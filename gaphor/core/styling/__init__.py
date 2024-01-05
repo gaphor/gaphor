@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import functools
 import operator
 from collections.abc import Hashable
 from typing import Iterator, Protocol, Sequence, TypedDict, Union
@@ -56,14 +55,13 @@ Style = TypedDict(
         "white-space": WhiteSpace,
         # Opaque elements to support inheritance
         "-gaphor-style-node": object,
-        "-gaphor-compiled-style-sheet": object
+        "-gaphor-compiled-style-sheet": object,
     },
     total=False,
 )
 
 
 class StyleNode(Hashable, Protocol):
-
     pseudo: str | None
     dark_mode: bool | None
 
@@ -140,7 +138,9 @@ class CompiledStyleSheet:
         self.selectors = sorted(
             (
                 (selspec[1], order, declarations, selspec[0])
-                for order, (selspec, declarations) in enumerate(compile_style_sheet(*css))
+                for order, (selspec, declarations) in enumerate(
+                    compile_style_sheet(*css)
+                )
                 if selspec != "error"
             ),
             key=operator.itemgetter(0, 1),
@@ -154,12 +154,11 @@ class CompiledStyleSheet:
                 for _specificity, _order, declarations, pred in self.selectors
                 if pred(node)
             ),
-            {"-gaphor-style-node": node, "-gaphor-compiled-style-sheet": self}
+            {"-gaphor-style-node": node, "-gaphor-compiled-style-sheet": self},
         )
 
 
 class PseudoStyleNode:
-
     def __init__(self, node: StyleNode, psuedo: str | None):
         self._node = node
         self.pseudo = psuedo
