@@ -38,7 +38,7 @@ from gaphor.core.modeling.properties import (
     relation_one,
 )
 from gaphor.core.modeling.stylesheet import StyleSheet
-from gaphor.core.styling import Style, StyleNode
+from gaphor.core.styling import CompiledStyleSheet, Style, StyleNode
 from gaphor.i18n import translation
 
 log = logging.getLogger(__name__)
@@ -236,7 +236,6 @@ class StyledItem:
             and self.item == other.item
             and self.state() == other.state()
             and self.dark_mode == other.dark_mode
-            and tuple(self.children()) == tuple(other.children())
         )
 
 
@@ -260,6 +259,7 @@ class Diagram(Element):
         self._connections = gaphas.connections.Connections()
         self._connections.add_handler(self._on_constraint_solved)
 
+        self._compiled_style_sheet: CompiledStyleSheet | None = None
         self._registered_views: set[gaphas.model.View] = set()
 
         self._watcher = self.watcher()
@@ -303,8 +303,17 @@ class Diagram(Element):
         return next(self.model.select(StyleSheet), None)
 
     def style(self, node: StyleNode) -> Style:
-        style_sheet = self.styleSheet
-        return style_sheet.compute_style(node) if style_sheet else FALLBACK_STYLE
+        if not (compiled_style_sheet := self._compiled_style_sheet):
+            style_sheet = self.styleSheet
+            compiled_style_sheet = self._compiled_style_sheet = (
+                style_sheet.new_compiled_style_sheet() if style_sheet else None
+            )
+
+        return (
+            compiled_style_sheet.compute_style(node)
+            if compiled_style_sheet
+            else FALLBACK_STYLE
+        )
 
     def gettext(self, message):
         """Translate a message to the language used in the model."""
@@ -409,6 +418,9 @@ class Diagram(Element):
         dirty_items: Sequence[Presentation],
     ) -> None:
         """Update the diagram canvas."""
+
+        # Clear our (cached) style sheet first
+        self._compiled_style_sheet = None
 
         def dirty_items_with_ancestors():
             for item in set(dirty_items):

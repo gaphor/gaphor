@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import functools
 from collections.abc import Hashable
 from typing import Callable, Iterator, Protocol, Sequence, TypedDict, Union
 
@@ -145,8 +146,12 @@ def resolve_variables(style: Style, style_layers: Sequence[Style]) -> Style:
 
 
 class CompiledStyleSheet:
-    def __init__(self, *css: str):
-        self.rules: list[tuple[Callable[[StyleNode], bool], Style]] = [
+    def __init__(
+        self,
+        *css: str,
+        rules: list[tuple[Callable[[StyleNode], bool], Style]] | None = None,
+    ):
+        self.rules: list[tuple[Callable[[StyleNode], bool], Style]] = rules or [
             (selector, declarations)  # type: ignore[misc]
             for _specificity, _order, selector, declarations in sorted(
                 (selspec[1], order, selspec[0], declarations)
@@ -156,9 +161,15 @@ class CompiledStyleSheet:
                 if selspec != "error"
             )
         ]
+        # Use this trick to bind a cache per instance, instead of globally.
+        self.compute_style = functools.lru_cache(maxsize=1000)(
+            self._compute_style_uncached
+        )
 
-    # @functools.lru_cache(maxsize=1000)
-    def compute_style(self, node: StyleNode) -> Style:
+    def copy(self) -> CompiledStyleSheet:
+        return CompiledStyleSheet(rules=self.rules)
+
+    def _compute_style_uncached(self, node: StyleNode) -> Style:
         parent = node.parent()
         parent_style = self.compute_style(parent) if parent else {}
         return merge_styles(
