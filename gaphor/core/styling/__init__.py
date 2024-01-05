@@ -1,8 +1,7 @@
 from __future__ import annotations
 
-import operator
 from collections.abc import Hashable
-from typing import Iterator, Protocol, Sequence, TypedDict, Union
+from typing import Callable, Iterator, Protocol, Sequence, TypedDict, Union
 
 from gaphor.core.styling.compiler import compile_style_sheet
 from gaphor.core.styling.declarations import (
@@ -147,16 +146,16 @@ def resolve_variables(style: Style, style_layers: Sequence[Style]) -> Style:
 
 class CompiledStyleSheet:
     def __init__(self, *css: str):
-        self.selectors = sorted(
-            (
-                (selspec[1], order, declarations, selspec[0])
+        self.rules: list[tuple[Callable[[StyleNode], bool], Style]] = [
+            (selector, declarations)  # type: ignore[misc]
+            for _specificity, _order, selector, declarations in sorted(
+                (selspec[1], order, selspec[0], declarations)
                 for order, (selspec, declarations) in enumerate(
                     compile_style_sheet(*css)
                 )
                 if selspec != "error"
-            ),
-            key=operator.itemgetter(0, 1),
-        )
+            )
+        ]
 
     # @functools.lru_cache(maxsize=1000)
     def compute_style(self, node: StyleNode) -> Style:
@@ -164,10 +163,6 @@ class CompiledStyleSheet:
         parent_style = self.compute_style(parent) if parent else {}
         return merge_styles(
             {n: v for n, v in parent_style.items() if n in INHERITED_DECLARATIONS},  # type: ignore[arg-type]
-            *(
-                declarations
-                for _specificity, _order, declarations, pred in self.selectors
-                if pred(node)
-            ),
+            *(declarations for selector, declarations in self.rules if selector(node)),
             {"-gaphor-style-node": node, "-gaphor-compiled-style-sheet": self},
         )

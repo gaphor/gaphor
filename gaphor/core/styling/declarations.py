@@ -55,7 +55,7 @@ class Var(NamedTuple):
     name: str
 
 
-FONT_SIZE_VALUES = {
+FONT_SIZE_VALUES: dict[str, int | float] = {
     "x-small": 3 / 4,
     "small": 8 / 9,
     "medium": 1,
