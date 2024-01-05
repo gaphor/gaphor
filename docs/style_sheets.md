@@ -100,7 +100,7 @@ of CSS. Below you'll find a summary of all CSS features supported by Gaphor.
                               - ``:drop`` if an item is dragged and can be dropped on this item
                               - ``:disabled`` if an element is grayed out during handle movement
 ``node:empty``                A node containing no child nodes in the diagram.
-``:root``                     An item is at the top level of the diagram.
+``:root``                     Refers to the diagram itself.
 
                               This is only applicable for the diagram
 ``:has()``                    The item contains any of the provided selectors.
@@ -132,6 +132,10 @@ widths, heights, and sizes are measured in pixels. You can’t use complex style
 declarations, like the `font` property in HTML/CSS which can contain font
 family, size, weight.
 
+Some properties are inherited from the parent style. The parent often is a diagram.
+When you set a `color`` or a `font-family` on `diagram`, it will propagate down
+to the items contained in the diagram.
+
 ### Colors
 
 ```{eval-rst}
@@ -143,8 +147,10 @@ family, size, weight.
                         ``background-color: rgb(255, 255, 255);``
 
                         ``background-color: hsl(130, 95%, 10%);``
-``color``               Color used for lines.
-``text-color``          Color for text.
+``color``               Color used for lines. *(inherited)*
+``text-color``          Color for text. *(inherited)*
+
+                        .. deprecated:: 2.23.0 Use color if possible.
 ``opacity``             Color opacity factor (``0.0`` - ``1.0``),
                         applied to all colors.
 ======================= =======================================
@@ -158,11 +164,11 @@ family, size, weight.
 
 ```{eval-rst}
 ======================= =======================================
-``font-family``         A single font name (e.g. ``sans``, ``serif``, ``courier``).
-``font-size``           An absolute size (e.g. ``14``) or a size value (e.g. ``small``).
-``font-style``          Either ``normal`` or ``italic``.
-``font-weight``         Either ``normal`` or ``bold``.
-``text-align``          Either ``left``, ``center``, ``right``.
+``font-family``         A single font name (e.g. ``sans``, ``serif``, ``courier``). *(inherited)*
+``font-size``           An absolute size (e.g. ``14``) or a size value (e.g. ``small``). *(inherited)*
+``font-style``          Either ``normal`` or ``italic``. *(inherited)*
+``font-weight``         Either ``normal`` or ``bold``. *(inherited)*
+``text-align``          Either ``left``, ``center``, ``right``. *(inherited)*
 ``text-decoration``     Either ``none`` or ``underline``.
 ``vertical-align``      Vertical alignment for text.
 
@@ -170,9 +176,7 @@ family, size, weight.
 ``vertical-spacing``    Set vertical spacing for icon-like items (actors, start state).
 
                         Example: ``vertical-spacing: 4``.
-``white-space``         Change the line wrapping behavior for text.
-                        Some text, like class' attributes and operations, cannot be wrapped.
-                        Either ``normal`` (text is wrapped) or ``nowrap``.
+``white-space``         Change the line wrapping behavior for text. *(inherited)*
 ======================= =======================================
 ```
 
@@ -191,7 +195,7 @@ family, size, weight.
 
                         Either ``start``, ``end``, ``center`` or ``stretch``.
 ``line-style``          Either ``normal`` or ``sloppy [factor]``.
-``line-width``          Set the width for lines: ``line-width: 2``.
+``line-width``          Set the width for lines: ``line-width: 2``. *(inherited)*
 ``min-height``          Set minimal height for an item: ``min-height: 50``.
 ``min-width``           Set minimal width for an item: ``min-width: 100``.
 ``padding``             CSS style padding (top, right, bottom, left).
@@ -364,7 +368,7 @@ ends. This rule will exclude simple elements, like lines and boxes, which will
 never have a backing model element.
 
 ```css
-:not([subject], :is(line, box, ellipse, commentline)) {
+:not(:is(:root, line, box, ellipse, commentline))[subject=""] {
   color: firebrick;
 }
 ```

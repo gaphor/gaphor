@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="2.22.1">
+<gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="2.23.0">
 <Package id="9d588440-d7c2-11ea-b8c5-37ef9fca94cd">
 <name>
 <val>style-sheets</val>
@@ -96,7 +96,7 @@ diagram[name=draft] * {
   font-family: Purisa;
 }
 
-:not([subject], :is(line, box, ellipse, commentline)) {
+:not(:is(:root, line, box, ellipse, commentline))[subject=""] {
   color: firebrick;
 }
 
