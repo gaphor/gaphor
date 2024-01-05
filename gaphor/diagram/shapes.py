@@ -1,10 +1,11 @@
 from __future__ import annotations
 
 import math
+from collections.abc import Iterable, Iterator, Sequence
 from dataclasses import replace
 from enum import Enum
 from math import pi
-from typing import Callable, Iterator, Protocol
+from typing import Callable, Protocol
 
 from gaphas.geometry import Rectangle
 
@@ -21,7 +22,7 @@ from gaphor.core.styling import (
     WhiteSpace,
     merge_styles,
 )
-from gaphor.core.styling.inherit import inherit_style
+from gaphor.core.styling.inherit import compute_inherited_style
 from gaphor.core.styling.pseudo import compute_pseudo_element_style
 from gaphor.diagram.text import Layout
 
@@ -194,7 +195,7 @@ def rectangle_shrink(rect: Rectangle | None, padding: Padding) -> Rectangle:
     )
 
 
-class Shape(Protocol):
+class Shape(Iterable, Protocol):
     def size(
         self, context: UpdateContext, bounding_box: Rectangle | None = None
     ) -> tuple[Number, Number]:
@@ -556,35 +557,6 @@ class Text:
             layout.show_layout(cr, text_box.width, default_size=(min_w, min_h))
 
 
-class StyledChildElement:
-    def __init__(self, shape: Shape, name: str, element: Element | None):
-        self._shape = shape
-        self._name = name
-        self._element = element
-
-    def name(self) -> str:
-        return self._name
-
-    def children(self) -> Iterator[StyleNode]:
-        return (node.style_node() for node in traverse_css_nodes(self._shape))
-
-    def attribute(self, name: str) -> str:
-        if not self._element:
-            return ""
-        fields = name.split(".")
-        return " ".join(map(attrstr, rgetattr(self._element, fields))).strip()
-
-    def __hash__(self):
-        return hash((self._name, self._element))
-
-    def __eq__(self, other):
-        return (
-            isinstance(other, StyledChildElement)
-            and self._name == other._name
-            and self._element == other._element
-        )
-
-
 class CssNode:
     """Create custom styling based on the active style and
     an element/class declaration.
@@ -605,27 +577,65 @@ class CssNode:
     def __iter__(self):
         return iter((self._child,))
 
-    def style_node(self):
-        return StyledChildElement(self._child, self._name, self._element)
+    def style_node(self, parent: Style | StyleNode) -> StyleNode:
+        return StyledCssNode(parent, self)
 
     def size(
         self, context: UpdateContext, bounding_box: Rectangle | None = None
     ) -> tuple[Number, Number]:
-        style = inherit_style(context.style, self.style_node())
+        style = compute_inherited_style(context.style, self.style_node(context.style))
         new_context = replace(context, style=style)
 
         return self._child.size(new_context, bounding_box)
 
     def draw(self, context: DrawContext, bounding_box: Rectangle):
-        style = inherit_style(context.style, self.style_node())
+        style = compute_inherited_style(context.style, self.style_node(context.style))
         new_context = replace(context, style=style)
 
         self._child.draw(new_context, bounding_box)
 
 
-def traverse_css_nodes(shape):
+class StyledCssNode:
+    def __init__(self, parent: Style | StyleNode, shape: CssNode):
+        self._parent: StyleNode | None = (
+            parent.get("-gaphor-style-node") if isinstance(parent, dict) else parent  # type: ignore[assignment]
+        )
+        self._shape = shape
+        self.pseudo: str | None = None
+        self.dark_mode = self._parent.dark_mode if self._parent else None
+
+    def name(self) -> str:
+        return self._shape._name
+
+    def parent(self) -> StyleNode | None:
+        return self._parent
+
+    def children(self) -> Iterator[StyleNode]:
+        return (node.style_node(self) for node in traverse_css_nodes(self._shape))
+
+    def attribute(self, name: str) -> str:
+        if not self._shape._element:
+            return ""
+        fields = name.split(".")
+        return " ".join(map(attrstr, rgetattr(self._shape._element, fields))).strip()
+
+    def state(self) -> Sequence[str]:
+        return ()
+
+    def __hash__(self):
+        return hash((self._parent, self._shape))
+
+    def __eq__(self, other):
+        return (
+            isinstance(other, StyledCssNode)
+            and self._parent == other._parent
+            and self._shape == other._shape
+        )
+
+
+def traverse_css_nodes(shape: Shape) -> Iterator[CssNode]:
     for s in shape:
         if isinstance(s, CssNode):
             yield s
         else:
-            traverse_css_nodes(s)
+            yield from traverse_css_nodes(s)

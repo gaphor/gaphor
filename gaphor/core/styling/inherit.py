@@ -1,48 +1,13 @@
-from typing import Iterator, Sequence
-
 from gaphor.core.styling import CompiledStyleSheet, Style, StyleNode
 
 
-class InheritingStyleNode:
-    def __init__(self, parent: StyleNode, child: StyleNode):
-        self._parent = parent
-        self._child = child
-        self.pseudo = parent.pseudo
-        self.dark_mode = parent.dark_mode
+def compute_inherited_style(style: Style, style_node: StyleNode) -> Style:
+    compiled_style_sheet: CompiledStyleSheet | None = style.get(
+        "-gaphor-compiled-style-sheet"
+    )  # type: ignore[assignment]
 
-    def name(self) -> str:
-        return self._child.name()
-
-    def parent(self) -> StyleNode | None:
-        return self._parent
-
-    def children(self) -> Iterator[StyleNode]:
-        return self._child.children()
-
-    def attribute(self, name: str) -> str:
-        return self._child.attribute(name)
-
-    def state(self) -> Sequence[str]:
-        return self._parent.state()
-
-    def __hash__(self):
-        return hash((self._parent, self._child))
-
-    def __eq__(self, other):
-        return (
-            isinstance(other, InheritingStyleNode)
-            and self._parent == other._parent
-            and self._child == other._child
-        )
-
-
-def inherit_style(style: Style, child: StyleNode) -> Style:
-    parent: StyleNode | None = style.get(  # type: ignore[assignment]
-        "-gaphor-style-node"
+    return (
+        compiled_style_sheet.compute_style(style_node)
+        if compiled_style_sheet
+        else style
     )
-    if not parent:
-        return style
-
-    compiled_style_sheet: CompiledStyleSheet = style.get("-gaphor-compiled-style-sheet")  # type: ignore[assignment]
-
-    return compiled_style_sheet.compute_style(InheritingStyleNode(parent, child))

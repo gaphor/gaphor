@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from collections.abc import Iterator
 from dataclasses import replace
 from math import atan2
 
@@ -177,8 +178,8 @@ class ElementPresentation(gaphas.Element, HandlePositionUpdate, Presentation[S])
                 context, bounding_box=Rectangle(0, 0, self.width, self.height)
             )
 
-    def css_nodes(self):
-        return traverse_css_nodes(self._shape) if self._shape else ()
+    def css_nodes(self) -> Iterator[CssNode]:
+        return traverse_css_nodes(self._shape) if self._shape else iter(())
 
     def draw(self, context):
         x, y = self.handles()[0].pos
@@ -301,7 +302,7 @@ class LinePresentation(gaphas.Line, HandlePositionUpdate, Presentation[S]):
         self._shape_middle_rect = shape_bounds(self._shape_middle, TextAlign.CENTER)
         self._shape_tail_rect = shape_bounds(self._shape_tail, TextAlign.RIGHT)
 
-    def css_nodes(self):
+    def css_nodes(self) -> Iterator[CssNode]:
         if self._shape_head:
             yield from traverse_css_nodes(self._shape_head)
         if self._shape_middle:
@@ -540,8 +541,8 @@ class AttachedPresentation(HandlePositionUpdate, Presentation[S]):
         self._shape = shape
         self.request_update()
 
-    def css_nodes(self):
-        return traverse_css_nodes(self._shape) if self._shape else ()
+    def css_nodes(self) -> Iterator[CssNode]:
+        return traverse_css_nodes(self._shape) if self._shape else iter(())
 
     def handles(self):
         return [self._handle]

@@ -1,5 +1,5 @@
 from gaphor.core.styling import CompiledStyleSheet
-from gaphor.core.styling.inherit import inherit_style
+from gaphor.core.styling.inherit import compute_inherited_style
 from gaphor.core.styling.tests.test_compiler import Node
 from gaphor.diagram.shapes import Box, CssNode
 
@@ -9,7 +9,9 @@ def test_inherit_from_parent_style():
 
     compiled_style_sheet = CompiledStyleSheet(css)
     style = compiled_style_sheet.compute_style(Node("node"))
-    inherited = inherit_style(style, CssNode("sub", None, Box()).style_node())
+    inherited = compute_inherited_style(
+        style, CssNode("sub", None, Box()).style_node(style)
+    )
 
     assert inherited.get("font-size") == 10
     assert inherited.get("content") == "Hi"
@@ -24,9 +26,13 @@ def test_should_not_inherit_everything():
 
     compiled_style_sheet = CompiledStyleSheet(css)
     style = compiled_style_sheet.compute_style(Node("node"))
-    inherited = inherit_style(
-        inherit_style(style, CssNode("sub", None, Box()).style_node()),
-        CssNode("sub", None, Box()).style_node(),
+    inherited = compute_inherited_style(
+        style,
+        CssNode("sub", None, Box()).style_node(
+            compute_inherited_style(
+                style, CssNode("sub", None, Box()).style_node(style)
+            )
+        ),
     )
 
     assert not inherited.get("background-color")

@@ -287,6 +287,25 @@ def test_has_pseudo_selector_with_wildcard():
     assert not selector(Node("classitem"))
 
 
+def test_has_pseudo_selector_with_nested_selector():
+    css = "classitem:has(middle nested) {}"
+
+    selector, _declarations = next(compile_style_sheet(css))
+
+    assert selector(
+        Node("classitem", children=[Node("middle", children=[Node("nested")])])
+    )
+    assert not selector(Node("classitem", children=[Node("nested")]))
+    assert selector(
+        Node(
+            "classitem",
+            children=[
+                Node("middle", children=[Node("other", children=[Node("nested")])])
+            ],
+        )
+    )
+
+
 def test_has_pseudo_selector_with_complex_selector():
     css = "classitem:has(middle > nested) {}"
 

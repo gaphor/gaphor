@@ -297,13 +297,15 @@ def test_text_with_after_pseudo_element():
     assert text.text(style) == "some text"
 
 
-def test_iterate_css_node():
+def test_iterate_css_node(update_context):
     shape = Box(
         CssNode("first", None, Box(CssNode("nested", None, Text("nested")))),
         CssNode("second", None, Box()),
     )
 
-    assert [n.style_node().name() for n in traverse_css_nodes(shape)] == [
+    assert [
+        n.style_node(update_context.style).name() for n in traverse_css_nodes(shape)
+    ] == [
         "first",
         "second",
     ]

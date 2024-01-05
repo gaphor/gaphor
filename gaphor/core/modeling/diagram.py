@@ -131,7 +131,7 @@ class StyledDiagram:
         dark_mode: bool | None = None,
     ):
         self.diagram = diagram
-        self.selection = selection or gaphas.selection.Selection()
+        self.selection = selection
         self.pseudo: str | None = None
         self.dark_mode = dark_mode
 
@@ -210,12 +210,13 @@ class StyledItem:
         )
 
     def children(self) -> Iterator[StyleNode]:
-        children = self.item.children
+        item = self.item
         selection = self.selection
         yield from (
-            StyledItem(child, selection, dark_mode=self.dark_mode) for child in children
+            StyledItem(child, selection, dark_mode=self.dark_mode)
+            for child in item.children
         )
-        yield from (node for child in children for node in child.css_nodes())
+        yield from (node.style_node(self) for node in item.css_nodes())
 
     def attribute(self, name: str) -> str:
         fields = name.split(".")
