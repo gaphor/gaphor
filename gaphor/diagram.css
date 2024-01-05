@@ -86,7 +86,7 @@ executionspecification {
     text-decoration: underline;
 }
 
-c4container {
+c4container, c4person {
   padding: 4 4 4 4;
 }
 
@@ -94,19 +94,19 @@ c4database {
   padding: 20 4 4 4;
 }
 
-:is(c4container, c4database):not([children = ""]) {
+:is(c4container, c4database, c4person):not([children=""]) {
   justify-content: end;
 }
 
-:is(c4container, c4database):not([children = ""]) > :is(name, technology) {
+:is(c4container, c4database, c4person):not([children=""]) > :is(name, technology) {
   text-align: left;
 }
 
-:is(c4container, c4database) technology {
+:is(c4container, c4database, c4person) technology {
   font-size: x-small;
 }
 
-:is(c4container, c4database) description {
+:is(c4container, c4database, c4person) description {
   padding: 4 4 0 4;
 }
 
