@@ -146,6 +146,11 @@ def resolve_variables(style: Style, style_layers: Sequence[Style]) -> Style:
 
 
 class CompiledStyleSheet:
+    """A style sheet, ready to compute styles for any StyleNode.
+
+    The computed styles are cached, to speed up subsequent lookups.
+    """
+
     def __init__(
         self,
         *css: str,
@@ -153,13 +158,8 @@ class CompiledStyleSheet:
     ):
         self.rules: list[tuple[Callable[[StyleNode], bool], Style]] = rules or [
             (selector, declarations)  # type: ignore[misc]
-            for _specificity, _order, selector, declarations in sorted(
-                (selspec[1], order, selspec[0], declarations)
-                for order, (selspec, declarations) in enumerate(
-                    compile_style_sheet(*css)
-                )
-                if selspec != "error"
-            )
+            for selector, declarations in compile_style_sheet(*css)
+            if selector != "error"
         ]
         # Use this trick to bind a cache per instance, instead of globally.
         self.compute_style = functools.lru_cache(maxsize=1000)(
