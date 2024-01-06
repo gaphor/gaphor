@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gaphor 2.18.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-04-09 15:06-0400\n"
-"PO-Revision-Date: 2023-07-19 14:11+0000\n"
+"PO-Revision-Date: 2024-01-07 14:06+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language-Team: Croatian <https://hosted.weblate.org/projects/gaphor/"
 "docs-gaphor-org/hr/>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 5.0-dev\n"
+"X-Generator: Weblate 5.4-dev\n"
 
 #: ../connect.md:1
 msgid "Connection Protocol"
@@ -1790,7 +1790,7 @@ msgstr "Aktivnosti"
 
 #: ../models/sysml/Allocations.rst:2
 msgid "Allocations"
-msgstr ""
+msgstr "Dodjeljivanja"
 
 #: ../models/sysml/Allocations.rst:5
 msgid "AllocatedActivityPartition"
