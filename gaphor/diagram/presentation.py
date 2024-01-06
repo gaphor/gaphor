@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from collections.abc import Iterator
 from dataclasses import replace
 from math import atan2
 
@@ -11,11 +12,12 @@ from gaphas.geometry import Rectangle, distance_rectangle_point
 from gaphas.solver.constraint import BaseConstraint
 
 from gaphor.core.modeling.diagram import Diagram, DrawContext
+from gaphor.core.modeling.element import Id
 from gaphor.core.modeling.event import AttributeUpdated, RevertibleEvent
 from gaphor.core.modeling.presentation import Presentation, S, literal_eval
 from gaphor.core.modeling.properties import attribute
 from gaphor.core.styling import Style, merge_styles
-from gaphor.diagram.shapes import CssNode, Text, stroke
+from gaphor.diagram.shapes import CssNode, Shape, Text, stroke, traverse_css_nodes
 from gaphor.diagram.text import TextAlign, middle_segment, text_point_at_line
 
 
@@ -124,7 +126,14 @@ class ElementPresentation(gaphas.Element, HandlePositionUpdate, Presentation[S])
 
     _port_sides = ("top", "right", "bottom", "left")
 
-    def __init__(self, diagram: Diagram, id=None, shape=None, width=100, height=50):
+    def __init__(
+        self,
+        diagram: Diagram,
+        id: Id | None = None,
+        shape: Shape | None = None,
+        width=100,
+        height=50,
+    ):
         super().__init__(
             connections=diagram.connections,
             diagram=diagram,
@@ -169,14 +178,18 @@ class ElementPresentation(gaphas.Element, HandlePositionUpdate, Presentation[S])
                 context, bounding_box=Rectangle(0, 0, self.width, self.height)
             )
 
+    def css_nodes(self) -> Iterator[CssNode]:
+        return traverse_css_nodes(self._shape) if self._shape else iter(())
+
     def draw(self, context):
         x, y = self.handles()[0].pos
         cairo = context.cairo
         cairo.translate(x, y)
-        self._shape.draw(
-            context,
-            Rectangle(0, 0, self.width, self.height),
-        )
+        if self._shape:
+            self._shape.draw(
+                context,
+                Rectangle(0, 0, self.width, self.height),
+            )
 
     def save(self, save_func):
         save_func("matrix", tuple(self.matrix))
@@ -220,11 +233,11 @@ class LinePresentation(gaphas.Line, HandlePositionUpdate, Presentation[S]):
     def __init__(
         self,
         diagram: Diagram,
-        id=None,
+        id: Id | None = None,
         style: Style | None = None,
-        shape_head=None,
-        shape_middle=None,
-        shape_tail=None,
+        shape_head: Shape | None = None,
+        shape_middle: Shape | None = None,
+        shape_tail: Shape | None = None,
     ):
         super().__init__(connections=diagram.connections, diagram=diagram, id=id)  # type: ignore[call-arg]
 
@@ -288,6 +301,14 @@ class LinePresentation(gaphas.Line, HandlePositionUpdate, Presentation[S]):
         self._shape_head_rect = shape_bounds(self._shape_head, TextAlign.LEFT)
         self._shape_middle_rect = shape_bounds(self._shape_middle, TextAlign.CENTER)
         self._shape_tail_rect = shape_bounds(self._shape_tail, TextAlign.RIGHT)
+
+    def css_nodes(self) -> Iterator[CssNode]:
+        if self._shape_head:
+            yield from traverse_css_nodes(self._shape_head)
+        if self._shape_middle:
+            yield from traverse_css_nodes(self._shape_middle)
+        if self._shape_tail:
+            yield from traverse_css_nodes(self._shape_tail)
 
     def point(self, x, y):
         """Given a point (x, y) return the distance to the diagram item."""
@@ -416,11 +437,18 @@ class AttachedPresentation(HandlePositionUpdate, Presentation[S]):
     E.g. ports, pins and parameter nodes.
     """
 
-    def __init__(self, diagram, id=None, shape=None, width=16, height=16):
+    def __init__(
+        self,
+        diagram: Diagram,
+        id: Id | None = None,
+        shape: Shape | None = None,
+        width=16,
+        height=16,
+    ):
         super().__init__(diagram, id)
         self._connections = diagram.connections
-        self._width_constraints = []
-        self._height_constraints = []
+        self._width_constraints: list[BaseConstraint] = []
+        self._height_constraints: list[BaseConstraint] = []
         self._last_connected_side = None
         self._shape = shape
 
@@ -512,6 +540,9 @@ class AttachedPresentation(HandlePositionUpdate, Presentation[S]):
     def shape(self, shape) -> None:
         self._shape = shape
         self.request_update()
+
+    def css_nodes(self) -> Iterator[CssNode]:
+        return traverse_css_nodes(self._shape) if self._shape else iter(())
 
     def handles(self):
         return [self._handle]

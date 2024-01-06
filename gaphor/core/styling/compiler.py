@@ -18,18 +18,32 @@ split_whitespace = re.compile("[^ \t\r\n\f]+").findall
 
 
 Rule = Union[
-    Tuple[Tuple[Callable[[object], bool], Tuple[int, int, int]], Dict[str, object]],
+    Tuple[Callable[[object], bool], Dict[str, object]],
     Tuple[Literal["error"], Union[tinycss2.ast.ParseError, selectors.SelectorError]],
 ]
 
 
 def compile_style_sheet(*css: str) -> Iterator[Rule]:
-    for sheet in css:
-        if sheet:
-            rules = tinycss2.parse_stylesheet(
-                sheet, skip_comments=True, skip_whitespace=True
+    return (
+        compiled_rule
+        for _specificity, _order, compiled_rule in sorted(
+            (
+                ((-1,), order, (selspec, declarations))
+                if selspec == "error"
+                else (selspec[1], order, (selspec[0], declarations))
             )
-            yield from compile_rules(rules)
+            for order, (selspec, declarations) in enumerate(
+                rule
+                for sheet in css
+                for rule in compile_rules(
+                    tinycss2.parse_stylesheet(
+                        sheet, skip_comments=True, skip_whitespace=True
+                    )
+                )
+                if sheet
+            )
+        )
+    )
 
 
 def compile_rules(rules):
@@ -195,7 +209,9 @@ def compile_pseudo_class_selector(selector: selectors.PseudoClassSelector):
     name = selector.name
     if name == "empty":
         return lambda el: not next(el.children(), 0)
-    elif name in ("root", "hover", "focus", "active", "drop", "disabled"):
+    elif name == "root":
+        return lambda el: not el.parent()
+    elif name in ("hover", "focus", "active", "drop", "disabled"):
         return lambda el: name in el.state()
     else:
         raise selectors.SelectorError("Unknown pseudo-class", name)

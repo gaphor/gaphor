@@ -3,10 +3,6 @@
 * {
   --opaque-background-color: white;
   background-color: transparent;
-  color: black;
-  font-size: 14;
-  line-width: 2;
-  padding: 0;
 }
 
 *:drop {
@@ -33,6 +29,14 @@
   *:drop {
     color: #62a0ea;
   }
+}
+
+:root {
+  color: black;
+  font-family: sans;
+  font-size: 14 ;
+  line-width: 2;
+  padding: 0;
 }
 
 dependency,
@@ -82,19 +86,27 @@ executionspecification {
     text-decoration: underline;
 }
 
-c4container {
+c4container, c4person {
+  padding: 4 4 4 4;
+}
+
+c4database {
+  padding: 20 4 4 4;
+}
+
+:is(c4container, c4database, c4person):not([children=""]) {
+  justify-content: end;
+}
+
+:is(c4container, c4database, c4person):not([children=""]) > :is(name, technology) {
   text-align: left;
 }
 
-c4container[children = ""] {
-  text-align: center;
-}
-
-c4container technology {
+:is(c4container, c4database, c4person) technology {
   font-size: x-small;
 }
 
-c4container description {
+:is(c4container, c4database, c4person) description {
   padding: 4 4 0 4;
 }
 

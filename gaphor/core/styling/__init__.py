@@ -1,8 +1,8 @@
 from __future__ import annotations
 
-import operator
+import functools
 from collections.abc import Hashable
-from typing import Iterator, Protocol, Sequence, TypedDict, Union
+from typing import Callable, Iterator, Protocol, Sequence, TypedDict, Union
 
 from gaphor.core.styling.compiler import compile_style_sheet
 from gaphor.core.styling.declarations import (
@@ -58,6 +58,18 @@ Style = TypedDict(
         "-gaphor-compiled-style-sheet": object,
     },
     total=False,
+)
+
+INHERITED_DECLARATIONS = (
+    "color",
+    "font-family",
+    "font-size",
+    "font-style",
+    "font-weight",
+    "line-width",  # a.k.a. stroke-width
+    "text-align",
+    "text-color",
+    "white-space",
 )
 
 
@@ -134,67 +146,34 @@ def resolve_variables(style: Style, style_layers: Sequence[Style]) -> Style:
 
 
 class CompiledStyleSheet:
-    def __init__(self, *css: str):
-        self.selectors = sorted(
-            (
-                (selspec[1], order, declarations, selspec[0])
-                for order, (selspec, declarations) in enumerate(
-                    compile_style_sheet(*css)
-                )
-                if selspec != "error"
-            ),
-            key=operator.itemgetter(0, 1),
+    """A style sheet, ready to compute styles for any StyleNode.
+
+    The computed styles are cached, to speed up subsequent lookups.
+    """
+
+    def __init__(
+        self,
+        *css: str,
+        rules: list[tuple[Callable[[StyleNode], bool], Style]] | None = None,
+    ):
+        self.rules: list[tuple[Callable[[StyleNode], bool], Style]] = rules or [
+            (selector, declarations)  # type: ignore[misc]
+            for selector, declarations in compile_style_sheet(*css)
+            if selector != "error"
+        ]
+        # Use this trick to bind a cache per instance, instead of globally.
+        self.compute_style = functools.lru_cache(maxsize=1000)(
+            self._compute_style_uncached
         )
 
-    # @functools.lru_cache(maxsize=1000)
-    def compute_style(self, node: StyleNode) -> Style:
+    def copy(self) -> CompiledStyleSheet:
+        return CompiledStyleSheet(rules=self.rules)
+
+    def _compute_style_uncached(self, node: StyleNode) -> Style:
+        parent = node.parent()
+        parent_style = self.compute_style(parent) if parent else {}
         return merge_styles(
-            *(
-                declarations
-                for _specificity, _order, declarations, pred in self.selectors
-                if pred(node)
-            ),
+            {n: v for n, v in parent_style.items() if n in INHERITED_DECLARATIONS},  # type: ignore[arg-type]
+            *(declarations for selector, declarations in self.rules if selector(node)),
             {"-gaphor-style-node": node, "-gaphor-compiled-style-sheet": self},
         )
-
-
-class PseudoStyleNode:
-    def __init__(self, node: StyleNode, psuedo: str | None):
-        self._node = node
-        self.pseudo = psuedo
-        self.dark_mode = node.dark_mode
-
-    def name(self) -> str:
-        return self._node.name()
-
-    def parent(self) -> StyleNode | None:
-        return self._node.parent()
-
-    def children(self) -> Iterator[StyleNode]:
-        return self._node.children()
-
-    def attribute(self, name: str) -> str:
-        return self._node.attribute(name)
-
-    def state(self) -> Sequence[str]:
-        return self._node.state()
-
-    def __hash__(self):
-        return hash((self._node, self.pseudo))
-
-    def __eq__(self, other):
-        return (
-            isinstance(other, PseudoStyleNode)
-            and self._node == other._node
-            and self.pseudo is other.pseudo
-        )
-
-
-def compute_pseudo_element_style(style: Style, pseudo: str) -> Style:
-    parent: StyleNode | None = style.get("-gaphor-style-node")  # type: ignore[assignment]
-    if not parent:
-        return style
-
-    compiled_style_sheet: CompiledStyleSheet = style.get("-gaphor-compiled-style-sheet")  # type: ignore[assignment]
-
-    return compiled_style_sheet.compute_style(PseudoStyleNode(parent, pseudo))

@@ -38,7 +38,7 @@ from gaphor.core.modeling.properties import (
     relation_one,
 )
 from gaphor.core.modeling.stylesheet import StyleSheet
-from gaphor.core.styling import Style, StyleNode
+from gaphor.core.styling import CompiledStyleSheet, Style, StyleNode
 from gaphor.i18n import translation
 
 log = logging.getLogger(__name__)
@@ -49,7 +49,6 @@ FALLBACK_STYLE: Style = {
     "color": (0, 0, 0, 1),
     "font-family": "sans",
     "font-size": 14,
-    "padding": (0, 0, 0, 0),
 }
 
 
@@ -132,7 +131,7 @@ class StyledDiagram:
         dark_mode: bool | None = None,
     ):
         self.diagram = diagram
-        self.selection = selection or gaphas.selection.Selection()
+        self.selection = selection
         self.pseudo: str | None = None
         self.dark_mode = dark_mode
 
@@ -187,6 +186,17 @@ class StyledItem:
         self.selection = selection
         self.pseudo: str | None = None
         self.dark_mode = dark_mode
+        self._state = (
+            (
+                "active" if item in selection.selected_items else "",
+                "focus" if item is selection.focused_item else "",
+                "hover" if item is selection.hovered_item else "",
+                "drop" if item is selection.dropzone_item else "",
+                "disabled" if item in selection.grayed_out_items else "",
+            )
+            if selection
+            else ()
+        )
 
     def name(self) -> str:
         return type(self.item).__name__.removesuffix("Item").lower()
@@ -200,12 +210,13 @@ class StyledItem:
         )
 
     def children(self) -> Iterator[StyleNode]:
+        item = self.item
         selection = self.selection
-        return (
+        yield from (
             StyledItem(child, selection, dark_mode=self.dark_mode)
-            for child in self.item.children
+            for child in item.children
         )
-        # TODO: Return css nodes in a Presentation (traverse shapes) to make :has() and :empty work
+        yield from (node.style_node(self) for node in item.css_nodes())
 
     def attribute(self, name: str) -> str:
         fields = name.split(".")
@@ -215,19 +226,7 @@ class StyledItem:
         return a
 
     def state(self) -> Sequence[str]:
-        item = self.item
-        selection = self.selection
-        return (
-            (
-                "active" if item in selection.selected_items else "",
-                "focus" if item is selection.focused_item else "",
-                "hover" if item is selection.hovered_item else "",
-                "drop" if item is selection.dropzone_item else "",
-                "disabled" if item in selection.grayed_out_items else "",
-            )
-            if selection
-            else ()
-        )
+        return self._state
 
     def __hash__(self):
         return hash((self.item, self.state(), self.dark_mode))
@@ -261,6 +260,7 @@ class Diagram(Element):
         self._connections = gaphas.connections.Connections()
         self._connections.add_handler(self._on_constraint_solved)
 
+        self._compiled_style_sheet: CompiledStyleSheet | None = None
         self._registered_views: set[gaphas.model.View] = set()
 
         self._watcher = self.watcher()
@@ -304,8 +304,17 @@ class Diagram(Element):
         return next(self.model.select(StyleSheet), None)
 
     def style(self, node: StyleNode) -> Style:
-        style_sheet = self.styleSheet
-        return style_sheet.compute_style(node) if style_sheet else FALLBACK_STYLE
+        if not (compiled_style_sheet := self._compiled_style_sheet):
+            style_sheet = self.styleSheet
+            compiled_style_sheet = self._compiled_style_sheet = (
+                style_sheet.new_compiled_style_sheet() if style_sheet else None
+            )
+
+        return (
+            compiled_style_sheet.compute_style(node)
+            if compiled_style_sheet
+            else FALLBACK_STYLE
+        )
 
     def gettext(self, message):
         """Translate a message to the language used in the model."""
@@ -410,6 +419,9 @@ class Diagram(Element):
         dirty_items: Sequence[Presentation],
     ) -> None:
         """Update the diagram canvas."""
+
+        # Clear our (cached) style sheet first
+        self._compiled_style_sheet = None
 
         def dirty_items_with_ancestors():
             for item in set(dirty_items):

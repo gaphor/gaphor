@@ -3,9 +3,9 @@ import pytest
 from gaphor.core.styling import (
     CompiledStyleSheet,
     compile_style_sheet,
-    compute_pseudo_element_style,
 )
 from gaphor.core.styling.declarations import WhiteSpace
+from gaphor.core.styling.pseudo import compute_pseudo_element_style
 from gaphor.core.styling.tests.test_compiler import Node
 
 
@@ -76,13 +76,13 @@ def test_multiple_rules():
     assert len(rules) == 2
 
 
-def test_selectors():
+def test_combined_rules():
     css = """
     foo, bar {}
     """
-    selector, declarations = next(compile_style_sheet(css))
+    rules = list(compile_style_sheet(css))
 
-    assert len(selector) == 2
+    assert len(rules) == 2
 
 
 def test_invalid_css_syntax():

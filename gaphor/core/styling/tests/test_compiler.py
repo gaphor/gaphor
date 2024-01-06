@@ -69,7 +69,7 @@ def test_node_test_object_child_parent():
 def test_select_all():
     css = "* {}"
 
-    (selector, specificity), payload = next(compile_style_sheet(css))
+    selector, _declarations = next(compile_style_sheet(css))
 
     assert selector("any")
 
@@ -77,7 +77,7 @@ def test_select_all():
 def test_select_name():
     css = "classitem {}"
 
-    (selector, specificity), payload = next(compile_style_sheet(css))
+    selector, _declarations = next(compile_style_sheet(css))
 
     assert selector(Node("classitem"))
     assert not selector(Node("packageitem"))
@@ -86,7 +86,7 @@ def test_select_name():
 def test_select_inside_combinator():
     css = "classitem nested {}"
 
-    (selector, specificity), payload = next(compile_style_sheet(css))
+    selector, _declarations = next(compile_style_sheet(css))
 
     assert selector(Node("nested", parent=Node("classitem")))
     assert selector(
@@ -102,7 +102,7 @@ def test_select_inside_combinator():
 def test_select_parent_combinator():
     css = "classitem > nested {}"
 
-    (selector, specificity), payload = next(compile_style_sheet(css))
+    selector, _declarations = next(compile_style_sheet(css))
 
     assert selector(Node("nested", parent=Node("classitem")))
     assert not selector(
@@ -118,7 +118,7 @@ def test_select_parent_combinator():
 def test_attributes():
     css = "classitem[subject] {}"
 
-    (selector, specificity), payload = next(compile_style_sheet(css))
+    selector, _declarations = next(compile_style_sheet(css))
 
     assert selector(Node("classitem", attributes={"subject": "val"}))
     assert not selector(Node("classitem"))
@@ -128,7 +128,7 @@ def test_attributes():
 def test_attribute_equal():
     css = "classitem[subject=foo] {}"
 
-    (selector, specificity), payload = next(compile_style_sheet(css))
+    selector, _declarations = next(compile_style_sheet(css))
 
     assert selector(Node("classitem", attributes={"subject": "foo"}))
     assert not selector(Node("classitem", attributes={"subject": "bar"}))
@@ -137,7 +137,7 @@ def test_attribute_equal():
 def test_attribute_in_list():
     css = "classitem[subject~=foo] {}"
 
-    (selector, specificity), payload = next(compile_style_sheet(css))
+    selector, _declarations = next(compile_style_sheet(css))
 
     assert selector(Node("classitem", attributes={"subject": "foo"}))
     assert selector(Node("classitem", attributes={"subject": "foo bar"}))
@@ -147,7 +147,7 @@ def test_attribute_in_list():
 def test_attribute_starts_with():
     css = "classitem[subject^=foo] {}"
 
-    (selector, specificity), payload = next(compile_style_sheet(css))
+    selector, _declarations = next(compile_style_sheet(css))
 
     assert selector(Node("classitem", attributes={"subject": "foo"}))
     assert selector(Node("classitem", attributes={"subject": "foomania"}))
@@ -157,7 +157,7 @@ def test_attribute_starts_with():
 def test_attribute_starts_with_dash():
     css = "classitem[subject|=foo] {}"
 
-    (selector, specificity), payload = next(compile_style_sheet(css))
+    selector, _declarations = next(compile_style_sheet(css))
 
     assert selector(Node("classitem", attributes={"subject": "foo"}))
     assert selector(Node("classitem", attributes={"subject": "foo-mania"}))
@@ -167,7 +167,7 @@ def test_attribute_starts_with_dash():
 def test_attribute_ends_with():
     css = "classitem[subject$=foo] {}"
 
-    (selector, specificity), payload = next(compile_style_sheet(css))
+    selector, _declarations = next(compile_style_sheet(css))
 
     assert selector(Node("classitem", attributes={"subject": "foo"}))
     assert selector(Node("classitem", attributes={"subject": "manicfoo"}))
@@ -177,7 +177,7 @@ def test_attribute_ends_with():
 def test_attribute_contains():
     css = "classitem[subject*=foo] {}"
 
-    (selector, specificity), payload = next(compile_style_sheet(css))
+    selector, _declarations = next(compile_style_sheet(css))
 
     assert selector(Node("classitem", attributes={"subject": "foo"}))
     assert selector(Node("classitem", attributes={"subject": "be foo-ish"}))
@@ -187,7 +187,7 @@ def test_attribute_contains():
 def test_attributes_with_dots():
     css = "classitem[subject.members] {}"
 
-    (selector, specificity), payload = next(compile_style_sheet(css))
+    selector, _declarations = next(compile_style_sheet(css))
 
     assert selector(Node("classitem", attributes={"subject.members": "foo"}))
 
@@ -195,7 +195,7 @@ def test_attributes_with_dots():
 def test_attributes_are_lower_case():
     css = "ClassItem[MixedCase] {}"
 
-    (selector, specificity), payload = next(compile_style_sheet(css))
+    selector, _declarations = next(compile_style_sheet(css))
 
     assert selector(Node("classitem", attributes={"mixedcase": "foo"}))
 
@@ -203,31 +203,38 @@ def test_attributes_are_lower_case():
 def test_empty_pseudo_selector():
     css = ":empty {}"
 
-    (selector, specificity), payload = next(compile_style_sheet(css))
+    selector, _declarations = next(compile_style_sheet(css))
 
     assert selector(Node("node"))
-    assert specificity == (0, 1, 0)
     assert not selector(Node("node", children=[Node("child")]))
 
 
 def test_empty_pseudo_selector_with_name():
     css = "node:empty {}"
 
-    (selector, specificity), payload = next(compile_style_sheet(css))
+    selector, _declarations = next(compile_style_sheet(css))
 
     assert selector(Node("node"))
     assert not selector(Node("node", children=[Node("child")]))
-    assert specificity == (0, 1, 1)
+
+
+def test_root_pseudo_selector_with_name():
+    css = ":root {}"
+
+    selector, _declarations = next(compile_style_sheet(css))
+
+    assert selector(Node("node"))
+    assert not selector(Node("node", parent=Node("child")))
 
 
 @pytest.mark.parametrize(
     "state",
-    ["root", "hover", "focus", "active", "drop", "disabled"],
+    ["hover", "focus", "active", "drop", "disabled"],
 )
 def test_hovered_pseudo_selector(state):
     css = f":{state} {{}}"
 
-    (selector, specificity), payload = next(compile_style_sheet(css))
+    selector, _declarations = next(compile_style_sheet(css))
 
     assert selector(Node("node", state=(state,)))
     assert selector(Node("node", state=(state, "other-state")))
@@ -237,23 +244,21 @@ def test_hovered_pseudo_selector(state):
 def test_is_pseudo_selector():
     css = "classitem:is(:hover, :active) {}"
 
-    (selector, specificity), payload = next(compile_style_sheet(css))
+    selector, _declarations = next(compile_style_sheet(css))
 
     assert selector(Node("classitem", state=("hover",)))
     assert selector(Node("classitem", state=("active",)))
     assert selector(Node("classitem", state=("hover", "active")))
-    assert specificity == (0, 1, 1)
     assert not selector(Node("classitem"))
 
 
 def test_not_pseudo_selector():
     css = "classitem:not(:hover) {}"
 
-    (selector, specificity), payload = next(compile_style_sheet(css))
+    selector, _declarations = next(compile_style_sheet(css))
 
     assert selector(Node("classitem"))
     assert selector(Node("classitem", state=("active")))
-    assert specificity == (0, 1, 1)
     assert not selector(Node("classitem", state=("hover",)))
     assert not selector(Node("classitem", state=("hover", "active")))
 
@@ -261,25 +266,54 @@ def test_not_pseudo_selector():
 def test_has_pseudo_selector():
     css = "classitem:has(nested) {}"
 
-    (selector, specificity), payload = next(compile_style_sheet(css))
+    selector, _declarations = next(compile_style_sheet(css))
 
     assert selector(Node("classitem", children=[Node("nested")]))
-    assert specificity == (0, 0, 2)
     assert selector(
         Node("classitem", children=[Node("middle", children=[Node("nested")])])
     )
     assert not selector(Node("classitem"))
 
 
-def test_has_pseudo_selector_with_complex_selector():
-    css = "classitem:has(middle > nested) {}"
+def test_has_pseudo_selector_with_wildcard():
+    css = "classitem:has(*) {}"
 
-    (selector, specificity), payload = next(compile_style_sheet(css))
+    selector, _declarations = next(compile_style_sheet(css))
+
+    assert selector(Node("classitem", children=[Node("nested")]))
+    assert selector(
+        Node("classitem", children=[Node("middle", children=[Node("nested")])])
+    )
+    assert not selector(Node("classitem"))
+
+
+def test_has_pseudo_selector_with_nested_selector():
+    css = "classitem:has(middle nested) {}"
+
+    selector, _declarations = next(compile_style_sheet(css))
 
     assert selector(
         Node("classitem", children=[Node("middle", children=[Node("nested")])])
     )
-    assert specificity == (0, 0, 3)
+    assert not selector(Node("classitem", children=[Node("nested")]))
+    assert selector(
+        Node(
+            "classitem",
+            children=[
+                Node("middle", children=[Node("other", children=[Node("nested")])])
+            ],
+        )
+    )
+
+
+def test_has_pseudo_selector_with_complex_selector():
+    css = "classitem:has(middle > nested) {}"
+
+    selector, _declarations = next(compile_style_sheet(css))
+
+    assert selector(
+        Node("classitem", children=[Node("middle", children=[Node("nested")])])
+    )
     assert not selector(Node("classitem", children=[Node("nested")]))
     assert not selector(
         Node(
@@ -305,18 +339,17 @@ def test_has_pseudo_selector_with_combinator_is_not_supported():
 def test_parse_empty_pseudo_element():
     css = "node::after {}"
 
-    (selector, specificity), payload = next(compile_style_sheet(css))
+    selector, declarations = next(compile_style_sheet(css))
 
-    assert payload == {}
+    assert declarations == {}
     assert not selector(Node("node"))
     assert selector(Node("node", pseudo="after"))
-    assert specificity == (0, 0, 2)
 
 
 def test_has_and_is_selector():
     css = "node:has(:is(:hover)) {}"
 
-    (selector, specificity), payload = next(compile_style_sheet(css))
+    selector, _declarations = next(compile_style_sheet(css))
 
     assert selector(
         Node(
@@ -336,10 +369,9 @@ def test_has_and_is_selector():
     ],
 )
 def test_media_query(css):
-    (selector, specificity), payload = next(compile_style_sheet(css))
+    selector, _declarations = next(compile_style_sheet(css))
 
     assert selector(Node("node", dark_mode=True))
-    assert specificity == (0, 0, 1)
 
 
 @pytest.mark.parametrize(

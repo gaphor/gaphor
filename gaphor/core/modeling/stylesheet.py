@@ -6,7 +6,7 @@ import textwrap
 from gaphor.core.modeling.element import Element
 from gaphor.core.modeling.event import AttributeUpdated
 from gaphor.core.modeling.properties import attribute
-from gaphor.core.styling import CompiledStyleSheet, Style, StyleNode
+from gaphor.core.styling import CompiledStyleSheet
 
 SYSTEM_STYLE_SHEET = (importlib.resources.files("gaphor") / "diagram.css").read_text(
     "utf-8"
@@ -44,12 +44,12 @@ class StyleSheet(Element):
     def compile_style_sheet(self) -> None:
         self._compiled_style_sheet = CompiledStyleSheet(
             SYSTEM_STYLE_SHEET,
-            f"* {{ font-family: {self._system_font_family} }}",
+            f"diagram {{ font-family: {self._system_font_family} }}",
             self.styleSheet,
         )
 
-    def compute_style(self, node: StyleNode) -> Style:
-        return self._compiled_style_sheet.compute_style(node)
+    def new_compiled_style_sheet(self) -> CompiledStyleSheet:
+        return self._compiled_style_sheet.copy()
 
     def postload(self):
         super().postload()

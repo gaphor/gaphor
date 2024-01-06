@@ -1,10 +1,11 @@
 from __future__ import annotations
 
 import math
+from collections.abc import Iterable, Iterator, Sequence
 from dataclasses import replace
 from enum import Enum
 from math import pi
-from typing import Callable, Iterator, Protocol, Sequence
+from typing import Callable, Protocol
 
 from gaphas.geometry import Rectangle
 
@@ -19,10 +20,10 @@ from gaphor.core.styling import (
     TextAlign,
     VerticalAlign,
     WhiteSpace,
-    compute_pseudo_element_style,
     merge_styles,
 )
-from gaphor.core.styling.inherit import inherit_style
+from gaphor.core.styling.inherit import compute_inherited_style
+from gaphor.core.styling.pseudo import compute_pseudo_element_style
 from gaphor.diagram.text import Layout
 
 
@@ -194,7 +195,7 @@ def rectangle_shrink(rect: Rectangle | None, padding: Padding) -> Rectangle:
     )
 
 
-class Shape(Protocol):
+class Shape(Iterable, Protocol):
     def size(
         self, context: UpdateContext, bounding_box: Rectangle | None = None
     ) -> tuple[Number, Number]:
@@ -202,6 +203,9 @@ class Shape(Protocol):
 
     def draw(self, context: DrawContext, bounding_box: Rectangle) -> None:
         ...
+
+
+DEFAULT_PADDING = (0, 0, 0, 0)
 
 
 class Box:
@@ -243,7 +247,7 @@ class Box:
         style = merge_styles(context.style, self._inline_style)
         min_width = style.get("min-width", 0)
         min_height = style.get("min-height", 0)
-        padding = style["padding"]
+        padding = style.get("padding", DEFAULT_PADDING)
         new_bounds = rectangle_shrink(bounding_box, padding)
         self.sizes = sizes = [c.size(context, new_bounds) for c in self.children]
         if sizes:
@@ -275,7 +279,9 @@ class Box:
     def draw_vertical(self, context: DrawContext, bounding_box: Rectangle):
         style = merge_styles(context.style, self._inline_style)
         new_context = replace(context, style=style)
-        padding_top, padding_right, padding_bottom, padding_left = style["padding"]
+        padding_top, padding_right, padding_bottom, padding_left = style.get(
+            "padding", DEFAULT_PADDING
+        )
         sizes = self.sizes
 
         justify_content = (
@@ -326,7 +332,9 @@ class Box:
     def draw_horizontal(self, context: DrawContext, bounding_box: Rectangle):
         style = merge_styles(context.style, self._inline_style)
         new_context = replace(context, style=style)
-        padding_top, padding_right, padding_bottom, padding_left = style["padding"]
+        padding_top, padding_right, padding_bottom, padding_left = style.get(
+            "padding", DEFAULT_PADDING
+        )
         sizes = self.sizes
 
         justify_content = style.get("justify-content", JustifyContent.CENTER)
@@ -385,6 +393,9 @@ class BoundedBox(Box):
         super().__init__(*children, style=style, draw=draw)
         self.bounding_box = Rectangle()
 
+    def __iter__(self):
+        return iter(self.children)
+
     def draw(self, context: DrawContext, bounding_box: Rectangle):
         self.bounding_box = bounding_box
         return super().draw(context, bounding_box)
@@ -412,11 +423,14 @@ class IconBox:
         self.sizes: list[tuple[Number, Number]] = []
         self._inline_style = style
 
+    def __iter__(self):
+        return iter((self.icon, *self.children))
+
     def size(self, context: UpdateContext, bounding_box: Rectangle | None = None):
         style = merge_styles(context.style, self._inline_style)
         min_width = style.get("min-width", 0)
         min_height = style.get("min-height", 0)
-        padding = style["padding"]
+        padding = style.get("padding", DEFAULT_PADDING)
 
         new_bounds = rectangle_shrink(bounding_box, padding)
         width, height = self.icon.size(context, new_bounds)
@@ -465,7 +479,10 @@ class IconBox:
     def draw(self, context: DrawContext, bounding_box: Rectangle):
         style = merge_styles(context.style, self._inline_style)
         new_context = replace(context, style=style)
-        self.icon.draw(new_context, rectangle_shrink(bounding_box, style["padding"]))
+        self.icon.draw(
+            new_context,
+            rectangle_shrink(bounding_box, style.get("padding", DEFAULT_PADDING)),
+        )
 
         cx, cy, max_w, total_h = self.child_pos(style, bounding_box)
         for c, (cw, ch) in zip(self.children, self.sizes):
@@ -480,6 +497,9 @@ class Text:
         self._text = text if callable(text) else lambda: text
         self._inline_style = style
         self._layout = Layout()
+
+    def __iter__(self):
+        return iter(())
 
     def text(self, style: Style | None = None):
         try:
@@ -512,7 +532,9 @@ class Text:
             text_align=text_align,
         )
         width, height = layout.size()
-        padding_top, padding_right, padding_bottom, padding_left = style["padding"]
+        padding_top, padding_right, padding_bottom, padding_left = style.get(
+            "padding", DEFAULT_PADDING
+        )
         return (
             max(min_w, width + padding_right + padding_left),
             max(min_h, height + padding_top + padding_bottom),
@@ -523,52 +545,18 @@ class Text:
         style = merge_styles(context.style, self._inline_style)
         min_w = max(style.get("min-width", 0), bounding_box.width)
         min_h = max(style.get("min-height", 0), bounding_box.height)
-        text_box = rectangle_shrink(bounding_box, style["padding"])
+        text_box = rectangle_shrink(bounding_box, style.get("padding", DEFAULT_PADDING))
 
         with cairo_state(context.cairo) as cr:
             if text_color := style.get("text-color"):
                 cr.set_source_rgba(*text_color)
+            elif color := style.get("color"):
+                cr.set_source_rgba(*color)
 
             layout = self._layout
             cr.move_to(text_box.x, text_box.y)
             layout.set(font=style)
             layout.show_layout(cr, text_box.width, default_size=(min_w, min_h))
-
-
-class StyledChildElement:
-    def __init__(self, name: str, element: Element | None):
-        self._name = name
-        self._element = element
-        self.pseudo: str | None = None
-        self.dark_mode: bool | None = None
-
-    def name(self) -> str:
-        return self._name
-
-    def parent(self) -> StyleNode | None:
-        raise NotImplementedError()
-
-    def children(self) -> Iterator[StyleNode]:
-        return iter(())
-
-    def attribute(self, name: str) -> str:
-        if not self._element:
-            return ""
-        fields = name.split(".")
-        return " ".join(map(attrstr, rgetattr(self._element, fields))).strip()
-
-    def state(self) -> Sequence[str]:
-        raise NotImplementedError()
-
-    def __hash__(self):
-        return hash((self.name, self._element))
-
-    def __eq__(self, other):
-        return (
-            isinstance(other, StyledChildElement)
-            and self._name == other._name
-            and self._element == other._element
-        )
 
 
 class CssNode:
@@ -588,20 +576,68 @@ class CssNode:
         self._child = child
         self._inline_style = style if style else {}
 
+    def __iter__(self):
+        return iter((self._child,))
+
+    def style_node(self, parent: Style | StyleNode) -> StyleNode:
+        return StyledCssNode(parent, self)
+
     def size(
         self, context: UpdateContext, bounding_box: Rectangle | None = None
     ) -> tuple[Number, Number]:
-        style = inherit_style(
-            context.style, StyledChildElement(self._name, self._element)
-        )
+        style = compute_inherited_style(context.style, self.style_node(context.style))
         new_context = replace(context, style=style)
 
         return self._child.size(new_context, bounding_box)
 
     def draw(self, context: DrawContext, bounding_box: Rectangle):
-        style = inherit_style(
-            context.style, StyledChildElement(self._name, self._element)
-        )
+        style = compute_inherited_style(context.style, self.style_node(context.style))
         new_context = replace(context, style=style)
 
         self._child.draw(new_context, bounding_box)
+
+
+class StyledCssNode:
+    def __init__(self, parent: Style | StyleNode, shape: CssNode):
+        self._parent: StyleNode | None = (
+            parent.get("-gaphor-style-node") if isinstance(parent, dict) else parent  # type: ignore[assignment]
+        )
+        self._shape = shape
+        self.pseudo: str | None = None
+        self.dark_mode = self._parent.dark_mode if self._parent else None
+
+    def name(self) -> str:
+        return self._shape._name
+
+    def parent(self) -> StyleNode | None:
+        return self._parent
+
+    def children(self) -> Iterator[StyleNode]:
+        return (node.style_node(self) for node in traverse_css_nodes(self._shape))
+
+    def attribute(self, name: str) -> str:
+        if not self._shape._element:
+            return ""
+        fields = name.split(".")
+        return " ".join(map(attrstr, rgetattr(self._shape._element, fields))).strip()
+
+    def state(self) -> Sequence[str]:
+        return ()
+
+    def __hash__(self):
+        return hash((self._parent, self._shape))
+
+    def __eq__(self, other):
+        return (
+            isinstance(other, StyledCssNode)
+            and self._parent == other._parent
+            and self._shape == other._shape
+        )
+
+
+def traverse_css_nodes(shape: Shape) -> Iterator[CssNode]:
+    for s in shape:
+        if isinstance(s, CssNode):
+            yield s
+        else:
+            yield from traverse_css_nodes(s)

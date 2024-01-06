@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="2.21.0">
+<gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="2.22.1">
 <Association id="DCE:12A2B620-4B3C-11D7-B391-02BBFE4396CE">
 <memberEnd>
 <reflist>
@@ -20335,9 +20335,9 @@
 <ref refid="DCE:8F7D73F4-464D-11D7-AA08-1B85D5275D8A"/>
 <ref refid="DCE:D33A1420-4694-11D7-B567-379CA7034986"/>
 <ref refid="DCE:18E7ADF0-4697-11D7-B567-379CA7034986"/>
+<ref refid="DCE:B7B7B610-4694-11D7-B567-379CA7034986"/>
 <ref refid="DCE:7D124DD0-4697-11D7-B567-379CA7034986"/>
 <ref refid="5d8d968e-e96c-11ea-96dc-bf74f1f80424"/>
-<ref refid="DCE:B7B7B610-4694-11D7-B567-379CA7034986"/>
 </reflist>
 </ownedAttribute>
 <package>
@@ -50069,7 +50069,7 @@ Fig. 9.9</val>
 <StyleSheet id="a89690ce-e0a8-11ea-b7ab-f5b4c130f24e">
 <styleSheet>
 <val>
-:not([subject], :is(line, box, ellipse, commentline)) {
+:not(:is(diagram, line, box, ellipse, commentline))[subject=""] {
   color: firebrick;
 }
 
@@ -56304,7 +56304,7 @@ have an opposite end.
 <val>(0.0, 0.0)</val>
 </top-left>
 <width>
-<val>208.0</val>
+<val>214.0</val>
 </width>
 <height>
 <val>74.0</val>
@@ -56611,7 +56611,7 @@ have an opposite end.
 <val>(0.0, 0.0)</val>
 </top-left>
 <width>
-<val>135.0</val>
+<val>140.0</val>
 </width>
 <height>
 <val>57.0</val>
@@ -57325,7 +57325,7 @@ have an opposite end.
 <val>(0.0, 0.0)</val>
 </top-left>
 <width>
-<val>175.0</val>
+<val>180.0</val>
 </width>
 <height>
 <val>57.0</val>

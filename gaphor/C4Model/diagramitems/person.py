@@ -1,9 +1,8 @@
 from math import pi
 
 from gaphor.C4Model import c4model
-from gaphor.core.styling import JustifyContent, TextAlign
 from gaphor.diagram.presentation import ElementPresentation, Named, text_name
-from gaphor.diagram.shapes import Box, Text, stroke
+from gaphor.diagram.shapes import Box, CssNode, Text, stroke
 from gaphor.diagram.support import represents
 
 
@@ -17,26 +16,21 @@ class C4PersonItem(Named, ElementPresentation):
 
     def update_shapes(self, event=None):
         self.shape = Box(
-            Box(
-                text_name(self),
+            text_name(self),
+            CssNode(
+                "technology",
+                self.subject,
                 Text(
                     text=lambda: f"[{self.diagram.gettext('Person')}]",
-                    style={"font-size": "x-small"},
                 ),
+            ),
+            CssNode(
+                "description",
+                self.subject,
                 Text(
                     text=lambda: self.subject.description or "",
-                    style={"padding": (4, 4, 0, 4)},
                 ),
-                style={"padding": (4, 4, 4, 4)},
             ),
-            style={
-                "text-align": TextAlign.LEFT
-                if self.diagram and self.children
-                else TextAlign.CENTER,
-                "justify-content": JustifyContent.END
-                if self.diagram and self.children
-                else JustifyContent.CENTER,
-            },
             draw=draw_person,
         )
 
