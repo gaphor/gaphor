@@ -8,27 +8,26 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2023-12-30 16:31+0100\n"
-"PO-Revision-Date: 2023-11-20 05:12+0000\n"
-"Last-Translator: albanobattistella <albano_battistella@hotmail.com>\n"
+"PO-Revision-Date: 2024-01-06 01:10+0000\n"
+"Last-Translator: Cristian Dorio <walker84837+weblate@gmail.com>\n"
+"Language-Team: Italian <https://hosted.weblate.org/projects/gaphor/gaphor/it/"
+">\n"
 "Language: it\n"
-"Language-Team: Italian "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/it/>\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.4-dev\n"
 "Generated-By: Babel 2.14.0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:23 gaphor/C4Model/toolbox.py:67
 #: gaphor/ui/greeter.py:56
-#, fuzzy
 msgid "C4 Model"
-msgstr "Nuovo modello"
+msgstr "Modello C4"
 
 #: gaphor/C4Model/propertypages.ui:11 gaphor/diagram/propertypages.ui:181
-#, fuzzy
 msgid "Description"
-msgstr "Associazione"
+msgstr "Descrizione"
 
 #: gaphor/C4Model/propertypages.ui:38 gaphor/templates/sysml.gaphor
 msgid "Technology"
@@ -36,17 +35,15 @@ msgstr "Tecnologia"
 
 #: gaphor/C4Model/toolbox.py:41
 msgid "New Software System"
-msgstr ""
+msgstr "Nuovo Sistema Software"
 
 #: gaphor/C4Model/toolbox.py:48
-#, fuzzy
 msgid "New Container"
-msgstr "Puntatore"
+msgstr "Nuovo container"
 
 #: gaphor/C4Model/toolbox.py:55
-#, fuzzy
 msgid "Database"
-msgstr "Stato"
+msgstr "Database"
 
 #: gaphor/C4Model/toolbox.py:56 gaphor/C4Model/toolbox.py:177
 msgid "New Database"
@@ -54,27 +51,24 @@ msgstr "Nuovo Database"
 
 #: gaphor/C4Model/toolbox.py:63 gaphor/C4Model/toolbox.py:167
 #: gaphor/UML/toolbox.py:67
-#, fuzzy
 msgid "New Component"
-msgstr "Componente"
+msgstr "Nuovo componente"
 
 #: gaphor/C4Model/toolbox.py:71 gaphor/C4Model/toolbox.py:77
-#, fuzzy
 msgid "Person"
-msgstr "Operazioni"
+msgstr "Persona"
 
 #: gaphor/C4Model/toolbox.py:83
 msgid "Software System"
 msgstr "Sistema Software"
 
 #: gaphor/C4Model/toolbox.py:95
-#, fuzzy
 msgid "Container"
-msgstr "Puntatore"
+msgstr "Contenitore"
 
 #: gaphor/C4Model/toolbox.py:107
 msgid "Container: Database"
-msgstr "Container: Database"
+msgstr "Contenitore: Database"
 
 #: gaphor/C4Model/toolbox.py:119 gaphor/UML/classes/classestoolbox.py:63
 msgid "Component"
@@ -87,14 +81,12 @@ msgid "Dependency"
 msgstr "Dipendenze"
 
 #: gaphor/C4Model/toolbox.py:151
-#, fuzzy
 msgid "New C4 Diagram"
-msgstr "Nuovo_Diagrama"
+msgstr "Nuovo diagramma C4"
 
 #: gaphor/C4Model/toolbox.py:152 gaphor/UML/toolbox.py:50
-#, fuzzy
 msgid "New Class Diagram"
-msgstr "Nuovo_Diagrama"
+msgstr "Nuovo diagramma classi"
 
 #: gaphor/C4Model/toolbox.py:153 gaphor/SysML/toolbox.py:129
 #: gaphor/UML/toolbox.py:54
@@ -1652,9 +1644,8 @@ msgid "Select a picture..."
 msgstr ""
 
 #: gaphor/diagram/general/generalpropertypages.py:149
-#, fuzzy
 msgid "Unable to parse picture “{filename}”."
-msgstr "Salvataggio del modello in {filename}"
+msgstr "Impossibile analizzare l'immagine “{filename}”."
 
 #: gaphor/diagram/tools/dnd.py:50
 msgid "Element can’t be represented on a diagram."
@@ -2652,9 +2643,8 @@ msgid "Loading current and incoming model"
 msgstr ""
 
 #: gaphor/ui/filemanager.py:227 gaphor/ui/filemanager.py:283
-#, fuzzy
 msgid "Unable to open model “{filename}”."
-msgstr "Salvataggio del modello in {filename}"
+msgstr "Impossibile aprire il modello in “{filename}”."
 
 #: gaphor/ui/filemanager.py:230 gaphor/ui/filemanager.py:286
 msgid "This file does not contain a valid Gaphor model."
@@ -2669,9 +2659,8 @@ msgid "Saving model to {filename}"
 msgstr "Salvataggio del modello in {filename}"
 
 #: gaphor/ui/filemanager.py:323
-#, fuzzy
 msgid "Unable to save model “{filename}”."
-msgstr "Salvataggio del modello in {filename}"
+msgstr "Impossibile salvare il modello in “{filename}”."
 
 #: gaphor/ui/filemanager.py:361 gaphor/ui/filemanager.py:396
 msgid "Save Gaphor Model As"
@@ -3078,4 +3067,3 @@ msgstr ""
 
 #~ msgid "The (spoken) language used in this model."
 #~ msgstr ""
-
