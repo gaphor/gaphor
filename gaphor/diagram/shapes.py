@@ -550,6 +550,8 @@ class Text:
         with cairo_state(context.cairo) as cr:
             if text_color := style.get("text-color"):
                 cr.set_source_rgba(*text_color)
+            elif color := style.get("color"):
+                cr.set_source_rgba(*color)
 
             layout = self._layout
             cr.move_to(text_box.x, text_box.y)
