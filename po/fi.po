@@ -7,17 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2023-12-30 16:31+0100\n"
+"POT-Creation-Date: 2024-01-06 21:08-0400\n"
 "PO-Revision-Date: 2024-01-04 10:07+0000\n"
 "Last-Translator: Jiri Grönroos <jiri.gronroos@iki.fi>\n"
-"Language-Team: Finnish <https://hosted.weblate.org/projects/gaphor/gaphor/fi/"
-">\n"
 "Language: fi\n"
+"Language-Team: Finnish "
+"<https://hosted.weblate.org/projects/gaphor/gaphor/fi/>\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.4-dev\n"
 "Generated-By: Babel 2.14.0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:23 gaphor/C4Model/toolbox.py:67
@@ -25,7 +24,8 @@ msgstr ""
 msgid "C4 Model"
 msgstr "C4-malli"
 
-#: gaphor/C4Model/propertypages.ui:11 gaphor/diagram/propertypages.ui:181
+#: gaphor/C4Model/propertypages.ui:11 gaphor/diagram/general/metadata.py:104
+#: gaphor/diagram/propertypages.ui:181
 msgid "Description"
 msgstr "Kuvaus"
 
@@ -54,7 +54,8 @@ msgstr "Uusi tietokanta"
 msgid "New Component"
 msgstr "Uusi komponentti"
 
-#: gaphor/C4Model/toolbox.py:71 gaphor/C4Model/toolbox.py:77
+#: gaphor/C4Model/diagramitems/person.py:24 gaphor/C4Model/toolbox.py:71
+#: gaphor/C4Model/toolbox.py:77
 msgid "Person"
 msgstr "Henkilö"
 
@@ -76,7 +77,7 @@ msgstr "Komponentti"
 
 #: gaphor/C4Model/toolbox.py:131 gaphor/RAAML/fta/ftatoolbox.py:16
 #: gaphor/UML/classes/classestoolbox.py:119
-#: gaphor/UML/classes/propertypages.ui:480
+#: gaphor/UML/classes/propertypages.ui:446
 msgid "Dependency"
 msgstr "Riippuvuus"
 
@@ -313,7 +314,7 @@ msgstr "Abstrakti operationaalinen tilanne"
 msgid "Generalization"
 msgstr "Yleistys"
 
-#: gaphor/RAAML/stpa/stpatoolbox.py:61 gaphor/SysML/blocks/block.py:60
+#: gaphor/RAAML/stpa/stpatoolbox.py:61 gaphor/SysML/blocks/block.py:59
 #: gaphor/SysML/blocks/interfaceblock.py:59
 msgid "Situation"
 msgstr "Tilanne"
@@ -390,17 +391,17 @@ msgid "Aggregation"
 msgstr "Yhdistäminen"
 
 #: gaphor/SysML/propertypages.ui:216 gaphor/UML/classes/propertypages.ui:116
-#: gaphor/UML/classes/propertypages.ui:251
+#: gaphor/UML/classes/propertypages.ui:234
 msgid "No aggregation"
 msgstr "Ei yhdistämistä"
 
 #: gaphor/SysML/propertypages.ui:217 gaphor/UML/classes/propertypages.ui:117
-#: gaphor/UML/classes/propertypages.ui:252
+#: gaphor/UML/classes/propertypages.ui:235
 msgid "Shared"
 msgstr "Jaettu"
 
 #: gaphor/SysML/propertypages.ui:218 gaphor/UML/classes/propertypages.ui:118
-#: gaphor/UML/classes/propertypages.ui:253
+#: gaphor/UML/classes/propertypages.ui:236
 msgid "Composite"
 msgstr "Komposiitti"
 
@@ -499,34 +500,34 @@ msgstr "Allokoitu tyyppi"
 msgid "allocate"
 msgstr "Allokoitu tyyppi"
 
-#: gaphor/SysML/blocks/block.py:62 gaphor/SysML/blocks/interfaceblock.py:61
+#: gaphor/SysML/blocks/block.py:61 gaphor/SysML/blocks/interfaceblock.py:61
 msgid "ControlStructure"
 msgstr "KontrolliRakenne"
 
-#: gaphor/SysML/blocks/block.py:64
+#: gaphor/SysML/blocks/block.py:63
 msgid "block"
 msgstr "lohko"
 
-#: gaphor/SysML/blocks/block.py:98
+#: gaphor/SysML/blocks/block.py:89
 msgid "parts"
 msgstr "osat"
 
-#: gaphor/SysML/blocks/block.py:111 gaphor/SysML/blocks/interfaceblock.py:97
+#: gaphor/SysML/blocks/block.py:103 gaphor/SysML/blocks/interfaceblock.py:89
 msgid "references"
 msgstr "viittaukset"
 
-#: gaphor/SysML/blocks/block.py:122 gaphor/SysML/blocks/interfaceblock.py:108
+#: gaphor/SysML/blocks/block.py:115 gaphor/SysML/blocks/interfaceblock.py:101
 msgid "values"
 msgstr "arvot"
 
-#: gaphor/SysML/blocks/block.py:140 gaphor/SysML/blocks/interfaceblock.py:126
+#: gaphor/SysML/blocks/block.py:134 gaphor/SysML/blocks/interfaceblock.py:120
 #, fuzzy
 msgid "operations"
 msgstr "Operaatiot"
 
-#: gaphor/SysML/blocks/block.py:155 gaphor/SysML/blocks/block.py:187
-#: gaphor/SysML/blocks/interfaceblock.py:141
-#: gaphor/SysML/blocks/interfaceblock.py:167
+#: gaphor/SysML/blocks/block.py:149 gaphor/SysML/blocks/block.py:168
+#: gaphor/SysML/blocks/interfaceblock.py:135
+#: gaphor/SysML/blocks/interfaceblock.py:158
 msgid "unnamed"
 msgstr "nimetön"
 
@@ -613,7 +614,7 @@ msgstr "vahvista"
 msgid "refine"
 msgstr "tarkenna"
 
-#: gaphor/SysML/requirements/requirement.py:57
+#: gaphor/SysML/requirements/requirement.py:56
 msgid "requirement"
 msgstr "vaatimus"
 
@@ -655,7 +656,7 @@ msgstr "Eristäminen"
 msgid "UML"
 msgstr "UML"
 
-#: gaphor/UML/actions/propertypages.ui:372 gaphor/UML/propertypages.ui:9
+#: gaphor/UML/actions/propertypages.ui:411 gaphor/UML/propertypages.ui:9
 msgid "Type"
 msgstr "Tyyppi"
 
@@ -854,7 +855,7 @@ msgstr "yhdistäminen"
 msgid "decision"
 msgstr "päätös"
 
-#: gaphor/UML/actions/activitypropertypage.py:134
+#: gaphor/UML/actions/activitypropertypage.py:137
 msgid "New Parameter…"
 msgstr "Uusi parametri…"
 
@@ -873,6 +874,16 @@ msgstr ""
 #: gaphor/UML/actions/objectnode.py:17
 msgid "FIFO"
 msgstr ""
+
+#: gaphor/UML/actions/objectnode.py:47
+#, fuzzy
+msgid "upperBound"
+msgstr "Yläraja"
+
+#: gaphor/UML/actions/objectnode.py:53
+#, fuzzy
+msgid "ordering"
+msgstr "Näytä järjestys"
 
 #: gaphor/UML/actions/partitionpage.py:114
 msgid "New Swimlane"
@@ -932,9 +943,6 @@ msgid "Behavior"
 msgstr "Toiminta"
 
 #: gaphor/UML/actions/propertypages.ui:252
-#: gaphor/UML/classes/propertypages.ui:155
-#: gaphor/UML/classes/propertypages.ui:290
-#: gaphor/UML/profiles/propertypages.ui:87
 msgid "Value"
 msgstr "Arvo"
 
@@ -948,16 +956,16 @@ msgstr "Vartija"
 msgid "Parameter Nodes"
 msgstr ""
 
-#: gaphor/UML/actions/propertypages.ui:331
+#: gaphor/UML/actions/propertypages.ui:332
 #: gaphor/UML/classes/propertypages.ui:67
-#: gaphor/UML/classes/propertypages.ui:202
-#: gaphor/UML/classes/propertypages.ui:382
-#: gaphor/UML/classes/propertypages.ui:589
-#: gaphor/UML/classes/propertypages.ui:687
+#: gaphor/UML/classes/propertypages.ui:185
+#: gaphor/UML/classes/propertypages.ui:348
+#: gaphor/UML/classes/propertypages.ui:556
+#: gaphor/UML/classes/propertypages.ui:655
 msgid "ⓘ Help"
 msgstr "ⓘ Ohje"
 
-#: gaphor/UML/actions/propertypages.ui:347
+#: gaphor/UML/actions/propertypages.ui:348
 msgid ""
 "Add and edit class activity according to UML syntax.\n"
 "\n"
@@ -972,15 +980,40 @@ msgid ""
 "Use <b>-</b>/<b>=</b> to move items up or down."
 msgstr ""
 
-#: gaphor/UML/actions/propertypages.ui:389
+#: gaphor/UML/actions/propertypages.ui:376
+#, fuzzy
+msgid "In/Out"
+msgstr "EI"
+
+#: gaphor/UML/actions/propertypages.ui:377
+#, fuzzy
+msgid "In"
+msgstr "Viiva"
+
+#: gaphor/UML/actions/propertypages.ui:378
+#, fuzzy
+msgid "Out"
+msgstr "EI"
+
+#: gaphor/UML/actions/propertypages.ui:379
+#, fuzzy
+msgid "Return"
+msgstr "Ominaisuus"
+
+#: gaphor/UML/actions/propertypages.ui:390
+#: gaphor/UML/classes/propertypages.ui:11
+msgid "Show Direction"
+msgstr "Näytä suunta"
+
+#: gaphor/UML/actions/propertypages.ui:428
 msgid "Multiplicity"
 msgstr ""
 
-#: gaphor/UML/classes/classespropertypages.py:233
+#: gaphor/UML/classes/classespropertypages.py:235
 msgid "New Attribute…"
 msgstr "Uusi attribuutti…"
 
-#: gaphor/UML/classes/classespropertypages.py:390
+#: gaphor/UML/classes/classespropertypages.py:393
 msgid "New Operation…"
 msgstr "Uusi operaatio…"
 
@@ -1005,15 +1038,15 @@ msgstr "Rajapinnan realisaatio"
 msgid "DataType"
 msgstr "DataTyyppi"
 
-#: gaphor/UML/classes/datatype.py:57
+#: gaphor/UML/classes/datatype.py:58
 msgid "primitive"
 msgstr "primitiivi"
 
-#: gaphor/UML/classes/datatype.py:59 gaphor/UML/classes/enumeration.py:70
+#: gaphor/UML/classes/datatype.py:60 gaphor/UML/classes/enumeration.py:71
 msgid "valueType"
 msgstr "arvoTyyppi"
 
-#: gaphor/UML/classes/datatype.py:61
+#: gaphor/UML/classes/datatype.py:62
 msgid "dataType"
 msgstr "dataTyyppi"
 
@@ -1029,40 +1062,36 @@ msgstr "realisoi"
 msgid "implements"
 msgstr "implementoi"
 
-#: gaphor/UML/classes/enumeration.py:72
+#: gaphor/UML/classes/enumeration.py:73
 msgid "enumeration"
 msgstr "enumeraatio"
 
-#: gaphor/UML/classes/enumerationpropertypages.py:124
+#: gaphor/UML/classes/enumerationpropertypages.py:126
 msgid "New Enumeration…"
 msgstr "Uusi enumeraatio…"
 
-#: gaphor/UML/classes/interface.py:283
+#: gaphor/UML/classes/interface.py:284
 msgid "interface"
 msgstr "rajapinta"
 
-#: gaphor/UML/classes/klass.py:58
+#: gaphor/UML/classes/klass.py:54
 msgid "stereotype"
 msgstr "stereotyyppi"
 
-#: gaphor/UML/classes/klass.py:60
+#: gaphor/UML/classes/klass.py:56
 msgid "metaclass"
 msgstr "metaluokka"
 
-#: gaphor/UML/classes/package.py:28
+#: gaphor/UML/classes/package.py:32
 msgid "profile"
 msgstr "profiili"
-
-#: gaphor/UML/classes/propertypages.ui:11
-msgid "Show Direction"
-msgstr "Näytä suunta"
 
 #: gaphor/UML/classes/propertypages.ui:49
 msgid "Head:"
 msgstr "Pää:"
 
 #: gaphor/UML/classes/propertypages.ui:83
-#: gaphor/UML/classes/propertypages.ui:218
+#: gaphor/UML/classes/propertypages.ui:201
 msgid ""
 "Add and edit association ends according to UML syntax.\n"
 "\n"
@@ -1078,42 +1107,53 @@ msgid ""
 msgstr ""
 
 #: gaphor/UML/classes/propertypages.ui:102
-#: gaphor/UML/classes/propertypages.ui:237
+#: gaphor/UML/classes/propertypages.ui:220
 msgid "Unknown navigation"
 msgstr "Tuntematon navigaatio"
 
 #: gaphor/UML/classes/propertypages.ui:103
-#: gaphor/UML/classes/propertypages.ui:238
+#: gaphor/UML/classes/propertypages.ui:221
 msgid "Not navigable"
 msgstr "Ei navigoitavissa"
 
 #: gaphor/UML/classes/propertypages.ui:104
-#: gaphor/UML/classes/propertypages.ui:239
+#: gaphor/UML/classes/propertypages.ui:222
 msgid "Navigable"
 msgstr "Navigoitavissa"
 
-#: gaphor/UML/classes/propertypages.ui:135
-#: gaphor/UML/classes/propertypages.ui:270
-#: gaphor/UML/classes/propertypages.ui:324
-#: gaphor/UML/classes/propertypages.ui:361
-#: gaphor/UML/profiles/propertypages.ui:67
-msgid "Attributes"
-msgstr "Attribuutit"
+#: gaphor/UML/classes/propertypages.ui:136
+#: gaphor/UML/classes/propertypages.ui:254
+#: gaphor/UML/profiles/propertypages.ui:33
+#: gaphor/UML/profiles/propertypages.ui:69
+msgid "Stereotypes"
+msgstr "Stereotyypit"
 
-#: gaphor/UML/classes/propertypages.ui:184
+#: gaphor/UML/classes/propertypages.ui:141
+#: gaphor/UML/classes/propertypages.ui:259
+#: gaphor/UML/profiles/propertypages.ui:74
+#, fuzzy
+msgid "Values"
+msgstr "arvot"
+
+#: gaphor/UML/classes/propertypages.ui:167
 msgid "Tail:"
 msgstr "Häntä:"
 
-#: gaphor/UML/classes/propertypages.ui:337
+#: gaphor/UML/classes/propertypages.ui:289
+#: gaphor/UML/classes/propertypages.ui:326
+msgid "Attributes"
+msgstr "Attribuutit"
+
+#: gaphor/UML/classes/propertypages.ui:302
 msgid "Show Attributes"
 msgstr "Näytä attribuutit"
 
-#: gaphor/UML/classes/propertypages.ui:367
-#: gaphor/UML/classes/propertypages.ui:573
+#: gaphor/UML/classes/propertypages.ui:332
+#: gaphor/UML/classes/propertypages.ui:539
 msgid "Static"
 msgstr "Staattinen"
 
-#: gaphor/UML/classes/propertypages.ui:399
+#: gaphor/UML/classes/propertypages.ui:365
 msgid ""
 "Add and edit class attributes according to UML syntax.\n"
 "\n"
@@ -1128,45 +1168,45 @@ msgid ""
 "Use <b>-</b>/<b>=</b> to move items up or down."
 msgstr ""
 
-#: gaphor/UML/classes/propertypages.ui:429
-#: gaphor/UML/classes/propertypages.ui:568
+#: gaphor/UML/classes/propertypages.ui:395
+#: gaphor/UML/classes/propertypages.ui:534
 msgid "Abstract"
 msgstr "Abstrakti"
 
-#: gaphor/UML/classes/propertypages.ui:451
+#: gaphor/UML/classes/propertypages.ui:417
 msgid "Dependency type"
 msgstr "Riippuvuuden tyyppi"
 
-#: gaphor/UML/classes/propertypages.ui:462
+#: gaphor/UML/classes/propertypages.ui:428
 msgid "Automatic"
 msgstr "Automaattinen"
 
-#: gaphor/UML/classes/propertypages.ui:481
+#: gaphor/UML/classes/propertypages.ui:447
 msgid "Usage"
 msgstr "Käyttö"
 
-#: gaphor/UML/classes/propertypages.ui:482
+#: gaphor/UML/classes/propertypages.ui:448
 msgid "Realization"
 msgstr "Realisaatio"
 
-#: gaphor/UML/classes/propertypages.ui:483
+#: gaphor/UML/classes/propertypages.ui:449
 msgid "Implementation"
 msgstr "Implementaatio"
 
-#: gaphor/UML/classes/propertypages.ui:502
+#: gaphor/UML/classes/propertypages.ui:468
 msgid "Folded"
 msgstr "Taitettu"
 
-#: gaphor/UML/classes/propertypages.ui:525
-#: gaphor/UML/classes/propertypages.ui:562
+#: gaphor/UML/classes/propertypages.ui:491
+#: gaphor/UML/classes/propertypages.ui:528
 msgid "Operations"
 msgstr "Operaatiot"
 
-#: gaphor/UML/classes/propertypages.ui:538
+#: gaphor/UML/classes/propertypages.ui:504
 msgid "Show Operations"
 msgstr "Näytä operaatiot"
 
-#: gaphor/UML/classes/propertypages.ui:603
+#: gaphor/UML/classes/propertypages.ui:570
 msgid ""
 "Add and edit class operations according to UML syntax.\n"
 "\n"
@@ -1179,16 +1219,16 @@ msgid ""
 "Use <b>-</b>/<b>=</b> to move items up or down."
 msgstr ""
 
-#: gaphor/UML/classes/propertypages.ui:632
-#: gaphor/UML/classes/propertypages.ui:670
+#: gaphor/UML/classes/propertypages.ui:599
+#: gaphor/UML/classes/propertypages.ui:637
 msgid "Enumeration Literals"
 msgstr "Enumeraation literaalit"
 
-#: gaphor/UML/classes/propertypages.ui:645
+#: gaphor/UML/classes/propertypages.ui:612
 msgid "Show Enumeration Literals"
 msgstr "Näytä enumeraation literaalit"
 
-#: gaphor/UML/classes/propertypages.ui:699
+#: gaphor/UML/classes/propertypages.ui:667
 msgid ""
 "Add and edit enumeration literals according to UML syntax.\n"
 "\n"
@@ -1199,7 +1239,7 @@ msgid ""
 "Use <b>-</b>/<b>=</b> to move items up or down."
 msgstr ""
 
-#: gaphor/UML/classes/propertypages.ui:730
+#: gaphor/UML/classes/propertypages.ui:698
 msgid "Indirectly Instantiated"
 msgstr "Epäsuorasti luotu ilmentymä"
 
@@ -1219,7 +1259,7 @@ msgstr "Solmu"
 msgid "Device"
 msgstr "Laite"
 
-#: gaphor/UML/deployments/node.py:55
+#: gaphor/UML/deployments/node.py:54
 msgid "device"
 msgstr "laite"
 
@@ -1318,13 +1358,14 @@ msgstr "Laajennus"
 msgid "Import"
 msgstr "Tuonti"
 
-#: gaphor/UML/profiles/propertypages.ui:33
-msgid "Stereotypes"
-msgstr "Stereotyypit"
-
 #: gaphor/UML/profiles/propertypages.ui:46
 msgid "Show Stereotypes"
 msgstr "Näytä stereotyypit"
+
+#: gaphor/UML/profiles/stereotypepropertypages.py:139
+#, fuzzy
+msgid "New Slot Value…"
+msgstr "Uusi arvotyyppi"
 
 #: gaphor/UML/states/propertypages.ui:9
 msgid "Activities"
@@ -1496,7 +1537,7 @@ msgstr "Kaavion metatieto"
 msgid "Picture"
 msgstr "Kuva"
 
-#: gaphor/diagram/presentation.py:51
+#: gaphor/diagram/presentation.py:62
 msgid "(from {namespace})"
 msgstr ""
 
@@ -1517,27 +1558,27 @@ msgstr "Käännä suunta"
 msgid "Note"
 msgstr "EI"
 
-#: gaphor/diagram/propertypages.ui:167
+#: gaphor/diagram/general/metadata.py:62 gaphor/diagram/propertypages.ui:167
 msgid "Created By"
 msgstr "Luonut"
 
-#: gaphor/diagram/propertypages.ui:195
+#: gaphor/diagram/general/metadata.py:79 gaphor/diagram/propertypages.ui:195
 msgid "Website"
 msgstr "Verkkosivusto"
 
-#: gaphor/diagram/propertypages.ui:209
+#: gaphor/diagram/general/metadata.py:125 gaphor/diagram/propertypages.ui:209
 msgid "Revision"
 msgstr "Versio"
 
-#: gaphor/diagram/propertypages.ui:223
+#: gaphor/diagram/general/metadata.py:142 gaphor/diagram/propertypages.ui:223
 msgid "License"
 msgstr "Lisenssi"
 
-#: gaphor/diagram/propertypages.ui:237
+#: gaphor/diagram/general/metadata.py:160 gaphor/diagram/propertypages.ui:237
 msgid "Created On"
 msgstr "Luotu"
 
-#: gaphor/diagram/propertypages.ui:251
+#: gaphor/diagram/general/metadata.py:178 gaphor/diagram/propertypages.ui:251
 msgid "Updated On"
 msgstr "Päivitetty"
 
@@ -1631,46 +1672,46 @@ msgstr "Konsoli"
 msgid "Gaphor Console"
 msgstr "Gaphorin konsoli"
 
-#: gaphor/plugins/diagramexport/__init__.py:50
+#: gaphor/plugins/diagramexport/__init__.py:49
 msgid "All {ext} Files"
 msgstr "Kaikki {ext}-tiedostot"
 
-#: gaphor/plugins/diagramexport/__init__.py:56
+#: gaphor/plugins/diagramexport/__init__.py:55
 msgid "Export as SVG"
 msgstr "Vie SVG-kuvaksi"
 
-#: gaphor/plugins/diagramexport/__init__.py:57
-#: gaphor/plugins/diagramexport/__init__.py:62
+#: gaphor/plugins/diagramexport/__init__.py:56
+#: gaphor/plugins/diagramexport/__init__.py:61
 msgid "Export diagram as SVG"
 msgstr "Vie kaavio SVG-muotoon"
 
-#: gaphor/plugins/diagramexport/__init__.py:67
+#: gaphor/plugins/diagramexport/__init__.py:66
 msgid "Export as PNG"
 msgstr "Vie PNG-kuvaksi"
 
-#: gaphor/plugins/diagramexport/__init__.py:68
-#: gaphor/plugins/diagramexport/__init__.py:73
+#: gaphor/plugins/diagramexport/__init__.py:67
+#: gaphor/plugins/diagramexport/__init__.py:72
 msgid "Export diagram as PNG"
 msgstr "Vie kaavio PNG-muotoon"
 
-#: gaphor/plugins/diagramexport/__init__.py:78
+#: gaphor/plugins/diagramexport/__init__.py:77
 msgid "Export as PDF"
 msgstr "Vie PDF-tiedostoksi"
 
-#: gaphor/plugins/diagramexport/__init__.py:79
-#: gaphor/plugins/diagramexport/__init__.py:85
+#: gaphor/plugins/diagramexport/__init__.py:78
+#: gaphor/plugins/diagramexport/__init__.py:84
 msgid "Export diagram as PDF"
 msgstr "Vie kaavio PDF-muotoon"
 
-#: gaphor/plugins/diagramexport/__init__.py:93
+#: gaphor/plugins/diagramexport/__init__.py:92
 msgid "Export as EPS"
 msgstr "Vie EPS-muotoon"
 
-#: gaphor/plugins/diagramexport/__init__.py:94
+#: gaphor/plugins/diagramexport/__init__.py:93
 msgid "Export diagram as Encapsulated PostScript"
 msgstr "Vie kaavio Encapsulated PostScript -muodossa"
 
-#: gaphor/plugins/diagramexport/__init__.py:100
+#: gaphor/plugins/diagramexport/__init__.py:99
 msgid "Export diagram as EPS"
 msgstr "Vie kaavio EPS-muotoon"
 
@@ -1722,7 +1763,8 @@ msgid "All XMI Files"
 msgstr "Kaikki XMI-tiedostot"
 
 #: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:62
-#: gaphor/ui/mainwindow.py:255 gaphor/ui/mainwindow.ui:46
+#: gaphor/ui/mainwindow.py:255 gaphor/ui/mainwindow.py:260
+#: gaphor/ui/mainwindow.ui:46
 msgid "New model"
 msgstr "Uusi malli"
 
@@ -2506,6 +2548,10 @@ msgstr "Kuvat"
 msgid "All Files"
 msgstr "Kaikki tiedostot"
 
+#: gaphor/ui/filedialog.py:112
+msgid "Flatpak Document Portal"
+msgstr ""
+
 #: gaphor/ui/filemanager.py:41
 msgid ""
 "Gaphor was not able to store the model, probably due to an internal "
@@ -2758,7 +2804,7 @@ msgstr "Uusi yleinen kaavio"
 msgid "<Relationships>"
 msgstr "<Suhteet>"
 
-#: gaphor/ui/help/__init__.py:82
+#: gaphor/ui/help/__init__.py:79
 msgid "Restart Gaphor to enable language changes"
 msgstr "Käynnistä Gaphor uudelleen, jotta kielimuutokset tulevat voimaan"
 
@@ -2962,3 +3008,4 @@ msgstr "Päivitä relaatio “{name}”"
 
 #~ msgid "Note or Remark"
 #~ msgstr "Huomautus tai muistutus"
+

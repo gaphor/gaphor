@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2023-12-30 16:31+0100\n"
+"POT-Creation-Date: 2024-01-06 21:08-0400\n"
 "PO-Revision-Date: 2023-12-16 22:28+0000\n"
 "Last-Translator: Dan Yeaw <dan@yeaw.me>\n"
 "Language: zh_Hans\n"
@@ -24,7 +24,8 @@ msgstr ""
 msgid "C4 Model"
 msgstr "C4 模型"
 
-#: gaphor/C4Model/propertypages.ui:11 gaphor/diagram/propertypages.ui:181
+#: gaphor/C4Model/propertypages.ui:11 gaphor/diagram/general/metadata.py:104
+#: gaphor/diagram/propertypages.ui:181
 msgid "Description"
 msgstr "描述"
 
@@ -53,7 +54,8 @@ msgstr "创建新数据库"
 msgid "New Component"
 msgstr "新建组件"
 
-#: gaphor/C4Model/toolbox.py:71 gaphor/C4Model/toolbox.py:77
+#: gaphor/C4Model/diagramitems/person.py:24 gaphor/C4Model/toolbox.py:71
+#: gaphor/C4Model/toolbox.py:77
 msgid "Person"
 msgstr "参与人"
 
@@ -75,7 +77,7 @@ msgstr "组件"
 
 #: gaphor/C4Model/toolbox.py:131 gaphor/RAAML/fta/ftatoolbox.py:16
 #: gaphor/UML/classes/classestoolbox.py:119
-#: gaphor/UML/classes/propertypages.ui:480
+#: gaphor/UML/classes/propertypages.ui:446
 msgid "Dependency"
 msgstr "依赖"
 
@@ -322,7 +324,7 @@ msgstr "抽象场景态势"
 msgid "Generalization"
 msgstr "泛化"
 
-#: gaphor/RAAML/stpa/stpatoolbox.py:61 gaphor/SysML/blocks/block.py:60
+#: gaphor/RAAML/stpa/stpatoolbox.py:61 gaphor/SysML/blocks/block.py:59
 #: gaphor/SysML/blocks/interfaceblock.py:59
 msgid "Situation"
 msgstr "情况"
@@ -397,17 +399,17 @@ msgid "Aggregation"
 msgstr "聚合"
 
 #: gaphor/SysML/propertypages.ui:216 gaphor/UML/classes/propertypages.ui:116
-#: gaphor/UML/classes/propertypages.ui:251
+#: gaphor/UML/classes/propertypages.ui:234
 msgid "No aggregation"
 msgstr "无聚合"
 
 #: gaphor/SysML/propertypages.ui:217 gaphor/UML/classes/propertypages.ui:117
-#: gaphor/UML/classes/propertypages.ui:252
+#: gaphor/UML/classes/propertypages.ui:235
 msgid "Shared"
 msgstr "共享"
 
 #: gaphor/SysML/propertypages.ui:218 gaphor/UML/classes/propertypages.ui:118
-#: gaphor/UML/classes/propertypages.ui:253
+#: gaphor/UML/classes/propertypages.ui:236
 msgid "Composite"
 msgstr "混合"
 
@@ -512,33 +514,33 @@ msgstr "分配类型"
 msgid "allocate"
 msgstr "分配类型"
 
-#: gaphor/SysML/blocks/block.py:62 gaphor/SysML/blocks/interfaceblock.py:61
+#: gaphor/SysML/blocks/block.py:61 gaphor/SysML/blocks/interfaceblock.py:61
 msgid "ControlStructure"
 msgstr "控制结构"
 
-#: gaphor/SysML/blocks/block.py:64
+#: gaphor/SysML/blocks/block.py:63
 msgid "block"
 msgstr "块"
 
-#: gaphor/SysML/blocks/block.py:98
+#: gaphor/SysML/blocks/block.py:89
 msgid "parts"
 msgstr "部件"
 
-#: gaphor/SysML/blocks/block.py:111 gaphor/SysML/blocks/interfaceblock.py:97
+#: gaphor/SysML/blocks/block.py:103 gaphor/SysML/blocks/interfaceblock.py:89
 msgid "references"
 msgstr "参考文献"
 
-#: gaphor/SysML/blocks/block.py:122 gaphor/SysML/blocks/interfaceblock.py:108
+#: gaphor/SysML/blocks/block.py:115 gaphor/SysML/blocks/interfaceblock.py:101
 msgid "values"
 msgstr "值"
 
-#: gaphor/SysML/blocks/block.py:140 gaphor/SysML/blocks/interfaceblock.py:126
+#: gaphor/SysML/blocks/block.py:134 gaphor/SysML/blocks/interfaceblock.py:120
 msgid "operations"
 msgstr "操作"
 
-#: gaphor/SysML/blocks/block.py:155 gaphor/SysML/blocks/block.py:187
-#: gaphor/SysML/blocks/interfaceblock.py:141
-#: gaphor/SysML/blocks/interfaceblock.py:167
+#: gaphor/SysML/blocks/block.py:149 gaphor/SysML/blocks/block.py:168
+#: gaphor/SysML/blocks/interfaceblock.py:135
+#: gaphor/SysML/blocks/interfaceblock.py:158
 msgid "unnamed"
 msgstr "未命名"
 
@@ -625,7 +627,7 @@ msgstr "验证"
 msgid "refine"
 msgstr "提炼"
 
-#: gaphor/SysML/requirements/requirement.py:57
+#: gaphor/SysML/requirements/requirement.py:56
 msgid "requirement"
 msgstr "需求"
 
@@ -667,7 +669,7 @@ msgstr "遏制"
 msgid "UML"
 msgstr "UML"
 
-#: gaphor/UML/actions/propertypages.ui:372 gaphor/UML/propertypages.ui:9
+#: gaphor/UML/actions/propertypages.ui:411 gaphor/UML/propertypages.ui:9
 msgid "Type"
 msgstr "样式"
 
@@ -870,7 +872,7 @@ msgstr "合并"
 msgid "decision"
 msgstr "决定"
 
-#: gaphor/UML/actions/activitypropertypage.py:134
+#: gaphor/UML/actions/activitypropertypage.py:137
 #, fuzzy
 msgid "New Parameter…"
 msgstr "新建包"
@@ -890,6 +892,16 @@ msgstr "LIFO（后进先出）"
 #: gaphor/UML/actions/objectnode.py:17
 msgid "FIFO"
 msgstr "FIFO（先进先出）"
+
+#: gaphor/UML/actions/objectnode.py:47
+#, fuzzy
+msgid "upperBound"
+msgstr "上限"
+
+#: gaphor/UML/actions/objectnode.py:53
+#, fuzzy
+msgid "ordering"
+msgstr "显示顺序"
 
 #: gaphor/UML/actions/partitionpage.py:114
 msgid "New Swimlane"
@@ -949,9 +961,6 @@ msgid "Behavior"
 msgstr "行为"
 
 #: gaphor/UML/actions/propertypages.ui:252
-#: gaphor/UML/classes/propertypages.ui:155
-#: gaphor/UML/classes/propertypages.ui:290
-#: gaphor/UML/profiles/propertypages.ui:87
 msgid "Value"
 msgstr "值"
 
@@ -965,16 +974,16 @@ msgstr "保护"
 msgid "Parameter Nodes"
 msgstr "参数节点"
 
-#: gaphor/UML/actions/propertypages.ui:331
+#: gaphor/UML/actions/propertypages.ui:332
 #: gaphor/UML/classes/propertypages.ui:67
-#: gaphor/UML/classes/propertypages.ui:202
-#: gaphor/UML/classes/propertypages.ui:382
-#: gaphor/UML/classes/propertypages.ui:589
-#: gaphor/UML/classes/propertypages.ui:687
+#: gaphor/UML/classes/propertypages.ui:185
+#: gaphor/UML/classes/propertypages.ui:348
+#: gaphor/UML/classes/propertypages.ui:556
+#: gaphor/UML/classes/propertypages.ui:655
 msgid "ⓘ Help"
 msgstr "ⓘ 帮助"
 
-#: gaphor/UML/actions/propertypages.ui:347
+#: gaphor/UML/actions/propertypages.ui:348
 msgid ""
 "Add and edit class activity according to UML syntax.\n"
 "\n"
@@ -999,16 +1008,41 @@ msgstr ""
 "按 <b>Enter</b> 进行编辑，按 <b>Backspace</b>/<b>Delete</b>以删除项目。\n"
 "使用 <b>-</b>/<b>=</b> 向上或向下移动项目。"
 
-#: gaphor/UML/actions/propertypages.ui:389
+#: gaphor/UML/actions/propertypages.ui:376
+#, fuzzy
+msgid "In/Out"
+msgstr "非"
+
+#: gaphor/UML/actions/propertypages.ui:377
+#, fuzzy
+msgid "In"
+msgstr "线"
+
+#: gaphor/UML/actions/propertypages.ui:378
+#, fuzzy
+msgid "Out"
+msgstr "非"
+
+#: gaphor/UML/actions/propertypages.ui:379
+#, fuzzy
+msgid "Return"
+msgstr "特征"
+
+#: gaphor/UML/actions/propertypages.ui:390
+#: gaphor/UML/classes/propertypages.ui:11
+msgid "Show Direction"
+msgstr "显示方向"
+
+#: gaphor/UML/actions/propertypages.ui:428
 msgid "Multiplicity"
 msgstr ""
 
-#: gaphor/UML/classes/classespropertypages.py:233
+#: gaphor/UML/classes/classespropertypages.py:235
 #, fuzzy
 msgid "New Attribute…"
 msgstr "显示属性"
 
-#: gaphor/UML/classes/classespropertypages.py:390
+#: gaphor/UML/classes/classespropertypages.py:393
 #, fuzzy
 msgid "New Operation…"
 msgstr "显示操作"
@@ -1034,15 +1068,15 @@ msgstr "接口实现"
 msgid "DataType"
 msgstr "数据类型"
 
-#: gaphor/UML/classes/datatype.py:57
+#: gaphor/UML/classes/datatype.py:58
 msgid "primitive"
 msgstr "原始"
 
-#: gaphor/UML/classes/datatype.py:59 gaphor/UML/classes/enumeration.py:70
+#: gaphor/UML/classes/datatype.py:60 gaphor/UML/classes/enumeration.py:71
 msgid "valueType"
 msgstr "值类型"
 
-#: gaphor/UML/classes/datatype.py:61
+#: gaphor/UML/classes/datatype.py:62
 msgid "dataType"
 msgstr "数据类型"
 
@@ -1058,41 +1092,37 @@ msgstr "实现"
 msgid "implements"
 msgstr "实现"
 
-#: gaphor/UML/classes/enumeration.py:72
+#: gaphor/UML/classes/enumeration.py:73
 msgid "enumeration"
 msgstr "枚举"
 
-#: gaphor/UML/classes/enumerationpropertypages.py:124
+#: gaphor/UML/classes/enumerationpropertypages.py:126
 #, fuzzy
 msgid "New Enumeration…"
 msgstr "枚举"
 
-#: gaphor/UML/classes/interface.py:283
+#: gaphor/UML/classes/interface.py:284
 msgid "interface"
 msgstr "接口"
 
-#: gaphor/UML/classes/klass.py:58
+#: gaphor/UML/classes/klass.py:54
 msgid "stereotype"
 msgstr "立体型"
 
-#: gaphor/UML/classes/klass.py:60
+#: gaphor/UML/classes/klass.py:56
 msgid "metaclass"
 msgstr "元类"
 
-#: gaphor/UML/classes/package.py:28
+#: gaphor/UML/classes/package.py:32
 msgid "profile"
 msgstr "配置"
-
-#: gaphor/UML/classes/propertypages.ui:11
-msgid "Show Direction"
-msgstr "显示方向"
 
 #: gaphor/UML/classes/propertypages.ui:49
 msgid "Head:"
 msgstr "头:"
 
 #: gaphor/UML/classes/propertypages.ui:83
-#: gaphor/UML/classes/propertypages.ui:218
+#: gaphor/UML/classes/propertypages.ui:201
 msgid ""
 "Add and edit association ends according to UML syntax.\n"
 "\n"
@@ -1118,42 +1148,53 @@ msgstr ""
 "使用 <b>-</b>/<b>=</b> 向上或向下移动项目。"
 
 #: gaphor/UML/classes/propertypages.ui:102
-#: gaphor/UML/classes/propertypages.ui:237
+#: gaphor/UML/classes/propertypages.ui:220
 msgid "Unknown navigation"
 msgstr "未知导航"
 
 #: gaphor/UML/classes/propertypages.ui:103
-#: gaphor/UML/classes/propertypages.ui:238
+#: gaphor/UML/classes/propertypages.ui:221
 msgid "Not navigable"
 msgstr "不可导航"
 
 #: gaphor/UML/classes/propertypages.ui:104
-#: gaphor/UML/classes/propertypages.ui:239
+#: gaphor/UML/classes/propertypages.ui:222
 msgid "Navigable"
 msgstr "可导航"
 
-#: gaphor/UML/classes/propertypages.ui:135
-#: gaphor/UML/classes/propertypages.ui:270
-#: gaphor/UML/classes/propertypages.ui:324
-#: gaphor/UML/classes/propertypages.ui:361
-#: gaphor/UML/profiles/propertypages.ui:67
-msgid "Attributes"
-msgstr "属性"
+#: gaphor/UML/classes/propertypages.ui:136
+#: gaphor/UML/classes/propertypages.ui:254
+#: gaphor/UML/profiles/propertypages.ui:33
+#: gaphor/UML/profiles/propertypages.ui:69
+msgid "Stereotypes"
+msgstr "立体型"
 
-#: gaphor/UML/classes/propertypages.ui:184
+#: gaphor/UML/classes/propertypages.ui:141
+#: gaphor/UML/classes/propertypages.ui:259
+#: gaphor/UML/profiles/propertypages.ui:74
+#, fuzzy
+msgid "Values"
+msgstr "值"
+
+#: gaphor/UML/classes/propertypages.ui:167
 msgid "Tail:"
 msgstr "尾:"
 
-#: gaphor/UML/classes/propertypages.ui:337
+#: gaphor/UML/classes/propertypages.ui:289
+#: gaphor/UML/classes/propertypages.ui:326
+msgid "Attributes"
+msgstr "属性"
+
+#: gaphor/UML/classes/propertypages.ui:302
 msgid "Show Attributes"
 msgstr "显示属性"
 
-#: gaphor/UML/classes/propertypages.ui:367
-#: gaphor/UML/classes/propertypages.ui:573
+#: gaphor/UML/classes/propertypages.ui:332
+#: gaphor/UML/classes/propertypages.ui:539
 msgid "Static"
 msgstr "静态的"
 
-#: gaphor/UML/classes/propertypages.ui:399
+#: gaphor/UML/classes/propertypages.ui:365
 msgid ""
 "Add and edit class attributes according to UML syntax.\n"
 "\n"
@@ -1178,45 +1219,45 @@ msgstr ""
 "按 <b>Enter</b> 进行编辑，按 <b>Backspace</b>/<b>Delete</b>以删除项目。\n"
 "使用 <b>-</b>/<b>=</b> 向上或向下移动项目。"
 
-#: gaphor/UML/classes/propertypages.ui:429
-#: gaphor/UML/classes/propertypages.ui:568
+#: gaphor/UML/classes/propertypages.ui:395
+#: gaphor/UML/classes/propertypages.ui:534
 msgid "Abstract"
 msgstr "抽象"
 
-#: gaphor/UML/classes/propertypages.ui:451
+#: gaphor/UML/classes/propertypages.ui:417
 msgid "Dependency type"
 msgstr "依赖类型"
 
-#: gaphor/UML/classes/propertypages.ui:462
+#: gaphor/UML/classes/propertypages.ui:428
 msgid "Automatic"
 msgstr "自动的"
 
-#: gaphor/UML/classes/propertypages.ui:481
+#: gaphor/UML/classes/propertypages.ui:447
 msgid "Usage"
 msgstr "用途"
 
-#: gaphor/UML/classes/propertypages.ui:482
+#: gaphor/UML/classes/propertypages.ui:448
 msgid "Realization"
 msgstr "实现"
 
-#: gaphor/UML/classes/propertypages.ui:483
+#: gaphor/UML/classes/propertypages.ui:449
 msgid "Implementation"
 msgstr "实现"
 
-#: gaphor/UML/classes/propertypages.ui:502
+#: gaphor/UML/classes/propertypages.ui:468
 msgid "Folded"
 msgstr "折叠的"
 
-#: gaphor/UML/classes/propertypages.ui:525
-#: gaphor/UML/classes/propertypages.ui:562
+#: gaphor/UML/classes/propertypages.ui:491
+#: gaphor/UML/classes/propertypages.ui:528
 msgid "Operations"
 msgstr "操作"
 
-#: gaphor/UML/classes/propertypages.ui:538
+#: gaphor/UML/classes/propertypages.ui:504
 msgid "Show Operations"
 msgstr "显示操作"
 
-#: gaphor/UML/classes/propertypages.ui:603
+#: gaphor/UML/classes/propertypages.ui:570
 msgid ""
 "Add and edit class operations according to UML syntax.\n"
 "\n"
@@ -1237,16 +1278,16 @@ msgstr ""
 "按 <b>Enter</b> 进行编辑， <b>Backspace</b>/<b>Delete</b> 以删除项目。\n"
 "使用 <b>-</b>/<b>=</b> 向上或向下移动项目。"
 
-#: gaphor/UML/classes/propertypages.ui:632
-#: gaphor/UML/classes/propertypages.ui:670
+#: gaphor/UML/classes/propertypages.ui:599
+#: gaphor/UML/classes/propertypages.ui:637
 msgid "Enumeration Literals"
 msgstr "枚举字面量"
 
-#: gaphor/UML/classes/propertypages.ui:645
+#: gaphor/UML/classes/propertypages.ui:612
 msgid "Show Enumeration Literals"
 msgstr "显示枚举字面量"
 
-#: gaphor/UML/classes/propertypages.ui:699
+#: gaphor/UML/classes/propertypages.ui:667
 msgid ""
 "Add and edit enumeration literals according to UML syntax.\n"
 "\n"
@@ -1263,7 +1304,7 @@ msgstr ""
 "按 <b>Enter</b> 进行编辑，按  <b>Backspace</b>/<b>Delete</b> 以删除项目。\n"
 "使用 <b>-</b>/<b>=</b> 向上或向下移动项目。"
 
-#: gaphor/UML/classes/propertypages.ui:730
+#: gaphor/UML/classes/propertypages.ui:698
 msgid "Indirectly Instantiated"
 msgstr "间接实例化"
 
@@ -1283,7 +1324,7 @@ msgstr "节点"
 msgid "Device"
 msgstr "设备"
 
-#: gaphor/UML/deployments/node.py:55
+#: gaphor/UML/deployments/node.py:54
 msgid "device"
 msgstr "设备"
 
@@ -1379,13 +1420,14 @@ msgstr "扩大"
 msgid "Import"
 msgstr "导入"
 
-#: gaphor/UML/profiles/propertypages.ui:33
-msgid "Stereotypes"
-msgstr "立体型"
-
 #: gaphor/UML/profiles/propertypages.ui:46
 msgid "Show Stereotypes"
 msgstr "显示立体型"
+
+#: gaphor/UML/profiles/stereotypepropertypages.py:139
+#, fuzzy
+msgid "New Slot Value…"
+msgstr "值类型"
 
 #: gaphor/UML/states/propertypages.ui:9
 msgid "Activities"
@@ -1548,7 +1590,7 @@ msgstr "图表元数据"
 msgid "Picture"
 msgstr "结构"
 
-#: gaphor/diagram/presentation.py:51
+#: gaphor/diagram/presentation.py:62
 msgid "(from {namespace})"
 msgstr "（来自 {namespace}）"
 
@@ -1569,27 +1611,27 @@ msgstr "翻转方向"
 msgid "Note"
 msgstr "非"
 
-#: gaphor/diagram/propertypages.ui:167
+#: gaphor/diagram/general/metadata.py:62 gaphor/diagram/propertypages.ui:167
 msgid "Created By"
 msgstr "创建于"
 
-#: gaphor/diagram/propertypages.ui:195
+#: gaphor/diagram/general/metadata.py:79 gaphor/diagram/propertypages.ui:195
 msgid "Website"
 msgstr "网站"
 
-#: gaphor/diagram/propertypages.ui:209
+#: gaphor/diagram/general/metadata.py:125 gaphor/diagram/propertypages.ui:209
 msgid "Revision"
 msgstr "修订"
 
-#: gaphor/diagram/propertypages.ui:223
+#: gaphor/diagram/general/metadata.py:142 gaphor/diagram/propertypages.ui:223
 msgid "License"
 msgstr "许可证"
 
-#: gaphor/diagram/propertypages.ui:237
+#: gaphor/diagram/general/metadata.py:160 gaphor/diagram/propertypages.ui:237
 msgid "Created On"
 msgstr "创建于"
 
-#: gaphor/diagram/propertypages.ui:251
+#: gaphor/diagram/general/metadata.py:178 gaphor/diagram/propertypages.ui:251
 msgid "Updated On"
 msgstr "更新于"
 
@@ -1687,46 +1729,46 @@ msgstr "控制台"
 msgid "Gaphor Console"
 msgstr "Gaphor 控制台"
 
-#: gaphor/plugins/diagramexport/__init__.py:50
+#: gaphor/plugins/diagramexport/__init__.py:49
 msgid "All {ext} Files"
 msgstr "所有 {ext} 文件"
 
-#: gaphor/plugins/diagramexport/__init__.py:56
+#: gaphor/plugins/diagramexport/__init__.py:55
 msgid "Export as SVG"
 msgstr "导出为 SVG 文件"
 
-#: gaphor/plugins/diagramexport/__init__.py:57
-#: gaphor/plugins/diagramexport/__init__.py:62
+#: gaphor/plugins/diagramexport/__init__.py:56
+#: gaphor/plugins/diagramexport/__init__.py:61
 msgid "Export diagram as SVG"
 msgstr "导出图型为 SVG 文件"
 
-#: gaphor/plugins/diagramexport/__init__.py:67
+#: gaphor/plugins/diagramexport/__init__.py:66
 msgid "Export as PNG"
 msgstr "导出为 PNG 文件"
 
-#: gaphor/plugins/diagramexport/__init__.py:68
-#: gaphor/plugins/diagramexport/__init__.py:73
+#: gaphor/plugins/diagramexport/__init__.py:67
+#: gaphor/plugins/diagramexport/__init__.py:72
 msgid "Export diagram as PNG"
 msgstr "导出图形为 PNG 文件"
 
-#: gaphor/plugins/diagramexport/__init__.py:78
+#: gaphor/plugins/diagramexport/__init__.py:77
 msgid "Export as PDF"
 msgstr "导出为 PDF 文件"
 
-#: gaphor/plugins/diagramexport/__init__.py:79
-#: gaphor/plugins/diagramexport/__init__.py:85
+#: gaphor/plugins/diagramexport/__init__.py:78
+#: gaphor/plugins/diagramexport/__init__.py:84
 msgid "Export diagram as PDF"
 msgstr "导出图形为 PDF 文件"
 
-#: gaphor/plugins/diagramexport/__init__.py:93
+#: gaphor/plugins/diagramexport/__init__.py:92
 msgid "Export as EPS"
 msgstr "导出为 EPS 文件"
 
-#: gaphor/plugins/diagramexport/__init__.py:94
+#: gaphor/plugins/diagramexport/__init__.py:93
 msgid "Export diagram as Encapsulated PostScript"
 msgstr "将图表导出为封装的PostScript"
 
-#: gaphor/plugins/diagramexport/__init__.py:100
+#: gaphor/plugins/diagramexport/__init__.py:99
 msgid "Export diagram as EPS"
 msgstr "将图表导出为 EPS 文件"
 
@@ -1775,7 +1817,8 @@ msgid "All XMI Files"
 msgstr "所有 XMI 文件"
 
 #: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:62
-#: gaphor/ui/mainwindow.py:255 gaphor/ui/mainwindow.ui:46
+#: gaphor/ui/mainwindow.py:255 gaphor/ui/mainwindow.py:260
+#: gaphor/ui/mainwindow.ui:46
 msgid "New model"
 msgstr "新建模型"
 
@@ -2523,6 +2566,10 @@ msgstr "泳道"
 msgid "All Files"
 msgstr "所有文件"
 
+#: gaphor/ui/filedialog.py:112
+msgid "Flatpak Document Portal"
+msgstr ""
+
 #: gaphor/ui/filemanager.py:41
 msgid ""
 "Gaphor was not able to store the model, probably due to an internal "
@@ -2772,7 +2819,7 @@ msgstr "新建通用图形"
 msgid "<Relationships>"
 msgstr "<关系>"
 
-#: gaphor/ui/help/__init__.py:82
+#: gaphor/ui/help/__init__.py:79
 msgid "Restart Gaphor to enable language changes"
 msgstr ""
 
