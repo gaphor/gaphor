@@ -237,17 +237,27 @@ class TreeModel:
                 self.remove_element(child)
 
         # Deal with member relation, but exclude namespace, since it also relates to the owner
-        if (
-            former_owner is None
-            and isinstance(element, UML.NamedElement)
-            and element.memberNamespace
-            and element.memberNamespace is not element.namespace
-        ):
-            former_owner = element.memberNamespace
+        former_namespace = (
+            element.memberNamespace
+            if (
+                former_owner is None
+                and isinstance(element, UML.NamedElement)
+                and element.memberNamespace
+                and element.memberNamespace is not element.namespace
+            )
+            else None
+        )
 
         if (
-            owner_branch := self.owner_branch_for_element(
-                element, former_owner=former_owner
+            owner_branch := (
+                self.owner_branch_for_element(element, former_owner=former_owner)
+                or (
+                    former_namespace
+                    and self.owner_branch_for_element(
+                        element, former_owner=former_namespace
+                    )
+                    or None
+                )
             )
         ) is not None:
             owner_branch.remove(element)
