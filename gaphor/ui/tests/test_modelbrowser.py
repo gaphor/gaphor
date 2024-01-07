@@ -9,6 +9,7 @@ from gaphor.ui.modelbrowser import (
     get_first_selected_item,
     list_item_drop_drop,
 )
+from gaphor.UML import recipes
 
 
 @pytest.fixture
@@ -311,6 +312,25 @@ def test_unlink_element_should_not_collapse_branch(
     assert row0.get_item().element is package
     assert row0.get_expanded()
     assert model_browser.selection.get_item(1).get_item().element is class_b
+
+
+def test_stereotype_base_class_should_not_end_up_in_root(
+    model_browser, element_factory
+):
+    profile = element_factory.create(UML.Profile)
+    profile.name = "profile"
+    metaclass = element_factory.create(UML.Class)
+    metaclass.package = profile
+    metaclass.name = "Metaclass"
+    stereotype = element_factory.create(UML.Stereotype)
+    stereotype.package = profile
+    stereotype.name = "Stereotype"
+
+    relation = recipes.create_extension(metaclass, stereotype)
+    relation.package = profile
+
+    row0 = model_browser.selection.get_item(0)
+    assert row0.get_item().element is profile  # not property
 
 
 class MockRowItem:
