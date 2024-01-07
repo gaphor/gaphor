@@ -3,18 +3,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gaphor 0.13.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2023-12-30 16:31+0100\n"
+"POT-Creation-Date: 2024-01-06 21:08-0400\n"
 "PO-Revision-Date: 2024-01-06 01:10+0000\n"
 "Last-Translator: Сергей <asvmail.as@gmail.com>\n"
-"Language-Team: Russian <https://hosted.weblate.org/projects/gaphor/gaphor/ru/"
-">\n"
 "Language: ru\n"
+"Language-Team: Russian "
+"<https://hosted.weblate.org/projects/gaphor/gaphor/ru/>\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Weblate 5.4-dev\n"
 "Generated-By: Babel 2.14.0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:23 gaphor/C4Model/toolbox.py:67
@@ -22,7 +21,8 @@ msgstr ""
 msgid "C4 Model"
 msgstr "Модель C4"
 
-#: gaphor/C4Model/propertypages.ui:11 gaphor/diagram/propertypages.ui:181
+#: gaphor/C4Model/propertypages.ui:11 gaphor/diagram/general/metadata.py:104
+#: gaphor/diagram/propertypages.ui:181
 msgid "Description"
 msgstr "Описание"
 
@@ -51,7 +51,8 @@ msgstr "Новая База данных"
 msgid "New Component"
 msgstr "Новый Компонент"
 
-#: gaphor/C4Model/toolbox.py:71 gaphor/C4Model/toolbox.py:77
+#: gaphor/C4Model/diagramitems/person.py:24 gaphor/C4Model/toolbox.py:71
+#: gaphor/C4Model/toolbox.py:77
 msgid "Person"
 msgstr "Человек"
 
@@ -73,7 +74,7 @@ msgstr "Компонент"
 
 #: gaphor/C4Model/toolbox.py:131 gaphor/RAAML/fta/ftatoolbox.py:16
 #: gaphor/UML/classes/classestoolbox.py:119
-#: gaphor/UML/classes/propertypages.ui:480
+#: gaphor/UML/classes/propertypages.ui:446
 msgid "Dependency"
 msgstr "Зависимость"
 
@@ -308,7 +309,7 @@ msgstr "Абстрактная Оперативная Обстановка"
 msgid "Generalization"
 msgstr "Обобщение"
 
-#: gaphor/RAAML/stpa/stpatoolbox.py:61 gaphor/SysML/blocks/block.py:60
+#: gaphor/RAAML/stpa/stpatoolbox.py:61 gaphor/SysML/blocks/block.py:59
 #: gaphor/SysML/blocks/interfaceblock.py:59
 msgid "Situation"
 msgstr "Ситуация"
@@ -383,17 +384,17 @@ msgid "Aggregation"
 msgstr "Агрегация"
 
 #: gaphor/SysML/propertypages.ui:216 gaphor/UML/classes/propertypages.ui:116
-#: gaphor/UML/classes/propertypages.ui:251
+#: gaphor/UML/classes/propertypages.ui:234
 msgid "No aggregation"
 msgstr "Без агрегации"
 
 #: gaphor/SysML/propertypages.ui:217 gaphor/UML/classes/propertypages.ui:117
-#: gaphor/UML/classes/propertypages.ui:252
+#: gaphor/UML/classes/propertypages.ui:235
 msgid "Shared"
 msgstr "Совместный"
 
 #: gaphor/SysML/propertypages.ui:218 gaphor/UML/classes/propertypages.ui:118
-#: gaphor/UML/classes/propertypages.ui:253
+#: gaphor/UML/classes/propertypages.ui:236
 msgid "Composite"
 msgstr "Составной"
 
@@ -487,33 +488,33 @@ msgstr "Привязка"
 msgid "allocate"
 msgstr "привязка"
 
-#: gaphor/SysML/blocks/block.py:62 gaphor/SysML/blocks/interfaceblock.py:61
+#: gaphor/SysML/blocks/block.py:61 gaphor/SysML/blocks/interfaceblock.py:61
 msgid "ControlStructure"
 msgstr "СтруктураУправления"
 
-#: gaphor/SysML/blocks/block.py:64
+#: gaphor/SysML/blocks/block.py:63
 msgid "block"
 msgstr "блок"
 
-#: gaphor/SysML/blocks/block.py:98
+#: gaphor/SysML/blocks/block.py:89
 msgid "parts"
 msgstr "части"
 
-#: gaphor/SysML/blocks/block.py:111 gaphor/SysML/blocks/interfaceblock.py:97
+#: gaphor/SysML/blocks/block.py:103 gaphor/SysML/blocks/interfaceblock.py:89
 msgid "references"
 msgstr "ссылки"
 
-#: gaphor/SysML/blocks/block.py:122 gaphor/SysML/blocks/interfaceblock.py:108
+#: gaphor/SysML/blocks/block.py:115 gaphor/SysML/blocks/interfaceblock.py:101
 msgid "values"
 msgstr "значения"
 
-#: gaphor/SysML/blocks/block.py:140 gaphor/SysML/blocks/interfaceblock.py:126
+#: gaphor/SysML/blocks/block.py:134 gaphor/SysML/blocks/interfaceblock.py:120
 msgid "operations"
 msgstr "методы"
 
-#: gaphor/SysML/blocks/block.py:155 gaphor/SysML/blocks/block.py:187
-#: gaphor/SysML/blocks/interfaceblock.py:141
-#: gaphor/SysML/blocks/interfaceblock.py:167
+#: gaphor/SysML/blocks/block.py:149 gaphor/SysML/blocks/block.py:168
+#: gaphor/SysML/blocks/interfaceblock.py:135
+#: gaphor/SysML/blocks/interfaceblock.py:158
 msgid "unnamed"
 msgstr "безымянный"
 
@@ -597,7 +598,7 @@ msgstr "проверяет"
 msgid "refine"
 msgstr "очищает"
 
-#: gaphor/SysML/requirements/requirement.py:57
+#: gaphor/SysML/requirements/requirement.py:56
 msgid "requirement"
 msgstr "требование"
 
@@ -639,7 +640,7 @@ msgstr "Сдерживание"
 msgid "UML"
 msgstr "UML"
 
-#: gaphor/UML/actions/propertypages.ui:372 gaphor/UML/propertypages.ui:9
+#: gaphor/UML/actions/propertypages.ui:411 gaphor/UML/propertypages.ui:9
 msgid "Type"
 msgstr "Тип"
 
@@ -833,7 +834,7 @@ msgstr "слияние"
 msgid "decision"
 msgstr "решение"
 
-#: gaphor/UML/actions/activitypropertypage.py:134
+#: gaphor/UML/actions/activitypropertypage.py:137
 msgid "New Parameter…"
 msgstr "Новый параметр…"
 
@@ -852,6 +853,16 @@ msgstr "LIFO"
 #: gaphor/UML/actions/objectnode.py:17
 msgid "FIFO"
 msgstr "FIFO"
+
+#: gaphor/UML/actions/objectnode.py:47
+#, fuzzy
+msgid "upperBound"
+msgstr "Верхняя Граница"
+
+#: gaphor/UML/actions/objectnode.py:53
+#, fuzzy
+msgid "ordering"
+msgstr "Показывать Порядок"
 
 #: gaphor/UML/actions/partitionpage.py:114
 msgid "New Swimlane"
@@ -911,9 +922,6 @@ msgid "Behavior"
 msgstr "Поведение"
 
 #: gaphor/UML/actions/propertypages.ui:252
-#: gaphor/UML/classes/propertypages.ui:155
-#: gaphor/UML/classes/propertypages.ui:290
-#: gaphor/UML/profiles/propertypages.ui:87
 msgid "Value"
 msgstr "Значение"
 
@@ -927,16 +935,16 @@ msgstr "Защита"
 msgid "Parameter Nodes"
 msgstr "Узлы Параметров"
 
-#: gaphor/UML/actions/propertypages.ui:331
+#: gaphor/UML/actions/propertypages.ui:332
 #: gaphor/UML/classes/propertypages.ui:67
-#: gaphor/UML/classes/propertypages.ui:202
-#: gaphor/UML/classes/propertypages.ui:382
-#: gaphor/UML/classes/propertypages.ui:589
-#: gaphor/UML/classes/propertypages.ui:687
+#: gaphor/UML/classes/propertypages.ui:185
+#: gaphor/UML/classes/propertypages.ui:348
+#: gaphor/UML/classes/propertypages.ui:556
+#: gaphor/UML/classes/propertypages.ui:655
 msgid "ⓘ Help"
 msgstr "ⓘ Справка"
 
-#: gaphor/UML/actions/propertypages.ui:347
+#: gaphor/UML/actions/propertypages.ui:348
 msgid ""
 "Add and edit class activity according to UML syntax.\n"
 "\n"
@@ -964,15 +972,39 @@ msgstr ""
 "для удаления элементов.\n"
 "Используйте <b>-</b>/<b>=</b> для перемещения элементов вверх и вниз."
 
-#: gaphor/UML/actions/propertypages.ui:389
+#: gaphor/UML/actions/propertypages.ui:376
+#, fuzzy
+msgid "In/Out"
+msgstr "НЕ"
+
+#: gaphor/UML/actions/propertypages.ui:377
+#, fuzzy
+msgid "In"
+msgstr "Линия"
+
+#: gaphor/UML/actions/propertypages.ui:378
+#, fuzzy
+msgid "Out"
+msgstr "НЕ"
+
+#: gaphor/UML/actions/propertypages.ui:379
+msgid "Return"
+msgstr ""
+
+#: gaphor/UML/actions/propertypages.ui:390
+#: gaphor/UML/classes/propertypages.ui:11
+msgid "Show Direction"
+msgstr "Показать Направление"
+
+#: gaphor/UML/actions/propertypages.ui:428
 msgid "Multiplicity"
 msgstr "Множественность"
 
-#: gaphor/UML/classes/classespropertypages.py:233
+#: gaphor/UML/classes/classespropertypages.py:235
 msgid "New Attribute…"
 msgstr "Новый Атрибут…"
 
-#: gaphor/UML/classes/classespropertypages.py:390
+#: gaphor/UML/classes/classespropertypages.py:393
 msgid "New Operation…"
 msgstr "Новый Метод…"
 
@@ -997,15 +1029,15 @@ msgstr "Реализация Интерфейса"
 msgid "DataType"
 msgstr "ТипДанных"
 
-#: gaphor/UML/classes/datatype.py:57
+#: gaphor/UML/classes/datatype.py:58
 msgid "primitive"
 msgstr "примитив"
 
-#: gaphor/UML/classes/datatype.py:59 gaphor/UML/classes/enumeration.py:70
+#: gaphor/UML/classes/datatype.py:60 gaphor/UML/classes/enumeration.py:71
 msgid "valueType"
 msgstr "типЗначения"
 
-#: gaphor/UML/classes/datatype.py:61
+#: gaphor/UML/classes/datatype.py:62
 msgid "dataType"
 msgstr "типДанных"
 
@@ -1021,40 +1053,36 @@ msgstr "реализует"
 msgid "implements"
 msgstr "имплементирует"
 
-#: gaphor/UML/classes/enumeration.py:72
+#: gaphor/UML/classes/enumeration.py:73
 msgid "enumeration"
 msgstr "перечисление"
 
-#: gaphor/UML/classes/enumerationpropertypages.py:124
+#: gaphor/UML/classes/enumerationpropertypages.py:126
 msgid "New Enumeration…"
 msgstr "Новое перечисление…"
 
-#: gaphor/UML/classes/interface.py:283
+#: gaphor/UML/classes/interface.py:284
 msgid "interface"
 msgstr "интерфейс"
 
-#: gaphor/UML/classes/klass.py:58
+#: gaphor/UML/classes/klass.py:54
 msgid "stereotype"
 msgstr "стереотип"
 
-#: gaphor/UML/classes/klass.py:60
+#: gaphor/UML/classes/klass.py:56
 msgid "metaclass"
 msgstr "метакласс"
 
-#: gaphor/UML/classes/package.py:28
+#: gaphor/UML/classes/package.py:32
 msgid "profile"
 msgstr "профиль"
-
-#: gaphor/UML/classes/propertypages.ui:11
-msgid "Show Direction"
-msgstr "Показать Направление"
 
 #: gaphor/UML/classes/propertypages.ui:49
 msgid "Head:"
 msgstr "Голова:"
 
 #: gaphor/UML/classes/propertypages.ui:83
-#: gaphor/UML/classes/propertypages.ui:218
+#: gaphor/UML/classes/propertypages.ui:201
 msgid ""
 "Add and edit association ends according to UML syntax.\n"
 "\n"
@@ -1082,42 +1110,53 @@ msgstr ""
 "Используйте <b>-</b>/<b>=</b> для перемещения элементов вверх и вниз."
 
 #: gaphor/UML/classes/propertypages.ui:102
-#: gaphor/UML/classes/propertypages.ui:237
+#: gaphor/UML/classes/propertypages.ui:220
 msgid "Unknown navigation"
 msgstr "Неизвестная навигация"
 
 #: gaphor/UML/classes/propertypages.ui:103
-#: gaphor/UML/classes/propertypages.ui:238
+#: gaphor/UML/classes/propertypages.ui:221
 msgid "Not navigable"
 msgstr "Не навигационный"
 
 #: gaphor/UML/classes/propertypages.ui:104
-#: gaphor/UML/classes/propertypages.ui:239
+#: gaphor/UML/classes/propertypages.ui:222
 msgid "Navigable"
 msgstr "Навигационный"
 
-#: gaphor/UML/classes/propertypages.ui:135
-#: gaphor/UML/classes/propertypages.ui:270
-#: gaphor/UML/classes/propertypages.ui:324
-#: gaphor/UML/classes/propertypages.ui:361
-#: gaphor/UML/profiles/propertypages.ui:67
-msgid "Attributes"
-msgstr "Атрибуты"
+#: gaphor/UML/classes/propertypages.ui:136
+#: gaphor/UML/classes/propertypages.ui:254
+#: gaphor/UML/profiles/propertypages.ui:33
+#: gaphor/UML/profiles/propertypages.ui:69
+msgid "Stereotypes"
+msgstr "Стереотипы"
 
-#: gaphor/UML/classes/propertypages.ui:184
+#: gaphor/UML/classes/propertypages.ui:141
+#: gaphor/UML/classes/propertypages.ui:259
+#: gaphor/UML/profiles/propertypages.ui:74
+#, fuzzy
+msgid "Values"
+msgstr "значения"
+
+#: gaphor/UML/classes/propertypages.ui:167
 msgid "Tail:"
 msgstr "Хвост:"
 
-#: gaphor/UML/classes/propertypages.ui:337
+#: gaphor/UML/classes/propertypages.ui:289
+#: gaphor/UML/classes/propertypages.ui:326
+msgid "Attributes"
+msgstr "Атрибуты"
+
+#: gaphor/UML/classes/propertypages.ui:302
 msgid "Show Attributes"
 msgstr "Показывать Атрибуты"
 
-#: gaphor/UML/classes/propertypages.ui:367
-#: gaphor/UML/classes/propertypages.ui:573
+#: gaphor/UML/classes/propertypages.ui:332
+#: gaphor/UML/classes/propertypages.ui:539
 msgid "Static"
 msgstr "Статический"
 
-#: gaphor/UML/classes/propertypages.ui:399
+#: gaphor/UML/classes/propertypages.ui:365
 msgid ""
 "Add and edit class attributes according to UML syntax.\n"
 "\n"
@@ -1144,45 +1183,45 @@ msgstr ""
 "для удаления элементов.\n"
 "Используйте <b>-</b>/<b>=</b> для перемещения элементов вверх и вниз."
 
-#: gaphor/UML/classes/propertypages.ui:429
-#: gaphor/UML/classes/propertypages.ui:568
+#: gaphor/UML/classes/propertypages.ui:395
+#: gaphor/UML/classes/propertypages.ui:534
 msgid "Abstract"
 msgstr "Абстрактный"
 
-#: gaphor/UML/classes/propertypages.ui:451
+#: gaphor/UML/classes/propertypages.ui:417
 msgid "Dependency type"
 msgstr "Тип зависимости"
 
-#: gaphor/UML/classes/propertypages.ui:462
+#: gaphor/UML/classes/propertypages.ui:428
 msgid "Automatic"
 msgstr "Автоматический"
 
-#: gaphor/UML/classes/propertypages.ui:481
+#: gaphor/UML/classes/propertypages.ui:447
 msgid "Usage"
 msgstr "Использование"
 
-#: gaphor/UML/classes/propertypages.ui:482
+#: gaphor/UML/classes/propertypages.ui:448
 msgid "Realization"
 msgstr "Реализация"
 
-#: gaphor/UML/classes/propertypages.ui:483
+#: gaphor/UML/classes/propertypages.ui:449
 msgid "Implementation"
 msgstr "Имплементация"
 
-#: gaphor/UML/classes/propertypages.ui:502
+#: gaphor/UML/classes/propertypages.ui:468
 msgid "Folded"
 msgstr "Свёрнуто"
 
-#: gaphor/UML/classes/propertypages.ui:525
-#: gaphor/UML/classes/propertypages.ui:562
+#: gaphor/UML/classes/propertypages.ui:491
+#: gaphor/UML/classes/propertypages.ui:528
 msgid "Operations"
 msgstr "Методы"
 
-#: gaphor/UML/classes/propertypages.ui:538
+#: gaphor/UML/classes/propertypages.ui:504
 msgid "Show Operations"
 msgstr "Показывать Методы"
 
-#: gaphor/UML/classes/propertypages.ui:603
+#: gaphor/UML/classes/propertypages.ui:570
 msgid ""
 "Add and edit class operations according to UML syntax.\n"
 "\n"
@@ -1205,16 +1244,16 @@ msgstr ""
 "для удаления элементов.\n"
 "Используйте <b>-</b>/<b>=</b> для перемещения элементов вверх и вниз."
 
-#: gaphor/UML/classes/propertypages.ui:632
-#: gaphor/UML/classes/propertypages.ui:670
+#: gaphor/UML/classes/propertypages.ui:599
+#: gaphor/UML/classes/propertypages.ui:637
 msgid "Enumeration Literals"
 msgstr "Значения"
 
-#: gaphor/UML/classes/propertypages.ui:645
+#: gaphor/UML/classes/propertypages.ui:612
 msgid "Show Enumeration Literals"
 msgstr "Показывать Значения"
 
-#: gaphor/UML/classes/propertypages.ui:699
+#: gaphor/UML/classes/propertypages.ui:667
 msgid ""
 "Add and edit enumeration literals according to UML syntax.\n"
 "\n"
@@ -1233,7 +1272,7 @@ msgstr ""
 "для удаления элементов.\n"
 "Используйте <b>-</b>/<b>=</b> для перемещения элементов вверх и вниз."
 
-#: gaphor/UML/classes/propertypages.ui:730
+#: gaphor/UML/classes/propertypages.ui:698
 msgid "Indirectly Instantiated"
 msgstr "Косвенный Экземпляр"
 
@@ -1253,7 +1292,7 @@ msgstr "Узел"
 msgid "Device"
 msgstr "Устройство"
 
-#: gaphor/UML/deployments/node.py:55
+#: gaphor/UML/deployments/node.py:54
 msgid "device"
 msgstr "устройство"
 
@@ -1348,13 +1387,14 @@ msgstr "Расширение"
 msgid "Import"
 msgstr "Импорт"
 
-#: gaphor/UML/profiles/propertypages.ui:33
-msgid "Stereotypes"
-msgstr "Стереотипы"
-
 #: gaphor/UML/profiles/propertypages.ui:46
 msgid "Show Stereotypes"
 msgstr "Показать Стереотипы"
+
+#: gaphor/UML/profiles/stereotypepropertypages.py:139
+#, fuzzy
+msgid "New Slot Value…"
+msgstr "Новый тип Значения"
 
 #: gaphor/UML/states/propertypages.ui:9
 msgid "Activities"
@@ -1516,7 +1556,7 @@ msgstr "Метаданные диаграммы"
 msgid "Picture"
 msgstr "Изображение"
 
-#: gaphor/diagram/presentation.py:51
+#: gaphor/diagram/presentation.py:62
 msgid "(from {namespace})"
 msgstr "(из {namespace})"
 
@@ -1536,27 +1576,27 @@ msgstr "Отразить ориентацию"
 msgid "Note"
 msgstr "Примечание"
 
-#: gaphor/diagram/propertypages.ui:167
+#: gaphor/diagram/general/metadata.py:62 gaphor/diagram/propertypages.ui:167
 msgid "Created By"
 msgstr "Создано"
 
-#: gaphor/diagram/propertypages.ui:195
+#: gaphor/diagram/general/metadata.py:79 gaphor/diagram/propertypages.ui:195
 msgid "Website"
 msgstr "Веб-сайт"
 
-#: gaphor/diagram/propertypages.ui:209
+#: gaphor/diagram/general/metadata.py:125 gaphor/diagram/propertypages.ui:209
 msgid "Revision"
 msgstr "Ревизия"
 
-#: gaphor/diagram/propertypages.ui:223
+#: gaphor/diagram/general/metadata.py:142 gaphor/diagram/propertypages.ui:223
 msgid "License"
 msgstr "Лицензия"
 
-#: gaphor/diagram/propertypages.ui:237
+#: gaphor/diagram/general/metadata.py:160 gaphor/diagram/propertypages.ui:237
 msgid "Created On"
 msgstr "Создано на"
 
-#: gaphor/diagram/propertypages.ui:251
+#: gaphor/diagram/general/metadata.py:178 gaphor/diagram/propertypages.ui:251
 msgid "Updated On"
 msgstr "Обновлено"
 
@@ -1650,46 +1690,46 @@ msgstr "Консоль"
 msgid "Gaphor Console"
 msgstr "Консоль Gaphor"
 
-#: gaphor/plugins/diagramexport/__init__.py:50
+#: gaphor/plugins/diagramexport/__init__.py:49
 msgid "All {ext} Files"
 msgstr "Все Файлы {ext}"
 
-#: gaphor/plugins/diagramexport/__init__.py:56
+#: gaphor/plugins/diagramexport/__init__.py:55
 msgid "Export as SVG"
 msgstr "Экспортировать как SVG"
 
-#: gaphor/plugins/diagramexport/__init__.py:57
-#: gaphor/plugins/diagramexport/__init__.py:62
+#: gaphor/plugins/diagramexport/__init__.py:56
+#: gaphor/plugins/diagramexport/__init__.py:61
 msgid "Export diagram as SVG"
 msgstr "Экспортировать диаграмму как SVG"
 
-#: gaphor/plugins/diagramexport/__init__.py:67
+#: gaphor/plugins/diagramexport/__init__.py:66
 msgid "Export as PNG"
 msgstr "Экспортировать как PNG"
 
-#: gaphor/plugins/diagramexport/__init__.py:68
-#: gaphor/plugins/diagramexport/__init__.py:73
+#: gaphor/plugins/diagramexport/__init__.py:67
+#: gaphor/plugins/diagramexport/__init__.py:72
 msgid "Export diagram as PNG"
 msgstr "Экспортировать диаграмму как PNG"
 
-#: gaphor/plugins/diagramexport/__init__.py:78
+#: gaphor/plugins/diagramexport/__init__.py:77
 msgid "Export as PDF"
 msgstr "Экспортировать как PDF"
 
-#: gaphor/plugins/diagramexport/__init__.py:79
-#: gaphor/plugins/diagramexport/__init__.py:85
+#: gaphor/plugins/diagramexport/__init__.py:78
+#: gaphor/plugins/diagramexport/__init__.py:84
 msgid "Export diagram as PDF"
 msgstr "Экспортировать диаграмму как PDF"
 
-#: gaphor/plugins/diagramexport/__init__.py:93
+#: gaphor/plugins/diagramexport/__init__.py:92
 msgid "Export as EPS"
 msgstr "Экспортировать как EPS"
 
-#: gaphor/plugins/diagramexport/__init__.py:94
+#: gaphor/plugins/diagramexport/__init__.py:93
 msgid "Export diagram as Encapsulated PostScript"
 msgstr "Экспортировать диаграмму как Encapsulated PostScript"
 
-#: gaphor/plugins/diagramexport/__init__.py:100
+#: gaphor/plugins/diagramexport/__init__.py:99
 msgid "Export diagram as EPS"
 msgstr "Экспортировать диаграмму как EPS"
 
@@ -1742,7 +1782,8 @@ msgid "All XMI Files"
 msgstr "Все Файлы XMI"
 
 #: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:62
-#: gaphor/ui/mainwindow.py:255 gaphor/ui/mainwindow.ui:46
+#: gaphor/ui/mainwindow.py:255 gaphor/ui/mainwindow.py:260
+#: gaphor/ui/mainwindow.ui:46
 msgid "New model"
 msgstr "Новая модель"
 
@@ -2371,8 +2412,8 @@ msgid ""
 "Add a model element from the tool box (bottom left) to the diagram. Here "
 "you will see its properties appear."
 msgstr ""
-"Добавьте элемент модели из панели инструментов (внизу слева) на диаграмму. "
-"Здесь вы увидите его свойства."
+"Добавьте элемент модели из панели инструментов (внизу слева) на "
+"диаграмму. Здесь вы увидите его свойства."
 
 #: gaphor/ui/elementeditor.ui:52
 msgid "This pane can be hidden by clicking the pane icon in the header."
@@ -2397,8 +2438,9 @@ msgid ""
 "select an element in the model browser and start typing. A search box "
 "will automatically appear."
 msgstr ""
-"<b>Совет:</b> Чтобы найти элемент на панели обзора моделей (вверху слева), "
-"выберите элемент и начните вводить текст. Поле поиска появится автоматически."
+"<b>Совет:</b> Чтобы найти элемент на панели обзора моделей (вверху "
+"слева), выберите элемент и начните вводить текст. Поле поиска появится "
+"автоматически."
 
 #: gaphor/ui/elementeditor.ui:97 gaphor/ui/help/shortcuts.ui:129
 msgid "Undo"
@@ -2477,8 +2519,8 @@ msgid ""
 "Apply incoming changes from the conflicting model. Use Undo to revert "
 "changes."
 msgstr ""
-"Применить входящие изменения из конфликтующей модели. Используйте «Отменить»"
-", чтобы отменить изменения."
+"Применить входящие изменения из конфликтующей модели. Используйте "
+"«Отменить», чтобы отменить изменения."
 
 #: gaphor/ui/elementeditor.ui:399
 msgid "Resolve"
@@ -2512,6 +2554,10 @@ msgstr "Дорожки"
 #: gaphor/ui/filedialog.py:39
 msgid "All Files"
 msgstr "Все файлы"
+
+#: gaphor/ui/filedialog.py:112
+msgid "Flatpak Document Portal"
+msgstr ""
 
 #: gaphor/ui/filemanager.py:41
 msgid ""
@@ -2766,7 +2812,7 @@ msgstr "Новая Общая Диаграмма"
 msgid "<Relationships>"
 msgstr "<Отношения>"
 
-#: gaphor/ui/help/__init__.py:82
+#: gaphor/ui/help/__init__.py:79
 msgid "Restart Gaphor to enable language changes"
 msgstr "Перезапустите Gaphor, чтобы применить изменения языка"
 
@@ -2780,9 +2826,9 @@ msgid ""
 msgstr ""
 "Авторское право © 2001-2023 Arjan Molenaar и Dan Yeaw.\n"
 "\n"
-"UML, SysML и RAAML являются либо зарегистрированными товарными знаками, либо "
-"товарными знаками Object Management Group, Inc. в Соединенных Штатах и/или "
-"других странах."
+"UML, SysML и RAAML являются либо зарегистрированными товарными знаками, "
+"либо товарными знаками Object Management Group, Inc. в Соединенных Штатах"
+" и/или других странах."
 
 #: gaphor/ui/help/about.ui:21
 msgid ""
@@ -2989,3 +3035,4 @@ msgstr "Обновить отношение «{name}»"
 
 #~ msgid "The (spoken) language used in this model."
 #~ msgstr ""
+
