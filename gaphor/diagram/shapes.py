@@ -234,9 +234,6 @@ class Box:
         self._inline_style = style
         self._draw_border = draw
 
-    def __len__(self):
-        return len(self.children)
-
     def __iter__(self):
         return iter(self.children)
 

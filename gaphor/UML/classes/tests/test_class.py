@@ -34,7 +34,7 @@ def test_compartments(element_factory):
 
     diagram.update_now((klass,))
 
-    assert 1 == len(compartments(klass)[0])
+    assert 1 == len(compartments(klass)[0].children)
     assert compartments(klass)[0].size(context()) > (44.0, 20.0)
 
     oper = element_factory.create(UML.Operation)
@@ -46,7 +46,7 @@ def test_compartments(element_factory):
     klass.subject.ownedOperation = oper
 
     diagram.update_now((klass,))
-    assert 2 == len(compartments(klass)[1])
+    assert 2 == len(compartments(klass)[1].children)
     assert compartments(klass)[1].size(context()) > (63.0, 34.0)
 
 
@@ -67,11 +67,11 @@ def test_attribute_removal(element_factory):
     attr.name = "blah3"
     klass.subject.ownedAttribute = attr
 
-    assert len(compartments(klass)[0]) == 3
+    assert len(compartments(klass)[0].children) == 3
 
     attr2.unlink()
 
-    assert len(compartments(klass)[0]) == 2
+    assert len(compartments(klass)[0].children) == 2
 
 
 def test_compartment_resizing(element_factory):
