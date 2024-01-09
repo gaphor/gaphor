@@ -18,7 +18,7 @@ class PseudoStyleNode:
     def children(self) -> Iterator[StyleNode]:
         return self._node.children()
 
-    def attribute(self, name: str) -> str:
+    def attribute(self, name: str) -> str | None:
         return self._node.attribute(name)
 
     def state(self) -> Sequence[str]:

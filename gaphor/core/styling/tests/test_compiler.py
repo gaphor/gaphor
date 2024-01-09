@@ -40,7 +40,7 @@ class Node:
         return iter(self._children)
 
     def attribute(self, name):
-        return self._attributes.get(name, "")
+        return self._attributes.get(name, "") if name in self._attributes else ""
 
     def state(self):
         return self._state
@@ -122,7 +122,6 @@ def test_attributes():
 
     assert selector(Node("classitem", attributes={"subject": "val"}))
     assert not selector(Node("classitem"))
-    assert not selector(Node("classitem", attributes={"subject": None}))
 
 
 def test_attribute_equal():
@@ -132,6 +131,7 @@ def test_attribute_equal():
 
     assert selector(Node("classitem", attributes={"subject": "foo"}))
     assert not selector(Node("classitem", attributes={"subject": "bar"}))
+    assert not selector(Node("classitem"))
 
 
 def test_attribute_in_list():
@@ -142,6 +142,7 @@ def test_attribute_in_list():
     assert selector(Node("classitem", attributes={"subject": "foo"}))
     assert selector(Node("classitem", attributes={"subject": "foo bar"}))
     assert not selector(Node("classitem", attributes={"subject": "bar"}))
+    assert not selector(Node("classitem"))
 
 
 def test_attribute_starts_with():
@@ -152,6 +153,7 @@ def test_attribute_starts_with():
     assert selector(Node("classitem", attributes={"subject": "foo"}))
     assert selector(Node("classitem", attributes={"subject": "foomania"}))
     assert not selector(Node("classitem", attributes={"subject": "not foo"}))
+    assert not selector(Node("classitem"))
 
 
 def test_attribute_starts_with_dash():
@@ -162,6 +164,7 @@ def test_attribute_starts_with_dash():
     assert selector(Node("classitem", attributes={"subject": "foo"}))
     assert selector(Node("classitem", attributes={"subject": "foo-mania"}))
     assert not selector(Node("classitem", attributes={"subject": "foomania"}))
+    assert not selector(Node("classitem"))
 
 
 def test_attribute_ends_with():
@@ -172,6 +175,7 @@ def test_attribute_ends_with():
     assert selector(Node("classitem", attributes={"subject": "foo"}))
     assert selector(Node("classitem", attributes={"subject": "manicfoo"}))
     assert not selector(Node("classitem", attributes={"subject": "fooless"}))
+    assert not selector(Node("classitem"))
 
 
 def test_attribute_contains():
@@ -182,6 +186,7 @@ def test_attribute_contains():
     assert selector(Node("classitem", attributes={"subject": "foo"}))
     assert selector(Node("classitem", attributes={"subject": "be foo-ish"}))
     assert not selector(Node("classitem", attributes={"subject": "fobic"}))
+    assert not selector(Node("classitem"))
 
 
 def test_attributes_with_dots():

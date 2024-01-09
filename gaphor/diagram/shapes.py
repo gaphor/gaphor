@@ -10,7 +10,7 @@ from typing import Callable, Protocol
 from gaphas.geometry import Rectangle
 
 from gaphor.core.modeling import DrawContext, Element, UpdateContext
-from gaphor.core.modeling.diagram import attrstr, rgetattr
+from gaphor.core.modeling.diagram import lookup_attribute
 from gaphor.core.styling import (
     JustifyContent,
     Number,
@@ -615,11 +615,10 @@ class StyledCssNode:
     def children(self) -> Iterator[StyleNode]:
         return (node.style_node(self) for node in traverse_css_nodes(self._shape))
 
-    def attribute(self, name: str) -> str:
+    def attribute(self, name: str) -> str | None:
         if not self._shape._element:
-            return ""
-        fields = name.split(".")
-        return " ".join(map(attrstr, rgetattr(self._shape._element, fields))).strip()
+            return None
+        return lookup_attribute(self._shape._element, name)
 
     def state(self) -> Sequence[str]:
         return ()

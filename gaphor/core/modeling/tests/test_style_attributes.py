@@ -1,5 +1,5 @@
 from gaphor import UML
-from gaphor.core.modeling.diagram import StyledItem
+from gaphor.core.modeling.diagram import Diagram, StyledItem, lookup_attribute
 from gaphor.UML.classes import ClassItem
 
 
@@ -16,7 +16,7 @@ def test_nonexistent_attribute_of_item(diagram):
 
     node = StyledItem(classitem)
 
-    assert node.attribute("foobar") == ""
+    assert node.attribute("foobar") is None
 
 
 def test_should_get_type_of_element_attribute(diagram, element_factory):
@@ -51,9 +51,9 @@ def test_nested_attribute_of_subject(diagram, element_factory):
 
     assert node.attribute("attribute") == "property"
     assert node.attribute("attribute.name") == "myname"
-    assert node.attribute("attribute.isBehavior") == ""
+    assert node.attribute("attribute.ownedElement") == ""
     assert node.attribute("attribute.isStatic") == "true"
-    assert node.attribute("attribute.notAnAttribute") == ""
+    assert node.attribute("attribute.notAnAttribute") is None
 
 
 def test_multiple_nested_attribute_of_subject(diagram, element_factory):
@@ -70,7 +70,7 @@ def test_multiple_nested_attribute_of_subject(diagram, element_factory):
 
     assert node.attribute("attribute") == "property property"
     assert node.attribute("attribute.name") in ("first second", "second first")
-    assert node.attribute("attribute.notAnAttribute") == ""
+    assert node.attribute("attribute.notAnAttribute") is None
 
 
 def test_mixed_case_attributes(diagram, element_factory):
@@ -84,3 +84,33 @@ def test_mixed_case_attributes(diagram, element_factory):
 
     assert node.attribute("ownedattribute") == "property"
     assert node.attribute("ownedattribute.name") == "first"
+
+
+def test_get_existing_attribute():
+    diagram = Diagram()
+    diagram.diagramType = "Test"
+
+    assert diagram.diagramType == "Test"
+    assert lookup_attribute(diagram, "diagramType") == "test"
+    assert lookup_attribute(diagram, "owner") == ""
+
+
+def test_non_existant_attribute():
+    diagram = Diagram()
+
+    assert lookup_attribute(diagram, "doesnotexist") is None
+
+
+def test_nested_attribute():
+    diagram = Diagram()
+    diagram.ownedDiagram = Diagram()
+
+    assert lookup_attribute(diagram, "ownedDiagram.name") == ""
+    assert lookup_attribute(diagram, "ownedDiagram.doesnotexist") is None
+
+
+def test_non_extsant_nested_attribute():
+    diagram = Diagram()
+
+    assert lookup_attribute(diagram, "ownedDiagram.name") is None
+    assert lookup_attribute(diagram, "ownedDiagram.doesnotexist") is None
