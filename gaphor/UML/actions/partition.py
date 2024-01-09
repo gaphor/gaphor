@@ -6,9 +6,8 @@ from gaphas.item import NW, SE
 from gaphor import UML
 from gaphor.core.modeling import DrawContext
 from gaphor.core.modeling.properties import association
-from gaphor.core.styling import JustifyContent
 from gaphor.diagram.presentation import ElementPresentation
-from gaphor.diagram.shapes import Box, stroke
+from gaphor.diagram.shapes import DEFAULT_PADDING, Box, CssNode, Orientation, stroke
 from gaphor.diagram.support import represents
 from gaphor.diagram.text import Layout
 
@@ -21,17 +20,9 @@ class PartitionItem(ElementPresentation):
         super().__init__(diagram, id)
         self.min_height = 300
         self._loading = False
-        self.shape = Box(
-            style={
-                "line-width": 2.4,
-                "padding": (4, 12, 4, 12),
-                "justify-content": JustifyContent.START,
-            },
-            draw=self.draw_swimlanes,
-        )
         self.watch("subject[NamedElement].name")
         self.watch("subject.appliedStereotype.classifier.name")
-        self.watch("partition", self.update_partition)
+        self.watch("partition", self.update_shapes)
         self.watch("partition.name")
         self.watch("partition[ActivityPartition].represents[NamedElement].name")
         self.handles()[NW].pos.add_handler(self.update_width)
@@ -73,10 +64,13 @@ class PartitionItem(ElementPresentation):
             self.partition = self.subject
         self._loading = False
 
-    def update_partition(self, event) -> None:
+    def update_shapes(self, event=None) -> None:
         """Set the min width of all the swimlanes."""
-        self.min_width = 150 * len(self.partition)
-        self.request_update()
+        self.shape = Box(
+            *(CssNode("swimlane", partition, Box()) for partition in self.partition),
+            orientation=Orientation.HORIZONTAL,
+            draw=self.draw_swimlanes,
+        )
 
     def draw_swimlanes(
         self, box: Box, context: DrawContext, bounding_box: Rectangle
@@ -87,7 +81,7 @@ class PartitionItem(ElementPresentation):
         by the total number of partitions and space them evenly.
         """
         cr = context.cairo
-        cr.set_line_width(context.style["line-width"])
+        cr.set_line_width(context.style.get("line-width", 2.4))
         partitions = self.partition
 
         if partitions:
@@ -95,9 +89,9 @@ class PartitionItem(ElementPresentation):
         else:
             partition_width = bounding_box.width / 2
 
-        padding_top, padding_right, padding_bottom, padding_left = context.style[
-            "padding"
-        ]
+        padding_top, padding_right, padding_bottom, padding_left = context.style.get(
+            "padding", DEFAULT_PADDING
+        )
         layout = Layout(
             font=context.style,
             width=partition_width - padding_left - padding_right,
