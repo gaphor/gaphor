@@ -215,8 +215,7 @@ class Box:
     - min-height
     - min-width
     - padding: a tuple (top, right, bottom, left)
-    - vertical-align: alignment of child shapes
-    - border-radius
+    - justify-content: alignment of child shapes
     """
 
     def __init__(
