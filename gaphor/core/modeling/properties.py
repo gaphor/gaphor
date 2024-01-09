@@ -378,7 +378,7 @@ class association(umlproperty):
         This method is called from the opposite association property.
         """
         if obj is value:
-            raise TypeError(f"Can not set {obj}.{self.name} to itself")
+            raise TypeError(f"Cannot set {obj}.{self.name} to itself")
 
         if self.upper == 1:
             self._set_one(obj, value, from_opposite)
@@ -666,7 +666,7 @@ class derived(umlproperty, Generic[T]):
         return uc.data
 
     def set(self, obj, value):
-        raise AttributeError(f"Can not set values on union {self.name}: {self.type}")
+        raise AttributeError(f"Cannot set values on union {self.name}: {self.type}")
 
     def delete(self, obj, value=None):
         raise AttributeError(f"Can not delete values on union {self.name}: {self.type}")
