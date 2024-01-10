@@ -120,11 +120,11 @@ compartment {
     text-decoration: underline;
 }
 
-component {
+:is(artifact, component) {
   padding: 4 32 4 4;
 }
 
-component:not([children=""]) {
+:is(artifact, component):not([children=""]) {
   justify-content: start;
 }
 
