@@ -68,6 +68,10 @@ usecase {
   padding: 4;
 }
 
+:is(include, extend) {
+  dash-style: 7.0 5.0;
+}
+
 swimlane {
   min-width: 150;
   padding: 4 12 4 12;
