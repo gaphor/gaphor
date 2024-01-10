@@ -86,11 +86,16 @@ def attrname(obj, lower_name):
     return next((name for name in dir(obj) if name.lower() == lower_name), lower_name)
 
 
+NO_ATTR = object()
+
+
 def rgetattr(obj, names):
-    """Recursively het a name, based on a list of names."""
+    """Recursively get a name, based on a list of names."""
     name, *tail = names
-    v = getattr(obj, attrname(obj, name), None)
+    v = getattr(obj, attrname(obj, name), NO_ATTR)
     if isinstance(v, (collection, list, tuple)):
+        if tail and not v:
+            yield NO_ATTR
         if tail:
             for m in v:
                 yield from rgetattr(m, tail)
@@ -114,6 +119,22 @@ def attrstr(obj):
         f'Can not make a string out of {obj}, returning "". Please raise an issue.'
     )
     return ""
+
+
+def lookup_attribute(element: Element, name: str) -> str | None:
+    """Look up an attribute from an element.
+
+    Attributes can be nested, e.g. ``owner.name``.
+
+    Returns ``""`` if the value is empty,
+    ``None`` if the attribute does not exist.
+    """
+    fields = name.split(".")
+    values = list(rgetattr(element, fields))
+    attr_values = [v for v in values if v is not NO_ATTR]
+    if not attr_values and NO_ATTR in values:
+        return None
+    return " ".join(map(attrstr, attr_values)).strip()
 
 
 def qualifiedName(element: Element) -> list[str]:
@@ -148,9 +169,8 @@ class StyledDiagram:
             if not item.parent
         )
 
-    def attribute(self, name: str) -> str:
-        fields = name.split(".")
-        return " ".join(map(attrstr, rgetattr(self.diagram, fields))).strip()
+    def attribute(self, name: str) -> str | None:
+        return lookup_attribute(self.diagram, name)
 
     def state(self) -> Sequence[str]:
         return ()
@@ -218,11 +238,10 @@ class StyledItem:
         )
         yield from (node.style_node(self) for node in item.css_nodes())
 
-    def attribute(self, name: str) -> str:
-        fields = name.split(".")
-        a = " ".join(map(attrstr, rgetattr(self.item, fields))).strip()
-        if (not a) and self.item.subject:
-            a = " ".join(map(attrstr, rgetattr(self.item.subject, fields))).strip()
+    def attribute(self, name: str) -> str | None:
+        a = lookup_attribute(self.item, name)
+        if a is None and self.item.subject:
+            a = lookup_attribute(self.item.subject, name)
         return a
 
     def state(self) -> Sequence[str]:
