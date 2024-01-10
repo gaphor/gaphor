@@ -59,6 +59,18 @@ executionspecification {
   background-color: var(--opaque-background-color);
 }
 
+partition {
+  padding: 4 12 4 12;
+  justify-content: stretch;
+}
+
+swimlane {
+  min-width: 150;
+  padding: 4 12 4 12;
+  justify-content: start;
+  white-space: normal;
+}
+
 * name {
   font-weight: bold;
 }
