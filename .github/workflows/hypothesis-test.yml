@@ -33,11 +33,6 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Set ownership of checkout directory
         run: chown -R $(id -u):$(id -g) $PWD
-      - name: Install pipx
-        run: |
-          python${{ env.python_version }} -m ensurepip
-          py -${{ env.python_version }} -m pip install pipx
-          echo "/github/home/.local/bin" >> $GITHUB_PATH
       - name: Use Python Dependency Cache
         uses: actions/cache@704facf57e6136b1bc63b828d79edcd491f0ee84 # v3.3.2
         with:
@@ -52,7 +47,7 @@ jobs:
       - name: Install Dependencies
         uses: ./.github/actions/install
         with:
-          python-version: ${{ env.python_version }}
+          python-command: python${{ env.python_version }}
       - name: Test with Hypothesis
         run: xvfb-run poetry run pytest -m hypothesis --hypothesis-profile=ci
         shell: bash
