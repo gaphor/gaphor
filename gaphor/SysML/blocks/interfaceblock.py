@@ -127,23 +127,22 @@ class InterfaceBlockItem(Classified, ElementPresentation[InterfaceBlock]):
         def lazy_format(attribute):
             return lambda: format_property(attribute) or self.diagram.gettext("unnamed")
 
-        return Box(
-            CssNode(
-                "heading",
-                self.subject,
-                Text(text=name),
+        return CssNode(
+            "compartment",
+            self.subject,
+            Box(
+                CssNode(
+                    "heading",
+                    self.subject,
+                    Text(text=name),
+                ),
+                *(
+                    CssNode(css_name, attribute, Text(text=lazy_format(attribute)))
+                    for attribute in self.subject.ownedAttribute
+                    if predicate(attribute)
+                ),
+                draw=draw_top_separator,
             ),
-            *(
-                CssNode(css_name, attribute, Text(text=lazy_format(attribute)))
-                for attribute in self.subject.ownedAttribute
-                if predicate(attribute)
-            ),
-            style={
-                "padding": (4, 4, 4, 4),
-                "min-height": 8,
-                "justify-content": JustifyContent.START,
-            },
-            draw=draw_top_separator,
         )
 
     def operations_compartment(self, name, predicate):
@@ -152,20 +151,19 @@ class InterfaceBlockItem(Classified, ElementPresentation[InterfaceBlock]):
                 "unnamed"
             )
 
-        return Box(
-            CssNode(
-                "heading",
-                self.subject,
-                Text(text=name),
+        return CssNode(
+            "compartment",
+            self.subject,
+            Box(
+                CssNode(
+                    "heading",
+                    self.subject,
+                    Text(text=name),
+                ),
+                *(
+                    CssNode("operation", operation, Text(text=lazy_format(operation)))
+                    for operation in self.subject.ownedOperation
+                ),
+                draw=draw_top_separator,
             ),
-            *(
-                CssNode("operation", operation, Text(text=lazy_format(operation)))
-                for operation in self.subject.ownedOperation
-            ),
-            style={
-                "padding": (4, 4, 4, 4),
-                "min-height": 8,
-                "justify-content": JustifyContent.START,
-            },
-            draw=draw_top_separator,
         )

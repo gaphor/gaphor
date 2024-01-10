@@ -106,21 +106,20 @@ def enumerations_compartment(subject):
     def lazy_format(literal):
         return lambda: format(literal)
 
-    return Box(
-        *(
-            CssNode(
-                "enumeration",
-                literal,
-                Text(
-                    text=lazy_format(literal.name),
-                ),
-            )
-            for literal in subject.ownedLiteral
+    return CssNode(
+        "compartment",
+        subject,
+        Box(
+            *(
+                CssNode(
+                    "enumeration",
+                    literal,
+                    Text(
+                        text=lazy_format(literal.name),
+                    ),
+                )
+                for literal in subject.ownedLiteral
+            ),
+            draw=draw_top_separator,
         ),
-        style={
-            "padding": (4, 4, 4, 4),
-            "min-height": 8,
-            "justify-content": JustifyContent.START,
-        },
-        draw=draw_top_separator,
     )

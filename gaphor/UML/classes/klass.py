@@ -119,24 +119,23 @@ def attributes_compartment(subject):
     def lazy_format(attribute):
         return lambda: format(attribute)
 
-    return Box(
-        *(
-            CssNode(
-                "attribute",
-                attribute,
-                Text(
-                    text=lazy_format(attribute),
-                ),
-            )
-            for attribute in subject.ownedAttribute
-            if not attribute.association
+    return CssNode(
+        "compartment",
+        subject,
+        Box(
+            *(
+                CssNode(
+                    "attribute",
+                    attribute,
+                    Text(
+                        text=lazy_format(attribute),
+                    ),
+                )
+                for attribute in subject.ownedAttribute
+                if not attribute.association
+            ),
+            draw=draw_top_separator,
         ),
-        style={
-            "padding": (4, 4, 4, 4),
-            "min-height": 8,
-            "justify-content": JustifyContent.START,
-        },
-        draw=draw_top_separator,
     )
 
 
@@ -146,21 +145,20 @@ def operations_compartment(subject):
             operation, visibility=True, type=True, multiplicity=True, default=True
         )
 
-    return Box(
-        *(
-            CssNode(
-                "operation",
-                operation,
-                Text(
-                    text=lazy_format(operation),
-                ),
-            )
-            for operation in subject.ownedOperation
+    return CssNode(
+        "compartment",
+        subject,
+        Box(
+            *(
+                CssNode(
+                    "operation",
+                    operation,
+                    Text(
+                        text=lazy_format(operation),
+                    ),
+                )
+                for operation in subject.ownedOperation
+            ),
+            draw=draw_top_separator,
         ),
-        style={
-            "padding": (4, 4, 4, 4),
-            "min-height": 8,
-            "justify-content": JustifyContent.START,
-        },
-        draw=draw_top_separator,
     )

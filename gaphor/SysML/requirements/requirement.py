@@ -7,6 +7,7 @@ from gaphor.diagram.presentation import (
 )
 from gaphor.diagram.shapes import (
     Box,
+    CssNode,
     Text,
     TextAlign,
     draw_border,
@@ -78,28 +79,31 @@ class RequirementItem(Classified, ElementPresentation[Requirement]):
     def id_and_text_compartment(self):
         subject = self.subject
         if subject and (subject.externalId or subject.text):
-            return Box(
-                *(
-                    [
-                        Text(
-                            text=lambda: f"Id: {subject.externalId}",
-                            style={"text-align": TextAlign.LEFT},
-                        )
-                    ]
-                    if subject and subject.externalId
-                    else []
+            return CssNode(
+                "compartment",
+                self.subject,
+                Box(
+                    *(
+                        [
+                            Text(
+                                text=lambda: f"Id: {subject.externalId}",
+                                style={"text-align": TextAlign.LEFT},
+                            )
+                        ]
+                        if subject and subject.externalId
+                        else []
+                    ),
+                    *(
+                        [
+                            Text(
+                                text=lambda: f"Text: {subject.text}",
+                                style={"text-align": TextAlign.LEFT},
+                            )
+                        ]
+                        if subject and subject.text
+                        else []
+                    ),
+                    draw=draw_top_separator,
                 ),
-                *(
-                    [
-                        Text(
-                            text=lambda: f"Text: {subject.text}",
-                            style={"text-align": TextAlign.LEFT},
-                        )
-                    ]
-                    if subject and subject.text
-                    else []
-                ),
-                style={"padding": (4, 4, 4, 4), "min-height": 8},
-                draw=draw_top_separator,
             )
         return Box()
