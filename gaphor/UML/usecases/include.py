@@ -19,7 +19,6 @@ class IncludeItem(Named, LinePresentation):
                 text_stereotypes(self, lambda: [self.diagram.gettext("include")]),
                 Text(text=lambda: self.subject.name or ""),
             ),
-            style={"dash-style": (7.0, 5.0)},
         )
 
         self._handles[0].pos = (30, 20)
