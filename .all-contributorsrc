@@ -1354,6 +1354,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "bjornstromberg",
+      "name": "Björn Strömberg",
+      "avatar_url": "https://avatars.githubusercontent.com/u/5454791?v=4",
+      "profile": "https://github.com/bjornstromberg",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
