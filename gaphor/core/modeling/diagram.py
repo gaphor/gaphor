@@ -90,7 +90,7 @@ NO_ATTR = object()
 
 
 def rgetattr(obj, names):
-    """Recursively het a name, based on a list of names."""
+    """Recursively get a name, based on a list of names."""
     name, *tail = names
     v = getattr(obj, attrname(obj, name), NO_ATTR)
     if isinstance(v, (collection, list, tuple)):
