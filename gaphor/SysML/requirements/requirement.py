@@ -21,7 +21,7 @@ from gaphor.UML.classes.klass import (
     operations_compartment,
 )
 from gaphor.UML.classes.stereotype import stereotype_compartments, stereotype_watches
-from gaphor.UML.recipes import stereotypes_str
+from gaphor.UML.shapes import text_stereotypes
 
 
 @represents(Requirement)
@@ -51,11 +51,7 @@ class RequirementItem(Classified, ElementPresentation[Requirement]):
     def update_shapes(self, event=None):
         self.shape = Box(
             Box(
-                Text(
-                    text=lambda: stereotypes_str(
-                        self.subject, [self.diagram.gettext("requirement")]
-                    ),
-                ),
+                text_stereotypes(self, lambda: [self.diagram.gettext("requirement")]),
                 text_name(self),
                 text_from_package(self),
                 style={

@@ -9,7 +9,7 @@ from gaphor.diagram.presentation import (
     text_from_package,
     text_name,
 )
-from gaphor.diagram.shapes import Box, Text, draw_border
+from gaphor.diagram.shapes import Box, draw_border
 from gaphor.diagram.support import represents
 from gaphor.UML.classes.klass import (
     attribute_watches,
@@ -18,7 +18,7 @@ from gaphor.UML.classes.klass import (
     operations_compartment,
 )
 from gaphor.UML.classes.stereotype import stereotype_compartments, stereotype_watches
-from gaphor.UML.recipes import stereotypes_str
+from gaphor.UML.shapes import text_stereotypes
 
 log = logging.getLogger(__name__)
 
@@ -65,11 +65,7 @@ class DataTypeItem(Classified, ElementPresentation[UML.DataType]):
     def update_shapes(self, event=None):
         self.shape = Box(
             Box(
-                Text(
-                    text=lambda: stereotypes_str(
-                        self.subject, self.additional_stereotypes()
-                    ),
-                ),
+                text_stereotypes(self, self.additional_stereotypes),
                 text_name(self),
                 text_from_package(self),
                 style={"padding": (12, 4, 12, 4)},

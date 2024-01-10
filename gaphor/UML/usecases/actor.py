@@ -11,9 +11,9 @@ from gaphas.solver import REQUIRED, STRONG, variable
 
 from gaphor import UML
 from gaphor.diagram.presentation import Classified, ElementPresentation, text_name
-from gaphor.diagram.shapes import Box, IconBox, Text, stroke
+from gaphor.diagram.shapes import Box, IconBox, stroke
 from gaphor.diagram.support import represents
-from gaphor.UML.recipes import stereotypes_str
+from gaphor.UML.shapes import text_stereotypes
 
 HEAD = 11
 ARM = 19
@@ -72,9 +72,7 @@ class ActorItem(Classified, ElementPresentation):
             Box(
                 draw=draw_actor,
             ),
-            Text(
-                text=lambda: stereotypes_str(self.subject),
-            ),
+            text_stereotypes(self),
             text_name(self),
         )
 

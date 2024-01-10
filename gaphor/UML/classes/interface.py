@@ -84,7 +84,7 @@ from gaphor.diagram.presentation import (
     text_from_package,
     text_name,
 )
-from gaphor.diagram.shapes import Box, IconBox, Text, draw_border, stroke
+from gaphor.diagram.shapes import Box, IconBox, draw_border, stroke
 from gaphor.diagram.support import represents
 from gaphor.UML.classes.klass import (
     attribute_watches,
@@ -93,7 +93,7 @@ from gaphor.UML.classes.klass import (
     operations_compartment,
 )
 from gaphor.UML.classes.stereotype import stereotype_compartments
-from gaphor.UML.recipes import stereotypes_str
+from gaphor.UML.shapes import text_stereotypes
 
 
 class Folded(Enum):
@@ -279,11 +279,7 @@ class InterfaceItem(Classified, ElementPresentation):
     def class_shape(self):
         return Box(
             Box(
-                Text(
-                    text=lambda: stereotypes_str(
-                        self.subject, (self.diagram.gettext("interface"),)
-                    ),
-                ),
+                text_stereotypes(self, lambda: [self.diagram.gettext("interface")]),
                 text_name(self),
                 text_from_package(self),
                 style={"padding": (12, 4, 12, 4)},
@@ -320,9 +316,7 @@ class InterfaceItem(Classified, ElementPresentation):
             Box(
                 draw=self.draw_interface_ball_and_socket,
             ),
-            Text(
-                text=lambda: stereotypes_str(self.subject),
-            ),
+            text_stereotypes(self),
             text_name(self),
         )
 

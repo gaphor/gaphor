@@ -5,12 +5,12 @@ And by extension SysML item flow.
 
 from gaphor.core.format import format
 from gaphor.diagram.presentation import Presentation
-from gaphor.diagram.shapes import Text, cairo_state
+from gaphor.diagram.shapes import CssNode, Shape, Text, cairo_state
 from gaphor.UML.classes.association import get_center_pos
 from gaphor.UML.recipes import stereotypes_str
 
 
-def shape_information_flow(presentation: Presentation, attribute: str) -> list[Text]:
+def shape_information_flow(presentation: Presentation, attribute: str) -> list[Shape]:
     return [
         Text(
             text=lambda: ", ".join(
@@ -18,13 +18,17 @@ def shape_information_flow(presentation: Presentation, attribute: str) -> list[T
             )
         ),
         # Also support SysML ItemFlow:
-        Text(
-            text=lambda: stereotypes_str(
-                iflow[0].itemProperty.type,
-                raaml_stereotype_workaround(iflow[0].itemProperty.type),
-            )
-            if (iflow := getattr(presentation.subject, attribute))
-            else ""
+        CssNode(
+            "stereotypes",
+            presentation.subject,
+            Text(
+                text=lambda: stereotypes_str(
+                    iflow[0].itemProperty.type,
+                    raaml_stereotype_workaround(iflow[0].itemProperty.type),
+                )
+                if (iflow := getattr(presentation.subject, attribute))
+                else ""
+            ),
         ),
         Text(
             text=lambda: format(iflow[0].itemProperty, type=True)

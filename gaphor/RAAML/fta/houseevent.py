@@ -9,11 +9,11 @@ from gaphor.diagram.presentation import (
     text_from_package,
     text_name,
 )
-from gaphor.diagram.shapes import Box, IconBox, Text, stroke
+from gaphor.diagram.shapes import Box, IconBox, stroke
 from gaphor.diagram.support import represents
 from gaphor.RAAML import raaml
 from gaphor.RAAML.fta.constants import DEFAULT_FTA_MAJOR, DEFAULT_FTA_MINOR
-from gaphor.UML.recipes import stereotypes_str
+from gaphor.UML.shapes import text_stereotypes
 
 
 @represents(raaml.HouseEvent)
@@ -30,11 +30,7 @@ class HouseEventItem(Classified, ElementPresentation):
             Box(
                 draw=draw_house_event,
             ),
-            Text(
-                text=lambda: stereotypes_str(
-                    self.subject, [self.diagram.gettext("House Event")]
-                ),
-            ),
+            text_stereotypes(self, lambda: [self.diagram.gettext("House Event")]),
             text_name(self),
             text_from_package(self),
         )

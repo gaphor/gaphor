@@ -6,9 +6,9 @@ from gaphor import UML
 from gaphor.core.modeling import DrawContext
 from gaphor.core.modeling.diagram import Diagram
 from gaphor.diagram.presentation import LinePresentation
-from gaphor.diagram.shapes import Box, Text
+from gaphor.diagram.shapes import Box
 from gaphor.diagram.support import represents
-from gaphor.UML.recipes import stereotypes_str
+from gaphor.UML.shapes import text_stereotypes
 
 
 @represents(
@@ -21,11 +21,7 @@ class GeneralizationItem(LinePresentation):
         super().__init__(
             diagram,
             id,
-            shape_middle=Box(
-                Text(
-                    text=lambda: stereotypes_str(self.subject),
-                )
-            ),
+            shape_middle=Box(text_stereotypes(self)),
             style={"dash-style": ()},
         )
 

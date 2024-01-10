@@ -10,7 +10,7 @@ from gaphor.core.modeling.properties import relation_one
 from gaphor.diagram.presentation import ElementPresentation, Named
 from gaphor.diagram.shapes import Box, IconBox, Text, ellipse, stroke
 from gaphor.diagram.support import represents
-from gaphor.UML.recipes import stereotypes_str
+from gaphor.UML.shapes import text_stereotypes
 
 
 @represents(UML.Pseudostate)
@@ -47,9 +47,7 @@ class PseudostateItem(ElementPresentation, Named):
 
         self.shape = IconBox(
             Box(draw=draw),
-            Text(
-                text=lambda: stereotypes_str(self.subject),
-            ),
+            text_stereotypes(self),
             Text(text=lambda: self.subject.name or ""),
         )
 

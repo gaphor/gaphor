@@ -83,6 +83,10 @@ swimlane {
   font-size: x-small;
 }
 
+:is(activity, interaction) stereotypes {
+  text-align: left;
+}
+
 * heading {
   padding: 0 0 4 0;
   font-size: x-small;

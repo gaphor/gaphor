@@ -7,9 +7,9 @@ from gaphor.diagram.presentation import (
     text_from_package,
     text_name,
 )
-from gaphor.diagram.shapes import Box, JustifyContent, Text, cairo_state, stroke
+from gaphor.diagram.shapes import Box, JustifyContent, cairo_state, stroke
 from gaphor.diagram.support import represents
-from gaphor.UML.recipes import stereotypes_str
+from gaphor.UML.shapes import text_stereotypes
 
 
 @represents(UML.Package)
@@ -25,13 +25,11 @@ class PackageItem(Named, ElementPresentation):
 
     def update_shapes(self, event=None):
         self.shape = Box(
-            Text(
-                text=lambda: stereotypes_str(
-                    self.subject,
-                    isinstance(self.subject, UML.Profile)
-                    and (self.diagram.gettext("profile"),)
-                    or (),
-                ),
+            text_stereotypes(
+                self,
+                lambda: [self.diagram.gettext("profile")]
+                if isinstance(self.subject, UML.Profile)
+                else [],
             ),
             text_name(self),
             text_from_package(self),

@@ -11,7 +11,7 @@ from gaphor.core.styling import JustifyContent, TextAlign
 from gaphor.diagram.presentation import ElementPresentation, Named
 from gaphor.diagram.shapes import Box, Text, draw_top_separator, stroke
 from gaphor.diagram.support import represents
-from gaphor.UML.recipes import stereotypes_str
+from gaphor.UML.shapes import text_stereotypes
 from gaphor.UML.states.region import region_compartment
 
 
@@ -62,9 +62,7 @@ class StateItem(ElementPresentation[UML.State], Named):
 
         self.shape = Box(
             Box(
-                Text(
-                    text=lambda: stereotypes_str(self.subject),
-                ),
+                text_stereotypes(self),
                 Text(text=lambda: self.subject.name or ""),
                 style={"padding": (4, 4, 4, 4)},
             ),

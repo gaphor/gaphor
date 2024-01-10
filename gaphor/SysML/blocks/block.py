@@ -17,7 +17,7 @@ from gaphor.diagram.support import represents
 from gaphor.SysML.sysml import Block, ValueType
 from gaphor.UML.classes.klass import attributes_compartment, operation_watches
 from gaphor.UML.classes.stereotype import stereotype_compartments, stereotype_watches
-from gaphor.UML.recipes import stereotypes_str
+from gaphor.UML.shapes import text_stereotypes
 from gaphor.UML.umlfmt import format_operation, format_property
 
 
@@ -66,11 +66,7 @@ class BlockItem(Classified, ElementPresentation[Block]):
     def update_shapes(self, event=None):
         self.shape = Box(
             Box(
-                Text(
-                    text=lambda: stereotypes_str(
-                        self.subject, self.additional_stereotypes()
-                    )
-                ),
+                text_stereotypes(self, self.additional_stereotypes),
                 text_name(self),
                 text_from_package(self),
                 style={

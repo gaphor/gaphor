@@ -9,7 +9,7 @@ from gaphor import UML
 from gaphor.diagram.presentation import LinePresentation, Named
 from gaphor.diagram.shapes import Box, Text, draw_arrow_tail
 from gaphor.diagram.support import represents
-from gaphor.UML.recipes import stereotypes_str
+from gaphor.UML.shapes import text_stereotypes
 
 
 @represents(UML.ControlFlow, head=UML.ControlFlow.source, tail=UML.ControlFlow.target)
@@ -31,9 +31,7 @@ class ControlFlowItem(Named, LinePresentation):
                 or ""
             ),
             shape_tail=Box(
-                Text(
-                    text=lambda: stereotypes_str(self.subject),
-                ),
+                text_stereotypes(self),
                 Text(text=lambda: self.subject.name or ""),
             ),
         )
@@ -65,9 +63,7 @@ class ObjectFlowItem(Named, LinePresentation):
                 or ""
             ),
             shape_tail=Box(
-                Text(
-                    text=lambda: stereotypes_str(self.subject),
-                ),
+                text_stereotypes(self),
                 Text(text=lambda: self.subject.name or ""),
             ),
         )
