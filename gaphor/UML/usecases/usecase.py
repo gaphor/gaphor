@@ -21,9 +21,6 @@ class UseCaseItem(Classified, ElementPresentation):
     def update_shapes(self, event=None):
         self.shape = Box(
             text_stereotypes(self),
-            Box(
-                text_name(self),
-                style={"padding": (4, 4, 4, 4)},
-            ),
+            text_name(self),
             draw=draw_ellipse,
         )
