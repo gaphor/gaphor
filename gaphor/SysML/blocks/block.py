@@ -2,7 +2,7 @@ from gaphor.core.modeling.properties import attribute
 from gaphor.diagram.presentation import (
     Classified,
     ElementPresentation,
-    from_package_str,
+    text_from_package,
     text_name,
 )
 from gaphor.diagram.shapes import (
@@ -72,10 +72,7 @@ class BlockItem(Classified, ElementPresentation[Block]):
                     )
                 ),
                 text_name(self),
-                Text(
-                    text=lambda: from_package_str(self),
-                    style={"font-size": "x-small"},
-                ),
+                text_from_package(self),
                 style={
                     "padding": (12, 4, 12, 4),
                     "justify-content": JustifyContent.START,

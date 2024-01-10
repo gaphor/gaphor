@@ -6,7 +6,7 @@ from gaphor.core.modeling import DrawContext
 from gaphor.diagram.presentation import (
     Classified,
     ElementPresentation,
-    from_package_str,
+    text_from_package,
     text_name,
 )
 from gaphor.diagram.shapes import Box, IconBox, Text, stroke
@@ -36,10 +36,7 @@ class NOTItem(Classified, ElementPresentation):
                 ),
             ),
             text_name(self),
-            Text(
-                text=lambda: from_package_str(self),
-                style={"font-size": "x-small"},
-            ),
+            text_from_package(self),
         )
 
 

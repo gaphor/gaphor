@@ -79,6 +79,10 @@ swimlane {
   font-style: italic;
 }
 
+* from {
+  font-size: x-small;
+}
+
 * heading {
   padding: 0 0 4 0;
   font-size: x-small;
