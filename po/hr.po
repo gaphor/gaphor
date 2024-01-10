@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gaphor\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2024-01-06 21:08-0400\n"
-"PO-Revision-Date: 2024-01-09 21:06+0000\n"
+"PO-Revision-Date: 2024-01-11 16:06+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language-Team: Croatian <https://hosted.weblate.org/projects/gaphor/gaphor/"
 "hr/>\n"
@@ -517,7 +517,7 @@ msgstr "reference"
 #: gaphor/SysML/blocks/block.py:115 gaphor/SysML/blocks/interfaceblock.py:101
 #: gaphor/SysML/blocks/block.py:122 gaphor/SysML/blocks/interfaceblock.py:108
 msgid "values"
-msgstr "vrijednost"
+msgstr "vrijednosti"
 
 #: gaphor/SysML/blocks/block.py:134 gaphor/SysML/blocks/interfaceblock.py:120
 #: gaphor/SysML/blocks/block.py:140 gaphor/SysML/blocks/interfaceblock.py:126
@@ -1166,9 +1166,8 @@ msgstr "Stereotipi"
 #: gaphor/UML/classes/propertypages.ui:141
 #: gaphor/UML/classes/propertypages.ui:259
 #: gaphor/UML/profiles/propertypages.ui:74
-#, fuzzy
 msgid "Values"
-msgstr "vrijednost"
+msgstr "Vrijednosti"
 
 #: gaphor/UML/classes/propertypages.ui:167
 #: gaphor/UML/classes/propertypages.ui:184
@@ -1445,9 +1444,8 @@ msgid "Show Stereotypes"
 msgstr "Prikaži stereotipe"
 
 #: gaphor/UML/profiles/stereotypepropertypages.py:139
-#, fuzzy
 msgid "New Slot Value…"
-msgstr "Nova vrsta vrijednosti"
+msgstr "Nova „slot” vrijednost …"
 
 #: gaphor/UML/states/propertypages.ui:9
 msgid "Activities"
@@ -2626,7 +2624,7 @@ msgstr "Sve datoteke"
 
 #: gaphor/ui/filedialog.py:112
 msgid "Flatpak Document Portal"
-msgstr ""
+msgstr "Portal Flatpak dokumenta"
 
 #: gaphor/ui/filemanager.py:41
 msgid ""
