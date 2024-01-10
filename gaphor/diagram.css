@@ -64,6 +64,10 @@ partition {
   justify-content: stretch;
 }
 
+usecase {
+  padding: 4;
+}
+
 swimlane {
   min-width: 150;
   padding: 4 12 4 12;
@@ -112,6 +116,16 @@ compartment {
     text-decoration: underline;
 }
 
+component {
+  padding: 4 32 4 4;
+}
+
+component:not([children=""]) {
+  justify-content: start;
+}
+
+/* C4 model */
+
 c4container, c4person {
   padding: 4 4 4 4;
 }
@@ -135,6 +149,8 @@ c4database {
 :is(c4container, c4database, c4person) description {
   padding: 4 4 0 4;
 }
+
+/* SysML */
 
 requirement {
   justify-content: start;

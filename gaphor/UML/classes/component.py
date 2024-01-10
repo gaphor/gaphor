@@ -2,9 +2,8 @@
 
 from gaphor import UML
 from gaphor.core.modeling.properties import attribute
-from gaphor.core.styling import JustifyContent
 from gaphor.diagram.presentation import Classified, ElementPresentation, text_name
-from gaphor.diagram.shapes import Box, cairo_state, draw_border
+from gaphor.diagram.shapes import Box, cairo_state, draw_all, draw_border
 from gaphor.diagram.support import represents
 from gaphor.UML.classes.stereotype import stereotype_compartments
 from gaphor.UML.shapes import text_stereotypes
@@ -29,22 +28,10 @@ class ComponentItem(Classified, ElementPresentation):
 
     def update_shapes(self, event=None):
         self.shape = Box(
-            Box(
-                text_stereotypes(self),
-                text_name(self),
-                style={
-                    "padding": (4, 32, 4, 4),
-                    "justify-content": JustifyContent.START,
-                },
-                draw=draw_component_icon,
-            ),
+            text_stereotypes(self),
+            text_name(self),
             *(self.show_stereotypes and stereotype_compartments(self.subject) or []),
-            style={
-                "justify-content": JustifyContent.START
-                if self.diagram and self.children
-                else JustifyContent.CENTER,
-            },
-            draw=draw_border,
+            draw=draw_all(draw_border, draw_component_icon),
         )
 
 

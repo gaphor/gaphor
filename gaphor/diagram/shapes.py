@@ -177,6 +177,14 @@ def draw_diamond(
     stroke(context, fill=True)
 
 
+def draw_all(*draw_functions):
+    def _draw(box, context, bounding_box):
+        for draw in draw_functions:
+            draw(box, context, bounding_box)
+
+    return _draw
+
+
 class Orientation(Enum):
     VERTICAL = "v"
     HORIZONTAL = "h"
