@@ -5,7 +5,7 @@ from gaphor.core.modeling.properties import attribute
 from gaphor.diagram.presentation import Classified, ElementPresentation, text_name
 from gaphor.diagram.shapes import Box, cairo_state, draw_all, draw_border
 from gaphor.diagram.support import represents
-from gaphor.UML.classes.stereotype import stereotype_compartments
+from gaphor.UML.classes.stereotype import stereotype_compartments, stereotype_watches
 from gaphor.UML.shapes import text_stereotypes
 
 
@@ -16,11 +16,7 @@ class ArtifactItem(Classified, ElementPresentation):
 
         self.watch("show_stereotypes", self.update_shapes)
         self.watch("subject[NamedElement].name")
-        self.watch("subject.appliedStereotype", self.update_shapes)
-        self.watch("subject.appliedStereotype.classifier.name")
-        self.watch("subject.appliedStereotype.slot", self.update_shapes)
-        self.watch("subject.appliedStereotype.slot.definingFeature.name")
-        self.watch("subject.appliedStereotype.slot.value", self.update_shapes)
+        stereotype_watches(self)
 
     show_stereotypes: attribute[int] = attribute("show_stereotypes", int)
 
