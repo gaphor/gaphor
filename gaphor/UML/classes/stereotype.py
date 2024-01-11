@@ -1,10 +1,11 @@
 """Support code for dealing with stereotypes in diagrams."""
 
 from gaphor.core.format import format
+from gaphor.diagram.presentation import ElementPresentation
 from gaphor.diagram.shapes import Box, CssNode, Text, draw_top_separator
 
 
-def stereotype_watches(presentation):
+def stereotype_watches(presentation: ElementPresentation) -> None:
     presentation.watch("subject.appliedStereotype", presentation.update_shapes).watch(
         "subject.appliedStereotype.classifier.name"
     ).watch("subject.appliedStereotype.slot", presentation.update_shapes).watch(

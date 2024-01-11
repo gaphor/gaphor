@@ -8,7 +8,7 @@ from gaphor.core.styling import JustifyContent
 from gaphor.diagram.presentation import ElementPresentation, Named
 from gaphor.diagram.shapes import Box, CssNode, Text, draw_border
 from gaphor.diagram.support import represents
-from gaphor.UML.classes.stereotype import stereotype_compartments
+from gaphor.UML.classes.stereotype import stereotype_compartments, stereotype_watches
 from gaphor.UML.shapes import text_stereotypes
 from gaphor.UML.umlfmt import format_property
 
@@ -23,12 +23,8 @@ class PropertyItem(Named, ElementPresentation[UML.Property]):
         self.watch("subject[Property].type.name")
         self.watch("subject[Property].lowerValue")
         self.watch("subject[Property].upperValue")
-        self.watch("subject.appliedStereotype", self.update_shapes)
-        self.watch("subject.appliedStereotype.classifier.name")
-        self.watch("subject.appliedStereotype.slot", self.update_shapes)
-        self.watch("subject.appliedStereotype.slot.definingFeature.name")
-        self.watch("subject.appliedStereotype.slot.value", self.update_shapes)
         self.watch("subject[Property].aggregation", self.update_shapes)
+        stereotype_watches(self)
 
     show_stereotypes: attribute[int] = attribute("show_stereotypes", int)
 

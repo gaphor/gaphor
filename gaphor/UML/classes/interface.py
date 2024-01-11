@@ -92,7 +92,7 @@ from gaphor.UML.classes.klass import (
     operation_watches,
     operations_compartment,
 )
-from gaphor.UML.classes.stereotype import stereotype_compartments
+from gaphor.UML.classes.stereotype import stereotype_compartments, stereotype_watches
 from gaphor.UML.shapes import text_stereotypes
 
 
@@ -188,14 +188,11 @@ class InterfaceItem(Classified, ElementPresentation):
         ).watch("show_operations", self.update_shapes).watch(
             "subject[NamedElement].name"
         ).watch("subject[NamedElement].namespace.name").watch(
-            "subject.appliedStereotype", self.update_shapes
-        ).watch("subject.appliedStereotype.classifier.name").watch(
-            "subject.appliedStereotype.slot", self.update_shapes
-        ).watch("subject.appliedStereotype.slot.definingFeature.name").watch(
-            "subject.appliedStereotype.slot.value", self.update_shapes
-        ).watch("subject[Interface].supplierDependency", self.update_shapes)
+            "subject[Interface].supplierDependency", self.update_shapes
+        )
         attribute_watches(self, "Interface")
         operation_watches(self, "Interface")
+        stereotype_watches(self)
 
     show_stereotypes: attribute[int] = attribute("show_stereotypes", int)
 
