@@ -53,7 +53,7 @@ jobs:
         run: pip install babel && python po/check-babel.py
       - name: Check Poetry lock file integrity
         run: |
-          pipx install --python python${{ env.python_version }} --pip-args=--constraint=.github/constraints.txt poetry
+          python${{ env.python_version }} -m pip install --constraint=.github/constraints.txt poetry
           poetry config virtualenvs.in-project true
           poetry check
 
@@ -83,11 +83,6 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Set ownership of checkout directory
         run: chown -R $(id -u):$(id -g) $PWD
-      - name: Install pipx
-        run: |
-          python${{ matrix.python_version }} -m ensurepip
-          py -${{ matrix.python_version }} -m pip install pipx
-          echo "/github/home/.local/bin" >> $GITHUB_PATH
       - name: Use Python Dependency Cache
         uses: actions/cache@704facf57e6136b1bc63b828d79edcd491f0ee84 # v3.3.2
         with:
@@ -97,7 +92,7 @@ jobs:
         id: install
         uses: ./.github/actions/install
         with:
-          python-version: ${{ matrix.python_version }}
+          python-command: python${{ matrix.python_version }}
       - name: Run Gaphor Tests
         run: xvfb-run poetry run pytest --cov
       - name: Upload Code Coverage to Code Climate
@@ -194,7 +189,7 @@ jobs:
         id: install
         uses: ./.github/actions/install
         with:
-          python-version: python${{ env.python_version }}
+          python-command: python${{ env.python_version }}
       - name: Run Gaphor Tests
         run: poetry run pytest --cov
       - name: Create macOS Application
@@ -334,10 +329,6 @@ jobs:
         uses: actions/setup-python@0a5c61591373683505ea898e09a3ea4f39ef2b9c # v5.0.0
         with:
           python-version: ${{ env.python_version }}
-      - name: Install pipx
-        run: |
-          python -m pip install pipx
-          pipx ensurepath
       - name: Use Python Dependency Cache
         uses: actions/cache@704facf57e6136b1bc63b828d79edcd491f0ee84 # v3.3.2
         with:
@@ -348,7 +339,7 @@ jobs:
         id: install
         uses: ./.github/actions/install
         with:
-          python-version: ${{ env.python_version }}
+          python-command: py -${{ env.python_version }}
       - name: Run Gaphor Tests
         run: poetry run pytest --cov
       - name: Create Windows Executables
