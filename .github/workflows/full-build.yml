@@ -107,13 +107,13 @@ jobs:
         run: poetry build
       - name: Upload gaphor-${{ steps.install.outputs.version }}.tar.gz
         if: ${{ matrix.python_version == env.python_version }}
-        uses: actions/upload-artifact@c7d193f32edcb7bfad88892161225aeda64e9392 # v4.0.0
+        uses: actions/upload-artifact@1eb3cb2b3e0f29609092a73eb033bb759a334595 # v4.1.0
         with:
           name: gaphor-${{ steps.install.outputs.version }}.tar.gz
           path: dist/gaphor-${{ steps.install.outputs.version }}.tar.gz
       - name: Upload gaphor-${{ steps.install.outputs.version }}-py3-none-any.whl
         if: ${{ matrix.python_version == env.python_version }}
-        uses: actions/upload-artifact@c7d193f32edcb7bfad88892161225aeda64e9392 # v4.0.0
+        uses: actions/upload-artifact@1eb3cb2b3e0f29609092a73eb033bb759a334595 # v4.1.0
         with:
           name: gaphor-${{ steps.install.outputs.version }}-py3-none-any.whl
           path: dist/gaphor-${{ steps.install.outputs.version }}-py3-none-any.whl
