@@ -25,7 +25,7 @@ jobs:
       - name: Install Linux Dependencies
         run: >
           dnf install -y gcc git graphviz pkg-config python-launcher upx
-          xorg-x11-server-Xvfb gtk4 gobject-introspection-devel
+          mutter dbus-x11 gtk4 gobject-introspection-devel
           cairo-gobject-devel gtksourceview5-devel libadwaita-devel cairo-devel
           python${{ env.python_version }}-devel
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
@@ -49,8 +49,12 @@ jobs:
         with:
           python-command: python${{ env.python_version }}
       - name: Test with Hypothesis
-        run: xvfb-run poetry run pytest -m hypothesis --hypothesis-profile=ci
-        shell: bash
+        run: |
+          export XDG_RUNTIME_DIR=/run/user/$(id -u)
+          mkdir -p $XDG_RUNTIME_DIR
+          dbus-launch --auto-syntax > $XDG_RUNTIME_DIR/dbus-env
+          source $XDG_RUNTIME_DIR/dbus-env
+          mutter --wayland --no-x11 --sm-disable --headless -- poetry run pytest --cov
       - name: Create Issue on Failure
         uses: JasonEtco/create-an-issue@e27dddc79c92bc6e4562f268fffa5ed752639abd # v2.9.1
         if: failure()

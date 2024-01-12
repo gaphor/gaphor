@@ -75,7 +75,7 @@ jobs:
       - name: Install Linux Dependencies
         run: >
           dnf install -y gcc git graphviz pkg-config python-launcher upx
-          xorg-x11-server-Xvfb gtk4 gobject-introspection-devel
+          mutter dbus-x11 gtk4 gobject-introspection-devel
           cairo-gobject-devel gtksourceview5-devel libadwaita-devel cairo-devel
           python${{ matrix.python_version }}-devel
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
@@ -94,7 +94,12 @@ jobs:
         with:
           python-command: python${{ matrix.python_version }}
       - name: Run Gaphor Tests
-        run: xvfb-run poetry run pytest --cov
+        run: |
+          export XDG_RUNTIME_DIR=/run/user/$(id -u)
+          mkdir -p $XDG_RUNTIME_DIR
+          dbus-launch --auto-syntax > $XDG_RUNTIME_DIR/dbus-env
+          source $XDG_RUNTIME_DIR/dbus-env
+          mutter --wayland --no-x11 --sm-disable --headless -- poetry run pytest --cov
       - name: Upload Code Coverage to Code Climate
         if: ${{ matrix.python_version == env.python_version }}
         uses: paambaati/codeclimate-action@a1831d7162ea1fbc612ffe5fb3b90278b7999d59 # v5.0.0
