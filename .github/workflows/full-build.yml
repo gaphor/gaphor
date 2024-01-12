@@ -94,11 +94,10 @@ jobs:
         with:
           python-command: python${{ matrix.python_version }}
       - name: Run Gaphor Tests
+        env:
+          XDG_RUNTIME_DIR: /tmp
         run: |
-          export XDG_RUNTIME_DIR=/run/user/$(id -u)
-          mkdir -p $XDG_RUNTIME_DIR
-          dbus-launch --auto-syntax > $XDG_RUNTIME_DIR/dbus-env
-          source $XDG_RUNTIME_DIR/dbus-env
+          eval $(dbus-launch --auto-syntax)
           mutter --wayland --no-x11 --sm-disable --headless -- poetry run pytest --cov
       - name: Upload Code Coverage to Code Climate
         if: ${{ matrix.python_version == env.python_version }}
