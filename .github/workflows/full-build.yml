@@ -53,7 +53,7 @@ jobs:
         run: pip install babel && python po/check-babel.py
       - name: Check Poetry lock file integrity
         run: |
-          pipx install --python python${{ env.python_version }} --pip-args=--constraint=.github/constraints.txt poetry
+          python${{ env.python_version }} -m pip install --constraint=.github/constraints.txt poetry
           poetry config virtualenvs.in-project true
           poetry check
 
@@ -83,13 +83,8 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Set ownership of checkout directory
         run: chown -R $(id -u):$(id -g) $PWD
-      - name: Install pipx
-        run: |
-          python${{ matrix.python_version }} -m ensurepip
-          py -${{ matrix.python_version }} -m pip install pipx
-          echo "/github/home/.local/bin" >> $GITHUB_PATH
       - name: Use Python Dependency Cache
-        uses: actions/cache@704facf57e6136b1bc63b828d79edcd491f0ee84 # v3.3.2
+        uses: actions/cache@e12d46a63a90f2fae62d114769bbf2a179198b5c # v3.3.3
         with:
           path: ~/.cache/pip
           key: ${{ runner.os }}-python${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}-39
@@ -97,7 +92,7 @@ jobs:
         id: install
         uses: ./.github/actions/install
         with:
-          python-version: ${{ matrix.python_version }}
+          python-command: python${{ matrix.python_version }}
       - name: Run Gaphor Tests
         run: xvfb-run poetry run pytest --cov
       - name: Upload Code Coverage to Code Climate
@@ -112,13 +107,13 @@ jobs:
         run: poetry build
       - name: Upload gaphor-${{ steps.install.outputs.version }}.tar.gz
         if: ${{ matrix.python_version == env.python_version }}
-        uses: actions/upload-artifact@c7d193f32edcb7bfad88892161225aeda64e9392 # v4.0.0
+        uses: actions/upload-artifact@1eb3cb2b3e0f29609092a73eb033bb759a334595 # v4.1.0
         with:
           name: gaphor-${{ steps.install.outputs.version }}.tar.gz
           path: dist/gaphor-${{ steps.install.outputs.version }}.tar.gz
       - name: Upload gaphor-${{ steps.install.outputs.version }}-py3-none-any.whl
         if: ${{ matrix.python_version == env.python_version }}
-        uses: actions/upload-artifact@c7d193f32edcb7bfad88892161225aeda64e9392 # v4.0.0
+        uses: actions/upload-artifact@1eb3cb2b3e0f29609092a73eb033bb759a334595 # v4.1.0
         with:
           name: gaphor-${{ steps.install.outputs.version }}-py3-none-any.whl
           path: dist/gaphor-${{ steps.install.outputs.version }}-py3-none-any.whl
@@ -140,7 +135,7 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Use Python Dependency Cache
-        uses: actions/cache@704facf57e6136b1bc63b828d79edcd491f0ee84 # v3.3.2
+        uses: actions/cache@e12d46a63a90f2fae62d114769bbf2a179198b5c # v3.3.3
         with:
           path: ~/.cache/pip
           key: ${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}-22.04
@@ -185,7 +180,7 @@ jobs:
         with:
           python-version: ${{ env.python_version }}
       - name: Use Python Dependency Cache
-        uses: actions/cache@704facf57e6136b1bc63b828d79edcd491f0ee84 # v3.3.2
+        uses: actions/cache@e12d46a63a90f2fae62d114769bbf2a179198b5c # v3.3.3
         with:
           path: ~/Library/Caches/pip
           key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
@@ -194,7 +189,7 @@ jobs:
         id: install
         uses: ./.github/actions/install
         with:
-          python-version: python${{ env.python_version }}
+          python-command: python${{ env.python_version }}
       - name: Run Gaphor Tests
         run: poetry run pytest --cov
       - name: Create macOS Application
@@ -220,7 +215,7 @@ jobs:
         with:
           egress-policy: audit
 
-      - uses: actions/download-artifact@f44cd7b40bfd40b6aa1cc1b9b5b7bf03d3c67110 # v4.1.0
+      - uses: actions/download-artifact@6b208ae046db98c579e8a3aa621ab581ff575935 # v4.1.1
         id: download
         with:
           name: ${{ needs.macos.outputs.artifact }}
@@ -251,7 +246,7 @@ jobs:
       - name: GTK binaries create dir
         run: mkdir C:\gtk-build\gtk\x64\release
       - name: GTK binaries get from cache
-        uses: actions/cache@704facf57e6136b1bc63b828d79edcd491f0ee84 # v3.3.2
+        uses: actions/cache@e12d46a63a90f2fae62d114769bbf2a179198b5c # v3.3.3
         id: cache
         with:
           path: C:\gtk-build\gtk\x64\release\**
@@ -311,7 +306,7 @@ jobs:
       - name: Create GTK binaries dir
         run: mkdir C:\gtk-build\gtk\x64\release
       - name: Get GTK binaries from cache
-        uses: actions/cache/restore@704facf57e6136b1bc63b828d79edcd491f0ee84 # v3.3.2
+        uses: actions/cache/restore@e12d46a63a90f2fae62d114769bbf2a179198b5c # v3.3.3
         id: cache
         with:
           path: C:\gtk-build\gtk\x64\release\**
@@ -334,12 +329,8 @@ jobs:
         uses: actions/setup-python@0a5c61591373683505ea898e09a3ea4f39ef2b9c # v5.0.0
         with:
           python-version: ${{ env.python_version }}
-      - name: Install pipx
-        run: |
-          python -m pip install pipx
-          pipx ensurepath
       - name: Use Python Dependency Cache
-        uses: actions/cache@704facf57e6136b1bc63b828d79edcd491f0ee84 # v3.3.2
+        uses: actions/cache@e12d46a63a90f2fae62d114769bbf2a179198b5c # v3.3.3
         with:
           path: ~\AppData\Local\pip\Cache
           key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
@@ -348,7 +339,7 @@ jobs:
         id: install
         uses: ./.github/actions/install
         with:
-          python-version: ${{ env.python_version }}
+          python-command: py -${{ env.python_version }}
       - name: Run Gaphor Tests
         run: poetry run pytest --cov
       - name: Create Windows Executables
@@ -370,7 +361,7 @@ jobs:
         with:
           egress-policy: audit
 
-      - uses: actions/download-artifact@f44cd7b40bfd40b6aa1cc1b9b5b7bf03d3c67110 # v4.1.0
+      - uses: actions/download-artifact@6b208ae046db98c579e8a3aa621ab581ff575935 # v4.1.1
         with:
           name: ${{ needs.windows.outputs.installer }}
           path: .
@@ -402,11 +393,11 @@ jobs:
         with:
           egress-policy: audit
 
-      - uses: actions/download-artifact@f44cd7b40bfd40b6aa1cc1b9b5b7bf03d3c67110 # v4.1.0
+      - uses: actions/download-artifact@6b208ae046db98c579e8a3aa621ab581ff575935 # v4.1.1
         with:
           name: ${{ needs.linux-wheel.outputs.targz }}
           path: dist
-      - uses: actions/download-artifact@f44cd7b40bfd40b6aa1cc1b9b5b7bf03d3c67110 # v4.1.0
+      - uses: actions/download-artifact@6b208ae046db98c579e8a3aa621ab581ff575935 # v4.1.1
         with:
           name: ${{ needs.linux-wheel.outputs.wheel }}
           path: dist

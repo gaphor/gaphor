@@ -34,12 +34,12 @@ jobs:
         sudo apt-get update -qq && sudo apt-get install -qq --no-install-recommends
         libgirepository1.0-dev
     - name: Use Python Dependency Cache
-      uses: actions/cache@704facf57e6136b1bc63b828d79edcd491f0ee84 # v3.3.2
+      uses: actions/cache@e12d46a63a90f2fae62d114769bbf2a179198b5c # v3.3.3
       with:
         path: ~/.cache/pip
         key: ${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}-22.04
     - name: Install Poetry
-      run: pipx install --python python${{ env.python_version }} --pip-args=--constraint=.github/constraints.txt poetry
+      run: python${{ env.python_version }} -m pip install --constraint=.github/constraints.txt poetry
     - name: Configure Poetry
       run: poetry config virtualenvs.in-project true
     - name: Install Python Dependencies

@@ -1,3 +1,14 @@
+2.23.2
+------
+(Unreleased)
+
+2.23.1
+------
+- Fix Activity Swimlanes aren't visible
+- Fix CSS attribute rules
+- Remove duplicate stereotypes at root of model browser
+- Update Croatian translations
+
 2.23.0
 ------
 - Support types for parameters
