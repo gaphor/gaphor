@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2024-01-06 21:08-0400\n"
-"PO-Revision-Date: 2024-01-04 10:07+0000\n"
+"PO-Revision-Date: 2024-01-14 12:31+0000\n"
 "Last-Translator: ovari <ovari123@zoho.com>\n"
+"Language-Team: Hungarian <https://hosted.weblate.org/projects/gaphor/gaphor/"
+"hu/>\n"
 "Language: hu\n"
-"Language-Team: Hungarian "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/hu/>\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.4-dev\n"
 "Generated-By: Babel 2.14.0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:23 gaphor/C4Model/toolbox.py:67
@@ -858,14 +859,12 @@ msgid "FIFO"
 msgstr "Érkezési sorrendben (First In First Out - FIFO)"
 
 #: gaphor/UML/actions/objectnode.py:47
-#, fuzzy
 msgid "upperBound"
-msgstr "Felső határérték"
+msgstr "felsőHatárérték"
 
 #: gaphor/UML/actions/objectnode.py:53
-#, fuzzy
 msgid "ordering"
-msgstr "Sorrend megjelenítése"
+msgstr "sorrend"
 
 #: gaphor/UML/actions/partitionpage.py:114
 msgid "New Swimlane"
@@ -976,24 +975,20 @@ msgstr ""
 "A <b>-</b>/<b>=</b> gombbal mozgathatja az elemeket felfelé vagy lefelé."
 
 #: gaphor/UML/actions/propertypages.ui:376
-#, fuzzy
 msgid "In/Out"
-msgstr "NEM kapu"
+msgstr "Be/Ki"
 
 #: gaphor/UML/actions/propertypages.ui:377
-#, fuzzy
 msgid "In"
-msgstr "Vonal"
+msgstr "Be"
 
 #: gaphor/UML/actions/propertypages.ui:378
-#, fuzzy
 msgid "Out"
-msgstr "NEM kapu"
+msgstr "Ki"
 
 #: gaphor/UML/actions/propertypages.ui:379
-#, fuzzy
 msgid "Return"
-msgstr "Jellemző"
+msgstr "Visszatérés"
 
 #: gaphor/UML/actions/propertypages.ui:390
 #: gaphor/UML/classes/propertypages.ui:11
@@ -1138,9 +1133,8 @@ msgstr "Sztereotípusok"
 #: gaphor/UML/classes/propertypages.ui:141
 #: gaphor/UML/classes/propertypages.ui:259
 #: gaphor/UML/profiles/propertypages.ui:74
-#, fuzzy
 msgid "Values"
-msgstr "értékek"
+msgstr "Értékek"
 
 #: gaphor/UML/classes/propertypages.ui:167
 msgid "Tail:"
@@ -1402,9 +1396,8 @@ msgid "Show Stereotypes"
 msgstr "Sztereotípusok megjelenítése"
 
 #: gaphor/UML/profiles/stereotypepropertypages.py:139
-#, fuzzy
 msgid "New Slot Value…"
-msgstr "Új értéktipus"
+msgstr "Új helyérték…"
 
 #: gaphor/UML/states/propertypages.ui:9
 msgid "Activities"
@@ -2576,7 +2569,7 @@ msgstr "Minden fájl"
 
 #: gaphor/ui/filedialog.py:112
 msgid "Flatpak Document Portal"
-msgstr ""
+msgstr "Flatpak-dokumentumportál"
 
 #: gaphor/ui/filemanager.py:41
 msgid ""
@@ -3052,4 +3045,3 @@ msgstr "„{name}”-kapcsolat frissítése"
 
 #~ msgid "Note or Remark"
 #~ msgstr "Megjegyzés"
-
