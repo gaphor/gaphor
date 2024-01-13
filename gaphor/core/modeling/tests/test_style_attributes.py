@@ -96,7 +96,7 @@ def test_get_existing_attribute():
     assert lookup_attribute(diagram, "owner") == ""
 
 
-def test_non_existant_attribute():
+def test_non_existent_attribute():
     diagram = Diagram()
 
     assert lookup_attribute(diagram, "doesnotexist") is None
@@ -110,7 +110,7 @@ def test_nested_attribute():
     assert lookup_attribute(diagram, "ownedDiagram.doesnotexist") is None
 
 
-def test_non_extsant_nested_attribute():
+def test_non_existent_nested_attribute():
     diagram = Diagram()
 
     assert lookup_attribute(diagram, "ownedDiagram.name") is None
