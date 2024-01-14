@@ -1,5 +1,5 @@
-from gaphor.diagram.presentation import LinePresentation, Named
-from gaphor.diagram.shapes import Box, Text, draw_arrow_head
+from gaphor.diagram.presentation import LinePresentation, Named, text_name
+from gaphor.diagram.shapes import Box, draw_arrow_head
 from gaphor.UML.shapes import text_stereotypes
 
 
@@ -12,7 +12,7 @@ class DirectedRelationshipPropertyPathItem(Named, LinePresentation):
             id,
             shape_middle=Box(
                 text_stereotypes(self, lambda: [self.relation_type]),
-                Text(text=lambda: self.subject.name or ""),
+                text_name(self),
             ),
             style={"dash-style": (7.0, 5.0)},
         )

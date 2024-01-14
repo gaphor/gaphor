@@ -154,8 +154,8 @@ node name {
   font-size: x-small;
 }
 
-:is(activity, interaction) stereotypes {
-  text-align: left;
+:is(activity, interaction) :is(name, stereotypes) {
+    text-align: left;
 }
 
 * heading {

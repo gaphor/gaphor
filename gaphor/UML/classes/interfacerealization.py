@@ -3,8 +3,8 @@
 
 from gaphor import UML
 from gaphor.core.styling import Style
-from gaphor.diagram.presentation import LinePresentation, Named
-from gaphor.diagram.shapes import Box, Text, stroke
+from gaphor.diagram.presentation import LinePresentation, Named, text_name
+from gaphor.diagram.shapes import Box, stroke
 from gaphor.diagram.support import represents
 from gaphor.UML.classes.interface import Folded, InterfacePort
 from gaphor.UML.shapes import text_stereotypes
@@ -22,7 +22,7 @@ class InterfaceRealizationItem(Named, LinePresentation):
             id,
             shape_middle=Box(
                 text_stereotypes(self),
-                Text(text=lambda: self.subject.name or ""),
+                text_name(self),
             ),
         )
 
