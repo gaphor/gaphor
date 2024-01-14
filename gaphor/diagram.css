@@ -105,7 +105,44 @@ compartment {
   justify-content: start;
 }
 
-* name {
+and name,
+xor name,
+intermediateevent name,
+dormantevent name,
+basicevent name,
+houseevent name,
+topevent name,
+inhibit name,
+conditionalevent name,
+zeroevent name,
+or name,
+not name,
+transferin name,
+transferout name,
+undevelopedevent name,
+seq name,
+majorityvote name,
+unsafecontrolaction name,
+operationalsituation name,
+controlaction name,
+interfaceblock name,
+block name,
+property name,
+requirement name,
+c4person name,
+c4database name,
+c4container name,
+package name,
+enumeration name,
+interface name,
+class name,
+datatype name,
+component name,
+statemachine name,
+usecase name,
+actor name,
+artifact name,
+node name {
   font-weight: bold;
 }
 
