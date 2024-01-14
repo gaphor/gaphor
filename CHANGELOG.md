@@ -1,6 +1,9 @@
 2.23.2
 ------
-(Unreleased)
+- Fix models failing to load for collection not hashable TypeError
+- Fix file filters for export image dialog
+- Add CSS for "from: ", stereotypes, and compartments
+- Update Hungarian translations
 
 2.23.1
 ------
