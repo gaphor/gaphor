@@ -171,9 +171,10 @@ class ModelBrowser(UIComponent, ActionProvider):
 
         with Transaction(self.event_manager):
             diagram_type = self._diagram_type_or(
-                diagram_kind, DiagramType(diagram_kind, "ASD", ())
+                diagram_kind, DiagramType(diagram_kind, "New Diagram", ())
             )
             diagram = diagram_type.create(self.element_factory, element)
+            diagram.name = diagram.gettext("New Diagram")
         self.select_element(diagram)
         self.event_manager.handle(DiagramOpened(diagram))
         self.tree_view_rename_selected()
