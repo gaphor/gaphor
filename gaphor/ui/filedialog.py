@@ -34,8 +34,9 @@ def new_filters(filters, images=False):
     store = Gio.ListStore.new(Gtk.FileFilter)
     if images:
         store.append(new_image_filter())
-    for name, pattern, mime_type in filters:
-        store.append(new_filter(name, pattern, mime_type))
+    if filters:
+        for name, pattern, mime_type in filters:
+            store.append(new_filter(name, pattern, mime_type))
     store.append(new_filter(gettext("All Files"), "*"))
     return store
 
@@ -54,8 +55,7 @@ def open_file_dialog(
     if dirname:
         dialog.set_initial_folder(Gio.File.parse_name(dirname))
 
-    if filters:
-        dialog.set_filters(new_filters(filters, image_filter))
+    dialog.set_filters(new_filters(filters, image_filter))
 
     def response(dialog, result):
         if result.had_error():
@@ -82,8 +82,7 @@ def save_file_dialog(
     if filename:
         dialog.set_initial_file(Gio.File.parse_name(str(filename)))
 
-    if filters:
-        dialog.set_filters(new_filters(filters))
+    dialog.set_filters(new_filters(filters))
 
     def response(dialog, result):
         if result.had_error():
