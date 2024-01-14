@@ -9,7 +9,6 @@ from gaphor.diagram.shapes import (
     Box,
     CssNode,
     Text,
-    TextAlign,
     draw_border,
     draw_top_separator,
 )
@@ -84,22 +83,12 @@ class RequirementItem(Classified, ElementPresentation[Requirement]):
                 self.subject,
                 Box(
                     *(
-                        [
-                            Text(
-                                text=lambda: f"Id: {subject.externalId}",
-                                style={"text-align": TextAlign.LEFT},
-                            )
-                        ]
+                        [Text(text=lambda: f"Id: {subject.externalId}")]
                         if subject and subject.externalId
                         else []
                     ),
                     *(
-                        [
-                            Text(
-                                text=lambda: f"Text: {subject.text}",
-                                style={"text-align": TextAlign.LEFT},
-                            )
-                        ]
+                        [Text(text=lambda: f"Text: {subject.text}")]
                         if subject and subject.text
                         else []
                     ),
