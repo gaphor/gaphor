@@ -1,5 +1,4 @@
-from gaphor.core.styling import JustifyContent, TextAlign
-from gaphor.diagram.shapes import BoundedBox, Text, draw_top_separator
+from gaphor.diagram.shapes import BoundedBox, Box, CssNode, Text, draw_top_separator
 
 
 def region_compartment(subject):
@@ -12,15 +11,14 @@ def region_compartment(subject):
 
 def _create_region_compartment(region, index):
     return BoundedBox(
-        Text(
-            text=lambda: region.name or "",
-            style={"text-align": TextAlign.LEFT},
-        ),
-        style={
-            "padding": (4, 4, 4, 4),
-            "min-height": 100,
-            "justify-content": JustifyContent.START,
-            "dash-style": (7, 3) if index > 0 else (),
-        },
-        draw=draw_top_separator,
+        CssNode(
+            "region",
+            region,
+            Box(
+                Text(
+                    text=lambda: region.name or "",
+                ),
+                draw=draw_top_separator,
+            ),
+        )
     )

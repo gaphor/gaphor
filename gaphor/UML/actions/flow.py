@@ -7,7 +7,7 @@ connectors.
 
 from gaphor import UML
 from gaphor.diagram.presentation import LinePresentation, Named, text_name
-from gaphor.diagram.shapes import Box, Text, draw_arrow_tail
+from gaphor.diagram.shapes import Box, CssNode, Text, draw_arrow_tail
 from gaphor.diagram.support import represents
 from gaphor.UML.shapes import text_stereotypes
 
@@ -24,11 +24,15 @@ class ControlFlowItem(Named, LinePresentation):
         super().__init__(
             diagram,
             id,
-            shape_middle=Text(
-                text=lambda: self.subject
-                and self.subject.guard
-                and f"[{self.subject.guard}]"
-                or ""
+            shape_middle=CssNode(
+                "guard",
+                None,
+                Text(
+                    text=lambda: self.subject
+                    and self.subject.guard
+                    and f"[{self.subject.guard}]"
+                    or ""
+                ),
             ),
             shape_tail=Box(text_stereotypes(self), text_name(self)),
         )
@@ -53,11 +57,15 @@ class ObjectFlowItem(Named, LinePresentation):
         super().__init__(
             diagram,
             id,
-            shape_middle=Text(
-                text=lambda: self.subject
-                and self.subject.guard
-                and f"[{self.subject.guard}]"
-                or ""
+            shape_middle=CssNode(
+                "guard",
+                None,
+                Text(
+                    text=lambda: self.subject
+                    and self.subject.guard
+                    and f"[{self.subject.guard}]"
+                    or ""
+                ),
             ),
             shape_tail=Box(text_stereotypes(self), text_name(self)),
         )

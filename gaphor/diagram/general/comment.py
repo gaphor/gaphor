@@ -17,7 +17,7 @@ class CommentItem(ElementPresentation):
         self.shape = Box(
             CssNode(
                 "body",
-                self.subject,
+                None,
                 Text(
                     text=lambda: self.subject.body or "",
                 ),
