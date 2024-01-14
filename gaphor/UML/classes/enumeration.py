@@ -6,7 +6,7 @@ from gaphor.core.styling import JustifyContent
 from gaphor.diagram.presentation import (
     Classified,
     ElementPresentation,
-    from_package_str,
+    text_from_package,
     text_name,
 )
 from gaphor.diagram.shapes import Box, CssNode, Text, draw_border, draw_top_separator
@@ -18,7 +18,7 @@ from gaphor.UML.classes.klass import (
     operations_compartment,
 )
 from gaphor.UML.classes.stereotype import stereotype_compartments, stereotype_watches
-from gaphor.UML.recipes import stereotypes_str
+from gaphor.UML.shapes import text_stereotypes
 
 log = logging.getLogger(__name__)
 
@@ -64,21 +64,16 @@ class EnumerationItem(Classified, ElementPresentation[UML.Enumeration]):
     def update_shapes(self, event=None):
         self.shape = Box(
             Box(
-                Text(
-                    text=lambda: stereotypes_str(
-                        self.subject,
-                        [
-                            self.diagram.gettext("valueType")
-                            if self.as_sysml_value_type
-                            else self.diagram.gettext("enumeration")
-                        ],
-                    ),
+                text_stereotypes(
+                    self,
+                    lambda: [
+                        self.diagram.gettext("valueType")
+                        if self.as_sysml_value_type
+                        else self.diagram.gettext("enumeration")
+                    ],
                 ),
                 text_name(self),
-                Text(
-                    text=lambda: from_package_str(self),
-                    style={"font-size": "x-small"},
-                ),
+                text_from_package(self),
                 style={"padding": (12, 4, 12, 4)},
             ),
             *(
@@ -111,21 +106,20 @@ def enumerations_compartment(subject):
     def lazy_format(literal):
         return lambda: format(literal)
 
-    return Box(
-        *(
-            CssNode(
-                "enumeration",
-                literal,
-                Text(
-                    text=lazy_format(literal.name),
-                ),
-            )
-            for literal in subject.ownedLiteral
+    return CssNode(
+        "compartment",
+        subject,
+        Box(
+            *(
+                CssNode(
+                    "enumeration",
+                    literal,
+                    Text(
+                        text=lazy_format(literal.name),
+                    ),
+                )
+                for literal in subject.ownedLiteral
+            ),
+            draw=draw_top_separator,
         ),
-        style={
-            "padding": (4, 4, 4, 4),
-            "min-height": 8,
-            "justify-content": JustifyContent.START,
-        },
-        draw=draw_top_separator,
     )

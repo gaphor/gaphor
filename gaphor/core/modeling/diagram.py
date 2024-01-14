@@ -335,7 +335,7 @@ class Diagram(Element):
             else FALLBACK_STYLE
         )
 
-    def gettext(self, message):
+    def gettext(self, message: str) -> str:
         """Translate a message to the language used in the model."""
         style_sheet = self.styleSheet
         if style_sheet and style_sheet.naturalLanguage:

@@ -6,15 +6,15 @@ from gaphor.core.modeling import DrawContext
 from gaphor.diagram.presentation import (
     Classified,
     ElementPresentation,
-    from_package_str,
+    text_from_package,
     text_name,
 )
-from gaphor.diagram.shapes import Box, IconBox, Text, stroke
+from gaphor.diagram.shapes import Box, IconBox, stroke
 from gaphor.diagram.support import represents
 from gaphor.RAAML import raaml
 from gaphor.RAAML.fta.constants import DEFAULT_FTA_MAJOR, DEFAULT_FTA_MINOR
 from gaphor.RAAML.fta.houseevent import draw_house_event
-from gaphor.UML.recipes import stereotypes_str
+from gaphor.UML.shapes import text_stereotypes
 
 
 @represents(raaml.ZeroEvent)
@@ -31,16 +31,9 @@ class ZeroEventItem(Classified, ElementPresentation):
             Box(
                 draw=draw_zero_event,
             ),
-            Text(
-                text=lambda: stereotypes_str(
-                    self.subject, [self.diagram.gettext("Zero Event")]
-                ),
-            ),
+            text_stereotypes(self, lambda: [self.diagram.gettext("Zero Event")]),
             text_name(self),
-            Text(
-                text=lambda: from_package_str(self),
-                style={"font-size": "x-small"},
-            ),
+            text_from_package(self),
         )
 
 

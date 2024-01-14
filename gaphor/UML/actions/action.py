@@ -4,7 +4,7 @@ from gaphor import UML
 from gaphor.diagram.presentation import ElementPresentation, Named, Valued
 from gaphor.diagram.shapes import Box, Text, draw_border, stroke
 from gaphor.diagram.support import represents
-from gaphor.UML.recipes import stereotypes_str
+from gaphor.UML.shapes import text_stereotypes
 from gaphor.UML.umlfmt import format_call_behavior_action_name
 
 
@@ -15,9 +15,7 @@ class ActionItem(Named, ElementPresentation):
 
         self.width = 100
         self.shape = Box(
-            Text(
-                text=lambda: stereotypes_str(self.subject),
-            ),
+            text_stereotypes(self),
             Text(
                 text=lambda: self.subject.name or "",
             ),
@@ -61,9 +59,7 @@ class CallBehaviorActionItem(ActionItem):
         super().__init__(diagram, id)
 
         self.shape = Box(
-            Text(
-                text=lambda: stereotypes_str(self.subject),
-            ),
+            text_stereotypes(self),
             Text(
                 text=lambda: format_call_behavior_action_name(self.subject),
             ),
@@ -112,9 +108,7 @@ class SendSignalActionItem(Named, ElementPresentation):
         super().__init__(diagram, id, width=50, height=30)
 
         self.shape = Box(
-            Text(
-                text=lambda: stereotypes_str(self.subject),
-            ),
+            text_stereotypes(self),
             Text(text=lambda: self.subject.name or ""),
             style={"padding": (4, 24, 4, 12)},
             draw=self.draw_border,
@@ -143,9 +137,7 @@ class AcceptEventActionItem(Named, ElementPresentation):
         super().__init__(diagram, id, width=50, height=30)
 
         self.shape = Box(
-            Text(
-                text=lambda: stereotypes_str(self.subject),
-            ),
+            text_stereotypes(self),
             Text(text=lambda: self.subject.name or ""),
             style={"padding": (4, 12, 4, 24)},
             draw=self.draw_border,

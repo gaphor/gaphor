@@ -2,9 +2,9 @@
 
 from gaphor import UML
 from gaphor.diagram.presentation import LinePresentation
-from gaphor.diagram.shapes import Text, draw_arrow_head
+from gaphor.diagram.shapes import draw_arrow_head
 from gaphor.diagram.support import represents
-from gaphor.UML.recipes import stereotypes_str
+from gaphor.UML.shapes import text_stereotypes
 
 
 @represents(
@@ -19,10 +19,8 @@ class PackageImportItem(LinePresentation):
         super().__init__(
             diagram,
             id,
-            shape_middle=Text(
-                text=lambda: stereotypes_str(
-                    self.subject, (self.diagram.gettext("import"),)
-                ),
+            shape_middle=text_stereotypes(
+                self, lambda: [self.diagram.gettext("import")]
             ),
             style={"dash-style": (7.0, 5.0)},
         )

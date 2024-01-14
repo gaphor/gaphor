@@ -6,7 +6,7 @@ from gaphor.diagram.presentation import ElementPresentation, Named
 from gaphor.diagram.shapes import Box, IconBox, Text, draw_border
 from gaphor.diagram.support import represents
 from gaphor.i18n import i18nize
-from gaphor.UML.recipes import stereotypes_str
+from gaphor.UML.shapes import text_stereotypes
 
 DEFAULT_UPPER_BOUND = "*"
 
@@ -32,9 +32,7 @@ class ObjectNodeItem(Named, ElementPresentation):
             id,
             shape=IconBox(
                 Box(
-                    Text(
-                        text=lambda: stereotypes_str(self.subject),
-                    ),
+                    text_stereotypes(self),
                     Text(text=lambda: self.subject.name or ""),
                     style={
                         "padding": (4, 12, 4, 12),

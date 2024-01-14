@@ -32,7 +32,7 @@ from gaphor.UML.informationflow import (
     shape_information_flow,
     watch_information_flow,
 )
-from gaphor.UML.recipes import stereotypes_str
+from gaphor.UML.shapes import text_stereotypes
 from gaphor.UML.umlfmt import format_association_end
 
 half_pi = pi / 2
@@ -52,9 +52,7 @@ class AssociationItem(Named, LinePresentation[UML.Association]):
             diagram,
             id,
             shape_middle=Box(
-                Text(
-                    text=lambda: stereotypes_str(self.subject),
-                ),
+                text_stereotypes(self),
                 Text(text=lambda: self.subject.name or ""),
                 *shape_information_flow(self, "abstraction"),
             ),

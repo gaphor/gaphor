@@ -9,7 +9,7 @@ from gaphor.diagram.presentation import (
 from gaphor.diagram.shapes import Box, JustifyContent, Text, TextAlign, draw_border
 from gaphor.diagram.support import represents
 from gaphor.diagram.text import FontStyle
-from gaphor.UML.recipes import stereotypes_str
+from gaphor.UML.shapes import text_stereotypes
 
 
 @represents(UML.Activity)
@@ -35,10 +35,7 @@ class ActivityItem(Classified, ElementPresentation):
 
     def update_shapes(self, event=None):
         self.shape = Box(
-            Text(
-                text=lambda: stereotypes_str(self.subject),
-                style={"text-align": TextAlign.LEFT},
-            ),
+            text_stereotypes(self),
             Text(
                 text=lambda: self.subject.name or "",
                 style={

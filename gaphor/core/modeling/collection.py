@@ -60,6 +60,9 @@ class collection(Generic[T]):
             isinstance(other, collection) and self.items == other.items
         )
 
+    def __hash__(self):
+        return hash(str(self))
+
     def index(self, key: T) -> int:
         """Given an object, return the position of that object in the
         collection."""

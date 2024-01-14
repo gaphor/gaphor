@@ -569,11 +569,11 @@ class CssNode:
     ):
         self._name = name
         self._element = element
-        self._child = child
+        self.child = child
         self._inline_style = style if style else {}
 
     def __iter__(self):
-        return iter((self._child,))
+        return iter((self.child,))
 
     def style_node(self, parent: Style | StyleNode) -> StyleNode:
         return StyledCssNode(parent, self)
@@ -584,13 +584,13 @@ class CssNode:
         style = compute_inherited_style(context.style, self.style_node(context.style))
         new_context = replace(context, style=style)
 
-        return self._child.size(new_context, bounding_box)
+        return self.child.size(new_context, bounding_box)
 
     def draw(self, context: DrawContext, bounding_box: Rectangle):
         style = compute_inherited_style(context.style, self.style_node(context.style))
         new_context = replace(context, style=style)
 
-        self._child.draw(new_context, bounding_box)
+        self.child.draw(new_context, bounding_box)
 
 
 class StyledCssNode:

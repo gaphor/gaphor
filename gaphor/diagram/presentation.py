@@ -65,6 +65,10 @@ def from_package_str(item):
     )
 
 
+def text_from_package(item: Presentation):
+    return CssNode("from", item.subject, Text(text=lambda: from_package_str(item)))
+
+
 def connect(item: gaphas.Item, handle: gaphas.Handle, target: gaphas.Item):
     connector = ConnectorAspect(item, handle, item.diagram.connections)
     sink = ConnectionSink(target, distance=float("inf"))

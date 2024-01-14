@@ -33,7 +33,7 @@ from gaphor.core.modeling.properties import attribute
 from gaphor.diagram.presentation import ElementPresentation, Named
 from gaphor.diagram.shapes import Box, CssNode, Text, cairo_state, stroke
 from gaphor.diagram.support import represents
-from gaphor.UML.recipes import stereotypes_str
+from gaphor.UML.shapes import text_stereotypes
 
 
 def clamp(value, min_value, max_value):
@@ -162,9 +162,7 @@ class LifelineItem(Named, ElementPresentation[UML.Lifeline]):
         self._ports.insert(0, self._lifetime.port)
 
         self.shape = Box(
-            Text(
-                text=lambda: stereotypes_str(self.subject),
-            ),
+            text_stereotypes(self),
             CssNode(
                 "name",
                 self.subject,

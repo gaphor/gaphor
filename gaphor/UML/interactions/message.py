@@ -55,7 +55,7 @@ from gaphor.diagram.presentation import LinePresentation, Named, get_center_pos
 from gaphor.diagram.shapes import Box, Text, cairo_state, stroke
 from gaphor.diagram.support import represents
 from gaphor.UML.interactions.lifeline import LifelineItem
-from gaphor.UML.recipes import stereotypes_str
+from gaphor.UML.shapes import text_stereotypes
 
 PI_2 = pi / 2
 
@@ -81,9 +81,7 @@ class MessageItem(Named, LinePresentation[UML.Message]):
             diagram,
             id,
             shape_middle=Box(
-                Text(
-                    text=lambda: stereotypes_str(self.subject),
-                ),
+                text_stereotypes(self),
                 Text(text=lambda: self.subject.name or ""),
             ),
         )

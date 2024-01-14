@@ -21,7 +21,7 @@ from gaphor.diagram.shapes import Box, Text, stroke
 from gaphor.diagram.support import represents
 from gaphor.i18n import i18nize
 from gaphor.UML.classes.interface import Folded, InterfacePort
-from gaphor.UML.recipes import stereotypes_str
+from gaphor.UML.shapes import text_stereotypes
 
 
 @represents(UML.Dependency, head=UML.Dependency.supplier, tail=UML.Dependency.client)
@@ -51,16 +51,12 @@ class DependencyItem(Named, LinePresentation):
             diagram,
             id,
             shape_middle=Box(
-                Text(
-                    text=lambda: stereotypes_str(
-                        self.subject,
-                        [
-                            diagram.gettext(s)
-                            for s in additional_stereotype.get(
-                                self._dependency_type, ()
-                            )
-                        ],
-                    ),
+                text_stereotypes(
+                    self,
+                    lambda: [
+                        diagram.gettext(s)
+                        for s in additional_stereotype.get(self._dependency_type, ())
+                    ],
                 ),
                 Text(text=lambda: self.subject.name or ""),
             ),

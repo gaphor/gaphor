@@ -5,7 +5,7 @@ from gaphor.core.styling import JustifyContent, TextAlign
 from gaphor.diagram.presentation import ElementPresentation, Named
 from gaphor.diagram.shapes import Box, Text, stroke
 from gaphor.diagram.support import represents
-from gaphor.UML.recipes import stereotypes_str
+from gaphor.UML.shapes import text_stereotypes
 
 
 @represents(UML.Interaction)
@@ -15,12 +15,7 @@ class InteractionItem(Named, ElementPresentation):
 
         self.shape = Box(
             Box(
-                Text(
-                    text=lambda: stereotypes_str(self.subject),
-                    style={
-                        "text-align": TextAlign.LEFT,
-                    },
-                ),
+                text_stereotypes(self),
                 Text(
                     text=lambda: self.subject.name or "",
                     style={"text-align": TextAlign.LEFT},

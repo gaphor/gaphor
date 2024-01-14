@@ -6,14 +6,14 @@ from gaphor.core.modeling import DrawContext
 from gaphor.diagram.presentation import (
     Classified,
     ElementPresentation,
-    from_package_str,
+    text_from_package,
     text_name,
 )
-from gaphor.diagram.shapes import Box, IconBox, Text, draw_diamond
+from gaphor.diagram.shapes import Box, IconBox, draw_diamond
 from gaphor.diagram.support import represents
 from gaphor.RAAML import raaml
 from gaphor.RAAML.fta.constants import WIDE_FTA_HEIGHT, WIDE_FTA_WIDTH
-from gaphor.UML.recipes import stereotypes_str
+from gaphor.UML.shapes import text_stereotypes
 
 
 @represents(raaml.Undeveloped)
@@ -30,16 +30,9 @@ class UndevelopedEventItem(Classified, ElementPresentation):
             Box(
                 draw=draw_undeveloped_event,
             ),
-            Text(
-                text=lambda: stereotypes_str(
-                    self.subject, [self.diagram.gettext("Undeveloped Event")]
-                ),
-            ),
+            text_stereotypes(self, lambda: [self.diagram.gettext("Undeveloped Event")]),
             text_name(self),
-            Text(
-                text=lambda: from_package_str(self),
-                style={"font-size": "x-small"},
-            ),
+            text_from_package(self),
         )
 
 

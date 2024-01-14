@@ -4,10 +4,10 @@ from gaphor import UML
 from gaphor.core.modeling.properties import attribute
 from gaphor.core.styling import JustifyContent
 from gaphor.diagram.presentation import Classified, ElementPresentation, text_name
-from gaphor.diagram.shapes import Box, Text, cairo_state, draw_border
+from gaphor.diagram.shapes import Box, cairo_state, draw_border
 from gaphor.diagram.support import represents
 from gaphor.UML.classes.stereotype import stereotype_compartments
-from gaphor.UML.recipes import stereotypes_str
+from gaphor.UML.shapes import text_stereotypes
 
 
 @represents(UML.Component)
@@ -30,9 +30,7 @@ class ComponentItem(Classified, ElementPresentation):
     def update_shapes(self, event=None):
         self.shape = Box(
             Box(
-                Text(
-                    text=lambda: stereotypes_str(self.subject),
-                ),
+                text_stereotypes(self),
                 text_name(self),
                 style={
                     "padding": (4, 32, 4, 4),

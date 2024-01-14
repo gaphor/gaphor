@@ -71,12 +71,26 @@ swimlane {
   white-space: normal;
 }
 
+compartment {
+  padding: 4 4 4 4;
+  min-height: 8;
+  justify-content: start;
+}
+
 * name {
   font-weight: bold;
 }
 
 * name[isabstract] {
   font-style: italic;
+}
+
+* from {
+  font-size: x-small;
+}
+
+:is(activity, interaction) stereotypes {
+  text-align: left;
 }
 
 * heading {
