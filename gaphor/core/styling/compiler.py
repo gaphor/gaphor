@@ -154,6 +154,22 @@ def descendants(el):
         yield from descendants(c)
 
 
+def previous(el):
+    p = el.parent()
+    if p is None:
+        return None
+    children = list(p.children())
+    try:
+        i = children.index(el)
+    except ValueError:
+        return None
+
+    if i == 0:
+        return None
+
+    return children[i - 1]
+
+
 @compile_node.register
 def compile_combined_selector(selector: selectors.CombinedSelector):
     left_inside = compile_node(selector.left)
@@ -166,6 +182,12 @@ def compile_combined_selector(selector: selectors.CombinedSelector):
 
         def left(el):
             p = el.parent()
+            return p is not None and left_inside(p)
+
+    elif selector.combinator == "+":
+
+        def left(el):
+            p = previous(el)
             return p is not None and left_inside(p)
 
     else:
