@@ -436,6 +436,8 @@ jobs:
         with:
           egress-policy: audit
 
+      - name: Wait for PyPI to sync after version update
+        run: sleep 30s
       - name: Repository Dispatch
         uses: peter-evans/repository-dispatch@bf47d102fdb849e755b0b0023ea3e81a44b6f570 # v2.1.2
         with:
