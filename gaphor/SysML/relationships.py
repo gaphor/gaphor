@@ -14,7 +14,6 @@ class DirectedRelationshipPropertyPathItem(Named, LinePresentation):
                 text_stereotypes(self, lambda: [self.relation_type]),
                 text_name(self),
             ),
-            style={"dash-style": (7.0, 5.0)},
         )
 
         self.draw_head = draw_arrow_head

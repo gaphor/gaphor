@@ -236,3 +236,7 @@ c4database {
 requirement {
   justify-content: start;
 }
+
+directedrelationshippropertypath {
+  dash-style: 7 5;
+}
