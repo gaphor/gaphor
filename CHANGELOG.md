@@ -1,6 +1,6 @@
 2.23.2
 ------
-(Unreleased)
+- Fix models failing to load for collection not hashable TypeError
 
 2.23.1
 ------
