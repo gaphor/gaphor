@@ -73,6 +73,10 @@ diagram type {
   font-weight: bold;
 }
 
+decisionnode type {
+  font-size: small;
+}
+
 proxyport,
 activityparameternode,
 executionspecification {
@@ -102,7 +106,23 @@ swimlane {
 compartment {
   padding: 4 4 4 4;
   min-height: 8;
+  text-align: left;
   justify-content: start;
+}
+
+statemachine {
+  justify-content: start;
+}
+
+region {
+  padding: 4;
+  min-height: 100;
+  justify-content: start;
+  text-align: left;
+}
+
+region + region {
+  dash-style: 7 3;
 }
 
 and name,

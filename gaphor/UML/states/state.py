@@ -7,9 +7,9 @@ from gaphas.types import Pos
 from gaphor import UML
 from gaphor.core.modeling.element import Element
 from gaphor.core.modeling.properties import attribute
-from gaphor.core.styling import JustifyContent, TextAlign
+from gaphor.core.styling import JustifyContent
 from gaphor.diagram.presentation import ElementPresentation, Named, text_name
-from gaphor.diagram.shapes import Box, Text, draw_top_separator, stroke
+from gaphor.diagram.shapes import Box, CssNode, Text, draw_top_separator, stroke
 from gaphor.diagram.support import represents
 from gaphor.UML.shapes import text_stereotypes
 from gaphor.UML.states.region import region_compartment
@@ -40,21 +40,17 @@ class StateItem(ElementPresentation[UML.State], Named):
                 text=lambda: self.subject.entry.name
                 and f"entry / {self.subject.entry.name}"
                 or "",
-                style={"text-align": TextAlign.LEFT},
             ),
             Text(
                 text=lambda: self.subject.exit.name
                 and f"exit / {self.subject.exit.name}"
                 or "",
-                style={"text-align": TextAlign.LEFT},
             ),
             Text(
                 text=lambda: self.subject.doActivity.name
                 and f"do / {self.subject.doActivity.name}"
                 or "",
-                style={"text-align": TextAlign.LEFT},
             ),
-            style={"padding": (4, 4, 4, 4), "justify-content": JustifyContent.START},
             draw=draw_top_separator,
         )
         if not any(t.text() for t in compartment.children):  # type: ignore[attr-defined]
@@ -66,7 +62,7 @@ class StateItem(ElementPresentation[UML.State], Named):
                 text_name(self),
                 style={"padding": (4, 4, 4, 4)},
             ),
-            compartment,
+            CssNode("compartment", self.subject, compartment),
             Box(
                 *(self._region_boxes),
                 style={"justify-content": JustifyContent.STRETCH},

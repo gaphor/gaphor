@@ -643,9 +643,9 @@ class StyledCssNode:
         return (node.style_node(self) for node in traverse_css_nodes(self._shape))
 
     def attribute(self, name: str) -> str | None:
-        if not self._shape._element:
-            return None
-        return lookup_attribute(self._shape._element, name)
+        if self._shape._element:
+            return lookup_attribute(self._shape._element, name)
+        return self._parent.attribute(name) if self._parent else None
 
     def state(self) -> Sequence[str]:
         return ()

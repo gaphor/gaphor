@@ -17,7 +17,7 @@ from gaphor.diagram.presentation import (
     literal_eval,
     text_name,
 )
-from gaphor.diagram.shapes import Box, IconBox, Text, ellipse, stroke
+from gaphor.diagram.shapes import Box, CssNode, IconBox, Text, ellipse, stroke
 from gaphor.diagram.support import represents
 from gaphor.UML.shapes import text_stereotypes
 
@@ -162,7 +162,7 @@ class DecisionNodeItem(ActivityNodeItem, ElementPresentation):
             Box(draw=draw_decision_node),
             # Text should be left-top
             text_stereotypes(self),
-            Text(text=self.node_type, style={"font-size": "small"}),
+            CssNode("type", None, Text(text=self.node_type)),
             text_name(self),
         )
 
@@ -218,11 +218,15 @@ class ForkNodeItem(Named, Presentation[UML.ForkNode], HandlePositionUpdate):
             Box(draw=self.draw_fork_node),
             text_stereotypes(self),
             text_name(self),
-            Text(
-                text=lambda: isinstance(self.subject, UML.JoinNode)
-                and self.subject.joinSpec not in (None, DEFAULT_JOIN_SPEC)
-                and f"{{ joinSpec = {self.subject.joinSpec} }}"
-                or "",
+            CssNode(
+                "joinspec",
+                None,
+                Text(
+                    text=lambda: isinstance(self.subject, UML.JoinNode)
+                    and self.subject.joinSpec not in (None, DEFAULT_JOIN_SPEC)
+                    and f"{{ joinSpec = {self.subject.joinSpec} }}"
+                    or ""
+                ),
             ),
         )
 

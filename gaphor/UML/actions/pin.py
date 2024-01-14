@@ -2,6 +2,7 @@ from gaphor import UML
 from gaphor.diagram.presentation import AttachedPresentation, Named
 from gaphor.diagram.shapes import (
     Box,
+    CssNode,
     IconBox,
     Text,
     TextAlign,
@@ -47,7 +48,7 @@ class PinItem(Named, AttachedPresentation[UML.Pin]):
         self.shape = IconBox(
             Box(draw=draw_border),
             text_stereotypes(self, lambda: [] if self.subject else [self.pin_type()]),
-            Text(text=lambda: format_pin(self.subject)),
+            CssNode("name", self.subject, Text(text=lambda: format_pin(self.subject))),
             style=text_position(self.connected_side()),
         )
 
