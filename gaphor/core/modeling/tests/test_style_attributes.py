@@ -1,5 +1,6 @@
 from gaphor import UML
-from gaphor.core.modeling.diagram import Diagram, StyledItem, lookup_attribute
+from gaphor.core.modeling.collection import collection
+from gaphor.core.modeling.diagram import Diagram, StyledItem, attrname, lookup_attribute
 from gaphor.UML.classes import ClassItem
 
 
@@ -95,7 +96,7 @@ def test_get_existing_attribute():
     assert lookup_attribute(diagram, "owner") == ""
 
 
-def test_non_existant_attribute():
+def test_non_existent_attribute():
     diagram = Diagram()
 
     assert lookup_attribute(diagram, "doesnotexist") is None
@@ -109,8 +110,18 @@ def test_nested_attribute():
     assert lookup_attribute(diagram, "ownedDiagram.doesnotexist") is None
 
 
-def test_non_extsant_nested_attribute():
+def test_non_existent_nested_attribute():
     diagram = Diagram()
 
     assert lookup_attribute(diagram, "ownedDiagram.name") is None
     assert lookup_attribute(diagram, "ownedDiagram.doesnotexist") is None
+
+
+def test_attrname_diagram_subject():
+    diagram = Diagram()
+    assert attrname(diagram, "subject") == "subject"
+
+
+def test_attrname_collection_subject(diagram):
+    collection1 = collection(None, None, int)
+    assert attrname(collection1, "subject") == "subject"
