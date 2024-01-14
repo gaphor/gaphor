@@ -13,7 +13,7 @@ def test_object_node(diagram, element_factory):
 
 def test_name(create):
     node = create(ObjectNodeItem, UML.ObjectNode)
-    name = node.shape.icon.children[1]
+    name = node.shape.icon.chid.children[1]
 
     node.subject.name = "Blah"
 
