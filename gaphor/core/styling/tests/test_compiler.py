@@ -115,6 +115,21 @@ def test_select_parent_combinator():
     assert not selector(Node("classitem"))
 
 
+def test_select_sibling_combinator():
+    css = "previous + sibling {}"
+
+    selector, _declarations = next(compile_style_sheet(css))
+
+    assert selector(Node("sibling", parent=Node("parent", children=[Node("previous")])))
+    assert not selector(
+        Node("sibling", parent=Node("parent", children=[Node("other")]))
+    )
+    assert not selector(
+        Node("other", parent=Node("parent", children=[Node("previous")]))
+    )
+    assert not selector(Node("sibling"))
+
+
 def test_attributes():
     css = "classitem[subject] {}"
 
