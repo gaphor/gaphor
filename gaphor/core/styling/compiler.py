@@ -164,10 +164,7 @@ def previous(el):
     except ValueError:
         return None
 
-    if i == 0:
-        return None
-
-    return children[i - 1]
+    return None if i == 0 else children[i - 1]
 
 
 @compile_node.register
