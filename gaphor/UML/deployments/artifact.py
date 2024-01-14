@@ -22,8 +22,10 @@ class ArtifactItem(Classified, ElementPresentation):
 
     def update_shapes(self, event=None):
         self.shape = Box(
-            text_stereotypes(self),
-            text_name(self),
+            Box(
+                text_stereotypes(self),
+                text_name(self),
+            ),
             *(self.show_stereotypes and stereotype_compartments(self.subject) or []),
             draw=draw_all(draw_border, draw_artifact_icon),
         )
