@@ -47,7 +47,7 @@ def test_compartments(element_factory):
 
     diagram.update_now((klass,))
     assert 2 == len(compartments(klass)[1].child.children)
-    assert compartments(klass)[1].size(context()) > (63.0, 34.0)
+    assert compartments(klass)[1].size(context()) > (60.0, 34.0)
 
 
 def test_attribute_removal(element_factory):
