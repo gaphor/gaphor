@@ -422,7 +422,7 @@ class IconBox:
     def __init__(self, icon: Shape, *children: Shape, style: Style | None = None):
         if style is None:
             style = {}
-        self.icon = icon
+        self.icon = CssNode("icon", None, icon)
         self.children = children
         self.sizes: list[tuple[Number, Number]] = []
         self._inline_style = style
