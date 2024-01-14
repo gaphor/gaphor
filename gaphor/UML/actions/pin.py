@@ -9,7 +9,7 @@ from gaphor.diagram.shapes import (
     draw_border,
 )
 from gaphor.diagram.support import represents
-from gaphor.UML.recipes import stereotypes_str
+from gaphor.UML.shapes import text_stereotypes
 from gaphor.UML.umlfmt import format_pin
 
 
@@ -46,11 +46,7 @@ class PinItem(Named, AttachedPresentation[UML.Pin]):
 
         self.shape = IconBox(
             Box(draw=draw_border),
-            Text(
-                text=lambda: stereotypes_str(
-                    self.subject, [] if self.subject else [self.pin_type()]
-                )
-            ),
+            text_stereotypes(self, lambda: [] if self.subject else [self.pin_type()]),
             Text(text=lambda: format_pin(self.subject)),
             style=text_position(self.connected_side()),
         )

@@ -4,7 +4,7 @@ from gaphor import UML
 from gaphor.diagram.presentation import LinePresentation, Named
 from gaphor.diagram.shapes import Box, Text, draw_arrow_head
 from gaphor.diagram.support import represents
-from gaphor.UML.recipes import stereotypes_str
+from gaphor.UML.shapes import text_stereotypes
 
 
 @represents(UML.Include, head=UML.Include.addition, tail=UML.Include.includingCase)
@@ -16,11 +16,7 @@ class IncludeItem(Named, LinePresentation):
             diagram,
             id,
             shape_middle=Box(
-                Text(
-                    text=lambda: stereotypes_str(
-                        self.subject, (self.diagram.gettext("include"),)
-                    )
-                ),
+                text_stereotypes(self, lambda: [self.diagram.gettext("include")]),
                 Text(text=lambda: self.subject.name or ""),
             ),
             style={"dash-style": (7.0, 5.0)},

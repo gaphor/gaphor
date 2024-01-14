@@ -108,7 +108,7 @@ from gaphor.UML.informationflow import (
     shape_information_flow,
     watch_information_flow,
 )
-from gaphor.UML.recipes import stereotypes_str
+from gaphor.UML.shapes import text_stereotypes
 
 
 @represents(UML.Connector)
@@ -131,9 +131,7 @@ class ConnectorItem(Named, LinePresentation[UML.Connector]):
             diagram,
             id,
             shape_middle=Box(
-                Text(
-                    text=lambda: stereotypes_str(self.subject),
-                ),
+                text_stereotypes(self),
                 Text(text=lambda: self.subject.name or ""),
                 *shape_information_flow(self, "informationFlow"),
             ),

@@ -18,7 +18,7 @@ from gaphor.diagram.presentation import (
 )
 from gaphor.diagram.shapes import Box, IconBox, Text, ellipse, stroke
 from gaphor.diagram.support import represents
-from gaphor.UML.recipes import stereotypes_str
+from gaphor.UML.shapes import text_stereotypes
 
 DEFAULT_JOIN_SPEC = "and"
 
@@ -49,9 +49,7 @@ class InitialNodeItem(ActivityNodeItem, ElementPresentation):
         self.shape = IconBox(
             Box(draw=draw_initial_node),
             # Text should be left-top
-            Text(
-                text=lambda: stereotypes_str(self.subject),
-            ),
+            text_stereotypes(self),
             Text(text=lambda: self.subject and self.subject.name or ""),
         )
 
@@ -84,9 +82,7 @@ class ActivityFinalNodeItem(ActivityNodeItem, ElementPresentation):
         self.shape = IconBox(
             Box(draw=draw_activity_final_node),
             # Text should be right-bottom
-            Text(
-                text=lambda: stereotypes_str(self.subject),
-            ),
+            text_stereotypes(self),
             Text(text=lambda: self.subject and self.subject.name or ""),
         )
 
@@ -130,9 +126,7 @@ class FlowFinalNodeItem(ActivityNodeItem, ElementPresentation):
         self.shape = IconBox(
             Box(draw=draw_flow_final_node),
             # Text should be right-bottom
-            Text(
-                text=lambda: stereotypes_str(self.subject),
-            ),
+            text_stereotypes(self),
             Text(text=lambda: self.subject and self.subject.name or ""),
         )
 
@@ -166,9 +160,7 @@ class DecisionNodeItem(ActivityNodeItem, ElementPresentation):
         self.shape = IconBox(
             Box(draw=draw_decision_node),
             # Text should be left-top
-            Text(
-                text=lambda: stereotypes_str(self.subject),
-            ),
+            text_stereotypes(self),
             Text(text=self.node_type, style={"font-size": "small"}),
             Text(text=lambda: self.subject and self.subject.name or ""),
         )
@@ -223,9 +215,7 @@ class ForkNodeItem(Named, Presentation[UML.ForkNode], HandlePositionUpdate):
 
         self._shape = IconBox(
             Box(draw=self.draw_fork_node),
-            Text(
-                text=lambda: stereotypes_str(self.subject),
-            ),
+            text_stereotypes(self),
             Text(text=lambda: self.subject and self.subject.name or ""),
             Text(
                 text=lambda: isinstance(self.subject, UML.JoinNode)

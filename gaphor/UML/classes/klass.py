@@ -9,13 +9,13 @@ from gaphor.core.styling import (
 from gaphor.diagram.presentation import (
     Classified,
     ElementPresentation,
-    from_package_str,
+    text_from_package,
     text_name,
 )
 from gaphor.diagram.shapes import Box, CssNode, Text, draw_border, draw_top_separator
 from gaphor.diagram.support import represents
 from gaphor.UML.classes.stereotype import stereotype_compartments, stereotype_watches
-from gaphor.UML.recipes import stereotypes_str
+from gaphor.UML.shapes import text_stereotypes
 
 log = logging.getLogger(__name__)
 
@@ -59,16 +59,9 @@ class ClassItem(Classified, ElementPresentation[UML.Class]):
     def update_shapes(self, event=None):
         self.shape = Box(
             Box(
-                Text(
-                    text=lambda: stereotypes_str(
-                        self.subject, self.additional_stereotypes()
-                    ),
-                ),
+                text_stereotypes(self, self.additional_stereotypes),
                 text_name(self),
-                Text(
-                    text=lambda: from_package_str(self),
-                    style={"font-size": "x-small"},
-                ),
+                text_from_package(self),
                 style={"padding": (12, 4, 12, 4)},
             ),
             *(
@@ -126,24 +119,23 @@ def attributes_compartment(subject):
     def lazy_format(attribute):
         return lambda: format(attribute)
 
-    return Box(
-        *(
-            CssNode(
-                "attribute",
-                attribute,
-                Text(
-                    text=lazy_format(attribute),
-                ),
-            )
-            for attribute in subject.ownedAttribute
-            if not attribute.association
+    return CssNode(
+        "compartment",
+        subject,
+        Box(
+            *(
+                CssNode(
+                    "attribute",
+                    attribute,
+                    Text(
+                        text=lazy_format(attribute),
+                    ),
+                )
+                for attribute in subject.ownedAttribute
+                if not attribute.association
+            ),
+            draw=draw_top_separator,
         ),
-        style={
-            "padding": (4, 4, 4, 4),
-            "min-height": 8,
-            "justify-content": JustifyContent.START,
-        },
-        draw=draw_top_separator,
     )
 
 
@@ -153,21 +145,20 @@ def operations_compartment(subject):
             operation, visibility=True, type=True, multiplicity=True, default=True
         )
 
-    return Box(
-        *(
-            CssNode(
-                "operation",
-                operation,
-                Text(
-                    text=lazy_format(operation),
-                ),
-            )
-            for operation in subject.ownedOperation
+    return CssNode(
+        "compartment",
+        subject,
+        Box(
+            *(
+                CssNode(
+                    "operation",
+                    operation,
+                    Text(
+                        text=lazy_format(operation),
+                    ),
+                )
+                for operation in subject.ownedOperation
+            ),
+            draw=draw_top_separator,
         ),
-        style={
-            "padding": (4, 4, 4, 4),
-            "min-height": 8,
-            "justify-content": JustifyContent.START,
-        },
-        draw=draw_top_separator,
     )

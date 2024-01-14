@@ -10,7 +10,7 @@ from gaphor.diagram.shapes import (
 )
 from gaphor.diagram.support import represents
 from gaphor.SysML import sysml
-from gaphor.UML.recipes import stereotypes_str
+from gaphor.UML.shapes import text_stereotypes
 
 
 def text_position(position):
@@ -35,11 +35,7 @@ class ProxyPortItem(Named, AttachedPresentation[sysml.ProxyPort]):
     def update_shapes(self, event=None):
         self.shape = IconBox(
             Box(draw=draw_border),
-            Text(
-                text=lambda: stereotypes_str(
-                    self.subject, [self.diagram.gettext("proxy")]
-                )
-            ),
+            text_stereotypes(self, lambda: [self.diagram.gettext("proxy")]),
             Text(text=self._format_name),
             style=text_position(self.connected_side()),
         )

@@ -1,7 +1,6 @@
 """Support code for dealing with stereotypes in diagrams."""
 
 from gaphor.core.format import format
-from gaphor.core.styling import JustifyContent
 from gaphor.diagram.shapes import Box, CssNode, Text, draw_top_separator
 
 
@@ -32,31 +31,30 @@ def _create_stereotype_compartment(appliedStereotype):
     slots = [slot for slot in appliedStereotype.slot if slot.value]
 
     if slots:
-        return Box(
-            CssNode(
-                "heading",
-                appliedStereotype.classifier,
-                Text(
-                    text=lazy_format(appliedStereotype.classifier[0])
-                    if appliedStereotype.classifier
-                    else "",
-                ),
-            ),
-            *(
+        return CssNode(
+            "compartment",
+            appliedStereotype,
+            Box(
                 CssNode(
-                    "slot",
-                    slot,
+                    "heading",
+                    appliedStereotype.classifier,
                     Text(
-                        text=lazy_format(slot),
+                        text=lazy_format(appliedStereotype.classifier[0])
+                        if appliedStereotype.classifier
+                        else "",
                     ),
-                )
-                for slot in slots
+                ),
+                *(
+                    CssNode(
+                        "slot",
+                        slot,
+                        Text(
+                            text=lazy_format(slot),
+                        ),
+                    )
+                    for slot in slots
+                ),
+                draw=draw_top_separator,
             ),
-            style={
-                "padding": (4, 4, 4, 4),
-                "min-height": 8,
-                "justify-content": JustifyContent.START,
-            },
-            draw=draw_top_separator,
         )
     return None

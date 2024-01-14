@@ -18,10 +18,10 @@ from gaphor import UML
 from gaphor.core.modeling.properties import attribute
 from gaphor.core.styling import JustifyContent
 from gaphor.diagram.presentation import Classified, ElementPresentation, text_name
-from gaphor.diagram.shapes import Box, Text, stroke
+from gaphor.diagram.shapes import Box, stroke
 from gaphor.diagram.support import represents
 from gaphor.UML.classes.stereotype import stereotype_compartments
-from gaphor.UML.recipes import stereotypes_str
+from gaphor.UML.shapes import text_stereotypes
 
 
 @represents(UML.Node)
@@ -47,13 +47,11 @@ class NodeItem(Classified, ElementPresentation):
     def update_shapes(self, event=None):
         self.shape = Box(
             Box(
-                Text(
-                    text=lambda: stereotypes_str(
-                        self.subject,
-                        isinstance(self.subject, UML.Device)
-                        and (self.diagram.gettext("device"),)
-                        or (),
-                    ),
+                text_stereotypes(
+                    self,
+                    lambda: [self.diagram.gettext("device")]
+                    if isinstance(self.subject, UML.Device)
+                    else [],
                 ),
                 text_name(self),
                 style={

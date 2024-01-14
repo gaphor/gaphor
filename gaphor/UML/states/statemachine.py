@@ -7,10 +7,10 @@ from gaphor.core.modeling.element import Element
 from gaphor.core.modeling.properties import attribute
 from gaphor.core.styling import JustifyContent
 from gaphor.diagram.presentation import Classified, ElementPresentation, text_name
-from gaphor.diagram.shapes import Box, Text, draw_border
+from gaphor.diagram.shapes import Box, draw_border
 from gaphor.diagram.support import represents
 from gaphor.UML.classes.stereotype import stereotype_compartments, stereotype_watches
-from gaphor.UML.recipes import stereotypes_str
+from gaphor.UML.shapes import text_stereotypes
 from gaphor.UML.states.region import region_compartment
 
 
@@ -35,11 +35,7 @@ class StateMachineItem(Classified, ElementPresentation[UML.StateMachine]):
         )
         self.shape = Box(
             Box(
-                Text(
-                    text=lambda: stereotypes_str(
-                        self.subject, [self.diagram.gettext("statemachine")]
-                    ),
-                ),
+                text_stereotypes(self, lambda: [self.diagram.gettext("statemachine")]),
                 text_name(self),
                 style={"padding": (4, 4, 4, 4)},
             ),
