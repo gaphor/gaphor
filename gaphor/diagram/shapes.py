@@ -253,8 +253,15 @@ class Box:
         min_height = style.get("min-height", 0)
         padding = style.get("padding", DEFAULT_PADDING)
         new_bounds = rectangle_shrink(bounding_box, padding)
-        self.sizes = sizes = [c.size(context, new_bounds) for c in self.children]
-        if sizes:
+
+        if self.children:
+            child_context = replace(
+                context,
+                style={k: v for k, v in context.style.items() if k != "padding"},  # type: ignore[arg-type]
+            )
+            self.sizes = sizes = [
+                c.size(child_context, new_bounds) for c in self.children
+            ]
             widths, heights = list(zip(*sizes))
             is_vertical = self._orientation == Orientation.VERTICAL
             padding_top, padding_right, padding_bottom, padding_left = padding
@@ -321,16 +328,20 @@ class Box:
         if self._draw_border:
             self._draw_border(self, new_context, bounding_box)
 
-        x = bounding_box.x + padding_left
-        w = bounding_box.width - padding_right - padding_left
         if self.children:
+            child_context = replace(
+                context,
+                style={k: v for k, v in context.style.items() if k != "padding"},  # type: ignore[arg-type]
+            )
+            x = bounding_box.x + padding_left
+            w = bounding_box.width - padding_right - padding_left
             last_child = self.children[-1]
             for c, (_w, h) in zip(self.children, sizes):
                 if c is last_child and justify_content is JustifyContent.START:
                     h = bounding_box.height - y
                 elif h < avg_height:
                     h = avg_height
-                c.draw(context, Rectangle(x, y, w, h))
+                c.draw(child_context, Rectangle(x, y, w, h))
                 y += h
 
     def draw_horizontal(self, context: DrawContext, bounding_box: Rectangle):
@@ -367,16 +378,20 @@ class Box:
         if self._draw_border:
             self._draw_border(self, new_context, bounding_box)
 
-        y = bounding_box.y + padding_top
-        h = bounding_box.height - padding_bottom - padding_top
         if self.children:
+            child_context = replace(
+                context,
+                style={k: v for k, v in context.style.items() if k != "padding"},  # type: ignore[arg-type]
+            )
+            y = bounding_box.y + padding_top
+            h = bounding_box.height - padding_bottom - padding_top
             last_child = self.children[-1]
             for c, (w, _h) in zip(self.children, sizes):
                 if c is last_child and justify_content is JustifyContent.START:
                     w = bounding_box.height - x
                 elif w < avg_width:
                     w = avg_width
-                c.draw(context, Rectangle(x, y, w, h))
+                c.draw(child_context, Rectangle(x, y, w, h))
                 x += w
 
 
@@ -439,8 +454,12 @@ class IconBox:
         new_bounds = rectangle_shrink(bounding_box, padding)
         width, height = self.icon.size(context, new_bounds)
 
+        child_context = replace(
+            context,
+            style={k: v for k, v in context.style.items() if k != "padding"},  # type: ignore[arg-type]
+        )
         new_bounds.expand(new_bounds.width * 1.32)
-        self.sizes = [c.size(context, new_bounds) for c in self.children]
+        self.sizes = [c.size(child_context, new_bounds) for c in self.children]
 
         padding_top, padding_right, padding_bottom, padding_left = padding
         return (
@@ -488,9 +507,13 @@ class IconBox:
             rectangle_shrink(bounding_box, style.get("padding", DEFAULT_PADDING)),
         )
 
-        cx, cy, max_w, total_h = self.child_pos(style, bounding_box)
+        child_context = replace(
+            context,
+            style={k: v for k, v in context.style.items() if k != "padding"},  # type: ignore[arg-type]
+        )
+        cx, cy, max_w, _total_h = self.child_pos(style, bounding_box)
         for c, (cw, ch) in zip(self.children, self.sizes):
-            c.draw(context, Rectangle(cx + (max_w - cw) / 2, cy, cw, ch))
+            c.draw(child_context, Rectangle(cx + (max_w - cw) / 2, cy, cw, ch))
             cy += ch
 
 
