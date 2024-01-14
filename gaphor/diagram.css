@@ -39,6 +39,7 @@
   padding: 0;
 }
 
+commentline,
 dependency,
 interfacerealization {
   dash-style: 7 5;
@@ -51,6 +52,16 @@ interfacerealization[on_folded_interface = true] {
 
 controlflow {
   dash-style: 9 3;
+}
+
+comment {
+  text-align: left;
+  vertical-align: top;
+  padding: 4 16 4 4;
+}
+
+comment body {
+  padding: 0;
 }
 
 proxyport,
