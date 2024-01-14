@@ -3,7 +3,7 @@ An item representing a diagram.
 """
 
 from gaphor.core.modeling.diagram import Diagram
-from gaphor.diagram.presentation import ElementPresentation, Named
+from gaphor.diagram.presentation import ElementPresentation, Named, text_name
 from gaphor.diagram.shapes import Box, CssNode, IconBox, Text, draw_border, stroke
 from gaphor.diagram.support import represents
 
@@ -27,7 +27,7 @@ class DiagramItem(ElementPresentation, Named):
                     text=lambda: self.subject and self.subject.diagramType or "",
                 ),
             ),
-            Text(text=lambda: self.subject and self.subject.name or ""),
+            text_name(self),
         )
 
         self.watch("subject[Diagram].name")

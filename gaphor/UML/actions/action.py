@@ -1,7 +1,7 @@
 """Action diagram item."""
 
 from gaphor import UML
-from gaphor.diagram.presentation import ElementPresentation, Named, Valued
+from gaphor.diagram.presentation import ElementPresentation, Named, Valued, text_name
 from gaphor.diagram.shapes import Box, Text, draw_border, stroke
 from gaphor.diagram.support import represents
 from gaphor.UML.shapes import text_stereotypes
@@ -16,9 +16,7 @@ class ActionItem(Named, ElementPresentation):
         self.width = 100
         self.shape = Box(
             text_stereotypes(self),
-            Text(
-                text=lambda: self.subject.name or "",
-            ),
+            text_name(self),
             style={
                 "padding": (4, 12, 4, 12),
                 "border-radius": 15,
@@ -109,7 +107,7 @@ class SendSignalActionItem(Named, ElementPresentation):
 
         self.shape = Box(
             text_stereotypes(self),
-            Text(text=lambda: self.subject.name or ""),
+            text_name(self),
             style={"padding": (4, 24, 4, 12)},
             draw=self.draw_border,
         )
@@ -138,7 +136,7 @@ class AcceptEventActionItem(Named, ElementPresentation):
 
         self.shape = Box(
             text_stereotypes(self),
-            Text(text=lambda: self.subject.name or ""),
+            text_name(self),
             style={"padding": (4, 12, 4, 24)},
             draw=self.draw_border,
         )

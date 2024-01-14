@@ -8,7 +8,7 @@ from gaphor import UML
 from gaphor.core.modeling.element import Element
 from gaphor.core.modeling.properties import attribute
 from gaphor.core.styling import JustifyContent, TextAlign
-from gaphor.diagram.presentation import ElementPresentation, Named
+from gaphor.diagram.presentation import ElementPresentation, Named, text_name
 from gaphor.diagram.shapes import Box, Text, draw_top_separator, stroke
 from gaphor.diagram.support import represents
 from gaphor.UML.shapes import text_stereotypes
@@ -63,7 +63,7 @@ class StateItem(ElementPresentation[UML.State], Named):
         self.shape = Box(
             Box(
                 text_stereotypes(self),
-                Text(text=lambda: self.subject.name or ""),
+                text_name(self),
                 style={"padding": (4, 4, 4, 4)},
             ),
             compartment,

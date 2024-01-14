@@ -100,8 +100,8 @@ interfaces are connectable elements.
 """
 
 from gaphor import UML
-from gaphor.diagram.presentation import LinePresentation, Named
-from gaphor.diagram.shapes import Box, Text
+from gaphor.diagram.presentation import LinePresentation, Named, text_name
+from gaphor.diagram.shapes import Box
 from gaphor.diagram.support import represents
 from gaphor.UML.informationflow import (
     draw_information_flow,
@@ -132,7 +132,7 @@ class ConnectorItem(Named, LinePresentation[UML.Connector]):
             id,
             shape_middle=Box(
                 text_stereotypes(self),
-                Text(text=lambda: self.subject.name or ""),
+                text_name(self),
                 *shape_information_flow(self, "informationFlow"),
             ),
         )

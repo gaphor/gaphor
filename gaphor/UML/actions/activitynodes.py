@@ -15,6 +15,7 @@ from gaphor.diagram.presentation import (
     HandlePositionUpdate,
     Named,
     literal_eval,
+    text_name,
 )
 from gaphor.diagram.shapes import Box, IconBox, Text, ellipse, stroke
 from gaphor.diagram.support import represents
@@ -50,7 +51,7 @@ class InitialNodeItem(ActivityNodeItem, ElementPresentation):
             Box(draw=draw_initial_node),
             # Text should be left-top
             text_stereotypes(self),
-            Text(text=lambda: self.subject and self.subject.name or ""),
+            text_name(self),
         )
 
         self.watch("subject[NamedElement].name")
@@ -83,7 +84,7 @@ class ActivityFinalNodeItem(ActivityNodeItem, ElementPresentation):
             Box(draw=draw_activity_final_node),
             # Text should be right-bottom
             text_stereotypes(self),
-            Text(text=lambda: self.subject and self.subject.name or ""),
+            text_name(self),
         )
 
         self.watch("subject[NamedElement].name")
@@ -127,7 +128,7 @@ class FlowFinalNodeItem(ActivityNodeItem, ElementPresentation):
             Box(draw=draw_flow_final_node),
             # Text should be right-bottom
             text_stereotypes(self),
-            Text(text=lambda: self.subject and self.subject.name or ""),
+            text_name(self),
         )
 
         self.watch("subject[NamedElement].name")
@@ -162,7 +163,7 @@ class DecisionNodeItem(ActivityNodeItem, ElementPresentation):
             # Text should be left-top
             text_stereotypes(self),
             Text(text=self.node_type, style={"font-size": "small"}),
-            Text(text=lambda: self.subject and self.subject.name or ""),
+            text_name(self),
         )
 
         self.watch("show_underlying_type")
@@ -216,7 +217,7 @@ class ForkNodeItem(Named, Presentation[UML.ForkNode], HandlePositionUpdate):
         self._shape = IconBox(
             Box(draw=self.draw_fork_node),
             text_stereotypes(self),
-            Text(text=lambda: self.subject and self.subject.name or ""),
+            text_name(self),
             Text(
                 text=lambda: isinstance(self.subject, UML.JoinNode)
                 and self.subject.joinSpec not in (None, DEFAULT_JOIN_SPEC)

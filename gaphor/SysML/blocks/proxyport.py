@@ -2,6 +2,7 @@ from gaphor.core.modeling.properties import attribute
 from gaphor.diagram.presentation import AttachedPresentation, Named
 from gaphor.diagram.shapes import (
     Box,
+    CssNode,
     IconBox,
     Text,
     TextAlign,
@@ -36,7 +37,13 @@ class ProxyPortItem(Named, AttachedPresentation[sysml.ProxyPort]):
         self.shape = IconBox(
             Box(draw=draw_border),
             text_stereotypes(self, lambda: [self.diagram.gettext("proxy")]),
-            Text(text=self._format_name),
+            CssNode(
+                "name",
+                self.subject,
+                Text(
+                    text=self._format_name,
+                ),
+            ),
             style=text_position(self.connected_side()),
         )
 
