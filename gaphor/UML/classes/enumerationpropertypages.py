@@ -35,7 +35,7 @@ class EnumerationView(GObject.Object):
 
     @GObject.Property(type=str, default="")
     def enumeration(self):
-        return format(self.literal, note=True) if self.literal else ""
+        return (format(self.literal, note=True) or " ") if self.literal else ""
 
     @enumeration.setter  # type: ignore[no-redef]
     @transactional
