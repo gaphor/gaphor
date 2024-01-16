@@ -8,12 +8,12 @@ build:
   - libgirepository1.0-dev
   - gir1.2-pango-1.0
   - graphviz
+  jobs:
+    pre_install:
+    - pip install --constraint=.github/constraints.txt poetry
+    - poetry config virtualenvs.create false
+    post_install:
+    - poetry install --with docs
 sphinx:
   configuration: docs/conf.py
   fail_on_warning: true
-python:
-  install:
-  - method: pip
-    path: .
-    extra_requirements:
-    - docs
