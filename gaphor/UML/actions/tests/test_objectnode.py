@@ -13,11 +13,11 @@ def test_object_node(diagram, element_factory):
 
 def test_name(create):
     node = create(ObjectNodeItem, UML.ObjectNode)
-    name = node.shape.icon.chid.children[1]
+    name = node.shape.icon.child.children[1]
 
     node.subject.name = "Blah"
 
-    assert "Blah" == name.text()
+    assert "Blah" == name.child.text()
 
 
 def test_ordering(create):
