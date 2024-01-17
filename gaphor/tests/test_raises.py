@@ -1,5 +1,4 @@
 import pytest
-from exceptiongroup import ExceptionGroup
 
 from gaphor.tests.raises import raises_exception_group
 

@@ -8,7 +8,6 @@ import time
 from types import TracebackType
 
 import better_exceptions
-from exceptiongroup import BaseExceptionGroup
 from gi.repository import Gtk
 
 from gaphor.abc import ActionProvider
