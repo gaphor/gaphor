@@ -167,7 +167,7 @@ class Greeter(Service, ActionProvider):
 
         filename = row.filename
         self.greeter.set_sensitive(False)
-        GLib.idle_add(load)
+        GLib.idle_add(load, priority=GLib.PRIORITY_LOW)
 
     def _on_template_activated(self, child):
         def load():
@@ -180,7 +180,7 @@ class Greeter(Service, ActionProvider):
             self.close()
 
         self.greeter.set_sensitive(False)
-        GLib.idle_add(load)
+        GLib.idle_add(load, priority=GLib.PRIORITY_LOW)
 
     def _on_window_close_request(self, window, event=None):
         self.close()
