@@ -1,7 +1,6 @@
 import logging
 
 import pytest
-from exceptiongroup import ExceptionGroup
 
 from gaphor import UML
 from gaphor.application import Application

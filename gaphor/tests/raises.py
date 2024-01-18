@@ -1,6 +1,3 @@
-from exceptiongroup import ExceptionGroup
-
-
 class raises_exception_group:
     def __init__(
         self,

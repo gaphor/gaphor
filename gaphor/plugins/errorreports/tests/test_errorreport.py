@@ -1,7 +1,6 @@
 import sys
 
 import pytest
-from exceptiongroup import ExceptionGroup
 
 from gaphor.plugins.errorreports.errorreports import ErrorReports
 

@@ -1,5 +1,4 @@
 import pytest
-from exceptiongroup import ExceptionGroup
 
 from gaphor.core.eventmanager import event_handler
 
