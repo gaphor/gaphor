@@ -247,6 +247,16 @@ def test_root_pseudo_selector_with_name():
     assert not selector(Node("node", parent=Node("child")))
 
 
+def test_first_child_selector():
+    css = "node:first-child {}"
+
+    selector, _declarations = next(compile_style_sheet(css))
+
+    assert not selector(Node("node", parent=Node("parent", children=[Node("node")])))
+    assert selector(Node("node", parent=Node("parent")))
+    assert not selector(Node("sibling"))
+
+
 @pytest.mark.parametrize(
     "state",
     ["hover", "focus", "active", "drop", "disabled"],
