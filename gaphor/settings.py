@@ -1,6 +1,7 @@
 """Application settings support for Gaphor."""
 
 import logging
+import sys
 from enum import Enum
 
 from gi.repository import Gio
@@ -27,9 +28,11 @@ class Settings:
             else None
         )
         if not self._gio_settings:
-            logger.warning(
-                "Settings schema not found and settings won't be saved, run `poe install-schemas`"
-            )
+            # Workaround: do not show this message if we're installing schemas
+            if "install-schemas" not in sys.argv:
+                logger.warning(
+                    "Settings schema not found and settings won’t be saved. Run `gaphor install-schemas`."
+                )
 
     @property
     def style_variant(self) -> StyleVariant:
