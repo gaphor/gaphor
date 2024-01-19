@@ -115,6 +115,10 @@ compartment:first-child {
   text-align: center;
 }
 
+:has(compartment) {
+  justify-content: start;
+}
+
 statemachine {
   justify-content: start;
 }
@@ -187,6 +191,7 @@ node name {
   padding: 0 0 4 0;
   font-size: x-small;
   font-style: italic;
+  text-align: center;
 }
 
 * :is(attribute, operation, enumeration, slot, part, reference, value) {
@@ -202,11 +207,15 @@ node name {
     text-decoration: underline;
 }
 
+package {
+  padding: 24 12 4 12;
+}
+
 :is(artifact, component) {
   padding: 4 32 4 4;
 }
 
-:is(artifact, component):not([children=""]) {
+:is(package, node, artifact, component):not([children=""]) {
   justify-content: start;
 }
 

@@ -56,11 +56,6 @@ class NodeItem(Classified, ElementPresentation):
                 },
             ),
             *(self.show_stereotypes and stereotype_compartments(self.subject) or []),
-            style={
-                "justify-content": JustifyContent.START
-                if self.diagram and self.children
-                else JustifyContent.CENTER,
-            },
             draw=draw_node,
         )
 

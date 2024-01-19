@@ -2,8 +2,6 @@ from gaphor.core.modeling.properties import attribute
 from gaphor.diagram.presentation import (
     Classified,
     ElementPresentation,
-    text_from_package,
-    text_name,
 )
 from gaphor.diagram.shapes import (
     Box,
@@ -21,7 +19,7 @@ from gaphor.UML.classes.klass import (
     operations_compartment,
 )
 from gaphor.UML.classes.stereotype import stereotype_compartments, stereotype_watches
-from gaphor.UML.shapes import text_stereotypes
+from gaphor.UML.shapes import name_compartment
 
 
 @represents(Requirement)
@@ -50,14 +48,7 @@ class RequirementItem(Classified, ElementPresentation[Requirement]):
 
     def update_shapes(self, event=None):
         self.shape = Box(
-            Box(
-                text_stereotypes(self, lambda: [self.diagram.gettext("requirement")]),
-                text_name(self),
-                text_from_package(self),
-                style={
-                    "padding": (12, 4, 12, 4),
-                },
-            ),
+            name_compartment(self, lambda: [self.diagram.gettext("requirement")]),
             *(
                 self.show_attributes
                 and self.subject

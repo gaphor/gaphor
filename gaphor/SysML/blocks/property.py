@@ -40,19 +40,22 @@ class PropertyItem(Named, ElementPresentation[UML.Property]):
 
     def update_shapes(self, event=None):
         self.shape = Box(
-            Box(
-                text_stereotypes(self),
-                CssNode(
-                    "name",
-                    self.subject,
-                    Text(
-                        text=lambda: format_property(
-                            self.subject, type=True, multiplicity=True
-                        )
-                        or "",
+            CssNode(
+                "compartment",
+                None,
+                Box(
+                    text_stereotypes(self),
+                    CssNode(
+                        "name",
+                        self.subject,
+                        Text(
+                            text=lambda: format_property(
+                                self.subject, type=True, multiplicity=True
+                            )
+                            or "",
+                        ),
                     ),
                 ),
-                style={"padding": (12, 4, 12, 4)},
             ),
             *(self.show_stereotypes and stereotype_compartments(self.subject) or []),
             style={

@@ -12,7 +12,7 @@ def name_compartment(
 ):
     return CssNode(
         "compartment",
-        presentation.subject,
+        None,
         Box(
             text_stereotypes(presentation, additional_stereotypes),
             text_name(presentation),
