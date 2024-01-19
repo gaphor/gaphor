@@ -104,10 +104,15 @@ swimlane {
 }
 
 compartment {
-  padding: 4 4 4 4;
+  padding: 4;
   min-height: 8;
   text-align: left;
   justify-content: start;
+}
+
+compartment:first-child {
+  padding: 12 4;
+  text-align: center;
 }
 
 statemachine {
