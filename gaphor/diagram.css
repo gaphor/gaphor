@@ -41,7 +41,9 @@
 
 commentline,
 dependency,
-interfacerealization {
+interfacerealization,
+include,
+extend {
   dash-style: 7 5;
 }
 
@@ -90,10 +92,6 @@ partition {
 
 usecase {
   padding: 4;
-}
-
-:is(include, extend) {
-  dash-style: 7.0 5.0;
 }
 
 swimlane {
@@ -204,7 +202,7 @@ node name {
 }
 
 * :is(attribute, operation)[isstatic] {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 package {
@@ -215,8 +213,12 @@ package {
   padding: 4 32 4 4;
 }
 
-:is(package, node, artifact, component):not([children=""]) {
+:is(package, node, artifact, component, property):not([children=""]) {
   justify-content: start;
+}
+
+property:not([aggregation="composite"]) {
+  dash-style: 7 5;
 }
 
 /* C4 model */
