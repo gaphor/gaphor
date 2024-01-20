@@ -16,12 +16,11 @@ module.
 
 from gaphor import UML
 from gaphor.core.modeling.properties import attribute
-from gaphor.core.styling import JustifyContent
-from gaphor.diagram.presentation import Classified, ElementPresentation, text_name
+from gaphor.diagram.presentation import Classified, ElementPresentation
 from gaphor.diagram.shapes import Box, stroke
 from gaphor.diagram.support import represents
 from gaphor.UML.classes.stereotype import stereotype_compartments, stereotype_watches
-from gaphor.UML.shapes import text_stereotypes
+from gaphor.UML.shapes import name_compartment
 
 
 @represents(UML.Node)
@@ -42,18 +41,11 @@ class NodeItem(Classified, ElementPresentation):
 
     def update_shapes(self, event=None):
         self.shape = Box(
-            Box(
-                text_stereotypes(
-                    self,
-                    lambda: [self.diagram.gettext("device")]
-                    if isinstance(self.subject, UML.Device)
-                    else [],
-                ),
-                text_name(self),
-                style={
-                    "padding": (4, 4, 4, 4),
-                    "justify-content": JustifyContent.START,
-                },
+            name_compartment(
+                self,
+                lambda: [self.diagram.gettext("device")]
+                if isinstance(self.subject, UML.Device)
+                else [],
             ),
             *(self.show_stereotypes and stereotype_compartments(self.subject) or []),
             draw=draw_node,
