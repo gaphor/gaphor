@@ -5,12 +5,12 @@
   background-color: transparent;
 }
 
-*:drop {
+:drop {
   color: #1a5fb4;
   line-width: 3;
 }
 
-*:disabled {
+:disabled {
   opacity: 0.5;
 }
 
@@ -26,7 +26,7 @@
     color: white;
   }
 
-  *:drop {
+  :drop {
     color: #62a0ea;
   }
 }
@@ -106,16 +106,15 @@ swimlane {
   white-space: normal;
 }
 
-compartment {
+compartment:first-child {
+  padding: 12 4;
+}
+
+compartment + compartment {
   padding: 4;
   min-height: 8;
   text-align: left;
   justify-content: start;
-}
-
-compartment:first-child {
-  padding: 12 4;
-  text-align: center;
 }
 
 :has(compartment + compartment),
@@ -179,11 +178,11 @@ node name {
   font-weight: bold;
 }
 
-* name[isabstract] {
+name[isabstract] {
   font-style: italic;
 }
 
-* from {
+from {
   font-size: x-small;
 }
 
@@ -191,23 +190,24 @@ node name {
     text-align: left;
 }
 
-* heading {
+heading {
   padding: 0 0 4 0;
   font-size: x-small;
   font-style: italic;
   text-align: center;
 }
 
-* :is(attribute, operation, enumeration, slot, part, reference, value) {
+attribute, operation, enumeration, slot, part, reference, value {
   text-align: left;
   white-space: nowrap;
 }
 
-* operation[isabstract] {
+operation[isabstract] {
   font-style: italic;
 }
 
-* :is(attribute, operation)[isstatic] {
+attribute[isstatic],
+operation[isstatic] {
   text-decoration: underline;
 }
 
@@ -215,7 +215,8 @@ package {
   padding: 24 12 4 12;
 }
 
-:is(artifact, component) {
+artifact,
+component {
   padding: 4 32 4 4;
 }
 
