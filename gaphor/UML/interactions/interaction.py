@@ -1,9 +1,8 @@
 """Interaction diagram item."""
 
 from gaphor import UML
-from gaphor.core.styling import JustifyContent
 from gaphor.diagram.presentation import ElementPresentation, Named, text_name
-from gaphor.diagram.shapes import Box, stroke
+from gaphor.diagram.shapes import Box, CssNode, stroke
 from gaphor.diagram.support import represents
 from gaphor.UML.shapes import text_stereotypes
 
@@ -14,17 +13,14 @@ class InteractionItem(Named, ElementPresentation):
         super().__init__(diagram, id, width=150, height=100)
 
         self.shape = Box(
-            Box(
-                text_stereotypes(self),
-                text_name(self),
-                style={
-                    "padding": (4, 4, 4, 4),
-                    "justify-content": JustifyContent.START,
-                },
+            CssNode(
+                "pentagon",
+                None,
+                Box(
+                    text_stereotypes(self),
+                    text_name(self),
+                ),
             ),
-            style={
-                "justify-content": JustifyContent.START,
-            },
             draw=draw_interaction,
         )
 

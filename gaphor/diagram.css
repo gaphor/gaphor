@@ -232,6 +232,15 @@ state compartment:first-child {
   padding: 4;
 }
 
+interaction {
+  justify-content: start;
+}
+
+pentagon {
+  padding: 4;
+  justify-content: start;
+}
+
 /* C4 model */
 
 c4container, c4person {
