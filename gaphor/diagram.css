@@ -66,13 +66,17 @@ comment body {
   padding: 0;
 }
 
-diagram icon {
+diagram > icon {
   padding: 4;
   border-radius: 4;
 }
 
 diagram type {
   font-weight: bold;
+}
+
+objectnode icon {
+  padding: 4 12;
 }
 
 decisionnode type {

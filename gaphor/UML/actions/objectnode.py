@@ -34,9 +34,6 @@ class ObjectNodeItem(Named, ElementPresentation):
                 Box(
                     text_stereotypes(self),
                     text_name(self),
-                    style={
-                        "padding": (4, 12, 4, 12),
-                    },
                     draw=draw_border,
                 ),
                 Text(
