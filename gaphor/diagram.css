@@ -190,7 +190,7 @@ from {
     text-align: left;
 }
 
-heading {
+compartment heading {
   padding: 0 0 4 0;
   font-size: x-small;
   font-style: italic;
@@ -277,6 +277,25 @@ sendsignalaction {
 
 accepteventaction {
   padding: 4 12 4 24;
+}
+
+metadata {
+  justify-content: stretch;
+
+}
+
+metadata cell {
+  padding: 4;
+}
+
+metadata * {
+  text-align: left;
+}
+
+metadata heading {
+  font-weight: bold;
+  font-style: normal;
+  font-size: small;
 }
 
 /* Attached */
