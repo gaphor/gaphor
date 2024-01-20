@@ -186,7 +186,7 @@ from {
   font-size: x-small;
 }
 
-:is(activity, interaction) :is(name, stereotypes) {
+:is(activity, interaction) > :is(name, stereotypes) {
     text-align: left;
 }
 
@@ -197,7 +197,14 @@ heading {
   text-align: center;
 }
 
-attribute, operation, enumeration, slot, part, reference, value {
+attribute,
+operation,
+enumeration,
+slot,
+part,
+reference,
+block value,
+blockinterface value {
   text-align: left;
   white-space: nowrap;
 }
@@ -251,6 +258,25 @@ activityparameternode {
   padding: 4 12;
   min-width: 120;
   text-align: center;
+}
+
+action,
+valuespecificationaction {
+  padding: 4 12;
+  border-radius: 15;
+}
+
+callbehavioraction {
+  padding: 4 24 4 12;
+  border-radius: 15;
+}
+
+sendsignalaction {
+  padding: 4 24 4 12;
+}
+
+accepteventaction {
+  padding: 4 12 4 24;
 }
 
 /* C4 model */

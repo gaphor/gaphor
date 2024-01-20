@@ -17,10 +17,6 @@ class ActionItem(Named, ElementPresentation):
         self.shape = Box(
             text_stereotypes(self),
             text_name(self),
-            style={
-                "padding": (4, 12, 4, 12),
-                "border-radius": 15,
-            },
             draw=draw_border,
         )
 
@@ -37,10 +33,6 @@ class ValueSpecificationActionItem(Valued, ElementPresentation):
         self.shape = Box(
             text_stereotypes(self, lambda: ["valueSpecification"]),
             CssNode("value", None, Text(text=lambda: self.subject.value or "")),
-            style={
-                "padding": (4, 12, 4, 12),
-                "border-radius": 15,
-            },
             draw=draw_border,
         )
 
@@ -59,10 +51,6 @@ class CallBehaviorActionItem(ActionItem):
                 None,
                 Text(text=lambda: format_call_behavior_action_name(self.subject)),
             ),
-            style={
-                "padding": (4, 24, 4, 12),
-                "border-radius": 15,
-            },
             draw=self.draw_border_with_fork,
         )
 
@@ -106,7 +94,6 @@ class SendSignalActionItem(Named, ElementPresentation):
         self.shape = Box(
             text_stereotypes(self),
             text_name(self),
-            style={"padding": (4, 24, 4, 12)},
             draw=self.draw_border,
         )
 
@@ -135,7 +122,6 @@ class AcceptEventActionItem(Named, ElementPresentation):
         self.shape = Box(
             text_stereotypes(self),
             text_name(self),
-            style={"padding": (4, 12, 4, 24)},
             draw=self.draw_border,
         )
 
