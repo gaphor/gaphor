@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 from collections.abc import Iterator
-from dataclasses import replace
 from math import atan2
 
 import gaphas
@@ -16,7 +15,6 @@ from gaphor.core.modeling.element import Id
 from gaphor.core.modeling.event import AttributeUpdated, RevertibleEvent
 from gaphor.core.modeling.presentation import Presentation, S, literal_eval
 from gaphor.core.modeling.properties import attribute
-from gaphor.core.styling import Style, merge_styles
 from gaphor.diagram.shapes import CssNode, Shape, Text, stroke, traverse_css_nodes
 from gaphor.diagram.text import TextAlign, middle_segment, text_point_at_line
 
@@ -238,14 +236,12 @@ class LinePresentation(gaphas.Line, HandlePositionUpdate, Presentation[S]):
         self,
         diagram: Diagram,
         id: Id | None = None,
-        style: Style | None = None,
         shape_head: Shape | None = None,
         shape_middle: Shape | None = None,
         shape_tail: Shape | None = None,
     ):
         super().__init__(connections=diagram.connections, diagram=diagram, id=id)  # type: ignore[call-arg]
 
-        self._style = style if style is not None else {}
         self._shape_head = shape_head
         self._shape_middle = shape_middle
         self._shape_tail = shape_tail
@@ -275,10 +271,6 @@ class LinePresentation(gaphas.Line, HandlePositionUpdate, Presentation[S]):
     @property
     def shape_tail(self):
         return self._shape_tail
-
-    @property
-    def style(self):
-        return self._style
 
     @property
     def middle_shape_size(self) -> Rectangle:
@@ -329,9 +321,6 @@ class LinePresentation(gaphas.Line, HandlePositionUpdate, Presentation[S]):
         return min(d0, *ds) if ds else d0
 
     def draw(self, context: DrawContext):
-        style = merge_styles(context.style, self.style)
-        context = replace(context, style=style)
-
         self.update_shape_bounds(context)
         cr = context.cairo
 
