@@ -220,12 +220,16 @@ component {
   padding: 4 32 4 4;
 }
 
-:is(package, node, artifact, component, property, statemachine):not([children=""]) {
+:is(package, node, artifact, component, property, statemachine, state):not([children=""]) {
   justify-content: start;
 }
 
 property:not([aggregation="composite"]) {
   dash-style: 7 5;
+}
+
+state compartment:first-child {
+  padding: 4;
 }
 
 /* C4 model */

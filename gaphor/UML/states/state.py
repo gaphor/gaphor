@@ -7,7 +7,6 @@ from gaphas.types import Pos
 from gaphor import UML
 from gaphor.core.modeling.element import Element
 from gaphor.core.modeling.properties import attribute
-from gaphor.core.styling import JustifyContent
 from gaphor.diagram.presentation import ElementPresentation, Named, text_name
 from gaphor.diagram.shapes import Box, CssNode, Text, draw_top_separator, stroke
 from gaphor.diagram.support import represents
@@ -57,19 +56,28 @@ class StateItem(ElementPresentation[UML.State], Named):
             compartment = Box()
 
         self.shape = Box(
-            Box(
-                text_stereotypes(self),
-                text_name(self),
-                style={"padding": (4, 4, 4, 4)},
+            CssNode(
+                "compartment",
+                None,
+                Box(
+                    text_stereotypes(self),
+                    text_name(self),
+                ),
             ),
             CssNode("compartment", self.subject, compartment),
-            Box(
-                *(self._region_boxes),
-                style={"justify-content": JustifyContent.STRETCH},
+            *(
+                self._region_boxes
+                and [
+                    CssNode(
+                        "regions",
+                        None,
+                        Box(
+                            *(self._region_boxes),
+                        ),
+                    )
+                ]
+                or []
             ),
-            style={
-                "justify-content": JustifyContent.START,
-            },
             draw=draw_state,
         )
 
