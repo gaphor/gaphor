@@ -22,7 +22,6 @@ class PackageImportItem(LinePresentation):
             shape_middle=text_stereotypes(
                 self, lambda: [self.diagram.gettext("import")]
             ),
-            style={"dash-style": (7.0, 5.0)},
         )
 
         self._handles[0].pos = (30, 20)

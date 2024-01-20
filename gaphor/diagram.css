@@ -43,7 +43,8 @@ commentline,
 dependency,
 interfacerealization,
 include,
-extend {
+extend,
+packageimport {
   dash-style: 7 5;
 }
 
