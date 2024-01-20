@@ -7,7 +7,7 @@ from gaphor.diagram.presentation import (
     connect,
     text_name,
 )
-from gaphor.diagram.shapes import Box, CssNode, JustifyContent, Text, draw_border
+from gaphor.diagram.shapes import Box, CssNode, Text, draw_border
 from gaphor.diagram.support import represents
 from gaphor.UML.shapes import text_stereotypes
 
@@ -37,11 +37,6 @@ class ActivityItem(Classified, ElementPresentation):
         self.shape = Box(
             text_stereotypes(self),
             text_name(self),
-            style={
-                "padding": (4, 12, 4, 12),
-                "border-radius": 20,
-                "justify-content": JustifyContent.START,
-            },
             draw=draw_border,
         )
 
@@ -85,7 +80,6 @@ class ActivityParameterNodeItem(AttachedPresentation[UML.ActivityParameterNode])
                         text=self._format_name,
                     ),
                 ),
-                style={"padding": (4, 12, 4, 12), "min-width": 120},
                 draw=draw_border,
             ),
         )

@@ -241,6 +241,18 @@ pentagon {
   justify-content: start;
 }
 
+activity {
+  padding: 4 12;
+  border-radius: 20;
+  justify-content: start;
+}
+
+activityparameternode {
+  padding: 4 12;
+  min-width: 120;
+  text-align: center;
+}
+
 /* C4 model */
 
 c4container, c4person {
