@@ -231,12 +231,13 @@ class StyledItem:
 
     def children(self) -> Iterator[StyleNode]:
         item = self.item
+        yield from (node.style_node(self) for node in item.css_nodes())
+
         selection = self.selection
         yield from (
             StyledItem(child, selection, dark_mode=self.dark_mode)
             for child in item.children
         )
-        yield from (node.style_node(self) for node in item.css_nodes())
 
     def attribute(self, name: str) -> str | None:
         a = lookup_attribute(self.item, name)
