@@ -35,21 +35,20 @@ class PinItem(Named, AttachedPresentation[UML.Pin]):
         return ""
 
     def update_shapes(self, event=None):
-        position = self.connected_side()
+        side = self.connected_side
         self.update_width(
             self.width,
-            factor=0 if position == "left" else 1 if position == "right" else 0.5,
+            factor=0 if side == "left" else 1 if side == "right" else 0.5,
         )
         self.update_height(
             self.width,
-            factor=0 if position == "top" else 1 if position == "bottom" else 0.5,
+            factor=0 if side == "top" else 1 if side == "bottom" else 0.5,
         )
 
         self.shape = IconBox(
             Box(draw=draw_border),
             text_stereotypes(self, lambda: [] if self.subject else [self.pin_type()]),
             CssNode("name", self.subject, Text(text=lambda: format_pin(self.subject))),
-            style=text_position(self.connected_side()),
         )
 
 

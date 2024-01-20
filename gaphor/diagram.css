@@ -279,6 +279,21 @@ accepteventaction {
   padding: 4 12 4 24;
 }
 
+/* Attached */
+
+[connected_side] {
+  text-align: right;
+  vertical-align: top;
+}
+
+[connected_side="left"] {
+  text-align: left;
+}
+
+[connected_side="bottom"] {
+  vertical-align: bottom;
+}
+
 /* C4 model */
 
 c4container, c4person {

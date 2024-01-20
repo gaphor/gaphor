@@ -548,13 +548,14 @@ class AttachedPresentation(HandlePositionUpdate, Presentation[S]):
         be drawn or when styling changes."""
 
     def update(self, context):
-        side = self.connected_side()
+        side = self.connected_side
         if not self.shape or self._last_connected_side != side:
             self._last_connected_side = side
             self.update_shapes()
 
         return self.shape.size(context, bounding_box=self.dimensions())
 
+    @property
     def connected_side(self) -> str | None:
         cinfo = self._connections.get_connection(self._handle)
         return cinfo.connected.port_side(cinfo.port) if cinfo else None

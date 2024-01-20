@@ -44,7 +44,6 @@ class ProxyPortItem(Named, AttachedPresentation[sysml.ProxyPort]):
                     text=self._format_name,
                 ),
             ),
-            style=text_position(self.connected_side()),
         )
 
     def _format_name(self):
