@@ -22,7 +22,6 @@ class GeneralizationItem(LinePresentation):
             diagram,
             id,
             shape_middle=Box(text_stereotypes(self)),
-            style={"dash-style": ()},
         )
 
         self._handles[0].pos = (30, 20)
