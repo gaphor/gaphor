@@ -118,12 +118,13 @@ compartment:first-child {
   text-align: center;
 }
 
-:has(compartment) {
+:has(compartment + compartment),
+:has(regions) {
   justify-content: start;
 }
 
-statemachine {
-  justify-content: start;
+regions {
+  justify-content: stretch;
 }
 
 region {
@@ -218,7 +219,7 @@ package {
   padding: 4 32 4 4;
 }
 
-:is(package, node, artifact, component, property):not([children=""]) {
+:is(package, node, artifact, component, property, statemachine):not([children=""]) {
   justify-content: start;
 }
 

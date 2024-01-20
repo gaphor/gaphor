@@ -5,9 +5,8 @@ from gaphas.types import Pos
 from gaphor import UML
 from gaphor.core.modeling.element import Element
 from gaphor.core.modeling.properties import attribute
-from gaphor.core.styling import JustifyContent
 from gaphor.diagram.presentation import Classified, ElementPresentation, text_name
-from gaphor.diagram.shapes import Box, draw_border
+from gaphor.diagram.shapes import Box, CssNode, draw_border
 from gaphor.diagram.support import represents
 from gaphor.UML.classes.stereotype import stereotype_compartments, stereotype_watches
 from gaphor.UML.shapes import text_stereotypes
@@ -19,6 +18,7 @@ class StateMachineItem(Classified, ElementPresentation[UML.StateMachine]):
     def __init__(self, diagram, id=None):
         super().__init__(diagram, id)
         self._region_boxes = []
+        self.watch("children", self.update_shapes)
         self.watch("show_stereotypes", self.update_shapes)
         self.watch("show_regions", self.update_shapes)
         self.watch("subject[NamedElement].name")
@@ -34,21 +34,30 @@ class StateMachineItem(Classified, ElementPresentation[UML.StateMachine]):
             list(region_compartment(self.subject)) if self.show_regions else []
         )
         self.shape = Box(
-            Box(
-                text_stereotypes(self, lambda: [self.diagram.gettext("statemachine")]),
-                text_name(self),
-                style={"padding": (4, 4, 4, 4)},
+            CssNode(
+                "compartment",
+                None,
+                Box(
+                    text_stereotypes(
+                        self, lambda: [self.diagram.gettext("statemachine")]
+                    ),
+                    text_name(self),
+                ),
             ),
             *(self.show_stereotypes and stereotype_compartments(self.subject) or []),
-            Box(
-                *(self._region_boxes),
-                style={"justify-content": JustifyContent.STRETCH},
+            *(
+                self._region_boxes
+                and [
+                    CssNode(
+                        "regions",
+                        None,
+                        Box(
+                            *(self._region_boxes),
+                        ),
+                    )
+                ]
+                or []
             ),
-            style={
-                "justify-content": JustifyContent.START
-                if (self.diagram and self.children) or self.show_regions
-                else JustifyContent.CENTER,
-            },
             draw=draw_border,
         )
 
