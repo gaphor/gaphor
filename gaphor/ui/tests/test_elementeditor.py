@@ -1,10 +1,13 @@
+import textwrap
+
 import pytest
 
 import gaphor.UML.classes.classespropertypages  # noqa
 from gaphor import UML
+from gaphor.core.modeling.diagram import StyledItem
 from gaphor.diagram.tests.fixtures import find
-from gaphor.ui.elementeditor import ElementEditor
-from gaphor.UML.diagramitems import PackageItem
+from gaphor.ui.elementeditor import ElementEditor, dump_css_tree
+from gaphor.UML.diagramitems import ClassItem, PackageItem
 
 
 class DiagramsStub:
@@ -51,3 +54,24 @@ def test_create_pages(
     editor.editors.clear_pages()
 
     assert not find(editor.editors.vbox, "name-editor")
+
+
+def test_dump_css_tree(element_factory, create):
+    class_item = create(ClassItem, UML.Class)
+
+    class_item.subject.ownedAttribute = element_factory.create(UML.Property)
+    class_item.subject.ownedOperation = element_factory.create(UML.Operation)
+
+    text = dump_css_tree(StyledItem(class_item))
+
+    assert text == textwrap.dedent(
+        """\
+        class
+         ├╴stereotypes
+         ├╴name
+         ├╴from
+         ├╴compartment
+         │  ╰╴attribute
+         ╰╴compartment
+            ╰╴operation"""
+    )

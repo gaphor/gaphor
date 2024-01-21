@@ -337,16 +337,8 @@
                     </child>
                     <child>
                       <object class="GtkLabel">
-                        <property name="label" translatable="yes">🔗 &lt;a href=&quot;https://docs.gaphor.org/en/latest/style_sheets.html&quot;&gt;Style sheets in Gaphor&lt;/a&gt;</property>
-                        <property name="use_markup">1</property>
-                        <property name="wrap">1</property>
-                        <property name="xalign">0</property>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkLabel">
                         <property name="margin_top">6</property>
-                        <property name="label" translatable="yes">CSS Nodes of focused item</property>
+                        <property name="label" translatable="yes">CSS nodes of focused item</property>
                         <property name="xalign">0</property>
                         <attributes>
                           <attribute name="weight" value="bold"></attribute>
@@ -354,14 +346,27 @@
                       </object>
                     </child>
                     <child>
-                      <object class="GtkLabel" id="css-nodes">
-                        <property name="wrap">0</property>
-                        <property name="selectable">1</property>
-                        <property name="label" translatable="yes">No focused item.</property>
+                      <object class="GtkFrame">
+                        <child>
+                          <object class="GtkLabel" id="css-nodes">
+                            <property name="use-markup">1</property>
+                            <property name="wrap">0</property>
+                            <property name="selectable">1</property>
+                            <property name="label" translatable="yes">No focused item.</property>
+                            <property name="xalign">0</property>
+                            <style>
+                              <class name="mono" />
+                            </style>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="label" translatable="yes">🔗 &lt;a href=&quot;https://docs.gaphor.org/en/latest/style_sheets.html&quot;&gt;Style sheets in Gaphor&lt;/a&gt;</property>
+                        <property name="use_markup">1</property>
+                        <property name="wrap">1</property>
                         <property name="xalign">0</property>
-                        <style>
-                          <class name="mono" />
-                        </style>
                       </object>
                     </child>
                   </object>

@@ -2,7 +2,7 @@
 
 import importlib.resources
 import logging
-from typing import Optional
+from typing import Iterator, Optional
 from unicodedata import normalize
 
 from babel import Locale
@@ -11,12 +11,14 @@ from gi.repository import Adw, GLib, Gtk, GtkSource
 from gaphor.abc import ActionProvider
 from gaphor.core import Transaction, action, event_handler
 from gaphor.core.modeling import Presentation, StyleSheet
+from gaphor.core.modeling.diagram import StyledItem
 from gaphor.core.modeling.event import (
     AssociationUpdated,
     AttributeUpdated,
     ElementCreated,
     ModelReady,
 )
+from gaphor.core.styling import StyleNode
 from gaphor.diagram.propertypages import PropertyPages, new_resource_builder
 from gaphor.event import ModelLoaded
 from gaphor.i18n import gettext, localedir
@@ -417,13 +419,7 @@ class PreferencesStack:
         if not item:
             self.css_nodes.set_label(gettext("No focused item."))
         else:
-            # class
-            #  ├╴compartment
-            #  │  ├╴attribute
-            #  │  ╰╴attribute
-            #  ╰╴compartment
-            #      ╰╴operation
-            self.css_nodes.set_label("Placeholder for CSS node view.")
+            self.css_nodes.set_label(dump_css_tree(StyledItem(item)))
 
     def on_language_changed(self, dropdown, _gparam):
         if (style_sheet := self.style_sheet) and not self._in_update:
@@ -437,3 +433,25 @@ class PreferencesStack:
             "Adwaita-dark" if style_manager.get_dark() else "Adwaita"
         )
         self.style_sheet_buffer.set_style_scheme(scheme)
+
+
+def dump_css_tree(styled_item: StyleNode) -> str:
+    return "\n".join(_dump_css_tree(styled_item))
+
+
+def _dump_css_tree(styled_item: StyleNode) -> Iterator[str]:
+    yield styled_item.name()
+    children = list(styled_item.children())
+    for child in children:
+        if isinstance(child, StyledItem):
+            continue
+        for line in _dump_css_tree(child):
+            if child is children[-1]:
+                if line.startswith(" "):
+                    yield f"   {line}"
+                else:
+                    yield f" ╰╴{line}"
+            elif line.startswith(" "):
+                yield f" │ {line}"
+            else:
+                yield f" ├╴{line}"
