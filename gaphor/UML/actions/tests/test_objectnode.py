@@ -30,4 +30,4 @@ def test_ordering(create):
 
     language = locale.getlocale()[0]
     if language == "en_US":
-        assert "{ ordering = unordered }" == ordering.text()
+        assert "{ ordering = unordered }" == ordering.child.text()
