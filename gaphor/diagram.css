@@ -222,17 +222,17 @@ package {
   padding: 24 12 4 12;
 }
 
-artifact,
-component {
-  padding: 4 32 4 4;
-}
-
-:is(package, node, artifact, component, property, statemachine, state):not([children=""]) {
+:not([children=""]) > compartment {
   justify-content: start;
 }
 
 property:not([aggregation="composite"]) {
   dash-style: 7 5;
+}
+
+artifact compartment:first-child,
+component compartment:first-child {
+  padding: 12 24 12 4;
 }
 
 state compartment:first-child {
