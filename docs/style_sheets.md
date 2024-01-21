@@ -93,16 +93,17 @@ of CSS. Below you'll find a summary of all CSS features supported by Gaphor.
 ``diagram[name*=draft]``      A diagram with a name containing the text "draft".
 ``diagram[name~=draft item]`` A diagram with a name of "draft" or "item".
 ``diagram[name|=draft]``      A diagram with a name is "draft" or starts with "draft-".
-``*:focus``                   The focused item. Other pseudo classes are:
+``:focus``                    The focused item. Other pseudo classes are:
 
                               - ``:active`` selected items
                               - ``:hover`` for the item under the mouse
                               - ``:drop`` if an item is dragged and can be dropped on this item
                               - ``:disabled`` if an element is grayed out during handle movement
-``node:empty``                A node containing no child nodes in the diagram.
+``:empty``                    A node containing no child nodes in the diagram.
 ``:root``                     Refers to the diagram itself.
 
                               This is only applicable for the diagram
+``:first-child``              A node is the first element among a group of sibling.
 ``:has()``                    The item contains any of the provided selectors.
 
                               E.g. ``node:has(component)``: a node containing a component item.
