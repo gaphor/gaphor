@@ -72,15 +72,15 @@ diagram > icon {
   border-radius: 4;
 }
 
-diagram type {
+diagram > type {
   font-weight: bold;
 }
 
-objectnode icon {
+objectnode > icon {
   padding: 4 12;
 }
 
-decisionnode type {
+decisionnode > type {
   font-size: small;
 }
 
@@ -187,7 +187,7 @@ from {
 }
 
 :is(activity, interaction) > :is(name, stereotypes) {
-    text-align: left;
+  text-align: left;
 }
 
 compartment heading {
@@ -281,7 +281,6 @@ accepteventaction {
 
 metadata {
   justify-content: stretch;
-
 }
 
 metadata cell {
