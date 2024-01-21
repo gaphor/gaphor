@@ -19,7 +19,7 @@ from gaphor.core.modeling.event import (
 )
 from gaphor.diagram.propertypages import PropertyPages, new_resource_builder
 from gaphor.event import ModelLoaded
-from gaphor.i18n import localedir
+from gaphor.i18n import gettext, localedir
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.csscompletion import (
     CompletionProviderWrapper,
@@ -73,7 +73,7 @@ class ElementEditor(UIComponent, ActionProvider):
         self.event_manager = event_manager
         self.properties = properties
         self.editors = EditorStack(event_manager, diagrams, properties)
-        self.preferences = PreferencesStack(event_manager, element_factory)
+        self.preferences = PreferencesStack(event_manager, diagrams, element_factory)
         self.modelmerge = ModelMerge(event_manager, element_factory, modeling_language)
 
     def open(self):
@@ -272,8 +272,9 @@ class EditorStack:
 class PreferencesStack:
     """Support code for the Preferences (cog) pane."""
 
-    def __init__(self, event_manager, element_factory):
+    def __init__(self, event_manager, diagrams, element_factory):
         self.event_manager = event_manager
+        self.diagrams = diagrams
         self.element_factory = element_factory
         self.lang_manager = GtkSource.LanguageManager.get_default()
         self.style_manager = Adw.StyleManager.get_default()
@@ -281,6 +282,7 @@ class PreferencesStack:
         self.lang_manager.append_search_path(
             str(importlib.resources.files("gaphor") / "ui" / "language-specs")
         )
+        self._current_item = None
 
         def tx_update_style_sheet(style_sheet, text):
             self._in_update = 1
@@ -307,6 +309,7 @@ class PreferencesStack:
         self.language_dropdown = builder.get_object("language-dropdown")
         self.style_sheet_buffer = builder.get_object("style-sheet-buffer")
         self.style_sheet_view = builder.get_object("style-sheet-view")
+        self.css_nodes = builder.get_object("css-nodes")
 
         self.style_sheet_buffer.set_language(
             self.lang_manager.get_language("gaphorcss")
@@ -332,6 +335,12 @@ class PreferencesStack:
         for _code, language in self._languages:
             language_model.append(language)
 
+        current_view = self.diagrams.get_current_view()
+        self._selection_changed(
+            focused_item=current_view and current_view.selection.focused_item
+        )
+
+        self.event_manager.subscribe(self._selection_changed)
         self.event_manager.subscribe(self._model_ready)
         self.event_manager.subscribe(self._style_sheet_created)
         self.event_manager.subscribe(self._style_sheet_changed)
@@ -341,6 +350,7 @@ class PreferencesStack:
         self.update()
 
     def close(self):
+        self.event_manager.unsubscribe(self._selection_changed)
         self.event_manager.unsubscribe(self._model_ready)
         self.event_manager.unsubscribe(self._style_sheet_changed)
         self.event_manager.unsubscribe(self._style_sheet_created)
@@ -392,6 +402,28 @@ class PreferencesStack:
     def _style_sheet_changed(self, event):
         if event.property is StyleSheet.styleSheet:
             self.update()
+
+    @event_handler(DiagramSelectionChanged)
+    def _selection_changed(self, event=None, focused_item=None):
+        """Called when a diagram item receives focus.
+
+        This rebuilds the CSS nodes view.
+        """
+        item = event and event.focused_item or focused_item
+        if item is self._current_item:
+            return
+
+        self._current_item = item
+        if not item:
+            self.css_nodes.set_label(gettext("No focused item."))
+        else:
+            # class
+            #  ├╴compartment
+            #  │  ├╴attribute
+            #  │  ╰╴attribute
+            #  ╰╴compartment
+            #      ╰╴operation
+            self.css_nodes.set_label("Placeholder for CSS node view.")
 
     def on_language_changed(self, dropdown, _gparam):
         if (style_sheet := self.style_sheet) and not self._in_update:

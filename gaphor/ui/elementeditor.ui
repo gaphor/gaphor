@@ -343,6 +343,27 @@
                         <property name="xalign">0</property>
                       </object>
                     </child>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="margin_top">6</property>
+                        <property name="label" translatable="yes">CSS Nodes of focused item</property>
+                        <property name="xalign">0</property>
+                        <attributes>
+                          <attribute name="weight" value="bold"></attribute>
+                        </attributes>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="css-nodes">
+                        <property name="wrap">0</property>
+                        <property name="selectable">1</property>
+                        <property name="label" translatable="yes">No focused item.</property>
+                        <property name="xalign">0</property>
+                        <style>
+                          <class name="mono" />
+                        </style>
+                      </object>
+                    </child>
                   </object>
                 </property>
               </object>
