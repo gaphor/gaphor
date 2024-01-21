@@ -1,3 +1,5 @@
+from dataclasses import replace
+
 import cairo
 import pytest
 from gaphas.geometry import Rectangle
@@ -6,6 +8,9 @@ from gaphor.core.modeling.diagram import FALLBACK_STYLE
 from gaphor.core.styling import (
     CompiledStyleSheet,
     JustifyContent,
+    Number,
+    Style,
+    merge_styles,
 )
 from gaphor.diagram.shapes import (
     Box,
@@ -13,12 +18,39 @@ from gaphor.diagram.shapes import (
     DrawContext,
     IconBox,
     Orientation,
+    Shape,
     Text,
     TextAlign,
     UpdateContext,
     VerticalAlign,
     traverse_css_nodes,
 )
+
+
+class InlineStyle:
+    """Add inline styles for testing."""
+
+    def __init__(
+        self,
+        inline_style: Style,
+        child: Shape,
+    ):
+        self.inline_style = inline_style
+        self.child = child
+
+    def size(
+        self, context: UpdateContext, bounding_box: Rectangle | None = None
+    ) -> tuple[Number, Number]:
+        style = merge_styles(context.style, self.inline_style)
+        new_context = replace(context, style=style)
+
+        return self.child.size(new_context, bounding_box)
+
+    def draw(self, context: DrawContext, bounding_box: Rectangle):
+        style = merge_styles(context.style, self.inline_style)
+        new_context = replace(context, style=style)
+
+        self.child.draw(new_context, bounding_box)
 
 
 @pytest.fixture
@@ -83,10 +115,12 @@ def test_draw_last_box_with_all_remaining_space(update_context, draw_context):
     def draw(_box, _context, bounding_box):
         bounding_boxes.append(bounding_box)
 
-    box = Box(
-        Box(style={"min-height": 80}, draw=draw),
-        Box(draw=draw),
-        style={"vertical-align": VerticalAlign.TOP},
+    box = InlineStyle(
+        {"vertical-align": VerticalAlign.TOP},
+        Box(
+            InlineStyle({"min-height": 80}, Box(draw=draw)),
+            Box(draw=draw),
+        ),
     )
 
     box.size(context=update_context, bounding_box=Rectangle(0, 0, 100, 120))
@@ -103,8 +137,8 @@ def test_draw_box_with_horzontal_content(update_context, draw_context):
         bounding_boxes.append(bounding_box)
 
     box = Box(
-        Box(style={"min-width": 40}, draw=draw),
-        Box(style={"min-width": 80}, draw=draw),
+        InlineStyle({"min-width": 40}, Box(draw=draw)),
+        InlineStyle({"min-width": 80}, Box(draw=draw)),
         orientation=Orientation.HORIZONTAL,
     )
 
@@ -123,10 +157,12 @@ def test_draw_box_with_stretched_content(update_context, draw_context):
     def draw(_box, _context, bounding_box):
         bounding_boxes.append(bounding_box)
 
-    box = Box(
-        Box(draw=draw),
-        Box(draw=draw),
-        style={"justify-content": JustifyContent.STRETCH},
+    box = InlineStyle(
+        {"justify-content": JustifyContent.STRETCH},
+        Box(
+            Box(draw=draw),
+            Box(draw=draw),
+        ),
     )
 
     box.size(context=update_context, bounding_box=Rectangle(0, 0, 100, 120))
@@ -142,10 +178,12 @@ def test_draw_box_with_stretched_oversized_content(draw_context, update_context)
     def draw(_box, _context, bounding_box):
         bounding_boxes.append(bounding_box)
 
-    box = Box(
-        Box(draw=draw),
-        Box(style={"min-height": 80}, draw=draw),
-        style={"justify-content": JustifyContent.STRETCH},
+    box = InlineStyle(
+        {"justify-content": JustifyContent.STRETCH},
+        Box(
+            Box(draw=draw),
+            InlineStyle({"min-height": 80}, Box(draw=draw)),
+        ),
     )
 
     box.size(context=update_context, bounding_box=Rectangle(0, 0, 100, 120))
@@ -264,7 +302,7 @@ def test_text_has_height(update_context, fixed_text_size):
 
 def test_text_with_min_width(update_context):
     style = {"min-width": 100, "min-height": 0}
-    text = Text("some text", style=style)
+    text = InlineStyle(style, Text("some text"))
 
     w, _ = text.size(update_context)
     assert w == 100
@@ -272,7 +310,7 @@ def test_text_with_min_width(update_context):
 
 def test_text_width_min_height(update_context):
     style = {"min-width": 0, "min-height": 40}
-    text = Text("some text", style=style)
+    text = InlineStyle(style, Text("some text"))
 
     _, h = text.size(update_context)
     assert h == 40
