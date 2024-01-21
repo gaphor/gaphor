@@ -48,7 +48,7 @@
       "build-commands": [
         "pip3 install --prefix=${FLATPAK_DEST} poetry",
         "${FLATPAK_DEST}/bin/poetry export --output=requirements.txt",
-        "pip3 install --ignore-installed --prefix=${FLATPAK_DEST} -r requirements.txt"
+        "pip3 install --no-cache-dir --ignore-installed --prefix=${FLATPAK_DEST} -r requirements.txt"
       ],
       "sources": [
         {
@@ -65,18 +65,13 @@
       "name": "gaphor",
       "buildsystem": "simple",
       "build-commands": [
-        "pip3 install --ignore-installed --prefix=${FLATPAK_DEST} .",
-        "install -D data/org.gaphor.Gaphor.gschema.xml /app/share/glib-2.0/schemas/org.gaphor.Gaphor.gschema.xml",
-        "glib-compile-schemas /app/share/glib-2.0/schemas"
+        "pip3 install --no-cache-dir --ignore-installed --prefix=${FLATPAK_DEST} .",
+        "gaphor install-schemas --schemas-dir=/app/share/glib-2.0/schemas"
       ],
       "sources": [
         {
           "type": "dir",
           "path": "."
-        },
-        {
-          "type": "file",
-          "path": "data/org.gaphor.Gaphor.gschema.xml"
         }
       ],
       "run-tests": true,

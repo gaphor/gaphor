@@ -61,8 +61,10 @@ a = Analysis(  # type: ignore
         ("../gaphor/ui/language-specs/*.lang", "gaphor/ui/language-specs"),
         ("../LICENSE.txt", "gaphor"),
         ("../gaphor/templates/*.gaphor", "gaphor/templates"),
-        ("../data/org.gaphor.Gaphor.gschema.xml", "share/glib-2.0/schemas"),
-        ("../data/gschemas.compiled", "share/glib-2.0/schemas"),
+        (
+            "../gaphor/ui/installschemas/org.gaphor.Gaphor.gschema.xml",
+            "share/glib-2.0/schemas",
+        ),
     ]
     + ui_files
     + mo_files
