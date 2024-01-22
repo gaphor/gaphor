@@ -59,7 +59,7 @@ a = Analysis(  # type: ignore
             "gaphor/ui/icons/hicolor/scalable/emblems",
         ),
         ("../gaphor/ui/language-specs/*.lang", "gaphor/ui/language-specs"),
-        ("../LICENSE.txt", "gaphor"),
+        ("../LICENSES/Apache-2.0.txt", "gaphor"),
         ("../gaphor/templates/*.gaphor", "gaphor/templates"),
         ("../data/org.gaphor.Gaphor.gschema.xml", "share/glib-2.0/schemas"),
         ("../data/gschemas.compiled", "share/glib-2.0/schemas"),

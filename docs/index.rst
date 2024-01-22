@@ -15,7 +15,7 @@ as well as create complete, highly complex models.
 
 .. image:: images/gaphor-core.png
 
-Gaphor is 100% Open source, available under a friendly `Apache 2 license <https://github.com/gaphor/gaphor/blob/main/LICENSE.txt>`_.
+Gaphor is 100% Open source, available under a friendly `Apache 2 license <https://github.com/gaphor/gaphor/blob/main/LICENSES/Apache-2.0.txt>`_.
 The code and issue tracker can be found on `GitHub <https://github.com/gaphor/gaphor>`_.
 
 What are you waiting for? :doc:`Let's get started <getting_started>`!

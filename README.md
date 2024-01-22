@@ -356,7 +356,7 @@ a welcoming, friendly community for everyone.
 
 Copyright © Arjan Molenaar and Dan Yeaw
 
-Licensed under the [Apache License v2](LICENSE.txt).
+Licensed under the [Apache License v2](LICENSES/Apache-2.0.txt).
 
 Summary: You can do what you like with Gaphor, as long as you include the
 required notices. This permissive license contains a patent license from the
