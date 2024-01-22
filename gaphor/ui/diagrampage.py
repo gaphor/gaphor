@@ -115,6 +115,7 @@ class DiagramPage:
         scrolled_window = Gtk.ScrolledWindow()
         scrolled_window.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
         scrolled_window.set_child(view)
+        scrolled_window.add_css_class("view")
         self.style_manager.connect_object(
             "notify::dark", self._on_notify_dark, scrolled_window
         )
