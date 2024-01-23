@@ -301,16 +301,16 @@ property:not([aggregation="composite"]) {
 
 /* Attached */
 
-[connected_side] {
+:has(icon)[connected_side] {
   text-align: right;
   vertical-align: top;
 }
 
-[connected_side="left"] {
+:has(icon)[connected_side="left"] {
   text-align: left;
 }
 
-[connected_side="bottom"] {
+:has(icon)[connected_side="bottom"] {
   vertical-align: bottom;
 }
 
