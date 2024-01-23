@@ -6,7 +6,6 @@ from gaphor.core.modeling import DrawContext
 from gaphor.diagram.presentation import (
     Classified,
     ElementPresentation,
-    text_from_package,
     text_name,
 )
 from gaphor.diagram.shapes import Box, IconBox, stroke
@@ -14,7 +13,7 @@ from gaphor.diagram.support import represents
 from gaphor.RAAML import raaml
 from gaphor.RAAML.fta.constants import DEFAULT_FTA_MAJOR
 from gaphor.RAAML.fta.transferin import draw_transfer_in
-from gaphor.UML.compartments import text_stereotypes
+from gaphor.UML.compartments import text_from_package, text_stereotypes
 
 
 @represents(raaml.TransferOut)

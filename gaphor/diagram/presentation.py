@@ -40,33 +40,6 @@ def text_name(item: Presentation):
     )
 
 
-def from_package_str(item):
-    """Display name space info when it is different, then diagram's or parent's
-    namespace."""
-    subject = item.subject
-    diagram = item.diagram
-
-    if not (subject and diagram):
-        return False
-
-    namespace = subject.namespace
-    parent = item.parent
-
-    # if there is a parent (i.e. interaction)
-    if parent and parent.subject and parent.subject.namespace is not namespace:
-        return False
-
-    return (
-        diagram.gettext("(from {namespace})").format(namespace=namespace.name)
-        if namespace is not item.diagram.owner
-        else ""
-    )
-
-
-def text_from_package(item: Presentation):
-    return CssNode("from", item.subject, Text(text=lambda: from_package_str(item)))
-
-
 def connect(item: gaphas.Item, handle: gaphas.Handle, target: gaphas.Item):
     connector = ConnectorAspect(item, handle, item.diagram.connections)
     sink = ConnectionSink(target, distance=float("inf"))
