@@ -144,6 +144,7 @@ gaphor = "gaphor.main:main"
 gui = "gaphor.main:gui_parser"
 exec = "gaphor.main:exec_parser"
 export = "gaphor.plugins.diagramexport.exportcli:export_parser"
+install-schemas = "gaphor.ui.installschemas:install_schemas_parser"
 
 [tool.poetry.plugins."babel.extractors"]
 "gaphor" = "gaphor.babel:extract_gaphor"
@@ -193,14 +194,6 @@ gettext-mo-all = { "script" = "po.build-babel:compile_mo_all" }
 gettext-mo-release = { "script" = "po.build-babel:compile_mo_release" }
 translations = ["gettext-pot", "gettext-po", "gettext-mo-all"]
 icons = { "shell" = "make -C gaphor/ui/icons" }
-
-[tool.poe.tasks.install-schemas]
-shell = """
-    glib-compile-schemas data
-    mkdir -p ~/.local/share/glib-2.0/schemas
-    cp data/org.gaphor.Gaphor.gschema.xml ~/.local/share/glib-2.0/schemas/
-    cp data/gschemas.compiled ~/.local/share/glib-2.0/schemas/
-"""
 
 [tool.poe.executor]
 type = "virtualenv"
