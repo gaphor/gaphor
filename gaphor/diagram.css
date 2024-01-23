@@ -110,7 +110,7 @@ decisionnode > type {
   font-size: small;
 }
 
-proxyport,
+proxyport > icon,
 activityparameternode,
 executionspecification {
   background-color: var(--opaque-background-color);
