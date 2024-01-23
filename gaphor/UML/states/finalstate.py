@@ -4,7 +4,7 @@ from gaphor import UML
 from gaphor.diagram.presentation import ElementPresentation, Named, text_name
 from gaphor.diagram.shapes import Box, IconBox, ellipse, stroke
 from gaphor.diagram.support import represents
-from gaphor.UML.shapes import text_stereotypes
+from gaphor.UML.compartments import text_stereotypes
 
 
 @represents(UML.FinalState)

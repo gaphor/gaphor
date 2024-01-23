@@ -10,7 +10,7 @@ from gaphor.diagram.presentation import (
 from gaphor.diagram.shapes import Box, draw_border
 from gaphor.diagram.support import represents
 from gaphor.RAAML import raaml
-from gaphor.UML.shapes import name_compartment
+from gaphor.UML.compartments import name_compartment
 
 
 @represents(raaml.OperationalSituation)

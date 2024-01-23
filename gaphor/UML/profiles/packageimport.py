@@ -4,7 +4,7 @@ from gaphor import UML
 from gaphor.diagram.presentation import LinePresentation
 from gaphor.diagram.shapes import draw_arrow_head
 from gaphor.diagram.support import represents
-from gaphor.UML.shapes import text_stereotypes
+from gaphor.UML.compartments import text_stereotypes
 
 
 @represents(

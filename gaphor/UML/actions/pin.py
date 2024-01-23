@@ -10,7 +10,7 @@ from gaphor.diagram.shapes import (
     draw_border,
 )
 from gaphor.diagram.support import represents
-from gaphor.UML.shapes import text_stereotypes
+from gaphor.UML.compartments import text_stereotypes
 from gaphor.UML.umlfmt import format_pin
 
 

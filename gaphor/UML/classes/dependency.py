@@ -21,7 +21,7 @@ from gaphor.diagram.shapes import Box, stroke
 from gaphor.diagram.support import represents
 from gaphor.i18n import i18nize
 from gaphor.UML.classes.interface import Folded, InterfacePort
-from gaphor.UML.shapes import text_stereotypes
+from gaphor.UML.compartments import text_stereotypes
 
 
 @represents(UML.Dependency, head=UML.Dependency.supplier, tail=UML.Dependency.client)

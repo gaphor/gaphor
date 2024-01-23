@@ -9,7 +9,7 @@ from gaphor.diagram.presentation import Classified, ElementPresentation, text_na
 from gaphor.diagram.shapes import Box, CssNode, draw_border
 from gaphor.diagram.support import represents
 from gaphor.UML.classes.stereotype import stereotype_compartments, stereotype_watches
-from gaphor.UML.shapes import text_stereotypes
+from gaphor.UML.compartments import text_stereotypes
 from gaphor.UML.states.region import region_compartment
 
 

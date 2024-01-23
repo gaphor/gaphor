@@ -4,7 +4,7 @@ from gaphor import UML
 from gaphor.diagram.presentation import ElementPresentation, Named, Valued, text_name
 from gaphor.diagram.shapes import Box, CssNode, Text, draw_border, stroke
 from gaphor.diagram.support import represents
-from gaphor.UML.shapes import text_stereotypes
+from gaphor.UML.compartments import text_stereotypes
 from gaphor.UML.umlfmt import format_call_behavior_action_name
 
 

@@ -1,6 +1,6 @@
 from gaphor.diagram.presentation import LinePresentation, Named, text_name
 from gaphor.diagram.shapes import Box, draw_arrow_head
-from gaphor.UML.shapes import text_stereotypes
+from gaphor.UML.compartments import text_stereotypes
 
 
 class DirectedRelationshipPropertyPathItem(Named, LinePresentation):

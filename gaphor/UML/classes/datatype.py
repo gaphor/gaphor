@@ -15,7 +15,7 @@ from gaphor.UML.classes.klass import (
     operations_compartment,
 )
 from gaphor.UML.classes.stereotype import stereotype_compartments, stereotype_watches
-from gaphor.UML.shapes import name_compartment
+from gaphor.UML.compartments import name_compartment
 
 log = logging.getLogger(__name__)
 

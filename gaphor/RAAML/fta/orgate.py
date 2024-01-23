@@ -15,7 +15,7 @@ from gaphor.diagram.shapes import Box, IconBox, stroke
 from gaphor.diagram.support import represents
 from gaphor.RAAML import raaml
 from gaphor.RAAML.fta.constants import DEFAULT_FTA_MAJOR, DEFAULT_FTA_MINOR
-from gaphor.UML.shapes import text_stereotypes
+from gaphor.UML.compartments import text_stereotypes
 
 
 @represents(raaml.OR)

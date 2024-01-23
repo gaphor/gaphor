@@ -20,7 +20,7 @@ from gaphor.diagram.presentation import Classified, ElementPresentation
 from gaphor.diagram.shapes import Box, stroke
 from gaphor.diagram.support import represents
 from gaphor.UML.classes.stereotype import stereotype_compartments, stereotype_watches
-from gaphor.UML.shapes import name_compartment
+from gaphor.UML.compartments import name_compartment
 
 
 @represents(UML.Node)

@@ -19,7 +19,7 @@ from gaphor.diagram.presentation import (
 )
 from gaphor.diagram.shapes import Box, CssNode, IconBox, Text, ellipse, stroke
 from gaphor.diagram.support import represents
-from gaphor.UML.shapes import text_stereotypes
+from gaphor.UML.compartments import text_stereotypes
 
 DEFAULT_JOIN_SPEC = "and"
 

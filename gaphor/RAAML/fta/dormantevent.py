@@ -13,7 +13,7 @@ from gaphor.diagram.shapes import Box, IconBox, draw_diamond
 from gaphor.diagram.support import represents
 from gaphor.RAAML import raaml
 from gaphor.RAAML.fta.undevelopedevent import draw_undeveloped_event
-from gaphor.UML.shapes import text_stereotypes
+from gaphor.UML.compartments import text_stereotypes
 
 
 @represents(raaml.DormantEvent)

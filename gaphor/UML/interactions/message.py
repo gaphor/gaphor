@@ -59,8 +59,8 @@ from gaphor.diagram.presentation import (
 )
 from gaphor.diagram.shapes import Box, cairo_state, stroke
 from gaphor.diagram.support import represents
+from gaphor.UML.compartments import text_stereotypes
 from gaphor.UML.interactions.lifeline import LifelineItem
-from gaphor.UML.shapes import text_stereotypes
 
 PI_2 = pi / 2
 

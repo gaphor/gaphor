@@ -31,12 +31,12 @@ from gaphor.diagram.shapes import (
 )
 from gaphor.diagram.support import represents
 from gaphor.diagram.text import Layout
+from gaphor.UML.compartments import text_stereotypes
 from gaphor.UML.informationflow import (
     draw_information_flow,
     shape_information_flow,
     watch_information_flow,
 )
-from gaphor.UML.shapes import text_stereotypes
 from gaphor.UML.umlfmt import format_association_end
 
 half_pi = pi / 2

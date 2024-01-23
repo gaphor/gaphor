@@ -14,7 +14,7 @@ from gaphor.diagram.support import represents
 from gaphor.SysML.sysml import InterfaceBlock, ValueType
 from gaphor.UML.classes.klass import attributes_compartment, operation_watches
 from gaphor.UML.classes.stereotype import stereotype_compartments, stereotype_watches
-from gaphor.UML.shapes import name_compartment
+from gaphor.UML.compartments import name_compartment
 from gaphor.UML.umlfmt import format_operation, format_property
 
 

@@ -6,7 +6,7 @@ from gaphor.diagram.presentation import ElementPresentation, Named, text_name
 from gaphor.diagram.shapes import Box, CssNode, IconBox, Text, draw_border
 from gaphor.diagram.support import represents
 from gaphor.i18n import i18nize
-from gaphor.UML.shapes import text_stereotypes
+from gaphor.UML.compartments import text_stereotypes
 
 DEFAULT_UPPER_BOUND = "*"
 

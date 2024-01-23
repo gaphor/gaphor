@@ -10,7 +10,7 @@ from gaphor.diagram.presentation import (
 from gaphor.diagram.shapes import Box, CssNode, Text, draw_border, draw_top_separator
 from gaphor.diagram.support import represents
 from gaphor.UML.classes.stereotype import stereotype_compartments, stereotype_watches
-from gaphor.UML.shapes import name_compartment
+from gaphor.UML.compartments import name_compartment
 
 log = logging.getLogger(__name__)
 
