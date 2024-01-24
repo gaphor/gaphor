@@ -51,11 +51,16 @@ from gaphas.connector import Handle
 from gaphas.constraint import constraint
 
 from gaphor import UML
-from gaphor.diagram.presentation import LinePresentation, Named, get_center_pos
-from gaphor.diagram.shapes import Box, Text, cairo_state, stroke
+from gaphor.diagram.presentation import (
+    LinePresentation,
+    Named,
+    get_center_pos,
+    text_name,
+)
+from gaphor.diagram.shapes import Box, cairo_state, stroke
 from gaphor.diagram.support import represents
+from gaphor.UML.compartments import text_stereotypes
 from gaphor.UML.interactions.lifeline import LifelineItem
-from gaphor.UML.shapes import text_stereotypes
 
 PI_2 = pi / 2
 
@@ -82,7 +87,7 @@ class MessageItem(Named, LinePresentation[UML.Message]):
             id,
             shape_middle=Box(
                 text_stereotypes(self),
-                Text(text=lambda: self.subject.name or ""),
+                text_name(self),
             ),
         )
         self.handles()[1].pos = (40, 0)

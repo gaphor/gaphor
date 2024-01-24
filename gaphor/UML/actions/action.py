@@ -1,10 +1,10 @@
 """Action diagram item."""
 
 from gaphor import UML
-from gaphor.diagram.presentation import ElementPresentation, Named, Valued
-from gaphor.diagram.shapes import Box, Text, draw_border, stroke
+from gaphor.diagram.presentation import ElementPresentation, Named, Valued, text_name
+from gaphor.diagram.shapes import Box, CssNode, Text, draw_border, stroke
 from gaphor.diagram.support import represents
-from gaphor.UML.shapes import text_stereotypes
+from gaphor.UML.compartments import text_stereotypes
 from gaphor.UML.umlfmt import format_call_behavior_action_name
 
 
@@ -16,13 +16,7 @@ class ActionItem(Named, ElementPresentation):
         self.width = 100
         self.shape = Box(
             text_stereotypes(self),
-            Text(
-                text=lambda: self.subject.name or "",
-            ),
-            style={
-                "padding": (4, 12, 4, 12),
-                "border-radius": 15,
-            },
+            text_name(self),
             draw=draw_border,
         )
 
@@ -37,16 +31,8 @@ class ValueSpecificationActionItem(Valued, ElementPresentation):
 
         self.width = 100
         self.shape = Box(
-            Text(
-                text=lambda: "«valueSpecification»",
-            ),
-            Text(
-                text=lambda: self.subject.value or "",
-            ),
-            style={
-                "padding": (4, 12, 4, 12),
-                "border-radius": 15,
-            },
+            text_stereotypes(self, lambda: ["valueSpecification"]),
+            CssNode("value", None, Text(text=lambda: self.subject.value or "")),
             draw=draw_border,
         )
 
@@ -60,13 +46,11 @@ class CallBehaviorActionItem(ActionItem):
 
         self.shape = Box(
             text_stereotypes(self),
-            Text(
-                text=lambda: format_call_behavior_action_name(self.subject),
+            CssNode(
+                "name",
+                None,
+                Text(text=lambda: format_call_behavior_action_name(self.subject)),
             ),
-            style={
-                "padding": (4, 24, 4, 12),
-                "border-radius": 15,
-            },
             draw=self.draw_border_with_fork,
         )
 
@@ -109,8 +93,7 @@ class SendSignalActionItem(Named, ElementPresentation):
 
         self.shape = Box(
             text_stereotypes(self),
-            Text(text=lambda: self.subject.name or ""),
-            style={"padding": (4, 24, 4, 12)},
+            text_name(self),
             draw=self.draw_border,
         )
 
@@ -138,8 +121,7 @@ class AcceptEventActionItem(Named, ElementPresentation):
 
         self.shape = Box(
             text_stereotypes(self),
-            Text(text=lambda: self.subject.name or ""),
-            style={"padding": (4, 12, 4, 24)},
+            text_name(self),
             draw=self.draw_border,
         )
 

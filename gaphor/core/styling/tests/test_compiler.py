@@ -115,6 +115,21 @@ def test_select_parent_combinator():
     assert not selector(Node("classitem"))
 
 
+def test_select_sibling_combinator():
+    css = "previous + sibling {}"
+
+    selector, _declarations = next(compile_style_sheet(css))
+
+    assert selector(Node("sibling", parent=Node("parent", children=[Node("previous")])))
+    assert not selector(
+        Node("sibling", parent=Node("parent", children=[Node("other")]))
+    )
+    assert not selector(
+        Node("other", parent=Node("parent", children=[Node("previous")]))
+    )
+    assert not selector(Node("sibling"))
+
+
 def test_attributes():
     css = "classitem[subject] {}"
 
@@ -230,6 +245,16 @@ def test_root_pseudo_selector_with_name():
 
     assert selector(Node("node"))
     assert not selector(Node("node", parent=Node("child")))
+
+
+def test_first_child_selector():
+    css = "node:first-child {}"
+
+    selector, _declarations = next(compile_style_sheet(css))
+
+    assert not selector(Node("node", parent=Node("parent", children=[Node("node")])))
+    assert selector(Node("node", parent=Node("parent")))
+    assert not selector(Node("sibling"))
 
 
 @pytest.mark.parametrize(

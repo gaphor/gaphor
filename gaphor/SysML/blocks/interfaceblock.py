@@ -2,13 +2,10 @@ from gaphor.core.modeling.properties import attribute
 from gaphor.diagram.presentation import (
     Classified,
     ElementPresentation,
-    text_from_package,
-    text_name,
 )
 from gaphor.diagram.shapes import (
     Box,
     CssNode,
-    JustifyContent,
     Text,
     draw_border,
     draw_top_separator,
@@ -17,7 +14,7 @@ from gaphor.diagram.support import represents
 from gaphor.SysML.sysml import InterfaceBlock, ValueType
 from gaphor.UML.classes.klass import attributes_compartment, operation_watches
 from gaphor.UML.classes.stereotype import stereotype_compartments, stereotype_watches
-from gaphor.UML.shapes import text_stereotypes
+from gaphor.UML.compartments import name_compartment
 from gaphor.UML.umlfmt import format_operation, format_property
 
 
@@ -65,15 +62,7 @@ class InterfaceBlockItem(Classified, ElementPresentation[InterfaceBlock]):
 
     def update_shapes(self, event=None):
         self.shape = Box(
-            Box(
-                text_stereotypes(self, self.additional_stereotypes),
-                text_name(self),
-                text_from_package(self),
-                style={
-                    "padding": (12, 4, 12, 4),
-                    "justify-content": JustifyContent.START,
-                },
-            ),
+            name_compartment(self, self.additional_stereotypes),
             *(
                 self.show_references
                 and self.subject
@@ -116,9 +105,6 @@ class InterfaceBlockItem(Classified, ElementPresentation[InterfaceBlock]):
                 or []
             ),
             *(self.show_stereotypes and stereotype_compartments(self.subject) or []),
-            style={
-                "justify-content": JustifyContent.START,
-            },
             draw=draw_border,
         )
 

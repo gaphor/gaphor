@@ -5,11 +5,11 @@ from gaphor.diagram.presentation import (
     Classified,
     ElementPresentation,
     connect,
+    text_name,
 )
-from gaphor.diagram.shapes import Box, JustifyContent, Text, TextAlign, draw_border
+from gaphor.diagram.shapes import Box, CssNode, Text, draw_border
 from gaphor.diagram.support import represents
-from gaphor.diagram.text import FontStyle
-from gaphor.UML.shapes import text_stereotypes
+from gaphor.UML.compartments import text_stereotypes
 
 
 @represents(UML.Activity)
@@ -36,20 +36,7 @@ class ActivityItem(Classified, ElementPresentation):
     def update_shapes(self, event=None):
         self.shape = Box(
             text_stereotypes(self),
-            Text(
-                text=lambda: self.subject.name or "",
-                style={
-                    "text-align": TextAlign.LEFT,
-                    "font-style": FontStyle.ITALIC
-                    if self.subject and self.subject.isAbstract
-                    else FontStyle.NORMAL,
-                },
-            ),
-            style={
-                "padding": (4, 12, 4, 12),
-                "border-radius": 20,
-                "justify-content": JustifyContent.START,
-            },
+            text_name(self),
             draw=draw_border,
         )
 
@@ -86,10 +73,13 @@ class ActivityParameterNodeItem(AttachedPresentation[UML.ActivityParameterNode])
             diagram,
             id,
             shape=Box(
-                Text(
-                    text=self._format_name,
+                CssNode(
+                    "name",
+                    None,
+                    Text(
+                        text=self._format_name,
+                    ),
                 ),
-                style={"padding": (4, 12, 4, 12), "min-width": 120},
                 draw=draw_border,
             ),
         )

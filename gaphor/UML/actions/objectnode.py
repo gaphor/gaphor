@@ -2,11 +2,11 @@
 
 from gaphor import UML
 from gaphor.core.modeling.properties import attribute
-from gaphor.diagram.presentation import ElementPresentation, Named
-from gaphor.diagram.shapes import Box, IconBox, Text, draw_border
+from gaphor.diagram.presentation import ElementPresentation, Named, text_name
+from gaphor.diagram.shapes import Box, CssNode, IconBox, Text, draw_border
 from gaphor.diagram.support import represents
 from gaphor.i18n import i18nize
-from gaphor.UML.shapes import text_stereotypes
+from gaphor.UML.compartments import text_stereotypes
 
 DEFAULT_UPPER_BOUND = "*"
 
@@ -33,23 +33,28 @@ class ObjectNodeItem(Named, ElementPresentation):
             shape=IconBox(
                 Box(
                     text_stereotypes(self),
-                    Text(text=lambda: self.subject.name or ""),
-                    style={
-                        "padding": (4, 12, 4, 12),
-                    },
+                    text_name(self),
                     draw=draw_border,
                 ),
-                Text(
-                    text=lambda: self.subject.upperBound
-                    not in (None, "", DEFAULT_UPPER_BOUND)
-                    and f'{{ {diagram.gettext("upperBound")} = {self.subject.upperBound} }}'
-                    or ""
+                CssNode(
+                    "upperbound",
+                    None,
+                    Text(
+                        text=lambda: self.subject.upperBound
+                        not in (None, "", DEFAULT_UPPER_BOUND)
+                        and f'{{ {diagram.gettext("upperBound")} = {self.subject.upperBound} }}'
+                        or ""
+                    ),
                 ),
-                Text(
-                    text=lambda: self.show_ordering
-                    and self.subject.ordering
-                    and f'{{ {diagram.gettext("ordering")} = {diagram.gettext(ORDERING_TEXT.get(self.subject.ordering))} }}'
-                    or ""
+                CssNode(
+                    "ordering",
+                    None,
+                    Text(
+                        text=lambda: self.show_ordering
+                        and self.subject.ordering
+                        and f'{{ {diagram.gettext("ordering")} = {diagram.gettext(ORDERING_TEXT.get(self.subject.ordering))} }}'
+                        or ""
+                    ),
                 ),
             ),
             width=50,

@@ -4,12 +4,11 @@ from gaphor import UML
 from gaphor.diagram.presentation import (
     ElementPresentation,
     Named,
-    text_from_package,
     text_name,
 )
-from gaphor.diagram.shapes import Box, JustifyContent, cairo_state, stroke
+from gaphor.diagram.shapes import Box, cairo_state, stroke
 from gaphor.diagram.support import represents
-from gaphor.UML.shapes import text_stereotypes
+from gaphor.UML.compartments import text_from_package, text_stereotypes
 
 
 @represents(UML.Package)
@@ -33,12 +32,6 @@ class PackageItem(Named, ElementPresentation):
             ),
             text_name(self),
             text_from_package(self),
-            style={
-                "padding": (24, 12, 4, 12),
-                "justify-content": JustifyContent.START
-                if self.diagram and self.children
-                else JustifyContent.CENTER,
-            },
             draw=draw_package,
         )
 

@@ -2,12 +2,9 @@ import logging
 
 from gaphor import UML
 from gaphor.core.modeling.properties import attribute
-from gaphor.core.styling import JustifyContent
 from gaphor.diagram.presentation import (
     Classified,
     ElementPresentation,
-    text_from_package,
-    text_name,
 )
 from gaphor.diagram.shapes import Box, draw_border
 from gaphor.diagram.support import represents
@@ -18,7 +15,7 @@ from gaphor.UML.classes.klass import (
     operations_compartment,
 )
 from gaphor.UML.classes.stereotype import stereotype_compartments, stereotype_watches
-from gaphor.UML.shapes import text_stereotypes
+from gaphor.UML.compartments import name_compartment
 
 log = logging.getLogger(__name__)
 
@@ -64,12 +61,7 @@ class DataTypeItem(Classified, ElementPresentation[UML.DataType]):
 
     def update_shapes(self, event=None):
         self.shape = Box(
-            Box(
-                text_stereotypes(self, self.additional_stereotypes),
-                text_name(self),
-                text_from_package(self),
-                style={"padding": (12, 4, 12, 4)},
-            ),
+            name_compartment(self, self.additional_stereotypes),
             *(
                 self.show_attributes
                 and self.subject
@@ -83,8 +75,5 @@ class DataTypeItem(Classified, ElementPresentation[UML.DataType]):
                 or []
             ),
             *(self.show_stereotypes and stereotype_compartments(self.subject) or []),
-            style={
-                "justify-content": JustifyContent.START,
-            },
             draw=draw_border,
         )

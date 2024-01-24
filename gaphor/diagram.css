@@ -5,12 +5,12 @@
   background-color: transparent;
 }
 
-*:drop {
+:drop {
   color: #1a5fb4;
   line-width: 3;
 }
 
-*:disabled {
+:disabled {
   opacity: 0.5;
 }
 
@@ -26,7 +26,7 @@
     color: white;
   }
 
-  *:drop {
+  :drop {
     color: #62a0ea;
   }
 }
@@ -39,8 +39,14 @@
   padding: 0;
 }
 
+/* Relationships */
+
+commentline,
 dependency,
-interfacerealization {
+interfacerealization,
+include,
+extend,
+packageimport {
   dash-style: 7 5;
 }
 
@@ -49,11 +55,62 @@ interfacerealization[on_folded_interface = true] {
   dash-style: 0;
 }
 
+/* General */
+
+comment {
+  text-align: left;
+  vertical-align: top;
+  padding: 4 16 4 4;
+}
+
+comment body {
+  padding: 0;
+}
+
+diagram > icon {
+  padding: 4;
+  border-radius: 4;
+}
+
+diagram > type {
+  font-weight: bold;
+}
+
+metadata {
+  justify-content: stretch;
+  text-align: left;
+}
+
+metadata cell {
+  padding: 4;
+}
+
+metadata heading {
+  font-weight: bold;
+  font-style: normal;
+  font-size: small;
+}
+
+pentagon {
+  padding: 4;
+  justify-content: start;
+}
+
+/* UML */
+
 controlflow {
   dash-style: 9 3;
 }
 
-proxyport,
+objectnode > icon {
+  padding: 4 12;
+}
+
+decisionnode > type {
+  font-size: small;
+}
+
+proxyport > icon,
 activityparameternode,
 executionspecification {
   background-color: var(--opaque-background-color);
@@ -64,6 +121,49 @@ partition {
   justify-content: stretch;
 }
 
+package {
+  padding: 24 12 4 12;
+}
+
+interaction {
+  justify-content: start;
+}
+
+activity {
+  padding: 4 12;
+  border-radius: 20;
+  justify-content: start;
+}
+
+activityparameternode {
+  padding: 4 12;
+  min-width: 120;
+  text-align: center;
+}
+
+action,
+valuespecificationaction {
+  padding: 4 12;
+  border-radius: 15;
+}
+
+callbehavioraction {
+  padding: 4 24 4 12;
+  border-radius: 15;
+}
+
+sendsignalaction {
+  padding: 4 24 4 12;
+}
+
+accepteventaction {
+  padding: 4 12 4 24;
+}
+
+usecase {
+  padding: 4;
+}
+
 swimlane {
   min-width: 150;
   padding: 4 12 4 12;
@@ -71,46 +171,150 @@ swimlane {
   white-space: normal;
 }
 
-compartment {
-  padding: 4 4 4 4;
-  min-height: 8;
+/* SysML */
+
+requirement {
   justify-content: start;
 }
 
-* name {
-  font-weight: bold;
+directedrelationshippropertypath {
+  dash-style: 7 5;
 }
 
-* name[isabstract] {
-  font-style: italic;
+/* Classifiers */
+
+compartment:first-child {
+  padding: 12 4;
 }
 
-* from {
-  font-size: x-small;
-}
-
-:is(activity, interaction) stereotypes {
+compartment + compartment {
+  padding: 4;
+  min-height: 8;
   text-align: left;
-}
-
-* heading {
-  padding: 0 0 4 0;
-  font-size: x-small;
-  font-style: italic;
-}
-
-* :is(attribute, operation, enumeration, slot, part, reference, value) {
-  text-align: left;
+  justify-content: start;
   white-space: nowrap;
 }
 
-* operation[isabstract] {
+artifact compartment:first-child,
+component compartment:first-child {
+  padding: 12 24 12 4;
+}
+
+state compartment:first-child {
+  padding: 4;
+}
+
+:has(compartment + compartment),
+:has(regions),
+:not([children=""]):has(compartment),
+:not([children=""]) > compartment {
+  justify-content: start;
+}
+
+regions {
+  justify-content: stretch;
+}
+
+region {
+  padding: 4;
+  min-height: 100;
+  justify-content: start;
+  text-align: left;
+}
+
+region + region {
+  dash-style: 7 3;
+}
+
+and name,
+xor name,
+intermediateevent name,
+dormantevent name,
+basicevent name,
+houseevent name,
+topevent name,
+inhibit name,
+conditionalevent name,
+zeroevent name,
+or name,
+not name,
+transferin name,
+transferout name,
+undevelopedevent name,
+seq name,
+majorityvote name,
+unsafecontrolaction name,
+operationalsituation name,
+controlaction name,
+interfaceblock name,
+block name,
+property name,
+requirement name,
+c4person name,
+c4database name,
+c4container name,
+package name,
+enumeration name,
+interface name,
+class name,
+datatype name,
+component name,
+statemachine name,
+usecase name,
+actor name,
+artifact name,
+node name {
+  font-weight: bold;
+}
+
+name[isabstract] {
   font-style: italic;
 }
 
-* :is(attribute, operation)[isstatic] {
-    text-decoration: underline;
+from {
+  font-size: x-small;
 }
+
+:is(activity, interaction) > :is(name, stereotypes) {
+  text-align: left;
+}
+
+compartment heading {
+  padding: 0 0 4 0;
+  font-size: x-small;
+  font-style: italic;
+  text-align: center;
+}
+
+operation[isabstract] {
+  font-style: italic;
+}
+
+attribute[isstatic],
+operation[isstatic] {
+  text-decoration: underline;
+}
+
+property:not([aggregation="composite"]) {
+  dash-style: 7 5;
+}
+
+/* Attached */
+
+:has(icon)[connected_side] {
+  text-align: right;
+  vertical-align: top;
+}
+
+:has(icon)[connected_side="left"] {
+  text-align: left;
+}
+
+:has(icon)[connected_side="bottom"] {
+  vertical-align: bottom;
+}
+
+/* C4 model */
 
 c4container, c4person {
   padding: 4 4 4 4;
@@ -134,8 +338,4 @@ c4database {
 
 :is(c4container, c4database, c4person) description {
   padding: 4 4 0 4;
-}
-
-requirement {
-  justify-content: start;
 }

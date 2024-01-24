@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 from collections.abc import Iterator
-from dataclasses import replace
 from math import atan2
 
 import gaphas
@@ -16,7 +15,6 @@ from gaphor.core.modeling.element import Id
 from gaphor.core.modeling.event import AttributeUpdated, RevertibleEvent
 from gaphor.core.modeling.presentation import Presentation, S, literal_eval
 from gaphor.core.modeling.properties import attribute
-from gaphor.core.styling import Style, merge_styles
 from gaphor.diagram.shapes import CssNode, Shape, Text, stroke, traverse_css_nodes
 from gaphor.diagram.text import TextAlign, middle_segment, text_point_at_line
 
@@ -40,33 +38,6 @@ def text_name(item: Presentation):
         item.subject,
         Text(text=lambda: item.subject and item.subject.name or ""),
     )
-
-
-def from_package_str(item):
-    """Display name space info when it is different, then diagram's or parent's
-    namespace."""
-    subject = item.subject
-    diagram = item.diagram
-
-    if not (subject and diagram):
-        return False
-
-    namespace = subject.namespace
-    parent = item.parent
-
-    # if there is a parent (i.e. interaction)
-    if parent and parent.subject and parent.subject.namespace is not namespace:
-        return False
-
-    return (
-        diagram.gettext("(from {namespace})").format(namespace=namespace.name)
-        if namespace is not item.diagram.owner
-        else ""
-    )
-
-
-def text_from_package(item: Presentation):
-    return CssNode("from", item.subject, Text(text=lambda: from_package_str(item)))
 
 
 def connect(item: gaphas.Item, handle: gaphas.Handle, target: gaphas.Item):
@@ -238,14 +209,12 @@ class LinePresentation(gaphas.Line, HandlePositionUpdate, Presentation[S]):
         self,
         diagram: Diagram,
         id: Id | None = None,
-        style: Style | None = None,
         shape_head: Shape | None = None,
         shape_middle: Shape | None = None,
         shape_tail: Shape | None = None,
     ):
         super().__init__(connections=diagram.connections, diagram=diagram, id=id)  # type: ignore[call-arg]
 
-        self._style = style if style is not None else {}
         self._shape_head = shape_head
         self._shape_middle = shape_middle
         self._shape_tail = shape_tail
@@ -275,10 +244,6 @@ class LinePresentation(gaphas.Line, HandlePositionUpdate, Presentation[S]):
     @property
     def shape_tail(self):
         return self._shape_tail
-
-    @property
-    def style(self):
-        return self._style
 
     @property
     def middle_shape_size(self) -> Rectangle:
@@ -329,9 +294,6 @@ class LinePresentation(gaphas.Line, HandlePositionUpdate, Presentation[S]):
         return min(d0, *ds) if ds else d0
 
     def draw(self, context: DrawContext):
-        style = merge_styles(context.style, self.style)
-        context = replace(context, style=style)
-
         self.update_shape_bounds(context)
         cr = context.cairo
 
@@ -559,13 +521,14 @@ class AttachedPresentation(HandlePositionUpdate, Presentation[S]):
         be drawn or when styling changes."""
 
     def update(self, context):
-        side = self.connected_side()
+        side = self.connected_side
         if not self.shape or self._last_connected_side != side:
             self._last_connected_side = side
             self.update_shapes()
 
         return self.shape.size(context, bounding_box=self.dimensions())
 
+    @property
     def connected_side(self) -> str | None:
         cinfo = self._connections.get_connection(self._handle)
         return cinfo.connected.port_side(cinfo.port) if cinfo else None

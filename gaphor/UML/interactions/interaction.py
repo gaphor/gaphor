@@ -1,11 +1,10 @@
 """Interaction diagram item."""
 
 from gaphor import UML
-from gaphor.core.styling import JustifyContent, TextAlign
-from gaphor.diagram.presentation import ElementPresentation, Named
-from gaphor.diagram.shapes import Box, Text, stroke
+from gaphor.diagram.presentation import ElementPresentation, Named, text_name
+from gaphor.diagram.shapes import Box, CssNode, stroke
 from gaphor.diagram.support import represents
-from gaphor.UML.shapes import text_stereotypes
+from gaphor.UML.compartments import text_stereotypes
 
 
 @represents(UML.Interaction)
@@ -14,20 +13,14 @@ class InteractionItem(Named, ElementPresentation):
         super().__init__(diagram, id, width=150, height=100)
 
         self.shape = Box(
-            Box(
-                text_stereotypes(self),
-                Text(
-                    text=lambda: self.subject.name or "",
-                    style={"text-align": TextAlign.LEFT},
+            CssNode(
+                "pentagon",
+                None,
+                Box(
+                    text_stereotypes(self),
+                    text_name(self),
                 ),
-                style={
-                    "padding": (4, 4, 4, 4),
-                    "justify-content": JustifyContent.START,
-                },
             ),
-            style={
-                "justify-content": JustifyContent.START,
-            },
             draw=draw_interaction,
         )
 

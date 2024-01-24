@@ -20,7 +20,6 @@ from gaphor.core.styling import (
     TextAlign,
     VerticalAlign,
     WhiteSpace,
-    merge_styles,
 )
 from gaphor.core.styling.inherit import compute_inherited_style
 from gaphor.core.styling.pseudo import compute_pseudo_element_style
@@ -222,15 +221,11 @@ class Box:
         self,
         *children: Shape,
         orientation: Orientation = Orientation.VERTICAL,
-        style: Style | None = None,
         draw: Callable[[Box, DrawContext, Rectangle], None] | None = None,
     ):
-        if style is None:
-            style = {}
         self.children = children
         self.sizes: list[tuple[Number, Number]] = []
         self._orientation = orientation
-        self._inline_style = style
         self._draw_border = draw
 
     def __iter__(self):
@@ -240,13 +235,20 @@ class Box:
         return self.children[index]
 
     def size(self, context: UpdateContext, bounding_box: Rectangle | None = None):
-        style = merge_styles(context.style, self._inline_style)
+        style = context.style
         min_width = style.get("min-width", 0)
         min_height = style.get("min-height", 0)
         padding = style.get("padding", DEFAULT_PADDING)
         new_bounds = rectangle_shrink(bounding_box, padding)
-        self.sizes = sizes = [c.size(context, new_bounds) for c in self.children]
-        if sizes:
+
+        if self.children:
+            child_context = replace(
+                context,
+                style={k: v for k, v in context.style.items() if k != "padding"},  # type: ignore[arg-type]
+            )
+            self.sizes = sizes = [
+                c.size(child_context, new_bounds) for c in self.children
+            ]
             widths, heights = list(zip(*sizes))
             is_vertical = self._orientation == Orientation.VERTICAL
             padding_top, padding_right, padding_bottom, padding_left = padding
@@ -273,8 +275,7 @@ class Box:
             self.draw_horizontal(context, bounding_box)
 
     def draw_vertical(self, context: DrawContext, bounding_box: Rectangle):
-        style = merge_styles(context.style, self._inline_style)
-        new_context = replace(context, style=style)
+        style = context.style
         padding_top, padding_right, padding_bottom, padding_left = style.get(
             "padding", DEFAULT_PADDING
         )
@@ -311,23 +312,26 @@ class Box:
             y = bounding_box.y + padding_top
 
         if self._draw_border:
-            self._draw_border(self, new_context, bounding_box)
+            self._draw_border(self, context, bounding_box)
 
-        x = bounding_box.x + padding_left
-        w = bounding_box.width - padding_right - padding_left
         if self.children:
+            child_context = replace(
+                context,
+                style={k: v for k, v in context.style.items() if k != "padding"},  # type: ignore[arg-type]
+            )
+            x = bounding_box.x + padding_left
+            w = bounding_box.width - padding_right - padding_left
             last_child = self.children[-1]
             for c, (_w, h) in zip(self.children, sizes):
                 if c is last_child and justify_content is JustifyContent.START:
                     h = bounding_box.height - y
                 elif h < avg_height:
                     h = avg_height
-                c.draw(context, Rectangle(x, y, w, h))
+                c.draw(child_context, Rectangle(x, y, w, h))
                 y += h
 
     def draw_horizontal(self, context: DrawContext, bounding_box: Rectangle):
-        style = merge_styles(context.style, self._inline_style)
-        new_context = replace(context, style=style)
+        style = context.style
         padding_top, padding_right, padding_bottom, padding_left = style.get(
             "padding", DEFAULT_PADDING
         )
@@ -357,18 +361,22 @@ class Box:
             x = bounding_box.x + padding_left
 
         if self._draw_border:
-            self._draw_border(self, new_context, bounding_box)
+            self._draw_border(self, context, bounding_box)
 
-        y = bounding_box.y + padding_top
-        h = bounding_box.height - padding_bottom - padding_top
         if self.children:
+            child_context = replace(
+                context,
+                style={k: v for k, v in context.style.items() if k != "padding"},  # type: ignore[arg-type]
+            )
+            y = bounding_box.y + padding_top
+            h = bounding_box.height - padding_bottom - padding_top
             last_child = self.children[-1]
             for c, (w, _h) in zip(self.children, sizes):
                 if c is last_child and justify_content is JustifyContent.START:
                     w = bounding_box.height - x
                 elif w < avg_width:
                     w = avg_width
-                c.draw(context, Rectangle(x, y, w, h))
+                c.draw(child_context, Rectangle(x, y, w, h))
                 x += w
 
 
@@ -381,12 +389,9 @@ class BoundedBox(Box):
     def __init__(
         self,
         *children: Shape,
-        style: Style | None = None,
         draw: Callable[[Box, DrawContext, Rectangle], None] | None = None,
     ):
-        if style is None:
-            style = {}
-        super().__init__(*children, style=style, draw=draw)
+        super().__init__(*children, draw=draw)
         self.bounding_box = Rectangle()
 
     def __iter__(self):
@@ -411,19 +416,16 @@ class IconBox:
     - padding: a tuple (top, right, bottom, left)
     """
 
-    def __init__(self, icon: Shape, *children: Shape, style: Style | None = None):
-        if style is None:
-            style = {}
-        self.icon = icon
+    def __init__(self, icon: Shape, *children: Shape):
+        self.icon = CssNode("icon", None, icon)
         self.children = children
         self.sizes: list[tuple[Number, Number]] = []
-        self._inline_style = style
 
     def __iter__(self):
         return iter((self.icon, *self.children))
 
     def size(self, context: UpdateContext, bounding_box: Rectangle | None = None):
-        style = merge_styles(context.style, self._inline_style)
+        style = context.style
         min_width = style.get("min-width", 0)
         min_height = style.get("min-height", 0)
         padding = style.get("padding", DEFAULT_PADDING)
@@ -431,8 +433,12 @@ class IconBox:
         new_bounds = rectangle_shrink(bounding_box, padding)
         width, height = self.icon.size(context, new_bounds)
 
+        child_context = replace(
+            context,
+            style={k: v for k, v in context.style.items() if k != "padding"},  # type: ignore[arg-type]
+        )
         new_bounds.expand(new_bounds.width * 1.32)
-        self.sizes = [c.size(context, new_bounds) for c in self.children]
+        self.sizes = [c.size(child_context, new_bounds) for c in self.children]
 
         padding_top, padding_right, padding_bottom, padding_left = padding
         return (
@@ -473,25 +479,25 @@ class IconBox:
         )
 
     def draw(self, context: DrawContext, bounding_box: Rectangle):
-        style = merge_styles(context.style, self._inline_style)
-        new_context = replace(context, style=style)
+        style = context.style
         self.icon.draw(
-            new_context,
+            context,
             rectangle_shrink(bounding_box, style.get("padding", DEFAULT_PADDING)),
         )
 
-        cx, cy, max_w, total_h = self.child_pos(style, bounding_box)
+        child_context = replace(
+            context,
+            style={k: v for k, v in context.style.items() if k != "padding"},  # type: ignore[arg-type]
+        )
+        cx, cy, max_w, _total_h = self.child_pos(style, bounding_box)
         for c, (cw, ch) in zip(self.children, self.sizes):
-            c.draw(context, Rectangle(cx + (max_w - cw) / 2, cy, cw, ch))
+            c.draw(child_context, Rectangle(cx + (max_w - cw) / 2, cy, cw, ch))
             cy += ch
 
 
 class Text:
-    def __init__(self, text: str | Callable[[], str], style: Style | None = None):
-        if style is None:
-            style = {}
+    def __init__(self, text: str | Callable[[], str]):
         self._text = text if callable(text) else lambda: text
-        self._inline_style = style
         self._layout = Layout()
 
     def __iter__(self):
@@ -512,7 +518,7 @@ class Text:
         return t
 
     def size(self, context: UpdateContext, bounding_box: Rectangle | None = None):
-        style = merge_styles(context.style, self._inline_style)
+        style = context.style
         min_w = style.get("min-width", 0)
         min_h = style.get("min-height", 0)
         text_align = style.get("text-align", TextAlign.CENTER)
@@ -538,7 +544,7 @@ class Text:
 
     def draw(self, context: DrawContext, bounding_box: Rectangle):
         """Draw the text, return the location and size."""
-        style = merge_styles(context.style, self._inline_style)
+        style = context.style
         min_w = max(style.get("min-width", 0), bounding_box.width)
         min_h = max(style.get("min-height", 0), bounding_box.height)
         text_box = rectangle_shrink(bounding_box, style.get("padding", DEFAULT_PADDING))
@@ -565,12 +571,10 @@ class CssNode:
         name: str,
         element: Element | None,
         child: Shape,
-        style: Style | None = None,
     ):
         self._name = name
         self._element = element
         self.child = child
-        self._inline_style = style if style else {}
 
     def __iter__(self):
         return iter((self.child,))
@@ -612,9 +616,9 @@ class StyledCssNode:
         return (node.style_node(self) for node in traverse_css_nodes(self._shape))
 
     def attribute(self, name: str) -> str | None:
-        if not self._shape._element:
-            return None
-        return lookup_attribute(self._shape._element, name)
+        if self._shape._element:
+            return lookup_attribute(self._shape._element, name)
+        return self._parent.attribute(name) if self._parent else None
 
     def state(self) -> Sequence[str]:
         return ()

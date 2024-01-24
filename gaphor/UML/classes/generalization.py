@@ -8,7 +8,7 @@ from gaphor.core.modeling.diagram import Diagram
 from gaphor.diagram.presentation import LinePresentation
 from gaphor.diagram.shapes import Box
 from gaphor.diagram.support import represents
-from gaphor.UML.shapes import text_stereotypes
+from gaphor.UML.compartments import text_stereotypes
 
 
 @represents(
@@ -22,7 +22,6 @@ class GeneralizationItem(LinePresentation):
             diagram,
             id,
             shape_middle=Box(text_stereotypes(self)),
-            style={"dash-style": ()},
         )
 
         self._handles[0].pos = (30, 20)

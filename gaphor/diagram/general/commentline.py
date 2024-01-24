@@ -9,7 +9,7 @@ from gaphor.diagram.presentation import LinePresentation
 
 class CommentLineItem(LinePresentation):
     def __init__(self, diagram, id=None):
-        super().__init__(diagram, id, style={"dash-style": (7.0, 5.0)})
+        super().__init__(diagram, id)
 
     def unlink(self):
         c1 = self._connections.get_connection(self.head)

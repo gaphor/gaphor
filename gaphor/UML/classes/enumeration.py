@@ -2,12 +2,9 @@ import logging
 
 from gaphor import UML
 from gaphor.core.modeling.properties import attribute
-from gaphor.core.styling import JustifyContent
 from gaphor.diagram.presentation import (
     Classified,
     ElementPresentation,
-    text_from_package,
-    text_name,
 )
 from gaphor.diagram.shapes import Box, CssNode, Text, draw_border, draw_top_separator
 from gaphor.diagram.support import represents
@@ -18,7 +15,7 @@ from gaphor.UML.classes.klass import (
     operations_compartment,
 )
 from gaphor.UML.classes.stereotype import stereotype_compartments, stereotype_watches
-from gaphor.UML.shapes import text_stereotypes
+from gaphor.UML.compartments import name_compartment
 
 log = logging.getLogger(__name__)
 
@@ -63,18 +60,13 @@ class EnumerationItem(Classified, ElementPresentation[UML.Enumeration]):
 
     def update_shapes(self, event=None):
         self.shape = Box(
-            Box(
-                text_stereotypes(
-                    self,
-                    lambda: [
-                        self.diagram.gettext("valueType")
-                        if self.as_sysml_value_type
-                        else self.diagram.gettext("enumeration")
-                    ],
-                ),
-                text_name(self),
-                text_from_package(self),
-                style={"padding": (12, 4, 12, 4)},
+            name_compartment(
+                self,
+                lambda: [
+                    self.diagram.gettext("valueType")
+                    if self.as_sysml_value_type
+                    else self.diagram.gettext("enumeration")
+                ],
             ),
             *(
                 self.show_enumerations
@@ -95,9 +87,6 @@ class EnumerationItem(Classified, ElementPresentation[UML.Enumeration]):
                 or []
             ),
             *(self.show_stereotypes and stereotype_compartments(self.subject) or []),
-            style={
-                "justify-content": JustifyContent.START,
-            },
             draw=draw_border,
         )
 

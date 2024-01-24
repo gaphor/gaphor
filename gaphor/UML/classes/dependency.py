@@ -16,12 +16,12 @@ the type of dependency in an automatic way.
 
 from gaphor import UML
 from gaphor.core.modeling.properties import attribute
-from gaphor.diagram.presentation import LinePresentation, Named
-from gaphor.diagram.shapes import Box, Text, stroke
+from gaphor.diagram.presentation import LinePresentation, Named, text_name
+from gaphor.diagram.shapes import Box, stroke
 from gaphor.diagram.support import represents
 from gaphor.i18n import i18nize
 from gaphor.UML.classes.interface import Folded, InterfacePort
-from gaphor.UML.shapes import text_stereotypes
+from gaphor.UML.compartments import text_stereotypes
 
 
 @represents(UML.Dependency, head=UML.Dependency.supplier, tail=UML.Dependency.client)
@@ -58,7 +58,7 @@ class DependencyItem(Named, LinePresentation):
                         for s in additional_stereotype.get(self._dependency_type, ())
                     ],
                 ),
-                Text(text=lambda: self.subject.name or ""),
+                text_name(self),
             ),
         )
 

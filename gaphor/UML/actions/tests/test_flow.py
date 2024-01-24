@@ -20,24 +20,24 @@ def test_name(create):
 
     flow.subject.name = "Blah"
 
-    assert "Blah" == name.text()
+    assert "Blah" == name.child.text()
 
     flow.subject = None
 
-    assert "" == name.text()
+    assert "" == name.child.text()
 
 
 def test_guard_text_update(create):
     flow = create(ControlFlowItem, UML.ControlFlow)
     guard = flow.shape_middle
 
-    assert "" == guard.text()
+    assert "" == guard.child.text()
 
     flow.subject.guard = "GuardMe"
-    assert "[GuardMe]" == guard.text()
+    assert "[GuardMe]" == guard.child.text()
 
     flow.subject = None
-    assert "" == guard.text()
+    assert "" == guard.child.text()
 
 
 def test_draw(create, diagram):

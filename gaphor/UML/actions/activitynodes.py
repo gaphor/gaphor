@@ -15,10 +15,11 @@ from gaphor.diagram.presentation import (
     HandlePositionUpdate,
     Named,
     literal_eval,
+    text_name,
 )
-from gaphor.diagram.shapes import Box, IconBox, Text, ellipse, stroke
+from gaphor.diagram.shapes import Box, CssNode, IconBox, Text, ellipse, stroke
 from gaphor.diagram.support import represents
-from gaphor.UML.shapes import text_stereotypes
+from gaphor.UML.compartments import text_stereotypes
 
 DEFAULT_JOIN_SPEC = "and"
 
@@ -50,7 +51,7 @@ class InitialNodeItem(ActivityNodeItem, ElementPresentation):
             Box(draw=draw_initial_node),
             # Text should be left-top
             text_stereotypes(self),
-            Text(text=lambda: self.subject and self.subject.name or ""),
+            text_name(self),
         )
 
         self.watch("subject[NamedElement].name")
@@ -83,7 +84,7 @@ class ActivityFinalNodeItem(ActivityNodeItem, ElementPresentation):
             Box(draw=draw_activity_final_node),
             # Text should be right-bottom
             text_stereotypes(self),
-            Text(text=lambda: self.subject and self.subject.name or ""),
+            text_name(self),
         )
 
         self.watch("subject[NamedElement].name")
@@ -127,7 +128,7 @@ class FlowFinalNodeItem(ActivityNodeItem, ElementPresentation):
             Box(draw=draw_flow_final_node),
             # Text should be right-bottom
             text_stereotypes(self),
-            Text(text=lambda: self.subject and self.subject.name or ""),
+            text_name(self),
         )
 
         self.watch("subject[NamedElement].name")
@@ -161,8 +162,8 @@ class DecisionNodeItem(ActivityNodeItem, ElementPresentation):
             Box(draw=draw_decision_node),
             # Text should be left-top
             text_stereotypes(self),
-            Text(text=self.node_type, style={"font-size": "small"}),
-            Text(text=lambda: self.subject and self.subject.name or ""),
+            CssNode("type", None, Text(text=self.node_type)),
+            text_name(self),
         )
 
         self.watch("show_underlying_type")
@@ -216,12 +217,16 @@ class ForkNodeItem(Named, Presentation[UML.ForkNode], HandlePositionUpdate):
         self._shape = IconBox(
             Box(draw=self.draw_fork_node),
             text_stereotypes(self),
-            Text(text=lambda: self.subject and self.subject.name or ""),
-            Text(
-                text=lambda: isinstance(self.subject, UML.JoinNode)
-                and self.subject.joinSpec not in (None, DEFAULT_JOIN_SPEC)
-                and f"{{ joinSpec = {self.subject.joinSpec} }}"
-                or "",
+            text_name(self),
+            CssNode(
+                "joinspec",
+                None,
+                Text(
+                    text=lambda: isinstance(self.subject, UML.JoinNode)
+                    and self.subject.joinSpec not in (None, DEFAULT_JOIN_SPEC)
+                    and f"{{ joinSpec = {self.subject.joinSpec} }}"
+                    or ""
+                ),
             ),
         )
 

@@ -16,10 +16,14 @@ from gaphas.geometry import Rectangle, distance_rectangle_point
 from gaphor import UML
 from gaphor.core.modeling.properties import association, attribute, enumeration
 from gaphor.core.styling import Style, merge_styles
-from gaphor.diagram.presentation import LinePresentation, Named, get_center_pos
+from gaphor.diagram.presentation import (
+    LinePresentation,
+    Named,
+    get_center_pos,
+    text_name,
+)
 from gaphor.diagram.shapes import (
     Box,
-    Text,
     cairo_state,
     draw_default_head,
     draw_default_tail,
@@ -27,12 +31,12 @@ from gaphor.diagram.shapes import (
 )
 from gaphor.diagram.support import represents
 from gaphor.diagram.text import Layout
+from gaphor.UML.compartments import text_stereotypes
 from gaphor.UML.informationflow import (
     draw_information_flow,
     shape_information_flow,
     watch_information_flow,
 )
-from gaphor.UML.shapes import text_stereotypes
 from gaphor.UML.umlfmt import format_association_end
 
 half_pi = pi / 2
@@ -53,7 +57,7 @@ class AssociationItem(Named, LinePresentation[UML.Association]):
             id,
             shape_middle=Box(
                 text_stereotypes(self),
-                Text(text=lambda: self.subject.name or ""),
+                text_name(self),
                 *shape_information_flow(self, "abstraction"),
             ),
         )

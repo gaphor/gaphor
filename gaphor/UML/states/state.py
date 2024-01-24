@@ -7,11 +7,10 @@ from gaphas.types import Pos
 from gaphor import UML
 from gaphor.core.modeling.element import Element
 from gaphor.core.modeling.properties import attribute
-from gaphor.core.styling import JustifyContent, TextAlign
-from gaphor.diagram.presentation import ElementPresentation, Named
-from gaphor.diagram.shapes import Box, Text, draw_top_separator, stroke
+from gaphor.diagram.presentation import ElementPresentation, Named, text_name
+from gaphor.diagram.shapes import Box, CssNode, Text, draw_top_separator, stroke
 from gaphor.diagram.support import represents
-from gaphor.UML.shapes import text_stereotypes
+from gaphor.UML.compartments import text_stereotypes
 from gaphor.UML.states.region import region_compartment
 
 
@@ -40,40 +39,45 @@ class StateItem(ElementPresentation[UML.State], Named):
                 text=lambda: self.subject.entry.name
                 and f"entry / {self.subject.entry.name}"
                 or "",
-                style={"text-align": TextAlign.LEFT},
             ),
             Text(
                 text=lambda: self.subject.exit.name
                 and f"exit / {self.subject.exit.name}"
                 or "",
-                style={"text-align": TextAlign.LEFT},
             ),
             Text(
                 text=lambda: self.subject.doActivity.name
                 and f"do / {self.subject.doActivity.name}"
                 or "",
-                style={"text-align": TextAlign.LEFT},
             ),
-            style={"padding": (4, 4, 4, 4), "justify-content": JustifyContent.START},
             draw=draw_top_separator,
         )
         if not any(t.text() for t in compartment.children):  # type: ignore[attr-defined]
             compartment = Box()
 
         self.shape = Box(
-            Box(
-                text_stereotypes(self),
-                Text(text=lambda: self.subject.name or ""),
-                style={"padding": (4, 4, 4, 4)},
+            CssNode(
+                "compartment",
+                None,
+                Box(
+                    text_stereotypes(self),
+                    text_name(self),
+                ),
             ),
-            compartment,
-            Box(
-                *(self._region_boxes),
-                style={"justify-content": JustifyContent.STRETCH},
+            CssNode("compartment", self.subject, compartment),
+            *(
+                self._region_boxes
+                and [
+                    CssNode(
+                        "regions",
+                        None,
+                        Box(
+                            *(self._region_boxes),
+                        ),
+                    )
+                ]
+                or []
             ),
-            style={
-                "justify-content": JustifyContent.START,
-            },
             draw=draw_state,
         )
 

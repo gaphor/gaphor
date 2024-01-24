@@ -2,6 +2,7 @@ from gaphor import UML
 from gaphor.diagram.presentation import AttachedPresentation, Named
 from gaphor.diagram.shapes import (
     Box,
+    CssNode,
     IconBox,
     Text,
     TextAlign,
@@ -9,7 +10,7 @@ from gaphor.diagram.shapes import (
     draw_border,
 )
 from gaphor.diagram.support import represents
-from gaphor.UML.shapes import text_stereotypes
+from gaphor.UML.compartments import text_stereotypes
 from gaphor.UML.umlfmt import format_pin
 
 
@@ -34,21 +35,20 @@ class PinItem(Named, AttachedPresentation[UML.Pin]):
         return ""
 
     def update_shapes(self, event=None):
-        position = self.connected_side()
+        side = self.connected_side
         self.update_width(
             self.width,
-            factor=0 if position == "left" else 1 if position == "right" else 0.5,
+            factor=0 if side == "left" else 1 if side == "right" else 0.5,
         )
         self.update_height(
             self.width,
-            factor=0 if position == "top" else 1 if position == "bottom" else 0.5,
+            factor=0 if side == "top" else 1 if side == "bottom" else 0.5,
         )
 
         self.shape = IconBox(
             Box(draw=draw_border),
             text_stereotypes(self, lambda: [] if self.subject else [self.pin_type()]),
-            Text(text=lambda: format_pin(self.subject)),
-            style=text_position(self.connected_side()),
+            CssNode("name", self.subject, Text(text=lambda: format_pin(self.subject))),
         )
 
 

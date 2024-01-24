@@ -3,10 +3,10 @@ ExtensionItem -- Graphical representation of an association.
 """
 
 from gaphor import UML
-from gaphor.diagram.presentation import LinePresentation, Named
-from gaphor.diagram.shapes import Box, Text
+from gaphor.diagram.presentation import LinePresentation, Named, text_name
+from gaphor.diagram.shapes import Box
 from gaphor.diagram.support import represents
-from gaphor.UML.shapes import text_stereotypes
+from gaphor.UML.compartments import text_stereotypes
 
 
 @represents(UML.Extension)
@@ -23,7 +23,7 @@ class ExtensionItem(Named, LinePresentation):
             id,
             shape_middle=Box(
                 text_stereotypes(self),
-                Text(text=lambda: self.subject.name or ""),
+                text_name(self),
             ),
         )
 

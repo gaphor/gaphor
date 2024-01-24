@@ -77,11 +77,9 @@ from gaphas.item import NE, NW, SE, SW
 from gaphor import UML
 from gaphor.core.modeling.presentation import literal_eval
 from gaphor.core.modeling.properties import attribute
-from gaphor.core.styling import JustifyContent
 from gaphor.diagram.presentation import (
     Classified,
     ElementPresentation,
-    text_from_package,
     text_name,
 )
 from gaphor.diagram.shapes import Box, IconBox, draw_border, stroke
@@ -92,8 +90,8 @@ from gaphor.UML.classes.klass import (
     operation_watches,
     operations_compartment,
 )
-from gaphor.UML.classes.stereotype import stereotype_compartments
-from gaphor.UML.shapes import text_stereotypes
+from gaphor.UML.classes.stereotype import stereotype_compartments, stereotype_watches
+from gaphor.UML.compartments import name_compartment, text_stereotypes
 
 
 class Folded(Enum):
@@ -188,14 +186,11 @@ class InterfaceItem(Classified, ElementPresentation):
         ).watch("show_operations", self.update_shapes).watch(
             "subject[NamedElement].name"
         ).watch("subject[NamedElement].namespace.name").watch(
-            "subject.appliedStereotype", self.update_shapes
-        ).watch("subject.appliedStereotype.classifier.name").watch(
-            "subject.appliedStereotype.slot", self.update_shapes
-        ).watch("subject.appliedStereotype.slot.definingFeature.name").watch(
-            "subject.appliedStereotype.slot.value", self.update_shapes
-        ).watch("subject[Interface].supplierDependency", self.update_shapes)
+            "subject[Interface].supplierDependency", self.update_shapes
+        )
         attribute_watches(self, "Interface")
         operation_watches(self, "Interface")
+        stereotype_watches(self)
 
     show_stereotypes: attribute[int] = attribute("show_stereotypes", int)
 
@@ -278,12 +273,7 @@ class InterfaceItem(Classified, ElementPresentation):
 
     def class_shape(self):
         return Box(
-            Box(
-                text_stereotypes(self, lambda: [self.diagram.gettext("interface")]),
-                text_name(self),
-                text_from_package(self),
-                style={"padding": (12, 4, 12, 4)},
-            ),
+            name_compartment(self, lambda: [self.diagram.gettext("interface")]),
             *(
                 self.show_attributes
                 and self.subject
@@ -297,9 +287,6 @@ class InterfaceItem(Classified, ElementPresentation):
                 or []
             ),
             *(self.show_stereotypes and stereotype_compartments(self.subject) or []),
-            style={
-                "justify-content": JustifyContent.START,
-            },
             draw=draw_border,
         )
 

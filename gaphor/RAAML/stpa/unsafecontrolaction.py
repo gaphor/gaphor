@@ -6,13 +6,11 @@ from gaphor.core.modeling import DrawContext
 from gaphor.diagram.presentation import (
     Classified,
     ElementPresentation,
-    text_from_package,
-    text_name,
 )
 from gaphor.diagram.shapes import Box, draw_border
 from gaphor.diagram.support import represents
 from gaphor.RAAML import raaml
-from gaphor.UML.shapes import text_stereotypes
+from gaphor.UML.compartments import name_compartment
 
 
 @represents(raaml.UnsafeControlAction)
@@ -26,13 +24,8 @@ class UnsafeControlActionItem(Classified, ElementPresentation):
 
     def update_shapes(self, event=None):
         self.shape = Box(
-            Box(
-                text_stereotypes(
-                    self, lambda: [self.diagram.gettext("Unsafe Control Action")]
-                ),
-                text_name(self),
-                text_from_package(self),
-                style={"padding": (12, 4, 12, 4)},
+            name_compartment(
+                self, lambda: [self.diagram.gettext("Unsafe Control Action")]
             ),
             draw=draw_unsafe_control_action,
         )
