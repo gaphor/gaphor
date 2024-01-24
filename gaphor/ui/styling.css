@@ -60,16 +60,17 @@ flowboxchild {
   margin-top: 12px;
 }
 
-box.propertypage > * {
+.propertypage {
   margin-top: 6px;
-}
-
-expander-widget.propertypage {
-  margin-top: 12px;
+  border-spacing: 6px;
 }
 
 .propertypage box.horizontal:not(.linked) {
   border-spacing: 6px;
+}
+
+.propertypage .title {
+  margin-top: 6px;
 }
 
 .propertypage .info {

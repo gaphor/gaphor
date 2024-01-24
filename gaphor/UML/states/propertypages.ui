@@ -2,73 +2,66 @@
 <interface>
   <requires lib="gtk" version="4.0"/>
 
-  <object class="GtkExpander" id="state-editor">
-    <property name="expanded">1</property>
+  <object class="GtkBox" id="state-editor">
+    <property name="orientation">vertical</property>
     <child type="label">
       <object class="GtkLabel">
         <property name="label" translatable="yes">Activities</property>
+        <property name="halign">start</property>
         <style>
           <class name="title"/>
         </style>
       </object>
     </child>
     <child>
-      <object class="GtkBox">
-        <property name="orientation">vertical</property>
-        <child>
-          <object class="GtkLabel">
-            <property name="label" translatable="yes">Entry</property>
-            <property name="xalign">0</property>
-            <style>
-              <class name="title" />
-            </style>
-          </object>
-        </child>
-        <child>
-          <object class="GtkDropDown" id="entry">
-            <property name="enable-search">1</property>
-            <property name="expression">
-              <lookup type="LabelValue" name="label" />
-            </property>
-          </object>
-        </child>
-        <child>
-          <object class="GtkLabel">
-            <property name="label" translatable="yes">Exit</property>
-            <property name="xalign">0</property>
-            <style>
-              <class name="title" />
-            </style>
-          </object>
-        </child>
-        <child>
-          <object class="GtkDropDown" id="exit">
-            <property name="enable-search">1</property>
-            <property name="expression">
-              <lookup type="LabelValue" name="label" />
-            </property>
-          </object>
-        </child>
-        <child>
-          <object class="GtkLabel">
-            <property name="label" translatable="yes">Do activity</property>
-            <property name="xalign">0</property>
-            <style>
-              <class name="title" />
-            </style>
-          </object>
-        </child>
-        <child>
-          <object class="GtkDropDown" id="do-activity">
-            <property name="enable-search">1</property>
-            <property name="expression">
-              <lookup type="LabelValue" name="label" />
-            </property>
-          </object>
-        </child>
+      <object class="GtkLabel">
+        <property name="label" translatable="yes">Entry</property>
+        <property name="xalign">0</property>
         <style>
-          <class name="propertypage"/>
+          <class name="title" />
         </style>
+      </object>
+    </child>
+    <child>
+      <object class="GtkDropDown" id="entry">
+        <property name="enable-search">1</property>
+        <property name="expression">
+          <lookup type="LabelValue" name="label" />
+        </property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkLabel">
+        <property name="label" translatable="yes">Exit</property>
+        <property name="halign">start</property>
+        <style>
+          <class name="title" />
+        </style>
+      </object>
+    </child>
+    <child>
+      <object class="GtkDropDown" id="exit">
+        <property name="enable-search">1</property>
+        <property name="expression">
+          <lookup type="LabelValue" name="label" />
+        </property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkLabel">
+        <property name="label" translatable="yes">Do activity</property>
+        <property name="xalign">0</property>
+        <style>
+          <class name="title" />
+        </style>
+      </object>
+    </child>
+    <child>
+      <object class="GtkDropDown" id="do-activity">
+        <property name="enable-search">1</property>
+        <property name="expression">
+          <lookup type="LabelValue" name="label" />
+        </property>
       </object>
     </child>
     <style>
@@ -81,7 +74,7 @@
     <child>
       <object class="GtkLabel">
         <property name="label" translatable="yes">Guard</property>
-        <property name="xalign">0</property>
+        <property name="halign">start</property>
         <style>
           <class name="title"/>
         </style>
@@ -101,56 +94,52 @@
     <property name="page-increment">10</property>
   </object>
 
-  <object class="GtkExpander" id="region-editor">
-    <property name="margin-top">12</property>
-    <child type="label">
+  <object class="GtkBox" id="region-editor">
+        <property name="orientation">vertical</property>
+    <child>
       <object class="GtkLabel" id="titlelabel">
         <property name="label" translatable="yes">Regions</property>
-        <attributes>
-          <attribute name="weight" value="bold"></attribute>
-        </attributes>
-      </object>
-    </child>
-    <child>
-      <object class="GtkBox" id="childbox">
-        <property name="orientation">vertical</property>
-        <child>
-          <object class="GtkBox">
-            <child>
-              <object class="GtkLabel">
-                <property name="label" translatable="yes">Show Regions</property>
-                <property name="halign">start</property>
-                <property name="hexpand">1</property>
-              </object>
-            </child>
-            <child>
-              <object class="GtkSwitch" id="show-regions">
-                <signal name="notify::active" handler="show-regions-changed" swapped="no"/>
-              </object>
-            </child>
-          </object>
-        </child>
-        <child>
-          <object class="GtkBox">
-            <child>
-              <object class="GtkLabel">
-                <property name="label" translatable="yes">Regions</property>
-                <property name="halign">start</property>
-                <property name="hexpand">1</property>
-              </object>
-            </child>
-            <child>
-              <object class="GtkSpinButton" id="num-regions">
-                <property name="adjustment">num-regions-adjustment</property>
-                <signal name="value-changed" handler="regions-changed" swapped="no"/>
-              </object>
-            </child>
-          </object>
-        </child>
+        <property name="halign">start</property>
         <style>
-          <class name="propertypage"/>
+          <class name="title"/>
         </style>
       </object>
     </child>
+    <child>
+      <object class="GtkBox">
+        <child>
+          <object class="GtkLabel">
+            <property name="label" translatable="yes">Show Regions</property>
+            <property name="halign">start</property>
+            <property name="hexpand">1</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkSwitch" id="show-regions">
+            <signal name="notify::active" handler="show-regions-changed" swapped="no"/>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="GtkBox">
+        <child>
+          <object class="GtkLabel">
+            <property name="label" translatable="yes">Regions</property>
+            <property name="halign">start</property>
+            <property name="hexpand">1</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkSpinButton" id="num-regions">
+            <property name="adjustment">num-regions-adjustment</property>
+            <signal name="value-changed" handler="regions-changed" swapped="no"/>
+          </object>
+        </child>
+      </object>
+    </child>
+    <style>
+      <class name="propertypage"/>
+    </style>
   </object>
 </interface>

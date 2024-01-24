@@ -287,56 +287,53 @@
     </style>
   </object>
 
-  <object class="GtkExpander" id="activity-editor">
-    <property name="focusable">1</property>
-    <property name="expanded">1</property>
-    <child type="label">
+  <object class="GtkBox" id="activity-editor">
+    <property name="orientation">vertical</property>
+    <child>
       <object class="GtkLabel">
         <property name="label" translatable="yes">Parameter Nodes</property>
+        <property name="halign">start</property>
         <style>
           <class name="title" />
         </style>
       </object>
     </child>
     <child>
-      <object class="GtkBox">
-        <property name="orientation">vertical</property>
-        <child>
-          <object class="GtkFrame">
-            <property name="child">
-              <object class="GtkColumnView" id="parameter-list">
-                <style>
-                  <class name="data-table" />
-                </style>
-                <property name="height-request">112</property>
-                <property name="focusable">1</property>
-                <child>
-                  <object class="GtkColumnViewColumn">
-                    <property name="title" translatable="yes">Parameter Nodes</property>
-                    <property name="expand">1</property>
-                  </object>
-                </child>
-                <child>
-                  <object class="GtkEventControllerKey">
-                    <signal name="key-pressed" handler="parameter-key-pressed" />
-                  </object>
-                </child>
-                <signal name="activate" handler="parameter-activated" />
-              </object>
-            </property>
-          </object>
-        </child>
-        <child>
-          <object class="GtkLabel" id="parameters-info-icon">
-            <property name="halign">end</property>
-            <property name="label" translatable="yes">ⓘ Help</property>
+      <object class="GtkFrame">
+        <property name="child">
+          <object class="GtkColumnView" id="parameter-list">
+            <style>
+              <class name="data-table" />
+            </style>
+            <property name="height-request">112</property>
+            <property name="focusable">1</property>
             <child>
-              <object class="GtkPopover" id="parameters-info">
-                <property name="visible">0</property>
-                <property name="position">top</property>
-                <property name="child">
-                  <object class="GtkLabel">
-                    <property name="label" translatable="yes">Add and edit class activity according to UML syntax.
+              <object class="GtkColumnViewColumn">
+                <property name="title" translatable="yes">Parameter Nodes</property>
+                <property name="expand">1</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkEventControllerKey">
+                <signal name="key-pressed" handler="parameter-key-pressed" />
+              </object>
+            </child>
+            <signal name="activate" handler="parameter-activated" />
+          </object>
+        </property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkLabel" id="parameters-info-icon">
+        <property name="halign">end</property>
+        <property name="label" translatable="yes">ⓘ Help</property>
+        <child>
+          <object class="GtkPopover" id="parameters-info">
+            <property name="visible">0</property>
+            <property name="position">top</property>
+            <property name="child">
+              <object class="GtkLabel">
+                <property name="label" translatable="yes">Add and edit class activity according to UML syntax.
 
   • &lt;tt&gt;attr&lt;/tt&gt; (name, defaults to public visibility)
   • &lt;tt&gt;+ attr: int&lt;/tt&gt; (public with type)
@@ -346,19 +343,17 @@
 
 Press &lt;b&gt;Enter&lt;/b&gt; to edit, &lt;b&gt;Backspace&lt;/b&gt;/&lt;b&gt;Delete&lt;/b&gt; to remove items.
 Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</property>
-                    <property name="use-markup">1</property>
-                    <style>
-                      <class name="info-popover" />
-                    </style>
-                  </object>
-                </property>
+                <property name="use-markup">1</property>
+                <style>
+                  <class name="info-popover" />
+                </style>
               </object>
-            </child>
-            <style>
-              <class name="info" />
-            </style>
+            </property>
           </object>
         </child>
+        <style>
+          <class name="info" />
+        </style>
       </object>
     </child>
     <style>

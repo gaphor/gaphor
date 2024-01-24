@@ -63,11 +63,12 @@
     </style>
   </object>
 
-  <object class="GtkExpander" id="line-editor">
-    <property name="expanded">1</property>
+  <object class="GtkBox" id="line-editor">
+    <property name="orientation">vertical</property>
     <child type="label">
       <object class="GtkLabel">
         <property name="label" translatable="yes">Style</property>
+        <property name="xalign">0</property>
         <style>
           <class name="title"/>
         </style>
@@ -75,45 +76,40 @@
     </child>
     <child>
       <object class="GtkBox">
-        <property name="orientation">vertical</property>
+        <property name="margin_top">6</property>
+        <property name="margin_bottom">6</property>
         <child>
-          <object class="GtkBox">
-            <property name="margin_top">6</property>
-            <property name="margin_bottom">6</property>
-            <child>
-              <object class="GtkLabel">
-                <property name="label" translatable="yes">Rectilinear</property>
-                <property name="halign">start</property>
-                <property name="hexpand">1</property>
-                <property name="hexpand-set">1</property>
-              </object>
-            </child>
-            <child>
-              <object class="GtkSwitch" id="line-rectilinear">
-                <property name="halign">end</property>
-                <signal name="notify::active" handler="rectilinear-changed" swapped="no"/>
-              </object>
-            </child>
+          <object class="GtkLabel">
+            <property name="label" translatable="yes">Rectilinear</property>
+            <property name="halign">start</property>
+            <property name="hexpand">1</property>
+            <property name="hexpand-set">1</property>
           </object>
         </child>
         <child>
-          <object class="GtkBox">
-            <property name="margin_top">6</property>
-            <property name="margin_bottom">6</property>
-            <child>
-              <object class="GtkLabel">
-                <property name="label" translatable="yes">Flip orientation</property>
-                <property name="halign">start</property>
-                <property name="hexpand">1</property>
-                <property name="hexpand-set">1</property>
-              </object>
-            </child>
-            <child>
-              <object class="GtkSwitch" id="flip-orientation">
-                <property name="halign">end</property>
-                <signal name="notify::active" handler="orientation-changed" swapped="no"/>
-              </object>
-            </child>
+          <object class="GtkSwitch" id="line-rectilinear">
+            <property name="halign">end</property>
+            <signal name="notify::active" handler="rectilinear-changed" swapped="no"/>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="GtkBox">
+        <property name="margin_top">6</property>
+        <property name="margin_bottom">6</property>
+        <child>
+          <object class="GtkLabel">
+            <property name="label" translatable="yes">Flip orientation</property>
+            <property name="halign">start</property>
+            <property name="hexpand">1</property>
+            <property name="hexpand-set">1</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkSwitch" id="flip-orientation">
+            <property name="halign">end</property>
+            <signal name="notify::active" handler="orientation-changed" swapped="no"/>
           </object>
         </child>
       </object>
@@ -123,9 +119,9 @@
     </style>
   </object>
 
-  <object class="GtkExpander" id="note-editor">
-    <property name="expanded">1</property>
-    <child type="label">
+  <object class="GtkBox" id="note-editor">
+    <property name="orientation">vertical</property>
+    <child>
       <object class="GtkLabel">
         <property name="label" translatable="yes">Note</property>
         <property name="xalign">0</property>
@@ -135,21 +131,13 @@
       </object>
     </child>
     <child>
-      <object class="GtkBox">
-        <property name="orientation">vertical</property>
-        <child>
-          <object class="GtkFrame">
-            <property name="child">
-              <object class="GtkTextView" id="note">
-                <property name="wrap-mode">word</property>
-                <property name="height-request">96</property>
-              </object>
-            </property>
+      <object class="GtkFrame">
+        <property name="child">
+          <object class="GtkTextView" id="note">
+            <property name="wrap-mode">word</property>
+            <property name="height-request">96</property>
           </object>
-        </child>
-        <style>
-          <class name="propertypage"/>
-        </style>
+        </property>
       </object>
     </child>
     <style>
