@@ -173,3 +173,7 @@ flowboxchild:hover {
 flowboxchild:active {
   background-color: alpha(@shade_color, 2);
 }
+
+.mono {
+  font-family: monospace;
+}
