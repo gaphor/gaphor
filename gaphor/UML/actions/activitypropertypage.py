@@ -41,7 +41,7 @@ class ActivityParameterNodeView(GObject.Object):
 
     @GObject.Property(type=str)
     def parameter(self) -> str:
-        return format(self.node.parameter) if self.node else ""
+        return (format(self.node.parameter) or " ") if self.node else ""
 
     @parameter.setter  # type: ignore[no-redef]
     @transactional

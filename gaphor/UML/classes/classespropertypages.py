@@ -131,7 +131,7 @@ class AttributeView(GObject.Object):
 
     @GObject.Property(type=str, default="")
     def attribute(self):
-        return format(self.attr, note=True) if self.attr else ""
+        return (format(self.attr, note=True) or " ") if self.attr else ""
 
     @attribute.setter  # type: ignore[no-redef]
     @transactional
@@ -276,7 +276,7 @@ class OperationView(GObject.Object):
 
     @GObject.Property(type=str, default="")
     def operation(self):
-        return format(self.oper, note=True) if self.oper else ""
+        return (format(self.oper, note=True) or " ") if self.oper else ""
 
     @operation.setter  # type: ignore[no-redef]
     @transactional
