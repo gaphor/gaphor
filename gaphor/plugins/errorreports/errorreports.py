@@ -68,8 +68,8 @@ class ErrorReports(UIComponent, ActionProvider):
         self.window = builder.get_object("error-reports")
         self.buffer = builder.get_object("buffer")
 
-        self.window.connect("destroy", self.close)
-        self.window.set_visible(True)
+        self.window.connect("close-request", self.close)
+        self.window.present()
 
         self.update_text()
 

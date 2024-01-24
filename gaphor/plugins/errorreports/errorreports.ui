@@ -6,7 +6,12 @@
     <property name="title" translatable="yes">Error Reports</property>
     <property name="default-width">600</property>
     <property name="default-height">400</property>
-    <property name="child">
+    <child type="titlebar">
+      <object class="GtkHeaderBar">
+        <property name="decoration-layout">:close</property>
+      </object>
+    </child>
+    <child>
       <object class="GtkBox">
         <property name="orientation">vertical</property>
         <child>
@@ -35,6 +40,6 @@
           </object>
         </child>
       </object>
-    </property>
+    </child>
   </object>
 </interface>
