@@ -154,8 +154,17 @@ textfield text selection {
   box-shadow: none;
 }
 
+#model_browser,
+#diagrams > box {
+  border-top: 1px solid @unfocused_borders;
+}
+
 #element_editor {
   border-left: 1px solid @unfocused_borders;
+}
+
+.toolbar {
+  padding-top: 0;
 }
 
 .editor-wide {
