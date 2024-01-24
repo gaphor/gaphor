@@ -6,11 +6,11 @@ Upstream-Contact:
 Source: https://gaphor.org
 
 Files: *
-Copyright: 2024 Arjan Molenaar & Dan Yeaw
+Copyright: The Gaphor Development Team
 License: Apache-2.0
 
 Files: gaphor/core/styling/selectors.py
-Copyright: 2012 by Simon Sapin, 2017 by Guillaume Ayoub, 2024 Arjan Molenaar & Dan Yeaw
+Copyright: 2012 by Simon Sapin, 2017 by Guillaume Ayoub, 2020 The Gaphor Development Team
 License: BSD-3-Clause
 
 Files: _packaging/hook-pydot.py
