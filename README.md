@@ -354,7 +354,7 @@ a welcoming, friendly community for everyone.
 
 ## ©️ License
 
-Copyright © Arjan Molenaar and Dan Yeaw
+Copyright © The Gaphor Development Team
 
 Licensed under the [Apache License v2](LICENSES/Apache-2.0.txt).
 
