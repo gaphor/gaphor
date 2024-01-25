@@ -419,7 +419,7 @@ jobs:
           egress-policy: audit
 
       - name: Repository Dispatch
-        uses: peter-evans/repository-dispatch@bf47d102fdb849e755b0b0023ea3e81a44b6f570 # v2.1.2
+        uses: peter-evans/repository-dispatch@ff45666b9427631e3450c54a1bcbee4d9ff4d7c0 # v3.0.0
         with:
           token: ${{ secrets.WEBSITE_DISPATCH_TOKEN }} # Expires 2024-07-08
           repository: gaphor/gaphor.github.io
@@ -439,7 +439,7 @@ jobs:
       - name: Wait for PyPI to sync after version update
         run: sleep 30s
       - name: Repository Dispatch
-        uses: peter-evans/repository-dispatch@bf47d102fdb849e755b0b0023ea3e81a44b6f570 # v2.1.2
+        uses: peter-evans/repository-dispatch@ff45666b9427631e3450c54a1bcbee4d9ff4d7c0 # v3.0.0
         with:
           token: ${{ secrets.FLATHUB_DISPATCH_TOKEN }} # Expires 2024-07-08
           repository: flathub/org.gaphor.Gaphor
