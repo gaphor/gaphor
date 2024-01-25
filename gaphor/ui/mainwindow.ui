@@ -82,11 +82,11 @@
                 <property name="icon_name">sidebar-show-right-symbolic</property>
               </object>
             </child>
-            <style>
-              <class name="flat"/>
-            </style>
           </object>
         </child>
+        <style>
+          <class name="flat"/>
+        </style>
       </object>
     </child>
     <child>
