@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-01-06 21:08-0400\n"
+"POT-Creation-Date: 2024-01-24 20:22-0500\n"
 "PO-Revision-Date: 2021-10-21 12:41+0000\n"
 "Last-Translator: Tomo Dote <fu7mu4@gmail.com>\n"
 "Language: ja\n"
@@ -24,8 +24,7 @@ msgstr ""
 msgid "C4 Model"
 msgstr "C4 モデル"
 
-#: gaphor/C4Model/propertypages.ui:11 gaphor/diagram/general/metadata.py:104
-#: gaphor/diagram/propertypages.ui:181
+#: gaphor/C4Model/propertypages.ui:11 gaphor/diagram/propertypages.ui:181
 msgid "Description"
 msgstr "説明"
 
@@ -55,8 +54,7 @@ msgstr "新データベース"
 msgid "New Component"
 msgstr "新コンポーネント"
 
-#: gaphor/C4Model/diagramitems/person.py:24 gaphor/C4Model/toolbox.py:71
-#: gaphor/C4Model/toolbox.py:77
+#: gaphor/C4Model/toolbox.py:71 gaphor/C4Model/toolbox.py:77
 msgid "Person"
 msgstr "人"
 
@@ -191,21 +189,21 @@ msgstr "ハザード"
 msgid "New Situation"
 msgstr "場面"
 
-#: gaphor/RAAML/fta/andgate.py:37 gaphor/RAAML/fta/ftatoolbox.py:24
+#: gaphor/RAAML/fta/andgate.py:35 gaphor/RAAML/fta/ftatoolbox.py:24
 msgid "AND Gate"
 msgstr "AND ゲート"
 
-#: gaphor/RAAML/fta/basicevent.py:35 gaphor/RAAML/fta/ftatoolbox.py:125
+#: gaphor/RAAML/fta/basicevent.py:33 gaphor/RAAML/fta/ftatoolbox.py:125
 #: gaphor/RAAML/fta/ftatoolbox.py:131
 msgid "Basic Event"
 msgstr ""
 
-#: gaphor/RAAML/fta/conditionalevent.py:32 gaphor/RAAML/fta/ftatoolbox.py:136
+#: gaphor/RAAML/fta/conditionalevent.py:30 gaphor/RAAML/fta/ftatoolbox.py:136
 #: gaphor/RAAML/fta/ftatoolbox.py:143
 msgid "Conditional Event"
 msgstr ""
 
-#: gaphor/RAAML/fta/dormantevent.py:35 gaphor/RAAML/fta/ftatoolbox.py:162
+#: gaphor/RAAML/fta/dormantevent.py:33 gaphor/RAAML/fta/ftatoolbox.py:162
 #: gaphor/RAAML/fta/ftatoolbox.py:168
 msgid "Dormant Event"
 msgstr ""
@@ -218,7 +216,7 @@ msgstr "フォルトツリー解析"
 msgid "AND"
 msgstr ""
 
-#: gaphor/RAAML/fta/ftatoolbox.py:35 gaphor/RAAML/fta/orgate.py:37
+#: gaphor/RAAML/fta/ftatoolbox.py:35 gaphor/RAAML/fta/orgate.py:35
 msgid "OR Gate"
 msgstr "OR ゲート"
 
@@ -226,7 +224,7 @@ msgstr "OR ゲート"
 msgid "OR"
 msgstr ""
 
-#: gaphor/RAAML/fta/ftatoolbox.py:46 gaphor/RAAML/fta/notgate.py:35
+#: gaphor/RAAML/fta/ftatoolbox.py:46 gaphor/RAAML/fta/notgate.py:33
 msgid "NOT Gate"
 msgstr "NOT ゲート"
 
@@ -251,64 +249,64 @@ msgid "XOR"
 msgstr ""
 
 #: gaphor/RAAML/fta/ftatoolbox.py:79 gaphor/RAAML/fta/ftatoolbox.py:86
-#: gaphor/RAAML/fta/majorityvotegate.py:39
+#: gaphor/RAAML/fta/majorityvotegate.py:38
 msgid "Majority Vote Gate"
 msgstr "多数決ゲート"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:92 gaphor/RAAML/fta/ftatoolbox.py:98
-#: gaphor/RAAML/fta/inhibitgate.py:35
+#: gaphor/RAAML/fta/inhibitgate.py:33
 msgid "Inhibit Gate"
 msgstr "抑止ゲート"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:103 gaphor/RAAML/fta/ftatoolbox.py:109
-#: gaphor/RAAML/fta/transferin.py:35
+#: gaphor/RAAML/fta/transferin.py:33
 msgid "Transfer In"
 msgstr ""
 
 #: gaphor/RAAML/fta/ftatoolbox.py:114 gaphor/RAAML/fta/ftatoolbox.py:120
-#: gaphor/RAAML/fta/transferout.py:36
+#: gaphor/RAAML/fta/transferout.py:34
 msgid "Transfer Out"
 msgstr ""
 
 #: gaphor/RAAML/fta/ftatoolbox.py:149 gaphor/RAAML/fta/ftatoolbox.py:156
-#: gaphor/RAAML/fta/undevelopedevent.py:35
+#: gaphor/RAAML/fta/undevelopedevent.py:33
 msgid "Undeveloped Event"
 msgstr ""
 
 #: gaphor/RAAML/fta/ftatoolbox.py:173 gaphor/RAAML/fta/ftatoolbox.py:179
-#: gaphor/RAAML/fta/houseevent.py:35
+#: gaphor/RAAML/fta/houseevent.py:33
 msgid "House Event"
 msgstr ""
 
 #: gaphor/RAAML/fta/ftatoolbox.py:184 gaphor/RAAML/fta/ftatoolbox.py:190
-#: gaphor/RAAML/fta/zeroevent.py:36
+#: gaphor/RAAML/fta/zeroevent.py:34
 msgid "Zero Event"
 msgstr ""
 
 #: gaphor/RAAML/fta/ftatoolbox.py:195 gaphor/RAAML/fta/ftatoolbox.py:201
-#: gaphor/RAAML/fta/topevent.py:32
+#: gaphor/RAAML/fta/topevent.py:30
 msgid "Top Event"
 msgstr ""
 
 #: gaphor/RAAML/fta/ftatoolbox.py:206 gaphor/RAAML/fta/ftatoolbox.py:213
-#: gaphor/RAAML/fta/intermediateevent.py:32
+#: gaphor/RAAML/fta/intermediateevent.py:31
 msgid "Intermediate Event"
 msgstr ""
 
-#: gaphor/RAAML/fta/seqgate.py:36
+#: gaphor/RAAML/fta/seqgate.py:35
 #, fuzzy
 msgid "Sequence Enforcing Gate"
 msgstr "SEQ ゲート"
 
-#: gaphor/RAAML/fta/xorgate.py:36
+#: gaphor/RAAML/fta/xorgate.py:34
 msgid "XOR Gate"
 msgstr ""
 
-#: gaphor/RAAML/stpa/controlaction.py:32 gaphor/RAAML/stpa/stpatoolbox.py:158
+#: gaphor/RAAML/stpa/controlaction.py:31 gaphor/RAAML/stpa/stpatoolbox.py:158
 msgid "Control Action"
 msgstr "制御アクション"
 
-#: gaphor/RAAML/stpa/operationalsituation.py:33
+#: gaphor/RAAML/stpa/operationalsituation.py:32
 #: gaphor/RAAML/stpa/stpatoolbox.py:127
 msgid "Operational Situation"
 msgstr "操作場面"
@@ -355,7 +353,7 @@ msgid "Controlled Process"
 msgstr "制御されたプロセス"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:138
-#: gaphor/RAAML/stpa/unsafecontrolaction.py:32
+#: gaphor/RAAML/stpa/unsafecontrolaction.py:31
 msgid "Unsafe Control Action"
 msgstr "安全ではない制御アクション"
 
@@ -534,27 +532,27 @@ msgstr ""
 msgid "block"
 msgstr "ブロック"
 
-#: gaphor/SysML/blocks/block.py:89
+#: gaphor/SysML/blocks/block.py:82
 msgid "parts"
 msgstr "部品"
 
-#: gaphor/SysML/blocks/block.py:103 gaphor/SysML/blocks/interfaceblock.py:89
+#: gaphor/SysML/blocks/block.py:96 gaphor/SysML/blocks/interfaceblock.py:82
 msgid "references"
 msgstr "参照"
 
-#: gaphor/SysML/blocks/block.py:115 gaphor/SysML/blocks/interfaceblock.py:101
+#: gaphor/SysML/blocks/block.py:108 gaphor/SysML/blocks/interfaceblock.py:94
 #, fuzzy
 msgid "values"
 msgstr "値"
 
-#: gaphor/SysML/blocks/block.py:134 gaphor/SysML/blocks/interfaceblock.py:120
+#: gaphor/SysML/blocks/block.py:127 gaphor/SysML/blocks/interfaceblock.py:113
 #, fuzzy
 msgid "operations"
 msgstr "操作"
 
-#: gaphor/SysML/blocks/block.py:149 gaphor/SysML/blocks/block.py:168
-#: gaphor/SysML/blocks/interfaceblock.py:135
-#: gaphor/SysML/blocks/interfaceblock.py:158
+#: gaphor/SysML/blocks/block.py:142 gaphor/SysML/blocks/block.py:160
+#: gaphor/SysML/blocks/interfaceblock.py:128
+#: gaphor/SysML/blocks/interfaceblock.py:150
 msgid "unnamed"
 msgstr "無名の"
 
@@ -617,7 +615,7 @@ msgstr "Primitive"
 msgid "interfaceblock"
 msgstr "インターフェース"
 
-#: gaphor/SysML/blocks/proxyport.py:40
+#: gaphor/SysML/blocks/proxyport.py:38
 msgid "proxy"
 msgstr "プロキシ"
 
@@ -641,7 +639,7 @@ msgstr ""
 msgid "refine"
 msgstr ""
 
-#: gaphor/SysML/requirements/requirement.py:56
+#: gaphor/SysML/requirements/requirement.py:55
 msgid "requirement"
 msgstr "要求"
 
@@ -878,15 +876,15 @@ msgstr ""
 msgid "Output pin"
 msgstr ""
 
-#: gaphor/UML/actions/activitynodes.py:189
+#: gaphor/UML/actions/activitynodes.py:181
 msgid "merge/decision"
 msgstr ""
 
-#: gaphor/UML/actions/activitynodes.py:191
+#: gaphor/UML/actions/activitynodes.py:183
 msgid "merge"
 msgstr ""
 
-#: gaphor/UML/actions/activitynodes.py:193
+#: gaphor/UML/actions/activitynodes.py:185
 msgid "decision"
 msgstr ""
 
@@ -911,25 +909,15 @@ msgstr ""
 msgid "FIFO"
 msgstr ""
 
-#: gaphor/UML/actions/objectnode.py:47
-#, fuzzy
-msgid "upperBound"
-msgstr "人"
-
-#: gaphor/UML/actions/objectnode.py:53
-#, fuzzy
-msgid "ordering"
-msgstr "順序あり"
-
 #: gaphor/UML/actions/partitionpage.py:114
 msgid "New Swimlane"
 msgstr "新スイムレーン"
 
-#: gaphor/UML/actions/pin.py:62
+#: gaphor/UML/actions/pin.py:58
 msgid "input pin"
 msgstr ""
 
-#: gaphor/UML/actions/pin.py:68
+#: gaphor/UML/actions/pin.py:64
 msgid "output pin"
 msgstr ""
 
@@ -1080,7 +1068,7 @@ msgstr ""
 msgid "primitive"
 msgstr ""
 
-#: gaphor/UML/classes/datatype.py:60 gaphor/UML/classes/enumeration.py:71
+#: gaphor/UML/classes/datatype.py:60 gaphor/UML/classes/enumeration.py:70
 msgid "valueType"
 msgstr ""
 
@@ -1100,7 +1088,7 @@ msgstr ""
 msgid "implements"
 msgstr ""
 
-#: gaphor/UML/classes/enumeration.py:73
+#: gaphor/UML/classes/enumeration.py:72
 msgid "enumeration"
 msgstr ""
 
@@ -1109,7 +1097,7 @@ msgstr ""
 msgid "New Enumeration…"
 msgstr "Enumeration"
 
-#: gaphor/UML/classes/interface.py:284
+#: gaphor/UML/classes/interface.py:282
 msgid "interface"
 msgstr "インターフェース"
 
@@ -1121,7 +1109,7 @@ msgstr "ステレオタイプ"
 msgid "metaclass"
 msgstr "メタクラス"
 
-#: gaphor/UML/classes/package.py:32
+#: gaphor/UML/classes/package.py:30
 msgid "profile"
 msgstr "プロファイル"
 
@@ -1298,7 +1286,7 @@ msgstr "ノード"
 msgid "Device"
 msgstr "デバイス"
 
-#: gaphor/UML/deployments/node.py:54
+#: gaphor/UML/deployments/node.py:52
 msgid "device"
 msgstr "デバイス"
 
@@ -1368,7 +1356,7 @@ msgstr "削除(_l)"
 msgid "Connectable Element"
 msgstr "要求"
 
-#: gaphor/UML/profiles/packageimport.py:24
+#: gaphor/UML/profiles/packageimport.py:23
 msgid "import"
 msgstr "インポート"
 
@@ -1432,7 +1420,7 @@ msgstr "集約"
 msgid "Show Regions"
 msgstr "操作の表示"
 
-#: gaphor/UML/states/statemachine.py:40
+#: gaphor/UML/states/statemachine.py:38
 msgid "statemachine"
 msgstr ""
 
@@ -1506,11 +1494,11 @@ msgstr "初期擬状態"
 msgid "Terminate Pseudostate"
 msgstr "初期擬状態"
 
-#: gaphor/UML/usecases/extend.py:21
+#: gaphor/UML/usecases/extend.py:19
 msgid "extend"
 msgstr ""
 
-#: gaphor/UML/usecases/include.py:21
+#: gaphor/UML/usecases/include.py:19
 msgid "include"
 msgstr ""
 
@@ -1598,30 +1586,30 @@ msgstr ""
 msgid "Note"
 msgstr "ノード"
 
-#: gaphor/diagram/general/metadata.py:62 gaphor/diagram/propertypages.ui:167
+#: gaphor/diagram/propertypages.ui:167
 msgid "Created By"
 msgstr ""
 
-#: gaphor/diagram/general/metadata.py:79 gaphor/diagram/propertypages.ui:195
+#: gaphor/diagram/propertypages.ui:195
 msgid "Website"
 msgstr ""
 
-#: gaphor/diagram/general/metadata.py:125 gaphor/diagram/propertypages.ui:209
+#: gaphor/diagram/propertypages.ui:209
 #, fuzzy
 msgid "Revision"
 msgstr "集約"
 
-#: gaphor/diagram/general/metadata.py:142 gaphor/diagram/propertypages.ui:223
+#: gaphor/diagram/propertypages.ui:223
 #, fuzzy
 msgid "License"
 msgstr "線"
 
-#: gaphor/diagram/general/metadata.py:160 gaphor/diagram/propertypages.ui:237
+#: gaphor/diagram/propertypages.ui:237
 #, fuzzy
 msgid "Created On"
 msgstr "新モデル"
 
-#: gaphor/diagram/general/metadata.py:178 gaphor/diagram/propertypages.ui:251
+#: gaphor/diagram/propertypages.ui:251
 msgid "Updated On"
 msgstr ""
 
@@ -1760,20 +1748,20 @@ msgstr ""
 msgid "Export diagram as EPS"
 msgstr "新ダイアグラム(_D)"
 
-#: gaphor/plugins/errorreports/errorreports.py:61
+#: gaphor/plugins/errorreports/errorreports.py:60
 #: gaphor/plugins/errorreports/errorreports.ui:6
 msgid "Error Reports"
 msgstr ""
 
-#: gaphor/plugins/errorreports/errorreports.py:96
+#: gaphor/plugins/errorreports/errorreports.py:95
 msgid "No errors have been intercepted. We’re good."
 msgstr ""
 
-#: gaphor/plugins/errorreports/errorreports.py:100
+#: gaphor/plugins/errorreports/errorreports.py:99
 msgid "Errors:"
 msgstr ""
 
-#: gaphor/plugins/errorreports/errorreports.py:149
+#: gaphor/plugins/errorreports/errorreports.py:148
 msgid ""
 "An unexpected error occurred.\n"
 "Please file an issue on GitHub and include information from Tools → Error"
@@ -1803,8 +1791,7 @@ msgid "All XMI Files"
 msgstr "全てのXMIファイル"
 
 #: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:62
-#: gaphor/ui/mainwindow.py:255 gaphor/ui/mainwindow.py:260
-#: gaphor/ui/mainwindow.ui:46
+#: gaphor/ui/mainwindow.py:255 gaphor/ui/mainwindow.ui:46
 msgid "New model"
 msgstr "新モデル"
 
@@ -2598,13 +2585,9 @@ msgstr "全Gaphorモデル"
 msgid "Images"
 msgstr "スイムレーン"
 
-#: gaphor/ui/filedialog.py:39
+#: gaphor/ui/filedialog.py:40
 msgid "All Files"
 msgstr "全ファイル"
-
-#: gaphor/ui/filedialog.py:112
-msgid "Flatpak Document Portal"
-msgstr ""
 
 #: gaphor/ui/filemanager.py:41
 msgid ""
@@ -2871,7 +2854,7 @@ msgstr ""
 
 #: gaphor/ui/help/about.ui:13
 msgid ""
-"Copyright © 2001-2023 Arjan Molenaar and Dan Yeaw.\n"
+"Copyright © 2001 The Gaphor Development Team.\n"
 "\n"
 "UML, SysML, and RAAML are either registered trademarks or trademarks of "
 "Object Management Group, Inc. in the United States and/or other "
@@ -3081,5 +3064,23 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "The (spoken) language used in this model."
+#~ msgstr ""
+
+#~ msgid "upperBound"
+#~ msgstr "人"
+
+#~ msgid "ordering"
+#~ msgstr "順序あり"
+
+#~ msgid "Flatpak Document Portal"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Copyright © 2001-2023 Arjan Molenaar and Dan Yeaw.\n"
+#~ "\n"
+#~ "UML, SysML, and RAAML are either "
+#~ "registered trademarks or trademarks of "
+#~ "Object Management Group, Inc. in the "
+#~ "United States and/or other countries."
 #~ msgstr ""
 

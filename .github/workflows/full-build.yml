@@ -49,6 +49,8 @@ jobs:
           python-version: ${{ env.python_version }}
       - name: Lint with Pre-commit
         uses: pre-commit/action@646c83fcd040023954eafda54b4db0192ce70507 # v3.0.0
+      - name: Check REUSE compliance
+        run: pip install reuse && python -m reuse lint
       - name: Check translations
         run: pip install babel && python po/check-babel.py
       - name: Check Poetry lock file integrity

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gaphor master\n"
 "Report-Msgid-Bugs-To: https://github.com/gaphor/gaphor/issues\n"
-"POT-Creation-Date: 2024-01-06 21:08-0400\n"
+"POT-Creation-Date: 2024-01-24 20:22-0500\n"
 "PO-Revision-Date: 2021-08-31 14:20+0900\n"
 "Last-Translator: Seong-ho Cho <darkcircle.0426@gmail.com>\n"
 "Language: ko\n"
@@ -22,8 +22,7 @@ msgstr ""
 msgid "C4 Model"
 msgstr "C4 모델"
 
-#: gaphor/C4Model/propertypages.ui:11 gaphor/diagram/general/metadata.py:104
-#: gaphor/diagram/propertypages.ui:181
+#: gaphor/C4Model/propertypages.ui:11 gaphor/diagram/propertypages.ui:181
 msgid "Description"
 msgstr "설명"
 
@@ -57,8 +56,7 @@ msgstr "컨테이너: 데이터베이스"
 msgid "New Component"
 msgstr "구성요소"
 
-#: gaphor/C4Model/diagramitems/person.py:24 gaphor/C4Model/toolbox.py:71
-#: gaphor/C4Model/toolbox.py:77
+#: gaphor/C4Model/toolbox.py:71 gaphor/C4Model/toolbox.py:77
 msgid "Person"
 msgstr "인간"
 
@@ -193,21 +191,21 @@ msgstr "위험"
 msgid "New Situation"
 msgstr "상황"
 
-#: gaphor/RAAML/fta/andgate.py:37 gaphor/RAAML/fta/ftatoolbox.py:24
+#: gaphor/RAAML/fta/andgate.py:35 gaphor/RAAML/fta/ftatoolbox.py:24
 msgid "AND Gate"
 msgstr "AND 게이트"
 
-#: gaphor/RAAML/fta/basicevent.py:35 gaphor/RAAML/fta/ftatoolbox.py:125
+#: gaphor/RAAML/fta/basicevent.py:33 gaphor/RAAML/fta/ftatoolbox.py:125
 #: gaphor/RAAML/fta/ftatoolbox.py:131
 msgid "Basic Event"
 msgstr "기본 이벤트"
 
-#: gaphor/RAAML/fta/conditionalevent.py:32 gaphor/RAAML/fta/ftatoolbox.py:136
+#: gaphor/RAAML/fta/conditionalevent.py:30 gaphor/RAAML/fta/ftatoolbox.py:136
 #: gaphor/RAAML/fta/ftatoolbox.py:143
 msgid "Conditional Event"
 msgstr "조건 이벤트"
 
-#: gaphor/RAAML/fta/dormantevent.py:35 gaphor/RAAML/fta/ftatoolbox.py:162
+#: gaphor/RAAML/fta/dormantevent.py:33 gaphor/RAAML/fta/ftatoolbox.py:162
 #: gaphor/RAAML/fta/ftatoolbox.py:168
 msgid "Dormant Event"
 msgstr "휴면 이벤트"
@@ -220,7 +218,7 @@ msgstr "결함 트리 분석"
 msgid "AND"
 msgstr ""
 
-#: gaphor/RAAML/fta/ftatoolbox.py:35 gaphor/RAAML/fta/orgate.py:37
+#: gaphor/RAAML/fta/ftatoolbox.py:35 gaphor/RAAML/fta/orgate.py:35
 msgid "OR Gate"
 msgstr "OR 게이트"
 
@@ -228,7 +226,7 @@ msgstr "OR 게이트"
 msgid "OR"
 msgstr ""
 
-#: gaphor/RAAML/fta/ftatoolbox.py:46 gaphor/RAAML/fta/notgate.py:35
+#: gaphor/RAAML/fta/ftatoolbox.py:46 gaphor/RAAML/fta/notgate.py:33
 msgid "NOT Gate"
 msgstr "NOT 게이트"
 
@@ -254,64 +252,64 @@ msgid "XOR"
 msgstr "내보내기"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:79 gaphor/RAAML/fta/ftatoolbox.py:86
-#: gaphor/RAAML/fta/majorityvotegate.py:39
+#: gaphor/RAAML/fta/majorityvotegate.py:38
 msgid "Majority Vote Gate"
 msgstr "다수결 투표 게이트"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:92 gaphor/RAAML/fta/ftatoolbox.py:98
-#: gaphor/RAAML/fta/inhibitgate.py:35
+#: gaphor/RAAML/fta/inhibitgate.py:33
 msgid "Inhibit Gate"
 msgstr "억제 게이트"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:103 gaphor/RAAML/fta/ftatoolbox.py:109
-#: gaphor/RAAML/fta/transferin.py:35
+#: gaphor/RAAML/fta/transferin.py:33
 msgid "Transfer In"
 msgstr "수신"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:114 gaphor/RAAML/fta/ftatoolbox.py:120
-#: gaphor/RAAML/fta/transferout.py:36
+#: gaphor/RAAML/fta/transferout.py:34
 msgid "Transfer Out"
 msgstr "송신"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:149 gaphor/RAAML/fta/ftatoolbox.py:156
-#: gaphor/RAAML/fta/undevelopedevent.py:35
+#: gaphor/RAAML/fta/undevelopedevent.py:33
 msgid "Undeveloped Event"
 msgstr "미개발 이벤트"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:173 gaphor/RAAML/fta/ftatoolbox.py:179
-#: gaphor/RAAML/fta/houseevent.py:35
+#: gaphor/RAAML/fta/houseevent.py:33
 msgid "House Event"
 msgstr "하우스 이벤트"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:184 gaphor/RAAML/fta/ftatoolbox.py:190
-#: gaphor/RAAML/fta/zeroevent.py:36
+#: gaphor/RAAML/fta/zeroevent.py:34
 msgid "Zero Event"
 msgstr "제로 이벤트"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:195 gaphor/RAAML/fta/ftatoolbox.py:201
-#: gaphor/RAAML/fta/topevent.py:32
+#: gaphor/RAAML/fta/topevent.py:30
 msgid "Top Event"
 msgstr "최상단 이벤트"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:206 gaphor/RAAML/fta/ftatoolbox.py:213
-#: gaphor/RAAML/fta/intermediateevent.py:32
+#: gaphor/RAAML/fta/intermediateevent.py:31
 msgid "Intermediate Event"
 msgstr "중간 이벤트"
 
-#: gaphor/RAAML/fta/seqgate.py:36
+#: gaphor/RAAML/fta/seqgate.py:35
 #, fuzzy
 msgid "Sequence Enforcing Gate"
 msgstr "시퀀스 강제(SEQ) 게이트"
 
-#: gaphor/RAAML/fta/xorgate.py:36
+#: gaphor/RAAML/fta/xorgate.py:34
 msgid "XOR Gate"
 msgstr ""
 
-#: gaphor/RAAML/stpa/controlaction.py:32 gaphor/RAAML/stpa/stpatoolbox.py:158
+#: gaphor/RAAML/stpa/controlaction.py:31 gaphor/RAAML/stpa/stpatoolbox.py:158
 msgid "Control Action"
 msgstr "제어 동작"
 
-#: gaphor/RAAML/stpa/operationalsituation.py:33
+#: gaphor/RAAML/stpa/operationalsituation.py:32
 #: gaphor/RAAML/stpa/stpatoolbox.py:127
 msgid "Operational Situation"
 msgstr "처리 상황"
@@ -358,7 +356,7 @@ msgid "Controlled Process"
 msgstr "제어 프로세스"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:138
-#: gaphor/RAAML/stpa/unsafecontrolaction.py:32
+#: gaphor/RAAML/stpa/unsafecontrolaction.py:31
 msgid "Unsafe Control Action"
 msgstr "안전하지 않은 제어 동작"
 
@@ -540,27 +538,27 @@ msgstr "제어 구조"
 msgid "block"
 msgstr "블록"
 
-#: gaphor/SysML/blocks/block.py:89
+#: gaphor/SysML/blocks/block.py:82
 msgid "parts"
 msgstr "부분"
 
-#: gaphor/SysML/blocks/block.py:103 gaphor/SysML/blocks/interfaceblock.py:89
+#: gaphor/SysML/blocks/block.py:96 gaphor/SysML/blocks/interfaceblock.py:82
 msgid "references"
 msgstr "참조"
 
-#: gaphor/SysML/blocks/block.py:115 gaphor/SysML/blocks/interfaceblock.py:101
+#: gaphor/SysML/blocks/block.py:108 gaphor/SysML/blocks/interfaceblock.py:94
 #, fuzzy
 msgid "values"
 msgstr "값"
 
-#: gaphor/SysML/blocks/block.py:134 gaphor/SysML/blocks/interfaceblock.py:120
+#: gaphor/SysML/blocks/block.py:127 gaphor/SysML/blocks/interfaceblock.py:113
 #, fuzzy
 msgid "operations"
 msgstr "동작"
 
-#: gaphor/SysML/blocks/block.py:149 gaphor/SysML/blocks/block.py:168
-#: gaphor/SysML/blocks/interfaceblock.py:135
-#: gaphor/SysML/blocks/interfaceblock.py:158
+#: gaphor/SysML/blocks/block.py:142 gaphor/SysML/blocks/block.py:160
+#: gaphor/SysML/blocks/interfaceblock.py:128
+#: gaphor/SysML/blocks/interfaceblock.py:150
 msgid "unnamed"
 msgstr "이름없음"
 
@@ -623,7 +621,7 @@ msgstr "원시"
 msgid "interfaceblock"
 msgstr "인터페이스"
 
-#: gaphor/SysML/blocks/proxyport.py:40
+#: gaphor/SysML/blocks/proxyport.py:38
 msgid "proxy"
 msgstr ""
 
@@ -652,7 +650,7 @@ msgstr "검증"
 msgid "refine"
 msgstr "정제"
 
-#: gaphor/SysML/requirements/requirement.py:56
+#: gaphor/SysML/requirements/requirement.py:55
 #, fuzzy
 msgid "requirement"
 msgstr "요구"
@@ -898,15 +896,15 @@ msgstr ""
 msgid "Output pin"
 msgstr ""
 
-#: gaphor/UML/actions/activitynodes.py:189
+#: gaphor/UML/actions/activitynodes.py:181
 msgid "merge/decision"
 msgstr ""
 
-#: gaphor/UML/actions/activitynodes.py:191
+#: gaphor/UML/actions/activitynodes.py:183
 msgid "merge"
 msgstr ""
 
-#: gaphor/UML/actions/activitynodes.py:193
+#: gaphor/UML/actions/activitynodes.py:185
 msgid "decision"
 msgstr ""
 
@@ -931,25 +929,15 @@ msgstr "LIFO"
 msgid "FIFO"
 msgstr "FIFO"
 
-#: gaphor/UML/actions/objectnode.py:47
-#, fuzzy
-msgid "upperBound"
-msgstr "상단"
-
-#: gaphor/UML/actions/objectnode.py:53
-#, fuzzy
-msgid "ordering"
-msgstr "순서 표시"
-
 #: gaphor/UML/actions/partitionpage.py:114
 msgid "New Swimlane"
 msgstr ""
 
-#: gaphor/UML/actions/pin.py:62
+#: gaphor/UML/actions/pin.py:58
 msgid "input pin"
 msgstr ""
 
-#: gaphor/UML/actions/pin.py:68
+#: gaphor/UML/actions/pin.py:64
 msgid "output pin"
 msgstr ""
 
@@ -1100,7 +1088,7 @@ msgstr "데이터형식"
 msgid "primitive"
 msgstr "원시"
 
-#: gaphor/UML/classes/datatype.py:60 gaphor/UML/classes/enumeration.py:71
+#: gaphor/UML/classes/datatype.py:60 gaphor/UML/classes/enumeration.py:70
 #, fuzzy
 msgid "valueType"
 msgstr "값 형식"
@@ -1123,7 +1111,7 @@ msgstr ""
 msgid "implements"
 msgstr "구현"
 
-#: gaphor/UML/classes/enumeration.py:73
+#: gaphor/UML/classes/enumeration.py:72
 #, fuzzy
 msgid "enumeration"
 msgstr "열거"
@@ -1133,7 +1121,7 @@ msgstr "열거"
 msgid "New Enumeration…"
 msgstr "열거"
 
-#: gaphor/UML/classes/interface.py:284
+#: gaphor/UML/classes/interface.py:282
 #, fuzzy
 msgid "interface"
 msgstr "인터페이스"
@@ -1148,7 +1136,7 @@ msgstr "이중형식"
 msgid "metaclass"
 msgstr "메타클래스"
 
-#: gaphor/UML/classes/package.py:32
+#: gaphor/UML/classes/package.py:30
 #, fuzzy
 msgid "profile"
 msgstr "프로파일"
@@ -1327,7 +1315,7 @@ msgstr "노드"
 msgid "Device"
 msgstr "장치"
 
-#: gaphor/UML/deployments/node.py:54
+#: gaphor/UML/deployments/node.py:52
 #, fuzzy
 msgid "device"
 msgstr "장치"
@@ -1399,7 +1387,7 @@ msgstr "삭제(_L)"
 msgid "Connectable Element"
 msgstr "요구(복수)"
 
-#: gaphor/UML/profiles/packageimport.py:24
+#: gaphor/UML/profiles/packageimport.py:23
 #, fuzzy
 msgid "import"
 msgstr "가져오기"
@@ -1465,7 +1453,7 @@ msgstr "응집"
 msgid "Show Regions"
 msgstr "방향 표시"
 
-#: gaphor/UML/states/statemachine.py:40
+#: gaphor/UML/states/statemachine.py:38
 msgid "statemachine"
 msgstr ""
 
@@ -1539,12 +1527,12 @@ msgstr "초기 의사상태"
 msgid "Terminate Pseudostate"
 msgstr "초기 의사상태"
 
-#: gaphor/UML/usecases/extend.py:21
+#: gaphor/UML/usecases/extend.py:19
 #, fuzzy
 msgid "extend"
 msgstr "확장"
 
-#: gaphor/UML/usecases/include.py:21
+#: gaphor/UML/usecases/include.py:19
 #, fuzzy
 msgid "include"
 msgstr "포함"
@@ -1634,30 +1622,30 @@ msgstr "뒤집기 방향"
 msgid "Note"
 msgstr "노드"
 
-#: gaphor/diagram/general/metadata.py:62 gaphor/diagram/propertypages.ui:167
+#: gaphor/diagram/propertypages.ui:167
 msgid "Created By"
 msgstr ""
 
-#: gaphor/diagram/general/metadata.py:79 gaphor/diagram/propertypages.ui:195
+#: gaphor/diagram/propertypages.ui:195
 msgid "Website"
 msgstr ""
 
-#: gaphor/diagram/general/metadata.py:125 gaphor/diagram/propertypages.ui:209
+#: gaphor/diagram/propertypages.ui:209
 #, fuzzy
 msgid "Revision"
 msgstr "응집"
 
-#: gaphor/diagram/general/metadata.py:142 gaphor/diagram/propertypages.ui:223
+#: gaphor/diagram/propertypages.ui:223
 #, fuzzy
 msgid "License"
 msgstr "선"
 
-#: gaphor/diagram/general/metadata.py:160 gaphor/diagram/propertypages.ui:237
+#: gaphor/diagram/propertypages.ui:237
 #, fuzzy
 msgid "Created On"
 msgstr "새 모델"
 
-#: gaphor/diagram/general/metadata.py:178 gaphor/diagram/propertypages.ui:251
+#: gaphor/diagram/propertypages.ui:251
 msgid "Updated On"
 msgstr ""
 
@@ -1798,20 +1786,20 @@ msgstr ""
 msgid "Export diagram as EPS"
 msgstr "다이어그램을 SVG로 내보내기"
 
-#: gaphor/plugins/errorreports/errorreports.py:61
+#: gaphor/plugins/errorreports/errorreports.py:60
 #: gaphor/plugins/errorreports/errorreports.ui:6
 msgid "Error Reports"
 msgstr ""
 
-#: gaphor/plugins/errorreports/errorreports.py:96
+#: gaphor/plugins/errorreports/errorreports.py:95
 msgid "No errors have been intercepted. We’re good."
 msgstr ""
 
-#: gaphor/plugins/errorreports/errorreports.py:100
+#: gaphor/plugins/errorreports/errorreports.py:99
 msgid "Errors:"
 msgstr ""
 
-#: gaphor/plugins/errorreports/errorreports.py:149
+#: gaphor/plugins/errorreports/errorreports.py:148
 msgid ""
 "An unexpected error occurred.\n"
 "Please file an issue on GitHub and include information from Tools → Error"
@@ -1843,8 +1831,7 @@ msgid "All XMI Files"
 msgstr "모든 XMI 파일"
 
 #: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:62
-#: gaphor/ui/mainwindow.py:255 gaphor/ui/mainwindow.py:260
-#: gaphor/ui/mainwindow.ui:46
+#: gaphor/ui/mainwindow.py:255 gaphor/ui/mainwindow.ui:46
 msgid "New model"
 msgstr "새 모델"
 
@@ -2643,13 +2630,9 @@ msgstr "모든 가포 모델"
 msgid "Images"
 msgstr "메인"
 
-#: gaphor/ui/filedialog.py:39
+#: gaphor/ui/filedialog.py:40
 msgid "All Files"
 msgstr "모든 파일"
-
-#: gaphor/ui/filedialog.py:112
-msgid "Flatpak Document Portal"
-msgstr ""
 
 #: gaphor/ui/filemanager.py:41
 msgid ""
@@ -2915,7 +2898,7 @@ msgstr ""
 
 #: gaphor/ui/help/about.ui:13
 msgid ""
-"Copyright © 2001-2023 Arjan Molenaar and Dan Yeaw.\n"
+"Copyright © 2001 The Gaphor Development Team.\n"
 "\n"
 "UML, SysML, and RAAML are either registered trademarks or trademarks of "
 "Object Management Group, Inc. in the United States and/or other "
@@ -3122,5 +3105,23 @@ msgstr ""
 #~ msgstr "참고 / 비고"
 
 #~ msgid "The (spoken) language used in this model."
+#~ msgstr ""
+
+#~ msgid "upperBound"
+#~ msgstr "상단"
+
+#~ msgid "ordering"
+#~ msgstr "순서 표시"
+
+#~ msgid "Flatpak Document Portal"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Copyright © 2001-2023 Arjan Molenaar and Dan Yeaw.\n"
+#~ "\n"
+#~ "UML, SysML, and RAAML are either "
+#~ "registered trademarks or trademarks of "
+#~ "Object Management Group, Inc. in the "
+#~ "United States and/or other countries."
 #~ msgstr ""
 

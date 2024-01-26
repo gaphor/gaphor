@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gaphor 0.13.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-01-06 21:08-0400\n"
+"POT-Creation-Date: 2024-01-24 20:22-0500\n"
 "PO-Revision-Date: 2024-01-06 01:10+0000\n"
 "Last-Translator: Сергей <asvmail.as@gmail.com>\n"
 "Language: ru\n"
@@ -21,8 +21,7 @@ msgstr ""
 msgid "C4 Model"
 msgstr "Модель C4"
 
-#: gaphor/C4Model/propertypages.ui:11 gaphor/diagram/general/metadata.py:104
-#: gaphor/diagram/propertypages.ui:181
+#: gaphor/C4Model/propertypages.ui:11 gaphor/diagram/propertypages.ui:181
 msgid "Description"
 msgstr "Описание"
 
@@ -51,8 +50,7 @@ msgstr "Новая База данных"
 msgid "New Component"
 msgstr "Новый Компонент"
 
-#: gaphor/C4Model/diagramitems/person.py:24 gaphor/C4Model/toolbox.py:71
-#: gaphor/C4Model/toolbox.py:77
+#: gaphor/C4Model/toolbox.py:71 gaphor/C4Model/toolbox.py:77
 msgid "Person"
 msgstr "Человек"
 
@@ -168,21 +166,21 @@ msgstr "Новая Опасность"
 msgid "New Situation"
 msgstr "Новая Ситуация"
 
-#: gaphor/RAAML/fta/andgate.py:37 gaphor/RAAML/fta/ftatoolbox.py:24
+#: gaphor/RAAML/fta/andgate.py:35 gaphor/RAAML/fta/ftatoolbox.py:24
 msgid "AND Gate"
 msgstr "Элемент И"
 
-#: gaphor/RAAML/fta/basicevent.py:35 gaphor/RAAML/fta/ftatoolbox.py:125
+#: gaphor/RAAML/fta/basicevent.py:33 gaphor/RAAML/fta/ftatoolbox.py:125
 #: gaphor/RAAML/fta/ftatoolbox.py:131
 msgid "Basic Event"
 msgstr "Обычное Событие"
 
-#: gaphor/RAAML/fta/conditionalevent.py:32 gaphor/RAAML/fta/ftatoolbox.py:136
+#: gaphor/RAAML/fta/conditionalevent.py:30 gaphor/RAAML/fta/ftatoolbox.py:136
 #: gaphor/RAAML/fta/ftatoolbox.py:143
 msgid "Conditional Event"
 msgstr "Условное Событие"
 
-#: gaphor/RAAML/fta/dormantevent.py:35 gaphor/RAAML/fta/ftatoolbox.py:162
+#: gaphor/RAAML/fta/dormantevent.py:33 gaphor/RAAML/fta/ftatoolbox.py:162
 #: gaphor/RAAML/fta/ftatoolbox.py:168
 msgid "Dormant Event"
 msgstr "Спящее Событие"
@@ -195,7 +193,7 @@ msgstr "Анализ Дерева Отказов"
 msgid "AND"
 msgstr "И"
 
-#: gaphor/RAAML/fta/ftatoolbox.py:35 gaphor/RAAML/fta/orgate.py:37
+#: gaphor/RAAML/fta/ftatoolbox.py:35 gaphor/RAAML/fta/orgate.py:35
 msgid "OR Gate"
 msgstr "Элемент ИЛИ"
 
@@ -203,7 +201,7 @@ msgstr "Элемент ИЛИ"
 msgid "OR"
 msgstr "ИЛИ"
 
-#: gaphor/RAAML/fta/ftatoolbox.py:46 gaphor/RAAML/fta/notgate.py:35
+#: gaphor/RAAML/fta/ftatoolbox.py:46 gaphor/RAAML/fta/notgate.py:33
 msgid "NOT Gate"
 msgstr "Элемент НЕ"
 
@@ -228,63 +226,63 @@ msgid "XOR"
 msgstr "ИскИЛИ"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:79 gaphor/RAAML/fta/ftatoolbox.py:86
-#: gaphor/RAAML/fta/majorityvotegate.py:39
+#: gaphor/RAAML/fta/majorityvotegate.py:38
 msgid "Majority Vote Gate"
 msgstr "Элемент Большинства Голосов"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:92 gaphor/RAAML/fta/ftatoolbox.py:98
-#: gaphor/RAAML/fta/inhibitgate.py:35
+#: gaphor/RAAML/fta/inhibitgate.py:33
 msgid "Inhibit Gate"
 msgstr "Блокирующий Элемент"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:103 gaphor/RAAML/fta/ftatoolbox.py:109
-#: gaphor/RAAML/fta/transferin.py:35
+#: gaphor/RAAML/fta/transferin.py:33
 msgid "Transfer In"
 msgstr "Вход"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:114 gaphor/RAAML/fta/ftatoolbox.py:120
-#: gaphor/RAAML/fta/transferout.py:36
+#: gaphor/RAAML/fta/transferout.py:34
 msgid "Transfer Out"
 msgstr "Выход"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:149 gaphor/RAAML/fta/ftatoolbox.py:156
-#: gaphor/RAAML/fta/undevelopedevent.py:35
+#: gaphor/RAAML/fta/undevelopedevent.py:33
 msgid "Undeveloped Event"
 msgstr "Неразработанное Событие"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:173 gaphor/RAAML/fta/ftatoolbox.py:179
-#: gaphor/RAAML/fta/houseevent.py:35
+#: gaphor/RAAML/fta/houseevent.py:33
 msgid "House Event"
 msgstr "Внешнее Событие"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:184 gaphor/RAAML/fta/ftatoolbox.py:190
-#: gaphor/RAAML/fta/zeroevent.py:36
+#: gaphor/RAAML/fta/zeroevent.py:34
 msgid "Zero Event"
 msgstr "Нулевое Событие"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:195 gaphor/RAAML/fta/ftatoolbox.py:201
-#: gaphor/RAAML/fta/topevent.py:32
+#: gaphor/RAAML/fta/topevent.py:30
 msgid "Top Event"
 msgstr "Верхнее Событие"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:206 gaphor/RAAML/fta/ftatoolbox.py:213
-#: gaphor/RAAML/fta/intermediateevent.py:32
+#: gaphor/RAAML/fta/intermediateevent.py:31
 msgid "Intermediate Event"
 msgstr "Промежуточное Событие"
 
-#: gaphor/RAAML/fta/seqgate.py:36
+#: gaphor/RAAML/fta/seqgate.py:35
 msgid "Sequence Enforcing Gate"
 msgstr "Последовательный Элемент"
 
-#: gaphor/RAAML/fta/xorgate.py:36
+#: gaphor/RAAML/fta/xorgate.py:34
 msgid "XOR Gate"
 msgstr "Элемент ИскИЛИ"
 
-#: gaphor/RAAML/stpa/controlaction.py:32 gaphor/RAAML/stpa/stpatoolbox.py:158
+#: gaphor/RAAML/stpa/controlaction.py:31 gaphor/RAAML/stpa/stpatoolbox.py:158
 msgid "Control Action"
 msgstr "Управляющее Действие"
 
-#: gaphor/RAAML/stpa/operationalsituation.py:33
+#: gaphor/RAAML/stpa/operationalsituation.py:32
 #: gaphor/RAAML/stpa/stpatoolbox.py:127
 msgid "Operational Situation"
 msgstr "Оперативная Обстановка"
@@ -331,7 +329,7 @@ msgid "Controlled Process"
 msgstr "Контролируемый Процесс"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:138
-#: gaphor/RAAML/stpa/unsafecontrolaction.py:32
+#: gaphor/RAAML/stpa/unsafecontrolaction.py:31
 msgid "Unsafe Control Action"
 msgstr "Небезопасное Действие Управления"
 
@@ -496,25 +494,25 @@ msgstr "СтруктураУправления"
 msgid "block"
 msgstr "блок"
 
-#: gaphor/SysML/blocks/block.py:89
+#: gaphor/SysML/blocks/block.py:82
 msgid "parts"
 msgstr "части"
 
-#: gaphor/SysML/blocks/block.py:103 gaphor/SysML/blocks/interfaceblock.py:89
+#: gaphor/SysML/blocks/block.py:96 gaphor/SysML/blocks/interfaceblock.py:82
 msgid "references"
 msgstr "ссылки"
 
-#: gaphor/SysML/blocks/block.py:115 gaphor/SysML/blocks/interfaceblock.py:101
+#: gaphor/SysML/blocks/block.py:108 gaphor/SysML/blocks/interfaceblock.py:94
 msgid "values"
 msgstr "значения"
 
-#: gaphor/SysML/blocks/block.py:134 gaphor/SysML/blocks/interfaceblock.py:120
+#: gaphor/SysML/blocks/block.py:127 gaphor/SysML/blocks/interfaceblock.py:113
 msgid "operations"
 msgstr "методы"
 
-#: gaphor/SysML/blocks/block.py:149 gaphor/SysML/blocks/block.py:168
-#: gaphor/SysML/blocks/interfaceblock.py:135
-#: gaphor/SysML/blocks/interfaceblock.py:158
+#: gaphor/SysML/blocks/block.py:142 gaphor/SysML/blocks/block.py:160
+#: gaphor/SysML/blocks/interfaceblock.py:128
+#: gaphor/SysML/blocks/interfaceblock.py:150
 msgid "unnamed"
 msgstr "безымянный"
 
@@ -574,7 +572,7 @@ msgstr "Примитив"
 msgid "interfaceblock"
 msgstr "интерфейсблок"
 
-#: gaphor/SysML/blocks/proxyport.py:40
+#: gaphor/SysML/blocks/proxyport.py:38
 msgid "proxy"
 msgstr "прокси"
 
@@ -598,7 +596,7 @@ msgstr "проверяет"
 msgid "refine"
 msgstr "очищает"
 
-#: gaphor/SysML/requirements/requirement.py:56
+#: gaphor/SysML/requirements/requirement.py:55
 msgid "requirement"
 msgstr "требование"
 
@@ -822,15 +820,15 @@ msgstr "Входной контакт"
 msgid "Output pin"
 msgstr "Выходной контакт"
 
-#: gaphor/UML/actions/activitynodes.py:189
+#: gaphor/UML/actions/activitynodes.py:181
 msgid "merge/decision"
 msgstr "слияние/решение"
 
-#: gaphor/UML/actions/activitynodes.py:191
+#: gaphor/UML/actions/activitynodes.py:183
 msgid "merge"
 msgstr "слияние"
 
-#: gaphor/UML/actions/activitynodes.py:193
+#: gaphor/UML/actions/activitynodes.py:185
 msgid "decision"
 msgstr "решение"
 
@@ -854,25 +852,15 @@ msgstr "LIFO"
 msgid "FIFO"
 msgstr "FIFO"
 
-#: gaphor/UML/actions/objectnode.py:47
-#, fuzzy
-msgid "upperBound"
-msgstr "Верхняя Граница"
-
-#: gaphor/UML/actions/objectnode.py:53
-#, fuzzy
-msgid "ordering"
-msgstr "Показывать Порядок"
-
 #: gaphor/UML/actions/partitionpage.py:114
 msgid "New Swimlane"
 msgstr "Новая Дорожка"
 
-#: gaphor/UML/actions/pin.py:62
+#: gaphor/UML/actions/pin.py:58
 msgid "input pin"
 msgstr "входной контакт"
 
-#: gaphor/UML/actions/pin.py:68
+#: gaphor/UML/actions/pin.py:64
 msgid "output pin"
 msgstr "выходной контакт"
 
@@ -1033,7 +1021,7 @@ msgstr "ТипДанных"
 msgid "primitive"
 msgstr "примитив"
 
-#: gaphor/UML/classes/datatype.py:60 gaphor/UML/classes/enumeration.py:71
+#: gaphor/UML/classes/datatype.py:60 gaphor/UML/classes/enumeration.py:70
 msgid "valueType"
 msgstr "типЗначения"
 
@@ -1053,7 +1041,7 @@ msgstr "реализует"
 msgid "implements"
 msgstr "имплементирует"
 
-#: gaphor/UML/classes/enumeration.py:73
+#: gaphor/UML/classes/enumeration.py:72
 msgid "enumeration"
 msgstr "перечисление"
 
@@ -1061,7 +1049,7 @@ msgstr "перечисление"
 msgid "New Enumeration…"
 msgstr "Новое перечисление…"
 
-#: gaphor/UML/classes/interface.py:284
+#: gaphor/UML/classes/interface.py:282
 msgid "interface"
 msgstr "интерфейс"
 
@@ -1073,7 +1061,7 @@ msgstr "стереотип"
 msgid "metaclass"
 msgstr "метакласс"
 
-#: gaphor/UML/classes/package.py:32
+#: gaphor/UML/classes/package.py:30
 msgid "profile"
 msgstr "профиль"
 
@@ -1292,7 +1280,7 @@ msgstr "Узел"
 msgid "Device"
 msgstr "Устройство"
 
-#: gaphor/UML/deployments/node.py:54
+#: gaphor/UML/deployments/node.py:52
 msgid "device"
 msgstr "устройство"
 
@@ -1359,7 +1347,7 @@ msgstr "Удалить"
 msgid "Connectable Element"
 msgstr "Новый подключаемый элемент"
 
-#: gaphor/UML/profiles/packageimport.py:24
+#: gaphor/UML/profiles/packageimport.py:23
 msgid "import"
 msgstr "импорт"
 
@@ -1422,7 +1410,7 @@ msgstr "Регионы"
 msgid "Show Regions"
 msgstr "Показать Регионы"
 
-#: gaphor/UML/states/statemachine.py:40
+#: gaphor/UML/states/statemachine.py:38
 msgid "statemachine"
 msgstr "конечный автомат"
 
@@ -1487,11 +1475,11 @@ msgstr "Точка Выхода"
 msgid "Terminate Pseudostate"
 msgstr "Узел Завершения"
 
-#: gaphor/UML/usecases/extend.py:21
+#: gaphor/UML/usecases/extend.py:19
 msgid "extend"
 msgstr "расширить"
 
-#: gaphor/UML/usecases/include.py:21
+#: gaphor/UML/usecases/include.py:19
 msgid "include"
 msgstr "включить"
 
@@ -1576,27 +1564,27 @@ msgstr "Отразить ориентацию"
 msgid "Note"
 msgstr "Примечание"
 
-#: gaphor/diagram/general/metadata.py:62 gaphor/diagram/propertypages.ui:167
+#: gaphor/diagram/propertypages.ui:167
 msgid "Created By"
 msgstr "Создано"
 
-#: gaphor/diagram/general/metadata.py:79 gaphor/diagram/propertypages.ui:195
+#: gaphor/diagram/propertypages.ui:195
 msgid "Website"
 msgstr "Веб-сайт"
 
-#: gaphor/diagram/general/metadata.py:125 gaphor/diagram/propertypages.ui:209
+#: gaphor/diagram/propertypages.ui:209
 msgid "Revision"
 msgstr "Ревизия"
 
-#: gaphor/diagram/general/metadata.py:142 gaphor/diagram/propertypages.ui:223
+#: gaphor/diagram/propertypages.ui:223
 msgid "License"
 msgstr "Лицензия"
 
-#: gaphor/diagram/general/metadata.py:160 gaphor/diagram/propertypages.ui:237
+#: gaphor/diagram/propertypages.ui:237
 msgid "Created On"
 msgstr "Создано на"
 
-#: gaphor/diagram/general/metadata.py:178 gaphor/diagram/propertypages.ui:251
+#: gaphor/diagram/propertypages.ui:251
 msgid "Updated On"
 msgstr "Обновлено"
 
@@ -1733,20 +1721,20 @@ msgstr "Экспортировать диаграмму как Encapsulated Post
 msgid "Export diagram as EPS"
 msgstr "Экспортировать диаграмму как EPS"
 
-#: gaphor/plugins/errorreports/errorreports.py:61
+#: gaphor/plugins/errorreports/errorreports.py:60
 #: gaphor/plugins/errorreports/errorreports.ui:6
 msgid "Error Reports"
 msgstr "Отчёты об Ошибках"
 
-#: gaphor/plugins/errorreports/errorreports.py:96
+#: gaphor/plugins/errorreports/errorreports.py:95
 msgid "No errors have been intercepted. We’re good."
 msgstr "Не было перехвачено никаких ошибок. Всё хорошо."
 
-#: gaphor/plugins/errorreports/errorreports.py:100
+#: gaphor/plugins/errorreports/errorreports.py:99
 msgid "Errors:"
 msgstr "Ошибки:"
 
-#: gaphor/plugins/errorreports/errorreports.py:149
+#: gaphor/plugins/errorreports/errorreports.py:148
 msgid ""
 "An unexpected error occurred.\n"
 "Please file an issue on GitHub and include information from Tools → Error"
@@ -1782,8 +1770,7 @@ msgid "All XMI Files"
 msgstr "Все Файлы XMI"
 
 #: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:62
-#: gaphor/ui/mainwindow.py:255 gaphor/ui/mainwindow.py:260
-#: gaphor/ui/mainwindow.ui:46
+#: gaphor/ui/mainwindow.py:255 gaphor/ui/mainwindow.ui:46
 msgid "New model"
 msgstr "Новая модель"
 
@@ -2551,13 +2538,9 @@ msgstr "Все Модели Gaphor"
 msgid "Images"
 msgstr "Дорожки"
 
-#: gaphor/ui/filedialog.py:39
+#: gaphor/ui/filedialog.py:40
 msgid "All Files"
 msgstr "Все файлы"
-
-#: gaphor/ui/filedialog.py:112
-msgid "Flatpak Document Portal"
-msgstr ""
 
 #: gaphor/ui/filemanager.py:41
 msgid ""
@@ -2817,8 +2800,9 @@ msgid "Restart Gaphor to enable language changes"
 msgstr "Перезапустите Gaphor, чтобы применить изменения языка"
 
 #: gaphor/ui/help/about.ui:13
+#, fuzzy
 msgid ""
-"Copyright © 2001-2023 Arjan Molenaar and Dan Yeaw.\n"
+"Copyright © 2001 The Gaphor Development Team.\n"
 "\n"
 "UML, SysML, and RAAML are either registered trademarks or trademarks of "
 "Object Management Group, Inc. in the United States and/or other "
@@ -3034,5 +3018,14 @@ msgstr "Обновить отношение «{name}»"
 #~ msgstr "Заметка или Примечание"
 
 #~ msgid "The (spoken) language used in this model."
+#~ msgstr ""
+
+#~ msgid "upperBound"
+#~ msgstr "Верхняя Граница"
+
+#~ msgid "ordering"
+#~ msgstr "Показывать Порядок"
+
+#~ msgid "Flatpak Document Portal"
 #~ msgstr ""
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-01-06 21:08-0400\n"
+"POT-Creation-Date: 2024-01-24 20:22-0500\n"
 "PO-Revision-Date: 2023-12-16 22:28+0000\n"
 "Last-Translator: Dan Yeaw <dan@yeaw.me>\n"
 "Language: zh_Hans\n"
@@ -24,8 +24,7 @@ msgstr ""
 msgid "C4 Model"
 msgstr "C4 模型"
 
-#: gaphor/C4Model/propertypages.ui:11 gaphor/diagram/general/metadata.py:104
-#: gaphor/diagram/propertypages.ui:181
+#: gaphor/C4Model/propertypages.ui:11 gaphor/diagram/propertypages.ui:181
 msgid "Description"
 msgstr "描述"
 
@@ -54,8 +53,7 @@ msgstr "创建新数据库"
 msgid "New Component"
 msgstr "新建组件"
 
-#: gaphor/C4Model/diagramitems/person.py:24 gaphor/C4Model/toolbox.py:71
-#: gaphor/C4Model/toolbox.py:77
+#: gaphor/C4Model/toolbox.py:71 gaphor/C4Model/toolbox.py:77
 msgid "Person"
 msgstr "参与人"
 
@@ -183,21 +181,21 @@ msgstr "危害"
 msgid "New Situation"
 msgstr "情况"
 
-#: gaphor/RAAML/fta/andgate.py:37 gaphor/RAAML/fta/ftatoolbox.py:24
+#: gaphor/RAAML/fta/andgate.py:35 gaphor/RAAML/fta/ftatoolbox.py:24
 msgid "AND Gate"
 msgstr "与门"
 
-#: gaphor/RAAML/fta/basicevent.py:35 gaphor/RAAML/fta/ftatoolbox.py:125
+#: gaphor/RAAML/fta/basicevent.py:33 gaphor/RAAML/fta/ftatoolbox.py:125
 #: gaphor/RAAML/fta/ftatoolbox.py:131
 msgid "Basic Event"
 msgstr "基本事件"
 
-#: gaphor/RAAML/fta/conditionalevent.py:32 gaphor/RAAML/fta/ftatoolbox.py:136
+#: gaphor/RAAML/fta/conditionalevent.py:30 gaphor/RAAML/fta/ftatoolbox.py:136
 #: gaphor/RAAML/fta/ftatoolbox.py:143
 msgid "Conditional Event"
 msgstr "条件式事件"
 
-#: gaphor/RAAML/fta/dormantevent.py:35 gaphor/RAAML/fta/ftatoolbox.py:162
+#: gaphor/RAAML/fta/dormantevent.py:33 gaphor/RAAML/fta/ftatoolbox.py:162
 #: gaphor/RAAML/fta/ftatoolbox.py:168
 msgid "Dormant Event"
 msgstr "休眠事件"
@@ -210,7 +208,7 @@ msgstr "故障树分析"
 msgid "AND"
 msgstr "与"
 
-#: gaphor/RAAML/fta/ftatoolbox.py:35 gaphor/RAAML/fta/orgate.py:37
+#: gaphor/RAAML/fta/ftatoolbox.py:35 gaphor/RAAML/fta/orgate.py:35
 msgid "OR Gate"
 msgstr "或门"
 
@@ -218,7 +216,7 @@ msgstr "或门"
 msgid "OR"
 msgstr "或"
 
-#: gaphor/RAAML/fta/ftatoolbox.py:46 gaphor/RAAML/fta/notgate.py:35
+#: gaphor/RAAML/fta/ftatoolbox.py:46 gaphor/RAAML/fta/notgate.py:33
 msgid "NOT Gate"
 msgstr "非门"
 
@@ -243,63 +241,63 @@ msgid "XOR"
 msgstr "异或"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:79 gaphor/RAAML/fta/ftatoolbox.py:86
-#: gaphor/RAAML/fta/majorityvotegate.py:39
+#: gaphor/RAAML/fta/majorityvotegate.py:38
 msgid "Majority Vote Gate"
 msgstr "多数表决门"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:92 gaphor/RAAML/fta/ftatoolbox.py:98
-#: gaphor/RAAML/fta/inhibitgate.py:35
+#: gaphor/RAAML/fta/inhibitgate.py:33
 msgid "Inhibit Gate"
 msgstr "禁门"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:103 gaphor/RAAML/fta/ftatoolbox.py:109
-#: gaphor/RAAML/fta/transferin.py:35
+#: gaphor/RAAML/fta/transferin.py:33
 msgid "Transfer In"
 msgstr "转入"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:114 gaphor/RAAML/fta/ftatoolbox.py:120
-#: gaphor/RAAML/fta/transferout.py:36
+#: gaphor/RAAML/fta/transferout.py:34
 msgid "Transfer Out"
 msgstr "转出"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:149 gaphor/RAAML/fta/ftatoolbox.py:156
-#: gaphor/RAAML/fta/undevelopedevent.py:35
+#: gaphor/RAAML/fta/undevelopedevent.py:33
 msgid "Undeveloped Event"
 msgstr "未展开事件"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:173 gaphor/RAAML/fta/ftatoolbox.py:179
-#: gaphor/RAAML/fta/houseevent.py:35
+#: gaphor/RAAML/fta/houseevent.py:33
 msgid "House Event"
 msgstr "房形事件"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:184 gaphor/RAAML/fta/ftatoolbox.py:190
-#: gaphor/RAAML/fta/zeroevent.py:36
+#: gaphor/RAAML/fta/zeroevent.py:34
 msgid "Zero Event"
 msgstr "零事件"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:195 gaphor/RAAML/fta/ftatoolbox.py:201
-#: gaphor/RAAML/fta/topevent.py:32
+#: gaphor/RAAML/fta/topevent.py:30
 msgid "Top Event"
 msgstr "顶事件"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:206 gaphor/RAAML/fta/ftatoolbox.py:213
-#: gaphor/RAAML/fta/intermediateevent.py:32
+#: gaphor/RAAML/fta/intermediateevent.py:31
 msgid "Intermediate Event"
 msgstr "中间事件"
 
-#: gaphor/RAAML/fta/seqgate.py:36
+#: gaphor/RAAML/fta/seqgate.py:35
 msgid "Sequence Enforcing Gate"
 msgstr "顺序相关门"
 
-#: gaphor/RAAML/fta/xorgate.py:36
+#: gaphor/RAAML/fta/xorgate.py:34
 msgid "XOR Gate"
 msgstr "异或门"
 
-#: gaphor/RAAML/stpa/controlaction.py:32 gaphor/RAAML/stpa/stpatoolbox.py:158
+#: gaphor/RAAML/stpa/controlaction.py:31 gaphor/RAAML/stpa/stpatoolbox.py:158
 msgid "Control Action"
 msgstr "控制行为"
 
-#: gaphor/RAAML/stpa/operationalsituation.py:33
+#: gaphor/RAAML/stpa/operationalsituation.py:32
 #: gaphor/RAAML/stpa/stpatoolbox.py:127
 msgid "Operational Situation"
 msgstr "场景态势"
@@ -346,7 +344,7 @@ msgid "Controlled Process"
 msgstr "受控过程"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:138
-#: gaphor/RAAML/stpa/unsafecontrolaction.py:32
+#: gaphor/RAAML/stpa/unsafecontrolaction.py:31
 msgid "Unsafe Control Action"
 msgstr "不安全控制行为"
 
@@ -522,25 +520,25 @@ msgstr "控制结构"
 msgid "block"
 msgstr "块"
 
-#: gaphor/SysML/blocks/block.py:89
+#: gaphor/SysML/blocks/block.py:82
 msgid "parts"
 msgstr "部件"
 
-#: gaphor/SysML/blocks/block.py:103 gaphor/SysML/blocks/interfaceblock.py:89
+#: gaphor/SysML/blocks/block.py:96 gaphor/SysML/blocks/interfaceblock.py:82
 msgid "references"
 msgstr "参考文献"
 
-#: gaphor/SysML/blocks/block.py:115 gaphor/SysML/blocks/interfaceblock.py:101
+#: gaphor/SysML/blocks/block.py:108 gaphor/SysML/blocks/interfaceblock.py:94
 msgid "values"
 msgstr "值"
 
-#: gaphor/SysML/blocks/block.py:134 gaphor/SysML/blocks/interfaceblock.py:120
+#: gaphor/SysML/blocks/block.py:127 gaphor/SysML/blocks/interfaceblock.py:113
 msgid "operations"
 msgstr "操作"
 
-#: gaphor/SysML/blocks/block.py:149 gaphor/SysML/blocks/block.py:168
-#: gaphor/SysML/blocks/interfaceblock.py:135
-#: gaphor/SysML/blocks/interfaceblock.py:158
+#: gaphor/SysML/blocks/block.py:142 gaphor/SysML/blocks/block.py:160
+#: gaphor/SysML/blocks/interfaceblock.py:128
+#: gaphor/SysML/blocks/interfaceblock.py:150
 msgid "unnamed"
 msgstr "未命名"
 
@@ -603,7 +601,7 @@ msgstr "原始"
 msgid "interfaceblock"
 msgstr "接口"
 
-#: gaphor/SysML/blocks/proxyport.py:40
+#: gaphor/SysML/blocks/proxyport.py:38
 msgid "proxy"
 msgstr "代理"
 
@@ -627,7 +625,7 @@ msgstr "验证"
 msgid "refine"
 msgstr "提炼"
 
-#: gaphor/SysML/requirements/requirement.py:56
+#: gaphor/SysML/requirements/requirement.py:55
 msgid "requirement"
 msgstr "需求"
 
@@ -860,15 +858,15 @@ msgstr "输入接口"
 msgid "Output pin"
 msgstr "输出接口"
 
-#: gaphor/UML/actions/activitynodes.py:189
+#: gaphor/UML/actions/activitynodes.py:181
 msgid "merge/decision"
 msgstr "合并/决定"
 
-#: gaphor/UML/actions/activitynodes.py:191
+#: gaphor/UML/actions/activitynodes.py:183
 msgid "merge"
 msgstr "合并"
 
-#: gaphor/UML/actions/activitynodes.py:193
+#: gaphor/UML/actions/activitynodes.py:185
 msgid "decision"
 msgstr "决定"
 
@@ -893,25 +891,15 @@ msgstr "LIFO（后进先出）"
 msgid "FIFO"
 msgstr "FIFO（先进先出）"
 
-#: gaphor/UML/actions/objectnode.py:47
-#, fuzzy
-msgid "upperBound"
-msgstr "上限"
-
-#: gaphor/UML/actions/objectnode.py:53
-#, fuzzy
-msgid "ordering"
-msgstr "显示顺序"
-
 #: gaphor/UML/actions/partitionpage.py:114
 msgid "New Swimlane"
 msgstr "新建泳道"
 
-#: gaphor/UML/actions/pin.py:62
+#: gaphor/UML/actions/pin.py:58
 msgid "input pin"
 msgstr "输入接口"
 
-#: gaphor/UML/actions/pin.py:68
+#: gaphor/UML/actions/pin.py:64
 msgid "output pin"
 msgstr "输出接口"
 
@@ -1072,7 +1060,7 @@ msgstr "数据类型"
 msgid "primitive"
 msgstr "原始"
 
-#: gaphor/UML/classes/datatype.py:60 gaphor/UML/classes/enumeration.py:71
+#: gaphor/UML/classes/datatype.py:60 gaphor/UML/classes/enumeration.py:70
 msgid "valueType"
 msgstr "值类型"
 
@@ -1092,7 +1080,7 @@ msgstr "实现"
 msgid "implements"
 msgstr "实现"
 
-#: gaphor/UML/classes/enumeration.py:73
+#: gaphor/UML/classes/enumeration.py:72
 msgid "enumeration"
 msgstr "枚举"
 
@@ -1101,7 +1089,7 @@ msgstr "枚举"
 msgid "New Enumeration…"
 msgstr "枚举"
 
-#: gaphor/UML/classes/interface.py:284
+#: gaphor/UML/classes/interface.py:282
 msgid "interface"
 msgstr "接口"
 
@@ -1113,7 +1101,7 @@ msgstr "立体型"
 msgid "metaclass"
 msgstr "元类"
 
-#: gaphor/UML/classes/package.py:32
+#: gaphor/UML/classes/package.py:30
 msgid "profile"
 msgstr "配置"
 
@@ -1324,7 +1312,7 @@ msgstr "节点"
 msgid "Device"
 msgstr "设备"
 
-#: gaphor/UML/deployments/node.py:54
+#: gaphor/UML/deployments/node.py:52
 msgid "device"
 msgstr "设备"
 
@@ -1392,7 +1380,7 @@ msgstr "删除"
 msgid "Connectable Element"
 msgstr "外部元件"
 
-#: gaphor/UML/profiles/packageimport.py:24
+#: gaphor/UML/profiles/packageimport.py:23
 msgid "import"
 msgstr "导入"
 
@@ -1455,7 +1443,7 @@ msgstr "区域"
 msgid "Show Regions"
 msgstr "显示区域"
 
-#: gaphor/UML/states/statemachine.py:40
+#: gaphor/UML/states/statemachine.py:38
 msgid "statemachine"
 msgstr "状态机"
 
@@ -1520,11 +1508,11 @@ msgstr "退出点伪状态"
 msgid "Terminate Pseudostate"
 msgstr "终止伪状态"
 
-#: gaphor/UML/usecases/extend.py:21
+#: gaphor/UML/usecases/extend.py:19
 msgid "extend"
 msgstr "扩展"
 
-#: gaphor/UML/usecases/include.py:21
+#: gaphor/UML/usecases/include.py:19
 msgid "include"
 msgstr "包含"
 
@@ -1611,27 +1599,27 @@ msgstr "翻转方向"
 msgid "Note"
 msgstr "非"
 
-#: gaphor/diagram/general/metadata.py:62 gaphor/diagram/propertypages.ui:167
+#: gaphor/diagram/propertypages.ui:167
 msgid "Created By"
 msgstr "创建于"
 
-#: gaphor/diagram/general/metadata.py:79 gaphor/diagram/propertypages.ui:195
+#: gaphor/diagram/propertypages.ui:195
 msgid "Website"
 msgstr "网站"
 
-#: gaphor/diagram/general/metadata.py:125 gaphor/diagram/propertypages.ui:209
+#: gaphor/diagram/propertypages.ui:209
 msgid "Revision"
 msgstr "修订"
 
-#: gaphor/diagram/general/metadata.py:142 gaphor/diagram/propertypages.ui:223
+#: gaphor/diagram/propertypages.ui:223
 msgid "License"
 msgstr "许可证"
 
-#: gaphor/diagram/general/metadata.py:160 gaphor/diagram/propertypages.ui:237
+#: gaphor/diagram/propertypages.ui:237
 msgid "Created On"
 msgstr "创建于"
 
-#: gaphor/diagram/general/metadata.py:178 gaphor/diagram/propertypages.ui:251
+#: gaphor/diagram/propertypages.ui:251
 msgid "Updated On"
 msgstr "更新于"
 
@@ -1772,20 +1760,20 @@ msgstr "将图表导出为封装的PostScript"
 msgid "Export diagram as EPS"
 msgstr "将图表导出为 EPS 文件"
 
-#: gaphor/plugins/errorreports/errorreports.py:61
+#: gaphor/plugins/errorreports/errorreports.py:60
 #: gaphor/plugins/errorreports/errorreports.ui:6
 msgid "Error Reports"
 msgstr "错误报告"
 
-#: gaphor/plugins/errorreports/errorreports.py:96
+#: gaphor/plugins/errorreports/errorreports.py:95
 msgid "No errors have been intercepted. We’re good."
 msgstr "没有截获任何错误。一切良好。"
 
-#: gaphor/plugins/errorreports/errorreports.py:100
+#: gaphor/plugins/errorreports/errorreports.py:99
 msgid "Errors:"
 msgstr "错误："
 
-#: gaphor/plugins/errorreports/errorreports.py:149
+#: gaphor/plugins/errorreports/errorreports.py:148
 msgid ""
 "An unexpected error occurred.\n"
 "Please file an issue on GitHub and include information from Tools → Error"
@@ -1817,8 +1805,7 @@ msgid "All XMI Files"
 msgstr "所有 XMI 文件"
 
 #: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:62
-#: gaphor/ui/mainwindow.py:255 gaphor/ui/mainwindow.py:260
-#: gaphor/ui/mainwindow.ui:46
+#: gaphor/ui/mainwindow.py:255 gaphor/ui/mainwindow.ui:46
 msgid "New model"
 msgstr "新建模型"
 
@@ -2562,13 +2549,9 @@ msgstr "Gaphor 模型"
 msgid "Images"
 msgstr "泳道"
 
-#: gaphor/ui/filedialog.py:39
+#: gaphor/ui/filedialog.py:40
 msgid "All Files"
 msgstr "所有文件"
-
-#: gaphor/ui/filedialog.py:112
-msgid "Flatpak Document Portal"
-msgstr ""
 
 #: gaphor/ui/filemanager.py:41
 msgid ""
@@ -2824,8 +2807,9 @@ msgid "Restart Gaphor to enable language changes"
 msgstr ""
 
 #: gaphor/ui/help/about.ui:13
+#, fuzzy
 msgid ""
-"Copyright © 2001-2023 Arjan Molenaar and Dan Yeaw.\n"
+"Copyright © 2001 The Gaphor Development Team.\n"
 "\n"
 "UML, SysML, and RAAML are either registered trademarks or trademarks of "
 "Object Management Group, Inc. in the United States and/or other "
@@ -3032,4 +3016,13 @@ msgstr "更新关系“{name}”"
 
 #~ msgid "Note or Remark"
 #~ msgstr "备注"
+
+#~ msgid "upperBound"
+#~ msgstr "上限"
+
+#~ msgid "ordering"
+#~ msgstr "显示顺序"
+
+#~ msgid "Flatpak Document Portal"
+#~ msgstr ""
 

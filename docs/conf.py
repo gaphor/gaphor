@@ -13,7 +13,6 @@
 from __future__ import annotations
 
 import os
-from datetime import date
 
 import gi
 
@@ -22,7 +21,7 @@ from gaphor.application import distribution
 # -- Project information -----------------------------------------------------
 
 project = "Gaphor"
-copyright = f"2001-{date.today().year}, Arjan Molenaar"
+copyright = "2001, The Gaphor Development Team"
 author = "Arjan Molenaar"
 version = distribution().version
 

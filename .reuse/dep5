@@ -1,0 +1,26 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: Gaphor
+Upstream-Contact:
+  Dan Yeaw <dan@yeaw.me>
+  Arjan Molenaar <gaphor@gmail.com>
+Source: https://gaphor.org
+
+Files: *
+Copyright: The Gaphor Development Team
+License: Apache-2.0
+
+Files: gaphor/core/styling/selectors.py
+Copyright: 2012 by Simon Sapin, 2017 by Guillaume Ayoub, 2020 The Gaphor Development Team
+License: BSD-3-Clause
+
+Files: _packaging/hook-pydot.py
+Copyright: 2021 PyInstaller Development Team
+License: GPL-2.0-or-later
+
+Files: gaphor/ui/language-specs/gaphorcss.lang
+Copyright: 2004, Scott Martin <scott@coffeeblack.org>
+           2010, Patryk Zawadzki <patrys@pld-linux.org>
+           2016, Tobias Schönberg <tobias47n9e@gmail.com>
+           2018, Jeffery To <jeffery.to@gmail.com>
+           2022, Arjan Molenaar <gaphor@gmail.com>
+License: LGPL-2.1-or-later
