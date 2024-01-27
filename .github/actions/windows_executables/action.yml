@@ -24,6 +24,19 @@ runs:
         poetry run pip install --force-reinstall (Resolve-Path C:\gtk-build\gtk\x64\release\PyGObject*.whl)
         poetry run pip install --force-reinstall (Resolve-Path C:\gtk-build\gtk\x64\release\pycairo*.whl)
       shell: pwsh
+    - name: Build PyInstaller Bootloader
+      run: |
+        # The pre-compiled bootloader is often flagged by virus scanners as a false positive, build our own
+        poetry shell
+        $env:PYINSTALLER_VER=$(poetry run py -c "from importlib.metadata import version; print(version('pyinstaller'))")
+        git clone --depth 1 --branch v$env:PYINSTALLER_VER https://github.com/pyinstaller/pyinstaller.git
+        cd .\pyinstaller\bootloader
+        py .\waf all --target-arch=64bit
+        cd ..
+        poetry run py -m pip install .
+        cd ..
+        rm -r -fo .\pyinstaller
+      shell: pwsh
     - name: Create Windows Installers
       run: |
         poetry build
