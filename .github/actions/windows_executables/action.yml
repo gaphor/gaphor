@@ -33,7 +33,7 @@ runs:
         cd .\pyinstaller\bootloader
         py .\waf all --gcc --target-arch=64bit
         cd ..\..
-        py -m pip install .\pyinstaller
+        py -m pip --disable-pip-version-check install .\pyinstaller
         rm -r -fo .\pyinstaller
       shell: pwsh
     - name: Create Windows Installers
