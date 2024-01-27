@@ -32,9 +32,8 @@ runs:
         git clone --depth 1 --branch v$env:PYINSTALLER_VER https://github.com/pyinstaller/pyinstaller.git
         cd .\pyinstaller\bootloader
         py .\waf all --target-arch=64bit
-        cd ..
-        poetry run py -m pip install .
-        cd ..
+        cd ..\..
+        py -m pip install .\pyinstaller
         rm -r -fo .\pyinstaller
       shell: pwsh
     - name: Create Windows Installers
