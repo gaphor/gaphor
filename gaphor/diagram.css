@@ -275,7 +275,8 @@ from {
   font-size: x-small;
 }
 
-:is(activity, interaction) > :is(name, stereotypes) {
+interaction > pentagon,
+activity > :is(name, stereotypes) {
   text-align: left;
 }
 
