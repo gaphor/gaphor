@@ -31,7 +31,7 @@ runs:
         $env:PYINSTALLER_VER=$(poetry run py -c "from importlib.metadata import version; print(version('pyinstaller'))")
         git clone --depth 1 --branch v$env:PYINSTALLER_VER https://github.com/pyinstaller/pyinstaller.git
         cd .\pyinstaller\bootloader
-        py .\waf all --target-arch=64bit
+        py .\waf all --gcc --target-arch=64bit
         cd ..\..
         py -m pip install .\pyinstaller
         rm -r -fo .\pyinstaller
