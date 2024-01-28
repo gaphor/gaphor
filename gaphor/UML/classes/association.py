@@ -14,6 +14,7 @@ from gaphas.connector import Handle
 from gaphas.geometry import Rectangle, distance_rectangle_point
 
 from gaphor import UML
+from gaphor.core.modeling import DrawContext, UpdateContext
 from gaphor.core.modeling.properties import association, attribute, enumeration
 from gaphor.diagram.presentation import (
     LinePresentation,
@@ -24,6 +25,7 @@ from gaphor.diagram.presentation import (
 from gaphor.diagram.shapes import (
     Box,
     CssNode,
+    Number,
     Text,
     cairo_state,
     draw_default_head,
@@ -52,20 +54,21 @@ class AssociationItem(Named, LinePresentation[UML.Association]):
     """
 
     def __init__(self, diagram, id=None):
+        # AssociationEnds are really inseparable from the AssociationItem.
+        self._head_end = AssociationEnd(owner=self, end="head")
+        self._tail_end = AssociationEnd(owner=self, end="tail")
+
         super().__init__(
             diagram,
             id,
+            shape_head=CssNode("end", None, self._head_end),
             shape_middle=Box(
                 text_stereotypes(self),
                 text_name(self),
                 *shape_information_flow(self, "abstraction"),
             ),
+            shape_tail=CssNode("end", None, self._tail_end),
         )
-
-        # AssociationEnds are really inseparable from the AssociationItem.
-        # We give them the same id as the association item.
-        self._head_end = AssociationEnd(owner=self, end="head")
-        self._tail_end = AssociationEnd(owner=self, end="tail")
 
         # For the association ends:
         base = "subject[Association].memberEnd[Property]"
@@ -136,11 +139,11 @@ class AssociationItem(Named, LinePresentation[UML.Association]):
         )
         self.request_update()
 
-    def update_ends(self):
-        self.on_association_end_value()
-
     def on_association_end_value(self, event=None):
         """Handle events and update text on association end."""
+        self.request_update()
+
+    def update(self, _context: UpdateContext | None = None):
         for end in (self._head_end, self._tail_end):
             end.set_text()
 
@@ -180,10 +183,7 @@ class AssociationItem(Named, LinePresentation[UML.Association]):
                 self.draw_head = draw_default_head
             self.draw_tail = draw_default_tail
 
-        self.request_update()
-
-    def update(self, context):
-        self.update_ends()
+        # self.request_update()
 
     def point(self, x, y):
         """Returns the distance from the Association to the (mouse) cursor."""
@@ -202,18 +202,8 @@ class AssociationItem(Named, LinePresentation[UML.Association]):
                 in self.subject.abstraction[:].informationTarget,
             )
 
-        handles = self.handles()
-
-        # Calculate alignment of the head name and multiplicity
-        self._head_end.update_position(context, handles[0].pos, handles[1].pos)
-
-        # Calculate alignment of the tail name and multiplicity
-        self._tail_end.update_position(context, handles[-1].pos, handles[-2].pos)
-
-        self._head_end.draw(context)
-        self._tail_end.draw(context)
         if self.show_direction:
-            pos, angle = get_center_pos(handles)
+            pos, angle = get_center_pos(self.handles())
             inv = (
                 -1
                 if (
@@ -342,8 +332,8 @@ class AssociationEnd:
         self._name_bounds = Rectangle()
         self._mult_bounds = Rectangle()
 
-        self._name_shape = CssNode("end", None, Text(text=lambda: self._name))
-        self._mult_shape = CssNode("end", None, Text(text=lambda: self._mult))
+        self._name_shape = Text(text=lambda: self._name)
+        self._mult_shape = Text(text=lambda: self._mult)
 
     name_bounds = property(lambda s: s._name_bounds)
 
@@ -394,11 +384,6 @@ class AssociationEnd:
 
         dx = float(p2[0]) - float(p1[0])
         dy = float(p2[1]) - float(p1[1])
-
-        def max_text_size(size1, size2):
-            w1, h1 = size1
-            w2, h2 = size2
-            return (max(w1, w2), max(h1, h2))
 
         name_w, name_h = self._name_shape.size(context)
         mult_w, mult_h = self._mult_shape.size(context)
@@ -465,7 +450,20 @@ class AssociationEnd:
         d3 = 1000.0
         return min(d1, d2, d3)
 
-    def draw(self, context):
+    def size(
+        self, context: UpdateContext, bounding_box: Rectangle | None = None
+    ) -> tuple[Number, Number]:
+        handles = self.owner.handles()
+
+        if self._end == "head":
+            self.update_position(context, handles[0].pos, handles[1].pos)
+        elif self._end == "tail":
+            self.update_position(context, handles[-1].pos, handles[-2].pos)
+
+        bounds = self._name_bounds + self._mult_bounds
+        return bounds.width, bounds.height
+
+    def draw(self, context: DrawContext, _bounding_box: Rectangle) -> None:
         """Draw name and multiplicity of the line end."""
         if not self.subject:
             return
@@ -474,3 +472,7 @@ class AssociationEnd:
         self._name_shape.draw(context, self._name_bounds)
         # cr.move_to(self._mult_bounds.x, self._mult_bounds.y)
         self._mult_shape.draw(context, self._mult_bounds)
+
+    def __iter__(self):
+        yield self._name_shape
+        yield self._mult_shape

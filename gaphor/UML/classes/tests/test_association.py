@@ -105,7 +105,7 @@ def test_association_head_end_not_navigable(items, navigability, draw_func):
 
     end = items.assoc.head_end
     UML.recipes.set_navigability(end.subject.association, end.subject, navigability)
-    items.assoc.update_ends()
+    items.assoc.update()
 
     assert items.assoc.head_subject.navigability is navigability
     assert items.assoc.draw_head is draw_func
