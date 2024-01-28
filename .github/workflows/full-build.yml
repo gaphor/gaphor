@@ -289,6 +289,12 @@ jobs:
       - name: GTK binaries output cache key
         id: output
         run: Write-Output "cachekey=${{ runner.os }}-gvsbuild-${{ env.gvsbuild_update }}-${{ env.gvsbuild_version }}" >> $env:GITHUB_OUTPUT
+      - name: Upload libraries
+        if: steps.cache.outputs.cache-hit != 'true'
+        uses: actions/upload-artifact@c7d193f32edcb7bfad88892161225aeda64e9392 # v4.0.0
+        with:
+          name: gtk-build
+          path: C:\gtk-build\gtk\x64\release
 
   windows:
     name: Windows
