@@ -39,6 +39,20 @@
   padding: 0;
 }
 
+:root > pentagon {
+  line-width: 1;
+  background-color: var(--opaque-background-color);
+}
+
+:root > pentagon > diagramtype {
+  font-weight: bold;
+  padding: 4 0 4 4;
+}
+
+:root > pentagon > name {
+  padding: 4;
+}
+
 /* Relationships */
 
 commentline,

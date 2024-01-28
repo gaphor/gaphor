@@ -373,7 +373,7 @@ class Box:
             last_child = self.children[-1]
             for c, (w, _h) in zip(self.children, sizes):
                 if c is last_child and justify_content is JustifyContent.START:
-                    w = bounding_box.height - x
+                    w = bounding_box.width - x
                 elif w < avg_width:
                     w = avg_width
                 c.draw(child_context, Rectangle(x, y, w, h))

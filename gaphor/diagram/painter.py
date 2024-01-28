@@ -9,11 +9,12 @@ and handles).
 from __future__ import annotations
 
 from cairo import LINE_JOIN_ROUND
-from gi.repository import GLib, Pango, PangoCairo
+from gaphas.geometry import Rectangle
 
 from gaphor.core.modeling.diagram import DrawContext, StyledDiagram, StyledItem
 from gaphor.diagram.diagramlabel import diagram_label
 from gaphor.diagram.selection import Selection
+from gaphor.diagram.shapes import Box, CssNode, Orientation, Text, cairo_state, stroke
 
 
 class ItemPainter:
@@ -59,44 +60,51 @@ class ItemPainter:
 class DiagramTypePainter:
     def __init__(self, diagram):
         self.diagram = diagram
+        self._pentagon = CssNode(
+            "pentagon",
+            diagram,
+            Box(
+                CssNode("diagramtype", None, Text(text=lambda: diagram.diagramType)),
+                CssNode("name", None, Text(text=lambda: diagram_label(diagram))),
+                orientation=Orientation.HORIZONTAL,
+                draw=draw_pentagon,
+            ),
+        )
 
     def paint(self, _items, cr):
         diagram = self.diagram
         if not diagram.diagramType:
             return
+
         style = diagram.style(StyledDiagram(diagram))
-        layout = PangoCairo.create_layout(cr)
-        escape = GLib.markup_escape_text
-        layout.set_markup(
-            f"<b>{escape(diagram.diagramType)}</b> {escape(diagram_label(diagram))}",
-            length=-1,
+
+        context = DrawContext(
+            cairo=cr,
+            style=style,
+            selected=False,
+            focused=False,
+            hovered=False,
+            dropzone=False,
         )
 
-        font_family = style.get("font-family")
-        font_size = style.get("font-size")
-
-        fd = Pango.FontDescription.new()
-        fd.set_family(font_family)
-        fd.set_absolute_size(font_size * Pango.SCALE)
-        layout.set_font_description(fd)
-
-        w, h = layout.get_pixel_size()
-        cr.save()
-        try:
+        with cairo_state(cr):
             cr.identity_matrix()
-            cr.set_line_width(1)
 
-            cr.move_to(-1, 12 + h)
-            cr.line_to(12 + w, 12 + h)
-            cr.line_to(18 + w, 8 + h / 2)
-            cr.line_to(18 + w, -1)
-            cr.line_to(-1, -1)
+            size = self._pentagon.size(context)  # type: ignore[arg-type]
+            bb = Rectangle(0, 0, *size)
+            self._pentagon.draw(context, bb)
 
-            cr.set_source_rgba(1.0, 1.0, 1.0, 0.6)
-            cr.fill_preserve()
-            cr.set_source_rgba(0.0, 0.0, 0.0, 1.0)
-            cr.stroke()
-            cr.move_to(6, 8)
-            PangoCairo.show_layout(cr, layout)
-        finally:
-            cr.restore()
+
+def draw_pentagon(box, context, bounding_box):
+    cr = context.cairo
+    w = bounding_box.width
+    h = bounding_box.height
+    line_width = context.style.get("line-width", 2)
+    with cairo_state(cr):
+        h2 = h / 2.0
+        cr.move_to(-line_width, -line_width)
+        cr.line_to(-line_width, h)
+        cr.line_to(w - 4, h)
+        cr.line_to(w, h2)
+        cr.line_to(w, -line_width)
+        stroke(context, fill=True)
