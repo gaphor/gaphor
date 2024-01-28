@@ -46,7 +46,8 @@ dependency,
 interfacerealization,
 include,
 extend,
-packageimport {
+packageimport,
+lifetime {
   dash-style: 7 5;
 }
 
