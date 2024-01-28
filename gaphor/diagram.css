@@ -171,6 +171,10 @@ swimlane {
   white-space: normal;
 }
 
+association > end {
+  font-size: x-small;
+}
+
 /* SysML */
 
 requirement {

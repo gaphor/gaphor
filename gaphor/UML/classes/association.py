@@ -15,7 +15,6 @@ from gaphas.geometry import Rectangle, distance_rectangle_point
 
 from gaphor import UML
 from gaphor.core.modeling.properties import association, attribute, enumeration
-from gaphor.core.styling import Style, merge_styles
 from gaphor.diagram.presentation import (
     LinePresentation,
     Named,
@@ -24,13 +23,14 @@ from gaphor.diagram.presentation import (
 )
 from gaphor.diagram.shapes import (
     Box,
+    CssNode,
+    Text,
     cairo_state,
     draw_default_head,
     draw_default_tail,
     stroke,
 )
 from gaphor.diagram.support import represents
-from gaphor.diagram.text import Layout
 from gaphor.UML.compartments import text_stereotypes
 from gaphor.UML.informationflow import (
     draw_information_flow,
@@ -342,10 +342,8 @@ class AssociationEnd:
         self._name_bounds = Rectangle()
         self._mult_bounds = Rectangle()
 
-        self._name_layout = Layout("")
-        self._mult_layout = Layout("")
-
-        self._inline_style: Style = {"font-size": "x-small"}
+        self._name_shape = CssNode("end", None, Text(text=lambda: self._name))
+        self._mult_shape = CssNode("end", None, Text(text=lambda: self._mult))
 
     name_bounds = property(lambda s: s._name_bounds)
 
@@ -392,7 +390,6 @@ class AssociationEnd:
 
         p1 is the line end and p2 is the last but one point of the line.
         """
-        style = merge_styles(context.style, self._inline_style)
         ofs = 4.0
 
         dx = float(p2[0]) - float(p1[0])
@@ -403,15 +400,8 @@ class AssociationEnd:
             w2, h2 = size2
             return (max(w1, w2), max(h1, h2))
 
-        name_layout = self._name_layout
-        name_layout.set_text(self._name)
-        name_layout.set_font(style)
-        name_w, name_h = max_text_size(name_layout.size(), (10, 10))
-
-        mult_layout = self._mult_layout
-        mult_layout.set_text(self._mult)
-        mult_layout.set_font(style)
-        mult_w, mult_h = max_text_size(mult_layout.size(), (10, 10))
+        name_w, name_h = self._name_shape.size(context)
+        mult_w, mult_h = self._mult_shape.size(context)
 
         rc = 1000.0 if dy == 0 else dx / dy
         abs_rc = abs(rc)
@@ -480,11 +470,7 @@ class AssociationEnd:
         if not self.subject:
             return
 
-        cr = context.cairo
-        if text_color := context.style.get("text-color"):
-            cr.set_source_rgba(*text_color)
-
-        cr.move_to(self._name_bounds.x, self._name_bounds.y)
-        self._name_layout.show_layout(cr)
-        cr.move_to(self._mult_bounds.x, self._mult_bounds.y)
-        self._mult_layout.show_layout(cr)
+        # cr.move_to(self._name_bounds.x, self._name_bounds.y)
+        self._name_shape.draw(context, self._name_bounds)
+        # cr.move_to(self._mult_bounds.x, self._mult_bounds.y)
+        self._mult_shape.draw(context, self._mult_bounds)
