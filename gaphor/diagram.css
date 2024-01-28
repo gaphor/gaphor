@@ -173,6 +173,7 @@ swimlane {
 
 association > end {
   font-size: x-small;
+  padding: 4;
 }
 
 /* SysML */
