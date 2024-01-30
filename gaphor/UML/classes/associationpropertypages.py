@@ -153,7 +153,7 @@ class AssociationPropertyPage(PropertyPageBase):
                 self.NAVIGABILITY[dropdown.get_selected()],
             )
             # Call this again, or non-navigability will not be displayed
-            self.item.update_ends()
+            self.item.request_update()
 
     @transactional
     def _on_end_aggregation_change(self, dropdown, _pspec, end):

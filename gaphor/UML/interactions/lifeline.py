@@ -31,7 +31,7 @@ from gaphas.solver.constraint import BaseConstraint
 from gaphor import UML
 from gaphor.core.modeling.properties import attribute
 from gaphor.diagram.presentation import ElementPresentation, Named
-from gaphor.diagram.shapes import Box, CssNode, Text, cairo_state, stroke
+from gaphor.diagram.shapes import Box, CssNode, Text, cairo_state, draw_border, stroke
 from gaphor.diagram.support import represents
 from gaphor.UML.compartments import text_stereotypes
 
@@ -162,15 +162,16 @@ class LifelineItem(Named, ElementPresentation[UML.Lifeline]):
         self._ports.insert(0, self._lifetime.port)
 
         self.shape = Box(
-            text_stereotypes(self),
             CssNode(
-                "name",
-                self.subject,
-                Text(
-                    text=self._format_name,
+                "compartment",
+                None,
+                Box(
+                    text_stereotypes(self),
+                    CssNode("name", self.subject, Text(text=self._format_name)),
                 ),
             ),
-            draw=self.draw_lifeline,
+            CssNode("lifetime", None, Box(draw=self.draw_lifetime)),
+            draw=draw_border,
         )
 
         self.watch("subject[NamedElement].name")
@@ -234,16 +235,12 @@ class LifelineItem(Named, ElementPresentation[UML.Lifeline]):
             return f"{name}: {self.subject.represents.name or ''}"
         return name
 
-    def draw_lifeline(self, box, context, bounding_box):
-        """Draw lifeline.
+    def draw_lifetime(self, box, context, bounding_box):
+        """Draw lifeline time line.
 
         We always draw the lifeline's head. We only draw the lifeline's
         lifetime when the lifetime is visible.
         """
-        cr = context.cairo
-        cr.rectangle(0, 0, self.width, self.height)
-        stroke(context, fill=True)
-
         if (
             context.hovered
             or context.focused
@@ -253,12 +250,12 @@ class LifelineItem(Named, ElementPresentation[UML.Lifeline]):
             bottom = self._lifetime.bottom
             cr = context.cairo
             with cairo_state(cr):
-                cr.set_dash((7.0, 5.0), 0)
                 x = self._handles[SW].pos.x
                 top = self._lifetime.top
-                cr.move_to(top.pos.x - x, top.pos.y)
-                cr.line_to(bottom.pos.x - x, bottom.pos.y)
-                stroke(context, fill=True, dash=False)
+                y_offset = self._handles[NW].pos.y
+                cr.move_to(top.pos.x - x, top.pos.y - y_offset)
+                cr.line_to(bottom.pos.x - x, bottom.pos.y - y_offset)
+                stroke(context, fill=False)
 
             # draw destruction event
             if self.is_destroyed:

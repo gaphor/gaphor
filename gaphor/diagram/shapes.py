@@ -373,7 +373,7 @@ class Box:
             last_child = self.children[-1]
             for c, (w, _h) in zip(self.children, sizes):
                 if c is last_child and justify_content is JustifyContent.START:
-                    w = bounding_box.height - x
+                    w = bounding_box.width - x
                 elif w < avg_width:
                     w = avg_width
                 c.draw(child_context, Rectangle(x, y, w, h))
@@ -613,7 +613,10 @@ class StyledCssNode:
         return self._parent
 
     def children(self) -> Iterator[StyleNode]:
-        return (node.style_node(self) for node in traverse_css_nodes(self._shape))
+        return (
+            node.style_node(self)
+            for node in traverse_css_nodes(self._shape, only_children=True)
+        )
 
     def attribute(self, name: str) -> str | None:
         if self._shape._element:
@@ -634,9 +637,16 @@ class StyledCssNode:
         )
 
 
-def traverse_css_nodes(shape: Shape) -> Iterator[CssNode]:
-    for s in shape:
-        if isinstance(s, CssNode):
-            yield s
-        else:
+def traverse_css_nodes(shape: Shape, only_children=False) -> Iterator[CssNode]:
+    """Traverse CSS nodes
+
+    Only return the next level of nodes.
+
+    If ``only_children`` is ``True``, start by checking children of shape,
+    instead of shape itself.
+    """
+    if not only_children and isinstance(shape, CssNode):
+        yield shape
+    else:
+        for s in shape:
             yield from traverse_css_nodes(s)

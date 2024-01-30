@@ -230,9 +230,6 @@
                 <property name="title" translatable="yes">Preferences</property>
                 <property name="child">
                   <object class="GtkBox">
-                    <style>
-                      <class name="editor-wide" />
-                    </style>
                     <property name="margin_start">6</property>
                     <property name="margin_end">6</property>
                     <property name="margin_top">12</property>

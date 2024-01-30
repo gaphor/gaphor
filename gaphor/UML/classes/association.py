@@ -7,6 +7,7 @@ Plan:
    for line ends.
 """
 
+from dataclasses import replace
 from math import pi
 from typing import Optional
 
@@ -14,8 +15,8 @@ from gaphas.connector import Handle
 from gaphas.geometry import Rectangle, distance_rectangle_point
 
 from gaphor import UML
+from gaphor.core.modeling import DrawContext, UpdateContext
 from gaphor.core.modeling.properties import association, attribute, enumeration
-from gaphor.core.styling import Style, merge_styles
 from gaphor.diagram.presentation import (
     LinePresentation,
     Named,
@@ -23,14 +24,17 @@ from gaphor.diagram.presentation import (
     text_name,
 )
 from gaphor.diagram.shapes import (
+    DEFAULT_PADDING,
     Box,
+    CssNode,
+    Number,
+    Text,
     cairo_state,
     draw_default_head,
     draw_default_tail,
     stroke,
 )
 from gaphor.diagram.support import represents
-from gaphor.diagram.text import Layout
 from gaphor.UML.compartments import text_stereotypes
 from gaphor.UML.informationflow import (
     draw_information_flow,
@@ -52,20 +56,21 @@ class AssociationItem(Named, LinePresentation[UML.Association]):
     """
 
     def __init__(self, diagram, id=None):
+        # AssociationEnds are really inseparable from the AssociationItem.
+        self._head_end = AssociationEnd(owner=self, end="head")
+        self._tail_end = AssociationEnd(owner=self, end="tail")
+
         super().__init__(
             diagram,
             id,
+            shape_head=CssNode("end", None, self._head_end),
             shape_middle=Box(
                 text_stereotypes(self),
                 text_name(self),
                 *shape_information_flow(self, "abstraction"),
             ),
+            shape_tail=CssNode("end", None, self._tail_end),
         )
-
-        # AssociationEnds are really inseparable from the AssociationItem.
-        # We give them the same id as the association item.
-        self._head_end = AssociationEnd(owner=self, end="head")
-        self._tail_end = AssociationEnd(owner=self, end="tail")
 
         # For the association ends:
         base = "subject[Association].memberEnd[Property]"
@@ -136,11 +141,11 @@ class AssociationItem(Named, LinePresentation[UML.Association]):
         )
         self.request_update()
 
-    def update_ends(self):
-        self.on_association_end_value()
-
     def on_association_end_value(self, event=None):
         """Handle events and update text on association end."""
+        self.request_update()
+
+    def update(self, _context: UpdateContext | None = None):
         for end in (self._head_end, self._tail_end):
             end.set_text()
 
@@ -180,11 +185,6 @@ class AssociationItem(Named, LinePresentation[UML.Association]):
                 self.draw_head = draw_default_head
             self.draw_tail = draw_default_tail
 
-        self.request_update()
-
-    def update(self, context):
-        self.update_ends()
-
     def point(self, x, y):
         """Returns the distance from the Association to the (mouse) cursor."""
         return min(
@@ -202,18 +202,8 @@ class AssociationItem(Named, LinePresentation[UML.Association]):
                 in self.subject.abstraction[:].informationTarget,
             )
 
-        handles = self.handles()
-
-        # Calculate alignment of the head name and multiplicity
-        self._head_end.update_position(context, handles[0].pos, handles[1].pos)
-
-        # Calculate alignment of the tail name and multiplicity
-        self._tail_end.update_position(context, handles[-1].pos, handles[-2].pos)
-
-        self._head_end.draw(context)
-        self._tail_end.draw(context)
         if self.show_direction:
-            pos, angle = get_center_pos(handles)
+            pos, angle = get_center_pos(self.handles())
             inv = (
                 -1
                 if (
@@ -342,10 +332,8 @@ class AssociationEnd:
         self._name_bounds = Rectangle()
         self._mult_bounds = Rectangle()
 
-        self._name_layout = Layout("")
-        self._mult_layout = Layout("")
-
-        self._inline_style: Style = {"font-size": "x-small"}
+        self._name_shape = Text(text=lambda: self._name)
+        self._mult_shape = Text(text=lambda: self._mult)
 
     name_bounds = property(lambda s: s._name_bounds)
 
@@ -386,32 +374,26 @@ class AssociationEnd:
     def get_mult(self):
         return self._mult
 
-    def update_position(self, context, p1, p2):
+    def update_position(self, context: UpdateContext, p1, p2):
         """Update label placement for association's name and multiplicity
         label.
 
         p1 is the line end and p2 is the last but one point of the line.
         """
-        style = merge_styles(context.style, self._inline_style)
-        ofs = 4.0
+        padding_top, padding_right, padding_bottom, padding_left = context.style.get(
+            "padding", DEFAULT_PADDING
+        )
 
         dx = float(p2[0]) - float(p1[0])
         dy = float(p2[1]) - float(p1[1])
 
-        def max_text_size(size1, size2):
-            w1, h1 = size1
-            w2, h2 = size2
-            return (max(w1, w2), max(h1, h2))
+        child_context = replace(
+            context,
+            style={k: v for k, v in context.style.items() if k != "padding"},  # type: ignore[arg-type]
+        )
 
-        name_layout = self._name_layout
-        name_layout.set_text(self._name)
-        name_layout.set_font(style)
-        name_w, name_h = max_text_size(name_layout.size(), (10, 10))
-
-        mult_layout = self._mult_layout
-        mult_layout.set_text(self._mult)
-        mult_layout.set_font(style)
-        mult_w, mult_h = max_text_size(mult_layout.size(), (10, 10))
+        name_w, name_h = self._name_shape.size(child_context)
+        mult_w, mult_h = self._mult_shape.size(child_context)
 
         rc = 1000.0 if dy == 0 else dx / dy
         abs_rc = abs(rc)
@@ -420,24 +402,25 @@ class AssociationEnd:
 
         if abs_rc > 6:
             # horizontal line
-            name_dy = -ofs * 2 - name_h
-            mult_dy = ofs * 2
+            name_dy = -padding_top - padding_bottom - name_h
+            mult_dy = padding_top + padding_bottom
             if left_side:
-                name_dx = ofs
-                mult_dx = ofs
+                name_dx = padding_left
+                mult_dx = padding_left
             else:
-                name_dx = -ofs - name_w
-                mult_dx = -ofs - mult_w
+                name_dx = -padding_right - name_w
+                mult_dx = -padding_right - mult_w
         elif 0 <= abs_rc <= 0.2:
             # vertical line
-            name_dx = -ofs * 2.5 - name_w
-            mult_dx = ofs * 2.5
+            line_width = context.style.get("line-width", 2)
+            name_dx = -padding_left - padding_right - name_w - line_width
+            mult_dx = padding_left + padding_right + line_width
             if top_side:
-                name_dy = ofs
-                mult_dy = ofs
+                name_dy = padding_top
+                mult_dy = padding_top
             else:
-                name_dy = -ofs - name_h
-                mult_dy = -ofs - mult_h
+                name_dy = -padding_bottom - name_h
+                mult_dy = -padding_bottom - mult_h
         else:
             # Should both items be placed on the same side of the line?
             same_side = abs_rc < 1.0
@@ -446,17 +429,17 @@ class AssociationEnd:
             align_left = left_side ^ same_side
             align_top = top_side ^ same_side
             if align_left:
-                name_dx = ofs
-                mult_dx = ofs
+                name_dx = padding_left
+                mult_dx = padding_left
             else:
-                name_dx = -ofs - name_w
-                mult_dx = -ofs - mult_w
+                name_dx = -padding_right - name_w
+                mult_dx = -padding_right - mult_w
             if align_top:
-                name_dy = -ofs - name_h
-                mult_dy = -ofs - name_h - mult_h
+                name_dy = -padding_bottom - name_h
+                mult_dy = -padding_bottom - name_h - mult_h
             else:
-                name_dy = ofs
-                mult_dy = ofs + mult_h
+                name_dy = padding_top
+                mult_dy = padding_top + mult_h
 
         self._name_bounds = Rectangle(
             p1[0] + name_dx, p1[1] + name_dy, width=name_w, height=name_h
@@ -475,16 +458,33 @@ class AssociationEnd:
         d3 = 1000.0
         return min(d1, d2, d3)
 
-    def draw(self, context):
+    def size(
+        self, context: UpdateContext, bounding_box: Rectangle | None = None
+    ) -> tuple[Number, Number]:
+        handles = self.owner.handles()
+
+        if self._end == "head":
+            self.update_position(context, handles[0].pos, handles[1].pos)
+        elif self._end == "tail":
+            self.update_position(context, handles[-1].pos, handles[-2].pos)
+
+        bounds = self._name_bounds + self._mult_bounds
+        return bounds.width, bounds.height
+
+    def draw(self, context: DrawContext, _bounding_box: Rectangle) -> None:
         """Draw name and multiplicity of the line end."""
         if not self.subject:
             return
 
-        cr = context.cairo
-        if text_color := context.style.get("text-color"):
-            cr.set_source_rgba(*text_color)
+        # Padding has been taken into account when calculating name and mult bounds
+        child_context = replace(
+            context,
+            style={k: v for k, v in context.style.items() if k != "padding"},  # type: ignore[arg-type]
+        )
 
-        cr.move_to(self._name_bounds.x, self._name_bounds.y)
-        self._name_layout.show_layout(cr)
-        cr.move_to(self._mult_bounds.x, self._mult_bounds.y)
-        self._mult_layout.show_layout(cr)
+        self._name_shape.draw(child_context, self._name_bounds)
+        self._mult_shape.draw(child_context, self._mult_bounds)
+
+    def __iter__(self):
+        yield self._name_shape
+        yield self._mult_shape
