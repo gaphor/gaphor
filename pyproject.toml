@@ -54,7 +54,7 @@ defusedxml = "^0.7.1"
 pyobjc-framework-cocoa = { version = ">=9.0.1,<11.0.0", markers = "sys_platform == 'darwin'" }
 
 [tool.poetry.group.dev.dependencies]
-pytest = "^7.1"
+pytest = ">=7.1,<9.0"
 pytest-archon = "^0.0"
 pytest-cov = "^4.0.0"
 pytest-randomly = "^3.12.0"
