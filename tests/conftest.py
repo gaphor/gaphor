@@ -3,6 +3,8 @@
 from hypothesis import settings
 
 from gaphor.conftest import (
+    create,
+    diagram,
     element_factory,
     event_manager,
     modeling_language,

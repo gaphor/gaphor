@@ -6,10 +6,12 @@ from gaphor import UML
 from gaphor.application import Application
 from gaphor.core import Transaction, event_handler
 from gaphor.core.modeling import AssociationUpdated, Diagram
+from gaphor.diagram.copypaste import copy_full, paste_full
 from gaphor.diagram.tests.fixtures import connect
 from gaphor.UML.classes import (
     AssociationItem,
     ClassItem,
+    ContainmentItem,
     GeneralizationItem,
 )
 from gaphor.UML.interactions import MessageItem
@@ -61,7 +63,7 @@ def test_class_association_undo_redo(event_manager, element_factory, undo_manage
     assert undo_manager.can_undo()
 
     for _i in range(3):
-        assert 8 == len(diagram.connections.solver.constraints)
+        assert 9 == len(diagram.connections.solver.constraints)
 
         undo_manager.undo_transaction()
 
@@ -376,6 +378,9 @@ def test_exception_raised_during_undo(event_manager, element_factory, undo_manag
 def test_exception_raised_during_undo_from_event_handler(
     event_manager, element_factory, undo_manager
 ):
+    class UndoRequested:
+        pass
+
     package: UML.Package = next(element_factory.select(UML.Package))
 
     with Transaction(event_manager):
@@ -405,5 +410,21 @@ def test_exception_raised_during_undo_from_event_handler(
     event_manager.handle()
 
 
-class UndoRequested:
-    pass
+def test_undo_paste_full(create, diagram, event_manager, undo_manager):
+    """Triggers an error when pasted data is undone.
+
+    Reproduce Hypothesis test found in https://github.com/gaphor/gaphor/issues/2895.
+    """
+
+    with Transaction(event_manager):
+        class_item = create(ClassItem, UML.Class)
+        containment_item = create(ContainmentItem)
+
+        connect(containment_item, containment_item.head, class_item)
+
+    copy_buffer = copy_full([containment_item, class_item])
+
+    with Transaction(event_manager):
+        paste_full(copy_buffer, diagram)
+
+    undo_manager.undo_transaction()

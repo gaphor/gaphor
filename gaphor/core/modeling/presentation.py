@@ -105,14 +105,7 @@ class Presentation(Matrices, Element, Generic[S]):
             self.parent.matrix_i2c.remove_handler(self._on_matrix_changed)
 
         if diagram := self._original_diagram:
-            connecting_items = [
-                cinfo.item
-                for cinfo in diagram.connections.get_connections(connected=self)
-            ]
-
             diagram.connections.remove_connections_to_item(self)
-            for item in connecting_items:
-                item.unlink()
             self._original_diagram = None
             super().inner_unlink(UnlinkEvent(self, diagram=diagram))
 

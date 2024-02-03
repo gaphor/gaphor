@@ -71,7 +71,15 @@ class BaseConnector:
     ) -> None:
         self.element = element
         self.line = line
-        self.diagram: Diagram = element.diagram
+
+        # Try to find the diagram. Any diagram can be None, when called while an element is unlinking
+        assert (
+            element.diagram is line.diagram
+            or element.diagram is None
+            or line.diagram is None
+        )
+        self.diagram: Diagram = element.diagram or line.diagram
+        assert self.diagram
 
     def get_connected(self, handle: Handle) -> Presentation[Element] | None:
         """Get item connected to a handle."""

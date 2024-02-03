@@ -150,5 +150,5 @@ def test_remove_connected_items_on_unlink(create, diagram):
     class_a_item.subject.unlink()
 
     assert class_a_item not in diagram.ownedPresentation
-    assert association_item not in diagram.ownedPresentation
+    assert association_item in diagram.ownedPresentation
     assert class_b_item in diagram.ownedPresentation
