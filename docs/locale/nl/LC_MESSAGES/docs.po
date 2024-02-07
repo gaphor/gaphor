@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gaphor 2.18.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-04-09 15:06-0400\n"
-"PO-Revision-Date: 2024-02-05 09:01+0000\n"
+"PO-Revision-Date: 2024-02-07 22:43+0000\n"
 "Last-Translator: Philip Goto <philip.goto@gmail.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/gaphor/"
 "docs-gaphor-org/nl/>\n"
@@ -677,7 +677,7 @@ msgstr ""
 
 #: ../getting_started.md:132
 msgid "sidebar-show-right-symbolic"
-msgstr "zijbalk-tonen-rechts-symbolisch"
+msgstr "sidebar-show-right-symbolic"
 
 #: ../getting_started.md:139
 msgid "The properties that are shown depend on the item that is selected."
@@ -693,7 +693,7 @@ msgstr ""
 
 #: ../getting_started.md:143
 msgid "document-properties-symbolic"
-msgstr "documenteigenschappen-symbolisch"
+msgstr "document-properties-symbolic"
 
 #: ../index.rst:29
 msgid "Getting Started"
@@ -2615,7 +2615,7 @@ msgstr ""
 
 #: ../style_sheets.md:89
 msgid "``generaliation[subject]``"
-msgstr "``generalisatie[object]``"
+msgstr "``generalisatie[onderdeel]``"
 
 #: ../style_sheets.md:89
 msgid "A generalization item with a subject present."
@@ -2623,7 +2623,7 @@ msgstr ""
 
 #: ../style_sheets.md:90
 msgid "``class[name=Foo]``"
-msgstr "``klasse[naam=Foo]``"
+msgstr "``class[name=Foo]``"
 
 #: ../style_sheets.md:90
 msgid "A class with name \"Foo\"."
@@ -2631,7 +2631,7 @@ msgstr ""
 
 #: ../style_sheets.md:91
 msgid "``diagram[name^=draft]``"
-msgstr "``diagram[naam^=concept]``"
+msgstr "``diagram[name^=draft]``"
 
 #: ../style_sheets.md:91
 msgid "A diagram with a name starting with \"draft\"."
@@ -2639,7 +2639,7 @@ msgstr ""
 
 #: ../style_sheets.md:92
 msgid "``diagram[name$=draft]``"
-msgstr "``diagram[naam$=concept]``"
+msgstr "``diagram[name$=draft]``"
 
 #: ../style_sheets.md:92
 msgid "A diagram with a name ends with \"draft\"."
@@ -2647,7 +2647,7 @@ msgstr ""
 
 #: ../style_sheets.md:93
 msgid "``diagram[name*=draft]``"
-msgstr "``diagram[naam*=concept]``"
+msgstr "``diagram[name*=draft]``"
 
 #: ../style_sheets.md:93
 msgid "A diagram with a name containing the text \"draft\"."
@@ -2663,7 +2663,7 @@ msgstr ""
 
 #: ../style_sheets.md:95
 msgid "``diagram[name|=draft]``"
-msgstr "``diagram[naam|=concept]``"
+msgstr "``diagram[name|=draft]``"
 
 #: ../style_sheets.md:95
 msgid "A diagram with a name is \"draft\" or starts with \"draft-\"."
@@ -2695,7 +2695,7 @@ msgstr ""
 
 #: ../style_sheets.md:102
 msgid "``node:empty``"
-msgstr "``knoop:leeg``"
+msgstr "``node:empty``"
 
 #: ../style_sheets.md:102
 msgid "A node containing no child nodes in the diagram."
@@ -2715,7 +2715,7 @@ msgstr ""
 
 #: ../style_sheets.md:106
 msgid "``:has()``"
-msgstr "``:heeft()``"
+msgstr "``:has()``"
 
 #: ../style_sheets.md:106
 msgid "The item contains any of the provided selectors."
@@ -2739,7 +2739,7 @@ msgstr ""
 
 #: ../style_sheets.md:112
 msgid "``:not()``"
-msgstr "``:niet()``"
+msgstr "``:not()``"
 
 #: ../style_sheets.md:112
 msgid "Negate the selector."
@@ -2775,7 +2775,7 @@ msgstr "Kleuren"
 
 #: ../style_sheets.md:137
 msgid "``background-color``"
-msgstr "``achtergrondkleur``"
+msgstr "``background-color``"
 
 #: ../style_sheets.md:137
 msgid "Examples:"
@@ -2795,7 +2795,7 @@ msgstr ""
 
 #: ../style_sheets.md:144
 msgid "``color``"
-msgstr "``kleur``"
+msgstr "``color``"
 
 #: ../style_sheets.md:144
 msgid "Color used for lines."
@@ -2803,7 +2803,7 @@ msgstr ""
 
 #: ../style_sheets.md:145
 msgid "``text-color``"
-msgstr "``tekstkleur``"
+msgstr "``text-color``"
 
 #: ../style_sheets.md:145
 msgid "Color for text."
@@ -2811,7 +2811,7 @@ msgstr ""
 
 #: ../style_sheets.md:146
 msgid "``opacity``"
-msgstr "``ondoorzichtigheid``"
+msgstr "``opacity``"
 
 #: ../style_sheets.md:146
 msgid "Color opacity factor (``0.0`` - ``1.0``), applied to all colors."
@@ -2827,7 +2827,7 @@ msgstr ""
 
 #: ../style_sheets.md:159
 msgid "``font-family``"
-msgstr ""
+msgstr "``font-family``"
 
 #: ../style_sheets.md:159
 msgid "A single font name (e.g. ``sans``, ``serif``, ``courier``)."
@@ -2835,7 +2835,7 @@ msgstr ""
 
 #: ../style_sheets.md:160
 msgid "``font-size``"
-msgstr ""
+msgstr "``font-size``"
 
 #: ../style_sheets.md:160
 msgid "An absolute size (e.g. ``14``) or a size value (e.g. ``small``)."
@@ -2843,7 +2843,7 @@ msgstr ""
 
 #: ../style_sheets.md:161
 msgid "``font-style``"
-msgstr ""
+msgstr "``font-style``"
 
 #: ../style_sheets.md:161
 msgid "Either ``normal`` or ``italic``."
@@ -2851,7 +2851,7 @@ msgstr ""
 
 #: ../style_sheets.md:162
 msgid "``font-weight``"
-msgstr ""
+msgstr "``font-weight``"
 
 #: ../style_sheets.md:162
 msgid "Either ``normal`` or ``bold``."
@@ -2859,7 +2859,7 @@ msgstr ""
 
 #: ../style_sheets.md:163
 msgid "``text-align``"
-msgstr ""
+msgstr "``text-align``"
 
 #: ../style_sheets.md:163
 msgid "Either ``left``, ``center``, ``right``."
@@ -2867,7 +2867,7 @@ msgstr ""
 
 #: ../style_sheets.md:164
 msgid "``text-decoration``"
-msgstr ""
+msgstr "``text-decoration``"
 
 #: ../style_sheets.md:164
 msgid "Either ``none`` or ``underline``."
@@ -2875,7 +2875,7 @@ msgstr ""
 
 #: ../style_sheets.md:165
 msgid "``vertical-align``"
-msgstr ""
+msgstr "``vertical-align``"
 
 #: ../style_sheets.md:165
 msgid "Vertical alignment for text."
@@ -2887,7 +2887,7 @@ msgstr ""
 
 #: ../style_sheets.md:168
 msgid "``vertical-spacing``"
-msgstr ""
+msgstr "``vertical-spacing``"
 
 #: ../style_sheets.md:168
 msgid "Set vertical spacing for icon-like items (actors, start state)."
@@ -2911,7 +2911,7 @@ msgstr ""
 
 #: ../style_sheets.md:183
 msgid "``border-radius``"
-msgstr ""
+msgstr "``border-radius``"
 
 #: ../style_sheets.md:183
 msgid "Radius for rectangles: ``border-radius: 4``."
@@ -2919,7 +2919,7 @@ msgstr ""
 
 #: ../style_sheets.md:184
 msgid "``dash-style``"
-msgstr ""
+msgstr "``dash-style``"
 
 #: ../style_sheets.md:184
 msgid "Style for dashed lines: ``dash-style: 7 5``."
@@ -2927,7 +2927,7 @@ msgstr ""
 
 #: ../style_sheets.md:185
 msgid "``justify-content``"
-msgstr ""
+msgstr "``justify-content``"
 
 #: ../style_sheets.md:185
 msgid "Content alignment for boxes."
@@ -2939,7 +2939,7 @@ msgstr ""
 
 #: ../style_sheets.md:188
 msgid "``line-style``"
-msgstr ""
+msgstr "``line-style``"
 
 #: ../style_sheets.md:188
 msgid "Either ``normal`` or ``sloppy [factor]``."
@@ -2947,7 +2947,7 @@ msgstr ""
 
 #: ../style_sheets.md:189
 msgid "``line-width``"
-msgstr ""
+msgstr "``line-width``"
 
 #: ../style_sheets.md:189
 msgid "Set the width for lines: ``line-width: 2``."
@@ -2955,7 +2955,7 @@ msgstr ""
 
 #: ../style_sheets.md:190
 msgid "``min-height``"
-msgstr ""
+msgstr "``min-height``"
 
 #: ../style_sheets.md:190
 msgid "Set minimal height for an item: ``min-height: 50``."
@@ -2963,7 +2963,7 @@ msgstr ""
 
 #: ../style_sheets.md:191
 msgid "``min-width``"
-msgstr ""
+msgstr "``min-width``"
 
 #: ../style_sheets.md:191
 msgid "Set minimal width for an item: ``min-width: 100``."
@@ -2971,7 +2971,7 @@ msgstr ""
 
 #: ../style_sheets.md:192
 msgid "``padding``"
-msgstr ""
+msgstr "``padding``"
 
 #: ../style_sheets.md:192
 msgid "CSS style padding (top, right, bottom, left)."
@@ -3075,7 +3075,7 @@ msgstr ""
 
 #: ../style_sheets.md:289
 msgid "\\*"
-msgstr ""
+msgstr "\\*"
 
 #: ../style_sheets.md:289
 msgid "*element name*"
@@ -3111,7 +3111,7 @@ msgstr ""
 
 #: ../style_sheets.md:292
 msgid "``association``"
-msgstr ""
+msgstr "``association``"
 
 #: ../style_sheets.md:293
 msgid "Components"
@@ -3123,7 +3123,7 @@ msgstr ""
 
 #: ../style_sheets.md:293
 msgid "``node``"
-msgstr ""
+msgstr "``node``"
 
 #: ../style_sheets.md:294
 #: ../style_sheets.md:295
@@ -3137,7 +3137,7 @@ msgstr ""
 
 #: ../style_sheets.md:294
 msgid "``decisionnode``"
-msgstr ""
+msgstr "``decisionnode``"
 
 #: ../style_sheets.md:295
 msgid "Fork/Join Node"
@@ -3145,7 +3145,7 @@ msgstr ""
 
 #: ../style_sheets.md:295
 msgid "``forknode``"
-msgstr ""
+msgstr "``forknode``"
 
 #: ../style_sheets.md:296
 msgid "Swimlane"
@@ -3153,7 +3153,7 @@ msgstr ""
 
 #: ../style_sheets.md:296
 msgid "``partition``"
-msgstr ""
+msgstr "``partition``"
 
 #: ../style_sheets.md:297
 msgid "Interactions"
@@ -3165,7 +3165,7 @@ msgstr ""
 
 #: ../style_sheets.md:297
 msgid "``message``"
-msgstr ""
+msgstr "``message``"
 
 #: ../style_sheets.md:298
 #: ../style_sheets.md:299
@@ -3179,7 +3179,7 @@ msgstr ""
 #: ../style_sheets.md:298
 #: ../style_sheets.md:299
 msgid "``pseudostate``"
-msgstr ""
+msgstr "``pseudostate``"
 
 #: ../style_sheets.md:299
 msgid "History Pseudostate"
