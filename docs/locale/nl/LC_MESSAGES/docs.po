@@ -2615,7 +2615,7 @@ msgstr ""
 
 #: ../style_sheets.md:89
 msgid "``generaliation[subject]``"
-msgstr ""
+msgstr "``generalization[subject]``"
 
 #: ../style_sheets.md:89
 msgid "A generalization item with a subject present."
