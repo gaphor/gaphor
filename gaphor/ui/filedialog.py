@@ -81,6 +81,8 @@ def save_file_dialog(
 
     if filename:
         dialog.set_initial_file(Gio.File.parse_name(str(filename)))
+    else:
+        dialog.set_initial_name(f"{gettext('New Model')}{extension}")
 
     dialog.set_filters(new_filters(filters))
 
@@ -90,12 +92,6 @@ def save_file_dialog(
             return
 
         filename = Path(dialog.save_finish(result).get_path())
-        if extension and filename.suffix != extension:
-            filename = filename.with_suffix(extension)
-            if filename.exists():
-                dialog.set_initial_file(Gio.File.parse_name(str(filename)))
-                dialog.save(parent=parent, cancellable=None, callback=response)
-                return
         handler(filename)
 
     dialog.save(parent=parent, cancellable=None, callback=response)
