@@ -41,10 +41,9 @@ class DiagramExport(Service, ActionProvider):
 
         save_file_dialog(
             title,
+            filename,
             save_handler,
             parent=self.main_window.window,
-            filename=filename,
-            extension=dot_ext,
             filters=[
                 (gettext("All {ext} Files").format(ext=ext.upper()), dot_ext, mime_type)
             ],

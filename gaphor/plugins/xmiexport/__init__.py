@@ -41,8 +41,7 @@ class XMIExport(Service, ActionProvider):
         )
         save_file_dialog(
             gettext("Export model as XMI file"),
+            filename,
             handler,
-            filename=filename,
-            extension=".xmi",
             filters=[(gettext("All XMI Files"), ".xmi", "text/xml")],
         )
