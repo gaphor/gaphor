@@ -49,9 +49,8 @@ def test_save_dialog(file_dialog):
 
     save_file_dialog(
         "title",
+        Path("testfile.gaphor"),
         save_handler,
-        filename=None,
-        extension=".gaphor",
         filters=[],
     )
 
@@ -68,9 +67,8 @@ def test_save_dialog_with_full_file_name(file_dialog):
     filename = Path("/test/path/model.gaphor")
     save_file_dialog(
         "title",
+        filename,
         save_handler,
-        filename=filename,
-        extension=".gaphor",
         filters=[],
     )
 
@@ -87,13 +85,12 @@ def test_save_dialog_filename_without_extension(file_dialog):
 
     save_file_dialog(
         "title",
+        Path("model"),
         save_handler,
-        filename=None,
-        extension=".gaphor",
         filters=[],
     )
 
-    assert selected_file.parts == (os.path.sep, "test", "path", "model.gaphor")
+    assert selected_file.parts == (os.path.sep, "test", "path", "model")
 
 
 def test_format_home_folder():

@@ -6,6 +6,7 @@ from __future__ import annotations
 import os
 import sys
 from pathlib import Path
+from typing import Callable
 
 from gi.repository import Gio, Gtk
 
@@ -69,18 +70,15 @@ def open_file_dialog(
 
 
 def save_file_dialog(
-    title,
-    handler,
+    title: str,
+    filename: Path,
+    handler: Callable[[Path], None],
     parent=None,
-    filename=None,
-    extension=None,
     filters=None,
 ) -> Gtk.FileChooser:
     dialog = Gtk.FileDialog.new()
     dialog.set_title(title)
-
-    if filename:
-        dialog.set_initial_file(Gio.File.parse_name(str(filename)))
+    dialog.set_initial_file(Gio.File.parse_name(str(filename.absolute())))
 
     dialog.set_filters(new_filters(filters))
 
@@ -90,12 +88,6 @@ def save_file_dialog(
             return
 
         filename = Path(dialog.save_finish(result).get_path())
-        if extension and filename.suffix != extension:
-            filename = filename.with_suffix(extension)
-            if filename.exists():
-                dialog.set_initial_file(Gio.File.parse_name(str(filename)))
-                dialog.save(parent=parent, cancellable=None, callback=response)
-                return
         handler(filename)
 
     dialog.save(parent=parent, cancellable=None, callback=response)

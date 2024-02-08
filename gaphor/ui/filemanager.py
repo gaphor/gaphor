@@ -359,10 +359,9 @@ class FileManager(Service, ActionProvider):
 
         return save_file_dialog(
             gettext("Save Gaphor Model As"),
+            self.filename or Path(gettext("New Model")).with_suffix(".gaphor"),
             self.save,
             parent=self.parent_window,
-            filename=self.filename,
-            extension=".gaphor",
             filters=GAPHOR_FILTER,
         )
 
@@ -394,12 +393,12 @@ class FileManager(Service, ActionProvider):
                 else:
                     save_file_dialog(
                         gettext("Save Gaphor Model As"),
+                        self.filename
+                        or Path(gettext("New Model")).with_suffix(".gaphor"),
                         lambda filename: self.save(
                             filename, on_save_done=confirm_shutdown
                         ),
                         parent=self.parent_window,
-                        filename=self.filename,
-                        extension=".gaphor",
                         filters=GAPHOR_FILTER,
                     )
             elif answer == "discard":
