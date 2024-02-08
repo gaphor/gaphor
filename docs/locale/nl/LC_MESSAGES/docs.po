@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gaphor 2.18.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-04-09 15:06-0400\n"
-"PO-Revision-Date: 2023-04-27 21:47+0000\n"
+"PO-Revision-Date: 2024-02-07 22:43+0000\n"
 "Last-Translator: Philip Goto <philip.goto@gmail.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/gaphor/"
 "docs-gaphor-org/nl/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.18-dev\n"
+"X-Generator: Weblate 5.4-dev\n"
 
 #: ../connect.md:1
 msgid "Connection Protocol"
@@ -41,7 +41,7 @@ msgstr ""
 
 #: ../container.md:6
 msgid "GitHub Codespaces"
-msgstr ""
+msgstr "GitHub Codespaces"
 
 #: ../container.md:8
 msgid "Follow these steps to open Gaphor in a Codespace:"
@@ -65,7 +65,7 @@ msgstr ""
 
 #: ../design_principles.md:1
 msgid "Design Principles"
-msgstr ""
+msgstr "Ontwerp­principes"
 
 #: ../design_principles.md:3
 msgid "Gaphor has been around for quite a few years. In those years we (the Gaphor developers) learned a few things on how to build it. Gaphor tries to be easily accessible for novice users as well as a useful tool for more experienced users."
@@ -117,7 +117,7 @@ msgstr ""
 
 #: ../design_principles.md:42
 msgid "Avoid dialogs"
-msgstr ""
+msgstr "Vermijd dialogen"
 
 #: ../design_principles.md:44
 msgid "In doing the right thing, and staying out of the way of users, Gaphor avoids the use of dialogs as much as possible."
@@ -137,7 +137,7 @@ msgstr ""
 
 #: ../design_principles.md:57
 msgid "Balanced"
-msgstr ""
+msgstr "Gebalanceerd"
 
 #: ../design_principles.md:59
 msgid "Although Gaphor implements quite a bit of the UML 2 model, it's not complete. We try to find the right balance in features to suite both expert and novice modellers."
@@ -153,7 +153,7 @@ msgstr ""
 
 #: ../design_principles.md:68
 msgid "Backwards compatibility"
-msgstr ""
+msgstr "Achterwaartse compatibiliteit"
 
 #: ../design_principles.md:70
 msgid "Gaphor is capable of loading models going back to Gaphor 1.0. It's important for a tool to always allow older models to be loaded."
@@ -173,7 +173,7 @@ msgstr ""
 
 #: ../design_principles.md:83
 msgid "User interaction"
-msgstr ""
+msgstr "Gebruikers­interactie"
 
 #: ../design_principles.md:85
 msgid "Gaphor is originally written on Linux. It uses [GTK](https://gtk.org) as it's user interface toolkit. This sort of implies that Gaphor follows the [GNOME Human Interface Guidelines (HIG)](https://developer.gnome.org/hig/). Gaphor is also a multi-platform application. We try to stay close to the GNOME HIG, but try not to introduce concepts that are not available on Windows and macOS."
@@ -185,7 +185,7 @@ msgstr ""
 
 #: ../design_principles.md:97
 msgid "What else?"
-msgstr ""
+msgstr "Wat nog meer?"
 
 #: ../design_principles.md:99
 msgid "**Idempotency** Allow the same operation to be applied multiple times. This should not affect the result."
@@ -197,7 +197,7 @@ msgstr ""
 
 #: ../event_system.md:1
 msgid "Event System"
-msgstr ""
+msgstr "Evenementen­systeem"
 
 #: ../event_system.md:3
 msgid "The event system in Gaphor provides an API to *handle* events and to *subscribe* to events."
@@ -283,7 +283,7 @@ msgstr ""
 
 #: ../first_model.md:15
 msgid "newclass"
-msgstr ""
+msgstr "nieuweklasse"
 
 #: ../first_model.md:22
 msgid "The Property Editor on the right side will show you details about the newly added class, such as its name (_New Class_), attributes and operations (methods)."
@@ -291,13 +291,13 @@ msgstr ""
 
 #: ../first_model.md:25
 msgid "![image](images/first-model-class.png)"
-msgstr ""
+msgstr "![afbeelding](images/first-model-class.png)"
 
 #: ../first_model.md:25
 #: ../first_model.md:48
 #: ../first_model.md:60
 msgid "image"
-msgstr ""
+msgstr "afbeelding"
 
 #: ../first_model.md:27
 msgid "It's simple to add elements to a diagram."
@@ -309,7 +309,7 @@ msgstr ""
 
 #: ../first_model.md:34
 msgid "Adding Relations"
-msgstr ""
+msgstr "Relaties toevoegen"
 
 #: ../first_model.md:36
 msgid "Add another Class. Change the names to `Shape` and `Circle`. Let's define that `Circle` is a sub-type of `Shape`. You can do this by selecting one and changing the name in the Property Editor, or by double-clicking the element."
@@ -321,7 +321,7 @@ msgstr ""
 
 #: ../first_model.md:40
 msgid "newgeneralization"
-msgstr ""
+msgstr "nieuwegeneralisatie"
 
 #: ../first_model.md:43
 msgid "Move the mouse cursor over `Shape`. Click, hold and drag the line end over `Circle`. Release the mouse button, and you should have your relationship between `Shape` and `Circle`. You can see both ends of the relation are red, indicating they are connected to their class."
@@ -329,7 +329,7 @@ msgstr ""
 
 #: ../first_model.md:48
 msgid "![image](images/first-model-generalization.png)"
-msgstr ""
+msgstr "![afbeelding](images/first-model-generalization.png)"
 
 #: ../first_model.md:50
 msgid "Optionally you can run the auto-layout (![open menu](images/open-menu-symbolic.svg) → Tools → Auto Layout) to align the elements on the diagram."
@@ -337,7 +337,7 @@ msgstr ""
 
 #: ../first_model.md:50
 msgid "openmenu"
-msgstr ""
+msgstr "menuopenen"
 
 #: ../first_model.md:54
 msgid "Creating New Diagrams"
@@ -349,11 +349,11 @@ msgstr ""
 
 #: ../first_model.md:56
 msgid "new diagram"
-msgstr ""
+msgstr "nieuw diagram"
 
 #: ../first_model.md:60
 msgid "![image](/images/first-model-new-diagram-popup.png)"
-msgstr ""
+msgstr "![afbeelding](/images/first-model-new-diagram-popup.png)"
 
 #: ../first_model.md:62
 msgid "Select _New Generic Diagram_ and a new diagram is created."
@@ -389,7 +389,7 @@ msgstr ""
 
 #: ../framework.md:11
 msgid "Event driven"
-msgstr ""
+msgstr "Gebeurtenis­gedreven"
 
 #: ../framework.md:13
 msgid "Parts of Gaphor communicate with each other through events. Whenever something important happens, for example, an attribute of a model element changes, an event is sent. When other parts of the application are interested in a change, they register an event handler for that event type. Events are emitted though a central broker so you do not have to register on every individual element that can send an event they are interested in. For example, a diagram item could register an event rule and then check if the element that sent the event is actually the event the item is representing. For more information see the full description of the [event system](event_system.md)."
@@ -405,7 +405,7 @@ msgstr ""
 
 #: ../framework.md:32
 msgid "Main Components"
-msgstr ""
+msgstr "Hoofd­componenten"
 
 #: ../framework.md:34
 msgid "The main portion of Gaphor that executes first is called the `Application`. Gaphor can have multiple models open at any time. Each model is kept in a `Session`. Only one Application instance is active. Each session will load its own services defined as [gaphor.services](service_oriented.md)."
@@ -417,7 +417,7 @@ msgstr ""
 
 #: ../framework.md:42
 msgid "event_manager"
-msgstr ""
+msgstr "gebeurtenisbeheer"
 
 #: ../framework.md:44
 msgid "This is the central component used for event dispatching. Every service that does something with events (both sending and receiving) depends on this component."
@@ -425,7 +425,7 @@ msgstr ""
 
 #: ../framework.md:48
 msgid "file_manager"
-msgstr ""
+msgstr "bestandsbeheer"
 
 #: ../framework.md:50
 msgid "Loading and saving a model is done through this service."
@@ -433,7 +433,7 @@ msgstr ""
 
 #: ../framework.md:52
 msgid "element_factory"
-msgstr ""
+msgstr "elementfabriek"
 
 #: ../framework.md:54
 msgid "The [data model](models/core.md) itself is maintained in the element factory (`gaphor.core.modeling.elementfactory`). This service is used to create model elements, as well as to lookup elements or query for a set of elements."
@@ -441,7 +441,7 @@ msgstr ""
 
 #: ../framework.md:58
 msgid "undo_manager"
-msgstr ""
+msgstr "ongedaanmakenbeheer"
 
 #: ../framework.md:60
 msgid "One of the most appreciated services. It allows users to make a mistake every now and then!"
@@ -513,11 +513,11 @@ msgstr ""
 
 #: ../getting_started.md:17
 msgid "![welcome screen](images/getting-started-greeter.png)"
-msgstr ""
+msgstr "![welkomstscherm](images/getting-started-greeter.png)"
 
 #: ../getting_started.md:17
 msgid "welcome screen"
-msgstr ""
+msgstr "welkomstscherm"
 
 #: ../getting_started.md:19
 msgid "You can select a template to get started."
@@ -549,11 +549,11 @@ msgstr ""
 
 #: ../getting_started.md:29
 msgid "![new model](images/getting-started-new-model.png)"
-msgstr ""
+msgstr "![nieuw model](images/getting-started-new-model.png)"
 
 #: ../getting_started.md:29
 msgid "new model"
-msgstr ""
+msgstr "nieuw model"
 
 #: ../getting_started.md:31
 msgid "The layout of the Gaphor interface is divided into four sections, namely:"
@@ -562,7 +562,7 @@ msgstr ""
 #: ../getting_started.md:34
 #: ../getting_started.md:41
 msgid "Model Browser"
-msgstr ""
+msgstr "Model­browser"
 
 #: ../getting_started.md:35
 msgid "Diagram Element Toolbox"
@@ -576,7 +576,7 @@ msgstr "Diagrammen"
 #: ../getting_started.md:37
 #: ../getting_started.md:130
 msgid "Property Editor"
-msgstr ""
+msgstr "Eigenschappen­bewerker"
 
 #: ../getting_started.md:39
 msgid "Each section has its own specific function."
@@ -677,7 +677,7 @@ msgstr ""
 
 #: ../getting_started.md:132
 msgid "sidebar-show-right-symbolic"
-msgstr ""
+msgstr "sidebar-show-right-symbolic"
 
 #: ../getting_started.md:139
 msgid "The properties that are shown depend on the item that is selected."
@@ -685,7 +685,7 @@ msgstr ""
 
 #: ../getting_started.md:141
 msgid "Model Preferences"
-msgstr ""
+msgstr "Model­eigenschappen"
 
 #: ../getting_started.md:143
 msgid "The Property Editor also contains model preferences: Click the ![document-properties-symbolic](images/document-properties-symbolic.svg) button. Here you can set a few model related settings and edit the [style sheet](style_sheets)."
@@ -693,11 +693,11 @@ msgstr ""
 
 #: ../getting_started.md:143
 msgid "document-properties-symbolic"
-msgstr ""
+msgstr "document-properties-symbolic"
 
 #: ../index.rst:29
 msgid "Getting Started"
-msgstr ""
+msgstr "Aan de slag"
 
 #: ../index.rst:36
 msgid "Features"
@@ -709,7 +709,7 @@ msgstr "Installatie"
 
 #: ../index.rst:55
 msgid "Modeling languages"
-msgstr ""
+msgstr "Modellerings­talen"
 
 #: ../index.rst:65
 msgid "Concepts"
@@ -721,7 +721,7 @@ msgstr "Intern"
 
 #: ../index.rst:2
 msgid "About Gaphor"
-msgstr ""
+msgstr "Over Gaphor"
 
 #: ../index.rst:6
 msgid "The documentation is up to date for Gaphor |version|"
@@ -775,7 +775,7 @@ msgstr ""
 #: ../macos.md:10
 #: ../windows.md:11
 msgid "Development Environment"
-msgstr ""
+msgstr "Ontwikkelings­omgeving"
 
 #: ../linux.md:13
 msgid "There are two ways to set up a development environment:"
@@ -791,7 +791,7 @@ msgstr ""
 
 #: ../linux.md:18
 msgid "GNOME Builder"
-msgstr ""
+msgstr "GNOME Builder"
 
 #: ../linux.md:20
 msgid "Open [GNOME Builder](https://flathub.org/apps/details/org.gnome.Builder) 43 or newer, [clone the repository](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository). Check if the _Build Profile_ is set to `org.gaphor.Gaphor.json`. If so, hit the _Run_ button to start the application."
@@ -849,11 +849,11 @@ msgstr ""
 
 #: ../linux.md:92
 msgid "[Install Flatpak](https://flatpak.org/setup)"
-msgstr ""
+msgstr "[Flatpak installeren](https://flatpak.org/setup)"
 
 #: ../linux.md:94
 msgid "Install flatpak-builder"
-msgstr ""
+msgstr "flatpak-builder installeren"
 
 #: ../linux.md:98
 msgid "Install the GNOME SDK"
@@ -897,11 +897,11 @@ msgstr ""
 
 #: ../linux.md:141
 msgid "https://github.com/pld-linux/python-gaphas"
-msgstr ""
+msgstr "https://github.com/pld-linux/python-gaphas"
 
 #: ../linux.md:142
 msgid "https://github.com/pld-linux/gaphor"
-msgstr ""
+msgstr "https://github.com/pld-linux/gaphor"
 
 #: ../linux.md:144
 msgid "There is also an [Arch User Repository (AUR) for Gaphor](https://aur.archlinux.org/packages/python-gaphor) available for Arch users."
@@ -925,7 +925,7 @@ msgstr ""
 
 #: ../macos.md:13
 msgid "Install [Homebrew](https://brew.sh)"
-msgstr ""
+msgstr "[Homebrew](https://brew.sh) installeren"
 
 #: ../macos.md:14
 msgid "Open a terminal and execute:"
@@ -969,11 +969,11 @@ msgstr ""
 
 #: ../merge_conflicts.md:14
 msgid "![merge dialog](images/merge-dialog.png)"
-msgstr ""
+msgstr "![samenvoegings­dialoog](images/merge-dialog.png)"
 
 #: ../merge_conflicts.md:14
 msgid "merge dialog"
-msgstr ""
+msgstr "samenvoegings­dialoog"
 
 #: ../merge_conflicts.md:16
 msgid "If you choose *Open Merge Editor*, both models will be loaded. The current model remains as is. In addition, the changes made to the incoming model are calculated. Those changes are stored as _pending change_ objects in the model."
@@ -1013,7 +1013,7 @@ msgstr ""
 
 #: ../modeling_language.md:1
 msgid "Modeling Languages"
-msgstr ""
+msgstr "Modellerings­talen"
 
 #: ../modeling_language.md:3
 msgid "Since version 2.0, Gaphor supports the concept of Modeling languages. This allows for development of separate modeling languages separate from the Gaphor core application."
@@ -1041,7 +1041,7 @@ msgstr ""
 
 #: ../modeling_language.md:24
 msgid "Diagram types"
-msgstr ""
+msgstr "Diagram­typen"
 
 #: ../modeling_language.md:25
 msgid "A toolbox definition"
@@ -1133,11 +1133,11 @@ msgstr "Parameters"
 
 #: ../../gaphor/diagram/connectors.py:docstring of gaphor.diagram.connectors.BaseConnector:5
 msgid "connecting item"
-msgstr ""
+msgstr "verbindend item"
 
 #: ../../gaphor/diagram/connectors.py:docstring of gaphor.diagram.connectors.BaseConnector:7
 msgid "connectable item"
-msgstr ""
+msgstr "verbindbaar item"
 
 #: ../../gaphor/diagram/connectors.py:docstring of gaphor.diagram.connectors.BaseConnector:10
 msgid "The following methods are required to make this work:"
@@ -1330,7 +1330,7 @@ msgstr ""
 #: ../style_sheets.md:304
 #: ../style_sheets.md:305
 msgid "C4 Model"
-msgstr ""
+msgstr "C4-model"
 
 #: ../models/c4model.md:3
 msgid "The [C4 model](https://c4model.com/) is a simple visual language to describe the static structure of a software system."
@@ -1652,7 +1652,7 @@ msgstr ""
 
 #: ../models/raaml/Methods.rst:239
 msgid "FTA/FTA"
-msgstr ""
+msgstr "FTA/FTA"
 
 #: ../models/sysml.md:1
 msgid "Systems Modeling Language"
@@ -1672,7 +1672,7 @@ msgstr "Toewijzingen"
 
 #: ../models/sysml/Allocations.rst:5
 msgid "AllocatedActivityPartition"
-msgstr ""
+msgstr "ToegewezenActiviteitsPartitie"
 
 #: ../models/sysml/Allocations.rst:11
 msgid "Allocation"
@@ -1718,7 +1718,7 @@ msgstr ""
 
 #: ../models/sysml/ConstraintBlocks.rst:2
 msgid "ConstraintBlocks"
-msgstr ""
+msgstr "BeperkingsBlokken"
 
 #: ../models/sysml/Libraries.rst:2
 msgid "Libraries"
@@ -1726,11 +1726,11 @@ msgstr "Bibliotheken"
 
 #: ../models/sysml/ModelElements.rst:2
 msgid "ModelElements"
-msgstr ""
+msgstr "ModelElementen"
 
 #: ../models/sysml/PortsAndFlows.rst:2
 msgid "PortsAndFlows"
-msgstr ""
+msgstr "PoortenEnStromingen"
 
 #: ../models/sysml/PortsAndFlows.rst:5
 msgid "Actions on Nested Ports"
@@ -1979,7 +1979,7 @@ msgstr ""
 
 #: ../models/uml/12._Use_Cases.rst:5
 msgid "UseCases"
-msgstr ""
+msgstr "Doeleinden"
 
 #: ../models/uml/13._Deployments.rst:2
 msgid "13. Deployments"
@@ -2575,7 +2575,7 @@ msgstr ""
 
 #: ../style_sheets.md:68
 msgid "dark-style"
-msgstr ""
+msgstr "donkere-stijl"
 
 #: ../style_sheets.md:75
 msgid "Here you already see the first custom attribute: `text-color`. This property allows you to control the color of the text drawn in an item. `color` is used for the lines (strokes) that make the layout of a diagram item."
@@ -2591,7 +2591,7 @@ msgstr ""
 
 #: ../style_sheets.md:86
 msgid "``*``"
-msgstr ""
+msgstr "``*``"
 
 #: ../style_sheets.md:86
 msgid "All items on the diagram, including the diagram itself."
@@ -2615,7 +2615,7 @@ msgstr ""
 
 #: ../style_sheets.md:89
 msgid "``generaliation[subject]``"
-msgstr ""
+msgstr "``generalisatie[onderdeel]``"
 
 #: ../style_sheets.md:89
 msgid "A generalization item with a subject present."
@@ -2623,7 +2623,7 @@ msgstr ""
 
 #: ../style_sheets.md:90
 msgid "``class[name=Foo]``"
-msgstr ""
+msgstr "``class[name=Foo]``"
 
 #: ../style_sheets.md:90
 msgid "A class with name \"Foo\"."
@@ -2631,7 +2631,7 @@ msgstr ""
 
 #: ../style_sheets.md:91
 msgid "``diagram[name^=draft]``"
-msgstr ""
+msgstr "``diagram[name^=draft]``"
 
 #: ../style_sheets.md:91
 msgid "A diagram with a name starting with \"draft\"."
@@ -2639,7 +2639,7 @@ msgstr ""
 
 #: ../style_sheets.md:92
 msgid "``diagram[name$=draft]``"
-msgstr ""
+msgstr "``diagram[name$=draft]``"
 
 #: ../style_sheets.md:92
 msgid "A diagram with a name ends with \"draft\"."
@@ -2647,7 +2647,7 @@ msgstr ""
 
 #: ../style_sheets.md:93
 msgid "``diagram[name*=draft]``"
-msgstr ""
+msgstr "``diagram[name*=draft]``"
 
 #: ../style_sheets.md:93
 msgid "A diagram with a name containing the text \"draft\"."
@@ -2663,7 +2663,7 @@ msgstr ""
 
 #: ../style_sheets.md:95
 msgid "``diagram[name|=draft]``"
-msgstr ""
+msgstr "``diagram[name|=draft]``"
 
 #: ../style_sheets.md:95
 msgid "A diagram with a name is \"draft\" or starts with \"draft-\"."
@@ -2671,7 +2671,7 @@ msgstr ""
 
 #: ../style_sheets.md:96
 msgid "``*:focus``"
-msgstr ""
+msgstr "``*:focus``"
 
 #: ../style_sheets.md:96
 msgid "The focused item. Other pseudo classes are:"
@@ -2695,7 +2695,7 @@ msgstr ""
 
 #: ../style_sheets.md:102
 msgid "``node:empty``"
-msgstr ""
+msgstr "``node:empty``"
 
 #: ../style_sheets.md:102
 msgid "A node containing no child nodes in the diagram."
@@ -2703,7 +2703,7 @@ msgstr ""
 
 #: ../style_sheets.md:103
 msgid "``:root``"
-msgstr ""
+msgstr "``:root``"
 
 #: ../style_sheets.md:103
 msgid "An item is at the top level of the diagram."
@@ -2715,7 +2715,7 @@ msgstr ""
 
 #: ../style_sheets.md:106
 msgid "``:has()``"
-msgstr ""
+msgstr "``:has()``"
 
 #: ../style_sheets.md:106
 msgid "The item contains any of the provided selectors."
@@ -2727,7 +2727,7 @@ msgstr ""
 
 #: ../style_sheets.md:109
 msgid "``:is()``"
-msgstr ""
+msgstr "``:is()``"
 
 #: ../style_sheets.md:109
 msgid "Match any of the provided selectors."
@@ -2739,7 +2739,7 @@ msgstr ""
 
 #: ../style_sheets.md:112
 msgid "``:not()``"
-msgstr ""
+msgstr "``:not()``"
 
 #: ../style_sheets.md:112
 msgid "Negate the selector."
@@ -2775,7 +2775,7 @@ msgstr "Kleuren"
 
 #: ../style_sheets.md:137
 msgid "``background-color``"
-msgstr ""
+msgstr "``background-color``"
 
 #: ../style_sheets.md:137
 msgid "Examples:"
@@ -2795,7 +2795,7 @@ msgstr ""
 
 #: ../style_sheets.md:144
 msgid "``color``"
-msgstr ""
+msgstr "``color``"
 
 #: ../style_sheets.md:144
 msgid "Color used for lines."
@@ -2803,7 +2803,7 @@ msgstr ""
 
 #: ../style_sheets.md:145
 msgid "``text-color``"
-msgstr ""
+msgstr "``text-color``"
 
 #: ../style_sheets.md:145
 msgid "Color for text."
@@ -2811,7 +2811,7 @@ msgstr ""
 
 #: ../style_sheets.md:146
 msgid "``opacity``"
-msgstr ""
+msgstr "``opacity``"
 
 #: ../style_sheets.md:146
 msgid "Color opacity factor (``0.0`` - ``1.0``), applied to all colors."
@@ -2827,7 +2827,7 @@ msgstr ""
 
 #: ../style_sheets.md:159
 msgid "``font-family``"
-msgstr ""
+msgstr "``font-family``"
 
 #: ../style_sheets.md:159
 msgid "A single font name (e.g. ``sans``, ``serif``, ``courier``)."
@@ -2835,7 +2835,7 @@ msgstr ""
 
 #: ../style_sheets.md:160
 msgid "``font-size``"
-msgstr ""
+msgstr "``font-size``"
 
 #: ../style_sheets.md:160
 msgid "An absolute size (e.g. ``14``) or a size value (e.g. ``small``)."
@@ -2843,7 +2843,7 @@ msgstr ""
 
 #: ../style_sheets.md:161
 msgid "``font-style``"
-msgstr ""
+msgstr "``font-style``"
 
 #: ../style_sheets.md:161
 msgid "Either ``normal`` or ``italic``."
@@ -2851,7 +2851,7 @@ msgstr ""
 
 #: ../style_sheets.md:162
 msgid "``font-weight``"
-msgstr ""
+msgstr "``font-weight``"
 
 #: ../style_sheets.md:162
 msgid "Either ``normal`` or ``bold``."
@@ -2859,7 +2859,7 @@ msgstr ""
 
 #: ../style_sheets.md:163
 msgid "``text-align``"
-msgstr ""
+msgstr "``text-align``"
 
 #: ../style_sheets.md:163
 msgid "Either ``left``, ``center``, ``right``."
@@ -2867,7 +2867,7 @@ msgstr ""
 
 #: ../style_sheets.md:164
 msgid "``text-decoration``"
-msgstr ""
+msgstr "``text-decoration``"
 
 #: ../style_sheets.md:164
 msgid "Either ``none`` or ``underline``."
@@ -2875,7 +2875,7 @@ msgstr ""
 
 #: ../style_sheets.md:165
 msgid "``vertical-align``"
-msgstr ""
+msgstr "``vertical-align``"
 
 #: ../style_sheets.md:165
 msgid "Vertical alignment for text."
@@ -2887,7 +2887,7 @@ msgstr ""
 
 #: ../style_sheets.md:168
 msgid "``vertical-spacing``"
-msgstr ""
+msgstr "``vertical-spacing``"
 
 #: ../style_sheets.md:168
 msgid "Set vertical spacing for icon-like items (actors, start state)."
@@ -2911,7 +2911,7 @@ msgstr ""
 
 #: ../style_sheets.md:183
 msgid "``border-radius``"
-msgstr ""
+msgstr "``border-radius``"
 
 #: ../style_sheets.md:183
 msgid "Radius for rectangles: ``border-radius: 4``."
@@ -2919,7 +2919,7 @@ msgstr ""
 
 #: ../style_sheets.md:184
 msgid "``dash-style``"
-msgstr ""
+msgstr "``dash-style``"
 
 #: ../style_sheets.md:184
 msgid "Style for dashed lines: ``dash-style: 7 5``."
@@ -2927,7 +2927,7 @@ msgstr ""
 
 #: ../style_sheets.md:185
 msgid "``justify-content``"
-msgstr ""
+msgstr "``justify-content``"
 
 #: ../style_sheets.md:185
 msgid "Content alignment for boxes."
@@ -2939,7 +2939,7 @@ msgstr ""
 
 #: ../style_sheets.md:188
 msgid "``line-style``"
-msgstr ""
+msgstr "``line-style``"
 
 #: ../style_sheets.md:188
 msgid "Either ``normal`` or ``sloppy [factor]``."
@@ -2947,7 +2947,7 @@ msgstr ""
 
 #: ../style_sheets.md:189
 msgid "``line-width``"
-msgstr ""
+msgstr "``line-width``"
 
 #: ../style_sheets.md:189
 msgid "Set the width for lines: ``line-width: 2``."
@@ -2955,7 +2955,7 @@ msgstr ""
 
 #: ../style_sheets.md:190
 msgid "``min-height``"
-msgstr ""
+msgstr "``min-height``"
 
 #: ../style_sheets.md:190
 msgid "Set minimal height for an item: ``min-height: 50``."
@@ -2963,7 +2963,7 @@ msgstr ""
 
 #: ../style_sheets.md:191
 msgid "``min-width``"
-msgstr ""
+msgstr "``min-width``"
 
 #: ../style_sheets.md:191
 msgid "Set minimal width for an item: ``min-width: 100``."
@@ -2971,7 +2971,7 @@ msgstr ""
 
 #: ../style_sheets.md:192
 msgid "``padding``"
-msgstr ""
+msgstr "``padding``"
 
 #: ../style_sheets.md:192
 msgid "CSS style padding (top, right, bottom, left)."
@@ -3075,7 +3075,7 @@ msgstr ""
 
 #: ../style_sheets.md:289
 msgid "\\*"
-msgstr ""
+msgstr "\\*"
 
 #: ../style_sheets.md:289
 msgid "*element name*"
@@ -3111,7 +3111,7 @@ msgstr ""
 
 #: ../style_sheets.md:292
 msgid "``association``"
-msgstr ""
+msgstr "``association``"
 
 #: ../style_sheets.md:293
 msgid "Components"
@@ -3123,7 +3123,7 @@ msgstr ""
 
 #: ../style_sheets.md:293
 msgid "``node``"
-msgstr ""
+msgstr "``node``"
 
 #: ../style_sheets.md:294
 #: ../style_sheets.md:295
@@ -3137,7 +3137,7 @@ msgstr ""
 
 #: ../style_sheets.md:294
 msgid "``decisionnode``"
-msgstr ""
+msgstr "``decisionnode``"
 
 #: ../style_sheets.md:295
 msgid "Fork/Join Node"
@@ -3145,7 +3145,7 @@ msgstr ""
 
 #: ../style_sheets.md:295
 msgid "``forknode``"
-msgstr ""
+msgstr "``forknode``"
 
 #: ../style_sheets.md:296
 msgid "Swimlane"
@@ -3153,7 +3153,7 @@ msgstr ""
 
 #: ../style_sheets.md:296
 msgid "``partition``"
-msgstr ""
+msgstr "``partition``"
 
 #: ../style_sheets.md:297
 msgid "Interactions"
@@ -3165,7 +3165,7 @@ msgstr ""
 
 #: ../style_sheets.md:297
 msgid "``message``"
-msgstr ""
+msgstr "``message``"
 
 #: ../style_sheets.md:298
 #: ../style_sheets.md:299
@@ -3179,7 +3179,7 @@ msgstr ""
 #: ../style_sheets.md:298
 #: ../style_sheets.md:299
 msgid "``pseudostate``"
-msgstr ""
+msgstr "``pseudostate``"
 
 #: ../style_sheets.md:299
 msgid "History Pseudostate"
@@ -3254,7 +3254,7 @@ msgstr ""
 
 #: ../style_sheets.md:307
 msgid "Primitive"
-msgstr ""
+msgstr "Primitieve"
 
 #: ../style_sheets.md:308
 msgid "Derive Requirement"
@@ -3402,7 +3402,7 @@ msgstr ""
 
 #: ../transaction.md:103
 msgid "Cleanup:"
-msgstr ""
+msgstr "Opschoning:"
 
 #: ../undo.md:1
 msgid "Undo Manager"
@@ -3470,7 +3470,7 @@ msgstr ""
 
 #: ../undo.md:42
 msgid "References"
-msgstr ""
+msgstr "Referenties"
 
 #: ../undo.md:44
 msgid "[A Framework for Undoing Actions in Collaborative Systems](http://web.eecs.umich.edu/~aprakash/papers/undo-tochi94.pdf)"
@@ -3494,7 +3494,7 @@ msgstr ""
 
 #: ../windows.md:13
 msgid "Choco"
-msgstr ""
+msgstr "Choco"
 
 #: ../windows.md:15
 msgid "We recommend using [Chocolately](https://chocolatey.org/) as a package manager in Windows."
@@ -3514,7 +3514,7 @@ msgstr ""
 
 #: ../windows.md:33
 msgid "Git"
-msgstr ""
+msgstr "Git"
 
 #: ../windows.md:35
 msgid "To setup a development environment in Windows first install [Git](https://gitforwindows.org) by executing as an administrator:"
@@ -3522,7 +3522,7 @@ msgstr ""
 
 #: ../windows.md:42
 msgid "MSYS2"
-msgstr ""
+msgstr "MSYS2"
 
 #: ../windows.md:44
 msgid "The development environment in the next step needs MSYS2 installed to provide some Linux command line tools in Windows."
@@ -3550,7 +3550,7 @@ msgstr ""
 
 #: ../windows.md:61
 msgid "Python"
-msgstr ""
+msgstr "Python"
 
 #: ../windows.md:63
 msgid "Install Visual Studio 2022"
