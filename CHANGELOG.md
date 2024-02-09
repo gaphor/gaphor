@@ -1,3 +1,14 @@
+2.24.0
+------
+- Fine grained CSS styling for model elements
+- Gaphor is now REUSE compliant
+- Connected elements are no longer automatcally removed from a diagram
+- Fix header bars for various windows
+- Various smaller UX improvements: greeter, diagram background, empty parameters
+- Install schemas by running `gaphor install-schemas`
+- Mitigations for false virus warnings on Windows
+- Fix issue when undoing fails
+
 2.23.2
 ------
 - Fix models failing to load for collection not hashable TypeError
