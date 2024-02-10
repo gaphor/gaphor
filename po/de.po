@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2024-01-24 20:22-0500\n"
-"PO-Revision-Date: 2024-02-10 20:24+0000\n"
-"Last-Translator: Tim <RC2225@users.noreply.github.com>\n"
+"PO-Revision-Date: 2024-02-10 20:25+0000\n"
+"Last-Translator: Lenny Angst <lenny@familie-angst.ch>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/gaphor/gaphor/de/>"
 "\n"
 "Language: de\n"
@@ -1608,7 +1608,7 @@ msgstr "Bild auswählen..."
 
 #: gaphor/diagram/propertypages.ui:289
 msgid "Set default size"
-msgstr ""
+msgstr "Standardgröße setzen"
 
 #: gaphor/diagram/general/generalpropertypages.py:126
 msgid "Select a picture..."
