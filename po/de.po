@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2024-01-24 20:22-0500\n"
-"PO-Revision-Date: 2023-12-09 02:31+0000\n"
-"Last-Translator: Milo Ivir <mail@milotype.de>\n"
+"PO-Revision-Date: 2024-02-10 20:25+0000\n"
+"Last-Translator: Tim <RC2225@users.noreply.github.com>\n"
+"Language-Team: German <https://hosted.weblate.org/projects/gaphor/gaphor/de/>"
+"\n"
 "Language: de\n"
-"Language-Team: German "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/de/>\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.4-dev\n"
 "Generated-By: Babel 2.14.0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:23 gaphor/C4Model/toolbox.py:67
@@ -105,49 +106,41 @@ msgstr "Neues Zustandsdiagramm"
 #: gaphor/C4Model/toolbox.py:159 gaphor/SysML/toolbox.py:133
 #: gaphor/SysML/toolbox.py:134 gaphor/SysML/toolbox.py:172
 #: gaphor/UML/toolbox.py:63
-#, fuzzy
 msgid "New Activity"
-msgstr "Aktivität"
+msgstr "Neue Aktivität"
 
 #: gaphor/C4Model/toolbox.py:161 gaphor/SysML/toolbox.py:143
 #: gaphor/SysML/toolbox.py:144 gaphor/SysML/toolbox.py:179
 #: gaphor/UML/toolbox.py:80
-#, fuzzy
 msgid "New Interaction"
-msgstr "Interaktion"
+msgstr "Neue Interaktion"
 
 #: gaphor/C4Model/toolbox.py:164 gaphor/SysML/toolbox.py:153
 #: gaphor/SysML/toolbox.py:154 gaphor/SysML/toolbox.py:194
 #: gaphor/UML/toolbox.py:86
-#, fuzzy
 msgid "New State Machine"
-msgstr "Zustandsmaschine"
+msgstr "Neue Zustandsmaschine"
 
 #: gaphor/C4Model/toolbox.py:166 gaphor/UML/toolbox.py:66
-#, fuzzy
 msgid "New Class"
-msgstr "Klasse"
+msgstr "Neue Klasse"
 
 #: gaphor/C4Model/toolbox.py:168 gaphor/UML/toolbox.py:68
-#, fuzzy
 msgid "New Data Type"
-msgstr "Datentyp"
+msgstr "Neuer Datentyp"
 
 #: gaphor/C4Model/toolbox.py:170 gaphor/SysML/toolbox.py:176
 #: gaphor/UML/toolbox.py:71
-#, fuzzy
 msgid "New Enumeration"
-msgstr "Aufzählung"
+msgstr "Neue Aufzählung"
 
 #: gaphor/C4Model/toolbox.py:173
-#, fuzzy
 msgid "New Primitive Type"
-msgstr "Grundelement"
+msgstr "Neues Grundelement"
 
 #: gaphor/C4Model/toolbox.py:175
-#, fuzzy
 msgid "New Person"
-msgstr "Person"
+msgstr "Neue Person"
 
 #: gaphor/RAAML/modelinglanguage.py:24 gaphor/ui/greeter.py:49
 msgid "RAAML"
@@ -162,24 +155,20 @@ msgid "New STPA Diagram"
 msgstr "Neues STPA-Diagramm"
 
 #: gaphor/RAAML/toolbox.py:27
-#, fuzzy
 msgid "New Top Event"
-msgstr "Top-Ereignis"
+msgstr "Neues Top-Ereignis"
 
 #: gaphor/RAAML/toolbox.py:28
-#, fuzzy
 msgid "New Loss"
-msgstr "Verlust"
+msgstr "Neuer Verlust"
 
 #: gaphor/RAAML/toolbox.py:29
-#, fuzzy
 msgid "New Hazard"
-msgstr "Gefahr"
+msgstr "Neue Gefahr"
 
 #: gaphor/RAAML/toolbox.py:30
-#, fuzzy
 msgid "New Situation"
-msgstr "Situation"
+msgstr "Neue Situation"
 
 #: gaphor/RAAML/fta/andgate.py:35 gaphor/RAAML/fta/ftatoolbox.py:24
 msgid "AND Gate"
@@ -446,7 +435,6 @@ msgstr "Neues Blockdefinitionsdiagramm"
 
 #: gaphor/SysML/toolbox.py:93 gaphor/SysML/toolbox.py:113
 #: gaphor/SysML/toolbox.py:125 gaphor/SysML/toolbox.py:167
-#, fuzzy
 msgid "New Package"
 msgstr "Neues Paket"
 
@@ -456,9 +444,8 @@ msgstr "Neues internes Blockdiagramm"
 
 #: gaphor/SysML/toolbox.py:104 gaphor/SysML/toolbox.py:105
 #: gaphor/SysML/toolbox.py:174
-#, fuzzy
 msgid "New Block"
-msgstr "Block"
+msgstr "Neuer Block"
 
 #: gaphor/SysML/toolbox.py:110 gaphor/UML/toolbox.py:51
 msgid "New Package Diagram"
@@ -473,9 +460,8 @@ msgid "New Use Case Diagram"
 msgstr "Neues Anwendungsfalldiagramm"
 
 #: gaphor/SysML/toolbox.py:173 gaphor/UML/toolbox.py:64
-#, fuzzy
 msgid "New Actor"
-msgstr "Hauptaktor"
+msgstr "Neuer Aktor"
 
 #: gaphor/SysML/toolbox.py:182
 #, fuzzy
@@ -483,34 +469,28 @@ msgid "New Interface Block"
 msgstr "Neues internes Blockdiagramm"
 
 #: gaphor/SysML/toolbox.py:186
-#, fuzzy
 msgid "New Requirement"
-msgstr "Anforderung"
+msgstr "Neue Anforderung"
 
 #: gaphor/SysML/toolbox.py:196 gaphor/UML/toolbox.py:89
-#, fuzzy
 msgid "New Use Case"
-msgstr "Anwendungsfall"
+msgstr "Neuer Anwendungsfall"
 
 #: gaphor/SysML/toolbox.py:197
-#, fuzzy
 msgid "New Value Type"
-msgstr "Wertetyp"
+msgstr "Neuer Wertetyp"
 
 #: gaphor/SysML/allocations/allocationstoolbox.py:6
-#, fuzzy
 msgid "Allocations"
-msgstr "Aktionen"
+msgstr "Zuordnungen"
 
 #: gaphor/SysML/allocations/allocationstoolbox.py:10
-#, fuzzy
 msgid "Allocate"
-msgstr "Zugeordneter Typ"
+msgstr "Zuordnen"
 
 #: gaphor/SysML/allocations/relationships.py:10
-#, fuzzy
 msgid "allocate"
-msgstr "Zugeordneter Typ"
+msgstr "zuordnen"
 
 #: gaphor/SysML/blocks/block.py:61 gaphor/SysML/blocks/interfaceblock.py:61
 msgid "ControlStructure"
@@ -578,9 +558,8 @@ msgstr "Assoziation"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:90
 #: gaphor/UML/classes/classestoolbox.py:109
-#, fuzzy
 msgid "Direct Association"
-msgstr "Geteilte Assoziation"
+msgstr "Direkte Assoziation"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:107
 msgid "ValueType"
@@ -672,7 +651,6 @@ msgid "Type"
 msgstr "Typ"
 
 #: gaphor/UML/propertypages.ui:28
-#, fuzzy
 msgid "Show Type"
 msgstr "Typ anzeigen"
 
@@ -701,39 +679,32 @@ msgid "New Profile Diagram"
 msgstr "Neues Profildiagramm"
 
 #: gaphor/UML/toolbox.py:65
-#, fuzzy
 msgid "New Artifact"
-msgstr "Artefakt"
+msgstr "Neues Artefakt"
 
 #: gaphor/UML/toolbox.py:69
-#, fuzzy
 msgid "New Device"
-msgstr "Gerät"
+msgstr "Neues Gerät"
 
 #: gaphor/UML/toolbox.py:75
-#, fuzzy
 msgid "New Instance Specification"
-msgstr "Spezifikation verbinden"
+msgstr "Neue Instanz-Spezifikation"
 
 #: gaphor/UML/toolbox.py:82
-#, fuzzy
 msgid "New Interface"
-msgstr "Schnittstelle"
+msgstr "Neue Schnittstelle"
 
 #: gaphor/UML/toolbox.py:83
-#, fuzzy
 msgid "New Node"
-msgstr "Neues Modell"
+msgstr "Neuer Knoten"
 
 #: gaphor/UML/toolbox.py:84
-#, fuzzy
 msgid "New Profile"
-msgstr "Profil"
+msgstr "Neues Profil"
 
 #: gaphor/UML/toolbox.py:88
-#, fuzzy
 msgid "New Stereotype"
-msgstr "Stereotyp"
+msgstr "Neuer Stereotyp"
 
 #: gaphor/UML/actions/actionstoolbox.py:17
 #: gaphor/UML/interactions/interactionstoolbox.py:16
@@ -873,9 +844,8 @@ msgid "decision"
 msgstr "Entscheidung"
 
 #: gaphor/UML/actions/activitypropertypage.py:137
-#, fuzzy
 msgid "New Parameter…"
-msgstr "Neues Paket"
+msgstr "Neuer Parameter…"
 
 #: gaphor/UML/actions/objectnode.py:14 gaphor/UML/actions/propertypages.ui:165
 msgid "unordered"
@@ -1028,17 +998,15 @@ msgstr "Richtung anzeigen"
 
 #: gaphor/UML/actions/propertypages.ui:428
 msgid "Multiplicity"
-msgstr ""
+msgstr "Multiplizität"
 
 #: gaphor/UML/classes/classespropertypages.py:235
-#, fuzzy
 msgid "New Attribute…"
-msgstr "Attribute anzeigen"
+msgstr "Neues Attribut…"
 
 #: gaphor/UML/classes/classespropertypages.py:393
-#, fuzzy
 msgid "New Operation…"
-msgstr "Operationen anzeigen"
+msgstr "Neue Operation…"
 
 #: gaphor/UML/classes/classestoolbox.py:25
 msgid "Classes"
@@ -1090,9 +1058,8 @@ msgid "enumeration"
 msgstr "Aufzählung"
 
 #: gaphor/UML/classes/enumerationpropertypages.py:126
-#, fuzzy
 msgid "New Enumeration…"
-msgstr "Aufzählung"
+msgstr "Neue Aufzählung…"
 
 #: gaphor/UML/classes/interface.py:282
 msgid "interface"
@@ -1444,7 +1411,6 @@ msgid "Exit"
 msgstr "Ausgang"
 
 #: gaphor/UML/states/propertypages.ui:54
-#, fuzzy
 msgid "Do activity"
 msgstr "Aktivität ausführen"
 
@@ -1588,9 +1554,8 @@ msgid "Diagram metadata"
 msgstr "Diagramm-Metadaten"
 
 #: gaphor/diagram/diagramtoolbox.py:194 gaphor/diagram/propertypages.ui:272
-#, fuzzy
 msgid "Picture"
-msgstr "Struktur"
+msgstr "Bild"
 
 #: gaphor/diagram/presentation.py:62
 msgid "(from {namespace})"
@@ -1639,15 +1604,15 @@ msgstr "Aktualisiert am"
 
 #: gaphor/diagram/propertypages.ui:283
 msgid "Select picture..."
-msgstr ""
+msgstr "Bild auswählen..."
 
 #: gaphor/diagram/propertypages.ui:289
 msgid "Set default size"
-msgstr ""
+msgstr "Standardgröße setzen"
 
 #: gaphor/diagram/general/generalpropertypages.py:126
 msgid "Select a picture..."
-msgstr ""
+msgstr "Ein Bild auswählen"
 
 #: gaphor/diagram/general/generalpropertypages.py:149
 #, fuzzy
@@ -3107,4 +3072,3 @@ msgstr "Verbindung “{name}” aktualisieren"
 
 #~ msgid "Flatpak Document Portal"
 #~ msgstr ""
-
