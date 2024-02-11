@@ -350,7 +350,7 @@ def main(main_loop=True):
     console.text_controller.connect("key-pressed", key_event)
 
     window.set_child(console)
-    window.set_visible(True)
+    window.present()
 
     if main_loop:
 
