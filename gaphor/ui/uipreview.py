@@ -45,7 +45,7 @@ def in_window(app, name, component):
     window.set_child(component)
     window.set_title(name)
     window.set_default_size(226, -1)
-    window.set_visible(True)
+    window.present()
     app.add_window(window)
     return window
 

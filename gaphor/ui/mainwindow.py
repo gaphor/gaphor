@@ -211,7 +211,7 @@ class MainWindow(Service, ActionProvider):
         window.connect("notify::default-width", self._on_window_size_changed)
         window.connect("notify::maximized", self._on_window_mode_changed)
         window.connect("notify::fullscreened", self._on_window_mode_changed)
-        window.set_visible(True)
+        window.present()
 
         window.connect("notify::is-active", self._on_window_active)
 

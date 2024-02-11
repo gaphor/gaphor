@@ -42,4 +42,4 @@ def error_handler(message, secondary_message="", window=None, close=None):
             close()
 
     dialog.connect("response", response)
-    dialog.set_visible(True)
+    dialog.present()
