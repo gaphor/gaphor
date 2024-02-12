@@ -54,7 +54,7 @@ event_manager = EventManager()
 
 modeling_language = ModelingLanguageService(event_manager=event_manager)
 
-with open("../models/Core.gaphor") as file_obj:
+with open("../models/Core.gaphor", encoding="utf-8") as file_obj:
     storage.load(
         file_obj,
         element_factory,
