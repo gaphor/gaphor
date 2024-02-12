@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2024-01-24 20:22-0500\n"
-"PO-Revision-Date: 2024-02-10 20:25+0000\n"
-"Last-Translator: Tim <RC2225@users.noreply.github.com>\n"
+"PO-Revision-Date: 2024-02-11 21:02+0000\n"
+"Last-Translator: Lenny Angst <lenny@familie-angst.ch>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/gaphor/gaphor/de/>"
 "\n"
 "Language: de\n"
@@ -1612,12 +1612,11 @@ msgstr "Standardgröße setzen"
 
 #: gaphor/diagram/general/generalpropertypages.py:126
 msgid "Select a picture..."
-msgstr "Ein Bild auswählen"
+msgstr "Ein Bild auswählen…"
 
 #: gaphor/diagram/general/generalpropertypages.py:149
-#, fuzzy
 msgid "Unable to parse picture “{filename}”."
-msgstr "Das Modell \"{filename}\" kann nicht gespeichert werden."
+msgstr "Das Bild \"{filename}\" kann nicht gelesen werden."
 
 #: gaphor/diagram/tools/dnd.py:50
 msgid "Element can’t be represented on a diagram."
@@ -1632,43 +1631,40 @@ msgid "No diagram '{name}' in model '{model_name}' ({model_file})."
 msgstr "Kein Diagramm '{name}' im Modell '{model_name}' ({model_file})."
 
 #: gaphor/plugins/align/align.py:31
-#, fuzzy
 msgid "Align left"
-msgstr "Magnet"
+msgstr "Links ausrichten"
 
 #: gaphor/plugins/align/align.py:35
 msgid "Align right"
-msgstr ""
+msgstr "Rechts ausrichten"
 
 #: gaphor/plugins/align/align.py:39
 msgid "Align vertical center"
-msgstr ""
+msgstr "Vertikal mittig ausrichten"
 
 #: gaphor/plugins/align/align.py:43
-#, fuzzy
 msgid "Align top"
-msgstr "Hauptaktor"
+msgstr "Oben ausrichten"
 
 #: gaphor/plugins/align/align.py:47
 msgid "Align bottom"
-msgstr ""
+msgstr "Unten ausrichten"
 
 #: gaphor/plugins/align/align.py:51
-#, fuzzy
 msgid "Align horizontal center"
-msgstr "Horizontal"
+msgstr "Horizontal mittig ausrichten"
 
 #: gaphor/plugins/align/align.py:55
 msgid "Max width"
-msgstr ""
+msgstr "Maximale Breite"
 
 #: gaphor/plugins/align/align.py:59
 msgid "Max height"
-msgstr ""
+msgstr "Maximale Höhe"
 
 #: gaphor/plugins/align/align.py:63
 msgid "Max size"
-msgstr ""
+msgstr "Maximale Größe"
 
 #: gaphor/plugins/autolayout/pydot.py:45
 msgid "Auto Layout"
@@ -2508,14 +2504,12 @@ msgstr ""
 "werden."
 
 #: gaphor/ui/elementeditor.ui:295
-#, fuzzy
 msgid "Diagram Language"
-msgstr "Sprache"
+msgstr "Diagrammsprache"
 
 #: gaphor/ui/elementeditor.ui:297 gaphor/ui/elementeditor.ui:305
-#, fuzzy
 msgid "The (natural) language used in this model."
-msgstr "In diesem Modell verwendete (gesprochene) Sprache."
+msgstr "Die in diesem Modell verwendete (gesprochene) Sprache."
 
 #: gaphor/ui/elementeditor.ui:313
 msgid "Style Sheet"
@@ -2571,9 +2565,8 @@ msgid "Gaphor Models"
 msgstr "Alle Gaphor-Modelle"
 
 #: gaphor/ui/filedialog.py:28
-#, fuzzy
 msgid "Images"
-msgstr "Swimlanes"
+msgstr "Bilder"
 
 #: gaphor/ui/filedialog.py:40
 msgid "All Files"
@@ -2820,9 +2813,8 @@ msgid "New _Diagram"
 msgstr "Neues _Diagramm"
 
 #: gaphor/ui/modelbrowser.py:585
-#, fuzzy
 msgid "New _Element"
-msgstr "Externes Element"
+msgstr "Neues _Element"
 
 #: gaphor/ui/modelbrowser.py:593
 msgid "De_lete"
@@ -2842,10 +2834,9 @@ msgstr "<Beziehungen>"
 
 #: gaphor/ui/help/__init__.py:79
 msgid "Restart Gaphor to enable language changes"
-msgstr ""
+msgstr "Starte Gaphor neu, um Sprachänderungen zu aktivieren"
 
 #: gaphor/ui/help/about.ui:13
-#, fuzzy
 msgid ""
 "Copyright © 2001 The Gaphor Development Team.\n"
 "\n"
@@ -2853,11 +2844,11 @@ msgid ""
 "Object Management Group, Inc. in the United States and/or other "
 "countries."
 msgstr ""
-"Copyright © 2001-2023 Arjan Molenaar und Dan Yeaw.\n"
+"Copyright © 2001-2023 Das Gaphor Entwicklungsteam\n"
 "\n"
-"UML, SysML und RAAML sind entweder eingetragene Marken oder Marken der "
-"Object Management Group, Inc. in den Vereinigten Staaten und/oder anderen"
-" Ländern."
+"UML, SysML und RAAML sind entweder eingetragene Handelsmarken oder "
+"Handelsmarken der Object Management Group, Inc. in den Vereinigten Staaten "
+"und/oder anderen Ländern."
 
 #: gaphor/ui/help/about.ui:21
 msgid ""
@@ -2888,20 +2879,19 @@ msgstr ""
 
 #: gaphor/ui/help/preferences.ui:9
 msgid "Appearance"
-msgstr ""
+msgstr "Erscheinungsbild"
 
 #: gaphor/ui/help/preferences.ui:13
-#, fuzzy
 msgid "Colors"
-msgstr "Schließen"
+msgstr "Farben"
 
 #: gaphor/ui/help/preferences.ui:21
 msgid "Dark"
-msgstr ""
+msgstr "Dunkel"
 
 #: gaphor/ui/help/preferences.ui:22
 msgid "Light"
-msgstr ""
+msgstr "Hell"
 
 #: gaphor/ui/help/preferences.ui:32
 msgid "Language"
@@ -2909,7 +2899,7 @@ msgstr "Sprache"
 
 #: gaphor/ui/help/preferences.ui:35
 msgid "Change from System Language to English"
-msgstr ""
+msgstr "Wechsle von der Systemsprache zu Englisch"
 
 #: gaphor/ui/help/shortcuts.ui:22
 msgid "Rename"
