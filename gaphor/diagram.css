@@ -197,6 +197,10 @@ requirement {
   justify-content: start;
 }
 
+requirement text {
+  white-space: normal;
+}
+
 directedrelationshippropertypath {
   dash-style: 7 5;
 }
