@@ -3,18 +3,19 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version:  0.6.0\n"
+"Project-Id-Version: 0.6.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2024-01-24 20:22-0500\n"
-"PO-Revision-Date: 2023-05-10 12:12+0000\n"
+"PO-Revision-Date: 2024-02-15 17:02+0000\n"
 "Last-Translator: Philip Goto <philip.goto@gmail.com>\n"
+"Language-Team: Dutch <https://hosted.weblate.org/projects/gaphor/gaphor/nl/>"
+"\n"
 "Language: nl\n"
-"Language-Team: Dutch "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/nl/>\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Weblate 5.4-dev\n"
 "Generated-By: Babel 2.14.0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:23 gaphor/C4Model/toolbox.py:67
@@ -103,16 +104,14 @@ msgstr "Nieuw staatmachinediagram"
 #: gaphor/C4Model/toolbox.py:159 gaphor/SysML/toolbox.py:133
 #: gaphor/SysML/toolbox.py:134 gaphor/SysML/toolbox.py:172
 #: gaphor/UML/toolbox.py:63
-#, fuzzy
 msgid "New Activity"
-msgstr "Activiteit"
+msgstr "Nieuwe activiteit"
 
 #: gaphor/C4Model/toolbox.py:161 gaphor/SysML/toolbox.py:143
 #: gaphor/SysML/toolbox.py:144 gaphor/SysML/toolbox.py:179
 #: gaphor/UML/toolbox.py:80
-#, fuzzy
 msgid "New Interaction"
-msgstr "Interactie"
+msgstr "Nieuwe interactie"
 
 #: gaphor/C4Model/toolbox.py:164 gaphor/SysML/toolbox.py:153
 #: gaphor/SysML/toolbox.py:154 gaphor/SysML/toolbox.py:194
@@ -122,9 +121,8 @@ msgid "New State Machine"
 msgstr "Staatmachine"
 
 #: gaphor/C4Model/toolbox.py:166 gaphor/UML/toolbox.py:66
-#, fuzzy
 msgid "New Class"
-msgstr "Klasse"
+msgstr "Nieuwe klasse"
 
 #: gaphor/C4Model/toolbox.py:168 gaphor/UML/toolbox.py:68
 #, fuzzy
@@ -133,9 +131,8 @@ msgstr "gegevensType"
 
 #: gaphor/C4Model/toolbox.py:170 gaphor/SysML/toolbox.py:176
 #: gaphor/UML/toolbox.py:71
-#, fuzzy
 msgid "New Enumeration"
-msgstr "opsomming"
+msgstr "Nieuwe opsomming"
 
 #: gaphor/C4Model/toolbox.py:173
 #, fuzzy
@@ -143,9 +140,8 @@ msgid "New Primitive Type"
 msgstr "primitieve"
 
 #: gaphor/C4Model/toolbox.py:175
-#, fuzzy
 msgid "New Person"
-msgstr "Persoon"
+msgstr "Nieuw persoon"
 
 #: gaphor/RAAML/modelinglanguage.py:24 gaphor/ui/greeter.py:49
 msgid "RAAML"
@@ -165,19 +161,16 @@ msgid "New Top Event"
 msgstr "Topgebeurtenis"
 
 #: gaphor/RAAML/toolbox.py:28
-#, fuzzy
 msgid "New Loss"
-msgstr "Verlies"
+msgstr "Nieuw verlies"
 
 #: gaphor/RAAML/toolbox.py:29
-#, fuzzy
 msgid "New Hazard"
-msgstr "Gevaar"
+msgstr "Nieuw gevaar"
 
 #: gaphor/RAAML/toolbox.py:30
-#, fuzzy
 msgid "New Situation"
-msgstr "Situatie"
+msgstr "Nieuwe situatie"
 
 #: gaphor/RAAML/fta/andgate.py:35 gaphor/RAAML/fta/ftatoolbox.py:24
 msgid "AND Gate"
@@ -418,9 +411,8 @@ msgid "Text"
 msgstr "Tekst"
 
 #: gaphor/SysML/sysmlfmt.py:10
-#, fuzzy
 msgid "sourceContext: {name}"
-msgstr "uitbreiden: {name}"
+msgstr "BronContext: {name}"
 
 #: gaphor/SysML/toolbox.py:43
 msgid "Internal Blocks"
@@ -444,7 +436,6 @@ msgstr "Nieuw blok­definitie­diagram"
 
 #: gaphor/SysML/toolbox.py:93 gaphor/SysML/toolbox.py:113
 #: gaphor/SysML/toolbox.py:125 gaphor/SysML/toolbox.py:167
-#, fuzzy
 msgid "New Package"
 msgstr "Nieuw pakket"
 
@@ -454,9 +445,8 @@ msgstr "Nieuw intern blok­diagram"
 
 #: gaphor/SysML/toolbox.py:104 gaphor/SysML/toolbox.py:105
 #: gaphor/SysML/toolbox.py:174
-#, fuzzy
 msgid "New Block"
-msgstr "Blok"
+msgstr "Nieuw blok"
 
 #: gaphor/SysML/toolbox.py:110 gaphor/UML/toolbox.py:51
 msgid "New Package Diagram"
@@ -471,9 +461,8 @@ msgid "New Use Case Diagram"
 msgstr "Nieuw Doeleinde­diagram"
 
 #: gaphor/SysML/toolbox.py:173 gaphor/UML/toolbox.py:64
-#, fuzzy
 msgid "New Actor"
-msgstr "Hoofduitvoerder"
+msgstr "Nieuwe uitvoerder"
 
 #: gaphor/SysML/toolbox.py:182
 #, fuzzy
@@ -481,9 +470,8 @@ msgid "New Interface Block"
 msgstr "Nieuw intern blok­diagram"
 
 #: gaphor/SysML/toolbox.py:186
-#, fuzzy
 msgid "New Requirement"
-msgstr "Vereiste"
+msgstr "Nieuwe vereiste"
 
 #: gaphor/SysML/toolbox.py:196 gaphor/UML/toolbox.py:89
 #, fuzzy
@@ -496,19 +484,16 @@ msgid "New Value Type"
 msgstr "waardeType"
 
 #: gaphor/SysML/allocations/allocationstoolbox.py:6
-#, fuzzy
 msgid "Allocations"
-msgstr "Acties"
+msgstr "Toewijzingen"
 
 #: gaphor/SysML/allocations/allocationstoolbox.py:10
-#, fuzzy
 msgid "Allocate"
-msgstr "Toegewezen type"
+msgstr "Toewijzen"
 
 #: gaphor/SysML/allocations/relationships.py:10
-#, fuzzy
 msgid "allocate"
-msgstr "Toegewezen type"
+msgstr "toewijzen"
 
 #: gaphor/SysML/blocks/block.py:61 gaphor/SysML/blocks/interfaceblock.py:61
 msgid "ControlStructure"
@@ -549,9 +534,8 @@ msgid "Block"
 msgstr "Blok"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:39
-#, fuzzy
 msgid "InterfaceBlock"
-msgstr "interface"
+msgstr "InterfaceBlok"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:51
 #: gaphor/UML/classes/classestoolbox.py:51
@@ -576,9 +560,8 @@ msgstr "Associatie"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:90
 #: gaphor/UML/classes/classestoolbox.py:109
-#, fuzzy
 msgid "Direct Association"
-msgstr "Gedeelde associatie"
+msgstr "Directe associatie"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:107
 msgid "ValueType"
@@ -595,9 +578,8 @@ msgid "Primitive"
 msgstr "Primitief"
 
 #: gaphor/SysML/blocks/interfaceblock.py:63
-#, fuzzy
 msgid "interfaceblock"
-msgstr "interface"
+msgstr "interfaceblok"
 
 #: gaphor/SysML/blocks/proxyport.py:38
 msgid "proxy"
@@ -670,7 +652,6 @@ msgid "Type"
 msgstr "Type"
 
 #: gaphor/UML/propertypages.ui:28
-#, fuzzy
 msgid "Show Type"
 msgstr "Type tonen"
 
@@ -699,14 +680,12 @@ msgid "New Profile Diagram"
 msgstr "Nieuw profiel­diagram"
 
 #: gaphor/UML/toolbox.py:65
-#, fuzzy
 msgid "New Artifact"
-msgstr "Artefact"
+msgstr "Nieuw artefact"
 
 #: gaphor/UML/toolbox.py:69
-#, fuzzy
 msgid "New Device"
-msgstr "apparaat"
+msgstr "Nieuw apparaat"
 
 #: gaphor/UML/toolbox.py:75
 #, fuzzy
@@ -714,24 +693,20 @@ msgid "New Instance Specification"
 msgstr "Specificatie samenvoegen"
 
 #: gaphor/UML/toolbox.py:82
-#, fuzzy
 msgid "New Interface"
-msgstr "interface"
+msgstr "Nieuwe interface"
 
 #: gaphor/UML/toolbox.py:83
-#, fuzzy
 msgid "New Node"
-msgstr "Nieuw model"
+msgstr "Nieuwe knoop"
 
 #: gaphor/UML/toolbox.py:84
-#, fuzzy
 msgid "New Profile"
-msgstr "Profiel"
+msgstr "Nieuw profiel"
 
 #: gaphor/UML/toolbox.py:88
-#, fuzzy
 msgid "New Stereotype"
-msgstr "Stereotype"
+msgstr "Nieuw stereotype"
 
 #: gaphor/UML/actions/actionstoolbox.py:17
 #: gaphor/UML/interactions/interactionstoolbox.py:16
@@ -871,9 +846,8 @@ msgid "decision"
 msgstr "besluit"
 
 #: gaphor/UML/actions/activitypropertypage.py:137
-#, fuzzy
 msgid "New Parameter…"
-msgstr "Nieuw pakket"
+msgstr "Nieuwe parameter…"
 
 #: gaphor/UML/actions/objectnode.py:14 gaphor/UML/actions/propertypages.ui:165
 msgid "unordered"
@@ -998,24 +972,20 @@ msgstr ""
 "Gebruik <b>-</b>/<b>=</b> om items omhoog of omlaag te verplaatsen."
 
 #: gaphor/UML/actions/propertypages.ui:376
-#, fuzzy
 msgid "In/Out"
-msgstr "NOT"
+msgstr "In/uit"
 
 #: gaphor/UML/actions/propertypages.ui:377
-#, fuzzy
 msgid "In"
-msgstr "Lijn"
+msgstr "In"
 
 #: gaphor/UML/actions/propertypages.ui:378
-#, fuzzy
 msgid "Out"
-msgstr "NOT"
+msgstr "Uit"
 
 #: gaphor/UML/actions/propertypages.ui:379
-#, fuzzy
 msgid "Return"
-msgstr "Functie"
+msgstr "Terug"
 
 #: gaphor/UML/actions/propertypages.ui:390
 #: gaphor/UML/classes/propertypages.ui:11
@@ -1024,17 +994,15 @@ msgstr "Richting tonen"
 
 #: gaphor/UML/actions/propertypages.ui:428
 msgid "Multiplicity"
-msgstr ""
+msgstr "Multipliciteit"
 
 #: gaphor/UML/classes/classespropertypages.py:235
-#, fuzzy
 msgid "New Attribute…"
-msgstr "Attributen tonen"
+msgstr "Nieuw attribuut…"
 
 #: gaphor/UML/classes/classespropertypages.py:393
-#, fuzzy
 msgid "New Operation…"
-msgstr "Handelingen tonen"
+msgstr "Nieuwe handeling…"
 
 #: gaphor/UML/classes/classestoolbox.py:25
 msgid "Classes"
@@ -1086,9 +1054,8 @@ msgid "enumeration"
 msgstr "opsomming"
 
 #: gaphor/UML/classes/enumerationpropertypages.py:126
-#, fuzzy
 msgid "New Enumeration…"
-msgstr "opsomming"
+msgstr "Nieuwe opsomming…"
 
 #: gaphor/UML/classes/interface.py:282
 msgid "interface"
@@ -1162,9 +1129,8 @@ msgstr "Stereotypen"
 #: gaphor/UML/classes/propertypages.ui:141
 #: gaphor/UML/classes/propertypages.ui:259
 #: gaphor/UML/profiles/propertypages.ui:74
-#, fuzzy
 msgid "Values"
-msgstr "waarden"
+msgstr "Waarden"
 
 #: gaphor/UML/classes/propertypages.ui:167
 msgid "Tail:"
@@ -1381,9 +1347,8 @@ msgid "Delete"
 msgstr "Verwijderen"
 
 #: gaphor/UML/interactions/propertypages.ui:42
-#, fuzzy
 msgid "Connectable Element"
-msgstr "Extern element"
+msgstr "Verbindbaar element"
 
 #: gaphor/UML/profiles/packageimport.py:23
 msgid "import"
@@ -1435,7 +1400,6 @@ msgid "Exit"
 msgstr "Uitgang"
 
 #: gaphor/UML/states/propertypages.ui:54
-#, fuzzy
 msgid "Do activity"
 msgstr "Activiteit uitvoeren"
 
@@ -1579,9 +1543,8 @@ msgid "Diagram metadata"
 msgstr "Diagram-metagegevens"
 
 #: gaphor/diagram/diagramtoolbox.py:194 gaphor/diagram/propertypages.ui:272
-#, fuzzy
 msgid "Picture"
-msgstr "Structuur"
+msgstr "Afbeelding"
 
 #: gaphor/diagram/presentation.py:62
 msgid "(from {namespace})"
@@ -1600,9 +1563,8 @@ msgid "Flip orientation"
 msgstr "Orientatie wisselen"
 
 #: gaphor/diagram/propertypages.ui:130
-#, fuzzy
 msgid "Note"
-msgstr "NOT"
+msgstr "Opmerking"
 
 #: gaphor/diagram/propertypages.ui:167
 msgid "Created By"
@@ -1630,7 +1592,7 @@ msgstr "Bijgewerkt op"
 
 #: gaphor/diagram/propertypages.ui:283
 msgid "Select picture..."
-msgstr ""
+msgstr "Afbeelding selecteren…"
 
 #: gaphor/diagram/propertypages.ui:289
 msgid "Set default size"
@@ -1658,26 +1620,24 @@ msgid "No diagram '{name}' in model '{model_name}' ({model_file})."
 msgstr "Geen diagram '{name}' in model '{model_name}' ({model_file})."
 
 #: gaphor/plugins/align/align.py:31
-#, fuzzy
 msgid "Align left"
-msgstr "Magneet"
+msgstr "Links uitlijnen"
 
 #: gaphor/plugins/align/align.py:35
 msgid "Align right"
-msgstr ""
+msgstr "Rechts uitlijnen"
 
 #: gaphor/plugins/align/align.py:39
 msgid "Align vertical center"
 msgstr ""
 
 #: gaphor/plugins/align/align.py:43
-#, fuzzy
 msgid "Align top"
-msgstr "Hoofduitvoerder"
+msgstr "Boven uitlijnen"
 
 #: gaphor/plugins/align/align.py:47
 msgid "Align bottom"
-msgstr ""
+msgstr "Onder uitlijnen"
 
 #: gaphor/plugins/align/align.py:51
 #, fuzzy
@@ -2595,9 +2555,8 @@ msgid "Gaphor Models"
 msgstr "Alle Gaphor-modellen"
 
 #: gaphor/ui/filedialog.py:28
-#, fuzzy
 msgid "Images"
-msgstr "Zwembanen"
+msgstr "Afbeeldingen"
 
 #: gaphor/ui/filedialog.py:40
 msgid "All Files"
@@ -2907,20 +2866,19 @@ msgstr ""
 
 #: gaphor/ui/help/preferences.ui:9
 msgid "Appearance"
-msgstr ""
+msgstr "Weergave"
 
 #: gaphor/ui/help/preferences.ui:13
-#, fuzzy
 msgid "Colors"
-msgstr "Sluiten"
+msgstr "Kleuren"
 
 #: gaphor/ui/help/preferences.ui:21
 msgid "Dark"
-msgstr ""
+msgstr "Donker"
 
 #: gaphor/ui/help/preferences.ui:22
 msgid "Light"
-msgstr ""
+msgstr "Licht"
 
 #: gaphor/ui/help/preferences.ui:32
 msgid "Language"
@@ -3091,4 +3049,3 @@ msgstr "Relatie ‘{name}’ bijwerken"
 
 #~ msgid "Flatpak Document Portal"
 #~ msgstr ""
-
