@@ -74,12 +74,22 @@ class RequirementItem(Classified, ElementPresentation[Requirement]):
                 self.subject,
                 Box(
                     *(
-                        [Text(text=lambda: f"Id: {subject.externalId}")]
+                        [
+                            CssNode(
+                                "id",
+                                None,
+                                Text(text=lambda: f"Id: {subject.externalId}"),
+                            )
+                        ]
                         if subject and subject.externalId
                         else []
                     ),
                     *(
-                        [Text(text=lambda: f"Text: {subject.text}")]
+                        [
+                            CssNode(
+                                "text", None, Text(text=lambda: f"Text: {subject.text}")
+                            )
+                        ]
                         if subject and subject.text
                         else []
                     ),
