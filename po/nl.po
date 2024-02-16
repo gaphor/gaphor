@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: 0.6.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2024-01-24 20:22-0500\n"
-"PO-Revision-Date: 2024-02-15 17:02+0000\n"
+"PO-Revision-Date: 2024-02-17 23:01+0000\n"
 "Last-Translator: Philip Goto <philip.goto@gmail.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/gaphor/gaphor/nl/>"
 "\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Weblate 5.4-dev\n"
+"X-Generator: Weblate 5.4\n"
 "Generated-By: Babel 2.14.0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:23 gaphor/C4Model/toolbox.py:67
@@ -116,18 +116,16 @@ msgstr "Nieuwe interactie"
 #: gaphor/C4Model/toolbox.py:164 gaphor/SysML/toolbox.py:153
 #: gaphor/SysML/toolbox.py:154 gaphor/SysML/toolbox.py:194
 #: gaphor/UML/toolbox.py:86
-#, fuzzy
 msgid "New State Machine"
-msgstr "Staatmachine"
+msgstr "Nieuwe staat­machine"
 
 #: gaphor/C4Model/toolbox.py:166 gaphor/UML/toolbox.py:66
 msgid "New Class"
 msgstr "Nieuwe klasse"
 
 #: gaphor/C4Model/toolbox.py:168 gaphor/UML/toolbox.py:68
-#, fuzzy
 msgid "New Data Type"
-msgstr "gegevensType"
+msgstr "Nieuw gegevens­type"
 
 #: gaphor/C4Model/toolbox.py:170 gaphor/SysML/toolbox.py:176
 #: gaphor/UML/toolbox.py:71
@@ -135,9 +133,8 @@ msgid "New Enumeration"
 msgstr "Nieuwe opsomming"
 
 #: gaphor/C4Model/toolbox.py:173
-#, fuzzy
 msgid "New Primitive Type"
-msgstr "primitieve"
+msgstr "Nieuw primitief type"
 
 #: gaphor/C4Model/toolbox.py:175
 msgid "New Person"
@@ -156,9 +153,8 @@ msgid "New STPA Diagram"
 msgstr "Nieuw STPA-diagram"
 
 #: gaphor/RAAML/toolbox.py:27
-#, fuzzy
 msgid "New Top Event"
-msgstr "Topgebeurtenis"
+msgstr "Nieuwe top­gebeurtenis"
 
 #: gaphor/RAAML/toolbox.py:28
 msgid "New Loss"
@@ -465,23 +461,20 @@ msgid "New Actor"
 msgstr "Nieuwe uitvoerder"
 
 #: gaphor/SysML/toolbox.py:182
-#, fuzzy
 msgid "New Interface Block"
-msgstr "Nieuw intern blok­diagram"
+msgstr "Nieuw interface­blok"
 
 #: gaphor/SysML/toolbox.py:186
 msgid "New Requirement"
 msgstr "Nieuwe vereiste"
 
 #: gaphor/SysML/toolbox.py:196 gaphor/UML/toolbox.py:89
-#, fuzzy
 msgid "New Use Case"
-msgstr "Doeleinde"
+msgstr "Nieuw doel­einde"
 
 #: gaphor/SysML/toolbox.py:197
-#, fuzzy
 msgid "New Value Type"
-msgstr "waardeType"
+msgstr "Nieuw waarde­type"
 
 #: gaphor/SysML/allocations/allocationstoolbox.py:6
 msgid "Allocations"
@@ -688,9 +681,8 @@ msgid "New Device"
 msgstr "Nieuw apparaat"
 
 #: gaphor/UML/toolbox.py:75
-#, fuzzy
 msgid "New Instance Specification"
-msgstr "Specificatie samenvoegen"
+msgstr "Nieuwe instantie­specificatie"
 
 #: gaphor/UML/toolbox.py:82
 msgid "New Interface"
@@ -745,9 +737,8 @@ msgid "Swimlane Two"
 msgstr "Zwembaan twee"
 
 #: gaphor/UML/actions/actionstoolbox.py:58
-#, fuzzy
 msgid "ValueSpecificationAction"
-msgstr "Specificatie samenvoegen"
+msgstr "WaardeSpecificatieActie"
 
 #: gaphor/UML/actions/actionstoolbox.py:63
 msgid "Actions"
@@ -760,17 +751,15 @@ msgstr "Actie"
 
 #: gaphor/UML/actions/actionstoolbox.py:91
 msgid "Call behavior action"
-msgstr ""
+msgstr "Aanroep­gedrag­actie"
 
 #: gaphor/UML/actions/actionstoolbox.py:98
-#, fuzzy
 msgid "CallBehaviorAction"
-msgstr "Gedrag"
+msgstr "AanroepGedragActie"
 
 #: gaphor/UML/actions/actionstoolbox.py:105
-#, fuzzy
 msgid "Value specification action"
-msgstr "Specificatie samenvoegen"
+msgstr "Waarde­specificatie­actie"
 
 #: gaphor/UML/actions/actionstoolbox.py:117
 msgid "Initial node"
@@ -1107,7 +1096,7 @@ msgstr ""
 #: gaphor/UML/classes/propertypages.ui:102
 #: gaphor/UML/classes/propertypages.ui:220
 msgid "Unknown navigation"
-msgstr "Onbekende navigeerbaarheid"
+msgstr "Onbekende navigeerbaar­heid"
 
 #: gaphor/UML/classes/propertypages.ui:103
 #: gaphor/UML/classes/propertypages.ui:221
@@ -1340,7 +1329,7 @@ msgstr "Antwoord"
 
 #: gaphor/UML/interactions/propertypages.ui:25
 msgid "Create"
-msgstr "Gemaakt op"
+msgstr "Aanmaken"
 
 #: gaphor/UML/interactions/propertypages.ui:26
 msgid "Delete"
@@ -1383,9 +1372,8 @@ msgid "Show Stereotypes"
 msgstr "Stereotypen tonen"
 
 #: gaphor/UML/profiles/stereotypepropertypages.py:139
-#, fuzzy
 msgid "New Slot Value…"
-msgstr "waardeType"
+msgstr "Nieuwe slot­waarde…"
 
 #: gaphor/UML/states/propertypages.ui:9
 msgid "Activities"
@@ -1596,16 +1584,15 @@ msgstr "Afbeelding selecteren…"
 
 #: gaphor/diagram/propertypages.ui:289
 msgid "Set default size"
-msgstr ""
+msgstr "Standaard­grootte instellen"
 
 #: gaphor/diagram/general/generalpropertypages.py:126
 msgid "Select a picture..."
-msgstr ""
+msgstr "Afbeelding selecteren…"
 
 #: gaphor/diagram/general/generalpropertypages.py:149
-#, fuzzy
 msgid "Unable to parse picture “{filename}”."
-msgstr "Kan model {filename} niet opslaan."
+msgstr "Kon afbeelding ‘{filename}’ niet parsen."
 
 #: gaphor/diagram/tools/dnd.py:50
 msgid "Element can’t be represented on a diagram."
@@ -1629,7 +1616,7 @@ msgstr "Rechts uitlijnen"
 
 #: gaphor/plugins/align/align.py:39
 msgid "Align vertical center"
-msgstr ""
+msgstr "Verticaal centreren"
 
 #: gaphor/plugins/align/align.py:43
 msgid "Align top"
@@ -1640,21 +1627,20 @@ msgid "Align bottom"
 msgstr "Onder uitlijnen"
 
 #: gaphor/plugins/align/align.py:51
-#, fuzzy
 msgid "Align horizontal center"
-msgstr "Horizontaal"
+msgstr "Horizontaal centreren"
 
 #: gaphor/plugins/align/align.py:55
 msgid "Max width"
-msgstr ""
+msgstr "Maximale breedte"
 
 #: gaphor/plugins/align/align.py:59
 msgid "Max height"
-msgstr ""
+msgstr "Maximale hoogte"
 
 #: gaphor/plugins/align/align.py:63
 msgid "Max size"
-msgstr ""
+msgstr "Maximale grootte"
 
 #: gaphor/plugins/autolayout/pydot.py:45
 msgid "Auto Layout"
@@ -2100,7 +2086,7 @@ msgstr "Functiecontext"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Read Input"
-msgstr "Gemaakt op"
+msgstr "Invoer lezen"
 
 #: gaphor/templates/sysml.gaphor
 msgid "FeatureInput"
@@ -2116,7 +2102,7 @@ msgstr "Actuatorcommando"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Model Navigation"
-msgstr "Onbekende navigeerbaarheid"
+msgstr "Model­navigatie"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Concept"
@@ -2492,14 +2478,12 @@ msgstr ""
 "diagram."
 
 #: gaphor/ui/elementeditor.ui:295
-#, fuzzy
 msgid "Diagram Language"
-msgstr "Taal"
+msgstr "Diagram­taal"
 
 #: gaphor/ui/elementeditor.ui:297 gaphor/ui/elementeditor.ui:305
-#, fuzzy
 msgid "The (natural) language used in this model."
-msgstr "De (gesproken) taal gebruikt in dit model"
+msgstr "De (natuurlijke) taal gebruikt in dit model."
 
 #: gaphor/ui/elementeditor.ui:313
 msgid "Style Sheet"
@@ -2799,9 +2783,8 @@ msgid "New _Diagram"
 msgstr "Nieuw _diagram"
 
 #: gaphor/ui/modelbrowser.py:585
-#, fuzzy
 msgid "New _Element"
-msgstr "Extern element"
+msgstr "Nieuw _element"
 
 #: gaphor/ui/modelbrowser.py:593
 msgid "De_lete"
@@ -2821,10 +2804,9 @@ msgstr "<relaties>"
 
 #: gaphor/ui/help/__init__.py:79
 msgid "Restart Gaphor to enable language changes"
-msgstr ""
+msgstr "Herstart Gaphor om taal­wijzigingen toe te passen"
 
 #: gaphor/ui/help/about.ui:13
-#, fuzzy
 msgid ""
 "Copyright © 2001 The Gaphor Development Team.\n"
 "\n"
@@ -2832,11 +2814,10 @@ msgid ""
 "Object Management Group, Inc. in the United States and/or other "
 "countries."
 msgstr ""
-"Copyright © 2001-2023, Arjan Molenaar en Dan Yeaw.\n"
+"Copyright © 2001, het Gaphor-ontwikkel­team.\n"
 "\n"
-"UML, SysML en RAAML zijn geregistreerde handelsmerken of handelsmerken "
-"van Object Management Group, Inc. in de Verenigde Staten en/of andere "
-"landen."
+"UML, SysML en RAAML zijn geregistreerde handels­merken of handels­merken van "
+"Object Management Group, Inc. in de Verenigde Staten en/of andere landen."
 
 #: gaphor/ui/help/about.ui:21
 msgid ""
@@ -2886,7 +2867,7 @@ msgstr "Taal"
 
 #: gaphor/ui/help/preferences.ui:35
 msgid "Change from System Language to English"
-msgstr ""
+msgstr "Van systeem­taal naar Engels wijzigen"
 
 #: gaphor/ui/help/shortcuts.ui:22
 msgid "Rename"
