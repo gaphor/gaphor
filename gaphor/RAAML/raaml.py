@@ -392,6 +392,14 @@ class Threat(Factor):
     pass
 
 
+class Less():
+    pass
+
+
+class MalfunctioningBehavior(Class, FailureMode):
+    pass
+
+
 
 ControllingMeasure.affects = association("affects", Property, composite=True)
 AnySituation.to = association("to", AnySituation, opposite="from_")
