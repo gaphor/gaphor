@@ -23360,7 +23360,10 @@ Figure 9.152</val>
 <reflist>
 <ref refid="ea002571-ce99-11ee-b3c6-97627a542234"/>
 <ref refid="0c39680d-ce9a-11ee-ad17-97627a542234"/>
+<ref refid="1afbcbf1-ce9d-11ee-a8e4-97627a542234"/>
+<ref refid="2e28369e-ce9d-11ee-bdac-97627a542234"/>
 <ref refid="17c594f2-ce9a-11ee-a1c1-97627a542234"/>
+<ref refid="38d36119-ce9d-11ee-8a26-97627a542234"/>
 </reflist>
 </ownedPresentation>
 </Diagram>
@@ -23979,6 +23982,7 @@ Figure 9.130</val>
 <presentation>
 <reflist>
 <ref refid="73449389-ce9a-11ee-9892-97627a542234"/>
+<ref refid="2e28369e-ce9d-11ee-bdac-97627a542234"/>
 </reflist>
 </presentation>
 </Class>
@@ -24012,6 +24016,7 @@ Figure 9.130</val>
 <presentation>
 <reflist>
 <ref refid="7821a3e9-ce9b-11ee-bd7d-97627a542234"/>
+<ref refid="38d36119-ce9d-11ee-8a26-97627a542234"/>
 </reflist>
 </presentation>
 </Association>
@@ -24194,4 +24199,96 @@ Figure 9.130</val>
 <ref refid="d5e4cfd7-ce9c-11ee-818e-97627a542234"/>
 </tail-connection>
 </CommentLineItem>
+<Comment id="1afbc099-ce9d-11ee-96e7-97627a542234">
+<body>
+<val>RAAML 1.0
+Figure 9.140</val>
+</body>
+<presentation>
+<reflist>
+<ref refid="1afbcbf1-ce9d-11ee-a8e4-97627a542234"/>
+</reflist>
+</presentation>
+</Comment>
+<CommentItem id="1afbcbf1-ce9d-11ee-a8e4-97627a542234">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 318.81930134968036, 131.53126525878906)</val>
+</matrix>
+<top-left>
+<val>(0.0, 0.0)</val>
+</top-left>
+<width>
+<val>129.23538615031964</val>
+</width>
+<height>
+<val>50.0</val>
+</height>
+<diagram>
+<ref refid="de345aa1-ce99-11ee-a24a-97627a542234"/>
+</diagram>
+<subject>
+<ref refid="1afbc099-ce9d-11ee-96e7-97627a542234"/>
+</subject>
+</CommentItem>
+<ClassItem id="2e28369e-ce9d-11ee-bdac-97627a542234">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 305.0546875, 226.73435974121094)</val>
+</matrix>
+<top-left>
+<val>(-5.575229900319641, 16.0)</val>
+</top-left>
+<width>
+<val>148.57522990031964</val>
+</width>
+<height>
+<val>58.0</val>
+</height>
+<diagram>
+<ref refid="de345aa1-ce99-11ee-a24a-97627a542234"/>
+</diagram>
+<show_attributes>
+<val>0</val>
+</show_attributes>
+<show_operations>
+<val>0</val>
+</show_operations>
+<subject>
+<ref refid="7343e411-ce9a-11ee-bb61-97627a542234"/>
+</subject>
+</ClassItem>
+<AssociationItem id="38d36119-ce9d-11ee-8a26-97627a542234">
+<diagram>
+<ref refid="de345aa1-ce99-11ee-a24a-97627a542234"/>
+</diagram>
+<head_subject>
+<ref refid="7942df17-ce9b-11ee-9e7e-97627a542234"/>
+</head_subject>
+<horizontal>
+<val>0</val>
+</horizontal>
+<orthogonal>
+<val>0</val>
+</orthogonal>
+<preferred_aggregation>
+<val>composite</val>
+</preferred_aggregation>
+<subject>
+<ref refid="794251d3-ce9b-11ee-b5ff-97627a542234"/>
+</subject>
+<tail_subject>
+<ref refid="794340b9-ce9b-11ee-85f7-97627a542234"/>
+</tail_subject>
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 367.80758259968036, 303.40234375)</val>
+</matrix>
+<points>
+<val>[(0.0, -2.6679840087890625), (0.0, 77.78515625)]</val>
+</points>
+<head-connection>
+<ref refid="2e28369e-ce9d-11ee-bdac-97627a542234"/>
+</head-connection>
+<tail-connection>
+<ref refid="ea002571-ce99-11ee-b3c6-97627a542234"/>
+</tail-connection>
+</AssociationItem>
 </gaphor>
