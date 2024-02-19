@@ -358,7 +358,7 @@ class InadequateProcessBehavior(ProcessModel):
     pass
 
 
-class Late(UnsafeControlAction_Def):
+class Late_UCA(UnsafeControlAction_Def):
     pass
 
 
@@ -426,6 +426,10 @@ class Unintended(AnyMalfunction):
 
 
 class Early(AnyMalfunction):
+    pass
+
+
+class Late(AnyMalfunction):
     pass
 
 
