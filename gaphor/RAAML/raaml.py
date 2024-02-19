@@ -433,6 +433,10 @@ class Late(AnyMalfunction):
     pass
 
 
+class Inverted(AnyMalfunction):
+    pass
+
+
 
 ControllingMeasure.affects = association("affects", Property, composite=True)
 AnySituation.to = association("to", AnySituation, opposite="from_")
