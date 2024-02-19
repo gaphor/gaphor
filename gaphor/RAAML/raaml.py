@@ -409,6 +409,10 @@ class AccidentScenario(DysfunctionalEvent, Scenario):
     situation: relation_many[AbstractOperationalSituation]
 
 
+class More(AnyMalfunction):
+    pass
+
+
 
 ControllingMeasure.affects = association("affects", Property, composite=True)
 AnySituation.to = association("to", AnySituation, opposite="from_")
