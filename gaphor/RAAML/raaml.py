@@ -310,7 +310,7 @@ class Sensor(Property):
     pass
 
 
-class Early(UnsafeControlAction_Def):
+class Early_UCA(UnsafeControlAction_Def):
     pass
 
 
@@ -422,6 +422,10 @@ class Intermittent(AnyMalfunction):
 
 
 class Unintended(AnyMalfunction):
+    pass
+
+
+class Early(AnyMalfunction):
     pass
 
 
