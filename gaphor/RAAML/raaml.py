@@ -392,15 +392,15 @@ class Threat(Factor):
     pass
 
 
-class Less():
+class AnyMalfunction(UndesiredState):
+    pass
+
+
+class Less(AnyMalfunction):
     pass
 
 
 class MalfunctioningBehavior(Class, FailureMode):
-    pass
-
-
-class AnyMalfunction(UndesiredState):
     pass
 
 
