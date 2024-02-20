@@ -117,7 +117,9 @@ class Application(Service, ActionProvider):
         @event_handler(SessionShutdown)
         def on_session_shutdown(event):
             self.shutdown_session(session)
-            if not self._sessions:
+            if not self._sessions and not (
+                self._gtk_app and self._gtk_app.get_windows()
+            ):
                 self.quit()
 
         event_manager = session.get_service("event_manager")
