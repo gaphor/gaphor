@@ -80,6 +80,12 @@ class ModelSaved:
         self.filename = filename
 
 
+class ModelChangedOnDisk:
+    def __init__(self, service, filename: Path | None = None):
+        self.service = service
+        self.filename = filename
+
+
 class TransactionBegin:
     """This event denotes the beginning of a transaction.
 
