@@ -6,8 +6,7 @@ from gaphor.core.modeling import Diagram, Element, Presentation
 from gaphor.diagram.support import get_diagram_item
 
 
-@singledispatch
-def drop(element: Element, diagram: Diagram, x: float, y: float):
+def drop_element(element: Element, diagram: Diagram, x: float, y: float):
     if item_class := get_diagram_item(type(element)):
         item = diagram.create(item_class)
         assert item
@@ -17,6 +16,9 @@ def drop(element: Element, diagram: Diagram, x: float, y: float):
 
         return item
     return None
+
+
+drop = singledispatch(drop_element)
 
 
 @drop.register
