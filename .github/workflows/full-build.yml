@@ -390,6 +390,30 @@ jobs:
         run: type gaphor-self-test.txt
         shell: cmd
 
+  scan-for-viruses:
+    name: Virus Check
+    needs: windows
+    runs-on: windows-latest
+    continue-on-error: true
+    timeout-minutes: 15
+    steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@63c24ba6bd7ba022e95695ff85de572c04a18142 # v2.7.0
+        with:
+          egress-policy: audit
+      - uses: actions/download-artifact@eaceaf801fd36c7dee90939fad912460b18a1ffe # v4.1.2
+        with:
+          name: ${{ needs.windows.outputs.installer }}
+          path: .
+      - name: VirusTotal Scan
+        uses: crazy-max/ghaction-virustotal@v4
+        with:
+          vt_api_key: ${{ secrets.VIRUSTOTAL_API_KEY }}
+          request_rate: 4
+          update_release_body: true
+          files: |
+            ${{ needs.windows.outputs.installer }}
+
   publish-to-pypi:
     name: Publish to PyPI (release only)
     needs: [ linux-wheel, linux-flatpak-devel, check-macos-app, check-windows-installer ]
