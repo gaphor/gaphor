@@ -37,27 +37,10 @@ flowboxchild {
   border-radius: 8px;
 }
 
-.greeter list row {
-  border-bottom: 1px solid alpha(@borders, 0.2);
-  transition-property: background, opacity;
-}
-
-.greeter list row:last-child {
-  border-bottom: none;
-}
-
-.greeter frame border {
-  border-color: alpha(@borders, 0.6);
-}
-
-.greeter flowboxchild {
-  border-radius: 12px;
-  outline-offset: -3px;
-}
-
-.greeter-title {
-  font-weight: bold;
-  padding: 18px 0 6px;
+.greeter-selection {
+  margin-top: 18px;
+  margin-bottom: 12px;
+  border-spacing: 12px;
 }
 
 .info {

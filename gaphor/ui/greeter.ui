@@ -79,9 +79,6 @@
                     <property name="halign">center</property>
                     <property name="vexpand">1</property>
                     <property name="orientation">vertical</property>
-                    <property name="spacing">18</property>
-                    <property name="margin-top">18</property>
-                    <property name="margin-bottom">12</property>
                     <child>
                       <object class="AdwPreferencesGroup" id="recent-files">
                         <property name="title" translatable="yes">Recently Opened</property>
@@ -95,6 +92,9 @@
                     <child>
                       <object class="AdwPreferencesGroup" id="examples" />
                     </child>
+                    <style>
+                      <class name="greeter-selection"/>
+                    </style>
                   </object>
                 </child>
               </object>
