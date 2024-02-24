@@ -37,29 +37,27 @@ flowboxchild {
   border-radius: 8px;
 }
 
+.title {
+  font-weight: bold;
+}
+
+.subtitle {
+  font-weight: normal;
+}
+
+.greeter row {
+  padding: 6px 0 6px 6px;
+  min-width: 400px;
+}
+
 .greeter-selection {
   margin-top: 18px;
   margin-bottom: 12px;
   border-spacing: 12px;
 }
 
-.info {
-  border-radius: 16px;
-  font-size: small;
-  padding: 1px 6px;
-}
-
-.greeter preferencesgroup .title {
-  font-weight: bold;
-}
-
-.greeter preferencesgroup .subtitle {
-  font-weight: normal;
-}
-
-.greeter preferencesgroup row {
-  padding: 6px 0 6px 6px;
-  min-width: 400px;
+.greeter-selection > .title {
+  margin-top: 12px;
 }
 
 box.propertypage > * {
@@ -72,10 +70,6 @@ expander-widget.propertypage {
 
 .propertypage box.horizontal:not(.linked) {
   border-spacing: 6px;
-}
-
-.propertypage .title {
-  font-weight: bold;
 }
 
 .propertypage .info {
@@ -100,7 +94,7 @@ row {
 
 .data-table .stereotype-value {
   padding-left: 24px;
- }
+}
 
 textfield text {
   background-color: @theme_bg_color;
@@ -110,6 +104,12 @@ textfield text {
 
 textfield text selection {
   background-color: alpha(@theme_selected_bg_color, 0.3);
+}
+
+.info {
+  border-radius: 16px;
+  font-size: small;
+  padding: 1px 6px;
 }
 
 .info:hover {

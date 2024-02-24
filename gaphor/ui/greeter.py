@@ -129,15 +129,15 @@ class Greeter(Service, ActionProvider):
 
         if any(self.query_recent_files()):
             for widget in self.create_recent_files():
-                listbox.add(widget)
+                listbox.append(widget)
         else:
             builder.get_object("recent-files").set_visible(False)
 
         for widget in self.create_templates(TEMPLATES):
-            templates.add(widget)
+            templates.append(widget)
 
         for widget in self.create_templates(EXAMPLES):
-            examples.add(widget)
+            examples.append(widget)
 
         self.greeter.connect("close-request", self._on_window_close_request)
         self.greeter.present()
