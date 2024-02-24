@@ -348,7 +348,7 @@ languages!
 We value your participation and want everyone to have an enjoyable and
 fulfilling experience. As a [GNOME Circle](https://circle.gnome.org/) project,
 all participants are expected to follow the GNOME [Code of
-Conduct](https://wiki.gnome.org/Foundation/CodeOfConduct), and to show respect,
+Conduct](https://conduct.gnome.org) and to show respect,
 understanding, and consideration to one another. Thank you for helping make this
 a welcoming, friendly community for everyone.
 
