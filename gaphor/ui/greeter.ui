@@ -92,6 +92,9 @@
                         <property name="title" translatable="yes">Create New Model</property>
                       </object>
                     </child>
+                    <child>
+                      <object class="AdwPreferencesGroup" id="examples" />
+                    </child>
                   </object>
                 </child>
               </object>
