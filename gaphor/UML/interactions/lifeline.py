@@ -233,7 +233,7 @@ class LifelineItem(Named, ElementPresentation[UML.Lifeline]):
             return ""
 
         if represents := self.subject.represents:
-            if represents.type:
+            if represents.type and represents.type.name:
                 return f"{represents.name or ''}: {represents.type.name or ''}"
             elif represents.typeValue:
                 return f"{represents.name or ''}: {represents.typeValue}"

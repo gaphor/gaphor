@@ -25,6 +25,9 @@ class ActivityItem(Classified, ElementPresentation):
             "subject[Activity].node[ActivityParameterNode].parameter.name",
             self.update_parameters,
         ).watch(
+            "subject[Activity].node[ActivityParameterNode].parameter.type.name",
+            self.update_parameters,
+        ).watch(
             "subject[Activity].node[ActivityParameterNode].parameter.typeValue",
             self.update_parameters,
         )

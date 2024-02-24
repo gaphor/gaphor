@@ -52,10 +52,10 @@ def format_property(
         s.append(name)
 
     if type:
-        if el.typeValue:
-            s.append(f": {el.typeValue}")
-        elif el.type and el.type.name:
+        if el.type and el.type.name:
             s.append(f": {el.type.name}")
+        elif el.typeValue:
+            s.append(f": {el.typeValue}")
 
     if multiplicity:
         s.append(format_multiplicity(el))
@@ -163,7 +163,9 @@ def format_parameter(
 
     s.append(name or "")
 
-    if type and el.typeValue:
+    if el.type and el.type.name:
+        s.append(f": {el.type.name}")
+    elif type and el.typeValue:
         s.append(f": {el.typeValue}")
 
     if multiplicity:
