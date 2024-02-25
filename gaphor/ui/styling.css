@@ -73,10 +73,6 @@ flowboxchild {
   margin-top: 6px;
 }
 
-/* .propertypage .info {
-  margin: 3px 2px 0 2px;
-} */
-
 frame > textview {
   padding: 6px;
 }
@@ -110,7 +106,7 @@ textfield text selection {
 .info {
   border-radius: 16px;
   font-size: small;
-  /* padding: 1px 6px; */
+  padding: 2px 6px;
 }
 
 .info:hover {
