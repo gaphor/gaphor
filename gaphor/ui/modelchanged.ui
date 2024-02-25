@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <requires lib="adw" version="1.0"/>
+  <object class="AdwBanner" id="model-changed">
+    <property name="title" translatable="yes">Model Changed on Disk</property>
+    <property name="button-label" translatable="yes">Discard Changes and Reload</property>
+    <property name="action-name">win.file-reload</property>
+  </object>
+</interface>

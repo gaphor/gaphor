@@ -12,17 +12,18 @@ from gaphor.ui.event import ElementOpened
 def session():
     session = Session(
         services=[
+            "diagrams",
+            "element_editor",
             "event_manager",
+            "export_menu",
             "component_registry",
             "element_factory",
-            "modeling_language",
-            "properties",
             "main_window",
             "model_browser",
-            "diagrams",
+            "model_changed",
+            "modeling_language",
+            "properties",
             "toolbox",
-            "element_editor",
-            "export_menu",
             "tools_menu",
         ]
     )

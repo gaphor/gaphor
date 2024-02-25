@@ -9,7 +9,7 @@ from pathlib import Path
 from typing import Callable
 
 from gaphas.decorators import g_async
-from gi.repository import Adw, Gtk
+from gi.repository import Adw, Gio, Gtk
 
 from gaphor import UML
 from gaphor.abc import ActionProvider, Service
@@ -17,6 +17,7 @@ from gaphor.core import action, event_handler, gettext
 from gaphor.core.changeset.compare import compare
 from gaphor.core.modeling import Diagram, ElementFactory, StyleSheet
 from gaphor.event import (
+    ModelChangedOnDisk,
     ModelLoaded,
     ModelSaved,
     SessionCreated,
@@ -79,6 +80,7 @@ class FileManager(Service, ActionProvider):
         self.modeling_language = modeling_language
         self.main_window = main_window
         self._filename: Path | None = None
+        self._monitor: Gio.Monitor | None = None
 
         event_manager.subscribe(self._on_session_shutdown_request)
         event_manager.subscribe(self._on_session_created)
@@ -105,6 +107,7 @@ class FileManager(Service, ActionProvider):
 
         if filename != self._filename:
             self._filename = Path(filename) if filename else None
+            self._update_monitor()
 
     def load_template(self, template):
         storage.load(template, self.element_factory, self.modeling_language)
@@ -136,6 +139,12 @@ class FileManager(Service, ActionProvider):
 
         for _ in self._load_async(filename, status_window.progress, done):
             pass
+
+    @action("file-reload")
+    def reload(self):
+        if self.filename and self.filename.exists():
+            self.element_factory.flush()
+            self.load(self.filename)
 
     def merge(
         self,
@@ -329,15 +338,33 @@ class FileManager(Service, ActionProvider):
                 raise
             finally:
                 status_window.destroy()
+            self._update_monitor()
             if on_save_done:
                 on_save_done()
 
+        self._cancel_monitor()
         for _ in async_saver():
             pass
 
     @property
     def parent_window(self):
         return self.main_window.window if self.main_window else None
+
+    def _update_monitor(self):
+        self._cancel_monitor()
+        monitor = Gio.File.parse_name(str(self._filename)).monitor(
+            Gio.FileMonitorFlags.NONE, None
+        )
+        monitor.connect("changed", self._on_file_changed)
+        self._monitor = monitor
+
+    def _cancel_monitor(self, _event=None):
+        if self._monitor:
+            self._monitor.disconnect_by_func(self._on_file_changed)
+            self._monitor = None
+
+    def _on_file_changed(self, _banner, _file, _other_file, _event_type):
+        self.event_manager.handle(ModelChangedOnDisk(self._filename))
 
     @action(name="file-save", shortcut="<Primary>s")
     def action_save(self):

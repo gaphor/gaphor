@@ -6,7 +6,10 @@
       <component name="toolbox" />
     </paned>
     <box orientation="horizontal" resize="true">
-      <component name="diagrams" resize="true" />
+      <box orientation="vertical" resize="true">
+        <component name="model_changed" />
+        <component name="diagrams" resize="true" />
+      </box>
       <component name="element_editor" />
     </box>
   </paned>
