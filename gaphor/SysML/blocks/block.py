@@ -15,6 +15,7 @@ from gaphor.SysML.sysml import Block, ValueType
 from gaphor.UML.classes.klass import attributes_compartment, operation_watches
 from gaphor.UML.classes.stereotype import stereotype_compartments, stereotype_watches
 from gaphor.UML.compartments import name_compartment
+from gaphor.UML.recipes import get_applied_stereotypes
 from gaphor.UML.umlfmt import format_operation, format_property
 
 
@@ -56,7 +57,9 @@ class BlockItem(Classified, ElementPresentation[Block]):
             return [self.diagram.gettext("Situation")]
         elif isinstance(self.subject, raaml.ControlStructure):
             return [self.diagram.gettext("ControlStructure")]
-        elif isinstance(self.subject, Block):
+        elif isinstance(self.subject, Block) and not any(
+            get_applied_stereotypes(self.subject)
+        ):
             return [self.diagram.gettext("block")]
         return ()
 
