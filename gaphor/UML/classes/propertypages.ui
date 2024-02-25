@@ -319,23 +319,6 @@ Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</propert
       </object>
     </child>
     <child>
-      <object class="GtkBox">
-        <child>
-          <object class="GtkLabel">
-            <property name="label" translatable="yes">Show Attributes</property>
-            <property name="halign">start</property>
-            <property name="hexpand">yes</property>
-          </object>
-        </child>
-        <child>
-          <object class="GtkSwitch" id="show-attributes">
-            <property name="focusable">1</property>
-            <signal name="notify::active" handler="show-attributes-changed" swapped="no"/>
-          </object>
-        </child>
-      </object>
-    </child>
-    <child>
       <object class="GtkFrame">
         <property name="child">
           <object class="GtkColumnView" id="attributes-list">
@@ -363,6 +346,23 @@ Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</propert
             <signal name="activate" handler="attributes-activated" />
           </object>
         </property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkBox">
+        <child>
+          <object class="GtkLabel">
+            <property name="label" translatable="yes">Show Attributes</property>
+            <property name="halign">start</property>
+            <property name="hexpand">yes</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkSwitch" id="show-attributes">
+            <property name="focusable">1</property>
+            <signal name="notify::active" handler="show-attributes-changed" swapped="no"/>
+          </object>
+        </child>
       </object>
     </child>
     <style>
@@ -516,23 +516,6 @@ Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</propert
       </object>
     </child>
     <child>
-      <object class="GtkBox">
-        <child>
-          <object class="GtkLabel">
-            <property name="label" translatable="yes">Show Operations</property>
-            <property name="halign">start</property>
-            <property name="hexpand">yes</property>
-          </object>
-        </child>
-        <child>
-          <object class="GtkSwitch" id="show-operations">
-            <property name="focusable">1</property>
-            <signal name="notify::active" handler="show-operations-changed" swapped="no"/>
-          </object>
-        </child>
-      </object>
-    </child>
-    <child>
       <object class="GtkFrame">
         <property name="child">
           <object class="GtkColumnView" id="operations-list">
@@ -565,6 +548,23 @@ Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</propert
             <signal name="activate" handler="operations-activated" />
           </object>
         </property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkBox">
+        <child>
+          <object class="GtkLabel">
+            <property name="label" translatable="yes">Show Operations</property>
+            <property name="halign">start</property>
+            <property name="hexpand">yes</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkSwitch" id="show-operations">
+            <property name="focusable">1</property>
+            <signal name="notify::active" handler="show-operations-changed" swapped="no"/>
+          </object>
+        </child>
       </object>
     </child>
     <style>
@@ -619,24 +619,6 @@ Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</propert
       </object>
     </child>
     <child>
-      <object class="GtkBox">
-        <child>
-          <object class="GtkLabel">
-            <property name="label" translatable="yes">Show Enumeration Literals</property>
-            <property name="hexpand">yes</property>
-            <property name="halign">start</property>
-          </object>
-        </child>
-        <child>
-          <object class="GtkSwitch" id="show-enumerations">
-            <property name="halign">center</property>
-            <property name="focusable">1</property>
-            <signal name="notify::active" handler="show-enumerations-changed" swapped="no"/>
-          </object>
-        </child>
-      </object>
-    </child>
-    <child>
       <object class="GtkFrame">
         <property name="child">
           <object class="GtkColumnView" id="enumerations-list">
@@ -659,6 +641,24 @@ Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</propert
             <signal name="activate" handler="enumerations-activated" />
           </object>
         </property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkBox">
+        <child>
+          <object class="GtkLabel">
+            <property name="label" translatable="yes">Show Enumeration Literals</property>
+            <property name="hexpand">yes</property>
+            <property name="halign">start</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkSwitch" id="show-enumerations">
+            <property name="halign">center</property>
+            <property name="focusable">1</property>
+            <signal name="notify::active" handler="show-enumerations-changed" swapped="no"/>
+          </object>
+        </child>
       </object>
     </child>
     <style>

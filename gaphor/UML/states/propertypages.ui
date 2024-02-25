@@ -109,22 +109,6 @@
       <object class="GtkBox">
         <child>
           <object class="GtkLabel">
-            <property name="label" translatable="yes">Show Regions</property>
-            <property name="halign">start</property>
-            <property name="hexpand">1</property>
-          </object>
-        </child>
-        <child>
-          <object class="GtkSwitch" id="show-regions">
-            <signal name="notify::active" handler="show-regions-changed" swapped="no"/>
-          </object>
-        </child>
-      </object>
-    </child>
-    <child>
-      <object class="GtkBox">
-        <child>
-          <object class="GtkLabel">
             <property name="label" translatable="yes">Regions</property>
             <property name="halign">start</property>
             <property name="hexpand">1</property>
@@ -134,6 +118,22 @@
           <object class="GtkSpinButton" id="num-regions">
             <property name="adjustment">num-regions-adjustment</property>
             <signal name="value-changed" handler="regions-changed" swapped="no"/>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="GtkBox">
+        <child>
+          <object class="GtkLabel">
+            <property name="label" translatable="yes">Show Regions</property>
+            <property name="halign">start</property>
+            <property name="hexpand">1</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkSwitch" id="show-regions">
+            <signal name="notify::active" handler="show-regions-changed" swapped="no"/>
           </object>
         </child>
       </object>
