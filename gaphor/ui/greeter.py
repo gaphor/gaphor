@@ -61,6 +61,30 @@ TEMPLATES = [
     ),
 ]
 
+EXAMPLES = [
+    ModelTemplate(
+        gettext("UML Example"),
+        gettext("Unified Modeling Language example model"),
+        "UML",
+        "UML",
+        "uml-example.gaphor",
+    ),
+    ModelTemplate(
+        gettext("SysML Example"),
+        gettext("Systems Modeling Language example model"),
+        "SysML",
+        "SysML",
+        "sysml-example.gaphor",
+    ),
+    ModelTemplate(
+        gettext("RAAML Example"),
+        gettext("Risk Analysis and Assessment Modeling Language example model"),
+        "RAAML",
+        "RAAML",
+        "raaml-example.gaphor",
+    ),
+]
+
 
 def new_builder(ui_file):
     builder = Gtk.Builder()
@@ -101,15 +125,19 @@ class Greeter(Service, ActionProvider):
 
         listbox = builder.get_object("recent-files")
         templates = builder.get_object("templates")
+        examples = builder.get_object("examples")
 
         if any(self.query_recent_files()):
             for widget in self.create_recent_files():
-                listbox.add(widget)
+                listbox.append(widget)
         else:
             builder.get_object("recent-files").set_visible(False)
 
-        for widget in self.create_templates():
-            templates.add(widget)
+        for widget in self.create_templates(TEMPLATES):
+            templates.append(widget)
+
+        for widget in self.create_templates(EXAMPLES):
+            examples.append(widget)
 
         self.greeter.connect("close-request", self._on_window_close_request)
         self.greeter.present()
@@ -140,8 +168,8 @@ class Greeter(Service, ActionProvider):
             row.filename = filename
             yield row
 
-    def create_templates(self):
-        for template in TEMPLATES:
+    def create_templates(self, templates):
+        for template in templates:
             row = Adw.ActionRow.new()
             row.set_activatable(True)
             row.set_title(template.name)

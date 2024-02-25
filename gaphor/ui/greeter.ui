@@ -79,19 +79,51 @@
                     <property name="halign">center</property>
                     <property name="vexpand">1</property>
                     <property name="orientation">vertical</property>
-                    <property name="spacing">18</property>
-                    <property name="margin-top">18</property>
-                    <property name="margin-bottom">12</property>
                     <child>
-                      <object class="AdwPreferencesGroup" id="recent-files">
-                        <property name="title" translatable="yes">Recently Opened</property>
+                      <object class="GtkLabel">
+                        <property name="label" translatable="yes">Create New Model</property>
+                        <property name="xalign">0</property>
+                        <style>
+                          <class name="title"/>
+                        </style>
                       </object>
                     </child>
                     <child>
-                      <object class="AdwPreferencesGroup" id="templates">
-                        <property name="title" translatable="yes">Create New Model</property>
+                      <object class="GtkListBox" id="recent-files">
+                        <property name="selection-mode">none</property>
+                        <style>
+                          <class name="boxed-list"/>
+                        </style>
                       </object>
                     </child>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="label" translatable="yes">Create New Model</property>
+                        <property name="xalign">0</property>
+                        <style>
+                          <class name="title"/>
+                        </style>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkListBox" id="templates">
+                        <property name="selection-mode">none</property>
+                        <style>
+                          <class name="boxed-list"/>
+                        </style>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkListBox" id="examples">
+                        <property name="selection-mode">none</property>
+                        <style>
+                          <class name="boxed-list"/>
+                        </style>
+                      </object>
+                    </child>
+                    <style>
+                      <class name="greeter-selection"/>
+                    </style>
                   </object>
                 </child>
               </object>
