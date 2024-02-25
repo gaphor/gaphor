@@ -438,16 +438,17 @@ def list_item_factory_setup(
             ),
         )
         element = list_item.get_item().get_item().element
-        if row.menu:
-            # Clean menu only when we want to create a new one.
-            row.menu.unparent()
-            row.menu = None
-        if element:
+        if not element:
+            return
+
+        if not row.menu:
             row.menu = Gtk.PopoverMenu.new_from_model(
                 popup_model(element, modeling_language)
             )
             row.menu.set_parent(row)
-            row.menu.popup()
+        else:
+            row.menu.set_menu_model(popup_model(element, modeling_language))
+        row.menu.popup()
 
     ctrl = Gtk.GestureClick.new()
     ctrl.set_button(Gdk.BUTTON_SECONDARY)
