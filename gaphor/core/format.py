@@ -23,6 +23,8 @@ def parse(el: Element, text: str) -> None:
 
 @format.register(Diagram)
 def format_diagram(el, **kwargs) -> str:
+    if el.diagramType:
+        return f"[{el.diagramType}] {el.name}"
     return el.name or ""
 
 
