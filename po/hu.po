@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2024-01-24 20:22-0500\n"
-"PO-Revision-Date: 2024-01-14 12:31+0000\n"
+"PO-Revision-Date: 2024-02-26 10:02+0000\n"
 "Last-Translator: ovari <ovari123@zoho.com>\n"
+"Language-Team: Hungarian <https://hosted.weblate.org/projects/gaphor/gaphor/"
+"hu/>\n"
 "Language: hu\n"
-"Language-Team: Hungarian "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/hu/>\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.5-dev\n"
 "Generated-By: Babel 2.14.0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:23 gaphor/C4Model/toolbox.py:67
@@ -2815,7 +2816,6 @@ msgid "Restart Gaphor to enable language changes"
 msgstr "Indítsa újra a Gaphort a nyelvi módosítások engedélyezéséhez"
 
 #: gaphor/ui/help/about.ui:13
-#, fuzzy
 msgid ""
 "Copyright © 2001 The Gaphor Development Team.\n"
 "\n"
@@ -2823,10 +2823,10 @@ msgid ""
 "Object Management Group, Inc. in the United States and/or other "
 "countries."
 msgstr ""
-"Szerzői jog © 2001-2023 Molenaar Arjan és Yeaw Dan.\n"
+"Szerzői jog © 2001 A Gaphor-fejlesztőcsapat.\n"
 "\n"
-"Az UML, SysML és RAAML az Object Management Group, Inc. bejegyzett "
-"védjegyei vagy védjegyei az Egyesült Államokban és/vagy más országokban."
+"Az UML, SysML és RAAML az Object Management Group, Inc. bejegyzett védjegyei "
+"vagy védjegyei az Egyesült Államokban és/vagy más országokban."
 
 #: gaphor/ui/help/about.ui:21
 msgid ""
@@ -3039,4 +3039,3 @@ msgstr "„{name}”-kapcsolat frissítése"
 
 #~ msgid "Flatpak Document Portal"
 #~ msgstr "Flatpak-dokumentumportál"
-
