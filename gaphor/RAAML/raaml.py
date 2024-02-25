@@ -310,7 +310,7 @@ class Sensor(Property):
     pass
 
 
-class Early(UnsafeControlAction_Def):
+class Early_UCA(UnsafeControlAction_Def):
     pass
 
 
@@ -358,7 +358,7 @@ class InadequateProcessBehavior(ProcessModel):
     pass
 
 
-class Late(UnsafeControlAction_Def):
+class Late_UCA(UnsafeControlAction_Def):
     pass
 
 
@@ -392,6 +392,51 @@ class Threat(Factor):
     pass
 
 
+class AnyMalfunction(UndesiredState):
+    pass
+
+
+class Less(AnyMalfunction):
+    pass
+
+
+class MalfunctioningBehavior(Class, FailureMode):
+    pass
+
+
+class AccidentScenario(DysfunctionalEvent, Scenario):
+    malfunctioningBehavior: relation_one[AnyMalfunction]
+    situation: relation_many[AbstractOperationalSituation]
+
+
+class More(AnyMalfunction):
+    pass
+
+
+class No(AnyMalfunction):
+    pass
+
+
+class Intermittent(AnyMalfunction):
+    pass
+
+
+class Unintended(AnyMalfunction):
+    pass
+
+
+class Early(AnyMalfunction):
+    pass
+
+
+class Late(AnyMalfunction):
+    pass
+
+
+class Inverted(AnyMalfunction):
+    pass
+
+
 
 ControllingMeasure.affects = association("affects", Property, composite=True)
 AnySituation.to = association("to", AnySituation, opposite="from_")
@@ -414,3 +459,5 @@ AbstractOperationalSituation.conditions = association("conditions", OperationalC
 LossScenario.unsafeControlAction = association("unsafeControlAction", UnsafeControlAction_Def)
 LossScenario.processModel = association("processModel", ProcessModel, composite=True)
 LossScenario.Factor = association("Factor", Factor, composite=True)
+AccidentScenario.situation = association("situation", AbstractOperationalSituation, lower=1, composite=True)
+AccidentScenario.malfunctioningBehavior = association("malfunctioningBehavior", AnyMalfunction, upper=1, composite=True)
