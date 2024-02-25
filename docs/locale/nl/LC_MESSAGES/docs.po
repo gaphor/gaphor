@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gaphor 2.18.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-04-09 15:06-0400\n"
-"PO-Revision-Date: 2024-02-07 22:43+0000\n"
+"PO-Revision-Date: 2024-02-23 16:22+0000\n"
 "Last-Translator: Philip Goto <philip.goto@gmail.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/gaphor/"
 "docs-gaphor-org/nl/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.4-dev\n"
+"X-Generator: Weblate 5.5-dev\n"
 
 #: ../connect.md:1
 msgid "Connection Protocol"
@@ -26,18 +26,27 @@ msgstr "Verbindingsprotocol"
 #: ../connect.md:3
 msgid "In Gaphor, if a connection is made on a diagram between an element and a relationship, the connection is also made at semantic level (the model). From a GUI point of view, a button release event is what kicks of the decision whether the connection is allowed."
 msgstr ""
+"Als er in Gaphor een verbinding wordt gemaakt op een diagram tussen een "
+"element en een relatie, wordt de verbinding ook op semantisch niveau (het "
+"model) gelegd. Vanuit GUI-oogpunt is het loslaten van een knop bepalend voor "
+"de beslissing of de verbinding is toegestaan."
 
 #: ../connect.md:12
 msgid "The check if a connection is allowed should also check if it is valid to create a relation to/from the same element (like associations, but not generalizations)."
 msgstr ""
+"Bij de controle of een verbinding is toegestaan, moet ook worden "
+"gecontroleerd of het geldig is om een relatie naar/van hetzelfde element te "
+"creëren (zoals associaties, maar geen generalisaties)."
 
 #: ../container.md:1
 msgid "Gaphor in a Container"
-msgstr ""
+msgstr "Gaphor in een container"
 
 #: ../container.md:3
 msgid "Instead of setting up a development environment locally, the easiest way to contribute to the project is using GitHub Codespaces."
 msgstr ""
+"In plaats van lokaal een ontwikkel­omgeving op te zetten, is de eenvoudigste "
+"manier om bij te dragen aan het project het gebruik van GitHub Codespaces."
 
 #: ../container.md:6
 msgid "GitHub Codespaces"
@@ -45,11 +54,11 @@ msgstr "GitHub Codespaces"
 
 #: ../container.md:8
 msgid "Follow these steps to open Gaphor in a Codespace:"
-msgstr ""
+msgstr "Volg deze stappen om Gaphor in een Codespace te openen:"
 
 #: ../container.md:9
 msgid "Navigate to https://github.com/gaphor/gaphor"
-msgstr ""
+msgstr "Navigeer naar https://github.com/gaphor/gaphor"
 
 #: ../container.md:10
 msgid "Click the Code drop-down menu and select the **Open with Codespaces** option."
