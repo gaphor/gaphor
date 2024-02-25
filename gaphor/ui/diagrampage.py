@@ -6,6 +6,7 @@ from typing import Optional
 from gaphas.guide import GuidePainter
 from gaphas.painter import FreeHandPainter, HandlePainter, PainterChain
 from gaphas.segment import LineSegmentPainter
+from gaphas.tool.itemtool import find_item_and_handle_at_point
 from gaphas.tool.rubberband import RubberbandPainter, RubberbandState
 from gaphas.view import GtkView
 from gi.repository import Adw, Gdk, GdkPixbuf, Gio, GLib, Gtk
@@ -146,7 +147,9 @@ class DiagramPage:
                 self.rubberband_state,
             )
             if self.view:
-                self.view.add_controller(context_menu_controller(self.context_menu))
+                self.view.add_controller(
+                    context_menu_controller(self.context_menu, self.diagram)
+                )
 
         elif tool_name == "toolbox-magnet":
             apply_magnet_tool_set(
@@ -276,8 +279,15 @@ class DiagramPage:
         )
 
 
-def context_menu_controller(context_menu):
+def context_menu_controller(context_menu, diagram):
     def on_show_popup(ctrl, n_press, x, y):
+        view = ctrl.get_widget()
+        item, _handle = find_item_and_handle_at_point(view, (x, y))
+
+        context_menu.set_menu_model(
+            popup_model(item.subject if item and item.subject else diagram)
+        )
+
         gdk_rect = Gdk.Rectangle()
         gdk_rect.x = x
         gdk_rect.y = y
@@ -293,7 +303,7 @@ def context_menu_controller(context_menu):
     return ctrl
 
 
-def popup_model(diagram):
+def popup_model(element):
     model = Gio.Menu.new()
     part = Gio.Menu.new()
 
@@ -301,7 +311,7 @@ def popup_model(diagram):
         gettext("Show in Model Browser"),
         "win.show-in-model-browser",
     )
-    menu_item.set_attribute_value("target", GLib.Variant.new_string(diagram.id))
+    menu_item.set_attribute_value("target", GLib.Variant.new_string(element.id))
 
     part.append_item(menu_item)
     model.append_section(None, part)
