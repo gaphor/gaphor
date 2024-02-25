@@ -16,6 +16,12 @@ class CurrentDiagramChanged:
         self.diagram = diagram
 
 
+class ModelSelectionChanged:
+    def __init__(self, service, focused_element):
+        self.service = service
+        self.focused_element = focused_element
+
+
 class DiagramSelectionChanged:
     def __init__(self, diagram_view, focused_item, selected_items):
         self.diagram_view = diagram_view

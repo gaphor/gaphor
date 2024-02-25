@@ -27,7 +27,11 @@ from gaphor.i18n import gettext, translated_ui_string
 from gaphor.transaction import Transaction
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.actiongroup import create_action_group
-from gaphor.ui.event import DiagramSelectionChanged, ElementOpened
+from gaphor.ui.event import (
+    DiagramSelectionChanged,
+    ElementOpened,
+    ModelSelectionChanged,
+)
 from gaphor.ui.treemodel import (
     RelationshipItem,
     TreeItem,
@@ -80,6 +84,13 @@ class ModelBrowser(UIComponent, ActionProvider):
         )
         self.tree_view = Gtk.ListView.new(self.selection, factory)
         self.tree_view.set_vexpand(True)
+
+        def selection_changed(_selection, position, _n_items):
+            element = self.selection.get_item(position).get_item().element
+            if element:
+                self.event_manager.handle(ModelSelectionChanged(self, element))
+
+        self.selection.connect("selection-changed", selection_changed)
 
         def list_view_activate(list_view, position):
             element = self.selection.get_item(position).get_item().element

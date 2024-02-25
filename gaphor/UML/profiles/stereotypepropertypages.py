@@ -5,14 +5,14 @@ from gi.repository import Gdk, Gio, GLib, GObject, Gtk
 
 from gaphor import UML
 from gaphor.core import transactional
-from gaphor.core.modeling.element import Element
+from gaphor.core.modeling import Element, Presentation
 from gaphor.diagram.propertypages import PropertyPageBase, PropertyPages
 from gaphor.i18n import gettext, translated_ui_string
 from gaphor.UML.profiles.metaclasspropertypage import new_builder
 from gaphor.UML.propertypages import text_field_handlers
 
 
-@PropertyPages.register(UML.Element)
+@PropertyPages.register(Presentation)
 class StereotypePage(PropertyPageBase):
     order = 40
 
