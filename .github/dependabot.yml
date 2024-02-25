@@ -2,17 +2,29 @@ version: 2
 updates:
   - package-ecosystem: "github-actions"
     directory: "/"
+    groups:
+      github-action-updates:
+        patterns:
+          - "*"
     schedule:
-      interval: "daily"
+      interval: weekly
     labels: ["skip-changelog"]
 
   - package-ecosystem: "pip"
     directory: "/"
+    groups:
+      pip-updates:
+        patterns:
+          - "*"
     schedule:
-      interval: "daily"
+      interval: weekly
     labels: ["skip-changelog"]
 
   - package-ecosystem: docker
     directory: /.devcontainer
+    groups:
+      docker-updates:
+        patterns:
+          - "*"
     schedule:
-      interval: daily
+      interval: weekly
