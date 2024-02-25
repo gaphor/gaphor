@@ -41,31 +41,27 @@
       </object>
     </child>
     <child>
-      <object class="GtkLabel" id="head-title">
-        <property name="label" translatable="yes">Head:</property>
-        <property name="halign">start</property>
-        <style>
-          <class name="title"/>
-        </style>
-      </object>
-    </child>
-    <child>
-      <object class="GtkEntry" id="head-name">
-        <property name="focusable">1</property>
-        <signal name="changed" handler="head-name-changed" swapped="no"/>
-      </object>
-    </child>
-    <child>
-      <object class="GtkLabel" id="head-info-icon">
-        <property name="halign">end</property>
-        <property name="label" translatable="yes">ⓘ Help</property>
+      <object class="GtkBox">
         <child>
-          <object class="GtkPopover" id="head-info">
-            <property name="visible">0</property>
-            <property name="position">top</property>
-            <property name="child">
-              <object class="GtkLabel">
-                <property name="label" translatable="yes">Add and edit association ends according to UML syntax.
+          <object class="GtkLabel" id="head-title">
+            <property name="label" translatable="yes">Head:</property>
+            <property name="halign">start</property>
+            <style>
+              <class name="title"/>
+            </style>
+          </object>
+        </child>
+        <child>
+          <object class="GtkLabel" id="head-info-icon">
+            <property name="halign">end</property>
+            <property name="label" translatable="yes">ⓘ Help</property>
+            <child>
+              <object class="GtkPopover" id="head-info">
+                <property name="visible">0</property>
+                <property name="position">top</property>
+                <property name="child">
+                  <object class="GtkLabel">
+                    <property name="label" translatable="yes">Add and edit association ends according to UML syntax.
 
   • &lt;tt&gt;+ name&lt;/tt&gt;
   • &lt;tt&gt;+ name[1]&lt;/tt&gt;
@@ -75,17 +71,25 @@
 
 Press &lt;b&gt;Enter&lt;/b&gt; to edit, &lt;b&gt;Backspace&lt;/b&gt;/&lt;b&gt;Delete&lt;/b&gt; to remove items.
 Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</property>
-                <property name="use-markup">1</property>
-                <style>
-                  <class name="info-popover"/>
-                </style>
+                    <property name="use-markup">1</property>
+                    <style>
+                      <class name="info-popover"/>
+                    </style>
+                  </object>
+                </property>
               </object>
-            </property>
+            </child>
+            <style>
+              <class name="info"/>
+            </style>
           </object>
         </child>
-        <style>
-          <class name="info"/>
-        </style>
+      </object>
+    </child>
+    <child>
+      <object class="GtkEntry" id="head-name">
+        <property name="focusable">1</property>
+        <signal name="changed" handler="head-name-changed" swapped="no"/>
       </object>
     </child>
     <child>
@@ -146,31 +150,27 @@ Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</propert
       </object>
     </child>
     <child>
-      <object class="GtkLabel" id="tail-title">
-        <property name="label" translatable="yes">Tail:</property>
-        <property name="halign">start</property>
-        <style>
-          <class name="title"/>
-        </style>
-      </object>
-    </child>
-    <child>
-      <object class="GtkEntry" id="tail-name">
-        <property name="focusable">1</property>
-        <signal name="changed" handler="tail-name-changed" swapped="no"/>
-      </object>
-    </child>
-    <child>
-      <object class="GtkLabel" id="tail-info-icon">
-        <property name="halign">end</property>
-        <property name="label" translatable="yes">ⓘ Help</property>
+      <object class="GtkBox">
         <child>
-          <object class="GtkPopover" id="tail-info">
-            <property name="visible">0</property>
-            <property name="position">top</property>
-            <property name="child">
-              <object class="GtkLabel">
-                <property name="label" translatable="yes">Add and edit association ends according to UML syntax.
+          <object class="GtkLabel" id="tail-title">
+            <property name="label" translatable="yes">Tail:</property>
+            <property name="halign">start</property>
+            <style>
+              <class name="title"/>
+            </style>
+          </object>
+        </child>
+        <child>
+          <object class="GtkLabel" id="tail-info-icon">
+            <property name="halign">end</property>
+            <property name="label" translatable="yes">ⓘ Help</property>
+            <child>
+              <object class="GtkPopover" id="tail-info">
+                <property name="visible">0</property>
+                <property name="position">top</property>
+                <property name="child">
+                  <object class="GtkLabel">
+                    <property name="label" translatable="yes">Add and edit association ends according to UML syntax.
 
   • &lt;tt&gt;+ name&lt;/tt&gt;
   • &lt;tt&gt;+ name[1]&lt;/tt&gt;
@@ -180,17 +180,25 @@ Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</propert
 
 Press &lt;b&gt;Enter&lt;/b&gt; to edit, &lt;b&gt;Backspace&lt;/b&gt;/&lt;b&gt;Delete&lt;/b&gt; to remove items.
 Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</property>
-                <property name="use-markup">1</property>
-                <style>
-                  <class name="info-popover"/>
-                </style>
+                    <property name="use-markup">1</property>
+                    <style>
+                      <class name="info-popover"/>
+                    </style>
+                  </object>
+                </property>
               </object>
-            </property>
+            </child>
+            <style>
+              <class name="info"/>
+            </style>
           </object>
         </child>
-        <style>
-          <class name="info"/>
-        </style>
+      </object>
+    </child>
+    <child>
+      <object class="GtkEntry" id="tail-name">
+        <property name="focusable">1</property>
+        <signal name="changed" handler="tail-name-changed" swapped="no"/>
       </object>
     </child>
     <child>
