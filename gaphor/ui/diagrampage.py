@@ -8,7 +8,7 @@ from gaphas.painter import FreeHandPainter, HandlePainter, PainterChain
 from gaphas.segment import LineSegmentPainter
 from gaphas.tool.rubberband import RubberbandPainter, RubberbandState
 from gaphas.view import GtkView
-from gi.repository import Adw, Gdk, GdkPixbuf, Gtk
+from gi.repository import Adw, Gdk, GdkPixbuf, Gio, GLib, Gtk
 
 from gaphor.core import event_handler, gettext
 from gaphor.core.modeling import StyleSheet
@@ -82,6 +82,7 @@ class DiagramPage:
         self.diagram_css: Optional[Gtk.CssProvider] = None
 
         self.rubberband_state = RubberbandState()
+        self.context_menu = Gtk.PopoverMenu.new_from_model(popup_model(diagram))
 
         self.event_manager.subscribe(self._on_element_delete)
         self.event_manager.subscribe(self._on_attribute_updated)
@@ -124,6 +125,7 @@ class DiagramPage:
 
         self.view = view
         self.widget = scrolled_window
+        self.context_menu.set_parent(view)
 
         self.select_tool("toolbox-pointer")
 
@@ -137,29 +139,32 @@ class DiagramPage:
     def apply_tool_set(self, tool_name):
         """Return a tool associated with an id (action name)."""
         if tool_name == "toolbox-pointer":
-            return apply_default_tool_set(
+            apply_default_tool_set(
                 self.view,
                 self.modeling_language,
                 self.event_manager,
                 self.rubberband_state,
             )
+            if self.view:
+                self.view.add_controller(context_menu_controller(self.context_menu))
+
         elif tool_name == "toolbox-magnet":
-            return apply_magnet_tool_set(
+            apply_magnet_tool_set(
                 self.view,
                 self.modeling_language,
                 self.event_manager,
             )
-
-        tool_def = get_tool_def(self.modeling_language, tool_name)
-        item_factory = tool_def.item_factory
-        handle_index = tool_def.handle_index
-        return apply_placement_tool_set(
-            self.view,
-            item_factory=item_factory,
-            modeling_language=self.modeling_language,
-            event_manager=self.event_manager,
-            handle_index=handle_index,
-        )
+        else:
+            tool_def = get_tool_def(self.modeling_language, tool_name)
+            item_factory = tool_def.item_factory
+            handle_index = tool_def.handle_index
+            apply_placement_tool_set(
+                self.view,
+                item_factory=item_factory,
+                modeling_language=self.modeling_language,
+                event_manager=self.event_manager,
+                handle_index=handle_index,
+            )
 
     def get_tool_icon_name(self, tool_name):
         if tool_name == "toolbox-pointer":
@@ -269,3 +274,36 @@ class DiagramPage:
                 view, selection.focused_item, selection.selected_items
             )
         )
+
+
+def context_menu_controller(context_menu):
+    def on_show_popup(ctrl, n_press, x, y):
+        gdk_rect = Gdk.Rectangle()
+        gdk_rect.x = x
+        gdk_rect.y = y
+        gdk_rect.width = gdk_rect.height = 1
+
+        context_menu.set_has_arrow(False)
+        context_menu.set_pointing_to(gdk_rect)
+        context_menu.popup()
+
+    ctrl = Gtk.GestureClick.new()
+    ctrl.set_button(Gdk.BUTTON_SECONDARY)
+    ctrl.connect("pressed", on_show_popup)
+    return ctrl
+
+
+def popup_model(diagram):
+    model = Gio.Menu.new()
+    part = Gio.Menu.new()
+
+    menu_item = Gio.MenuItem.new(
+        gettext("Show in Model Browser"),
+        "win.show-in-model-browser",
+    )
+    menu_item.set_attribute_value("target", GLib.Variant.new_string(diagram.id))
+
+    part.append_item(menu_item)
+    model.append_section(None, part)
+
+    return model

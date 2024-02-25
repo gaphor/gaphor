@@ -225,6 +225,11 @@ class ModelBrowser(UIComponent, ActionProvider):
         if self.search_bar:
             self.search_bar.set_search_mode(True)
 
+    @action(name="win.show-in-model-browser")
+    def show_in_model_browser(self, id: str):
+        if element := self.element_factory.lookup(id):
+            self.select_element(element)
+
     @event_handler(ElementCreated)
     def on_element_created(self, event: ElementCreated):
         self.model.add_element(event.element)
