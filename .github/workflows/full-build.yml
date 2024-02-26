@@ -396,7 +396,7 @@ jobs:
     runs-on: windows-latest
     continue-on-error: true
     timeout-minutes: 15
-    if: env.mainline_build == 'true'
+    if: ${{ env.mainline_build == 'true' }}
     steps:
       - name: Harden Runner
         uses: step-security/harden-runner@63c24ba6bd7ba022e95695ff85de572c04a18142 # v2.7.0
