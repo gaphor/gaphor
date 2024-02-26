@@ -225,6 +225,11 @@ class ModelBrowser(UIComponent, ActionProvider):
         if self.search_bar:
             self.search_bar.set_search_mode(True)
 
+    @action(name="win.show-in-model-browser")
+    def show_in_model_browser(self, id: str):
+        if element := self.element_factory.lookup(id):
+            self.select_element(element)
+
     @event_handler(ElementCreated)
     def on_element_created(self, event: ElementCreated):
         self.model.add_element(event.element)
@@ -433,16 +438,17 @@ def list_item_factory_setup(
             ),
         )
         element = list_item.get_item().get_item().element
-        if row.menu:
-            # Clean menu only when we want to create a new one.
-            row.menu.unparent()
-            row.menu = None
-        if element:
+        if not element:
+            return
+
+        if not row.menu:
             row.menu = Gtk.PopoverMenu.new_from_model(
                 popup_model(element, modeling_language)
             )
             row.menu.set_parent(row)
-            row.menu.popup()
+        else:
+            row.menu.set_menu_model(popup_model(element, modeling_language))
+        row.menu.popup()
 
     ctrl = Gtk.GestureClick.new()
     ctrl.set_button(Gdk.BUTTON_SECONDARY)

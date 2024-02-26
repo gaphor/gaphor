@@ -104,6 +104,7 @@ def show_popover(widget, view, box, commit):
         if should_commit:
             commit()
         view.grab_focus()
+        popover.unparent()
 
     popover.connect("closed", on_closed)
 
