@@ -165,7 +165,6 @@ class EditorStack:
 
         self.vbox: Optional[Gtk.Box] = None
         self._current_item = None
-        self._expanded_pages = {}
 
     def open(self, builder):
         """Display the ElementEditor pane."""
@@ -207,9 +206,6 @@ class EditorStack:
                 page = adapter.construct()
                 if not page:
                     continue
-                elif isinstance(page, Gtk.Expander):
-                    page.set_expanded(self._expanded_pages.get(name, True))
-                    page.connect_after("activate", self.on_expand, name)
                 self.vbox.append(page)
             except Exception:
                 log.error(
@@ -221,9 +217,6 @@ class EditorStack:
         assert self.vbox
         while page := self.vbox.get_first_child():
             self.vbox.remove(page)
-
-    def on_expand(self, widget, name):
-        self._expanded_pages[name] = widget.get_expanded()
 
     @event_handler(DiagramSelectionChanged)
     def _selection_changed(self, event=None, focused_item=None):

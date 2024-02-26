@@ -2,11 +2,12 @@
 <interface>
   <requires lib="gtk" version="4.0" />
 
-  <object class="GtkExpander" id="item-flow-editor">
-    <property name="expanded">1</property>
-    <child type="label">
+  <object class="GtkBox" id="item-flow-editor">
+    <property name="orientation">vertical</property>
+    <child>
       <object class="GtkLabel">
         <property name="label" translatable="yes">Item Flow</property>
+        <property name="halign">start</property>
         <style>
           <class name="title"/>
         </style>
@@ -14,71 +15,63 @@
     </child>
     <child>
       <object class="GtkBox">
-        <property name="orientation">vertical</property>
-        <child>
-          <object class="GtkBox">
-            <child>
-              <object class="GtkLabel">
-                <property name="label" translatable="yes">Enable Item Flow</property>
-                <property name="halign">start</property>
-                <property name="hexpand">yes</property>
-              </object>
-            </child>
-            <child>
-              <object class="GtkSwitch" id="use-item-flow">
-                <signal name="notify::active" handler="item-flow-active" swapped="no" />
-              </object>
-            </child>
-          </object>
-        </child>
         <child>
           <object class="GtkLabel">
-            <property name="label" translatable="yes">Item Property</property>
-            <property name="xalign">0</property>
+            <property name="label" translatable="yes">Enable Item Flow</property>
+            <property name="halign">start</property>
+            <property name="hexpand">yes</property>
           </object>
         </child>
         <child>
-          <object class="GtkBox">
+          <object class="GtkSwitch" id="use-item-flow">
+            <signal name="notify::active" handler="item-flow-active" swapped="no" />
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="GtkLabel">
+        <property name="label" translatable="yes">Item Property</property>
+        <property name="xalign">0</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkBox">
+        <child>
+          <object class="GtkEntry" id="item-flow-name">
+            <signal name="changed" handler="item-flow-name-changed" swapped="no" />
+            <property name="halign">start</property>
+            <property name="hexpand">yes</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="item-flow-invert">
+            <property name="tooltip-text" translatable="yes">Invert direction</property>
+            <signal name="clicked" handler="invert-direction-changed" swapped="no" />
             <child>
-              <object class="GtkEntry" id="item-flow-name">
-                <signal name="changed" handler="item-flow-name-changed" swapped="no" />
-                <property name="halign">start</property>
-                <property name="hexpand">yes</property>
+              <object class="GtkImage">
+                <property name="icon-name">object-flip-horizontal-symbolic</property>
               </object>
             </child>
-            <child>
-              <object class="GtkButton" id="item-flow-invert">
-                <property name="tooltip-text" translatable="yes">Invert direction</property>
-                <signal name="clicked" handler="invert-direction-changed" swapped="no" />
-                <child>
-                  <object class="GtkImage">
-                    <property name="icon-name">object-flip-horizontal-symbolic</property>
-                  </object>
-                </child>
-                <style>
-                  <class name="flat" />
-                </style>
-              </object>
-            </child>
+            <style>
+              <class name="flat" />
+            </style>
           </object>
         </child>
-        <child>
-          <object class="GtkLabel">
-            <property name="label" translatable="yes">Allocated Type</property>
-            <property name="xalign">0</property>
-          </object>
-        </child>
-        <child>
-          <object class="GtkDropDown" id="item-flow-type">
-            <property name="enable-search">1</property>
-            <property name="expression">
-              <lookup type="LabelValue" name="label" />
-            </property>
-          </object>
-        </child>
-        <style>
-          <class name="propertypage"/>
-        </style>
+      </object>
+    </child>
+    <child>
+      <object class="GtkLabel">
+        <property name="label" translatable="yes">Allocated Type</property>
+        <property name="halign">start</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkDropDown" id="item-flow-type">
+        <property name="enable-search">1</property>
+        <property name="expression">
+          <lookup type="LabelValue" name="label" />
+        </property>
       </object>
     </child>
     <style>
@@ -86,11 +79,12 @@
     </style>
   </object>
 
-  <object class="GtkExpander" id="compartment-editor">
-    <property name="expanded">1</property>
-    <child type="label">
+  <object class="GtkBox" id="compartment-editor">
+    <property name="orientation">vertical</property>
+    <child>
       <object class="GtkLabel">
         <property name="label" translatable="yes">Compartments</property>
+        <property name="halign">start</property>
         <style>
           <class name="title"/>
         </style>
@@ -98,58 +92,50 @@
     </child>
     <child>
       <object class="GtkBox">
-        <property name="orientation">vertical</property>
         <child>
-          <object class="GtkBox">
-            <child>
-              <object class="GtkLabel">
-                <property name="label" translatable="yes">Show Parts</property>
-                <property name="halign">start</property>
-                <property name="hexpand">yes</property>
-              </object>
-            </child>
-            <child>
-              <object class="GtkSwitch" id="show-parts">
-                <signal name="notify::active" handler="show-parts-changed" swapped="no"/>
-              </object>
-            </child>
+          <object class="GtkLabel">
+            <property name="label" translatable="yes">Show Parts</property>
+            <property name="halign">start</property>
+            <property name="hexpand">yes</property>
           </object>
         </child>
         <child>
-          <object class="GtkBox">
-            <child>
-              <object class="GtkLabel">
-                <property name="label" translatable="yes">Show References</property>
-                <property name="halign">start</property>
-                <property name="hexpand">yes</property>
-              </object>
-            </child>
-            <child>
-              <object class="GtkSwitch" id="show-references">
-                <signal name="notify::active" handler="show-references-changed" swapped="no" />
-              </object>
-            </child>
+          <object class="GtkSwitch" id="show-parts">
+            <signal name="notify::active" handler="show-parts-changed" swapped="no"/>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="GtkBox">
+        <child>
+          <object class="GtkLabel">
+            <property name="label" translatable="yes">Show References</property>
+            <property name="halign">start</property>
+            <property name="hexpand">yes</property>
           </object>
         </child>
         <child>
-          <object class="GtkBox">
-            <child>
-              <object class="GtkLabel">
-                <property name="label" translatable="yes">Show Values</property>
-                <property name="halign">start</property>
-                <property name="hexpand">yes</property>
-              </object>
-            </child>
-            <child>
-              <object class="GtkSwitch" id="show-values">
-                <signal name="notify::active" handler="show-values-changed" swapped="no" />
-              </object>
-            </child>
+          <object class="GtkSwitch" id="show-references">
+            <signal name="notify::active" handler="show-references-changed" swapped="no" />
           </object>
         </child>
-        <style>
-          <class name="propertypage"/>
-        </style>
+      </object>
+    </child>
+    <child>
+      <object class="GtkBox">
+        <child>
+          <object class="GtkLabel">
+            <property name="label" translatable="yes">Show Values</property>
+            <property name="halign">start</property>
+            <property name="hexpand">yes</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkSwitch" id="show-values">
+            <signal name="notify::active" handler="show-values-changed" swapped="no" />
+          </object>
+        </child>
       </object>
     </child>
     <style>
@@ -157,11 +143,12 @@
     </style>
   </object>
 
-  <object class="GtkExpander" id="interfaceblock-editor">
-    <property name="expanded">1</property>
-    <child type="label">
+  <object class="GtkBox" id="interfaceblock-editor">
+    <property name="orientation">vertical</property>
+    <child>
       <object class="GtkLabel">
         <property name="label" translatable="yes">Compartments</property>
+        <property name="halign">start</property>
         <style>
           <class name="title"/>
         </style>
@@ -169,26 +156,18 @@
     </child>
     <child>
       <object class="GtkBox">
-        <property name="orientation">vertical</property>
         <child>
-          <object class="GtkBox">
-            <child>
-              <object class="GtkLabel">
-                <property name="label" translatable="yes">Show Values</property>
-                <property name="halign">start</property>
-                <property name="hexpand">yes</property>
-              </object>
-            </child>
-            <child>
-              <object class="GtkSwitch" id="show-values">
-                <signal name="notify::active" handler="show-values-changed" swapped="no" />
-              </object>
-            </child>
+          <object class="GtkLabel">
+            <property name="label" translatable="yes">Show Values</property>
+            <property name="halign">start</property>
+            <property name="hexpand">yes</property>
           </object>
         </child>
-        <style>
-          <class name="propertypage"/>
-        </style>
+        <child>
+          <object class="GtkSwitch" id="show-values">
+            <signal name="notify::active" handler="show-values-changed" swapped="no" />
+          </object>
+        </child>
       </object>
     </child>
     <style>

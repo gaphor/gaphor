@@ -60,20 +60,17 @@ flowboxchild {
   margin-top: 12px;
 }
 
-box.propertypage > * {
+.propertypage {
   margin-top: 6px;
-}
-
-expander-widget.propertypage {
-  margin-top: 12px;
+  border-spacing: 6px;
 }
 
 .propertypage box.horizontal:not(.linked) {
   border-spacing: 6px;
 }
 
-.propertypage .info {
-  margin: 3px 2px 0 2px;
+.propertypage .title {
+  margin-top: 6px;
 }
 
 frame > textview {
@@ -109,7 +106,7 @@ textfield text selection {
 .info {
   border-radius: 16px;
   font-size: small;
-  padding: 1px 6px;
+  padding: 2px 6px;
 }
 
 .info:hover {
