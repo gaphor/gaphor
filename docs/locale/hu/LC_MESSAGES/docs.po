@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gaphor 2.18.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-04-09 15:06-0400\n"
-"PO-Revision-Date: 2024-01-04 20:47+0000\n"
+"PO-Revision-Date: 2024-02-26 10:01+0000\n"
 "Last-Translator: ovari <ovari123@zoho.com>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/gaphor/"
 "docs-gaphor-org/hu/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.4-dev\n"
+"X-Generator: Weblate 5.5-dev\n"
 
 #: ../connect.md:1
 msgid "Connection Protocol"
@@ -26,6 +26,10 @@ msgstr "Csatlakozási protokoll"
 #: ../connect.md:3
 msgid "In Gaphor, if a connection is made on a diagram between an element and a relationship, the connection is also made at semantic level (the model). From a GUI point of view, a button release event is what kicks of the decision whether the connection is allowed."
 msgstr ""
+"A Gaphorban, ha egy ábrán kapcsolatot hozunk létre egy elem és egy kapcsolat "
+"között, a kapcsolat szemantikai szinten is létrejön (a modell). A grafikus "
+"felhasználói felület szempontjából a gomb felszabadítási eseménye dönti el, "
+"hogy a kapcsolat engedélyezett-e."
 
 #: ../connect.md:12
 msgid "The check if a connection is allowed should also check if it is valid to create a relation to/from the same element (like associations, but not generalizations)."
