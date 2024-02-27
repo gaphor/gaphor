@@ -190,21 +190,19 @@ def update_attribute_model(store: Gio.ListStore, klass: UML.Class) -> None:
     )
 
 
-@PropertyPages.register(DataTypeItem)
-@PropertyPages.register(ClassItem)
-@PropertyPages.register(InterfaceItem)
+@PropertyPages.register(UML.DataType)
+@PropertyPages.register(UML.Class)
+@PropertyPages.register(UML.Interface)
 class AttributesPage(PropertyPageBase):
-    """An editor for attributes associated with classes and interfaces."""
-
     order = 20
 
-    def __init__(self, item):
+    def __init__(self, subject):
         super().__init__()
-        self.item = item
-        self.watcher = item.subject and item.subject.watcher()
+        self.subject = subject
+        self.watcher = subject and subject.watcher()
 
     def construct(self):
-        if not self.item.subject:
+        if not self.subject:
             return
 
         builder = new_builder(
@@ -213,15 +211,11 @@ class AttributesPage(PropertyPageBase):
             signals={
                 "attributes-activated": (list_view_activated,),
                 "attributes-key-pressed": (list_view_key_handler,),
-                "show-attributes-changed": (self.on_show_attributes_changed,),
                 "attributes-info-clicked": (self.on_attributes_info_clicked,),
             },
         )
         self.info = builder.get_object("attributes-info")
         help_link(builder, "attributes-info-icon", "attributes-info")
-
-        show_attributes = builder.get_object("show-attributes")
-        show_attributes.set_active(self.item.show_attributes)
 
         column_view: Gtk.ColumnView = builder.get_object("attributes-list")
 
@@ -245,7 +239,7 @@ class AttributesPage(PropertyPageBase):
         ):
             column.set_factory(factory)
 
-        self.model = attribute_model(self.item.subject)
+        self.model = attribute_model(self.subject)
         selection = Gtk.SingleSelection.new(self.model)
         column_view.set_model(selection)
 
@@ -256,16 +250,43 @@ class AttributesPage(PropertyPageBase):
             builder.get_object("attributes-editor"), self.watcher
         )
 
+    def on_attributes_changed(self, event):
+        update_attribute_model(self.model, self.subject)
+
+    def on_attributes_info_clicked(self, image, event):
+        self.info.set_visible(True)
+
+
+@PropertyPages.register(DataTypeItem)
+@PropertyPages.register(ClassItem)
+@PropertyPages.register(InterfaceItem)
+class ShowAttributesPage(PropertyPageBase):
+    order = 21
+
+    def __init__(self, item):
+        super().__init__()
+        self.item = item
+
+    def construct(self):
+        if not self.item.subject:
+            return
+
+        builder = new_builder(
+            "show-attributes-editor",
+            signals={
+                "show-attributes-changed": (self.on_show_attributes_changed,),
+            },
+        )
+
+        show_attributes = builder.get_object("show-attributes")
+        show_attributes.set_active(self.item.show_attributes)
+
+        return builder.get_object("show-attributes-editor")
+
     @transactional
     def on_show_attributes_changed(self, button, gparam):
         self.item.show_attributes = button.get_active()
         self.item.request_update()
-
-    def on_attributes_changed(self, event):
-        update_attribute_model(self.model, self.item.subject)
-
-    def on_attributes_info_clicked(self, image, event):
-        self.info.set_visible(True)
 
 
 class OperationView(GObject.Object):
@@ -347,21 +368,19 @@ def update_operation_model(store: Gio.ListStore, klass: UML.Class) -> None:
     )
 
 
-@PropertyPages.register(DataTypeItem)
-@PropertyPages.register(ClassItem)
-@PropertyPages.register(InterfaceItem)
+@PropertyPages.register(UML.DataType)
+@PropertyPages.register(UML.Class)
+@PropertyPages.register(UML.Interface)
 class OperationsPage(PropertyPageBase):
-    """An editor for operations associated with classes and interfaces."""
-
     order = 30
 
-    def __init__(self, item):
+    def __init__(self, subject):
         super().__init__()
-        self.item = item
-        self.watcher = item.subject and item.subject.watcher()
+        self.subject = subject
+        self.watcher = subject and subject.watcher()
 
     def construct(self):
-        if not self.item.subject:
+        if not self.subject:
             return
 
         builder = new_builder(
@@ -370,16 +389,12 @@ class OperationsPage(PropertyPageBase):
             signals={
                 "operations-activated": (list_view_activated,),
                 "operations-key-pressed": (list_view_key_handler,),
-                "show-operations-changed": (self.on_show_operations_changed,),
                 "operations-info-clicked": (self.on_operations_info_clicked,),
             },
         )
 
         self.info = builder.get_object("operations-info")
         help_link(builder, "operations-info-icon", "operations-info")
-
-        show_operations = builder.get_object("show-operations")
-        show_operations.set_active(self.item.show_operations)
 
         column_view: Gtk.ColumnView = builder.get_object("operations-list")
 
@@ -409,7 +424,7 @@ class OperationsPage(PropertyPageBase):
         ):
             column.set_factory(factory)
 
-        self.model = operation_model(self.item.subject)
+        self.model = operation_model(self.subject)
         selection = Gtk.SingleSelection.new(self.model)
         column_view.set_model(selection)
 
@@ -420,16 +435,43 @@ class OperationsPage(PropertyPageBase):
             builder.get_object("operations-editor"), self.watcher
         )
 
+    def on_operations_changed(self, event):
+        update_operation_model(self.model, self.subject)
+
+    def on_operations_info_clicked(self, image, event):
+        self.info.set_visible(True)
+
+
+@PropertyPages.register(DataTypeItem)
+@PropertyPages.register(ClassItem)
+@PropertyPages.register(InterfaceItem)
+class ShowOperationsPage(PropertyPageBase):
+    order = 31
+
+    def __init__(self, item):
+        super().__init__()
+        self.item = item
+
+    def construct(self):
+        if not self.item.subject:
+            return
+
+        builder = new_builder(
+            "show-operations-editor",
+            signals={
+                "show-operations-changed": (self.on_show_operations_changed,),
+            },
+        )
+
+        show_operations = builder.get_object("show-operations")
+        show_operations.set_active(self.item.show_operations)
+
+        return builder.get_object("show-operations-editor")
+
     @transactional
     def on_show_operations_changed(self, button, gparam):
         self.item.show_operations = button.get_active()
         self.item.request_update()
-
-    def on_operations_changed(self, event):
-        update_operation_model(self.model, self.item.subject)
-
-    def on_operations_info_clicked(self, image, event):
-        self.info.set_visible(True)
 
 
 @PropertyPages.register(UML.Component)

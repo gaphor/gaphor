@@ -348,6 +348,13 @@ Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</propert
         </property>
       </object>
     </child>
+    <style>
+      <class name="propertypage"/>
+    </style>
+  </object>
+
+  <object class="GtkBox" id="show-attributes-editor">
+    <property name="orientation">vertical</property>
     <child>
       <object class="GtkBox">
         <child>
@@ -550,6 +557,13 @@ Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</propert
         </property>
       </object>
     </child>
+    <style>
+      <class name="propertypage"/>
+    </style>
+  </object>
+
+  <object class="GtkBox" id="show-operations-editor">
+    <property name="orientation">vertical</property>
     <child>
       <object class="GtkBox">
         <child>
@@ -643,6 +657,13 @@ Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</propert
         </property>
       </object>
     </child>
+    <style>
+      <class name="propertypage"/>
+    </style>
+  </object>
+
+  <object class="GtkBox" id="show-enumerations-editor">
+    <property name="orientation">vertical</property>
     <child>
       <object class="GtkBox">
         <child>

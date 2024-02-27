@@ -9,6 +9,8 @@ from gaphor.UML.classes.classespropertypages import (
     InterfacePropertyPage,
     NamedElementPropertyPage,
     OperationsPage,
+    ShowAttributesPage,
+    ShowOperationsPage,
     attribute_model,
 )
 
@@ -70,11 +72,11 @@ def test_interface_property_page(diagram, element_factory):
     assert item.folded == Folded.PROVIDED
 
 
-def test_attributes_page(diagram, element_factory):
+def test_show_attributes_page(diagram, element_factory):
     item = diagram.create(
         UML.classes.InterfaceItem, subject=element_factory.create(UML.Interface)
     )
-    property_page = AttributesPage(item)
+    property_page = ShowAttributesPage(item)
 
     widget = property_page.construct()
     show_attributes = find(widget, "show-attributes")
@@ -84,44 +86,42 @@ def test_attributes_page(diagram, element_factory):
 
 
 def test_attributes_page_add_attribute(diagram, element_factory):
-    item = diagram.create(
-        UML.classes.InterfaceItem, subject=element_factory.create(UML.Interface)
-    )
-    property_page = AttributesPage(item)
+    subject = element_factory.create(UML.Interface)
+
+    property_page = AttributesPage(subject)
 
     property_page.construct()
     property_page.model.get_item(0).attribute = "+ attr: str"
 
-    assert item.subject.attribute[0].name == "attr"
-    assert item.subject.attribute[0].typeValue == "str"
+    assert subject.attribute[0].name == "attr"
+    assert subject.attribute[0].typeValue == "str"
 
 
-def test_attribute_create_model(diagram, element_factory):
-    class_item = diagram.create(
-        UML.classes.ClassItem, subject=element_factory.create(UML.Class)
-    )
+def test_attribute_create_model(element_factory):
+    subject = element_factory.create(UML.Class)
+
     attr1 = element_factory.create(UML.Property)
     attr1.name = "attr1"
-    class_item.subject.ownedAttribute = attr1
+    subject.ownedAttribute = attr1
     attr2 = element_factory.create(UML.Property)
     attr2.name = "attr2"
-    class_item.subject.ownedAttribute = attr2
+    subject.ownedAttribute = attr2
     attr3 = element_factory.create(UML.Property)
     attr3.name = "attr3"
-    class_item.subject.ownedAttribute = attr3
+    subject.ownedAttribute = attr3
 
-    list_store = attribute_model(class_item.subject)
+    list_store = attribute_model(subject)
 
     assert list_store[0].attr is attr1
     assert list_store[1].attr is attr2
     assert list_store[2].attr is attr3
 
 
-def test_operations_page(diagram, element_factory):
+def test_show_operations_page(diagram, element_factory):
     item = diagram.create(
         UML.classes.InterfaceItem, subject=element_factory.create(UML.Interface)
     )
-    property_page = OperationsPage(item)
+    property_page = ShowOperationsPage(item)
 
     widget = property_page.construct()
     show_operations = find(widget, "show-operations")
@@ -130,13 +130,12 @@ def test_operations_page(diagram, element_factory):
     assert not item.show_operations
 
 
-def test_operations_page_add_operation(diagram, element_factory):
-    item = diagram.create(
-        UML.classes.InterfaceItem, subject=element_factory.create(UML.Interface)
-    )
-    property_page = OperationsPage(item)
+def test_operations_page_add_operation(element_factory):
+    subject = element_factory.create(UML.Interface)
+
+    property_page = OperationsPage(subject)
 
     property_page.construct()
     property_page.model.get_item(0).operation = "+ oper()"
 
-    assert item.subject.ownedOperation[0].name == "oper"
+    assert subject.ownedOperation[0].name == "oper"

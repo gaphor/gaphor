@@ -67,6 +67,13 @@
         </property>
       </object>
     </child>
+    <style>
+      <class name="propertypage"/>
+    </style>
+  </object>
+
+  <object class="GtkBox" id="show-stereotypes-editor">
+    <property name="orientation">vertical</property>
     <child>
       <object class="GtkBox">
         <child>
