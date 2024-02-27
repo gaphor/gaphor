@@ -2,9 +2,9 @@ from gi.repository import Gdk
 
 from gaphor import UML
 from gaphor.diagram.tests.fixtures import find
-from gaphor.UML.actions.activity import ActivityItem, ActivityParameterNodeItem
+from gaphor.UML.actions.activity import ActivityParameterNodeItem
 from gaphor.UML.actions.activitypropertypage import (
-    ActivityItemPage,
+    ActivityPage,
     ActivityParameterNodeDirectionPropertyPage,
     ActivityParameterNodeNamePropertyPage,
     ActivityParameterNodeTypePropertyPage,
@@ -69,13 +69,13 @@ def test_activity_parameter_node_add_new_parameter(element_factory):
     assert parameter.typeValue == "str"
 
 
-def test_update_model_when_new_parameter_added(create, element_factory):
-    activity_item = create(ActivityItem, UML.Activity)
+def test_update_model_when_new_parameter_added(element_factory):
+    subject = element_factory.create(UML.Activity)
 
-    property_page = ActivityItemPage(activity_item)
+    property_page = ActivityPage(subject)
     property_page.construct()
 
-    activity_item.subject.node = activity_parameter_node(element_factory, "one")
+    subject.node = activity_parameter_node(element_factory, "one")
 
     assert property_page.model.get_n_items() == 2  # one + empty row
 
@@ -92,10 +92,10 @@ def test_activity_parameter_node_name_editing(element_factory):
     assert subject.parameter.name == "A new name"
 
 
-def test_update_model_when_new_parameter_added_via_list_model(create, element_factory):
-    activity_item = create(ActivityItem, UML.Activity)
+def test_update_model_when_new_parameter_added_via_list_model(element_factory):
+    subject = element_factory.create(UML.Activity)
 
-    property_page = ActivityItemPage(activity_item)
+    property_page = ActivityPage(subject)
     property_page.construct()
 
     new_view = property_page.model.get_item(0)
@@ -106,61 +106,59 @@ def test_update_model_when_new_parameter_added_via_list_model(create, element_fa
     assert property_page.model.get_item(1).node is None
 
 
-def test_update_model_with_single_node_when_parameter_deleted(create, element_factory):
-    activity_item = create(ActivityItem, UML.Activity)
-    activity_item.subject.node = node = activity_parameter_node(element_factory, "one")
+def test_update_model_with_single_node_when_parameter_deleted(element_factory):
+    subject = element_factory.create(UML.Activity)
+    subject.node = node = activity_parameter_node(element_factory, "one")
 
-    property_page = ActivityItemPage(activity_item)
+    property_page = ActivityPage(subject)
     property_page.construct()
 
-    del activity_item.subject.node[node]
+    del subject.node[node]
 
-    assert not activity_item.subject.node
+    assert not subject.node
     assert property_page.model.get_n_items() == 1
     assert property_page.model.get_item(0).node is None
 
 
-def test_update_model_with_multiple_nodes_when_parameter_deleted(
-    create, element_factory
-):
-    activity_item = create(ActivityItem, UML.Activity)
-    activity_item.subject.node = node = activity_parameter_node(element_factory, "one")
-    activity_item.subject.node = activity_parameter_node(element_factory, "two")
+def test_update_model_with_multiple_nodes_when_parameter_deleted(element_factory):
+    subject = element_factory.create(UML.Activity)
+    subject.node = node = activity_parameter_node(element_factory, "one")
+    subject.node = activity_parameter_node(element_factory, "two")
 
-    property_page = ActivityItemPage(activity_item)
+    property_page = ActivityPage(subject)
     property_page.construct()
 
-    del activity_item.subject.node[node]
+    del subject.node[node]
 
     assert property_page.model.get_n_items() == 2
-    assert property_page.model.get_item(0).node in activity_item.subject.node
+    assert property_page.model.get_item(0).node in subject.node
     assert property_page.model.get_item(1).node is None
 
 
-def test_activity_parameter_node_reorder_down(create, element_factory):
-    activity_item = create(ActivityItem, UML.Activity)
-    activity_item.subject.node = activity_parameter_node(element_factory, "one")
-    activity_item.subject.node = activity_parameter_node(element_factory, "two")
-    node_one, node_two = activity_item.subject.node
+def test_activity_parameter_node_reorder_down(element_factory):
+    subject = element_factory.create(UML.Activity)
+    subject.node = activity_parameter_node(element_factory, "one")
+    subject.node = activity_parameter_node(element_factory, "two")
+    node_one, node_two = subject.node
 
-    property_page = ActivityItemPage(activity_item)
+    property_page = ActivityPage(subject)
     widget = property_page.construct()
 
     list_view = find(widget, "parameter-list")
 
     list_view_key_handler(ControllerStub(list_view), Gdk.KEY_plus, None, 0)
 
-    assert activity_item.subject.node[0] is node_two
-    assert activity_item.subject.node[1] is node_one
+    assert subject.node[0] is node_two
+    assert subject.node[1] is node_one
 
 
-def test_activity_parameter_node_reorder_up(create, element_factory):
-    activity_item = create(ActivityItem, UML.Activity)
-    activity_item.subject.node = activity_parameter_node(element_factory, "one")
-    activity_item.subject.node = activity_parameter_node(element_factory, "two")
-    node_one, node_two = activity_item.subject.node
+def test_activity_parameter_node_reorder_up(element_factory):
+    subject = element_factory.create(UML.Activity)
+    subject.node = activity_parameter_node(element_factory, "one")
+    subject.node = activity_parameter_node(element_factory, "two")
+    node_one, node_two = subject.node
 
-    property_page = ActivityItemPage(activity_item)
+    property_page = ActivityPage(subject)
     widget = property_page.construct()
 
     list_view = find(widget, "parameter-list")
@@ -169,31 +167,31 @@ def test_activity_parameter_node_reorder_up(create, element_factory):
 
     list_view_key_handler(ControllerStub(list_view), Gdk.KEY_minus, None, 0)
 
-    assert activity_item.subject.node[0] is node_two
-    assert activity_item.subject.node[1] is node_one
+    assert subject.node[0] is node_two
+    assert subject.node[1] is node_one
 
 
-def test_activity_parameter_node_reorder_first_node_up(create, element_factory):
-    activity_item = create(ActivityItem, UML.Activity)
-    activity_item.subject.node = activity_parameter_node(element_factory, "one")
-    activity_item.subject.node = activity_parameter_node(element_factory, "two")
-    node_one, node_two = activity_item.subject.node
+def test_activity_parameter_node_reorder_first_node_up(element_factory):
+    subject = element_factory.create(UML.Activity)
+    subject.node = activity_parameter_node(element_factory, "one")
+    subject.node = activity_parameter_node(element_factory, "two")
+    node_one, node_two = subject.node
 
-    property_page = ActivityItemPage(activity_item)
+    property_page = ActivityPage(subject)
     widget = property_page.construct()
 
     list_view = find(widget, "parameter-list")
 
     list_view_key_handler(ControllerStub(list_view), Gdk.KEY_minus, None, 0)
 
-    assert activity_item.subject.node[0] is node_one
-    assert activity_item.subject.node[1] is node_two
+    assert subject.node[0] is node_one
+    assert subject.node[1] is node_two
 
 
-def test_construct_activity_item_property_page(create):
-    activity_item = create(ActivityItem, UML.Activity)
+def test_construct_activity_item_property_page(element_factory):
+    subject = element_factory.create(UML.Activity)
 
-    property_page = ActivityItemPage(activity_item)
+    property_page = ActivityPage(subject)
     widget = property_page.construct()
 
     assert widget

@@ -17,7 +17,7 @@ from gaphor.diagram.propertypages import (
 from gaphor.diagram.propertypages import (
     new_builder as diagram_new_builder,
 )
-from gaphor.UML.actions.activity import ActivityItem, ActivityParameterNodeItem
+from gaphor.UML.actions.activity import ActivityParameterNodeItem
 from gaphor.UML.propertypages import (
     TypedElementPropertyPage,
     create_list_store,
@@ -98,16 +98,16 @@ def update_activity_parameter_node_model(
     )
 
 
-@PropertyPages.register(ActivityItem)
-class ActivityItemPage(PropertyPageBase):
+@PropertyPages.register(UML.Activity)
+class ActivityPage(PropertyPageBase):
     order = 40
 
-    def __init__(self, item: ActivityItem):
-        self.item = item
-        self.watcher = item.subject and item.subject.watcher()
+    def __init__(self, subject: UML.Activity):
+        self.subject = subject
+        self.watcher = subject and subject.watcher()
 
     def construct(self):
-        subject = self.item.subject
+        subject = self.subject
 
         if not subject:
             return
@@ -154,7 +154,7 @@ class ActivityItemPage(PropertyPageBase):
 
     @event_handler(AssociationUpdated)
     def on_nodes_changed(self, event):
-        update_activity_parameter_node_model(self.model, self.item.subject)
+        update_activity_parameter_node_model(self.model, self.subject)
 
     def on_parameters_info_clicked(self, image, event):
         self.info.set_visible(True)
