@@ -80,7 +80,7 @@ NOTE: Gaphor requires GTK 4. It works best with GTK >=4.8 and libadwaita >=1.2.
 
 ### Debugging using Visual Studio Code
 
-Before you start debugging you'll need to open Gaphor is vscode (the folder
+Before you start debugging you'll need to open Gaphor in vscode (the folder
 containing `pyproject.toml`). You'll need to have the Python extension installed.
 
 Create a file `.vscode/launch.json` with the following content:
