@@ -3816,7 +3816,7 @@ msgid "Debugging using Visual Studio Code"
 msgstr ""
 
 #: ../linux.md:83
-msgid "Before you start debugging you'll need to open Gaphor is vscode (the folder containing `pyproject.toml`). You'll need to have the Python extension installed."
+msgid "Before you start debugging you'll need to open Gaphor in vscode (the folder containing `pyproject.toml`). You'll need to have the Python extension installed."
 msgstr ""
 
 #: ../linux.md:86
@@ -3913,7 +3913,7 @@ msgid "If PyGObject does not compile and complains about a missing `ffi.h` file,
 msgstr ""
 
 #: ../macos.md:41
-msgid "Before you start debugging you'll need to open Gaphor is VSCode (the folder containing `pyproject.toml`). You'll need to have the Python extension installed."
+msgid "Before you start debugging you'll need to open Gaphor in VSCode (the folder containing `pyproject.toml`). You'll need to have the Python extension installed."
 msgstr ""
 
 #: ../macos.md:61
