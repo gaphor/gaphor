@@ -7,17 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-01-24 20:22-0500\n"
+"POT-Creation-Date: 2024-02-27 10:00-0500\n"
 "PO-Revision-Date: 2024-02-26 10:02+0000\n"
 "Last-Translator: ovari <ovari123@zoho.com>\n"
-"Language-Team: Hungarian <https://hosted.weblate.org/projects/gaphor/gaphor/"
-"hu/>\n"
 "Language: hu\n"
+"Language-Team: Hungarian "
+"<https://hosted.weblate.org/projects/gaphor/gaphor/hu/>\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.5-dev\n"
 "Generated-By: Babel 2.14.0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:23 gaphor/C4Model/toolbox.py:67
@@ -25,11 +24,12 @@ msgstr ""
 msgid "C4 Model"
 msgstr "C4-modell"
 
-#: gaphor/C4Model/propertypages.ui:11 gaphor/diagram/propertypages.ui:181
+#: gaphor/C4Model/propertypages.ui:11 gaphor/diagram/propertypages.ui:169
 msgid "Description"
 msgstr "Leírás"
 
-#: gaphor/C4Model/propertypages.ui:38 gaphor/templates/sysml.gaphor
+#: gaphor/C4Model/propertypages.ui:38 gaphor/templates/sysml-example.gaphor
+#: gaphor/templates/sysml.gaphor
 msgid "Technology"
 msgstr "Technológia"
 
@@ -76,7 +76,7 @@ msgstr "Összetevő"
 
 #: gaphor/C4Model/toolbox.py:131 gaphor/RAAML/fta/ftatoolbox.py:16
 #: gaphor/UML/classes/classestoolbox.py:119
-#: gaphor/UML/classes/propertypages.ui:446
+#: gaphor/UML/classes/propertypages.ui:430
 msgid "Dependency"
 msgstr "Függőség"
 
@@ -170,26 +170,27 @@ msgstr "Új veszély"
 msgid "New Situation"
 msgstr "Új helyzet"
 
-#: gaphor/RAAML/fta/andgate.py:35 gaphor/RAAML/fta/ftatoolbox.py:24
+#: gaphor/RAAML/fta/andgate.py:34 gaphor/RAAML/fta/ftatoolbox.py:24
 msgid "AND Gate"
 msgstr "ÉS kapu"
 
-#: gaphor/RAAML/fta/basicevent.py:33 gaphor/RAAML/fta/ftatoolbox.py:125
+#: gaphor/RAAML/fta/basicevent.py:32 gaphor/RAAML/fta/ftatoolbox.py:125
 #: gaphor/RAAML/fta/ftatoolbox.py:131
 msgid "Basic Event"
 msgstr "Elemi esemény"
 
-#: gaphor/RAAML/fta/conditionalevent.py:30 gaphor/RAAML/fta/ftatoolbox.py:136
+#: gaphor/RAAML/fta/conditionalevent.py:29 gaphor/RAAML/fta/ftatoolbox.py:136
 #: gaphor/RAAML/fta/ftatoolbox.py:143
 msgid "Conditional Event"
 msgstr "Feltételes esemény"
 
-#: gaphor/RAAML/fta/dormantevent.py:33 gaphor/RAAML/fta/ftatoolbox.py:162
+#: gaphor/RAAML/fta/dormantevent.py:32 gaphor/RAAML/fta/ftatoolbox.py:162
 #: gaphor/RAAML/fta/ftatoolbox.py:168
 msgid "Dormant Event"
 msgstr "Szunnyadó esemény"
 
-#: gaphor/RAAML/fta/ftatoolbox.py:12 gaphor/templates/raaml.gaphor
+#: gaphor/RAAML/fta/ftatoolbox.py:12 gaphor/templates/raaml-example.gaphor
+#: gaphor/templates/raaml.gaphor
 msgid "Fault Tree Analysis"
 msgstr "Hibafaelemzés"
 
@@ -197,15 +198,15 @@ msgstr "Hibafaelemzés"
 msgid "AND"
 msgstr "ÉS kapu"
 
-#: gaphor/RAAML/fta/ftatoolbox.py:35 gaphor/RAAML/fta/orgate.py:35
+#: gaphor/RAAML/fta/ftatoolbox.py:35 gaphor/RAAML/fta/orgate.py:34
 msgid "OR Gate"
 msgstr "VAGY kapu"
 
-#: gaphor/RAAML/fta/ftatoolbox.py:41 gaphor/templates/raaml.gaphor
+#: gaphor/RAAML/fta/ftatoolbox.py:41 gaphor/templates/raaml-example.gaphor
 msgid "OR"
 msgstr "VAGY kapu"
 
-#: gaphor/RAAML/fta/ftatoolbox.py:46 gaphor/RAAML/fta/notgate.py:33
+#: gaphor/RAAML/fta/ftatoolbox.py:46 gaphor/RAAML/fta/notgate.py:32
 msgid "NOT Gate"
 msgstr "NEM kapu"
 
@@ -230,79 +231,79 @@ msgid "XOR"
 msgstr "Kizáró VAGY kapu"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:79 gaphor/RAAML/fta/ftatoolbox.py:86
-#: gaphor/RAAML/fta/majorityvotegate.py:38
+#: gaphor/RAAML/fta/majorityvotegate.py:37
 msgid "Majority Vote Gate"
 msgstr "Többségi szavazókapu"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:92 gaphor/RAAML/fta/ftatoolbox.py:98
-#: gaphor/RAAML/fta/inhibitgate.py:33
+#: gaphor/RAAML/fta/inhibitgate.py:32
 msgid "Inhibit Gate"
 msgstr "Akadály kapu"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:103 gaphor/RAAML/fta/ftatoolbox.py:109
-#: gaphor/RAAML/fta/transferin.py:33
+#: gaphor/RAAML/fta/transferin.py:32
 msgid "Transfer In"
 msgstr "Bejövő átmozgatás"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:114 gaphor/RAAML/fta/ftatoolbox.py:120
-#: gaphor/RAAML/fta/transferout.py:34
+#: gaphor/RAAML/fta/transferout.py:33
 msgid "Transfer Out"
 msgstr "Kimenő átmozgatás"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:149 gaphor/RAAML/fta/ftatoolbox.py:156
-#: gaphor/RAAML/fta/undevelopedevent.py:33
+#: gaphor/RAAML/fta/undevelopedevent.py:32
 msgid "Undeveloped Event"
 msgstr "Ki nem fejtett esemény"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:173 gaphor/RAAML/fta/ftatoolbox.py:179
-#: gaphor/RAAML/fta/houseevent.py:33
+#: gaphor/RAAML/fta/houseevent.py:32
 msgid "House Event"
 msgstr "Kibontható/becsukható esemény"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:184 gaphor/RAAML/fta/ftatoolbox.py:190
-#: gaphor/RAAML/fta/zeroevent.py:34
+#: gaphor/RAAML/fta/zeroevent.py:33
 msgid "Zero Event"
 msgstr "Nulla esemény"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:195 gaphor/RAAML/fta/ftatoolbox.py:201
-#: gaphor/RAAML/fta/topevent.py:30
+#: gaphor/RAAML/fta/topevent.py:27
 msgid "Top Event"
 msgstr "Nemkívánatos esemény"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:206 gaphor/RAAML/fta/ftatoolbox.py:213
-#: gaphor/RAAML/fta/intermediateevent.py:31
+#: gaphor/RAAML/fta/intermediateevent.py:28
 msgid "Intermediate Event"
 msgstr "Köztes esemény"
 
-#: gaphor/RAAML/fta/seqgate.py:35
+#: gaphor/RAAML/fta/seqgate.py:34
 msgid "Sequence Enforcing Gate"
 msgstr "Sorozat végrehajtó kapu"
 
-#: gaphor/RAAML/fta/xorgate.py:34
+#: gaphor/RAAML/fta/xorgate.py:33
 msgid "XOR Gate"
 msgstr "KIZÁRÓ VAGY kapu"
 
-#: gaphor/RAAML/stpa/controlaction.py:31 gaphor/RAAML/stpa/stpatoolbox.py:158
+#: gaphor/RAAML/stpa/controlaction.py:27 gaphor/RAAML/stpa/stpatoolbox.py:158
 msgid "Control Action"
 msgstr "Vezérlési művelet"
 
-#: gaphor/RAAML/stpa/operationalsituation.py:32
+#: gaphor/RAAML/stpa/operationalsituation.py:29
 #: gaphor/RAAML/stpa/stpatoolbox.py:127
 msgid "Operational Situation"
 msgstr "Működési helyzet"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:17 gaphor/RAAML/stpa/stpatoolbox.py:43
-#: gaphor/templates/raaml.gaphor
+#: gaphor/templates/raaml-example.gaphor
 msgid "Loss"
 msgstr "Veszteség"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:22 gaphor/RAAML/stpa/stpatoolbox.py:52
-#: gaphor/templates/raaml.gaphor
+#: gaphor/templates/raaml-example.gaphor
 msgid "Hazard"
 msgstr "Veszély"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:27 gaphor/RAAML/stpa/stpatoolbox.py:116
-#: gaphor/templates/raaml.gaphor
+#: gaphor/templates/raaml-example.gaphor
 msgid "Abstract Operational Situation"
 msgstr "Elvont működési helyzet"
 
@@ -311,8 +312,8 @@ msgstr "Elvont működési helyzet"
 msgid "Generalization"
 msgstr "Általánosítás"
 
-#: gaphor/RAAML/stpa/stpatoolbox.py:61 gaphor/SysML/blocks/block.py:59
-#: gaphor/SysML/blocks/interfaceblock.py:59
+#: gaphor/RAAML/stpa/stpatoolbox.py:61 gaphor/SysML/blocks/block.py:57
+#: gaphor/SysML/blocks/interfaceblock.py:56
 msgid "Situation"
 msgstr "Helyzet"
 
@@ -320,11 +321,11 @@ msgstr "Helyzet"
 msgid "Control Structure"
 msgstr "Ellenőrzési szerkezet"
 
-#: gaphor/RAAML/stpa/stpatoolbox.py:83 gaphor/templates/sysml.gaphor
+#: gaphor/RAAML/stpa/stpatoolbox.py:83 gaphor/templates/sysml-example.gaphor
 msgid "Controller"
 msgstr "Vezérlő"
 
-#: gaphor/RAAML/stpa/stpatoolbox.py:94 gaphor/templates/sysml.gaphor
+#: gaphor/RAAML/stpa/stpatoolbox.py:94 gaphor/templates/sysml-example.gaphor
 msgid "Actuator"
 msgstr "Indítószerkezet"
 
@@ -333,7 +334,7 @@ msgid "Controlled Process"
 msgstr "Vezérelt folyamat"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:138
-#: gaphor/RAAML/stpa/unsafecontrolaction.py:31
+#: gaphor/RAAML/stpa/unsafecontrolaction.py:28
 msgid "Unsafe Control Action"
 msgstr "Nem biztonságos vezérlési művelet"
 
@@ -349,62 +350,62 @@ msgstr "SysML"
 msgid "Item Flow"
 msgstr "Tételfolyam"
 
-#: gaphor/SysML/propertypages.ui:22
+#: gaphor/SysML/propertypages.ui:20
 msgid "Enable Item Flow"
 msgstr "Tételfolyam engedélyezése"
 
-#: gaphor/SysML/propertypages.ui:36
+#: gaphor/SysML/propertypages.ui:34
 msgid "Item Property"
 msgstr "Tételtulajdonság"
 
-#: gaphor/SysML/propertypages.ui:51 gaphor/UML/classes/propertypages.ui:21
+#: gaphor/SysML/propertypages.ui:49 gaphor/UML/classes/propertypages.ui:21
 msgid "Invert direction"
 msgstr "Fordított irány"
 
-#: gaphor/SysML/propertypages.ui:67 gaphor/UML/actions/propertypages.ui:205
+#: gaphor/SysML/propertypages.ui:65 gaphor/UML/actions/propertypages.ui:205
 msgid "Allocated Type"
 msgstr "Lefoglalt típus"
 
-#: gaphor/SysML/propertypages.ui:93 gaphor/SysML/propertypages.ui:164
+#: gaphor/SysML/propertypages.ui:86 gaphor/SysML/propertypages.ui:150
 msgid "Compartments"
 msgstr "Rekeszek"
 
-#: gaphor/SysML/propertypages.ui:106
+#: gaphor/SysML/propertypages.ui:97
 msgid "Show Parts"
 msgstr "Alkatrészek megjelenítése"
 
-#: gaphor/SysML/propertypages.ui:122
+#: gaphor/SysML/propertypages.ui:113
 msgid "Show References"
 msgstr "Hivatkozások megjelenítése"
 
-#: gaphor/SysML/propertypages.ui:138 gaphor/SysML/propertypages.ui:177
+#: gaphor/SysML/propertypages.ui:129 gaphor/SysML/propertypages.ui:161
 msgid "Show Values"
 msgstr "Értékek megjelenítése"
 
-#: gaphor/SysML/propertypages.ui:204
+#: gaphor/SysML/propertypages.ui:183
 msgid "Aggregation"
 msgstr "Összesítés"
 
-#: gaphor/SysML/propertypages.ui:216 gaphor/UML/classes/propertypages.ui:116
-#: gaphor/UML/classes/propertypages.ui:234
+#: gaphor/SysML/propertypages.ui:195 gaphor/UML/classes/propertypages.ui:116
+#: gaphor/UML/classes/propertypages.ui:227
 msgid "No aggregation"
 msgstr "Nincs összesítés"
 
-#: gaphor/SysML/propertypages.ui:217 gaphor/UML/classes/propertypages.ui:117
-#: gaphor/UML/classes/propertypages.ui:235
+#: gaphor/SysML/propertypages.ui:196 gaphor/UML/classes/propertypages.ui:117
+#: gaphor/UML/classes/propertypages.ui:228
 msgid "Shared"
 msgstr "Közös"
 
-#: gaphor/SysML/propertypages.ui:218 gaphor/UML/classes/propertypages.ui:118
-#: gaphor/UML/classes/propertypages.ui:236
+#: gaphor/SysML/propertypages.ui:197 gaphor/UML/classes/propertypages.ui:118
+#: gaphor/UML/classes/propertypages.ui:229
 msgid "Composite"
 msgstr "Összetett"
 
-#: gaphor/SysML/propertypages.ui:236
+#: gaphor/SysML/propertypages.ui:215
 msgid "Id"
 msgstr "Azonosító"
 
-#: gaphor/SysML/propertypages.ui:250
+#: gaphor/SysML/propertypages.ui:229
 msgid "Text"
 msgstr "Szöveg"
 
@@ -490,7 +491,7 @@ msgstr "Kiosztás"
 msgid "allocate"
 msgstr "kiosztás"
 
-#: gaphor/SysML/blocks/block.py:61 gaphor/SysML/blocks/interfaceblock.py:61
+#: gaphor/SysML/blocks/block.py:59 gaphor/SysML/blocks/interfaceblock.py:58
 msgid "ControlStructure"
 msgstr "Ellenőrzési szerkezet"
 
@@ -498,25 +499,25 @@ msgstr "Ellenőrzési szerkezet"
 msgid "block"
 msgstr "blokkelem"
 
-#: gaphor/SysML/blocks/block.py:82
+#: gaphor/SysML/blocks/block.py:74
 msgid "parts"
 msgstr "alkatrészek"
 
-#: gaphor/SysML/blocks/block.py:96 gaphor/SysML/blocks/interfaceblock.py:82
+#: gaphor/SysML/blocks/block.py:88 gaphor/SysML/blocks/interfaceblock.py:71
 msgid "references"
 msgstr "hivatkozások"
 
-#: gaphor/SysML/blocks/block.py:108 gaphor/SysML/blocks/interfaceblock.py:94
+#: gaphor/SysML/blocks/block.py:100 gaphor/SysML/blocks/interfaceblock.py:83
 msgid "values"
 msgstr "értékek"
 
-#: gaphor/SysML/blocks/block.py:127 gaphor/SysML/blocks/interfaceblock.py:113
+#: gaphor/SysML/blocks/block.py:119 gaphor/SysML/blocks/interfaceblock.py:102
 msgid "operations"
 msgstr "műveletek"
 
-#: gaphor/SysML/blocks/block.py:142 gaphor/SysML/blocks/block.py:160
-#: gaphor/SysML/blocks/interfaceblock.py:128
-#: gaphor/SysML/blocks/interfaceblock.py:150
+#: gaphor/SysML/blocks/block.py:131 gaphor/SysML/blocks/block.py:149
+#: gaphor/SysML/blocks/interfaceblock.py:114
+#: gaphor/SysML/blocks/interfaceblock.py:136
 msgid "unnamed"
 msgstr "névtelen"
 
@@ -572,11 +573,11 @@ msgstr "Felsorolás"
 msgid "Primitive"
 msgstr "Egyszerű"
 
-#: gaphor/SysML/blocks/interfaceblock.py:63
+#: gaphor/SysML/blocks/interfaceblock.py:60
 msgid "interfaceblock"
 msgstr "felületblokkelem"
 
-#: gaphor/SysML/blocks/proxyport.py:38
+#: gaphor/SysML/blocks/proxyport.py:39
 msgid "proxy"
 msgstr "közvetít"
 
@@ -600,12 +601,12 @@ msgstr "ellenőrzés"
 msgid "refine"
 msgstr "finomítás"
 
-#: gaphor/SysML/requirements/requirement.py:55
+#: gaphor/SysML/requirements/requirement.py:51
 msgid "requirement"
 msgstr "követelmény"
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:13
-#: gaphor/templates/sysml.gaphor
+#: gaphor/templates/sysml-example.gaphor gaphor/templates/sysml.gaphor
 msgid "Requirements"
 msgstr "Követelmények"
 
@@ -638,11 +639,15 @@ msgstr "Ellenőrzés"
 msgid "Containment"
 msgstr "Tartalmazás"
 
+#: gaphor/UML/compartments.py:63
+msgid "(from {namespace})"
+msgstr "(forrás: {namespace})"
+
 #: gaphor/UML/modelinglanguage.py:20 gaphor/ui/greeter.py:35
 msgid "UML"
 msgstr "UML"
 
-#: gaphor/UML/actions/propertypages.ui:411 gaphor/UML/propertypages.ui:9
+#: gaphor/UML/actions/propertypages.ui:412 gaphor/UML/propertypages.ui:9
 msgid "Type"
 msgstr "Típus"
 
@@ -725,8 +730,8 @@ msgid "include: {name}"
 msgstr "belefoglalás: {name}"
 
 #: gaphor/UML/actions/actionstoolbox.py:40
-#: gaphor/UML/actions/actionstoolbox.py:67 gaphor/templates/sysml.gaphor
-#: gaphor/templates/uml.gaphor
+#: gaphor/UML/actions/actionstoolbox.py:67
+#: gaphor/templates/sysml-example.gaphor gaphor/templates/uml-example.gaphor
 msgid "Activity"
 msgstr "Tevékenység"
 
@@ -824,15 +829,15 @@ msgstr "Bemeneti tű"
 msgid "Output pin"
 msgstr "Kimeneti tű"
 
-#: gaphor/UML/actions/activitynodes.py:181
+#: gaphor/UML/actions/activitynodes.py:182
 msgid "merge/decision"
 msgstr "döntő/egyesítő"
 
-#: gaphor/UML/actions/activitynodes.py:183
+#: gaphor/UML/actions/activitynodes.py:184
 msgid "merge"
 msgstr "egyesítő"
 
-#: gaphor/UML/actions/activitynodes.py:185
+#: gaphor/UML/actions/activitynodes.py:186
 msgid "decision"
 msgstr "döntő"
 
@@ -909,7 +914,8 @@ msgstr "Érkezési sorrendben (First In First Out - FIFO)"
 msgid "Name"
 msgstr "Név"
 
-#: gaphor/UML/actions/propertypages.ui:228 gaphor/templates/sysml.gaphor
+#: gaphor/UML/actions/propertypages.ui:228
+#: gaphor/templates/sysml-example.gaphor gaphor/templates/sysml.gaphor
 msgid "Behavior"
 msgstr "Viselkedés"
 
@@ -918,25 +924,25 @@ msgid "Value"
 msgstr "Érték"
 
 #: gaphor/UML/actions/propertypages.ui:273
-#: gaphor/UML/states/propertypages.ui:83
+#: gaphor/UML/states/propertypages.ui:76
 msgid "Guard"
 msgstr "Védő"
 
-#: gaphor/UML/actions/propertypages.ui:295
-#: gaphor/UML/actions/propertypages.ui:315
+#: gaphor/UML/actions/propertypages.ui:296
+#: gaphor/UML/actions/propertypages.ui:351
 msgid "Parameter Nodes"
 msgstr "Paraméter csomópontok"
 
-#: gaphor/UML/actions/propertypages.ui:332
-#: gaphor/UML/classes/propertypages.ui:67
-#: gaphor/UML/classes/propertypages.ui:185
-#: gaphor/UML/classes/propertypages.ui:348
-#: gaphor/UML/classes/propertypages.ui:556
-#: gaphor/UML/classes/propertypages.ui:655
+#: gaphor/UML/actions/propertypages.ui:308
+#: gaphor/UML/classes/propertypages.ui:59
+#: gaphor/UML/classes/propertypages.ui:170
+#: gaphor/UML/classes/propertypages.ui:288
+#: gaphor/UML/classes/propertypages.ui:488
+#: gaphor/UML/classes/propertypages.ui:593
 msgid "ⓘ Help"
 msgstr "ⓘ Súgó"
 
-#: gaphor/UML/actions/propertypages.ui:348
+#: gaphor/UML/actions/propertypages.ui:324
 msgid ""
 "Add and edit class activity according to UML syntax.\n"
 "\n"
@@ -964,28 +970,28 @@ msgstr ""
 "\n"
 "A <b>-</b>/<b>=</b> gombbal mozgathatja az elemeket felfelé vagy lefelé."
 
-#: gaphor/UML/actions/propertypages.ui:376
+#: gaphor/UML/actions/propertypages.ui:377
 msgid "In/Out"
 msgstr "Be/Ki"
 
-#: gaphor/UML/actions/propertypages.ui:377
+#: gaphor/UML/actions/propertypages.ui:378
 msgid "In"
 msgstr "Be"
 
-#: gaphor/UML/actions/propertypages.ui:378
+#: gaphor/UML/actions/propertypages.ui:379
 msgid "Out"
 msgstr "Ki"
 
-#: gaphor/UML/actions/propertypages.ui:379
+#: gaphor/UML/actions/propertypages.ui:380
 msgid "Return"
 msgstr "Visszatérés"
 
-#: gaphor/UML/actions/propertypages.ui:390
+#: gaphor/UML/actions/propertypages.ui:391
 #: gaphor/UML/classes/propertypages.ui:11
 msgid "Show Direction"
 msgstr "Irány megjelenítése"
 
-#: gaphor/UML/actions/propertypages.ui:428
+#: gaphor/UML/actions/propertypages.ui:429
 msgid "Multiplicity"
 msgstr "Multiplicitás"
 
@@ -1018,15 +1024,15 @@ msgstr "Felület megvalósítása"
 msgid "DataType"
 msgstr "Adattípus"
 
-#: gaphor/UML/classes/datatype.py:58
+#: gaphor/UML/classes/datatype.py:55
 msgid "primitive"
 msgstr "egyszerű"
 
-#: gaphor/UML/classes/datatype.py:60 gaphor/UML/classes/enumeration.py:70
+#: gaphor/UML/classes/datatype.py:57 gaphor/UML/classes/enumeration.py:66
 msgid "valueType"
 msgstr "értéktipus"
 
-#: gaphor/UML/classes/datatype.py:62
+#: gaphor/UML/classes/datatype.py:59
 msgid "dataType"
 msgstr "adattípus"
 
@@ -1042,7 +1048,7 @@ msgstr "életbe léptet"
 msgid "implements"
 msgstr "megvalósítás"
 
-#: gaphor/UML/classes/enumeration.py:72
+#: gaphor/UML/classes/enumeration.py:68
 msgid "enumeration"
 msgstr "felsorolás"
 
@@ -1050,28 +1056,28 @@ msgstr "felsorolás"
 msgid "New Enumeration…"
 msgstr "Új felsorolás…"
 
-#: gaphor/UML/classes/interface.py:282
+#: gaphor/UML/classes/interface.py:276
 msgid "interface"
 msgstr "felület"
 
-#: gaphor/UML/classes/klass.py:54
+#: gaphor/UML/classes/klass.py:49
 msgid "stereotype"
 msgstr "sztereotípus"
 
-#: gaphor/UML/classes/klass.py:56
+#: gaphor/UML/classes/klass.py:51
 msgid "metaclass"
 msgstr "metaosztály"
 
-#: gaphor/UML/classes/package.py:30
+#: gaphor/UML/classes/package.py:29
 msgid "profile"
 msgstr "profil"
 
-#: gaphor/UML/classes/propertypages.ui:49
+#: gaphor/UML/classes/propertypages.ui:47
 msgid "Head:"
 msgstr "Fej:"
 
-#: gaphor/UML/classes/propertypages.ui:83
-#: gaphor/UML/classes/propertypages.ui:201
+#: gaphor/UML/classes/propertypages.ui:75
+#: gaphor/UML/classes/propertypages.ui:186
 msgid ""
 "Add and edit association ends according to UML syntax.\n"
 "\n"
@@ -1099,52 +1105,43 @@ msgstr ""
 "A <b>-</b>/<b>=</b> gombbal mozgathatja az elemeket felfelé vagy lefelé."
 
 #: gaphor/UML/classes/propertypages.ui:102
-#: gaphor/UML/classes/propertypages.ui:220
+#: gaphor/UML/classes/propertypages.ui:213
 msgid "Unknown navigation"
 msgstr "Ismeretlen navigáció"
 
 #: gaphor/UML/classes/propertypages.ui:103
-#: gaphor/UML/classes/propertypages.ui:221
+#: gaphor/UML/classes/propertypages.ui:214
 msgid "Not navigable"
 msgstr "Nem navigálható"
 
 #: gaphor/UML/classes/propertypages.ui:104
-#: gaphor/UML/classes/propertypages.ui:222
+#: gaphor/UML/classes/propertypages.ui:215
 msgid "Navigable"
 msgstr "Navigálható"
 
 #: gaphor/UML/classes/propertypages.ui:136
-#: gaphor/UML/classes/propertypages.ui:254
+#: gaphor/UML/classes/propertypages.ui:247
 #: gaphor/UML/profiles/propertypages.ui:33
-#: gaphor/UML/profiles/propertypages.ui:69
+#: gaphor/UML/profiles/propertypages.ui:51
 msgid "Stereotypes"
 msgstr "Sztereotípusok"
 
 #: gaphor/UML/classes/propertypages.ui:141
-#: gaphor/UML/classes/propertypages.ui:259
-#: gaphor/UML/profiles/propertypages.ui:74
+#: gaphor/UML/classes/propertypages.ui:252
+#: gaphor/UML/profiles/propertypages.ui:56
 msgid "Values"
 msgstr "Értékek"
 
-#: gaphor/UML/classes/propertypages.ui:167
+#: gaphor/UML/classes/propertypages.ui:158
 msgid "Tail:"
 msgstr "Farok:"
 
-#: gaphor/UML/classes/propertypages.ui:289
-#: gaphor/UML/classes/propertypages.ui:326
+#: gaphor/UML/classes/propertypages.ui:276
+#: gaphor/UML/classes/propertypages.ui:332
 msgid "Attributes"
 msgstr "Attribútumok"
 
-#: gaphor/UML/classes/propertypages.ui:302
-msgid "Show Attributes"
-msgstr "Attribútumok megjelenítése"
-
-#: gaphor/UML/classes/propertypages.ui:332
-#: gaphor/UML/classes/propertypages.ui:539
-msgid "Static"
-msgstr "Ritkán módosul"
-
-#: gaphor/UML/classes/propertypages.ui:365
+#: gaphor/UML/classes/propertypages.ui:305
 msgid ""
 "Add and edit class attributes according to UML syntax.\n"
 "\n"
@@ -1174,45 +1171,50 @@ msgstr ""
 "\n"
 "A <b>-</b>/<b>=</b> gombbal mozgathatja az elemeket felfelé vagy lefelé."
 
-#: gaphor/UML/classes/propertypages.ui:395
-#: gaphor/UML/classes/propertypages.ui:534
+#: gaphor/UML/classes/propertypages.ui:338
+#: gaphor/UML/classes/propertypages.ui:540
+msgid "Static"
+msgstr "Ritkán módosul"
+
+#: gaphor/UML/classes/propertypages.ui:355
+msgid "Show Attributes"
+msgstr "Attribútumok megjelenítése"
+
+#: gaphor/UML/classes/propertypages.ui:379
+#: gaphor/UML/classes/propertypages.ui:535
 msgid "Abstract"
 msgstr "Elvont"
 
-#: gaphor/UML/classes/propertypages.ui:417
+#: gaphor/UML/classes/propertypages.ui:401
 msgid "Dependency type"
 msgstr "Függőségi típus"
 
-#: gaphor/UML/classes/propertypages.ui:428
+#: gaphor/UML/classes/propertypages.ui:412
 msgid "Automatic"
 msgstr "Önműködő"
 
-#: gaphor/UML/classes/propertypages.ui:447
+#: gaphor/UML/classes/propertypages.ui:431
 msgid "Usage"
 msgstr "Felhasználás"
 
-#: gaphor/UML/classes/propertypages.ui:448
+#: gaphor/UML/classes/propertypages.ui:432
 msgid "Realization"
 msgstr "Megvalósítás"
 
-#: gaphor/UML/classes/propertypages.ui:449
+#: gaphor/UML/classes/propertypages.ui:433
 msgid "Implementation"
 msgstr "Megvalósítás"
 
-#: gaphor/UML/classes/propertypages.ui:468
+#: gaphor/UML/classes/propertypages.ui:452
 msgid "Folded"
 msgstr "Összehajtogatott"
 
-#: gaphor/UML/classes/propertypages.ui:491
-#: gaphor/UML/classes/propertypages.ui:528
+#: gaphor/UML/classes/propertypages.ui:476
+#: gaphor/UML/classes/propertypages.ui:529
 msgid "Operations"
 msgstr "Műveletek"
 
-#: gaphor/UML/classes/propertypages.ui:504
-msgid "Show Operations"
-msgstr "Műveletek megjelenítése"
-
-#: gaphor/UML/classes/propertypages.ui:570
+#: gaphor/UML/classes/propertypages.ui:502
 msgid ""
 "Add and edit class operations according to UML syntax.\n"
 "\n"
@@ -1237,16 +1239,16 @@ msgstr ""
 "\n"
 "A <b>-</b>/<b>=</b> gombbal mozgathatja az elemeket felfelé vagy lefelé."
 
-#: gaphor/UML/classes/propertypages.ui:599
-#: gaphor/UML/classes/propertypages.ui:637
+#: gaphor/UML/classes/propertypages.ui:557
+msgid "Show Operations"
+msgstr "Műveletek megjelenítése"
+
+#: gaphor/UML/classes/propertypages.ui:581
+#: gaphor/UML/classes/propertypages.ui:632
 msgid "Enumeration Literals"
 msgstr "Felsorolási szövegállandó"
 
-#: gaphor/UML/classes/propertypages.ui:612
-msgid "Show Enumeration Literals"
-msgstr "Felsorolási literálok megjelenítése"
-
-#: gaphor/UML/classes/propertypages.ui:667
+#: gaphor/UML/classes/propertypages.ui:605
 msgid ""
 "Add and edit enumeration literals according to UML syntax.\n"
 "\n"
@@ -1266,7 +1268,11 @@ msgstr ""
 "\n"
 "A <b>-</b>/<b>=</b> gombbal mozgathatja az elemeket felfelé vagy lefelé."
 
-#: gaphor/UML/classes/propertypages.ui:698
+#: gaphor/UML/classes/propertypages.ui:650
+msgid "Show Enumeration Literals"
+msgstr "Felsorolási literálok megjelenítése"
+
+#: gaphor/UML/classes/propertypages.ui:675
 msgid "Indirectly Instantiated"
 msgstr "Közvetetten példányosítva"
 
@@ -1286,7 +1292,7 @@ msgstr "Csomópont"
 msgid "Device"
 msgstr "Eszköz"
 
-#: gaphor/UML/deployments/node.py:52
+#: gaphor/UML/deployments/node.py:46
 msgid "device"
 msgstr "eszköz"
 
@@ -1296,12 +1302,13 @@ msgstr "hívás()"
 
 #: gaphor/UML/interactions/interactionstoolbox.py:36
 #: gaphor/UML/interactions/interactionstoolbox.py:57
-#: gaphor/templates/sysml.gaphor gaphor/templates/uml.gaphor
+#: gaphor/templates/sysml-example.gaphor gaphor/templates/uml-example.gaphor
+#: gaphor/templates/uml.gaphor
 msgid "Interaction"
 msgstr "Tevékenység"
 
 #: gaphor/UML/interactions/interactionstoolbox.py:53
-#: gaphor/templates/uml.gaphor
+#: gaphor/templates/uml-example.gaphor gaphor/templates/uml.gaphor
 msgid "Interactions"
 msgstr "Tevékenységek"
 
@@ -1381,7 +1388,7 @@ msgstr "Kiterjesztés"
 msgid "Import"
 msgstr "Importálás"
 
-#: gaphor/UML/profiles/propertypages.ui:46
+#: gaphor/UML/profiles/propertypages.ui:74
 msgid "Show Stereotypes"
 msgstr "Sztereotípusok megjelenítése"
 
@@ -1393,28 +1400,28 @@ msgstr "Új helyérték…"
 msgid "Activities"
 msgstr "Tevékenységek"
 
-#: gaphor/UML/states/propertypages.ui:20
+#: gaphor/UML/states/propertypages.ui:18
 msgid "Entry"
 msgstr "Bejegyzés"
 
-#: gaphor/UML/states/propertypages.ui:37
+#: gaphor/UML/states/propertypages.ui:35
 msgid "Exit"
 msgstr "Kilépés"
 
-#: gaphor/UML/states/propertypages.ui:54
+#: gaphor/UML/states/propertypages.ui:52
 msgid "Do activity"
 msgstr "Tevékenység végrehajtása"
 
-#: gaphor/UML/states/propertypages.ui:108
-#: gaphor/UML/states/propertypages.ui:137
+#: gaphor/UML/states/propertypages.ui:101
+#: gaphor/UML/states/propertypages.ui:112
 msgid "Regions"
 msgstr "Területek"
 
-#: gaphor/UML/states/propertypages.ui:121
+#: gaphor/UML/states/propertypages.ui:129
 msgid "Show Regions"
 msgstr "Területek megjelenítése"
 
-#: gaphor/UML/states/statemachine.py:38
+#: gaphor/UML/states/statemachine.py:42
 msgid "statemachine"
 msgstr "állapotautomata"
 
@@ -1423,7 +1430,7 @@ msgid "State"
 msgstr "Állapot"
 
 #: gaphor/UML/states/statestoolbox.py:46 gaphor/UML/states/statestoolbox.py:63
-#: gaphor/templates/sysml.gaphor
+#: gaphor/templates/sysml-example.gaphor
 msgid "State Machine"
 msgstr "Állapotautomata"
 
@@ -1487,8 +1494,9 @@ msgstr "kiterjesztés"
 msgid "include"
 msgstr "belefoglalás"
 
-#: gaphor/UML/usecases/usecasetoolbox.py:12 gaphor/templates/sysml.gaphor
-#: gaphor/templates/uml.gaphor
+#: gaphor/UML/usecases/usecasetoolbox.py:12
+#: gaphor/templates/sysml-example.gaphor gaphor/templates/sysml.gaphor
+#: gaphor/templates/uml-example.gaphor gaphor/templates/uml.gaphor
 msgid "Use Cases"
 msgstr "Használati esetek"
 
@@ -1496,7 +1504,7 @@ msgstr "Használati esetek"
 msgid "Use case"
 msgstr "Használati eset"
 
-#: gaphor/UML/usecases/usecasetoolbox.py:28 gaphor/templates/uml.gaphor
+#: gaphor/UML/usecases/usecasetoolbox.py:28 gaphor/templates/uml-example.gaphor
 msgid "Actor"
 msgstr "Szereplő"
 
@@ -1508,7 +1516,7 @@ msgstr "Belefoglalás"
 msgid "Extend"
 msgstr "Kiterjesztés"
 
-#: gaphor/diagram/diagramtoolbox.py:131 gaphor/ui/help/shortcuts.ui:16
+#: gaphor/diagram/diagramtoolbox.py:131 gaphor/ui/help/shortcuts.ui:14
 msgid "General"
 msgstr "Általános"
 
@@ -1544,59 +1552,55 @@ msgstr "Megjegyzési sor"
 msgid "Diagram metadata"
 msgstr "Ábra metaadatai"
 
-#: gaphor/diagram/diagramtoolbox.py:194 gaphor/diagram/propertypages.ui:272
+#: gaphor/diagram/diagramtoolbox.py:194 gaphor/diagram/propertypages.ui:260
 msgid "Picture"
 msgstr "Kép"
-
-#: gaphor/diagram/presentation.py:62
-msgid "(from {namespace})"
-msgstr "(forrás: {namespace})"
 
 #: gaphor/diagram/propertypages.ui:70
 msgid "Style"
 msgstr "Stílus"
 
-#: gaphor/diagram/propertypages.ui:85
+#: gaphor/diagram/propertypages.ui:83
 msgid "Rectilinear"
 msgstr "Egyenes vonalú"
 
-#: gaphor/diagram/propertypages.ui:105
+#: gaphor/diagram/propertypages.ui:103
 msgid "Flip orientation"
 msgstr "Tájolás váltása"
 
-#: gaphor/diagram/propertypages.ui:130
+#: gaphor/diagram/propertypages.ui:126
 msgid "Note"
 msgstr "Jegyzet"
 
-#: gaphor/diagram/propertypages.ui:167
+#: gaphor/diagram/propertypages.ui:155
 msgid "Created By"
 msgstr "Készítette"
 
-#: gaphor/diagram/propertypages.ui:195
+#: gaphor/diagram/propertypages.ui:183
 msgid "Website"
 msgstr "Honlap"
 
-#: gaphor/diagram/propertypages.ui:209
+#: gaphor/diagram/propertypages.ui:197
 msgid "Revision"
 msgstr "Felülvizsgálat"
 
-#: gaphor/diagram/propertypages.ui:223
+#: gaphor/diagram/propertypages.ui:211
 msgid "License"
 msgstr "Engedély"
 
-#: gaphor/diagram/propertypages.ui:237
+#: gaphor/diagram/propertypages.ui:225
 msgid "Created On"
 msgstr "Létrehozva"
 
-#: gaphor/diagram/propertypages.ui:251
+#: gaphor/diagram/propertypages.ui:239
 msgid "Updated On"
 msgstr "Frissítve"
 
-#: gaphor/diagram/propertypages.ui:283
+#: gaphor/diagram/propertypages.ui:271
 msgid "Select picture..."
 msgstr "Kép kijelölése…"
 
-#: gaphor/diagram/propertypages.ui:289
+#: gaphor/diagram/propertypages.ui:277
 msgid "Set default size"
 msgstr "Alapértelmezett méret beállítása"
 
@@ -1682,46 +1686,46 @@ msgstr "Kezelőpult"
 msgid "Gaphor Console"
 msgstr "Gaphor-kezelőpult"
 
-#: gaphor/plugins/diagramexport/__init__.py:49
+#: gaphor/plugins/diagramexport/__init__.py:48
 msgid "All {ext} Files"
 msgstr "Minden {ext}-fájl"
 
-#: gaphor/plugins/diagramexport/__init__.py:55
+#: gaphor/plugins/diagramexport/__init__.py:54
 msgid "Export as SVG"
 msgstr "Exportálás SVG-fájlként"
 
-#: gaphor/plugins/diagramexport/__init__.py:56
-#: gaphor/plugins/diagramexport/__init__.py:61
+#: gaphor/plugins/diagramexport/__init__.py:55
+#: gaphor/plugins/diagramexport/__init__.py:60
 msgid "Export diagram as SVG"
 msgstr "Ábra exportálása SVG-fájlként"
 
-#: gaphor/plugins/diagramexport/__init__.py:66
+#: gaphor/plugins/diagramexport/__init__.py:65
 msgid "Export as PNG"
 msgstr "Exportálás PNG-fájlként"
 
-#: gaphor/plugins/diagramexport/__init__.py:67
-#: gaphor/plugins/diagramexport/__init__.py:72
+#: gaphor/plugins/diagramexport/__init__.py:66
+#: gaphor/plugins/diagramexport/__init__.py:71
 msgid "Export diagram as PNG"
 msgstr "Ábra exportálása PNG-fájlként"
 
-#: gaphor/plugins/diagramexport/__init__.py:77
+#: gaphor/plugins/diagramexport/__init__.py:76
 msgid "Export as PDF"
 msgstr "Exportálás PDF-fájlként"
 
-#: gaphor/plugins/diagramexport/__init__.py:78
-#: gaphor/plugins/diagramexport/__init__.py:84
+#: gaphor/plugins/diagramexport/__init__.py:77
+#: gaphor/plugins/diagramexport/__init__.py:83
 msgid "Export diagram as PDF"
 msgstr "Ábra exportálása PDF-fájlként"
 
-#: gaphor/plugins/diagramexport/__init__.py:92
+#: gaphor/plugins/diagramexport/__init__.py:91
 msgid "Export as EPS"
 msgstr "Exportálás EPS-fájlként"
 
-#: gaphor/plugins/diagramexport/__init__.py:93
+#: gaphor/plugins/diagramexport/__init__.py:92
 msgid "Export diagram as Encapsulated PostScript"
 msgstr "Ábra exportálása beágyazott PostScript-fájlként"
 
-#: gaphor/plugins/diagramexport/__init__.py:99
+#: gaphor/plugins/diagramexport/__init__.py:98
 msgid "Export diagram as EPS"
 msgstr "Ábra exportálása EPS-fájlként"
 
@@ -1748,7 +1752,7 @@ msgstr ""
 "Kérjük, jelentse be a problémát a GitHubon, és adja meg az Eszközök → "
 "Hibajelentések adatait."
 
-#: gaphor/plugins/errorreports/errorreports.ui:18
+#: gaphor/plugins/errorreports/errorreports.ui:23
 msgid ""
 "Any unhandled errors are shown here. You can use these to provide extra "
 "information when you create an issue on GitHub."
@@ -1768,16 +1772,16 @@ msgstr "Modell exportálása XMI-fájlként (XML Model Interchange – XML-model
 msgid "Export model as XMI file"
 msgstr "Modell exportálása XMI-fájlként"
 
-#: gaphor/plugins/xmiexport/__init__.py:47
+#: gaphor/plugins/xmiexport/__init__.py:46
 msgid "All XMI Files"
 msgstr "Minden XMI-fájl"
 
-#: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:62
+#: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:63
 #: gaphor/ui/mainwindow.py:255 gaphor/ui/mainwindow.ui:46
 msgid "New model"
 msgstr "Új modell"
 
-#: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:65
+#: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:66
 msgid "New diagram"
 msgstr "Új ábra"
 
@@ -1813,83 +1817,84 @@ msgstr "Összetevőábra"
 msgid "Code diagram"
 msgstr "Kódábra"
 
-#: gaphor/templates/raaml.gaphor gaphor/templates/uml.gaphor
+#: gaphor/templates/raaml-example.gaphor gaphor/templates/raaml.gaphor
+#: gaphor/templates/uml-example.gaphor gaphor/templates/uml.gaphor
 msgid "Model Name Here"
 msgstr "Modell neve ide"
 
-#: gaphor/templates/raaml.gaphor
+#: gaphor/templates/raaml-example.gaphor gaphor/templates/raaml.gaphor
 msgid "STPA"
 msgstr "STPA"
 
-#: gaphor/templates/raaml.gaphor
+#: gaphor/templates/raaml-example.gaphor gaphor/templates/raaml.gaphor
 msgid "Loss Definition"
 msgstr "Veszteség meghatározása"
 
-#: gaphor/templates/raaml.gaphor
+#: gaphor/templates/raaml-example.gaphor gaphor/templates/raaml.gaphor
 msgid "FTA"
 msgstr "FTA"
 
-#: gaphor/templates/raaml.gaphor
+#: gaphor/templates/raaml-example.gaphor
 msgid "Loss of System"
 msgstr "Rendszer elvesztése"
 
-#: gaphor/templates/raaml.gaphor
+#: gaphor/templates/raaml-example.gaphor
 msgid "Loss of Subsystem 1"
 msgstr "1. alrendszer elvesztése"
 
-#: gaphor/templates/raaml.gaphor
+#: gaphor/templates/raaml-example.gaphor
 msgid "Loss of Subsystem 2"
 msgstr "2. alrendszer elvesztése"
 
-#: gaphor/templates/raaml.gaphor
+#: gaphor/templates/raaml-example.gaphor gaphor/templates/raaml.gaphor
 msgid "Hazard Definition"
 msgstr "Veszély meghatározása"
 
-#: gaphor/templates/raaml.gaphor
+#: gaphor/templates/raaml-example.gaphor
 msgid "Loss of Life or Injury of People"
 msgstr "Emberek életének elvesztése vagy sérülése"
 
-#: gaphor/templates/raaml.gaphor
+#: gaphor/templates/raaml-example.gaphor
 msgid "Loss of Mission"
 msgstr "Küldetés elvesztése"
 
-#: gaphor/templates/raaml.gaphor
+#: gaphor/templates/raaml-example.gaphor
 msgid "Loss of Customer Satisfaction"
 msgstr "Ügyfél-elégedettség elvesztése"
 
-#: gaphor/templates/raaml.gaphor
+#: gaphor/templates/raaml-example.gaphor
 msgid "Hazard 2"
 msgstr "2. veszély"
 
-#: gaphor/templates/raaml.gaphor
+#: gaphor/templates/raaml-example.gaphor
 msgid "Hazard 1"
 msgstr "1. veszély"
 
-#: gaphor/templates/raaml.gaphor
+#: gaphor/templates/raaml-example.gaphor gaphor/templates/raaml.gaphor
 msgid "Mapping of Losses and Hazards"
 msgstr "Veszteségek és veszélyek feltérképezése"
 
-#: gaphor/templates/raaml.gaphor
+#: gaphor/templates/raaml-example.gaphor gaphor/templates/raaml.gaphor
 msgid "Operational Situations"
 msgstr "Működési helyzetek"
 
-#: gaphor/templates/raaml.gaphor
+#: gaphor/templates/raaml-example.gaphor
 msgid "Operational Situation 1"
 msgstr "1. működési helyzet"
 
-#: gaphor/templates/raaml.gaphor
+#: gaphor/templates/raaml-example.gaphor gaphor/templates/raaml.gaphor
 msgid "Context of UCAs"
 msgstr "UCA-k környezete"
 
-#: gaphor/templates/raaml.gaphor
+#: gaphor/templates/raaml-example.gaphor gaphor/templates/raaml.gaphor
 msgid "Situational Context"
 msgstr "Helyzeti környezet"
 
-#: gaphor/templates/raaml.gaphor
+#: gaphor/templates/raaml-example.gaphor gaphor/templates/raaml.gaphor
 msgid "Situation Hierarchy"
 msgstr "Helyzeti hierarchia"
 
-#: gaphor/templates/raaml.gaphor
+#: gaphor/templates/raaml-example.gaphor gaphor/templates/raaml.gaphor
 msgid ""
 "The fault tree analysis shows which causes for the failure of a system "
 "have been considered."
@@ -1897,391 +1902,391 @@ msgstr ""
 "A hibafa elemzés megmutatja, hogy a rendszer meghibásodásának mely okokat"
 " vették figyelembe."
 
-#: gaphor/templates/sysml.gaphor
+#: gaphor/templates/sysml-example.gaphor gaphor/templates/sysml.gaphor
 msgid "1. Concept Level"
 msgstr "1. Fogalmi szint"
 
-#: gaphor/templates/sysml.gaphor
+#: gaphor/templates/sysml-example.gaphor gaphor/templates/sysml.gaphor
 msgid "2. Logical Level"
 msgstr "2. Logikai szint"
 
-#: gaphor/templates/sysml.gaphor
+#: gaphor/templates/sysml-example.gaphor gaphor/templates/sysml.gaphor
 msgid "3. Technology Level"
 msgstr "3. Technológiai szint"
 
-#: gaphor/templates/sysml.gaphor
+#: gaphor/templates/sysml-example.gaphor
 msgid "User"
 msgstr "Felhasználó"
 
-#: gaphor/templates/sysml.gaphor
+#: gaphor/templates/sysml-example.gaphor
 msgid "Use Case #1"
 msgstr "1. használati eset"
 
-#: gaphor/templates/sysml.gaphor
+#: gaphor/templates/sysml-example.gaphor gaphor/templates/sysml.gaphor
 msgid "Structure"
 msgstr "Szerkezet"
 
-#: gaphor/templates/sysml.gaphor
+#: gaphor/templates/sysml-example.gaphor gaphor/templates/sysml.gaphor
 msgid "Feature Domain"
 msgstr "Jellegzetes környezete"
 
-#: gaphor/templates/sysml.gaphor
+#: gaphor/templates/sysml-example.gaphor
 msgid "Operator"
 msgstr "Kezelő"
 
-#: gaphor/templates/sysml.gaphor
+#: gaphor/templates/sysml-example.gaphor
 msgid "Feature"
 msgstr "Jellemző"
 
-#: gaphor/templates/sysml.gaphor
+#: gaphor/templates/sysml-example.gaphor
 msgid "External Element"
 msgstr "Külső elem"
 
-#: gaphor/templates/sysml.gaphor
+#: gaphor/templates/sysml-example.gaphor gaphor/templates/sysml.gaphor
 msgid "Concept Requirements"
 msgstr "Koncepció követelményei"
 
-#: gaphor/templates/sysml.gaphor
+#: gaphor/templates/sysml-example.gaphor
 msgid "Feature User Need"
 msgstr "Jellemző felhasználói igény"
 
-#: gaphor/templates/sysml.gaphor
+#: gaphor/templates/sysml-example.gaphor gaphor/templates/sysml.gaphor
 msgid "Logical Structure"
 msgstr "Logikai szerkezet"
 
-#: gaphor/templates/sysml.gaphor
+#: gaphor/templates/sysml-example.gaphor
 msgid "Sensor"
 msgstr "Érzékelő"
 
-#: gaphor/templates/sysml.gaphor
+#: gaphor/templates/sysml-example.gaphor
 msgid "sensor"
 msgstr "érzékelő"
 
-#: gaphor/templates/sysml.gaphor
+#: gaphor/templates/sysml-example.gaphor
 msgid "controller"
 msgstr "vezérlő"
 
-#: gaphor/templates/sysml.gaphor
+#: gaphor/templates/sysml-example.gaphor gaphor/templates/sysml.gaphor
 msgid "Logical Boundary"
 msgstr "Logikai határ"
 
-#: gaphor/templates/sysml.gaphor
+#: gaphor/templates/sysml-example.gaphor gaphor/templates/sysml.gaphor
 msgid "Technology Structure"
 msgstr "Technológiai szerkezet"
 
-#: gaphor/templates/sysml.gaphor
+#: gaphor/templates/sysml-example.gaphor gaphor/templates/sysml.gaphor
 msgid "Technology Boundary"
 msgstr "Technológiai határ"
 
-#: gaphor/templates/sysml.gaphor
+#: gaphor/templates/sysml-example.gaphor gaphor/templates/sysml.gaphor
 msgid "Technology Requirements"
 msgstr "Technológiai követelmények"
 
-#: gaphor/templates/sysml.gaphor
+#: gaphor/templates/sysml-example.gaphor gaphor/templates/sysml.gaphor
 msgid "Detailed Behavior"
 msgstr "Részletes viselkedés"
 
-#: gaphor/templates/sysml.gaphor
+#: gaphor/templates/sysml-example.gaphor gaphor/templates/sysml.gaphor
 msgid "Logical Requirements"
 msgstr "Logika követelményei"
 
-#: gaphor/templates/sysml.gaphor
+#: gaphor/templates/sysml-example.gaphor gaphor/templates/sysml.gaphor
 msgid "Logical States"
 msgstr "Logikai állapotok"
 
-#: gaphor/templates/sysml.gaphor
+#: gaphor/templates/sysml-example.gaphor gaphor/templates/sysml.gaphor
 msgid "Feature Event Flow"
 msgstr "Jellemző eseményfolyam"
 
-#: gaphor/templates/sysml.gaphor
+#: gaphor/templates/sysml-example.gaphor
 msgid "Off"
 msgstr "Ki"
 
-#: gaphor/templates/sysml.gaphor
+#: gaphor/templates/sysml-example.gaphor
 msgid "On"
 msgstr "Be"
 
-#: gaphor/templates/sysml.gaphor
+#: gaphor/templates/sysml-example.gaphor
 msgid "actuator"
 msgstr "indítószerkezet"
 
-#: gaphor/templates/sysml.gaphor
+#: gaphor/templates/sysml-example.gaphor
 msgid "Use Case Function #1"
 msgstr "1. függvény használati eset"
 
-#: gaphor/templates/sysml.gaphor
+#: gaphor/templates/sysml-example.gaphor
 msgid "First Action"
 msgstr "1. művelet"
 
-#: gaphor/templates/sysml.gaphor
+#: gaphor/templates/sysml-example.gaphor
 msgid "Second Action"
 msgstr "2. művelet"
 
-#: gaphor/templates/sysml.gaphor
+#: gaphor/templates/sysml-example.gaphor
 msgid "Example System Requirement"
 msgstr "Rendszerkövetelmény példa"
 
-#: gaphor/templates/sysml.gaphor
+#: gaphor/templates/sysml-example.gaphor
 msgid "Sensed Data"
 msgstr "Érzékelt adatok"
 
-#: gaphor/templates/sysml.gaphor
+#: gaphor/templates/sysml-example.gaphor
 msgid "Command"
 msgstr "Parancs"
 
-#: gaphor/templates/sysml.gaphor
+#: gaphor/templates/sysml-example.gaphor gaphor/templates/sysml.gaphor
 msgid "Functional Boundary Behavior"
 msgstr "Függvényes határviselkedése"
 
-#: gaphor/templates/sysml.gaphor
+#: gaphor/templates/sysml-example.gaphor
 msgid "Determine Actuator Command"
 msgstr "Indítószerkezeti parancs meghatározó"
 
-#: gaphor/templates/sysml.gaphor
+#: gaphor/templates/sysml-example.gaphor
 msgid "Actuate Actuator"
 msgstr "Indítószerkezet működtetése"
 
-#: gaphor/templates/sysml.gaphor
+#: gaphor/templates/sysml-example.gaphor
 msgid "Example Technology Requirement"
 msgstr "Példa technológiai követelmény"
 
-#: gaphor/templates/sysml.gaphor gaphor/ui/help/preferences.ui:20
+#: gaphor/templates/sysml-example.gaphor gaphor/ui/help/preferences.ui:20
 msgid "System"
 msgstr "Rendszer"
 
-#: gaphor/templates/sysml.gaphor
+#: gaphor/templates/sysml-example.gaphor
 msgid "ECU"
 msgstr "Elektronikus vezérlőegység (ECU)"
 
-#: gaphor/templates/sysml.gaphor
+#: gaphor/templates/sysml-example.gaphor
 msgid "DC Motor"
 msgstr "Egyenáramú motor"
 
-#: gaphor/templates/sysml.gaphor
+#: gaphor/templates/sysml-example.gaphor
 msgid "IR Transceiver"
 msgstr "Infravörös adóvevő"
 
-#: gaphor/templates/sysml.gaphor
+#: gaphor/templates/sysml-example.gaphor
 msgid "ecu"
 msgstr "elektronikus vezérlőegység (ecu)"
 
-#: gaphor/templates/sysml.gaphor
+#: gaphor/templates/sysml-example.gaphor
 msgid "dc Motor"
 msgstr "Egyenáramú motor"
 
-#: gaphor/templates/sysml.gaphor
+#: gaphor/templates/sysml-example.gaphor
 msgid "ir Transceiver"
 msgstr "infravörös adóvevő"
 
-#: gaphor/templates/sysml.gaphor
+#: gaphor/templates/sysml-example.gaphor
 msgid "Detect Obstacle"
 msgstr "Akadály észlelése"
 
-#: gaphor/templates/sysml.gaphor
+#: gaphor/templates/sysml-example.gaphor
 msgid "Command Reverse"
 msgstr "Fordított parancs"
 
-#: gaphor/templates/sysml.gaphor
+#: gaphor/templates/sysml-example.gaphor
 msgid "Reverse Motor"
 msgstr "Fordított motor"
 
-#: gaphor/templates/sysml.gaphor
+#: gaphor/templates/sysml-example.gaphor
 msgid "Detect Object"
 msgstr "Objektum észlelése"
 
-#: gaphor/templates/sysml.gaphor
+#: gaphor/templates/sysml-example.gaphor
 msgid "Detection Event"
 msgstr "Észlelési esemény"
 
-#: gaphor/templates/sysml.gaphor
+#: gaphor/templates/sysml-example.gaphor gaphor/templates/sysml.gaphor
 msgid "Feature Context"
 msgstr "Jellegzetes környezete"
 
-#: gaphor/templates/sysml.gaphor
+#: gaphor/templates/sysml-example.gaphor
 msgid "Read Input"
 msgstr "Bemenet olvasása"
 
-#: gaphor/templates/sysml.gaphor
+#: gaphor/templates/sysml-example.gaphor
 msgid "FeatureInput"
 msgstr "Jellemző bemenete"
 
-#: gaphor/templates/sysml.gaphor
+#: gaphor/templates/sysml-example.gaphor
 msgid "Request Actuation"
 msgstr "Működtetés lekérése"
 
-#: gaphor/templates/sysml.gaphor
+#: gaphor/templates/sysml-example.gaphor
 msgid "Actuation Command"
 msgstr "Működtetés-parancs"
 
-#: gaphor/templates/sysml.gaphor
+#: gaphor/templates/sysml-example.gaphor gaphor/templates/sysml.gaphor
 msgid "Model Navigation"
 msgstr "Modell-navigáció"
 
-#: gaphor/templates/sysml.gaphor
+#: gaphor/templates/sysml-example.gaphor gaphor/templates/sysml.gaphor
 msgid "Concept"
 msgstr "Koncepció"
 
-#: gaphor/templates/sysml.gaphor
+#: gaphor/templates/sysml-example.gaphor gaphor/templates/sysml.gaphor
 msgid "Logical"
 msgstr "Logikai"
 
-#: gaphor/templates/sysml.gaphor
+#: gaphor/templates/sysml-example.gaphor gaphor/templates/sysml.gaphor
 msgid "Pillar"
 msgstr "Oszlop"
 
-#: gaphor/templates/sysml.gaphor
+#: gaphor/templates/sysml-example.gaphor gaphor/templates/sysml.gaphor
 msgid "Abstraction Level"
 msgstr "Absztrakciós szint"
 
-#: gaphor/templates/uml.gaphor
+#: gaphor/templates/uml-example.gaphor gaphor/templates/uml.gaphor
 msgid "1. Use Cases"
 msgstr "1. Használati esetek"
 
-#: gaphor/templates/uml.gaphor
+#: gaphor/templates/uml-example.gaphor gaphor/templates/uml.gaphor
 msgid "2. Domain Analysis"
 msgstr "2. Tartományelemzés"
 
-#: gaphor/templates/uml.gaphor
+#: gaphor/templates/uml-example.gaphor gaphor/templates/uml.gaphor
 msgid "3. Architectural Design"
 msgstr "3. Építészeti tervezés"
 
-#: gaphor/templates/uml.gaphor
+#: gaphor/templates/uml-example.gaphor gaphor/templates/uml.gaphor
 msgid "4. Detailed Design"
 msgstr "4. Részletes tervezés"
 
-#: gaphor/templates/uml.gaphor
+#: gaphor/templates/uml-example.gaphor
 msgid "Main Actor"
 msgstr "Főszereplő"
 
-#: gaphor/templates/uml.gaphor
+#: gaphor/templates/uml-example.gaphor
 msgid "Main Use Case"
 msgstr "Fő használati eset"
 
-#: gaphor/templates/uml.gaphor
+#: gaphor/templates/uml-example.gaphor
 msgid "Included Use Case"
 msgstr "Használati eset belefoglalva"
 
-#: gaphor/templates/uml.gaphor
+#: gaphor/templates/uml-example.gaphor
 msgid "Secondary Actor"
 msgstr "Másodlagos szereplő"
 
-#: gaphor/templates/uml.gaphor
+#: gaphor/templates/uml-example.gaphor
 msgid "Secondary Use Case"
 msgstr "Másodlagos használati eset"
 
-#: gaphor/templates/uml.gaphor
+#: gaphor/templates/uml-example.gaphor gaphor/templates/uml.gaphor
 msgid "Use Case Scenarios"
 msgstr "Használati eset forgatókönyvek"
 
-#: gaphor/templates/uml.gaphor
+#: gaphor/templates/uml-example.gaphor
 msgid "Scenario 1"
 msgstr "1. forgatókönyv"
 
-#: gaphor/templates/uml.gaphor
+#: gaphor/templates/uml-example.gaphor
 msgid "Scenario 2"
 msgstr "2. forgatókönyv"
 
-#: gaphor/templates/uml.gaphor
+#: gaphor/templates/uml-example.gaphor gaphor/templates/uml.gaphor
 msgid "Domain Entities"
 msgstr "Tartományegyedek"
 
-#: gaphor/templates/uml.gaphor
+#: gaphor/templates/uml-example.gaphor
 msgid "Software Task"
 msgstr "Szoftver feladat"
 
-#: gaphor/templates/uml.gaphor
+#: gaphor/templates/uml-example.gaphor
 msgid "performs"
 msgstr "művelet"
 
-#: gaphor/templates/uml.gaphor
+#: gaphor/templates/uml-example.gaphor gaphor/templates/uml.gaphor
 msgid "Package Dependencies"
 msgstr "Csomagfüggőségek"
 
-#: gaphor/templates/uml.gaphor
+#: gaphor/templates/uml-example.gaphor
 msgid "SW Component 1"
 msgstr "1. szoftverösszetevő"
 
-#: gaphor/templates/uml.gaphor
+#: gaphor/templates/uml-example.gaphor
 msgid "SW Component 4"
 msgstr "4. szoftverösszetevő"
 
-#: gaphor/templates/uml.gaphor
+#: gaphor/templates/uml-example.gaphor
 msgid "SW Component 3"
 msgstr "3. szoftverösszetevő"
 
-#: gaphor/templates/uml.gaphor
+#: gaphor/templates/uml-example.gaphor
 msgid "SW Component 2"
 msgstr "2. szoftverösszetevő"
 
-#: gaphor/templates/uml.gaphor
+#: gaphor/templates/uml-example.gaphor
 msgid "Primary Actor"
 msgstr "Elsődleges szereplő"
 
-#: gaphor/templates/uml.gaphor
+#: gaphor/templates/uml-example.gaphor
 msgid "Actor Profile"
 msgstr "Szereplői profil"
 
-#: gaphor/templates/uml.gaphor
+#: gaphor/templates/uml-example.gaphor
 msgid "login"
 msgstr "bejelentkezés"
 
-#: gaphor/templates/uml.gaphor
+#: gaphor/templates/uml-example.gaphor gaphor/templates/uml.gaphor
 msgid "Detailed Class Design"
 msgstr "Részletes osztálytervezés"
 
-#: gaphor/templates/uml.gaphor
+#: gaphor/templates/uml-example.gaphor
 msgid "First Class"
 msgstr "Első osztály"
 
-#: gaphor/templates/uml.gaphor
+#: gaphor/templates/uml-example.gaphor
 msgid "firstName"
 msgstr "keresztnév"
 
-#: gaphor/templates/uml.gaphor
+#: gaphor/templates/uml-example.gaphor
 msgid "lastName"
 msgstr "családnév"
 
-#: gaphor/templates/uml.gaphor
+#: gaphor/templates/uml-example.gaphor
 msgid "Login"
 msgstr "Bejelentkezés"
 
-#: gaphor/templates/uml.gaphor
+#: gaphor/templates/uml-example.gaphor
 msgid "lastLogin"
 msgstr "utolsóBejelentkezés"
 
-#: gaphor/templates/uml.gaphor
+#: gaphor/templates/uml-example.gaphor
 msgid "Second Class"
 msgstr "Másodosztály"
 
-#: gaphor/templates/uml.gaphor
+#: gaphor/templates/uml-example.gaphor
 msgid "released"
 msgstr "kiadva"
 
-#: gaphor/templates/uml.gaphor
+#: gaphor/templates/uml-example.gaphor gaphor/templates/uml.gaphor
 msgid "Implementation Architecture"
 msgstr "Megvalósítási architektúra"
 
-#: gaphor/templates/uml.gaphor
+#: gaphor/templates/uml-example.gaphor
 msgid "Node 1"
 msgstr "1. csomópont"
 
-#: gaphor/templates/uml.gaphor
+#: gaphor/templates/uml-example.gaphor
 msgid "Artifact 1"
 msgstr "1. műtermék"
 
-#: gaphor/templates/uml.gaphor
+#: gaphor/templates/uml-example.gaphor
 msgid "Node 2"
 msgstr "2. csomópont"
 
-#: gaphor/templates/uml.gaphor
+#: gaphor/templates/uml-example.gaphor
 msgid "protocol"
 msgstr "protokoll"
 
-#: gaphor/templates/uml.gaphor
+#: gaphor/templates/uml-example.gaphor
 msgid "Artifact 2"
 msgstr "2. műtermék"
 
-#: gaphor/templates/uml.gaphor
+#: gaphor/templates/uml-example.gaphor gaphor/templates/uml.gaphor
 msgid ""
 "Analyze functional requirements by\n"
 "identifying user roles – actors – and\n"
@@ -2290,7 +2295,7 @@ msgstr ""
 "A működési követelmények elemzése a felhasználói szerepek – szereplők – "
 "azonosításával és felhasználási eseteikhez való társításával."
 
-#: gaphor/templates/uml.gaphor
+#: gaphor/templates/uml-example.gaphor gaphor/templates/uml.gaphor
 msgid ""
 "Model abstract use case implementation by creating activity diagrams "
 "visualizing activity flows for primary and secondary use case scenarios."
@@ -2299,7 +2304,7 @@ msgstr ""
 " létrehozásával, amely tevékenységfolyamatokat vizualizál az elsődleges "
 "és másodlagos használati esetek forgatókönyveihez."
 
-#: gaphor/templates/uml.gaphor
+#: gaphor/templates/uml-example.gaphor gaphor/templates/uml.gaphor
 msgid ""
 "Perform domain analysis by modeling domain entities and their "
 "relationships using simplified class diagram. This diagram will serve as "
@@ -2311,7 +2316,7 @@ msgstr ""
 "fogalmak vizuális szótáraként fog szolgálni. Ez egyben a tervezési szintű"
 " adatmodell kiindulópontja is lesz."
 
-#: gaphor/templates/uml.gaphor
+#: gaphor/templates/uml-example.gaphor gaphor/templates/uml.gaphor
 msgid ""
 "Prepare package dependencies diagram to group your implementation classes"
 " in appropriate way. This will help you maintain the code well structured"
@@ -2323,7 +2328,7 @@ msgstr ""
 "elkerüli a tervezési hibákat, például a körkörös függőséget vagy a "
 "bizonytalan részektől való függőséget."
 
-#: gaphor/templates/uml.gaphor
+#: gaphor/templates/uml-example.gaphor gaphor/templates/uml.gaphor
 msgid ""
 "Model component interactions for use case scenarios in order to find out "
 "new methods in\n"
@@ -2334,13 +2339,13 @@ msgstr ""
 "találjon a meglévő osztályokban, vagy akár új, különleges felelősséggel "
 "rendelkező osztályokat."
 
-#: gaphor/templates/uml.gaphor
+#: gaphor/templates/uml-example.gaphor gaphor/templates/uml.gaphor
 msgid "Create detailed class diagrams to capture your object-oriented data model."
 msgstr ""
 "Részletes osztálydiagramok létrehozása az objektumorientált adatmodell "
 "rögzítéséhez."
 
-#: gaphor/templates/uml.gaphor
+#: gaphor/templates/uml-example.gaphor gaphor/templates/uml.gaphor
 msgid ""
 "Define the major artifacts that manifest implementation of your "
 "components. Indicate how they are deployed on hardware nodes, their "
@@ -2350,11 +2355,11 @@ msgstr ""
 "jelzik. Mutassa be, hogyan vannak telepítve a hardver csomópontokon, "
 "kölcsönös függőségeiket és kommunikációs protokolljaikat."
 
-#: gaphor/templates/uml.gaphor
+#: gaphor/templates/uml-example.gaphor
 msgid "String"
 msgstr "Karakterlánc"
 
-#: gaphor/templates/uml.gaphor
+#: gaphor/templates/uml-example.gaphor
 msgid "Date"
 msgstr "Dátum"
 
@@ -2382,11 +2387,15 @@ msgstr "Váltás"
 msgid "Open a Model"
 msgstr "Modell megnyitása"
 
-#: gaphor/ui/diagrampage.py:90 gaphor/ui/mainwindow.py:274
+#: gaphor/ui/diagrampage.py:92 gaphor/ui/mainwindow.py:274
 #: gaphor/ui/modelmerge/organize.py:135 gaphor/ui/modelmerge/organize.py:166
 #: gaphor/ui/treemodel.py:45
 msgid "<None>"
 msgstr "<Nincs>"
+
+#: gaphor/ui/diagrampage.py:311
+msgid "Show in Model Browser"
+msgstr ""
 
 #: gaphor/ui/diagrams.ui:12
 msgid "Open a Diagram"
@@ -2399,6 +2408,10 @@ msgid ""
 msgstr ""
 "Nyisson meg egy ábrát a modellböngészőből, vagy\n"
 "hozzon létre egy új ábrát az Új ábra menüből."
+
+#: gaphor/ui/elementeditor.py:413 gaphor/ui/elementeditor.ui:352
+msgid "No focused item."
+msgstr ""
 
 #: gaphor/ui/elementeditor.ui:11
 msgid "No item selected"
@@ -2444,23 +2457,23 @@ msgstr ""
 "sarokban), válasszon ki egy elemet a modellböngészőben, és kezdje el a "
 "gépelést. Egy keresőmező önműködően megjelenik."
 
-#: gaphor/ui/elementeditor.ui:97 gaphor/ui/help/shortcuts.ui:129
+#: gaphor/ui/elementeditor.ui:97 gaphor/ui/help/shortcuts.ui:113
 msgid "Undo"
 msgstr "Visszavonás"
 
-#: gaphor/ui/elementeditor.ui:115 gaphor/ui/help/shortcuts.ui:137
+#: gaphor/ui/elementeditor.ui:115 gaphor/ui/help/shortcuts.ui:120
 msgid "Redo"
 msgstr "Ismét"
 
-#: gaphor/ui/elementeditor.ui:134 gaphor/ui/help/shortcuts.ui:154
+#: gaphor/ui/elementeditor.ui:134 gaphor/ui/help/shortcuts.ui:135
 msgid "Zoom In"
 msgstr "Nagyítás"
 
-#: gaphor/ui/elementeditor.ui:149 gaphor/ui/help/shortcuts.ui:170
+#: gaphor/ui/elementeditor.ui:149 gaphor/ui/help/shortcuts.ui:149
 msgid "Reset Zoom"
 msgstr "Tényleges méret"
 
-#: gaphor/ui/elementeditor.ui:164 gaphor/ui/help/shortcuts.ui:162
+#: gaphor/ui/elementeditor.ui:164 gaphor/ui/help/shortcuts.ui:142
 msgid "Zoom Out"
 msgstr "Kicsinyítés"
 
@@ -2468,39 +2481,43 @@ msgstr "Kicsinyítés"
 msgid "Editors"
 msgstr "Szerkesztők"
 
-#: gaphor/ui/elementeditor.ui:230 gaphor/ui/elementeditor.ui:244
+#: gaphor/ui/elementeditor.ui:230 gaphor/ui/elementeditor.ui:241
 #: gaphor/ui/greeter.ui:14 gaphor/ui/help/preferences.ui:6
-#: gaphor/ui/help/shortcuts.ui:54 gaphor/ui/mainwindow.py:62
+#: gaphor/ui/help/shortcuts.ui:47 gaphor/ui/mainwindow.py:62
 msgid "Preferences"
 msgstr "Beállítások"
 
-#: gaphor/ui/elementeditor.ui:257
+#: gaphor/ui/elementeditor.ui:254
 msgid "Reset Tool Automatically"
 msgstr "Az eszköz önműködő visszaállítása"
 
-#: gaphor/ui/elementeditor.ui:275
+#: gaphor/ui/elementeditor.ui:272
 msgid "Remove Unused Elements"
 msgstr "Nem használt elemek eltávolítása"
 
-#: gaphor/ui/elementeditor.ui:277 gaphor/ui/elementeditor.ui:284
+#: gaphor/ui/elementeditor.ui:274 gaphor/ui/elementeditor.ui:281
 msgid "Automatically remove elements no longer in use in any diagram."
 msgstr ""
 "Önműködően távolítsa el azokat az elemeket, amelyeket már nem használnak "
 "az ábrákban."
 
-#: gaphor/ui/elementeditor.ui:295
+#: gaphor/ui/elementeditor.ui:292
 msgid "Diagram Language"
 msgstr "Ábra nyelve"
 
-#: gaphor/ui/elementeditor.ui:297 gaphor/ui/elementeditor.ui:305
+#: gaphor/ui/elementeditor.ui:294 gaphor/ui/elementeditor.ui:302
 msgid "The (natural) language used in this model."
 msgstr "A modellben használt (természetes) nyelv."
 
-#: gaphor/ui/elementeditor.ui:313
+#: gaphor/ui/elementeditor.ui:310
 msgid "Style Sheet"
 msgstr "Stíluslap"
 
-#: gaphor/ui/elementeditor.ui:340
+#: gaphor/ui/elementeditor.ui:338
+msgid "CSS nodes of focused item"
+msgstr ""
+
+#: gaphor/ui/elementeditor.ui:363
 msgid ""
 "🔗 <a href=\"https://docs.gaphor.org/en/latest/style_sheets.html\">Style "
 "sheets in Gaphor</a>"
@@ -2508,15 +2525,15 @@ msgstr ""
 "🔗 <a href=\"https://docs.gaphor.org/en/latest/style_sheets.html\">Gaphor-"
 "stíluslapok</a>"
 
-#: gaphor/ui/elementeditor.ui:354
+#: gaphor/ui/elementeditor.ui:377
 msgid "Merge Models"
 msgstr "Modellek egyesítése"
 
-#: gaphor/ui/elementeditor.ui:368
+#: gaphor/ui/elementeditor.ui:391
 msgid "Merge Model Changes"
 msgstr "Modellváltozások egyesítése"
 
-#: gaphor/ui/elementeditor.ui:379
+#: gaphor/ui/elementeditor.ui:402
 msgid ""
 "Apply incoming changes from the conflicting model. Use Undo to revert "
 "changes."
@@ -2524,7 +2541,7 @@ msgstr ""
 "Alkalmazza az ütköző modell bejövő módosításait. A módosítások "
 "visszavonásához használja a Visszavonás gombot."
 
-#: gaphor/ui/elementeditor.ui:399
+#: gaphor/ui/elementeditor.ui:422
 msgid "Resolve"
 msgstr "Megoldás"
 
@@ -2544,19 +2561,19 @@ msgstr "Bezárás"
 msgid "Start Debug Session"
 msgstr "Hibakeresési munkamenet elindítsa"
 
-#: gaphor/ui/filedialog.py:14
+#: gaphor/ui/filedialog.py:15
 msgid "Gaphor Models"
 msgstr "Minden Gaphor-modell"
 
-#: gaphor/ui/filedialog.py:28
+#: gaphor/ui/filedialog.py:29
 msgid "Images"
 msgstr "Képek"
 
-#: gaphor/ui/filedialog.py:40
+#: gaphor/ui/filedialog.py:41
 msgid "All Files"
 msgstr "Minden fájl"
 
-#: gaphor/ui/filemanager.py:41
+#: gaphor/ui/filemanager.py:42
 msgid ""
 "Gaphor was not able to store the model, probably due to an internal "
 "error:\n"
@@ -2567,7 +2584,7 @@ msgstr ""
 "{exc}\n"
 "Ha úgy gondolja, hogy ez hiba, lépjen kapcsolatba a fejlesztőkkel."
 
-#: gaphor/ui/filemanager.py:45
+#: gaphor/ui/filemanager.py:46
 msgid ""
 "You do not have the permissions necessary to save the model.\n"
 "Please check that you typed the location correctly and try again."
@@ -2575,7 +2592,7 @@ msgstr ""
 "Nem rendelkezik a modell mentéséhez szükséges jogosultságokkal.\n"
 "Kérjük, ellenőrizze, hogy helyesen beírta a helyet, és próbálja újra."
 
-#: gaphor/ui/filemanager.py:49
+#: gaphor/ui/filemanager.py:50
 msgid ""
 "You do not have enough free space on the device to save the model.\n"
 "Please free up some disk space and try again or save it in a different "
@@ -2585,7 +2602,7 @@ msgstr ""
 "Kérjük, szabadítson fel lemezterületet, és próbálja újra, vagy mentse egy"
 " másik helyre."
 
-#: gaphor/ui/filemanager.py:52
+#: gaphor/ui/filemanager.py:53
 msgid ""
 "The model cannot be stored at this location:\n"
 "{exc}\n"
@@ -2595,47 +2612,52 @@ msgstr ""
 "{exc}\n"
 "Kérjük, ellenőrizze, hogy helyesen beírta a helyet, és próbálja újra."
 
-#: gaphor/ui/filemanager.py:125 gaphor/ui/filemanager.py:148
+#: gaphor/ui/filemanager.py:128 gaphor/ui/filemanager.py:157
 msgid "Loading…"
 msgstr "Betöltés folyamatban van…"
 
-#: gaphor/ui/filemanager.py:126
+#: gaphor/ui/filemanager.py:129
 msgid "Loading model from {filename}"
 msgstr "Modell betöltése innen: {filename}"
 
-#: gaphor/ui/filemanager.py:149
+#: gaphor/ui/filemanager.py:158
 msgid "Loading current and incoming model"
 msgstr "Jelenlegi és bejövő modell betöltése"
 
-#: gaphor/ui/filemanager.py:227 gaphor/ui/filemanager.py:283
+#: gaphor/ui/filemanager.py:236 gaphor/ui/filemanager.py:292
 msgid "Unable to open model “{filename}”."
 msgstr "Nem sikerült megnyitni a(z) „{filename}”-modellfájlt."
 
-#: gaphor/ui/filemanager.py:230 gaphor/ui/filemanager.py:286
+#: gaphor/ui/filemanager.py:239 gaphor/ui/filemanager.py:295
 msgid "This file does not contain a valid Gaphor model."
 msgstr "Ez a fájl nem tartalmaz érvényes Gaphor-modellt."
 
-#: gaphor/ui/filemanager.py:306
+#: gaphor/ui/filemanager.py:315
 msgid "Saving…"
 msgstr "Mentés folyamatban van…"
 
-#: gaphor/ui/filemanager.py:307
+#: gaphor/ui/filemanager.py:316
 msgid "Saving model to {filename}"
 msgstr "Modell mentése ide: {filename}"
 
-#: gaphor/ui/filemanager.py:323
+#: gaphor/ui/filemanager.py:332
 msgid "Unable to save model “{filename}”."
 msgstr "Nem sikerült menteni a(z) „{filename}”-modellfájlt."
 
-#: gaphor/ui/filemanager.py:361 gaphor/ui/filemanager.py:396
+#: gaphor/ui/filemanager.py:388 gaphor/ui/filemanager.py:422
 msgid "Save Gaphor Model As"
 msgstr "A Gaphor-modell mentése másként"
 
-#: gaphor/ui/filemanager.py:417
+#: gaphor/ui/filemanager.py:389 gaphor/ui/filemanager.py:424
+#, fuzzy
+msgid "New Model"
+msgstr "Új modell"
+
+#: gaphor/ui/filemanager.py:443
 msgid "Resolve Merge Conflict?"
 msgstr "Egyesítési ütközés megoldása?"
 
-#: gaphor/ui/filemanager.py:420
+#: gaphor/ui/filemanager.py:446
 msgid ""
 "The model you are opening contains a merge conflict. Do you want to open "
 "the current model or the incoming change to the model?"
@@ -2643,27 +2665,27 @@ msgstr ""
 "A megnyitott modell egyesítési ütközést tartalmaz. Meg szeretné nyitni a "
 "jelenlegi modellt vagy a modell bejövő módosítását?"
 
-#: gaphor/ui/filemanager.py:424 gaphor/ui/filemanager.py:449
+#: gaphor/ui/filemanager.py:450 gaphor/ui/filemanager.py:475
 msgid "Cancel"
 msgstr "Mégse"
 
-#: gaphor/ui/filemanager.py:425
+#: gaphor/ui/filemanager.py:451
 msgid "Open Merge Editor"
 msgstr "Egyesítési szerkesztő megnyitása"
 
-#: gaphor/ui/filemanager.py:426
+#: gaphor/ui/filemanager.py:452
 msgid "Open Current"
 msgstr "Jelenlegi megnyitása"
 
-#: gaphor/ui/filemanager.py:427
+#: gaphor/ui/filemanager.py:453
 msgid "Open Incoming"
 msgstr "Bejövő megnyitása"
 
-#: gaphor/ui/filemanager.py:440
+#: gaphor/ui/filemanager.py:466
 msgid "Save Changes?"
 msgstr "Változtatások mentése?"
 
-#: gaphor/ui/filemanager.py:441
+#: gaphor/ui/filemanager.py:467
 msgid ""
 "The open model contains unsaved changes. Changes which are not saved will"
 " be permanently lost."
@@ -2671,11 +2693,11 @@ msgstr ""
 "A megnyitott modell nem mentett változtatásokat tartalmaz. A nem mentett "
 "változtatások véglegesen elvesznek."
 
-#: gaphor/ui/filemanager.py:450
+#: gaphor/ui/filemanager.py:476
 msgid "Discard"
 msgstr "Elvetés"
 
-#: gaphor/ui/filemanager.py:451 gaphor/ui/help/shortcuts.ui:103
+#: gaphor/ui/filemanager.py:477 gaphor/ui/help/shortcuts.ui:90
 #: gaphor/ui/mainwindow.py:52
 msgid "Save"
 msgstr "Mentés"
@@ -2706,6 +2728,35 @@ msgstr ""
 msgid "Layered C4 Model template"
 msgstr "Réteges C4-es modell-sablon"
 
+#: gaphor/ui/greeter.py:66
+msgid "UML Example"
+msgstr ""
+
+#: gaphor/ui/greeter.py:67
+#, fuzzy
+msgid "Unified Modeling Language example model"
+msgstr "UML-sablon (Unified Modeling Language - Egységes modellezési nyelv)"
+
+#: gaphor/ui/greeter.py:73
+msgid "SysML Example"
+msgstr ""
+
+#: gaphor/ui/greeter.py:74
+#, fuzzy
+msgid "Systems Modeling Language example model"
+msgstr "SML-sablon (Systems Modeling Language - Rendszermodellező nyelv)"
+
+#: gaphor/ui/greeter.py:80
+msgid "RAAML Example"
+msgstr ""
+
+#: gaphor/ui/greeter.py:81
+#, fuzzy
+msgid "Risk Analysis and Assessment Modeling Language example model"
+msgstr ""
+"RAAML-sablon (Risk Analysis and Assessment Modeling Language - "
+"Kockázatelemzési és -értékelési modellezési nyelv)"
+
 #: gaphor/ui/greeter.ui:8 gaphor/ui/greeter.ui:53 gaphor/ui/mainwindow.py:48
 msgid "Open Model…"
 msgstr "Modell megnyitása…"
@@ -2719,19 +2770,15 @@ msgstr "Billentyűparancsok"
 msgid "About Gaphor"
 msgstr "A Gaphor névjegye"
 
-#: gaphor/ui/greeter.ui:84
-msgid "Recently Opened"
-msgstr "Legutóbb megnyitott"
-
-#: gaphor/ui/greeter.ui:89
+#: gaphor/ui/greeter.ui:84 gaphor/ui/greeter.ui:101
 msgid "Create New Model"
 msgstr "Új modell létrehozása"
 
-#: gaphor/ui/help/shortcuts.ui:87 gaphor/ui/mainwindow.py:47
+#: gaphor/ui/help/shortcuts.ui:76 gaphor/ui/mainwindow.py:47
 msgid "New Model…"
 msgstr "Új modell…"
 
-#: gaphor/ui/help/shortcuts.ui:111 gaphor/ui/mainwindow.py:53
+#: gaphor/ui/help/shortcuts.ui:97 gaphor/ui/mainwindow.py:53
 msgid "Save As…"
 msgstr "Mentés másként…"
 
@@ -2759,53 +2806,67 @@ msgstr "Új ábra menü"
 msgid "Open application menu"
 msgstr "Alkalmazásmenü megnyitása"
 
-#: gaphor/ui/help/shortcuts.ui:38 gaphor/ui/mainwindow.ui:79
+#: gaphor/ui/help/shortcuts.ui:33 gaphor/ui/mainwindow.ui:79
 msgid "Toggle Property Editor"
 msgstr "Tulajdonságszerkesztő átváltása"
 
-#: gaphor/ui/modelbrowser.py:209
+#: gaphor/ui/modelbrowser.py:177
+#, fuzzy
+msgid "New Diagram"
+msgstr "Új ábra"
+
+#: gaphor/ui/modelbrowser.py:210
 msgid "{name} package"
 msgstr "{name}-csomag"
 
-#: gaphor/ui/modelbrowser.py:211
+#: gaphor/ui/modelbrowser.py:212
 msgid "New package"
 msgstr "Új csomag"
 
-#: gaphor/ui/modelbrowser.py:406 gaphor/ui/modelbrowser.py:589
+#: gaphor/ui/modelbrowser.py:412 gaphor/ui/modelbrowser.py:596
 msgid "New _Package"
 msgstr "Új _csomag"
 
-#: gaphor/ui/modelbrowser.py:570
+#: gaphor/ui/modelbrowser.py:577
 msgid "_Open"
 msgstr "_Megnyitás"
 
-#: gaphor/ui/modelbrowser.py:570
+#: gaphor/ui/modelbrowser.py:577
 msgid "Add to diagram"
 msgstr "Ábra hozzáadása"
 
-#: gaphor/ui/modelbrowser.py:573
+#: gaphor/ui/modelbrowser.py:580
 msgid "_Rename"
 msgstr "Átne_vezés"
 
-#: gaphor/ui/modelbrowser.py:578
+#: gaphor/ui/modelbrowser.py:585
 msgid "New _Diagram"
 msgstr "Új á_bra"
 
-#: gaphor/ui/modelbrowser.py:585
+#: gaphor/ui/modelbrowser.py:592
 msgid "New _Element"
 msgstr "Új _elem"
 
-#: gaphor/ui/modelbrowser.py:593
+#: gaphor/ui/modelbrowser.py:600
 msgid "De_lete"
 msgstr "_Törlés"
 
-#: gaphor/ui/modelbrowser.py:603
+#: gaphor/ui/modelbrowser.py:610
 msgid "Show in “{diagram}”"
 msgstr "Megjelenítés a(z) „{diagram}”-ábrán"
 
-#: gaphor/ui/modelbrowser.py:635
+#: gaphor/ui/modelbrowser.py:642
 msgid "New Generic Diagram"
 msgstr "Új általános-ábra"
+
+#: gaphor/ui/modelchanged.ui:6
+#, fuzzy
+msgid "Model Changed on Disk"
+msgstr "Modellváltozások egyesítése"
+
+#: gaphor/ui/modelchanged.ui:7
+msgid "Discard Changes and Reload"
+msgstr ""
 
 #: gaphor/ui/tests/test_treemodel.py:200 gaphor/ui/treemodel.py:64
 msgid "<Relationships>"
@@ -2825,8 +2886,8 @@ msgid ""
 msgstr ""
 "Szerzői jog © 2001 A Gaphor-fejlesztőcsapat.\n"
 "\n"
-"Az UML, SysML és RAAML az Object Management Group, Inc. bejegyzett védjegyei "
-"vagy védjegyei az Egyesült Államokban és/vagy más országokban."
+"Az UML, SysML és RAAML az Object Management Group, Inc. bejegyzett "
+"védjegyei vagy védjegyei az Egyesült Államokban és/vagy más országokban."
 
 #: gaphor/ui/help/about.ui:21
 msgid ""
@@ -2878,71 +2939,71 @@ msgstr "Nyelv"
 msgid "Change from System Language to English"
 msgstr "Váltás a rendszer nyelvéről angolra"
 
-#: gaphor/ui/help/shortcuts.ui:22
+#: gaphor/ui/help/shortcuts.ui:19
 msgid "Rename"
 msgstr "Átnevezés"
 
-#: gaphor/ui/help/shortcuts.ui:30
+#: gaphor/ui/help/shortcuts.ui:26
 msgid "Search"
 msgstr "Keresés"
 
-#: gaphor/ui/help/shortcuts.ui:46
+#: gaphor/ui/help/shortcuts.ui:40
 msgid "Close Diagram"
 msgstr "Ábra bezárása"
 
-#: gaphor/ui/help/shortcuts.ui:62
+#: gaphor/ui/help/shortcuts.ui:54
 msgid "Toggle Fullscreen"
 msgstr "Teljes képernyős nézet ki-/bekapcsolása"
 
-#: gaphor/ui/help/shortcuts.ui:70
+#: gaphor/ui/help/shortcuts.ui:61
 msgid "Quit Gaphor"
 msgstr "A Gaphor bezárása"
 
-#: gaphor/ui/help/shortcuts.ui:81
+#: gaphor/ui/help/shortcuts.ui:71
 msgid "Files"
 msgstr "Fájlok"
 
-#: gaphor/ui/help/shortcuts.ui:95
+#: gaphor/ui/help/shortcuts.ui:83
 msgid "Open a Model…"
 msgstr "Modell megnyitása…"
 
-#: gaphor/ui/help/shortcuts.ui:123
+#: gaphor/ui/help/shortcuts.ui:108
 msgid "Undo and Redo"
 msgstr "Visszavonás és ismét"
 
-#: gaphor/ui/help/shortcuts.ui:148
+#: gaphor/ui/help/shortcuts.ui:130
 msgid "Zoom"
 msgstr "Nagyítás"
 
-#: gaphor/ui/help/shortcuts.ui:180
+#: gaphor/ui/help/shortcuts.ui:158
 msgid "Selections"
 msgstr "Kijelölések"
 
-#: gaphor/ui/help/shortcuts.ui:186
+#: gaphor/ui/help/shortcuts.ui:163
 msgid "Select All"
 msgstr "Összes kijelölése"
 
-#: gaphor/ui/help/shortcuts.ui:194
+#: gaphor/ui/help/shortcuts.ui:170
 msgid "Deselect All"
 msgstr "Minden kijelölés megszüntetése"
 
-#: gaphor/ui/help/shortcuts.ui:205
+#: gaphor/ui/help/shortcuts.ui:180
 msgid "Copy and Paste"
 msgstr "Másolás és beillesztés"
 
-#: gaphor/ui/help/shortcuts.ui:211
+#: gaphor/ui/help/shortcuts.ui:185
 msgid "Copy"
 msgstr "Másolás"
 
-#: gaphor/ui/help/shortcuts.ui:219
+#: gaphor/ui/help/shortcuts.ui:192
 msgid "Cut"
 msgstr "Kivágás"
 
-#: gaphor/ui/help/shortcuts.ui:227
+#: gaphor/ui/help/shortcuts.ui:199
 msgid "Paste (link defining elements)"
 msgstr "Beillesztés (meghatározó elemek összekapcsolása)"
 
-#: gaphor/ui/help/shortcuts.ui:235
+#: gaphor/ui/help/shortcuts.ui:206
 msgid "Paste (copy defining elements)"
 msgstr "Beillesztés (meghatározó elemek másolása)"
 
@@ -3039,3 +3100,7 @@ msgstr "„{name}”-kapcsolat frissítése"
 
 #~ msgid "Flatpak Document Portal"
 #~ msgstr "Flatpak-dokumentumportál"
+
+#~ msgid "Recently Opened"
+#~ msgstr "Legutóbb megnyitott"
+
