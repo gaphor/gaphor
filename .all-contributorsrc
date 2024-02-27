@@ -1365,6 +1365,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "paulmenzel",
+      "name": "Paul Menzel",
+      "avatar_url": "https://avatars.githubusercontent.com/u/9318792?v=4",
+      "profile": "https://www.molgen.mpg.de",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,
