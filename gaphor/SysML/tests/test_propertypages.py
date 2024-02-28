@@ -8,6 +8,9 @@ from gaphor.SysML.propertypages import (
     ItemFlowPropertyPage,
     PropertyAggregationPropertyPage,
     RequirementPropertyPage,
+)
+from gaphor.UML.propertypages import (
+    ShowTypedElementPropertyPage,
     TypedElementPropertyPage,
 )
 
@@ -48,12 +51,12 @@ def test_requirement_property_page_text(diagram, element_factory):
     assert subject.text == "test"
 
 
-def test_property_type_property_page_show_type(diagram, element_factory):
+def test_show_property_type_property_page_show_type(diagram, element_factory):
     item = diagram.create(
         SysML.blocks.ProxyPortItem,
         subject=element_factory.create(SysML.sysml.ProxyPort),
     )
-    property_page = TypedElementPropertyPage(item)
+    property_page = ShowTypedElementPropertyPage(item)
 
     widget = property_page.construct()
     show_parts = find(widget, "show-type")
@@ -121,15 +124,12 @@ def test_no_property_aggregation_page_for_ports(element_factory):
     assert not widget
 
 
-def test_property_type(diagram, element_factory):
-    item = diagram.create(
-        SysML.blocks.PropertyItem,
-        subject=element_factory.create(UML.Property),
-    )
+def test_property_type(element_factory):
+    subject = element_factory.create(UML.Property)
 
     type = element_factory.create(UML.Class)
     type.name = "Bar"
-    property_page = TypedElementPropertyPage(item)
+    property_page = TypedElementPropertyPage(subject)
 
     widget = property_page.construct()
     dropdown = find(widget, "element-type")
@@ -139,7 +139,7 @@ def test_property_type(diagram, element_factory):
     dropdown.set_selected(bar_index)
 
     assert dropdown.get_selected_item().label == "Bar"
-    assert item.subject.type is type
+    assert subject.type is type
 
 
 def test_association_item_flow(association):
