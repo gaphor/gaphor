@@ -32,16 +32,12 @@
     <property name="orientation">vertical</property>
     <property name="baseline-position">top</property>
     <child>
-      <object class="GtkBox">
-        <child>
-          <object class="GtkLabel" id="type-label">
-            <property name="halign">center</property>
-            <property name="hexpand">yes</property>
-            <style>
-              <class name="title"/>
-            </style>
-          </object>
-        </child>
+      <object class="GtkLabel" id="type-label">
+        <property name="halign">center</property>
+        <property name="hexpand">yes</property>
+        <style>
+          <class name="title"/>
+        </style>
       </object>
     </child>
     <child>
