@@ -2,7 +2,7 @@
 <interface>
   <requires lib="gtk" version="4.0"/>
 
-  <object class="GtkBox" id="association-editor">
+  <object class="GtkBox" id="association-direction-editor">
     <property name="orientation">vertical</property>
     <child>
       <object class="GtkBox">
@@ -40,6 +40,13 @@
         </child>
       </object>
     </child>
+    <style>
+      <class name="propertypage"/>
+    </style>
+  </object>
+
+  <object class="GtkBox" id="association-editor">
+    <property name="orientation">vertical</property>
     <child>
       <object class="GtkBox">
         <child>

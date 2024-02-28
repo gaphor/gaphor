@@ -20,7 +20,7 @@ def test_connect_composite_association(create, diagram):
     a = create(AssociationItem)
     composite_association_config(a)
 
-    property_page = AssociationPropertyPage(a)
+    property_page = AssociationPropertyPage(a.subject)
     _widget = property_page.construct()
 
     connect(a, a.head, c1)

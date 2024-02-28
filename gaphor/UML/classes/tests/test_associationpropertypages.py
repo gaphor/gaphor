@@ -1,32 +1,23 @@
 from gaphor import UML
 from gaphor.diagram.tests.fixtures import find
-from gaphor.UML.classes.associationpropertypages import AssociationPropertyPage
+from gaphor.UML.classes.associationpropertypages import (
+    AssociationDirectionPropertyPage,
+    AssociationPropertyPage,
+)
 
 
-def test_association_property_page(diagram, element_factory):
+def test_association_property_page(element_factory):
     end1 = element_factory.create(UML.Class)
     end2 = element_factory.create(UML.Class)
-    item = diagram.create(
-        UML.classes.AssociationItem, subject=UML.recipes.create_association(end1, end2)
-    )
-    item.head_subject = item.subject.memberEnd[0]
-    item.tail_subject = item.subject.memberEnd[1]
-    property_page = AssociationPropertyPage(item)
+    subject = UML.recipes.create_association(end1, end2)
+
+    property_page = AssociationPropertyPage(subject)
 
     widget = property_page.construct()
     head_name = find(widget, "head-name")
     head_name.set_text("head")
 
-    assert item.subject.memberEnd[0].name == "head"
-
-
-def test_association_property_page_with_no_subject(diagram, element_factory):
-    item = diagram.create(UML.classes.AssociationItem)
-    property_page = AssociationPropertyPage(item)
-
-    widget = property_page.construct()
-
-    assert widget is None
+    assert subject.memberEnd[0].name == "head"
 
 
 def test_association_property_page_invert_direction(diagram, element_factory):
@@ -37,7 +28,7 @@ def test_association_property_page_invert_direction(diagram, element_factory):
     )
     item.head_subject = item.subject.memberEnd[0]
     item.tail_subject = item.subject.memberEnd[1]
-    property_page = AssociationPropertyPage(item)
+    property_page = AssociationDirectionPropertyPage(item)
 
     property_page._on_invert_direction_change(None)
 
@@ -53,17 +44,13 @@ def metaclass_and_stereotype(element_factory):
     return metaclass, stereotype
 
 
-def test_association_property_with_stereotype(diagram, element_factory):
+def test_association_property_with_stereotype(element_factory):
     end1 = element_factory.create(UML.Class)
     end2 = element_factory.create(UML.Class)
-    item = diagram.create(
-        UML.classes.AssociationItem, subject=UML.recipes.create_association(end1, end2)
-    )
-    item.head_subject = item.subject.memberEnd[0]
-    item.tail_subject = item.subject.memberEnd[1]
-    metclass, stereotype = metaclass_and_stereotype(element_factory)
+    subject = UML.recipes.create_association(end1, end2)
+    metaclass_and_stereotype(element_factory)
 
-    property_page = AssociationPropertyPage(item)
+    property_page = AssociationPropertyPage(subject)
 
     widget = property_page.construct()
 
