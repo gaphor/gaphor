@@ -141,20 +141,12 @@
       </object>
     </child>
     <child>
-      <object class="GtkBox">
-        <child>
-          <object class="GtkLabel">
-            <property name="label" translatable="yes">Show Ordering</property>
-            <property name="halign">start</property>
-            <property name="hexpand">yes</property>
-          </object>
-        </child>
-        <child>
-          <object class="GtkSwitch" id="show-ordering">
-            <property name="focusable">1</property>
-            <signal name="notify::active" handler="show-ordering-changed" swapped="no" />
-          </object>
-        </child>
+      <object class="GtkLabel">
+        <property name="label" translatable="yes">Ordering</property>
+        <property name="xalign">0</property>
+        <style>
+          <class name="title" />
+        </style>
       </object>
     </child>
     <child>
@@ -170,6 +162,30 @@
           </object>
         </property>
         <signal name="notify::selected" handler="ordering-changed" swapped="no" />
+      </object>
+    </child>
+    <style>
+      <class name="propertypage" />
+    </style>
+  </object>
+
+  <object class="GtkBox" id="show-object-node-editor">
+    <property name="orientation">vertical</property>
+    <child>
+      <object class="GtkBox">
+        <child>
+          <object class="GtkLabel">
+            <property name="label" translatable="yes">Show Ordering</property>
+            <property name="halign">start</property>
+            <property name="hexpand">yes</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkSwitch" id="show-ordering">
+            <property name="focusable">1</property>
+            <signal name="notify::active" handler="show-ordering-changed" swapped="no" />
+          </object>
+        </child>
       </object>
     </child>
     <style>
