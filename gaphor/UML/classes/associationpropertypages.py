@@ -66,7 +66,7 @@ class AssociationPropertyPage(PropertyPageBase):
         return name
 
     def construct(self):
-        if not self.subject:
+        if not self.subject or isinstance(self.subject, UML.Extension):
             return
 
         head_subject = self.subject.memberEnd[0]

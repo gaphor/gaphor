@@ -361,7 +361,8 @@ class Diagrams(UIComponent, ActionProvider):
     def _on_flush_model(self, event):
         """Close all tabs."""
         for page in self._notebook.get_pages():
-            self._notebook.close_page(page)
+            if page:
+                self._notebook.close_page(page)
         self._update_action_state()
 
     def _update_action_state(self):

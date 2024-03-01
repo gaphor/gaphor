@@ -16,6 +16,7 @@ from gaphor.diagram.propertypages import (
     unsubscribe_all_on_destroy,
 )
 from gaphor.UML.classes.datatype import DataTypeItem
+from gaphor.UML.classes.enumeration import EnumerationItem
 from gaphor.UML.classes.interface import Folded, InterfaceItem
 from gaphor.UML.classes.klass import ClassItem
 from gaphor.UML.deployments.connector import ConnectorItem
@@ -190,6 +191,19 @@ def update_attribute_model(store: Gio.ListStore, klass: UML.Class) -> None:
     )
 
 
+# We need a type check here, or all Class subtypes will get this editor
+ATTRIBUTES_PAGE_CLASSIFIERS = [
+    UML.Class,
+    UML.DataType,
+    UML.Enumeration,
+    UML.Interface,
+    UML.PrimitiveType,
+    UML.Stereotype,
+]
+
+OPERATIONS_PAGE_CLASSIFIERS = list(ATTRIBUTES_PAGE_CLASSIFIERS)
+
+
 @PropertyPages.register(UML.DataType)
 @PropertyPages.register(UML.Class)
 @PropertyPages.register(UML.Interface)
@@ -202,7 +216,7 @@ class AttributesPage(PropertyPageBase):
         self.watcher = subject and subject.watcher()
 
     def construct(self):
-        if not self.subject:
+        if type(self.subject) not in ATTRIBUTES_PAGE_CLASSIFIERS:
             return
 
         builder = new_builder(
@@ -259,6 +273,7 @@ class AttributesPage(PropertyPageBase):
 
 @PropertyPages.register(DataTypeItem)
 @PropertyPages.register(ClassItem)
+@PropertyPages.register(EnumerationItem)
 @PropertyPages.register(InterfaceItem)
 class ShowAttributesPage(PropertyPageBase):
     order = 21
@@ -380,7 +395,7 @@ class OperationsPage(PropertyPageBase):
         self.watcher = subject and subject.watcher()
 
     def construct(self):
-        if not self.subject:
+        if type(self.subject) not in OPERATIONS_PAGE_CLASSIFIERS:
             return
 
         builder = new_builder(
@@ -443,6 +458,7 @@ class OperationsPage(PropertyPageBase):
 
 
 @PropertyPages.register(DataTypeItem)
+@PropertyPages.register(EnumerationItem)
 @PropertyPages.register(ClassItem)
 @PropertyPages.register(InterfaceItem)
 class ShowOperationsPage(PropertyPageBase):

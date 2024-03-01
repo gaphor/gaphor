@@ -9,13 +9,7 @@ from gaphor.diagram.propertypages import (
     help_link,
     unsubscribe_all_on_destroy,
 )
-from gaphor.UML.classes.classespropertypages import (
-    AttributesPage,
-    OperationsPage,
-    ShowAttributesPage,
-    ShowOperationsPage,
-    new_resource_builder,
-)
+from gaphor.UML.classes.classespropertypages import new_resource_builder
 from gaphor.UML.classes.enumeration import EnumerationItem
 from gaphor.UML.propertypages import (
     create_list_store,
@@ -176,9 +170,3 @@ class ShowEnumerationPage(PropertyPageBase):
     def on_show_enumerations_changed(self, button, gparam):
         self.item.show_enumerations = button.get_active()
         self.item.request_update()
-
-
-PropertyPages.register(UML.Enumeration)(AttributesPage)
-PropertyPages.register(EnumerationItem)(ShowAttributesPage)
-PropertyPages.register(UML.Enumeration)(OperationsPage)
-PropertyPages.register(EnumerationItem)(ShowOperationsPage)

@@ -30,7 +30,7 @@ class ObjectNodePropertyPage(PropertyPageBase):
     def construct(self):
         subject = self.subject
 
-        if not subject:
+        if not subject or isinstance(subject, UML.ActivityParameterNode):
             return
 
         builder = new_builder(

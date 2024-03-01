@@ -14,7 +14,11 @@ from gaphor.SysML.blocks.block import BlockItem
 from gaphor.SysML.blocks.interfaceblock import InterfaceBlockItem
 from gaphor.SysML.blocks.property import PropertyItem
 from gaphor.SysML.blocks.proxyport import ProxyPortItem
-from gaphor.UML.classes.classespropertypages import OperationsPage, ShowOperationsPage
+from gaphor.UML.classes.classespropertypages import (
+    ATTRIBUTES_PAGE_CLASSIFIERS,
+    OPERATIONS_PAGE_CLASSIFIERS,
+    ShowOperationsPage,
+)
 from gaphor.UML.propertypages import (
     ShowTypedElementPropertyPage,
     TypedElementPropertyPage,
@@ -75,9 +79,9 @@ class RequirementPropertyPage(PropertyPageBase):
         )
 
 
-PropertyPages.register(sysml.Block)(OperationsPage)
+ATTRIBUTES_PAGE_CLASSIFIERS.extend([sysml.ValueType])
+OPERATIONS_PAGE_CLASSIFIERS.extend([sysml.Block, sysml.InterfaceBlock, sysml.ValueType])
 PropertyPages.register(BlockItem)(ShowOperationsPage)
-PropertyPages.register(sysml.InterfaceBlock)(OperationsPage)
 PropertyPages.register(InterfaceBlockItem)(ShowOperationsPage)
 
 PropertyPages.register(UML.Property)(TypedElementPropertyPage)
