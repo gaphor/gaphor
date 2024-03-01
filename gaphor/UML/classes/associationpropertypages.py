@@ -28,7 +28,7 @@ class AssociationPropertyPage(PropertyPageBase):
         self.watcher = subject and subject.watcher()
         self.semaphore = 0
 
-    def construct_end(self, builder, end_name, subject, stereotypes_model):
+    def construct_end(self, builder, end_name, subject):
         title = builder.get_object(f"{end_name}-title")
         if subject.type:
             title.set_text(f"Member End (: {subject.type.name})")
@@ -41,7 +41,7 @@ class AssociationPropertyPage(PropertyPageBase):
         aggregation = builder.get_object(f"{end_name}-aggregation")
         aggregation.set_selected(self.AGGREGATION.index(subject.aggregation))
 
-        if stereotypes_model:
+        if stereotypes_model := stereotype_model(subject):
             stereotype_list = builder.get_object(f"{end_name}-stereotype-list")
             stereotype_set_model_with_interaction(stereotype_list, stereotypes_model)
         else:
@@ -71,9 +71,6 @@ class AssociationPropertyPage(PropertyPageBase):
 
         head_subject = self.subject.memberEnd[0]
         tail_subject = self.subject.memberEnd[1]
-
-        head_model = stereotype_model(head_subject)
-        tail_model = stereotype_model(tail_subject)
 
         builder = new_builder(
             "association-editor",
@@ -108,8 +105,8 @@ class AssociationPropertyPage(PropertyPageBase):
         help_link(builder, "head-info-icon", "head-info")
         help_link(builder, "tail-info-icon", "tail-info")
 
-        self.construct_end(builder, "head", head_subject, head_model)
-        self.construct_end(builder, "tail", tail_subject, tail_model)
+        self.construct_end(builder, "head", head_subject)
+        self.construct_end(builder, "tail", tail_subject)
 
         def name_handler(event):
             end_name = "head" if event.element is head_subject else "tail"
