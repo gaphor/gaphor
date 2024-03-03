@@ -3,18 +3,19 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version:  0.6.0\n"
+"Project-Id-Version: 0.6.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2024-02-27 10:00-0500\n"
-"PO-Revision-Date: 2024-02-17 23:01+0000\n"
+"PO-Revision-Date: 2024-03-03 02:34+0000\n"
 "Last-Translator: Philip Goto <philip.goto@gmail.com>\n"
+"Language-Team: Dutch <https://hosted.weblate.org/projects/gaphor/gaphor/nl/>"
+"\n"
 "Language: nl\n"
-"Language-Team: Dutch "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/nl/>\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Weblate 5.5-dev\n"
 "Generated-By: Babel 2.14.0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:23 gaphor/C4Model/toolbox.py:67
@@ -2383,7 +2384,7 @@ msgstr "<geen>"
 
 #: gaphor/ui/diagrampage.py:311
 msgid "Show in Model Browser"
-msgstr ""
+msgstr "Tonen in model­browser"
 
 #: gaphor/ui/diagrams.ui:12
 msgid "Open a Diagram"
@@ -2399,7 +2400,7 @@ msgstr ""
 
 #: gaphor/ui/elementeditor.py:413 gaphor/ui/elementeditor.ui:352
 msgid "No focused item."
-msgstr ""
+msgstr "Geen gefocust item"
 
 #: gaphor/ui/elementeditor.ui:11
 msgid "No item selected"
@@ -2504,7 +2505,7 @@ msgstr "Stijlblad"
 
 #: gaphor/ui/elementeditor.ui:338
 msgid "CSS nodes of focused item"
-msgstr ""
+msgstr "CSS-knopen van gefocust item"
 
 #: gaphor/ui/elementeditor.ui:363
 msgid ""
@@ -2642,7 +2643,6 @@ msgid "Save Gaphor Model As"
 msgstr "Gaphor-model opslaan als"
 
 #: gaphor/ui/filemanager.py:389 gaphor/ui/filemanager.py:424
-#, fuzzy
 msgid "New Model"
 msgstr "Nieuw model"
 
@@ -2721,30 +2721,27 @@ msgstr "Sjabloon voor Layered C4 Model"
 
 #: gaphor/ui/greeter.py:66
 msgid "UML Example"
-msgstr ""
+msgstr "UML-voorbeeld"
 
 #: gaphor/ui/greeter.py:67
-#, fuzzy
 msgid "Unified Modeling Language example model"
-msgstr "Sjabloon voor Unified Modeling Language"
+msgstr "Voorbeeld­model voor Unified Modeling Language"
 
 #: gaphor/ui/greeter.py:73
 msgid "SysML Example"
-msgstr ""
+msgstr "SysML-voorbeeld"
 
 #: gaphor/ui/greeter.py:74
-#, fuzzy
 msgid "Systems Modeling Language example model"
-msgstr "Sjabloon voor Systems Modeling Language"
+msgstr "Voorbeeld­model voor Systems Modeling Language"
 
 #: gaphor/ui/greeter.py:80
 msgid "RAAML Example"
-msgstr ""
+msgstr "RAAML-voorbeeld"
 
 #: gaphor/ui/greeter.py:81
-#, fuzzy
 msgid "Risk Analysis and Assessment Modeling Language example model"
-msgstr "Sjabloon voor Risk Analysis and Assessment Modeling Language"
+msgstr "Voorbeeld­model voor Risk Analysis and Assessment Modeling Language"
 
 #: gaphor/ui/greeter.ui:8 gaphor/ui/greeter.ui:53 gaphor/ui/mainwindow.py:48
 msgid "Open Model…"
@@ -2800,7 +2797,6 @@ msgid "Toggle Property Editor"
 msgstr "Eigenschapsbewerker omschakelen"
 
 #: gaphor/ui/modelbrowser.py:177
-#, fuzzy
 msgid "New Diagram"
 msgstr "Nieuw diagram"
 
@@ -2849,13 +2845,12 @@ msgid "New Generic Diagram"
 msgstr "Nieuw algemeen diagram"
 
 #: gaphor/ui/modelchanged.ui:6
-#, fuzzy
 msgid "Model Changed on Disk"
-msgstr "Modelwijzigingen samenvoegen"
+msgstr "Model is gewijzigd op schijf"
 
 #: gaphor/ui/modelchanged.ui:7
 msgid "Discard Changes and Reload"
-msgstr ""
+msgstr "Wijzigingen verwerpen en herladen"
 
 #: gaphor/ui/tests/test_treemodel.py:200 gaphor/ui/treemodel.py:64
 msgid "<Relationships>"
@@ -3093,4 +3088,3 @@ msgstr "Relatie ‘{name}’ bijwerken"
 
 #~ msgid "Recently Opened"
 #~ msgstr "Onlangs geopend"
-
