@@ -19,6 +19,7 @@ from gaphor.core.modeling.event import (
     ModelReady,
 )
 from gaphor.core.styling import StyleNode
+from gaphor.diagram.event import DiagramSelectionChanged
 from gaphor.diagram.propertypages import PropertyPages, new_resource_builder
 from gaphor.event import ModelLoaded
 from gaphor.i18n import gettext, localedir
@@ -29,7 +30,7 @@ from gaphor.ui.csscompletion import (
     CssNamedColorProposals,
     CssPropertyProposals,
 )
-from gaphor.ui.event import DiagramSelectionChanged, ModelSelectionChanged
+from gaphor.ui.event import ModelSelectionChanged
 from gaphor.ui.modelmerge import ModelMerge
 
 log = logging.getLogger(__name__)
@@ -165,7 +166,6 @@ class EditorStack:
 
         self.vbox: Optional[Gtk.Box] = None
         self._current_item = None
-        self._last_focused_item = None
 
     def open(self, builder):
         """Display the ElementEditor pane."""
@@ -238,10 +238,6 @@ class EditorStack:
 
     @event_handler(DiagramSelectionChanged)
     def _diagram_selection_changed(self, event):
-        if self._last_focused_item is event.focused_item:
-            return
-
-        self._last_focused_item = event.focused_item
         self._selection_changed(event.focused_item)
 
     @event_handler(ModelSelectionChanged)

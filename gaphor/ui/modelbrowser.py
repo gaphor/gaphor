@@ -20,7 +20,7 @@ from gaphor.core.modeling import (
 )
 from gaphor.diagram.deletable import deletable
 from gaphor.diagram.diagramtoolbox import DiagramType
-from gaphor.diagram.event import DiagramOpened
+from gaphor.diagram.event import DiagramOpened, DiagramSelectionChanged
 from gaphor.diagram.group import change_owner
 from gaphor.diagram.tools.dnd import ElementDragData
 from gaphor.i18n import gettext, translated_ui_string
@@ -28,7 +28,6 @@ from gaphor.transaction import Transaction
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.actiongroup import create_action_group
 from gaphor.ui.event import (
-    DiagramSelectionChanged,
     ElementOpened,
     ModelSelectionChanged,
 )

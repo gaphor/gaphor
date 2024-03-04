@@ -24,7 +24,7 @@ from gaphor.diagram.tools import (
     apply_placement_tool_set,
 )
 from gaphor.diagram.tools.magnet import MagnetPainter
-from gaphor.ui.event import DiagramClosed, DiagramSelectionChanged, ToolSelected
+from gaphor.ui.event import DiagramClosed, ToolSelected
 
 log = logging.getLogger(__name__)
 
@@ -121,8 +121,6 @@ class DiagramPage:
         self.style_manager.connect_object(
             "notify::dark", self._on_notify_dark, scrolled_window
         )
-
-        view.selection.add_handler(self._on_view_selection_changed)
 
         self.view = view
         self.widget = scrolled_window
@@ -266,17 +264,6 @@ class DiagramPage:
         )
 
         view.request_update(self.diagram.get_all_items())
-
-    def _on_view_selection_changed(self, item):
-        view = self.view
-        if not view:
-            return
-        selection = view.selection
-        self.event_manager.handle(
-            DiagramSelectionChanged(
-                view, selection.focused_item, selection.selected_items
-            )
-        )
 
 
 def context_menu_controller(context_menu, diagram):

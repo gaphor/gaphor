@@ -2,10 +2,10 @@ from __future__ import annotations
 
 from gaphor.abc import ActionProvider, Service
 from gaphor.core import action, event_handler
+from gaphor.diagram.event import DiagramSelectionChanged
 from gaphor.diagram.presentation import ElementPresentation
 from gaphor.i18n import gettext
 from gaphor.transaction import Transaction
-from gaphor.ui.event import DiagramSelectionChanged
 
 
 class AlignService(Service, ActionProvider):
