@@ -221,7 +221,7 @@ class DummyEventWatcher:
     def watch(self, path: str, handler: Handler | None = None) -> DummyEventWatcher:
         return self
 
-    def unsubscribe_all(self) -> None:
+    def unsubscribe_all(self, *_args) -> None:
         pass
 
 

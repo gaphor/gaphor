@@ -1,15 +1,20 @@
 from gaphor import UML
 from gaphor.diagram.tests.fixtures import find
 from gaphor.UML.profiles.stereotypepropertypages import (
+    ShowStereotypePage,
     StereotypePage,
 )
 
 
 def create_property_page(diagram, element_factory) -> StereotypePage:
+    return StereotypePage(element_factory.create(UML.Class))
+
+
+def create_show_property_page(diagram, element_factory) -> ShowStereotypePage:
     item = diagram.create(
         UML.classes.ClassItem, subject=element_factory.create(UML.Class)
     )
-    return StereotypePage(item)
+    return ShowStereotypePage(item)
 
 
 def get_model(property_page: StereotypePage):
@@ -27,9 +32,9 @@ def metaclass_and_stereotype(element_factory):
     return metaclass, stereotype
 
 
-def test_stereotype_property_page_with_stereotype(diagram, element_factory):
+def test_show_stereotype_property_page_with_stereotype(diagram, element_factory):
     metaclass, stereotype = metaclass_and_stereotype(element_factory)
-    property_page = create_property_page(diagram, element_factory)
+    property_page = create_show_property_page(diagram, element_factory)
 
     widget = property_page.construct()
     show_stereotypes = find(widget, "show-stereotypes")
@@ -42,12 +47,12 @@ def test_stereotype_property_page_apply_stereotype(diagram, element_factory):
     _metaclass, stereotype = metaclass_and_stereotype(element_factory)
 
     property_page = create_property_page(diagram, element_factory)
-    item = property_page.item
+    subject = property_page.subject
     model = get_model(property_page)
     view = model[0]
     view.applied = True
 
-    assert stereotype in item.subject.appliedStereotype[0].classifier
+    assert stereotype in subject.appliedStereotype[0].classifier
 
 
 def test_stereotype_property_page_slot_value(diagram, element_factory):
@@ -59,11 +64,10 @@ def test_stereotype_property_page_slot_value(diagram, element_factory):
     UML.recipes.create_extension(metaclass, stereotype)
 
     property_page = create_property_page(diagram, element_factory)
-    item = property_page.item
     model = get_model(property_page)
     model[0].applied = True
     model[1].slot_value = "test"
-    applied_stereotype = item.subject.appliedStereotype[0]
+    applied_stereotype = property_page.subject.appliedStereotype[0]
     slot = applied_stereotype.slot[0]
 
     assert stereotype.ownedAttribute[0] is slot.definingFeature

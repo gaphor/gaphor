@@ -16,24 +16,22 @@ from gaphor.UML.profiles.stereotypepropertypages import (
 )
 
 
-@PropertyPages.register(AssociationItem)
+@PropertyPages.register(UML.Association)
 class AssociationPropertyPage(PropertyPageBase):
     NAVIGABILITY = (None, False, True)
     AGGREGATION = UML.Property.aggregation.values
 
     order = 20
 
-    def __init__(self, item):
-        self.item = item
-        self.subject = item.subject
-        self.watcher = item.subject and self.subject.watcher()
+    def __init__(self, subject: UML.Association):
+        self.subject = subject
+        self.watcher = subject and subject.watcher()
         self.semaphore = 0
 
-    def construct_end(self, builder, end_name, end, stereotypes_model):
-        subject = end.subject
+    def construct_end(self, builder, end_name, subject):
         title = builder.get_object(f"{end_name}-title")
         if subject.type:
-            title.set_text(f"{end_name.title()} (: {subject.type.name})")
+            title.set_text(f"Member End (: {subject.type.name})")
 
         self.update_end_name(builder, end_name, subject)
 
@@ -43,7 +41,7 @@ class AssociationPropertyPage(PropertyPageBase):
         aggregation = builder.get_object(f"{end_name}-aggregation")
         aggregation.set_selected(self.AGGREGATION.index(subject.aggregation))
 
-        if stereotypes_model:
+        if stereotypes_model := stereotype_model(subject):
             stereotype_list = builder.get_object(f"{end_name}-stereotype-list")
             stereotype_set_model_with_interaction(stereotype_list, stereotypes_model)
         else:
@@ -68,29 +66,36 @@ class AssociationPropertyPage(PropertyPageBase):
         return name
 
     def construct(self):
-        if not self.subject:
-            return None
+        if not self.subject or isinstance(self.subject, UML.Extension):
+            return
 
-        head = self.item.head_end
-        tail = self.item.tail_end
-
-        head_model = stereotype_model(head.subject)
-        tail_model = stereotype_model(tail.subject)
+        head_subject = self.subject.memberEnd[0]
+        tail_subject = self.subject.memberEnd[1]
 
         builder = new_builder(
             "association-editor",
             "association-info",
             signals={
-                "show-direction-changed": (self._on_show_direction_change,),
-                "invert-direction-changed": (self._on_invert_direction_change,),
-                "head-name-changed": (self._on_end_name_change, head),
-                "head-navigation-changed": (self._on_end_navigability_change, head),
-                "head-aggregation-changed": (self._on_end_aggregation_change, head),
+                "head-name-changed": (self._on_end_name_change, head_subject),
+                "head-navigation-changed": (
+                    self._on_end_navigability_change,
+                    head_subject,
+                ),
+                "head-aggregation-changed": (
+                    self._on_end_aggregation_change,
+                    head_subject,
+                ),
                 "head-info-clicked": (self._on_association_info_clicked,),
                 "head-stereotype-key-pressed": (stereotype_key_handler,),
-                "tail-name-changed": (self._on_end_name_change, tail),
-                "tail-navigation-changed": (self._on_end_navigability_change, tail),
-                "tail-aggregation-changed": (self._on_end_aggregation_change, tail),
+                "tail-name-changed": (self._on_end_name_change, tail_subject),
+                "tail-navigation-changed": (
+                    self._on_end_navigability_change,
+                    tail_subject,
+                ),
+                "tail-aggregation-changed": (
+                    self._on_end_aggregation_change,
+                    tail_subject,
+                ),
                 "tail-info-clicked": (self._on_association_info_clicked,),
                 "tail-stereotype-key-pressed": (stereotype_key_handler,),
             },
@@ -100,34 +105,84 @@ class AssociationPropertyPage(PropertyPageBase):
         help_link(builder, "head-info-icon", "head-info")
         help_link(builder, "tail-info-icon", "tail-info")
 
-        show_direction = builder.get_object("show-direction")
-        show_direction.set_active(self.item.show_direction)
-
-        self.construct_end(builder, "head", head, head_model)
-        self.construct_end(builder, "tail", tail, tail_model)
+        self.construct_end(builder, "head", head_subject)
+        self.construct_end(builder, "tail", tail_subject)
 
         def name_handler(event):
-            end_name = "head" if event.element is head.subject else "tail"
+            end_name = "head" if event.element is head_subject else "tail"
             self.update_end_name(builder, end_name, event.element)
 
         def restore_nav_handler(event):
-            for end_name, end in (("head", head), ("tail", tail)):
+            for end_name, end_subject in (
+                ("head", head_subject),
+                ("tail", tail_subject),
+            ):
                 combo = builder.get_object(f"{end_name}-navigation")
-                self._on_end_navigability_change(combo, None, end)
+                self._on_end_navigability_change(combo, None, end_subject)
 
         # Watch on association end:
-        self.watcher.watch("memberEnd[Property].name", name_handler).watch(
-            "memberEnd[Property].visibility", name_handler
-        ).watch("memberEnd[Property].lowerValue", name_handler).watch(
-            "memberEnd[Property].upperValue", name_handler
-        ).watch(
-            "memberEnd[Property].type",
-            restore_nav_handler,
-        )
+        if self.watcher:
+            self.watcher.watch("memberEnd[Property].name", name_handler).watch(
+                "memberEnd[Property].visibility", name_handler
+            ).watch("memberEnd[Property].lowerValue", name_handler).watch(
+                "memberEnd[Property].upperValue", name_handler
+            ).watch(
+                "memberEnd[Property].type",
+                restore_nav_handler,
+            )
 
         return unsubscribe_all_on_destroy(
             builder.get_object("association-editor"), self.watcher
         )
+
+    @transactional
+    def _on_end_name_change(self, entry, subject):
+        if not self.semaphore:
+            self.semaphore += 1
+            parse(subject, entry.get_text())
+            self.semaphore -= 1
+
+    @transactional
+    def _on_end_navigability_change(self, dropdown, _pspec, subject):
+        if subject and subject.opposite and subject.opposite.type:
+            UML.recipes.set_navigability(
+                subject.association,
+                subject,
+                self.NAVIGABILITY[dropdown.get_selected()],
+            )
+
+    @transactional
+    def _on_end_aggregation_change(self, dropdown, _pspec, subject):
+        subject.aggregation = self.AGGREGATION[dropdown.get_selected()]
+
+    def _on_association_info_clicked(self, widget, event):
+        self.info.set_relative_to(widget)
+        self.info.set_visible(True)
+
+
+@PropertyPages.register(AssociationItem)
+class AssociationDirectionPropertyPage(PropertyPageBase):
+    order = 20
+
+    def __init__(self, item: AssociationItem):
+        self.item = item
+
+    def construct(self):
+        if not self.item.subject:
+            return None
+
+        builder = new_builder(
+            "association-direction-editor",
+            signals={
+                "show-direction-changed": (self._on_show_direction_change,),
+                "invert-direction-changed": (self._on_invert_direction_change,),
+            },
+        )
+
+        show_direction = builder.get_object("show-direction")
+        show_direction.set_active(self.item.show_direction)
+
+        return builder.get_object("association-direction-editor")
 
     @transactional
     def _on_show_direction_change(self, button, gparam):
@@ -136,29 +191,3 @@ class AssociationPropertyPage(PropertyPageBase):
     @transactional
     def _on_invert_direction_change(self, button):
         self.item.invert_direction()
-
-    @transactional
-    def _on_end_name_change(self, entry, end):
-        if not self.semaphore:
-            self.semaphore += 1
-            parse(end.subject, entry.get_text())
-            self.semaphore -= 1
-
-    @transactional
-    def _on_end_navigability_change(self, dropdown, _pspec, end):
-        if end.subject and end.subject.opposite and end.subject.opposite.type:
-            UML.recipes.set_navigability(
-                end.subject.association,
-                end.subject,
-                self.NAVIGABILITY[dropdown.get_selected()],
-            )
-            # Call this again, or non-navigability will not be displayed
-            self.item.request_update()
-
-    @transactional
-    def _on_end_aggregation_change(self, dropdown, _pspec, end):
-        end.subject.aggregation = self.AGGREGATION[dropdown.get_selected()]
-
-    def _on_association_info_clicked(self, widget, event):
-        self.info.set_relative_to(widget)
-        self.info.set_visible(True)

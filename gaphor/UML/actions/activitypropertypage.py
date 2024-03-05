@@ -17,8 +17,9 @@ from gaphor.diagram.propertypages import (
 from gaphor.diagram.propertypages import (
     new_builder as diagram_new_builder,
 )
-from gaphor.UML.actions.activity import ActivityItem, ActivityParameterNodeItem
+from gaphor.UML.actions.activity import ActivityParameterNodeItem
 from gaphor.UML.propertypages import (
+    ShowTypedElementPropertyPage,
     TypedElementPropertyPage,
     create_list_store,
     list_item_factory,
@@ -98,16 +99,16 @@ def update_activity_parameter_node_model(
     )
 
 
-@PropertyPages.register(ActivityItem)
-class ActivityItemPage(PropertyPageBase):
+@PropertyPages.register(UML.Activity)
+class ActivityPage(PropertyPageBase):
     order = 40
 
-    def __init__(self, item: ActivityItem):
-        self.item = item
-        self.watcher = item.subject and item.subject.watcher()
+    def __init__(self, subject: UML.Activity):
+        self.subject = subject
+        self.watcher = subject and subject.watcher()
 
     def construct(self):
-        subject = self.item.subject
+        subject = self.subject
 
         if not subject:
             return
@@ -154,7 +155,7 @@ class ActivityItemPage(PropertyPageBase):
 
     @event_handler(AssociationUpdated)
     def on_nodes_changed(self, event):
-        update_activity_parameter_node_model(self.model, self.item.subject)
+        update_activity_parameter_node_model(self.model, self.subject)
 
     def on_parameters_info_clicked(self, image, event):
         self.info.set_visible(True)
@@ -206,19 +207,55 @@ class ActivityParameterNodeNamePropertyPage(PropertyPageBase):
             self.subject.parameter.name = entry.get_text()
 
 
-@PropertyPages.register(ActivityParameterNodeItem)
+@PropertyPages.register(UML.ActivityParameterNode)
 class ActivityParameterNodeTypePropertyPage(TypedElementPropertyPage):
+    @property
+    def typed_element(self):
+        return self.subject.parameter
+
+
+@PropertyPages.register(ActivityParameterNodeItem)
+class ShowActivityParameterNodeTypePropertyPage(ShowTypedElementPropertyPage):
     @property
     def typed_element(self):
         return self.item.subject.parameter
 
 
-@PropertyPages.register(ActivityParameterNodeItem)
+@PropertyPages.register(UML.ActivityParameterNode)
 class ActivityParameterNodeDirectionPropertyPage(PropertyPageBase):
     DIRECTION = UML.Parameter.direction.values
     order = 40
 
-    def __init__(self, item):
+    def __init__(self, subject: UML.ActivityParameterNode):
+        super().__init__()
+        self.subject = subject
+
+    def construct(self):
+        if not (self.subject and self.subject.parameter):
+            return
+
+        builder = new_builder(
+            "parameter-direction-editor",
+            signals={
+                "parameter-direction-changed": (self._on_parameter_direction_changed,),
+            },
+        )
+
+        direction = builder.get_object("parameter-direction")
+        direction.set_selected(self.DIRECTION.index(self.subject.parameter.direction))
+
+        return builder.get_object("parameter-direction-editor")
+
+    @transactional
+    def _on_parameter_direction_changed(self, dropdown, _pspec):
+        self.subject.parameter.direction = self.DIRECTION[dropdown.get_selected()]
+
+
+@PropertyPages.register(ActivityParameterNodeItem)
+class ShowActivityParameterNodeDirectionPropertyPage(PropertyPageBase):
+    order = 40
+
+    def __init__(self, item: ActivityParameterNodeItem):
         super().__init__()
         self.item = item
 
@@ -227,26 +264,16 @@ class ActivityParameterNodeDirectionPropertyPage(PropertyPageBase):
             return
 
         builder = new_builder(
-            "parameter-direction-editor",
+            "show-parameter-direction-editor",
             signals={
-                "parameter-direction-changed": (self._on_parameter_direction_changed,),
                 "show-direction-changed": (self._on_show_direction_changed,),
             },
-        )
-
-        direction = builder.get_object("parameter-direction")
-        direction.set_selected(
-            self.DIRECTION.index(self.item.subject.parameter.direction)
         )
 
         show_direction = builder.get_object("show-direction")
         show_direction.set_active(self.item.show_direction)
 
-        return builder.get_object("parameter-direction-editor")
-
-    @transactional
-    def _on_parameter_direction_changed(self, dropdown, _pspec):
-        self.item.subject.parameter.direction = self.DIRECTION[dropdown.get_selected()]
+        return builder.get_object("show-parameter-direction-editor")
 
     @transactional
     def _on_show_direction_changed(self, button, _gspec):

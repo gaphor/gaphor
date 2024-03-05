@@ -20,14 +20,17 @@ from gaphor.core.modeling import (
 )
 from gaphor.diagram.deletable import deletable
 from gaphor.diagram.diagramtoolbox import DiagramType
-from gaphor.diagram.event import DiagramOpened
+from gaphor.diagram.event import DiagramOpened, DiagramSelectionChanged
 from gaphor.diagram.group import change_owner
 from gaphor.diagram.tools.dnd import ElementDragData
 from gaphor.i18n import gettext, translated_ui_string
 from gaphor.transaction import Transaction
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.actiongroup import create_action_group
-from gaphor.ui.event import DiagramSelectionChanged, ElementOpened
+from gaphor.ui.event import (
+    ElementOpened,
+    ModelSelectionChanged,
+)
 from gaphor.ui.treemodel import (
     RelationshipItem,
     TreeItem,
@@ -47,6 +50,7 @@ class ModelBrowser(UIComponent, ActionProvider):
         self.modeling_language = modeling_language
         self.model = TreeModel()
         self.search_bar = None
+        self._selection_changed_id = 0
 
     def open(self):
         self.event_manager.subscribe(self.on_element_created)
@@ -81,9 +85,16 @@ class ModelBrowser(UIComponent, ActionProvider):
         self.tree_view = Gtk.ListView.new(self.selection, factory)
         self.tree_view.set_vexpand(True)
 
+        def selection_changed(selection, _position, _n_items):
+            if element := get_first_selected_item(selection).get_item().element:
+                self.event_manager.handle(ModelSelectionChanged(self, element))
+
+        self._selection_changed_id = self.selection.connect(
+            "selection-changed", selection_changed
+        )
+
         def list_view_activate(list_view, position):
-            element = self.selection.get_item(position).get_item().element
-            if element:
+            if element := self.selection.get_item(position).get_item().element:
                 self.open_element(element)
 
         self.tree_view.connect("activate", list_view_activate)
@@ -125,6 +136,14 @@ class ModelBrowser(UIComponent, ActionProvider):
 
     def select_element(self, element: Element) -> int | None:
         return select_element(self.tree_view, element)
+
+    def select_element_quietly(self, element):
+        """Select element, but do not trigger a ModelSelectionChanged event."""
+        self.selection.handler_block(self._selection_changed_id)
+        try:
+            self.select_element(element)
+        finally:
+            self.selection.handler_unblock(self._selection_changed_id)
 
     def get_selected_elements(self) -> list[Element]:
         assert self.model
@@ -255,7 +274,7 @@ class ModelBrowser(UIComponent, ActionProvider):
         element = event.element
         self.model.remove_element(element, former_owner=event.old_value)
         self.model.add_element(element)
-        self.select_element(element)
+        self.select_element_quietly(element)
 
     @event_handler(ElementUpdated)
     def on_attribute_changed(self, event: ElementUpdated):
@@ -277,7 +296,7 @@ class ModelBrowser(UIComponent, ActionProvider):
         if not event.focused_item:
             return
         if element := event.focused_item.subject:
-            self.select_element(element)
+            self.select_element_quietly(element)
 
 
 class SearchEngine:

@@ -18,22 +18,19 @@ from gaphor.UML.actions.objectnode import ObjectNodeItem
 new_builder = new_resource_builder("gaphor.UML.actions")
 
 
-@PropertyPages.register(ObjectNodeItem)
+@PropertyPages.register(UML.ObjectNode)
 class ObjectNodePropertyPage(PropertyPageBase):
     order = 15
 
     ORDERING_VALUES = ["unordered", "ordered", "LIFO", "FIFO"]
 
-    subject: UML.ObjectNode
-    item: ObjectNodeItem
-
-    def __init__(self, item):
-        self.item = item
+    def __init__(self, subject: UML.ObjectNode):
+        self.subject = subject
 
     def construct(self):
-        subject = self.item.subject
+        subject = self.subject
 
-        if not subject:
+        if not subject or isinstance(subject, UML.ActivityParameterNode):
             return
 
         builder = new_builder(
@@ -41,7 +38,6 @@ class ObjectNodePropertyPage(PropertyPageBase):
             signals={
                 "upper-bound-changed": (self._on_upper_bound_change,),
                 "ordering-changed": (self._on_ordering_change,),
-                "show-ordering-changed": (self._on_ordering_show_change,),
             },
         )
 
@@ -51,20 +47,43 @@ class ObjectNodePropertyPage(PropertyPageBase):
         ordering = builder.get_object("ordering")
         ordering.set_selected(self.ORDERING_VALUES.index(subject.ordering))
 
-        show_ordering = builder.get_object("show-ordering")
-        show_ordering.set_active(self.item.show_ordering)
-
         return builder.get_object("object-node-editor")
 
     @transactional
     def _on_upper_bound_change(self, entry):
         value = entry.get_text().strip()
-        self.item.subject.upperBound = value
+        self.subject.upperBound = value
 
     @transactional
     def _on_ordering_change(self, dropdown, _pspec):
         value = self.ORDERING_VALUES[dropdown.get_selected()]
-        self.item.subject.ordering = value
+        self.subject.ordering = value
+
+
+@PropertyPages.register(ObjectNodeItem)
+class ShowObjectNodePropertyPage(PropertyPageBase):
+    order = 16
+
+    def __init__(self, item: ObjectNodeItem):
+        self.item = item
+
+    def construct(self):
+        subject = self.item.subject
+
+        if not subject:
+            return
+
+        builder = new_builder(
+            "show-object-node-editor",
+            signals={
+                "show-ordering-changed": (self._on_ordering_show_change,),
+            },
+        )
+
+        show_ordering = builder.get_object("show-ordering")
+        show_ordering.set_active(self.item.show_ordering)
+
+        return builder.get_object("show-object-node-editor")
 
     @transactional
     def _on_ordering_show_change(self, button, gparam):

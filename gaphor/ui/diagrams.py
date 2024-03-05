@@ -15,7 +15,7 @@ from gaphor.core.modeling import (
     StyleSheet,
 )
 from gaphor.diagram.drop import drop
-from gaphor.diagram.event import DiagramOpened
+from gaphor.diagram.event import DiagramOpened, DiagramSelectionChanged
 from gaphor.event import ActionEnabled
 from gaphor.i18n import translated_ui_string
 from gaphor.transaction import Transaction
@@ -24,7 +24,6 @@ from gaphor.ui.diagrampage import DiagramPage, GtkView
 from gaphor.ui.event import (
     CurrentDiagramChanged,
     DiagramClosed,
-    DiagramSelectionChanged,
     ElementOpened,
 )
 
@@ -280,13 +279,25 @@ class Diagrams(UIComponent, ActionProvider):
     def select_all(self):
         view = self.get_current_view()
         if view and view.has_focus():
-            view.selection.select_items(*view.model.get_all_items())
+            selection = view.selection
+            selection.select_items(*view.model.get_all_items())
+            self.event_manager.handle(
+                DiagramSelectionChanged(
+                    view, selection.focused_item, selection.selected_items
+                )
+            )
 
     @action(name="unselect-all", shortcut="<Primary><Shift>a")
     def unselect_all(self):
         view = self.get_current_view()
         if view and view.has_focus():
-            view.selection.unselect_all()
+            selection = view.selection
+            selection.unselect_all()
+            self.event_manager.handle(
+                DiagramSelectionChanged(
+                    view, selection.focused_item, selection.selected_items
+                )
+            )
 
     @event_handler(ElementOpened)
     def _on_show_element(self, event: ElementOpened):
@@ -361,7 +372,8 @@ class Diagrams(UIComponent, ActionProvider):
     def _on_flush_model(self, event):
         """Close all tabs."""
         for page in self._notebook.get_pages():
-            self._notebook.close_page(page)
+            if page:
+                self._notebook.close_page(page)
         self._update_action_state()
 
     def _update_action_state(self):

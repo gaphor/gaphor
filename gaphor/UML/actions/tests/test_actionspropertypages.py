@@ -6,6 +6,7 @@ from gaphor.UML.actions.actionspropertypages import (
     ForkNodePropertyPage,
     JoinNodePropertyPage,
     ObjectNodePropertyPage,
+    ShowObjectNodePropertyPage,
 )
 
 
@@ -13,7 +14,7 @@ def test_object_node_property_page_show_ordering(diagram, element_factory):
     item = diagram.create(
         UML.actions.ObjectNodeItem, subject=element_factory.create(UML.ObjectNode)
     )
-    property_page = ObjectNodePropertyPage(item)
+    property_page = ShowObjectNodePropertyPage(item)
 
     widget = property_page.construct()
     show_ordering = find(widget, "show-ordering")
@@ -23,30 +24,27 @@ def test_object_node_property_page_show_ordering(diagram, element_factory):
 
 
 def test_object_node_property_page_upper_bound(diagram, element_factory):
-    item = diagram.create(
-        UML.actions.ObjectNodeItem, subject=element_factory.create(UML.ObjectNode)
-    )
-    property_page = ObjectNodePropertyPage(item)
+    subject = element_factory.create(UML.ObjectNode)
+    property_page = ObjectNodePropertyPage(subject)
 
     widget = property_page.construct()
     upper_bound = find(widget, "upper-bound")
     upper_bound.set_text("test")
 
-    assert item.subject.upperBound == "test"
+    assert subject.upperBound == "test"
 
 
 def test_object_node_property_page_ordering(diagram, element_factory):
-    item = diagram.create(
-        UML.actions.ObjectNodeItem, subject=element_factory.create(UML.ObjectNode)
-    )
-    assert item.subject.ordering == "unordered"
-    property_page = ObjectNodePropertyPage(item)
+    subject = element_factory.create(UML.ObjectNode)
+
+    assert subject.ordering == "unordered"
+    property_page = ObjectNodePropertyPage(subject)
 
     widget = property_page.construct()
     ordering = find(widget, "ordering")
     ordering.set_selected(3)
 
-    assert item.subject.ordering == "FIFO"
+    assert subject.ordering == "FIFO"
 
 
 def test_decision_node_property_page_show_type(diagram, element_factory):

@@ -15,17 +15,17 @@ new_builder = new_resource_builder("gaphor.UML")
 class TypedElementPropertyPage(PropertyPageBase):
     order = 31
 
-    def __init__(self, item):
+    def __init__(self, subject):
         super().__init__()
-        self.item = item
+        self.subject = subject
 
-        assert (not item.subject) or isinstance(
+        assert (not subject) or isinstance(
             self.typed_element, UML.TypedElement
-        ), item.subject
+        ), subject
 
     @property
     def typed_element(self):
-        return self.item.subject
+        return self.subject
 
     def construct(self):
         if not self.typed_element:
@@ -33,12 +33,7 @@ class TypedElementPropertyPage(PropertyPageBase):
 
         typed_element = self.typed_element
 
-        builder = new_builder(
-            "typed-element-editor",
-            signals={
-                "show-type-changed": (self._on_show_type_change,),
-            },
-        )
+        builder = new_builder("typed-element-editor")
 
         dropdown = builder.get_object("element-type")
         model = list_of_classifiers(typed_element.model, UML.Classifier)
@@ -53,12 +48,6 @@ class TypedElementPropertyPage(PropertyPageBase):
 
         dropdown.connect("notify::selected", self._on_property_type_changed)
 
-        if hasattr(self.item, "show_type"):
-            show_type = builder.get_object("show-type")
-            show_type.set_active(self.item.show_type)
-        else:
-            builder.get_object("type-toggle-box").unparent()
-
         return builder.get_object("typed-element-editor")
 
     @transactional
@@ -70,6 +59,38 @@ class TypedElementPropertyPage(PropertyPageBase):
             typed_element.type = element
         else:
             del typed_element.type
+
+
+class ShowTypedElementPropertyPage(PropertyPageBase):
+    order = 32
+
+    def __init__(self, item):
+        super().__init__()
+        self.item = item
+
+        assert (not item.subject) or isinstance(
+            self.typed_element, UML.TypedElement
+        ), item.subject
+
+    @property
+    def typed_element(self):
+        return self.item.subject
+
+    def construct(self):
+        if not self.typed_element and hasattr(self.item, "show_type"):
+            return
+
+        builder = new_builder(
+            "show-typed-element-editor",
+            signals={
+                "show-type-changed": (self._on_show_type_change,),
+            },
+        )
+
+        show_type = builder.get_object("show-type")
+        show_type.set_active(self.item.show_type)
+
+        return builder.get_object("show-typed-element-editor")
 
     @transactional
     def _on_show_type_change(self, button, _gparam):

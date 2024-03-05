@@ -9,11 +9,7 @@ from gaphor.diagram.propertypages import (
     help_link,
     unsubscribe_all_on_destroy,
 )
-from gaphor.UML.classes.classespropertypages import (
-    AttributesPage,
-    OperationsPage,
-    new_resource_builder,
-)
+from gaphor.UML.classes.classespropertypages import new_resource_builder
 from gaphor.UML.classes.enumeration import EnumerationItem
 from gaphor.UML.propertypages import (
     create_list_store,
@@ -82,19 +78,19 @@ def update_enumeration_model(store: Gio.ListStore, enum: UML.Enumeration) -> Non
     )
 
 
-@PropertyPages.register(EnumerationItem)
+@PropertyPages.register(UML.Enumeration)
 class EnumerationPage(PropertyPageBase):
     """An editor for enumeration literals for an enumeration."""
 
-    order = 19
+    order = 18
 
-    def __init__(self, item):
+    def __init__(self, subject):
         super().__init__()
-        self.item = item
-        self.watcher = item.subject and item.subject.watcher()
+        self.subject = subject
+        self.watcher = subject and subject.watcher()
 
     def construct(self):
-        if not isinstance(self.item.subject, UML.Enumeration):
+        if not isinstance(self.subject, UML.Enumeration):
             return
 
         builder = new_builder(
@@ -103,16 +99,12 @@ class EnumerationPage(PropertyPageBase):
             signals={
                 "enumerations-activated": (list_view_activated,),
                 "enumerations-key-pressed": (list_view_key_handler,),
-                "show-enumerations-changed": (self.on_show_enumerations_changed,),
                 "enumerations-info-clicked": (self.on_enumerations_info_clicked,),
             },
         )
 
         self.info = builder.get_object("enumerations-info")
         help_link(builder, "enumerations-info-icon", "enumerations-info")
-
-        show_enumerations = builder.get_object("show-enumerations")
-        show_enumerations.set_active(self.item.show_enumerations)
 
         column_view: Gtk.ColumnView = builder.get_object("enumerations-list")
 
@@ -130,7 +122,7 @@ class EnumerationPage(PropertyPageBase):
         ):
             column.set_factory(factory)
 
-        self.model = enumeration_model(self.item.subject)
+        self.model = enumeration_model(self.subject)
         selection = Gtk.SingleSelection.new(self.model)
         column_view.set_model(selection)
 
@@ -141,17 +133,40 @@ class EnumerationPage(PropertyPageBase):
             builder.get_object("enumerations-editor"), self.watcher
         )
 
-    @transactional
-    def on_show_enumerations_changed(self, button, gparam):
-        self.item.show_enumerations = button.get_active()
-        self.item.request_update()
-
     def on_enumerations_changed(self, event):
-        update_enumeration_model(self.model, self.item.subject)
+        update_enumeration_model(self.model, self.subject)
 
     def on_enumerations_info_clicked(self, image, event):
         self.info.set_visible(True)
 
 
-PropertyPages.register(EnumerationItem)(AttributesPage)
-PropertyPages.register(EnumerationItem)(OperationsPage)
+@PropertyPages.register(EnumerationItem)
+class ShowEnumerationPage(PropertyPageBase):
+    """An editor for enumeration literals for an enumeration."""
+
+    order = 19
+
+    def __init__(self, item):
+        super().__init__()
+        self.item = item
+
+    def construct(self):
+        if not isinstance(self.item.subject, UML.Enumeration):
+            return
+
+        builder = new_builder(
+            "show-enumerations-editor",
+            signals={
+                "show-enumerations-changed": (self.on_show_enumerations_changed,),
+            },
+        )
+
+        show_enumerations = builder.get_object("show-enumerations")
+        show_enumerations.set_active(self.item.show_enumerations)
+
+        return builder.get_object("show-enumerations-editor")
+
+    @transactional
+    def on_show_enumerations_changed(self, button, gparam):
+        self.item.show_enumerations = button.get_active()
+        self.item.request_update()

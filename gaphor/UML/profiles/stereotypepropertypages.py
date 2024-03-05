@@ -5,22 +5,22 @@ from gi.repository import Gdk, Gio, GLib, GObject, Gtk
 
 from gaphor import UML
 from gaphor.core import transactional
-from gaphor.core.modeling.element import Element
+from gaphor.core.modeling import Element, Presentation
 from gaphor.diagram.propertypages import PropertyPageBase, PropertyPages
 from gaphor.i18n import gettext, translated_ui_string
 from gaphor.UML.profiles.metaclasspropertypage import new_builder
 from gaphor.UML.propertypages import text_field_handlers
 
 
-@PropertyPages.register(UML.Element)
+@PropertyPages.register(Element)
 class StereotypePage(PropertyPageBase):
     order = 40
 
-    def __init__(self, item):
-        self.item = item
+    def __init__(self, subject):
+        self.subject = subject
 
     def construct(self):
-        subject = self.item.subject
+        subject = self.subject
         if not subject:
             return None
 
@@ -31,18 +31,10 @@ class StereotypePage(PropertyPageBase):
         builder = new_builder(
             "stereotypes-editor",
             signals={
-                "show-stereotypes-changed": (self._on_show_stereotypes_change,),
                 "stereotype-activated": (stereotype_activated,),
                 "stereotype-key-pressed": (stereotype_key_handler,),
             },
         )
-
-        show_stereotypes = builder.get_object("show-stereotypes")
-
-        if hasattr(self.item, "show_stereotypes"):
-            show_stereotypes.set_active(self.item.show_stereotypes)
-        else:
-            show_stereotypes.get_parent().unparent()
 
         stereotype_list = builder.get_object("stereotype-list")
         model = stereotype_model(subject)
@@ -50,6 +42,35 @@ class StereotypePage(PropertyPageBase):
         stereotype_set_model_with_interaction(stereotype_list, model)
 
         return builder.get_object("stereotypes-editor")
+
+
+@PropertyPages.register(Presentation)
+class ShowStereotypePage(PropertyPageBase):
+    order = 41
+
+    def __init__(self, item):
+        self.item = item
+
+    def construct(self):
+        subject = self.item.subject
+        if not subject or not hasattr(self.item, "show_stereotypes"):
+            return None
+
+        stereotypes = UML.recipes.get_stereotypes(subject)
+        if not stereotypes:
+            return None
+
+        builder = new_builder(
+            "show-stereotypes-editor",
+            signals={
+                "show-stereotypes-changed": (self._on_show_stereotypes_change,),
+            },
+        )
+
+        show_stereotypes = builder.get_object("show-stereotypes")
+        show_stereotypes.set_active(self.item.show_stereotypes)
+
+        return builder.get_object("show-stereotypes-editor")
 
     @transactional
     def _on_show_stereotypes_change(self, button, gparam):

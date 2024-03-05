@@ -19,6 +19,7 @@ from gaphor.core.modeling.event import (
     ModelReady,
 )
 from gaphor.core.styling import StyleNode
+from gaphor.diagram.event import DiagramSelectionChanged
 from gaphor.diagram.propertypages import PropertyPages, new_resource_builder
 from gaphor.event import ModelLoaded
 from gaphor.i18n import gettext, localedir
@@ -29,7 +30,7 @@ from gaphor.ui.csscompletion import (
     CssNamedColorProposals,
     CssPropertyProposals,
 )
-from gaphor.ui.event import DiagramSelectionChanged
+from gaphor.ui.event import ModelSelectionChanged
 from gaphor.ui.modelmerge import ModelMerge
 
 log = logging.getLogger(__name__)
@@ -171,15 +172,15 @@ class EditorStack:
         self.vbox = builder.get_object("editors")
 
         current_view = self.diagrams.get_current_view()
-        self._selection_changed(
-            focused_item=current_view and current_view.selection.focused_item
-        )
+        self._selection_changed(current_view and current_view.selection.focused_item)
 
-        self.event_manager.subscribe(self._selection_changed)
+        self.event_manager.subscribe(self._diagram_selection_changed)
+        self.event_manager.subscribe(self._model_selection_changed)
         self.event_manager.subscribe(self._element_changed)
 
     def close(self):
-        self.event_manager.unsubscribe(self._selection_changed)
+        self.event_manager.unsubscribe(self._diagram_selection_changed)
+        self.event_manager.unsubscribe(self._model_selection_changed)
         self.event_manager.unsubscribe(self._element_changed)
 
         self.vbox = None
@@ -218,14 +219,12 @@ class EditorStack:
         while page := self.vbox.get_first_child():
             self.vbox.remove(page)
 
-    @event_handler(DiagramSelectionChanged)
-    def _selection_changed(self, event=None, focused_item=None):
+    def _selection_changed(self, item):
         """Called when a diagram item receives focus.
 
         This reloads all tabs based on the current selection.
         """
         assert self.vbox
-        item = event and event.focused_item or focused_item
         if item is self._current_item and self.vbox.get_first_child():
             return
 
@@ -236,6 +235,14 @@ class EditorStack:
             self.create_pages(item)
         else:
             self.show_no_item_selected()
+
+    @event_handler(DiagramSelectionChanged)
+    def _diagram_selection_changed(self, event):
+        self._selection_changed(event.focused_item)
+
+    @event_handler(ModelSelectionChanged)
+    def _model_selection_changed(self, event):
+        self._selection_changed(event.focused_element)
 
     def show_no_item_selected(self):
         assert self.vbox
@@ -331,11 +338,11 @@ class PreferencesStack:
             language_model.append(language)
 
         current_view = self.diagrams.get_current_view()
-        self._selection_changed(
+        self._diagram_selection_changed(
             focused_item=current_view and current_view.selection.focused_item
         )
 
-        self.event_manager.subscribe(self._selection_changed)
+        self.event_manager.subscribe(self._diagram_selection_changed)
         self.event_manager.subscribe(self._model_ready)
         self.event_manager.subscribe(self._style_sheet_created)
         self.event_manager.subscribe(self._style_sheet_changed)
@@ -345,7 +352,7 @@ class PreferencesStack:
         self.update()
 
     def close(self):
-        self.event_manager.unsubscribe(self._selection_changed)
+        self.event_manager.unsubscribe(self._diagram_selection_changed)
         self.event_manager.unsubscribe(self._model_ready)
         self.event_manager.unsubscribe(self._style_sheet_changed)
         self.event_manager.unsubscribe(self._style_sheet_created)
@@ -399,7 +406,7 @@ class PreferencesStack:
             self.update()
 
     @event_handler(DiagramSelectionChanged)
-    def _selection_changed(self, event=None, focused_item=None):
+    def _diagram_selection_changed(self, event=None, focused_item=None):
         """Called when a diagram item receives focus.
 
         This rebuilds the CSS nodes view.
