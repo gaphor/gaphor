@@ -47,4 +47,57 @@ A new Hello World entry has been added to the tools menu (![open menu](images/op
 If you want to write a plugin yourself, you can familiarize yourself with Gaphor's
 [design principles](design_principles), [service oriented architecture](service_oriented) (includes a plugin example),
 and [event driven framework](framework).
-Next you can have a look at the [Hello World plugin](https://github.com/gaphor/gaphor_plugin_helloworld) available on GitHub.
+
+## Example plugin
+
+You can have a look at the [Hello World plugin](https://github.com/gaphor/gaphor_plugin_helloworld) available on GitHub for an example of how to create your own plugin.
+
+The
+[pyproject.toml](https://github.com/gaphor/gaphor_plugin_helloworld/blob/main/pyproject.toml)
+file contains a plugin:
+
+```yaml
+[tool.poetry.plugins."gaphor.services"]
+"helloworld" = "gaphor_helloworld_plugin:HelloWorldPlugin"
+```
+
+This refers to the class `HelloWorldPlugin` in package/module
+[gaphor_plugins_helloworld](https://github.com/gaphor/gaphor_plugin_helloworld/blob/main/gaphor_helloworld_plugin/__init__.py).
+
+Here is a stripped version of the hello world plugin:
+
+```python
+from gaphor.abc import Service, ActionProvider
+from gaphor.core import _, action
+
+class HelloWorldPlugin(Service, ActionProvider):     # 1.
+
+    def __init__(self, tools_menu):                  # 2.
+        self.tools_menu = tools_menu
+        tools_menu.add_actions(self)                 # 3.
+
+    def shutdown(self):                              # 4.
+        self.tools_menu.remove_actions(self)
+
+    @action(                                         # 5.
+        name="helloworld",
+        label=_("Hello world"),
+        tooltip=_("Every application…"),
+    )
+    def helloworld_action(self):
+        main_window = self.main_window
+        ...  # gtk code left out
+```
+
+1.  As stated before, a plugin should implement the `Service` interface.
+    It also implements `ActionProvider`, saying it has some actions to
+    be performed by the user.
+2.  The menu entry will be part of the "Tools" extension menu. This
+    extension point is created as a service. Other services can also be
+    passed as dependencies. Services can get references to other
+    services by defining them as arguments of the constructor.
+3.  All action defined in this service are registered.
+4.  Each service has a `shutdown()` method. This allows the service to
+    perform some cleanup when it's shut down.
+5.  The action that can be invoked. The action is defined and will be
+    picked up by `add_actions()` method (see 3.)
