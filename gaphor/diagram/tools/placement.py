@@ -8,7 +8,7 @@ from gi.repository import GLib, Gtk
 
 from gaphor.core.eventmanager import EventManager
 from gaphor.diagram.diagramtoolbox import ItemFactory
-from gaphor.diagram.event import DiagramItemPlaced
+from gaphor.diagram.event import DiagramItemPlaced, DiagramSelectionChanged
 from gaphor.diagram.group import group
 from gaphor.diagram.instanteditors import instant_editor
 from gaphor.diagram.presentation import ElementPresentation
@@ -36,11 +36,13 @@ def placement_tool(factory: ItemFactory, event_manager, handle_index: int):
     return gesture
 
 
-def on_drag_begin(gesture, start_x, start_y, placement_state):
+def on_drag_begin(gesture, start_x, start_y, placement_state: PlacementState):
     view = gesture.get_widget()
     gesture.set_state(Gtk.EventSequenceState.CLAIMED)
 
-    item = create_item(view, placement_state.factory, start_x, start_y)
+    item = create_item(
+        view, placement_state.factory, placement_state.event_manager, start_x, start_y
+    )
 
     handle = item.handles()[placement_state.handle_index]
     if handle.movable:
@@ -55,7 +57,7 @@ def on_drag_begin(gesture, start_x, start_y, placement_state):
     view.selection.dropzone_item = None
 
 
-def create_item(view, factory, x, y):
+def create_item(view, factory, event_manager, x, y):
     selection = view.selection
     parent = selection.dropzone_item
     item = factory(view.model, parent)
@@ -64,7 +66,10 @@ def create_item(view, factory, x, y):
     view.model.update_now({item})
     maybe_group(parent, item)
     selection.unselect_all()
-    view.selection.focused_item = item
+    selection.focused_item = item
+    event_manager.handle(
+        DiagramSelectionChanged(view, selection.focused_item, selection.selected_items)
+    )
     return item
 
 
