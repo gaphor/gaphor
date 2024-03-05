@@ -4,16 +4,17 @@ msgstr ""
 "Project-Id-Version: Gaphor 0.13.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2024-02-27 10:00-0500\n"
-"PO-Revision-Date: 2024-01-06 01:10+0000\n"
+"PO-Revision-Date: 2024-03-05 13:01+0000\n"
 "Last-Translator: Сергей <asvmail.as@gmail.com>\n"
+"Language-Team: Russian <https://hosted.weblate.org/projects/gaphor/gaphor/ru/"
+">\n"
 "Language: ru\n"
-"Language-Team: Russian "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/ru/>\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Weblate 5.5-dev\n"
 "Generated-By: Babel 2.14.0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:23 gaphor/C4Model/toolbox.py:67
@@ -968,23 +969,20 @@ msgstr ""
 "Используйте <b>-</b>/<b>=</b> для перемещения элементов вверх и вниз."
 
 #: gaphor/UML/actions/propertypages.ui:377
-#, fuzzy
 msgid "In/Out"
-msgstr "НЕ"
+msgstr "Ввод/Вывод"
 
 #: gaphor/UML/actions/propertypages.ui:378
-#, fuzzy
 msgid "In"
-msgstr "Линия"
+msgstr "Ввод"
 
 #: gaphor/UML/actions/propertypages.ui:379
-#, fuzzy
 msgid "Out"
-msgstr "НЕ"
+msgstr "Вывод"
 
 #: gaphor/UML/actions/propertypages.ui:380
 msgid "Return"
-msgstr ""
+msgstr "Вернуть"
 
 #: gaphor/UML/actions/propertypages.ui:391
 #: gaphor/UML/classes/propertypages.ui:11
@@ -1129,9 +1127,8 @@ msgstr "Стереотипы"
 #: gaphor/UML/classes/propertypages.ui:141
 #: gaphor/UML/classes/propertypages.ui:252
 #: gaphor/UML/profiles/propertypages.ui:56
-#, fuzzy
 msgid "Values"
-msgstr "значения"
+msgstr "Значения"
 
 #: gaphor/UML/classes/propertypages.ui:158
 msgid "Tail:"
@@ -2382,7 +2379,7 @@ msgstr "<Пусто>"
 
 #: gaphor/ui/diagrampage.py:311
 msgid "Show in Model Browser"
-msgstr ""
+msgstr "Показать в обзоре моделей"
 
 #: gaphor/ui/diagrams.ui:12
 msgid "Open a Diagram"
@@ -2398,7 +2395,7 @@ msgstr ""
 
 #: gaphor/ui/elementeditor.py:413 gaphor/ui/elementeditor.ui:352
 msgid "No focused item."
-msgstr ""
+msgstr "Нет элемента в фокусе."
 
 #: gaphor/ui/elementeditor.ui:11
 msgid "No item selected"
@@ -2501,7 +2498,7 @@ msgstr "Таблица Стилей"
 
 #: gaphor/ui/elementeditor.ui:338
 msgid "CSS nodes of focused item"
-msgstr ""
+msgstr "CSS-узлы элемента в фокусе"
 
 #: gaphor/ui/elementeditor.ui:363
 msgid ""
@@ -2715,7 +2712,7 @@ msgstr "Многоуровневый шаблон Модели C4"
 
 #: gaphor/ui/greeter.py:66
 msgid "UML Example"
-msgstr ""
+msgstr "Пример UML"
 
 #: gaphor/ui/greeter.py:67
 #, fuzzy
@@ -2724,7 +2721,7 @@ msgstr "Шаблон Унифицированного Языка Моделир�
 
 #: gaphor/ui/greeter.py:73
 msgid "SysML Example"
-msgstr ""
+msgstr "Пример SysML"
 
 #: gaphor/ui/greeter.py:74
 #, fuzzy
@@ -2733,12 +2730,11 @@ msgstr "Шаблон Языка Моделирования Систем"
 
 #: gaphor/ui/greeter.py:80
 msgid "RAAML Example"
-msgstr ""
+msgstr "Пример RAAML"
 
 #: gaphor/ui/greeter.py:81
-#, fuzzy
 msgid "Risk Analysis and Assessment Modeling Language example model"
-msgstr "Шаблон Языка Моделирования Анализа и Оценки Рисков"
+msgstr "Пример модели языка Моделирования Анализа и Оценки Рисков"
 
 #: gaphor/ui/greeter.ui:8 gaphor/ui/greeter.ui:53 gaphor/ui/mainwindow.py:48
 msgid "Open Model…"
@@ -2849,7 +2845,7 @@ msgstr "Изменения при слиянии моделей"
 
 #: gaphor/ui/modelchanged.ui:7
 msgid "Discard Changes and Reload"
-msgstr ""
+msgstr "Отменить изменения и перезагрузить"
 
 #: gaphor/ui/tests/test_treemodel.py:200 gaphor/ui/treemodel.py:64
 msgid "<Relationships>"
@@ -3091,4 +3087,3 @@ msgstr "Обновить отношение «{name}»"
 
 #~ msgid "Recently Opened"
 #~ msgstr "Недавно открытые"
-
