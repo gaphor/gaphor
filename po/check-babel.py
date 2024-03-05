@@ -41,7 +41,7 @@ def check_po_files():
 
         for message, error in invalid(messages):
             have_errors = True
-            print(f"{path.name}:{message.lineno}: {error}.")
+            print(f"{path.name}:{message.lineno}: {error}.")  # noqa: T201
     return have_errors
 
 

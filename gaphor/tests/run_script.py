@@ -1,3 +1,5 @@
+# ruff: noqa: T201
+
 from gaphor.application import distribution
 
 if __name__ == "__main__":

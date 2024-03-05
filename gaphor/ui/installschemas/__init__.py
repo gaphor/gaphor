@@ -39,7 +39,8 @@ def install_schemas_parser():
 
 def install_schemas_command(args):
     schemas_dir = Path(args.schemas_dir)
-    print(f"Installing Gaphor schema in {schemas_dir}…")
+    # Print, since logger is not initialized at this point
+    print(f"Installing Gaphor schema in {schemas_dir}…")  # noqa: T201
     schemas_dir.mkdir(parents=True, exist_ok=True)
     schema_file = Path(__file__).parent / "org.gaphor.Gaphor.gschema.xml"
     shutil.copy(schema_file, schemas_dir)

@@ -256,6 +256,7 @@ select = [
     "C",
     "E",
     "F",
+    "T20",
     "W",
 ]
 extend-select = ["I"]

@@ -28,7 +28,7 @@ def load_components(ui_filename):
     ]
 
     for component in components:
-        print("show component", component.get_buildable_id())
+        print("show component", component.get_buildable_id())  # noqa: T201
         yield component.get_buildable_id(), component
 
 
@@ -68,7 +68,7 @@ def app_open(app, files, n_files, hint):
                     else:
                         components[name] = in_window(app, name, comp)
         except Exception as e:
-            print(e)
+            print(e)  # noqa: T201
         return True
 
     s = GLib.Timeout(1000)

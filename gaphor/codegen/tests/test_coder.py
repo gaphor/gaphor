@@ -200,8 +200,6 @@ def test_simple_attribute(uml_metamodel: ElementFactory):
 
 
 def test_order_classes(uml_metamodel):
-    print(uml_metamodel)
-
     classes = list(order_classes(uml_metamodel.select(UML.Class)))
 
     assert classes[0].name == "Element"
