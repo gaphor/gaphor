@@ -6,6 +6,8 @@ generator could not do its job correctly.
 This is a simple rip-off of the override script used in PyGTK.
 """
 
+# ruff: noqa: T201
+
 import re
 from typing import List
 
@@ -76,8 +78,7 @@ class Overrides:
                 assert not self.header
                 self.header = "".join(rest)
             elif words[0] != "comment":
-                print(f"Unknown word: '{words[0]}', line {line_number:d}")
-                raise SystemExit
+                raise ValueError(f"Unknown word: '{words[0]}', line {line_number:d}")
 
     def has_override(self, key):
         return key in self.overrides

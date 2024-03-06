@@ -54,7 +54,6 @@ class AppFileManager(Service, ActionProvider):
                     dialog.set_close_response("open")
 
                     def response(dialog, answer, filename=filename):
-                        print(answer)
                         dialog.destroy()
                         self.application.new_session(
                             filename=filename, force=(answer == "open")

@@ -61,5 +61,5 @@ def test_all_presented_uml_and_sysml_elements():
 @pytest.mark.parametrize("class_", all_presented_uml_and_sysml_elements())
 def test_element_has_concrete_ownable_property(class_):
     owners = list(concrete_owner_property(class_))
-    print(f"{class_}: {list(map(str, owners))}")
+
     assert any(owners)

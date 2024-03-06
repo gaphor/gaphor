@@ -144,7 +144,7 @@ class Properties(Service):
             return
 
         with open(self.filename, "w", encoding="utf-8") as ofile:
-            pprint.pprint(self._properties, ofile)
+            pprint.pprint(self._properties, ofile)  # noqa: T203
 
     def get(self, key: str, default=_no_default):
         """Locate a property.

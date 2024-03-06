@@ -151,7 +151,6 @@ def iteration(condition, timeout=5):
     def do_timeout():
         nonlocal sentinel
         sentinel = True
-        print("Check timed out")
         return GLib.SOURCE_REMOVE
 
     GLib.idle_add(check_condition, priority=GLib.PRIORITY_LOW)

@@ -159,7 +159,7 @@ def logging_config(level=logging.INFO):
 
 class VersionAction(argparse.Action):
     def __call__(self, parser, namespace, values, option_string=None):
-        print(f"Gaphor {distribution().version}")
+        print(f"Gaphor {distribution().version}")  # noqa: T201
         parser.exit()
 
 

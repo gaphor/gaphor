@@ -1,5 +1,7 @@
 #!/usr/bin/python
 
+# ruff: noqa: T201
+
 """This script lists classes and optionally attributes from UML model created
 with Gaphor."""
 
