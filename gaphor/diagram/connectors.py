@@ -298,16 +298,8 @@ class RelationshipConnect(BaseConnector):
         raise NotImplementedError("Implement connect_subject() in a subclass")
 
     def disconnect_subject(self, handle: Handle) -> None:
-        """Disconnect the diagram item from its model element.
-
-        If there are no more presentations(diagram items) connected to
-        the model element, unlink() it too.
-        """
-        line = self.line
-        old = line.subject
-        del line.subject
-        if old and len(old.presentation) == 0:
-            old.unlink()
+        """Disconnect the diagram item from its model element."""
+        del self.line.subject
 
     def connect(self, handle: Handle, port: Port) -> bool:
         """Connect the items to each other.
