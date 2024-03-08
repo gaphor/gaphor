@@ -183,7 +183,7 @@ def test_object_flow_activity_is_set_on_input_pin(create):
     assert flow.subject.owner is activity.subject
 
 
-def test_object_flow_reconnect(create, element_factory):
+def test_object_flow_reconnect(create, element_factory, sanitizer_service):
     flow = create(ObjectFlowItem)
     a1 = create(ActionItem, UML.Action)
     o1 = create(ObjectNodeItem, UML.ObjectNode)
@@ -215,7 +215,7 @@ def test_object_flow_reconnect(create, element_factory):
     assert flow.subject.guard == "tguard"
 
 
-def test_control_flow_reconnection(create):
+def test_control_flow_reconnection(create, sanitizer_service):
     """Test control flow becoming object flow due to reconnection."""
     flow = create(ControlFlowItem)
     a1 = create(ActionItem, UML.Action)
@@ -284,7 +284,7 @@ def test_connect_to_action_item(create):
     assert flow.subject.target is a2.subject
 
 
-def test_disconnect_from_action_item(create):
+def test_disconnect_from_action_item(create, sanitizer_service):
     """Test flow item disconnection from action items."""
     flow = create(ControlFlowItem)
     a1 = create(ActionItem, UML.Action)
@@ -301,7 +301,7 @@ def test_disconnect_from_action_item(create):
     assert len(a2.subject.outgoing) == 0
 
 
-def test_reconnect(create, element_factory):
+def test_reconnect(create, element_factory, sanitizer_service):
     """Test flow item reconnection."""
     flow = create(ControlFlowItem)
     a1 = create(ActionItem, UML.Action)
@@ -333,7 +333,7 @@ def test_reconnect(create, element_factory):
     assert flow.subject.guard == "tguard"
 
 
-def test_object_flow_reconnection(create):
+def test_object_flow_reconnection(create, sanitizer_service):
     """Test object flow becoming control flow due to reconnection."""
     flow = create(ObjectFlowItem)
     a1 = create(ActionItem, UML.Action)
@@ -520,7 +520,14 @@ def test_combined_nodes_connection(
     [(ControlFlowItem, UML.ControlFlow), (ObjectFlowItem, UML.ObjectFlow)],
 )
 def test_combined_node_disconnection(
-    create, element_factory, item_cls, fork_node_cls, join_node_cls, flow_item, uml_flow
+    create,
+    element_factory,
+    item_cls,
+    fork_node_cls,
+    join_node_cls,
+    flow_item,
+    uml_flow,
+    sanitizer_service,
 ):
     """Test combined nodes disconnection.
 

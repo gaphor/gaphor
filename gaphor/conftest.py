@@ -26,6 +26,7 @@ from gaphor.core.modeling.modelinglanguage import (
 from gaphor.storage import storage
 from gaphor.SysML.modelinglanguage import SysMLModelingLanguage
 from gaphor.UML.modelinglanguage import UMLModelingLanguage
+from gaphor.UML.sanitizerservice import SanitizerService
 
 
 @pytest.fixture
@@ -47,6 +48,13 @@ def modeling_language():
     return MockModelingLanguage(
         CoreModelingLanguage(), UMLModelingLanguage(), SysMLModelingLanguage()
     )
+
+
+@pytest.fixture
+def sanitizer_service(event_manager):
+    sanitizer_service = SanitizerService(event_manager)
+    yield sanitizer_service
+    sanitizer_service.shutdown()
 
 
 @pytest.fixture

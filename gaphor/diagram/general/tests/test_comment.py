@@ -109,7 +109,7 @@ def test_commentline_element_disconnect(create, diagram):
     assert not diagram.connections.get_connection(line.tail)
 
 
-def test_commentline_relationship_disconnect(create):
+def test_commentline_relationship_disconnect(create, sanitizer_service):
     """Test comment line to a relationship item connection and unlink.
 
     Demonstrates defect #103.
@@ -188,7 +188,7 @@ def test_commentline_element_unlink(create, diagram):
     assert len(clazz_subject.comment) == 0
 
 
-def test_commentline_relationship_unlink(create):
+def test_commentline_relationship_unlink(create, sanitizer_service):
     """Test comment line to a relationship item connection and unlink.
 
     Demonstrates defect #103.

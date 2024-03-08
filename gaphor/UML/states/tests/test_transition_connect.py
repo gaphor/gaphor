@@ -34,7 +34,7 @@ def test_vertex_connect(create, select):
     assert t.subject.target == v2.subject
 
 
-def test_vertex_reconnect(create, select):
+def test_vertex_reconnect(create, select, sanitizer_service):
     v1 = create(StateItem, UML.State)
     v2 = create(StateItem, UML.State)
     v3 = create(StateItem, UML.State)

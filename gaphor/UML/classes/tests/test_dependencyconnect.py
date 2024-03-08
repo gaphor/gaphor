@@ -87,7 +87,7 @@ def test_dependency_reconnect_should_keep_attributes(create):
     assert dep.subject.name == "Name"
 
 
-def test_dependency_disconnect(create, element_factory):
+def test_dependency_disconnect(create, element_factory, sanitizer_service):
     actor1 = create(ActorItem, UML.Actor)
     actor2 = create(ActorItem, UML.Actor)
     dep = create(DependencyItem)
@@ -105,7 +105,7 @@ def test_dependency_disconnect(create, element_factory):
     assert dep_subj not in actor2.subject.clientDependency
 
 
-def test_dependency_reconnect_on_same(create):
+def test_dependency_reconnect_on_same(create, sanitizer_service):
     """Test dependency reconnection using two actor items."""
     actor1 = create(ActorItem, UML.Actor)
     actor2 = create(ActorItem, UML.Actor)

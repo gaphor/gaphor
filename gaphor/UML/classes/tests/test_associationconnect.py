@@ -93,7 +93,9 @@ def test_association_item_reconnect_with_aggregation(connected_association, crea
     assert asc.tail_subject.aggregation == "composite"
 
 
-def test_disconnect_should_disconnect_model(connected_association, element_factory):
+def test_disconnect_should_disconnect_model(
+    connected_association, element_factory, sanitizer_service
+):
     asc, c1, c2 = connected_association
 
     disconnect(asc, asc.head)
@@ -108,7 +110,7 @@ def test_disconnect_should_disconnect_model(connected_association, element_facto
 
 
 def test_disconnect_of_second_association_should_leave_model_in_tact(
-    connected_association, clone
+    connected_association, clone, sanitizer_service
 ):
     asc, c1, c2 = connected_association
     new = clone(asc)
@@ -120,7 +122,7 @@ def test_disconnect_of_second_association_should_leave_model_in_tact(
 
 
 def test_disconnect_of_navigable_end_should_remove_owner_relationship(
-    connected_association, element_factory
+    connected_association, element_factory, sanitizer_service
 ):
     asc, c1, c2 = connected_association
 
