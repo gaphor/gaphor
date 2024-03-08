@@ -284,9 +284,7 @@ class FileManager(Service, ActionProvider):
                 raise ValueError(f"Unknown resolution for merge conflict: {answer}")
 
         if split:
-            resolve_merge_conflict_dialog(
-                self.parent_window, filename, handle_merge_conflict
-            )
+            resolve_merge_conflict_dialog(self.parent_window, handle_merge_conflict)
         else:
             error_handler(
                 message=gettext("Unable to open model “{filename}”.").format(
@@ -437,7 +435,7 @@ class FileManager(Service, ActionProvider):
             confirm_shutdown()
 
 
-def resolve_merge_conflict_dialog(window: Gtk.Window, filename: Path, handler) -> None:
+def resolve_merge_conflict_dialog(window: Gtk.Window, handler) -> None:
     dialog = Adw.MessageDialog.new(
         window,
         gettext("Resolve Merge Conflict?"),
