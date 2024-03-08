@@ -15,6 +15,7 @@ import pytest
 # Load gaphor.ui first, so GTK library versions are set corrently
 import gaphor.ui  # noqa: F401
 
+import gaphor.services.properties
 from gaphor.core import Transaction
 from gaphor.core.eventmanager import EventManager
 from gaphor.core.modeling import Diagram, ElementFactory
@@ -118,3 +119,9 @@ def test_models():
 def models():
     """The folder where test models can be found."""
     return Path(__file__).parent.parent / "models"
+
+
+@pytest.fixture(autouse=True)
+def tmp_get_cache_config_dir(tmp_path, monkeypatch):
+    monkeypatch.setattr(gaphor.services.properties, "get_config_dir", lambda: tmp_path)
+    monkeypatch.setattr(gaphor.services.properties, "get_cache_dir", lambda: tmp_path)

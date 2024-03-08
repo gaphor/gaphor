@@ -9,6 +9,7 @@ from gaphor.conftest import (
     event_manager,
     modeling_language,
     test_models,
+    tmp_get_cache_config_dir,
 )
 
 settings.register_profile(

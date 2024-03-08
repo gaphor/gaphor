@@ -81,8 +81,6 @@ class Properties(Service):
         event_manager.subscribe(self.on_model_saved)
         event_manager.subscribe(self.on_model_flushed)
 
-        self.load()
-
     def shutdown(self):
         """Shutdown the properties service.
 
