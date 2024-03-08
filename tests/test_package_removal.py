@@ -29,7 +29,7 @@ def element_factory(session, test_models):
     element_factory.shutdown()
 
 
-def test_package_removal(session, event_manager, element_factory):
+def test_package_removal(event_manager, element_factory):
     # Find all profile instances
     profiles = element_factory.lselect(UML.Profile)
 
