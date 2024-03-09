@@ -299,7 +299,9 @@ def test_message_connect_to_execution_specification_in_interaction(
     assert message.subject.interaction is interaction.subject
 
 
-def test_message_disconnect_from_execution_specification(diagram, element_factory):
+def test_message_disconnect_from_execution_specification(
+    diagram, element_factory, sanitizer_service
+):
     """Test gluing message on sequence diagram."""
 
     lifeline = diagram.create(

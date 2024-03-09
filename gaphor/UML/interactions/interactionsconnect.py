@@ -116,11 +116,8 @@ def disconnect_lifelines(line, send, received):
     # one is disconnected and one is about to be disconnected,
     # so destroy the message
     if not (subject.sendEvent or subject.receiveEvent):
-        # Both ends are disconnected:
-        message = line.subject
+        # Both ends are disconnected: remove subject
         del line.subject
-        if not message.presentation:
-            message.unlink()
 
 
 @Connector.register(LifelineItem, MessageItem)
