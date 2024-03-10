@@ -175,7 +175,7 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Workaround for errors while upgrading Python@3.12
-        run: brew unlink python@3.12 && ls -l /usr/local/bin
+        run: sudo rm -f /usr/local/bin/2to3* /usr/local/bin/idle3* /usr/local/bin/pip3* /usr/local/bin/pydoc3* /usr/local/bin/python3* /usr/local/bin/wheel3*
       - name: Install macOS Dependencies
         env:
           HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK: 1
