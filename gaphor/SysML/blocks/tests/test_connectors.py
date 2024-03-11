@@ -132,6 +132,7 @@ def test_disconnect_connector_from_proxy_port(
     head_proxy_port_item: ProxyPortItem,
     tail_proxy_port_item: ProxyPortItem,
     element_factory,
+    sanitizer_service,
 ):
     connect(connector_item, connector_item.handles()[0], head_proxy_port_item)
     connect(connector_item, connector_item.handles()[1], tail_proxy_port_item)

@@ -116,11 +116,8 @@ def disconnect_lifelines(line, send, received):
     # one is disconnected and one is about to be disconnected,
     # so destroy the message
     if not (subject.sendEvent or subject.receiveEvent):
-        # Both ends are disconnected:
-        message = line.subject
+        # Both ends are disconnected: remove subject
         del line.subject
-        if not message.presentation:
-            message.unlink()
 
 
 @Connector.register(LifelineItem, MessageItem)
@@ -221,27 +218,21 @@ class LifelineExecutionSpecificationConnect(BaseConnector):
         if lifeline.interaction:
             exec_spec.enclosingInteraction = lifeline.interaction
 
-        diagram = self.diagram
         if self.line.parent is not self.element:
             self.line.change_parent(self.element)
 
-        for cinfo in diagram.connections.get_connections(connected=self.line):
+        for cinfo in self.diagram.connections.get_connections(connected=self.line):
             Connector(self.line, cinfo.item).connect(cinfo.handle, cinfo.port)
         return True
 
     def disconnect(self, handle):
-        exec_spec: Optional[UML.ExecutionSpecification] = self.line.subject
         del self.line.subject
-        if exec_spec:
-            exec_spec.unlink()
-
-        diagram = self.diagram
 
         if self.line.parent is self.element:
             new_parent = self.element.parent
             self.line.change_parent(new_parent)
 
-        for cinfo in diagram.connections.get_connections(connected=self.line):
+        for cinfo in self.diagram.connections.get_connections(connected=self.line):
             Connector(self.line, cinfo.item).disconnect(cinfo.handle)
 
 
@@ -267,10 +258,7 @@ class ExecutionSpecificationExecutionSpecificationConnect(BaseConnector):
         return True
 
     def disconnect(self, handle):
-        exec_spec: Optional[UML.ExecutionSpecification] = self.line.subject
         del self.line.subject
-        if exec_spec and not exec_spec.presentation:
-            exec_spec.unlink()
 
         for cinfo in self.diagram.connections.get_connections(connected=self.line):
             Connector(self.line, cinfo.item).disconnect(cinfo.handle)

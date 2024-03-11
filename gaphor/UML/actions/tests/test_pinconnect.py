@@ -2,6 +2,7 @@ import pytest
 
 from gaphor import UML
 from gaphor.diagram.connectors import Connector
+from gaphor.diagram.copypaste import copy_full, paste_link
 from gaphor.UML.actions.action import ActionItem
 from gaphor.UML.actions.pin import InputPinItem, OutputPinItem
 from gaphor.UML.actions.pinconnect import ActionPinConnector
@@ -74,3 +75,27 @@ def test_disconnect_output_pin_to_action(action_item, output_pin_item):
 
     assert output_pin_item.subject is None
     assert output_pin_item.diagram
+
+
+def test_delete_action_leaves_pins_in_place(
+    diagram, action_item, input_pin_item, element_factory
+):
+    connector = Connector(action_item, input_pin_item)
+    connector.connect(input_pin_item.handles()[0], action_item.ports()[0])
+
+    copy_data = copy_full({action_item, input_pin_item})
+
+    new_elements = paste_link(copy_data, diagram)
+
+    new_action_item = next(e for e in new_elements if isinstance(e, ActionItem))
+    new_input_pin_item = next(e for e in new_elements if isinstance(e, InputPinItem))
+
+    new_action_item.unlink()
+
+    assert new_action_item.diagram is None
+    assert not new_action_item.children
+
+    assert action_item in element_factory
+    assert input_pin_item in element_factory
+    assert new_action_item not in element_factory
+    assert new_input_pin_item not in element_factory

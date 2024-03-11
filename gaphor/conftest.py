@@ -15,6 +15,7 @@ import pytest
 # Load gaphor.ui first, so GTK library versions are set corrently
 import gaphor.ui  # noqa: F401
 
+import gaphor.services.properties
 from gaphor.core import Transaction
 from gaphor.core.eventmanager import EventManager
 from gaphor.core.modeling import Diagram, ElementFactory
@@ -26,6 +27,7 @@ from gaphor.core.modeling.modelinglanguage import (
 from gaphor.storage import storage
 from gaphor.SysML.modelinglanguage import SysMLModelingLanguage
 from gaphor.UML.modelinglanguage import UMLModelingLanguage
+from gaphor.UML.sanitizerservice import SanitizerService
 
 
 @pytest.fixture
@@ -47,6 +49,13 @@ def modeling_language():
     return MockModelingLanguage(
         CoreModelingLanguage(), UMLModelingLanguage(), SysMLModelingLanguage()
     )
+
+
+@pytest.fixture
+def sanitizer_service(event_manager):
+    sanitizer_service = SanitizerService(event_manager)
+    yield sanitizer_service
+    sanitizer_service.shutdown()
 
 
 @pytest.fixture
@@ -110,3 +119,9 @@ def test_models():
 def models():
     """The folder where test models can be found."""
     return Path(__file__).parent.parent / "models"
+
+
+@pytest.fixture(autouse=True)
+def tmp_get_cache_config_dir(tmp_path, monkeypatch):
+    monkeypatch.setattr(gaphor.services.properties, "get_config_dir", lambda: tmp_path)
+    monkeypatch.setattr(gaphor.services.properties, "get_cache_dir", lambda: tmp_path)

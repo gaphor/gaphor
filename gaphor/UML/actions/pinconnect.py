@@ -42,10 +42,8 @@ class ActionPinConnector:
     def disconnect(self, handle: Handle) -> None:
         pin = self.pin
         if pin.subject and pin.diagram:
-            subject = pin.subject
             del pin.subject
             pin.change_parent(None)
-            subject.unlink()
 
 
 @Connector.register(ValueSpecificationActionItem, PinItem)

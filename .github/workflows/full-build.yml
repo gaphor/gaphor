@@ -174,6 +174,8 @@ jobs:
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
         with:
           ref: ${{ github.event.pull_request.head.sha }}
+      - name: Workaround for errors while upgrading Python@3.12
+        run: sudo rm -f /usr/local/bin/2to3* /usr/local/bin/idle3* /usr/local/bin/pip3* /usr/local/bin/pydoc3* /usr/local/bin/python3* /usr/local/bin/wheel3*
       - name: Install macOS Dependencies
         env:
           HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK: 1

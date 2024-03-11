@@ -66,7 +66,9 @@ def test_connect_execution_specification_to_lifeline(diagram, element_factory):
     )
 
 
-def test_disconnect_execution_specification_from_lifeline(diagram, element_factory):
+def test_disconnect_execution_specification_from_lifeline(
+    diagram, element_factory, sanitizer_service
+):
     def elements_of_kind(type):
         return element_factory.lselect(type)
 
@@ -174,7 +176,7 @@ def test_connect_execution_specification_with_execution_specification_to_lifelin
 
 
 def test_disconnect_execution_specification_with_execution_specification_from_lifeline(
-    diagram, element_factory
+    diagram, element_factory, sanitizer_service
 ):
     def elements_of_kind(type):
         return element_factory.lselect(type)
