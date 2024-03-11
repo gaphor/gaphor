@@ -131,6 +131,7 @@ class Greeter(Service, ActionProvider):
             for widget in self.create_recent_files():
                 listbox.append(widget)
         else:
+            builder.get_object("recent-files-title").set_visible(False)
             builder.get_object("recent-files").set_visible(False)
 
         for widget in self.create_templates(TEMPLATES):
