@@ -53,7 +53,7 @@ def on_drop(target, source_value, x, y, modeling_language, event_manager):
     elif isinstance(source_value, ToolboxActionDragData):
         tool_def = get_tool_def(modeling_language, source_value.action)
         with Transaction(event_manager):
-            create_item(view, tool_def.item_factory, x, y)
+            create_item(view, tool_def.item_factory, event_manager, x, y)
         return True
 
     return False
