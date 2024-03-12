@@ -29,9 +29,11 @@ To install a plugin, use `pip` from a Python installation on your computer. On m
 on Windows you may need to install Python separately from [python.org](https://python.org) or the Windows Store.
 
 ```{important}
-1. Since plugins are installed with your system Python version, it's important that
-plugins are pure python - e.i. do not contain compiled C code.
-1. If you use Gaphor installed as Flatpak, you need to grant Gaphor access to user files (`filesystem=home`), so Gaphor can find files in your `.local` folder. You can use [FlatSeal](https://flathub.org/apps/com.github.tchx84.Flatseal) to change permissions of Flatpaks.
+1. Since plugins are installed with your system Python version, it's important that plugins are pure Python and do
+   not contain compiled C code.
+1. If you use Gaphor installed as Flatpak, you need to grant Gaphor access to user files
+   (`filesystem=home`), so Gaphor can find files in your `.local` folder. You can use
+   [FlatSeal](https://flathub.org/apps/com.github.tchx84.Flatseal) to change permissions of Flatpaks.
 ```
 
 For example: to install the [Hello World plugin](https://github.com/gaphor/gaphor_plugin_helloworld) on Linux and macOS, enter:
