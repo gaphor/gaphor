@@ -140,6 +140,14 @@ class MainWindow(Service, ActionProvider):
         return self._builder.get_object("subtitle") if self._builder else None
 
     @property
+    def element_editor(self):
+        return (
+            self._builder.get_object("component:element_editor")
+            if self._builder
+            else None
+        )
+
+    @property
     def model_changed(self) -> bool:
         return self.modified.get_visible() if self.modified else False  # type: ignore[no-any-return]
 
@@ -188,6 +196,9 @@ class MainWindow(Service, ActionProvider):
                 widget.set_name(name)
                 bin.set_child(widget)
 
+                if name == "element_editor":
+                    bin.set_reveal_child(self.properties.get("show-editors", True))
+
         # TODO: set ui.namespace-width/height position
 
         self.action_group, shortcuts = window_action_group(self.component_registry)
@@ -218,6 +229,16 @@ class MainWindow(Service, ActionProvider):
         del self._ui_updates[:]
 
     # Actions:
+
+    @action(
+        name="show-editors",
+        shortcut="F9",
+        state=lambda self: self.properties.get("show-editors", True),
+    )
+    def toggle_editor_visibility(self, active):
+        if element_editor := self.element_editor:
+            element_editor.set_reveal_child(active)
+        self.properties.set("show-editors", active)
 
     @action("fullscreen", shortcut="F11", state=False)
     def toggle_fullscreen(self, active):

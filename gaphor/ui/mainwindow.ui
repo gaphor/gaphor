@@ -157,8 +157,11 @@
                   </object>
                 </child>
                 <child>
-                  <object class="AdwBin" id="component:element_editor">
+                  <object class="GtkRevealer" id="component:element_editor">
                     <property name="hexpand-set">1</property>
+                    <property name="transition-type">slide-left</property>
+                    <property name="transition-duration">200</property>
+                    <property name="reveal-child">1</property>
                     <child>
                       <object class="GtkLabel">
                         <property name="label">Element Editor</property>
