@@ -130,7 +130,7 @@ class ElementEditor(UIComponent, ActionProvider):
         self.revealer.set_reveal_child(active)
         self.properties.set("show-editors", active)
 
-    @action(name="show-preferences", shortcut="<Primary>comma", state=False)
+    @action(name="show-preferences", shortcut="<Primary>semicolon", state=False)
     def toggle_editor_preferences(self, active):
         if not self.revealer.get_child_revealed():
             self.revealer.activate_action("win.show-editors", None)
