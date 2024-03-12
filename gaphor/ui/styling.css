@@ -131,7 +131,7 @@ textfield text selection {
 }
 
 #model_browser,
-#diagrams > box {
+#diagrams {
   border-top: 1px solid @unfocused_borders;
 }
 
