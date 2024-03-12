@@ -15,10 +15,6 @@
   font-weight: bold;
 }
 
-#diagrams {
-  border-top-width: 0;
-}
-
 diagramview {
   background: white;
 }
@@ -130,13 +126,13 @@ textfield text selection {
   box-shadow: none;
 }
 
-#model_browser,
-#diagrams {
-  border-top: 1px solid @unfocused_borders;
+#model_browser {
+  margin: 1px 1px 0 0;
 }
 
-#element_editor {
-  border-left: 1px solid @unfocused_borders;
+tabbar > revealer > box,
+#model_browser listview {
+  background-color: transparent;
 }
 
 #element_editor .title {

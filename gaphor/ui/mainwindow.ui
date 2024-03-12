@@ -172,6 +172,52 @@
                     <child type="top">
                       <object class="AdwHeaderBar">
                         <property name="show-title">0</property>
+                        <child>
+                          <object class="GtkButton">
+                            <property name="receives_default">1</property>
+                            <property name="tooltip_text" translatable="yes">Undo</property>
+                            <property name="action_name">win.edit-undo</property>
+                            <child>
+                              <object class="GtkImage">
+                                <property name="icon_name">edit-undo-symbolic</property>
+                              </object>
+                            </child>
+                            <style>
+                              <class name="flat"/>
+                            </style>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkButton">
+                            <property name="receives_default">1</property>
+                            <property name="action_name">win.edit-redo</property>
+                            <property name="tooltip_text" translatable="yes">Redo</property>
+                            <child>
+                              <object class="GtkImage">
+                                <property name="icon_name">edit-redo-symbolic</property>
+                              </object>
+                            </child>
+                            <style>
+                              <class name="flat"/>
+                            </style>
+                          </object>
+                        </child>
+                        <child type="end">
+                          <object class="GtkToggleButton">
+                            <property name="margin-start">38</property>
+                            <property name="receives_default">1</property>
+                            <property name="tooltip_text" translatable="yes">Toggle Model Preferences</property>
+                            <property name="action_name">win.show-preferences</property>
+                            <child>
+                              <object class="GtkImage">
+                                <property name="icon_name">document-properties-symbolic</property>
+                              </object>
+                            </child>
+                            <style>
+                              <class name="flat"/>
+                            </style>
+                          </object>
+                        </child>
                       </object>
                     </child>
                     <property name="content">
