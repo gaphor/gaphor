@@ -13,6 +13,7 @@
   <object class="GtkApplicationWindow" id="main-window">
     <property name="default-width">860</property>
     <property name="default-height">580</property>
+    <property name="resizable">1</property>
     <child type="titlebar">
       <object class="GtkHeaderBar" id="header">
         <child type="title">
@@ -98,11 +99,11 @@
     <child>
       <object class="AdwToastOverlay" id="main-overlay">
         <property name="child">
-          <object class="GtkPaned">
+          <object class="GtkPaned" id="left-pane">
             <property name="orientation">horizontal</property>
             <property name="position">220</property>
             <child type="start">
-              <object class="GtkPaned">
+              <object class="GtkPaned" id="top-left-pane">
                 <property name="orientation">vertical</property>
                 <property name="position">300</property>
                 <child type="start">

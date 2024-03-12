@@ -188,7 +188,12 @@ class MainWindow(Service, ActionProvider):
         elif self.properties.get("ui.window-mode", "") == "fullscreened":
             window.fullscreen()
 
-        main_overlay = builder.get_object("main-overlay")
+        track_paned_position(
+            builder.get_object("left-pane"), "ui.namespace-width", self.properties
+        )
+        track_paned_position(
+            builder.get_object("top-left-pane"), "ui.namespace-height", self.properties
+        )
 
         for name, component in self.component_registry.all(UIComponent):
             if bin := builder.get_object(f"component:{name}"):
@@ -199,25 +204,21 @@ class MainWindow(Service, ActionProvider):
                 if name == "element_editor":
                     bin.set_reveal_child(self.properties.get("show-editors", True))
 
-        # TODO: set ui.namespace-width/height position
-
         self.action_group, shortcuts = window_action_group(self.component_registry)
         window.insert_action_group("win", self.action_group)
 
         self._on_modeling_language_selection_changed()
+        self.in_app_notifier = InAppNotifier(builder.get_object("main-overlay"))
 
-        window.set_resizable(True)
         window.add_controller(Gtk.ShortcutController.new_for_model(shortcuts))
         window.connect("close-request", self._on_window_close_request)
         window.connect("notify::default-height", self._on_window_size_changed)
         window.connect("notify::default-width", self._on_window_size_changed)
         window.connect("notify::maximized", self._on_window_mode_changed)
         window.connect("notify::fullscreened", self._on_window_mode_changed)
+        window.connect("notify::is-active", self._on_window_active)
         window.present()
 
-        window.connect("notify::is-active", self._on_window_active)
-
-        self.in_app_notifier = InAppNotifier(main_overlay)
         em = self.event_manager
         em.subscribe(self._on_undo_manager_state_changed)
         em.subscribe(self._on_action_enabled)
@@ -327,3 +328,26 @@ class MainWindow(Service, ActionProvider):
 
 def is_maximized(window: Gtk.Window) -> bool:
     return window.is_maximized() or window.is_fullscreen()  # type: ignore[no-any-return]
+
+
+def _paned_position_changed(paned, _gparam, name, properties):
+    if not is_maximized(paned.get_root()):
+        properties.set(name, paned.props.position)
+
+
+def _paned_ensure_visible(paned, _gparam):
+    if paned.props.position < paned.props.min_position + 12:
+        paned.props.position = paned.props.min_position + 12
+    elif paned.props.position > paned.props.max_position - 12:
+        paned.props.position = paned.props.max_position - 12
+
+
+def track_paned_position(paned, name, properties):
+    paned.connect("notify::position", _paned_ensure_visible)
+    paned.connect("notify::min-position", _paned_ensure_visible)
+    paned.connect("notify::max-position", _paned_ensure_visible)
+
+    if position := properties.get(name, 0):
+        paned.set_position(position)
+
+    paned.connect("notify::position", _paned_position_changed, name, properties)
