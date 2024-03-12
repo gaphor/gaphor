@@ -41,10 +41,13 @@ def load_ui_file(ui_file) -> str:
 
 
 def in_window(app, name, component):
-    window = Gtk.Window.new()
-    window.set_child(component)
-    window.set_title(name)
-    window.set_default_size(226, -1)
+    if isinstance(component, Gtk.Window):
+        window = component
+    else:
+        window = Gtk.Window.new()
+        window.set_child(component)
+        window.set_title(name)
+        window.set_default_size(226, -1)
     window.present()
     app.add_window(window)
     return window
@@ -63,7 +66,11 @@ def app_open(app, files, n_files, hint):
             if new_mtime > last_modified:
                 last_modified = new_mtime
                 for name, comp in load_components(file):
-                    if name in components:
+                    if isinstance(comp, Gtk.Window):
+                        if name in components:
+                            components[name].destroy()
+                        components[name] = in_window(app, name, comp)
+                    elif name in components:
                         components[name].set_child(comp)
                     else:
                         components[name] = in_window(app, name, comp)

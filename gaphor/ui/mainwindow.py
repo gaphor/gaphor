@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import importlib.resources
 import logging
 from pathlib import Path
 from typing import Callable
@@ -27,7 +26,6 @@ from gaphor.ui.abc import UIComponent
 from gaphor.ui.actiongroup import window_action_group
 from gaphor.ui.event import CurrentDiagramChanged
 from gaphor.ui.filedialog import pretty_path
-from gaphor.ui.layout import deserialize, is_maximized
 from gaphor.ui.modelbrowser import create_diagram_types_model
 from gaphor.ui.notification import InAppNotifier
 
@@ -150,9 +148,6 @@ class MainWindow(Service, ActionProvider):
         if self.modified:
             self.modified.set_visible(model_changed)
 
-    def get_ui_component(self, name):
-        return self.component_registry.get(UIComponent, name)
-
     def open(self, gtk_app=None):
         """Open the main window."""
 
@@ -185,19 +180,15 @@ class MainWindow(Service, ActionProvider):
         elif self.properties.get("ui.window-mode", "") == "fullscreened":
             window.fullscreen()
 
-        def _factory(name):
-            comp = self.get_ui_component(name)
-            return comp.open()
+        main_overlay = builder.get_object("main-overlay")
 
-        main_content = builder.get_object("main-content")
-        deserialize(
-            main_content,
-            (importlib.resources.files("gaphor.ui") / "layout.xml").read_text(
-                encoding="utf-8"
-            ),
-            _factory,
-            self.properties,
-        )
+        for name, component in self.component_registry.all(UIComponent):
+            if bin := builder.get_object(f"component:{name}"):
+                widget = component.open()
+                widget.set_name(name)
+                bin.set_child(widget)
+
+        # TODO: set ui.namespace-width/height position
 
         self.action_group, shortcuts = window_action_group(self.component_registry)
         window.insert_action_group("win", self.action_group)
@@ -215,7 +206,7 @@ class MainWindow(Service, ActionProvider):
 
         window.connect("notify::is-active", self._on_window_active)
 
-        self.in_app_notifier = InAppNotifier(main_content)
+        self.in_app_notifier = InAppNotifier(main_overlay)
         em = self.event_manager
         em.subscribe(self._on_undo_manager_state_changed)
         em.subscribe(self._on_action_enabled)
@@ -311,3 +302,7 @@ class MainWindow(Service, ActionProvider):
     def _on_window_mode_changed(self, window, gspec):
         mode = gspec.name
         self.properties.set("ui.window-mode", mode if window.get_property(mode) else "")
+
+
+def is_maximized(window: Gtk.Window) -> bool:
+    return window.is_maximized() or window.is_fullscreen()  # type: ignore[no-any-return]
