@@ -37,12 +37,8 @@ flowboxchild {
   border-radius: 8px;
 }
 
-.title {
+.section-title {
   font-weight: bold;
-}
-
-.subtitle {
-  font-weight: normal;
 }
 
 .greeter row {
@@ -135,7 +131,7 @@ textfield text selection {
 }
 
 #model_browser,
-#diagrams > box {
+#diagrams {
   border-top: 1px solid @unfocused_borders;
 }
 

@@ -84,7 +84,7 @@
                         <property name="label" translatable="yes">Recently Opened</property>
                         <property name="xalign">0</property>
                         <style>
-                          <class name="title"/>
+                          <class name="section-title"/>
                         </style>
                       </object>
                     </child>
@@ -101,7 +101,7 @@
                         <property name="label" translatable="yes">Create New Model</property>
                         <property name="xalign">0</property>
                         <style>
-                          <class name="title"/>
+                          <class name="section-title"/>
                         </style>
                       </object>
                     </child>
