@@ -43,7 +43,7 @@ a = Analysis(  # type: ignore
     datas=[
         ("../gaphor/diagram.css", "gaphor"),
         ("../gaphor/ui/styling*.css", "gaphor/ui"),
-        ("../gaphor/ui/*.png", "gaphor/ui"),
+        ("../gaphor/ui/placement-icon-base.png", "gaphor/ui"),
         (
             "../gaphor/ui/icons/hicolor/scalable/actions/*.svg",
             "gaphor/ui/icons/hicolor/scalable/actions",
