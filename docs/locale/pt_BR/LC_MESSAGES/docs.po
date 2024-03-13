@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gaphor 2.23.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-02-15 20:49-0500\n"
-"PO-Revision-Date: 2024-03-13 02:17+0000\n"
+"PO-Revision-Date: 2024-03-14 13:01+0000\n"
 "Last-Translator: Rafael Fontenelle <rafaelff@gnome.org>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/"
 "gaphor/docs-gaphor-org/pt_BR/>\n"
@@ -2693,118 +2693,189 @@ msgstr ""
 #: ../coffee_machine_concept.md:31
 msgid "A use case diagram is a type of visual representation used in systems engineering to describe the functional requirements of a system, such as an espresso machine. In the context of the espresso machine, a use case diagram would be used to identify and define the different ways in which the machine will be used by its users, such as the café staff and customers."
 msgstr ""
+"Um diagrama de caso de uso é um tipo de representação visual usada em "
+"engenharia de sistemas para descrever os requisitos funcionais de um "
+"sistema, como uma máquina de café expresso. No contexto da máquina de café "
+"expresso, seria utilizado um diagrama de casos de utilização para "
+"identificar e definir as diferentes formas como a máquina será utilizada "
+"pelos seus utilizadores, tais como os funcionários do café e os clientes."
 
 #: ../coffee_machine_concept.md:37
 msgid "The diagram would typically include different actors or users, such as the barista, the customer, and possibly a manager or maintenance technician. It would also include different \"use cases\" or scenarios, which describe the different actions that the users can take with the machine, such as placing an order, making an espresso, or cleaning the machine."
 msgstr ""
+"O diagrama normalmente incluiria diferentes atores ou usuários, como o "
+"barista, o cliente e, possivelmente, um gerente ou técnico de manutenção. "
+"Também incluiria diferentes \"casos de uso\" ou cenários, que descrevem as "
+"diferentes ações que os usuários podem realizar com a máquina, como fazer um "
+"pedido, fazer um café expresso ou limpar a máquina."
 
 #: ../coffee_machine_concept.md:43
 msgid "The use case diagram helps to ensure that all the necessary functional requirements of the espresso machine are identified and accounted for, and that the system is designed to meet the needs of its users. It can also be used as a communication tool between the different stakeholders involved in the development of the machine, such as the ants and Cappuccino the cat."
 msgstr ""
+"O diagrama de casos de uso ajuda a garantir que todos os requisitos "
+"funcionais necessários da máquina de café expresso sejam identificados e "
+"considerados e que o sistema seja projetado para atender às necessidades de "
+"seus usuários. Também pode ser utilizado como ferramenta de comunicação "
+"entre os diferentes stakeholders envolvidos no desenvolvimento da máquina, "
+"como as formigas e o gato Cappuccino."
 
 #: ../coffee_machine_concept.md:49
 msgid "The ants need your help updating the diagrams, so let's get started:"
 msgstr ""
+"As formigas precisam da sua ajuda para atualizar os diagramas, então vamos "
+"começar:"
 
 #: ../coffee_machine_concept.md:51
 msgid "Double-click on the actor to pop up the rename dialog, and replace User with Barista."
 msgstr ""
+"Clique duas vezes no ator para abrir a caixa de diálogo de renomeação e "
+"substitua User por Barista."
 
 #: ../coffee_machine_concept.md:53
 msgid "Update the name of the oval Use Case from Use Case #1 to Brew espresso."
-msgstr ""
+msgstr "Atualize o nome do Caso de Uso oval de Use Case #1 para Brew espresso."
 
 #: ../coffee_machine_concept.md:54
 msgid "Update the name of the rectangle Block from Feature to Espresso Machine"
-msgstr ""
+msgstr "Atualize o nome do Bloco retangular de Feature para Espresso Machine"
 
 #: ../coffee_machine_concept.md:56
 msgid "A barista interacts with the espresso machine. The barista is provided a simple interface with a few push buttons."
 msgstr ""
+"Um barista interage com a máquina de café expresso. O barista dispõe de uma "
+"interface simples com alguns botões."
 
 #: ../coffee_machine_concept.md:59
 msgid "In this particular use case diagram, we have one actor named Barista and one use case called Brew espresso, which is allocated to a block called Espresso Machine. The actor, in this case, is a cat barista who interacts with the system (an espresso machine) to accomplish a particular task, which is brewing espresso."
 msgstr ""
+"Neste diagrama de caso de uso específico, temos um ator chamado \"Barista\" "
+"e um caso de uso chamado \"Brew espresso\", que é alocado em um bloco "
+"chamado \"Espresso Machine\". O ator, neste caso, é um gato barista que "
+"interage com o sistema (uma máquina de café expresso) para realizar uma "
+"determinada tarefa, que é preparar o café expresso."
 
 #: ../coffee_machine_concept.md:65
 msgid "Use case diagram showing an actor named Barista and a use case called Brew espresso"
 msgstr ""
+"Diagrama de caso de uso mostrando um ator chamado \"Barista\" e um caso de "
+"uso chamado \"Brew espresso\""
 
 #: ../coffee_machine_concept.md:70
 msgid "The use case Brew espresso represents a specific functionality or action that the system (the Espresso Machine block) can perform. It describes the steps or interactions necessary to complete the task of brewing espresso, such as selecting the appropriate settings, starting the brewing process, and stopping the process once it's complete."
 msgstr ""
+"O caso de uso \"Brew espresso\" representa uma funcionalidade ou ação "
+"específica que o sistema (o bloco \"Espresso Machine\") pode executar. Ele "
+"descreve as etapas ou interações necessárias para concluir a tarefa de "
+"preparar café expresso, como selecionar as configurações apropriadas, "
+"iniciar o processo de preparação e interromper o processo quando estiver "
+"concluído."
 
 #: ../coffee_machine_concept.md:76
 msgid "The use case diagram shows the relationship between the actor and the use case. It is represented by an oval shape with the use case name inside and an association with the actor. The association represents the interaction from the actor to the use case."
 msgstr ""
+"O diagrama de casos de uso mostra o relacionamento entre o ator e o caso de "
+"uso. É representado por uma forma oval com o nome do caso de uso dentro e "
+"uma associação com o ator. A associação representa a interação do ator com o "
+"caso de uso."
 
 #: ../coffee_machine_concept.md:81
 msgid "Domain Diagram"
-msgstr ""
+msgstr "Diagrama de Domínio"
 
 #: ../coffee_machine_concept.md:83
 msgid "A domain diagram is a graphical representation of the concepts, terms, and relationships within a specific domain. In the case of a coffee shop, a domain diagram could represent the key elements and relationships within the coffee shop domain."
 msgstr ""
+"Um diagrama de domínio é uma representação gráfica dos conceitos, termos e "
+"relacionamentos dentro de um domínio específico. No caso de uma cafeteria, "
+"um diagrama de domínio poderia representar os principais elementos e "
+"relacionamentos dentro do domínio da cafeteria."
 
 #: ../coffee_machine_concept.md:88
 msgid "The following is a domain diagram that builds upon the context diagram with additional blocks:"
 msgstr ""
+"A seguir está um diagrama de domínio que se baseia no diagrama de contexto "
+"com blocos adicionais:"
 
 #: ../coffee_machine_concept.md:90
 msgid "Barista"
-msgstr ""
+msgstr "Barista"
 
 #: ../coffee_machine_concept.md:91
 msgid "Coffee Machine"
-msgstr ""
+msgstr "Espresso Machine (máquina de expresso)"
 
 #: ../coffee_machine_concept.md:92
 msgid "Roasted Coffee"
-msgstr ""
+msgstr "Roasted Coffee (café torrado)"
 
 #: ../coffee_machine_concept.md:93
 msgid "Coffee Grinder"
-msgstr ""
+msgstr "Coffee Grinder (moedor de café)"
 
 #: ../coffee_machine_concept.md:94
 msgid "Water Supply"
-msgstr ""
+msgstr "Water Supply (abastecimento de água)"
 
 #: ../coffee_machine_concept.md:95
 msgid "Customer"
-msgstr ""
+msgstr "Customer (cliente)"
 
 #: ../coffee_machine_concept.md:97
 msgid "Each block represents a key concept within the coffee shop domain, and the containment relationship is used between the domain and the blocks to show that they are part of the domain."
 msgstr ""
+"Cada bloco representa um conceito-chave dentro do domínio da cafeteria, e a "
+"relação de contenção é usada entre o domínio e os blocos para mostrar que "
+"eles fazem parte do domínio."
 
 #: ../coffee_machine_concept.md:101
 msgid "Block Definition Diagram showing hierarchy of blocks in the Coffee Shop domain"
 msgstr ""
+"Diagrama de Definição de Blocos mostrando a hierarquia de blocos no domínio "
+"Coffee Shop (Cafeteria)"
 
 #: ../coffee_machine_concept.md:106
 msgid "The Barista block is responsible for preparing and serving the coffee to the customers. The Roasted Coffee block contains the types of coffee available for the barista to use. The Coffee Grinder block grinds the roasted coffee beans to the desired consistency before brewing. The Water Supply block contains the water source for the coffee machine, and finally the Customer block represents the person who orders and receives the coffee."
 msgstr ""
+"O bloco Barista é responsável por preparar e servir o café aos clientes. O "
+"bloco \"Roasted Coffee\" contém os tipos de café disponíveis para o barista "
+"utilizar. O bloco \"Coffee Grinder\" mói os grãos de café torrados até a "
+"consistência desejada antes de prepará-los. O bloco \"Water Supply\" contém "
+"a fonte de água da máquina de café e, por fim, o bloco \"Customer\" "
+"representa quem pede e recebe o café."
 
 #: ../coffee_machine_concept.md:113
 msgid "The ants need more of your help to rename the Feature Domain diagram and update it so that it matches the one above."
 msgstr ""
+"As formigas precisam de mais ajuda para renomear o diagrama do Domínio de "
+"Recursos e atualizá-lo para que corresponda ao diagrama acima."
 
 #: ../coffee_machine_concept.md:116
 msgid "The domain diagram provides a high-level view of the coffee shop domain and the key concepts and relationships involved in it. It can be a useful tool for understanding the relationships between different elements of the domain and for communicating these relationships to others."
 msgstr ""
+"O diagrama de domínio fornece uma visão de alto nível do domínio da "
+"cafeteria e dos principais conceitos e relacionamentos envolvidos nele. Pode "
+"ser uma ferramenta útil para compreender as relações entre os diferentes "
+"elementos do domínio e para comunicar essas relações a outros."
 
 #: ../coffee_machine_concept.md:121
 msgid "Context Diagram"
-msgstr ""
+msgstr "Diagrama de Contexto"
 
 #: ../coffee_machine_concept.md:123
 msgid "The context diagram is a high-level view of the system, and it shows its interaction with external entities. In the case of a coffee machine, a context diagram provides a clear and concise representation of the system and its interactions with the external environment."
 msgstr ""
+"O context diagram ou diagrama de contexto é uma visão de alto nível do "
+"sistema e mostra sua interação com entidades externas. No caso de uma "
+"máquina de café, um diagrama de contexto fornece uma representação clara e "
+"concisa do sistema e das suas interações com o ambiente externo."
 
 #: ../coffee_machine_concept.md:128
 msgid "The context diagram for a coffee machine shows the coffee machine as the system at the center, with all its external entities surrounding it. The external entities include the barista, the power source, the coffee grinder, and the water source."
 msgstr ""
+"O diagrama de contexto de uma máquina de café mostra a máquina de café como "
+"o sistema central, com todas as suas entidades externas ao seu redor. As "
+"entidades externas incluem o barista, a fonte de energia, o moedor de café e "
+"a fonte de água."
 
 #: ../coffee_machine_concept.md:133
 msgid "Block definition diagram showing context of the coffee shop with external entities"
@@ -5065,7 +5136,7 @@ msgstr "Atividades"
 
 #: ../models/sysml/Allocations.rst:2
 msgid "Allocations"
-msgstr ""
+msgstr "Alocações"
 
 #: ../models/sysml/Allocations.rst:5
 msgid "AllocatedActivityPartition"
@@ -5147,7 +5218,7 @@ msgstr ""
 
 #: ../models/sysml/PortsAndFlows.rst:29
 msgid "Item Flow"
-msgstr ""
+msgstr "Fluxo de Itens"
 
 #: ../models/sysml/Requirements.rst:2
 #: ../style_sheets.md:328
@@ -6755,7 +6826,7 @@ msgstr ""
 
 #: ../style_sheets.md:317
 msgid "Interactions"
-msgstr ""
+msgstr "Interações"
 
 #: ../style_sheets.md:317
 msgid "Reflexive message"
@@ -6768,7 +6839,7 @@ msgstr ""
 #: ../style_sheets.md:318
 #: ../style_sheets.md:319
 msgid "States"
-msgstr ""
+msgstr "Estados"
 
 #: ../style_sheets.md:318
 msgid "Initial Pseudostate"
@@ -6805,7 +6876,7 @@ msgstr "Modelo C4"
 
 #: ../style_sheets.md:321
 msgid "Person"
-msgstr ""
+msgstr "Pessoa"
 
 #: ../style_sheets.md:321
 msgid "``c4person``"
