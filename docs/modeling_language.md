@@ -20,9 +20,15 @@ functions.
 But let's not get ahead of ourselves. What is the functionality a modeling
 language implementation can offer?
 
+Three functionalities are exposed by a [`ModelingLanguage` instance](#modeling-language):
+
 * A data model (elements) and diagram items
 * Diagram types
 * A toolbox definition
+
+Other functionalities can be extended by adding handlers to the respective
+generic functions:
+
 * [Connectors](#connectors), allow diagram items to connect
 * [Format/parse](#format-and-parse) model elements to and from a textual representation
 * [Copy/paste](#copy-and-paste) behavior when element copying is not trivial,
@@ -31,18 +37,17 @@ language implementation can offer?
 * [Dropping](#dropping), allow elements to be dragged from the tree view onto a diagram
 * [Automatic cleanup rules](#automated-model-cleanup) to keep the model consistent
 
-The first three by functionalities are exposed by the `ModelingLanguage` class.
-The other functionalities can be extended by adding handlers to the respective
-generic functions.
 
 Modeling languages can also provide new UI components. Those components are not loaded
 directly when you import a modeling language package. Instead, they should be imported via
 the `gaphor.modules` entrypoint.
 
-* [Editor pages](#editor-property-pages), shown in the collapsible pane on the right side
+* [Editor pages](#property-editor-pages), shown in the collapsible pane on the right side
 * [Instant (diagram) editor popups](#instant-diagram-editor-popups)
 * Special diagram interactions
 
+
+## Modeling language
 
 ```{eval-rst}
 .. autoclass:: gaphor.abc.ModelingLanguage
@@ -181,7 +186,7 @@ A little dispatch function is used to determine if a model element can be remove
 Determine if a model element can safely be removed.
 ```
 
-## Editor property pages
+## Property Editor pages
 
 The editor page is constructed from snippets. For example: almost each element has a name,
 so there is a UI snippet that allows you to edit a name.

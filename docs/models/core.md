@@ -13,7 +13,7 @@ This allows us to provide you nice diagrams of Gaphor’s internal model.
 :model: core
 ```
 
-The `Element` base class provides event notification and integrates
+The {obj}`~gaphor.core.modeling.Element` base class provides event notification and integrates
 with the model repository (internally known as `ElementFactory`).
 Bi-directional relationships are also possible, as well as derived
 relations.
