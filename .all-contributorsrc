@@ -1383,6 +1383,16 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "rffontenelle",
+      "name": "Rafael Fontenelle",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1571783?v=4",
+      "profile": "https://github.com/rffontenelle",
+      "contributions": [
+        "translation",
+        "ideas"
+      ]
     }
   ],
   "contributorsPerLine": 7,
