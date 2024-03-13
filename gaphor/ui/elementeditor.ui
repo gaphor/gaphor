@@ -180,6 +180,7 @@
           <object class="GtkToggleButton">
             <property name="margin-start">38</property>
             <property name="receives_default">1</property>
+            <property name="tooltip_text" translatable="yes">Toggle Model Preferences</property>
             <property name="action_name">win.show-preferences</property>
             <child>
               <object class="GtkImage">
