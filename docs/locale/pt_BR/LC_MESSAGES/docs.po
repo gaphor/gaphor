@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gaphor 2.23.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-02-15 20:49-0500\n"
-"PO-Revision-Date: 2024-03-14 13:01+0000\n"
+"PO-Revision-Date: 2024-03-15 01:52+0000\n"
 "Last-Translator: Rafael Fontenelle <rafaelff@gnome.org>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/"
 "gaphor/docs-gaphor-org/pt_BR/>\n"
@@ -2943,7 +2943,7 @@ msgstr ""
 
 #: ../coffee_machine_logical.md:14
 msgid "Functional Boundary Behavior"
-msgstr ""
+msgstr "Comportamento de Limite Funcional"
 
 #: ../coffee_machine_logical.md:16
 msgid "A Functional Boundary Behavior diagram is a type of SysML Activity diagram used to show the interactions between different logical blocks. The swim lanes divide the diagram into different areas, each representing a different functional block or component."
@@ -3959,7 +3959,7 @@ msgstr ""
 
 #: ../getting_started.md:167
 msgid "Diagram Language"
-msgstr "Linguagem do diagrama"
+msgstr "Idioma do diagrama"
 
 #: ../getting_started.md:169
 msgid "The diagram language modifier is only applicable to the loaded model and how it is shown in the diagram. The diagram language setting is saved as part of the model and defaults to English."
@@ -3979,7 +3979,7 @@ msgstr ""
 
 #: ../getting_started.md:178
 msgid "Style Sheet"
-msgstr "Folha de estilos"
+msgstr "Folha de Estilos"
 
 #: ../getting_started.md:180
 msgid "The [style sheet](style_sheets) allows to change the visual appearance of diagrams and model elements."
@@ -6830,7 +6830,7 @@ msgstr "Interações"
 
 #: ../style_sheets.md:317
 msgid "Reflexive message"
-msgstr ""
+msgstr "Mensagem reflexiva"
 
 #: ../style_sheets.md:317
 msgid "``message``"
@@ -6947,7 +6947,7 @@ msgstr "RAAML"
 
 #: ../style_sheets.md:329
 msgid "FTA"
-msgstr ""
+msgstr "FTA"
 
 #: ../style_sheets.md:329
 msgid "any AND/OR/… Gate"
