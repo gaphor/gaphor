@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2024-02-27 10:00-0500\n"
-"PO-Revision-Date: 2024-01-04 10:07+0000\n"
+"PO-Revision-Date: 2024-03-15 21:07+0000\n"
 "Last-Translator: Jiri Grönroos <jiri.gronroos@iki.fi>\n"
+"Language-Team: Finnish <https://hosted.weblate.org/projects/gaphor/gaphor/fi/"
+">\n"
 "Language: fi\n"
-"Language-Team: Finnish "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/fi/>\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.5-dev\n"
 "Generated-By: Babel 2.14.0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:23 gaphor/C4Model/toolbox.py:67
@@ -2381,7 +2382,7 @@ msgstr "<Ei mitään>"
 
 #: gaphor/ui/diagrampage.py:311
 msgid "Show in Model Browser"
-msgstr ""
+msgstr "Näytä malliselaimessa"
 
 #: gaphor/ui/diagrams.ui:12
 msgid "Open a Diagram"
@@ -2628,7 +2629,6 @@ msgid "Save Gaphor Model As"
 msgstr "Tallenna Gaphor-malli nimellä"
 
 #: gaphor/ui/filemanager.py:389 gaphor/ui/filemanager.py:424
-#, fuzzy
 msgid "New Model"
 msgstr "Uusi malli"
 
@@ -2707,25 +2707,23 @@ msgstr "Layered C4 Model -mallipohja"
 
 #: gaphor/ui/greeter.py:66
 msgid "UML Example"
-msgstr ""
+msgstr "UML-esimerkki"
 
 #: gaphor/ui/greeter.py:67
-#, fuzzy
 msgid "Unified Modeling Language example model"
 msgstr "Unified Modeling Language -mallipohja"
 
 #: gaphor/ui/greeter.py:73
 msgid "SysML Example"
-msgstr ""
+msgstr "SysML-esimerkki"
 
 #: gaphor/ui/greeter.py:74
-#, fuzzy
 msgid "Systems Modeling Language example model"
 msgstr "Systems Modeling Language -mallipohja"
 
 #: gaphor/ui/greeter.py:80
 msgid "RAAML Example"
-msgstr ""
+msgstr "RAAML-esimerkki"
 
 #: gaphor/ui/greeter.py:81
 #, fuzzy
@@ -2786,7 +2784,6 @@ msgid "Toggle Property Editor"
 msgstr "Ominaisuusmuokkain päälle/pois"
 
 #: gaphor/ui/modelbrowser.py:177
-#, fuzzy
 msgid "New Diagram"
 msgstr "Uusi kaavio"
 
@@ -2835,13 +2832,12 @@ msgid "New Generic Diagram"
 msgstr "Uusi yleinen kaavio"
 
 #: gaphor/ui/modelchanged.ui:6
-#, fuzzy
 msgid "Model Changed on Disk"
-msgstr "Yhdistä mallimuutokset"
+msgstr "Malli muuttui levyllä"
 
 #: gaphor/ui/modelchanged.ui:7
 msgid "Discard Changes and Reload"
-msgstr ""
+msgstr "Hylkää muutokset ja lataa uudelleen"
 
 #: gaphor/ui/tests/test_treemodel.py:200 gaphor/ui/treemodel.py:64
 msgid "<Relationships>"
@@ -3072,4 +3068,3 @@ msgstr "Päivitä relaatio “{name}”"
 
 #~ msgid "Recently Opened"
 #~ msgstr "Äskettäin avattu"
-
