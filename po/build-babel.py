@@ -37,7 +37,19 @@ def compile_mo_all():
 
 
 def compile_mo_release():
-    mature_translations = ["cs", "es", "de", "nl", "fi", "hr", "hu", "ru"]
+    mature_translations = [
+        "cs",
+        "es",
+        "de",
+        "nl",
+        "fi",
+        "hr",
+        "hu",
+        "pt_BR",
+        "ru",
+        "tr",
+        "zh_hans",
+    ]
     for path in (
         path
         for path in po_path.iterdir()
