@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gaphor 2.23.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-02-15 20:49-0500\n"
-"PO-Revision-Date: 2024-03-15 01:52+0000\n"
+"PO-Revision-Date: 2024-03-15 02:07+0000\n"
 "Last-Translator: Rafael Fontenelle <rafaelff@gnome.org>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/"
 "gaphor/docs-gaphor-org/pt_BR/>\n"
@@ -4586,7 +4586,7 @@ msgstr ""
 
 #: ../getting_started.md:123
 msgid "Copy and Paste"
-msgstr ""
+msgstr "Copiar e Colar"
 
 #: ../getting_started.md:125
 msgid ""
@@ -4616,7 +4616,7 @@ msgstr ""
 
 #: ../getting_started.md:136
 msgid "Undo and Redo"
-msgstr "Desfazer e refazer"
+msgstr "Desfazer e Refazer"
 
 #: ../getting_started.md:138
 msgid ""
