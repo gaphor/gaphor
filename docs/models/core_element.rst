@@ -1,5 +1,18 @@
-The ``Element`` Class
+Core Modeling Classes
 =====================
+
+Here you can find a short description of the base classes in
+a Gaphor model: :obj:`~gaphor.core.modeling.Element`,
+:obj:`~gaphor.core.modeling.Presentation`, and :obj:`~gaphor.core.modeling.Diagram`.
+
+The :obj:`~gaphor.core.modeling.element.RepositoryProtocol`, and
+:obj:`~gaphor.core.modeling.element.EventWatcherProtocol`
+protocols are important to connect the model to the repository and event handling
+mechanisms.
+
+
+The ``Element`` Class
+---------------------
 
 The class ``Element`` is the core of Gaphor's data model.
 
@@ -36,6 +49,30 @@ The class ``Element`` is the core of Gaphor's data model.
    .. automethod:: gaphor.core.modeling.Element.isKindOf
 
    .. automethod:: gaphor.core.modeling.Element.isTypeOf
+
+
+The ``Presentation`` class
+--------------------------
+
+.. autoclass:: gaphor.core.modeling.Presentation
+
+   .. automethod:: gaphor.core.modeling.Presentation.request_update
+
+   .. automethod:: gaphor.core.modeling.Presentation.watch
+
+   .. automethod:: gaphor.core.modeling.Presentation.change_parent
+
+
+The ``Diagram`` class
+--------------------------
+
+.. autoclass:: gaphor.core.modeling.Diagram
+
+   .. automethod:: gaphor.core.modeling.Diagram.create
+
+   .. automethod:: gaphor.core.modeling.Diagram.lookup
+
+   .. automethod:: gaphor.core.modeling.Diagram.select
 
 
 Protocols

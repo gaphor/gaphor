@@ -264,17 +264,14 @@ P = TypeVar("P", bound=Presentation)
 
 
 class Diagram(Element):
-    """Diagrams may contain model elements and can be owned by a Package."""
+    """Diagrams may contain :obj:`Presentation` elements and can be owned by any element."""
 
     name: attribute[str] = attribute("name", str)
     diagramType: attribute[str] = attribute("diagramType", str)
     element: relation_one[Element]
 
     def __init__(self, id: Id | None = None, model: RepositoryProtocol | None = None):
-        """Initialize the diagram with an optional id and element model.
-
-        The diagram also has a canvas.
-        """
+        """Initialize the diagram with an optional id and element model."""
 
         super().__init__(id, model)
         self._connections = gaphas.connections.Connections()
@@ -348,7 +345,12 @@ class Diagram(Element):
         self._order_owned_presentation()
         super().postload()
 
-    def create(self, type, parent=None, subject=None):
+    def create(
+        self,
+        type_: type[P],
+        parent: Presentation | None = None,
+        subject: Element | None = None,
+    ) -> P:
         """Create a new diagram item on the diagram.
 
         It is created with a unique ID, and it is attached to the
@@ -357,13 +359,19 @@ class Diagram(Element):
         subject.
         """
 
-        return self.create_as(type, generate_id(), parent, subject)
+        return self.create_as(type_, generate_id(), parent, subject)
 
-    def create_as(self, type, id, parent=None, subject=None):
+    def create_as(
+        self,
+        type_: type[P],
+        id: Id,
+        parent: Presentation | None = None,
+        subject: Element | None = None,
+    ) -> P:
         assert isinstance(self.model, PresentationRepositoryProtocol)
-        item = self.model.create_as(type, id, diagram=self)
+        item = self.model.create_as(type_, id, diagram=self)
         if not isinstance(item, gaphas.Item):
-            raise TypeError(f"Type {type} does not comply with Item protocol")
+            raise TypeError(f"Type {type_} does not comply with Item protocol")
         if subject:
             item.subject = subject
         if parent:
@@ -371,10 +379,12 @@ class Diagram(Element):
         self.request_update(item)
         return item
 
-    def lookup(self, id):
-        for item in self.get_all_items():
-            if item.id == id:
-                return item
+    def lookup(self, id: Id) -> Presentation | None:
+        """Find a presentation item by id.
+
+        Returns a presentation in this diagram or return ``None``.
+        """
+        return next((item for item in self.get_all_items() if item.id == id), None)
 
     def unlink(self):
         """Unlink all canvas items then unlink this diagram."""

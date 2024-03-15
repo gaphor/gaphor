@@ -49,17 +49,7 @@ class BaseConnector:
     Line item ``line`` connects with a handle to a connectable item ``element``.
 
     :param line: connecting item
-    :type line: Presentation
     :param element: connectable item
-    :type element: Presentation
-
-    The following methods are required to make this work:
-
-    - ``allow()``: is the connection allowed at all (during mouse movement for example).
-    - ``connect()``: Establish a connection between element and line. Also takes care of
-      disconnects, if required (e.g. 1:1 relationships)
-    - ``disconnect()``: Break connection, called when dropping a handle on a
-      point where it can not connect.
 
     By convention the adapters are registered by (element, line) -- in that order.
     """
@@ -90,12 +80,19 @@ class BaseConnector:
     def allow(self, handle: Handle, port: Port) -> bool:
         """Determine if items can be connected.
 
+        Is the connection allowed at all (during mouse movement for example)?
+
         Returns `True` if connection is allowed.
         """
         return bool(self.element.diagram) and self.element.diagram is self.line.diagram
 
     def connect(self, handle: Handle, port: Port) -> bool:
-        """Connect to an element. Note that at this point the line may be
+        """Connect to an element.
+
+        Establish a connection between element and line. Also takes care of
+        disconnects, if required (e.g. 1:1 relationships).
+
+        Note that at this point the line may be
         connected to some other, or the same element. The connection at model
         level also still exists.
 
@@ -104,7 +101,11 @@ class BaseConnector:
         return True
 
     def disconnect(self, handle: Handle) -> None:
-        """Disconnect model level connections."""
+        """Disconnect model level connections.
+
+        Break connection, called when dropping a handle on a
+        point where it can not connect.
+        """
 
 
 class NoConnector:

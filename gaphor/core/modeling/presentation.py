@@ -5,21 +5,20 @@ from __future__ import annotations
 import ast
 import logging
 import re
-from typing import TYPE_CHECKING, Generic, TypeVar
+from typing import TYPE_CHECKING, Generic, Self, TypeVar
 
 from gaphas.item import Matrices
 
-from gaphor.core.modeling.element import Element, Id, UnlinkEvent
+from gaphor.core.modeling.element import Element, Handler, Id, UnlinkEvent
 from gaphor.core.modeling.event import RevertibleEvent
 from gaphor.core.modeling.properties import relation_many, relation_one
 
 if TYPE_CHECKING:
     from gaphor.core.modeling.diagram import Diagram
 
-S = TypeVar("S", bound=Element)
-
-
 log = logging.getLogger(__name__)
+
+S = TypeVar("S", bound=Element)
 
 
 def literal_eval(value: str):
@@ -27,8 +26,10 @@ def literal_eval(value: str):
 
 
 class Presentation(Matrices, Element, Generic[S]):
-    """This presentation is used to link the behaviors of
-    `gaphor.core.modeling` and `gaphas.Item`."""
+    """A special type of :obj:`Element` that can be displayed on a :obj:`Diagram`.
+
+    Subtypes of ``Presentation`` should implement the :obj:`gaphas.item.Item` protocol.
+    """
 
     def __init__(self, diagram: Diagram, id: Id | None = None) -> None:
         super().__init__(id=id, model=diagram.model)
@@ -51,23 +52,32 @@ class Presentation(Matrices, Element, Generic[S]):
     parent: relation_one[Presentation]
     children: relation_many[Presentation]
 
-    def request_update(self):
+    def request_update(self) -> None:
+        """Mark this presentation object for update.
+
+        Updates are orchestrated by diagrams.
+        """
         if self.diagram:
             self.diagram.request_update(self)
 
-    def watch(self, path, handler=None):
-        """Watch a certain path of elements starting with the DiagramItem. The
-        handler is optional and will default to a simple self.request_update().
+    def watch(self, path: str, handler: Handler | None = None) -> Self:
+        """Watch a certain path of elements starting with ``self``.
+
+        The handler is optional and will default to a simple :obj:`request_update`.
 
         Watches should be set in the constructor, so they can be registered
         and unregistered in one shot.
 
-        This interface is fluent(returns self).
+        .. code::
+
+            self.watch("subject[NamedElement].name")
+
+        This interface is fluent: returns ``self``.
         """
         self._watcher.watch(path, handler)
         return self
 
-    def change_parent(self, new_parent):
+    def change_parent(self, new_parent: Presentation | None) -> None:
         """Change the parent and update the item's matrix so the item visually
         remains in the same place."""
         old_parent = self.parent
@@ -83,6 +93,10 @@ class Presentation(Matrices, Element, Generic[S]):
         self.matrix.set(*m)
 
     def css_nodes(self):
+        """CSS nodes present in this element.
+
+        Returns a sequence of CSS nodes.
+        """
         return ()
 
     def load(self, name, value):
