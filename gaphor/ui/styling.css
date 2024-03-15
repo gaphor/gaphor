@@ -126,10 +126,6 @@ textfield text selection {
   box-shadow: none;
 }
 
-#model_browser {
-  margin: 1px 1px 0 0;
-}
-
 tabbar > revealer > box,
 #model_browser listview {
   background-color: transparent;
