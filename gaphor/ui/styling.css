@@ -139,6 +139,11 @@ tabbar > revealer > box,
   padding-top: 0;
 }
 
+.pseudo-sidebar-pane {
+  background-color: @sidebar_bg_color;
+  color: @sidebar_fg_color;
+}
+
 .editor-wide {
   min-width: 350px;
 }

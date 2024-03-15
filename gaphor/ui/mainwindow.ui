@@ -75,7 +75,7 @@
                     </property>
 
                     <style>
-                      <class name="sidebar-pane"/>
+                      <class name="pseudo-sidebar-pane"/>
                     </style>
 
                   </object>
