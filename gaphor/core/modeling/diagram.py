@@ -380,7 +380,7 @@ class Diagram(Element):
         return item
 
     def lookup(self, id: Id) -> Presentation | None:
-        """Find a presentatio item by id.
+        """Find a presentation item by id.
 
         Returns a presentation in this diagram or return ``None``.
         """
