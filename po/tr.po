@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2024-02-27 10:00-0500\n"
-"PO-Revision-Date: 2024-02-02 20:01+0000\n"
-"Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
+"PO-Revision-Date: 2024-03-15 21:07+0000\n"
+"Last-Translator: Semih <semihbrn10@gmail.com>\n"
+"Language-Team: Turkish <https://hosted.weblate.org/projects/gaphor/gaphor/tr/"
+">\n"
 "Language: tr\n"
-"Language-Team: Turkish "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/tr/>\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.5-dev\n"
 "Generated-By: Babel 2.14.0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:23 gaphor/C4Model/toolbox.py:67
@@ -2383,7 +2384,7 @@ msgstr "<Yok>"
 
 #: gaphor/ui/diagrampage.py:311
 msgid "Show in Model Browser"
-msgstr ""
+msgstr "Model Browser'da Göster"
 
 #: gaphor/ui/diagrams.ui:12
 msgid "Open a Diagram"
@@ -2399,7 +2400,7 @@ msgstr ""
 
 #: gaphor/ui/elementeditor.py:413 gaphor/ui/elementeditor.ui:352
 msgid "No focused item."
-msgstr ""
+msgstr "Odaklanılan öge yok."
 
 #: gaphor/ui/elementeditor.ui:11
 msgid "No item selected"
@@ -2499,7 +2500,7 @@ msgstr "Biçim Dosyası"
 
 #: gaphor/ui/elementeditor.ui:338
 msgid "CSS nodes of focused item"
-msgstr ""
+msgstr "Odaklanılan ögenin CSS düğümleri"
 
 #: gaphor/ui/elementeditor.ui:363
 msgid ""
@@ -2635,9 +2636,8 @@ msgid "Save Gaphor Model As"
 msgstr "Gaphor Modelini Farklı Kaydet"
 
 #: gaphor/ui/filemanager.py:389 gaphor/ui/filemanager.py:424
-#, fuzzy
 msgid "New Model"
-msgstr "Yeni model"
+msgstr "Yeni Model"
 
 #: gaphor/ui/filemanager.py:443
 msgid "Resolve Merge Conflict?"
@@ -2714,30 +2714,27 @@ msgstr "Katmanlı C4 Modeli şablonu"
 
 #: gaphor/ui/greeter.py:66
 msgid "UML Example"
-msgstr ""
+msgstr "UML Örneği"
 
 #: gaphor/ui/greeter.py:67
-#, fuzzy
 msgid "Unified Modeling Language example model"
-msgstr "Birleşik Modelleme Dili şablonu"
+msgstr "Birleşik Modelleme Dili örnek modeli"
 
 #: gaphor/ui/greeter.py:73
 msgid "SysML Example"
-msgstr ""
+msgstr "SysML Örneği"
 
 #: gaphor/ui/greeter.py:74
-#, fuzzy
 msgid "Systems Modeling Language example model"
-msgstr "Sistem Modelleme Dili şablonu"
+msgstr "Sistem Modelleme Dili örnek modeli"
 
 #: gaphor/ui/greeter.py:80
 msgid "RAAML Example"
-msgstr ""
+msgstr "RAAML Örneği"
 
 #: gaphor/ui/greeter.py:81
-#, fuzzy
 msgid "Risk Analysis and Assessment Modeling Language example model"
-msgstr "Risk Analizi ve Değerlendirme Modelleme Dili şablonu"
+msgstr "Risk Analizi ve Değerlendirme Modelleme Dili örnek modeli"
 
 #: gaphor/ui/greeter.ui:8 gaphor/ui/greeter.ui:53 gaphor/ui/mainwindow.py:48
 msgid "Open Model…"
@@ -2793,9 +2790,8 @@ msgid "Toggle Property Editor"
 msgstr "Özellik düzenleyiciyi aç/kapat"
 
 #: gaphor/ui/modelbrowser.py:177
-#, fuzzy
 msgid "New Diagram"
-msgstr "Yeni diyagram"
+msgstr "Yeni Diyagram"
 
 #: gaphor/ui/modelbrowser.py:210
 msgid "{name} package"
@@ -2842,13 +2838,12 @@ msgid "New Generic Diagram"
 msgstr "Yeni Genel Diyagram"
 
 #: gaphor/ui/modelchanged.ui:6
-#, fuzzy
 msgid "Model Changed on Disk"
-msgstr "Model Değişikliklerini Birleştir"
+msgstr "Diskteki Model Değiştirildi"
 
 #: gaphor/ui/modelchanged.ui:7
 msgid "Discard Changes and Reload"
-msgstr ""
+msgstr "Değişiklikleri At ve Yeniden Yükle"
 
 #: gaphor/ui/tests/test_treemodel.py:200 gaphor/ui/treemodel.py:64
 msgid "<Relationships>"
@@ -3086,4 +3081,3 @@ msgstr "“{name}” ilişkisini güncelle"
 
 #~ msgid "Recently Opened"
 #~ msgstr "Son Açılanlar"
-
