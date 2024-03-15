@@ -24,8 +24,9 @@
               <object class="GtkPaned" id="left-pane">
                 <property name="orientation">horizontal</property>
                 <property name="position">220</property>
+                <property name="shrink-start-child">0</property>
 
-                <child type="start">
+                <property name="start-child">
                   <!-- Model Browser and Toolbox pane -->
                   <object class="AdwToolbarView">
                     <child type="top">
@@ -34,7 +35,7 @@
                         <property name="decoration-layout"></property>
                         <child>
                           <object class="GtkMenuButton" id="modeling-language-name">
-                            <property name="focus_on_click">0</property>
+                            <property name="focus-on-click">0</property>
                             <property name="popover">select-modeling-language</property>
                           </object>
                         </child>
@@ -79,9 +80,9 @@
                     </style>
 
                   </object>
-                </child>
+                </property>
 
-                <child type="end">
+                <property name="end-child">
                   <!-- Diagrams pane -->
                   <object class="AdwToolbarView">
                     <child type="top">
@@ -179,7 +180,7 @@
                       </object>
                     </property>
                   </object>
-                </child>
+                </property>
 
               </object>
             </property>

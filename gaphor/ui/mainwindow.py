@@ -191,6 +191,7 @@ class MainWindow(Service, ActionProvider):
         track_paned_position(
             builder.get_object("left-pane"), "ui.namespace-width", self.properties
         )
+
         track_paned_position(
             builder.get_object("top-left-pane"), "ui.namespace-height", self.properties
         )
