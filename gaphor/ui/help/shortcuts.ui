@@ -15,6 +15,28 @@
 
             <child>
               <object class="GtkShortcutsShortcut">
+                <property name="accelerator">&lt;Primary&gt;comma</property>
+                <property name="title" translatable="yes">Preferences</property>
+              </object>
+            </child>
+
+            <child>
+              <object class="GtkShortcutsShortcut">
+                <property name="accelerator">&lt;Primary&gt;q</property>
+                <property name="title" translatable="yes">Quit Gaphor</property>
+              </object>
+            </child>
+
+          </object>
+        </child>
+
+        <!-- File shortcuts -->
+        <child>
+          <object class="GtkShortcutsGroup">
+            <property name="title" translatable="yes">Model</property>
+
+            <child>
+              <object class="GtkShortcutsShortcut">
                 <property name="accelerator">F2</property>
                 <property name="title" translatable="yes">Rename</property>
               </object>
@@ -36,15 +58,15 @@
 
             <child>
               <object class="GtkShortcutsShortcut">
-                <property name="accelerator">&lt;Primary&gt;w</property>
-                <property name="title" translatable="yes">Close Diagram</property>
+                <property name="accelerator">&lt;Primary&gt;semicolon</property>
+                <property name="title" translatable="yes">Toggle Model Preferences</property>
               </object>
             </child>
 
             <child>
               <object class="GtkShortcutsShortcut">
-                <property name="accelerator">&lt;Primary&gt;comma</property>
-                <property name="title" translatable="yes">Preferences</property>
+                <property name="accelerator">&lt;Primary&gt;w</property>
+                <property name="title" translatable="yes">Close Diagram</property>
               </object>
             </child>
 
@@ -55,52 +77,8 @@
               </object>
             </child>
 
-            <child>
-              <object class="GtkShortcutsShortcut">
-                <property name="accelerator">&lt;Primary&gt;q</property>
-                <property name="title" translatable="yes">Quit Gaphor</property>
-              </object>
-            </child>
-
           </object>
         </child>
-
-        <!-- File shortcuts -->
-        <child>
-          <object class="GtkShortcutsGroup">
-            <property name="title" translatable="yes">Files</property>
-
-            <child>
-              <object class="GtkShortcutsShortcut">
-                <property name="accelerator">&lt;Primary&gt;n</property>
-                <property name="title" translatable="yes">New Model…</property>
-              </object>
-            </child>
-
-            <child>
-              <object class="GtkShortcutsShortcut">
-                <property name="accelerator">&lt;Primary&gt;o</property>
-                <property name="title" translatable="yes">Open a Model…</property>
-              </object>
-            </child>
-
-            <child>
-              <object class="GtkShortcutsShortcut">
-                <property name="accelerator">&lt;Primary&gt;s</property>
-                <property name="title" translatable="yes">Save</property>
-              </object>
-            </child>
-
-            <child>
-              <object class="GtkShortcutsShortcut">
-                <property name="accelerator">&lt;Primary&gt;&lt;Shift&gt;s</property>
-                <property name="title" translatable="yes">Save As…</property>
-              </object>
-            </child>
-
-          </object>
-        </child>
-
 
         <!-- Undo shortcuts -->
         <child>
@@ -121,34 +99,6 @@
               </object>
             </child>
 
-          </object>
-        </child>
-
-        <!-- Zoom shortcuts -->
-        <child>
-          <object class="GtkShortcutsGroup">
-            <property name="title" translatable="yes">Zoom</property>
-
-            <child>
-              <object class="GtkShortcutsShortcut">
-                <property name="accelerator">&lt;Primary&gt;equal</property>
-                <property name="title" translatable="yes">Zoom In</property>
-              </object>
-            </child>
-
-            <child>
-              <object class="GtkShortcutsShortcut">
-                <property name="accelerator">&lt;Primary&gt;minus</property>
-                <property name="title" translatable="yes">Zoom Out</property>
-              </object>
-            </child>
-
-            <child>
-              <object class="GtkShortcutsShortcut">
-                <property name="accelerator">&lt;Primary&gt;0</property>
-                <property name="title" translatable="yes">Reset Zoom</property>
-              </object>
-            </child>
           </object>
         </child>
 
@@ -204,6 +154,70 @@
               <object class="GtkShortcutsShortcut">
                 <property name="accelerator">&lt;Primary&gt;&lt;Shift&gt;v</property>
                 <property name="title" translatable="yes">Paste (copy defining elements)</property>
+              </object>
+            </child>
+
+          </object>
+        </child>
+
+        <!-- Zoom shortcuts -->
+        <child>
+          <object class="GtkShortcutsGroup">
+            <property name="title" translatable="yes">Zoom</property>
+
+            <child>
+              <object class="GtkShortcutsShortcut">
+                <property name="accelerator">&lt;Primary&gt;equal</property>
+                <property name="title" translatable="yes">Zoom In</property>
+              </object>
+            </child>
+
+            <child>
+              <object class="GtkShortcutsShortcut">
+                <property name="accelerator">&lt;Primary&gt;minus</property>
+                <property name="title" translatable="yes">Zoom Out</property>
+              </object>
+            </child>
+
+            <child>
+              <object class="GtkShortcutsShortcut">
+                <property name="accelerator">&lt;Primary&gt;0</property>
+                <property name="title" translatable="yes">Reset Zoom</property>
+              </object>
+            </child>
+          </object>
+        </child>
+
+        <!-- File shortcuts -->
+        <child>
+          <object class="GtkShortcutsGroup">
+            <property name="title" translatable="yes">Files</property>
+
+            <child>
+              <object class="GtkShortcutsShortcut">
+                <property name="accelerator">&lt;Primary&gt;n</property>
+                <property name="title" translatable="yes">New Model…</property>
+              </object>
+            </child>
+
+            <child>
+              <object class="GtkShortcutsShortcut">
+                <property name="accelerator">&lt;Primary&gt;o</property>
+                <property name="title" translatable="yes">Open a Model…</property>
+              </object>
+            </child>
+
+            <child>
+              <object class="GtkShortcutsShortcut">
+                <property name="accelerator">&lt;Primary&gt;s</property>
+                <property name="title" translatable="yes">Save</property>
+              </object>
+            </child>
+
+            <child>
+              <object class="GtkShortcutsShortcut">
+                <property name="accelerator">&lt;Primary&gt;&lt;Shift&gt;s</property>
+                <property name="title" translatable="yes">Save As…</property>
               </object>
             </child>
 

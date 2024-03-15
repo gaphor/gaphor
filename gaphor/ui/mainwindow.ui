@@ -11,6 +11,9 @@
   <object class="GtkPopoverMenu" id="diagram-types">
   </object>
   <object class="GtkApplicationWindow" id="main-window">
+    <property name="default-width">860</property>
+    <property name="default-height">580</property>
+    <property name="resizable">1</property>
     <child type="titlebar">
       <object class="GtkHeaderBar" id="header">
         <child type="title">
@@ -92,8 +95,85 @@
         </style>
       </object>
     </child>
+
     <child>
-      <object class="AdwToastOverlay" id="main-content">
+      <object class="AdwToastOverlay" id="main-overlay">
+        <property name="child">
+          <object class="GtkPaned" id="left-pane">
+            <property name="orientation">horizontal</property>
+            <property name="position">220</property>
+            <child type="start">
+              <object class="GtkPaned" id="top-left-pane">
+                <property name="orientation">vertical</property>
+                <property name="position">300</property>
+                <child type="start">
+                  <object class="AdwBin" id="component:model_browser">
+                    <property name="hexpand">1</property>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="label">Model Browser</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child type="end">
+                  <object class="AdwBin" id="component:toolbox">
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="label">Toolbox</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child type="end">
+              <object class="GtkBox">
+                <property name="orientation">horizontal</property>
+                <property name="hexpand">1</property>
+                <child>
+                  <object class="GtkBox">
+                    <property name="hexpand">1</property>
+                    <property name="orientation">vertical</property>
+                    <child>
+                      <object class="AdwBin" id="component:model_changed">
+                        <child>
+                          <object class="GtkLabel">
+                            <property name="label">Model Changed</property>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="AdwBin" id="component:diagrams">
+                        <property name="hexpand">1</property>
+                        <property name="vexpand">1</property>
+                        <child>
+                          <object class="GtkLabel">
+                            <property name="label">Diagrams</property>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkRevealer" id="component:element_editor">
+                    <property name="hexpand-set">1</property>
+                    <property name="transition-type">slide-left</property>
+                    <property name="transition-duration">200</property>
+                    <property name="reveal-child">1</property>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="label">Element Editor</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </property>
       </object>
     </child>
   </object>

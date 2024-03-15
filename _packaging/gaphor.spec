@@ -42,9 +42,8 @@ a = Analysis(  # type: ignore
     binaries=[],
     datas=[
         ("../gaphor/diagram.css", "gaphor"),
-        ("../gaphor/ui/layout.xml", "gaphor/ui"),
         ("../gaphor/ui/styling*.css", "gaphor/ui"),
-        ("../gaphor/ui/*.png", "gaphor/ui"),
+        ("../gaphor/ui/placement-icon-base.png", "gaphor/ui"),
         (
             "../gaphor/ui/icons/hicolor/scalable/actions/*.svg",
             "gaphor/ui/icons/hicolor/scalable/actions",

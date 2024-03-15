@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import importlib.resources
 import logging
 from pathlib import Path
 from typing import Callable
@@ -27,7 +26,6 @@ from gaphor.ui.abc import UIComponent
 from gaphor.ui.actiongroup import window_action_group
 from gaphor.ui.event import CurrentDiagramChanged
 from gaphor.ui.filedialog import pretty_path
-from gaphor.ui.layout import deserialize, is_maximized
 from gaphor.ui.modelbrowser import create_diagram_types_model
 from gaphor.ui.notification import InAppNotifier
 
@@ -142,6 +140,14 @@ class MainWindow(Service, ActionProvider):
         return self._builder.get_object("subtitle") if self._builder else None
 
     @property
+    def element_editor(self):
+        return (
+            self._builder.get_object("component:element_editor")
+            if self._builder
+            else None
+        )
+
+    @property
     def model_changed(self) -> bool:
         return self.modified.get_visible() if self.modified else False  # type: ignore[no-any-return]
 
@@ -149,9 +155,6 @@ class MainWindow(Service, ActionProvider):
     def model_changed(self, model_changed: bool):
         if self.modified:
             self.modified.set_visible(model_changed)
-
-    def get_ui_component(self, name):
-        return self.component_registry.get(UIComponent, name)
 
     def open(self, gtk_app=None):
         """Open the main window."""
@@ -185,37 +188,37 @@ class MainWindow(Service, ActionProvider):
         elif self.properties.get("ui.window-mode", "") == "fullscreened":
             window.fullscreen()
 
-        def _factory(name):
-            comp = self.get_ui_component(name)
-            return comp.open()
-
-        main_content = builder.get_object("main-content")
-        deserialize(
-            main_content,
-            (importlib.resources.files("gaphor.ui") / "layout.xml").read_text(
-                encoding="utf-8"
-            ),
-            _factory,
-            self.properties,
+        track_paned_position(
+            builder.get_object("left-pane"), "ui.namespace-width", self.properties
         )
+        track_paned_position(
+            builder.get_object("top-left-pane"), "ui.namespace-height", self.properties
+        )
+
+        for name, component in self.component_registry.all(UIComponent):
+            if bin := builder.get_object(f"component:{name}"):
+                widget = component.open()
+                widget.set_name(name)
+                bin.set_child(widget)
+
+                if name == "element_editor":
+                    bin.set_reveal_child(self.properties.get("show-editors", True))
 
         self.action_group, shortcuts = window_action_group(self.component_registry)
         window.insert_action_group("win", self.action_group)
 
         self._on_modeling_language_selection_changed()
+        self.in_app_notifier = InAppNotifier(builder.get_object("main-overlay"))
 
-        window.set_resizable(True)
         window.add_controller(Gtk.ShortcutController.new_for_model(shortcuts))
         window.connect("close-request", self._on_window_close_request)
         window.connect("notify::default-height", self._on_window_size_changed)
         window.connect("notify::default-width", self._on_window_size_changed)
         window.connect("notify::maximized", self._on_window_mode_changed)
         window.connect("notify::fullscreened", self._on_window_mode_changed)
+        window.connect("notify::is-active", self._on_window_active)
         window.present()
 
-        window.connect("notify::is-active", self._on_window_active)
-
-        self.in_app_notifier = InAppNotifier(main_content)
         em = self.event_manager
         em.subscribe(self._on_undo_manager_state_changed)
         em.subscribe(self._on_action_enabled)
@@ -227,6 +230,16 @@ class MainWindow(Service, ActionProvider):
         del self._ui_updates[:]
 
     # Actions:
+
+    @action(
+        name="show-editors",
+        shortcut="F9",
+        state=lambda self: self.properties.get("show-editors", True),
+    )
+    def toggle_editor_visibility(self, active):
+        if element_editor := self.element_editor:
+            element_editor.set_reveal_child(active)
+        self.properties.set("show-editors", active)
 
     @action("fullscreen", shortcut="F11", state=False)
     def toggle_fullscreen(self, active):
@@ -311,3 +324,30 @@ class MainWindow(Service, ActionProvider):
     def _on_window_mode_changed(self, window, gspec):
         mode = gspec.name
         self.properties.set("ui.window-mode", mode if window.get_property(mode) else "")
+
+
+def is_maximized(window: Gtk.Window) -> bool:
+    return window.is_maximized() or window.is_fullscreen()  # type: ignore[no-any-return]
+
+
+def _paned_position_changed(paned, _gparam, name, properties):
+    if not is_maximized(paned.get_root()):
+        properties.set(name, paned.props.position)
+
+
+def _paned_ensure_visible(paned, _gparam):
+    if paned.props.position < paned.props.min_position + 12:
+        paned.props.position = paned.props.min_position + 12
+    elif paned.props.position > paned.props.max_position - 12:
+        paned.props.position = paned.props.max_position - 12
+
+
+def track_paned_position(paned, name, properties):
+    paned.connect("notify::position", _paned_ensure_visible)
+    paned.connect("notify::min-position", _paned_ensure_visible)
+    paned.connect("notify::max-position", _paned_ensure_visible)
+
+    if position := properties.get(name, 0):
+        paned.set_position(position)
+
+    paned.connect("notify::position", _paned_position_changed, name, properties)

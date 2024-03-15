@@ -78,13 +78,12 @@ class ElementEditor(UIComponent, ActionProvider):
         self.editors = EditorStack(event_manager, diagrams, properties)
         self.preferences = PreferencesStack(event_manager, diagrams, element_factory)
         self.modelmerge = ModelMerge(event_manager, element_factory, modeling_language)
+        self.editor_stack: Gtk.Box | None = None
 
     def open(self):
         """Display the ElementEditor pane."""
         builder = new_builder("elementeditor", "style-sheet-buffer")
 
-        self.revealer = builder.get_object("elementeditor")
-        self.revealer.set_reveal_child(self.properties.get("show-editors", True))
         self.editor_stack = builder.get_object("editor-stack")
 
         resolve = builder.get_object("modelmerge-resolve")
@@ -98,7 +97,7 @@ class ElementEditor(UIComponent, ActionProvider):
 
         self.on_model_loaded(None)
 
-        return self.revealer
+        return builder.get_object("elementeditor")
 
     def close(self, widget=None):
         """Hide the element editor window and deactivate the toolbar button.
@@ -117,31 +116,26 @@ class ElementEditor(UIComponent, ActionProvider):
 
     @event_handler(ModelLoaded)
     def on_model_loaded(self, event):
-        self.editor_stack.set_visible_child_name(
-            "modelmerge" if self.modelmerge.needs_merge else "editors"
-        )
+        if editor_stack := self.editor_stack:
+            editor_stack.set_visible_child_name(
+                "modelmerge" if self.modelmerge.needs_merge else "editors"
+            )
 
-    @action(
-        name="show-editors",
-        shortcut="F9",
-        state=lambda self: self.properties.get("show-editors", True),
-    )
-    def toggle_editor_visibility(self, active):
-        self.revealer.set_reveal_child(active)
-        self.properties.set("show-editors", active)
-
-    @action(name="show-preferences", shortcut="<Primary>comma", state=False)
+    @action(name="show-preferences", shortcut="<Primary>semicolon", state=False)
     def toggle_editor_preferences(self, active):
-        if not self.revealer.get_child_revealed():
-            self.revealer.activate_action("win.show-editors", None)
+        if not self.editor_stack:
+            return
 
-        self.editor_stack.set_visible_child_name(
-            "preferences"
-            if active
-            else "modelmerge"
-            if self.modelmerge.needs_merge
-            else "editors"
-        )
+        if not self.editor_stack.get_mapped():
+            self.editor_stack.activate_action("win.show-editors", None)
+        else:
+            self.editor_stack.set_visible_child_name(
+                "preferences"
+                if active
+                else "modelmerge"
+                if self.modelmerge.needs_merge
+                else "editors"
+            )
 
     @action(
         name="reset-tool-after-create",

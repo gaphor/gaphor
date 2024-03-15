@@ -2,6 +2,7 @@
 <interface>
   <requires lib="gtk" version="4.0"/>
   <requires lib="gtksourceview" version="5.0" />
+
   <object class="GtkBox" id="no-item-selected">
     <property name="orientation">vertical</property>
     <child>
@@ -74,118 +75,28 @@
       </object>
     </child>
   </object>
+
   <object class="GtkSourceBuffer" id="style-sheet-buffer"/>
-  <object class="GtkRevealer" id="elementeditor">
-    <property name="transition_type">slide-left</property>
-    <property name="transition_duration">200</property>
-    <property name="reveal_child">1</property>
-    <property name="child">
+
+  <object class="GtkBox" id="elementeditor">
+    <property name="margin_top">2</property>
+    <property name="orientation">vertical</property>
+    <child>
       <object class="GtkBox">
-        <property name="margin_top">2</property>
-        <property name="orientation">vertical</property>
+        <style>
+          <class name="toolbar"/>
+        </style>
+        <property name="halign">end</property>
         <child>
           <object class="GtkBox">
-            <style>
-              <class name="toolbar"/>
-            </style>
-            <property name="halign">end</property>
             <child>
-              <object class="GtkBox">
-                <child>
-                  <object class="GtkButton">
-                    <property name="receives_default">1</property>
-                    <property name="tooltip_text" translatable="yes">Undo</property>
-                    <property name="action_name">win.edit-undo</property>
-                    <child>
-                      <object class="GtkImage">
-                        <property name="icon_name">edit-undo-symbolic</property>
-                      </object>
-                    </child>
-                    <style>
-                      <class name="flat"/>
-                    </style>
-                  </object>
-                </child>
-                <child>
-                  <object class="GtkButton">
-                    <property name="receives_default">1</property>
-                    <property name="action_name">win.edit-redo</property>
-                    <child>
-                      <object class="GtkImage">
-                        <property name="tooltip_text" translatable="yes">Redo</property>
-                        <property name="icon_name">edit-redo-symbolic</property>
-                      </object>
-                    </child>
-                    <style>
-                      <class name="flat"/>
-                    </style>
-                  </object>
-                </child>
-                <style>
-                  <class name="linked"/>
-                </style>
-              </object>
-            </child>
-            <child>
-              <object class="GtkBox">
-                <child>
-                  <object class="GtkButton">
-                    <property name="receives_default">1</property>
-                    <property name="tooltip_text" translatable="yes">Zoom In</property>
-                    <property name="action_name">win.zoom-in</property>
-                    <child>
-                      <object class="GtkImage">
-                        <property name="icon_name">zoom-in-symbolic</property>
-                      </object>
-                    </child>
-                    <style>
-                      <class name="flat"/>
-                    </style>
-                  </object>
-                </child>
-                <child>
-                  <object class="GtkButton">
-                    <property name="receives_default">1</property>
-                    <property name="tooltip_text" translatable="yes">Reset Zoom</property>
-                    <property name="action_name">win.zoom-100</property>
-                    <child>
-                      <object class="GtkImage">
-                        <property name="icon_name">zoom-original-symbolic</property>
-                      </object>
-                    </child>
-                    <style>
-                      <class name="flat"/>
-                    </style>
-                  </object>
-                </child>
-                <child>
-                  <object class="GtkButton">
-                    <property name="receives_default">1</property>
-                    <property name="tooltip_text" translatable="yes">Zoom Out</property>
-                    <property name="action_name">win.zoom-out</property>
-                    <child>
-                      <object class="GtkImage">
-                        <property name="icon_name">zoom-out-symbolic</property>
-                      </object>
-                    </child>
-                    <style>
-                      <class name="flat"/>
-                    </style>
-                  </object>
-                </child>
-                <style>
-                  <class name="linked"/>
-                </style>
-              </object>
-            </child>
-            <child>
-              <object class="GtkToggleButton">
-                <property name="margin-start">38</property>
+              <object class="GtkButton">
                 <property name="receives_default">1</property>
-                <property name="action_name">win.show-preferences</property>
+                <property name="tooltip_text" translatable="yes">Undo</property>
+                <property name="action_name">win.edit-undo</property>
                 <child>
                   <object class="GtkImage">
-                    <property name="icon_name">document-properties-symbolic</property>
+                    <property name="icon_name">edit-undo-symbolic</property>
                   </object>
                 </child>
                 <style>
@@ -193,243 +104,329 @@
                 </style>
               </object>
             </child>
+            <child>
+              <object class="GtkButton">
+                <property name="receives_default">1</property>
+                <property name="action_name">win.edit-redo</property>
+                <child>
+                  <object class="GtkImage">
+                    <property name="tooltip_text" translatable="yes">Redo</property>
+                    <property name="icon_name">edit-redo-symbolic</property>
+                  </object>
+                </child>
+                <style>
+                  <class name="flat"/>
+                </style>
+              </object>
+            </child>
+            <style>
+              <class name="linked"/>
+            </style>
           </object>
         </child>
         <child>
-          <object class="GtkStack" id="editor-stack">
-            <property name="transition_type">slide-left-right</property>
-            <property name="hhomogeneous">0</property>
+          <object class="GtkBox">
             <child>
-              <object class="GtkStackPage">
-                <property name="name">editors</property>
-                <property name="title" translatable="yes">Editors</property>
+              <object class="GtkButton">
+                <property name="receives_default">1</property>
+                <property name="tooltip_text" translatable="yes">Zoom In</property>
+                <property name="action_name">win.zoom-in</property>
+                <child>
+                  <object class="GtkImage">
+                    <property name="icon_name">zoom-in-symbolic</property>
+                  </object>
+                </child>
+                <style>
+                  <class name="flat"/>
+                </style>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton">
+                <property name="receives_default">1</property>
+                <property name="tooltip_text" translatable="yes">Reset Zoom</property>
+                <property name="action_name">win.zoom-100</property>
+                <child>
+                  <object class="GtkImage">
+                    <property name="icon_name">zoom-original-symbolic</property>
+                  </object>
+                </child>
+                <style>
+                  <class name="flat"/>
+                </style>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton">
+                <property name="receives_default">1</property>
+                <property name="tooltip_text" translatable="yes">Zoom Out</property>
+                <property name="action_name">win.zoom-out</property>
+                <child>
+                  <object class="GtkImage">
+                    <property name="icon_name">zoom-out-symbolic</property>
+                  </object>
+                </child>
+                <style>
+                  <class name="flat"/>
+                </style>
+              </object>
+            </child>
+            <style>
+              <class name="linked"/>
+            </style>
+          </object>
+        </child>
+        <child>
+          <object class="GtkToggleButton">
+            <property name="margin-start">38</property>
+            <property name="receives_default">1</property>
+            <property name="tooltip_text" translatable="yes">Toggle Model Preferences</property>
+            <property name="action_name">win.show-preferences</property>
+            <child>
+              <object class="GtkImage">
+                <property name="icon_name">document-properties-symbolic</property>
+              </object>
+            </child>
+            <style>
+              <class name="flat"/>
+            </style>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="GtkStack" id="editor-stack">
+        <property name="transition_type">slide-left-right</property>
+        <property name="hhomogeneous">0</property>
+        <child>
+          <object class="GtkStackPage">
+            <property name="name">editors</property>
+            <property name="title" translatable="yes">Editors</property>
+            <property name="child">
+              <object class="GtkScrolledWindow">
+                <property name="hscrollbar_policy">never</property>
                 <property name="child">
-                  <object class="GtkScrolledWindow">
-                    <property name="hscrollbar_policy">never</property>
+                  <object class="GtkViewport">
                     <property name="child">
-                      <object class="GtkViewport">
-                        <property name="child">
-                          <object class="GtkBox" id="editors">
-                            <property name="margin_start">6</property>
-                            <property name="margin_end">6</property>
-                            <property name="margin_top">6</property>
-                            <property name="margin_bottom">6</property>
-                            <property name="orientation">vertical</property>
-                          </object>
-                        </property>
+                      <object class="GtkBox" id="editors">
+                        <property name="margin_start">6</property>
+                        <property name="margin_end">6</property>
+                        <property name="margin_top">6</property>
+                        <property name="margin_bottom">6</property>
+                        <property name="orientation">vertical</property>
                       </object>
                     </property>
                   </object>
                 </property>
               </object>
-            </child>
-
-            <child>
-              <object class="GtkStackPage">
-                <property name="name">preferences</property>
-                <property name="title" translatable="yes">Preferences</property>
-                <property name="child">
-                  <object class="GtkBox">
-                    <property name="margin_start">6</property>
-                    <property name="margin_end">6</property>
-                    <property name="margin_top">12</property>
-                    <property name="margin_bottom">12</property>
-                    <property name="orientation">vertical</property>
-                    <property name="spacing">6</property>
-                    <child>
-                      <object class="GtkLabel">
-                        <property name="label" translatable="yes">Preferences</property>
-                        <property name="xalign">0</property>
-                        <attributes>
-                          <attribute name="weight" value="bold"></attribute>
-                        </attributes>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkBox">
-                        <property name="spacing">6</property>
-                        <child>
-                          <object class="GtkLabel">
-                            <property name="hexpand">1</property>
-                            <property name="label" translatable="yes">Reset Tool Automatically</property>
-                            <property name="xalign">0</property>
-                          </object>
-                        </child>
-                        <child>
-                          <object class="GtkSwitch">
-                            <property name="halign">center</property>
-                            <property name="action_name">win.reset-tool-after-create</property>
-                          </object>
-                        </child>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkBox">
-                        <property name="spacing">6</property>
-                        <child>
-                          <object class="GtkLabel">
-                            <property name="hexpand">1</property>
-                            <property name="label" translatable="yes">Remove Unused Elements</property>
-                            <property name="xalign">0</property>
-                            <property name="tooltip-text" translatable="yes">Automatically remove elements no longer in use in any diagram.</property>
-                          </object>
-                        </child>
-                        <child>
-                          <object class="GtkSwitch">
-                            <property name="halign">center</property>
-                            <property name="action_name">win.remove-unused-elements</property>
-                            <property name="tooltip-text" translatable="yes">Automatically remove elements no longer in use in any diagram.</property>
-                          </object>
-                        </child>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkBox">
-                        <property name="spacing">6</property>
-                        <child>
-                          <object class="GtkLabel">
-                            <property name="hexpand">1</property>
-                            <property name="label" translatable="yes">Diagram Language</property>
-                            <property name="xalign">0</property>
-                            <property name="tooltip-text" translatable="yes">The (natural) language used in this model.</property>
-                          </object>
-                        </child>
-                        <child>
-                          <object class="GtkDropDown" id="language-dropdown">
-                            <property name="model">
-                              <object class="GtkStringList" id="language-model" />
-                            </property>
-                            <property name="tooltip-text" translatable="yes">The (natural) language used in this model.</property>
-                          </object>
-                        </child>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkLabel">
-                        <property name="margin_top">6</property>
-                        <property name="label" translatable="yes">Style Sheet</property>
-                        <property name="xalign">0</property>
-                        <attributes>
-                          <attribute name="weight" value="bold"></attribute>
-                        </attributes>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkFrame">
-                        <child>
-                          <object class="GtkScrolledWindow">
-                            <property name="vexpand">1</property>
-                            <property name="child">
-                              <object class="GtkSourceView" id="style-sheet-view">
-                                <property name="buffer">style-sheet-buffer</property>
-                                <property name="monospace">True</property>
-                                <property name="auto-indent">True</property>
-                                <property name="tab-width">2</property>
-                                <property name="insert-spaces-instead-of-tabs">True</property>
-                              </object>
-                            </property>
-                          </object>
-                        </child>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkLabel">
-                        <property name="margin_top">6</property>
-                        <property name="label" translatable="yes">CSS nodes of focused item</property>
-                        <property name="xalign">0</property>
-                        <attributes>
-                          <attribute name="weight" value="bold"></attribute>
-                        </attributes>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkFrame">
-                        <child>
-                          <object class="GtkLabel" id="css-nodes">
-                            <property name="use-markup">1</property>
-                            <property name="wrap">0</property>
-                            <property name="selectable">1</property>
-                            <property name="label" translatable="yes">No focused item.</property>
-                            <property name="xalign">0</property>
-                            <style>
-                              <class name="mono" />
-                            </style>
-                          </object>
-                        </child>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkLabel">
-                        <property name="label" translatable="yes">🔗 &lt;a href=&quot;https://docs.gaphor.org/en/latest/style_sheets.html&quot;&gt;Style sheets in Gaphor&lt;/a&gt;</property>
-                        <property name="use_markup">1</property>
-                        <property name="wrap">1</property>
-                        <property name="xalign">0</property>
-                      </object>
-                    </child>
-                  </object>
-                </property>
-              </object>
-            </child>
-
-            <child>
-              <object class="GtkStackPage">
-                <property name="name">modelmerge</property>
-                <property name="title" translatable="yes">Merge Models</property>
-                <property name="child">
-                  <object class="GtkBox">
-                    <style>
-                      <class name="editor-wide" />
-                    </style>
-                    <property name="margin_start">6</property>
-                    <property name="margin_end">6</property>
-                    <property name="margin_top">6</property>
-                    <property name="margin_bottom">6</property>
-                    <property name="spacing">6</property>
-                    <property name="orientation">vertical</property>
-                    <child>
-                      <object class="GtkLabel">
-                        <property name="label" translatable="yes">Merge Model Changes</property>
-                        <property name="use_markup">1</property>
-                        <property name="wrap">1</property>
-                        <property name="xalign">0</property>
-                        <attributes>
-                          <attribute name="weight" value="bold"/>
-                        </attributes>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkLabel">
-                        <property name="label" translatable="yes">Apply incoming changes from the conflicting model. Use Undo to revert changes.</property>
-                        <property name="use_markup">1</property>
-                        <property name="wrap">1</property>
-                        <property name="xalign">0</property>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkFrame">
-                        <child>
-                          <object class="GtkScrolledWindow">
-                            <property name="vexpand">1</property>
-                            <child>
-                              <object class="GtkListView" id="modelmerge" />
-                            </child>
-                          </object>
-                        </child>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkButton" id="modelmerge-resolve">
-                        <property name="label" translatable="yes">Resolve</property>
-                      </object>
-                    </child>
-                  </object>
-                </property>
-              </object>
-            </child>
-
+            </property>
           </object>
         </child>
+
+        <child>
+          <object class="GtkStackPage">
+            <property name="name">preferences</property>
+            <property name="title" translatable="yes">Preferences</property>
+            <property name="child">
+              <object class="GtkBox">
+                <property name="margin_start">6</property>
+                <property name="margin_end">6</property>
+                <property name="margin_top">12</property>
+                <property name="margin_bottom">12</property>
+                <property name="orientation">vertical</property>
+                <property name="spacing">6</property>
+                <child>
+                  <object class="GtkLabel">
+                    <property name="label" translatable="yes">Preferences</property>
+                    <property name="xalign">0</property>
+                    <attributes>
+                      <attribute name="weight" value="bold"></attribute>
+                    </attributes>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkBox">
+                    <property name="spacing">6</property>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="hexpand">1</property>
+                        <property name="label" translatable="yes">Reset Tool Automatically</property>
+                        <property name="xalign">0</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkSwitch">
+                        <property name="halign">center</property>
+                        <property name="action_name">win.reset-tool-after-create</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkBox">
+                    <property name="spacing">6</property>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="hexpand">1</property>
+                        <property name="label" translatable="yes">Remove Unused Elements</property>
+                        <property name="xalign">0</property>
+                        <property name="tooltip-text" translatable="yes">Automatically remove elements no longer in use in any diagram.</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkSwitch">
+                        <property name="halign">center</property>
+                        <property name="action_name">win.remove-unused-elements</property>
+                        <property name="tooltip-text" translatable="yes">Automatically remove elements no longer in use in any diagram.</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkBox">
+                    <property name="spacing">6</property>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="hexpand">1</property>
+                        <property name="label" translatable="yes">Diagram Language</property>
+                        <property name="xalign">0</property>
+                        <property name="tooltip-text" translatable="yes">The (natural) language used in this model.</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkDropDown" id="language-dropdown">
+                        <property name="model">
+                          <object class="GtkStringList" id="language-model" />
+                        </property>
+                        <property name="tooltip-text" translatable="yes">The (natural) language used in this model.</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkLabel">
+                    <property name="margin_top">6</property>
+                    <property name="label" translatable="yes">Style Sheet</property>
+                    <property name="xalign">0</property>
+                    <attributes>
+                      <attribute name="weight" value="bold"></attribute>
+                    </attributes>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkFrame">
+                    <child>
+                      <object class="GtkScrolledWindow">
+                        <property name="vexpand">1</property>
+                        <property name="child">
+                          <object class="GtkSourceView" id="style-sheet-view">
+                            <property name="buffer">style-sheet-buffer</property>
+                            <property name="monospace">True</property>
+                            <property name="auto-indent">True</property>
+                            <property name="tab-width">2</property>
+                            <property name="insert-spaces-instead-of-tabs">True</property>
+                          </object>
+                        </property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkLabel">
+                    <property name="margin_top">6</property>
+                    <property name="label" translatable="yes">CSS nodes of focused item</property>
+                    <property name="xalign">0</property>
+                    <attributes>
+                      <attribute name="weight" value="bold"></attribute>
+                    </attributes>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkFrame">
+                    <child>
+                      <object class="GtkLabel" id="css-nodes">
+                        <property name="use-markup">1</property>
+                        <property name="wrap">0</property>
+                        <property name="selectable">1</property>
+                        <property name="label" translatable="yes">No focused item.</property>
+                        <property name="xalign">0</property>
+                        <style>
+                          <class name="mono" />
+                        </style>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkLabel">
+                    <property name="label" translatable="yes">🔗 &lt;a href=&quot;https://docs.gaphor.org/en/latest/style_sheets.html&quot;&gt;Style sheets in Gaphor&lt;/a&gt;</property>
+                    <property name="use_markup">1</property>
+                    <property name="wrap">1</property>
+                    <property name="xalign">0</property>
+                  </object>
+                </child>
+              </object>
+            </property>
+          </object>
+        </child>
+
+        <child>
+          <object class="GtkStackPage">
+            <property name="name">modelmerge</property>
+            <property name="title" translatable="yes">Merge Models</property>
+            <property name="child">
+              <object class="GtkBox">
+                <style>
+                  <class name="editor-wide" />
+                </style>
+                <property name="margin_start">6</property>
+                <property name="margin_end">6</property>
+                <property name="margin_top">6</property>
+                <property name="margin_bottom">6</property>
+                <property name="spacing">6</property>
+                <property name="orientation">vertical</property>
+                <child>
+                  <object class="GtkLabel">
+                    <property name="label" translatable="yes">Merge Model Changes</property>
+                    <property name="use_markup">1</property>
+                    <property name="wrap">1</property>
+                    <property name="xalign">0</property>
+                    <attributes>
+                      <attribute name="weight" value="bold"/>
+                    </attributes>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkLabel">
+                    <property name="label" translatable="yes">Apply incoming changes from the conflicting model. Use Undo to revert changes.</property>
+                    <property name="use_markup">1</property>
+                    <property name="wrap">1</property>
+                    <property name="xalign">0</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkFrame">
+                    <child>
+                      <object class="GtkScrolledWindow">
+                        <property name="vexpand">1</property>
+                        <child>
+                          <object class="GtkListView" id="modelmerge" />
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkButton" id="modelmerge-resolve">
+                    <property name="label" translatable="yes">Resolve</property>
+                  </object>
+                </child>
+              </object>
+            </property>
+          </object>
+        </child>
+
       </object>
-    </property>
+    </child>
   </object>
 </interface>
