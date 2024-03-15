@@ -182,7 +182,7 @@ class MainWindow(Service, ActionProvider):
             create_hamburger_model(self.export_menu.menu, self.tools_menu.menu),
         )
 
-        window.set_default_size(*(self.properties.get("ui.window-size", (860, 580))))
+        window.set_default_size(*(self.properties.get("ui.window-size", (1024, 640))))
         if self.properties.get("ui.window-mode", "") == "maximized":
             window.maximize()
         elif self.properties.get("ui.window-mode", "") == "fullscreened":

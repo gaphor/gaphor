@@ -11,8 +11,8 @@
   <object class="GtkPopoverMenu" id="diagram-types">
   </object>
   <object class="AdwApplicationWindow" id="main-window">
-    <property name="default-width">860</property>
-    <property name="default-height">580</property>
+    <property name="default-width">1024</property>
+    <property name="default-height">640</property>
     <property name="resizable">1</property>
     <property name="content">
       <object class="AdwToastOverlay" id="main-overlay">
