@@ -398,17 +398,19 @@ def create_shortcut_controller(shortcuts):
 
 
 def create_popup_controller(tree_view, selection, modeling_language):
-    menu = None
+    menus: dict[str, Gtk.PopoverMenu] = {}
 
     def on_show_popup(ctrl, n_press, x, y):
-        nonlocal menu
         selection.unselect_all()
+        language_name = modeling_language.active_modeling_language
+        menu = menus.get(language_name)
         if not menu:
             menu = Gtk.PopoverMenu.new_from_model(
                 toplevel_popup_model(modeling_language)
             )
             menu.set_parent(tree_view)
             menu.set_has_arrow(False)
+            menus[language_name] = menu
 
         gdk_rect = Gdk.Rectangle()
         gdk_rect.x = x
