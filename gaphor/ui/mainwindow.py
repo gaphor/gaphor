@@ -241,7 +241,9 @@ class MainWindow(Service, ActionProvider):
             element_editor.set_reveal_child(active)
         self.properties.set("show-editors", active)
 
-    @action("fullscreen", shortcut="F11", state=False)
+    @action(
+        "fullscreen", shortcut="F11", state=lambda self: self.window.is_fullscreen()
+    )
     def toggle_fullscreen(self, active):
         if not self.window:
             return

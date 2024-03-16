@@ -139,6 +139,10 @@ textfield text selection {
   border-left: 1px solid @unfocused_borders;
 }
 
+#element_editor .title {
+  font-weight: bold;
+}
+
 .toolbar {
   padding-top: 0;
 }
