@@ -681,13 +681,13 @@ test = ["objgraph", "psutil"]
 
 [[package]]
 name = "hypothesis"
-version = "6.99.4"
+version = "6.99.8"
 description = "A library for property-based testing"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "hypothesis-6.99.4-py3-none-any.whl", hash = "sha256:20ca59622b002b3b4d6c5913c37149e233240e7d7ea632e8da7f77629b2f7040"},
-    {file = "hypothesis-6.99.4.tar.gz", hash = "sha256:edc8f984dba5d1b69a6a4564246b7850fa7ec351d2b27c9e7a43c91deab8d45c"},
+    {file = "hypothesis-6.99.8-py3-none-any.whl", hash = "sha256:8b5175a906c0a11967c3a04eeb17c42b4b395cacd02a246ce926613189a14279"},
+    {file = "hypothesis-6.99.8.tar.gz", hash = "sha256:1274abcc12137645a1bcb8453063060cf38f949a90b31d08bea45e1818e05b8b"},
 ]
 
 [package.dependencies]
@@ -695,10 +695,10 @@ attrs = ">=22.2.0"
 sortedcontainers = ">=2.1.0,<3.0.0"
 
 [package.extras]
-all = ["backports.zoneinfo (>=0.2.1)", "black (>=19.10b0)", "click (>=7.0)", "crosshair-tool (>=0.0.50)", "django (>=3.2)", "dpcontracts (>=0.4)", "hypothesis-crosshair (>=0.0.1)", "lark (>=0.10.1)", "libcst (>=0.3.16)", "numpy (>=1.17.3)", "pandas (>=1.1)", "pytest (>=4.6)", "python-dateutil (>=1.4)", "pytz (>=2014.1)", "redis (>=3.0.0)", "rich (>=9.0.0)", "tzdata (>=2024.1)"]
+all = ["backports.zoneinfo (>=0.2.1)", "black (>=19.10b0)", "click (>=7.0)", "crosshair-tool (>=0.0.51)", "django (>=3.2)", "dpcontracts (>=0.4)", "hypothesis-crosshair (>=0.0.2)", "lark (>=0.10.1)", "libcst (>=0.3.16)", "numpy (>=1.17.3)", "pandas (>=1.1)", "pytest (>=4.6)", "python-dateutil (>=1.4)", "pytz (>=2014.1)", "redis (>=3.0.0)", "rich (>=9.0.0)", "tzdata (>=2024.1)"]
 cli = ["black (>=19.10b0)", "click (>=7.0)", "rich (>=9.0.0)"]
 codemods = ["libcst (>=0.3.16)"]
-crosshair = ["crosshair-tool (>=0.0.50)", "hypothesis-crosshair (>=0.0.1)"]
+crosshair = ["crosshair-tool (>=0.0.51)", "hypothesis-crosshair (>=0.0.2)"]
 dateutil = ["python-dateutil (>=1.4)"]
 django = ["django (>=3.2)"]
 dpcontracts = ["dpcontracts (>=0.4)"]
@@ -1729,38 +1729,38 @@ PyYAML = "*"
 
 [[package]]
 name = "pyobjc-core"
-version = "10.1"
+version = "10.2"
 description = "Python<->ObjC Interoperability Module"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "pyobjc-core-10.1.tar.gz", hash = "sha256:1844f1c8e282839e6fdcb9a9722396c1c12fb1e9331eb68828a26f28a3b2b2b1"},
-    {file = "pyobjc_core-10.1-cp310-cp310-macosx_10_9_universal2.whl", hash = "sha256:2a72a88222539ad07b5c8be411edc52ff9147d7cef311a2c849869d7bb9603fd"},
-    {file = "pyobjc_core-10.1-cp311-cp311-macosx_10_9_universal2.whl", hash = "sha256:fe1b9987b7b0437685fb529832876c2a8463500114960d4e76bb8ae96b6bf208"},
-    {file = "pyobjc_core-10.1-cp312-cp312-macosx_10_9_universal2.whl", hash = "sha256:9f628779c345d3abd0e20048fb0e256d894c22254577a81a6dcfdb92c3647682"},
-    {file = "pyobjc_core-10.1-cp38-cp38-macosx_10_9_x86_64.whl", hash = "sha256:25a9e5a2de19238787d24cfa7def6b7fbb94bbe89c0e3109f71c1cb108e8ab44"},
-    {file = "pyobjc_core-10.1-cp38-cp38-macosx_11_0_universal2.whl", hash = "sha256:2d43205d3a784aa87055b84c0ec0dfa76498e5f18d1ad16bdc58a3dcf5a7d5d0"},
-    {file = "pyobjc_core-10.1-cp39-cp39-macosx_10_9_universal2.whl", hash = "sha256:0aa9799b5996a893944999a2f1afcf1de119cab3551c169ad9f54d12e1d38c99"},
+    {file = "pyobjc-core-10.2.tar.gz", hash = "sha256:0153206e15d0e0d7abd53ee8a7fbaf5606602a032e177a028fc8589516a8771c"},
+    {file = "pyobjc_core-10.2-cp310-cp310-macosx_10_9_universal2.whl", hash = "sha256:b8eab50ce7f17017a0f1d68c3b7e88bb1bb033415fdff62b8e0a9ee4ab72f242"},
+    {file = "pyobjc_core-10.2-cp311-cp311-macosx_10_9_universal2.whl", hash = "sha256:f2115971463073426ab926416e17e5c16de5b90d1a1f2a2d8724637eb1c21308"},
+    {file = "pyobjc_core-10.2-cp312-cp312-macosx_10_9_universal2.whl", hash = "sha256:a70546246177c23acb323c9324330e37638f1a0a3d13664abcba3bb75e43012c"},
+    {file = "pyobjc_core-10.2-cp38-cp38-macosx_10_9_x86_64.whl", hash = "sha256:a9b5a215080d13bd7526031d21d5eb27a410780878d863f486053a0eba7ca9a5"},
+    {file = "pyobjc_core-10.2-cp38-cp38-macosx_11_0_universal2.whl", hash = "sha256:eb1ab700a44bcc4ceb125091dfaae0b998b767b49990df5fdc83eb58158d8e3f"},
+    {file = "pyobjc_core-10.2-cp39-cp39-macosx_10_9_universal2.whl", hash = "sha256:c9a7163aff9c47d654f835f80361c1b112886ec754800d34e75d1e02ff52c3d7"},
 ]
 
 [[package]]
 name = "pyobjc-framework-cocoa"
-version = "10.1"
+version = "10.2"
 description = "Wrappers for the Cocoa frameworks on macOS"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "pyobjc-framework-Cocoa-10.1.tar.gz", hash = "sha256:8faaf1292a112e488b777d0c19862d993f3f384f3927dc6eca0d8d2221906a14"},
-    {file = "pyobjc_framework_Cocoa-10.1-cp310-cp310-macosx_10_9_universal2.whl", hash = "sha256:2e82c2e20b89811d92a7e6e487b6980f360b7c142e2576e90f0e7569caf8202b"},
-    {file = "pyobjc_framework_Cocoa-10.1-cp311-cp311-macosx_10_9_universal2.whl", hash = "sha256:0860a9beb7e5c72a1f575679a6d1428a398fa19ad710fb116df899972912e304"},
-    {file = "pyobjc_framework_Cocoa-10.1-cp312-cp312-macosx_10_9_universal2.whl", hash = "sha256:34b791ea740e1afce211f19334e45469fea9a48d8fce5072e146199fd19ff49f"},
-    {file = "pyobjc_framework_Cocoa-10.1-cp38-cp38-macosx_10_9_x86_64.whl", hash = "sha256:1398c1a9bebad1a0f2549980e20f4aade00c341b9bac56b4493095a65917d34a"},
-    {file = "pyobjc_framework_Cocoa-10.1-cp38-cp38-macosx_11_0_universal2.whl", hash = "sha256:22be21226e223d26c9e77645564225787f2b12a750dd17c7ad99c36f428eda14"},
-    {file = "pyobjc_framework_Cocoa-10.1-cp39-cp39-macosx_10_9_universal2.whl", hash = "sha256:0280561f4fb98a864bd23f2c480d907b0edbffe1048654f5dfab160cea8198e6"},
+    {file = "pyobjc-framework-Cocoa-10.2.tar.gz", hash = "sha256:6383141379636b13855dca1b39c032752862b829f93a49d7ddb35046abfdc035"},
+    {file = "pyobjc_framework_Cocoa-10.2-cp310-cp310-macosx_10_9_universal2.whl", hash = "sha256:f9227b4f271fda2250f5a88cbc686ff30ae02c0f923bb7854bb47972397496b2"},
+    {file = "pyobjc_framework_Cocoa-10.2-cp311-cp311-macosx_10_9_universal2.whl", hash = "sha256:6a6042b7703bdc33b7491959c715c1e810a3f8c7a560c94b36e00ef321480797"},
+    {file = "pyobjc_framework_Cocoa-10.2-cp312-cp312-macosx_10_9_universal2.whl", hash = "sha256:18886d5013cd7dc7ecd6e0df5134c767569b5247fc10a5e293c72ee3937b217b"},
+    {file = "pyobjc_framework_Cocoa-10.2-cp38-cp38-macosx_10_9_x86_64.whl", hash = "sha256:1ecf01400ee698d2e0ff4c907bcf9608d9d710e97203fbb97b37d208507a9362"},
+    {file = "pyobjc_framework_Cocoa-10.2-cp38-cp38-macosx_11_0_universal2.whl", hash = "sha256:0def036a7b24e3ae37a244c77bec96b7c9c8384bf6bb4d33369f0a0c8807a70d"},
+    {file = "pyobjc_framework_Cocoa-10.2-cp39-cp39-macosx_10_9_universal2.whl", hash = "sha256:5f47ecc393bc1019c4b47e8653207188df784ac006ad54d8c2eb528906ff7013"},
 ]
 
 [package.dependencies]
-pyobjc-core = ">=10.1"
+pyobjc-core = ">=10.2"
 
 [[package]]
 name = "pyparsing"
