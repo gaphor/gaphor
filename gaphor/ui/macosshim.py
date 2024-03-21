@@ -2,6 +2,8 @@ from gi.repository import GLib, Gtk
 
 
 def init_macos_shortcuts():
+    """Add <Cmd>-<..> shortcuts for macOS."""
+
     def new_shortcut_with_args(shortcut, signal, *args):
         shortcut = Gtk.Shortcut.new(
             trigger=Gtk.ShortcutTrigger.parse_string(shortcut),
@@ -89,3 +91,11 @@ def init_macos_shortcuts():
             "<Meta><Shift>a", "select-all", GLib.Variant.new_boolean(False)
         )
     )
+
+
+def init_macos_settings():
+    """Tweak settings, so Gaphor on macOS looks alike Linux.
+
+    Adwaita styling only requires a close button.
+    """
+    Gtk.Settings.get_default().set_property("gtk-decoration-layout", ":close")
