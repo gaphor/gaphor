@@ -17,72 +17,72 @@
     <property name="content">
       <object class="AdwToastOverlay" id="main-overlay">
         <property name="child">
-          <object class="AdwOverlaySplitView" id="element-editor-overlay">
-            <property name="sidebar-position">end</property>
+          <object class="GtkPaned" id="left-pane">
+            <property name="orientation">horizontal</property>
+            <property name="position">220</property>
+            <property name="shrink-start-child">0</property>
 
-            <property name="content">
-              <object class="GtkPaned" id="left-pane">
-                <property name="orientation">horizontal</property>
-                <property name="position">220</property>
-                <property name="shrink-start-child">0</property>
-
-                <property name="start-child">
-                  <!-- Model Browser and Toolbox pane -->
-                  <object class="AdwToolbarView">
-                    <child type="top">
-                      <object class="AdwHeaderBar">
-                        <property name="show-title">0</property>
-                        <property name="decoration-layout"></property>
+            <property name="start-child">
+              <!-- Model Browser and Toolbox pane -->
+              <object class="AdwToolbarView">
+                <child type="top">
+                  <object class="AdwHeaderBar">
+                    <property name="show-title">0</property>
+                    <property name="decoration-layout"></property>
+                    <child>
+                      <object class="GtkMenuButton" id="modeling-language-name">
+                        <property name="focus-on-click">0</property>
+                        <property name="popover">select-modeling-language</property>
+                      </object>
+                    </child>
+                    <child type="end">
+                      <object class="GtkMenuButton">
+                        <property name="popover">hamburger</property>
+                        <property name="icon_name">open-menu-symbolic</property>
+                        <property name="tooltip-text" translatable="yes">Open application menu</property>
+                        <property name="primary">1</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <property name="content">
+                  <object class="GtkPaned" id="top-left-pane">
+                    <property name="orientation">vertical</property>
+                    <property name="position">300</property>
+                    <child type="start">
+                      <object class="AdwBin" id="component:model_browser">
+                        <property name="hexpand">1</property>
                         <child>
-                          <object class="GtkMenuButton" id="modeling-language-name">
-                            <property name="focus-on-click">0</property>
-                            <property name="popover">select-modeling-language</property>
-                          </object>
-                        </child>
-                        <child type="end">
-                          <object class="GtkMenuButton">
-                            <property name="popover">hamburger</property>
-                            <property name="icon_name">open-menu-symbolic</property>
-                            <property name="tooltip-text" translatable="yes">Open application menu</property>
-                            <property name="primary">1</property>
+                          <object class="GtkLabel">
+                            <property name="label">Model Browser</property>
                           </object>
                         </child>
                       </object>
                     </child>
-                    <property name="content">
-                      <object class="GtkPaned" id="top-left-pane">
-                        <property name="orientation">vertical</property>
-                        <property name="position">300</property>
-                        <child type="start">
-                          <object class="AdwBin" id="component:model_browser">
-                            <property name="hexpand">1</property>
-                            <child>
-                              <object class="GtkLabel">
-                                <property name="label">Model Browser</property>
-                              </object>
-                            </child>
-                          </object>
-                        </child>
-                        <child type="end">
-                          <object class="AdwBin" id="component:toolbox">
-                            <child>
-                              <object class="GtkLabel">
-                                <property name="label">Toolbox</property>
-                              </object>
-                            </child>
+                    <child type="end">
+                      <object class="AdwBin" id="component:toolbox">
+                        <child>
+                          <object class="GtkLabel">
+                            <property name="label">Toolbox</property>
                           </object>
                         </child>
                       </object>
-                    </property>
-
-                    <style>
-                      <class name="pseudo-sidebar-pane"/>
-                    </style>
-
+                    </child>
                   </object>
                 </property>
 
-                <property name="end-child">
+                <style>
+                  <class name="pseudo-sidebar-pane"/>
+                </style>
+
+              </object>
+            </property>
+
+            <property name="end-child">
+              <object class="AdwOverlaySplitView" id="element-editor-overlay">
+                <property name="sidebar-position">end</property>
+
+                <property name="content">
                   <!-- Diagrams pane -->
                   <object class="AdwToolbarView">
                     <child type="top">
@@ -182,76 +182,75 @@
                   </object>
                 </property>
 
-              </object>
-            </property>
-
-            <property name="sidebar">
-              <!-- Property Editor pane -->
-              <object class="AdwToolbarView">
-                <child type="top">
-                  <object class="AdwHeaderBar">
-                    <property name="show-title">0</property>
-                    <child>
-                      <object class="GtkButton">
-                        <property name="receives_default">1</property>
-                        <property name="tooltip_text" translatable="yes">Undo</property>
-                        <property name="action_name">win.edit-undo</property>
+                <property name="sidebar">
+                  <!-- Property Editor pane -->
+                  <object class="AdwToolbarView">
+                    <child type="top">
+                      <object class="AdwHeaderBar">
+                        <property name="show-title">0</property>
                         <child>
-                          <object class="GtkImage">
-                            <property name="icon_name">edit-undo-symbolic</property>
+                          <object class="GtkButton">
+                            <property name="receives_default">1</property>
+                            <property name="tooltip_text" translatable="yes">Undo</property>
+                            <property name="action_name">win.edit-undo</property>
+                            <child>
+                              <object class="GtkImage">
+                                <property name="icon_name">edit-undo-symbolic</property>
+                              </object>
+                            </child>
+                            <style>
+                              <class name="flat"/>
+                            </style>
                           </object>
                         </child>
-                        <style>
-                          <class name="flat"/>
-                        </style>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkButton">
-                        <property name="receives_default">1</property>
-                        <property name="tooltip_text" translatable="yes">Redo</property>
-                        <property name="action_name">win.edit-redo</property>
                         <child>
-                          <object class="GtkImage">
-                            <property name="icon_name">edit-redo-symbolic</property>
+                          <object class="GtkButton">
+                            <property name="receives_default">1</property>
+                            <property name="tooltip_text" translatable="yes">Redo</property>
+                            <property name="action_name">win.edit-redo</property>
+                            <child>
+                              <object class="GtkImage">
+                                <property name="icon_name">edit-redo-symbolic</property>
+                              </object>
+                            </child>
+                            <style>
+                              <class name="flat"/>
+                            </style>
                           </object>
                         </child>
-                        <style>
-                          <class name="flat"/>
-                        </style>
-                      </object>
-                    </child>
-                    <child type="end">
-                      <object class="GtkToggleButton">
-                        <property name="margin-start">38</property>
-                        <property name="receives_default">1</property>
-                        <property name="tooltip_text" translatable="yes">Toggle Model Preferences</property>
-                        <property name="action_name">win.show-preferences</property>
-                        <child>
-                          <object class="GtkImage">
-                            <property name="icon_name">document-properties-symbolic</property>
+                        <child type="end">
+                          <object class="GtkToggleButton">
+                            <property name="margin-start">38</property>
+                            <property name="receives_default">1</property>
+                            <property name="tooltip_text" translatable="yes">Toggle Model Preferences</property>
+                            <property name="action_name">win.show-preferences</property>
+                            <child>
+                              <object class="GtkImage">
+                                <property name="icon_name">document-properties-symbolic</property>
+                              </object>
+                            </child>
+                            <style>
+                              <class name="flat"/>
+                            </style>
                           </object>
                         </child>
-                        <style>
-                          <class name="flat"/>
-                        </style>
                       </object>
                     </child>
-                  </object>
-                </child>
-                <property name="content">
-                  <object class="AdwBin" id="component:element_editor">
-                    <property name="hexpand-set">1</property>
-                    <child>
-                      <object class="GtkLabel">
-                        <property name="label">Element Editor</property>
+                    <property name="content">
+                      <object class="AdwBin" id="component:element_editor">
+                        <property name="hexpand-set">1</property>
+                        <child>
+                          <object class="GtkLabel">
+                            <property name="label">Element Editor</property>
+                          </object>
+                        </child>
                       </object>
-                    </child>
+                    </property>
                   </object>
                 </property>
+
               </object>
             </property>
-
 
           </object>
         </property>
