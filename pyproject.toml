@@ -143,6 +143,7 @@ gaphor = "gaphor.main:main"
 
 [tool.poetry.plugins."gaphor.argparsers"]
 gui = "gaphor.main:gui_parser"
+self-test = "gaphor.main:self_test_parser"
 exec = "gaphor.main:exec_parser"
 export = "gaphor.plugins.diagramexport.exportcli:export_parser"
 install-schemas = "gaphor.ui.installschemas:install_schemas_parser"

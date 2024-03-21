@@ -233,7 +233,7 @@ jobs:
           hdiutil attach ${{ needs.macos.outputs.artifact }}
           cd /Volumes/Gaphor*
           # Retry if first test fails
-          Gaphor.app/Contents/MacOS/gaphor --self-test || Gaphor.app/Contents/MacOS/gaphor --self-test
+          Gaphor.app/Contents/MacOS/gaphor self-test || Gaphor.app/Contents/MacOS/gaphor self-test
 
   windows-build-gtk:
     name: Windows (Build GTK)
@@ -385,7 +385,7 @@ jobs:
         shell: cmd
       - name: Perform self-test
         timeout-minutes: 5
-        run: start "" /WAIT "C:\Program Files\Gaphor\gaphor.exe" --self-test
+        run: start "" /WAIT "C:\Program Files\Gaphor\gaphor.exe" self-test
         shell: cmd
       - name: Test output
         if: always()
