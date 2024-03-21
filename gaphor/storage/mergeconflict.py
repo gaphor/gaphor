@@ -33,9 +33,10 @@ def split_ours_and_theirs(
 
     repo = pygit2.Repository(repo_path)
     work_path = Path(repo.workdir)
+    possible_filenames = (filename.absolute(), filename.resolve())
     if conflicts := repo.index.conflicts:
         for common, ours, theirs in conflicts:
-            if work_path / common.path == filename:
+            if work_path / common.path in possible_filenames:
                 ancestor.write(repo.get(common.id).read_raw())
                 current.write(repo.get(ours.id).read_raw())
                 incoming.write(repo.get(theirs.id).read_raw())
