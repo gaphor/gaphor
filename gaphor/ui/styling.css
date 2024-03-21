@@ -131,21 +131,17 @@ tabbar > revealer > box,
   background-color: transparent;
 }
 
-#element_editor .title {
-  font-weight: bold;
-}
-
-.toolbar {
-  padding-top: 0;
-}
-
 .pseudo-sidebar-pane {
   background-color: @sidebar_bg_color;
   color: @sidebar_fg_color;
 }
 
-.editor-wide {
-  min-width: 350px;
+#element_editor .title {
+  font-weight: bold;
+}
+
+#element_editor {
+  min-width: 270px;
 }
 
 #toolbox > viewport > box {
