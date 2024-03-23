@@ -47,12 +47,6 @@ def test_quiet_logging():
     assert logging.getLogger("root").getEffectiveLevel() == logging.WARNING
 
 
-def test_self_test(mock_gaphor_ui_run):
-    main([APP_NAME, "--self-test"])
-
-    assert mock_gaphor_ui_run == [APP_NAME, "--self-test"]
-
-
 def test_gapplication_service(mock_gaphor_ui_run):
     main([APP_NAME, "--gapplication-service"])
 

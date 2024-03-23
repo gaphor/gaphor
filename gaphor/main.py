@@ -109,8 +109,6 @@ def gui_parser():
 
         # Recreate a command line for our GTK gui
         run_argv = [sys.argv[0]]
-        if args.self_test:
-            run_argv += ["--self-test"]
         if args.gapplication_service:
             run_argv += ["--gapplication-service"]
         run_argv.extend(args.model)
@@ -122,11 +120,26 @@ def gui_parser():
     )
 
     group = parser.add_argument_group("options (no command provided)")
-    group.add_argument(
-        "--self-test", help="run self test and exit", action="store_true"
-    )
     group.add_argument("--gapplication-service", action="store_true")
     group.add_argument("model", nargs="*", help="model file(s) to load")
+    parser.set_defaults(command=run)
+    return parser
+
+
+def self_test_parser():
+    def run(args) -> int:
+        # Only now import the UI module
+        import gaphor.ui
+
+        # Recreate a command line for our GTK gui
+        run_argv = [sys.argv[0]]
+
+        return gaphor.ui.run(run_argv, launch_service="self_test")
+
+    parser = argparse.ArgumentParser(
+        description="Perform a self test and exit", parents=[version_parser()]
+    )
+
     parser.set_defaults(command=run)
     return parser
 

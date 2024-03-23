@@ -39,7 +39,7 @@ if sys.platform == "darwin":
         )
 
 
-def run(argv: list[str]) -> int:
+def run(argv: list[str], launch_service="greeter") -> int:
     application: Application | None = None
 
     def app_startup(gtk_app):
@@ -69,9 +69,7 @@ def run(argv: list[str]) -> int:
             event_manager = application.get_service("event_manager")
             event_manager.subscribe(on_session_created)
             event_manager.subscribe(on_quit)
-            application.get_service(
-                "self_test" if "--self-test" in argv else "greeter"
-            ).init(gtk_app)
+            application.get_service(launch_service).init(gtk_app)
         except Exception:
             gtk_app.exit_code = 1
             gtk_app.quit()
@@ -108,24 +106,11 @@ def run(argv: list[str]) -> int:
 
     settings.style_variant_changed(update_color_scheme)
     gtk_app.exit_code = 0
-    add_main_options(gtk_app)
     gtk_app.connect("startup", app_startup)
     gtk_app.connect("activate", app_activate)
     gtk_app.connect("open", app_open)
     gtk_app.run(argv)
     return gtk_app.exit_code
-
-
-def add_main_options(gtk_app):
-    """These parameters are handled in `gaphor.ui.run()`."""
-    gtk_app.add_main_option(
-        "self-test",
-        0,
-        GLib.OptionFlags.NONE,
-        GLib.OptionArg.NONE,
-        "Run self test and exit",
-        None,
-    )
 
 
 if __name__ == "__main__":
