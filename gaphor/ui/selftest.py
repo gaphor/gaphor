@@ -181,7 +181,7 @@ def system_information():
         Pango version:          {Pango.version_string()}
         PyGObject version:      {gi.__version__}
         Pycairo version:        {cairo.version}
-        pygit2/libgit2 version: {"pygit2" in globals() and f"{pygit2.__version__}  / {pygit2.LIBGIT2_VERSION}" or "-NONE-"}
+        pygit2/libgit2 version: {"pygit2" in globals() and f"{pygit2.__version__} / {pygit2.LIBGIT2_VERSION}" or "-NONE-"}
         """
     )
 
