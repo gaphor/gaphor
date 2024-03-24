@@ -146,10 +146,10 @@ class ElementPresentation(gaphas.Element, HandlePositionUpdate, Presentation[S])
         be drawn or when styling changes."""
 
     def update(self, context):
-        if not self.shape:
+        if not self._shape:
             self.update_shapes()
-        if self.shape:
-            self.min_width, self.min_height = self.shape.size(
+        if self._shape:
+            self.min_width, self.min_height = self._shape.size(
                 context, bounding_box=Rectangle(0, 0, self.width, self.height)
             )
 
