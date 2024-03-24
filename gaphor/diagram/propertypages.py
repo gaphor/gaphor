@@ -292,7 +292,7 @@ class InternalsPropertyPage(PropertyPageBase):
             presentation_text = textwrap.dedent(
                 f"""\
                 {gettext('Presentation')}:
-                  {gettext('class')}: {type(subject).__module__}.{type(subject).__name__}
+                  {gettext('class')}: {presentation_class(subject)}
                   {gettext('id')}: {subject.id}"""
             )
             element = subject.subject
@@ -304,7 +304,7 @@ class InternalsPropertyPage(PropertyPageBase):
             textwrap.dedent(
                 f"""\
                 {gettext('Model Element')}:
-                  {gettext('class')}: {type(element).__module__}.{type(element).__name__}
+                  {gettext('class')}: {model_element_class(element)}
                   {gettext('id')}: {element.id}"""
             )
             if element
@@ -317,3 +317,21 @@ class InternalsPropertyPage(PropertyPageBase):
             internals.set_label(presentation_text or element_text)
 
         return builder.get_object("internals-editor")
+
+
+def presentation_class(subject):
+    t = type(subject)
+    if t.__module__.startswith("gaphor.UML."):
+        return f"gaphor.UML.diagramitems.{t.__name__}"
+    elif t.__module__.startswith("gaphor.SysML."):
+        return f"gaphor.SysML.diagramitems.{t.__name__}"
+    elif t.__module__.startswith("gaphor.RAAML."):
+        return f"gaphor.RAAML.diagramitems.{t.__name__}"
+    return f"{t.__module__}.{t.__name__}"
+
+
+def model_element_class(subject):
+    t = type(subject)
+    if t.__module__ == "gaphor.UML.uml":
+        return f"gaphor.UML.{t.__name__}"
+    return f"{t.__module__}.{t.__name__}"
