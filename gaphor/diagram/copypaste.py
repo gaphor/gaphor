@@ -201,7 +201,7 @@ def _paste_presentation(copy_data: PresentationCopy, _diagram, lookup):
     for name, ser in data.items():
         for value in deserialize(ser, lookup):
             item.load(name, value)
-    diagram.update_now((item,))
+    diagram.update({item})
 
 
 def _paste(copy_data: Opaque, diagram: Diagram, full: bool) -> set[Presentation]:

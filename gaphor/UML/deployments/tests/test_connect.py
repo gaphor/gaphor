@@ -132,7 +132,7 @@ def test_simple_connection(create, diagram):
     connect(line, line.head, iface)
     connect(line, line.tail, comp)
     iface.update_shapes()
-    diagram.update_now((iface, comp, line))
+    diagram.update((iface, comp, line))
 
     # interface goes into assembly mode
     assert iface.folded == Folded.PROVIDED

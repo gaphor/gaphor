@@ -85,7 +85,7 @@ def test_association_end_updates(create, diagram):
     assert a.subject.memberEnd[0].name is None
 
     a.subject.memberEnd[0].name = "blah"
-    diagram.update_now((a,))
+    diagram.update({a})
 
     assert a.head_end.name == "+ blah", a.head_end.name
 

@@ -63,7 +63,7 @@ def create_item(view, factory, event_manager, x, y):
     item = factory(view.model, parent)
     x, y = view.get_matrix_v2i(item).transform_point(x, y)
     item.matrix.translate(x, y)
-    view.model.update_now({item})
+    view.model.update({item})
     maybe_group(parent, item)
     selection.unselect_all()
     selection.focused_item = item

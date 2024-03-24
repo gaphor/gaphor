@@ -182,7 +182,7 @@ def test_save_and_load_of_association_with_two_connected_classes(
     c2 = create(ClassItem, UML.Class)
     c2.matrix.translate(200, 200)
     diagram.request_update(c2)
-    diagram.update_now((c1, c2))
+    diagram.update({c1, c2})
     assert tuple(c2.matrix_i2c) == (1, 0, 0, 1, 200, 200)
 
     a = create(AssociationItem)
@@ -190,7 +190,7 @@ def test_save_and_load_of_association_with_two_connected_classes(
     connect(a, a.head, c1)
     connect(a, a.tail, c2)
 
-    diagram.update_now((c1, c2, a))
+    diagram.update({c1, c2, a})
 
     assert a.head.pos.y == 0, a.head.pos
     assert a.tail.pos.x == 200, a.tail.pos

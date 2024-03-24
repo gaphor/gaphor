@@ -26,7 +26,7 @@ def test_interface_realization_folded_interface_connection(element_factory, diag
     impl = diagram.create(InterfaceRealizationItem)
 
     connect(impl, impl.head, iface)
-    diagram.update_now((iface, impl))
+    diagram.update({iface, impl})
 
     style = diagram.style(StyledItem(impl))
     assert not style["dash-style"]
@@ -66,7 +66,7 @@ def test_dependency_folded_interface_connection(element_factory, diagram):
     connect(dep, dep.head, iface)
     connect(dep, dep.tail, clazz)
     iface.update_shapes()
-    diagram.update_now((clazz, iface, dep))
+    diagram.update({clazz, iface, dep})
     style = diagram.style(StyledItem(dep))
 
     assert dep.subject

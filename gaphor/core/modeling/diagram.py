@@ -448,8 +448,12 @@ class Diagram(Element):
         self,
         dirty_items: Sequence[Presentation],
     ) -> None:
-        """Update the diagram canvas."""
+        self.update(dirty_items)
 
+    def update(
+        self,
+        dirty_items: Iterable[Presentation],
+    ) -> None:
         # Clear our (cached) style sheet first
         self._compiled_style_sheet = None
 

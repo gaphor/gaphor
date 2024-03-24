@@ -348,7 +348,7 @@ def test_reconnect_on_same_element(event_manager, element_factory, undo_manager)
     assert original_handle_pos != new_handle_pos
 
     undo_manager.undo_transaction()
-    diagram.update_now(diagram.ownedPresentation)
+    diagram.update(diagram.ownedPresentation)
 
     assert original_handle_pos == copy_pos(association.head.pos)
 

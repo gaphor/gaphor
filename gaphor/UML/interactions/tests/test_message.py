@@ -52,7 +52,7 @@ def test_message_connected_to_lifeline(diagram, element_factory, saver, loader):
     )
     lifeline.lifetime.length = 100
     message = diagram.create(MessageItem, subject=element_factory.create(UML.Message))
-    diagram.update_now({lifeline, message})
+    diagram.update({lifeline, message})
     message.head.pos.x = lifeline.handles()[SE].pos.x
     message.head.pos.y = lifeline.handles()[-1].pos.y
 
