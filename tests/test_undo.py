@@ -328,11 +328,10 @@ def test_delete_item_with_subject_owning_diagram(
     undo_manager.undo_transaction()
 
 
-def copy_pos(pos):
-    return tuple(map(float, pos))
-
-
 def test_reconnect_on_same_element(event_manager, element_factory, undo_manager):
+    def copy_pos(pos):
+        return tuple(map(float, pos))
+
     with Transaction(event_manager):
         diagram: Diagram = element_factory.create(Diagram)
         klass = element_factory.create(UML.Class)
