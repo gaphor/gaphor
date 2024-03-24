@@ -182,8 +182,8 @@ class AssociationItem(Named, LinePresentation[UML.Association]):
         self.request_update()
 
     def update(self, _context: UpdateContext | None = None):
-        for end in (self._head_end, self._tail_end):
-            end.set_text()
+        self._head_end.update_text()
+        self._tail_end.update_text()
 
     def point(self, x, y):
         """Returns the distance from the Association to the (mouse) cursor."""
@@ -351,10 +351,11 @@ class AssociationEnd:
     def subject(self) -> Optional[UML.Property]:
         return getattr(self.owner, f"{self._end}_subject")  # type:ignore[no-any-return]
 
-    def request_update(self):
-        self._owner.request_update()
+    @property
+    def name(self):
+        return self._name
 
-    def set_text(self):
+    def update_text(self):
         """Set the text on the association end."""
         if self.subject:
             try:
@@ -366,13 +367,6 @@ class AssociationEnd:
             else:
                 self._name = n
                 self._mult = m
-                self.request_update()
-
-    def get_name(self):
-        return self._name
-
-    def get_mult(self):
-        return self._mult
 
     def update_position(self, context: UpdateContext, p1, p2):
         """Update label placement for association's name and multiplicity

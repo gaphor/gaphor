@@ -87,7 +87,7 @@ def test_association_end_updates(create, diagram):
     a.subject.memberEnd[0].name = "blah"
     diagram.update_now((a,))
 
-    assert a.head_end._name == "+ blah", a.head_end.get_name()
+    assert a.head_end.name == "+ blah", a.head_end.name
 
 
 def test_association_end_owner_handles(items):
