@@ -15,7 +15,7 @@ from gaphas.segment import Segment
 from gi.repository import GObject, Gtk
 
 from gaphor.core import transactional
-from gaphor.core.modeling import Diagram, Element, Presentation
+from gaphor.core.modeling import Diagram, Element, Presentation, qualifiedName
 from gaphor.i18n import gettext, translated_ui_string
 
 
@@ -304,6 +304,7 @@ class InternalsPropertyPage(PropertyPageBase):
             textwrap.dedent(
                 f"""\
                 {gettext('Model Element')}:
+                  {gettext('qname')}: {'.'.join(qualifiedName(element))}
                   {gettext('class')}: {model_element_class(element)}
                   {gettext('id')}: {element.id}"""
             )

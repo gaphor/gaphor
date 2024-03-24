@@ -67,7 +67,7 @@ Constraint.context = derivedunion('context', Namespace, 0, 1)
 %%
 override NamedElement.qualifiedName: derived[list[str]]
 
-from gaphor.core.modeling.diagram import qualifiedName
+from gaphor.core.modeling import qualifiedName
 
 NamedElement.qualifiedName = derived(
     "qualifiedName",

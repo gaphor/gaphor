@@ -797,7 +797,7 @@ NamedElement.clientDependency = association("clientDependency", Dependency, comp
 NamedElement.namespace = derivedunion("namespace", Namespace, upper=1)
 # 68: override NamedElement.qualifiedName: derived[list[str]]
 
-from gaphor.core.modeling.diagram import qualifiedName
+from gaphor.core.modeling import qualifiedName
 
 NamedElement.qualifiedName = derived(
     "qualifiedName",
