@@ -23,7 +23,7 @@ def test_compartments(element_factory):
     assert 0 == len(compartments(klass)[0].child.children)
     assert 0 == len(compartments(klass)[1].child.children)
 
-    diagram.update_now((klass,))
+    diagram.update({klass})
 
     assert 50 == float(klass.min_height)
     assert 100 == float(klass.min_width)
@@ -32,7 +32,7 @@ def test_compartments(element_factory):
     attr.name = 4 * "x"  # about 44 pixels
     klass.subject.ownedAttribute = attr
 
-    diagram.update_now((klass,))
+    diagram.update({klass})
 
     assert 1 == len(compartments(klass)[0].child.children)
     assert compartments(klass)[0].size(context()) >= (40, 15)
@@ -45,7 +45,7 @@ def test_compartments(element_factory):
     oper.name = 6 * "x"  # about 66 pixels
     klass.subject.ownedOperation = oper
 
-    diagram.update_now((klass,))
+    diagram.update({klass})
     assert 2 == len(compartments(klass)[1].child.children)
     assert compartments(klass)[1].size(context()) > (60.0, 34.0)
 
@@ -53,7 +53,7 @@ def test_compartments(element_factory):
 def test_attribute_removal(element_factory):
     diagram = element_factory.create(Diagram)
     klass = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
-    diagram.update_now((klass,))
+    diagram.update({klass})
 
     attr = element_factory.create(UML.Property)
     attr.name = "blah1"
@@ -79,7 +79,7 @@ def test_compartment_resizing(element_factory):
     klass = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
     klass.subject.name = "Class1"
 
-    diagram.update_now((klass,))
+    diagram.update({klass})
 
     attr = element_factory.create(UML.Property)
     attr.name = "blah"
@@ -93,7 +93,7 @@ def test_compartment_resizing(element_factory):
 
     attr.name = "x" * 25
 
-    diagram.update_now((klass,))
+    diagram.update({klass})
 
     width = klass.width
     assert width >= 170.0

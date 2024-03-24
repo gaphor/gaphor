@@ -123,4 +123,4 @@ class PartitionPropertyPage(PropertyPageBase):
             last_child = self.partitions.get_last_child()
             self.partitions.remove(last_child)
 
-        self.item.diagram.update_now(self.item.diagram.ownedPresentation)
+        self.item.diagram.update(self.item.diagram.ownedPresentation)

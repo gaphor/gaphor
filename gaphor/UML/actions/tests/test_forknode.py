@@ -15,7 +15,7 @@ def saver():
 
 def test_forknode_save_default_height(diagram, saver):
     fork: ForkNodeItem = diagram.create(ForkNodeItem)
-    diagram.update_now({fork})
+    diagram.update({fork})
 
     fork.save(saver)
 
@@ -28,7 +28,7 @@ def test_forknode_save_height_0(diagram, saver):
 
     fork.handles()[0].pos.y = -100
     fork.handles()[1].pos.y = 0
-    diagram.update_now({fork})
+    diagram.update({fork})
 
     fork.save(saver)
 
@@ -41,7 +41,7 @@ def test_forknode_save_height_1(diagram, saver):
 
     fork.handles()[0].pos.y = 0
     fork.handles()[1].pos.y = 100
-    diagram.update_now({fork})
+    diagram.update({fork})
 
     fork.save(saver)
 

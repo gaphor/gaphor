@@ -76,6 +76,7 @@ def on_drag_update(gesture, offset_x, offset_y, drag_state):
         moving.move((x, y))
 
     view.magnet = (drag_state.direction, x, y)
+    view.model.update()
     view.update_back_buffer()
 
 
@@ -92,6 +93,7 @@ def on_drag_end(gesture, offset_x, offset_y, drag_state):
     for moving in drag_state.moving_items:
         moving.stop_move((x + offset_x, y + offset_y))
     drag_state.reset()
+    view.model.update()
     view.update_back_buffer()
     drag_state.event_manager.handle(ToolCompleted())
     with contextlib.suppress(AttributeError):

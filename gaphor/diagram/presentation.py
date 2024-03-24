@@ -54,7 +54,7 @@ def postload_connect(item: gaphas.Item, handle: gaphas.Handle, target: gaphas.It
     This function finds a suitable spot on the `target` item to connect the `handle` to.
     """
     target.postload()
-    item.diagram.update_now({item, target})
+    item.diagram.update({item, target})
     connector = ConnectorAspect(item, handle, item.diagram.connections)
     sink = ConnectionSink(target, distance=float("inf"))
     connector.glue(sink)
@@ -146,10 +146,10 @@ class ElementPresentation(gaphas.Element, HandlePositionUpdate, Presentation[S])
         be drawn or when styling changes."""
 
     def update(self, context):
-        if not self.shape:
+        if not self._shape:
             self.update_shapes()
-        if self.shape:
-            self.min_width, self.min_height = self.shape.size(
+        if self._shape:
+            self.min_width, self.min_height = self._shape.size(
                 context, bounding_box=Rectangle(0, 0, self.width, self.height)
             )
 

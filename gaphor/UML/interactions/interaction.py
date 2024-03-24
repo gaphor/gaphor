@@ -33,6 +33,8 @@ def draw_interaction(box, context, bounding_box):
     cr.rectangle(0, 0, bounding_box.width, bounding_box.height)
     stroke(context, fill=True)
     # draw pentagon
+    if not box.sizes:
+        box.size(context, bounding_box)
     w, h = box.sizes[0]
     h2 = h / 2.0
     cr.move_to(0, h)

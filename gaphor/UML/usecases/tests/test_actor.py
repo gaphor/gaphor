@@ -9,7 +9,7 @@ def test_create_actor(create, diagram):
     actor_item = create(ActorItem, UML.Actor)
     actor_item.subject.name = "Actor"
 
-    diagram.update_now({actor_item})
+    diagram.update({actor_item})
 
 
 def test_connect_to_lower_port(create, diagram):
@@ -20,7 +20,7 @@ def test_connect_to_lower_port(create, diagram):
     line_head.pos = (50, 100)
     line_tail.pos = (50, 100)
 
-    diagram.update_now({actor_item, line_item})
+    diagram.update({actor_item, line_item})
 
     connect(line_item, line_head, actor_item)
 
@@ -36,11 +36,11 @@ def test_save_and_load(create, diagram, element_factory, saver, loader):
     line_head.pos = (50, 100)
     line_tail.pos = (50, 100)
 
-    diagram.update_now({actor_item, line_item})
+    diagram.update({actor_item, line_item})
 
     connect(line_item, line_head, actor_item)
 
-    diagram.update_now({actor_item, line_item})
+    diagram.update({actor_item, line_item})
 
     data = saver()
     loader(data)

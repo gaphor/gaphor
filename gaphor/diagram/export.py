@@ -15,7 +15,7 @@ def escape_filename(diagram_name):
 
 
 def render(diagram, new_surface, padding=8, write_to_png=None) -> None:
-    diagram.update_now(diagram.get_all_items())
+    diagram.update(set(diagram.get_all_items()))
 
     painter = new_painter(diagram)
 

@@ -162,7 +162,7 @@ class ModelConsistency(RuleBasedStateMachine):
         with self.transaction:
             item = tooldef.item_factory(diagram)
             item.matrix.translate(x, y)
-            diagram.update_now({item})
+            diagram.update({item})
 
         # Do best effort to connect a line, no problem if it fails
         if isinstance(item, LinePresentation):
