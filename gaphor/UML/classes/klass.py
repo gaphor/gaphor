@@ -84,7 +84,9 @@ def attribute_watches(presentation, cast):
         f"subject[{cast}].ownedAttribute.upperValue"
     ).watch(f"subject[{cast}].ownedAttribute.defaultValue").watch(
         f"subject[{cast}].ownedAttribute.type"
-    ).watch(f"subject[{cast}].ownedAttribute.typeValue")
+    ).watch(f"subject[{cast}].ownedAttribute.type.name").watch(
+        f"subject[{cast}].ownedAttribute.typeValue"
+    )
 
 
 def operation_watches(presentation, cast):
@@ -97,8 +99,10 @@ def operation_watches(presentation, cast):
     ).watch(f"subject[{cast}].ownedOperation.visibility").watch(
         f"subject[{cast}].ownedOperation.ownedParameter.lowerValue"
     ).watch(f"subject[{cast}].ownedOperation.ownedParameter.upperValue").watch(
-        f"subject[{cast}].ownedOperation.ownedParameter.typeValue"
-    ).watch(f"subject[{cast}].ownedOperation.ownedParameter.defaultValue")
+        f"subject[{cast}].ownedOperation.ownedParameter.type.name"
+    ).watch(f"subject[{cast}].ownedOperation.ownedParameter.typeValue").watch(
+        f"subject[{cast}].ownedOperation.ownedParameter.defaultValue"
+    )
 
 
 def attributes_compartment(subject):

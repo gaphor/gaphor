@@ -177,6 +177,8 @@ class LifelineItem(Named, ElementPresentation[UML.Lifeline]):
         self.watch("subject[NamedElement].name")
         self.watch("subject.appliedStereotype.classifier.name")
         self.watch("subject[Lifeline].represents.name")
+        self.watch("subject[Lifeline].represents.type.name")
+        self.watch("subject[Lifeline].represents.typeValue")
         self.setup_constraints()
 
     is_destroyed: attribute[int] = attribute("is_destroyed", int, default=False)
@@ -230,10 +232,14 @@ class LifelineItem(Named, ElementPresentation[UML.Lifeline]):
         if not self.subject:
             return ""
 
-        name = self.subject.name or ""
-        if self.subject.represents:
-            return f"{name}: {self.subject.represents.name or ''}"
-        return name
+        if represents := self.subject.represents:
+            if represents.type and represents.type.name:
+                return f"{represents.name or ''}: {represents.type.name or ''}"
+            elif represents.typeValue:
+                return f"{represents.name or ''}: {represents.typeValue}"
+            return represents.name or ""
+
+        return self.subject.name or ""
 
     def draw_lifetime(self, box, context, bounding_box):
         """Draw lifeline time line.

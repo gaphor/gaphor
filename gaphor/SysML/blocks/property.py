@@ -19,6 +19,7 @@ class PropertyItem(Named, ElementPresentation[UML.Property]):
         self.watch("show_stereotypes", self.update_shapes)
         self.watch("subject[Property].name")
         self.watch("subject[Property].type.name")
+        self.watch("subject[Property].typeValue")
         self.watch("subject[Property].lowerValue")
         self.watch("subject[Property].upperValue")
         self.watch("subject[Property].aggregation", self.update_shapes)
