@@ -414,6 +414,33 @@ class Diagram(Element):
         else:
             yield from (e for e in self.get_all_items() if expression(e))
 
+    def update(self, dirty_items: Collection[Presentation] = ()) -> None:
+        """Update the diagram.
+
+        All items that requested an update via ``request_update()``
+        are now updates. If an item has an ``update(context: UpdateContext)``
+        method, it's invoked. Constraints are solved.
+        """
+        self._update_dirty_items(dirty_items)
+
+        # Clear our (cached) style sheet first
+        self._compiled_style_sheet = None
+
+        def dirty_items_with_ancestors():
+            for item in self._dirty_items:
+                yield item
+                yield from gaphas.canvas.ancestors(self, item)
+
+        for item in reversed(list(self.sort(dirty_items_with_ancestors()))):
+            if update := getattr(item, "update", None):
+                update(UpdateContext(style=self.style(StyledItem(item))))
+
+        self._connections.solve()
+
+        self._dirty_items.clear()
+
+    # gaphas.model.Model protocol:
+
     @property
     def connections(self) -> gaphas.connections.Connections:
         return self._connections
@@ -436,6 +463,15 @@ class Diagram(Element):
         if item in self.ownedPresentation:
             self._update_dirty_items(dirty_items={item})
 
+    def update_now(self, _dirty_items: Collection[Presentation]) -> None:
+        pass
+
+    def register_view(self, view: gaphas.model.View[Presentation]) -> None:
+        self._registered_views.add(view)
+
+    def unregister_view(self, view: gaphas.model.View[Presentation]) -> None:
+        self._registered_views.discard(view)
+
     def _update_dirty_items(self, dirty_items=(), removed_items=()):
         """Send an update notification to all registered views."""
         if dirty_items:
@@ -446,31 +482,6 @@ class Diagram(Element):
         for v in self._registered_views:
             v.request_update(dirty_items, removed_items)
 
-    def update_now(self, _dirty_items: Collection[Presentation]) -> None:
-        pass
-
-    def update(
-        self,
-        dirty_items: Collection[Presentation] = (),
-    ) -> None:
-        self._update_dirty_items(dirty_items)
-
-        # Clear our (cached) style sheet first
-        self._compiled_style_sheet = None
-
-        def dirty_items_with_ancestors():
-            for item in self._dirty_items:
-                yield item
-                yield from gaphas.canvas.ancestors(self, item)
-
-        for item in reversed(list(self.sort(dirty_items_with_ancestors()))):
-            if update := getattr(item, "update", None):
-                update(UpdateContext(style=self.style(StyledItem(item))))
-
-        self._connections.solve()
-
-        self._dirty_items.clear()
-
     def _on_constraint_solved(self, cinfo: gaphas.connections.Connection) -> None:
         dirty_items = set()
         if cinfo.item:
@@ -479,12 +490,6 @@ class Diagram(Element):
             dirty_items.add(cinfo.connected)
         if dirty_items:
             self._update_dirty_items(dirty_items)
-
-    def register_view(self, view: gaphas.model.View[Presentation]) -> None:
-        self._registered_views.add(view)
-
-    def unregister_view(self, view: gaphas.model.View[Presentation]) -> None:
-        self._registered_views.discard(view)
 
 
 @runtime_checkable
