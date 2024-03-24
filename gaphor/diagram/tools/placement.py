@@ -55,6 +55,7 @@ def on_drag_begin(gesture, start_x, start_y, placement_state: PlacementState):
         placement_state.event_manager.handle(DiagramItemPlaced(item))
 
     view.selection.dropzone_item = None
+    view.model.update({item})
 
 
 def create_item(view, factory, event_manager, x, y):
@@ -92,13 +93,13 @@ def connect_opposite_handle(view, new_item, x, y, handle_index):
                 handle_move.connect(vpos)
 
 
-def on_drag_update(gesture, offset_x, offset_y, placement_state):
+def on_drag_update(gesture, offset_x, offset_y, placement_state: PlacementState):
     if placement_state.moving:
         _, x, y = gesture.get_start_point()
         placement_state.moving.move((x + offset_x, y + offset_y))
 
 
-def on_drag_end(gesture, offset_x, offset_y, placement_state):
+def on_drag_end(gesture, offset_x, offset_y, placement_state: PlacementState):
     if placement_state.moving:
         view = gesture.get_widget()
         _, x, y = gesture.get_start_point()
@@ -107,7 +108,7 @@ def on_drag_end(gesture, offset_x, offset_y, placement_state):
         connect_opposite_handle(view, item, x, y, placement_state.handle_index)
         placement_state.event_manager.handle(DiagramItemPlaced(item))
         view.selection.dropzone_item = None
-        view.model.request_update(item)
+        view.model.update({item})
         open_editor(item, view, placement_state.event_manager)
 
 

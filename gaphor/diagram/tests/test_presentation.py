@@ -7,7 +7,7 @@ from gaphor.UML import diagramitems
 
 
 class DummyVisualComponent:
-    def size(self, ctx):
+    def size(self, ctx, bounding_box=None):
         return 0, 0
 
     def draw(self, ctx, bounding_box):

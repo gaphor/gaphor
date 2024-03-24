@@ -5,14 +5,11 @@ Diagrams can be visualized and edited.
 from __future__ import annotations
 
 import logging
+from collections.abc import Callable, Collection, Iterable, Iterator, Sequence
 from dataclasses import dataclass
 from functools import lru_cache
 from typing import (
-    Callable,
-    Iterable,
-    Iterator,
     Protocol,
-    Sequence,
     TypeVar,
     overload,
     runtime_checkable,
@@ -279,6 +276,7 @@ class Diagram(Element):
 
         self._compiled_style_sheet: CompiledStyleSheet | None = None
         self._registered_views: set[gaphas.model.View] = set()
+        self._dirty_items: set[gaphas.Item] = set()
 
         self._watcher = self.watcher()
         self._watcher.watch("ownedPresentation", self._owned_presentation_changed)
@@ -295,7 +293,7 @@ class Diagram(Element):
 
     def _owned_presentation_changed(self, event):
         if isinstance(event, AssociationDeleted) and event.old_value:
-            self._update_views(removed_items=(event.old_value,))
+            self._update_dirty_items(removed_items={event.old_value})
         elif isinstance(event, AssociationAdded):
             self._order_owned_presentation()
 
@@ -376,7 +374,7 @@ class Diagram(Element):
             item.subject = subject
         if parent:
             item.parent = parent
-        self.request_update(item)
+        self.update({item})
         return item
 
     def lookup(self, id: Id) -> Presentation | None:
@@ -436,29 +434,32 @@ class Diagram(Element):
 
     def request_update(self, item: gaphas.item.Item) -> None:
         if item in self.ownedPresentation:
-            self._update_views(dirty_items=(item,))
+            self._update_dirty_items(dirty_items={item})
 
-    def _update_views(self, dirty_items=(), removed_items=()):
+    def _update_dirty_items(self, dirty_items=(), removed_items=()):
         """Send an update notification to all registered views."""
+        if dirty_items:
+            self._dirty_items.update(dirty_items)
+        if removed_items:
+            self._dirty_items.difference_update(removed_items)
+
         for v in self._registered_views:
             v.request_update(dirty_items, removed_items)
 
-    @gaphas.decorators.nonrecursive
-    def update_now(
-        self,
-        dirty_items: Sequence[Presentation],
-    ) -> None:
-        self.update(dirty_items)
+    def update_now(self, _dirty_items: Collection[Presentation]) -> None:
+        pass
 
     def update(
         self,
-        dirty_items: Iterable[Presentation],
+        dirty_items: Collection[Presentation] = (),
     ) -> None:
+        self._update_dirty_items(dirty_items)
+
         # Clear our (cached) style sheet first
         self._compiled_style_sheet = None
 
         def dirty_items_with_ancestors():
-            for item in set(dirty_items):
+            for item in self._dirty_items:
                 yield item
                 yield from gaphas.canvas.ancestors(self, item)
 
@@ -468,6 +469,8 @@ class Diagram(Element):
 
         self._connections.solve()
 
+        self._dirty_items.clear()
+
     def _on_constraint_solved(self, cinfo: gaphas.connections.Connection) -> None:
         dirty_items = set()
         if cinfo.item:
@@ -475,7 +478,7 @@ class Diagram(Element):
         if cinfo.connected:
             dirty_items.add(cinfo.connected)
         if dirty_items:
-            self._update_views(dirty_items)
+            self._update_dirty_items(dirty_items)
 
     def register_view(self, view: gaphas.model.View[Presentation]) -> None:
         self._registered_views.add(view)
