@@ -240,7 +240,7 @@ jobs:
     runs-on: windows-latest
     timeout-minutes: 60
     env:
-      gvsbuild_version: 2024.1.0
+      gvsbuild_version: 2024.3.0
       # Bump this number if you want to force a rebuild of gvsbuild with the same version
       gvsbuild_update: 0
     outputs:
@@ -264,11 +264,6 @@ jobs:
         uses: actions/setup-python@0a5c61591373683505ea898e09a3ea4f39ef2b9c # v5.0.0
         with:
           python-version: ${{ env.python_version }}
-      - name: GTK binaries move git binary
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: |
-          move "C:\Program Files\Git\usr\bin" "C:\Program Files\Git\usr\notbin"
-          move "C:\Program Files\Git\bin" "C:\Program Files\Git\notbin"
       - name: Install gvsbuild
         if: steps.cache.outputs.cache-hit != 'true'
         run: python -m pip install gvsbuild==${{ env.gvsbuild_version }}
@@ -283,11 +278,6 @@ jobs:
         run: >
           Get-ChildItem C:\gtk-build\build\x64\release\*\dist\*.whl |
           ForEach-Object -process { cp $_ C:\gtk-build\gtk\x64\release\ }
-      - name: GTK binaries restore git binary
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: |
-          move "C:\Program Files\Git\usr\notbin" "C:\Program Files\Git\usr\bin"
-          move "C:\Program Files\Git\notbin" "C:\Program Files\Git\bin"
       - name: GTK binaries output cache key
         id: output
         run: Write-Output "cachekey=${{ runner.os }}-gvsbuild-${{ env.gvsbuild_update }}-${{ env.gvsbuild_version }}" >> $env:GITHUB_OUTPUT
