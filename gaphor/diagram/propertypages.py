@@ -7,6 +7,7 @@ gaphor.adapter package.
 from __future__ import annotations
 
 import abc
+import textwrap
 from typing import Callable, List, Tuple, Type
 
 import gaphas.item
@@ -15,7 +16,7 @@ from gi.repository import GObject, Gtk
 
 from gaphor.core import transactional
 from gaphor.core.modeling import Diagram, Element, Presentation
-from gaphor.i18n import translated_ui_string
+from gaphor.i18n import gettext, translated_ui_string
 
 
 class LabelValue(GObject.Object):
@@ -264,3 +265,55 @@ class NotePropertyPage(PropertyPageBase):
         self.subject.note = buffer.get_text(
             buffer.get_start_iter(), buffer.get_end_iter(), False
         )
+
+
+@PropertyPages.register(Element)
+class InternalsPropertyPage(PropertyPageBase):
+    """Show internals.
+
+    This info may come in handy if you want to code.
+    """
+
+    order = 400
+
+    def __init__(self, subject):
+        self.subject = subject
+
+    def construct(self):
+        subject = self.subject
+
+        if not subject:
+            return
+
+        builder = new_builder("internals-editor")
+        internals = builder.get_object("internals")
+
+        if isinstance(subject, Presentation):
+            presentation_text = textwrap.dedent(
+                f"""\
+                {gettext('Presentation')}:
+                  {gettext('class')}: {type(subject).__module__}.{type(subject).__name__}
+                  {gettext('id')}: {subject.id}"""
+            )
+            element = subject.subject
+        else:
+            presentation_text = ""
+            element = subject
+
+        element_text = (
+            textwrap.dedent(
+                f"""\
+                {gettext('Model Element')}:
+                  {gettext('class')}: {type(element).__module__}.{type(element).__name__}
+                  {gettext('id')}: {element.id}"""
+            )
+            if element
+            else ""
+        )
+
+        if presentation_text and element_text:
+            internals.set_label(presentation_text + "\n\n" + element_text)
+        else:
+            internals.set_label(presentation_text or element_text)
+
+        return builder.get_object("internals-editor")
