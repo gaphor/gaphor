@@ -417,7 +417,7 @@ class Diagram(Element):
     def update(self, dirty_items: Collection[Presentation] = ()) -> None:
         """Update the diagram.
 
-        All items that requested an update via ``request_update()``
+        All items that requested an update via :meth:`request_update`
         are now updates. If an item has an ``update(context: UpdateContext)``
         method, it's invoked. Constraints are solved.
         """
@@ -460,6 +460,13 @@ class Diagram(Element):
         return (n for n in self.get_all_items() if n in items_set)
 
     def request_update(self, item: gaphas.item.Item) -> None:
+        """Schedule an item for updating.
+
+        No update is done at this point, it's only added to the set of
+        to-be updated items.
+
+        This method is part of the :obj:`gaphas.model.Model` protocol.
+        """
         if item in self.ownedPresentation:
             self._update_dirty_items(dirty_items={item})
 
