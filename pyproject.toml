@@ -56,7 +56,7 @@ pyobjc-framework-cocoa = { version = ">=9.0.1,<11.0.0", markers = "sys_platform 
 [tool.poetry.group.dev.dependencies]
 pytest = ">=7.1,<9.0"
 pytest-archon = "^0.0"
-pytest-cov = "^4.0.0"
+pytest-cov = ">=4,<6"
 pytest-randomly = "^3.12.0"
 xdoctest = "^1.1.0"
 hypothesis = "^6.54.5"
