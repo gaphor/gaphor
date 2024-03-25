@@ -132,7 +132,7 @@ class DiagramPage:
 
         # Set model only after the painters are set
         view.model = self.diagram
-        self.diagram.update(set(self.diagram.get_all_items()))
+        self.diagram.update(self.diagram.ownedPresentation)
 
         return self.widget
 
