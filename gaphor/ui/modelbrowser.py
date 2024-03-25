@@ -25,6 +25,7 @@ from gaphor.diagram.group import change_owner
 from gaphor.diagram.tools.dnd import ElementDragData
 from gaphor.i18n import gettext, translated_ui_string
 from gaphor.transaction import Transaction
+from gaphor.event import Notification
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.actiongroup import create_action_group
 from gaphor.ui.event import (
@@ -192,8 +193,11 @@ class ModelBrowser(UIComponent, ActionProvider):
             diagram_type = self._diagram_type_or(
                 diagram_kind, DiagramType(diagram_kind, "New Diagram", ())
             )
-            diagram = diagram_type.create(self.element_factory, element)
-            diagram.name = diagram.gettext("New Diagram")
+            try:
+                diagram = diagram_type.create(self.element_factory, element)
+                diagram.name = diagram.gettext("New Diagram")
+            except TypeError as e:
+                self.event_manager.handle(Notification(str(e)))
         self.select_element(diagram)
         self.event_manager.handle(DiagramOpened(diagram))
         self.tree_view_rename_selected()

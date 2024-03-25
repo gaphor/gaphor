@@ -1,3 +1,5 @@
+import pytest
+
 from gaphor.SysML.diagramtype import DiagramDefault, SysMLDiagramType
 from gaphor.UML.uml import NamedElement
 
@@ -37,3 +39,10 @@ def test_sysml_diagram_type(element_factory):
     assert diagram.name == "Defghi"
     assert isinstance(diagram.element, MockElementA)
     assert diagram.element.name == "New mock element A"
+
+    mock_b = element_factory.create(MockElementB)
+    mock_b.name = "Mock B"
+
+    with pytest.raises(TypeError) as e:
+        diagram = diagram_type.create(element_factory, mock_b)
+    assert str(e.value) == "Cannot create \"Defghi\" in SysML profile"
