@@ -1393,6 +1393,15 @@
         "translation",
         "ideas"
       ]
+    },
+    {
+      "login": "Seant-Dev",
+      "name": "Antonio Mejia",
+      "avatar_url": "https://avatars.githubusercontent.com/u/62353416?v=4",
+      "profile": "https://github.com/Seant-Dev",
+      "contributions": [
+        "translation"
+      ]
     }
   ],
   "contributorsPerLine": 7,
