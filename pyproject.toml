@@ -185,7 +185,7 @@ c4model.script = """gaphor.codegen.coder:main(
     supermodelfiles=[('UML', 'models/UML.gaphor')]
     )"""
 lint = "pre-commit run --all-files"
-docs = { "cwd" = "docs", "shell" = "sphinx-build -b html . _build/html" }
+docs = { "cwd" = "docs", "shell" = "sphinx-build -W -b html . _build/html" }
 docs-gettext-pot = { "cwd" = "docs", "shell" = "sphinx-build -b gettext . locale" }
 clean = { "shell" = "rm -rf dist build _packaging/dist _packaging/build _packaging/windows/file_version_info.txt docs/_build" }
 package = { "cwd" = "_packaging", shell = "pyinstaller -y gaphor.spec"}
