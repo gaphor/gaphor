@@ -36,12 +36,18 @@ def delete_selected_items(view: GtkView, event_manager):
                 del i.diagram.element
             i.unlink()
 
+
 def unselect(view: GtkView, event_manager):
     items = view.selection.selected_items
     with Transaction(event_manager):
         for i in list(items):
             if isinstance(i, LinePresentation):
-                if i._has_been_dropped and i._lastHandleMoved and not i._lastHandleMoved.glued and i._connections.get_connection(i._lastHandleMoved):
+                if (
+                    i._has_been_dropped
+                    and i._lastHandleMoved
+                    and not i._lastHandleMoved.glued
+                    and i._connections.get_connection(i._lastHandleMoved)
+                ):
                     i._connections.disconnect_item(i, i._lastHandleMoved)
                     i._lastHandleMoved = None
         view.selection.unselect_all()
