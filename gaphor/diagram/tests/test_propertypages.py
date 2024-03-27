@@ -1,6 +1,7 @@
 from gaphor.core.modeling import Comment, Diagram
 from gaphor.diagram.general import CommentItem, Line
 from gaphor.diagram.propertypages import (
+    InternalsPropertyPage,
     LineStylePage,
     NamePropertyPage,
     NotePropertyPage,
@@ -67,3 +68,15 @@ def test_note_page_with_subject(element_factory):
     note.get_buffer().set_text("A new note")
 
     assert comment.note == "A new note"
+
+
+def test_internals_page_for_presentation(create):
+    subject = create(CommentItem, Comment)
+    property_page = InternalsPropertyPage(subject)
+    widget = property_page.construct()
+
+    internals = find(widget, "internals")
+    text = internals.get_label()
+
+    assert "CommentItem" in text
+    assert "gaphor.core.modeling.coremodel.Comment" in text
