@@ -29,13 +29,16 @@ class SysMLDiagramType(DiagramType):
 
     def create(self, element_factory, element):
         if not isinstance(element, self._allowed_types):
-            d = next(d for d in self._defaults if isinstance(element, d.from_type))
-            assert d.to_type in self._allowed_types
-            new_element = element_factory.create(d.to_type)
-            new_element.name = d.name
-            if element:
-                change_owner(element, new_element)
-            element = new_element
+            try:
+                d = next(d for d in self._defaults if isinstance(element, d.from_type))
+                assert d.to_type in self._allowed_types
+                new_element = element_factory.create(d.to_type)
+                new_element.name = d.name
+                if element:
+                    change_owner(element, new_element)
+                element = new_element
+            except:
+                raise TypeError(f"Cannot create \"{self.name}\" in SysML profile")
 
         diagram = element_factory.create(SysMLDiagram)
         diagram.name = diagram.gettext(self.name)
