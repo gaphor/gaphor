@@ -197,8 +197,7 @@ class DiagramPage:
         ):
             self.update_drawing_style()
 
-            diagram = self.diagram
-            diagram.update(diagram.ownedPresentation)
+            self.diagram.update(self.diagram.ownedPresentation)
         elif event.property is Diagram.name and self.view:
             self.view.update_back_buffer()
 
