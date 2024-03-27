@@ -75,6 +75,9 @@ class HandlePositionEvent(RevertibleEvent):
 
 
 class HandlePositionUpdate:
+
+    _lastHandleMoved = None
+
     def watch_handle(self, handle):
         handle.pos.add_handler(self._on_handle_position_update)
 
@@ -85,6 +88,7 @@ class HandlePositionUpdate:
         for handle in self.handles():  # type: ignore[attr-defined]
             if handle.pos is position:
                 self.handle(HandlePositionEvent(self, handle, old))  # type: ignore[attr-defined]
+                self._lastHandleMoved = handle
                 break
 
 
@@ -226,6 +230,8 @@ class LinePresentation(gaphas.Line, HandlePositionUpdate, Presentation[S]):
 
         self.watch_handle(self.head)
         self.watch_handle(self.tail)
+
+        self._has_been_dropped = False
 
     head = property(lambda self: self._handles[0])
     tail = property(lambda self: self._handles[-1])

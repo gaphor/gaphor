@@ -2,6 +2,7 @@ from gaphas.tool import item_tool as _item_tool
 from gi.repository import Gtk
 
 from gaphor.diagram.event import DiagramSelectionChanged
+from gaphor.diagram.presentation import LinePresentation
 
 
 def item_tool(event_manager) -> Gtk.GestureDrag:
@@ -27,5 +28,9 @@ def on_drag_update(gesture, _offset_x, _offset_y):
 
 def on_drag_end(gesture, _offset_x, _offset_y):
     view = gesture.get_widget()
+    for i in view.selection.selected_items:
+        if isinstance(i, LinePresentation):
+            i._lastHandleMoved = None
+            i._has_been_dropped = True
     view.selection.dropzone_item = None
     view.model.update()
