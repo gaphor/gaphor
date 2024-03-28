@@ -75,6 +75,14 @@ class UndoManagerStateChanged(ServiceEvent):
     """Event class used to send state changes on the Undo Manager."""
 
 
+class _UndoManagerTransactionCommitted(ServiceEvent):
+    """A transaction was commited.
+
+    This is a subsequent event that triggers the actual commit.
+    In doing so we allow other parties to handle their commit handlers first.
+    """
+
+
 class NotInTransactionException(Exception):
     """Raised when changes occur outside a transaction."""
 
@@ -100,10 +108,11 @@ class UndoManager(Service, ActionProvider):
         self._undoing = 0
         self._rolling_back = 0
 
-        event_manager.priority_subscribe(self.reset)
+        event_manager.subscribe(self.reset)
         event_manager.priority_subscribe(self.begin_transaction)
-        event_manager.priority_subscribe(self.commit_transaction)
-        event_manager.priority_subscribe(self.rollback_transaction)
+        event_manager.subscribe(self.commit_transaction)
+        event_manager.subscribe(self.rollback_transaction)
+        event_manager.subscribe(self._on_transaction_commit)
         self._register_undo_handlers()
         self._action_executed()
 
@@ -112,6 +121,7 @@ class UndoManager(Service, ActionProvider):
         self.event_manager.unsubscribe(self.begin_transaction)
         self.event_manager.unsubscribe(self.commit_transaction)
         self.event_manager.unsubscribe(self.rollback_transaction)
+        self.event_manager.unsubscribe(self._on_transaction_commit)
         self._unregister_undo_handlers()
 
     def clear_undo_stack(self):
@@ -155,6 +165,10 @@ class UndoManager(Service, ActionProvider):
             )
 
     @event_handler(TransactionCommit)
+    def _on_transaction_commit(self, event):
+        self.event_manager.handle(_UndoManagerTransactionCommitted(self))
+
+    @event_handler(_UndoManagerTransactionCommitted)
     def commit_transaction(self, event=None):
         assert self._current_transaction
 

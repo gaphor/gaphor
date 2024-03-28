@@ -8,10 +8,15 @@ from gaphor import UML
 from gaphor.abc import Service
 from gaphor.core import event_handler
 from gaphor.core.modeling import Diagram, Element, Presentation
-from gaphor.core.modeling.event import AssociationDeleted, AssociationSet, DerivedSet
+from gaphor.core.modeling.event import (
+    AssociationDeleted,
+    AssociationSet,
+    DerivedSet,
+    DiagramUpdateRequested,
+)
 from gaphor.diagram.deletable import deletable
 from gaphor.diagram.general import CommentLineItem
-from gaphor.event import Notification
+from gaphor.event import Notification, TransactionCommit
 from gaphor.i18n import gettext
 
 
@@ -37,18 +42,23 @@ class SanitizerService(Service):
         self.event_manager = event_manager
         self.properties = properties or {}
         self.undo_manager = undo_manager
+        self._to_be_updated_diagrams = set()
 
         event_manager.subscribe(self._unlink_on_subject_delete)
-        event_manager.subscribe(self.update_annotated_element_link)
+        event_manager.subscribe(self._update_annotated_element_link)
         event_manager.subscribe(self._unlink_on_extension_delete)
         event_manager.subscribe(self._redraw_diagram_on_move)
+        event_manager.subscribe(self._diagram_update_requested)
+        event_manager.subscribe(self._on_update_diagrams)
 
     def shutdown(self):
         event_manager = self.event_manager
         event_manager.unsubscribe(self._unlink_on_subject_delete)
-        event_manager.unsubscribe(self.update_annotated_element_link)
+        event_manager.unsubscribe(self._update_annotated_element_link)
         event_manager.unsubscribe(self._unlink_on_extension_delete)
         event_manager.unsubscribe(self._redraw_diagram_on_move)
+        event_manager.unsubscribe(self._diagram_update_requested)
+        event_manager.unsubscribe(self._on_update_diagrams)
 
     @event_handler(AssociationSet)
     @undo_guard
@@ -78,7 +88,7 @@ class SanitizerService(Service):
 
     @event_handler(AssociationSet)
     @undo_guard
-    def update_annotated_element_link(self, event):
+    def _update_annotated_element_link(self, event):
         """Link comment and element if a comment line is present, but comment
         and element subject are not connected yet."""
         if event.property is not Presentation.subject:  # type: ignore[misc]
@@ -118,6 +128,16 @@ class SanitizerService(Service):
             diagram = event.element
             for item in diagram.get_all_items():
                 diagram.request_update(item)
+
+    @event_handler(DiagramUpdateRequested)
+    @undo_guard
+    def _diagram_update_requested(self, event):
+        self._to_be_updated_diagrams.add(event.diagram)
+
+    @event_handler(TransactionCommit)
+    def _on_update_diagrams(self, event):
+        for diagram in self._to_be_updated_diagrams:
+            diagram.update()
 
 
 def update_stereotype_application(stereotype: UML.Stereotype, seen=None):

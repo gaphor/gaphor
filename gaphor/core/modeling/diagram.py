@@ -26,7 +26,11 @@ from gaphor.core.modeling.element import (
     generate_id,
     self_and_owners,
 )
-from gaphor.core.modeling.event import AssociationAdded, AssociationDeleted
+from gaphor.core.modeling.event import (
+    AssociationAdded,
+    AssociationDeleted,
+    DiagramUpdateRequested,
+)
 from gaphor.core.modeling.presentation import Presentation
 from gaphor.core.modeling.properties import (
     association,
@@ -469,6 +473,7 @@ class Diagram(Element):
         """
         if item in self.ownedPresentation:
             self._update_dirty_items(dirty_items={item})
+        self.handle(DiagramUpdateRequested(self))
 
     def update_now(self, _dirty_items: Collection[Presentation]) -> None:
         pass
@@ -486,6 +491,7 @@ class Diagram(Element):
         if removed_items:
             self._dirty_items.difference_update(removed_items)
 
+        # We can directly request updates on the view, since those happen asynchronously
         for v in self._registered_views:
             v.request_update(dirty_items, removed_items)
 

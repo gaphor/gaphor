@@ -36,9 +36,8 @@ class Presentation(Matrices, Element, Generic[S]):
         self.diagram = diagram
         self._original_diagram: Diagram | None = diagram
 
-        def update(event):
-            if self.diagram:
-                self.diagram.update({self})
+        def update(_event):
+            self.request_update()
 
         self._watcher = self.watcher(default_handler=update)
         self.watch("subject")

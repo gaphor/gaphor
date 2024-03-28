@@ -21,7 +21,10 @@ class StereotypePage(PropertyPageBase):
 
     def construct(self):
         subject = self.subject
-        if not subject or isinstance(subject, Presentation):
+        if isinstance(subject, Presentation):
+            subject = subject.subject
+
+        if not subject:
             return None
 
         stereotypes = UML.recipes.get_stereotypes(subject)

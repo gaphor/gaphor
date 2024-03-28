@@ -250,3 +250,10 @@ class ModelFlushed(ServiceEvent):
         the factory.
         """
         super().__init__(service)
+
+
+class DiagramUpdateRequested:
+    """Generic event fired when element state changes."""
+
+    def __init__(self, diagram):
+        self.diagram = diagram
