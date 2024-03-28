@@ -301,7 +301,6 @@ class ShowAttributesPage(PropertyPageBase):
     @transactional
     def on_show_attributes_changed(self, button, gparam):
         self.item.show_attributes = button.get_active()
-        self.item.request_update()
 
 
 class OperationView(GObject.Object):
@@ -487,7 +486,6 @@ class ShowOperationsPage(PropertyPageBase):
     @transactional
     def on_show_operations_changed(self, button, gparam):
         self.item.show_operations = button.get_active()
-        self.item.request_update()
 
 
 @PropertyPages.register(UML.Component)

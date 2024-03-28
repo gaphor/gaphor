@@ -169,4 +169,3 @@ class ShowEnumerationPage(PropertyPageBase):
     @transactional
     def on_show_enumerations_changed(self, button, gparam):
         self.item.show_enumerations = button.get_active()
-        self.item.request_update()

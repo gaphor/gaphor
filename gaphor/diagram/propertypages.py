@@ -217,13 +217,13 @@ class LineStylePage(PropertyPageBase):
             line_segment.split_segment(0)
         active = button.get_active()
         self.item.orthogonal = active
-        self.item.diagram.update({self.item})
+        self.item.request_update()
         self.horizontal_button.set_sensitive(active)
 
     @transactional
     def _on_horizontal_change(self, button, gparam):
         self.item.horizontal = button.get_active()
-        self.item.diagram.update({self.item})
+        self.item.request_update()
 
 
 @PropertyPages.register(Element)
