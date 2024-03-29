@@ -39,14 +39,14 @@ class SanitizerService(Service):
         self.undo_manager = undo_manager
 
         event_manager.subscribe(self._unlink_on_subject_delete)
-        event_manager.subscribe(self.update_annotated_element_link)
+        event_manager.subscribe(self._update_annotated_element_link)
         event_manager.subscribe(self._unlink_on_extension_delete)
         event_manager.subscribe(self._redraw_diagram_on_move)
 
     def shutdown(self):
         event_manager = self.event_manager
         event_manager.unsubscribe(self._unlink_on_subject_delete)
-        event_manager.unsubscribe(self.update_annotated_element_link)
+        event_manager.unsubscribe(self._update_annotated_element_link)
         event_manager.unsubscribe(self._unlink_on_extension_delete)
         event_manager.unsubscribe(self._redraw_diagram_on_move)
 
@@ -78,7 +78,7 @@ class SanitizerService(Service):
 
     @event_handler(AssociationSet)
     @undo_guard
-    def update_annotated_element_link(self, event):
+    def _update_annotated_element_link(self, event):
         """Link comment and element if a comment line is present, but comment
         and element subject are not connected yet."""
         if event.property is not Presentation.subject:  # type: ignore[misc]

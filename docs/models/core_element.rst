@@ -74,6 +74,9 @@ The ``Diagram`` class
 
    .. automethod:: gaphor.core.modeling.Diagram.select
 
+   .. automethod:: gaphor.core.modeling.Diagram.request_update
+
+   .. automethod:: gaphor.core.modeling.Diagram.update
 
 Protocols
 ---------

@@ -250,3 +250,13 @@ class ModelFlushed(ServiceEvent):
         the factory.
         """
         super().__init__(service)
+
+
+class DiagramUpdateRequested:
+    """Event fired when a diagram needs updating.
+
+    Instead of updating directly, this event is emited so
+    diagrams can be updated in bulk."""
+
+    def __init__(self, diagram):
+        self.diagram = diagram

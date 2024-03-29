@@ -26,7 +26,11 @@ from gaphor.core.modeling.element import (
     generate_id,
     self_and_owners,
 )
-from gaphor.core.modeling.event import AssociationAdded, AssociationDeleted
+from gaphor.core.modeling.event import (
+    AssociationAdded,
+    AssociationDeleted,
+    DiagramUpdateRequested,
+)
 from gaphor.core.modeling.presentation import Presentation
 from gaphor.core.modeling.properties import (
     association,
@@ -417,7 +421,7 @@ class Diagram(Element):
     def update(self, dirty_items: Collection[Presentation] = ()) -> None:
         """Update the diagram.
 
-        All items that requested an update via ``request_update()``
+        All items that requested an update via :meth:`request_update`
         are now updates. If an item has an ``update(context: UpdateContext)``
         method, it's invoked. Constraints are solved.
         """
@@ -460,8 +464,16 @@ class Diagram(Element):
         return (n for n in self.get_all_items() if n in items_set)
 
     def request_update(self, item: gaphas.item.Item) -> None:
+        """Schedule an item for updating.
+
+        No update is done at this point, it's only added to the set of
+        to-be updated items.
+
+        This method is part of the :obj:`gaphas.model.Model` protocol.
+        """
         if item in self.ownedPresentation:
             self._update_dirty_items(dirty_items={item})
+        self.handle(DiagramUpdateRequested(self))
 
     def update_now(self, _dirty_items: Collection[Presentation]) -> None:
         pass
@@ -479,6 +491,7 @@ class Diagram(Element):
         if removed_items:
             self._dirty_items.difference_update(removed_items)
 
+        # We can directly request updates on the view, since those happen asynchronously
         for v in self._registered_views:
             v.request_update(dirty_items, removed_items)
 

@@ -70,11 +70,11 @@ class AutoLayout:
         self.dump_gv = dump_gv
 
     def layout(self, diagram: Diagram, splines="polyline") -> None:
-        diagram.update(set(diagram.get_all_items()))
+        diagram.update(diagram.ownedPresentation)
         graph = diagram_as_pydot(diagram, splines=splines)
         rendered_graph = self.render(graph)
         self.apply_layout(diagram, rendered_graph)
-        diagram.update(set(diagram.get_all_items()))
+        diagram.update(diagram.ownedPresentation)
 
     def render(self, graph: pydot.Dot):
         if self.dump_gv:
