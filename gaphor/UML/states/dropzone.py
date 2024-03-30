@@ -14,16 +14,15 @@ class RegionDropZoneMoveMixin(DropZoneMoveMixin):
     """This drop zone aspect has some specifics to drop a state in the right
     region on a state (machine)."""
 
-    def drop(self, pos):
+    def drop(self, new_parent, pos):
         view = self.view
-        new_parent = view.selection.dropzone_item
 
         if (
             not isinstance(new_parent, (StateItem, StateMachineItem))
             or not new_parent.subject
             or not new_parent.subject.region
         ):
-            return super().drop(pos)
+            return super().drop(new_parent, pos)
 
         item = self.item
         old_parent = item.parent

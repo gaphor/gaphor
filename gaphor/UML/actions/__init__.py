@@ -1,10 +1,10 @@
 # ruff: noqa: F401
 
-import gaphor.UML.actions.drop
 from gaphor.UML.actions import (
     actionsgroup,
     activityconnect,
     copypaste,
+    drop,
     flowconnect,
     pinconnect,
 )
