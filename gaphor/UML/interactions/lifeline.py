@@ -95,7 +95,7 @@ class LifetimeItem:
     MIN_LENGTH = 10
     MIN_LENGTH_VISIBLE = 3 * MIN_LENGTH
 
-    def __init__(self):
+    def __init__(self, add_constraint):
         super().__init__()
 
         self.top = Handle(strength=VERY_STRONG - 1)
@@ -106,7 +106,10 @@ class LifetimeItem:
 
         self.port = BetweenPort(self.top.pos, self.bottom.pos)
 
-        self._c_min_length = None  # to be set by lifeline item
+        self._c_min_length = LessThanConstraint(
+            self.top.pos.y, self.bottom.pos.y, delta=LifetimeItem.MIN_LENGTH
+        )
+        add_constraint(self._c_min_length)
 
     def _set_length(self, length):
         """Set lifeline's lifetime length."""
@@ -114,11 +117,13 @@ class LifetimeItem:
 
     length = property(lambda s: s.bottom.pos.y - s.top.pos.y, _set_length)
 
-    def _set_min_length(self, length):
-        assert self._c_min_length is not None
-        self._c_min_length.delta = length
+    @property
+    def min_length(self):
+        return self._c_min_length.delta
 
-    min_length = property(lambda s: s._c_min_length.delta, _set_min_length)
+    @min_length.setter
+    def min_length(self, length):
+        self._c_min_length.delta = length
 
     def _is_visible(self):
         return self.length > self.MIN_LENGTH
@@ -150,7 +155,9 @@ class LifelineItem(Named, ElementPresentation[UML.Lifeline]):
 
         self._connections = diagram.connections
 
-        self._lifetime = LifetimeItem()
+        self._lifetime = LifetimeItem(
+            lambda c: self._connections.add_constraint(self, c)
+        )
 
         top = self._lifetime.top
         bottom = self._lifetime.bottom
@@ -201,11 +208,8 @@ class LifelineItem(Named, ElementPresentation[UML.Lifeline]):
         c2 = EqualsConstraint(top.pos.x, bottom.pos.x, delta=0.0)
 
         c3 = EqualsConstraint(self._handles[SW].pos.y, top.pos.y, delta=0.0)
-        self._lifetime._c_min_length = LessThanConstraint(
-            top.pos.y, bottom.pos.y, delta=LifetimeItem.MIN_LENGTH
-        )
 
-        for c in (c1, c2, c3, self._lifetime._c_min_length):
+        for c in (c1, c2, c3):
             self._connections.add_constraint(self, c)
 
     def save(self, save_func):
