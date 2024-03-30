@@ -111,11 +111,14 @@ class LifetimeItem:
         )
         add_constraint(self._c_min_length)
 
-    def _set_length(self, length):
+    @property
+    def length(self):
+        return self.bottom.pos.y - self.top.pos.y
+
+    @length.setter
+    def length(self, length):
         """Set lifeline's lifetime length."""
         self.bottom.pos.y = self.top.pos.y + length
-
-    length = property(lambda s: s.bottom.pos.y - s.top.pos.y, _set_length)
 
     @property
     def min_length(self):
@@ -125,17 +128,17 @@ class LifetimeItem:
     def min_length(self, length):
         self._c_min_length.delta = length
 
-    def _is_visible(self):
+    @property
+    def visible(self):
         return self.length > self.MIN_LENGTH
 
-    def _set_visible(self, visible):
+    @visible.setter
+    def visible(self, visible):
         """Set lifetime visibility."""
         if visible:
             self.bottom.pos.y = self.top.pos.y + self.MIN_LENGTH_VISIBLE
         else:
             self.bottom.pos.y = self.top.pos.y + self.MIN_LENGTH
-
-    visible = property(_is_visible, _set_visible)
 
 
 @represents(UML.Lifeline)
