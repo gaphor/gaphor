@@ -1,9 +1,7 @@
-import contextlib
 import importlib.resources
 import logging
 import platform
 import sys
-import tempfile
 import textwrap
 import time
 
@@ -16,10 +14,6 @@ from gaphor.application import Application, distribution
 from gaphor.core import Transaction
 from gaphor.core.modeling import Diagram
 from gaphor.ui import APPLICATION_ID
-
-with contextlib.suppress(ImportError):
-    import pygit2
-
 
 log = logging.getLogger(__name__)
 
@@ -77,7 +71,6 @@ class SelfTest(Service):
         self.test_gsettings_schemas()
         self.test_new_session()
         self.test_auto_layout()
-        self.test_git_support()
 
     def init_timer(self, gtk_app, timeout):
         start = time.time()
@@ -156,16 +149,6 @@ class SelfTest(Service):
         auto_layout.layout(diagram)
         status.complete()
 
-    @test
-    def test_git_support(self, status):
-        if "pygit2" not in globals():
-            status.skip()
-            return
-
-        with tempfile.TemporaryDirectory() as temp_dir:
-            pygit2.init_repository(temp_dir)
-        status.complete()
-
 
 def system_information():
     return textwrap.dedent(
@@ -181,7 +164,6 @@ def system_information():
         Pango version:          {Pango.version_string()}
         PyGObject version:      {gi.__version__}
         Pycairo version:        {cairo.version}
-        pygit2/libgit2 version: {"pygit2" in globals() and f"{pygit2.__version__} / {pygit2.LIBGIT2_VERSION}" or "-NONE-"}
         """
     )
 
