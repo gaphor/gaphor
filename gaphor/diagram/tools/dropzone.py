@@ -95,6 +95,9 @@ class DropZoneMoveMixin:
     def stop_move(self, pos):
         """Motion stops: drop!"""
         super().stop_move(pos)  # type: ignore[misc]
+        self.drop(pos)
+
+    def drop(self, pos):
         item = self.item
         view = self.view
         old_parent = item.parent
