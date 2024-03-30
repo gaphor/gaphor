@@ -61,7 +61,7 @@ class StateMachineItem(Classified, ElementPresentation[UML.StateMachine]):
             draw=draw_border,
         )
 
-    def subject_at_point(self, pos: Pos) -> Element | None:
+    def region_at_point(self, pos: Pos) -> Element | None:
         return next(
             (
                 region

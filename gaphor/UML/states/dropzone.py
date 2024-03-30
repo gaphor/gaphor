@@ -31,7 +31,7 @@ class RegionDropZoneMoveMixin(DropZoneMoveMixin):
             return
 
         item_pos = view.get_matrix_v2i(new_parent).transform_point(*pos)
-        target_subject = new_parent.subject_at_point(item_pos)
+        target_subject = new_parent.region_at_point(item_pos)
 
         if target_subject is item.subject.container:
             return
@@ -40,8 +40,6 @@ class RegionDropZoneMoveMixin(DropZoneMoveMixin):
             item.change_parent(None)
             old_parent.request_update()
 
-        item_pos = view.get_matrix_v2i(new_parent).transform_point(*pos)
-        target_subject = new_parent.subject_at_point(item_pos)
         if group(target_subject, item.subject):
             grow_parent(new_parent, item)
             item.change_parent(new_parent)
