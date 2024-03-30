@@ -230,7 +230,7 @@ class ElementFactory(Service):
     @event_handler(UnlinkEvent)
     def _on_unlink_event(self, event):
         element = event.element
-        element._model = None
+        element._model = None  # noqa: SLF001
         assert isinstance(element.id, Id)
         try:
             del self._elements[element.id]

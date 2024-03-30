@@ -40,7 +40,7 @@ class Transaction:
     ...     pass
     """
 
-    _stack: list = []
+    _stack: list[Transaction] = []
 
     def __init__(self, event_manager):
         """Initialize the transaction.
@@ -83,7 +83,7 @@ class Transaction:
 
     def mark_rollback(self):
         for tx in self._stack:
-            tx._need_rollback = True
+            tx._need_rollback = True  # noqa: SLF001
 
     def _close(self):
         """Close the transaction.
