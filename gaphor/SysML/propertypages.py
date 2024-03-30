@@ -233,7 +233,7 @@ class ItemFlowPropertyPage(PropertyPageBase):
             signals={
                 "item-flow-active": (self._on_item_flow_active,),
                 "item-flow-name-changed": (self._on_item_flow_name_changed,),
-                "invert-direction-changed": (self._invert_direction_changed,),
+                "invert-direction-changed": (self.on_invert_direction_changed,),
             },
         )
 
@@ -305,7 +305,7 @@ class ItemFlowPropertyPage(PropertyPageBase):
             del iflow.itemProperty.type
 
     @transactional
-    def _invert_direction_changed(self, button):
+    def on_invert_direction_changed(self, button):
         if not (iflow := self.information_flow):
             return
 

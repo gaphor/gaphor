@@ -227,11 +227,16 @@ class LinePresentation(gaphas.Line, HandlePositionUpdate, Presentation[S]):
         self.watch_handle(self.head)
         self.watch_handle(self.tail)
 
-    head = property(lambda self: self._handles[0])
-    tail = property(lambda self: self._handles[-1])
-
     orthogonal: attribute[int] = attribute("orthogonal", int, 0)
     horizontal: attribute[int] = attribute("horizontal", int, 0)
+
+    @property
+    def head(self):
+        return self._handles[0]
+
+    @property
+    def tail(self):
+        return self._handles[-1]
 
     @property
     def shape_head(self):

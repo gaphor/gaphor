@@ -89,7 +89,9 @@ class DiagramPage:
         self.event_manager.subscribe(self._on_attribute_updated)
         self.event_manager.subscribe(self._on_tool_selected)
 
-    title = property(lambda s: s.diagram and s.diagram.name or gettext("<None>"))
+    @property
+    def title(self):
+        return self.diagram and self.diagram.name or gettext("<None>")
 
     def get_diagram(self):
         return self.diagram

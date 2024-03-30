@@ -103,6 +103,9 @@ class AssociationItem(Named, LinePresentation[UML.Association]):
 
         watch_information_flow(self, "Association", "abstraction")
 
+    head_subject = association("head_subject", UML.Property, upper=1)
+    tail_subject = association("tail_subject", UML.Property, upper=1)
+
     show_direction: attribute[int] = attribute("show_direction", int, default=False)
 
     preferred_aggregation = enumeration(
@@ -112,6 +115,14 @@ class AssociationItem(Named, LinePresentation[UML.Association]):
     preferred_tail_navigability = enumeration(
         "preferred_tail_navigability", ("none", "navigable"), "none"
     )
+
+    @property
+    def head_end(self):
+        return self._head_end
+
+    @property
+    def tail_end(self):
+        return self._tail_end
 
     def load(self, name, value):
         # end_head and end_tail were used in an older Gaphor version
@@ -127,11 +138,6 @@ class AssociationItem(Named, LinePresentation[UML.Association]):
     def postload(self):
         super().postload()
         self.on_association_end_endings()
-
-    head_end = property(lambda self: self._head_end)
-    tail_end = property(lambda self: self._tail_end)
-    head_subject = association("head_subject", UML.Property, upper=1)
-    tail_subject = association("tail_subject", UML.Property, upper=1)
 
     def invert_direction(self):
         """Invert the direction of the association, this is done by swapping
@@ -335,7 +341,9 @@ class AssociationEnd:
         self._name_shape = Text(text=lambda: self._name)
         self._mult_shape = Text(text=lambda: self._mult)
 
-    name_bounds = property(lambda s: s._name_bounds)
+    @property
+    def name_bounds(self):
+        return self._name_bounds
 
     @property
     def owner(self) -> AssociationItem:

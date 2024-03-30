@@ -3,6 +3,8 @@
 # The application path is updated and the
 # environment variable VGBINDIR is set to make sure plugins are found
 
+# ruff: noqa: SLF001
+
 import logging
 import os
 import subprocess

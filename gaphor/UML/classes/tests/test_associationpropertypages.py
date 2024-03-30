@@ -30,7 +30,7 @@ def test_association_property_page_invert_direction(diagram, element_factory):
     item.tail_subject = item.subject.memberEnd[1]
     property_page = AssociationDirectionPropertyPage(item)
 
-    property_page._on_invert_direction_change(None)
+    property_page.on_invert_direction_change(None)
 
     assert item.tail_subject is item.subject.memberEnd[0]
 
