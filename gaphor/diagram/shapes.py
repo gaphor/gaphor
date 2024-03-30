@@ -572,8 +572,8 @@ class CssNode:
         element: Element | None,
         child: Shape,
     ):
-        self._name = name
-        self._element = element
+        self.name = name
+        self.element = element
         self.child = child
 
     def __iter__(self):
@@ -607,7 +607,7 @@ class StyledCssNode:
         self.dark_mode = self._parent.dark_mode if self._parent else None
 
     def name(self) -> str:
-        return self._shape._name
+        return self._shape.name
 
     def parent(self) -> StyleNode | None:
         return self._parent
@@ -619,8 +619,8 @@ class StyledCssNode:
         )
 
     def attribute(self, name: str) -> str | None:
-        if self._shape._element:
-            return lookup_attribute(self._shape._element, name)
+        if element := self._shape.element:
+            return lookup_attribute(element, name)
         return self._parent.attribute(name) if self._parent else None
 
     def state(self) -> Sequence[str]:

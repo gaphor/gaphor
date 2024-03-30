@@ -138,7 +138,7 @@ class umlproperty:
     upper: Upper = 1
 
     def __init__(self, name: str):
-        self._dependent_properties: set[derived | redefine] = set()
+        self.dependent_properties: set[derived | redefine] = set()
         self.name = name
         self._name = f"_{name}"
 
@@ -179,7 +179,7 @@ class umlproperty:
 
     def handle(self, event):
         event.element.handle(event)
-        for d in self._dependent_properties:
+        for d in self.dependent_properties:
             d.propagate(event)
 
 
@@ -621,7 +621,7 @@ class derived(umlproperty, Generic[T]):
         assert isinstance(
             subset, (association, derived)
         ), f"have element {subset}, expected association"
-        subset._dependent_properties.add(self)
+        subset.dependent_properties.add(self)
 
     def load(self, obj, value):
         raise ValueError(
@@ -836,7 +836,7 @@ class redefine(umlproperty):
         self.upper = original.upper
         self.lower = original.lower
 
-        original._dependent_properties.add(self)
+        original.dependent_properties.add(self)
 
     @property
     def opposite(self) -> str | None:

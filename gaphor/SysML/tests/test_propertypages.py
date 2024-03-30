@@ -242,7 +242,7 @@ def test_connector_item_flow_invert_direction(connector):
     use = find(widget, "use-item-flow")
     use.set_active(True)
 
-    property_page._invert_direction_changed(None)
+    property_page.on_invert_direction_changed(None)
 
     information_flow = connector.informationFlow[0]
     assert information_flow.informationSource is connector.end[1].role
@@ -256,7 +256,7 @@ def test_association_item_flow_invert_direction(association):
     use = find(widget, "use-item-flow")
     use.set_active(True)
 
-    property_page._invert_direction_changed(None)
+    property_page.on_invert_direction_changed(None)
 
     information_flow = association.abstraction[0]
     assert information_flow.informationSource is association.memberEnd[1]
