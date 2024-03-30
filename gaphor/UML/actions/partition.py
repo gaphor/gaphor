@@ -1,6 +1,5 @@
 """Activity Partition item."""
 
-from collections.abc import Collection
 
 from gaphas.geometry import Rectangle
 from gaphas.item import NW, SE
@@ -8,7 +7,7 @@ from gaphas.types import Pos
 
 from gaphor import UML
 from gaphor.core.modeling import DrawContext
-from gaphor.core.modeling.properties import association
+from gaphor.core.modeling.properties import association, relation_many
 from gaphor.diagram.presentation import ElementPresentation
 from gaphor.diagram.shapes import DEFAULT_PADDING, Box, CssNode, Orientation, stroke
 from gaphor.diagram.support import represents
@@ -55,7 +54,9 @@ class PartitionItem(ElementPresentation[UML.ActivityPartition]):
             x = child.matrix[4]
             child.matrix.set(x0=x + offset + (x - left) * factor)
 
-    partition = association("partition", UML.ActivityPartition, composite=True)
+    partition: relation_many[UML.ActivityPartition] = association(
+        "partition", UML.ActivityPartition, composite=True
+    )
 
     def load(self, name, value):
         self._loading = True
@@ -76,12 +77,10 @@ class PartitionItem(ElementPresentation[UML.ActivityPartition]):
         )
 
     def partition_at_point(self, pos: Pos) -> UML.ActivityPartition | None:
-        partitions: Collection[UML.ActivityPartition] = self.partition
-
         if self.point(*pos) > 0:
             return None
 
-        if partitions:
+        if partitions := self.partition:
             partition_width = self.width / len(partitions)
         else:
             partition_width = self.width / 2

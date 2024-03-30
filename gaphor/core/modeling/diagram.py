@@ -457,7 +457,7 @@ class Diagram(Element):
         return item.parent
 
     def get_children(self, item: Presentation) -> Iterable[Presentation]:
-        return iter(item.children)  # type: ignore[no-any-return]
+        return iter(item.children)
 
     def sort(self, items: Sequence[Presentation]) -> Iterable[Presentation]:
         items_set = set(items)
