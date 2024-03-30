@@ -1,29 +1,33 @@
-import pygit2
+import subprocess
+
+from dulwich import porcelain
+from dulwich.repo import Repo
 
 
-def create_merge_conflict(repo, filename, initial_text, our_text, their_text):
-    def commit_all(message, parents):
-        ref = "HEAD"
-        author = pygit2.Signature("Alice Author", "alice@gaphor.org")
-
-        index = repo.index
-        index.add_all()
-        index.write()
-        tree = index.write_tree()
-
-        return repo.create_commit(ref, author, author, message, tree, parents)
+def create_merge_conflict(repo: Repo, filename, initial_text, our_text, their_text):
+    def commit_all(message):
+        porcelain.add(repo, paths=[filename])
+        return porcelain.commit(
+            repo, author=b"Alice Author <alice@gaphor.org>", message=message
+        )
 
     filename.write_text(initial_text, encoding="utf-8")
-    initial_oid = commit_all("Initial commit", parents=[])
-    main_ref = repo.head
-    branch_ref = repo.references.create("refs/heads/branch", initial_oid)
+    main_ref = commit_all("Initial commit")
 
-    repo.checkout(branch_ref)
+    porcelain.branch_create(repo, "branch")
+    porcelain.checkout_branch(repo, "branch")
     filename.write_text(their_text, encoding="utf-8")
-    branch_oid = commit_all("Branch commit", parents=[initial_oid])
+    branch_oid = commit_all("Branch commit")
 
-    repo.checkout(main_ref)
+    porcelain.checkout_branch(repo, main_ref)
     filename.write_text(our_text, encoding="utf-8")
-    commit_all("Second commit", parents=[initial_oid])
+    commit_all("Second commit")
 
-    repo.merge(branch_oid)
+    # `porcelain.merge` function does not exist.
+    _porcelain_merge(repo, branch_oid)
+
+
+def _porcelain_merge(repo, branch):
+    """Merge branch with git cli."""
+
+    subprocess.run(["git", "merge", branch], cwd=repo.path)
