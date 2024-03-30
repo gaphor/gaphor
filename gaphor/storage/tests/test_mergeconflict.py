@@ -1,11 +1,13 @@
 import io
 
+import pytest
 from dulwich.repo import Repo
 
 from gaphor.storage.mergeconflict import split_ours_and_theirs
 from gaphor.storage.tests.fixtures import create_merge_conflict
 
 
+@pytest.mark.filterwarnings("ignore:use .* Repo._get_user_identity:DeprecationWarning")
 def test_split_git_repo(tmp_path):
     repo = Repo.init(tmp_path)
     filename = "testfile.txt"

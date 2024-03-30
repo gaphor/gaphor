@@ -106,6 +106,7 @@ def test_old_model_is_loaded_without_utf8_encoding(
 
 
 @pytest.mark.parametrize("resolution", ["current", "incoming"])
+@pytest.mark.filterwarnings("ignore:use .* Repo._get_user_identity:DeprecationWarning")
 def test_load_model_with_merge_conflict(
     file_manager: FileManager, element_factory, merge_conflict, monkeypatch, resolution
 ):
@@ -116,6 +117,7 @@ def test_load_model_with_merge_conflict(
     assert element_factory.size() > 0
 
 
+@pytest.mark.filterwarnings("ignore:use .* Repo._get_user_identity:DeprecationWarning")
 def test_load_model_merge_conflict_and_manual_resolution(
     file_manager: FileManager, element_factory, merge_conflict, monkeypatch
 ):
@@ -128,6 +130,7 @@ def test_load_model_merge_conflict_and_manual_resolution(
     assert element_factory.lselect(PendingChange)
 
 
+@pytest.mark.filterwarnings("ignore:use .* Repo._get_user_identity:DeprecationWarning")
 def test_load_model_with_merge_conflict_and_unknown_resolution(
     file_manager: FileManager, merge_conflict, monkeypatch
 ):
