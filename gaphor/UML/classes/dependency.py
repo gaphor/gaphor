@@ -88,10 +88,13 @@ class DependencyItem(Named, LinePresentation):
             else "false"
         )
 
-    def set_dependency_type(self, dependency_type):
-        self._dependency_type = dependency_type
+    @property
+    def dependency_type(self):
+        return self._dependency_type
 
-    dependency_type = property(lambda s: s._dependency_type, set_dependency_type)
+    @dependency_type.setter
+    def dependency_type(self, dependency_type):
+        self._dependency_type = dependency_type
 
     def draw_head(self, context):
         cr = context.cairo

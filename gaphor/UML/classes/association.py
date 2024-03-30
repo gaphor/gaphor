@@ -335,7 +335,9 @@ class AssociationEnd:
         self._name_shape = Text(text=lambda: self._name)
         self._mult_shape = Text(text=lambda: self._mult)
 
-    name_bounds = property(lambda s: s._name_bounds)
+    @property
+    def name_bounds(self):
+        return self._name_bounds
 
     @property
     def owner(self) -> AssociationItem:

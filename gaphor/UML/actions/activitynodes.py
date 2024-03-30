@@ -25,7 +25,7 @@ DEFAULT_JOIN_SPEC = "and"
 
 
 def no_movable_handles(item):
-    for h in item._handles:
+    for h in item.handles():
         h.movable = False
 
 

@@ -216,7 +216,13 @@ class InterfaceItem(Classified, ElementPresentation):
         super().save(save_func)
         save_func("folded", self._folded.value)
 
-    def _set_folded(self, folded):
+    @property
+    def folded(self):
+        """Check or set folded notation, see Folded.* enum."""
+        return self._folded
+
+    @folded.setter
+    def folded(self, folded):
         """Set folded notation.
 
         :param folded: Folded state, see Folded.* enum.
@@ -242,12 +248,6 @@ class InterfaceItem(Classified, ElementPresentation):
             h.movable = movable
 
         self.update_shapes()
-
-    folded = property(
-        lambda s: s._folded,
-        _set_folded,
-        doc="Check or set folded notation, see Folded.* enum.",
-    )
 
     def update_shapes(self, event=None):
         connected_items = [
