@@ -1,22 +1,8 @@
-import pytest
-from gaphas.view import GtkView
-
 from gaphor import UML
-from gaphor.diagram.painter import ItemPainter
-from gaphor.diagram.selection import Selection
 from gaphor.UML.actions.action import ActionItem
 from gaphor.UML.actions.actionstoolbox import partition_config
 from gaphor.UML.actions.dropzone import PartitionDropZoneMoveMixin
 from gaphor.UML.actions.partition import PartitionItem
-
-
-@pytest.fixture
-def view(diagram):
-    view = GtkView(model=diagram, selection=Selection())
-    item_painter = ItemPainter(view.selection)
-    view.painter = item_painter
-    view.bounding_box_painter = item_painter
-    return view
 
 
 class DropZoneMove(PartitionDropZoneMoveMixin):

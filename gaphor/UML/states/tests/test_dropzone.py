@@ -1,21 +1,9 @@
 import pytest
-from gaphas.view import GtkView
 
 from gaphor import UML
 from gaphor.core.modeling import StyleSheet
-from gaphor.diagram.painter import ItemPainter
-from gaphor.diagram.selection import Selection
 from gaphor.UML.states.dropzone import RegionDropZoneMoveMixin
 from gaphor.UML.states.state import StateItem
-
-
-@pytest.fixture
-def view(diagram):
-    view = GtkView(model=diagram, selection=Selection())
-    item_painter = ItemPainter(view.selection)
-    view.painter = item_painter
-    view.bounding_box_painter = item_painter
-    return view
 
 
 @pytest.fixture
