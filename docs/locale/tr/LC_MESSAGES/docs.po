@@ -8,166 +8,181 @@ msgstr ""
 "Project-Id-Version: Gaphor 2.23.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-02-15 20:49-0500\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2024-03-30 20:12+0000\n"
+"Last-Translator: Semih <semihbrn10@gmail.com>\n"
+"Language-Team: Turkish <https://hosted.weblate.org/projects/gaphor/"
+"docs-gaphor-org/tr/>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.5-dev\n"
 
 #: ../changelog.rst:2
 msgid "Change Log"
-msgstr ""
+msgstr "Değişiklik Günlüğü"
 
 #: ../changelog.rst:4
 msgid "This is a curated list of the changes per version."
-msgstr ""
+msgstr "Bu, sürüm başına değişikliklerin derlenmiş bir listesidir."
 
 #: ../changelog.rst:8
 msgid "The latest version may not have been released yet."
-msgstr ""
+msgstr "En son sürüm henüz yayınlanmamış olabilir."
 
 #: ../../CHANGELOG.md:1
 msgid "2.24.0"
-msgstr ""
+msgstr "2.24.0"
 
 #: ../../CHANGELOG.md:3
 msgid "Fine grained CSS styling for model elements"
-msgstr ""
+msgstr "Model ögeleri için ince taneli CSS stili"
 
 #: ../../CHANGELOG.md:4
 msgid "Gaphor is now REUSE compliant"
-msgstr ""
+msgstr "Gaphor artık REUSE uyumlu"
 
 #: ../../CHANGELOG.md:5
 msgid "Connected elements are no longer automatcally removed from a diagram"
-msgstr ""
+msgstr "Bağlı elemanlar artık bir diyagramdan otomatik olarak kaldırılmıyor"
 
 #: ../../CHANGELOG.md:6
 msgid "Fix header bars for various windows"
-msgstr ""
+msgstr "Çeşitli pencereler için başlık çubuklarını düzeltme"
 
 #: ../../CHANGELOG.md:7
 msgid "Various smaller UX improvements: greeter, diagram background, empty parameters"
 msgstr ""
+"Çeşitli küçük kullanıcı deneyimi iyileştirmeleri: karşılayıcı, diyagram arka "
+"planı, boş parametreler"
 
 #: ../../CHANGELOG.md:8
 msgid "Install schemas by running `gaphor install-schemas`"
-msgstr ""
+msgstr "Şemaları `gaphor install-schemas` çalıştırarak yükleyin"
 
 #: ../../CHANGELOG.md:9
 msgid "Mitigations for false virus warnings on Windows"
-msgstr ""
+msgstr "Windows'ta yanlış virüs uyarıları için hafifletmeler"
 
 #: ../../CHANGELOG.md:10
 msgid "Fix issue when undoing fails"
-msgstr ""
+msgstr "Geri alma başarısız olduğunda sorunu düzeltin"
 
 #: ../../CHANGELOG.md:12
 msgid "2.23.2"
-msgstr ""
+msgstr "2.23.2"
 
 #: ../../CHANGELOG.md:14
 msgid "Fix models failing to load for collection not hashable TypeError"
 msgstr ""
+"Hashable olmayan koleksiyonlar için yüklenemeyen modelleri düzeltin TypeError"
 
 #: ../../CHANGELOG.md:15
 msgid "Fix file filters for export image dialog"
-msgstr ""
+msgstr "Görüntü dışa aktar iletişim kutusu için dosya filtrelerini düzeltin"
 
 #: ../../CHANGELOG.md:16
 msgid "Add CSS for \"from: \", stereotypes, and compartments"
-msgstr ""
+msgstr "\"from: \", stereotipler ve bölmeler için CSS ekleyin"
 
 #: ../../CHANGELOG.md:17
 msgid "Update Hungarian translations"
-msgstr ""
+msgstr "Macarca çeviri güncellemesi"
 
 #: ../../CHANGELOG.md:19
 msgid "2.23.1"
-msgstr ""
+msgstr "2.23.1"
 
 #: ../../CHANGELOG.md:21
 msgid "Fix Activity Swimlanes aren't visible"
-msgstr ""
+msgstr "Etkinlik Yüzme Alanlarının Görünmemesini Düzeltme"
 
 #: ../../CHANGELOG.md:22
 msgid "Fix CSS attribute rules"
-msgstr ""
+msgstr "CSS öznitelik kurallarını düzeltme"
 
 #: ../../CHANGELOG.md:23
 msgid "Remove duplicate stereotypes at root of model browser"
-msgstr ""
+msgstr "Model tarayıcısının kökünde yinelenen stereotipleri kaldırın"
 
 #: ../../CHANGELOG.md:24
 #: ../../CHANGELOG.md:124
 msgid "Update Croatian translations"
-msgstr ""
+msgstr "Hırvatça çeviri güncellemesi"
 
 #: ../../CHANGELOG.md:26
 msgid "2.23.0"
-msgstr ""
+msgstr "2.23.0"
 
 #: ../../CHANGELOG.md:28
 msgid "Support types for parameters"
-msgstr ""
+msgstr "Parametreler için destek türleri"
 
 #: ../../CHANGELOG.md:29
 msgid "Restore windows in maximized and full-screen state"
-msgstr ""
+msgstr "Pencereleri büyütülmüş ve tam ekran durumunda geri yükleme"
 
 #: ../../CHANGELOG.md:30
 msgid "Fine grained CSS: elements in a presentation item can be changed from CSS (experimental)"
 msgstr ""
+"İnce taneli CSS: bir sunum ögesindeki öğeler CSS'den değiştirilebilir "
+"(deneysel)"
 
 #: ../../CHANGELOG.md:31
 msgid "Very long element names are now wrapped"
-msgstr ""
+msgstr "Çok uzun eleman adları artık sarılıyor"
 
 #: ../../CHANGELOG.md:32
 msgid "Format files accessed from Flatpak via portals"
-msgstr ""
+msgstr "Flatpak'ten portallar aracılığıyla erişilen dosyaları biçimlendirme"
 
 #: ../../CHANGELOG.md:33
 msgid "Update Property Editor to use Gtk.ColumnView and ListView"
 msgstr ""
+"Özellik Düzenleyiciyi Gtk.ColumnView ve ListView kullanacak şekilde "
+"güncelleme"
 
 #: ../../CHANGELOG.md:34
 msgid "Replace deprecated Gtk.FileChooser by FileDialog"
-msgstr ""
+msgstr "Kullanımdan kaldırılan Gtk.FileChooser'ı FileDialog ile değiştirin"
 
 #: ../../CHANGELOG.md:35
 msgid "Replace in-app notifications by Adwaita Toasts"
-msgstr ""
+msgstr "Uygulama içi bildirimleri Adwaita Toasts ile değiştirin"
 
 #: ../../CHANGELOG.md:36
 msgid "macOS: Update app icon"
-msgstr ""
+msgstr "macOS: Uygulama simgesi güncellendi"
 
 #: ../../CHANGELOG.md:37
 msgid "macOS: Fix ⓘ icon in Property Editor isn't displayed"
 msgstr ""
+"macOS: Özellik Düzenleyici'deki ⓘ simgesinin görüntülenmemesi düzeltildi"
 
 #: ../../CHANGELOG.md:38
 msgid "macOS and Windows: Apply custom window shadow"
-msgstr ""
+msgstr "macOS ve Windows: Özel pencere gölgesi uygulama"
 
 #: ../../CHANGELOG.md:39
 msgid "Fix Gaphor should work if GSettings schema is not available"
-msgstr ""
+msgstr "GSettings şeması mevcut değilse Gaphor'un çalışması gerekir"
 
 #: ../../CHANGELOG.md:40
 msgid "Fix values showing under part compartment in SysML Block elements"
 msgstr ""
+"SysML Blok elemanlarında parça bölmesinin altında gösterilen değerler "
+"düzeltildi"
 
 #: ../../CHANGELOG.md:41
 msgid "Fix merge-node icon"
-msgstr ""
+msgstr "Birleştirme düğümü simgesi düzeltildi"
 
 #: ../../CHANGELOG.md:42
 msgid "Fix connecting lines when model is loaded and documentation updates"
 msgstr ""
+"Model yüklendiğinde ve belgeler güncellendiğinde bağlantı çizgileri "
+"düzeltildi"
 
 #: ../../CHANGELOG.md:43
 msgid "Fix macOS build and documentation generation"
