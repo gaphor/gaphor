@@ -3,6 +3,7 @@ from gaphor.diagram.general.diagramitem import DiagramItem
 from gaphor.diagram.group import change_owner
 from gaphor.diagram.support import represents
 from gaphor.SysML.sysml import SysMLDiagram
+from gaphor.i18n import gettext
 
 represents(SysMLDiagram)(DiagramItem)
 
@@ -38,7 +39,11 @@ class SysMLDiagramType(DiagramType):
                     change_owner(element, new_element)
                 element = new_element
             except:
-                raise TypeError(f"Cannot create \"{self.name}\" in SysML profile")
+                raise TypeError(
+                    gettext("Can’t create “{name}” in SysML profile").format(
+                        name=self.name
+                    )
+                )
 
         diagram = element_factory.create(SysMLDiagram)
         diagram.name = diagram.gettext(self.name)
