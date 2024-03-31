@@ -473,7 +473,6 @@ class Diagram(Element):
         """
         if item in self.ownedPresentation:
             self._update_dirty_items(dirty_items={item})
-        self.handle(DiagramUpdateRequested(self))
 
     def update_now(self, _dirty_items: Collection[Presentation]) -> None:
         pass
@@ -486,10 +485,15 @@ class Diagram(Element):
 
     def _update_dirty_items(self, dirty_items=(), removed_items=()):
         """Send an update notification to all registered views."""
+        should_emit = not bool(self._dirty_items)
+
         if dirty_items:
             self._dirty_items.update(dirty_items)
         if removed_items:
             self._dirty_items.difference_update(removed_items)
+
+        if should_emit:
+            self.handle(DiagramUpdateRequested(self))
 
         # We can directly request updates on the view, since those happen asynchronously
         for v in self._registered_views:
