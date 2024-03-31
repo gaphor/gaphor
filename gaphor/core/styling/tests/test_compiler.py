@@ -26,9 +26,9 @@ class Node:
         self.dark_mode = dark_mode
 
         if parent:
-            parent._children.append(self)
+            parent._children.append(self)  # noqa: SLF001
         for c in self._children:
-            c._parent = self
+            c._parent = self  # noqa: SLF001
 
     def name(self):
         return self._name

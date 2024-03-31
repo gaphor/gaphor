@@ -179,5 +179,6 @@ def test_indirect_delete_of_element(event_manager, element_factory):
     operation = element_factory.create(Operation)
     event_manager.handle(TriggerUnlink(operation))
 
-    assert operation._model is None
+    with pytest.raises(TypeError):
+        assert operation.model
     assert operation not in element_factory

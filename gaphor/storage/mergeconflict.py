@@ -3,16 +3,9 @@ from __future__ import annotations
 import io
 from pathlib import Path
 
-try:
-    import pygit2
-except ImportError:
-    import warnings
-
-    warnings.warn("Library pygit2 not found", ImportWarning, stacklevel=1)
-
-
-def in_git_repository(filename: Path) -> bool:
-    return bool(pygit2.discover_repository(filename))
+from dulwich.errors import NotGitRepository
+from dulwich.index import IndexEntry
+from dulwich.repo import Repo
 
 
 def split_ours_and_theirs(
@@ -21,24 +14,27 @@ def split_ours_and_theirs(
     current: io.BufferedIOBase,
     incoming: io.BufferedIOBase,
 ) -> bool:
-    """For a file name, find the current (ours) and incoming (theirs) file and serialize those
-    to the respected files.
+    """For a file name, find the current (this/ours), incoming (theirs/other),
+    and ancestor (common) blobs and seralize those to the IO buffers.
     """
-    if "pygit2" not in globals():
+    try:
+        repo = Repo.discover(filename)
+    except NotGitRepository:
         return False
 
-    repo_path = pygit2.discover_repository(filename)
-    if not repo_path:
+    work_path = Path(repo.path)
+    index = repo.open_index()
+    if not index.has_conflicts():
         return False
 
-    repo = pygit2.Repository(repo_path)
-    work_path = Path(repo.workdir)
-    possible_filenames = (filename.absolute(), filename.resolve())
-    if conflicts := repo.index.conflicts:
-        for common, ours, theirs in conflicts:
-            if work_path / common.path in possible_filenames:
-                ancestor.write(repo.get(common.id).read_raw())
-                current.write(repo.get(ours.id).read_raw())
-                incoming.write(repo.get(theirs.id).read_raw())
-                return True
+    def _write(index_entry: IndexEntry, destination: io.BufferedIOBase):
+        for data in repo.get_object(index_entry.sha).as_raw_chunks():
+            destination.write(data)
+
+    for relpath, entry in index.iteritems():
+        if work_path / relpath.decode("utf-8") == filename:
+            _write(entry.ancestor, ancestor)
+            _write(entry.this, current)
+            _write(entry.other, incoming)
+            return True
     return False

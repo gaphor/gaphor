@@ -3,19 +3,14 @@ import textwrap
 import time
 
 import pytest
+from dulwich.repo import Repo
 from gi.repository import GLib
 
 from gaphor import UML
 from gaphor.core import event_handler
 from gaphor.event import ModelChangedOnDisk
+from gaphor.storage.tests.fixtures import create_merge_conflict
 from gaphor.ui.filemanager import FileManager
-
-try:
-    import pygit2
-except ImportError:
-    pass
-else:
-    from gaphor.storage.tests.fixtures import create_merge_conflict
 
 
 def iteration(sentinel):
@@ -110,8 +105,8 @@ def test_old_model_is_loaded_without_utf8_encoding(
     file_manager.load(model_file)
 
 
-@pytest.mark.skipif("pygit2" not in globals(), reason="No pygit2 installed")
 @pytest.mark.parametrize("resolution", ["current", "incoming"])
+@pytest.mark.filterwarnings("ignore:use .* Repo._get_user_identity:DeprecationWarning")
 def test_load_model_with_merge_conflict(
     file_manager: FileManager, element_factory, merge_conflict, monkeypatch, resolution
 ):
@@ -122,7 +117,7 @@ def test_load_model_with_merge_conflict(
     assert element_factory.size() > 0
 
 
-@pytest.mark.skipif("pygit2" not in globals(), reason="No pygit2 installed")
+@pytest.mark.filterwarnings("ignore:use .* Repo._get_user_identity:DeprecationWarning")
 def test_load_model_merge_conflict_and_manual_resolution(
     file_manager: FileManager, element_factory, merge_conflict, monkeypatch
 ):
@@ -135,7 +130,7 @@ def test_load_model_merge_conflict_and_manual_resolution(
     assert element_factory.lselect(PendingChange)
 
 
-@pytest.mark.skipif("pygit2" not in globals(), reason="No pygit2 installed")
+@pytest.mark.filterwarnings("ignore:use .* Repo._get_user_identity:DeprecationWarning")
 def test_load_model_with_merge_conflict_and_unknown_resolution(
     file_manager: FileManager, merge_conflict, monkeypatch
 ):
@@ -211,7 +206,7 @@ def merge_conflict(tmp_path):
     )
 
     model = tmp_path / "model.gaphor"
-    repo = pygit2.init_repository(tmp_path)
+    repo = Repo.init(tmp_path)
 
     create_merge_conflict(repo, model, initial_model, current_model, incoming_model)
 

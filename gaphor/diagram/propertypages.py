@@ -304,7 +304,7 @@ class InternalsPropertyPage(PropertyPageBase):
             textwrap.dedent(
                 f"""\
                 {gettext('Model Element')}:
-                  {gettext('qname')}: {'.'.join(qualifiedName(element))}
+                  {gettext('qname')}: {'.'.join(map(str, qualifiedName(element)))}
                   {gettext('class')}: {model_element_class(element)}
                   {gettext('id')}: {element.id}"""
             )

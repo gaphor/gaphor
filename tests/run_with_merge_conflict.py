@@ -1,7 +1,7 @@
 from pathlib import Path
 from tempfile import TemporaryDirectory
 
-import pygit2
+from dulwich.repo import Repo
 
 from gaphor.storage.tests.fixtures import create_merge_conflict
 from gaphor.ui import run
@@ -12,7 +12,7 @@ workspace = Path(__file__).parent.parent
 def run_gaphor_with_merge_conflict():
     with TemporaryDirectory() as tmp_dir:
         tmp_path = Path(tmp_dir)
-        repo = pygit2.init_repository(tmp_path)
+        repo = Repo.init(tmp_path)
 
         create_merge_conflict(
             repo,

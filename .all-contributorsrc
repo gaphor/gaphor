@@ -1402,6 +1402,15 @@
       "contributions": [
         "translation"
       ]
+    },
+    {
+      "login": "FranciscoTGouveia",
+      "name": "Francisco Gouveia",
+      "avatar_url": "https://avatars.githubusercontent.com/u/93057203?v=4",
+      "profile": "https://github.com/FranciscoTGouveia",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,

@@ -1,4 +1,5 @@
-"""Test the UndoManager."""
+# ruff: noqa: SLF001
+
 import pytest
 
 from gaphor.core import event_handler
