@@ -23,7 +23,7 @@ def key_pressed(ctrl, keyval, keycode, state, event_manager):
         delete_selected_items(view, event_manager)
         return True
     if keyval == Gdk.KEY_Escape:
-        unselect(view, event_manager)
+        cancel_handle_drag(view, event_manager)
     return False
 
 
@@ -37,18 +37,18 @@ def delete_selected_items(view: GtkView, event_manager):
             i.unlink()
 
 
-def unselect(view: GtkView, event_manager):
+def cancel_handle_drag(view: GtkView, event_manager):
     items = view.selection.selected_items
     with Transaction(event_manager):
         for i in list(items):
             if isinstance(i, LinePresentation):
                 if (
                     i._has_been_dropped
-                    and i._lastHandleMoved
-                    and not i._lastHandleMoved.glued
-                    and i._connections.get_connection(i._lastHandleMoved)
+                    and i._last_handle_moved
+                    and not i._last_handle_moved.glued
+                    and i._connections.get_connection(i._last_handle_moved)
                 ):
-                    i._connections.disconnect_item(i, i._lastHandleMoved)
-                    i._lastHandleMoved = None
+                    i._connections.disconnect_item(i, i._last_handle_moved)
+                    i._last_handle_moved = None
         view.selection.unselect_all()
         view.selection.grayed_out_items = set()

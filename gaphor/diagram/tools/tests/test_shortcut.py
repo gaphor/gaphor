@@ -1,15 +1,13 @@
 from gaphas.selection import Selection
 
 from gaphor import UML
-from gaphor.diagram.diagramtoolbox import new_item_factory
-from gaphor.diagram.tools import itemtool
-from gaphor.diagram.tools.shortcut import delete_selected_items, unselect
-from gaphor.UML.diagramitems import PackageItem
-from gaphor.diagram.general import CommentItem, CommentLineItem
+from gaphor.core import event_handler
 from gaphor.core.modeling import Comment
 from gaphor.diagram.connectors import ItemDisconnected
+from gaphor.diagram.diagramtoolbox import new_item_factory
+from gaphor.diagram.general import CommentItem, CommentLineItem
 from gaphor.diagram.tests.fixtures import connect
-from gaphor.core import event_handler
+from gaphor.diagram.tools import itemtool
 from gaphor.diagram.tools.placement import (
     PlacementState,
     on_drag_begin,
@@ -17,7 +15,8 @@ from gaphor.diagram.tools.placement import (
     on_drag_update,
     placement_tool,
 )
-from gaphor.diagram.tools.itemtool import item_tool, on_drag_end as item_tool
+from gaphor.diagram.tools.shortcut import cancel_handle_drag, delete_selected_items
+from gaphor.UML.diagramitems import PackageItem
 
 
 class MockView:
@@ -65,7 +64,7 @@ def test_unselect_item_from_drop(create, event_manager, view):
 
     itemtool.on_drag_end(tool, 0, 0)
 
-    unselect(view, event_manager)
+    cancel_handle_drag(view, event_manager)
 
     assert len(view.selection.selected_items) == 0
     assert not events
@@ -100,7 +99,7 @@ def test_cancel_line(create, event_manager, view):
 
     on_drag_end(tool_placement, 0, 0, state)
 
-    unselect(view, event_manager)
+    cancel_handle_drag(view, event_manager)
 
     assert len(view.selection.selected_items) == 0
     assert events
