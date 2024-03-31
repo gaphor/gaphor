@@ -2,8 +2,8 @@ from gaphor.diagram.diagramtoolbox import DiagramType
 from gaphor.diagram.general.diagramitem import DiagramItem
 from gaphor.diagram.group import change_owner
 from gaphor.diagram.support import represents
-from gaphor.SysML.sysml import SysMLDiagram
 from gaphor.i18n import gettext
+from gaphor.SysML.sysml import SysMLDiagram
 
 represents(SysMLDiagram)(DiagramItem)
 
@@ -38,12 +38,12 @@ class SysMLDiagramType(DiagramType):
                 if element:
                     change_owner(element, new_element)
                 element = new_element
-            except:
+            except StopIteration as si:
                 raise TypeError(
-                    gettext("Can’t create “{name}” in SysML profile").format(
-                        name=self.name
+                    gettext("Can’t create “{name}” nested under a “{elem}”").format(
+                        name=self.name, elem=element.name
                     )
-                )
+                ) from si
 
         diagram = element_factory.create(SysMLDiagram)
         diagram.name = diagram.gettext(self.name)

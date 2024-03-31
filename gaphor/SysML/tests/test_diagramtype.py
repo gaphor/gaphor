@@ -45,4 +45,4 @@ def test_sysml_diagram_type(element_factory):
 
     with pytest.raises(TypeError) as e:
         diagram = diagram_type.create(element_factory, mock_b)
-    assert str(e.value) == "Can’t create “Defghi” in SysML profile"
+    assert str(e.value) == "Can’t create “Defghi” nested under a “Mock B”"
