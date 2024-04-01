@@ -2,8 +2,9 @@ from gaphas.guide import GuidedItemMoveMixin
 from gaphas.move import ItemMove
 from gaphas.move import Move as MoveAspect
 
+from gaphor.diagram.drop import grow_parent
 from gaphor.diagram.group import group, ungroup
-from gaphor.diagram.tools.dropzone import DropZoneMoveMixin, grow_parent
+from gaphor.diagram.tools.dropzone import DropZoneMoveMixin
 from gaphor.UML.states.pseudostates import PseudostateItem
 from gaphor.UML.states.state import StateItem
 from gaphor.UML.states.statemachine import StateMachineItem

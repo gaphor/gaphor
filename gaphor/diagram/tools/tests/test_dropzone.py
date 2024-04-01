@@ -1,7 +1,8 @@
 from gaphas.item import NW, SE
 
 from gaphor import UML
-from gaphor.diagram.tools.dropzone import drop_zone_tool, grow_parent, on_motion
+from gaphor.diagram.drop import grow_parent
+from gaphor.diagram.tools.dropzone import drop_zone_tool, on_motion
 from gaphor.UML.deployments import ArtifactItem, NodeItem
 
 

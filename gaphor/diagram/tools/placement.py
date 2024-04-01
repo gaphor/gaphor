@@ -8,11 +8,11 @@ from gi.repository import GLib, Gtk
 
 from gaphor.core.eventmanager import EventManager
 from gaphor.diagram.diagramtoolbox import ItemFactory
+from gaphor.diagram.drop import grow_parent
 from gaphor.diagram.event import DiagramItemPlaced, DiagramSelectionChanged
 from gaphor.diagram.group import group
 from gaphor.diagram.instanteditors import instant_editor
 from gaphor.diagram.presentation import ElementPresentation
-from gaphor.diagram.tools.dropzone import grow_parent
 
 log = logging.getLogger(__name__)
 

@@ -1,10 +1,7 @@
 from __future__ import annotations
 
-import logging
-
-from gaphas.geometry import Rectangle
 from gaphas.guide import GuidedItemMoveMixin
-from gaphas.item import NW, SE, Item
+from gaphas.item import Item
 from gaphas.move import ItemMove
 from gaphas.move import Move as MoveAspect
 from gaphas.tool.itemtool import item_at_point
@@ -13,15 +10,13 @@ from gi.repository import Gtk
 
 from gaphor.core.modeling import Element
 from gaphor.diagram.connectors import can_connect
-from gaphor.diagram.group import can_group, group, ungroup
+from gaphor.diagram.drop import drop
+from gaphor.diagram.group import can_group
 from gaphor.diagram.presentation import (
     ElementPresentation,
     LinePresentation,
     Presentation,
 )
-from gaphor.UML.recipes import owner_package
-
-log = logging.getLogger(__name__)
 
 
 def drop_zone_tool(
@@ -99,24 +94,11 @@ class DropZoneMoveMixin:
         self.drop(new_parent, pos)
 
     def drop(self, new_parent, pos):
-        item = self.item
-        old_parent = item.parent
-
-        if new_parent is old_parent:
-            if old_parent is not None:
-                old_parent.request_update()
-            return
-
-        if old_parent and ungroup(old_parent.subject, item.subject):
-            item.change_parent(None)
-            old_parent.request_update()
-
-        if new_parent and item.subject and group(new_parent.subject, item.subject):
-            grow_parent(new_parent, item)
-            item.change_parent(new_parent)
-        elif item.subject:
-            diagram_parent = owner_package(item.diagram)
-            group(diagram_parent, item.subject)
+        drop(
+            self.item,
+            new_parent,
+            *self.view.get_matrix_v2i(new_parent).transform_point(*pos),
+        )
 
 
 @MoveAspect.register(ElementPresentation)
@@ -124,28 +106,3 @@ class DropZoneMoveMixin:
 @MoveAspect.register(Presentation)
 class DropZoneMove(DropZoneMoveMixin, GuidedItemMoveMixin, ItemMove):
     pass
-
-
-def grow_parent(parent, item):
-    if not isinstance(item, ElementPresentation):
-        return
-
-    if not isinstance(parent, ElementPresentation):
-        log.warning(f"Can not grow item {parent}: not an ElementPresentation")
-        return
-
-    parent_bb = _bounds(parent)
-    item_bb = _bounds(item)
-    item_bb.expand(20)
-    new_parent_bb = parent_bb + item_bb
-
-    c2i = parent.matrix_i2c.inverse()
-    parent.handles()[NW].pos = c2i.transform_point(new_parent_bb.x, new_parent_bb.y)
-    parent.handles()[SE].pos = c2i.transform_point(new_parent_bb.x1, new_parent_bb.y1)
-
-
-def _bounds(item):
-    transform = item.matrix_i2c.transform_point
-    x0, y0 = transform(*item.handles()[NW].pos)
-    x1, y1 = transform(*item.handles()[SE].pos)
-    return Rectangle(x0, y0, x1=x1, y1=y1)
