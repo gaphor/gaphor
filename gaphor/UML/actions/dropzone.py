@@ -21,30 +21,33 @@ class PartitionDropZoneMoveMixin(DropZoneMoveMixin):
     partition (swim lane)."""
 
     def drop(self, new_parent, pos):
-        view = self.view
-
         if not isinstance(new_parent, PartitionItem) or not new_parent.subject:
             return super().drop(new_parent, pos)
 
-        item = self.item
-        old_parent = item.parent
+        group_partition(
+            self.item,
+            new_parent,
+            self.view.get_matrix_v2i(new_parent).transform_point(*pos),
+        )
 
-        if not item.subject:
-            return
 
-        item_pos = view.get_matrix_v2i(new_parent).transform_point(*pos)
-        target_subject = new_parent.partition_at_point(item_pos)
+def group_partition(item, new_parent, item_pos):
+    if not item.subject:
+        return
 
-        if target_subject is item.subject.inPartition:
-            return
+    old_parent = item.parent
+    target_subject = new_parent.partition_at_point(item_pos)
 
-        if old_parent and any(ungroup(p, item.subject) for p in old_parent.partition):
-            item.change_parent(None)
-            old_parent.request_update()
+    if target_subject is item.subject.inPartition:
+        return
 
-        if group(target_subject, item.subject):
-            grow_parent(new_parent, item)
-            item.change_parent(new_parent)
+    if old_parent and any(ungroup(p, item.subject) for p in old_parent.partition):
+        item.change_parent(None)
+        old_parent.request_update()
+
+    if group(target_subject, item.subject):
+        grow_parent(new_parent, item)
+        item.change_parent(new_parent)
 
 
 @MoveAspect.register(ActionItem)

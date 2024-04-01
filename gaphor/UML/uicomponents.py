@@ -1,7 +1,7 @@
 # ruff: noqa: F401
 
 import gaphor.UML.actions.dropzone
-import gaphor.UML.states.dropzone
+import gaphor.UML.states.drop
 import gaphor.UML.states.propertypages
 from gaphor.UML.actions import (
     actionseditors,
