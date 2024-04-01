@@ -1,6 +1,10 @@
 from gaphor.diagram.drop import drop
 from gaphor.UML import uml
+from gaphor.UML.actions.action import ActionItem
+from gaphor.UML.actions.actionstoolbox import partition_config
 from gaphor.UML.actions.activity import ActivityItem, ActivityParameterNodeItem
+from gaphor.UML.actions.drop import drop_on_partition
+from gaphor.UML.actions.partition import PartitionItem
 
 
 def test_activity_parameter_drop_with_single_activity_and_parameter(
@@ -62,3 +66,49 @@ def test_activity_parameter_drop_with_two_same_activity_items(diagram, element_f
     assert isinstance(parameter_item_2, ActivityParameterNodeItem)
     assert parameter_item_2.subject is activity_parameter_node
     assert parameter_item_2.parent is activity_item_2
+
+
+def test_drop_on_swimlane_on_first_partition(create):
+    swimlanes: PartitionItem = create(PartitionItem, uml.ActivityPartition)
+    partition_config(swimlanes)
+    action = create(ActionItem, uml.Action)
+
+    drop_on_partition(action, swimlanes, 10, swimlanes.height / 2)
+
+    assert action.subject in swimlanes.partition[0].node
+
+
+def test_drop_on_swimlane_on_second_partition(create):
+    swimlanes: PartitionItem = create(PartitionItem, uml.ActivityPartition)
+    partition_config(swimlanes)
+    action = create(ActionItem, uml.Action)
+
+    drop_on_partition(action, swimlanes, swimlanes.width - 10, swimlanes.height / 2)
+
+    assert action.subject in swimlanes.partition[1].node
+
+
+def test_drop_from_first_swimlane_on_second_partition(create):
+    swimlanes: PartitionItem = create(PartitionItem, uml.ActivityPartition)
+    partition_config(swimlanes)
+    action = create(ActionItem, uml.Action)
+
+    handles = swimlanes.handles()
+    drop_on_partition(action, swimlanes, handles[0].pos.x + 10, swimlanes.height / 2)
+    drop_on_partition(action, swimlanes, handles[1].pos.x - 10, swimlanes.height / 2)
+
+    assert action.subject not in swimlanes.partition[0].node
+    assert action.subject in swimlanes.partition[1].node
+
+
+def test_drop_from_second_swimlane_to_outside(create):
+    swimlanes: PartitionItem = create(PartitionItem, uml.ActivityPartition)
+    partition_config(swimlanes)
+    action = create(ActionItem, uml.Action)
+
+    handles = swimlanes.handles()
+    drop_on_partition(action, swimlanes, handles[1].pos.x - 10, swimlanes.height / 2)
+    drop_on_partition(action, swimlanes, handles[1].pos.x - 10, 1000)
+
+    assert action.subject not in swimlanes.partition[0].node
+    assert action.subject not in swimlanes.partition[1].node
