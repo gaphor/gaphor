@@ -1,11 +1,12 @@
+from gaphor.core.modeling import Diagram
 from gaphor.diagram.drop import drop
 from gaphor.diagram.presentation import connect
 from gaphor.diagram.support import get_diagram_item
 from gaphor.UML.uml import ActivityParameterNode
 
 
-@drop.register
-def drop_relationship(element: ActivityParameterNode, diagram, x, y):
+@drop.register(ActivityParameterNode, Diagram)
+def drop_relationship(element: ActivityParameterNode, diagram: Diagram, x, y):
     item_class = get_diagram_item(type(element))
     if not item_class:
         return None
@@ -16,7 +17,7 @@ def drop_relationship(element: ActivityParameterNode, diagram, x, y):
 
     appendable_item = min(
         diagram.select(
-            lambda item: element.activity and element.activity is item.subject
+            lambda item: bool(element.activity and element.activity is item.subject)
         ),
         key=drop_distance_to_item,
         default=None,

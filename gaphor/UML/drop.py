@@ -1,13 +1,14 @@
 from __future__ import annotations
 
 from gaphor import UML
+from gaphor.core.modeling import Diagram
 from gaphor.diagram.drop import drop
 from gaphor.diagram.presentation import connect
 from gaphor.diagram.support import get_diagram_item, get_diagram_item_metadata
 
 
-@drop.register
-def drop_relationship(element: UML.Relationship, diagram, x, y):
+@drop.register(UML.Relationship, Diagram)
+def drop_relationship(element: UML.Relationship, diagram: Diagram, x, y):
     item_class = get_diagram_item(type(element))
     if not item_class:
         return None
@@ -35,20 +36,20 @@ def diagram_has_presentation(diagram, element):
     )
 
 
-@drop.register
-def drop_association(element: UML.Association, diagram, x, y):
+@drop.register(UML.Association, Diagram)
+def drop_association(element: UML.Association, diagram: Diagram, x, y):
     return _drop(
         element, element.memberEnd[0].type, element.memberEnd[1].type, diagram, x, y
     )
 
 
-@drop.register
-def drop_connector(element: UML.Connector, diagram, x, y):
+@drop.register(UML.Connector, Diagram)
+def drop_connector(element: UML.Connector, diagram: Diagram, x, y):
     return _drop(element, element.end[0].role, element.end[1].role, diagram, x, y)
 
 
-@drop.register
-def drop_message(element: UML.Message, diagram, x, y):
+@drop.register(UML.Message, Diagram)
+def drop_message(element: UML.Message, diagram: Diagram, x, y):
     return _drop(
         element,
         element.sendEvent.covered
