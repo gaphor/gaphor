@@ -89,7 +89,9 @@ class DiagramPage:
         self.event_manager.subscribe(self._on_attribute_updated)
         self.event_manager.subscribe(self._on_tool_selected)
 
-    title = property(lambda s: s.diagram and s.diagram.name or gettext("<None>"))
+    @property
+    def title(self):
+        return self.diagram and self.diagram.name or gettext("<None>")
 
     def get_diagram(self):
         return self.diagram
@@ -132,6 +134,7 @@ class DiagramPage:
 
         # Set model only after the painters are set
         view.model = self.diagram
+        self.diagram.update(self.diagram.ownedPresentation)
 
         return self.widget
 
@@ -196,9 +199,7 @@ class DiagramPage:
         ):
             self.update_drawing_style()
 
-            diagram = self.diagram
-            for item in diagram.get_all_items():
-                diagram.request_update(item)
+            self.diagram.update(self.diagram.ownedPresentation)
         elif event.property is Diagram.name and self.view:
             self.view.update_back_buffer()
 

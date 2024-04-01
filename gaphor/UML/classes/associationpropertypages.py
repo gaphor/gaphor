@@ -175,7 +175,7 @@ class AssociationDirectionPropertyPage(PropertyPageBase):
             "association-direction-editor",
             signals={
                 "show-direction-changed": (self._on_show_direction_change,),
-                "invert-direction-changed": (self._on_invert_direction_change,),
+                "invert-direction-changed": (self.on_invert_direction_change,),
             },
         )
 
@@ -189,5 +189,5 @@ class AssociationDirectionPropertyPage(PropertyPageBase):
         self.item.show_direction = button.get_active()
 
     @transactional
-    def _on_invert_direction_change(self, button):
+    def on_invert_direction_change(self, button):
         self.item.invert_direction()

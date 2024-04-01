@@ -7,6 +7,7 @@ gaphor.adapter package.
 from __future__ import annotations
 
 import abc
+import textwrap
 from typing import Callable, List, Tuple, Type
 
 import gaphas.item
@@ -14,8 +15,8 @@ from gaphas.segment import Segment
 from gi.repository import GObject, Gtk
 
 from gaphor.core import transactional
-from gaphor.core.modeling import Diagram, Element, Presentation
-from gaphor.i18n import translated_ui_string
+from gaphor.core.modeling import Diagram, Element, Presentation, qualifiedName
+from gaphor.i18n import gettext, translated_ui_string
 
 
 class LabelValue(GObject.Object):
@@ -216,13 +217,13 @@ class LineStylePage(PropertyPageBase):
             line_segment.split_segment(0)
         active = button.get_active()
         self.item.orthogonal = active
-        self.item.diagram.update_now((self.item,))
+        self.item.request_update()
         self.horizontal_button.set_sensitive(active)
 
     @transactional
     def _on_horizontal_change(self, button, gparam):
         self.item.horizontal = button.get_active()
-        self.item.diagram.update_now((self.item,))
+        self.item.request_update()
 
 
 @PropertyPages.register(Element)
@@ -264,3 +265,74 @@ class NotePropertyPage(PropertyPageBase):
         self.subject.note = buffer.get_text(
             buffer.get_start_iter(), buffer.get_end_iter(), False
         )
+
+
+@PropertyPages.register(Element)
+class InternalsPropertyPage(PropertyPageBase):
+    """Show internals.
+
+    This info may come in handy if you want to code.
+    """
+
+    order = 400
+
+    def __init__(self, subject):
+        self.subject = subject
+
+    def construct(self):
+        subject = self.subject
+
+        if not subject:
+            return
+
+        builder = new_builder("internals-editor")
+        internals = builder.get_object("internals")
+
+        if isinstance(subject, Presentation):
+            presentation_text = textwrap.dedent(
+                f"""\
+                {gettext('Presentation')}:
+                  {gettext('class')}: {presentation_class(subject)}
+                  {gettext('id')}: {subject.id}"""
+            )
+            element = subject.subject
+        else:
+            presentation_text = ""
+            element = subject
+
+        element_text = (
+            textwrap.dedent(
+                f"""\
+                {gettext('Model Element')}:
+                  {gettext('qname')}: {'.'.join(map(str, qualifiedName(element)))}
+                  {gettext('class')}: {model_element_class(element)}
+                  {gettext('id')}: {element.id}"""
+            )
+            if element
+            else ""
+        )
+
+        if presentation_text and element_text:
+            internals.set_label(presentation_text + "\n\n" + element_text)
+        else:
+            internals.set_label(presentation_text or element_text)
+
+        return builder.get_object("internals-editor")
+
+
+def presentation_class(subject):
+    t = type(subject)
+    if t.__module__.startswith("gaphor.UML."):
+        return f"gaphor.UML.diagramitems.{t.__name__}"
+    elif t.__module__.startswith("gaphor.SysML."):
+        return f"gaphor.SysML.diagramitems.{t.__name__}"
+    elif t.__module__.startswith("gaphor.RAAML."):
+        return f"gaphor.RAAML.diagramitems.{t.__name__}"
+    return f"{t.__module__}.{t.__name__}"
+
+
+def model_element_class(subject):
+    t = type(subject)
+    if t.__module__ == "gaphor.UML.uml":
+        return f"gaphor.UML.{t.__name__}"
+    return f"{t.__module__}.{t.__name__}"

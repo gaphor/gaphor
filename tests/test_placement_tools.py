@@ -51,7 +51,7 @@ def test_pointer(tab):
     tab.apply_tool_set("toolbox-pointer")
 
     # TODO: what's the observed behavior?
-    assert tab.view._controllers
+    assert tab.view._controllers  # noqa: SLF001
 
 
 def flatten(list):

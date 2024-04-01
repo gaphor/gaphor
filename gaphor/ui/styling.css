@@ -15,10 +15,6 @@
   font-weight: bold;
 }
 
-#diagrams {
-  border-top-width: 0;
-}
-
 diagramview {
   background: white;
 }
@@ -69,6 +65,7 @@ flowboxchild {
   margin-top: 6px;
 }
 
+frame .internals-label,
 frame > textview {
   padding: 6px;
 }
@@ -130,25 +127,22 @@ textfield text selection {
   box-shadow: none;
 }
 
-#model_browser,
-#diagrams {
-  border-top: 1px solid @unfocused_borders;
+tabbar > revealer > box,
+#model_browser listview {
+  background-color: transparent;
 }
 
-#element_editor {
-  border-left: 1px solid @unfocused_borders;
+.pseudo-sidebar-pane {
+  background-color: @sidebar_bg_color;
+  color: @sidebar_fg_color;
 }
 
 #element_editor .title {
   font-weight: bold;
 }
 
-.toolbar {
-  padding-top: 0;
-}
-
-.editor-wide {
-  min-width: 350px;
+#element_editor {
+  min-width: 270px;
 }
 
 #toolbox > viewport > box {

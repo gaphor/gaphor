@@ -95,7 +95,7 @@ class LifetimeItem:
     MIN_LENGTH = 10
     MIN_LENGTH_VISIBLE = 3 * MIN_LENGTH
 
-    def __init__(self):
+    def __init__(self, add_constraint):
         super().__init__()
 
         self.top = Handle(strength=VERY_STRONG - 1)
@@ -106,31 +106,39 @@ class LifetimeItem:
 
         self.port = BetweenPort(self.top.pos, self.bottom.pos)
 
-        self._c_min_length = None  # to be set by lifeline item
+        self._c_min_length = LessThanConstraint(
+            self.top.pos.y, self.bottom.pos.y, delta=LifetimeItem.MIN_LENGTH
+        )
+        add_constraint(self._c_min_length)
 
-    def _set_length(self, length):
+    @property
+    def length(self):
+        return self.bottom.pos.y - self.top.pos.y
+
+    @length.setter
+    def length(self, length):
         """Set lifeline's lifetime length."""
         self.bottom.pos.y = self.top.pos.y + length
 
-    length = property(lambda s: s.bottom.pos.y - s.top.pos.y, _set_length)
+    @property
+    def min_length(self):
+        return self._c_min_length.delta
 
-    def _set_min_length(self, length):
-        assert self._c_min_length is not None
+    @min_length.setter
+    def min_length(self, length):
         self._c_min_length.delta = length
 
-    min_length = property(lambda s: s._c_min_length.delta, _set_min_length)
-
-    def _is_visible(self):
+    @property
+    def visible(self):
         return self.length > self.MIN_LENGTH
 
-    def _set_visible(self, visible):
+    @visible.setter
+    def visible(self, visible):
         """Set lifetime visibility."""
         if visible:
             self.bottom.pos.y = self.top.pos.y + self.MIN_LENGTH_VISIBLE
         else:
             self.bottom.pos.y = self.top.pos.y + self.MIN_LENGTH
-
-    visible = property(_is_visible, _set_visible)
 
 
 @represents(UML.Lifeline)
@@ -150,7 +158,9 @@ class LifelineItem(Named, ElementPresentation[UML.Lifeline]):
 
         self._connections = diagram.connections
 
-        self._lifetime = LifetimeItem()
+        self._lifetime = LifetimeItem(
+            lambda c: self._connections.add_constraint(self, c)
+        )
 
         top = self._lifetime.top
         bottom = self._lifetime.bottom
@@ -177,6 +187,8 @@ class LifelineItem(Named, ElementPresentation[UML.Lifeline]):
         self.watch("subject[NamedElement].name")
         self.watch("subject.appliedStereotype.classifier.name")
         self.watch("subject[Lifeline].represents.name")
+        self.watch("subject[Lifeline].represents.type.name")
+        self.watch("subject[Lifeline].represents.typeValue")
         self.setup_constraints()
 
     is_destroyed: attribute[int] = attribute("is_destroyed", int, default=False)
@@ -199,11 +211,8 @@ class LifelineItem(Named, ElementPresentation[UML.Lifeline]):
         c2 = EqualsConstraint(top.pos.x, bottom.pos.x, delta=0.0)
 
         c3 = EqualsConstraint(self._handles[SW].pos.y, top.pos.y, delta=0.0)
-        self._lifetime._c_min_length = LessThanConstraint(
-            top.pos.y, bottom.pos.y, delta=LifetimeItem.MIN_LENGTH
-        )
 
-        for c in (c1, c2, c3, self._lifetime._c_min_length):
+        for c in (c1, c2, c3):
             self._connections.add_constraint(self, c)
 
     def save(self, save_func):
@@ -230,10 +239,14 @@ class LifelineItem(Named, ElementPresentation[UML.Lifeline]):
         if not self.subject:
             return ""
 
-        name = self.subject.name or ""
-        if self.subject.represents:
-            return f"{name}: {self.subject.represents.name or ''}"
-        return name
+        if represents := self.subject.represents:
+            if represents.type and represents.type.name:
+                return f"{represents.name or ''}: {represents.type.name or ''}"
+            elif represents.typeValue:
+                return f"{represents.name or ''}: {represents.typeValue}"
+            return represents.name or ""
+
+        return self.subject.name or ""
 
     def draw_lifetime(self, box, context, bounding_box):
         """Draw lifeline time line.

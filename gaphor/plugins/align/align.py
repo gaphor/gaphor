@@ -67,7 +67,7 @@ class AlignService(Service, ActionProvider):
 
                 with Transaction(self.event_manager):
                     f(elements)
-                    current_diagram.update_now(current_diagram.get_all_items())
+                    current_diagram.update(current_diagram.ownedPresentation)
 
 
 def _align_elements_left(elements: set[ElementPresentation]):

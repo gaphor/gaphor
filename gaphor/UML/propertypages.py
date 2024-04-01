@@ -77,7 +77,7 @@ class ShowTypedElementPropertyPage(PropertyPageBase):
         return self.item.subject
 
     def construct(self):
-        if not self.typed_element and hasattr(self.item, "show_type"):
+        if not self.typed_element or not hasattr(self.item, "show_type"):
             return
 
         builder = new_builder(

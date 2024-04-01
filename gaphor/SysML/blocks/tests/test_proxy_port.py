@@ -23,7 +23,7 @@ def test_proxy_port_item_point(diagram):
 def test_ports(diagram):
     proxy_port = diagram.create(ProxyPortItem)
 
-    diagram.update_now({proxy_port})
+    diagram.update({proxy_port})
 
     top, right, bottom, left = proxy_port.ports()
 

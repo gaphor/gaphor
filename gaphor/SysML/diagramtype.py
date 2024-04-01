@@ -2,6 +2,7 @@ from gaphor.diagram.diagramtoolbox import DiagramType
 from gaphor.diagram.general.diagramitem import DiagramItem
 from gaphor.diagram.group import change_owner
 from gaphor.diagram.support import represents
+from gaphor.i18n import gettext
 from gaphor.SysML.sysml import SysMLDiagram
 
 represents(SysMLDiagram)(DiagramItem)
@@ -29,13 +30,20 @@ class SysMLDiagramType(DiagramType):
 
     def create(self, element_factory, element):
         if not isinstance(element, self._allowed_types):
-            d = next(d for d in self._defaults if isinstance(element, d.from_type))
-            assert d.to_type in self._allowed_types
-            new_element = element_factory.create(d.to_type)
-            new_element.name = d.name
-            if element:
-                change_owner(element, new_element)
-            element = new_element
+            try:
+                d = next(d for d in self._defaults if isinstance(element, d.from_type))
+                assert d.to_type in self._allowed_types
+                new_element = element_factory.create(d.to_type)
+                new_element.name = d.name
+                if element:
+                    change_owner(element, new_element)
+                element = new_element
+            except StopIteration as si:
+                raise TypeError(
+                    gettext("Can’t create “{name}” nested under a “{elem}”").format(
+                        name=self.name, elem=element.name
+                    )
+                ) from si
 
         diagram = element_factory.create(SysMLDiagram)
         diagram.name = diagram.gettext(self.name)

@@ -1,4 +1,4 @@
-"""Unit tests for transactions in Gaphor."""
+# ruff: noqa: SLF001
 import pytest
 
 from gaphor.core import event_handler

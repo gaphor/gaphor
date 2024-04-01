@@ -21,7 +21,7 @@ class CssNamedColorProposals(ProposalBase):
     def __init__(self):
         super().__init__()
         store = Gio.ListStore.new(TextProposal)
-        for color_name in tinycss2.color3._COLOR_KEYWORDS:
+        for color_name in tinycss2.color3._COLOR_KEYWORDS:  # noqa: SLF001
             proposal = TextProposal(color_name)
             store.append(proposal)
         self.store = store

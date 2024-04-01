@@ -216,7 +216,7 @@ def test_save_and_load(diagram, element_factory, saver, loader):
         diagram, element_factory
     )
 
-    diagram.update_now((lifeline, exec_spec))
+    diagram.update({lifeline, exec_spec})
 
     saved_data = saver()
 

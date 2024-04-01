@@ -76,29 +76,35 @@ class AssociationItem(Named, LinePresentation[UML.Association]):
         base = "subject[Association].memberEnd[Property]"
         self.watch("subject[NamedElement].name").watch(
             "subject.appliedStereotype.classifier.name"
-        ).watch(f"{base}.name", self.on_association_end_value).watch(
-            f"{base}.aggregation", self.on_association_end_value
-        ).watch(
+        ).watch(f"{base}.name").watch(
             f"{base}.appliedStereotype.slot.definingFeature.name",
-            self.on_association_end_value,
+        ).watch(f"{base}.appliedStereotype.slot.value").watch(
+            f"{base}.classifier"
+        ).watch(f"{base}.visibility").watch(f"{base}.lowerValue").watch(
+            f"{base}.upperValue"
+        ).watch(f"{base}.owningAssociation").watch(
+            f"{base}.type[Class].ownedAttribute"
+        ).watch(f"{base}.type[Interface].ownedAttribute").watch(
+            f"{base}.appliedStereotype.classifier"
+        ).watch("subject[Association].memberEnd").watch("show_direction").watch(
+            "preferred_tail_navigability"
+        ).watch("preferred_aggregation", self.on_association_end_endings).watch(
+            f"{base}.aggregation", self.on_association_end_endings
         ).watch(
-            f"{base}.appliedStereotype.slot.value", self.on_association_end_value
-        ).watch(f"{base}.classifier", self.on_association_end_value).watch(
-            f"{base}.visibility", self.on_association_end_value
-        ).watch(f"{base}.lowerValue", self.on_association_end_value).watch(
-            f"{base}.upperValue", self.on_association_end_value
-        ).watch(f"{base}.owningAssociation", self.on_association_end_value).watch(
-            f"{base}.type[Class].ownedAttribute", self.on_association_end_value
-        ).watch(
-            f"{base}.type[Interface].ownedAttribute", self.on_association_end_value
-        ).watch(
-            f"{base}.appliedStereotype.classifier", self.on_association_end_value
-        ).watch("subject[Association].memberEnd").watch(
-            "subject[Association].ownedEnd"
-        ).watch("subject[Association].navigableOwnedEnd").watch("show_direction").watch(
-            "preferred_aggregation", self.on_association_end_value
-        ).watch("preferred_tail_navigability", self.on_association_end_value)
+            "subject[Association].navigableOwnedEnd", self.on_association_end_endings
+        ).watch("subject[Association].ownedEnd", self.on_association_end_endings)
+
+        # For types, see the Association.navigability override
+        for t in [UML.Class, UML.DataType, UML.Interface]:
+            self.watch(
+                f"subject[Association].memberEnd.type[{t.__name__}].ownedAttribute",
+                self.on_association_end_endings,
+            )
+
         watch_information_flow(self, "Association", "abstraction")
+
+    head_subject = association("head_subject", UML.Property, upper=1)
+    tail_subject = association("tail_subject", UML.Property, upper=1)
 
     show_direction: attribute[int] = attribute("show_direction", int, default=False)
 
@@ -109,6 +115,14 @@ class AssociationItem(Named, LinePresentation[UML.Association]):
     preferred_tail_navigability = enumeration(
         "preferred_tail_navigability", ("none", "navigable"), "none"
     )
+
+    @property
+    def head_end(self):
+        return self._head_end
+
+    @property
+    def tail_end(self):
+        return self._tail_end
 
     def load(self, name, value):
         # end_head and end_tail were used in an older Gaphor version
@@ -123,12 +137,7 @@ class AssociationItem(Named, LinePresentation[UML.Association]):
 
     def postload(self):
         super().postload()
-        self.on_association_end_value()
-
-    head_end = property(lambda self: self._head_end)
-    tail_end = property(lambda self: self._tail_end)
-    head_subject = association("head_subject", UML.Property, upper=1)
-    tail_subject = association("tail_subject", UML.Property, upper=1)
+        self.on_association_end_endings()
 
     def invert_direction(self):
         """Invert the direction of the association, this is done by swapping
@@ -141,15 +150,7 @@ class AssociationItem(Named, LinePresentation[UML.Association]):
         )
         self.request_update()
 
-    def on_association_end_value(self, event=None):
-        """Handle events and update text on association end."""
-        self.request_update()
-
-    def update(self, _context: UpdateContext | None = None):
-        for end in (self._head_end, self._tail_end):
-            end.set_text()
-
-        # Update line endings:
+    def on_association_end_endings(self, event=None):
         head_subject = self.head_subject
         tail_subject = self.tail_subject
 
@@ -184,6 +185,11 @@ class AssociationItem(Named, LinePresentation[UML.Association]):
             else:
                 self.draw_head = draw_default_head
             self.draw_tail = draw_default_tail
+        self.request_update()
+
+    def update(self, _context: UpdateContext | None = None):
+        self._head_end.update_text()
+        self._tail_end.update_text()
 
     def point(self, x, y):
         """Returns the distance from the Association to the (mouse) cursor."""
@@ -335,7 +341,9 @@ class AssociationEnd:
         self._name_shape = Text(text=lambda: self._name)
         self._mult_shape = Text(text=lambda: self._mult)
 
-    name_bounds = property(lambda s: s._name_bounds)
+    @property
+    def name_bounds(self):
+        return self._name_bounds
 
     @property
     def owner(self) -> AssociationItem:
@@ -351,10 +359,11 @@ class AssociationEnd:
     def subject(self) -> Optional[UML.Property]:
         return getattr(self.owner, f"{self._end}_subject")  # type:ignore[no-any-return]
 
-    def request_update(self):
-        self._owner.request_update()
+    @property
+    def name(self):
+        return self._name
 
-    def set_text(self):
+    def update_text(self):
         """Set the text on the association end."""
         if self.subject:
             try:
@@ -366,13 +375,6 @@ class AssociationEnd:
             else:
                 self._name = n
                 self._mult = m
-                self.request_update()
-
-    def get_name(self):
-        return self._name
-
-    def get_mult(self):
-        return self._mult
 
     def update_position(self, context: UpdateContext, p1, p2):
         """Update label placement for association's name and multiplicity

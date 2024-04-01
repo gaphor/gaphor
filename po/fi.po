@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2024-02-27 10:00-0500\n"
-"PO-Revision-Date: 2024-03-15 21:07+0000\n"
+"PO-Revision-Date: 2024-03-29 17:02+0000\n"
 "Last-Translator: Jiri Grönroos <jiri.gronroos@iki.fi>\n"
 "Language-Team: Finnish <https://hosted.weblate.org/projects/gaphor/gaphor/fi/"
 ">\n"
@@ -1127,9 +1127,8 @@ msgstr "Stereotyypit"
 #: gaphor/UML/classes/propertypages.ui:141
 #: gaphor/UML/classes/propertypages.ui:252
 #: gaphor/UML/profiles/propertypages.ui:56
-#, fuzzy
 msgid "Values"
-msgstr "arvot"
+msgstr "Arvot"
 
 #: gaphor/UML/classes/propertypages.ui:158
 msgid "Tail:"
@@ -1548,9 +1547,8 @@ msgid "Flip orientation"
 msgstr "Käännä suunta"
 
 #: gaphor/diagram/propertypages.ui:126
-#, fuzzy
 msgid "Note"
-msgstr "EI"
+msgstr "Muistiinpano"
 
 #: gaphor/diagram/propertypages.ui:155
 msgid "Created By"
@@ -1967,9 +1965,8 @@ msgid "Detailed Behavior"
 msgstr "Tarkennettu toiminta"
 
 #: gaphor/templates/sysml-example.gaphor gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Logical Requirements"
-msgstr "Vaatimukset"
+msgstr "Loogiset vaatimukset"
 
 #: gaphor/templates/sysml-example.gaphor gaphor/templates/sysml.gaphor
 msgid "Logical States"
@@ -2495,7 +2492,7 @@ msgstr "Tyylisivu"
 
 #: gaphor/ui/elementeditor.ui:338
 msgid "CSS nodes of focused item"
-msgstr ""
+msgstr "Kohdistetun tietueen CSS-solmut"
 
 #: gaphor/ui/elementeditor.ui:363
 msgid ""

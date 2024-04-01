@@ -7,7 +7,7 @@ from gaphor.UML import diagramitems
 
 
 class DummyVisualComponent:
-    def size(self, ctx):
+    def size(self, ctx, bounding_box=None):
         return 0, 0
 
     def draw(self, ctx, bounding_box):
@@ -71,13 +71,13 @@ def test_element_loading(element_factory, diagram):
     p = diagram.create(StubElement)
 
     p.load("matrix", "(2.0, 0.0, 0.0, 2.0, 0.0, 0.0)")
-    p.load("width", "20")
-    p.load("height", "25")
+    p.load("width", "200")
+    p.load("height", "225")
     p.load("subject", subject)
 
     assert tuple(p.matrix) == (2.0, 0.0, 0.0, 2.0, 0.0, 0.0)
-    assert p.width == 20
-    assert p.height == 25
+    assert p.width == 200
+    assert p.height == 225
     assert p.subject is subject
 
 

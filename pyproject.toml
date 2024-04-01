@@ -49,14 +49,14 @@ jedi = ">=0.18.1,<0.20.0"
 better-exceptions = "^0.3.3"
 pydot = ">=1.4.2,<3.0.0"
 pillow = ">=10.0.0"
-pygit2 = "^1.11.1"
 defusedxml = "^0.7.1"
 pyobjc-framework-cocoa = { version = ">=9.0.1,<11.0.0", markers = "sys_platform == 'darwin'" }
+dulwich = "^0.21.7"
 
 [tool.poetry.group.dev.dependencies]
 pytest = ">=7.1,<9.0"
 pytest-archon = "^0.0"
-pytest-cov = "^4.0.0"
+pytest-cov = ">=4,<6"
 pytest-randomly = "^3.12.0"
 xdoctest = "^1.1.0"
 hypothesis = "^6.54.5"
@@ -143,6 +143,7 @@ gaphor = "gaphor.main:main"
 
 [tool.poetry.plugins."gaphor.argparsers"]
 gui = "gaphor.main:gui_parser"
+self-test = "gaphor.main:self_test_parser"
 exec = "gaphor.main:exec_parser"
 export = "gaphor.plugins.diagramexport.exportcli:export_parser"
 install-schemas = "gaphor.ui.installschemas:install_schemas_parser"
@@ -184,7 +185,7 @@ c4model.script = """gaphor.codegen.coder:main(
     supermodelfiles=[('UML', 'models/UML.gaphor')]
     )"""
 lint = "pre-commit run --all-files"
-docs = { "cwd" = "docs", "shell" = "sphinx-build -b html . _build/html" }
+docs = { "cwd" = "docs", "shell" = "sphinx-build -W -b html . _build/html" }
 docs-gettext-pot = { "cwd" = "docs", "shell" = "sphinx-build -b gettext . locale" }
 clean = { "shell" = "rm -rf dist build _packaging/dist _packaging/build _packaging/windows/file_version_info.txt docs/_build" }
 package = { "cwd" = "_packaging", shell = "pyinstaller -y gaphor.spec"}
@@ -256,6 +257,7 @@ select = [
     "C",
     "E",
     "F",
+    "SLF",
     "T20",
     "W",
 ]

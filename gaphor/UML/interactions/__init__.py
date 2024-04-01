@@ -1,3 +1,4 @@
+import gaphor.UML.interactions.drop  # noqa: F401
 from gaphor.UML.interactions import (  # noqa: F401
     copypaste,
     interactionsconnect,

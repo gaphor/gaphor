@@ -140,9 +140,9 @@ class MainWindow(Service, ActionProvider):
         return self._builder.get_object("subtitle") if self._builder else None
 
     @property
-    def element_editor(self):
+    def element_editor_overlay(self):
         return (
-            self._builder.get_object("component:element_editor")
+            self._builder.get_object("element-editor-overlay")
             if self._builder
             else None
         )
@@ -182,7 +182,7 @@ class MainWindow(Service, ActionProvider):
             create_hamburger_model(self.export_menu.menu, self.tools_menu.menu),
         )
 
-        window.set_default_size(*(self.properties.get("ui.window-size", (860, 580))))
+        window.set_default_size(*(self.properties.get("ui.window-size", (1024, 640))))
         if self.properties.get("ui.window-mode", "") == "maximized":
             window.maximize()
         elif self.properties.get("ui.window-mode", "") == "fullscreened":
@@ -191,18 +191,19 @@ class MainWindow(Service, ActionProvider):
         track_paned_position(
             builder.get_object("left-pane"), "ui.namespace-width", self.properties
         )
+
         track_paned_position(
             builder.get_object("top-left-pane"), "ui.namespace-height", self.properties
         )
+
+        if overlay := self.element_editor_overlay:
+            overlay.set_show_sidebar(self.properties.get("show-editors", True))
 
         for name, component in self.component_registry.all(UIComponent):
             if bin := builder.get_object(f"component:{name}"):
                 widget = component.open()
                 widget.set_name(name)
                 bin.set_child(widget)
-
-                if name == "element_editor":
-                    bin.set_reveal_child(self.properties.get("show-editors", True))
 
         self.action_group, shortcuts = window_action_group(self.component_registry)
         window.insert_action_group("win", self.action_group)
@@ -237,8 +238,8 @@ class MainWindow(Service, ActionProvider):
         state=lambda self: self.properties.get("show-editors", True),
     )
     def toggle_editor_visibility(self, active):
-        if element_editor := self.element_editor:
-            element_editor.set_reveal_child(active)
+        if overlay := self.element_editor_overlay:
+            overlay.set_show_sidebar(active)
         self.properties.set("show-editors", active)
 
     @action(

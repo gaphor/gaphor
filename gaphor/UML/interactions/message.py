@@ -93,7 +93,6 @@ class MessageItem(Named, LinePresentation[UML.Message]):
         self.handles()[1].pos = (40, 0)
 
         self._horizontal_line = constraint(horizontal=[h.pos for h in self.handles()])
-        self.diagram.connections.add_constraint(self, self._horizontal_line)
 
         self._is_communication = False
         self._arrow_pos = 0, 0
@@ -101,6 +100,7 @@ class MessageItem(Named, LinePresentation[UML.Message]):
 
         self.watch("subject[NamedElement].name")
         self.watch("subject.appliedStereotype.classifier.name")
+        self.watch("subject[Message].messageEnd", self._update_message_end)
 
     def load(self, name, value):
         if name == "points":
@@ -109,7 +109,7 @@ class MessageItem(Named, LinePresentation[UML.Message]):
 
     def postload(self):
         super().postload()
-        if len(self.handles()) == 2:
+        if len(self.handles()) == 2 and not self.is_communication():
             self.diagram.connections.add_constraint(self, self._horizontal_line)
 
     def insert_handle(self, index: int, handle: Handle) -> None:
@@ -119,7 +119,13 @@ class MessageItem(Named, LinePresentation[UML.Message]):
 
     def remove_handle(self, handle: Handle) -> None:
         super().remove_handle(handle)
-        if len(self.handles()) == 2:
+        if len(self.handles()) == 2 and not self.is_communication():
+            self.diagram.connections.add_constraint(self, self._horizontal_line)
+
+    def _update_message_end(self, event):
+        if self.is_communication():
+            self.diagram.connections.remove_constraint(self, self._horizontal_line)
+        elif len(self.handles()) == 2:
             self.diagram.connections.add_constraint(self, self._horizontal_line)
 
     def _draw_circle(self, cr):
@@ -225,11 +231,11 @@ class MessageItem(Named, LinePresentation[UML.Message]):
             cr.stroke()
 
     def draw(self, context):
+        self._is_communication = self.is_communication()
         super().draw(context)
 
         # on communication diagram draw decorating arrows for messages and
         # inverted messages
-        self._is_communication = self.is_communication()
         if self._is_communication:
             pos, angle = get_center_pos(self.handles())
             self._arrow_pos = pos
@@ -246,7 +252,11 @@ class MessageItem(Named, LinePresentation[UML.Message]):
             c1
             and isinstance(c1.connected, LifelineItem)
             and not c1.connected.lifetime.visible
-            and c2
-            and isinstance(c2.connected, LifelineItem)
-            and not c2.connected.lifetime.visible
+            and (
+                not c2
+                or (
+                    isinstance(c2.connected, LifelineItem)
+                    and not c2.connected.lifetime.visible
+                )
+            )
         )

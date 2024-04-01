@@ -24,7 +24,7 @@ from hypothesis.strategies import data, integers, sampled_from
 from gaphor.application import Session
 from gaphor.C4Model.toolbox import c4
 from gaphor.core import Transaction
-from gaphor.core.modeling import Diagram, ElementFactory
+from gaphor.core.modeling import Diagram, ElementFactory, Presentation
 from gaphor.core.modeling.element import Element, generate_id, uuid_generator
 from gaphor.diagram.group import can_group, change_owner
 from gaphor.diagram.presentation import LinePresentation
@@ -132,9 +132,9 @@ class AutoLayouting(RuleBasedStateMachine):
     )
     def add_item_to_diagram(self, tooldef, data, x, y):
         with self.transaction:
-            item = tooldef.item_factory(self.diagram)
+            item: Presentation = tooldef.item_factory(self.diagram)
             item.matrix.translate(x, y)
-            self.diagram.update_now({item})
+            self.diagram.update({item})
 
         # Do best effort to connect a line, no problem if it fails
         if isinstance(item, LinePresentation):

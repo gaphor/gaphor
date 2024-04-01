@@ -50,5 +50,5 @@ def test_draw(create, diagram):
         selected=True,
         dropzone=False,
     )
-    diagram.update_now((flow,))
+    diagram.update({flow})
     flow.draw(context)

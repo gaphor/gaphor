@@ -1,9 +1,22 @@
-Core Modeling Classes
-=====================
+Modeling Language Core
+======================
 
-Here you can find a short description of the base classes in
-a Gaphor model: :obj:`~gaphor.core.modeling.Element`,
-:obj:`~gaphor.core.modeling.Presentation`, and :obj:`~gaphor.core.modeling.Diagram`.
+The Core modeling language is the the basis for any other language.
+
+The :obj:`~gaphor.core.modeling.Element` class acts as the root for all gaphor domain classes.
+:obj:`~gaphor.core.modeling.Diagram` and :obj:`~gaphor.core.modeling.Presentation` form the basis for everything you see
+in a diagram.
+
+All data models in Gaphor are generated from actual Gaphor model files.
+This allows us to provide you nice diagrams of Gaphor’s internal model.
+
+.. diagram:: core
+   :model: core
+
+The :obj:`~gaphor.core.modeling.Element` base class provides event notification and integrates
+with the model repository (internally known as :obj:`~gaphor.core.modeling.ElementFactory`).
+Bi-directional relationships are also possible, as well as derived
+relations.
 
 The :obj:`~gaphor.core.modeling.element.RepositoryProtocol`, and
 :obj:`~gaphor.core.modeling.element.EventWatcherProtocol`
@@ -14,7 +27,7 @@ mechanisms.
 The ``Element`` Class
 ---------------------
 
-The class ``Element`` is the core of Gaphor's data model.
+The class ``Element`` is the core of Gaphor’s data model.
 
 .. autoclass:: gaphor.core.modeling.Element
 
@@ -74,6 +87,9 @@ The ``Diagram`` class
 
    .. automethod:: gaphor.core.modeling.Diagram.select
 
+   .. automethod:: gaphor.core.modeling.Diagram.request_update
+
+   .. automethod:: gaphor.core.modeling.Diagram.update
 
 Protocols
 ---------
@@ -116,3 +132,9 @@ Protocols
    .. automethod:: gaphor.core.modeling.element.EventWatcherProtocol.unsubscribe_all
 
       Should be called before the watcher is disposed, to release all watched paths.
+
+
+.. toctree::
+   :hidden:
+
+   core_changeset
