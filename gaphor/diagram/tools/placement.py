@@ -75,6 +75,7 @@ def create_item(view, factory, event_manager, x, y):
 
 
 def maybe_group(parent, item):
+    # TODO: for state machines and swim lanes: group the right region/partition
     if parent and item.subject and group(parent.subject, item.subject):
         grow_parent(parent, item)
         item.change_parent(parent)
