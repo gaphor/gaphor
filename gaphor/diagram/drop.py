@@ -16,7 +16,9 @@ from gaphor.UML.recipes import owner_package
 log = logging.getLogger(__name__)
 
 
-def drop_element(element: Element, diagram: Diagram, x: float, y: float):
+def drop_element(
+    element: Element, diagram: Diagram, x: float, y: float
+) -> Presentation | None:
     if item_class := get_diagram_item(type(element)):
         item = diagram.create(item_class)
         assert item
@@ -34,13 +36,24 @@ drop: FunctionDispatcher[Callable[[Element, Element], bool]] = multidispatch(
 
 
 @drop.register(Presentation, Diagram)
-def drop_presentation(element: Presentation, diagram: Diagram, x: float, y: float):
-    return None
+def drop_presentation(item: Presentation, diagram: Diagram, x: float, y: float):
+    if item.diagram is not diagram:
+        return
+
+    old_parent = item.parent
+
+    if old_parent and ungroup(old_parent.subject, item.subject):
+        item.change_parent(None)
+        old_parent.request_update()
 
 
 @drop.register(Presentation, Presentation)
-def group_presentation(item, new_parent, x, y):
+def drop_on_presentation(
+    item: Presentation, new_parent: Presentation, x: float, y: float
+):
     """Place :obj:`item`, with position :obj:`pos` relative to :obj:`new_parent`."""
+    assert item.diagram is new_parent.diagram
+
     old_parent = item.parent
 
     if new_parent is old_parent:
@@ -60,7 +73,7 @@ def group_presentation(item, new_parent, x, y):
         group(diagram_parent, item.subject)
 
 
-def grow_parent(parent, item):
+def grow_parent(parent: Presentation, item: Presentation) -> None:
     if not isinstance(item, ElementPresentation):
         return
 
@@ -78,7 +91,7 @@ def grow_parent(parent, item):
     parent.handles()[SE].pos = c2i.transform_point(new_parent_bb.x1, new_parent_bb.y1)
 
 
-def _bounds(item):
+def _bounds(item: ElementPresentation) -> Rectangle:
     transform = item.matrix_i2c.transform_point
     x0, y0 = transform(*item.handles()[NW].pos)
     x1, y1 = transform(*item.handles()[SE].pos)

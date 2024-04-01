@@ -51,6 +51,8 @@ def drop_relationship(element: ActivityParameterNode, diagram: Diagram, x, y):
 @drop.register(ValueSpecificationActionItem, PartitionItem)
 @drop.register(ObjectNodeItem, PartitionItem)
 def drop_on_partition(item, new_parent, x, y):
+    assert item.diagram is new_parent.diagram
+
     if not item.subject:
         return
 

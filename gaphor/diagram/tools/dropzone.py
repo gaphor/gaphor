@@ -94,11 +94,18 @@ class DropZoneMoveMixin:
         self.drop(new_parent, pos)
 
     def drop(self, new_parent, pos):
-        drop(
-            self.item,
-            new_parent,
-            *self.view.get_matrix_v2i(new_parent).transform_point(*pos),
-        )
+        if new_parent:
+            drop(
+                self.item,
+                new_parent,
+                *self.view.get_matrix_v2i(new_parent).transform_point(*pos),
+            )
+        else:
+            drop(
+                self.item,
+                self.item.diagram,
+                *self.view.matrix.inverse().transform_point(*pos),
+            )
 
 
 @MoveAspect.register(ElementPresentation)

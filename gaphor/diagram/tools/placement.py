@@ -8,9 +8,8 @@ from gi.repository import GLib, Gtk
 
 from gaphor.core.eventmanager import EventManager
 from gaphor.diagram.diagramtoolbox import ItemFactory
-from gaphor.diagram.drop import grow_parent
+from gaphor.diagram.drop import drop
 from gaphor.diagram.event import DiagramItemPlaced, DiagramSelectionChanged
-from gaphor.diagram.group import group
 from gaphor.diagram.instanteditors import instant_editor
 from gaphor.diagram.presentation import ElementPresentation
 
@@ -65,20 +64,14 @@ def create_item(view, factory, event_manager, x, y):
     x, y = view.get_matrix_v2i(item).transform_point(x, y)
     item.matrix.translate(x, y)
     view.model.update({item})
-    maybe_group(parent, item)
+    if parent:
+        drop(item, parent, *view.get_matrix_v2i(parent).transform_point(x, y))
     selection.unselect_all()
     selection.focused_item = item
     event_manager.handle(
         DiagramSelectionChanged(view, selection.focused_item, selection.selected_items)
     )
     return item
-
-
-def maybe_group(parent, item):
-    # TODO: for state machines and swim lanes: group the right region/partition
-    if parent and item.subject and group(parent.subject, item.subject):
-        grow_parent(parent, item)
-        item.change_parent(parent)
 
 
 def connect_opposite_handle(view, new_item, x, y, handle_index):
