@@ -182,6 +182,9 @@ class RegionPropertyPage(PropertyPageBase):
         self.item = item
 
     def construct(self):
+        if not self.item.subject:
+            return
+
         builder = new_builder(
             "region-editor",
             "num-regions-adjustment",
