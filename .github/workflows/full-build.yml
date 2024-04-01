@@ -18,7 +18,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  python_version: '3.11'
+  python_version: '3.12'
   mainline_build: ${{ github.ref == 'refs/heads/main' || github.event.label.name == 'translation' || github.event_name == 'release' }}
   PYTHONWARNDEFAULTENCODING: 'true'
 
