@@ -1,4 +1,4 @@
-from gaphor.diagram.shapes import BoundedBox, Box, CssNode, Text, draw_top_separator
+from gaphor.diagram.shapes import Box, CssNode, Text, draw_top_separator
 
 
 def region_compartment(subject):
@@ -10,15 +10,13 @@ def region_compartment(subject):
 
 
 def _create_region_compartment(region, index):
-    return BoundedBox(
-        CssNode(
-            "region",
-            region,
-            Box(
-                Text(
-                    text=lambda: region.name or "",
-                ),
-                draw=draw_top_separator,
+    return CssNode(
+        "region",
+        region,
+        Box(
+            Text(
+                text=lambda: region.name or "",
             ),
-        )
+            draw=draw_top_separator,
+        ),
     )
