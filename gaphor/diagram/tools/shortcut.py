@@ -39,16 +39,17 @@ def delete_selected_items(view: GtkView, event_manager):
 
 def cancel_handle_drag(view: GtkView, event_manager):
     items = view.selection.selected_items
+    model = view.model
     with Transaction(event_manager):
         for i in list(items):
             if isinstance(i, LinePresentation):
                 if (
-                    i._has_been_dropped
-                    and i._last_handle_moved
-                    and not i._last_handle_moved.glued
-                    and i._connections.get_connection(i._last_handle_moved)
+                    i.has_been_dropped
+                    and i.last_handle_moved
+                    and not i.last_handle_moved.glued
+                    and model.connections.get_connection(i.last_handle_moved)
                 ):
-                    i._connections.disconnect_item(i, i._last_handle_moved)
-                    i._last_handle_moved = None
+                    model.connections.disconnect_item(i, i.last_handle_moved)
+                    i.last_handle_moved = None
         view.selection.unselect_all()
         view.selection.grayed_out_items = set()

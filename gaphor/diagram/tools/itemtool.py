@@ -30,7 +30,7 @@ def on_drag_end(gesture, _offset_x, _offset_y):
     view = gesture.get_widget()
     for i in view.selection.selected_items:
         if isinstance(i, LinePresentation):
-            i._last_handle_moved = None
-            i._has_been_dropped = True
+            i.last_handle_moved = None
+            i.has_been_dropped = True
     view.selection.dropzone_item = None
     view.model.update()
