@@ -1411,6 +1411,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "JACKADUX",
+      "name": "JACKADUX",
+      "avatar_url": "https://avatars.githubusercontent.com/u/87265559?v=4",
+      "profile": "https://boghma.com/",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
