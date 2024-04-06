@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import contextlib
-from typing import Generic, Sequence, Type, TypeVar, overload
+from typing import Generic, Iterator, Sequence, Type, TypeVar, overload
 
 from gaphor.core.modeling.event import AssociationUpdated
 
@@ -44,7 +44,7 @@ class collection(Generic[T]):
     def __contains__(self, obj) -> bool:
         return self.items.__contains__(obj)
 
-    def __iter__(self):
+    def __iter__(self) -> Iterator[T]:
         return iter(self.items)
 
     def __str__(self):

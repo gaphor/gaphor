@@ -115,7 +115,7 @@ def component_provided(self: uml.Component) -> list[uml.Realization]:
     # this is a generator of generators, so flatten it later
     rc_realizations = _pr_rc_interface_deps(self, uml.Realization)
 
-    return list(set(itertools.chain(implementations, realizations, *rc_realizations)))
+    return list(set(itertools.chain(implementations, realizations, *rc_realizations)))  # type: ignore[arg-type]
 
 
 uml.Component.provided = property(component_provided, doc=component_provided.__doc__)

@@ -1,9 +1,10 @@
+from gaphor.core.modeling import Diagram
 from gaphor.diagram.drop import drop, drop_element
 from gaphor.UML.interactions.lifeline import LifelineItem
 from gaphor.UML.uml import ConnectableElement
 
 
-@drop.register
+@drop.register(ConnectableElement, Diagram)
 def drop_connectable_element(element: ConnectableElement, diagram, x, y):
     def drop_distance_to_item(item):
         local_x, local_y = item.matrix_i2c.inverse().transform_point(x, y)

@@ -1,11 +1,13 @@
 """Activity Partition item."""
 
+
 from gaphas.geometry import Rectangle
 from gaphas.item import NW, SE
+from gaphas.types import Pos
 
 from gaphor import UML
 from gaphor.core.modeling import DrawContext
-from gaphor.core.modeling.properties import association
+from gaphor.core.modeling.properties import association, relation_many
 from gaphor.diagram.presentation import ElementPresentation
 from gaphor.diagram.shapes import DEFAULT_PADDING, Box, CssNode, Orientation, stroke
 from gaphor.diagram.support import represents
@@ -15,7 +17,7 @@ HEADER_HEIGHT: int = 29
 
 
 @represents(UML.ActivityPartition)
-class PartitionItem(ElementPresentation):
+class PartitionItem(ElementPresentation[UML.ActivityPartition]):
     def __init__(self, diagram, id=None):
         super().__init__(diagram, id)
         self.min_height = 300
@@ -52,7 +54,9 @@ class PartitionItem(ElementPresentation):
             x = child.matrix[4]
             child.matrix.set(x0=x + offset + (x - left) * factor)
 
-    partition = association("partition", UML.ActivityPartition, composite=True)
+    partition: relation_many[UML.ActivityPartition] = association(
+        "partition", UML.ActivityPartition, composite=True
+    )
 
     def load(self, name, value):
         self._loading = True
@@ -71,6 +75,23 @@ class PartitionItem(ElementPresentation):
             orientation=Orientation.HORIZONTAL,
             draw=self.draw_swimlanes,
         )
+
+    def partition_at_point(self, pos: Pos) -> UML.ActivityPartition | None:
+        if self.point(*pos) > 0:
+            return None
+
+        if partitions := self.partition:
+            partition_width = self.width / len(partitions)
+        else:
+            partition_width = self.width / 2
+
+        right = self.handles()[0].pos.x
+        x, y = pos
+        for p in partitions:
+            right += partition_width
+            if x < right:
+                return p
+        return None
 
     def draw_swimlanes(
         self, box: Box, context: DrawContext, bounding_box: Rectangle

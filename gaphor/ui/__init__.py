@@ -15,7 +15,7 @@ gi.require_version("Gdk", "4.0")
 gi.require_version("GtkSource", "5")
 gi.require_version("Adw", "1")
 
-from gi.repository import Adw, Gio, GLib, GtkSource
+from gi.repository import Adw, Gio, GtkSource
 
 import gaphor.ui.textfield
 from gaphor.application import Application, Session

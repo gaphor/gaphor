@@ -112,6 +112,7 @@ def remove_stereotype(element: Element, stereotype: Stereotype) -> None:
         UML metamodel stereotype instance.
     """
     for obj in element.appliedStereotype:
+        assert isinstance(obj, InstanceSpecification)
         if obj.classifier and obj.classifier[0] is stereotype:
             del element.appliedStereotype[obj]
             obj.unlink()

@@ -3,19 +3,21 @@
 Everything is about services so the Case can define it's required
 services and start off.
 """
+# ruff: noqa: I001
 from __future__ import annotations
-
-# isort: skip_file
 
 from io import StringIO
 from pathlib import Path
 
 import pytest
 
+import gaphor.services.properties
+
 # Load gaphor.ui first, so GTK library versions are set corrently
 import gaphor.ui  # noqa: F401
 
-import gaphor.services.properties
+from gaphas.view import GtkView
+
 from gaphor.core import Transaction
 from gaphor.core.eventmanager import EventManager
 from gaphor.core.modeling import Diagram, ElementFactory
@@ -24,6 +26,8 @@ from gaphor.core.modeling.modelinglanguage import (
     CoreModelingLanguage,
     MockModelingLanguage,
 )
+from gaphor.diagram.painter import ItemPainter
+from gaphor.diagram.selection import Selection
 from gaphor.storage import storage
 from gaphor.SysML.modelinglanguage import SysMLModelingLanguage
 from gaphor.UML.modelinglanguage import UMLModelingLanguage
@@ -119,6 +123,15 @@ def test_models():
 def models():
     """The folder where test models can be found."""
     return Path(__file__).parent.parent / "models"
+
+
+@pytest.fixture
+def view(diagram):
+    view = GtkView(model=diagram, selection=Selection())
+    item_painter = ItemPainter(view.selection)
+    view.painter = item_painter
+    view.bounding_box_painter = item_painter
+    return view
 
 
 @pytest.fixture(autouse=True)

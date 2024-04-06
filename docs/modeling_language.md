@@ -164,15 +164,17 @@ This is not 100% accurate.
 Dropping is performed by dragging an element from the tree view and drop it on a diagram.
 This is an easy way to extend a diagram with already existing model elements.
 
-```{function} gaphor.diagram.drop.drop(element: ~gaphor.core.modeling.Element, diagram: ~gaphor.core.modeling.Diagram, x: float, y: float) -> ~gaphor.core.modeling.Presentation | None
+Alternatively, a presentation item can be dropped on top of another element.
 
-The drop function creates a new presentation for an element on the diagram.
+```{function} gaphor.diagram.drop.drop(element: ~gaphor.core.modeling.Element | ~gaphor.core.modeling.Presentation, diagram: ~gaphor.core.modeling.Diagram | ~gaphor.core.modeling.Presentation, x: float, y: float) -> ~gaphor.core.modeling.Presentation | None
+
+The drop function creates a new presentation for an element on the diagram,
+if the element is not a presentation yet.
 For relationships, a drop only works if both connected elements are present in the
 same diagram.
 
-The big difference with dragging an element from the toolbox, is that dragging from the toolbox
-will actually place a new ``Presentation`` element on the diagram. ``drop`` works the other way
-around: it starts with a model element and creates an accompanying ``Presentation``.
+While grouping deals with connecting model elements, dropping deals with creating and placing
+presentation elements on the right item in a diagram.
 ```
 
 ## Automated model cleanup

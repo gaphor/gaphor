@@ -18,7 +18,7 @@ from gaphor.UML.states.region import region_compartment
 class StateItem(ElementPresentation[UML.State], Named):
     def __init__(self, diagram, id=None):
         super().__init__(diagram, id, width=50, height=30)
-        self._region_boxes = []
+        self._region_heights = []
         self.watch("subject[NamedElement].name")
         self.watch("subject.appliedStereotype.classifier.name")
         self.watch("subject[State].entry.name", self.update_shapes)
@@ -31,7 +31,7 @@ class StateItem(ElementPresentation[UML.State], Named):
     show_regions: attribute[int] = attribute("show_regions", int, default=True)
 
     def update_shapes(self, event=None):
-        self._region_boxes = (
+        region_boxes = (
             list(region_compartment(self.subject)) if self.show_regions else []
         )
         compartment = Box(
@@ -66,13 +66,13 @@ class StateItem(ElementPresentation[UML.State], Named):
             ),
             CssNode("compartment", self.subject, compartment),
             *(
-                self._region_boxes
+                region_boxes
                 and [
                     CssNode(
                         "regions",
                         None,
                         Box(
-                            *(self._region_boxes),
+                            *(region_boxes),
                         ),
                     )
                 ]
@@ -81,15 +81,18 @@ class StateItem(ElementPresentation[UML.State], Named):
             draw=draw_state,
         )
 
-    def subject_at_point(self, pos: Pos) -> Element | None:
-        return next(
-            (
-                region
-                for region, bounds in zip(self.subject.region, self._region_boxes)
-                if pos in bounds
-            ),
-            self.subject,
-        )
+    def update(self, context):
+        super().update(context)
+        self._region_heights = [h for _w, h in self._shape.children[-1].child.sizes]  # type: ignore[union-attr]
+
+    def region_at_point(self, pos: Pos) -> Element | None:
+        region_offset = self.height - sum(self._region_heights)
+        _x, y = pos
+        for region, h in zip(self.subject.region, self._region_heights):
+            region_offset += h
+            if y < region_offset:
+                return region
+        return self.subject
 
 
 def draw_state(box, context, bounding_box):

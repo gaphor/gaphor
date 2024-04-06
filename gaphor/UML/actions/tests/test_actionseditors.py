@@ -1,6 +1,5 @@
 # ruff: noqa: F401,F811
 from gaphor import UML
-from gaphor.diagram.tests.test_instanteditors import view
 from gaphor.UML.actions.actionseditors import (
     activity_parameter_node_item_editor,
     fork_node_item_editor,

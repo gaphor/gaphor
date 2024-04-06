@@ -16,16 +16,16 @@ def represents(uml_element, **metadata):
 
 
 # Map elements to their (default) representation.
-_element_to_item_map: Dict[Element, Presentation] = {}
-_item_to_metadata_map: Dict[Presentation, dict[str, object]] = {}
+_element_to_item_map: Dict[type[Element], type[Presentation]] = {}
+_item_to_metadata_map: Dict[type[Presentation], dict[str, object]] = {}
 
 
-def get_diagram_item(element_cls):
+def get_diagram_item(element_cls: type[Element]) -> type[Presentation] | None:
     global _element_to_item_map
     return _element_to_item_map.get(element_cls)
 
 
-def get_diagram_item_metadata(item_cls):
+def get_diagram_item_metadata(item_cls: type[Presentation]):
     global _item_to_metadata_map
     return _item_to_metadata_map.get(item_cls, {})
 

@@ -194,6 +194,7 @@ def class_declaration(class_: UML.Class):
 
 def variables(class_: UML.Class, overrides: Overrides | None = None):
     if class_.ownedAttribute:
+        a: UML.Property
         for a in sorted(class_.ownedAttribute, key=lambda a: a.name or ""):
             if is_extension_end(a):
                 continue
@@ -206,6 +207,7 @@ def variables(class_: UML.Class, overrides: Overrides | None = None):
             elif a.typeValue:
                 yield f'{a.name}: _attribute[{a.typeValue}] = _attribute("{a.name}", {a.typeValue}{default_value(a)})'
             elif is_enumeration(a.type):
+                assert isinstance(a.type, UML.Class)
                 enum_values = ", ".join(f'"{e.name}"' for e in a.type.ownedAttribute)
                 yield f'{a.name} = _enumeration("{a.name}", ({enum_values}), "{a.type.ownedAttribute[0].name}")'
             elif a.type:
@@ -213,6 +215,7 @@ def variables(class_: UML.Class, overrides: Overrides | None = None):
                 comment = "  # type: ignore[assignment]" if is_reassignment(a) else ""
                 yield f"{a.name}: relation_{mult}[{a.type.name}]{comment}"
             else:
+                assert isinstance(a.owner, UML.NamedElement)
                 raise ValueError(
                     f"{a.name}: {a.type} can not be written; owner={a.owner.name}"
                 )
@@ -348,24 +351,25 @@ def order_classes(classes: Iterable[UML.Class]) -> Iterable[UML.Class]:
 
 def bases(c: UML.Class) -> Iterable[UML.Class]:
     for g in c.generalization:
+        assert isinstance(g.general, UML.Class)
         yield g.general
 
     for a in c.ownedAttribute:
         if a.association and a.name == "baseClass":
-            yield a.association.ownedEnd.class_
+            yield a.association.ownedEnd.class_  # type: ignore[attr-defined]
 
 
-def is_enumeration(c: UML.Class) -> bool:
+def is_enumeration(c: UML.Type) -> bool:
     return c and c.name and (c.name.endswith("Kind") or c.name.endswith("Sort"))  # type: ignore[return-value]
 
 
-def is_simple_type(c: UML.Class) -> bool:
+def is_simple_type(c: UML.Type) -> bool:
     return any(
         s.name == "SimpleAttribute" for s in UML.recipes.get_applied_stereotypes(c)
-    ) or any(is_simple_type(g.general) for g in c.generalization)
+    ) or any(is_simple_type(g.general) for g in c.generalization)  # type: ignore[attr-defined]
 
 
-def is_tilde_type(c: UML.Class) -> bool:
+def is_tilde_type(c: UML.Type) -> bool:
     return c and c.name and c.name.startswith("~")  # type: ignore[return-value]
 
 
@@ -413,6 +417,7 @@ def redefines(a: UML.Property) -> str | None:
 def attribute(
     c: UML.Class, name: str, super_models: list[tuple[ModelingLanguage, ElementFactory]]
 ) -> tuple[type[Element] | None, UML.Property | None]:
+    a: UML.Property | None
     for a in c.ownedAttribute:
         if a.name == name:
             return None, a
@@ -470,7 +475,7 @@ def resolve_attribute_type_values(element_factory: ElementFactory) -> None:
             del prop.typeValue
             prop.aggregation = "composite"
 
-        if prop.type and is_simple_type(prop.type):  # type: ignore[arg-type]
+        if prop.type and is_simple_type(prop.type):
             prop.typeValue = "str"
             del prop.type
 

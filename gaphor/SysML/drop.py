@@ -1,3 +1,4 @@
+from gaphor.core.modeling import Diagram
 from gaphor.diagram.drop import drop
 from gaphor.diagram.presentation import connect
 from gaphor.diagram.support import get_diagram_item
@@ -5,8 +6,8 @@ from gaphor.SysML.sysml import Block, ProxyPort
 from gaphor.UML.uml import Property
 
 
-@drop.register
-def drop_proxy_port(element: ProxyPort, diagram, x, y):
+@drop.register(ProxyPort, Diagram)
+def drop_proxy_port(element: ProxyPort, diagram: Diagram, x, y):
     item_class = get_diagram_item(type(element))
     if not item_class:
         return None
