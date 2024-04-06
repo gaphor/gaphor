@@ -3,14 +3,14 @@
     <requires lib="gtk" version="4.0"/>
     <requires lib="adw" version="1.0"/>
     <object class="AdwPreferencesWindow" id="preferences">
-        <property name="title" translatable="true">Preferences</property>
+        <property name="title" translatable="yes">Preferences</property>
         <child>
             <object class="AdwPreferencesPage" id="appearance_page">
-                <property name="title" translatable="true">Appearance</property>
+                <property name="title" translatable="yes">Appearance</property>
                 <property name="icon-name">applications-graphics-symbolic</property>
                 <child>
                     <object class="AdwPreferencesGroup">
-                        <property name="title" translatable="true">Colors</property>
+                        <property name="title" translatable="yes">Colors</property>
                         <child>
                             <object class="AdwComboRow" id="style_variant">
                                 <property name="title">Force Dark or Light Color Scheme</property>
@@ -29,10 +29,10 @@
                 </child>
                 <child>
                     <object class="AdwPreferencesGroup">
-                        <property name="title" translatable="true">Language</property>
+                        <property name="title" translatable="yes">Language</property>
                         <child>
                             <object class="AdwSwitchRow" id="use_english">
-                                <property name="title" translatable="true">Change from System Language to English</property>
+                                <property name="title" translatable="yes">Change from System Language to English</property>
                             </object>
                         </child>
                     </object>
