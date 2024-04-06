@@ -47,13 +47,14 @@ Did you know Gaphor has excellent integration with :doc:`Sphinx <sphinx>` and :d
    plugins
 
 .. toctree::
-   :caption: Installation
+   :caption: Development
    :hidden:
 
    linux
    macos
    windows
    container
+   contribute
 
 .. toctree::
    :caption: Modeling languages
