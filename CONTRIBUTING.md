@@ -40,7 +40,7 @@ room](https://app.element.io/#/room/#gaphor_Lobby:gitter.im).
  version.
  * Be welcoming to newcomers and encourage diverse new contributors from all
  backgrounds. We expect all contributors to comply with the GNOME [Code of
- Conduct](https://wiki.gnome.org/Foundation/CodeOfConduct).
+ Conduct](https://conduct.gnome.org/).
 
 # Your First Contribution
 
