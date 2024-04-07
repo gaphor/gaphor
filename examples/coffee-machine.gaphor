@@ -9206,7 +9206,7 @@
 <ref refid="1d9d032a-f565-11ed-b488-0456e5e540ed"/>
 </itemFlow>
 <name>
-<val>Temp./Preassure</val>
+<val>Temp./Pressure</val>
 </name>
 </Property>
 <ItemFlow id="3032c06a-f565-11ed-b488-0456e5e540ed">
