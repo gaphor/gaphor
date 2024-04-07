@@ -140,7 +140,6 @@ cd gaphor
 Install Poetry
 ```PowerShell
 pipx install poetry
-poetry config virtualenvs.in-project true
 ```
 
 Add GTK to your environmental variables:

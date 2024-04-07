@@ -71,7 +71,6 @@ cd gaphor
 # activate latest python for this project
 pyenv local 3.x.x # 3.x.x is the version you installed earlier
 poetry env use 3.x # ensures poetry /consistently/ uses latest major release
-poetry config virtualenvs.in-project true
 poetry install
 poetry run gaphor
 ```
