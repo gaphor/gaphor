@@ -9,9 +9,9 @@ Older releases are available from [GitHub](https://github.com/gaphor/gaphor/rele
 
 ## Development Environment
 
-To setup a development environment with macOS:
+To set up a development environment with macOS:
 1. Install [Homebrew](https://brew.sh)
-1. Open a terminal and execute:
+2. Open a terminal and execute:
 ```bash
 brew install python3 gobject-introspection gtk4 gtksourceview5 libadwaita adwaita-icon-theme graphviz
 ```
@@ -51,7 +51,7 @@ Create a file `.vscode/launch.json` with the following content:
             "type": "python",
             "request": "launch",
             "module": "gaphor",
-            "justMyCode": false,
+            "justMyCode": false
         }
     ]
 }
@@ -64,7 +64,7 @@ In order to create an exe installation package for macOS, we utilize
 dependencies and bundle them in to a single folder.
 
 1. Follow the instructions for settings up a development environment above
-1. Open a terminal and execute the following from the repository directory:
+2. Open a terminal and execute the following from the repository directory:
 ```bash
 poetry run python po/build-babel.py
 poetry install --with packaging
