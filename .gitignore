@@ -51,6 +51,7 @@ _packaging/windows/file_version_info.txt
 _packaging/windows/output
 
 # MacOS
+.DS_Store
 package/gaphor.iconset/
 
 # Vagrant
