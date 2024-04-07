@@ -122,7 +122,7 @@ segments with the knee of the two segments where the handle was.
 
 ### Copy and Paste
 
-As stated before, Gaphor is a modeling environent. This means that every _item_ in a diagram
+As stated before, Gaphor is a modeling environment. This means that every _item_ in a diagram
 is backed by a _model element_ found in the model browser. This means that you can show the same
 _model element_ in different diagrams.
 
@@ -158,11 +158,11 @@ button.
 
 ### Reset Tool Automatically
 
-By default the pointer tool is selected after an element is placed from the toolbox. If this option is turned off, the same type of element will be placed by clicking in the diagram until another element is selected in the toolbox.
+By default, the pointer tool is selected after an element is placed from the toolbox. If this option is turned off, the same type of element will be placed by clicking in the diagram until another element is selected in the toolbox.
 
 ### Remove Unused Elements
 
-By default elements that are not part of any diagram in the model will be removed. If this option is turned off, elements remain in the model and may be found in the model browser.
+By default, elements that are not part of any diagram in the model will be removed. If this option is turned off, elements remain in the model and may be found in the model browser.
 
 ### Diagram Language
 

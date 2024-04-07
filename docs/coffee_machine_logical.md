@@ -19,12 +19,12 @@ swim lanes divide the diagram into different areas, each representing a
 different functional block or component.
 
 In this case, the diagram includes swimlanes for the HMI, Controller, Water
-Pump, Water Heater, Grouphead, and Portafilter. The HMI receives the button
+Pump, Water Heater, Group Head, and Portafilter. The HMI receives the button
 press from the barista and then sends a command to the Controller. The
-Controller then commands the Water Pump and Water Heater to start, and
+Controller then commands the Water Heater to start, and
 once the water has reached the correct temperature, the Controller commands
-the Pump and Heater to start. The water would then be pumped through the
-Grouphead and into the Portafilter, brewing the coffee. The diagram shows
+the Pump to start. The water would then be pumped through the
+Group Head and into the Portafilter, brewing the coffee. The diagram shows
 the flow of information and actions between the different logical blocks, and
 help to ensure that the behavior that each block provides is properly connected
 and integrated into the system.
@@ -36,17 +36,14 @@ and integrated into the system.
 From the Logical package, expand the Behavior package in the Model Browser and
 double-click on the diagram named Functional Boundary Behavior. Additional
 swimlanes can be added by clicking on the swimlanes and add additional
-partitions in the Property Editor.
+partitions in the Property Editor. The name of the partition before the colon can 
+also be changed in the Property Editor. The names of the Blocks can be changed in 
+the Structure package, as was explained in the [Domain Diagram section](coffee_machine_concept.md#domain-diagram). 
 
-In the Structure package, right-click on the Blocks with the B symbol and rename
-them from the context menu so that the names of the Logical Blocks in each
-swimlane are correct. The name of the partition before the colon can also be
-changed in the Property Editor.
-
-Additional Object Flows, pins, and actions can be created using the Toolbox.
-The Parameter Nodes which are attached to the Activity on the very left and right
-of the diagram are renamed and created by clicking on the Activity and modifying
-them in the Property Editor.
+Additional Object Flows, pins (pay attention to inputs vs outputs), and actions can be 
+created using the Toolbox. The Parameter Nodes which are attached to the Activity on the 
+very left and right of the diagram are created and renamed created by clicking on the 
+Activity and modifying them in the Property Editor.
 
 ## Logical State Machine
 
@@ -68,10 +65,10 @@ one cup mode or two cup mode.
 :alt: State machine diagram showing logical states including on and off
 ```
 
-Open the Logical States diagram and use the Toolbox to add the additional
-substates and transition. Guards for the transitions, shown surrounded by
-brackets, are added by selecting the transition and adding the guard in the
-Property Editor.
+Open the Logical States diagram and add a region to the On state via the Property Editor.
+Next use the Toolbox to add the additional substates and transition. Guards for the 
+transitions, shown surrounded by brackets, are added by selecting the transition and 
+adding the guard in the Property Editor.
 
 The logical state machine diagram for the coffee machine shows these states,
 and the different conditions that trigger the transitions. This helps the ants
@@ -90,7 +87,7 @@ The following logical blocks are part of the espresso machine:
 - Water heater
 - Portafilter
 - Controller
-- Grouphead
+- Group head
 - HMI
 
 Each block represents a key portion of the espresso machine, and the
@@ -129,10 +126,10 @@ parts.
   pressure, and other parameters to maintain consistency and deliver the desired
   results.
 
-- Grouphead: The grouphead is a part of the espresso machine where the
+- Group head: The group head is a part of the espresso machine where the
   portafilter attaches. It provides a secure connection between the portafilter
   and the machine, allowing the brewed espresso to flow out of the portafilter
-  and into the cup. The grouphead also helps to maintain proper temperature and
+  and into the cup. The group head also helps to maintain proper temperature and
   pressure during the brewing process.
 
 - HMI (Human-Machine Interface): The HMI is the user interface of the espresso
@@ -144,7 +141,7 @@ parts.
 
 We didn't make any technical choices at this time, for example we didn't
 specify which type of controller, the pump capacity, or the model of the
-grouphead. These details will be defined once we get to the Technology level.
+group head. These details will be defined once we get to the Technology level.
 
 The ants need more of your help to update the Logical Structure diagram so that
 it matches the one above.
@@ -217,7 +214,7 @@ requirement.
 
 Here we derive two requirements:
 
-- Controller commands heatup
+- Controller commands heat up
 - 900kPa of water pressure
 
 ```{diagram} Logical Requirements

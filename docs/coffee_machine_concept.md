@@ -94,7 +94,7 @@ additional blocks:
 - Water Supply
 - Customer
 
-Each block represents a key concept within the coffee shop domain, and the
+Each block in the Block Definition Diagram (bdd) represents a key concept within the coffee shop domain, and the
 containment relationship is used between the domain and the blocks to show
 that they are part of the domain.
 
@@ -111,7 +111,12 @@ water source for the coffee machine, and finally the Customer block represents
 the person who orders and receives the coffee.
 
 The ants need more of your help to rename the Feature Domain diagram and update it
-so that it matches the one above.
+so that it matches the one above. Make sure that "Profile: SysML" is selected in the 
+top-left corner of the Gaphor user interface. The names of the blocks can be changed
+directly in the diagram, but the name of the bdd can only be changed in the Model Browser.
+In the Structure package, right-click on the Blocks with the B symbol and rename
+them from the context menu. Also remember that you can use [auto-layout](first_model.md#adding-relations) 
+to align and distribute all elements.
 
 The domain diagram provides a high-level view of the coffee shop domain and the
 key concepts and relationships involved in it. It can be a useful tool for
@@ -136,7 +141,9 @@ grinder, and the water source.
 ```
 
 The ants need more of your help to rename the Feature Context diagram and update it
-so that it matches the one above.
+so that it matches the one above. To create the specific arrows shown, use an Association 
+entity, then toggle Enable Item Flow to on for that association and fill in the Item 
+Property field. 
 
 Overall, the context diagram for a coffee machine provides a high-level view of
 the system and its interactions with external entities. It is a useful tool for
@@ -161,17 +168,16 @@ starting point for the design process.
 The following are some concept requirements for a coffee machine that addresses
 a water tank, heat-up time, and HMI button:
 
--  Water Tank: The coffee machine should have a water tank of sufficient size to
+-  Water Tank: The coffee machine shall have a water tank of sufficient size to
    make multiple cups of coffee before needing a refill. The water tank should be
    easy to access and fill.
 
--  Heat-up Time: The coffee machine should have a heat-up time of no more than 10
+-  Heat-up Time: The coffee machine shall have a heat-up time of no more than 10
    minutes from the time the user turns on the machine until it's ready to brew
    coffee.
 
--  HMI Button: The coffee machine should have an HMI with a 1 cup brew button to
-   make it easy for the user to select the amount of coffee they want to brew. The
-   HMI should be intuitive and easy to use.
+-  1 Cup Button: The coffee machine shall have an HMI with a 1 cup brew button to
+   make it easy for the user to select the amount of coffee they want to brew.
 
 ```{diagram} Concept Requirements
 :model: coffee-machine
