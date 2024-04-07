@@ -158,6 +158,11 @@ Install Gaphor's dependencies
 poetry install
 ```
 
+Install the git hook scripts
+```Powershell
+poetry run pre-commit install
+```
+
 Reinstall PyGObject and pycairo using gvsbuild wheels
 ```PowerShell
 poetry run pip install --force-reinstall (Resolve-Path C:\gtk-build\build\x64\release\pygobject\dist\PyGObject*.whl)

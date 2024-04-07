@@ -63,8 +63,8 @@ Install [Poetry](https://python-poetry.org) using [pipx](https://pypa.github.io/
 pipx install poetry
 ```
 
-[Clone the
-repository](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository).
+Next, [clone the
+repository](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository), after which you need to execute the following consecutive commands:
 
 ```bash
 cd gaphor
@@ -72,6 +72,10 @@ cd gaphor
 pyenv local 3.x.x # 3.x.x is the version you installed earlier
 poetry env use 3.x # ensures poetry /consistently/ uses latest major release
 poetry install
+poetry run pre-commit install
+```
+Now, you can run gaphor as
+```bash
 poetry run gaphor
 ```
 

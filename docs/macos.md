@@ -20,11 +20,15 @@ Install [Poetry](https://python-poetry.org) using [pipx](https://pypa.github.io/
 pipx install poetry
 ```
 
-[Clone the
-repository](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository).
+Next, [clone the
+repository](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository), after which you can execute the following consecutive commands to install the poetry environment:
 ```bash
 cd gaphor
 poetry install
+poetry run pre-commit install
+```
+Now, you can run gaphor as
+```bash
 poetry run gaphor
 ```
 
