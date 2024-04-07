@@ -82,7 +82,7 @@ Alternatively, you can also setup a local development environment:
 4. Do the changes in your fork.
 5. If you like the change and think the project could use it:
     * Be sure you have the pre-commit hook installed above, it will ensure that
-    [Black](https://github.com/ambv/black) is automatically run on any changes for
+    [Ruff](https://github.com/astral-sh/ruff) is automatically run on any changes for
     consistent code formatting.
     * [Sign](https://help.github.com/articles/signing-commits/) your commits.
     * Note the Gaphor Code of Conduct.

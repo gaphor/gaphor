@@ -63,6 +63,7 @@ hypothesis = "^6.54.5"
 ipython = "^8.5.0"
 sphinx = ">=6,<8"
 babelgladeextractor = "^0.7"
+ruff = "^0.3.5"
 
 [tool.poetry.group.lint.dependencies]
 pre-commit = ">=2.20,<4.0"
@@ -240,6 +241,9 @@ module = "*.tests.*"
 ignore_errors = true
 
 [tool.ruff]
+line-length = 88
+
+[tool.ruff.lint]
 exclude = [
     ".venv",
     "dist",
@@ -250,7 +254,6 @@ exclude = [
     "gaphor/UML/uml.py",
 ]
 ignore = ["E501"]
-line-length = 88
 select = [
     "B",
     "B9",
@@ -263,7 +266,7 @@ select = [
 ]
 extend-select = ["I"]
 
-[tool.ruff.mccabe]
+[tool.ruff.lint.mccabe]
 max-complexity = 18
 
 [build-system]
