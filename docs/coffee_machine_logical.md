@@ -36,13 +36,13 @@ and integrated into the system.
 From the Logical package, expand the Behavior package in the Model Browser and
 double-click on the diagram named Functional Boundary Behavior. Additional
 swimlanes can be added by clicking on the swimlanes and add additional
-partitions in the Property Editor. The name of the partition before the colon can 
-also be changed in the Property Editor. The names of the Blocks can be changed in 
-the Structure package, as was explained in the [Domain Diagram section](coffee_machine_concept.md#domain-diagram). 
+partitions in the Property Editor. The name of the partition before the colon can
+also be changed in the Property Editor. The names of the Blocks can be changed in
+the Structure package, as was explained in the [Domain Diagram section](coffee_machine_concept.md#domain-diagram).
 
-Additional Object Flows, pins (pay attention to inputs vs outputs), and actions can be 
-created using the Toolbox. The Parameter Nodes which are attached to the Activity on the 
-very left and right of the diagram are created and renamed created by clicking on the 
+Additional Object Flows, pins (pay attention to inputs vs outputs), and actions can be
+created using the Toolbox. The Parameter Nodes which are attached to the Activity on the
+very left and right of the diagram are created and renamed created by clicking on the
 Activity and modifying them in the Property Editor.
 
 ## Logical State Machine
@@ -66,8 +66,8 @@ one cup mode or two cup mode.
 ```
 
 Open the Logical States diagram and add a region to the On state via the Property Editor.
-Next use the Toolbox to add the additional substates and transition. Guards for the 
-transitions, shown surrounded by brackets, are added by selecting the transition and 
+Next use the Toolbox to add the additional substates and transition. Guards for the
+transitions, shown surrounded by brackets, are added by selecting the transition and
 adding the guard in the Property Editor.
 
 The logical state machine diagram for the coffee machine shows these states,

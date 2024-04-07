@@ -43,10 +43,10 @@ machine](images/coffee-machine-double-shot.jpg)
 
 The first thing the ants did was to open Gaphor to the Greeter window and start
 a new model with the _SysML_ template. You can now decide to either:
-- recreate their work as part of this tutorial. For this, open the SysML Example 
-model shown at the bottom of the Greeter window  
-- inspect the result of their work by opening the `coffee-machine` 
-model located in the `examples` folder.   
+- recreate their work as part of this tutorial. For this, open the SysML Example
+model shown at the bottom of the Greeter window
+- inspect the result of their work by opening the `coffee-machine`
+model located in the `examples` folder.
 
 ## Abstraction Levels
 Abstraction is a way of simplifying complex systems by focusing on only the most

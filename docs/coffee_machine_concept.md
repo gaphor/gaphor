@@ -111,11 +111,11 @@ water source for the coffee machine, and finally the Customer block represents
 the person who orders and receives the coffee.
 
 The ants need more of your help to rename the Feature Domain diagram and update it
-so that it matches the one above. Make sure that "Profile: SysML" is selected in the 
+so that it matches the one above. Make sure that "Profile: SysML" is selected in the
 top-left corner of the Gaphor user interface. The names of the blocks can be changed
 directly in the diagram, but the name of the bdd can only be changed in the Model Browser.
 In the Structure package, right-click on the Blocks with the B symbol and rename
-them from the context menu. Also remember that you can use [auto-layout](first_model.md#adding-relations) 
+them from the context menu. Also remember that you can use [auto-layout](first_model.md#adding-relations)
 to align and distribute all elements.
 
 The domain diagram provides a high-level view of the coffee shop domain and the
@@ -141,9 +141,9 @@ grinder, and the water source.
 ```
 
 The ants need more of your help to rename the Feature Context diagram and update it
-so that it matches the one above. To create the specific arrows shown, use an Association 
-entity, then toggle Enable Item Flow to on for that association and fill in the Item 
-Property field. 
+so that it matches the one above. To create the specific arrows shown, use an Association
+entity, then toggle Enable Item Flow to on for that association and fill in the Item
+Property field.
 
 Overall, the context diagram for a coffee machine provides a high-level view of
 the system and its interactions with external entities. It is a useful tool for
