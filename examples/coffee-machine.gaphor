@@ -692,9 +692,6 @@
 </presentation>
 </Diagram>
 <Requirement id="09b17aca-70f6-11ec-aabc-f47b099bf663">
-<externalId>
-<val>1</val>
-</externalId>
 <name>
 <val>Water Tank</val>
 </name>
@@ -1580,9 +1577,6 @@
 </presentation>
 </Diagram>
 <Requirement id="75afe800-716f-11ec-999a-f47b099bf663">
-<externalId>
-<val>1</val>
-</externalId>
 <name>
 <val>Controller Commands Heatup</val>
 </name>
@@ -2104,9 +2098,6 @@
 </subject>
 </ActionItem>
 <Requirement id="8bf1fd8a-7172-11ec-999a-f47b099bf663">
-<externalId>
-<val>1</val>
-</externalId>
 <name>
 <val>Example Technology Requirement</val>
 </name>
