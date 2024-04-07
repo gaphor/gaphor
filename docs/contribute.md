@@ -27,7 +27,7 @@ the chance your work will be accepted.
 
 You'll need to
 [fork](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo) Gaphor
-and set up a [development environment](linux) ([macOS](macos), [Windows](windows)).
+and set up a [development environment](linux.md) ([macOS](macos.md), [Windows](windows.md)).
 
 ```{note}
 In our pipeline we do a couple of quality checks. We strongly recommend that you [install
