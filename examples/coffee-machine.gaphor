@@ -4514,7 +4514,7 @@
 </reflist>
 </presentation>
 <text>
-<val>The Espresso Machine should heatup to operating temperature within 10 minutes of turning it on.</val>
+<val>The Espresso Machine shall heat up to operating temperature within 10 minutes of turning it on.</val>
 </text>
 </Requirement>
 <RequirementItem id="a77a32f5-bacf-11ed-9ed2-f47b099bf663">
@@ -4551,7 +4551,7 @@
 </reflist>
 </presentation>
 <text>
-<val>Pressing the one cup button should result in a single shot of espresso.</val>
+<val>Pressing the one cup button shall result in a single shot of espresso.</val>
 </text>
 </Requirement>
 <RequirementItem id="96b32747-bad0-11ed-9fb6-f47b099bf663">
@@ -6683,7 +6683,7 @@
 </reflist>
 </presentation>
 <text>
-<val>During shot extraction, the water should be pressurized to 900 kPa at the grouphead.</val>
+<val>During shot extraction, the water shall be pressurized to 900 kPa at the grouphead.</val>
 </text>
 </Requirement>
 <RequirementItem id="c39b6682-be17-11ed-8f83-f47b099bf663">
