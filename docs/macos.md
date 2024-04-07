@@ -67,6 +67,7 @@ dependencies and bundle them in to a single folder.
 1. Follow the instructions for settings up a development environment above
 1. Open a terminal and execute the following from the repository directory:
 ```bash
+poetry run python po/build-babel.py
 poetry install --with packaging
 poetry run poe package
 ```
