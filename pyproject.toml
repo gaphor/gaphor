@@ -197,9 +197,6 @@ gettext-mo-release = { "script" = "po.build-babel:compile_mo_release" }
 translations = ["gettext-pot", "gettext-po", "gettext-mo-all"]
 icons = { "shell" = "make -C gaphor/ui/icons" }
 
-[tool.poe.executor]
-type = "virtualenv"
-
 [tool.pytest.ini_options]
 testpaths = [
     "gaphor",
