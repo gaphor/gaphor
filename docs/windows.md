@@ -32,7 +32,7 @@ to run without signing, but still requires signing for remote scripts.
 
 ### Git
 
-To setup a development environment in Windows first install
+To set up a development environment in Windows first install
 [Git](https://gitforwindows.org) by executing as an administrator:
 
 ```PowerShell
@@ -58,7 +58,7 @@ use a standard Python development environment in Windows.
 
 First we will install the gvsbuild dependencies:
 1. Visual C++ build tools workload for Visual Studio 2022 Build Tools
-1. Python
+2. Python
 
 #### Install Visual Studio 2022
 
@@ -140,7 +140,6 @@ cd gaphor
 Install Poetry
 ```PowerShell
 pipx install poetry
-poetry config virtualenvs.in-project true
 ```
 
 Add GTK to your environmental variables:
@@ -157,6 +156,11 @@ PowerShell sessions.
 Install Gaphor's dependencies
 ```PowerShell
 poetry install
+```
+
+Install the git hook scripts
+```Powershell
+poetry run pre-commit install
 ```
 
 Reinstall PyGObject and pycairo using gvsbuild wheels

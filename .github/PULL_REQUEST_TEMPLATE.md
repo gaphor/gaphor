@@ -5,7 +5,7 @@
 Please check if your PR fulfills the following requirements:
 
 - [ ] I have read, and I am following the [Contributor guide](https://github.com/gaphor/gaphor/blob/main/CONTRIBUTING.md)
-- [ ] I have read, and I understand the GNOME [Code of Conduct](https://wiki.gnome.org/Foundation/CodeOfConduct)
+- [ ] I have read, and I understand the GNOME [Code of Conduct](https://conduct.gnome.org/)
 
 ### PR Type
 What kind of change does this PR introduce?

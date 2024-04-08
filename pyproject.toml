@@ -197,9 +197,6 @@ gettext-mo-release = { "script" = "po.build-babel:compile_mo_release" }
 translations = ["gettext-pot", "gettext-po", "gettext-mo-all"]
 icons = { "shell" = "make -C gaphor/ui/icons" }
 
-[tool.poe.executor]
-type = "virtualenv"
-
 [tool.pytest.ini_options]
 testpaths = [
     "gaphor",
@@ -240,6 +237,9 @@ module = "*.tests.*"
 ignore_errors = true
 
 [tool.ruff]
+line-length = 88
+
+[tool.ruff.lint]
 exclude = [
     ".venv",
     "dist",
@@ -250,7 +250,6 @@ exclude = [
     "gaphor/UML/uml.py",
 ]
 ignore = ["E501"]
-line-length = 88
 select = [
     "B",
     "B9",
@@ -263,7 +262,7 @@ select = [
 ]
 extend-select = ["I"]
 
-[tool.ruff.mccabe]
+[tool.ruff.lint.mccabe]
 max-complexity = 18
 
 [build-system]

@@ -42,7 +42,11 @@ to create the perfect kittie espresso machine.
 machine](images/coffee-machine-double-shot.jpg)
 
 The first thing the ants did was to open Gaphor to the Greeter window and start
-a new model with the _SysML_ template.
+a new model with the _SysML_ template. You can now decide to either:
+- recreate their work as part of this tutorial. For this, open the SysML Example
+model shown at the bottom of the Greeter window
+- inspect the result of their work by opening the `coffee-machine`
+model located in the `examples` folder.
 
 ## Abstraction Levels
 Abstraction is a way of simplifying complex systems by focusing on only the most
@@ -106,12 +110,12 @@ on what they represent:
 - Behavior: The functionality of a system
 - Structure: How a system is formed using parts and connections
 - Requirements: Written statements that constrain the system
-- Parametrics: Enforces mathematical rules across values in the system
+- Parametric: Enforces mathematical rules across values in the system
 
 If you want to learn more about these four pillars, there is a 30-minute video
 by Rick Steiner called [The Four Pillars of SysML](https://youtu.be/998UznK9ogY).
 
-Since Parametrics Diagrams are one of the least used diagram types in SysML, we are
+Since Parametric Diagrams are one of the least used diagram types in SysML, we are
 going to only focus on the first three. The power of SysML comes in being able
 to make relationships between these three pillars. For example, by allocating
 behavior like an activity to an element of the structure like a block.

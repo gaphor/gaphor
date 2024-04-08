@@ -63,16 +63,19 @@ Install [Poetry](https://python-poetry.org) using [pipx](https://pypa.github.io/
 pipx install poetry
 ```
 
-[Clone the
-repository](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository).
+Next, [clone the
+repository](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository), after which you need to execute the following consecutive commands:
 
 ```bash
 cd gaphor
 # activate latest python for this project
 pyenv local 3.x.x # 3.x.x is the version you installed earlier
 poetry env use 3.x # ensures poetry /consistently/ uses latest major release
-poetry config virtualenvs.in-project true
 poetry install
+poetry run pre-commit install
+```
+Now, you can run gaphor as
+```bash
 poetry run gaphor
 ```
 
@@ -96,7 +99,7 @@ Create a file `.vscode/launch.json` with the following content:
             "module": "gaphor",
             "justMyCode": false,
             "env": {
-                "GDK_BACKEND": "wayland",
+                "GDK_BACKEND": "wayland"
             }
         }
     ]
@@ -109,7 +112,7 @@ Create a file `.vscode/launch.json` with the following content:
 
 The main method that Gaphor is packaged for Linux is with a Flatpak package.
 [Flatpak](https://flatpak.org) is a software utility for software deployment
-and package management for Linux. It offer a sandbox environment in which
+and package management for Linux. It offers a sandbox environment in which
 users can run application software in isolation from the rest of the system.
 
 We distribute the official Flatpak using [Flathub](https://flathub.org), and
@@ -118,25 +121,25 @@ repository](https://github.com/flathub/org.gaphor.Gaphor).
 
 1. [Install Flatpak](https://flatpak.org/setup)
 
-1. Install flatpak-builder
+2. Install flatpak-builder
 
        sudo apt-get install flatpak-builder
 
-1. Install the GNOME SDK
+3. Install the GNOME SDK
 
        flatpak install flathub org.gnome.Sdk 43
 
-1. Clone the Flathub repository and install the necessary SDK:
+4. Clone the Flathub repository and install the necessary SDK:
 
        git clone https://github.com/flathub/org.gaphor.Gaphor.git
        cd org.gaphor.Gaphor
        make setup
 
-1. Build Gaphor Flatpak
+5. Build Gaphor Flatpak
 
        make
 
-1. Install the Flatpak
+6. Install the Flatpak
 
        make install
 
