@@ -1420,6 +1420,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "teunhoevenaars",
+      "name": "Teun Hoevenaars",
+      "avatar_url": "https://avatars.githubusercontent.com/u/41649398?v=4",
+      "profile": "https://github.com/teunhoevenaars",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,
