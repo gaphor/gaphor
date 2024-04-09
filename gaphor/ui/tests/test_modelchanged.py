@@ -20,13 +20,13 @@ def test_create_ui(event_manager):
 
 def test_monitor_file_changed(event_manager, tmp_path):
     new_file = tmp_path / "new_file"
-    new_file.write_text("a")
+    new_file.write_text("a", encoding="utf-8")
 
     model_changed = ModelChanged(event_manager)
     widget = model_changed.open()
     event_manager.handle(ModelChangedOnDisk(model_changed, new_file))
 
-    new_file.write_text("b")
+    new_file.write_text("b", encoding="utf-8")
     iteration()
 
     assert widget.get_revealed()
