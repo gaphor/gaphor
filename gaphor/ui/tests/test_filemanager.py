@@ -89,7 +89,7 @@ def test_notify_changes(
     notified = False
     event_manager.subscribe(on_changed_on_disk)
 
-    out_file.write_text("a")
+    out_file.write_text("a", encoding="utf-8")
     iteration(lambda: notified)
 
     assert notified
