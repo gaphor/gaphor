@@ -14,6 +14,7 @@ from gaphor.SysML.blocks.block import BlockItem
 from gaphor.SysML.blocks.interfaceblock import InterfaceBlockItem
 from gaphor.SysML.blocks.property import PropertyItem
 from gaphor.SysML.blocks.proxyport import ProxyPortItem
+from gaphor.SysML.requirements import RequirementItem
 from gaphor.UML.classes.classespropertypages import (
     ATTRIBUTES_PAGE_CLASSIFIERS,
     OPERATIONS_PAGE_CLASSIFIERS,
@@ -28,15 +29,15 @@ from gaphor.UML.propertypages import (
 new_builder = new_resource_builder("gaphor.SysML")
 
 
-@PropertyPages.register(sysml.Requirement)
+@PropertyPages.register(RequirementItem)
 class RequirementPropertyPage(PropertyPageBase):
     order = 15
 
-    def __init__(self, subject: sysml.Requirement):
+    def __init__(self, item):
         super().__init__()
-        assert subject
-        self.subject = subject
-        self.watcher = subject.watcher()
+        self.item = item
+        self.subject = item.subject
+        self.watcher = item.subject.watcher()
 
     def construct(self):
         builder = new_builder(
@@ -59,7 +60,7 @@ class RequirementPropertyPage(PropertyPageBase):
             buffer.set_text(subject.text)
 
         show_requirement_text = builder.get_object("show-requirement-text")
-        show_requirement_text.set_active(self.subject.showText)
+        show_requirement_text.set_active(self.item.show_text)
 
         @handler_blocking(buffer, "changed", self._on_text_changed)
         def text_handler(event):
@@ -78,7 +79,7 @@ class RequirementPropertyPage(PropertyPageBase):
 
     @transactional
     def _on_show_text_change(self, button, gparam):
-        self.subject.showText = button.get_active()
+        self.item.show_text = button.get_active()
 
     @transactional
     def _on_text_changed(self, buffer):

@@ -28,18 +28,20 @@ class RequirementItem(Classified, ElementPresentation[Requirement]):
     def __init__(self, diagram, id=None):
         super().__init__(diagram, id)
 
-        self.watch("show_stereotypes", self.update_shapes).watch(
-            "show_attributes", self.update_shapes
-        ).watch("show_operations", self.update_shapes).watch(
-            "subject[NamedElement].name"
-        ).watch("subject[NamedElement].namespace.name").watch(
-            "subject[Classifier].isAbstract", self.update_shapes
-        ).watch("subject[AbstractRequirement].externalId", self.update_shapes).watch(
-            "subject[AbstractRequirement].text", self.update_shapes
-        ).watch("subject[AbstractRequirement].showText", self.update_shapes)
+        self.watch("show_text", self.update_shapes).watch(
+            "show_stereotypes", self.update_shapes
+        ).watch("show_attributes", self.update_shapes).watch(
+            "show_operations", self.update_shapes
+        ).watch("subject[NamedElement].name").watch(
+            "subject[NamedElement].namespace.name"
+        ).watch("subject[Classifier].isAbstract", self.update_shapes).watch(
+            "subject[AbstractRequirement].externalId", self.update_shapes
+        ).watch("subject[AbstractRequirement].text", self.update_shapes)
         attribute_watches(self, "Requirement")
         operation_watches(self, "Requirement")
         stereotype_watches(self)
+
+    show_text: attribute[int] = attribute("show_text", int, default=True)
 
     show_stereotypes: attribute[int] = attribute("show_stereotypes", int)
 
@@ -71,7 +73,7 @@ class RequirementItem(Classified, ElementPresentation[Requirement]):
 
     def id_and_text_compartment(self):
         subject = self.subject
-        if subject and (subject.externalId or (subject.text and subject.showText)):
+        if subject and (subject.externalId or (subject.text and self.show_text)):
             return CssNode(
                 "compartment",
                 self.subject,
@@ -93,7 +95,7 @@ class RequirementItem(Classified, ElementPresentation[Requirement]):
                                 "text", None, Text(text=lambda: f"Text: {subject.text}")
                             )
                         ]
-                        if subject and subject.text and subject.showText
+                        if subject and subject.text and self.show_text
                         else []
                     ),
                     draw=draw_top_separator,
