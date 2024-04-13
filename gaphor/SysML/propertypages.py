@@ -36,10 +36,14 @@ class RequirementPropertyPage(PropertyPageBase):
     def __init__(self, item):
         super().__init__()
         self.item = item
-        self.subject = item.subject
-        self.watcher = item.subject.watcher()
 
     def construct(self):
+        if not self.item.subject:
+            return
+
+        subject = self.item.subject
+        watcher = subject.watcher()
+
         builder = new_builder(
             "requirement-editor",
             "requirement-text-buffer",
@@ -48,10 +52,8 @@ class RequirementPropertyPage(PropertyPageBase):
                 "requirement-id-changed": (self._on_id_changed,),
             },
         )
-        subject = self.subject
-
         entry = builder.get_object("requirement-id")
-        entry.set_text(subject.externalId or "")
+        entry.set_text(self.item.subject.externalId or "")
 
         text_view = builder.get_object("requirement-text")
 
@@ -67,15 +69,15 @@ class RequirementPropertyPage(PropertyPageBase):
             if not text_view.props.has_focus:
                 buffer.set_text(event.new_value)
 
-        self.watcher.watch("text", text_handler)
+        watcher.watch("text", text_handler)
 
         return unsubscribe_all_on_destroy(
-            builder.get_object("requirement-editor"), self.watcher
+            builder.get_object("requirement-editor"), watcher
         )
 
     @transactional
     def _on_id_changed(self, entry):
-        self.subject.externalId = entry.get_text()
+        self.item.subject.externalId = entry.get_text()
 
     @transactional
     def _on_show_text_change(self, button, gparam):
@@ -83,7 +85,7 @@ class RequirementPropertyPage(PropertyPageBase):
 
     @transactional
     def _on_text_changed(self, buffer):
-        self.subject.text = buffer.get_text(
+        self.item.subject.text = buffer.get_text(
             buffer.get_start_iter(), buffer.get_end_iter(), False
         )
 
