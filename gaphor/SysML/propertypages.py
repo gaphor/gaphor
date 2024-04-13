@@ -78,7 +78,7 @@ class RequirementPropertyPage(PropertyPageBase):
         self.subject.externalId = entry.get_text()
 
     @transactional
-    def _on_show_text_change(self, button, gparam):
+    def _on_show_text_change(self, button):
         self.item.show_text = button.get_active()
 
     @transactional
