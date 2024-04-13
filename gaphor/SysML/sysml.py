@@ -32,6 +32,7 @@ class AbstractRequirement(NamedElement):
     master: derived[AbstractRequirement]
     refinedBy: derived[NamedElement]
     satisfiedBy: derived[NamedElement]
+    showText: _attribute[int] = _attribute("showText", int, 1)
     text: _attribute[str] = _attribute("text", str)
     tracedTo: derived[NamedElement]
     verifiedBy: derived[NamedElement]

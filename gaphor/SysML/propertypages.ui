@@ -244,6 +244,22 @@
         </child>
       </object>
     </child>
+    <child>
+      <object class="GtkBox">
+        <child>
+          <object class="GtkLabel">
+            <property name="label" translatable="yes">Show text</property>
+            <property name="halign">start</property>
+            <property name="hexpand">yes</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkSwitch" id="show-requirement-text">
+            <signal name="notify::active" handler="show-requirement-text-changed" swapped="no"/>
+          </object>
+        </child>
+      </object>
+    </child>
     <style>
       <class name="propertypage"/>
     </style>

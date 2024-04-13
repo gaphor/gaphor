@@ -43,6 +43,7 @@ class RequirementPropertyPage(PropertyPageBase):
             "requirement-editor",
             "requirement-text-buffer",
             signals={
+                "show-requirement-text-changed": (self._on_show_text_change,),
                 "requirement-id-changed": (self._on_id_changed,),
             },
         )
@@ -56,6 +57,9 @@ class RequirementPropertyPage(PropertyPageBase):
         buffer = builder.get_object("requirement-text-buffer")
         if subject.text:
             buffer.set_text(subject.text)
+
+        show_requirement_text = builder.get_object("show-requirement-text")
+        show_requirement_text.set_active(self.subject.showText)
 
         @handler_blocking(buffer, "changed", self._on_text_changed)
         def text_handler(event):
@@ -71,6 +75,10 @@ class RequirementPropertyPage(PropertyPageBase):
     @transactional
     def _on_id_changed(self, entry):
         self.subject.externalId = entry.get_text()
+
+    @transactional
+    def _on_show_text_change(self, button, gparam):
+        self.subject.showText = button.get_active()
 
     @transactional
     def _on_text_changed(self, buffer):

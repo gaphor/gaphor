@@ -35,7 +35,7 @@ class RequirementItem(Classified, ElementPresentation[Requirement]):
             "subject[Classifier].isAbstract", self.update_shapes
         ).watch("subject[AbstractRequirement].externalId", self.update_shapes).watch(
             "subject[AbstractRequirement].text", self.update_shapes
-        )
+        ).watch("subject[AbstractRequirement].showText", self.update_shapes)
         attribute_watches(self, "Requirement")
         operation_watches(self, "Requirement")
         stereotype_watches(self)
@@ -68,7 +68,7 @@ class RequirementItem(Classified, ElementPresentation[Requirement]):
 
     def id_and_text_compartment(self):
         subject = self.subject
-        if subject and (subject.externalId or subject.text):
+        if subject and (subject.externalId or (subject.text and subject.showText)):
             return CssNode(
                 "compartment",
                 self.subject,
@@ -90,7 +90,7 @@ class RequirementItem(Classified, ElementPresentation[Requirement]):
                                 "text", None, Text(text=lambda: f"Text: {subject.text}")
                             )
                         ]
-                        if subject and subject.text
+                        if subject and subject.text and subject.showText
                         else []
                     ),
                     draw=draw_top_separator,
