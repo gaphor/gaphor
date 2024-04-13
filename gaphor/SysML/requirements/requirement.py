@@ -1,5 +1,6 @@
 from gaphor.core.modeling.properties import attribute
 from gaphor.diagram.presentation import (
+    RESET_HEIGHT,
     Classified,
     ElementPresentation,
 )
@@ -47,6 +48,8 @@ class RequirementItem(Classified, ElementPresentation[Requirement]):
     show_operations: attribute[int] = attribute("show_operations", int, default=False)
 
     def update_shapes(self, event=None):
+        # reset height so requirement block is reduced to minimum required height
+        self.height = RESET_HEIGHT
         self.shape = Box(
             name_compartment(self, lambda: [self.diagram.gettext("requirement")]),
             *(
