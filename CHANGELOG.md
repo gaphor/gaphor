@@ -1,3 +1,32 @@
+2.25.0
+------
+-  Move main window menus and update to more modern Adwaita layout
+-  Element details are now in Property Pages
+-  Drop a ConnectableElement on a Lifeline
+-  Element selected in Model Browser shows in Property Editor
+-  Simplify property pages by removing expanders
+-  Right-click to find diagram in model browser
+-  Create separate section for examples and templates in greeter
+-  Display diagram type in model browser
+-  Add simple notifier for file changes
+-  Do not show "block" stereotype if other stereotypes are applied
+-  Associate Action with right Partition
+-  Exception is now thrown when creating wrong diagram type in SysML
+-  Do not perform diagram updates outside of a transaction
+-  Use TypedElement.type for Lifeline and other types
+-  Show right popover menu after profile change
+-  Fix greeter row style and label for recent files
+-  Prevent removing relationships with Remove Unused Elements disabled
+-  Do not quit if there are windows open after sessions are closed
+-  Linting: limit private member access
+-  Replace Pygit2 by Dulwich
+-  Make self-test a command, instead of an option
+-  Refactor the main window to a .ui file
+-  Refactor align service and cleanup unused arguments
+-  Update Code of Conduct link to https://conduct.gnome.org/
+-  Add virus scan with VirusTotal to CI
+-  Many translation updates
+
 2.24.0
 ------
 - Fine grained CSS styling for model elements
