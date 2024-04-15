@@ -18,7 +18,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  python_version: '3.11'
+  python_version: '3.12'
   mainline_build: ${{ github.ref == 'refs/heads/main' || github.event.label.name == 'translation' || github.event_name == 'release' }}
   PYTHONWARNDEFAULTENCODING: 'true'
 
@@ -50,9 +50,9 @@ jobs:
       - name: Lint with Pre-commit
         uses: pre-commit/action@2c7b3805fd2a0fd8c1884dcaebf91fc102a13ecd # v3.0.1
       - name: Check REUSE compliance
-        run: pip install reuse && python -m reuse lint
+        run: pip install --constraint=.github/constraints.txt reuse && python -m reuse lint
       - name: Check translations
-        run: pip install babel && python po/check-babel.py
+        run: pip install --constraint=.github/constraints.txt babel && python po/check-babel.py
       - name: Check Poetry lock file integrity
         run: |
           python${{ env.python_version }} -m pip install --constraint=.github/constraints.txt poetry
@@ -240,9 +240,9 @@ jobs:
     runs-on: windows-latest
     timeout-minutes: 60
     env:
-      gvsbuild_version: 2024.4.0
+      gvsbuild_version: 2024.4.1
       # Bump this number if you want to force a rebuild of gvsbuild with the same version
-      gvsbuild_update: 0
+      gvsbuild_update: 1
     outputs:
       cachekey: ${{ steps.output.outputs.cachekey }}
     steps:
