@@ -1429,6 +1429,15 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "bragefuglseth",
+      "name": "Brage Fuglseth",
+      "avatar_url": "https://avatars.githubusercontent.com/u/91388039?v=4",
+      "profile": "https://bragefuglseth.dev",
+      "contributions": [
+        "design"
+      ]
     }
   ],
   "contributorsPerLine": 7,
