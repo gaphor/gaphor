@@ -45,6 +45,7 @@ Unless required by applicable law or agreed to in writing, software distributed 
     <property name="translator-credits">3fla1416 (fr)
       Albano Battistella (it)
       Antonin Delpeuch (fr)
+      Antonio Mejia (es)
       Arjan Molenaar (nl)
       Bill ZHANG (zh_Hans)
       Daniel Nylander (sv)
@@ -75,6 +76,7 @@ Unless required by applicable law or agreed to in writing, software distributed 
       Óscar Fernández Díaz (es)
       Евгений Лежнин (ru)</property>
     <property name="designers">Arjan Molenaar
+      Brage Fuglseth
       Dan Yeaw
       Tobias Bernard</property>
     <property name="documenters">Alexis Howells
@@ -83,6 +85,7 @@ Unless required by applicable law or agreed to in writing, software distributed 
       Dan Yeaw
       Jens Pfeifle
       Mike Kidner
+      Teun Hoevenaars
       Thomas Firchau
       Zsolt Sandor
       Yauhen Kirylau</property>
