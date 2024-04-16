@@ -244,6 +244,13 @@
         </child>
       </object>
     </child>
+    <style>
+      <class name="propertypage"/>
+    </style>
+  </object>
+
+  <object class="GtkBox" id="requirement-item-editor">
+    <property name="orientation">vertical</property>
     <child>
       <object class="GtkBox">
         <child>

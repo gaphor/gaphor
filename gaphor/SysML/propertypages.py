@@ -29,31 +29,28 @@ from gaphor.UML.propertypages import (
 new_builder = new_resource_builder("gaphor.SysML")
 
 
-@PropertyPages.register(RequirementItem)
+@PropertyPages.register(sysml.Requirement)
 class RequirementPropertyPage(PropertyPageBase):
     order = 15
 
-    def __init__(self, item):
+    def __init__(self, subject: sysml.Requirement):
         super().__init__()
-        self.item = item
+        assert subject
+        self.subject = subject
+        self.watcher = subject.watcher()
 
     def construct(self):
-        if not self.item.subject:
-            return
-
-        subject = self.item.subject
-        watcher = subject.watcher()
-
         builder = new_builder(
             "requirement-editor",
             "requirement-text-buffer",
             signals={
-                "show-requirement-text-changed": (self._on_show_text_change,),
                 "requirement-id-changed": (self._on_id_changed,),
             },
         )
+        subject = self.subject
+
         entry = builder.get_object("requirement-id")
-        entry.set_text(self.item.subject.externalId or "")
+        entry.set_text(subject.externalId or "")
 
         text_view = builder.get_object("requirement-text")
 
@@ -61,33 +58,55 @@ class RequirementPropertyPage(PropertyPageBase):
         if subject.text:
             buffer.set_text(subject.text)
 
-        show_requirement_text = builder.get_object("show-requirement-text")
-        show_requirement_text.set_active(self.item.show_text)
-
         @handler_blocking(buffer, "changed", self._on_text_changed)
         def text_handler(event):
             if not text_view.props.has_focus:
                 buffer.set_text(event.new_value)
 
-        watcher.watch("text", text_handler)
+        self.watcher.watch("text", text_handler)
 
         return unsubscribe_all_on_destroy(
-            builder.get_object("requirement-editor"), watcher
+            builder.get_object("requirement-editor"), self.watcher
         )
 
     @transactional
     def _on_id_changed(self, entry):
-        self.item.subject.externalId = entry.get_text()
+        self.subject.externalId = entry.get_text()
+
+    @transactional
+    def _on_text_changed(self, buffer):
+        self.subject.text = buffer.get_text(
+            buffer.get_start_iter(), buffer.get_end_iter(), False
+        )
+
+
+@PropertyPages.register(RequirementItem)
+class RequirementItemPropertyPage(PropertyPageBase):
+    order = 16
+
+    def __init__(self, item: RequirementItem):
+        super().__init__()
+        self.item = item
+
+    def construct(self):
+        if not self.item.subject:
+            return
+
+        builder = new_builder(
+            "requirement-item-editor",
+            signals={
+                "show-requirement-text-changed": (self._on_show_text_change,),
+            },
+        )
+
+        show_requirement_text = builder.get_object("show-requirement-text")
+        show_requirement_text.set_active(self.item.show_text)
+
+        return builder.get_object("requirement-item-editor")
 
     @transactional
     def _on_show_text_change(self, button, gparam):
         self.item.show_text = button.get_active()
-
-    @transactional
-    def _on_text_changed(self, buffer):
-        self.item.subject.text = buffer.get_text(
-            buffer.get_start_iter(), buffer.get_end_iter(), False
-        )
 
 
 ATTRIBUTES_PAGE_CLASSIFIERS.extend([sysml.ValueType])

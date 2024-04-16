@@ -8,6 +8,7 @@ from gaphor.SysML.propertypages import (
     CompartmentPage,
     ItemFlowPropertyPage,
     PropertyAggregationPropertyPage,
+    RequirementItemPropertyPage,
     RequirementPropertyPage,
 )
 from gaphor.UML.propertypages import (
@@ -30,32 +31,26 @@ def connector(element_factory):
     return UML.recipes.create_connector(prop_a, prop_b)
 
 
-def test_requirement_property_page_id(diagram, element_factory):
-    item = diagram.create(
-        SysML.requirements.RequirementItem,
-        subject=element_factory.create(SysML.sysml.Requirement),
-    )
-    property_page = RequirementPropertyPage(item)
+def test_requirement_property_page_id(element_factory):
+    subject = element_factory.create(SysML.sysml.Requirement)
+    property_page = RequirementPropertyPage(subject)
 
     widget = property_page.construct()
     requirement_id = find(widget, "requirement-id")
     requirement_id.set_text("test")
 
-    assert item.subject.externalId == "test"
+    assert subject.externalId == "test"
 
 
-def test_requirement_property_page_text(diagram, element_factory):
-    item = diagram.create(
-        SysML.requirements.RequirementItem,
-        subject=element_factory.create(SysML.sysml.Requirement),
-    )
-    property_page = RequirementPropertyPage(item)
+def test_requirement_property_page_text(element_factory):
+    subject = element_factory.create(SysML.sysml.Requirement)
+    property_page = RequirementPropertyPage(subject)
 
     widget = property_page.construct()
     requirement_text = find(widget, "requirement-text")
     requirement_text.get_buffer().set_text("test")
 
-    assert item.subject.text == "test"
+    assert subject.text == "test"
 
 
 def test_requirement_property_page_show_text(diagram, element_factory):
@@ -63,7 +58,7 @@ def test_requirement_property_page_show_text(diagram, element_factory):
         SysML.requirements.RequirementItem,
         subject=element_factory.create(SysML.sysml.Requirement),
     )
-    property_page = RequirementPropertyPage(item)
+    property_page = RequirementItemPropertyPage(item)
 
     widget = property_page.construct()
     show_requirement_text = find(widget, "show-requirement-text")
