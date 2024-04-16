@@ -1,7 +1,7 @@
 import pytest
 
 from gaphor import UML, SysML
-from gaphor.diagram.presentation import RESET_HEIGHT
+from gaphor.diagram.presentation import DEFAULT_HEIGHT
 from gaphor.diagram.propertypages import PropertyPages
 from gaphor.diagram.tests.fixtures import find
 from gaphor.SysML.propertypages import (
@@ -77,7 +77,7 @@ def test_requirement_height_reset(diagram, element_factory):
     assert item.height == 500
 
     item.subject.text = "test"
-    assert item.height == RESET_HEIGHT
+    assert item.height == DEFAULT_HEIGHT
 
 
 def test_show_property_type_property_page_show_type(diagram, element_factory):

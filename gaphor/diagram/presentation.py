@@ -18,8 +18,8 @@ from gaphor.core.modeling.properties import attribute
 from gaphor.diagram.shapes import CssNode, Shape, Text, stroke, traverse_css_nodes
 from gaphor.diagram.text import TextAlign, middle_segment, text_point_at_line
 
-RESET_HEIGHT = 50
-RESET_WIDTH = 100
+DEFAULT_HEIGHT = 50
+DEFAULT_WIDTH = 100
 
 
 class Named:
@@ -109,8 +109,8 @@ class ElementPresentation(gaphas.Element, HandlePositionUpdate, Presentation[S])
         diagram: Diagram,
         id: Id | None = None,
         shape: Shape | None = None,
-        width=RESET_WIDTH,
-        height=RESET_HEIGHT,
+        width=DEFAULT_WIDTH,
+        height=DEFAULT_HEIGHT,
     ):
         super().__init__(
             connections=diagram.connections,
