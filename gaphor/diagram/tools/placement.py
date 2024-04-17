@@ -24,6 +24,7 @@ class PlacementState:
         self.event_manager = event_manager
         self.handle_index = handle_index
         self.moving: Optional[MoveType] = None
+        self.position = [0, 0]
 
 
 def placement_tool(factory: ItemFactory, event_manager, handle_index: int):
@@ -32,10 +33,18 @@ def placement_tool(factory: ItemFactory, event_manager, handle_index: int):
     gesture.connect("drag-begin", on_drag_begin, placement_state)
     gesture.connect("drag-update", on_drag_update, placement_state)
     gesture.connect("drag-end", on_drag_end, placement_state)
-    return gesture
+    key_ctrl = Gtk.EventControllerKey.new()
+    key_ctrl.connect("key-pressed", key_pressed, gesture, placement_state)
+    return gesture, key_ctrl
+
+
+def key_pressed(ctrl, keyval, keycode, _state, gesture, state):
+    if gesture.is_active():
+        gesture.emit("drag-end", *state.position)
 
 
 def on_drag_begin(gesture, start_x, start_y, placement_state: PlacementState):
+    placement_state.position = [start_x, start_y]
     view = gesture.get_widget()
     gesture.set_state(Gtk.EventSequenceState.CLAIMED)
 
@@ -88,12 +97,16 @@ def connect_opposite_handle(view, new_item, x, y, handle_index):
 
 
 def on_drag_update(gesture, offset_x, offset_y, placement_state: PlacementState):
+    placement_state.position[0] += offset_x
+    placement_state.position[1] += offset_y
     if placement_state.moving:
         _, x, y = gesture.get_start_point()
         placement_state.moving.move((x + offset_x, y + offset_y))
 
 
 def on_drag_end(gesture, offset_x, offset_y, placement_state: PlacementState):
+    placement_state.position[0] += offset_x
+    placement_state.position[1] += offset_y
     if placement_state.moving:
         view = gesture.get_widget()
         _, x, y = gesture.get_start_point()

@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-from typing import Iterable
-
 from gi.repository import Gtk
 
 from gaphor.core.eventmanager import EventManager
@@ -23,12 +21,15 @@ class TxData:
 
 
 def transactional_tool(
-    *tools: Gtk.Gesture, event_manager: EventManager | None = None
-) -> Iterable[Gtk.Gesture]:
+    *tools: Gtk.EventController, event_manager: EventManager | None = None
+):
     tx_data = TxData(event_manager)
     for tool in tools:
-        tool.connect("begin", on_begin, tx_data)
-        tool.connect_after("end", on_end, tx_data)
+        if not isinstance(tool, Gtk.EventControllerKey):
+            tool.connect("begin", on_begin, tx_data)
+            tool.connect_after("end", on_end, tx_data)
+        else:
+            tool.connect_after("key-pressed", key_pressed, tx_data)
     return tools
 
 
@@ -38,3 +39,11 @@ def on_begin(gesture, _sequence, tx_data):
 
 def on_end(gesture, _sequence, tx_data):
     tx_data.commit()
+
+
+def key_pressed(ctrl, keyval, keycode, _sequence, tx_data):
+    if len(tx_data.txs) > 0:
+        tx_data.commit()
+        view = ctrl.get_widget()
+        view.selection.grayed_out_items = set()
+        view.selection.dropzone_item = None

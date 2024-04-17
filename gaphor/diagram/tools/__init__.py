@@ -23,7 +23,7 @@ def apply_default_tool_set(view, modeling_language, event_manager, rubberband_st
     view.add_controller(hover_tool())
     view.add_controller(*text_edit_tools(event_manager))
     view.add_controller(
-        *transactional_tool(item_tool(event_manager), event_manager=event_manager)
+        *transactional_tool(*item_tool(event_manager), event_manager=event_manager)
     )
     view.add_controller(rubberband_tool(rubberband_state))
     add_basic_tools(view, modeling_language, event_manager)
@@ -45,7 +45,7 @@ def apply_placement_tool_set(
     view.add_controller(view_focus_tool())
     view.add_controller(
         *transactional_tool(
-            placement_tool(item_factory, event_manager, handle_index),
+            *placement_tool(item_factory, event_manager, handle_index),
             event_manager=event_manager,
         )
     )
