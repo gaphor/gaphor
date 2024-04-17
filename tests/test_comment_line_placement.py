@@ -62,8 +62,7 @@ def click(tool, event_manager):
 def test_placement(view, event_manager):
     factory = new_item_factory(CommentLineItem)
     tool = placement_tool(factory, event_manager, handle_index=-1)
-    view.add_controller(*tool)
-    tool = tool[0]
+    view.add_controller(tool)
 
     with Transaction(event_manager):
         click(tool, event_manager)

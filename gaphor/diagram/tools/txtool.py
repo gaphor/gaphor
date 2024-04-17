@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from typing import Iterable
+
 from gi.repository import Gtk
 
 from gaphor.core.eventmanager import EventManager
@@ -21,29 +23,34 @@ class TxData:
 
 
 def transactional_tool(
-    *tools: Gtk.EventController, event_manager: EventManager | None = None
-):
+    *tools: Gtk.Gesture, event_manager: EventManager | None = None
+) -> Iterable[Gtk.EventController]:
     tx_data = TxData(event_manager)
     for tool in tools:
-        if not isinstance(tool, Gtk.EventControllerKey):
-            tool.connect("begin", on_begin, tx_data)
-            tool.connect_after("end", on_end, tx_data)
-        else:
-            tool.connect_after("key-pressed", key_pressed, tx_data)
-    return tools
+        tool.connect("begin", on_begin, tx_data)
+        tool.connect_after("end", on_end, tx_data)
+        tool.connect_after("cancel", on_cancel, tx_data)
+
+    key_ctrl = Gtk.EventControllerKey.new()
+    key_ctrl.connect("key-pressed", key_pressed, tools, tx_data)
+    return (*tools, key_ctrl)
 
 
 def on_begin(gesture, _sequence, tx_data):
     tx_data.begin()
 
 
+def on_cancel(gesture, _sequence, tx_data):
+    if tx_data.txs:
+        Transaction.mark_rollback()
+
+
 def on_end(gesture, _sequence, tx_data):
     tx_data.commit()
 
 
-def key_pressed(ctrl, keyval, keycode, _sequence, tx_data):
-    if len(tx_data.txs) > 0:
-        tx_data.commit()
-        view = ctrl.get_widget()
-        view.selection.grayed_out_items = set()
-        view.selection.dropzone_item = None
+def key_pressed(ctrl, keyval, keycode, state, tools, tx_data):
+    if tx_data.txs:
+        for tool in tools:
+            tool.reset()
+        return True
