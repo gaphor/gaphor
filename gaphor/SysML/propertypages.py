@@ -14,6 +14,7 @@ from gaphor.SysML.blocks.block import BlockItem
 from gaphor.SysML.blocks.interfaceblock import InterfaceBlockItem
 from gaphor.SysML.blocks.property import PropertyItem
 from gaphor.SysML.blocks.proxyport import ProxyPortItem
+from gaphor.SysML.requirements import RequirementItem
 from gaphor.UML.classes.classespropertypages import (
     ATTRIBUTES_PAGE_CLASSIFIERS,
     OPERATIONS_PAGE_CLASSIFIERS,
@@ -77,6 +78,35 @@ class RequirementPropertyPage(PropertyPageBase):
         self.subject.text = buffer.get_text(
             buffer.get_start_iter(), buffer.get_end_iter(), False
         )
+
+
+@PropertyPages.register(RequirementItem)
+class RequirementItemPropertyPage(PropertyPageBase):
+    order = 16
+
+    def __init__(self, item: RequirementItem):
+        super().__init__()
+        self.item = item
+
+    def construct(self):
+        if not self.item.subject:
+            return
+
+        builder = new_builder(
+            "requirement-item-editor",
+            signals={
+                "show-requirement-text-changed": (self._on_show_text_change,),
+            },
+        )
+
+        show_requirement_text = builder.get_object("show-requirement-text")
+        show_requirement_text.set_active(self.item.show_text)
+
+        return builder.get_object("requirement-item-editor")
+
+    @transactional
+    def _on_show_text_change(self, button, gparam):
+        self.item.show_text = button.get_active()
 
 
 ATTRIBUTES_PAGE_CLASSIFIERS.extend([sysml.ValueType])

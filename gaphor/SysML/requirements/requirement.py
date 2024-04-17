@@ -1,5 +1,6 @@
 from gaphor.core.modeling.properties import attribute
 from gaphor.diagram.presentation import (
+    DEFAULT_HEIGHT,
     Classified,
     ElementPresentation,
 )
@@ -27,18 +28,20 @@ class RequirementItem(Classified, ElementPresentation[Requirement]):
     def __init__(self, diagram, id=None):
         super().__init__(diagram, id)
 
-        self.watch("show_stereotypes", self.update_shapes).watch(
-            "show_attributes", self.update_shapes
-        ).watch("show_operations", self.update_shapes).watch(
-            "subject[NamedElement].name"
-        ).watch("subject[NamedElement].namespace.name").watch(
-            "subject[Classifier].isAbstract", self.update_shapes
-        ).watch("subject[AbstractRequirement].externalId", self.update_shapes).watch(
-            "subject[AbstractRequirement].text", self.update_shapes
-        )
+        self.watch("show_text", self.update_shapes).watch(
+            "show_stereotypes", self.update_shapes
+        ).watch("show_attributes", self.update_shapes).watch(
+            "show_operations", self.update_shapes
+        ).watch("subject[NamedElement].name").watch(
+            "subject[NamedElement].namespace.name"
+        ).watch("subject[Classifier].isAbstract", self.update_shapes).watch(
+            "subject[AbstractRequirement].externalId", self.update_shapes
+        ).watch("subject[AbstractRequirement].text", self.update_shapes)
         attribute_watches(self, "Requirement")
         operation_watches(self, "Requirement")
         stereotype_watches(self)
+
+    show_text: attribute[int] = attribute("show_text", int, default=True)
 
     show_stereotypes: attribute[int] = attribute("show_stereotypes", int)
 
@@ -47,6 +50,8 @@ class RequirementItem(Classified, ElementPresentation[Requirement]):
     show_operations: attribute[int] = attribute("show_operations", int, default=False)
 
     def update_shapes(self, event=None):
+        # reset height so requirement block is reduced to minimum required height
+        self.height = DEFAULT_HEIGHT
         self.shape = Box(
             name_compartment(self, lambda: [self.diagram.gettext("requirement")]),
             *(
@@ -68,7 +73,7 @@ class RequirementItem(Classified, ElementPresentation[Requirement]):
 
     def id_and_text_compartment(self):
         subject = self.subject
-        if subject and (subject.externalId or subject.text):
+        if subject and (subject.externalId or (subject.text and self.show_text)):
             return CssNode(
                 "compartment",
                 self.subject,
@@ -90,7 +95,7 @@ class RequirementItem(Classified, ElementPresentation[Requirement]):
                                 "text", None, Text(text=lambda: f"Text: {subject.text}")
                             )
                         ]
-                        if subject and subject.text
+                        if subject and subject.text and self.show_text
                         else []
                     ),
                     draw=draw_top_separator,
