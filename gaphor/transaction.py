@@ -81,8 +81,9 @@ class Transaction:
         self.mark_rollback()
         self.commit()
 
-    def mark_rollback(self):
-        for tx in self._stack:
+    @classmethod
+    def mark_rollback(cls):
+        for tx in cls._stack:
             tx._need_rollback = True  # noqa: SLF001
 
     def _close(self):

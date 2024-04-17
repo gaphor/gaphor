@@ -3,7 +3,6 @@ from gi.repository import Gdk, Gtk
 
 from gaphor.core import Transaction
 from gaphor.core.modeling import Presentation, self_and_owners
-from gaphor.diagram.presentation import LinePresentation
 
 
 def shortcut_tool(event_manager):
@@ -22,8 +21,6 @@ def key_pressed(ctrl, keyval, keycode, state, event_manager):
     if keyval in (Gdk.KEY_Delete, Gdk.KEY_BackSpace):
         delete_selected_items(view, event_manager)
         return True
-    if keyval == Gdk.KEY_Escape:
-        cancel_handle_drag(view, event_manager)
     return False
 
 
@@ -35,21 +32,3 @@ def delete_selected_items(view: GtkView, event_manager):
             if i.subject and i.subject in self_and_owners(i.diagram):
                 del i.diagram.element
             i.unlink()
-
-
-def cancel_handle_drag(view: GtkView, event_manager):
-    items = view.selection.selected_items
-    model = view.model
-    with Transaction(event_manager):
-        for i in list(items):
-            if isinstance(i, LinePresentation):
-                if (
-                    i.has_been_dropped
-                    and i.last_handle_moved
-                    and not i.last_handle_moved.glued
-                    and model.connections.get_connection(i.last_handle_moved)
-                ):
-                    model.connections.disconnect_item(i, i.last_handle_moved)
-                    i.last_handle_moved = None
-        view.selection.unselect_all()
-        view.selection.grayed_out_items = set()
