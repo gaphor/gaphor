@@ -86,6 +86,10 @@ class Transaction:
         for tx in cls._stack:
             tx._need_rollback = True  # noqa: SLF001
 
+    @classmethod
+    def in_transaction(cls) -> bool:
+        return bool(cls._stack)
+
     def _close(self):
         """Close the transaction.
 

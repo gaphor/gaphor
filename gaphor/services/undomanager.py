@@ -271,10 +271,6 @@ class UndoManager(Service, ActionProvider):
 
         self._action_executed()
 
-    def in_transaction(self):
-        """The undo manager is recording changes."""
-        return self._current_transaction is not None
-
     def in_undo_transaction(self):
         """An undo or redo action is currently performed."""
         return bool(self._undoing)

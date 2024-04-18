@@ -24,6 +24,7 @@ from gaphor.diagram.tools import (
     apply_placement_tool_set,
 )
 from gaphor.diagram.tools.magnet import MagnetPainter
+from gaphor.transaction import Transaction
 from gaphor.ui.event import DiagramClosed, ToolSelected
 
 log = logging.getLogger(__name__)
@@ -139,7 +140,16 @@ class DiagramPage:
         return self.widget
 
     def apply_tool_set(self, tool_name):
-        """Return a tool associated with an id (action name)."""
+        """Return a tool associated with an id (action name).
+
+        Tool sets can't be changed if a transaction is active,
+        because it could ruin the user (inter)action.
+        """
+
+        if Transaction.in_transaction():
+            log.warning("Cannot change tool set while in a transaction.")
+            return False
+
         if tool_name == "toolbox-pointer":
             apply_default_tool_set(
                 self.view,
@@ -169,6 +179,7 @@ class DiagramPage:
                 event_manager=self.event_manager,
                 handle_index=handle_index,
             )
+        return True
 
     def get_tool_icon_name(self, tool_name):
         if tool_name == "toolbox-pointer":
@@ -226,11 +237,12 @@ class DiagramPage:
     def select_tool(self, tool_name: str):
         if not self.view:
             return
-        self.apply_tool_set(tool_name)
-        if icon_name := self.get_tool_icon_name(tool_name):
-            self.view.set_cursor(get_placement_cursor(None, icon_name))
-        else:
-            self.view.set_cursor(None)
+
+        if self.apply_tool_set(tool_name):
+            if icon_name := self.get_tool_icon_name(tool_name):
+                self.view.set_cursor(get_placement_cursor(None, icon_name))
+            else:
+                self.view.set_cursor(None)
 
     def update_drawing_style(self):
         """Set the drawing style for the diagram based on the active style
