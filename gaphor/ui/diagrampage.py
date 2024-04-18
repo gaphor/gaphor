@@ -281,6 +281,9 @@ class DiagramPage:
 
 def context_menu_controller(context_menu, diagram):
     def on_show_popup(ctrl, n_press, x, y):
+        if Transaction.in_transaction():
+            return
+
         view = ctrl.get_widget()
         item, _handle = find_item_and_handle_at_point(view, (x, y))
 
