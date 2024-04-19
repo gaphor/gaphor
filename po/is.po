@@ -8,28 +8,31 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2024-02-27 10:00-0500\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2024-04-20 21:07+0000\n"
+"Last-Translator: Finnur Þórisson <finnurthorisson@proton.me>\n"
+"Language-Team: Icelandic <https://hosted.weblate.org/projects/gaphor/gaphor/"
+"is/>\n"
 "Language: is\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n % 10 != 1 || n % 100 == 11;\n"
+"X-Generator: Weblate 5.5-dev\n"
 "Generated-By: Babel 2.14.0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:23 gaphor/C4Model/toolbox.py:67
 #: gaphor/ui/greeter.py:56
 msgid "C4 Model"
-msgstr ""
+msgstr "C4 módel"
 
 #: gaphor/C4Model/propertypages.ui:11 gaphor/diagram/propertypages.ui:169
 msgid "Description"
-msgstr ""
+msgstr "Lýsing"
 
 #: gaphor/C4Model/propertypages.ui:38 gaphor/templates/sysml-example.gaphor
 #: gaphor/templates/sysml.gaphor
 msgid "Technology"
-msgstr ""
+msgstr "Tækni"
 
 #: gaphor/C4Model/toolbox.py:41
 msgid "New Software System"
@@ -41,11 +44,11 @@ msgstr ""
 
 #: gaphor/C4Model/toolbox.py:55
 msgid "Database"
-msgstr ""
+msgstr "Gagnagrunnur"
 
 #: gaphor/C4Model/toolbox.py:56 gaphor/C4Model/toolbox.py:177
 msgid "New Database"
-msgstr ""
+msgstr "Nýr gagnagrunnur"
 
 #: gaphor/C4Model/toolbox.py:63 gaphor/C4Model/toolbox.py:167
 #: gaphor/UML/toolbox.py:67
@@ -54,11 +57,11 @@ msgstr ""
 
 #: gaphor/C4Model/toolbox.py:71 gaphor/C4Model/toolbox.py:77
 msgid "Person"
-msgstr ""
+msgstr "Manneskja"
 
 #: gaphor/C4Model/toolbox.py:83
 msgid "Software System"
-msgstr ""
+msgstr "Hugbúnaðarkerfi"
 
 #: gaphor/C4Model/toolbox.py:95
 msgid "Container"
