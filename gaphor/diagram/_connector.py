@@ -9,7 +9,6 @@ import logging
 from gaphas.connector import Connector as ConnectorAspect
 from gaphas.connector import ItemConnector, LineConnector
 
-from gaphor.core import transactional
 from gaphor.core.modeling import Presentation
 from gaphor.diagram.connectors import (
     Connector,
@@ -36,7 +35,6 @@ class PresentationConnector(ItemConnector):
         adapter = Connector(sink.item, self.item)
         return adapter and adapter.allow(self.handle, sink.port)
 
-    @transactional
     def connect(self, sink):
         """Create connection at handle level and at model level."""
         handle = self.handle
@@ -73,7 +71,6 @@ class PresentationConnector(ItemConnector):
     def connect_handle(self, sink):
         super().connect_handle(sink, callback=DisconnectHandle())
 
-    @transactional
     def disconnect(self):
         # Model level disconnect and event is handled in callback
         super().disconnect()

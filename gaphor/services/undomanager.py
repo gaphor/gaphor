@@ -38,7 +38,7 @@ from gaphor.event import (
     TransactionCommit,
     TransactionRollback,
 )
-from gaphor.transaction import Transaction, transactional
+from gaphor.transaction import Transaction
 
 logger = logging.getLogger(__name__)
 
@@ -62,7 +62,6 @@ class ActionStack:
     def can_execute(self):
         return bool(self._actions)
 
-    @transactional
     def execute(self):
         self._actions.reverse()
 
