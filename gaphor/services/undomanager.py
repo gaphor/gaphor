@@ -75,12 +75,21 @@ class UndoManagerStateChanged(ServiceEvent):
     """Event class used to send state changes on the Undo Manager."""
 
 
-class _UndoManagerTransactionCommitted(ServiceEvent):
-    """A transaction was commited.
+class _UndoManagerTransactionCommitted:
+    """A transaction was committed.
 
     This is a subsequent event that triggers the actual commit.
     In doing so we allow other parties to handle their commit handlers first.
     """
+
+    def __init__(self, undoing, redoing, rollbacking):
+        self.undoing = undoing
+        self.redoing = redoing
+        self.rollbacking = rollbacking
+
+
+class _UndoManagerTransactionRolledBack:
+    """A transaction has to be rolled back."""
 
 
 class NotInTransactionException(Exception):
@@ -106,6 +115,7 @@ class UndoManager(Service, ActionProvider):
         self._stack_depth = 20
         self._current_transaction = None
         self._undoing = 0
+        self._redoing = 0
         self._rolling_back = 0
 
         event_manager.subscribe(self.reset)
@@ -113,6 +123,7 @@ class UndoManager(Service, ActionProvider):
         event_manager.subscribe(self.commit_transaction)
         event_manager.subscribe(self.rollback_transaction)
         event_manager.subscribe(self._on_transaction_commit)
+        event_manager.subscribe(self._on_transaction_rollback)
         self._register_undo_handlers()
         self._action_executed()
 
@@ -122,6 +133,7 @@ class UndoManager(Service, ActionProvider):
         self.event_manager.unsubscribe(self.commit_transaction)
         self.event_manager.unsubscribe(self.rollback_transaction)
         self.event_manager.unsubscribe(self._on_transaction_commit)
+        self.event_manager.unsubscribe(self._on_transaction_rollback)
         self._unregister_undo_handlers()
 
     def clear_undo_stack(self):
@@ -149,40 +161,51 @@ class UndoManager(Service, ActionProvider):
             self._current_transaction.add(action)
             self._action_executed()
         elif requires_transaction:
-            undo_stack = list(self._undo_stack)
-            redo_stack = list(self._redo_stack)
-
+            self._rolling_back += 1
             try:
                 with Transaction(self.event_manager):
                     action()
             finally:
-                # Restore stacks and act like nothing happened
-                self._redo_stack = redo_stack
-                self._undo_stack = undo_stack
+                self._rolling_back -= 1
 
             raise NotInTransactionException(
                 f"Updating state outside of a transaction: {action.__doc__}."
             )
 
     @event_handler(TransactionCommit)
-    def _on_transaction_commit(self, event):
-        self.event_manager.handle(_UndoManagerTransactionCommitted(self))
+    def _on_transaction_commit(self, _event):
+        self.event_manager.handle(
+            _UndoManagerTransactionCommitted(
+                self._undoing, self._redoing, self._rolling_back
+            )
+        )
 
     @event_handler(_UndoManagerTransactionCommitted)
-    def commit_transaction(self, event=None):
+    def commit_transaction(self, event: _UndoManagerTransactionCommitted | None = None):
         assert self._current_transaction
 
-        if self._current_transaction.can_execute():
-            self.clear_redo_stack()
-            self._undo_stack.append(self._current_transaction)
-            while len(self._undo_stack) > self._stack_depth:
-                del self._undo_stack[0]
+        if event is None:
+            event = _UndoManagerTransactionCommitted(0, 0, 0)
+
+        if not event.rollbacking and self._current_transaction.can_execute():
+            if event.undoing:
+                self._redo_stack.append(self._current_transaction)
+            else:
+                if not event.redoing:
+                    self.clear_redo_stack()
+                self._undo_stack.append(self._current_transaction)
+                while len(self._undo_stack) > self._stack_depth:
+                    del self._undo_stack[0]
 
         self._current_transaction = None
 
         self._action_executed()
 
     @event_handler(TransactionRollback)
+    def _on_transaction_rollback(self, _event):
+        self.event_manager.handle(_UndoManagerTransactionRolledBack())
+
+    @event_handler(_UndoManagerTransactionRolledBack)
     def rollback_transaction(self, event=None):
         """Roll back the transaction we're in."""
         assert self._current_transaction
@@ -192,9 +215,6 @@ class UndoManager(Service, ActionProvider):
                 "Already performing a rollback, ignoring additional rollback events"
             )
             return
-
-        # Store stacks
-        undo_stack = list(self._undo_stack)
 
         erroneous_tx = self._current_transaction
         self._current_transaction = None
@@ -207,14 +227,7 @@ class UndoManager(Service, ActionProvider):
                     logger.error("Could not rollback transaction", exc_info=True)
                     raise
         finally:
-            # Discard all data collected in the rollback "transaction"
-            self._undo_stack = undo_stack
             self._rolling_back -= 1
-
-        self._action_executed()
-
-    def discard_transaction(self):
-        self._current_transaction = None
 
         self._action_executed()
 
@@ -226,27 +239,14 @@ class UndoManager(Service, ActionProvider):
         if self._current_transaction:
             logger.warning("Trying to undo a transaction, while in a transaction")
             self.commit_transaction()
-        transaction = self._undo_stack.pop()
 
-        # Store stacks
-        undo_stack = list(self._undo_stack)
-        redo_stack = list(self._redo_stack)
-        self._undo_stack = []
-
+        self._undoing += 1
         try:
-            self._undoing += 1
+            transaction = self._undo_stack.pop()
             with Transaction(self.event_manager):
                 transaction.execute()
         finally:
-            # Restore stacks and put latest tx on the redo stack
-            self._redo_stack = redo_stack
-            if self._undo_stack:
-                self._redo_stack.extend(self._undo_stack)
-            self._undo_stack = undo_stack
             self._undoing -= 1
-
-        while len(self._redo_stack) > self._stack_depth:
-            del self._redo_stack[0]
 
         self._action_executed()
 
@@ -258,22 +258,21 @@ class UndoManager(Service, ActionProvider):
         if not self._redo_stack:
             return
 
-        transaction = self._redo_stack.pop()
+        assert not self._current_transaction
 
-        redo_stack = list(self._redo_stack)
+        self._redoing += 1
         try:
-            self._undoing += 1
+            transaction = self._redo_stack.pop()
             with Transaction(self.event_manager):
                 transaction.execute()
         finally:
-            self._redo_stack = redo_stack
-            self._undoing -= 1
+            self._redoing -= 1
 
         self._action_executed()
 
     def in_undo_transaction(self):
         """An undo or redo action is currently performed."""
-        return bool(self._undoing)
+        return bool(self._undoing or self._redoing)
 
     def can_undo(self):
         return bool(self._current_transaction or self._undo_stack)

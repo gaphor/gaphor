@@ -34,6 +34,11 @@ from gaphor.UML.modelinglanguage import UMLModelingLanguage
 from gaphor.UML.sanitizerservice import SanitizerService
 
 
+@pytest.fixture(autouse=True)
+def assert_not_in_transaction():
+    assert not Transaction.in_transaction()
+
+
 @pytest.fixture
 def event_manager():
     return EventManager()
