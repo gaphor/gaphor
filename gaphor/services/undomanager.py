@@ -155,12 +155,12 @@ class UndoManager(Service, ActionProvider):
         assert not self._current_transaction
         self._current_transaction = ActionStack()
 
-    def add_undo_action(self, action, requires_transaction=True):
+    def add_undo_action(self, action):
         """Add an action to undo."""
         if self._current_transaction:
             self._current_transaction.add(action)
             self._action_executed()
-        elif requires_transaction:
+        else:
             self._rolling_back += 1
             try:
                 with Transaction(self.event_manager):
@@ -325,9 +325,7 @@ class UndoManager(Service, ActionProvider):
             f"Reverse event {event.__class__.__name__} for element {event.element}."
         )
 
-        self.add_undo_action(
-            undo_reversible_event, requires_transaction=event.requires_transaction
-        )
+        self.add_undo_action(undo_reversible_event)
 
     @event_handler(ElementCreated)
     def undo_create_element_event(self, event: ElementCreated):

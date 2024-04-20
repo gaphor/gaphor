@@ -9,8 +9,6 @@ class RevertibleEvent:
     be revertible/undoable.
     """
 
-    requires_transaction = True
-
     def __init__(self, element):
         self.element = element
 
