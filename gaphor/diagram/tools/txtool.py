@@ -1,11 +1,14 @@
 from __future__ import annotations
 
+import logging
 from typing import Iterable
 
 from gi.repository import Gtk
 
 from gaphor.core.eventmanager import EventManager
 from gaphor.transaction import Transaction
+
+log = logging.getLogger(__name__)
 
 
 class TxData:
@@ -37,6 +40,12 @@ def transactional_tool(
 
 
 def on_begin(gesture, _sequence, tx_data):
+    while tx_data.txs:
+        log.warning(
+            "Closing transaction. This should have happened in the 'end' handler."
+        )
+        tx_data.commit()
+
     tx_data.begin()
 
 
