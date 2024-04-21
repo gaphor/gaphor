@@ -17,7 +17,7 @@ from gaphor.transaction import TransactionBegin, TransactionCommit, TransactionR
 
 
 def undo_guard(func):
-    """Do not execute the sanitizer if we're undoing a transaction.
+    """Do not execute the sanitizer if we're undoing/redoing/rolling back a transaction.
 
     The sanitizer actions are already part of that transaction.
     """
