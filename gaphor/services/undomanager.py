@@ -114,9 +114,6 @@ class UndoManager(Service, ActionProvider):
         self._redo_stack: List[ActionStack] = []
         self._stack_depth = 20
         self._current_transaction = None
-        self._undoing = 0
-        self._redoing = 0
-        self._rolling_back = 0
 
         event_manager.subscribe(self.reset)
         event_manager.priority_subscribe(self.begin_transaction)
@@ -161,12 +158,8 @@ class UndoManager(Service, ActionProvider):
             self._current_transaction.add(action)
             self._action_executed()
         else:
-            self._rolling_back += 1
-            try:
-                with Transaction(self.event_manager, context="rollback"):
-                    action()
-            finally:
-                self._rolling_back -= 1
+            with Transaction(self.event_manager, context="rollback"):
+                action()
 
             raise NotInTransactionException(
                 f"Updating state outside of a transaction: {action.__doc__}."
@@ -202,30 +195,25 @@ class UndoManager(Service, ActionProvider):
         self.event_manager.handle(_UndoManagerTransactionRolledBack(event.context))
 
     @event_handler(_UndoManagerTransactionRolledBack)
-    def rollback_transaction(self, _event=None):
+    def rollback_transaction(self, event=None):
         """Roll back the transaction we're in."""
         assert self._current_transaction
 
-        if self._rolling_back:
+        if event and event.context in ("undo", "redo", "rollback"):
             logger.error(
-                "Already performing a rollback, ignoring additional rollback events"
+                "Already performing %s, ignoring additional rollback events",
+                event.context,
             )
             return
 
-        # TODO: should we do something special if event.context in ("undo", "redo", "rollback")?
-
         erroneous_tx = self._current_transaction
         self._current_transaction = None
-        self._rolling_back += 1
-        try:
-            with Transaction(self.event_manager, context="rollback"):
-                try:
-                    erroneous_tx.execute()
-                except Exception:
-                    logger.error("Could not rollback transaction", exc_info=True)
-                    raise
-        finally:
-            self._rolling_back -= 1
+        with Transaction(self.event_manager, context="rollback"):
+            try:
+                erroneous_tx.execute()
+            except Exception:
+                logger.error("Could not rollback transaction", exc_info=True)
+                raise
 
         self._action_executed()
 
@@ -238,13 +226,9 @@ class UndoManager(Service, ActionProvider):
             logger.warning("Trying to undo a transaction, while in a transaction")
             self.commit_transaction()
 
-        self._undoing += 1
-        try:
-            transaction = self._undo_stack.pop()
-            with Transaction(self.event_manager, context="undo"):
-                transaction.execute()
-        finally:
-            self._undoing -= 1
+        transaction = self._undo_stack.pop()
+        with Transaction(self.event_manager, context="undo"):
+            transaction.execute()
 
         self._action_executed()
 
@@ -258,19 +242,11 @@ class UndoManager(Service, ActionProvider):
 
         assert not self._current_transaction
 
-        self._redoing += 1
-        try:
-            transaction = self._redo_stack.pop()
-            with Transaction(self.event_manager, context="redo"):
-                transaction.execute()
-        finally:
-            self._redoing -= 1
+        transaction = self._redo_stack.pop()
+        with Transaction(self.event_manager, context="redo"):
+            transaction.execute()
 
         self._action_executed()
-
-    def in_undo_transaction(self):
-        """An undo or redo action is currently performed."""
-        return bool(self._undoing or self._redoing)
 
     def can_undo(self):
         return bool(self._current_transaction or self._undo_stack)
