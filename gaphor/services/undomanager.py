@@ -105,6 +105,11 @@ class UndoManager(Service, ActionProvider):
     (e.i action()) If something is returned by an action, that is
     considered the callable to be used to undo or redo the last
     performed action.
+
+    Change events (attribute/association updates) are handled with priority
+    by the undo manager. This is done, so that, if a transaction is rolled back,
+    all changes that have been applied are rolled back. This prevents events from
+    being delayed because of exceptions that occur in some other event handler.
     """
 
     def __init__(self, event_manager, element_factory):
@@ -121,7 +126,14 @@ class UndoManager(Service, ActionProvider):
         event_manager.subscribe(self.rollback_transaction)
         event_manager.subscribe(self._on_transaction_commit)
         event_manager.subscribe(self._on_transaction_rollback)
-        self._register_undo_handlers()
+
+        event_manager.priority_subscribe(self.undo_reversible_event)
+        event_manager.priority_subscribe(self.undo_create_element_event)
+        event_manager.priority_subscribe(self.undo_delete_element_event)
+        event_manager.priority_subscribe(self.undo_attribute_change_event)
+        event_manager.priority_subscribe(self.undo_association_set_event)
+        event_manager.priority_subscribe(self.undo_association_add_event)
+        event_manager.priority_subscribe(self.undo_association_delete_event)
         self._action_executed()
 
     def shutdown(self):
@@ -131,7 +143,14 @@ class UndoManager(Service, ActionProvider):
         self.event_manager.unsubscribe(self.rollback_transaction)
         self.event_manager.unsubscribe(self._on_transaction_commit)
         self.event_manager.unsubscribe(self._on_transaction_rollback)
-        self._unregister_undo_handlers()
+
+        self.event_manager.unsubscribe(self.undo_reversible_event)
+        self.event_manager.unsubscribe(self.undo_create_element_event)
+        self.event_manager.unsubscribe(self.undo_delete_element_event)
+        self.event_manager.unsubscribe(self.undo_attribute_change_event)
+        self.event_manager.unsubscribe(self.undo_association_set_event)
+        self.event_manager.unsubscribe(self.undo_association_add_event)
+        self.event_manager.unsubscribe(self.undo_association_delete_event)
 
     def clear_undo_stack(self):
         self._undo_stack = []
@@ -268,24 +287,6 @@ class UndoManager(Service, ActionProvider):
     #
     # Undo Handlers
     #
-
-    def _register_undo_handlers(self):
-        self.event_manager.priority_subscribe(self.undo_reversible_event)
-        self.event_manager.priority_subscribe(self.undo_create_element_event)
-        self.event_manager.priority_subscribe(self.undo_delete_element_event)
-        self.event_manager.priority_subscribe(self.undo_attribute_change_event)
-        self.event_manager.priority_subscribe(self.undo_association_set_event)
-        self.event_manager.priority_subscribe(self.undo_association_add_event)
-        self.event_manager.priority_subscribe(self.undo_association_delete_event)
-
-    def _unregister_undo_handlers(self):
-        self.event_manager.unsubscribe(self.undo_reversible_event)
-        self.event_manager.unsubscribe(self.undo_create_element_event)
-        self.event_manager.unsubscribe(self.undo_delete_element_event)
-        self.event_manager.unsubscribe(self.undo_attribute_change_event)
-        self.event_manager.unsubscribe(self.undo_association_set_event)
-        self.event_manager.unsubscribe(self.undo_association_add_event)
-        self.event_manager.unsubscribe(self.undo_association_delete_event)
 
     @event_handler(RevertibleEvent)
     def undo_reversible_event(self, event: RevertibleEvent):
