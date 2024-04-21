@@ -45,17 +45,18 @@ class Transaction:
 
     _stack: list[Transaction] = []
 
-    def __init__(self, event_manager):
+    def __init__(self, event_manager, context=None):
         """Initialize the transaction.
 
         If this is the first transaction in the stack, a
         :obj:`~gaphor.event.TransactionBegin` event is emitted.
         """
         self.event_manager = event_manager
+        self.context = context
 
         self._need_rollback = False
         if not self._stack:
-            self._handle(TransactionBegin())
+            self._handle(TransactionBegin(self.context))
         self._stack.append(self)
 
     def commit(self):
@@ -69,9 +70,9 @@ class Transaction:
         self._close()
         if not self._stack:
             if self._need_rollback:
-                self._handle(TransactionRollback())
+                self._handle(TransactionRollback(self.context))
             else:
-                self._handle(TransactionCommit())
+                self._handle(TransactionCommit(self.context))
 
     def rollback(self):
         """Roll-back the transaction.

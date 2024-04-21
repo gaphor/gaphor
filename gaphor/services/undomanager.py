@@ -81,14 +81,15 @@ class _UndoManagerTransactionCommitted:
     In doing so we allow other parties to handle their commit handlers first.
     """
 
-    def __init__(self, undoing, redoing, rollbacking):
-        self.undoing = undoing
-        self.redoing = redoing
-        self.rollbacking = rollbacking
+    def __init__(self, context):
+        self.context = context
 
 
 class _UndoManagerTransactionRolledBack:
     """A transaction has to be rolled back."""
+
+    def __init__(self, context):
+        self.context = context
 
 
 class NotInTransactionException(Exception):
@@ -162,7 +163,7 @@ class UndoManager(Service, ActionProvider):
         else:
             self._rolling_back += 1
             try:
-                with Transaction(self.event_manager):
+                with Transaction(self.event_manager, context="rollback"):
                     action()
             finally:
                 self._rolling_back -= 1
@@ -172,25 +173,21 @@ class UndoManager(Service, ActionProvider):
             )
 
     @event_handler(TransactionCommit)
-    def _on_transaction_commit(self, _event):
-        self.event_manager.handle(
-            _UndoManagerTransactionCommitted(
-                self._undoing, self._redoing, self._rolling_back
-            )
-        )
+    def _on_transaction_commit(self, event: TransactionCommit):
+        self.event_manager.handle(_UndoManagerTransactionCommitted(event.context))
 
     @event_handler(_UndoManagerTransactionCommitted)
     def commit_transaction(self, event: _UndoManagerTransactionCommitted | None = None):
         assert self._current_transaction
 
         if event is None:
-            event = _UndoManagerTransactionCommitted(0, 0, 0)
+            event = _UndoManagerTransactionCommitted(None)
 
-        if not event.rollbacking and self._current_transaction.can_execute():
-            if event.undoing:
+        if event.context != "rollback" and self._current_transaction.can_execute():
+            if event.context == "undo":
                 self._redo_stack.append(self._current_transaction)
             else:
-                if not event.redoing:
+                if event.context != "redo":
                     self.clear_redo_stack()
                 self._undo_stack.append(self._current_transaction)
                 while len(self._undo_stack) > self._stack_depth:
@@ -201,11 +198,11 @@ class UndoManager(Service, ActionProvider):
         self._action_executed()
 
     @event_handler(TransactionRollback)
-    def _on_transaction_rollback(self, _event):
-        self.event_manager.handle(_UndoManagerTransactionRolledBack())
+    def _on_transaction_rollback(self, event: TransactionRollback):
+        self.event_manager.handle(_UndoManagerTransactionRolledBack(event.context))
 
     @event_handler(_UndoManagerTransactionRolledBack)
-    def rollback_transaction(self, event=None):
+    def rollback_transaction(self, _event=None):
         """Roll back the transaction we're in."""
         assert self._current_transaction
 
@@ -215,11 +212,13 @@ class UndoManager(Service, ActionProvider):
             )
             return
 
+        # TODO: should we do something special if event.context in ("undo", "redo", "rollback")?
+
         erroneous_tx = self._current_transaction
         self._current_transaction = None
         self._rolling_back += 1
         try:
-            with Transaction(self.event_manager):
+            with Transaction(self.event_manager, context="rollback"):
                 try:
                     erroneous_tx.execute()
                 except Exception:
@@ -242,7 +241,7 @@ class UndoManager(Service, ActionProvider):
         self._undoing += 1
         try:
             transaction = self._undo_stack.pop()
-            with Transaction(self.event_manager):
+            with Transaction(self.event_manager, context="undo"):
                 transaction.execute()
         finally:
             self._undoing -= 1
@@ -262,7 +261,7 @@ class UndoManager(Service, ActionProvider):
         self._redoing += 1
         try:
             transaction = self._redo_stack.pop()
-            with Transaction(self.event_manager):
+            with Transaction(self.event_manager, context="redo"):
                 transaction.execute()
         finally:
             self._redoing -= 1

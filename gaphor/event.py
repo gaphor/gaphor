@@ -92,10 +92,16 @@ class TransactionBegin:
     Nested (sub-) transactions should not emit this signal.
     """
 
+    def __init__(self, context):
+        self.context = context
+
 
 class TransactionCommit:
     """This event is emitted when a transaction (toplevel) is successfully
     committed."""
+
+    def __init__(self, context):
+        self.context = context
 
 
 class TransactionRollback:
@@ -104,6 +110,9 @@ class TransactionRollback:
     If a set of operations fail (e.i. due to an exception) the
     transaction should be marked for rollback.
     """
+
+    def __init__(self, context):
+        self.context = context
 
 
 class ActionEnabled:
