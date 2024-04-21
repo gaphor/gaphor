@@ -13,6 +13,7 @@ from gaphor.diagram.deletable import deletable
 from gaphor.diagram.general import CommentLineItem
 from gaphor.event import Notification
 from gaphor.i18n import gettext
+from gaphor.transaction import TransactionBegin, TransactionCommit, TransactionRollback
 
 
 def undo_guard(func):
@@ -22,7 +23,7 @@ def undo_guard(func):
     """
 
     def guard(self, event):
-        if self.undo_manager and self.undo_manager.in_undo_transaction():
+        if self.in_undo_transaction:
             return
         return func(self, event)
 
@@ -33,11 +34,13 @@ class SanitizerService(Service):
     """Does some background cleanup jobs, such as removing elements from the
     model that have no presentations (and should have some)."""
 
-    def __init__(self, event_manager, undo_manager=None, properties=None):
+    def __init__(self, event_manager, properties=None):
         self.event_manager = event_manager
         self.properties = properties or {}
-        self.undo_manager = undo_manager
+        self.in_undo_transaction = False
 
+        event_manager.subscribe(self._begin_transaction)
+        event_manager.subscribe(self._end_transaction)
         event_manager.subscribe(self._unlink_on_subject_delete)
         event_manager.subscribe(self._update_annotated_element_link)
         event_manager.subscribe(self._unlink_on_extension_delete)
@@ -45,10 +48,20 @@ class SanitizerService(Service):
 
     def shutdown(self):
         event_manager = self.event_manager
+        event_manager.unsubscribe(self._begin_transaction)
+        event_manager.unsubscribe(self._end_transaction)
         event_manager.unsubscribe(self._unlink_on_subject_delete)
         event_manager.unsubscribe(self._update_annotated_element_link)
         event_manager.unsubscribe(self._unlink_on_extension_delete)
         event_manager.unsubscribe(self._redraw_diagram_on_move)
+
+    @event_handler(TransactionBegin)
+    def _begin_transaction(self, event):
+        self.in_undo_transaction = event.context in ("undo", "redo", "rollback")
+
+    @event_handler(TransactionCommit, TransactionRollback)
+    def _end_transaction(self, _event):
+        self.in_undo_transaction = False
 
     @event_handler(AssociationSet)
     @undo_guard

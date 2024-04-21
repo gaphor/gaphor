@@ -9,14 +9,9 @@ from gaphor.UML.profiles import ExtensionItem
 from gaphor.UML.sanitizerservice import SanitizerService
 
 
-class MockUndoManager:
-    def in_undo_transaction(self):
-        return False
-
-
 @pytest.fixture(autouse=True)
 def sanitizer(event_manager):
-    sanitizer = SanitizerService(event_manager, MockUndoManager())
+    sanitizer = SanitizerService(event_manager)
     yield sanitizer
     sanitizer.shutdown()
 
