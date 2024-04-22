@@ -205,13 +205,27 @@ def compile_attribute_selector(selector: selectors.AttributeSelector):
     elif operator == "=":
         return lambda el: el.attribute(name) == value
     elif operator == "~=":
-        return lambda el: value in split_whitespace(el.attribute(name))
+        return lambda el: (
+            attr := el.attribute(name)
+        ) is not None and value in split_whitespace(attr)
     elif operator == "^=":
-        return lambda el: value and el.attribute(name).startswith(value)
+        return (
+            lambda el: value
+            and (attr := el.attribute(name)) is not None
+            and attr.startswith(value)
+        )
     elif operator == "$=":
-        return lambda el: value and el.attribute(name).endswith(value)
+        return (
+            lambda el: value
+            and (attr := el.attribute(name)) is not None
+            and attr.endswith(value)
+        )
     elif operator == "*=":
-        return lambda el: value and value in el.attribute(name)
+        return (
+            lambda el: value
+            and (attr := el.attribute(name)) is not None
+            and value in attr
+        )
     elif operator == "|=":
 
         def pipe_equal_matcher(el):
