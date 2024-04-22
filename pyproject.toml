@@ -51,7 +51,7 @@ pydot = ">=1.4.2,<3.0.0"
 pillow = ">=10.0.0"
 defusedxml = "^0.7.1"
 pyobjc-framework-cocoa = { version = ">=9.0.1,<11.0.0", markers = "sys_platform == 'darwin'" }
-dulwich = "^0.21.7"
+dulwich = ">=0.21.7,<0.23.0"
 
 [tool.poetry.group.dev.dependencies]
 pytest = ">=7.1,<9.0"
