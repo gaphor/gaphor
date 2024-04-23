@@ -40,7 +40,7 @@ class Node:
         return iter(self._children)
 
     def attribute(self, name):
-        return self._attributes.get(name, "") if name in self._attributes else ""
+        return self._attributes.get(name, "") if name in self._attributes else None
 
     def state(self):
         return self._state
