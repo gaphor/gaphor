@@ -22,7 +22,7 @@ description of the [event system](event_system.md).
 
 ## Transactional
 
-Gaphor is [transactional](transaction.md), which means it keeps track of the functions it
+Gaphor is transactional, which means it keeps track of the functions it
 performs as a series of transactions. The transactions work by sending an
 event when a transaction starts and sending another when a transaction ends.
 This allows, for example, the undo manager to keep a running log of the

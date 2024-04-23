@@ -15,7 +15,13 @@ class TransactionError(Exception):
 
 
 class Transaction:
-    """The transaction. On start and end of a transaction an event is emitted.
+    """The transaction.
+
+    On start and end of a transaction an event is emitted.
+    Transactions can be nested. Events are only emitted when the
+    outermost transaction begins and finishes.
+
+    Note that transactions are a global construct.
 
     >>> import gaphor.core.eventmanager
     >>> event_manager = gaphor.core.eventmanager.EventManager()
@@ -23,76 +29,77 @@ class Transaction:
     Transactions can be nested. If the outermost transaction is committed or
     rolled back, an event is emitted.
 
-    Events can be handled programmatically:
+    It's most convenient to use ``Transaction`` as a context manager:
+
+    >>> with Transaction(event_manager) as ctx:
+    ...     ... # do actions
+    ...     # in case the transaction should be rolled back:
+    ...     ctx.rollback()
+
+    Events can be handled programmatically, although this is discouraged:
 
     >>> tx = Transaction(event_manager)
     >>> tx.commit()
 
-    It can be assigned as decorator:
-
-    >>> @transactional
-    ... def foo():
-    ...     pass
-
-    Or with the ``with`` statement:
-
-    >>> with Transaction(event_manager):
-    ...     pass
     """
 
     _stack: list[Transaction] = []
 
-    def __init__(self, event_manager):
+    def __init__(self, event_manager, context=None):
         """Initialize the transaction.
 
         If this is the first transaction in the stack, a
-        TransactionBegin event is emitted.
+        :obj:`~gaphor.event.TransactionBegin` event is emitted.
         """
         self.event_manager = event_manager
+        self.context = context
 
         self._need_rollback = False
         if not self._stack:
-            self._handle(TransactionBegin())
+            self._handle(TransactionBegin(self.context))
         self._stack.append(self)
 
     def commit(self):
         """Commit the transaction.
 
-        First, the transaction is closed. If it needs to be rolled-back,
-        a TransactionRollback event is emitted. Otherwise, a
-        TransactionCommit event is emitted.
+        The transaction is closed. A :obj:`~gaphor.event.TransactionCommit` event is emitted.
+        If the transaction needs to be rolled back,
+        a :obj:`~gaphor.event.TransactionRollback` event is emitted instead.
         """
 
         self._close()
         if not self._stack:
             if self._need_rollback:
-                self._handle(TransactionRollback())
+                self._handle(TransactionRollback(self.context))
             else:
-                self._handle(TransactionCommit())
+                self._handle(TransactionCommit(self.context))
 
     def rollback(self):
         """Roll-back the transaction.
 
-        First, the transaction is closed. Every transaction on the stack
-        is then marked for roll-back.  If the stack is empty, a
-        TransactionRollback event is emitted.
+        First, the transaction is closed.
+        A :obj:`~gaphor.event.TransactionRollback` event is emitted.
         """
 
         self.mark_rollback()
         self.commit()
 
-    def mark_rollback(self):
-        for tx in self._stack:
+    @classmethod
+    def mark_rollback(cls):
+        """Mark the transaction for rollback.
+
+        This operation itself will not close the transaction,
+        instead it will allow you to elegantly revert changes.
+        """
+        for tx in cls._stack:
             tx._need_rollback = True  # noqa: SLF001
 
+    @classmethod
+    def in_transaction(cls) -> bool:
+        """Are you running inside a transaction?"""
+        return bool(cls._stack)
+
     def _close(self):
-        """Close the transaction.
-
-        If the stack is empty, a TransactionError is raised.  If the
-        last transaction on the stack isn't this transaction, a
-        Transaction error is raised.
-        """
-
         try:
             last = self._stack.pop()
         except IndexError:
@@ -107,11 +114,11 @@ class Transaction:
         self.event_manager.handle(event)
 
     def __enter__(self) -> TransactionContext:
-        """Provide with-statement transaction support."""
+        """Provide ``with``-statement transaction support."""
         return TransactionContext(self)
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        """Provide with-statement transaction support.
+        """Provide ``with``-statement transaction support.
 
         If an error occurred, the transaction is rolled back. Otherwise,
         it is committed.
@@ -142,7 +149,11 @@ def transactional(func):
     """The transactional decorator makes a function transactional. Events are
     emitted through the (global) `subscribers` set.
 
-    It is preferred to use the `Transaction` context manager. The
+    >>> @transactional
+    ... def foo():
+    ...     pass
+
+    It is preferred to use the :obj:`~gaphor.transaction.Transaction` context manager. The
     context manager emits events in the context of the session in scope,
     whereas the `@transactional` decorator emits a global event which is
     sent to the active session.

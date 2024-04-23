@@ -83,4 +83,3 @@ Did you know Gaphor has excellent integration with :doc:`Sphinx <sphinx>` and :d
    connect
    storage
    undo
-   transaction

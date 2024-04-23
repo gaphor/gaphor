@@ -7,11 +7,11 @@ from gaphor.core.modeling import Presentation, self_and_owners
 
 def shortcut_tool(event_manager):
     ctrl = Gtk.EventControllerKey.new()
-    ctrl.connect("key-pressed", on_delete, event_manager)
+    ctrl.connect("key-pressed", key_pressed, event_manager)
     return ctrl
 
 
-def on_delete(ctrl, keyval, keycode, state, event_manager):
+def key_pressed(ctrl, keyval, keycode, state, event_manager):
     """Handle the 'Delete' key.
 
     This can not be handled directly (through GTK's accelerators),

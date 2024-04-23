@@ -413,6 +413,17 @@ def test_set_derived_union_outside_transaction(
     assert not a.derived_b
 
 
+def test_rollback_transaction(undo_manager, element_factory, event_manager):
+    class A(Element):
+        pass
+
+    with Transaction(event_manager) as tx:
+        element_factory.create(A)
+        tx.rollback()
+
+    assert not undo_manager.can_undo()
+
+
 def test_redo_stack(event_manager, element_factory, undo_manager):
     undo_manager.begin_transaction()
 

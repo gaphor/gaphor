@@ -38,7 +38,7 @@ from gaphor.event import (
     TransactionCommit,
     TransactionRollback,
 )
-from gaphor.transaction import Transaction, transactional
+from gaphor.transaction import Transaction
 
 logger = logging.getLogger(__name__)
 
@@ -62,7 +62,6 @@ class ActionStack:
     def can_execute(self):
         return bool(self._actions)
 
-    @transactional
     def execute(self):
         self._actions.reverse()
 
@@ -75,12 +74,22 @@ class UndoManagerStateChanged(ServiceEvent):
     """Event class used to send state changes on the Undo Manager."""
 
 
-class _UndoManagerTransactionCommitted(ServiceEvent):
-    """A transaction was commited.
+class _UndoManagerTransactionCommitted:
+    """A transaction was committed.
 
     This is a subsequent event that triggers the actual commit.
     In doing so we allow other parties to handle their commit handlers first.
     """
+
+    def __init__(self, context):
+        self.context = context
+
+
+class _UndoManagerTransactionRolledBack:
+    """A transaction has to be rolled back."""
+
+    def __init__(self, context):
+        self.context = context
 
 
 class NotInTransactionException(Exception):
@@ -96,6 +105,11 @@ class UndoManager(Service, ActionProvider):
     (e.i action()) If something is returned by an action, that is
     considered the callable to be used to undo or redo the last
     performed action.
+
+    Change events (attribute/association updates) are handled with priority
+    by the undo manager. This is done, so that, if a transaction is rolled back,
+    all changes that have been applied are rolled back. This prevents events from
+    being delayed because of exceptions that occur in some other event handler.
     """
 
     def __init__(self, event_manager, element_factory):
@@ -105,15 +119,21 @@ class UndoManager(Service, ActionProvider):
         self._redo_stack: List[ActionStack] = []
         self._stack_depth = 20
         self._current_transaction = None
-        self._undoing = 0
-        self._rolling_back = 0
 
         event_manager.subscribe(self.reset)
         event_manager.priority_subscribe(self.begin_transaction)
         event_manager.subscribe(self.commit_transaction)
         event_manager.subscribe(self.rollback_transaction)
         event_manager.subscribe(self._on_transaction_commit)
-        self._register_undo_handlers()
+        event_manager.subscribe(self._on_transaction_rollback)
+
+        event_manager.priority_subscribe(self.undo_reversible_event)
+        event_manager.priority_subscribe(self.undo_create_element_event)
+        event_manager.priority_subscribe(self.undo_delete_element_event)
+        event_manager.priority_subscribe(self.undo_attribute_change_event)
+        event_manager.priority_subscribe(self.undo_association_set_event)
+        event_manager.priority_subscribe(self.undo_association_add_event)
+        event_manager.priority_subscribe(self.undo_association_delete_event)
         self._action_executed()
 
     def shutdown(self):
@@ -122,7 +142,15 @@ class UndoManager(Service, ActionProvider):
         self.event_manager.unsubscribe(self.commit_transaction)
         self.event_manager.unsubscribe(self.rollback_transaction)
         self.event_manager.unsubscribe(self._on_transaction_commit)
-        self._unregister_undo_handlers()
+        self.event_manager.unsubscribe(self._on_transaction_rollback)
+
+        self.event_manager.unsubscribe(self.undo_reversible_event)
+        self.event_manager.unsubscribe(self.undo_create_element_event)
+        self.event_manager.unsubscribe(self.undo_delete_element_event)
+        self.event_manager.unsubscribe(self.undo_attribute_change_event)
+        self.event_manager.unsubscribe(self.undo_association_set_event)
+        self.event_manager.unsubscribe(self.undo_association_add_event)
+        self.event_manager.unsubscribe(self.undo_association_delete_event)
 
     def clear_undo_stack(self):
         self._undo_stack = []
@@ -143,78 +171,68 @@ class UndoManager(Service, ActionProvider):
         assert not self._current_transaction
         self._current_transaction = ActionStack()
 
-    def add_undo_action(self, action, requires_transaction=True):
+    def add_undo_action(self, action):
         """Add an action to undo."""
         if self._current_transaction:
             self._current_transaction.add(action)
             self._action_executed()
-        elif requires_transaction:
-            undo_stack = list(self._undo_stack)
-            redo_stack = list(self._redo_stack)
-
-            try:
-                with Transaction(self.event_manager):
-                    action()
-            finally:
-                # Restore stacks and act like nothing happened
-                self._redo_stack = redo_stack
-                self._undo_stack = undo_stack
+        else:
+            with Transaction(self.event_manager, context="rollback"):
+                action()
 
             raise NotInTransactionException(
                 f"Updating state outside of a transaction: {action.__doc__}."
             )
 
     @event_handler(TransactionCommit)
-    def _on_transaction_commit(self, event):
-        self.event_manager.handle(_UndoManagerTransactionCommitted(self))
+    def _on_transaction_commit(self, event: TransactionCommit):
+        self.event_manager.handle(_UndoManagerTransactionCommitted(event.context))
 
     @event_handler(_UndoManagerTransactionCommitted)
-    def commit_transaction(self, event=None):
+    def commit_transaction(self, event: _UndoManagerTransactionCommitted | None = None):
         assert self._current_transaction
 
-        if self._current_transaction.can_execute():
-            self.clear_redo_stack()
-            self._undo_stack.append(self._current_transaction)
-            while len(self._undo_stack) > self._stack_depth:
-                del self._undo_stack[0]
+        if event is None:
+            event = _UndoManagerTransactionCommitted(None)
+
+        if event.context != "rollback" and self._current_transaction.can_execute():
+            if event.context == "undo":
+                self._redo_stack.append(self._current_transaction)
+            else:
+                if event.context != "redo":
+                    self.clear_redo_stack()
+                self._undo_stack.append(self._current_transaction)
+                while len(self._undo_stack) > self._stack_depth:
+                    del self._undo_stack[0]
 
         self._current_transaction = None
 
         self._action_executed()
 
     @event_handler(TransactionRollback)
+    def _on_transaction_rollback(self, event: TransactionRollback):
+        self.event_manager.handle(_UndoManagerTransactionRolledBack(event.context))
+
+    @event_handler(_UndoManagerTransactionRolledBack)
     def rollback_transaction(self, event=None):
         """Roll back the transaction we're in."""
         assert self._current_transaction
 
-        if self._rolling_back:
+        if event and event.context in ("undo", "redo", "rollback"):
             logger.error(
-                "Already performing a rollback, ignoring additional rollback events"
+                "Already performing %s, ignoring additional rollback events",
+                event.context,
             )
             return
 
-        # Store stacks
-        undo_stack = list(self._undo_stack)
-
         erroneous_tx = self._current_transaction
         self._current_transaction = None
-        self._rolling_back += 1
-        try:
-            with Transaction(self.event_manager):
-                try:
-                    erroneous_tx.execute()
-                except Exception:
-                    logger.error("Could not rollback transaction", exc_info=True)
-                    raise
-        finally:
-            # Discard all data collected in the rollback "transaction"
-            self._undo_stack = undo_stack
-            self._rolling_back -= 1
-
-        self._action_executed()
-
-    def discard_transaction(self):
-        self._current_transaction = None
+        with Transaction(self.event_manager, context="rollback"):
+            try:
+                erroneous_tx.execute()
+            except Exception:
+                logger.error("Could not rollback transaction", exc_info=True)
+                raise
 
         self._action_executed()
 
@@ -226,27 +244,10 @@ class UndoManager(Service, ActionProvider):
         if self._current_transaction:
             logger.warning("Trying to undo a transaction, while in a transaction")
             self.commit_transaction()
+
         transaction = self._undo_stack.pop()
-
-        # Store stacks
-        undo_stack = list(self._undo_stack)
-        redo_stack = list(self._redo_stack)
-        self._undo_stack = []
-
-        try:
-            self._undoing += 1
-            with Transaction(self.event_manager):
-                transaction.execute()
-        finally:
-            # Restore stacks and put latest tx on the redo stack
-            self._redo_stack = redo_stack
-            if self._undo_stack:
-                self._redo_stack.extend(self._undo_stack)
-            self._undo_stack = undo_stack
-            self._undoing -= 1
-
-        while len(self._redo_stack) > self._stack_depth:
-            del self._redo_stack[0]
+        with Transaction(self.event_manager, context="undo"):
+            transaction.execute()
 
         self._action_executed()
 
@@ -258,26 +259,13 @@ class UndoManager(Service, ActionProvider):
         if not self._redo_stack:
             return
 
-        transaction = self._redo_stack.pop()
+        assert not self._current_transaction
 
-        redo_stack = list(self._redo_stack)
-        try:
-            self._undoing += 1
-            with Transaction(self.event_manager):
-                transaction.execute()
-        finally:
-            self._redo_stack = redo_stack
-            self._undoing -= 1
+        transaction = self._redo_stack.pop()
+        with Transaction(self.event_manager, context="redo"):
+            transaction.execute()
 
         self._action_executed()
-
-    def in_transaction(self):
-        """The undo manager is recording changes."""
-        return self._current_transaction is not None
-
-    def in_undo_transaction(self):
-        """An undo or redo action is currently performed."""
-        return bool(self._undoing)
 
     def can_undo(self):
         return bool(self._current_transaction or self._undo_stack)
@@ -300,24 +288,6 @@ class UndoManager(Service, ActionProvider):
     # Undo Handlers
     #
 
-    def _register_undo_handlers(self):
-        self.event_manager.priority_subscribe(self.undo_reversible_event)
-        self.event_manager.priority_subscribe(self.undo_create_element_event)
-        self.event_manager.priority_subscribe(self.undo_delete_element_event)
-        self.event_manager.priority_subscribe(self.undo_attribute_change_event)
-        self.event_manager.priority_subscribe(self.undo_association_set_event)
-        self.event_manager.priority_subscribe(self.undo_association_add_event)
-        self.event_manager.priority_subscribe(self.undo_association_delete_event)
-
-    def _unregister_undo_handlers(self):
-        self.event_manager.unsubscribe(self.undo_reversible_event)
-        self.event_manager.unsubscribe(self.undo_create_element_event)
-        self.event_manager.unsubscribe(self.undo_delete_element_event)
-        self.event_manager.unsubscribe(self.undo_attribute_change_event)
-        self.event_manager.unsubscribe(self.undo_association_set_event)
-        self.event_manager.unsubscribe(self.undo_association_add_event)
-        self.event_manager.unsubscribe(self.undo_association_delete_event)
-
     @event_handler(RevertibleEvent)
     def undo_reversible_event(self, event: RevertibleEvent):
         element_id = event.element.id
@@ -330,9 +300,7 @@ class UndoManager(Service, ActionProvider):
             f"Reverse event {event.__class__.__name__} for element {event.element}."
         )
 
-        self.add_undo_action(
-            undo_reversible_event, requires_transaction=event.requires_transaction
-        )
+        self.add_undo_action(undo_reversible_event)
 
     @event_handler(ElementCreated)
     def undo_create_element_event(self, event: ElementCreated):
