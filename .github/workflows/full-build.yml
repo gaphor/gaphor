@@ -200,6 +200,8 @@ jobs:
         uses: ./.github/actions/install
         with:
           python-command: python${{ env.python_version }}
+      - name: Run Gaphor Self-Test
+        run: poetry run gaphor self-test
       - name: Run Gaphor Tests
         run: poetry run pytest --cov
       - name: Create macOS Application
