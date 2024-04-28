@@ -1456,6 +1456,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "linfindel",
+      "name": "Nathan Hadley",
+      "avatar_url": "https://avatars.githubusercontent.com/u/116459177?v=4",
+      "profile": "https://linfindel.github.io",
+      "contributions": [
+        "translation"
+      ]
     }
   ],
   "contributorsPerLine": 7,
