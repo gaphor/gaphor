@@ -9,15 +9,14 @@ import contextlib
 import itertools
 from typing import Iterable
 
-import pytest
+import hypothesis
+from hypothesis import settings
 from hypothesis.control import assume, cleanup
 from hypothesis.errors import UnsatisfiedAssumption
 from hypothesis.stateful import (
     RuleBasedStateMachine,
     initialize,
-    invariant,
     rule,
-    run_state_machine_as_test,
 )
 from hypothesis.strategies import data, integers, sampled_from
 
@@ -43,14 +42,6 @@ from gaphor.UML.toolbox import (
     states,
     use_cases,
 )
-
-
-@pytest.mark.skip(
-    reason="This test takes too long since Hypothesis 6.68.1 and should be refactored"
-)
-@pytest.mark.hypothesis
-def test_auto_layouting():
-    run_state_machine_as_test(AutoLayouting)
 
 
 def tooldef():
@@ -79,7 +70,11 @@ def tooldef():
     )
 
 
-class AutoLayouting(RuleBasedStateMachine):
+def ordered(elements: Iterable[Element]) -> list[Element]:
+    return sorted(elements, key=lambda e: e.id)
+
+
+class AutoLayOuting(RuleBasedStateMachine):
     @property
     def model(self) -> ElementFactory:
         return self.session.get_service("element_factory")  # type: ignore[no-any-return]
@@ -97,7 +92,8 @@ class AutoLayouting(RuleBasedStateMachine):
         assume(elements)
         return sampled_from(elements)
 
-    def relations(self, diagram):
+    @staticmethod
+    def relations(diagram):
         relations = [
             p
             for p in diagram.presentation
@@ -168,10 +164,14 @@ class AutoLayouting(RuleBasedStateMachine):
                 tx.rollback()
         assume(changed)
 
-    @invariant()
-    def check_auto_layout(self):
+    def teardown(self):
         self.auto_layout.layout(self.diagram)
 
 
-def ordered(elements: Iterable[Element]) -> list[Element]:
-    return sorted(elements, key=lambda e: e.id)
+AutoLayOuting.TestCase.settings = settings(
+    max_examples=5,
+    stateful_step_count=50,
+    deadline=1000,
+    phases=[hypothesis.Phase.generate],
+)
+TestAutoLayOuting = AutoLayOuting.TestCase
