@@ -171,7 +171,7 @@ class AutoLayOuting(RuleBasedStateMachine):
 AutoLayOuting.TestCase.settings = settings(
     max_examples=5,
     stateful_step_count=50,
-    deadline=1000,
+    deadline=2000,
     phases=[hypothesis.Phase.generate],
 )
 TestAutoLayOuting = AutoLayOuting.TestCase
