@@ -41,10 +41,19 @@ runs:
       shell: bash
     - name: Import codesign certificate
       if: inputs.sign_app == 'true'
-      uses: apple-actions/import-codesign-certs@v2
-      with:
-        p12-file-base64: ${{ inputs.base64_encoded_p12 }}
-        p12-password: ${{ inputs.certpassword_p12 }}
+      env:
+        P12BASE64: ${{ inputs.base64_encoded_p12 }}
+        P12PASSWORD: ${{ inputs.certpassword_p12 }}
+      run: |
+        P12FILE=$(mktemp)
+        PASSWORD=$(openssl rand -base64 24)
+        security create-keychain -p "$PASSWORD" temp.keychain
+        echo "$P12BASE64" | base64 -D -o "$P12FILE"
+        security import "$P12FILE" -k temp.keychain -f pkcs12 -T /usr/bin/codesign -T /usr/bin/security -P "$P12PASSWORD"
+        rm -f "$P12FILE"
+        security set-key-partition-list -S "apple-tool:,apple:" -k "$PASSWORD" temp.keychain
+        security list-keychains -d user -s temp.keychain login.keychain
+      shell: bash
     - name: Create Signed macOS Application
       if: inputs.sign_app == 'true'
       env:
@@ -98,6 +107,10 @@ runs:
       env:
         PRODUCT_PATH: "_packaging/dist/Gaphor-${{ inputs.version }}.dmg"
       run: xcrun stapler staple ${{ env.PRODUCT_PATH }}
+      shell: bash
+    - name: Delete temporary keychain
+      if: inputs.sign_app == 'true'
+      run: security delete-keychain temp.keychain
       shell: bash
     - name: Upload Gaphor-${{ inputs.version }}.dmg
       uses: actions/upload-artifact@c7d193f32edcb7bfad88892161225aeda64e9392 # v4.0.0
