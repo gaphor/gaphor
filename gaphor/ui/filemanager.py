@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import logging
 import tempfile
+import time
 from functools import partial
 from pathlib import Path
 from typing import Callable
@@ -322,8 +323,6 @@ class FileManager(Service, ActionProvider):
                     for percentage in storage.save_generator(out, self.element_factory):
                         status_window.progress(percentage)
                         yield
-
-                self.filename = filename
                 self.event_manager.handle(ModelSaved(self, filename))
             except Exception as e:
                 error_handler(
@@ -334,9 +333,12 @@ class FileManager(Service, ActionProvider):
                     window=self.parent_window,
                 )
                 raise
+            else:
+                time.sleep(2)
+                self.filename = filename
+                self._update_monitor()
             finally:
                 status_window.destroy()
-            self._update_monitor()
             if on_save_done:
                 on_save_done()
 
@@ -350,7 +352,7 @@ class FileManager(Service, ActionProvider):
 
     def _update_monitor(self):
         self._cancel_monitor()
-        monitor = Gio.File.parse_name(str(self._filename)).monitor(
+        monitor = Gio.File.parse_name(str(self.filename)).monitor(
             Gio.FileMonitorFlags.NONE, None
         )
         monitor.connect("changed", self._on_file_changed)
@@ -362,7 +364,7 @@ class FileManager(Service, ActionProvider):
             self._monitor = None
 
     def _on_file_changed(self, _banner, _file, _other_file, _event_type):
-        self.event_manager.handle(ModelChangedOnDisk(self._filename))
+        self.event_manager.handle(ModelChangedOnDisk(None, self._filename))
 
     @action(name="file-save", shortcut="<Primary>s")
     def action_save(self):
