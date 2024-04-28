@@ -352,7 +352,7 @@ class FileManager(Service, ActionProvider):
 
     def _update_monitor(self):
         self._cancel_monitor()
-        monitor = Gio.File.parse_name(str(self.filename)).monitor(
+        monitor = Gio.File.parse_name(str(self._filename)).monitor(
             Gio.FileMonitorFlags.NONE, None
         )
         monitor.connect("changed", self._on_file_changed)
