@@ -74,6 +74,14 @@ def ordered(elements: Iterable[Element]) -> list[Element]:
     return sorted(elements, key=lambda e: e.id)
 
 
+def relations(diagram):
+    relations = [
+        p for p in diagram.presentation if isinstance(p, diagramitems.DependencyItem)
+    ]
+    assume(relations)
+    return sampled_from(ordered(relations))
+
+
 class AutoLayOuting(RuleBasedStateMachine):
     @property
     def model(self) -> ElementFactory:
@@ -91,16 +99,6 @@ class AutoLayOuting(RuleBasedStateMachine):
         elements = ordered(self.model.select(expression))
         assume(elements)
         return sampled_from(elements)
-
-    @staticmethod
-    def relations(diagram):
-        relations = [
-            p
-            for p in diagram.presentation
-            if isinstance(p, diagramitems.DependencyItem)
-        ]
-        assume(relations)
-        return sampled_from(ordered(relations))
 
     def targets(self, relation, handle):
         return self.select(
@@ -143,7 +141,7 @@ class AutoLayOuting(RuleBasedStateMachine):
 
     @rule(data=data())
     def connect_relation(self, data):
-        relation = data.draw(self.relations(self.diagram))
+        relation = data.draw(relations(self.diagram))
         handle = data.draw(sampled_from([relation.head, relation.tail]))
         self._connect_relation(data, relation, handle)
 
