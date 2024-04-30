@@ -433,6 +433,7 @@ class ItemConnected(RevertibleEvent):
     def __init__(self, element, handle, connected, port):
         super().__init__(element)
         self.handle_index = element.handles().index(handle)
+        self.connected_id = connected.id
         self.port_index = connected.ports().index(port)
 
     def revert(self, target):

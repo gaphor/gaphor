@@ -63,13 +63,12 @@ class PresentationConnector(ItemConnector):
             return
 
         self.connect_handle(sink)
-
-        # adapter requires both ends to be connected.
         adapter.connect(handle, sink.port)
-        item.handle(ItemConnected(item, handle, sink.item, sink.port))
 
     def connect_handle(self, sink):
         super().connect_handle(sink, callback=DisconnectHandle())
+        item = self.item
+        item.handle(ItemConnected(item, self.handle, sink.item, sink.port))
 
     def disconnect(self):
         # Model level disconnect and event is handled in callback
