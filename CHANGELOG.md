@@ -1,3 +1,12 @@
+2.25.1
+------
+- macOS: fix screen update delays
+- Restore zoom buttons
+- Add feature to hide requirement text
+- Fix pasting of associations fails
+- Improve undo for cases when a key is pressed when dragging
+- Add Icelandic, and update Hungarian, Chinese (Simplified), and Italian translations
+
 2.25.0
 ------
 -  Update UI to modern Adwaita layout
