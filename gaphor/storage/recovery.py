@@ -1,5 +1,6 @@
 from pathlib import Path
 
+from gaphor import settings
 from gaphor.abc import Service
 from gaphor.core import event_handler
 from gaphor.core.modeling.event import (
@@ -13,18 +14,19 @@ from gaphor.core.modeling.event import (
     RevertibleEvent,
 )
 from gaphor.event import ModelSaved, SessionCreated
-from gaphor.services.properties import file_hash, get_cache_dir
 
 
-def recovery_file_name(filename: str) -> Path:
-    return (get_cache_dir() / file_hash(filename)).with_suffix(".recovery")
+def recovery_filename(filename: str) -> Path:
+    return (settings.get_cache_dir() / settings.file_hash(filename)).with_suffix(
+        ".recovery"
+    )
 
 
 class Recovery(Service):
     def __init__(self, event_manager, element_factory):
         self.event_manager = event_manager
         self.element_factory = element_factory
-        self.filename: Path = recovery_file_name("")
+        self.filename: Path = recovery_filename("")
         self.events = []
 
         event_manager.subscribe(self.on_model_loaded)
@@ -81,11 +83,11 @@ class Recovery(Service):
 
     @event_handler(SessionCreated)
     def on_model_loaded(self, event):
-        self.filename = recovery_file_name(event.filename or "")
+        self.filename = recovery_filename(event.filename or "")
 
     @event_handler(ModelSaved)
     def on_model_saved(self, event):
-        self.filename = recovery_file_name(event.filename or "")
+        self.filename = recovery_filename(event.filename or "")
         self.truncate()
 
     @event_handler(RevertibleEvent)
