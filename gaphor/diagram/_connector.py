@@ -74,6 +74,12 @@ class PresentationConnector(ItemConnector):
         # Model level disconnect and event is handled in callback
         super().disconnect()
 
+    def disconnect_handle(self):
+        if cinfo := self.connections.get_connection(self.handle):
+            # prevent model level disconnect from triggering
+            cinfo.callback.disable = True
+        super().disconnect()
+
 
 @ConnectorAspect.register(LinePresentation)
 class LinePresentationConnector(PresentationConnector, LineConnector):
