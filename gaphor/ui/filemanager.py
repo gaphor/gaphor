@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import logging
 import tempfile
-import time
 from functools import partial
 from pathlib import Path
 from typing import Callable
@@ -334,7 +333,6 @@ class FileManager(Service, ActionProvider):
                 )
                 raise
             else:
-                time.sleep(2)
                 self.filename = filename
                 self._update_monitor()
             finally:
@@ -364,7 +362,8 @@ class FileManager(Service, ActionProvider):
             self._monitor = None
 
     def _on_file_changed(self, _banner, _file, _other_file, _event_type):
-        self.event_manager.handle(ModelChangedOnDisk(None, self._filename))
+        if not _event_type == Gio.FileMonitorEvent.ATTRIBUTE_CHANGED:
+            self.event_manager.handle(ModelChangedOnDisk(None, self._filename))
 
     @action(name="file-save", shortcut="<Primary>s")
     def action_save(self):
