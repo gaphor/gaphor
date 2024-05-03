@@ -480,10 +480,8 @@ class ItemTemporaryDisconnected(RevertibleEvent):
 
         sink = ConnectionSink(connected)
         sink.port = connected.ports()[self.port_index]
-        connections.reconnect_item(
-            target, handle, sink.port, sink.constraint(target, handle)
-        )
-        target.handle(ItemReconnected(target, handle))
+        connector = ConnectorAspect(target, handle, connections)
+        connector.reconnect_handle(sink)
 
 
 class ItemReconnected(RevertibleEvent):
