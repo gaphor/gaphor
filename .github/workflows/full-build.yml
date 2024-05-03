@@ -183,8 +183,6 @@ jobs:
         run: >
           brew update && brew install gtksourceview5 libadwaita
           adwaita-icon-theme gobject-introspection graphviz create-dmg upx
-      - name: Workaround - Install GTK 4.14.0
-        run: brew unlink gtk4 && brew install ./_packaging/gtk4.rb
       - name: Set up Python
         uses: actions/setup-python@82c7e631bb3cdc910f68e0081d67478d79c6982d # v5.1.0
         with:
