@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2024-02-27 10:00-0500\n"
-"PO-Revision-Date: 2024-01-06 01:10+0000\n"
-"Last-Translator: Cristian Dorio <walker84837+weblate@gmail.com>\n"
+"PO-Revision-Date: 2024-05-03 12:07+0000\n"
+"Last-Translator: Nathan Hadley <nathanhadley.pigeon@gmail.com>\n"
+"Language-Team: Italian <https://hosted.weblate.org/projects/gaphor/gaphor/it/"
+">\n"
 "Language: it\n"
-"Language-Team: Italian "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/it/>\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.5.3\n"
 "Generated-By: Babel 2.14.0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:23 gaphor/C4Model/toolbox.py:67
@@ -90,91 +91,77 @@ msgstr "Nuovo diagramma classi"
 
 #: gaphor/C4Model/toolbox.py:153 gaphor/SysML/toolbox.py:129
 #: gaphor/UML/toolbox.py:54
-#, fuzzy
 msgid "New Activity Diagram"
-msgstr "Nuovo_Diagrama"
+msgstr "Nuovo Diagrama di Attività"
 
 #: gaphor/C4Model/toolbox.py:154 gaphor/SysML/toolbox.py:139
 #: gaphor/UML/toolbox.py:55
-#, fuzzy
 msgid "New Sequence Diagram"
-msgstr "Nuovo_Diagrama"
+msgstr "Nuovo Diagrama di Sequenza"
 
 #: gaphor/C4Model/toolbox.py:155 gaphor/SysML/toolbox.py:149
 #: gaphor/UML/toolbox.py:57
-#, fuzzy
 msgid "New State Machine Diagram"
-msgstr "Nuovo_Diagrama"
+msgstr "Nuovo Diagrama della Macchina a Stati"
 
 #: gaphor/C4Model/toolbox.py:159 gaphor/SysML/toolbox.py:133
 #: gaphor/SysML/toolbox.py:134 gaphor/SysML/toolbox.py:172
 #: gaphor/UML/toolbox.py:63
-#, fuzzy
 msgid "New Activity"
-msgstr "Attività"
+msgstr "Nuova attività"
 
 #: gaphor/C4Model/toolbox.py:161 gaphor/SysML/toolbox.py:143
 #: gaphor/SysML/toolbox.py:144 gaphor/SysML/toolbox.py:179
 #: gaphor/UML/toolbox.py:80
-#, fuzzy
 msgid "New Interaction"
-msgstr "Interazione"
+msgstr "Nuova interazione"
 
 #: gaphor/C4Model/toolbox.py:164 gaphor/SysML/toolbox.py:153
 #: gaphor/SysML/toolbox.py:154 gaphor/SysML/toolbox.py:194
 #: gaphor/UML/toolbox.py:86
-#, fuzzy
 msgid "New State Machine"
-msgstr "Nuovo_Diagrama"
+msgstr "Nuova macchina statale"
 
 #: gaphor/C4Model/toolbox.py:166 gaphor/UML/toolbox.py:66
-#, fuzzy
 msgid "New Class"
-msgstr "Classe"
+msgstr "Nuova classe"
 
 #: gaphor/C4Model/toolbox.py:168 gaphor/UML/toolbox.py:68
-#, fuzzy
 msgid "New Data Type"
-msgstr "Stato"
+msgstr "Nuovo tipo di dati"
 
 #: gaphor/C4Model/toolbox.py:170 gaphor/SysML/toolbox.py:176
 #: gaphor/UML/toolbox.py:71
-#, fuzzy
 msgid "New Enumeration"
-msgstr "Interazione"
+msgstr "Nuova enumerazione"
 
 #: gaphor/C4Model/toolbox.py:173
 msgid "New Primitive Type"
-msgstr ""
+msgstr "Nuovo tipo primitivo"
 
 #: gaphor/C4Model/toolbox.py:175
-#, fuzzy
 msgid "New Person"
-msgstr "Operazioni"
+msgstr "Nuova persona"
 
 #: gaphor/RAAML/modelinglanguage.py:24 gaphor/ui/greeter.py:49
 msgid "RAAML"
 msgstr "RAAML"
 
 #: gaphor/RAAML/toolbox.py:22
-#, fuzzy
 msgid "New FTA Diagram"
-msgstr "Nuovo_Diagrama"
+msgstr "Nuovo diagramma FTA"
 
 #: gaphor/RAAML/toolbox.py:23
-#, fuzzy
 msgid "New STPA Diagram"
-msgstr "Nuovo_Diagrama"
+msgstr "Nuovo diagramma STPA"
 
 #: gaphor/RAAML/toolbox.py:27
-#, fuzzy
 msgid "New Top Event"
-msgstr "Componente"
+msgstr "Nuovo evento principale"
 
 #: gaphor/RAAML/toolbox.py:28
-#, fuzzy
 msgid "New Loss"
-msgstr "Classe"
+msgstr "Nuova perdita"
 
 #: gaphor/RAAML/toolbox.py:29
 #, fuzzy
@@ -469,7 +456,7 @@ msgstr ""
 #: gaphor/SysML/toolbox.py:125 gaphor/SysML/toolbox.py:167
 #, fuzzy
 msgid "New Package"
-msgstr "Nuovo_Pacchetto"
+msgstr "Nuovo Pacchetto"
 
 #: gaphor/SysML/toolbox.py:97
 msgid "New Internal Block Diagram"
@@ -484,7 +471,7 @@ msgstr "Blocco"
 #: gaphor/SysML/toolbox.py:110 gaphor/UML/toolbox.py:51
 #, fuzzy
 msgid "New Package Diagram"
-msgstr "Nuovo_Diagrama"
+msgstr "Nuovo Diagrama"
 
 #: gaphor/SysML/toolbox.py:117
 #, fuzzy
@@ -494,7 +481,7 @@ msgstr "Requisito"
 #: gaphor/SysML/toolbox.py:159 gaphor/UML/toolbox.py:58
 #, fuzzy
 msgid "New Use Case Diagram"
-msgstr "Nuovo_Diagrama"
+msgstr "Nuovo Diagrama"
 
 #: gaphor/SysML/toolbox.py:173 gaphor/UML/toolbox.py:64
 #, fuzzy
@@ -730,7 +717,7 @@ msgstr "Componente"
 #: gaphor/UML/toolbox.py:53
 #, fuzzy
 msgid "New Deployment Diagram"
-msgstr "Nuovo_Diagrama"
+msgstr "Nuovo Diagrama"
 
 #: gaphor/UML/toolbox.py:56
 msgid "New Communication Diagram"
@@ -739,7 +726,7 @@ msgstr ""
 #: gaphor/UML/toolbox.py:59
 #, fuzzy
 msgid "New Profile Diagram"
-msgstr "Nuovo_Diagrama"
+msgstr "Nuovo Diagrama"
 
 #: gaphor/UML/toolbox.py:65
 #, fuzzy
@@ -922,7 +909,7 @@ msgstr ""
 #: gaphor/UML/actions/activitypropertypage.py:137
 #, fuzzy
 msgid "New Parameter…"
-msgstr "Nuovo_Pacchetto"
+msgstr "Nuovo Pacchetto"
 
 #: gaphor/UML/actions/objectnode.py:14 gaphor/UML/actions/propertypages.ui:165
 msgid "unordered"
@@ -1397,7 +1384,7 @@ msgstr "Nuovo modello"
 #: gaphor/UML/interactions/propertypages.ui:26
 #, fuzzy
 msgid "Delete"
-msgstr "Can_cella"
+msgstr "Cancella"
 
 #: gaphor/UML/interactions/propertypages.ui:42
 #, fuzzy
@@ -1612,7 +1599,7 @@ msgstr "Riga di commento"
 #: gaphor/diagram/diagramtoolbox.py:187
 #, fuzzy
 msgid "Diagram metadata"
-msgstr "Nuovo_Diagrama"
+msgstr "Nuovo Diagrama"
 
 #: gaphor/diagram/diagramtoolbox.py:194 gaphor/diagram/propertypages.ui:260
 msgid "Picture"
@@ -1851,22 +1838,22 @@ msgstr "Nuovo modello"
 #: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:66
 #, fuzzy
 msgid "New diagram"
-msgstr "Nuovo_Diagrama"
+msgstr "Nuovo Diagrama"
 
 #: gaphor/templates/c4model.gaphor
 #, fuzzy
 msgid "1. Context diagrams"
-msgstr "Nuovo_Diagrama"
+msgstr "Nuovo Diagrama"
 
 #: gaphor/templates/c4model.gaphor
 #, fuzzy
 msgid "2. Container diagrams"
-msgstr "Nuovo_Diagrama"
+msgstr "Nuovo Diagrama"
 
 #: gaphor/templates/c4model.gaphor
 #, fuzzy
 msgid "4. Code diagrams"
-msgstr "Nuovo_Diagrama"
+msgstr "Nuovo Diagrama"
 
 #: gaphor/templates/c4model.gaphor
 msgid "3. Component diagrams"
@@ -1880,17 +1867,17 @@ msgstr "Nuovo_Diagrama"
 #: gaphor/templates/c4model.gaphor
 #, fuzzy
 msgid "Container diagram"
-msgstr "Nuovo_Diagrama"
+msgstr "Nuovo Diagrama"
 
 #: gaphor/templates/c4model.gaphor
 #, fuzzy
 msgid "Component diagram"
-msgstr "Nuovo_Diagrama"
+msgstr "Nuovo Diagrama"
 
 #: gaphor/templates/c4model.gaphor
 #, fuzzy
 msgid "Code diagram"
-msgstr "Nuovo_Diagrama"
+msgstr "Nuovo Diagrama"
 
 #: gaphor/templates/raaml-example.gaphor gaphor/templates/raaml.gaphor
 #: gaphor/templates/uml-example.gaphor gaphor/templates/uml.gaphor
@@ -2048,7 +2035,7 @@ msgstr ""
 #: gaphor/templates/sysml-example.gaphor gaphor/templates/sysml.gaphor
 #, fuzzy
 msgid "Logical Boundary"
-msgstr "Nuovo_Diagrama"
+msgstr "Nuovo Diagrama"
 
 #: gaphor/templates/sysml-example.gaphor gaphor/templates/sysml.gaphor
 msgid "Technology Structure"
@@ -2057,7 +2044,7 @@ msgstr ""
 #: gaphor/templates/sysml-example.gaphor gaphor/templates/sysml.gaphor
 #, fuzzy
 msgid "Technology Boundary"
-msgstr "Nuovo_Diagrama"
+msgstr "Nuovo Diagrama"
 
 #: gaphor/templates/sysml-example.gaphor gaphor/templates/sysml.gaphor
 #, fuzzy
@@ -2487,7 +2474,7 @@ msgstr ""
 #: gaphor/ui/diagrams.ui:12
 #, fuzzy
 msgid "Open a Diagram"
-msgstr "Nuovo_Diagrama"
+msgstr "Nuovo Diagrama"
 
 #: gaphor/ui/diagrams.ui:14
 msgid ""
@@ -2856,7 +2843,7 @@ msgstr "Profilo: {name}"
 #: gaphor/ui/mainwindow.ui:64
 #, fuzzy
 msgid "New diagram menu"
-msgstr "Nuovo_Diagrama"
+msgstr "Nuovo Diagrama"
 
 #: gaphor/ui/mainwindow.ui:72
 msgid "Open application menu"
@@ -2869,21 +2856,21 @@ msgstr ""
 #: gaphor/ui/modelbrowser.py:177
 #, fuzzy
 msgid "New Diagram"
-msgstr "Nuovo_Diagrama"
+msgstr "Nuovo Diagrama"
 
 #: gaphor/ui/modelbrowser.py:210
 #, fuzzy
 msgid "{name} package"
-msgstr "Nuovo_Pacchetto"
+msgstr "Nuovo Pacchetto"
 
 #: gaphor/ui/modelbrowser.py:212
 #, fuzzy
 msgid "New package"
-msgstr "Nuovo_Pacchetto"
+msgstr "Nuovo Pacchetto"
 
 #: gaphor/ui/modelbrowser.py:412 gaphor/ui/modelbrowser.py:596
 msgid "New _Package"
-msgstr "Nuovo_Pacchetto"
+msgstr "Nuovo _Pacchetto"
 
 #: gaphor/ui/modelbrowser.py:577
 msgid "_Open"
@@ -2892,7 +2879,7 @@ msgstr "_Apri"
 #: gaphor/ui/modelbrowser.py:577
 #, fuzzy
 msgid "Add to diagram"
-msgstr "Nuovo_Diagrama"
+msgstr "Nuovo Diagrama"
 
 #: gaphor/ui/modelbrowser.py:580
 msgid "_Rename"
@@ -2900,7 +2887,7 @@ msgstr "_Rinomina"
 
 #: gaphor/ui/modelbrowser.py:585
 msgid "New _Diagram"
-msgstr "Nuovo_Diagrama"
+msgstr "Nuovo _Diagrama"
 
 #: gaphor/ui/modelbrowser.py:592
 #, fuzzy
@@ -2918,7 +2905,7 @@ msgstr "Mostra in \"{diagram}\""
 #: gaphor/ui/modelbrowser.py:642
 #, fuzzy
 msgid "New Generic Diagram"
-msgstr "Nuovo_Diagrama"
+msgstr "Nuovo Diagrama"
 
 #: gaphor/ui/modelchanged.ui:6
 msgid "Model Changed on Disk"
@@ -2989,7 +2976,7 @@ msgstr ""
 #: gaphor/ui/help/shortcuts.ui:19
 #, fuzzy
 msgid "Rename"
-msgstr "_Rinomina"
+msgstr "Rinomina"
 
 #: gaphor/ui/help/shortcuts.ui:26
 msgid "Search"
@@ -2998,7 +2985,7 @@ msgstr ""
 #: gaphor/ui/help/shortcuts.ui:40
 #, fuzzy
 msgid "Close Diagram"
-msgstr "Nuovo_Diagrama"
+msgstr "Nuovo Diagrama"
 
 #: gaphor/ui/help/shortcuts.ui:54
 msgid "Toggle Fullscreen"
@@ -3064,7 +3051,7 @@ msgstr ""
 #: gaphor/ui/modelmerge/organize.py:134
 #, fuzzy
 msgid "Update diagram “{name}”"
-msgstr "Nuovo_Diagrama"
+msgstr "Nuovo Diagrama"
 
 #: gaphor/ui/modelmerge/organize.py:165 gaphor/ui/modelmerge/organize.py:307
 msgid "Update element “{name}”"
@@ -3170,4 +3157,3 @@ msgstr ""
 
 #~ msgid "Recently Opened"
 #~ msgstr ""
-
