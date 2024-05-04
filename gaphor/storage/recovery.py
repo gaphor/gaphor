@@ -17,6 +17,7 @@ from gaphor.core.modeling.event import (
 )
 from gaphor.core.modeling.presentation import MatrixUpdated
 from gaphor.diagram.connectors import ItemConnected, ItemDisconnected
+from gaphor.diagram.presentation import HandlePositionEvent
 from gaphor.event import ModelSaved, SessionCreated
 
 
@@ -44,6 +45,7 @@ class Recovery(Service):
         event_manager.subscribe(self.on_matrix_updated)
         event_manager.subscribe(self.on_item_connected)
         event_manager.subscribe(self.on_item_disconnected)
+        event_manager.subscribe(self.on_handle_position_event)
 
     def shutdown(self):
         self.event_manager.unsubscribe(self.on_model_loaded)
@@ -57,6 +59,7 @@ class Recovery(Service):
         self.event_manager.unsubscribe(self.on_matrix_updated)
         self.event_manager.unsubscribe(self.on_item_connected)
         self.event_manager.unsubscribe(self.on_item_disconnected)
+        self.event_manager.unsubscribe(self.on_handle_position_event)
 
     def replay(self, element_factory, modeling_language):
         for event in list(self.events):
@@ -86,6 +89,9 @@ class Recovery(Service):
                 case ("mu", element_id, matrix):
                     element = element_factory.lookup(element_id)
                     element.matrix.set(*matrix)
+                case ("hp", element_id, handle_index, pos):
+                    element = element_factory.lookup(element_id)
+                    element.handles()[handle_index].pos = pos
                 case ("ic", element_id, handle_index, connected_id, port_index):
                     element = element_factory.lookup(element_id)
                     connected = element_factory.lookup(connected_id)
@@ -168,17 +174,22 @@ class Recovery(Service):
 
     # We should handle all RevertibleEvent subtypes separately:
     # gaphor.core.modeling.presentation.MatrixUpdated
+    # gaphor.diagram.presentation.HandlePositionEvent
     # gaphor.diagram.connectors.ItemConnected
     # gaphor.diagram.connectors.ItemDisconnected
-    # ignore: gaphor.diagram.connectors.ItemTemporaryDisconnected
+    # gaphor.diagram.connectors.ItemTemporaryDisconnected
     # gaphor.diagram.connectors.ItemReconnected
-    # gaphor.diagram.presentation.HandlePositionEvent
     # gaphor.diagram.tools.segment.LineSplitSegmentEvent
     # gaphor.diagram.tools.segment.LineMergeSegmentEvent
 
     @event_handler(MatrixUpdated)
     def on_matrix_updated(self, event: MatrixUpdated):
         self.events.append(("mu", event.element.id, tuple(event.element.matrix)))
+
+    @event_handler(HandlePositionEvent)
+    def on_handle_position_event(self, event: HandlePositionEvent):
+        pos = tuple(event.element.handles()[event.handle_index].pos)
+        self.events.append(("hp", event.element.id, event.handle_index, pos))
 
     @event_handler(ItemConnected)
     def on_item_connected(self, event: ItemConnected):
