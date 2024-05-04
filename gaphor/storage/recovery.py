@@ -11,8 +11,11 @@ from gaphor.core.modeling.event import (
     DerivedUpdated,
     ElementCreated,
     ElementDeleted,
-    RevertibleEvent,
+    RedefinedAdded,
+    RedefinedDeleted,
+    RedefinedSet,
 )
+from gaphor.diagram.connectors import ItemConnected, ItemDisconnected
 from gaphor.event import ModelSaved, SessionCreated
 
 
@@ -32,23 +35,25 @@ class Recovery(Service):
         event_manager.subscribe(self.on_model_loaded)
         event_manager.subscribe(self.on_model_saved)
 
-        event_manager.subscribe(self.on_reversible_event)
         event_manager.subscribe(self.on_create_element_event)
         event_manager.subscribe(self.on_delete_element_event)
         event_manager.subscribe(self.on_attribute_change_event)
         event_manager.subscribe(self.on_association_set_event)
         event_manager.subscribe(self.on_association_delete_event)
+        event_manager.subscribe(self.on_item_connected)
+        event_manager.subscribe(self.on_item_disconnected)
 
     def shutdown(self):
         self.event_manager.unsubscribe(self.on_model_loaded)
         self.event_manager.unsubscribe(self.on_model_saved)
 
-        self.event_manager.unsubscribe(self.on_reversible_event)
         self.event_manager.unsubscribe(self.on_create_element_event)
         self.event_manager.unsubscribe(self.on_delete_element_event)
         self.event_manager.unsubscribe(self.on_attribute_change_event)
         self.event_manager.unsubscribe(self.on_association_set_event)
         self.event_manager.unsubscribe(self.on_association_delete_event)
+        self.event_manager.unsubscribe(self.on_item_connected)
+        self.event_manager.unsubscribe(self.on_item_disconnected)
 
     def replay(self, element_factory, modeling_language):
         for event in list(self.events):
@@ -75,6 +80,24 @@ class Recovery(Service):
                     element = element_factory.lookup(element_id)
                     other_element = element_factory.lookup(other_element_id)
                     del getattr(element, prop)[other_element]
+                case ("ic", element_id, handle_index, connected_id, port_index):
+                    element = element_factory.lookup(element_id)
+                    connected = element_factory.lookup(connected_id)
+                    ItemDisconnected(
+                        element,
+                        element.handles()[handle_index],
+                        connected,
+                        connected.ports()[port_index],
+                    ).revert(element)
+                case ("id", element_id, handle_index, connected_id, port_index):
+                    element = element_factory.lookup(element_id)
+                    connected = element_factory.lookup(connected_id)
+                    ItemConnected(
+                        element,
+                        element.handles()[handle_index],
+                        connected,
+                        connected.ports()[port_index],
+                    ).revert(element)
                 case _:
                     assert NotImplementedError(f"Event {event} not implemented")
 
@@ -89,19 +112,6 @@ class Recovery(Service):
     def on_model_saved(self, event):
         self.filename = recovery_filename(event.filename or "")
         self.truncate()
-
-    @event_handler(RevertibleEvent)
-    def on_reversible_event(self, event: RevertibleEvent):
-        # We should handle all RevertibleEvent subtypes separately:
-        # gaphor.core.modeling.presentation.MatrixUpdated
-        # gaphor.diagram.connectors.ItemConnected
-        # gaphor.diagram.connectors.ItemDisconnected
-        # ignore: gaphor.diagram.connectors.ItemTemporaryDisconnected
-        # gaphor.diagram.connectors.ItemReconnected
-        # gaphor.diagram.presentation.HandlePositionEvent
-        # gaphor.diagram.tools.segment.LineSplitSegmentEvent
-        # gaphor.diagram.tools.segment.LineMergeSegmentEvent
-        ...
 
     @event_handler(ElementCreated)
     def on_create_element_event(self, event: ElementCreated):
@@ -126,7 +136,7 @@ class Recovery(Service):
 
     @event_handler(AssociationAdded, AssociationSet)
     def on_association_set_event(self, event: AssociationSet | AssociationAdded):
-        if isinstance(event, DerivedUpdated):
+        if isinstance(event, (DerivedUpdated, RedefinedAdded, RedefinedSet)):
             return
         self.events.append(
             (
@@ -139,7 +149,7 @@ class Recovery(Service):
 
     @event_handler(AssociationDeleted)
     def on_association_delete_event(self, event: AssociationDeleted):
-        if isinstance(event, DerivedUpdated):
+        if isinstance(event, (DerivedUpdated, RedefinedDeleted)):
             return
         self.events.append(
             (
@@ -147,5 +157,39 @@ class Recovery(Service):
                 event.element.id,
                 event.property.name,
                 event.old_value and event.old_value.id,
+            )
+        )
+
+    # We should handle all RevertibleEvent subtypes separately:
+    # gaphor.core.modeling.presentation.MatrixUpdated
+    # gaphor.diagram.connectors.ItemConnected
+    # gaphor.diagram.connectors.ItemDisconnected
+    # ignore: gaphor.diagram.connectors.ItemTemporaryDisconnected
+    # gaphor.diagram.connectors.ItemReconnected
+    # gaphor.diagram.presentation.HandlePositionEvent
+    # gaphor.diagram.tools.segment.LineSplitSegmentEvent
+    # gaphor.diagram.tools.segment.LineMergeSegmentEvent
+
+    @event_handler(ItemConnected)
+    def on_item_connected(self, event: ItemConnected):
+        self.events.append(
+            (
+                "ic",
+                event.element.id,
+                event.handle_index,
+                event.connected_id,
+                event.port_index,
+            )
+        )
+
+    @event_handler(ItemDisconnected)
+    def on_item_disconnected(self, event: ItemDisconnected):
+        self.events.append(
+            (
+                "id",
+                event.element.id,
+                event.handle_index,
+                event.connected_id,
+                event.port_index,
             )
         )
