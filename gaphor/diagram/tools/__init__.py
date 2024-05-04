@@ -6,7 +6,6 @@ from gaphas.tool import hover_tool, rubberband_tool, view_focus_tool, zoom_tools
 from gaphas.tool.scroll import pan_tool
 
 import gaphor.diagram.tools.handlemove
-import gaphor.diagram.tools.segment
 from gaphor.diagram.tools.dnd import drop_target_tool
 from gaphor.diagram.tools.dropzone import drop_zone_tool
 from gaphor.diagram.tools.itemtool import item_tool
