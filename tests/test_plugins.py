@@ -1,6 +1,9 @@
 import subprocess
 import sys
 from pathlib import Path
+from urllib import error, request
+
+import pytest
 
 from gaphor.entrypoint import load_entry_points
 from gaphor.plugins import (
@@ -9,6 +12,16 @@ from gaphor.plugins import (
 )
 
 
+def have_internet():
+    try:
+        request.urlopen("http://gaphor.org", timeout=1)
+    except error.URLError:
+        return False
+    else:
+        return True
+
+
+@pytest.mark.skipif(not have_internet(), reason="This test requires access to pypi")
 def test_loading_plugins(tmp_path, monkeypatch):
     monkeypatch.setenv("GAPHOR_PLUGIN_PATH", str(tmp_path))
 
