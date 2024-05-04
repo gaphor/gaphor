@@ -129,6 +129,22 @@ def test_record_delete_association(
     assert new_diagram not in new_comment.ownedDiagram
 
 
+def test_record_move_element(
+    recovery, event_manager, element_factory, modeling_language
+):
+    diagram = element_factory.create(Diagram)
+    class_item = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
+    class_item.matrix.translate(200, 100)
+
+    new_model = ElementFactory(event_manager)
+    recovery.replay(new_model, modeling_language)
+
+    new_class_item = new_model.lookup(class_item.id)
+
+    assert new_class_item.matrix[4] == pytest.approx(200)
+    assert new_class_item.matrix[5] == pytest.approx(100)
+
+
 def test_record_connect_element(
     recovery, event_manager, element_factory, modeling_language
 ):

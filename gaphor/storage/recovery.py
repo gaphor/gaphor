@@ -15,6 +15,7 @@ from gaphor.core.modeling.event import (
     RedefinedDeleted,
     RedefinedSet,
 )
+from gaphor.core.modeling.presentation import MatrixUpdated
 from gaphor.diagram.connectors import ItemConnected, ItemDisconnected
 from gaphor.event import ModelSaved, SessionCreated
 
@@ -40,6 +41,7 @@ class Recovery(Service):
         event_manager.subscribe(self.on_attribute_change_event)
         event_manager.subscribe(self.on_association_set_event)
         event_manager.subscribe(self.on_association_delete_event)
+        event_manager.subscribe(self.on_matrix_updated)
         event_manager.subscribe(self.on_item_connected)
         event_manager.subscribe(self.on_item_disconnected)
 
@@ -52,6 +54,7 @@ class Recovery(Service):
         self.event_manager.unsubscribe(self.on_attribute_change_event)
         self.event_manager.unsubscribe(self.on_association_set_event)
         self.event_manager.unsubscribe(self.on_association_delete_event)
+        self.event_manager.unsubscribe(self.on_matrix_updated)
         self.event_manager.unsubscribe(self.on_item_connected)
         self.event_manager.unsubscribe(self.on_item_disconnected)
 
@@ -80,6 +83,9 @@ class Recovery(Service):
                     element = element_factory.lookup(element_id)
                     other_element = element_factory.lookup(other_element_id)
                     del getattr(element, prop)[other_element]
+                case ("mu", element_id, matrix):
+                    element = element_factory.lookup(element_id)
+                    element.matrix.set(*matrix)
                 case ("ic", element_id, handle_index, connected_id, port_index):
                     element = element_factory.lookup(element_id)
                     connected = element_factory.lookup(connected_id)
@@ -169,6 +175,10 @@ class Recovery(Service):
     # gaphor.diagram.presentation.HandlePositionEvent
     # gaphor.diagram.tools.segment.LineSplitSegmentEvent
     # gaphor.diagram.tools.segment.LineMergeSegmentEvent
+
+    @event_handler(MatrixUpdated)
+    def on_matrix_updated(self, event: MatrixUpdated):
+        self.events.append(("mu", event.element.id, tuple(event.element.matrix)))
 
     @event_handler(ItemConnected)
     def on_item_connected(self, event: ItemConnected):
