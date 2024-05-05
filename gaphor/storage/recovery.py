@@ -4,7 +4,7 @@ from pathlib import Path
 from gaphor import settings
 from gaphor.abc import Service
 from gaphor.core import event_handler
-from gaphor.core.modeling.event import (
+from gaphor.core.modeling import (
     AssociationAdded,
     AssociationDeleted,
     AssociationSet,
@@ -97,7 +97,11 @@ class Recovery(Service):
 
     @event_handler(TransactionCommit)
     def on_transaction_commit(self, event: TransactionCommit):
-        if self.filename and self.events and event.context != "rollback":
+        if (
+            self.filename
+            and self.events
+            and event.context not in ("rollback", "recover")
+        ):
             with self.filename.open("a", encoding="utf-8") as f:
                 f.write(repr(self.events))
                 f.write("\n")
@@ -118,7 +122,7 @@ class Recovery(Service):
             return
 
         events = []
-        with Transaction(self.event_manager):
+        with Transaction(self.event_manager, context="recover"):
             for line in self.filename.open(encoding="utf-8"):
                 events = ast.literal_eval(line.rstrip("\r\n"))
                 replay_events(events, self.element_factory, self.modeling_language)
