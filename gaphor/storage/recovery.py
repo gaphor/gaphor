@@ -26,7 +26,12 @@ from gaphor.diagram.connectors import (
 )
 from gaphor.diagram.presentation import HandlePositionEvent
 from gaphor.diagram.segment import LineMergeSegmentEvent, LineSplitSegmentEvent
-from gaphor.event import ModelSaved, Notification, SessionCreated
+from gaphor.event import (
+    ModelSaved,
+    Notification,
+    SessionCreated,
+    SessionShutdown,
+)
 from gaphor.i18n import gettext
 from gaphor.transaction import Transaction, TransactionCommit, TransactionRollback
 
@@ -51,6 +56,7 @@ class Recovery(Service):
         event_manager.subscribe(self.on_model_loaded)
         event_manager.subscribe(self.on_model_ready)
         event_manager.subscribe(self.on_model_saved)
+        event_manager.subscribe(self.on_session_shutdown)
 
         event_manager.subscribe(self.on_create_element_event)
         event_manager.subscribe(self.on_delete_element_event)
@@ -71,6 +77,7 @@ class Recovery(Service):
         self.event_manager.unsubscribe(self.on_model_loaded)
         self.event_manager.unsubscribe(self.on_model_ready)
         self.event_manager.unsubscribe(self.on_model_saved)
+        self.event_manager.unsubscribe(self.on_session_shutdown)
 
         self.event_manager.unsubscribe(self.on_create_element_event)
         self.event_manager.unsubscribe(self.on_delete_element_event)
@@ -136,6 +143,12 @@ class Recovery(Service):
         self.filename = recovery_filename(event.filename) if event.filename else None
 
         # Delete again: new model name may be different from original one
+        if self.filename:
+            self.filename.unlink(missing_ok=True)
+        self.truncate()
+
+    @event_handler(SessionShutdown)
+    def on_session_shutdown(self, event: SessionShutdown):
         if self.filename:
             self.filename.unlink(missing_ok=True)
         self.truncate()
