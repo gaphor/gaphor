@@ -109,6 +109,8 @@ class MainWindow(Service, ActionProvider):
         event_manager.subscribe(self._on_file_manager_state_changed)
         event_manager.subscribe(self._on_current_diagram_changed)
         event_manager.subscribe(self._on_model_ready)
+        event_manager.subscribe(self._on_undo_manager_state_changed)
+        event_manager.subscribe(self._on_action_enabled)
 
     def shutdown(self):
         if self.window:
@@ -224,8 +226,6 @@ class MainWindow(Service, ActionProvider):
         window.present()
 
         em = self.event_manager
-        em.subscribe(self._on_undo_manager_state_changed)
-        em.subscribe(self._on_action_enabled)
         em.subscribe(self._on_modeling_language_selection_changed)
         em.subscribe(self.in_app_notifier.handle)
 
@@ -289,10 +289,6 @@ class MainWindow(Service, ActionProvider):
 
     @event_handler(CurrentDiagramChanged)
     def _on_current_diagram_changed(self, event):
-        if not self.window:
-            self._ui_updates.append(lambda: self._on_current_diagram_changed(event))
-            return
-
         self.title.set_text(
             (event.diagram.name or gettext("<None>")) if event.diagram else "Gaphor"
         )
@@ -304,7 +300,9 @@ class MainWindow(Service, ActionProvider):
 
     @event_handler(ActionEnabled)
     def _on_action_enabled(self, event):
-        if self.action_group and event.scope == "win":
+        if not self.action_group:
+            self._ui_updates.append(lambda: self._on_action_enabled(event))
+        elif self.action_group and event.scope == "win":
             a = self.action_group.lookup_action(event.name)
             a.set_enabled(event.enabled)
 
