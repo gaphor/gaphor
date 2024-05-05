@@ -8,7 +8,12 @@ from gaphor import UML
 from gaphor.abc import Service
 from gaphor.core import event_handler
 from gaphor.core.modeling import Diagram, Element, Presentation
-from gaphor.core.modeling.event import AssociationDeleted, AssociationSet, DerivedSet
+from gaphor.core.modeling.event import (
+    AssociationDeleted,
+    AssociationSet,
+    DerivedSet,
+    DiagramUpdateRequested,
+)
 from gaphor.diagram.deletable import deletable
 from gaphor.diagram.general import CommentLineItem
 from gaphor.event import Notification
@@ -38,9 +43,12 @@ class SanitizerService(Service):
         self.event_manager = event_manager
         self.properties = properties or {}
         self.in_undo_transaction = False
+        self._to_be_updated_diagrams = set()
 
         event_manager.subscribe(self._begin_transaction)
         event_manager.subscribe(self._end_transaction)
+        event_manager.subscribe(self._diagram_update_requested)
+        event_manager.subscribe(self._on_update_diagrams)
         event_manager.subscribe(self._unlink_on_subject_delete)
         event_manager.subscribe(self._update_annotated_element_link)
         event_manager.subscribe(self._unlink_on_extension_delete)
@@ -50,6 +58,8 @@ class SanitizerService(Service):
         event_manager = self.event_manager
         event_manager.unsubscribe(self._begin_transaction)
         event_manager.unsubscribe(self._end_transaction)
+        event_manager.unsubscribe(self._on_update_diagrams)
+        event_manager.unsubscribe(self._diagram_update_requested)
         event_manager.unsubscribe(self._unlink_on_subject_delete)
         event_manager.unsubscribe(self._update_annotated_element_link)
         event_manager.unsubscribe(self._unlink_on_extension_delete)
@@ -62,6 +72,16 @@ class SanitizerService(Service):
     @event_handler(TransactionCommit, TransactionRollback)
     def _end_transaction(self, _event):
         self.in_undo_transaction = False
+
+    @event_handler(DiagramUpdateRequested)
+    def _diagram_update_requested(self, event: DiagramUpdateRequested):
+        self._to_be_updated_diagrams.add(event.diagram)
+
+    @event_handler(TransactionCommit, TransactionRollback)
+    def _on_update_diagrams(self, event):
+        for diagram in self._to_be_updated_diagrams:
+            diagram.update()
+        self._to_be_updated_diagrams.clear()
 
     @event_handler(AssociationSet)
     @undo_guard
