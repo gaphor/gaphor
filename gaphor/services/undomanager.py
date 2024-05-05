@@ -25,6 +25,7 @@ from gaphor.core.modeling.event import (
     AttributeUpdated,
     ElementCreated,
     ElementDeleted,
+    ModelFlushed,
     ModelReady,
     RevertibleEvent,
 )
@@ -120,6 +121,7 @@ class UndoManager(Service, ActionProvider):
         self._stack_depth = 20
         self._current_transaction = None
 
+        event_manager.subscribe(self.ready)
         event_manager.subscribe(self.reset)
         event_manager.priority_subscribe(self.begin_transaction)
         event_manager.subscribe(self.commit_transaction)
@@ -137,6 +139,7 @@ class UndoManager(Service, ActionProvider):
         self._action_executed()
 
     def shutdown(self):
+        self.event_manager.unsubscribe(self.ready)
         self.event_manager.unsubscribe(self.reset)
         self.event_manager.unsubscribe(self.begin_transaction)
         self.event_manager.unsubscribe(self.commit_transaction)
@@ -153,18 +156,22 @@ class UndoManager(Service, ActionProvider):
         self.event_manager.unsubscribe(self.undo_association_delete_event)
 
     def clear_undo_stack(self):
-        self._undo_stack = []
-        self._current_transaction = None
+        del self._undo_stack[:]
 
     def clear_redo_stack(self):
         del self._redo_stack[:]
 
     @event_handler(ModelReady)
-    def reset(self, event=None):
+    def ready(self, _event=None):
+        self._action_executed(state_changed=False)
+
+    @event_handler(ModelFlushed)
+    def reset(self, _event=None):
+        assert not self._current_transaction
+
         self.clear_redo_stack()
         self.clear_undo_stack()
-        self.event_manager.handle(ActionEnabled("win.edit-undo", False))
-        self.event_manager.handle(ActionEnabled("win.edit-redo", False))
+        self._action_executed(state_changed=False)
 
     @event_handler(TransactionBegin)
     def begin_transaction(self, event=None):
@@ -274,10 +281,11 @@ class UndoManager(Service, ActionProvider):
     def can_redo(self):
         return bool(self._redo_stack)
 
-    def _action_executed(self, event=None):
+    def _action_executed(self, state_changed=True):
         self.event_manager.handle(ActionEnabled("win.edit-undo", self.can_undo()))
         self.event_manager.handle(ActionEnabled("win.edit-redo", self.can_redo()))
-        self.event_manager.handle(UndoManagerStateChanged(self))
+        if state_changed:
+            self.event_manager.handle(UndoManagerStateChanged(self))
 
     def lookup(self, id: str) -> Element:
         if element := self.element_factory.lookup(id):
