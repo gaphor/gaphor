@@ -18,6 +18,7 @@ from gaphor.core.modeling.event import (
 from gaphor.core.modeling.presentation import MatrixUpdated
 from gaphor.diagram.connectors import ItemConnected, ItemDisconnected
 from gaphor.diagram.presentation import HandlePositionEvent
+from gaphor.diagram.segment import LineMergeSegmentEvent, LineSplitSegmentEvent
 from gaphor.event import ModelSaved, SessionCreated
 
 
@@ -46,6 +47,8 @@ class Recovery(Service):
         event_manager.subscribe(self.on_item_connected)
         event_manager.subscribe(self.on_item_disconnected)
         event_manager.subscribe(self.on_handle_position_event)
+        event_manager.subscribe(self.on_split_line_segment_event)
+        event_manager.subscribe(self.on_merge_line_segment_event)
 
     def shutdown(self):
         self.event_manager.unsubscribe(self.on_model_loaded)
@@ -60,6 +63,8 @@ class Recovery(Service):
         self.event_manager.unsubscribe(self.on_item_connected)
         self.event_manager.unsubscribe(self.on_item_disconnected)
         self.event_manager.unsubscribe(self.on_handle_position_event)
+        self.event_manager.unsubscribe(self.on_split_line_segment_event)
+        self.event_manager.unsubscribe(self.on_merge_line_segment_event)
 
     def replay(self, element_factory, modeling_language):
         for event in list(self.events):
@@ -110,6 +115,12 @@ class Recovery(Service):
                         connected,
                         connected.ports()[port_index],
                     ).revert(element)
+                case ("ls", element_id, segment, count):
+                    element = element_factory.lookup(element_id)
+                    LineMergeSegmentEvent(element, segment, count).revert(element)
+                case ("lm", element_id, segment, count):
+                    element = element_factory.lookup(element_id)
+                    LineSplitSegmentEvent(element, segment, count).revert(element)
                 case _:
                     assert NotImplementedError(f"Event {event} not implemented")
 
@@ -212,5 +223,27 @@ class Recovery(Service):
                 event.handle_index,
                 event.connected_id,
                 event.port_index,
+            )
+        )
+
+    @event_handler(LineSplitSegmentEvent)
+    def on_split_line_segment_event(self, event: LineSplitSegmentEvent):
+        self.events.append(
+            (
+                "ls",
+                event.element.id,
+                event.segment,
+                event.count,
+            )
+        )
+
+    @event_handler(LineMergeSegmentEvent)
+    def on_merge_line_segment_event(self, event: LineMergeSegmentEvent):
+        self.events.append(
+            (
+                "lm",
+                event.element.id,
+                event.segment,
+                event.count,
             )
         )

@@ -1,8 +1,9 @@
 import pytest
+from gaphas.segment import Segment
 
 from gaphor import UML
 from gaphor.core.modeling import Comment, Diagram, ElementFactory
-from gaphor.diagram.general import CommentItem
+from gaphor.diagram.general import CommentItem, Line
 from gaphor.diagram.tests.fixtures import connect, disconnect
 from gaphor.storage.recovery import Recovery
 from gaphor.UML.diagramitems import ClassItem, DependencyItem
@@ -239,3 +240,42 @@ def test_record_disconnect_element(
     assert cinfo_head.item is new_dependency_item
     assert cinfo_head.connected is new_class_item
     assert not cinfo_tail
+
+
+def test_record_split_line_segments(
+    recovery, event_manager, element_factory, modeling_language
+):
+    diagram = element_factory.create(Diagram)
+    line_item = diagram.create(Line)
+    Segment(line_item, diagram).split_segment(0, 2)
+    handle_positions = [tuple(h.pos) for h in line_item.handles()]
+
+    new_model = ElementFactory(event_manager)
+    recovery.replay(new_model, modeling_language)
+
+    new_line_item = new_model.lookup(line_item.id)
+    new_handle_positions = [tuple(h.pos) for h in new_line_item.handles()]
+
+    assert len(new_handle_positions) == 3
+    assert handle_positions == new_handle_positions
+
+
+def test_record_merge_line_segments(
+    recovery, event_manager, element_factory, modeling_language
+):
+    diagram = element_factory.create(Diagram)
+    line_item = diagram.create(Line)
+    Segment(line_item, diagram).split_segment(0, 3)
+    new_model = ElementFactory(event_manager)
+    recovery.replay(new_model, modeling_language)
+
+    recovery.truncate()
+    Segment(line_item, diagram).merge_segment(1, 2)
+    handle_positions = [tuple(h.pos) for h in line_item.handles()]
+    recovery.replay(new_model, modeling_language)
+
+    new_line_item = new_model.lookup(line_item.id)
+    new_handle_positions = [tuple(h.pos) for h in new_line_item.handles()]
+
+    assert len(new_handle_positions) == 3
+    assert handle_positions == new_handle_positions
