@@ -26,7 +26,8 @@ from gaphor.diagram.connectors import (
 )
 from gaphor.diagram.presentation import HandlePositionEvent
 from gaphor.diagram.segment import LineMergeSegmentEvent, LineSplitSegmentEvent
-from gaphor.event import ModelSaved, SessionCreated
+from gaphor.event import ModelSaved, Notification, SessionCreated
+from gaphor.i18n import gettext
 from gaphor.transaction import Transaction, TransactionCommit, TransactionRollback
 
 
@@ -109,6 +110,7 @@ class Recovery(Service):
         if not self.filename or not self.filename.exists():
             return
 
+        events = []
         with Transaction(self.event_manager):
             for line in self.filename.open(encoding="utf-8"):
                 events = ast.literal_eval(line.rstrip("\r\n"))
@@ -116,6 +118,15 @@ class Recovery(Service):
 
             # Ensure events are not recorded again
             self.truncate()
+
+        if events:
+            self.event_manager.handle(
+                Notification(
+                    gettext(
+                        "This model contains unsaved changes. The changes have been restored."
+                    )
+                )
+            )
 
     @event_handler(ModelSaved)
     def on_model_saved(self, event: ModelSaved):
