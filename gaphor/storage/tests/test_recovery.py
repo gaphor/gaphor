@@ -5,19 +5,15 @@ from gaphor import UML
 from gaphor.core.modeling import Comment, Diagram, ElementFactory
 from gaphor.diagram.general import CommentItem, Line
 from gaphor.diagram.tests.fixtures import connect, disconnect
-from gaphor.storage.recovery import Recovery
+from gaphor.storage.recovery import Recovery, replay_events
 from gaphor.UML.diagramitems import ClassItem, DependencyItem
 
 
 @pytest.fixture
-def recovery(event_manager, element_factory):
-    recovery = Recovery(event_manager, element_factory)
+def recovery(event_manager, element_factory, modeling_language):
+    recovery = Recovery(event_manager, element_factory, modeling_language)
     yield recovery
     recovery.shutdown()
-
-
-def test_initialize(event_manager, element_factory):
-    assert recovery
 
 
 def test_record_create_element(
@@ -27,7 +23,7 @@ def test_record_create_element(
 
     new_model = ElementFactory(event_manager)
 
-    recovery.replay(new_model, modeling_language)
+    replay_events(recovery.events[:], new_model, modeling_language)
 
     assert ("c", "Comment", comment.id, None) in recovery.events
     assert new_model.lookup(comment.id)
@@ -39,7 +35,9 @@ def test_record_create_presentation(
     comment = diagram.create(CommentItem)
 
     new_model = ElementFactory(event_manager)
-    recovery.replay(new_model, modeling_language)
+    new_model.create_as(Diagram, id=diagram.id)
+
+    replay_events(recovery.events[:], new_model, modeling_language)
 
     assert ("c", "CommentItem", comment.id, diagram.id) in recovery.events
 
@@ -53,7 +51,7 @@ def test_record_delete_element(
     comment.unlink()
 
     new_model = ElementFactory(event_manager)
-    recovery.replay(new_model, modeling_language)
+    replay_events(recovery.events[:], new_model, modeling_language)
 
     assert ("c", "Comment", comment.id, None) in recovery.events
     assert ("u", comment.id, None) in recovery.events
@@ -67,7 +65,8 @@ def test_record_delete_presentation(
     comment.unlink()
 
     new_model = ElementFactory(event_manager)
-    recovery.replay(new_model, modeling_language)
+    new_model.create_as(Diagram, diagram.id)
+    replay_events(recovery.events[:], new_model, modeling_language)
 
     assert ("c", "CommentItem", comment.id, diagram.id) in recovery.events
     assert ("u", comment.id, diagram.id) in recovery.events
@@ -81,7 +80,7 @@ def test_record_update_attribute(
     comment.body = "Foo"
 
     new_model = ElementFactory(event_manager)
-    recovery.replay(new_model, modeling_language)
+    replay_events(recovery.events[:], new_model, modeling_language)
 
     assert ("c", "Comment", comment.id, None) in recovery.events
     assert ("a", comment.id, "body", "Foo") in recovery.events
@@ -97,7 +96,7 @@ def test_record_set_association(
     diagram.element = comment
 
     new_model = ElementFactory(event_manager)
-    recovery.replay(new_model, modeling_language)
+    replay_events(recovery.events[:], new_model, modeling_language)
 
     new_comment = new_model.lookup(comment.id)
     new_diagram = new_model.lookup(diagram.id)
@@ -118,7 +117,7 @@ def test_record_delete_association(
     del diagram.element
 
     new_model = ElementFactory(event_manager)
-    recovery.replay(new_model, modeling_language)
+    replay_events(recovery.events[:], new_model, modeling_language)
 
     new_comment = new_model.lookup(comment.id)
     new_diagram = new_model.lookup(diagram.id)
@@ -138,7 +137,7 @@ def test_record_move_element(
     class_item.matrix.translate(200, 100)
 
     new_model = ElementFactory(event_manager)
-    recovery.replay(new_model, modeling_language)
+    replay_events(recovery.events[:], new_model, modeling_language)
 
     new_class_item = new_model.lookup(class_item.id)
 
@@ -154,7 +153,7 @@ def test_record_move_handle_element(
     class_item.handles()[2].pos = (200, 100)
 
     new_model = ElementFactory(event_manager)
-    recovery.replay(new_model, modeling_language)
+    replay_events(recovery.events[:], new_model, modeling_language)
 
     new_class_item = new_model.lookup(class_item.id)
 
@@ -171,7 +170,7 @@ def test_record_connect_element(
     connect(dependency_item, dependency_item.head, class_item)
 
     new_model = ElementFactory(event_manager)
-    recovery.replay(new_model, modeling_language)
+    replay_events(recovery.events[:], new_model, modeling_language)
 
     new_diagram = new_model.lookup(diagram.id)
     new_class_item = new_model.lookup(class_item.id)
@@ -196,7 +195,7 @@ def test_record_connect_both_ends(
     connect(dependency_item, dependency_item.tail, other_class_item)
 
     new_model = ElementFactory(event_manager)
-    recovery.replay(new_model, modeling_language)
+    replay_events(recovery.events[:], new_model, modeling_language)
 
     new_diagram = new_model.lookup(diagram.id)
     new_class_item = new_model.lookup(class_item.id)
@@ -228,7 +227,7 @@ def test_record_disconnect_element(
     disconnect(dependency_item, dependency_item.tail)
 
     new_model = ElementFactory(event_manager)
-    recovery.replay(new_model, modeling_language)
+    replay_events(recovery.events[:], new_model, modeling_language)
 
     new_diagram = new_model.lookup(diagram.id)
     new_class_item = new_model.lookup(class_item.id)
@@ -254,7 +253,7 @@ def test_record_reconnect_element(
     diagram.update()
 
     new_model = ElementFactory(event_manager)
-    recovery.replay(new_model, modeling_language)
+    replay_events(recovery.events[:], new_model, modeling_language)
 
     new_diagram = new_model.lookup(diagram.id)
     new_dependency_item = new_model.lookup(dependency_item.id)
@@ -273,7 +272,7 @@ def test_record_split_line_segments(
     handle_positions = [tuple(h.pos) for h in line_item.handles()]
 
     new_model = ElementFactory(event_manager)
-    recovery.replay(new_model, modeling_language)
+    replay_events(recovery.events[:], new_model, modeling_language)
 
     new_line_item = new_model.lookup(line_item.id)
     new_handle_positions = [tuple(h.pos) for h in new_line_item.handles()]
@@ -289,12 +288,12 @@ def test_record_merge_line_segments(
     line_item = diagram.create(Line)
     Segment(line_item, diagram).split_segment(0, 3)
     new_model = ElementFactory(event_manager)
-    recovery.replay(new_model, modeling_language)
+    replay_events(recovery.events[:], new_model, modeling_language)
 
     recovery.truncate()
     Segment(line_item, diagram).merge_segment(1, 2)
     handle_positions = [tuple(h.pos) for h in line_item.handles()]
-    recovery.replay(new_model, modeling_language)
+    replay_events(recovery.events[:], new_model, modeling_language)
 
     new_line_item = new_model.lookup(line_item.id)
     new_handle_positions = [tuple(h.pos) for h in new_line_item.handles()]
