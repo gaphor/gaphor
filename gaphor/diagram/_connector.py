@@ -80,7 +80,7 @@ class PresentationConnector(ItemConnector):
         self.glue(sink)
         constraint = sink.constraint(item, handle)
         self.connections.reconnect_item(item, handle, sink.port, constraint=constraint)
-        item.handle(ItemReconnected(item, handle))
+        item.handle(ItemReconnected(item, handle, sink.item, sink.port))
 
 
 @ConnectorAspect.register(LinePresentation)

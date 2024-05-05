@@ -24,7 +24,7 @@ class PresentationSegment(LineSegment):
 
     def temporary_disconnect(self):
         # Send an event to cause a "temporary disconnect". This is the contra-signal
-        # of `ItemReconnected`, which is sent from the Connector in recreate_constraints().
+        # of `ItemReconnected`, sent from the PresentationConnector.reconnect_handle().
         connected = self.item
         model = self.model
 

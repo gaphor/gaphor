@@ -16,7 +16,12 @@ from gaphor.core.modeling.event import (
     RedefinedSet,
 )
 from gaphor.core.modeling.presentation import MatrixUpdated
-from gaphor.diagram.connectors import ItemConnected, ItemDisconnected
+from gaphor.diagram.connectors import (
+    ItemConnected,
+    ItemDisconnected,
+    ItemReconnected,
+    ItemTemporaryDisconnected,
+)
 from gaphor.diagram.presentation import HandlePositionEvent
 from gaphor.diagram.segment import LineMergeSegmentEvent, LineSplitSegmentEvent
 from gaphor.event import ModelSaved, SessionCreated
@@ -46,6 +51,7 @@ class Recovery(Service):
         event_manager.subscribe(self.on_matrix_updated)
         event_manager.subscribe(self.on_item_connected)
         event_manager.subscribe(self.on_item_disconnected)
+        event_manager.subscribe(self.on_item_reconnected)
         event_manager.subscribe(self.on_handle_position_event)
         event_manager.subscribe(self.on_split_line_segment_event)
         event_manager.subscribe(self.on_merge_line_segment_event)
@@ -62,6 +68,7 @@ class Recovery(Service):
         self.event_manager.unsubscribe(self.on_matrix_updated)
         self.event_manager.unsubscribe(self.on_item_connected)
         self.event_manager.unsubscribe(self.on_item_disconnected)
+        self.event_manager.unsubscribe(self.on_item_reconnected)
         self.event_manager.unsubscribe(self.on_handle_position_event)
         self.event_manager.unsubscribe(self.on_split_line_segment_event)
         self.event_manager.unsubscribe(self.on_merge_line_segment_event)
@@ -110,6 +117,15 @@ class Recovery(Service):
                     element = element_factory.lookup(element_id)
                     connected = element_factory.lookup(connected_id)
                     ItemConnected(
+                        element,
+                        element.handles()[handle_index],
+                        connected,
+                        connected.ports()[port_index],
+                    ).revert(element)
+                case ("ir", element_id, handle_index, connected_id, port_index):
+                    element = element_factory.lookup(element_id)
+                    connected = element_factory.lookup(connected_id)
+                    ItemTemporaryDisconnected(
                         element,
                         element.handles()[handle_index],
                         connected,
@@ -188,7 +204,7 @@ class Recovery(Service):
     # gaphor.diagram.presentation.HandlePositionEvent
     # gaphor.diagram.connectors.ItemConnected
     # gaphor.diagram.connectors.ItemDisconnected
-    # gaphor.diagram.connectors.ItemTemporaryDisconnected
+    # ignore: gaphor.diagram.connectors.ItemTemporaryDisconnected
     # gaphor.diagram.connectors.ItemReconnected
     # gaphor.diagram.tools.segment.LineSplitSegmentEvent
     # gaphor.diagram.tools.segment.LineMergeSegmentEvent
@@ -219,6 +235,18 @@ class Recovery(Service):
         self.events.append(
             (
                 "id",
+                event.element.id,
+                event.handle_index,
+                event.connected_id,
+                event.port_index,
+            )
+        )
+
+    @event_handler(ItemReconnected)
+    def on_item_reconnected(self, event: ItemReconnected):
+        self.events.append(
+            (
+                "ir",
                 event.element.id,
                 event.handle_index,
                 event.connected_id,

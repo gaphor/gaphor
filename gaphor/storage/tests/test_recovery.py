@@ -242,6 +242,28 @@ def test_record_disconnect_element(
     assert not cinfo_tail
 
 
+def test_record_reconnect_element(
+    recovery, event_manager, element_factory, modeling_language
+):
+    diagram = element_factory.create(Diagram)
+    class_item = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
+    dependency_item = diagram.create(DependencyItem)
+    connect(dependency_item, dependency_item.head, class_item)
+    dependency_item.head.pos = (100, 100)
+    connect(dependency_item, dependency_item.head, class_item)
+    diagram.update()
+
+    new_model = ElementFactory(event_manager)
+    recovery.replay(new_model, modeling_language)
+
+    new_diagram = new_model.lookup(diagram.id)
+    new_dependency_item = new_model.lookup(dependency_item.id)
+    new_diagram.update()
+
+    assert ("ir", dependency_item.id, 0, class_item.id, 1) in recovery.events
+    assert dependency_item.head.pos == new_dependency_item.head.pos
+
+
 def test_record_split_line_segments(
     recovery, event_manager, element_factory, modeling_language
 ):
