@@ -68,6 +68,7 @@ class Diagrams(UIComponent, ActionProvider):
             self._notebook.connect(
                 "notify::selected-page", self._on_current_page_changed
             ),
+            self._notebook.connect_after("map", self._on_current_page_changed),
         ]
 
         self.event_manager.subscribe(self._on_show_diagram)
@@ -111,7 +112,6 @@ class Diagrams(UIComponent, ActionProvider):
         for page_num, widget in get_widgets_on_pages(self._notebook):
             if widget.diagram_page.get_diagram() is diagram:
                 self._notebook.set_selected_page(self._notebook.get_nth_page(page_num))
-                self.get_current_view().grab_focus()
                 return True
         return False
 
@@ -137,7 +137,6 @@ class Diagrams(UIComponent, ActionProvider):
         apply_tool_select_controller(widget, self.toolbox)
         self._create_tab(diagram.name, widget)
         page.select_tool(self.toolbox.active_tool_name)
-        self.get_current_view().grab_focus()
         self._update_action_state()
         return page
 
@@ -175,10 +174,12 @@ class Diagrams(UIComponent, ActionProvider):
         )
         self.properties.set("opened-diagrams", list(diagram_ids()))
 
-    def _on_current_page_changed(self, _notebook_or_tab_page, _gparam):
+    def _on_current_page_changed(self, _notebook_or_tab_page=None, _gparam=None):
         diagram = self.get_current_diagram()
         self.event_manager.handle(CurrentDiagramChanged(diagram))
         self.properties.set("current-diagram", diagram.id if diagram else None)
+        view = self.get_current_view()
+        view.grab_focus()
 
     @action(name="close-current-tab", shortcut="<Primary>w")
     def close_current_tab(self):
