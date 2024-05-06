@@ -224,18 +224,19 @@ with open("../my-model.gaphor", "w") as out:
 
 ### Updating elements
 
-If you need to update existing elements, this can be done by keeping track of the element ID. Each element in the model has a unique internal id.
-Once again we need some imports from Gaphor:
+If you need to update existing elements, this can be done by keeping track of the element ID. Each element in the model
+has a unique internal id. Once again we need some imports from Gaphor:
 
 ```
-from gaphor.application import Session #needed to run services
-from gaphor.transaction import Transaction # needed to make changes
-from gaphor.storage import storage #needed to save to file
 from pathlib import Path
+
+from gaphor import UML
+from gaphor.application import Session  # needed to run services
+from gaphor.transaction import Transaction  # needed to make changes
+from gaphor.storage import storage  # needed to save to file
 ```
 
-Then start up the sevices we will use:
-
+Then start up the services we will use:
 
 ```
 # Create the Gaphor application object.
@@ -243,11 +244,10 @@ session = Session()
 # Get services we need.
 element_factory = session.get_service("element_factory")
 file_manager = session.get_service("file_manager")
-event_manager = session.get_service("event_manager")  
+event_manager = session.get_service("event_manager")
 ```
 
-and  load in the model to the session
-
+and load in the model to the session
 
 ```
 # The model file to load.
@@ -256,33 +256,35 @@ model_filename = "../my-model.gaphor"
 # Load model from file.
 file_manager.load(Path(model_filename))
 # Now we query the model to get the element we want to change:
-the_class = element_factory.select(lambda e: isinstance(e, UML.Class) and e.name="My Class" )
+the_class = element_factory.select(
+    lambda e: isinstance(e, UML.Class) and e.name == "My Class"
+)
 uid = the_class._id
 print(f"Original element: {the_class.name} -- {the_class.my_attr}")
 ```
 
-Importantly, the changes are made as part of a Transaction. Here we find the element with the same id, and then update the content. We  then save the altered model to file. 
+Importantly, the changes are made as part of a Transaction. Here we find the element with the same id, and then update
+the content. We then save the altered model to a file.
 
 ```
-    # change the name and write back into the model
-    with Transaction(event_manager) as ctx:
+# change the name and write back into the model
+with Transaction(event_manager) as ctx:
 
-        cls = next(
-            element_factory.select(
-                lambda e: isinstance(e, UML.Class) and e._id == uid
-            )
+    cls = next(
+        element_factory.select(
+            lambda e: isinstance(e, UML.Class) and e._id == uid
         )
-        cls.name = "Not My Class Anymore"
-        cls.attr = "updated string"
+    )
+    cls.name = "Not My Class Anymore"
+    cls.attr = "updated string"
 
-    # Write changes to file here
-    with Transaction(event_manager) as ctx:
-        with open(model_filename, "w") as out:
-            storage.save(out, element_factory)
-	    
-print(f"Updated element: {cls.name} -- {cls.my_attr}")	    
+# Write changes to file here
+with Transaction(event_manager) as ctx:
+    with open(model_filename, "w") as out:
+        storage.save(out, element_factory)
+
+print(f"Updated element: {cls.name} -- {cls.my_attr}")
 ```
-
 
 ## What else
 
