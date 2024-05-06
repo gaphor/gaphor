@@ -171,6 +171,9 @@ def load_elements_generator(
         assert elem.element
         elem.element.postload()
 
+    for diagram in element_factory.select(Diagram):
+        diagram.update()
+
 
 def _load_elements_and_canvasitems(
     elements: dict[str, element],
