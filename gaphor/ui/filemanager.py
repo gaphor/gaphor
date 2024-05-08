@@ -322,8 +322,6 @@ class FileManager(Service, ActionProvider):
                     for percentage in storage.save_generator(out, self.element_factory):
                         status_window.progress(percentage)
                         yield
-
-                self.filename = filename
                 self.event_manager.handle(ModelSaved(self, filename))
             except Exception as e:
                 error_handler(
@@ -334,9 +332,11 @@ class FileManager(Service, ActionProvider):
                     window=self.parent_window,
                 )
                 raise
+            else:
+                self.filename = filename
+                self._update_monitor()
             finally:
                 status_window.destroy()
-            self._update_monitor()
             if on_save_done:
                 on_save_done()
 
@@ -362,7 +362,8 @@ class FileManager(Service, ActionProvider):
             self._monitor = None
 
     def _on_file_changed(self, _banner, _file, _other_file, _event_type):
-        self.event_manager.handle(ModelChangedOnDisk(self._filename))
+        if not _event_type == Gio.FileMonitorEvent.ATTRIBUTE_CHANGED:
+            self.event_manager.handle(ModelChangedOnDisk(None, self._filename))
 
     @action(name="file-save", shortcut="<Primary>s")
     def action_save(self):
