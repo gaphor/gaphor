@@ -227,31 +227,31 @@ jobs:
           # Retry if first test fails
           Gaphor.app/Contents/MacOS/gaphor self-test || Gaphor.app/Contents/MacOS/gaphor self-test
 
-  windows-download-gtk:
-    name: Windows (Download GTK)
+  windows:
+    name: Windows
+    needs: lint
     runs-on: windows-latest
-    timeout-minutes: 15
+    env:
+      INCLUDE: C:\gtk\include;C:\gtk\include\cairo;C:\gtk\include\glib-2.0;C:\gtk\include\gobject-introspection-1.0;C:\gtk\lib\glib-2.0\include;
+      LIB: C:\gtk\lib
+      gvsbuild_version: 2024.5.0
+    permissions:
+      contents: write
+    timeout-minutes: 45
     outputs:
-      cachekey: ${{ steps.output.outputs.cachekey }}
+      installer: gaphor-${{ steps.install.outputs.version }}-installer.exe
+    if: "!contains(github.event.head_commit.message, 'skip ci')"
     steps:
-      - name: GTK binaries create dir
-        run: mkdir C:\gtk
       - name: GTK binaries get from cache
         uses: actions/cache@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9 # v4.0.2
         id: cache
         with:
           path: C:\gtk\**
           key: ${{ runner.os }}-gvsbuild-${{ env.gvsbuild_version }}
-      - name: Set up Python
-        if: steps.cache.outputs.cache-hit != 'true'
-        uses: actions/setup-python@82c7e631bb3cdc910f68e0081d67478d79c6982d # v5.1.0
-        with:
-          python-version: ${{ env.python_version }}
       - name: Download Gvsbuild
         if: steps.cache.outputs.cache-hit != 'true'
         env:
           REPO: "wingtk/gvsbuild"
-          VERSION: "2024.5.0"
           MATCH: "^GTK4_Gvsbuild_.+_x64.zip$"
           RENAME: "Gvsbuild.zip"
         shell: bash
@@ -259,7 +259,7 @@ jobs:
           curl -sL --fail \
             -H "Accept: application/vnd.github.v3+json" \
             -H "Authorization: Bearer ${{ github.token }}" \
-              "https://api.github.com/repos/${REPO}/releases/tags/${VERSION}" \
+              "https://api.github.com/repos/${REPO}/releases/tags/${{ env.gvsbuild_version }}" \
               | jq -r ".assets | .[] | select(.name | test(\"${MATCH}\")) | .url" \
               | tee asset.url
           curl -sL --fail \
@@ -268,37 +268,6 @@ jobs:
               -o "${RENAME}" \
               "$(cat asset.url)"
           7z x Gvsbuild.zip -oC:\gtk -y
-      - name: GTK binaries output cache key
-        id: output
-        run: Write-Output "cachekey=${{ runner.os }}-gvsbuild-${{ env.gvsbuild_version }}" >> $env:GITHUB_OUTPUT
-
-  windows:
-    name: Windows
-    needs: [lint, windows-download-gtk]
-    runs-on: windows-latest
-    env:
-      INCLUDE: C:\gtk\include;C:\gtk\include\cairo;C:\gtk\include\glib-2.0;C:\gtk\include\gobject-introspection-1.0;C:\gtk\lib\glib-2.0\include;
-      LIB: C:\gtk\lib
-    permissions:
-      contents: write
-    timeout-minutes: 45
-    outputs:
-      installer: gaphor-${{ steps.install.outputs.version }}-installer.exe
-    if: "!contains(github.event.head_commit.message, 'skip ci')"
-    steps:
-      - name: Create GTK binaries dir
-        run: mkdir C:\gtk
-      - name: Get GTK binaries from cache
-        uses: actions/cache/restore@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9 # v4.0.2
-        id: cache
-        with:
-          path: C:\gtk\**
-          key: ${{ needs.windows-download-gtk.outputs.cachekey }}
-      - name: Check cache hit
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: |
-          echo "No GTK binaries cache"
-          exit 1
       - name: Set up env
         run: |
           Write-Output "PKG_CONFIG=C:\gtk\bin\pkgconf.exe" >> $env:GITHUB_ENV
