@@ -39,34 +39,10 @@ To set up a development environment in Windows first install
 choco install git
 ```
 
-### MSYS2
+### GTK and Python with Gvsbuild
 
-The development environment in the next step needs MSYS2 installed to provide
-some Linux command line tools in Windows.
-
-Keep PowerShell open as administrator and install [MSYS2](http://www.msys2.org/):
-
-```PowerShell
-choco install msys2
-```
-
-### GTK and Python with gvsbuild
-
-gvsbuild provides a Python script helps you build the GTK library stack for
-Windows using Visual Studio. By compiling GTK with Visual Studio, we can then
-use a standard Python development environment in Windows.
-
-First we will install the gvsbuild dependencies:
-1. Visual C++ build tools workload for Visual Studio 2022 Build Tools
-2. Python
-
-#### Install Visual Studio 2022
-
-With your admin PowerShell terminal:
-
-```PowerShell
-choco install visualstudio2022-workload-vctools
-```
+Gvsbuild provides pre-built GTK libraries for Windows. We will install
+these libraries and Python.
 
 #### Install the Latest Python
 
@@ -83,7 +59,7 @@ The default installation options should be fine for use with Gaphor.
 2. Open a PowerShell terminal as a normal user and check the python version:
 
    ```PowerShell
-   py -3.11 --version
+   py -3.12 --version
    ```
 
 #### Install Graphviz
@@ -107,26 +83,20 @@ Graphviz is used by Gaphor for automatic diagram formatting.
 
 From the regular user PowerShell terminal execute:
 ```PowerShell
-py -3.11 -m pip install --user pipx
-py -3.11 -m pipx ensurepath
+py -3.12 -m pip install --user pipx
+py -3.12 -m pipx ensurepath
 ```
 
-#### Install gvsbuild
+#### Download GTK
 
-From the regular user PowerShell terminal execute:
+Download the latest release asset at https://github.com/wingtk/gvsbuild/releases. The file will be
+called GTK4_Gvsbuild_VERSION_x64.zip, where VERSION is the latest released version.
+
+Unzip the GTK4_Gvsbuild_VERSION_x64.zip file to C:\gtk. For example with 7Zip:
 
 ```PowerShell
-pipx install gvsbuild
+7z x GTK4_Gvsbuild_*.zip  -oC:\gtk -y
 ```
-
-#### Build GTK
-
-In the same PowerShell terminal, execute:
-
-```PowerShell
-gvsbuild build --enable-gi --py-wheel gobject-introspection gtk4 libadwaita gtksourceview5 pygobject pycairo adwaita-icon-theme hicolor-icon-theme
-```
-Grab a coffee, the build will take a few minutes to complete.
 
 ### Setup Gaphor
 
@@ -144,9 +114,9 @@ pipx install poetry
 
 Add GTK to your environmental variables:
 ```PowerShell
-$env:Path = $env:Path + ";C:\gtk-build\gtk\x64\release\bin"
-$env:LIB = "C:\gtk-build\gtk\x64\release\lib"
-$env:INCLUDE = "C:\gtk-build\gtk\x64\release\include;C:\gtk-build\gtk\x64\release\include\cairo;C:\gtk-build\gtk\x64\release\include\glib-2.0;C:\gtk-build\gtk\x64\release\include\gobject-introspection-1.0;C:\gtk-build\gtk\x64\release\lib\glib-2.0\include;"
+$env:Path = $env:Path + ";C:\gtk\bin"
+$env:LIB = "C:\gtk\lib"
+$env:INCLUDE = "C:\gtk\include;C:\gtk\include\cairo;C:\gtk\include\glib-2.0;C:\gtk\include\gobject-introspection-1.0;C:\gtk\lib\glib-2.0\include;"
 $env:XDG_DATA_HOME = "$HOME\.local\share"
 ```
 
@@ -165,8 +135,8 @@ poetry run pre-commit install
 
 Reinstall PyGObject and pycairo using gvsbuild wheels
 ```PowerShell
-poetry run pip install --force-reinstall (Resolve-Path C:\gtk-build\build\x64\release\pygobject\dist\PyGObject*.whl)
-poetry run pip install --force-reinstall (Resolve-Path C:\gtk-build\build\x64\release\pycairo\dist\pycairo*.whl)
+poetry run pip install --force-reinstall (Resolve-Path C:\gtk\wheels\PyGObject*.whl)
+poetry run pip install --force-reinstall (Resolve-Path C:\gtk\wheels\pycairo*.whl)
 ```
 
 Launch Gaphor!
@@ -183,7 +153,7 @@ cd (to the location you put gaphor)
 
 Ensure that path environment variable is set:
 ```PowerShell
-$env:Path = "C:\gtk-build\gtk\x64\release\bin;" + $env:Path
+$env:Path = "C:\gtk\bin;" + $env:Path
 ```
 
 Start Visual Studio Code:

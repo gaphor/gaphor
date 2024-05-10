@@ -237,14 +237,10 @@ jobs:
           # Retry if first test fails
           Gaphor.app/Contents/MacOS/gaphor self-test || Gaphor.app/Contents/MacOS/gaphor self-test
 
-  windows-build-gtk:
+  windows-download-gtk:
     name: Windows (Build GTK)
     runs-on: windows-latest
-    timeout-minutes: 60
-    env:
-      gvsbuild_version: 2024.4.1
-      # Bump this number if you want to force a rebuild of gvsbuild with the same version
-      gvsbuild_update: 1
+    timeout-minutes: 15
     outputs:
       cachekey: ${{ steps.output.outputs.cachekey }}
     steps:
@@ -254,49 +250,50 @@ jobs:
           egress-policy: audit
 
       - name: GTK binaries create dir
-        run: mkdir C:\gtk-build\gtk\x64\release
+        run: mkdir C:\gtk
       - name: GTK binaries get from cache
         uses: actions/cache@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9 # v4.0.2
         id: cache
         with:
-          path: C:\gtk-build\gtk\x64\release\**
-          key: ${{ runner.os }}-gvsbuild-${{ env.gvsbuild_update }}-${{ env.gvsbuild_version }}
+          path: C:\gtk\**
+          key: ${{ runner.os }}-gvsbuild-${{ env.gvsbuild_version }}
       - name: Set up Python
         if: steps.cache.outputs.cache-hit != 'true'
         uses: actions/setup-python@82c7e631bb3cdc910f68e0081d67478d79c6982d # v5.1.0
         with:
           python-version: ${{ env.python_version }}
-      - name: Install gvsbuild
+      - name: Download Gvsbuild
         if: steps.cache.outputs.cache-hit != 'true'
-        run: python -m pip install gvsbuild==${{ env.gvsbuild_version }}
-        # j2 option resolves out of memory issues while linking on GitHub Actions runners
-      - name: GTK binaries run gvsbuild
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: >
-          gvsbuild build --ninja-opts -j2 --enable-gi --py-wheel gobject-introspection
-          gtk4 libadwaita gtksourceview5 pycairo pygobject adwaita-icon-theme hicolor-icon-theme
-      - name: Copy wheels to cached directory
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: >
-          Get-ChildItem C:\gtk-build\build\x64\release\*\dist\*.whl |
-          ForEach-Object -process { cp $_ C:\gtk-build\gtk\x64\release\ }
+        env:
+          REPO: "wingtk/gvsbuild"
+          VERSION: "2024.5.0"
+          MATCH: "^GTK4_Gvsbuild_.+_x64.zip$"
+          RENAME: "Gvsbuild.zip"
+        shell: bash
+        run: |
+          curl -sL --fail \
+            -H "Accept: application/vnd.github.v3+json" \
+            -H "Authorization: Bearer ${{ github.token }}" \
+              "https://api.github.com/repos/${REPO}/releases/tags/${VERSION}" \
+              | jq -r ".assets | .[] | select(.name | test(\"${MATCH}\")) | .url" \
+              | tee asset.url
+          curl -sL --fail \
+            -H "Accept: application/octet-stream" \
+            -H "Authorization: Bearer ${{ github.token }}" \
+              -o "${RENAME}" \
+              "$(cat asset.url)"
+          7z x Gvsbuild.zip -oC:\gtk -y
       - name: GTK binaries output cache key
         id: output
-        run: Write-Output "cachekey=${{ runner.os }}-gvsbuild-${{ env.gvsbuild_update }}-${{ env.gvsbuild_version }}" >> $env:GITHUB_OUTPUT
-      - name: Upload libraries
-        if: steps.cache.outputs.cache-hit != 'true'
-        uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4.3.3
-        with:
-          name: gtk-build
-          path: C:\gtk-build\gtk\x64\release
+        run: Write-Output "cachekey=${{ runner.os }}-gvsbuild-${{ env.gvsbuild_version }}" >> $env:GITHUB_OUTPUT
 
   windows:
     name: Windows
-    needs: [lint, windows-build-gtk]
+    needs: [lint, windows-download-gtk]
     runs-on: windows-latest
     env:
-      INCLUDE: C:\gtk-build\gtk\x64\release\include;C:\gtk-build\gtk\x64\release\include\cairo;C:\gtk-build\gtk\x64\release\include\glib-2.0;C:\gtk-build\gtk\x64\release\include\gobject-introspection-1.0;C:\gtk-build\gtk\x64\release\lib\glib-2.0\include;
-      LIB: C:\gtk-build\gtk\x64\release\lib
+      INCLUDE: C:\gtk\include;C:\gtk\include\cairo;C:\gtk\include\glib-2.0;C:\gtk\include\gobject-introspection-1.0;C:\gtk\lib\glib-2.0\include;
+      LIB: C:\gtk\lib
     permissions:
       contents: write
     timeout-minutes: 45
@@ -310,13 +307,13 @@ jobs:
           egress-policy: audit
 
       - name: Create GTK binaries dir
-        run: mkdir C:\gtk-build\gtk\x64\release
+        run: mkdir C:\gtk
       - name: Get GTK binaries from cache
         uses: actions/cache/restore@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9 # v4.0.2
         id: cache
         with:
-          path: C:\gtk-build\gtk\x64\release\**
-          key: ${{ needs.windows-build-gtk.outputs.cachekey }}
+          path: C:\gtk\**
+          key: ${{ needs.windows-download-gtk.outputs.cachekey }}
       - name: Check cache hit
         if: steps.cache.outputs.cache-hit != 'true'
         run: |
@@ -324,9 +321,9 @@ jobs:
           exit 1
       - name: Set up env
         run: |
-          Write-Output "PKG_CONFIG=C:\gtk-build\gtk\x64\release\bin\pkgconf.exe" >> $env:GITHUB_ENV
+          Write-Output "PKG_CONFIG=C:\gtk\bin\pkgconf.exe" >> $env:GITHUB_ENV
           Write-Output "XDG_DATA_HOME=$HOME\.local\share" >> $env:GITHUB_ENV
-          Write-Output "C:\gtk-build\gtk\x64\release\bin" >> $env:GITHUB_PATH
+          Write-Output "C:\gtk\bin" >> $env:GITHUB_PATH
           choco install graphviz -y
       - uses: actions/checkout@44c2b7a8a4ea60a981eaca3cf939b5f4305c123b # v4.1.5
         with:
