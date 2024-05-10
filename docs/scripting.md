@@ -355,14 +355,16 @@ with open(outfile, "w") as out:
 ```
 
 ### Basic Validation
-Some simple validation checks can be run using a couple of lambda functions to select and evaluate elements.
+Some simple validation checks can be run using a couple of small functions to select and evaluate elements.
 
 ```
 # As before assume we have a factory service and the model is loaded
-# Define a lambda to select an element
-element_select =  lambda e:isinstance(e, SysML.sysml.SysMLDiagram) and e.diagramType=='ibd'
+# Define a function to select an element
+def element_select(e):
+    return isinstance(e, SysML.sysml.SysMLDiagram) and e.diagramType=='ibd'
 # Define a validation rule
-rule = lambda e: isinstance(e.owner, SysML.sysml.Block),
+def rule(e):
+    return(isinstance(e.owner, SysML.sysml.Block))
 # Define a message to display if the element fails the validation
 msg = "IBD diagrams must be owned by a block"
 
