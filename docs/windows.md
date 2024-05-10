@@ -90,9 +90,9 @@ py -3.12 -m pipx ensurepath
 #### Download GTK
 
 Download the latest release asset at https://github.com/wingtk/gvsbuild/releases. The file will be
-called GTK4_Gvsbuild_VERSION_x64.zip, where VERSION is the latest released version.
+called `GTK4_Gvsbuild_VERSION_x64.zip`, where `VERSION` is the latest released version.
 
-Unzip the GTK4_Gvsbuild_VERSION_x64.zip file to C:\gtk. For example with 7Zip:
+Unzip the `GTK4_Gvsbuild_VERSION_x64.zip` file to `C:\gtk`. For example with 7Zip:
 
 ```PowerShell
 7z x GTK4_Gvsbuild_*.zip  -oC:\gtk -y
