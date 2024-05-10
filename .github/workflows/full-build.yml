@@ -251,23 +251,12 @@ jobs:
       - name: Download Gvsbuild
         if: steps.cache.outputs.cache-hit != 'true'
         env:
-          REPO: "wingtk/gvsbuild"
-          MATCH: "^GTK4_Gvsbuild_.+_x64.zip$"
-          RENAME: "Gvsbuild.zip"
-        shell: bash
+          GH_TOKEN: ${{ github.token }}
+          HASH: c5cd0079f47124190d9c66d3661da018eccc1dfc3dd31b5c01531df7f88006e5
         run: |
-          curl -sL --fail \
-            -H "Accept: application/vnd.github.v3+json" \
-            -H "Authorization: Bearer ${{ github.token }}" \
-              "https://api.github.com/repos/${REPO}/releases/tags/${{ env.gvsbuild_version }}" \
-              | jq -r ".assets | .[] | select(.name | test(\"${MATCH}\")) | .url" \
-              | tee asset.url
-          curl -sL --fail \
-            -H "Accept: application/octet-stream" \
-            -H "Authorization: Bearer ${{ github.token }}" \
-              -o "${RENAME}" \
-              "$(cat asset.url)"
-          7z x Gvsbuild.zip -oC:\gtk -y
+          gh release download --repo wingtk/gvsbuild ${{ env.gvsbuild_version }} -p 'GTK4_Gvsbuild_${{ env.gvsbuild_version }}_x64.zip'
+          (Get-FileHash GTK4_Gvsbuild_${{ env.gvsbuild_version }}_x64.zip).Hash -eq $HASH
+          7z x GTK4_Gvsbuild_${{ env.gvsbuild_version }}_x64.zip -oC:\gtk -y
       - name: Set up env
         run: |
           Write-Output "PKG_CONFIG=C:\gtk\bin\pkgconf.exe" >> $env:GITHUB_ENV
