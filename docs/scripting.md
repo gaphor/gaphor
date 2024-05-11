@@ -301,6 +301,7 @@ What else is there to know…
 Expanding on the information above the following snippetts show how to create requirements and interfaces.
 
 ### Requirements from text fields
+
 ```
 txts = ['req1', 'req2', 'bob the cat']
 my_diagram = element_factory.create(Diagram)
@@ -323,8 +324,8 @@ with open(outfile, "w") as out:
 ```
 
 ### Interfaces from dictionaries
-```
 
+```
 # get interface definitions from file into this dictionary format
 interfaces = {'Interface1': ['signal1:type1', 'signal2:type1', 'signal3:type1'],
               'Interface2': ['signal4:type2', 'signal5:type2', 'signal6:type2']}
@@ -360,18 +361,22 @@ Some simple validation checks can be run using a couple of small functions to se
 ```
 # As before assume we have a factory service and the model is loaded
 # Define a function to select an element
-def element_select(e):
-    return isinstance(e, SysML.sysml.SysMLDiagram) and e.diagramType=='ibd'
+def element_select(element):
+    return isinstance(element, SysML.sysml.SysMLDiagram) and element.diagramType == "ibd"
+
+
 # Define a validation rule
-def rule(e):
-    return(isinstance(e.owner, SysML.sysml.Block))
+def rule(element):
+    return isinstance(element.owner, SysML.sysml.Block)
+
+
 # Define a message to display if the element fails the validation
 msg = "IBD diagrams must be owned by a block"
 
-e = next(factory.select(element_select))
-isValid = rule(e)
-if not isValid:
-   print(msg)
+element = next(factory.select(element_select))
+is_valid = rule(element)
+if not is_valid:
+    print(msg)
 ```
 
 Here is another example:
