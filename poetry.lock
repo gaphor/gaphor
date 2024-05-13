@@ -747,13 +747,13 @@ test = ["objgraph", "psutil"]
 
 [[package]]
 name = "hypothesis"
-version = "6.100.6"
+version = "6.102.1"
 description = "A library for property-based testing"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "hypothesis-6.100.6-py3-none-any.whl", hash = "sha256:416d2c2b248df6fe71e2ae94b4b475cbaaced4c949929039e0484463dfc30644"},
-    {file = "hypothesis-6.100.6.tar.gz", hash = "sha256:726663fe65c793cd0c092b82ce737940f7da7fa1297a81da898c3317e5a19026"},
+    {file = "hypothesis-6.102.1-py3-none-any.whl", hash = "sha256:90bbdc3aa6d90ca349a9a257793e66cafdea03a44bbb8dad940d2618b92acc5b"},
+    {file = "hypothesis-6.102.1.tar.gz", hash = "sha256:ba1d6fd8369faa9adf19b1bfee60bceaa9eba165d7b3815df6a271cb75d41797"},
 ]
 
 [package.dependencies]
@@ -1809,23 +1809,23 @@ diagrams = ["jinja2", "railroad-diagrams"]
 
 [[package]]
 name = "pytest"
-version = "8.1.2"
+version = "8.2.0"
 description = "pytest: simple powerful testing with Python"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "pytest-8.1.2-py3-none-any.whl", hash = "sha256:6c06dc309ff46a05721e6fd48e492a775ed8165d2ecdf57f156a80c7e95bb142"},
-    {file = "pytest-8.1.2.tar.gz", hash = "sha256:f3c45d1d5eed96b01a2aea70dee6a4a366d51d38f9957768083e4fecfc77f3ef"},
+    {file = "pytest-8.2.0-py3-none-any.whl", hash = "sha256:1733f0620f6cda4095bbf0d9ff8022486e91892245bb9e7d5542c018f612f233"},
+    {file = "pytest-8.2.0.tar.gz", hash = "sha256:d507d4482197eac0ba2bae2e9babf0672eb333017bcedaa5fb1a3d42c1174b3f"},
 ]
 
 [package.dependencies]
 colorama = {version = "*", markers = "sys_platform == \"win32\""}
 iniconfig = "*"
 packaging = "*"
-pluggy = ">=1.4,<2.0"
+pluggy = ">=1.5,<2.0"
 
 [package.extras]
-testing = ["argcomplete", "attrs (>=19.2)", "hypothesis (>=3.56)", "mock", "pygments (>=2.7.2)", "requests", "setuptools", "xmlschema"]
+dev = ["argcomplete", "attrs (>=19.2)", "hypothesis (>=3.56)", "mock", "pygments (>=2.7.2)", "requests", "setuptools", "xmlschema"]
 
 [[package]]
 name = "pytest-archon"
@@ -2777,4 +2777,4 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.11,<3.13"
-content-hash = "a5d2a46f747f65b47045f1d09c160edaa2c4a154c536157a579142c607d43232"
+content-hash = "c48020ca87c2d2f2437f1072665b676df2031fa8b91d8ae78da907f2875c66ce"
