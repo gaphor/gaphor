@@ -49,7 +49,7 @@ class Recovery(Service):
         self.modeling_language = modeling_language
         # TODO: How to record new, unsaved models?
         self.filename: Path | None = None
-        self.events = []
+        self.recorder = Recorder()
 
         event_manager.subscribe(self.on_transaction_commit)
         event_manager.subscribe(self.on_transaction_rollback)
@@ -58,18 +58,7 @@ class Recovery(Service):
         event_manager.subscribe(self.on_model_saved)
         event_manager.subscribe(self.on_session_shutdown)
 
-        event_manager.subscribe(self.on_create_element_event)
-        event_manager.subscribe(self.on_delete_element_event)
-        event_manager.subscribe(self.on_attribute_change_event)
-        event_manager.subscribe(self.on_association_set_event)
-        event_manager.subscribe(self.on_association_delete_event)
-        event_manager.subscribe(self.on_matrix_updated)
-        event_manager.subscribe(self.on_item_connected)
-        event_manager.subscribe(self.on_item_disconnected)
-        event_manager.subscribe(self.on_item_reconnected)
-        event_manager.subscribe(self.on_handle_position_event)
-        event_manager.subscribe(self.on_split_line_segment_event)
-        event_manager.subscribe(self.on_merge_line_segment_event)
+        self.recorder.subscribe(event_manager)
 
     def shutdown(self):
         self.event_manager.unsubscribe(self.on_transaction_commit)
@@ -79,42 +68,28 @@ class Recovery(Service):
         self.event_manager.unsubscribe(self.on_model_saved)
         self.event_manager.unsubscribe(self.on_session_shutdown)
 
-        self.event_manager.unsubscribe(self.on_create_element_event)
-        self.event_manager.unsubscribe(self.on_delete_element_event)
-        self.event_manager.unsubscribe(self.on_attribute_change_event)
-        self.event_manager.unsubscribe(self.on_association_set_event)
-        self.event_manager.unsubscribe(self.on_association_delete_event)
-        self.event_manager.unsubscribe(self.on_matrix_updated)
-        self.event_manager.unsubscribe(self.on_item_connected)
-        self.event_manager.unsubscribe(self.on_item_disconnected)
-        self.event_manager.unsubscribe(self.on_item_reconnected)
-        self.event_manager.unsubscribe(self.on_handle_position_event)
-        self.event_manager.unsubscribe(self.on_split_line_segment_event)
-        self.event_manager.unsubscribe(self.on_merge_line_segment_event)
-
-    def truncate(self):
-        del self.events[:]
+        self.recorder.unsubscribe(self.event_manager)
 
     @event_handler(TransactionCommit)
     def on_transaction_commit(self, event: TransactionCommit):
         if (
             self.filename
-            and self.events
+            and self.recorder.events
             and event.context not in ("rollback", "recover")
         ):
             with self.filename.open("a", encoding="utf-8") as f:
-                f.write(repr(self.events))
+                f.write(repr(self.recorder.events))
                 f.write("\n")
-        self.truncate()
+        self.recorder.truncate()
 
     @event_handler(TransactionRollback)
     def on_transaction_rollback(self, _event):
-        self.truncate()
+        self.recorder.truncate()
 
     @event_handler(SessionCreated)
     def on_model_loaded(self, event: SessionCreated):
         self.filename = recovery_filename(event.filename) if event.filename else None
-        self.truncate()
+        self.recorder.truncate()
 
     @event_handler(ModelReady)
     def on_model_ready(self, _event):
@@ -149,13 +124,49 @@ class Recovery(Service):
         # Delete again: new model name may be different from original one
         if self.filename:
             self.filename.unlink(missing_ok=True)
-        self.truncate()
+        self.recorder.truncate()
 
     @event_handler(SessionShutdown)
     def on_session_shutdown(self, event: SessionShutdown):
         if self.filename:
             self.filename.unlink(missing_ok=True)
-        self.truncate()
+        self.recorder.truncate()
+
+
+class Recorder:
+    def __init__(self):
+        self.events = []
+
+    def subscribe(self, event_manager):
+        event_manager.subscribe(self.on_create_element_event)
+        event_manager.subscribe(self.on_delete_element_event)
+        event_manager.subscribe(self.on_attribute_change_event)
+        event_manager.subscribe(self.on_association_set_event)
+        event_manager.subscribe(self.on_association_delete_event)
+        event_manager.subscribe(self.on_matrix_updated)
+        event_manager.subscribe(self.on_item_connected)
+        event_manager.subscribe(self.on_item_disconnected)
+        event_manager.subscribe(self.on_item_reconnected)
+        event_manager.subscribe(self.on_handle_position_event)
+        event_manager.subscribe(self.on_split_line_segment_event)
+        event_manager.subscribe(self.on_merge_line_segment_event)
+
+    def unsubscribe(self, event_manager):
+        event_manager.unsubscribe(self.on_create_element_event)
+        event_manager.unsubscribe(self.on_delete_element_event)
+        event_manager.unsubscribe(self.on_attribute_change_event)
+        event_manager.unsubscribe(self.on_association_set_event)
+        event_manager.unsubscribe(self.on_association_delete_event)
+        event_manager.unsubscribe(self.on_matrix_updated)
+        event_manager.unsubscribe(self.on_item_connected)
+        event_manager.unsubscribe(self.on_item_disconnected)
+        event_manager.unsubscribe(self.on_item_reconnected)
+        event_manager.unsubscribe(self.on_handle_position_event)
+        event_manager.unsubscribe(self.on_split_line_segment_event)
+        event_manager.unsubscribe(self.on_merge_line_segment_event)
+
+    def truncate(self):
+        del self.events[:]
 
     @event_handler(ElementCreated)
     def on_create_element_event(self, event: ElementCreated):

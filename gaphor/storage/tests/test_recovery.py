@@ -5,111 +5,112 @@ from gaphor import UML
 from gaphor.core.modeling import Comment, Diagram, ElementFactory
 from gaphor.diagram.general import CommentItem, Line
 from gaphor.diagram.tests.fixtures import connect, disconnect
-from gaphor.storage.recovery import Recovery, replay_events
+from gaphor.storage.recovery import Recorder, replay_events
 from gaphor.UML.diagramitems import ClassItem, DependencyItem
 
 
 @pytest.fixture
-def recovery(event_manager, element_factory, modeling_language):
-    recovery = Recovery(event_manager, element_factory, modeling_language)
-    yield recovery
-    recovery.shutdown()
+def recorder(event_manager):
+    recorder = Recorder()
+    recorder.subscribe(event_manager)
+    yield recorder
+    recorder.unsubscribe(event_manager)
 
 
 def test_record_create_element(
-    recovery, event_manager, element_factory, modeling_language
+    recorder, event_manager, element_factory, modeling_language
 ):
     comment = element_factory.create(Comment)
 
     new_model = ElementFactory(event_manager)
 
-    replay_events(recovery.events[:], new_model, modeling_language)
+    replay_events(recorder.events[:], new_model, modeling_language)
 
-    assert ("c", "Comment", comment.id, None) in recovery.events
+    assert ("c", "Comment", comment.id, None) in recorder.events
     assert new_model.lookup(comment.id)
 
 
 def test_record_create_presentation(
-    recovery, event_manager, diagram, modeling_language
+    recorder, event_manager, diagram, modeling_language
 ):
     comment = diagram.create(CommentItem)
 
     new_model = ElementFactory(event_manager)
     new_model.create_as(Diagram, id=diagram.id)
 
-    replay_events(recovery.events[:], new_model, modeling_language)
+    replay_events(recorder.events[:], new_model, modeling_language)
 
-    assert ("c", "CommentItem", comment.id, diagram.id) in recovery.events
+    assert ("c", "CommentItem", comment.id, diagram.id) in recorder.events
 
     assert new_model.lookup(comment.id)
 
 
 def test_record_delete_element(
-    recovery, event_manager, element_factory, modeling_language
+    recorder, event_manager, element_factory, modeling_language
 ):
     comment = element_factory.create(Comment)
     comment.unlink()
 
     new_model = ElementFactory(event_manager)
-    replay_events(recovery.events[:], new_model, modeling_language)
+    replay_events(recorder.events[:], new_model, modeling_language)
 
-    assert ("c", "Comment", comment.id, None) in recovery.events
-    assert ("u", comment.id, None) in recovery.events
+    assert ("c", "Comment", comment.id, None) in recorder.events
+    assert ("u", comment.id, None) in recorder.events
     assert not new_model.lookup(comment.id)
 
 
 def test_record_delete_presentation(
-    recovery, event_manager, diagram, modeling_language
+    recorder, event_manager, diagram, modeling_language
 ):
     comment = diagram.create(CommentItem)
     comment.unlink()
 
     new_model = ElementFactory(event_manager)
     new_model.create_as(Diagram, diagram.id)
-    replay_events(recovery.events[:], new_model, modeling_language)
+    replay_events(recorder.events[:], new_model, modeling_language)
 
-    assert ("c", "CommentItem", comment.id, diagram.id) in recovery.events
-    assert ("u", comment.id, diagram.id) in recovery.events
+    assert ("c", "CommentItem", comment.id, diagram.id) in recorder.events
+    assert ("u", comment.id, diagram.id) in recorder.events
     assert not new_model.lookup(comment.id)
 
 
 def test_record_update_attribute(
-    recovery, event_manager, element_factory, modeling_language
+    recorder, event_manager, element_factory, modeling_language
 ):
     comment = element_factory.create(Comment)
     comment.body = "Foo"
 
     new_model = ElementFactory(event_manager)
-    replay_events(recovery.events[:], new_model, modeling_language)
+    replay_events(recorder.events[:], new_model, modeling_language)
 
-    assert ("c", "Comment", comment.id, None) in recovery.events
-    assert ("a", comment.id, "body", "Foo") in recovery.events
+    assert ("c", "Comment", comment.id, None) in recorder.events
+    assert ("a", comment.id, "body", "Foo") in recorder.events
     assert new_model.lookup(comment.id)
     assert new_model.lookup(comment.id).body == "Foo"
 
 
 def test_record_set_association(
-    recovery, event_manager, element_factory, modeling_language
+    recorder, event_manager, element_factory, modeling_language
 ):
     comment = element_factory.create(Comment)
     diagram = element_factory.create(Diagram)
     diagram.element = comment
 
     new_model = ElementFactory(event_manager)
-    replay_events(recovery.events[:], new_model, modeling_language)
+    replay_events(recorder.events[:], new_model, modeling_language)
 
     new_comment = new_model.lookup(comment.id)
     new_diagram = new_model.lookup(diagram.id)
 
-    assert ("s", diagram.id, "element", comment.id) in recovery.events
-    assert ("s", comment.id, "ownedDiagram", diagram.id) in recovery.events
+    assert ("s", diagram.id, "element", comment.id) in recorder.events
+    assert ("s", comment.id, "ownedDiagram", diagram.id) in recorder.events
 
     assert new_comment is new_diagram.element
     assert new_diagram in new_comment.ownedDiagram
 
 
 def test_record_delete_association(
-    recovery, event_manager, element_factory, modeling_language
+    recorder, event_manager, element_factory, modeling_language
 ):
     comment = element_factory.create(Comment)
     diagram = element_factory.create(Diagram)
@@ -117,27 +118,27 @@ def test_record_delete_association(
     del diagram.element
 
     new_model = ElementFactory(event_manager)
-    replay_events(recovery.events[:], new_model, modeling_language)
+    replay_events(recorder.events[:], new_model, modeling_language)
 
     new_comment = new_model.lookup(comment.id)
     new_diagram = new_model.lookup(diagram.id)
 
-    assert ("s", diagram.id, "element", None) in recovery.events
-    assert ("d", comment.id, "ownedDiagram", diagram.id) in recovery.events
+    assert ("s", diagram.id, "element", None) in recorder.events
+    assert ("d", comment.id, "ownedDiagram", diagram.id) in recorder.events
 
     assert not new_diagram.element
     assert new_diagram not in new_comment.ownedDiagram
 
 
 def test_record_move_element(
-    recovery, event_manager, element_factory, modeling_language
+    recorder, event_manager, element_factory, modeling_language
 ):
     diagram = element_factory.create(Diagram)
     class_item = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
     class_item.matrix.translate(200, 100)
 
     new_model = ElementFactory(event_manager)
-    replay_events(recovery.events[:], new_model, modeling_language)
+    replay_events(recorder.events[:], new_model, modeling_language)
 
     new_class_item = new_model.lookup(class_item.id)
 
@@ -146,14 +147,14 @@ def test_record_move_element(
 
 
 def test_record_move_handle_element(
-    recovery, event_manager, element_factory, modeling_language
+    recorder, event_manager, element_factory, modeling_language
 ):
     diagram = element_factory.create(Diagram)
     class_item = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
     class_item.handles()[2].pos = (200, 100)
 
     new_model = ElementFactory(event_manager)
-    replay_events(recovery.events[:], new_model, modeling_language)
+    replay_events(recorder.events[:], new_model, modeling_language)
 
     new_class_item = new_model.lookup(class_item.id)
 
@@ -162,7 +163,7 @@ def test_record_move_handle_element(
 
 
 def test_record_connect_element(
-    recovery, event_manager, element_factory, modeling_language
+    recorder, event_manager, element_factory, modeling_language
 ):
     diagram = element_factory.create(Diagram)
     class_item = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
@@ -170,7 +171,7 @@ def test_record_connect_element(
     connect(dependency_item, dependency_item.head, class_item)
 
     new_model = ElementFactory(event_manager)
-    replay_events(recovery.events[:], new_model, modeling_language)
+    replay_events(recorder.events[:], new_model, modeling_language)
 
     new_diagram = new_model.lookup(diagram.id)
     new_class_item = new_model.lookup(class_item.id)
@@ -183,7 +184,7 @@ def test_record_connect_element(
 
 
 def test_record_connect_both_ends(
-    recovery, event_manager, element_factory, modeling_language
+    recorder, event_manager, element_factory, modeling_language
 ):
     diagram = element_factory.create(Diagram)
     class_item = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
@@ -195,7 +196,7 @@ def test_record_connect_both_ends(
     connect(dependency_item, dependency_item.tail, other_class_item)
 
     new_model = ElementFactory(event_manager)
-    replay_events(recovery.events[:], new_model, modeling_language)
+    replay_events(recorder.events[:], new_model, modeling_language)
 
     new_diagram = new_model.lookup(diagram.id)
     new_class_item = new_model.lookup(class_item.id)
@@ -214,7 +215,7 @@ def test_record_connect_both_ends(
 
 
 def test_record_disconnect_element(
-    recovery, event_manager, element_factory, modeling_language
+    recorder, event_manager, element_factory, modeling_language
 ):
     diagram = element_factory.create(Diagram)
     class_item = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
@@ -227,7 +228,7 @@ def test_record_disconnect_element(
     disconnect(dependency_item, dependency_item.tail)
 
     new_model = ElementFactory(event_manager)
-    replay_events(recovery.events[:], new_model, modeling_language)
+    replay_events(recorder.events[:], new_model, modeling_language)
 
     new_diagram = new_model.lookup(diagram.id)
     new_class_item = new_model.lookup(class_item.id)
@@ -242,7 +243,7 @@ def test_record_disconnect_element(
 
 
 def test_record_reconnect_element(
-    recovery, event_manager, element_factory, modeling_language
+    recorder, event_manager, element_factory, modeling_language
 ):
     diagram = element_factory.create(Diagram)
     class_item = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
@@ -253,18 +254,18 @@ def test_record_reconnect_element(
     diagram.update()
 
     new_model = ElementFactory(event_manager)
-    replay_events(recovery.events[:], new_model, modeling_language)
+    replay_events(recorder.events[:], new_model, modeling_language)
 
     new_diagram = new_model.lookup(diagram.id)
     new_dependency_item = new_model.lookup(dependency_item.id)
     new_diagram.update()
 
-    assert ("ir", dependency_item.id, 0, class_item.id, 1) in recovery.events
+    assert ("ir", dependency_item.id, 0, class_item.id, 1) in recorder.events
     assert dependency_item.head.pos == new_dependency_item.head.pos
 
 
 def test_record_split_line_segments(
-    recovery, event_manager, element_factory, modeling_language
+    recorder, event_manager, element_factory, modeling_language
 ):
     diagram = element_factory.create(Diagram)
     line_item = diagram.create(Line)
@@ -272,7 +273,7 @@ def test_record_split_line_segments(
     handle_positions = [tuple(h.pos) for h in line_item.handles()]
 
     new_model = ElementFactory(event_manager)
-    replay_events(recovery.events[:], new_model, modeling_language)
+    replay_events(recorder.events[:], new_model, modeling_language)
 
     new_line_item = new_model.lookup(line_item.id)
     new_handle_positions = [tuple(h.pos) for h in new_line_item.handles()]
@@ -282,18 +283,18 @@ def test_record_split_line_segments(
 
 
 def test_record_merge_line_segments(
-    recovery, event_manager, element_factory, modeling_language
+    recorder, event_manager, element_factory, modeling_language
 ):
     diagram = element_factory.create(Diagram)
     line_item = diagram.create(Line)
     Segment(line_item, diagram).split_segment(0, 3)
     new_model = ElementFactory(event_manager)
-    replay_events(recovery.events[:], new_model, modeling_language)
+    replay_events(recorder.events[:], new_model, modeling_language)
 
-    recovery.truncate()
+    recorder.truncate()
     Segment(line_item, diagram).merge_segment(1, 2)
     handle_positions = [tuple(h.pos) for h in line_item.handles()]
-    replay_events(recovery.events[:], new_model, modeling_language)
+    replay_events(recorder.events[:], new_model, modeling_language)
 
     new_line_item = new_model.lookup(line_item.id)
     new_handle_positions = [tuple(h.pos) for h in new_line_item.handles()]
