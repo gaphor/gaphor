@@ -1,7 +1,6 @@
 <h1 align="center"><img src="https://github.com/gaphor/gaphor/blob/main/data/logos/gaphor-logo-full.svg?raw=true" alt="Gaphor - UML/SysML Modeling" height="96"/></h1>
 
 [![Build](https://github.com/gaphor/gaphor/actions/workflows/full-build.yml/badge.svg)](https://github.com/gaphor/gaphor/actions/workflows/full-build.yml?query=branch%3Amain)
-[![Hypothesis Tests](https://github.com/gaphor/gaphor/actions/workflows/hypothesis-test.yml/badge.svg)](https://github.com/gaphor/gaphor/actions/workflows/hypothesis-test.yml?query=branch%3Amain)
 [![Docs build state](https://readthedocs.org/projects/gaphor/badge/?version=latest)](https://docs.gaphor.org)
 [![PyPI](https://img.shields.io/pypi/v/gaphor.svg)](https://pypi.org/project/gaphor)
 [![PyPI - Downloads](https://img.shields.io/pypi/dm/gaphor)](https://pypistats.org/packages/gaphor)
