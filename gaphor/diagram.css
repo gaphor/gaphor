@@ -61,8 +61,13 @@ interfacerealization,
 include,
 extend,
 packageimport,
-lifetime {
-  dash-style: 7 5;
+lifetime,
+satisfy,
+derivereqt,
+trace,
+verify,
+refine {
+ dash-style: 7 5;
 }
 
 dependency[on_folded_interface = true],
