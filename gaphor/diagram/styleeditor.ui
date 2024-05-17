@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <object class="GtkWindow" id="style-editor">
+    <property name="title" translatable="yes">Style Editor</property>
+    <property name="default-width">600</property>
+    <property name="default-height">400</property>
+
+    <child type="titlebar">
+      <object class="GtkHeaderBar">
+        <property name="decoration-layout">:close</property>
+      </object>
+    </child>
+
+    <child>
+      <object class="GtkBox">
+        <property name="orientation">vertical</property>
+        <property name="spacing">20</property>
+        <property name="margin-top">20</property>
+        <property name="margin-bottom">20</property>
+        <property name="halign">center</property>
+
+        <child>
+          <object class="GtkBox">
+            <property name="orientation">horizontal</property>
+            <property name="spacing">10</property>
+            <property name="halign">center</property>
+            <child>
+              <object class="GtkLabel">
+                <property name="label" translatable="yes">Border Radius:</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkSpinButton" id="border-radius">
+                <property name="valign">center</property>
+                <property name="adjustment">
+                  <object class="GtkAdjustment">
+                    <property name="lower">0</property>
+                    <property name="upper">100</property>
+                    <property name="step-increment">1</property>
+                  </object>
+                </property>
+              </object>
+            </child>
+          </object>
+        </child>
+
+        <child>
+          <object class="GtkBox">
+            <property name="orientation">horizontal</property>
+            <property name="spacing">10</property>
+            <property name="halign">center</property>
+            <child>
+              <object class="GtkLabel">
+                <property name="label" translatable="yes">Color:</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkColorButton" id="color">
+                <property name="valign">center</property>
+              </object>
+            </child>
+          </object>
+        </child>
+
+        <child>
+          <object class="GtkBox">
+            <property name="orientation">horizontal</property>
+            <property name="spacing">10</property>
+            <property name="halign">center</property>
+            <child>
+              <object class="GtkLabel">
+                <property name="label" translatable="yes">Background Color:</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkColorButton" id="background-color">
+                <property name="valign">center</property>
+              </object>
+            </child>
+          </object>
+        </child>
+
+        <child>
+          <object class="GtkBox">
+            <property name="orientation">horizontal</property>
+            <property name="spacing">10</property>
+            <property name="halign">center</property>
+            <child>
+              <object class="GtkLabel">
+                <property name="label" translatable="yes">Text Color:</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkColorButton" id="text-color">
+                <property name="valign">center</property>
+              </object>
+            </child>
+          </object>
+        </child>
+
+        <child>
+          <object class="GtkButton" id="export">
+            <property name="label" translatable="yes">Export to Style Sheet</property>
+            <property name="halign">end</property>
+          </object>
+        </child>
+
+      </object>
+    </child>
+  </object>
+</interface>

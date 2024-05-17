@@ -61,6 +61,7 @@ def test_diagram_package():
         .exclude("gaphor.diagram.tools*")
         .exclude("gaphor.diagram.*editors")
         .exclude("gaphor.diagram.*propertypages")
+        .exclude("gaphor.diagram.styleeditor")
         .should_not_import(*UI_LIBRARIES)
         .check(gaphor)
     )

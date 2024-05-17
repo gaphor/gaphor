@@ -1,8 +1,14 @@
 """Object node item."""
 
 from gaphor import UML
+from gaphor.core.modeling.diagram import StyledItem
 from gaphor.core.modeling.properties import attribute
-from gaphor.diagram.presentation import ElementPresentation, Named, text_name
+from gaphor.diagram.presentation import (
+    ElementPresentation,
+    Named,
+    PresentationStyle,
+    text_name,
+)
 from gaphor.diagram.shapes import Box, CssNode, IconBox, Text, draw_border
 from gaphor.diagram.support import represents
 from gaphor.i18n import i18nize
@@ -66,6 +72,11 @@ class ObjectNodeItem(Named, ElementPresentation):
         self.watch("subject[ObjectNode].upperBound")
         self.watch("subject[ObjectNode].ordering")
         self.watch("show_ordering")
+        self.watch("subject[ObjectNode].name", self.change_name)
+
+        self.presentation_style = PresentationStyle(
+            self.diagram.styleSheet, StyledItem(self).name()
+        )
 
     show_ordering: attribute[int] = attribute("show_ordering", int, default=False)
 

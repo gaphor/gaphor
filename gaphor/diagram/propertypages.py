@@ -16,6 +16,7 @@ from gi.repository import GObject, Gtk
 
 from gaphor.core import transactional
 from gaphor.core.modeling import Diagram, Element, Presentation, qualifiedName
+from gaphor.diagram.styleeditor import StyleEditor
 from gaphor.i18n import gettext, translated_ui_string
 
 
@@ -318,6 +319,47 @@ class InternalsPropertyPage(PropertyPageBase):
             internals.set_label(presentation_text or element_text)
 
         return builder.get_object("internals-editor")
+
+
+@PropertyPages.register(Element)
+class StylePropertyPage(PropertyPageBase):
+    """A button to open a easy-to-use CSS editor."""
+
+    order = 300
+    style_editor = None
+
+    def __init__(self, subject):
+        super().__init__()
+        self.subject = subject
+        self.watcher = subject.watcher() if subject else None
+        self.propertypages_builder = new_builder(
+            "style-editor",
+            signals={
+                "open-style-editor": (self._on_open_style_editor,),
+            },
+        )
+        self.has_style_editor = False
+
+    def construct(self):
+        if not self.subject:
+            return
+        assert self.watcher
+        return self.propertypages_builder.get_object("style-editor")
+
+    @transactional
+    def _on_open_style_editor(self, button):
+        if not self.has_style_editor:
+            if StylePropertyPage.style_editor:
+                StylePropertyPage.style_editor.close()
+            StylePropertyPage.style_editor = StyleEditor(
+                self.subject, self.close_style_editor
+            )
+            self.has_style_editor = True
+        StylePropertyPage.style_editor.present()
+
+    def close_style_editor(self):
+        StylePropertyPage.style_editor = None
+        self.has_style_editor = False
 
 
 def presentation_class(subject):

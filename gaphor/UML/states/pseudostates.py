@@ -6,8 +6,14 @@ See also gaphor.UML.states package description.
 from gaphas.item import SE
 
 from gaphor import UML
+from gaphor.core.modeling.diagram import StyledItem
 from gaphor.core.modeling.properties import relation_one
-from gaphor.diagram.presentation import ElementPresentation, Named, text_name
+from gaphor.diagram.presentation import (
+    ElementPresentation,
+    Named,
+    PresentationStyle,
+    text_name,
+)
 from gaphor.diagram.shapes import Box, IconBox, ellipse, stroke
 from gaphor.diagram.support import represents
 from gaphor.UML.compartments import text_stereotypes
@@ -39,6 +45,11 @@ class PseudostateItem(ElementPresentation, Named):
         self.watch("subject[NamedElement].name")
         self.watch("subject.appliedStereotype.classifier.name")
         self.watch("subject[Pseudostate].kind", self.update_shapes)
+        self.watch("subject[Pseudostate].name", self.change_name)
+
+        self.presentation_style = PresentationStyle(
+            self.diagram.styleSheet, StyledItem(self).name()
+        )
 
     def update_shapes(self, event=None):
         kind = self.subject.kind if self.subject and self.subject.kind else "initial"

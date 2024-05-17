@@ -5,6 +5,7 @@ from gaphor.diagram.propertypages import (
     LineStylePage,
     NamePropertyPage,
     NotePropertyPage,
+    StylePropertyPage,
 )
 from gaphor.diagram.tests.fixtures import find
 
@@ -80,3 +81,12 @@ def test_internals_page_for_presentation(create):
 
     assert "CommentItem" in text
     assert "gaphor.core.modeling.coremodel.Comment" in text
+
+
+def test_style_editor_page(diagram):
+    item = diagram.create(Line)
+    property_page = StylePropertyPage(item)
+    widget = property_page.construct()
+    assert widget
+    style_editor = find(widget, "style-editor")
+    assert style_editor

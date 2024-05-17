@@ -15,6 +15,7 @@ from gaphor.core import event_handler, gettext
 from gaphor.core.modeling import StyleSheet
 from gaphor.core.modeling.diagram import Diagram, StyledDiagram
 from gaphor.core.modeling.event import AttributeUpdated, ElementDeleted
+from gaphor.core.modeling.presentation import Presentation
 from gaphor.diagram.diagramtoolbox import get_tool_def, tooliter
 from gaphor.diagram.painter import DiagramTypePainter, ItemPainter
 from gaphor.diagram.selection import Selection
@@ -200,6 +201,8 @@ class DiagramPage:
     def _on_element_delete(self, event: ElementDeleted):
         if event.element is self.diagram:
             self.event_manager.handle(DiagramClosed(self.diagram))
+        if isinstance(event.element, Presentation) and event.element.presentation_style is not None:
+            event.element.presentation_style.delete_elem()
 
     @event_handler(AttributeUpdated)
     def _on_attribute_updated(self, event: AttributeUpdated):

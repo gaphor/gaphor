@@ -1,7 +1,14 @@
 """Action diagram item."""
 
 from gaphor import UML
-from gaphor.diagram.presentation import ElementPresentation, Named, Valued, text_name
+from gaphor.core.modeling.diagram import StyledItem
+from gaphor.diagram.presentation import (
+    ElementPresentation,
+    Named,
+    PresentationStyle,
+    Valued,
+    text_name,
+)
 from gaphor.diagram.shapes import Box, CssNode, Text, draw_border, stroke
 from gaphor.diagram.support import represents
 from gaphor.UML.compartments import text_stereotypes
@@ -22,6 +29,11 @@ class ActionItem(Named, ElementPresentation):
 
         self.watch("subject[NamedElement].name")
         self.watch("subject.appliedStereotype.classifier.name")
+        self.watch("subject[Action].name", self.change_name)
+
+        self.presentation_style = PresentationStyle(
+            self.diagram.styleSheet, StyledItem(self).name()
+        )
 
 
 @represents(UML.ValueSpecificationAction)
@@ -37,6 +49,11 @@ class ValueSpecificationActionItem(Valued, ElementPresentation):
         )
 
         self.watch("subject[ValueSpecificationAction].value")
+        self.watch("subject[ValueSpecificationAction].name", self.change_name)
+
+        self.presentation_style = PresentationStyle(
+            self.diagram.styleSheet, StyledItem(self).name()
+        )
 
 
 @represents(UML.CallBehaviorAction)
@@ -55,6 +72,7 @@ class CallBehaviorActionItem(ActionItem):
         )
 
         self.watch("subject[CallBehaviorAction].behavior.name")
+        self.watch("subject[CallBehaviorAction].name", self.change_name)
 
     def draw_border_with_fork(self, box, context, bounding_box):
         draw_border(box, context, bounding_box)
@@ -99,6 +117,11 @@ class SendSignalActionItem(Named, ElementPresentation):
 
         self.watch("subject[NamedElement].name")
         self.watch("subject.appliedStereotype.classifier.name")
+        self.watch("subject[SendSignalAction].name", self.change_name)
+
+        self.presentation_style = PresentationStyle(
+            self.diagram.styleSheet, StyledItem(self).name()
+        )
 
     def draw_border(self, box, context, bounding_box):
         cr = context.cairo
@@ -127,6 +150,11 @@ class AcceptEventActionItem(Named, ElementPresentation):
 
         self.watch("subject[NamedElement].name")
         self.watch("subject.appliedStereotype.classifier.name")
+        self.watch("subject[AcceptEventAction].name", self.change_name)
+
+        self.presentation_style = PresentationStyle(
+            self.diagram.styleSheet, StyledItem(self).name()
+        )
 
     def draw_border(self, box, context, bounding_box):
         cr = context.cairo

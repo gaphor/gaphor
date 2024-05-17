@@ -1,5 +1,6 @@
 from gaphor import UML
-from gaphor.diagram.presentation import AttachedPresentation, Named
+from gaphor.core.modeling.diagram import StyledItem
+from gaphor.diagram.presentation import AttachedPresentation, Named, PresentationStyle
 from gaphor.diagram.shapes import (
     Box,
     CssNode,
@@ -17,9 +18,9 @@ from gaphor.UML.umlfmt import format_pin
 def text_position(position):
     return {
         "text-align": TextAlign.LEFT if position == "left" else TextAlign.RIGHT,
-        "vertical-align": VerticalAlign.BOTTOM
-        if position == "bottom"
-        else VerticalAlign.TOP,
+        "vertical-align": (
+            VerticalAlign.BOTTOM if position == "bottom" else VerticalAlign.TOP
+        ),
     }
 
 
@@ -30,6 +31,10 @@ class PinItem(Named, AttachedPresentation[UML.Pin]):
         self.watch("subject[TypedElement].type")
         self.watch("subject[MultiplicityElement].lowerValue")
         self.watch("subject[MultiplicityElement].upperValue")
+
+        self.presentation_style = PresentationStyle(
+            self.diagram.styleSheet, StyledItem(self).name()
+        )
 
     def pin_type(self):
         return ""

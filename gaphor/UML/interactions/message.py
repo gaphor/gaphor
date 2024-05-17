@@ -51,9 +51,11 @@ from gaphas.connector import Handle
 from gaphas.constraint import constraint
 
 from gaphor import UML
+from gaphor.core.modeling.diagram import StyledItem
 from gaphor.diagram.presentation import (
     LinePresentation,
     Named,
+    PresentationStyle,
     get_center_pos,
     text_name,
 )
@@ -101,6 +103,10 @@ class MessageItem(Named, LinePresentation[UML.Message]):
         self.watch("subject[NamedElement].name")
         self.watch("subject.appliedStereotype.classifier.name")
         self.watch("subject[Message].messageEnd", self._update_message_end)
+
+        self.presentation_style = PresentationStyle(
+            self.diagram.styleSheet, StyledItem(self).name()
+        )
 
     def load(self, name, value):
         if name == "points":

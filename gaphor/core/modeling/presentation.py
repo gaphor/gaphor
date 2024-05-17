@@ -10,7 +10,7 @@ from typing import TYPE_CHECKING, Generic, Self, TypeVar
 from gaphas.item import Matrices
 
 from gaphor.core.modeling.element import Element, Handler, Id, UnlinkEvent
-from gaphor.core.modeling.event import RevertibleEvent
+from gaphor.core.modeling.event import AttributeUpdated, RevertibleEvent
 from gaphor.core.modeling.properties import relation_many, relation_one
 
 if TYPE_CHECKING:
@@ -45,11 +45,28 @@ class Presentation(Matrices, Element, Generic[S]):
         self.watch("diagram", self._on_diagram_changed)
         self.watch("parent", self._on_parent_changed)
         self.matrix.add_handler(self._on_matrix_changed)
+        self._presentation_style = None
 
     subject: relation_one[S]
     diagram: relation_one[Diagram]
     parent: relation_one[Presentation]
     children: relation_many[Presentation]
+
+    def change_name(self, event=None):
+        if (
+            isinstance(event, AttributeUpdated)
+            and self.presentation_style is not None
+            and self.presentation_style.styleSheet is not None
+        ):
+            self.presentation_style.name_change(self.subject.name)
+
+    @property
+    def presentation_style(self):
+        return self._presentation_style
+
+    @presentation_style.setter
+    def presentation_style(self, value=None):
+        self._presentation_style = value
 
     def request_update(self) -> None:
         """Mark this presentation object for update.
@@ -109,6 +126,16 @@ class Presentation(Matrices, Element, Generic[S]):
             self._on_matrix_changed(None, ())
         else:
             super().load(name, value)
+        try:
+            if (
+                self.subject is not None
+                and self.subject.name is not None
+                and self.presentation_style is not None
+                and self.presentation_style.styleSheet is not None
+            ):
+                self.presentation_style.name_change(self.subject.name)
+        except:
+            pass
 
     def inner_unlink(self, _unlink_event: UnlinkEvent) -> None:
         self._watcher.unsubscribe_all()
