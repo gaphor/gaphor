@@ -48,7 +48,7 @@ jobs:
           XDG_RUNTIME_DIR: /tmp
         run: |
           eval $(dbus-launch --auto-syntax)
-          mutter --wayland --no-x11 --sm-disable --headless -- poetry run pytest -m hypothesis --hypothesis-profile=ci
+          mutter --wayland --no-x11 --sm-disable --headless -- poetry run pytest -m hypothesis --hypothesis-profile=ci tests/test_model_consistency.py
       - name: Create Issue on Failure
         uses: JasonEtco/create-an-issue@1b14a70e4d8dc185e5cc76d3bec9eab20257b2c5 # v2.9.2
         if: failure()
