@@ -1466,6 +1466,15 @@
       "contributions": [
         "translation"
       ]
+    },
+    {
+      "login": "hulsed",
+      "name": "Daniel Hulse",
+      "avatar_url": "https://avatars.githubusercontent.com/u/23367230?v=4",
+      "profile": "https://fediscience.org/@Daniel_Hulse",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,
