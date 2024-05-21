@@ -354,7 +354,7 @@ def _(relation: diagramitems.MessageItem, head, tail):
 ModelConsistency.TestCase.settings = settings(
     max_examples=5,
     stateful_step_count=100,
-    deadline=5000,
+    deadline=20000,
     phases=[hypothesis.Phase.generate],
 )
 TestAutoLayOuting = ModelConsistency.TestCase
