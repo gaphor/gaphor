@@ -4,8 +4,9 @@ msgstr ""
 "Project-Id-Version: Gaphor 0.8.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2024-02-27 10:00-0500\n"
-"PO-Revision-Date: 2024-03-25 18:01+0000\n"
-"Last-Translator: Antonio Mejia <wave.i5.edm@gmail.com>\n"
+"PO-Revision-Date: 2024-05-22 12:02+0000\n"
+"Last-Translator: Deivid Santiago Ordoñez Varela <deiord44santiagoov@gmail."
+"com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/gaphor/gaphor/es/"
 ">\n"
 "Language: es\n"
@@ -13,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.5-dev\n"
+"X-Generator: Weblate 5.6-dev\n"
 "Generated-By: Babel 2.14.0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:23 gaphor/C4Model/toolbox.py:67
@@ -686,61 +687,54 @@ msgid "New Profile Diagram"
 msgstr "Diagrama de perfil nuevo"
 
 #: gaphor/UML/toolbox.py:65
-#, fuzzy
 msgid "New Artifact"
-msgstr "Artefacto"
+msgstr "Nuevo Artefacto"
 
 #: gaphor/UML/toolbox.py:69
-#, fuzzy
 msgid "New Device"
-msgstr "dispositivo"
+msgstr "Nuevo Dispositivo"
 
 #: gaphor/UML/toolbox.py:75
-#, fuzzy
 msgid "New Instance Specification"
-msgstr "Especificación de unión"
+msgstr "Nueva instancia de especificación"
 
 #: gaphor/UML/toolbox.py:82
-#, fuzzy
 msgid "New Interface"
-msgstr "interfaz"
+msgstr "Nueva interfaz"
 
 #: gaphor/UML/toolbox.py:83
-#, fuzzy
 msgid "New Node"
-msgstr "Modelo nuevo"
+msgstr "Nuevo nodo"
 
 #: gaphor/UML/toolbox.py:84
-#, fuzzy
 msgid "New Profile"
-msgstr "Perfil"
+msgstr "Nuevo Perfil"
 
 #: gaphor/UML/toolbox.py:88
-#, fuzzy
 msgid "New Stereotype"
-msgstr "Estereotipo"
+msgstr "Nuevo Estereotipo"
 
 #: gaphor/UML/actions/actionstoolbox.py:17
 #: gaphor/UML/interactions/interactionstoolbox.py:16
 #: gaphor/UML/states/statestoolbox.py:27 gaphor/UML/toolboxconfig.py:5
 msgid "New {name}"
-msgstr "{name} nuevo"
+msgstr "Nuevo {nombre}"
 
 #: gaphor/UML/umlfmt.py:218
 msgid "general: {name}"
-msgstr "general: {name}"
+msgstr "general: {nombre}"
 
 #: gaphor/UML/umlfmt.py:223
 msgid "supplier: {name}"
-msgstr "proveedor: {name}"
+msgstr "proveedor: {nombre}"
 
 #: gaphor/UML/umlfmt.py:230
 msgid "extend: {name}"
-msgstr "extender: {name}"
+msgstr "extender: {nombre}"
 
 #: gaphor/UML/umlfmt.py:237
 msgid "include: {name}"
-msgstr "incluir: {name}"
+msgstr "incluir: {nombre}"
 
 #: gaphor/UML/actions/actionstoolbox.py:40
 #: gaphor/UML/actions/actionstoolbox.py:67
@@ -750,11 +744,11 @@ msgstr "Actividad"
 
 #: gaphor/UML/actions/actionstoolbox.py:48
 msgid "Swimlane One"
-msgstr "Swimlane uno"
+msgstr "Carril uno"
 
 #: gaphor/UML/actions/actionstoolbox.py:52
 msgid "Swimlane Two"
-msgstr "Swimlane dos"
+msgstr "Carril dos"
 
 #: gaphor/UML/actions/actionstoolbox.py:58
 #, fuzzy
@@ -858,9 +852,8 @@ msgid "decision"
 msgstr "decisión"
 
 #: gaphor/UML/actions/activitypropertypage.py:137
-#, fuzzy
 msgid "New Parameter…"
-msgstr "Paquete nuevo"
+msgstr "Nuevo Parametro…"
 
 #: gaphor/UML/actions/objectnode.py:14 gaphor/UML/actions/propertypages.ui:165
 msgid "unordered"
@@ -880,7 +873,7 @@ msgstr "FIFO"
 
 #: gaphor/UML/actions/partitionpage.py:114
 msgid "New Swimlane"
-msgstr "Swimlane nuevo"
+msgstr "Nuevo carril"
 
 #: gaphor/UML/actions/pin.py:58
 msgid "input pin"
@@ -904,7 +897,7 @@ msgstr "Especificación de unión"
 
 #: gaphor/UML/actions/propertypages.ui:89
 msgid "Swimlanes"
-msgstr "Swimlanes"
+msgstr "Carriles"
 
 #: gaphor/UML/actions/propertypages.ui:100
 msgid "Partitions"
@@ -975,11 +968,11 @@ msgid ""
 msgstr ""
 "Añada y edite los atributos de la clase según la sintaxis UML.\n"
 "\n"
-"  • <tt>attr</tt> (nombre, predeterminado a la visibilidad pública)\n"
-"  • <tt>+ attr: int</tt> (público con tipo)\n"
-"  • <tt>+ attr: int[0..1]</tt> (público, tipo, y multiplicidad)\n"
-"  • <tt>+ attr: int | bool</tt> (public, union type)\n"
-"  • <tt># /attr: int # una nota</tt> (protegidas, derivadas, con "
+"   • <tt>attr</tt> (nombre, predeterminado a la visibilidad pública)\n"
+"   • <tt>+ attr: int</tt> (público con tipo)\n"
+"   • <tt>+ attr: int[0..1]</tt> (público, tipo, y multiplicidad)\n"
+"   • <tt>+ attr: int | bool</tt> (publico, tipo de unión)\n"
+"   • <tt># /attr: int # una nota</tt> (protegidas, derivadas, con "
 "observación)\n"
 "\n"
 "Pulse <b>Enter</b> para editar, <b>Retroceso</b>/<b>Eliminar</b> para "
@@ -987,24 +980,22 @@ msgstr ""
 "Use <b>-</b>/<b>=</b> para mover elementos arriba o abajo."
 
 #: gaphor/UML/actions/propertypages.ui:377
-#, fuzzy
 msgid "In/Out"
-msgstr "NOT"
+msgstr "Entrada/Salida"
 
 #: gaphor/UML/actions/propertypages.ui:378
 #, fuzzy
 msgid "In"
-msgstr "Línea"
+msgstr "Entrada"
 
 #: gaphor/UML/actions/propertypages.ui:379
 #, fuzzy
 msgid "Out"
-msgstr "NOT"
+msgstr "Salida"
 
 #: gaphor/UML/actions/propertypages.ui:380
-#, fuzzy
 msgid "Return"
-msgstr "Característica"
+msgstr "Retorno"
 
 #: gaphor/UML/actions/propertypages.ui:391
 #: gaphor/UML/classes/propertypages.ui:11
@@ -1016,14 +1007,12 @@ msgid "Multiplicity"
 msgstr ""
 
 #: gaphor/UML/classes/classespropertypages.py:235
-#, fuzzy
 msgid "New Attribute…"
-msgstr "Mostrar atributos"
+msgstr "Nuevo Atributo…"
 
 #: gaphor/UML/classes/classespropertypages.py:393
-#, fuzzy
 msgid "New Operation…"
-msgstr "Mostrar operaciones"
+msgstr "Nueva Operación…"
 
 #: gaphor/UML/classes/classestoolbox.py:25
 msgid "Classes"
@@ -1044,7 +1033,7 @@ msgstr "Realización de la interfaz"
 
 #: gaphor/UML/classes/classestoolbox.py:142
 msgid "DataType"
-msgstr "TipoDato"
+msgstr "Tipo de Dato"
 
 #: gaphor/UML/classes/datatype.py:55
 msgid "primitive"
@@ -1052,11 +1041,11 @@ msgstr "primitivo"
 
 #: gaphor/UML/classes/datatype.py:57 gaphor/UML/classes/enumeration.py:66
 msgid "valueType"
-msgstr "tipoValor"
+msgstr "tipo de Valor"
 
 #: gaphor/UML/classes/datatype.py:59
 msgid "dataType"
-msgstr "tipoDato"
+msgstr "tipo de Dato"
 
 #: gaphor/UML/classes/dependency.py:43
 msgid "use"
@@ -1075,9 +1064,8 @@ msgid "enumeration"
 msgstr "enumeración"
 
 #: gaphor/UML/classes/enumerationpropertypages.py:126
-#, fuzzy
 msgid "New Enumeration…"
-msgstr "enumeración"
+msgstr "Nueva enumeración…"
 
 #: gaphor/UML/classes/interface.py:276
 msgid "interface"
@@ -1114,8 +1102,7 @@ msgid ""
 "items.\n"
 "Use <b>-</b>/<b>=</b> to move items up or down."
 msgstr ""
-"Añada y edite los extremos de la asociación de acuerdo con la sintaxis "
-"UML.\n"
+"Añada y edite los extremos de la asociación de acuerdo con la sintaxis UML.\n"
 "\n"
 "  • <tt>+ nombre</tt>\n"
 "  • <tt>+ nombre[1]</tt>\n"
@@ -1123,7 +1110,7 @@ msgstr ""
 "  • <tt>1..2</tt>\n"
 "  • <tt>- [1..2]</tt>\n"
 "\n"
-"Pulse <b>Enter</b> para editar, <b>Retroceso</b>/<b>Eliminar</b> para "
+"Pulse <b>Intro</b> para editar, <b>Retroceso</b>/<b>Eliminar</b> para "
 "eliminar elementos.\n"
 "Use <b>-</b>/<b>=</b> para mover elementos arriba o abajo."
 
@@ -1185,10 +1172,10 @@ msgstr ""
 "  • <tt>+ attr: int</tt> (público con tipo)\n"
 "  • <tt>+ attr: int[0..1]</tt> (público, tipo, y multiplicidad)\n"
 "  • <tt>+ attr: int | bool</tt> (público, tipo de unión)\n"
-"  • <tt># /attr: int # una nota</tt> (protegidas, derivadas, con "
-"observación)\n"
+"  • <tt># /attr: int # una nota</tt> (protegidas, derivadas, con observación)"
 "\n"
-"Pulse <b>Enter</b> para editar, <b>Retroceso</b>/<b>Eliminar</b> para "
+"\n"
+"Pulse <b>Intro</b> para editar, <b>Retroceso</b>/<b>Eliminar</b> para "
 "eliminar elementos.\n"
 "Use <b>-</b>/<b>=</b> para mover elementos arriba o abajo."
 
