@@ -69,10 +69,6 @@ from gaphor.UML.toolbox import (
     use_cases,
 )
 
-# @pytest.mark.hypothesis
-# def test_model_consistency():
-#     run_state_machine_as_test(ModelConsistency)
-
 
 def tooldef():
     return sampled_from(
