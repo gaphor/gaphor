@@ -23,7 +23,6 @@ from gaphor.core.modeling.event import (
     ElementCreated,
     ElementDeleted,
     ModelFlushed,
-    ModelReady,
 )
 from gaphor.core.modeling.presentation import Presentation
 
@@ -200,11 +199,6 @@ class ElementFactory(Service):
                 element.unlink()
 
         self.handle(ModelFlushed(self))
-
-    def model_ready(self) -> None:
-        """Send notification that a new model has been loaded by means of the
-        ModelReady event from gaphor.core.modeling.event."""
-        self.handle(ModelReady(self))
 
     @contextmanager
     def block_events(self, new_event_manager: EventHandler | None = None):

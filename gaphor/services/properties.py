@@ -17,7 +17,7 @@ from gi.repository import GLib
 from gaphor.abc import Service
 from gaphor.core import event_handler
 from gaphor.core.modeling.event import ModelFlushed
-from gaphor.event import ModelLoaded, ModelSaved, SessionCreated
+from gaphor.event import ModelSaved, SessionCreated
 
 log = logging.getLogger(__name__)
 
@@ -92,7 +92,7 @@ class Properties(Service):
         self.event_manager.unsubscribe(self.on_model_saved)
         self.event_manager.unsubscribe(self.on_model_flushed)
 
-    @event_handler(ModelLoaded, SessionCreated)
+    @event_handler(SessionCreated)
     def on_model_loaded(self, event):
         self.filename = get_cache_dir() / file_hash(event.filename or "")
         self.load()

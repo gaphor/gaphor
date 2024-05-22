@@ -1,7 +1,7 @@
 import pytest
 
 from gaphor import UML
-from gaphor.core.modeling import Diagram
+from gaphor.core.modeling import Diagram, ModelReady
 from gaphor.ui.modelbrowser import (
     ElementDragData,
     ModelBrowser,
@@ -163,7 +163,7 @@ def test_model_browser_model_ready(event_manager, element_factory, modeling_lang
     model_browser.open()
     tree_model = model_browser.model
 
-    element_factory.model_ready()
+    event_manager.handle(ModelReady(element_factory))
 
     assert tree_model.tree_item_for_element(package) is not None
     assert tree_model.tree_item_for_element(class_) is None

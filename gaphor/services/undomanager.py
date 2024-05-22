@@ -163,7 +163,8 @@ class UndoManager(Service, ActionProvider):
     def reset(self, event=None):
         self.clear_redo_stack()
         self.clear_undo_stack()
-        self._action_executed()
+        self.event_manager.handle(ActionEnabled("win.edit-undo", False))
+        self.event_manager.handle(ActionEnabled("win.edit-redo", False))
 
     @event_handler(TransactionBegin)
     def begin_transaction(self, event=None):

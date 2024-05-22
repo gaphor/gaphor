@@ -15,10 +15,9 @@ from gaphor import UML
 from gaphor.abc import ActionProvider, Service
 from gaphor.core import action, event_handler, gettext
 from gaphor.core.changeset.compare import compare
-from gaphor.core.modeling import Diagram, ElementFactory, StyleSheet
+from gaphor.core.modeling import Diagram, ElementFactory, ModelReady, StyleSheet
 from gaphor.event import (
     ModelChangedOnDisk,
-    ModelLoaded,
     ModelSaved,
     SessionCreated,
     SessionShutdown,
@@ -64,7 +63,6 @@ def load_default_model(element_factory):
         diagram = element_factory.create(Diagram)
         diagram.element = model
         diagram.name = gettext("New diagram")
-    element_factory.model_ready()
 
 
 class FileManager(Service, ActionProvider):
@@ -111,7 +109,6 @@ class FileManager(Service, ActionProvider):
 
     def load_template(self, template):
         storage.load(template, self.element_factory, self.modeling_language)
-        self.event_manager.handle(ModelLoaded(self))
 
     def load(self, filename: Path, on_load_done: Callable[[], None] | None = None):
         """Load the Gaphor model from the supplied file name.
@@ -135,7 +132,7 @@ class FileManager(Service, ActionProvider):
             if on_load_done:
                 on_load_done()
             else:
-                self.event_manager.handle(ModelLoaded(self, filename))
+                self.event_manager.handle(ModelReady(self))
 
         for _ in self._load_async(filename, status_window.progress, done):
             pass
@@ -217,11 +214,12 @@ class FileManager(Service, ActionProvider):
         done=None,
         element_factory=None,
     ):
+        factory = element_factory or self.element_factory
         try:
             with filename.open(encoding="utf-8", errors="replace") as file_obj:
                 for percentage in storage.load_generator(
                     file_obj,
-                    element_factory or self.element_factory,
+                    factory,
                     self.modeling_language,
                 ):
                     if progress:
@@ -264,7 +262,7 @@ class FileManager(Service, ActionProvider):
             nonlocal temp_dir
             temp_dir.cleanup()
             self.filename = filename
-            self.event_manager.handle(ModelLoaded(self, filename, modified=True))
+            self.event_manager.handle(ModelReady(self, modified=True))
 
         def handle_merge_conflict(answer):
             if answer == "cancel":
@@ -399,6 +397,7 @@ class FileManager(Service, ActionProvider):
             self.load_template(event.template)
         else:
             load_default_model(self.element_factory)
+            self.event_manager.handle(ModelReady(self))
 
     @event_handler(SessionShutdownRequested)
     def _on_session_shutdown_request(self, event: SessionShutdownRequested) -> None:

@@ -8,7 +8,6 @@ from gaphor.core.modeling.event import (
     ElementCreated,
     ElementDeleted,
     ModelFlushed,
-    ModelReady,
     ServiceEvent,
 )
 from gaphor.core.modeling.presentation import Presentation
@@ -131,11 +130,6 @@ def test_remove_event(element_factory):
     clear_events()
     p.unlink()
     assert isinstance(last_event, ElementDeleted)
-
-
-def test_model_event(element_factory):
-    element_factory.model_ready()
-    assert isinstance(last_event, ModelReady)
 
 
 def test_flush_event(element_factory):

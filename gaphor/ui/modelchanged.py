@@ -2,7 +2,8 @@ from gi.repository import Gtk
 
 from gaphor.abc import ActionProvider
 from gaphor.core import event_handler
-from gaphor.event import ModelChangedOnDisk, ModelLoaded, ModelSaved
+from gaphor.core.modeling import ModelReady
+from gaphor.event import ModelChangedOnDisk, ModelSaved
 from gaphor.i18n import translated_ui_string
 from gaphor.ui.abc import UIComponent
 
@@ -41,7 +42,7 @@ class ModelChanged(UIComponent, ActionProvider):
         if self._banner:
             self._banner.set_revealed(True)
 
-    @event_handler(ModelLoaded, ModelSaved)
+    @event_handler(ModelReady, ModelSaved)
     def _on_model_reset(self, _event):
         if self._banner:
             self._banner.set_revealed(False)
