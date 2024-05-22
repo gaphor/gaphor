@@ -5,7 +5,7 @@ from gaphor import UML
 from gaphor.core.modeling import Comment, Diagram, ElementFactory
 from gaphor.diagram.general import CommentItem, Line
 from gaphor.diagram.tests.fixtures import connect, disconnect
-from gaphor.storage.recovery import Recorder, replay_events
+from gaphor.storage.recovery import Recorder, replay_events, sha256sum
 from gaphor.UML.diagramitems import ClassItem, DependencyItem
 
 
@@ -301,3 +301,14 @@ def test_record_merge_line_segments(
 
     assert len(new_handle_positions) == 3
     assert handle_positions == new_handle_positions
+
+
+def test_sha256sum(tmp_path):
+    tmp_file = tmp_path / "testfile"
+    with tmp_file.open(mode="wb") as f:
+        f.write(b"abcdefg")
+
+    assert (
+        sha256sum(tmp_file)
+        == "7d1a54127b222502f5b79b5fb0803061152a44f92b37e23c6527baf665d4da9a"
+    )

@@ -1,4 +1,6 @@
 import ast
+import hashlib
+import logging
 from pathlib import Path
 
 from gaphor import settings
@@ -35,6 +37,8 @@ from gaphor.event import (
 from gaphor.i18n import gettext
 from gaphor.transaction import Transaction, TransactionCommit, TransactionRollback
 
+log = logging.getLogger(__name__)
+
 
 def recovery_filename(filename: Path) -> Path:
     return (settings.get_cache_dir() / settings.file_hash(filename)).with_suffix(
@@ -42,12 +46,16 @@ def recovery_filename(filename: Path) -> Path:
     )
 
 
+def sha256sum(filename: Path):
+    with open(filename, "rb", buffering=0) as f:
+        return hashlib.file_digest(f, "sha256").hexdigest()  # type: ignore[arg-type]
+
+
 class Recovery(Service):
     def __init__(self, event_manager, element_factory, modeling_language):
         self.event_manager = event_manager
         self.element_factory = element_factory
         self.modeling_language = modeling_language
-        # TODO: How to record new, unsaved models?
         self.filename: Path | None = None
         self.recorder = Recorder()
 
@@ -77,7 +85,17 @@ class Recovery(Service):
             and self.recorder.events
             and event.context not in ("rollback", "recover")
         ):
-            with self.filename.open("a", encoding="utf-8") as f:
+            recovery = recovery_filename(self.filename)
+            needs_preamble = not recovery.exists()
+
+            with recovery.open("a", encoding="utf-8") as f:
+                if needs_preamble:
+                    preamble = {
+                        "path": str(self.filename.absolute()),
+                        "sha256": sha256sum(self.filename),
+                    }
+                    f.write(repr(preamble))
+                    f.write("\n")
                 f.write(repr(self.recorder.events))
                 f.write("\n")
         self.recorder.truncate()
@@ -88,22 +106,33 @@ class Recovery(Service):
 
     @event_handler(SessionCreated)
     def on_model_loaded(self, event: SessionCreated):
-        self.filename = recovery_filename(event.filename) if event.filename else None
+        self.filename = event.filename
         self.recorder.truncate()
 
     @event_handler(ModelReady)
     def on_model_ready(self, _event):
-        if not self.filename or not self.filename.exists():
+        if not self.filename:
+            return
+
+        recovery = recovery_filename(self.filename)
+
+        if not recovery.exists():
             return
 
         events = []
         with Transaction(self.event_manager, context="recover"):
-            for line in self.filename.open(encoding="utf-8"):
+            for line in recovery.open(encoding="utf-8"):
                 events = ast.literal_eval(line.rstrip("\r\n"))
+                if isinstance(events, dict) and sha256sum(self.filename) != events.get(
+                    "sha256"
+                ):
+                    backup = recovery.with_suffix(".recovery.bak")
+                    log.info(
+                        "Recovery file hash does not match. Renamed to %s.", backup
+                    )
+                    recovery.rename(backup)
+                    return
                 replay_events(events, self.element_factory, self.modeling_language)
-
-            # Ensure events are not recorded again
-            self.truncate()
 
         if events:
             self.event_manager.handle(
@@ -117,19 +146,19 @@ class Recovery(Service):
     @event_handler(ModelSaved)
     def on_model_saved(self, event: ModelSaved):
         if self.filename:
-            self.filename.unlink(missing_ok=True)
+            recovery_filename(self.filename).unlink(missing_ok=True)
 
-        self.filename = recovery_filename(event.filename) if event.filename else None
+        self.filename = event.filename
 
         # Delete again: new model name may be different from original one
         if self.filename:
-            self.filename.unlink(missing_ok=True)
+            recovery_filename(self.filename).unlink(missing_ok=True)
         self.recorder.truncate()
 
     @event_handler(SessionShutdown)
     def on_session_shutdown(self, event: SessionShutdown):
         if self.filename:
-            self.filename.unlink(missing_ok=True)
+            recovery_filename(self.filename).unlink(missing_ok=True)
         self.recorder.truncate()
 
 
