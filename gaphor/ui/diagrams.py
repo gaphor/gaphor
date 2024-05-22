@@ -178,8 +178,8 @@ class Diagrams(UIComponent, ActionProvider):
         diagram = self.get_current_diagram()
         self.event_manager.handle(CurrentDiagramChanged(diagram))
         self.properties.set("current-diagram", diagram.id if diagram else None)
-        view = self.get_current_view()
-        view.grab_focus()
+        if view := self.get_current_view():
+            view.grab_focus()
 
     @action(name="close-current-tab", shortcut="<Primary>w")
     def close_current_tab(self):
