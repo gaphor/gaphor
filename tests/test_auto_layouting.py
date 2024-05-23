@@ -172,4 +172,4 @@ AutoLayouting.TestCase.settings = settings(
     deadline=2000,
     phases=[hypothesis.Phase.generate],
 )
-TestAutoLayOuting = AutoLayouting.TestCase
+TestAutoLayouting = AutoLayouting.TestCase

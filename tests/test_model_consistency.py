@@ -28,9 +28,9 @@ from functools import singledispatch
 from io import StringIO
 from typing import Iterable
 
-import pytest
+import hypothesis
 from gaphas.connector import Handle
-from hypothesis import reproduce_failure  # noqa
+from hypothesis import reproduce_failure, settings  # noqa
 from hypothesis.control import assume, cleanup
 from hypothesis.errors import UnsatisfiedAssumption
 from hypothesis.stateful import (
@@ -38,7 +38,6 @@ from hypothesis.stateful import (
     initialize,
     invariant,
     rule,
-    run_state_machine_as_test,
 )
 from hypothesis.strategies import data, integers, lists, sampled_from
 
@@ -69,11 +68,6 @@ from gaphor.UML.toolbox import (
     states,
     use_cases,
 )
-
-
-@pytest.mark.hypothesis
-def test_model_consistency():
-    run_state_machine_as_test(ModelConsistency)
 
 
 def tooldef():
@@ -355,3 +349,12 @@ def _(relation: diagramitems.MessageItem, head, tail):
     assert isinstance(subject.receiveEvent, UML.MessageOccurrenceSpecification)
     assert subject.sendEvent.covered is head.subject
     assert subject.receiveEvent.covered is tail.subject
+
+
+ModelConsistency.TestCase.settings = settings(
+    max_examples=5,
+    stateful_step_count=100,
+    deadline=20000,
+    phases=[hypothesis.Phase.generate],
+)
+TestModelConsistency = ModelConsistency.TestCase

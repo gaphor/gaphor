@@ -718,23 +718,23 @@ msgstr "Nuevo Estereotipo"
 #: gaphor/UML/interactions/interactionstoolbox.py:16
 #: gaphor/UML/states/statestoolbox.py:27 gaphor/UML/toolboxconfig.py:5
 msgid "New {name}"
-msgstr "Nuevo {nombre}"
+msgstr "Nuevo {name}"
 
 #: gaphor/UML/umlfmt.py:218
 msgid "general: {name}"
-msgstr "general: {nombre}"
+msgstr "general: {name}"
 
 #: gaphor/UML/umlfmt.py:223
 msgid "supplier: {name}"
-msgstr "proveedor: {nombre}"
+msgstr "proveedor: {name}"
 
 #: gaphor/UML/umlfmt.py:230
 msgid "extend: {name}"
-msgstr "extender: {nombre}"
+msgstr "extender: {name}"
 
 #: gaphor/UML/umlfmt.py:237
 msgid "include: {name}"
-msgstr "incluir: {nombre}"
+msgstr "incluir: {name}"
 
 #: gaphor/UML/actions/actionstoolbox.py:40
 #: gaphor/UML/actions/actionstoolbox.py:67
