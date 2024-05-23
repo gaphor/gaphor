@@ -82,7 +82,7 @@ def relations(diagram):
     return sampled_from(ordered(relations))
 
 
-class AutoLayOuting(RuleBasedStateMachine):
+class AutoLayouting(RuleBasedStateMachine):
     @property
     def model(self) -> ElementFactory:
         return self.session.get_service("element_factory")  # type: ignore[no-any-return]
@@ -166,10 +166,10 @@ class AutoLayOuting(RuleBasedStateMachine):
         self.auto_layout.layout(self.diagram)
 
 
-AutoLayOuting.TestCase.settings = settings(
+AutoLayouting.TestCase.settings = settings(
     max_examples=5,
     stateful_step_count=30,
     deadline=2000,
     phases=[hypothesis.Phase.generate],
 )
-TestAutoLayOuting = AutoLayOuting.TestCase
+TestAutoLayOuting = AutoLayouting.TestCase
