@@ -357,4 +357,4 @@ ModelConsistency.TestCase.settings = settings(
     deadline=20000,
     phases=[hypothesis.Phase.generate],
 )
-TestAutoLayOuting = ModelConsistency.TestCase
+TestModelConsistency = ModelConsistency.TestCase
