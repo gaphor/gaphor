@@ -106,7 +106,8 @@ class Recovery(Service):
 
     @event_handler(SessionCreated)
     def on_model_loaded(self, event: SessionCreated):
-        self.filename = event.filename
+        if not event.force:
+            self.filename = event.filename
         self.recorder.truncate()
 
     @event_handler(ModelReady)
