@@ -203,7 +203,7 @@ class EditorStack:
                 self.vbox.append(page)
             except Exception:
                 log.error(
-                    f"Could not construct property page for {name}", exc_info=True
+                    "Could not construct property page for %s", name, exc_info=True
                 )
 
     def clear_pages(self):
