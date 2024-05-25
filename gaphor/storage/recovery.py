@@ -115,25 +115,32 @@ class Recovery(Service):
         if not self.filename:
             return
 
-        recovery = recovery_filename(self.filename)
+        recovery_file = recovery_filename(self.filename)
 
-        if not recovery.exists():
+        if not recovery_file.exists():
             return
 
         events = []
-        with Transaction(self.event_manager, context="recover"):
-            for line in recovery.open(encoding="utf-8"):
-                events = ast.literal_eval(line.rstrip("\r\n"))
-                if isinstance(events, dict) and sha256sum(self.filename) != events.get(
-                    "sha256"
-                ):
-                    backup = recovery.with_suffix(".recovery.bak")
-                    log.info(
-                        "Recovery file hash does not match. Renamed to %s.", backup
-                    )
-                    recovery.rename(backup)
-                    return
-                replay_events(events, self.element_factory, self.modeling_language)
+        try:
+            with Transaction(self.event_manager, context="recover"):
+                for line in recovery_file.open(encoding="utf-8"):
+                    events = ast.literal_eval(line.rstrip("\r\n"))
+                    if isinstance(events, dict) and sha256sum(
+                        self.filename
+                    ) != events.get("sha256"):
+                        backup = recovery_file.with_suffix(".recovery.bak")
+                        log.info(
+                            "Recovery file hash does not match. Renamed to %s.", backup
+                        )
+                        recovery_file.rename(backup)
+                        return
+                    replay_events(events, self.element_factory, self.modeling_language)
+        except Exception:
+            log.error(
+                "Could not recover model changes from %s. Changes have been rolled back.",
+                recovery_file,
+                exc_info=True,
+            )
 
         if events:
             self.event_manager.handle(

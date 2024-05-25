@@ -130,3 +130,33 @@ def test_no_recovery_for_properly_closed_session(application: Application, test_
     new_element_factory = new_session.get_service("element_factory")
 
     assert not new_element_factory.lookup(diagram.id)
+
+
+@pytest.mark.parametrize(
+    "errorous_line",
+    [
+        '[("s", "1234", "name", "value")]\n',
+        '[("s", syntax error)]\n',
+        "\n",
+    ],
+)
+def test_broken_recovery_log(
+    application: Application, test_models, caplog, errorous_line
+):
+    model_file = test_models / "simple-items.gaphor"
+    session = application.new_session(filename=model_file)
+    element_factory = session.get_service("element_factory")
+    with Transaction(session.get_service("event_manager")):
+        diagram = element_factory.create(Diagram)
+
+    application.shutdown_session(session)
+
+    with recovery_filename(model_file).open("a", encoding="utf-8") as f:
+        # f.write("['no', 'such', 'command']\n")
+        f.write(errorous_line)
+
+    new_session = application.new_session(filename=model_file)
+    new_element_factory = new_session.get_service("element_factory")
+
+    assert not new_element_factory.lookup(diagram.id)
+    assert "Could not recover model changes" in caplog.text
