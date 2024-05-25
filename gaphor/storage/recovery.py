@@ -1,6 +1,7 @@
 import ast
 import hashlib
 import logging
+from io import IOBase
 from pathlib import Path
 
 from gaphor import settings
@@ -58,6 +59,7 @@ class Recovery(Service):
         self.modeling_language = modeling_language
         self.filename: Path | None = None
         self.recorder = Recorder()
+        # self.event_log = EventLog()
 
         event_manager.subscribe(self.on_transaction_commit)
         event_manager.subscribe(self.on_transaction_rollback)
@@ -155,6 +157,7 @@ class Recovery(Service):
     def on_model_saved(self, event: ModelSaved):
         if self.filename:
             recovery_filename(self.filename).unlink(missing_ok=True)
+            # self.event_log.filename = filename
 
         self.filename = event.filename
 
@@ -168,6 +171,65 @@ class Recovery(Service):
         if self.filename:
             recovery_filename(self.filename).unlink(missing_ok=True)
         self.recorder.truncate()
+
+
+class EventLog:
+    def __init__(self, filename: Path, directory: Path):
+        self._directory = directory
+        self._filename = filename
+        self._log_name = (
+            self._directory / settings.file_hash(self._filename)
+        ).with_suffix(".recovery")
+        self._file: IOBase | None = None
+
+    def clear(self):
+        self._close()
+        self._log_name.unlink(missing_ok=True)
+
+    def write(self, event):
+        f = self._file
+        if not f or f.closed:
+            f = self._file = self._log_name.open(mode="a", encoding="utf-8")
+
+        if f.tell() == 0:
+            f.write(
+                repr(
+                    {
+                        "path": str(self._filename.absolute()),
+                        "sha256": sha256sum(self._filename),
+                    }
+                )
+            )
+            f.write("\n")
+
+        f.write(repr(event))
+        f.write("\n")
+        f.flush()
+
+    def read(self):
+        self._close()
+        try:
+            with self._log_name.open(mode="r", encoding="utf-8") as f:
+                for line in f:
+                    events = ast.literal_eval(line.rstrip("\r\n"))
+                    if isinstance(events, dict) and sha256sum(
+                        self._filename
+                    ) != events.get("sha256"):
+                        backup = self._log_name.with_suffix(".recovery.bak")
+                        log.info(
+                            "Recovery file hash does not match. Renamed to %s.", backup
+                        )
+                        self._log_name.rename(backup)
+                        return
+                    yield events
+        except FileNotFoundError:
+            # Log does not exist, no problem
+            pass
+
+    def _close(self):
+        if self._file and not self._file.closed:
+            self._file.close()
+            self._file = None
 
 
 class Recorder:
