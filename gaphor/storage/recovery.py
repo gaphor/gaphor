@@ -47,19 +47,13 @@ def recovery_filename(filename: Path) -> Path:
     )
 
 
-def sha256sum(filename: Path):
-    with open(filename, "rb", buffering=0) as f:
-        return hashlib.file_digest(f, "sha256").hexdigest()  # type: ignore[arg-type]
-
-
 class Recovery(Service):
     def __init__(self, event_manager, element_factory, modeling_language):
         self.event_manager = event_manager
         self.element_factory = element_factory
         self.modeling_language = modeling_language
-        self.filename: Path | None = None
         self.recorder = Recorder()
-        # self.event_log = EventLog()
+        self.event_log: EventLog | None = None
 
         event_manager.subscribe(self.on_transaction_commit)
         event_manager.subscribe(self.on_transaction_rollback)
@@ -71,6 +65,9 @@ class Recovery(Service):
         self.recorder.subscribe(event_manager)
 
     def shutdown(self):
+        if self.event_log:
+            self.event_log.close()
+
         self.event_manager.unsubscribe(self.on_transaction_commit)
         self.event_manager.unsubscribe(self.on_transaction_rollback)
         self.event_manager.unsubscribe(self.on_model_loaded)
@@ -83,23 +80,11 @@ class Recovery(Service):
     @event_handler(TransactionCommit)
     def on_transaction_commit(self, event: TransactionCommit):
         if (
-            self.filename
+            self.event_log
             and self.recorder.events
             and event.context not in ("rollback", "recover")
         ):
-            recovery = recovery_filename(self.filename)
-            needs_preamble = not recovery.exists()
-
-            with recovery.open("a", encoding="utf-8") as f:
-                if needs_preamble:
-                    preamble = {
-                        "path": str(self.filename.absolute()),
-                        "sha256": sha256sum(self.filename),
-                    }
-                    f.write(repr(preamble))
-                    f.write("\n")
-                f.write(repr(self.recorder.events))
-                f.write("\n")
+            self.event_log.write(self.recorder.events)
         self.recorder.truncate()
 
     @event_handler(TransactionRollback)
@@ -108,39 +93,24 @@ class Recovery(Service):
 
     @event_handler(SessionCreated)
     def on_model_loaded(self, event: SessionCreated):
-        if not event.force:
-            self.filename = event.filename
+        if event.filename and not event.force:
+            self.event_log = EventLog(event.filename, settings.get_cache_dir())
         self.recorder.truncate()
 
     @event_handler(ModelReady)
     def on_model_ready(self, _event):
-        if not self.filename:
-            return
-
-        recovery_file = recovery_filename(self.filename)
-
-        if not recovery_file.exists():
+        if not self.event_log:
             return
 
         events = []
         try:
             with Transaction(self.event_manager, context="recover"):
-                for line in recovery_file.open(encoding="utf-8"):
-                    events = ast.literal_eval(line.rstrip("\r\n"))
-                    if isinstance(events, dict) and sha256sum(
-                        self.filename
-                    ) != events.get("sha256"):
-                        backup = recovery_file.with_suffix(".recovery.bak")
-                        log.info(
-                            "Recovery file hash does not match. Renamed to %s.", backup
-                        )
-                        recovery_file.rename(backup)
-                        return
+                for events in self.event_log.read():
                     replay_events(events, self.element_factory, self.modeling_language)
         except Exception:
             log.error(
                 "Could not recover model changes from %s. Changes have been rolled back.",
-                recovery_file,
+                self.event_log.log_file,
                 exc_info=True,
             )
 
@@ -155,35 +125,38 @@ class Recovery(Service):
 
     @event_handler(ModelSaved)
     def on_model_saved(self, event: ModelSaved):
-        if self.filename:
-            recovery_filename(self.filename).unlink(missing_ok=True)
-            # self.event_log.filename = filename
+        if self.event_log:
+            self.event_log.clear()
 
-        self.filename = event.filename
+        if event.filename:
+            self.event_log = EventLog(event.filename, settings.get_cache_dir())
+            self.event_log.clear()
+        else:
+            self.event_log = None
 
-        # Delete again: new model name may be different from original one
-        if self.filename:
-            recovery_filename(self.filename).unlink(missing_ok=True)
         self.recorder.truncate()
 
     @event_handler(SessionShutdown)
-    def on_session_shutdown(self, event: SessionShutdown):
-        if self.filename:
-            recovery_filename(self.filename).unlink(missing_ok=True)
+    def on_session_shutdown(self, _event: SessionShutdown):
+        if self.event_log:
+            self.event_log.clear()
         self.recorder.truncate()
 
 
 class EventLog:
     def __init__(self, filename: Path, directory: Path):
-        self._directory = directory
         self._filename = filename
-        self._log_name = (
-            self._directory / settings.file_hash(self._filename)
-        ).with_suffix(".recovery")
+        self._log_name = (directory / settings.file_hash(filename)).with_suffix(
+            ".recovery"
+        )
         self._file: IOBase | None = None
 
+    @property
+    def log_file(self):
+        return self._log_name
+
     def clear(self):
-        self._close()
+        self.close()
         self._log_name.unlink(missing_ok=True)
 
     def write(self, event):
@@ -207,7 +180,7 @@ class EventLog:
         f.flush()
 
     def read(self):
-        self._close()
+        self.close()
         try:
             with self._log_name.open(mode="r", encoding="utf-8") as f:
                 for line in f:
@@ -226,10 +199,15 @@ class EventLog:
             # Log does not exist, no problem
             pass
 
-    def _close(self):
-        if self._file and not self._file.closed:
+    def close(self):
+        if self._file:
             self._file.close()
             self._file = None
+
+
+def sha256sum(filename: Path):
+    with open(filename, "rb", buffering=0) as f:
+        return hashlib.file_digest(f, "sha256").hexdigest()  # type: ignore[arg-type]
 
 
 class Recorder:
