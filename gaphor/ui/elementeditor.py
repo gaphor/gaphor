@@ -21,7 +21,6 @@ from gaphor.core.modeling.event import (
 from gaphor.core.styling import StyleNode
 from gaphor.diagram.event import DiagramSelectionChanged
 from gaphor.diagram.propertypages import PropertyPages, new_resource_builder
-from gaphor.event import ModelLoaded
 from gaphor.i18n import gettext, localedir
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.csscompletion import (
@@ -87,15 +86,15 @@ class ElementEditor(UIComponent, ActionProvider):
         self.editor_stack = builder.get_object("editor-stack")
 
         resolve = builder.get_object("modelmerge-resolve")
-        resolve.connect_after("clicked", self.on_model_loaded)
+        resolve.connect_after("clicked", self.on_model_ready)
 
         self.editors.open(builder)
         self.preferences.open(builder)
         self.modelmerge.open(builder)
 
-        self.event_manager.subscribe(self.on_model_loaded)
+        self.event_manager.subscribe(self.on_model_ready)
 
-        self.on_model_loaded(None)
+        self.on_model_ready(None)
 
         return builder.get_object("elementeditor")
 
@@ -106,7 +105,7 @@ class ElementEditor(UIComponent, ActionProvider):
         idempotent if set.
         """
 
-        self.event_manager.unsubscribe(self.on_model_loaded)
+        self.event_manager.unsubscribe(self.on_model_ready)
 
         self.editors.close()
         self.preferences.close()
@@ -114,8 +113,8 @@ class ElementEditor(UIComponent, ActionProvider):
 
         return True
 
-    @event_handler(ModelLoaded)
-    def on_model_loaded(self, event):
+    @event_handler(ModelReady)
+    def on_model_ready(self, _event):
         if editor_stack := self.editor_stack:
             editor_stack.set_visible_child_name(
                 "modelmerge" if self.modelmerge.needs_merge else "editors"
@@ -386,16 +385,16 @@ class PreferencesStack:
         self._in_update = 0
 
     @event_handler(ModelReady)
-    def _model_ready(self, event):
+    def _model_ready(self, _event):
         self.update()
 
     @event_handler(ElementCreated)
-    def _style_sheet_created(self, event):
+    def _style_sheet_created(self, event: ElementCreated):
         if isinstance(event.element, StyleSheet):
             self.update()
 
     @event_handler(AttributeUpdated)
-    def _style_sheet_changed(self, event):
+    def _style_sheet_changed(self, event: AttributeUpdated):
         if event.property is StyleSheet.styleSheet:
             self.update()
 

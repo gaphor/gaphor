@@ -230,12 +230,13 @@ class ElementDeleted(ServiceEvent):
 class ModelReady(ServiceEvent):
     """A generic element factory event."""
 
-    def __init__(self, service):
+    def __init__(self, service, modified=False):
         """Constructor.
 
         The service parameter is the service the emitted the event.
         """
         super().__init__(service)
+        self.modified = modified
 
 
 class ModelFlushed(ServiceEvent):

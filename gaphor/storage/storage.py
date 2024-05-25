@@ -317,7 +317,6 @@ def load_generator(
                 yield percentage
 
     yield 100
-    element_factory.model_ready()
 
 
 def version_lower_than(gaphor_version, version):

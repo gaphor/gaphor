@@ -2,7 +2,7 @@ import pathlib
 
 from gi.repository import GLib
 
-from gaphor.event import ModelLoaded
+from gaphor.event import SessionCreated
 from gaphor.ui.recentfiles import RecentFiles
 
 
@@ -21,7 +21,7 @@ def test_add_new_recent_file(event_manager):
     recent_manager = RecentManagerStub()
     RecentFiles(event_manager, recent_manager)
 
-    event_manager.handle(ModelLoaded(None, "testfile.gaphor"))
+    event_manager.handle(SessionCreated(None, None, "testfile.gaphor"))
 
     assert len(recent_manager.items) == 1
     assert recent_manager.items[0].startswith("file:///"), recent_manager.items[0]

@@ -11,12 +11,13 @@ from gi.repository import Gio, GLib, Gtk
 from gaphor.abc import ActionProvider, Service
 from gaphor.application import distribution
 from gaphor.core import action, event_handler, gettext
+from gaphor.core.modeling import ModelReady
 from gaphor.event import (
     ActionEnabled,
     ActiveSessionChanged,
-    ModelLoaded,
     ModelSaved,
     Notification,
+    SessionCreated,
     SessionShutdownRequested,
 )
 from gaphor.i18n import translated_ui_string
@@ -107,6 +108,7 @@ class MainWindow(Service, ActionProvider):
 
         event_manager.subscribe(self._on_file_manager_state_changed)
         event_manager.subscribe(self._on_current_diagram_changed)
+        event_manager.subscribe(self._on_model_ready)
 
     def shutdown(self):
         if self.window:
@@ -116,6 +118,7 @@ class MainWindow(Service, ActionProvider):
         em = self.event_manager
         em.unsubscribe(self._on_file_manager_state_changed)
         em.unsubscribe(self._on_current_diagram_changed)
+        em.unsubscribe(self._on_model_ready)
         em.unsubscribe(self._on_undo_manager_state_changed)
         em.unsubscribe(self._on_action_enabled)
         em.unsubscribe(self._on_modeling_language_selection_changed)
@@ -259,8 +262,10 @@ class MainWindow(Service, ActionProvider):
 
     # Signal callbacks:
 
-    @event_handler(ModelLoaded, ModelSaved)
-    def _on_file_manager_state_changed(self, event: ModelLoaded | ModelSaved) -> None:
+    @event_handler(SessionCreated, ModelSaved)
+    def _on_file_manager_state_changed(
+        self, event: SessionCreated | ModelSaved
+    ) -> None:
         if not (window := self.window):
             self._ui_updates.append(lambda: self._on_file_manager_state_changed(event))
             return
@@ -276,9 +281,11 @@ class MainWindow(Service, ActionProvider):
             else f"{gettext('New model')} - Gaphor"
         )
 
-        self.model_changed = isinstance(event, ModelLoaded) and event.modified
-
         window.present()
+
+    @event_handler(ModelReady)
+    def _on_model_ready(self, event: ModelReady):
+        self.model_changed = event.modified
 
     @event_handler(CurrentDiagramChanged)
     def _on_current_diagram_changed(self, event):

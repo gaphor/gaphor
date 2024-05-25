@@ -5,9 +5,8 @@ from gi.repository import Gio, Gtk
 
 from gaphor.core import event_handler
 from gaphor.core.changeset.apply import applicable, apply_change
-from gaphor.core.modeling import PendingChange
+from gaphor.core.modeling import ModelReady, PendingChange
 from gaphor.event import (
-    ModelLoaded,
     TransactionBegin,
     TransactionCommit,
     TransactionRollback,
@@ -91,7 +90,7 @@ class ModelMerge:
                 change.unlink()
         self.close()
 
-    @event_handler(ModelLoaded)
+    @event_handler(ModelReady)
     def on_model_loaded(self, event):
         self.event_manager.subscribe(self.on_model_updated)
         self.refresh_model()

@@ -20,7 +20,6 @@ from gaphor.entrypoint import initialize
 from gaphor.event import (
     ActiveSessionChanged,
     ApplicationShutdown,
-    ModelLoaded,
     ModelSaved,
     ServiceInitializedEvent,
     ServiceShutdownEvent,
@@ -239,6 +238,6 @@ class Session(Service):
         self.component_registry.unregister(srv)
         srv.shutdown()
 
-    @event_handler(SessionCreated, ModelLoaded, ModelSaved)
+    @event_handler(SessionCreated, ModelSaved)
     def on_filename_changed(self, event):
         self._filename = event.filename
