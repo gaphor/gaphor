@@ -10,6 +10,7 @@ import importlib.metadata
 import logging
 from pathlib import Path
 from typing import Iterator, TypeVar, cast
+from uuid import uuid1
 
 from gaphor import transaction
 from gaphor.abc import ActionProvider, Service
@@ -90,9 +91,11 @@ class Application(Service, ActionProvider):
         return self._active_session
 
     def new_session(self, *, filename=None, template=None, services=None, force=False):
+        """Initialize an application session."""
+
         filename = Path(filename) if filename else None
         if filename is None is template:
-            return self._new_session(services=services)
+            return self._spawn_session(session=Session(services=services))
 
         if filename and not force:
             for session in self._sessions:
@@ -100,24 +103,28 @@ class Application(Service, ActionProvider):
                     session.foreground()
                     return
 
-        return self._new_session(
+        return self._spawn_session(
+            session=Session(services=services),
             filename=filename,
             template=template,
-            services=services,
             force=force,
         )
 
-    def _new_session(self, filename=None, template=None, services=None, force=False):
-        """Initialize an application session."""
-        session = Session(services=services)
+    def recover_session(self, *, session_id):
+        """Recover a (crashed) session."""
 
+        return self._spawn_session(session=Session(session_id=session_id))
+
+    def _spawn_session(
+        self, session: Session, filename=None, template=None, force=False
+    ):
         @event_handler(ActiveSessionChanged)
-        def on_active_session_changed(event):
+        def on_active_session_changed(_event):
             logger.debug("Set active session to %s", session)
             self._active_session = session
 
         @event_handler(SessionShutdown)
-        def on_session_shutdown(event):
+        def on_session_shutdown(_event):
             self.shutdown_session(session)
             if not self._sessions and not (
                 self._gtk_app and self._gtk_app.get_windows()
@@ -197,8 +204,9 @@ class Session(Service):
     """A user context is a set of services (including UI services) that define
     a window with loaded model."""
 
-    def __init__(self, services=None):
+    def __init__(self, session_id: str | None = None, *, services=None):
         """Initialize the application."""
+        self.session_id = session_id or str(uuid1())
         services_by_name: dict[str, Service] = initialize("gaphor.services", services)
         self._filename = None
 

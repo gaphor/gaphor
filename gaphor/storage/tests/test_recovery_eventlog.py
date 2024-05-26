@@ -12,7 +12,7 @@ def test_file(tmp_path):
 
 @pytest.fixture
 def event_log(test_file):
-    event_log = EventLog(test_file)
+    event_log = EventLog("_", test_file)
     return event_log
 
 

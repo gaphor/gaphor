@@ -52,6 +52,7 @@ class Recovery(Service):
         self.event_manager = event_manager
         self.element_factory = element_factory
         self.modeling_language = modeling_language
+        self.session_id: str = "_"
         self.recorder = Recorder()
         self.event_log: EventLog | None = None
 
@@ -93,8 +94,8 @@ class Recovery(Service):
 
     @event_handler(SessionCreated)
     def on_model_loaded(self, event: SessionCreated):
-        if event.filename and not event.force:
-            self.event_log = EventLog(event.filename)
+        self.session_id = event.session.session_id
+        self.event_log = EventLog(self.session_id, event.filename)
         self.recorder.truncate()
 
     @event_handler(ModelReady)
@@ -130,7 +131,7 @@ class Recovery(Service):
             self.event_log.clear()
 
         if event.filename:
-            self.event_log = EventLog(event.filename)
+            self.event_log = EventLog(self.session_id, event.filename)
             self.event_log.clear()
         else:
             self.event_log = None
@@ -145,11 +146,11 @@ class Recovery(Service):
 
 
 class EventLog:
-    def __init__(self, filename: Path):
+    def __init__(self, session_id: str, filename: Path | None):
         self._filename = filename
-        self._log_name = (recovery_dir() / settings.file_hash(filename)).with_suffix(
-            ".recovery"
-        )
+        self._log_name = (recovery_dir() / session_id).with_suffix(".recovery")
+
+        # The file that we use to save the events to:
         self._file: IOBase | None = None
 
     @property
@@ -169,8 +170,10 @@ class EventLog:
             f.write(
                 repr(
                     {
-                        "path": str(self._filename.absolute()),
-                        "sha256": sha256sum(self._filename),
+                        "path": str(self._filename.absolute())
+                        if self._filename
+                        else "",
+                        "sha256": sha256sum(self._filename) if self._filename else "",
                     }
                 )
             )
@@ -187,9 +190,11 @@ class EventLog:
             with self._log_name.open(mode="r", encoding="utf-8") as f:
                 for line in f:
                     events = ast.literal_eval(line.rstrip("\r\n"))
-                    if isinstance(events, dict) and sha256sum(
-                        self._filename
-                    ) != events.get("sha256"):
+                    if (
+                        isinstance(events, dict)
+                        and self._filename
+                        and sha256sum(self._filename) != events.get("sha256")
+                    ):
                         checksum_failed = True
                         break
                     yield events
