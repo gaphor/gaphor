@@ -41,10 +41,10 @@ from gaphor.transaction import Transaction, TransactionCommit, TransactionRollba
 log = logging.getLogger(__name__)
 
 
-def recovery_filename(filename: Path) -> Path:
-    return (settings.get_cache_dir() / settings.file_hash(filename)).with_suffix(
-        ".recovery"
-    )
+def recovery_dir() -> Path:
+    d = settings.get_cache_dir() / "recovery"
+    d.mkdir(exist_ok=True)
+    return d
 
 
 class Recovery(Service):
@@ -94,7 +94,7 @@ class Recovery(Service):
     @event_handler(SessionCreated)
     def on_model_loaded(self, event: SessionCreated):
         if event.filename and not event.force:
-            self.event_log = EventLog(event.filename, settings.get_cache_dir())
+            self.event_log = EventLog(event.filename)
         self.recorder.truncate()
 
     @event_handler(ModelReady)
@@ -130,7 +130,7 @@ class Recovery(Service):
             self.event_log.clear()
 
         if event.filename:
-            self.event_log = EventLog(event.filename, settings.get_cache_dir())
+            self.event_log = EventLog(event.filename)
             self.event_log.clear()
         else:
             self.event_log = None
@@ -145,9 +145,9 @@ class Recovery(Service):
 
 
 class EventLog:
-    def __init__(self, filename: Path, directory: Path):
+    def __init__(self, filename: Path):
         self._filename = filename
-        self._log_name = (directory / settings.file_hash(filename)).with_suffix(
+        self._log_name = (recovery_dir() / settings.file_hash(filename)).with_suffix(
             ".recovery"
         )
         self._file: IOBase | None = None

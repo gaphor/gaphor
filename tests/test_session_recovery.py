@@ -3,7 +3,6 @@ import pytest
 from gaphor.application import Application
 from gaphor.core.modeling import Diagram
 from gaphor.event import SessionShutdown
-from gaphor.storage.recovery import recovery_filename
 from gaphor.transaction import Transaction
 
 
@@ -76,6 +75,7 @@ def test_no_recovery_for_saved_file(application: Application, test_models, tmp_p
     model_file = test_models / "simple-items.gaphor"
     session = application.new_session(filename=model_file)
     element_factory = session.get_service("element_factory")
+    log_file = session.get_service("recovery").event_log.log_file
     with Transaction(session.get_service("event_manager")):
         diagram = element_factory.create(Diagram)
 
@@ -88,7 +88,7 @@ def test_no_recovery_for_saved_file(application: Application, test_models, tmp_p
     new_element_factory = new_session.get_service("element_factory")
 
     assert not new_element_factory.lookup(diagram.id)
-    assert not recovery_filename(model_file).exists()
+    assert not log_file.exists()
 
 
 def test_no_recovey_when_model_changed(application: Application, test_models, tmp_path):
@@ -100,6 +100,7 @@ def test_no_recovey_when_model_changed(application: Application, test_models, tm
 
     session = application.new_session(filename=model_file)
     element_factory = session.get_service("element_factory")
+    log_file = session.get_service("recovery").event_log.log_file
     with Transaction(session.get_service("event_manager")):
         diagram = element_factory.create(Diagram)
 
@@ -113,7 +114,7 @@ def test_no_recovey_when_model_changed(application: Application, test_models, tm
     new_element_factory = new_session.get_service("element_factory")
 
     assert not new_element_factory.lookup(diagram.id)
-    assert recovery_filename(model_file).with_suffix(".recovery.bak").exists()
+    assert log_file.with_suffix(".recovery.bak").exists()
 
 
 def test_no_recovery_for_properly_closed_session(application: Application, test_models):
@@ -146,12 +147,13 @@ def test_broken_recovery_log(
     model_file = test_models / "simple-items.gaphor"
     session = application.new_session(filename=model_file)
     element_factory = session.get_service("element_factory")
+    log_file = session.get_service("recovery").event_log.log_file
     with Transaction(session.get_service("event_manager")):
         diagram = element_factory.create(Diagram)
 
     application.shutdown_session(session)
 
-    with recovery_filename(model_file).open("a", encoding="utf-8") as f:
+    with log_file.open("a", encoding="utf-8") as f:
         # f.write("['no', 'such', 'command']\n")
         f.write(errorous_line)
 
