@@ -113,6 +113,7 @@ class Recovery(Service):
                 self.event_log.log_file,
                 exc_info=True,
             )
+            self.event_log.move_aside("Replaying events failed.")
 
         if events:
             self.event_manager.handle(
@@ -188,11 +189,7 @@ class EventLog:
                     if isinstance(events, dict) and sha256sum(
                         self._filename
                     ) != events.get("sha256"):
-                        backup = self._log_name.with_suffix(".recovery.bak")
-                        log.info(
-                            "Recovery file hash does not match. Renamed to %s.", backup
-                        )
-                        self._log_name.rename(backup)
+                        self.move_aside("Recovery file hash does not match.")
                         return
                     yield events
         except FileNotFoundError:
@@ -203,6 +200,12 @@ class EventLog:
         if self._file:
             self._file.close()
             self._file = None
+
+    def move_aside(self, reason: str):
+        self.close()
+        backup = self._log_name.with_suffix(".recovery.bak")
+        self._log_name.rename(backup)
+        log.info("%s Renamed to %s.", reason, backup)
 
 
 def sha256sum(filename: Path):
