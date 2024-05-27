@@ -433,6 +433,7 @@ class ItemConnected(RevertibleEvent):
     def __init__(self, element, handle, connected, port):
         super().__init__(element)
         self.handle_index = element.handles().index(handle)
+        self.connected_id = connected.id
         self.port_index = connected.ports().index(port)
 
     def revert(self, target):
@@ -442,9 +443,7 @@ class ItemConnected(RevertibleEvent):
         handle = target.handles()[self.handle_index]
 
         connector = ConnectorAspect(target, handle, connections)
-        if cinfo := connections.get_connection(handle):
-            cinfo.callback.disable = True
-        connector.disconnect()
+        connector.disconnect_handle()
 
 
 class ItemDisconnected(RevertibleEvent):
@@ -457,15 +456,14 @@ class ItemDisconnected(RevertibleEvent):
     def revert(self, target):
         # Reverse only the diagram level connection.
         # Associations have their own handlers
+        handle = target.handles()[self.handle_index]
         connections = target.diagram.connections
         connected = target.diagram.lookup(self.connected_id)
+
         sink = ConnectionSink(connected)
         sink.port = connected.ports()[self.port_index]
-        handle = target.handles()[self.handle_index]
-
         connector = ConnectorAspect(target, handle, connections)
         connector.connect_handle(sink)
-        target.handle(ItemConnected(target, handle, sink.item, sink.port))
 
 
 class ItemTemporaryDisconnected(RevertibleEvent):
@@ -476,16 +474,14 @@ class ItemTemporaryDisconnected(RevertibleEvent):
         self.port_index = connected.ports().index(port)
 
     def revert(self, target):
+        handle = target.handles()[self.handle_index]
         connections = target.diagram.connections
         connected = target.diagram.lookup(self.connected_id)
+
         sink = ConnectionSink(connected)
         sink.port = connected.ports()[self.port_index]
-        handle = target.handles()[self.handle_index]
-
-        connections.reconnect_item(
-            target, handle, sink.port, sink.constraint(target, handle)
-        )
-        target.handle(ItemReconnected(target, handle))
+        connector = ConnectorAspect(target, handle, connections)
+        connector.reconnect_handle(sink)
 
 
 class ItemReconnected(RevertibleEvent):
@@ -496,8 +492,8 @@ class ItemReconnected(RevertibleEvent):
     def revert(self, target):
         connections = target.diagram.connections
         handle = target.handles()[self.handle_index]
-        cinfo = connections.get_connection(handle)
 
+        cinfo = connections.get_connection(handle)
         connections.solver.remove_constraint(cinfo.constraint)
         target.handle(
             ItemTemporaryDisconnected(target, handle, cinfo.connected, cinfo.port)

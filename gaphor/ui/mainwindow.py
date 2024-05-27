@@ -109,11 +109,16 @@ class MainWindow(Service, ActionProvider):
         event_manager.subscribe(self._on_file_manager_state_changed)
         event_manager.subscribe(self._on_current_diagram_changed)
         event_manager.subscribe(self._on_model_ready)
+        event_manager.subscribe(self._on_undo_manager_state_changed)
+        event_manager.subscribe(self._on_action_enabled)
+        event_manager.subscribe(self._on_modeling_language_selection_changed)
+        event_manager.subscribe(self._on_notification)
 
     def shutdown(self):
         if self.window:
             self.window.destroy()
             self._builder = None
+            self.in_app_notifier = None
 
         em = self.event_manager
         em.unsubscribe(self._on_file_manager_state_changed)
@@ -122,9 +127,7 @@ class MainWindow(Service, ActionProvider):
         em.unsubscribe(self._on_undo_manager_state_changed)
         em.unsubscribe(self._on_action_enabled)
         em.unsubscribe(self._on_modeling_language_selection_changed)
-        if self.in_app_notifier:
-            em.unsubscribe(self.in_app_notifier.handle)
-            self.in_app_notifier = None
+        em.unsubscribe(self._on_notification)
 
     @property
     def window(self):
@@ -223,12 +226,6 @@ class MainWindow(Service, ActionProvider):
         window.connect("notify::is-active", self._on_window_active)
         window.present()
 
-        em = self.event_manager
-        em.subscribe(self._on_undo_manager_state_changed)
-        em.subscribe(self._on_action_enabled)
-        em.subscribe(self._on_modeling_language_selection_changed)
-        em.subscribe(self.in_app_notifier.handle)
-
         for handler in self._ui_updates:
             handler()
         del self._ui_updates[:]
@@ -289,10 +286,6 @@ class MainWindow(Service, ActionProvider):
 
     @event_handler(CurrentDiagramChanged)
     def _on_current_diagram_changed(self, event):
-        if not self.window:
-            self._ui_updates.append(lambda: self._on_current_diagram_changed(event))
-            return
-
         self.title.set_text(
             (event.diagram.name or gettext("<None>")) if event.diagram else "Gaphor"
         )
@@ -304,7 +297,9 @@ class MainWindow(Service, ActionProvider):
 
     @event_handler(ActionEnabled)
     def _on_action_enabled(self, event):
-        if self.action_group and event.scope == "win":
+        if not self.action_group:
+            self._ui_updates.append(lambda: self._on_action_enabled(event))
+        elif self.action_group and event.scope == "win":
             a = self.action_group.lookup_action(event.name)
             a.set_enabled(event.enabled)
 
@@ -318,6 +313,14 @@ class MainWindow(Service, ActionProvider):
             self.diagram_types.set_menu_model(
                 create_diagram_types_model(self.modeling_language)
             )
+
+    @event_handler(Notification)
+    def _on_notification(self, event: Notification):
+        if not self.in_app_notifier:
+            self._ui_updates.append(lambda: self._on_notification(event))
+            return
+
+        self.in_app_notifier.handle(event)
 
     def _on_window_active(self, window, prop):
         self.event_manager.handle(ActiveSessionChanged(self))

@@ -10,14 +10,13 @@ from gaphor.core import action, event_handler
 from gaphor.core.modeling import (
     AttributeUpdated,
     Diagram,
-    DiagramUpdateRequested,
     ModelFlushed,
     ModelReady,
     StyleSheet,
 )
 from gaphor.diagram.drop import drop
 from gaphor.diagram.event import DiagramOpened, DiagramSelectionChanged
-from gaphor.event import ActionEnabled, TransactionCommit
+from gaphor.event import ActionEnabled
 from gaphor.i18n import translated_ui_string
 from gaphor.transaction import Transaction
 from gaphor.ui.abc import UIComponent
@@ -48,7 +47,6 @@ class Diagrams(UIComponent, ActionProvider):
         self.toolbox = toolbox
         self._notebook: Gtk.Widget = None
         self._page_handler_ids: list[int] = []
-        self._to_be_updated_diagrams = set()
 
     def open(self):
         """Open the diagrams component."""
@@ -77,16 +75,12 @@ class Diagrams(UIComponent, ActionProvider):
         self.event_manager.subscribe(self._on_name_change)
         self.event_manager.subscribe(self._on_flush_model)
         self.event_manager.subscribe(self._on_model_ready)
-        self.event_manager.subscribe(self._diagram_update_requested)
-        self.event_manager.subscribe(self._on_update_diagrams)
 
         self._on_model_ready()
         return self._stack
 
     def close(self):
         """Close the diagrams component."""
-        self.event_manager.unsubscribe(self._on_update_diagrams)
-        self.event_manager.unsubscribe(self._diagram_update_requested)
         self.event_manager.unsubscribe(self._on_model_ready)
         self.event_manager.unsubscribe(self._on_flush_model)
         self.event_manager.unsubscribe(self._on_name_change)
@@ -400,16 +394,6 @@ class Diagrams(UIComponent, ActionProvider):
                 if widget is self._notebook.get_selected_page():
                     self.event_manager.handle(CurrentDiagramChanged(event.element))
                 return
-
-    @event_handler(DiagramUpdateRequested)
-    def _diagram_update_requested(self, event: DiagramUpdateRequested):
-        self._to_be_updated_diagrams.add(event.diagram)
-
-    @event_handler(TransactionCommit)
-    def _on_update_diagrams(self, event):
-        for diagram in self._to_be_updated_diagrams:
-            diagram.update()
-        self._to_be_updated_diagrams.clear()
 
 
 def apply_tool_select_controller(widget, toolbox):

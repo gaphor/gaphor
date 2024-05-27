@@ -334,13 +334,6 @@ class UnknownModelElementError(Exception):
     pass
 
 
-# since 2.2.0
-def upgrade_ensure_style_sheet_is_present(factory):
-    style_sheet = next(factory.select(StyleSheet), None)
-    if not style_sheet:
-        factory.create(StyleSheet)
-
-
 # since 2.1.0
 def upgrade_element_owned_comment_to_comment(elem):
     for name, refids in dict(elem.references).items():
@@ -349,6 +342,13 @@ def upgrade_element_owned_comment_to_comment(elem):
             del elem.references["ownedComment"]
             break
     return elem
+
+
+# since 2.2.0
+def upgrade_ensure_style_sheet_is_present(factory):
+    style_sheet = next(factory.select(StyleSheet), None)
+    if not style_sheet:
+        factory.create(StyleSheet)
 
 
 # since 2.3.0
@@ -421,15 +421,6 @@ def upgrade_generalization_arrow_direction(elem):
     return elem
 
 
-# since 2.19.0
-def upgrade_decision_node_item_show_type(elem):
-    if elem.type == "DecisionNodeItem":
-        if "show_type" in elem.values:
-            elem.values["show_underlying_type"] = elem.values["show_type"]
-            del elem.values["show_type"]
-    return elem
-
-
 # since 2.9.0
 def upgrade_flow_item_to_control_flow_item(elem, elements):
     if elem.type == "FlowItem":
@@ -439,6 +430,15 @@ def upgrade_flow_item_to_control_flow_item(elem, elements):
             subject_type = "ControlFlow"
 
         elem.type = f"{subject_type}Item"
+    return elem
+
+
+# since 2.19.0
+def upgrade_decision_node_item_show_type(elem):
+    if elem.type == "DecisionNodeItem":
+        if "show_type" in elem.values:
+            elem.values["show_underlying_type"] = elem.values["show_type"]
+            del elem.values["show_type"]
     return elem
 
 

@@ -42,15 +42,7 @@ class PresentationConnector(ItemConnector):
         cinfo = self.connections.get_connection(handle)
 
         if cinfo and cinfo.connected is sink.item:
-            # reconnect only constraint - leave model intact
-            log.debug("performing reconnect constraint")
-            self.glue(sink)
-            constraint = sink.constraint(item, handle)
-            self.connections.reconnect_item(
-                item, handle, sink.port, constraint=constraint
-            )
-            item.handle(ItemReconnected(item, handle))
-
+            self.reconnect_handle(sink)
             return
 
         adapter = Connector(sink.item, item)
@@ -63,17 +55,32 @@ class PresentationConnector(ItemConnector):
             return
 
         self.connect_handle(sink)
-
-        # adapter requires both ends to be connected.
         adapter.connect(handle, sink.port)
-        item.handle(ItemConnected(item, handle, sink.item, sink.port))
 
     def connect_handle(self, sink):
         super().connect_handle(sink, callback=DisconnectHandle())
+        item = self.item
+        item.handle(ItemConnected(item, self.handle, sink.item, sink.port))
 
     def disconnect(self):
         # Model level disconnect and event is handled in callback
         super().disconnect()
+
+    def disconnect_handle(self):
+        if cinfo := self.connections.get_connection(self.handle):
+            # prevent model level disconnect from triggering
+            cinfo.callback.disable = True
+        super().disconnect()
+
+    def reconnect_handle(self, sink):
+        """Reconnect only constraint - leave model intact."""
+        handle = self.handle
+        item = self.item
+        log.debug("performing reconnect constraint")
+        self.glue(sink)
+        constraint = sink.constraint(item, handle)
+        self.connections.reconnect_item(item, handle, sink.port, constraint=constraint)
+        item.handle(ItemReconnected(item, handle))
 
 
 @ConnectorAspect.register(LinePresentation)
