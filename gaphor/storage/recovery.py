@@ -55,11 +55,16 @@ def all_sessions() -> Iterator[tuple[str, Path | None, Path | None]]:
     """
     for session_file in sessions_dir().glob("*.recovery"):
         with session_file.open(encoding="utf-8") as f:
-            preamble = f.readline()
-        if preamble:
-            p = ast.literal_eval(preamble)
-            if path := p.get("path"):
-                yield (session_file.stem, Path(path), None)
+            preamble_line = f.readline()
+        if preamble_line:
+            preamble = ast.literal_eval(preamble_line)
+            path = preamble.get("path")
+            is_template = preamble.get("template")
+            yield (
+                (session_file.stem, None, Path(path))
+                if is_template
+                else (session_file.stem, Path(path), None)
+            )
 
 
 class Recovery(Service):
@@ -109,8 +114,8 @@ class Recovery(Service):
 
     @event_handler(SessionCreated)
     def on_model_loaded(self, event: SessionCreated):
-        self.session_id = event.session.session_id
-        self.event_log = EventLog(self.session_id, event.filename)
+        self.session_id = event.session.session_id  # type: ignore[attr-defined]
+        self.event_log = EventLog(self.session_id, event.filename, event.template)
         self.recorder.truncate()
 
     @event_handler(ModelReady)
@@ -161,8 +166,11 @@ class Recovery(Service):
 
 
 class EventLog:
-    def __init__(self, session_id: str, filename: Path | None):
+    def __init__(
+        self, session_id: str, filename: Path | None, template: Path | None = None
+    ):
         self._filename = filename
+        self._template = template
         self._log_name = (sessions_dir() / session_id).with_suffix(".recovery")
 
         # The file that we use to save the events to:
@@ -182,14 +190,24 @@ class EventLog:
             f = self._file = self._log_name.open(mode="a", encoding="utf-8")
 
         if f.tell() == 0:
+            if self._filename:
+                filename = self._filename.absolute()
+                is_template = False
+            elif self._template:
+                filename = self._template.absolute()
+                is_template = True
+            else:
+                filename = None
+
             f.write(
                 repr(
                     {
-                        "path": str(self._filename.absolute())
-                        if self._filename
-                        else "",
-                        "sha256": sha256sum(self._filename) if self._filename else "",
+                        "path": str(filename.absolute()),
+                        "sha256": sha256sum(filename),
+                        "template": is_template,
                     }
+                    if filename
+                    else {}
                 )
             )
             f.write("\n")

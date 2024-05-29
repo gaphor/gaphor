@@ -111,6 +111,7 @@ class FileManager(Service, ActionProvider):
     def load_template(self, template):
         translated_model = translate_model(template)
         storage.load(translated_model, self.element_factory, self.modeling_language)
+        self.event_manager.handle(ModelReady(self))
 
     def load(self, filename: Path, on_load_done: Callable[[], None] | None = None):
         """Load the Gaphor model from the supplied file name.
