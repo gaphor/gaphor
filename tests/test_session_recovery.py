@@ -22,7 +22,9 @@ def test_recovery_when_reloading_file(application: Application, test_models):
 
     application.shutdown_session(session)
 
-    new_session = application.new_session(filename=model_file)
+    new_session = application.recover_session(
+        session_id=session.session_id, filename=model_file
+    )
     new_element_factory = new_session.get_service("element_factory")
 
     assert new_element_factory.lookup(diagram.id)
@@ -38,7 +40,9 @@ def test_recovery_when_change_is_rolled_back(application: Application, test_mode
 
     application.shutdown_session(session)
 
-    new_session = application.new_session(filename=model_file)
+    new_session = application.recover_session(
+        session_id=session.session_id, filename=model_file
+    )
     new_element_factory = new_session.get_service("element_factory")
 
     assert not new_element_factory.lookup(diagram.id)
@@ -57,7 +61,7 @@ def test_recovery_when_model_is_loaded_twice(application: Application, test_mode
     assert not new_element_factory.lookup(diagram.id)
 
 
-def test_no_recovery_for_new_file(application: Application):
+def test_no_recovery_for_new_session(application: Application):
     session = application.new_session()
     element_factory = session.get_service("element_factory")
     with Transaction(session.get_service("event_manager")):
@@ -84,7 +88,9 @@ def test_no_recovery_for_saved_file(application: Application, test_models, tmp_p
 
     application.shutdown_session(session)
 
-    new_session = application.new_session(filename=model_file)
+    new_session = application.recover_session(
+        session_id=session.session_id, filename=model_file
+    )
     new_element_factory = new_session.get_service("element_factory")
 
     assert not new_element_factory.lookup(diagram.id)
@@ -110,7 +116,9 @@ def test_no_recovey_when_model_changed(application: Application, test_models, tm
     with open(model_file, mode="a", encoding="utf-8") as f:
         f.write("\n")
 
-    new_session = application.new_session(filename=model_file)
+    new_session = application.recover_session(
+        session_id=session.session_id, filename=model_file
+    )
     new_element_factory = new_session.get_service("element_factory")
 
     assert not new_element_factory.lookup(diagram.id)
@@ -127,7 +135,9 @@ def test_no_recovery_for_properly_closed_session(application: Application, test_
 
     event_manager.handle(SessionShutdown(session))
 
-    new_session = application.new_session(filename=model_file)
+    new_session = application.recover_session(
+        session_id=session.session_id, filename=model_file
+    )
     new_element_factory = new_session.get_service("element_factory")
 
     assert not new_element_factory.lookup(diagram.id)
@@ -156,7 +166,9 @@ def test_broken_recovery_log(
     with log_file.open("a", encoding="utf-8") as f:
         f.write(errorous_line)
 
-    new_session = application.new_session(filename=model_file)
+    new_session = application.recover_session(
+        session_id=session.session_id, filename=model_file
+    )
     new_element_factory = new_session.get_service("element_factory")
 
     assert not new_element_factory.lookup(diagram.id)

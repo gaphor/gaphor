@@ -1,6 +1,7 @@
 import ast
 import hashlib
 import logging
+from collections.abc import Iterator
 from io import IOBase
 from pathlib import Path
 
@@ -41,10 +42,24 @@ from gaphor.transaction import Transaction, TransactionCommit, TransactionRollba
 log = logging.getLogger(__name__)
 
 
-def recovery_dir() -> Path:
-    d = settings.get_cache_dir() / "recovery"
+def sessions_dir() -> Path:
+    d = settings.get_cache_dir() / "sessions"
     d.mkdir(exist_ok=True)
     return d
+
+
+def all_sessions() -> Iterator[tuple[str, Path | None, Path | None]]:
+    """Get all open active/inactive sessions.
+
+    Returns a list of tuples: session id, filename path, template path.
+    """
+    for session_file in sessions_dir().glob("*.recovery"):
+        with session_file.open(encoding="utf-8") as f:
+            preamble = f.readline()
+        if preamble:
+            p = ast.literal_eval(preamble)
+            if path := p.get("path"):
+                yield (session_file.stem, Path(path), None)
 
 
 class Recovery(Service):
@@ -148,7 +163,7 @@ class Recovery(Service):
 class EventLog:
     def __init__(self, session_id: str, filename: Path | None):
         self._filename = filename
-        self._log_name = (recovery_dir() / session_id).with_suffix(".recovery")
+        self._log_name = (sessions_dir() / session_id).with_suffix(".recovery")
 
         # The file that we use to save the events to:
         self._file: IOBase | None = None

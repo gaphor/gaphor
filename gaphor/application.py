@@ -110,10 +110,12 @@ class Application(Service, ActionProvider):
             force=force,
         )
 
-    def recover_session(self, *, session_id):
+    def recover_session(self, *, session_id, filename=None, template=None):
         """Recover a (crashed) session."""
 
-        return self._spawn_session(session=Session(session_id=session_id))
+        return self._spawn_session(
+            session=Session(session_id=session_id), filename=filename, template=template
+        )
 
     def _spawn_session(
         self, session: Session, filename=None, template=None, force=False
