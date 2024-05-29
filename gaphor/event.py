@@ -43,7 +43,7 @@ class SessionCreated(ServiceEvent):
         application: Service,
         session: Service,
         filename: str | Path | None,
-        template: str | None = None,
+        template: str | Path | None = None,
         force: bool = False,
     ):
         super().__init__(application)
