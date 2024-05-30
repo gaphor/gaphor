@@ -67,7 +67,7 @@ class SanitizerService(Service):
 
     @event_handler(TransactionBegin)
     def _begin_transaction(self, event):
-        self.in_undo_transaction = event.context in ("undo", "redo", "rollback")
+        self.in_undo_transaction = bool(event.context)
 
     @event_handler(TransactionCommit, TransactionRollback)
     def _end_transaction(self, _event):
