@@ -41,7 +41,7 @@ if sys.platform == "darwin":
         )
 
 
-def run(argv: list[str], launch_service="greeter") -> int:
+def run(argv: list[str], *, launch_service="greeter", recover=False) -> int:
     application: Application | None = None
 
     def app_startup(gtk_app):
@@ -72,7 +72,8 @@ def run(argv: list[str], launch_service="greeter") -> int:
             event_manager.subscribe(on_session_created)
             event_manager.subscribe(on_quit)
             application.get_service(launch_service).init(gtk_app)
-            recover_sessions(application)
+            if recover:
+                recover_sessions(application)
         except Exception:
             gtk_app.exit_code = 1
             gtk_app.quit()
@@ -81,7 +82,7 @@ def run(argv: list[str], launch_service="greeter") -> int:
     def app_activate(gtk_app):
         assert application
         if not application.has_sessions():
-            application.get_service("greeter").open()
+            application.get_service(launch_service).open()
 
     def app_open(gtk_app, files, n_files, hint):
         # appfilemanager should take care of this:

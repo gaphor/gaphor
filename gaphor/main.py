@@ -113,7 +113,7 @@ def gui_parser():
             run_argv += ["--gapplication-service"]
         run_argv.extend(args.model)
 
-        return gaphor.ui.run(run_argv)
+        return gaphor.ui.run(run_argv, recover=True)
 
     parser = argparse.ArgumentParser(
         description="Launch the GUI.", parents=[version_parser()]

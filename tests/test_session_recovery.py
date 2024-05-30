@@ -181,20 +181,21 @@ def test_recover_from_session_files(application: Application, test_models):
     session_id = "1234"
     class_id = "9876"
 
+    recovery_statements = [
+        {
+            "path": str(test_models / "all-elements.gaphor"),
+            "sha256": sha256sum(test_models / "all-elements.gaphor"),
+            "template": True,
+        },
+        [("c", "Class", class_id, None)],
+    ]
+
     with (sessions_dir() / f"{session_id}.recovery").open("w", encoding="utf-8") as f:
-        f.writelines(
-            [
-                f"{{'path': '{test_models}/all-elements.gaphor', 'sha256': '{sha256sum(test_models / 'all-elements.gaphor')}', 'template': True}}\n",
-                f"[('c', 'Class', '{class_id}', None)]\n",
-            ]
-        )
+        f.writelines(f"{repr(stmt)}\n" for stmt in recovery_statements)
 
     recover_sessions(application)
 
     session = next(s for s in application.sessions if s.session_id == session_id)
+    element_factory = session.get_service("element_factory")
 
-    assert session.session_id == session_id
-
-    # element_factory = session.get_service("element_factory")
-
-    # assert element_factory.lookup(class_id)
+    assert element_factory.lookup(class_id)

@@ -60,11 +60,12 @@ def all_sessions() -> Iterator[tuple[str, Path | None, Path | None]]:
             preamble = ast.literal_eval(preamble_line)
             path = preamble.get("path")
             is_template = preamble.get("template")
-            yield (
-                (session_file.stem, None, Path(path))
-                if is_template
-                else (session_file.stem, Path(path), None)
-            )
+            if path:
+                yield (
+                    (session_file.stem, None, Path(path))
+                    if is_template
+                    else (session_file.stem, Path(path), None)
+                )
 
 
 class Recovery(Service):
@@ -115,7 +116,8 @@ class Recovery(Service):
     @event_handler(SessionCreated)
     def on_model_loaded(self, event: SessionCreated):
         self.session_id = event.session.session_id  # type: ignore[attr-defined]
-        self.event_log = EventLog(self.session_id, event.filename, event.template)
+        if event.filename or event.template:
+            self.event_log = EventLog(self.session_id, event.filename, event.template)
         self.recorder.truncate()
 
     @event_handler(ModelReady)
@@ -185,19 +187,21 @@ class EventLog:
         self._log_name.unlink(missing_ok=True)
 
     def write(self, event):
+        if not (self._filename or self._template):
+            return
+
         f = self._file
         if not f or f.closed:
             f = self._file = self._log_name.open(mode="a", encoding="utf-8")
 
         if f.tell() == 0:
-            if self._filename:
-                filename = self._filename.absolute()
-                is_template = False
-            elif self._template:
+            if self._template:
                 filename = self._template.absolute()
                 is_template = True
             else:
-                filename = None
+                assert self._filename
+                filename = self._filename.absolute()
+                is_template = False
 
             f.write(
                 repr(
@@ -206,8 +210,6 @@ class EventLog:
                         "sha256": sha256sum(filename),
                         "template": is_template,
                     }
-                    if filename
-                    else {}
                 )
             )
             f.write("\n")
