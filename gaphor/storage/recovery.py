@@ -57,15 +57,22 @@ def all_sessions() -> Iterator[tuple[str, Path | None, Path | None]]:
         with session_file.open(encoding="utf-8") as f:
             preamble_line = f.readline()
         if preamble_line:
-            preamble = ast.literal_eval(preamble_line)
-            path = preamble.get("path")
-            is_template = preamble.get("template")
-            if path:
-                yield (
-                    (session_file.stem, None, Path(path))
-                    if is_template
-                    else (session_file.stem, Path(path), None)
-                )
+            try:
+                preamble = ast.literal_eval(preamble_line)
+                path = Path(preamble.get("path"))
+                is_template = preamble.get("template", False)
+                if path.exists() and path.is_file():
+                    yield (
+                        (session_file.stem, None, Path(path))
+                        if is_template
+                        else (session_file.stem, Path(path), None)
+                    )
+                else:
+                    log.info("Session file does not reference an existing model file.")
+                    _move_aside(session_file)
+            except (SyntaxError, TypeError, AttributeError):
+                log.info("File has an invalid header: '%s'.", preamble_line)
+                _move_aside(session_file)
 
 
 class Recovery(Service):
@@ -136,7 +143,8 @@ class Recovery(Service):
                 self.event_log.log_file,
                 exc_info=True,
             )
-            self.event_log.move_aside("Replaying events failed.")
+            log.warning("Replaying events failed.")
+            self.event_log.move_aside()
 
         if events:
             self.event_manager.handle(
@@ -234,7 +242,8 @@ class EventLog:
                         break
                     yield events
             if checksum_failed:
-                self.move_aside("Recovery file hash does not match.")
+                log.info("Recovery file hash does not match.")
+                self.move_aside()
         except FileNotFoundError:
             # Log does not exist, no problem
             pass
@@ -244,11 +253,15 @@ class EventLog:
             self._file.close()
             self._file = None
 
-    def move_aside(self, reason: str):
+    def move_aside(self):
         self.close()
-        backup = self._log_name.with_suffix(".recovery.bak")
-        self._log_name.rename(backup)
-        log.info("%s Renamed to %s.", reason, backup)
+        _move_aside(self._log_name)
+
+
+def _move_aside(path: Path):
+    backup = path.with_suffix(".recovery.bak")
+    path.rename(backup)
+    log.info("Session recovery file is renamed to %s.", backup)
 
 
 def sha256sum(filename: Path):

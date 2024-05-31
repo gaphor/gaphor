@@ -181,21 +181,96 @@ def test_recover_from_session_files(application: Application, test_models):
     session_id = "1234"
     class_id = "9876"
 
-    recovery_statements = [
+    create_recovery_file(
+        session_id,
         {
             "path": str(test_models / "all-elements.gaphor"),
             "sha256": sha256sum(test_models / "all-elements.gaphor"),
             "template": True,
         },
         [("c", "Class", class_id, None)],
-    ]
-
-    with (sessions_dir() / f"{session_id}.recovery").open("w", encoding="utf-8") as f:
-        f.writelines(f"{repr(stmt)}\n" for stmt in recovery_statements)
-
+    )
     recover_sessions(application)
 
     session = next(s for s in application.sessions if s.session_id == session_id)
     element_factory = session.get_service("element_factory")
 
     assert element_factory.lookup(class_id)
+
+
+def test_recover_with_invalid_filename(application: Application):
+    session_id = "1234"
+    class_id = "9876"
+
+    create_recovery_file(
+        session_id,
+        {
+            "path": "not-a-model.gaphor",
+            "sha256": "1234",
+            "template": False,
+        },
+        [("c", "Class", class_id, None)],
+    )
+    recover_sessions(application)
+
+    assert not application.sessions
+
+
+def test_recover_with_invalid_sha(application: Application, test_models):
+    session_id = "1234"
+    class_id = "9876"
+
+    create_recovery_file(
+        session_id,
+        {
+            "path": str(test_models / "all-elements.gaphor"),
+            "sha256": "invalid-sha",
+            "template": False,
+        },
+        [("c", "Class", class_id, None)],
+    )
+    recover_sessions(application)
+
+    session = next(s for s in application.sessions if s.session_id == session_id)
+    element_factory = session.get_service("element_factory")
+
+    assert not element_factory.lookup(class_id)
+
+
+def test_recover_with_invalid_header(application: Application, test_models):
+    session_id = "1234"
+    class_id = "9876"
+
+    create_recovery_file(
+        session_id,
+        "invalid header",
+        [("c", "Class", class_id, None)],
+    )
+    recover_sessions(application)
+
+    assert not application.sessions
+
+
+def test_recover_with_unparseable_header(application: Application, test_models, caplog):
+    session_id = "1234"
+    class_id = "9876"
+
+    create_recovery_file(
+        session_id,
+        {
+            "path": str(test_models / "all-elements.gaphor"),
+            "sha256": sha256sum(test_models / "all-elements.gaphor"),
+            "template": True,
+        },
+        [("c", "Class", class_id, None)],
+        raw_prefix="invalid",
+    )
+    recover_sessions(application)
+
+    assert not application.sessions
+
+
+def create_recovery_file(session_id, *lines, raw_prefix=""):
+    with (sessions_dir() / f"{session_id}.recovery").open("w", encoding="utf-8") as f:
+        f.write(raw_prefix)
+        f.writelines(f"{repr(stmt)}\n" for stmt in lines)
