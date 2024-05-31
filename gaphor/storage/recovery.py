@@ -182,6 +182,7 @@ class EventLog:
 
     def read(self):
         self.close()
+        checksum_failed = False
         try:
             with self._log_name.open(mode="r", encoding="utf-8") as f:
                 for line in f:
@@ -189,9 +190,11 @@ class EventLog:
                     if isinstance(events, dict) and sha256sum(
                         self._filename
                     ) != events.get("sha256"):
-                        self.move_aside("Recovery file hash does not match.")
-                        return
+                        checksum_failed = True
+                        break
                     yield events
+            if checksum_failed:
+                self.move_aside("Recovery file hash does not match.")
         except FileNotFoundError:
             # Log does not exist, no problem
             pass
