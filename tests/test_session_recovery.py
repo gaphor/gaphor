@@ -177,7 +177,8 @@ def test_broken_recovery_log(
     assert "Could not recover model changes" in caplog.text
 
 
-def test_recover_from_session_files(application: Application, test_models):
+@pytest.mark.parametrize("template", [True, False])
+def test_recover_from_session_files(application: Application, test_models, template):
     session_id = "1234"
     class_id = "9876"
 
@@ -186,7 +187,7 @@ def test_recover_from_session_files(application: Application, test_models):
         {
             "path": str(test_models / "all-elements.gaphor"),
             "sha256": sha256sum(test_models / "all-elements.gaphor"),
-            "template": True,
+            "template": template,
         },
         [("c", "Class", class_id, None)],
     )

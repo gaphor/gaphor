@@ -227,26 +227,34 @@ class EventLog:
         f.flush()
 
     def read(self):
+        if not (self._filename or self._template):
+            return
+
         self.close()
-        checksum_failed = False
         try:
             with self._log_name.open(mode="r", encoding="utf-8") as f:
+                preamble_line = f.readline()
+                preamble = ast.literal_eval(preamble_line)
+                if not isinstance(preamble, dict):
+                    raise ChecksumFailed()
+
+                filename = (
+                    self._template if preamble.get("template") else self._filename
+                )
+                if not filename or sha256sum(filename) != preamble.get("sha256"):
+                    raise ChecksumFailed()
+
                 for line in f:
                     events = ast.literal_eval(line.rstrip("\r\n"))
-                    if (
-                        isinstance(events, dict)
-                        and self._filename
-                        and sha256sum(self._filename) != events.get("sha256")
-                    ):
-                        checksum_failed = True
-                        break
                     yield events
-            if checksum_failed:
-                log.info("Recovery file hash does not match.")
-                self.move_aside()
+
         except FileNotFoundError:
             # Log does not exist, no problem
             pass
+        except ChecksumFailed:
+            # Move file after it's closed.
+            log.info("Recovery file hash does not match.")
+            self.move_aside()
 
     def close(self):
         if self._file:
@@ -256,6 +264,10 @@ class EventLog:
     def move_aside(self):
         self.close()
         _move_aside(self._log_name)
+
+
+class ChecksumFailed(Exception):
+    pass
 
 
 def _move_aside(path: Path):
