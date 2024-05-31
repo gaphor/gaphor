@@ -295,15 +295,18 @@ class Recorder:
             )
         )
 
-    # We should handle all RevertibleEvent subtypes separately:
-    # gaphor.core.modeling.presentation.MatrixUpdated
-    # gaphor.diagram.presentation.HandlePositionEvent
-    # gaphor.diagram.connectors.ItemConnected
-    # gaphor.diagram.connectors.ItemDisconnected
-    # ignore: gaphor.diagram.connectors.ItemTemporaryDisconnected
-    # gaphor.diagram.connectors.ItemReconnected
-    # gaphor.diagram.tools.segment.LineSplitSegmentEvent
-    # gaphor.diagram.tools.segment.LineMergeSegmentEvent
+    # We handle all RevertibleEvent subtypes separately:
+    #
+    # - gaphor.core.modeling.presentation.MatrixUpdated
+    # - gaphor.diagram.presentation.HandlePositionEvent
+    # - gaphor.diagram.connectors.ItemConnected
+    # - gaphor.diagram.connectors.ItemDisconnected
+    # - gaphor.diagram.connectors.ItemReconnected
+    # - gaphor.diagram.tools.segment.LineSplitSegmentEvent
+    # - gaphor.diagram.tools.segment.LineMergeSegmentEvent
+    #
+    # We can ignore gaphor.diagram.connectors.ItemTemporaryDisconnected,
+    # since it has no (direct) impact on the model state.
 
     @event_handler(MatrixUpdated)
     def on_matrix_updated(self, event: MatrixUpdated):
@@ -376,6 +379,7 @@ class Recorder:
 
 
 def replay_events(events, element_factory, modeling_language):
+    """Replay events previously recorded by EventLog."""
     for event in events:
         match event:
             case ("c", type, element_id, None):
