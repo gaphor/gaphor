@@ -278,6 +278,8 @@ class MainWindow(Service, ActionProvider):
             else f"{gettext('New model')} - Gaphor"
         )
 
+        self.model_changed = False
+
         window.present()
 
     @event_handler(ModelReady)
@@ -292,8 +294,7 @@ class MainWindow(Service, ActionProvider):
 
     @event_handler(UndoManagerStateChanged)
     def _on_undo_manager_state_changed(self, event):
-        undo_manager = event.service
-        self.model_changed = undo_manager.can_undo()
+        self.model_changed = True
 
     @event_handler(ActionEnabled)
     def _on_action_enabled(self, event):
