@@ -154,7 +154,6 @@ def test_broken_recovery_log(
     application.shutdown_session(session)
 
     with log_file.open("a", encoding="utf-8") as f:
-        # f.write("['no', 'such', 'command']\n")
         f.write(errorous_line)
 
     new_session = application.new_session(filename=model_file)
