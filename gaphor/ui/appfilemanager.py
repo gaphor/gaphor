@@ -31,7 +31,11 @@ class AppFileManager(Service, ActionProvider):
 
         def open_files(filenames):
             for filename in filenames:
-                if self.application.has_session(filename):
+                if any(
+                    session
+                    for session in self.application.sessions
+                    if session.filename == filename
+                ):
                     name = Path(filename).name
                     title = gettext("Switch to {name}?").format(name=name)
                     body = gettext(

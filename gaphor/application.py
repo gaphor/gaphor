@@ -146,15 +146,6 @@ class Application(Service, ActionProvider):
 
         return session
 
-    def has_sessions(self):
-        return bool(self._sessions)
-
-    def has_session(self, filename):
-        filename = Path(filename)
-        return any(
-            session for session in self._sessions if session.filename == filename
-        )
-
     def shutdown_session(self, session):
         assert session
         session.shutdown()

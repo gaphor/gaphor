@@ -81,7 +81,7 @@ def run(argv: list[str], *, launch_service="greeter", recover=False) -> int:
 
     def app_activate(gtk_app):
         assert application
-        if not application.has_sessions():
+        if not application.sessions:
             application.get_service(launch_service).open()
 
     def app_open(gtk_app, files, n_files, hint):
