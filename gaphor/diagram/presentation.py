@@ -69,6 +69,7 @@ class HandlePositionEvent(RevertibleEvent):
         super().__init__(element)
         self.handle_index = element.handles().index(handle)
         self.old_value = old_value
+        self.new_value = handle.pos.tuple()
 
     def revert(self, target):
         target.handles()[self.handle_index].pos = self.old_value
