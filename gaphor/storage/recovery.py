@@ -1,6 +1,7 @@
 import ast
 import hashlib
 import logging
+from collections.abc import Iterator
 from io import IOBase
 from pathlib import Path
 
@@ -41,10 +42,37 @@ from gaphor.transaction import Transaction, TransactionCommit, TransactionRollba
 log = logging.getLogger(__name__)
 
 
-def recovery_dir() -> Path:
-    d = settings.get_cache_dir() / "recovery"
+def sessions_dir() -> Path:
+    d = settings.get_cache_dir() / "sessions"
     d.mkdir(exist_ok=True)
     return d
+
+
+def all_sessions() -> Iterator[tuple[str, Path | None, Path | None]]:
+    """Get all open active/inactive sessions.
+
+    Returns a list of tuples: session id, filename path, template path.
+    """
+    for session_file in sessions_dir().glob("*.recovery"):
+        with session_file.open(encoding="utf-8") as f:
+            preamble_line = f.readline()
+        if preamble_line:
+            try:
+                preamble = ast.literal_eval(preamble_line)
+                path = Path(preamble.get("path"))
+                is_template = preamble.get("template", False)
+                if path.exists() and path.is_file():
+                    yield (
+                        (session_file.stem, None, Path(path))
+                        if is_template
+                        else (session_file.stem, Path(path), None)
+                    )
+                else:
+                    log.info("Session file does not reference an existing model file.")
+                    _move_aside(session_file)
+            except (SyntaxError, TypeError, AttributeError):
+                log.info("File has an invalid header: '%s'.", preamble_line)
+                _move_aside(session_file)
 
 
 class Recovery(Service):
@@ -52,6 +80,7 @@ class Recovery(Service):
         self.event_manager = event_manager
         self.element_factory = element_factory
         self.modeling_language = modeling_language
+        self.session_id: str = "_"
         self.recorder = Recorder()
         self.event_log: EventLog | None = None
 
@@ -93,8 +122,9 @@ class Recovery(Service):
 
     @event_handler(SessionCreated)
     def on_model_loaded(self, event: SessionCreated):
-        if event.filename and not event.force:
-            self.event_log = EventLog(event.filename)
+        self.session_id = event.session.session_id  # type: ignore[attr-defined]
+        if event.filename or event.template:
+            self.event_log = EventLog(self.session_id, event.filename, event.template)
         self.recorder.truncate()
 
     @event_handler(ModelReady)
@@ -113,7 +143,8 @@ class Recovery(Service):
                 self.event_log.log_file,
                 exc_info=True,
             )
-            self.event_log.move_aside("Replaying events failed.")
+            log.warning("Replaying events failed.")
+            self.event_log.move_aside()
 
         if events:
             self.event_manager.handle(
@@ -130,7 +161,7 @@ class Recovery(Service):
             self.event_log.clear()
 
         if event.filename:
-            self.event_log = EventLog(event.filename)
+            self.event_log = EventLog(self.session_id, event.filename)
             self.event_log.clear()
         else:
             self.event_log = None
@@ -145,11 +176,14 @@ class Recovery(Service):
 
 
 class EventLog:
-    def __init__(self, filename: Path):
+    def __init__(
+        self, session_id: str, filename: Path | None, template: Path | None = None
+    ):
         self._filename = filename
-        self._log_name = (recovery_dir() / settings.file_hash(filename)).with_suffix(
-            ".recovery"
-        )
+        self._template = template
+        self._log_name = (sessions_dir() / session_id).with_suffix(".recovery")
+
+        # The file that we use to save the events to:
         self._file: IOBase | None = None
 
     @property
@@ -161,16 +195,28 @@ class EventLog:
         self._log_name.unlink(missing_ok=True)
 
     def write(self, event):
+        if not (self._filename or self._template):
+            return
+
         f = self._file
         if not f or f.closed:
             f = self._file = self._log_name.open(mode="a", encoding="utf-8")
 
         if f.tell() == 0:
+            if self._template:
+                filename = self._template.absolute()
+                is_template = True
+            else:
+                assert self._filename
+                filename = self._filename.absolute()
+                is_template = False
+
             f.write(
                 repr(
                     {
-                        "path": str(self._filename.absolute()),
-                        "sha256": sha256sum(self._filename),
+                        "path": str(filename.absolute()),
+                        "sha256": sha256sum(filename),
+                        "template": is_template,
                     }
                 )
             )
@@ -181,34 +227,53 @@ class EventLog:
         f.flush()
 
     def read(self):
+        if not (self._filename or self._template):
+            return
+
         self.close()
-        checksum_failed = False
         try:
             with self._log_name.open(mode="r", encoding="utf-8") as f:
+                preamble_line = f.readline()
+                preamble = ast.literal_eval(preamble_line)
+                if not isinstance(preamble, dict):
+                    raise ChecksumFailed()
+
+                filename = (
+                    self._template if preamble.get("template") else self._filename
+                )
+                if not filename or sha256sum(filename) != preamble.get("sha256"):
+                    raise ChecksumFailed()
+
                 for line in f:
                     events = ast.literal_eval(line.rstrip("\r\n"))
-                    if isinstance(events, dict) and sha256sum(
-                        self._filename
-                    ) != events.get("sha256"):
-                        checksum_failed = True
-                        break
                     yield events
-            if checksum_failed:
-                self.move_aside("Recovery file hash does not match.")
+
         except FileNotFoundError:
             # Log does not exist, no problem
             pass
+        except ChecksumFailed:
+            # Move file after it's closed.
+            log.info("Recovery file hash does not match.")
+            self.move_aside()
 
     def close(self):
         if self._file:
             self._file.close()
             self._file = None
 
-    def move_aside(self, reason: str):
+    def move_aside(self):
         self.close()
-        backup = self._log_name.with_suffix(".recovery.bak")
-        self._log_name.rename(backup)
-        log.info("%s Renamed to %s.", reason, backup)
+        _move_aside(self._log_name)
+
+
+class ChecksumFailed(Exception):
+    pass
+
+
+def _move_aside(path: Path):
+    backup = path.with_suffix(".recovery.bak")
+    path.rename(backup)
+    log.info("Session recovery file is renamed to %s.", backup)
 
 
 def sha256sum(filename: Path):

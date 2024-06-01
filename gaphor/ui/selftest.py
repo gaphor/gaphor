@@ -107,11 +107,6 @@ class SelfTest(Service):
 
     @test
     def test_new_session(self, status):
-        with (importlib.resources.files("gaphor") / "templates" / "uml.gaphor").open(
-            encoding="utf-8"
-        ) as f:
-            session = self.application.new_session(template=f)
-
         def check_new_session(session):
             main_window = session.get_service("main_window")
 
@@ -120,6 +115,8 @@ class SelfTest(Service):
                 return GLib.SOURCE_REMOVE
             return GLib.SOURCE_CONTINUE
 
+        template = importlib.resources.files("gaphor") / "templates" / "uml.gaphor"
+        session = self.application.new_session(template=template)
         GLib.idle_add(check_new_session, session, priority=GLib.PRIORITY_LOW)
 
     @test

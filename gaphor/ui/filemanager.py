@@ -13,6 +13,7 @@ from gi.repository import Adw, Gio, Gtk
 
 from gaphor import UML
 from gaphor.abc import ActionProvider, Service
+from gaphor.babel import translate_model
 from gaphor.core import action, event_handler, gettext
 from gaphor.core.changeset.compare import compare
 from gaphor.core.modeling import Diagram, ElementFactory, ModelReady, StyleSheet
@@ -108,7 +109,9 @@ class FileManager(Service, ActionProvider):
             self._update_monitor()
 
     def load_template(self, template):
-        storage.load(template, self.element_factory, self.modeling_language)
+        translated_model = translate_model(template)
+        storage.load(translated_model, self.element_factory, self.modeling_language)
+        self.event_manager.handle(ModelReady(self))
 
     def load(self, filename: Path, on_load_done: Callable[[], None] | None = None):
         """Load the Gaphor model from the supplied file name.

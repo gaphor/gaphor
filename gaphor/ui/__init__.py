@@ -22,6 +22,7 @@ from gaphor.application import Application, Session
 from gaphor.core import event_handler
 from gaphor.event import ActiveSessionChanged, ApplicationShutdown, SessionCreated
 from gaphor.settings import APPLICATION_ID, StyleVariant, settings
+from gaphor.storage.recovery import all_sessions
 from gaphor.ui.actiongroup import apply_application_actions
 
 Adw.init()
@@ -40,7 +41,7 @@ if sys.platform == "darwin":
         )
 
 
-def run(argv: list[str], launch_service="greeter") -> int:
+def run(argv: list[str], *, launch_service="greeter", recover=False) -> int:
     application: Application | None = None
 
     def app_startup(gtk_app):
@@ -71,6 +72,8 @@ def run(argv: list[str], launch_service="greeter") -> int:
             event_manager.subscribe(on_session_created)
             event_manager.subscribe(on_quit)
             application.get_service(launch_service).init(gtk_app)
+            if recover:
+                recover_sessions(application)
         except Exception:
             gtk_app.exit_code = 1
             gtk_app.quit()
@@ -78,8 +81,8 @@ def run(argv: list[str], launch_service="greeter") -> int:
 
     def app_activate(gtk_app):
         assert application
-        if not application.has_sessions():
-            application.get_service("greeter").open()
+        if not application.sessions:
+            application.get_service(launch_service).open()
 
     def app_open(gtk_app, files, n_files, hint):
         # appfilemanager should take care of this:
@@ -112,6 +115,16 @@ def run(argv: list[str], launch_service="greeter") -> int:
     gtk_app.connect("open", app_open)
     gtk_app.run(argv)
     return gtk_app.exit_code
+
+
+def recover_sessions(application):
+    for session_id, filename, template in all_sessions():
+        if not any(
+            session.session_id == session_id for session in application.sessions
+        ):
+            application.recover_session(
+                session_id=session_id, filename=filename, template=template
+            )
 
 
 if __name__ == "__main__":

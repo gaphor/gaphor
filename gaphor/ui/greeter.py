@@ -7,7 +7,6 @@ from gi.repository import Adw, GLib, Gtk
 from gaphor.abc import ActionProvider, Service
 from gaphor.action import action
 from gaphor.application import distribution
-from gaphor.babel import translate_model
 from gaphor.core import event_handler
 from gaphor.event import SessionCreated
 from gaphor.i18n import gettext, translated_ui_string
@@ -203,8 +202,7 @@ class Greeter(Service, ActionProvider):
             filename = (
                 importlib.resources.files("gaphor") / "templates" / child.filename
             )
-            translated_model = translate_model(filename)
-            session = self.application.new_session(template=translated_model)
+            session = self.application.new_session(template=filename)
             session.get_service("properties").set("modeling-language", child.lang)
             self.close()
 

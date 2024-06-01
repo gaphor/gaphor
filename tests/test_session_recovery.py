@@ -3,7 +3,9 @@ import pytest
 from gaphor.application import Application
 from gaphor.core.modeling import Diagram
 from gaphor.event import SessionShutdown
+from gaphor.storage.recovery import sessions_dir, sha256sum
 from gaphor.transaction import Transaction
+from gaphor.ui import recover_sessions
 
 
 @pytest.fixture
@@ -22,7 +24,9 @@ def test_recovery_when_reloading_file(application: Application, test_models):
 
     application.shutdown_session(session)
 
-    new_session = application.new_session(filename=model_file)
+    new_session = application.recover_session(
+        session_id=session.session_id, filename=model_file
+    )
     new_element_factory = new_session.get_service("element_factory")
 
     assert new_element_factory.lookup(diagram.id)
@@ -38,7 +42,9 @@ def test_recovery_when_change_is_rolled_back(application: Application, test_mode
 
     application.shutdown_session(session)
 
-    new_session = application.new_session(filename=model_file)
+    new_session = application.recover_session(
+        session_id=session.session_id, filename=model_file
+    )
     new_element_factory = new_session.get_service("element_factory")
 
     assert not new_element_factory.lookup(diagram.id)
@@ -57,7 +63,7 @@ def test_recovery_when_model_is_loaded_twice(application: Application, test_mode
     assert not new_element_factory.lookup(diagram.id)
 
 
-def test_no_recovery_for_new_file(application: Application):
+def test_no_recovery_for_new_session(application: Application):
     session = application.new_session()
     element_factory = session.get_service("element_factory")
     with Transaction(session.get_service("event_manager")):
@@ -84,7 +90,9 @@ def test_no_recovery_for_saved_file(application: Application, test_models, tmp_p
 
     application.shutdown_session(session)
 
-    new_session = application.new_session(filename=model_file)
+    new_session = application.recover_session(
+        session_id=session.session_id, filename=model_file
+    )
     new_element_factory = new_session.get_service("element_factory")
 
     assert not new_element_factory.lookup(diagram.id)
@@ -110,7 +118,9 @@ def test_no_recovey_when_model_changed(application: Application, test_models, tm
     with open(model_file, mode="a", encoding="utf-8") as f:
         f.write("\n")
 
-    new_session = application.new_session(filename=model_file)
+    new_session = application.recover_session(
+        session_id=session.session_id, filename=model_file
+    )
     new_element_factory = new_session.get_service("element_factory")
 
     assert not new_element_factory.lookup(diagram.id)
@@ -127,7 +137,9 @@ def test_no_recovery_for_properly_closed_session(application: Application, test_
 
     event_manager.handle(SessionShutdown(session))
 
-    new_session = application.new_session(filename=model_file)
+    new_session = application.recover_session(
+        session_id=session.session_id, filename=model_file
+    )
     new_element_factory = new_session.get_service("element_factory")
 
     assert not new_element_factory.lookup(diagram.id)
@@ -156,8 +168,110 @@ def test_broken_recovery_log(
     with log_file.open("a", encoding="utf-8") as f:
         f.write(errorous_line)
 
-    new_session = application.new_session(filename=model_file)
+    new_session = application.recover_session(
+        session_id=session.session_id, filename=model_file
+    )
     new_element_factory = new_session.get_service("element_factory")
 
     assert not new_element_factory.lookup(diagram.id)
     assert "Could not recover model changes" in caplog.text
+
+
+@pytest.mark.parametrize("template", [True, False])
+def test_recover_from_session_files(application: Application, test_models, template):
+    session_id = "1234"
+    class_id = "9876"
+
+    create_recovery_file(
+        session_id,
+        {
+            "path": str(test_models / "all-elements.gaphor"),
+            "sha256": sha256sum(test_models / "all-elements.gaphor"),
+            "template": template,
+        },
+        [("c", "Class", class_id, None)],
+    )
+    recover_sessions(application)
+
+    session = next(s for s in application.sessions if s.session_id == session_id)
+    element_factory = session.get_service("element_factory")
+
+    assert element_factory.lookup(class_id)
+
+
+def test_recover_with_invalid_filename(application: Application):
+    session_id = "1234"
+    class_id = "9876"
+
+    create_recovery_file(
+        session_id,
+        {
+            "path": "not-a-model.gaphor",
+            "sha256": "1234",
+            "template": False,
+        },
+        [("c", "Class", class_id, None)],
+    )
+    recover_sessions(application)
+
+    assert not application.sessions
+
+
+def test_recover_with_invalid_sha(application: Application, test_models):
+    session_id = "1234"
+    class_id = "9876"
+
+    create_recovery_file(
+        session_id,
+        {
+            "path": str(test_models / "all-elements.gaphor"),
+            "sha256": "invalid-sha",
+            "template": False,
+        },
+        [("c", "Class", class_id, None)],
+    )
+    recover_sessions(application)
+
+    session = next(s for s in application.sessions if s.session_id == session_id)
+    element_factory = session.get_service("element_factory")
+
+    assert not element_factory.lookup(class_id)
+
+
+def test_recover_with_invalid_header(application: Application, test_models):
+    session_id = "1234"
+    class_id = "9876"
+
+    create_recovery_file(
+        session_id,
+        "invalid header",
+        [("c", "Class", class_id, None)],
+    )
+    recover_sessions(application)
+
+    assert not application.sessions
+
+
+def test_recover_with_unparseable_header(application: Application, test_models, caplog):
+    session_id = "1234"
+    class_id = "9876"
+
+    create_recovery_file(
+        session_id,
+        {
+            "path": str(test_models / "all-elements.gaphor"),
+            "sha256": sha256sum(test_models / "all-elements.gaphor"),
+            "template": True,
+        },
+        [("c", "Class", class_id, None)],
+        raw_prefix="invalid",
+    )
+    recover_sessions(application)
+
+    assert not application.sessions
+
+
+def create_recovery_file(session_id, *lines, raw_prefix=""):
+    with (sessions_dir() / f"{session_id}.recovery").open("w", encoding="utf-8") as f:
+        f.write(raw_prefix)
+        f.writelines(f"{repr(stmt)}\n" for stmt in lines)

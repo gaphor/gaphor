@@ -12,7 +12,7 @@ def test_file(tmp_path):
 
 @pytest.fixture
 def event_log(test_file):
-    event_log = EventLog(test_file)
+    event_log = EventLog("_", test_file)
     return event_log
 
 
@@ -83,7 +83,7 @@ def test_should_not_append_if_file_changed(event_log, test_file):
 def test_move_aside_event_log(event_log):
     event_log.write(["my", "line"])
 
-    event_log.move_aside("Because")
+    event_log.move_aside()
 
     assert not event_log.log_file.exists()
     assert event_log.log_file.with_suffix(".recovery.bak").exists()
