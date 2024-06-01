@@ -378,7 +378,7 @@ class Recorder:
 
     @event_handler(MatrixUpdated)
     def on_matrix_updated(self, event: MatrixUpdated):
-        self.events.append(("mu", event.element.id, tuple(event.element.matrix)))
+        self.events.append(("mu", event.element.id, event.new_value))
 
     @event_handler(HandlePositionEvent)
     def on_handle_position_event(self, event: HandlePositionEvent):
