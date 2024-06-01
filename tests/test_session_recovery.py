@@ -2,6 +2,8 @@ import pytest
 
 from gaphor.application import Application
 from gaphor.core.modeling import Diagram
+from gaphor.diagram.general import Line
+from gaphor.diagram.segment import Segment
 from gaphor.event import SessionShutdown
 from gaphor.storage.recovery import sessions_dir, sha256sum
 from gaphor.transaction import Transaction
@@ -275,3 +277,50 @@ def create_recovery_file(session_id, *lines, raw_prefix=""):
     with (sessions_dir() / f"{session_id}.recovery").open("w", encoding="utf-8") as f:
         f.write(raw_prefix)
         f.writelines(f"{repr(stmt)}\n" for stmt in lines)
+
+
+def test_recovery_with_unlinked_item(application: Application, test_models):
+    model_file = test_models / "simple-items.gaphor"
+    session = application.new_session(template=model_file)
+    event_manager = session.get_service("event_manager")
+    element_factory = session.get_service("element_factory")
+    diagram = next(element_factory.select(Diagram))
+
+    with Transaction(event_manager):
+        line = diagram.create(Line)
+
+    with Transaction(event_manager):
+        line.handles()[0].pos = (100, 100)
+
+    with Transaction(event_manager):
+        line.unlink()
+
+    application.shutdown_session(session)
+
+    recover_sessions(application)
+
+    assert application.sessions
+
+
+def test_recovery_with_line_segments(application: Application, test_models):
+    model_file = test_models / "simple-items.gaphor"
+    session = application.new_session(template=model_file)
+    event_manager = session.get_service("event_manager")
+    element_factory = session.get_service("element_factory")
+    diagram = next(element_factory.select(Diagram))
+
+    with Transaction(event_manager):
+        line = diagram.create(Line)
+        Segment(line, diagram).split_segment(0)
+
+    with Transaction(event_manager):
+        line.handles()[-1].pos = (100, 100)
+
+    with Transaction(event_manager):
+        Segment(line, diagram).merge_segment(0)
+
+    application.shutdown_session(session)
+
+    recover_sessions(application)
+
+    assert application.sessions

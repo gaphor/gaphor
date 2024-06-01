@@ -151,6 +151,7 @@ class MatrixUpdated(RevertibleEvent):
     def __init__(self, element, old_value):
         super().__init__(element)
         self.old_value = old_value
+        self.new_value = element.matrix.tuple()
 
     def revert(self, target):
         target.matrix.set(*self.old_value)
