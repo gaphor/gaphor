@@ -49,6 +49,10 @@
   padding: 4 0 4 4;
 }
 
+:root > pentagon > stereotypes {
+  padding: 4 0 4 4;
+}
+
 :root > pentagon > name {
   padding: 4;
 }

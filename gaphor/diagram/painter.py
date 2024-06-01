@@ -15,6 +15,7 @@ from gaphor.core.modeling.diagram import DrawContext, StyledDiagram, StyledItem
 from gaphor.diagram.diagramlabel import diagram_label
 from gaphor.diagram.selection import Selection
 from gaphor.diagram.shapes import Box, CssNode, Orientation, Text, cairo_state, stroke
+from gaphor.UML.recipes import get_applied_stereotypes, stereotypes_str
 
 
 class ItemPainter:
@@ -65,6 +66,9 @@ class DiagramTypePainter:
             diagram,
             Box(
                 CssNode("diagramtype", None, Text(text=lambda: diagram.diagramType)),
+                CssNode(
+                    "stereotypes", None, Text(text=lambda: stereotypes_str(diagram))
+                ),
                 CssNode("name", None, Text(text=lambda: diagram_label(diagram))),
                 orientation=Orientation.HORIZONTAL,
                 draw=draw_pentagon,
@@ -73,7 +77,7 @@ class DiagramTypePainter:
 
     def paint(self, _items, cr):
         diagram = self.diagram
-        if not diagram.diagramType:
+        if not diagram.diagramType and not any(get_applied_stereotypes(diagram)):
             return
 
         style = diagram.style(StyledDiagram(diagram))
