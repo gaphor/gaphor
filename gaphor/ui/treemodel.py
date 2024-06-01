@@ -56,6 +56,9 @@ class TreeItem(GObject.Object):
     def start_editing(self):
         self.editing = True
 
+    def done_editing(self):
+        self.editing = False
+
 
 class RelationshipItem(TreeItem):
     def __init__(self, child_model):
