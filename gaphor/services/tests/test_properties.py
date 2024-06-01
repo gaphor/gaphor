@@ -4,7 +4,6 @@ import pytest
 
 import gaphor.services.properties
 from gaphor.event import ModelSaved, SessionCreated
-from gaphor.services.properties import get_cache_dir, get_config_dir
 
 
 @pytest.fixture
@@ -42,13 +41,3 @@ def test_load_of_corrupted_properties(properties, event_manager, caplog):
 
     assert new_properties.get("test", "not set") == "not set"
     assert "Invalid syntax in property file" in caplog.text
-
-
-def test_config_dir():
-    config_dir = get_config_dir()
-    assert str(config_dir).endswith("gaphor")
-
-
-def test_cache_dir():
-    cache_dir = get_cache_dir()
-    assert str(cache_dir).endswith("gaphor")

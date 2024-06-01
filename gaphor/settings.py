@@ -1,14 +1,44 @@
 """Application settings support for Gaphor."""
 
+import hashlib
 import logging
 import sys
 from enum import Enum
+from pathlib import Path
 
-from gi.repository import Gio
+from gi.repository import Gio, GLib
 
 APPLICATION_ID = "org.gaphor.Gaphor"
 
 logger = logging.getLogger(__name__)
+
+
+def get_config_dir() -> Path:
+    """Return the directory where the user's config is stored.
+
+    This varies depending on platform.
+    """
+
+    config_dir = Path(GLib.get_user_config_dir()) / "gaphor"
+    config_dir.mkdir(exist_ok=True, parents=True)
+
+    return config_dir
+
+
+def get_cache_dir() -> Path:
+    """Return the directory where the user's cache is stored.
+
+    This varies depending on platform.
+    """
+
+    cache_dir = Path(GLib.get_user_cache_dir()) / "gaphor"
+    cache_dir.mkdir(exist_ok=True, parents=True)
+
+    return cache_dir
+
+
+def file_hash(filename) -> str:
+    return hashlib.blake2b(str(filename).encode("utf-8"), digest_size=24).hexdigest()
 
 
 class StyleVariant(Enum):

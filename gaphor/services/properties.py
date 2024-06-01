@@ -6,14 +6,12 @@ These are things like preferences.
 
 
 import ast
-import hashlib
 import logging
 import pprint
 from pathlib import Path
 from typing import Dict
 
-from gi.repository import GLib
-
+from gaphor import settings
 from gaphor.abc import Service
 from gaphor.core import event_handler
 from gaphor.core.modeling.event import ModelFlushed
@@ -22,32 +20,8 @@ from gaphor.event import ModelSaved, SessionCreated
 log = logging.getLogger(__name__)
 
 
-def get_config_dir() -> Path:
-    """Return the directory where the user's config is stored.
-
-    This varies depending on platform.
-    """
-
-    config_dir = Path(GLib.get_user_config_dir()) / "gaphor"
-    config_dir.mkdir(exist_ok=True, parents=True)
-
-    return config_dir
-
-
-def get_cache_dir() -> Path:
-    """Return the directory where the user's cache is stored.
-
-    This varies depending on platform.
-    """
-
-    cache_dir = Path(GLib.get_user_cache_dir()) / "gaphor"
-    cache_dir.mkdir(exist_ok=True, parents=True)
-
-    return cache_dir
-
-
-def file_hash(filename) -> str:
-    return hashlib.blake2b(str(filename).encode("utf-8"), digest_size=24).hexdigest()
+def properties_filename(filename: str) -> Path:
+    return settings.get_cache_dir() / settings.file_hash(filename)
 
 
 class PropertyChanged:
@@ -74,7 +48,7 @@ class Properties(Service):
 
     def __init__(self, event_manager):
         self.event_manager = event_manager
-        self.filename: Path = get_cache_dir() / file_hash("")
+        self.filename: Path = properties_filename("")
         self._properties: Dict[str, object] = {}
 
         event_manager.subscribe(self.on_model_loaded)
@@ -94,12 +68,12 @@ class Properties(Service):
 
     @event_handler(SessionCreated)
     def on_model_loaded(self, event):
-        self.filename = get_cache_dir() / file_hash(event.filename or "")
+        self.filename = properties_filename(event.filename or "")
         self.load()
 
     @event_handler(ModelSaved)
     def on_model_saved(self, event):
-        self.filename = get_cache_dir() / file_hash(event.filename)
+        self.filename = properties_filename(event.filename)
         self.save()
 
     @event_handler(ModelFlushed)

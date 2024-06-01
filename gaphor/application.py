@@ -101,10 +101,13 @@ class Application(Service, ActionProvider):
                     return
 
         return self._new_session(
-            filename=filename, template=template, services=services
+            filename=filename,
+            template=template,
+            services=services,
+            force=force,
         )
 
-    def _new_session(self, filename=None, template=None, services=None):
+    def _new_session(self, filename=None, template=None, services=None, force=False):
         """Initialize an application session."""
         session = Session(services=services)
 
@@ -127,7 +130,7 @@ class Application(Service, ActionProvider):
 
         self._sessions.add(session)
 
-        session_created = SessionCreated(self, session, filename, template)
+        session_created = SessionCreated(self, session, filename, template, force)
         event_manager.handle(session_created)
         self.event_manager.handle(session_created)
         session.foreground()

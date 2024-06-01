@@ -141,5 +141,5 @@ def view(diagram):
 
 @pytest.fixture(autouse=True)
 def tmp_get_cache_config_dir(tmp_path, monkeypatch):
-    monkeypatch.setattr(gaphor.services.properties, "get_config_dir", lambda: tmp_path)
-    monkeypatch.setattr(gaphor.services.properties, "get_cache_dir", lambda: tmp_path)
+    monkeypatch.setattr(gaphor.settings, "get_config_dir", lambda: tmp_path)
+    monkeypatch.setattr(gaphor.settings, "get_cache_dir", lambda: tmp_path)

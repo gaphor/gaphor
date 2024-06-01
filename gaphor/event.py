@@ -44,12 +44,14 @@ class SessionCreated(ServiceEvent):
         session: Service,
         filename: str | Path | None,
         template: str | None = None,
+        force: bool = False,
     ):
         super().__init__(application)
         self.application = application
         self.session = session
         self.filename = Path(filename) if filename else None
         self.template = template
+        self.force = force
 
 
 class ActiveSessionChanged(ServiceEvent):
