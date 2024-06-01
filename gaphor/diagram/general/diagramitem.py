@@ -6,6 +6,7 @@ from gaphor.core.modeling.diagram import Diagram
 from gaphor.diagram.presentation import ElementPresentation, Named, text_name
 from gaphor.diagram.shapes import Box, CssNode, IconBox, Text, draw_border, stroke
 from gaphor.diagram.support import represents
+from gaphor.UML.compartments import text_stereotypes
 
 
 @represents(Diagram)
@@ -27,11 +28,13 @@ class DiagramItem(ElementPresentation, Named):
                     text=lambda: self.subject and self.subject.diagramType or "",
                 ),
             ),
+            text_stereotypes(self),
             text_name(self),
         )
 
         self.watch("subject[Diagram].name")
         self.watch("subject[Diagram].diagramType")
+        self.watch("subject.appliedStereotype.classifier.name")
 
 
 def draw_diagram(box, context, bounding_box):
