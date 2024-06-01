@@ -3,7 +3,7 @@ import pytest
 from gaphor import UML
 from gaphor.core.modeling import Comment
 from gaphor.diagram.tests.fixtures import connect
-from gaphor.plugins.autolayout.pydot import AutoLayout, parse_edge_pos
+from gaphor.plugins.autolayout.pydot import AutoLayout, parse_edge_pos, strip_quotes
 from gaphor.UML.diagramitems import (
     ActionItem,
     AssociationItem,
@@ -107,3 +107,9 @@ def test_parse_pos():
 def test_parse_pos_invalid_number_of_points():
     with pytest.raises(IndexError):
         parse_edge_pos('"1.0,2.0 3.0,4 5.0,6.0"', 10)
+
+
+def test_strip_line_endings():
+    assert strip_quotes("\\\n807.5") == "807.5"
+    assert strip_quotes("\\\r\n807.5") == "807.5"
+    assert strip_quotes('\\\r\n"807.5"') == "807.5"

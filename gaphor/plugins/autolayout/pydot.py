@@ -371,7 +371,11 @@ def parse_bb(bb, height: float | None = None) -> Rect:
 
 
 def strip_quotes(s):
-    return s.replace('"', "").replace("\\\n", "")
+    """Replace quotes and line continuations (backslash + newline).
+
+    Basically cleaning up some stuff that Pydot leaves in.
+    """
+    return s.replace('"', "").replace("\\\n", "").replace("\\\r\n", "")
 
 
 # Do not auto-layout sequence diagrams
