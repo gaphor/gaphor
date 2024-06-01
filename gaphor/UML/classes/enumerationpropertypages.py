@@ -47,9 +47,6 @@ class EnumerationView(GObject.Object):
 
     editing = GObject.Property(type=bool, default=False)
 
-    def start_editing(self):
-        self.editing = True
-
     def empty(self):
         return not self.literal
 

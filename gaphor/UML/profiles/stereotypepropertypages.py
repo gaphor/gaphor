@@ -190,9 +190,6 @@ class StereotypeView(GObject.Object):
         elif slot:
             del self.instance.slot[slot]
 
-    def start_editing(self):
-        self.editing = True
-
 
 def stereotype_model(subject: Element):
     model = Gio.ListStore.new(StereotypeView.__gtype__)
@@ -259,7 +256,7 @@ def stereotype_activated(list_view, _row):
     item = selection.get_selected_item()
 
     if item.attr:
-        item.start_editing()
+        item.editing = True
     else:
         item.applied = not item.applied
 
@@ -271,7 +268,7 @@ def stereotype_key_handler(ctrl, keyval, _keycode, state):
     item = selection.get_selected_item()
 
     if keyval in (Gdk.KEY_F2,):
-        item.start_editing()
+        item.editing = True
         return True
 
     if keyval in (Gdk.KEY_Delete, Gdk.KEY_BackSpace) and not state & (

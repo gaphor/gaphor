@@ -496,7 +496,7 @@ def list_item_factory_setup(
     row.add_controller(drop_target)
 
     def done_editing(text_field, should_commit):
-        list_item.get_item().get_item().done_editing()
+        list_item.get_item().get_item().editing = False
         if should_commit:
             tree_item = list_item.get_item().get_item()
             with Transaction(event_manager):

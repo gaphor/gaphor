@@ -158,6 +158,7 @@ def update_list_store(
 def text_field_handlers(model_field: str):
     def on_done_editing(list_item, should_commit):
         text = list_item.get_child()
+        list_item.get_item().editing = False
         if should_commit:
             setattr(list_item.get_item(), model_field, text.editable_text)
 
@@ -182,7 +183,7 @@ def list_view_activated(list_view, _row):
     selection = list_view.get_model()
     item = selection.get_selected_item()
 
-    item.start_editing()
+    item.editing = True
 
 
 @transactional
@@ -196,7 +197,7 @@ def list_view_key_handler(ctrl, keyval, _keycode, state):
     item = selection.get_selected_item()
 
     if keyval in (Gdk.KEY_F2,):
-        item.start_editing()
+        item.editing = True
         return True
 
     if not item or item.empty():

@@ -58,9 +58,6 @@ class ActivityParameterNodeView(GObject.Object):
             self.activity.node = node
         parse(self.node.parameter, value)
 
-    def start_editing(self):
-        self.editing = True
-
     def empty(self):
         return not self.node
 

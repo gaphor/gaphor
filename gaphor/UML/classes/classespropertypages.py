@@ -160,9 +160,6 @@ class AttributeView(GObject.Object):
 
     editing = GObject.Property(type=bool, default=False)
 
-    def start_editing(self):
-        self.editing = True
-
     def empty(self):
         return not self.attr
 
@@ -350,9 +347,6 @@ class OperationView(GObject.Object):
         self.oper.isAbstract = value
 
     editing = GObject.Property(type=bool, default=False)
-
-    def start_editing(self):
-        self.editing = True
 
     def empty(self):
         return not self.oper
