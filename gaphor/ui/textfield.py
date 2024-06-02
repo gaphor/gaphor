@@ -14,6 +14,7 @@ _XML = """\
           <object class="GtkLabel">
             <property name="xalign">0</property>
             <property name="hexpand">yes</property>
+            <property name="ellipsize">end</property>
             <binding name="attributes">
               <lookup name="attributes">TextField</lookup>
             </binding>
