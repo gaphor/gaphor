@@ -7,7 +7,7 @@ class StyleEditor:
     def __init__(self, subject, close_callback):
         self.subject = subject
         self.window_builder = Gtk.Builder()
-        self.window_builder.add_from_file("gaphor/diagram/styleeditor.ui")
+        self.window_builder.add_from_file("gaphor/ui/styleeditor.ui")
         self.window = None
         self.close_callback = close_callback
         self.color_button = None

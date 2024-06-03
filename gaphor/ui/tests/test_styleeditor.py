@@ -2,10 +2,10 @@ from gi.repository import Gdk
 
 from gaphor import UML
 from gaphor.core.modeling import StyleSheet
-from gaphor.diagram.styleeditor import StyleEditor
 from gaphor.diagram.tests.fixtures import find
 from gaphor.transaction import Transaction
 from gaphor.ui.diagrampage import DiagramPage
+from gaphor.ui.styleeditor import StyleEditor
 from gaphor.UML.classes import ClassItem
 
 

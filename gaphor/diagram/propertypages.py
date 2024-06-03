@@ -16,8 +16,8 @@ from gi.repository import GObject, Gtk
 
 from gaphor.core import transactional
 from gaphor.core.modeling import Diagram, Element, Presentation, qualifiedName
-from gaphor.diagram.styleeditor import StyleEditor
 from gaphor.i18n import gettext, translated_ui_string
+from gaphor.ui.styleeditor import StyleEditor
 
 
 class LabelValue(GObject.Object):
@@ -355,7 +355,8 @@ class StylePropertyPage(PropertyPageBase):
                 self.subject, self.close_style_editor
             )
             self.has_style_editor = True
-        StylePropertyPage.style_editor.present()
+        if StylePropertyPage.style_editor:
+            StylePropertyPage.style_editor.present()
 
     def close_style_editor(self):
         StylePropertyPage.style_editor = None
