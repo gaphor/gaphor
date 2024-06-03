@@ -227,10 +227,11 @@ with open("../my-model.gaphor", "w") as out:
 If you need to update existing elements, this can be done by keeping track of the element ID. Each element in the model
 has a unique internal id. Once again we need some imports from Gaphor:
 
-```
+```{code-cell} iPython3
 from pathlib import Path
 
 from gaphor import UML
+from gaphor import SysML
 from gaphor.application import Session  # needed to run services
 from gaphor.transaction import Transaction  # needed to make changes
 from gaphor.storage import storage  # needed to save to file
@@ -238,7 +239,7 @@ from gaphor.storage import storage  # needed to save to file
 
 Then start up the services we will use:
 
-```
+```{code-cell} iPython3
 # Create the Gaphor application object.
 session = Session()
 # Get services we need.
@@ -249,24 +250,24 @@ event_manager = session.get_service("event_manager")
 
 and load in the model to the session
 
-```
+```{code-cell} iPython3
 # The model file to load.
 model_filename = "../my-model.gaphor"
 
 # Load model from file.
 file_manager.load(Path(model_filename))
 # Now we query the model to get the element we want to change:
-the_class = element_factory.select(
-    lambda e: isinstance(e, UML.Class) and e.name == "My Class"
-)
+the_class = next(element_factory.select(
+                lambda e: isinstance(e, UML.Class) and e.name == "MyClass"
+                ))
 uid = the_class._id
-print(f"Original element: {the_class.name} -- {the_class.my_attr}")
+#print(f"Original element: {the_class.name} -- {the_class.my_attr}")
 ```
 
 Importantly, the changes are made as part of a Transaction. Here we find the element with the same id, and then update
 the content. We then save the altered model to a file.
 
-```
+```{code-cell} iPython3
 # change the name and write back into the model
 with Transaction(event_manager) as ctx:
 
@@ -276,14 +277,14 @@ with Transaction(event_manager) as ctx:
         )
     )
     cls.name = "Not My Class Anymore"
-    cls.attr = "updated string"
+    cls.ownedAttribute[0].typeValue = "updated string"
 
 # Write changes to file here
 with Transaction(event_manager) as ctx:
     with open(model_filename, "w") as out:
         storage.save(out, element_factory)
 
-print(f"Updated element: {cls.name} -- {cls.my_attr}")
+#print(f"Updated element: {cls.name} -- {cls.ownedAttribute[0].typeValue}")
 ```
 
 ## What else
@@ -302,78 +303,82 @@ Expanding on the information above the following snippetts show how to create re
 
 ### Requirements from text fields
 
-```
+```{code-cell} iPython3
 txts = ['req1', 'req2', 'bob the cat']
-my_diagram = element_factory.create(Diagram)
-my_diagram.name=' my diagram'
-reqPackage = element_factory.create(UML.Package)
-reqPackage.name = "Requirements"
-drop(reqPackage, my_diagram, x=0, y=0)
+outfile = "requirement_example.gaphor"
+with Transaction(event_manager) as ctx:
+    my_diagram = element_factory.create(Diagram)
+    my_diagram.name=' my diagram'
+    reqPackage = element_factory.create(UML.Package)
+    reqPackage.name = "Requirements"
+    drop(reqPackage, my_diagram, x=0, y=0)
 
-for req_id,txt in enumerate(txts):
-    my_class = element_factory.create(SysML.sysml.Requirement)
-    my_class.name = f"{req_id}-{txt[:3]}"
-    my_class.text = f"{txt}"
-    my_class.externalId = f"{req_id}"
 
-    drop(my_class, my_diagram, x=0, y=0)
+    for req_id,txt in enumerate(txts):
+        my_class = element_factory.create(SysML.sysml.Requirement)
+        my_class.name = f"{req_id}-{txt[:3]}"
+        my_class.text = f"{txt}"
+        my_class.externalId = f"{req_id}"
 
-with open(outfile, "w") as out:
-    storage.save(out, element_factory)
+        drop(my_class, my_diagram, x=0, y=0)
+    with open(outfile, "w") as out:
+        storage.save(out, element_factory)
 
 ```
 
 ### Interfaces from dictionaries
 
-```
+```{code-cell} iPython3
 # get interface definitions from file into this dictionary format
 interfaces = {'Interface1': ['signal1:type1', 'signal2:type1', 'signal3:type1'],
               'Interface2': ['signal4:type2', 'signal5:type2', 'signal6:type2']}
+outfile = 'interface_example.gaphor'
+with Transaction(event_manager) as ctx:
+    my_diagram = element_factory.create(Diagram)
+    my_diagram.name=' my diagram'
+    intPackage = element_factory.create(UML.Package)
+    intPackage.name = "Interfaces"
+    drop(intPackage, my_diagram, x=0, y=0)
 
 
-my_diagram = element_factory.create(Diagram)
-my_diagram.name=' my diagram'
-intPackage = element_factory.create(UML.Package)
-intPackage.name = "Interfaces"
-drop(intPackage, my_diagram, x=0, y=0)
+    for interface,signals in interfaces.items():
+        my_class = element_factory.create(UML.uml.Interface)
+        my_class.name = f"{interface}"
+        for s in signals:
+            my_attr = element_factory.create(UML.Property)
+            name,vtype = s.split(':')
+            my_attr.name = name
+            my_attr.typeValue = vtype
+            my_class.ownedAttribute = my_attr
 
-for interface,signals in interfaces.items():
-    my_class = element_factory.create(UML.uml.Interface)
-    my_class.name = f"{interface}"
-    for s in signals:
-        my_attr = element_factory.create(UML.Property)
-        name,vtype = s.split(':')
-        my_attr.name = name
-        my_attr.typeValue = vtype
-        my_class.ownedAttribute = my_attr
-
-    drop(my_class, my_diagram, x=0, y=0)
+        drop(my_class, my_diagram, x=0, y=0)
 
 
-with open(outfile, "w") as out:
-    storage.save(out, element_factory)
+    with open(outfile, "w") as out:
+        storage.save(out, element_factory)
 
 ```
 
 ### Basic Validation
 Some simple validation checks can be run using a couple of small functions to select and evaluate elements.
 
-```
+```{code-cell} iPython3
+import re
 # As before assume we have a factory service and the model is loaded
 # Define a function to select an element
 def element_select(element):
-    return isinstance(element, SysML.sysml.SysMLDiagram) and element.diagramType == "ibd"
+    return isinstance(element, UML.Class)
 
 
-# Define a validation rule
+# Define a validation rule - names must be capatalised
 def rule(element):
-    return isinstance(element.owner, SysML.sysml.Block)
+    return re.match('^[A-Z]',element.name)
 
 
 # Define a message to display if the element fails the validation
-msg = "IBD diagrams must be owned by a block"
+msg = "Class Names must be capitalised"
 
-element = next(factory.select(element_select))
+element = next(element_factory.select(element_select))
 is_valid = rule(element)
 if not is_valid:
     print(msg)
