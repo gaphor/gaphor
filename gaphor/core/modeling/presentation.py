@@ -55,6 +55,7 @@ class Presentation(Matrices, Element, Generic[S]):
     def change_name(self, event=None):
         if (
             isinstance(event, AttributeUpdated)
+            and hasattr(self.subject, "name")
             and self.presentation_style is not None
             and self.presentation_style.styleSheet is not None
         ):
@@ -126,16 +127,14 @@ class Presentation(Matrices, Element, Generic[S]):
             self._on_matrix_changed(None, ())
         else:
             super().load(name, value)
-        try:
-            if (
-                self.subject is not None
-                and self.subject.name is not None
-                and self.presentation_style is not None
-                and self.presentation_style.styleSheet is not None
-            ):
-                self.presentation_style.name_change(self.subject.name)
-        except:
-            pass
+        if (
+            self.subject is not None
+            and hasattr(self.subject, "name")
+            and self.subject.name is not None
+            and self.presentation_style is not None
+            and self.presentation_style.styleSheet is not None
+        ):
+            self.presentation_style.name_change(self.subject.name)
 
     def inner_unlink(self, _unlink_event: UnlinkEvent) -> None:
         self._watcher.unsubscribe_all()

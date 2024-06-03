@@ -132,5 +132,5 @@ def test_remove_item(
         color.set_rgba(rgba)
         style_editor.on_color_set(color)
         item.unlink()
-        assert len(stylesheet.style_elems) == 0
+        assert len(stylesheet.style_elements) == 0
         style_editor.close()

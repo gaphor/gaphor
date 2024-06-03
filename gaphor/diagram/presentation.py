@@ -586,23 +586,26 @@ class PresentationStyle:
     def name_change(self, new_name: str):
         old_key: str = self.key()
         self.name = new_name
-        self.styleSheet.change_name_style_elem(old_key, self.key())
+        self.styleSheet.change_name_style_element(old_key, self.key())
 
-    def delete_elem(self):
+    def delete_element(self):
         if self.initialized():
-            self.styleSheet.delete_style_elem(self.key())
+            self.styleSheet.delete_style_element(self.key())
 
     def translate_to_stylesheet(self):
-        if self.initialized() and len(self.styleSheet.style_elems.get(self.key())) > 0:
+        if (
+            self.initialized()
+            and len(self.styleSheet.style_elements.get(self.key())) > 0
+        ):
             self.styleSheet.translate_to_stylesheet(self.key())
 
     def change_style(self, style: str, value):
         if not self.initialized():
             self.new_style()
-        self.styleSheet.change_style_elem(self.key(), style, str(value))
+        self.styleSheet.change_style_element(self.key(), style, str(value))
 
     def new_style(self):
-        self.styleSheet.new_style_elem(self.key())
+        self.styleSheet.new_style_element(self.key())
 
     def get_style(self, style: str):
         if not self.initialized():
@@ -618,5 +621,7 @@ class PresentationStyle:
 
     def initialized(self) -> bool:
         return (
-            True if self.styleSheet.style_elems.get(self.key()) is not None else False
+            True
+            if self.styleSheet.style_elements.get(self.key()) is not None
+            else False
         )

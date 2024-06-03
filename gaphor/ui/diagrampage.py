@@ -201,8 +201,11 @@ class DiagramPage:
     def _on_element_delete(self, event: ElementDeleted):
         if event.element is self.diagram:
             self.event_manager.handle(DiagramClosed(self.diagram))
-        if isinstance(event.element, Presentation) and event.element.presentation_style is not None:
-            event.element.presentation_style.delete_elem()
+        if (
+            isinstance(event.element, Presentation)
+            and event.element.presentation_style is not None
+        ):
+            event.element.presentation_style.delete_element()
 
     @event_handler(AttributeUpdated)
     def _on_attribute_updated(self, event: AttributeUpdated):
