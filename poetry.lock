@@ -747,13 +747,13 @@ test = ["objgraph", "psutil"]
 
 [[package]]
 name = "hypothesis"
-version = "6.102.6"
+version = "6.103.0"
 description = "A library for property-based testing"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "hypothesis-6.102.6-py3-none-any.whl", hash = "sha256:ef281ba8b2626ebade9f463fbe8851ae6ff6ae4a8621a9e54c7c2477a97ccff0"},
-    {file = "hypothesis-6.102.6.tar.gz", hash = "sha256:ef5655b4ca349082241ab55f899a34ea6d75cc336a7b07356680909059db1349"},
+    {file = "hypothesis-6.103.0-py3-none-any.whl", hash = "sha256:0d21a87e2d68b4937f19f1e6e681d747de65f748c9caa818308a0e3899ea8481"},
+    {file = "hypothesis-6.103.0.tar.gz", hash = "sha256:7fe91917b99fc98ac150ec295775a687448c7c42c2276ab6e4a6969a4b285bb5"},
 ]
 
 [package.dependencies]
@@ -878,13 +878,13 @@ test = ["flaky", "ipyparallel", "pre-commit", "pytest (>=7.0)", "pytest-asyncio 
 
 [[package]]
 name = "ipython"
-version = "8.24.0"
+version = "8.25.0"
 description = "IPython: Productive Interactive Computing"
 optional = false
 python-versions = ">=3.10"
 files = [
-    {file = "ipython-8.24.0-py3-none-any.whl", hash = "sha256:d7bf2f6c4314984e3e02393213bab8703cf163ede39672ce5918c51fe253a2a3"},
-    {file = "ipython-8.24.0.tar.gz", hash = "sha256:010db3f8a728a578bb641fdd06c063b9fb8e96a9464c63aec6310fbcb5e80501"},
+    {file = "ipython-8.25.0-py3-none-any.whl", hash = "sha256:53eee7ad44df903a06655871cbab66d156a051fd86f3ec6750470ac9604ac1ab"},
+    {file = "ipython-8.25.0.tar.gz", hash = "sha256:c6ed726a140b6e725b911528f80439c534fac915246af3efc39440a6b0f9d716"},
 ]
 
 [package.dependencies]
@@ -902,7 +902,7 @@ typing-extensions = {version = ">=4.6", markers = "python_version < \"3.12\""}
 [package.extras]
 all = ["ipython[black,doc,kernel,matplotlib,nbconvert,nbformat,notebook,parallel,qtconsole]", "ipython[test,test-extra]"]
 black = ["black"]
-doc = ["docrepr", "exceptiongroup", "ipykernel", "ipython[test]", "matplotlib", "setuptools (>=18.5)", "sphinx (>=1.3)", "sphinx-rtd-theme", "sphinxcontrib-jquery", "stack-data", "typing-extensions"]
+doc = ["docrepr", "exceptiongroup", "intersphinx-registry", "ipykernel", "ipython[test]", "matplotlib", "setuptools (>=18.5)", "sphinx (>=1.3)", "sphinx-rtd-theme", "sphinxcontrib-jquery", "tomli", "typing-extensions"]
 kernel = ["ipykernel"]
 matplotlib = ["matplotlib"]
 nbconvert = ["nbconvert"]
@@ -1760,38 +1760,40 @@ PyYAML = "*"
 
 [[package]]
 name = "pyobjc-core"
-version = "10.2"
+version = "10.3"
 description = "Python<->ObjC Interoperability Module"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "pyobjc-core-10.2.tar.gz", hash = "sha256:0153206e15d0e0d7abd53ee8a7fbaf5606602a032e177a028fc8589516a8771c"},
-    {file = "pyobjc_core-10.2-cp310-cp310-macosx_10_9_universal2.whl", hash = "sha256:b8eab50ce7f17017a0f1d68c3b7e88bb1bb033415fdff62b8e0a9ee4ab72f242"},
-    {file = "pyobjc_core-10.2-cp311-cp311-macosx_10_9_universal2.whl", hash = "sha256:f2115971463073426ab926416e17e5c16de5b90d1a1f2a2d8724637eb1c21308"},
-    {file = "pyobjc_core-10.2-cp312-cp312-macosx_10_9_universal2.whl", hash = "sha256:a70546246177c23acb323c9324330e37638f1a0a3d13664abcba3bb75e43012c"},
-    {file = "pyobjc_core-10.2-cp38-cp38-macosx_10_9_x86_64.whl", hash = "sha256:a9b5a215080d13bd7526031d21d5eb27a410780878d863f486053a0eba7ca9a5"},
-    {file = "pyobjc_core-10.2-cp38-cp38-macosx_11_0_universal2.whl", hash = "sha256:eb1ab700a44bcc4ceb125091dfaae0b998b767b49990df5fdc83eb58158d8e3f"},
-    {file = "pyobjc_core-10.2-cp39-cp39-macosx_10_9_universal2.whl", hash = "sha256:c9a7163aff9c47d654f835f80361c1b112886ec754800d34e75d1e02ff52c3d7"},
+    {file = "pyobjc_core-10.3-cp310-cp310-macosx_10_9_universal2.whl", hash = "sha256:713dd174e3fd4bfb975949d7314c778d02909d5c017497408d8eedcedab73a42"},
+    {file = "pyobjc_core-10.3-cp311-cp311-macosx_10_9_universal2.whl", hash = "sha256:9eca0c6d3923e8f5c4a86831e446f2995958525ff0c6a01f6f4fa8de0cb25c8a"},
+    {file = "pyobjc_core-10.3-cp312-cp312-macosx_10_9_universal2.whl", hash = "sha256:50dfe3bd7295f04445cf3134113578678a188ca4fb0869e821369a2d288492dc"},
+    {file = "pyobjc_core-10.3-cp313-cp313-macosx_10_9_universal2.whl", hash = "sha256:13511c0ab3235486d4560e9923ed96db76357e7c7e70e0629fee9425b0a8d901"},
+    {file = "pyobjc_core-10.3-cp38-cp38-macosx_10_9_x86_64.whl", hash = "sha256:a7e3a0625f9370ef86a2529be0d22dd3dc48326a7a28113bc6f24d4bf866d076"},
+    {file = "pyobjc_core-10.3-cp38-cp38-macosx_11_0_universal2.whl", hash = "sha256:7a17321d2e226ca43a8f70f8bc823cfaa58ff9d9cdedcd16708d4eec9ca808b2"},
+    {file = "pyobjc_core-10.3-cp39-cp39-macosx_10_9_universal2.whl", hash = "sha256:5c2bfb2f9fcb9f291a64041a336aab1b34a20dbbf4f77fca3057a7d8ef9ce9c5"},
+    {file = "pyobjc_core-10.3.tar.gz", hash = "sha256:875f2555b51a8a36cafbdb7d5d36f3452287a81bd5d7dc09aa6c309d638a9275"},
 ]
 
 [[package]]
 name = "pyobjc-framework-cocoa"
-version = "10.2"
+version = "10.3"
 description = "Wrappers for the Cocoa frameworks on macOS"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "pyobjc-framework-Cocoa-10.2.tar.gz", hash = "sha256:6383141379636b13855dca1b39c032752862b829f93a49d7ddb35046abfdc035"},
-    {file = "pyobjc_framework_Cocoa-10.2-cp310-cp310-macosx_10_9_universal2.whl", hash = "sha256:f9227b4f271fda2250f5a88cbc686ff30ae02c0f923bb7854bb47972397496b2"},
-    {file = "pyobjc_framework_Cocoa-10.2-cp311-cp311-macosx_10_9_universal2.whl", hash = "sha256:6a6042b7703bdc33b7491959c715c1e810a3f8c7a560c94b36e00ef321480797"},
-    {file = "pyobjc_framework_Cocoa-10.2-cp312-cp312-macosx_10_9_universal2.whl", hash = "sha256:18886d5013cd7dc7ecd6e0df5134c767569b5247fc10a5e293c72ee3937b217b"},
-    {file = "pyobjc_framework_Cocoa-10.2-cp38-cp38-macosx_10_9_x86_64.whl", hash = "sha256:1ecf01400ee698d2e0ff4c907bcf9608d9d710e97203fbb97b37d208507a9362"},
-    {file = "pyobjc_framework_Cocoa-10.2-cp38-cp38-macosx_11_0_universal2.whl", hash = "sha256:0def036a7b24e3ae37a244c77bec96b7c9c8384bf6bb4d33369f0a0c8807a70d"},
-    {file = "pyobjc_framework_Cocoa-10.2-cp39-cp39-macosx_10_9_universal2.whl", hash = "sha256:5f47ecc393bc1019c4b47e8653207188df784ac006ad54d8c2eb528906ff7013"},
+    {file = "pyobjc_framework_Cocoa-10.3-cp310-cp310-macosx_10_9_universal2.whl", hash = "sha256:745fcd99cc9ca1827a5b6fa2127d12023428f8ce2047afefc57b1e69f185750f"},
+    {file = "pyobjc_framework_Cocoa-10.3-cp311-cp311-macosx_10_9_universal2.whl", hash = "sha256:116b79be8e9756047a9b6f90d2f08c0e640ff86fcea85ca553dbbb4b121b390f"},
+    {file = "pyobjc_framework_Cocoa-10.3-cp312-cp312-macosx_10_9_universal2.whl", hash = "sha256:08ccc260d3481ddf03784f7dcf2cc7a4e9d8f1ecdf727cb4f80cde7b88416c39"},
+    {file = "pyobjc_framework_Cocoa-10.3-cp313-cp313-macosx_10_9_universal2.whl", hash = "sha256:277f5e4d4fab0d431cb5f07fc161a3076cb365099977e748c6a255e94eaad137"},
+    {file = "pyobjc_framework_Cocoa-10.3-cp38-cp38-macosx_10_9_x86_64.whl", hash = "sha256:008e5ca144a378513ee5f8c5a9009e8b4401ec09edda3648b01f8d8b640b3152"},
+    {file = "pyobjc_framework_Cocoa-10.3-cp38-cp38-macosx_11_0_universal2.whl", hash = "sha256:3c3f9806aa04dc1cd08e18a98a97629f0d0581fa0d6a71e739934f02e8b1a8df"},
+    {file = "pyobjc_framework_Cocoa-10.3-cp39-cp39-macosx_10_9_universal2.whl", hash = "sha256:fb89620f96d5d0d52a158faeab1b568bed6fa6d0c4f883198e60e60a14db1360"},
+    {file = "pyobjc_framework_cocoa-10.3.tar.gz", hash = "sha256:d39f90ffe04143911060c392e62b9514f14caaba119657d6e2b8b197af49e117"},
 ]
 
 [package.dependencies]
-pyobjc-core = ">=10.2"
+pyobjc-core = ">=10.3"
 
 [[package]]
 name = "pyparsing"
@@ -2738,13 +2740,13 @@ files = [
 
 [[package]]
 name = "xdoctest"
-version = "1.1.3"
+version = "1.1.4"
 description = "A rewrite of the builtin doctest module"
 optional = false
 python-versions = ">=3.6"
 files = [
-    {file = "xdoctest-1.1.3-py3-none-any.whl", hash = "sha256:9360535bd1a971ffc216d9613898cedceb81d0fd024587cc3c03c74d14c00a31"},
-    {file = "xdoctest-1.1.3.tar.gz", hash = "sha256:84e76a42a11a5926ff66d9d84c616bc101821099672550481ad96549cbdd02ae"},
+    {file = "xdoctest-1.1.4-py3-none-any.whl", hash = "sha256:2ee7920603e1a977749cabf611dfde1935165c6ac83dcfb2c9bdf8fc3ac1ec26"},
+    {file = "xdoctest-1.1.4.tar.gz", hash = "sha256:eb3fbad5a9ac4d47b2fafa60435ac15f2cbcd33dc860bf1e759a1f63bfeddc10"},
 ]
 
 [package.extras]
