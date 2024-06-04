@@ -361,7 +361,7 @@ with Transaction(event_manager) as ctx:
 Some simple validation checks can be run using a couple of small functions to select and evaluate elements.
 
 ```{code-cell} iPython3
-import re
+
 # As before assume we have a factory service and the model is loaded
 # Define a function to select an element
 def element_select(element):
@@ -370,7 +370,7 @@ def element_select(element):
 
 # Define a validation rule - names must be capatalised
 def rule(element):
-    return re.match('^[A-Z]',element.name)
+    return element.name[0].isupper()
 
 
 # Define a message to display if the element fails the validation
