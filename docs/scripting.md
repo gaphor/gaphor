@@ -261,7 +261,6 @@ the_class = next(element_factory.select(
                 lambda e: isinstance(e, UML.Class) and e.name == "MyClass"
                 ))
 uid = the_class._id
-#print(f"Original element: {the_class.name} -- {the_class.my_attr}")
 ```
 
 Importantly, the changes are made as part of a Transaction. Here we find the element with the same id, and then update
@@ -284,7 +283,6 @@ with Transaction(event_manager) as ctx:
     with open(model_filename, "w") as out:
         storage.save(out, element_factory)
 
-#print(f"Updated element: {cls.name} -- {cls.ownedAttribute[0].typeValue}")
 ```
 
 ## What else
