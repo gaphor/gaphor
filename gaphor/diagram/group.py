@@ -23,6 +23,9 @@ def change_owner(new_parent, element):
     if new_parent and element.owner is new_parent:
         return False
 
+    if new_parent and element in self_and_owners(new_parent):
+        return False
+
     if new_parent is None and element.owner:
         return ungroup(element.owner, element)
 
