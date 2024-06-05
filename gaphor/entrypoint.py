@@ -22,8 +22,8 @@ def load_entry_points(scope, services=None) -> Dict[str, type]:
     """Load services from resources."""
     uninitialized_services = {}
     for ep in list_entry_points(scope):
-        cls = ep.load()
         if not services or ep.name in services:
+            cls = ep.load()
             logger.debug(f'found entry point "{scope}.{ep.name}"')
             uninitialized_services[ep.name] = cls
     return uninitialized_services
