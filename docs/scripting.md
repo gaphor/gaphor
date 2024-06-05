@@ -218,7 +218,8 @@ draw(my_diagram, format="svg")
 If you save the model, your changes are persisted:
 
 ```{code-cell} ipython3
-with open("../my-model.gaphor", "w") as out:
+model_filename = "../my-model.gaphor"
+with open(model_filename, "w") as out:
     storage.save(out, element_factory)
 ```
 
@@ -259,7 +260,7 @@ event_manager = session.get_service("event_manager")
 and load in the model to the session
 
 ```{code-cell} ipython3
-with open("../my-model.gaphor", encoding="utf-8") as file_obj:
+with open(model_filename, encoding="utf-8") as file_obj:
     storage.load(
         file_obj,
         element_factory,
