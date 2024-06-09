@@ -3,8 +3,12 @@
 from __future__ import annotations
 
 from pathlib import Path
+from typing import TYPE_CHECKING
 
 from gaphor.abc import Service
+
+if TYPE_CHECKING:
+    from gaphor.application import Session
 
 
 class ServiceEvent:
@@ -41,7 +45,7 @@ class SessionCreated(ServiceEvent):
     def __init__(
         self,
         application: Service,
-        session: Service,
+        session: Session,
         filename: Path | None,
         template: Path | None = None,
         force: bool = False,

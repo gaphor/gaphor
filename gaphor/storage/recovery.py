@@ -122,7 +122,7 @@ class Recovery(Service):
 
     @event_handler(SessionCreated)
     def on_model_loaded(self, event: SessionCreated):
-        self.session_id = event.session.session_id  # type: ignore[attr-defined]
+        self.session_id = event.session.session_id
         if event.filename or event.template:
             self.event_log = EventLog(self.session_id, event.filename, event.template)
         self.recorder.truncate()

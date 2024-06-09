@@ -45,12 +45,13 @@ def test_diagram_package():
         .exclude("*.tests.*")
         .may_import(*GAPHOR_CORE)
         .may_import("gaphor.diagram*")
+        .may_import("gaphor.UML.compartments")
         .may_import("gaphor.UML.recipes")
         .may_import("gaphor.UML.uml")
         .may_import("gaphor.ui.filedialog")
         .may_import("gaphor.ui.errorhandler")
         .should_not_import("gaphor*")
-        .check(gaphor)
+        .check(gaphor, skip_type_checking=True)
     )
 
     (
@@ -62,7 +63,7 @@ def test_diagram_package():
         .exclude("gaphor.diagram.*editors")
         .exclude("gaphor.diagram.*propertypages")
         .should_not_import(*UI_LIBRARIES)
-        .check(gaphor)
+        .check(gaphor, skip_type_checking=True)
     )
 
 
@@ -76,7 +77,7 @@ def test_services_package():
         .may_import("gaphor.services*")
         .should_not_import("gaphor*")
         .should_not_import(*UI_LIBRARIES)
-        .check(gaphor)
+        .check(gaphor, skip_type_checking=True)
     )
 
 
@@ -91,7 +92,7 @@ def test_storage_package():
         .may_import("gaphor.application", "gaphor.services.componentregistry")
         .should_not_import("gaphor*")
         .should_not_import(*UI_LIBRARIES)
-        .check(gaphor)
+        .check(gaphor, skip_type_checking=True)
     )
 
 
