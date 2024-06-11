@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
     - name: Harden Runner
-      uses: step-security/harden-runner@f086349bfa2bd1361f7909c78558e816508cdc10 # v2.8.0
+      uses: step-security/harden-runner@17d0e2bd7d51742c71671bd19fa12bdc9d40a3d6 # v2.8.1
       with:
         egress-policy: audit
 
@@ -42,11 +42,11 @@ jobs:
       run: |
         poetry install --no-interaction
     - name: Initialize CodeQL
-      uses: github/codeql-action/init@f079b8493333aace61c81488f8bd40919487bd9f # v3.25.7
+      uses: github/codeql-action/init@2e230e8fe0ad3a14a340ad0815ddb96d599d2aff # v3.25.8
       with:
         languages: python
         # Override the default behavior so that the action doesn't attempt
         # to auto-install Python dependencies
         setup-python-dependencies: false
     - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@f079b8493333aace61c81488f8bd40919487bd9f # v3.25.7
+      uses: github/codeql-action/analyze@2e230e8fe0ad3a14a340ad0815ddb96d599d2aff # v3.25.8
