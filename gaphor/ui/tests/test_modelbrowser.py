@@ -276,20 +276,17 @@ def test_drop_multiple_elements(model_browser, element_factory, event_manager):
     gen = element_factory.create(UML.Generalization)
     gen.general = class_a
     gen.specific = class_b
-    orig = element_factory.create(UML.Package)
-    class_a.package = orig
-    class_b.package = orig
     package = element_factory.create(UML.Package)
 
-    drag_data = ElementDragData(elements=[class_a, class_b])
-    model_browser.select_element(class_a)
-    list_item = MockRowItem(get_first_selected_item(model_browser.selection))
     model_browser.select_element(package)
-    target = MockDropTarget()
-    list_item_drop_drop(target, drag_data, 0, 0, list_item, event_manager)
+    list_item = MockRowItem(get_first_selected_item(model_browser.selection))
 
-    assert class_b not in model_browser.get_selected_elements()
-    assert class_a not in model_browser.get_selected_elements()
+    target = MockDropTarget()
+    drag_data = ElementDragData(elements=[class_a, class_b])
+    list_item_drop_drop(target, drag_data, 0, 10, list_item, event_manager)
+
+    assert class_b.owner is package
+    assert class_a.owner is package
 
 
 def test_unlink_element_should_not_collapse_branch(
@@ -331,6 +328,29 @@ def test_stereotype_base_class_should_not_end_up_in_root(
 
     row0 = model_browser.selection.get_item(0)
     assert row0.get_item().element is profile  # not property
+
+
+def test_drag_and_drop_parent_on_child(model_browser, element_factory, event_manager):
+    root = element_factory.create(UML.Package)
+    parent = element_factory.create(UML.Package)
+    parent.package = root
+    parent_diagram = element_factory.create(Diagram)
+    parent_diagram.element = parent
+    child = element_factory.create(UML.Package)
+    child.package = parent
+    child_diagram = element_factory.create(Diagram)
+    child_diagram.element = child
+
+    model_browser.select_element(parent)
+    list_item = MockRowItem(get_first_selected_item(model_browser.selection))
+
+    target = MockDropTarget()
+    drag_data = ElementDragData(elements=[parent])
+    list_item_drop_drop(target, drag_data, 0, 10, list_item, event_manager)
+
+    assert model_browser.select_element(child) is not None
+    assert child.owner is parent
+    assert parent.owner is root
 
 
 class MockRowItem:
