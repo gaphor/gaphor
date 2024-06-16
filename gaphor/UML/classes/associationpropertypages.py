@@ -26,7 +26,7 @@ class AssociationPropertyPage(PropertyPageBase):
     def __init__(self, subject: UML.Association):
         self.subject = subject
         self.watcher = subject and subject.watcher()
-        self.semaphore = 0
+        self.end_name_change_semaphore = 0
 
     def construct_end(self, builder, end_name, subject):
         title = builder.get_object(f"{end_name}-title")
@@ -59,10 +59,10 @@ class AssociationPropertyPage(PropertyPageBase):
             )
             or ""
         )
-        if not (name.is_focus() or self.semaphore):
-            self.semaphore += 1
+        if not (name.is_focus() or self.end_name_change_semaphore):
+            self.end_name_change_semaphore += 1
             name.set_text(new_name)
-            self.semaphore -= 1
+            self.end_name_change_semaphore -= 1
         return name
 
     def construct(self):
@@ -136,8 +136,8 @@ class AssociationPropertyPage(PropertyPageBase):
         )
 
     def _on_end_name_change(self, entry, subject):
-        if not self.semaphore:
-            self.semaphore += 1
+        if not self.end_name_change_semaphore:
+            self.end_name_change_semaphore += 1
 
             @transactional
             def do_in_tx():
@@ -145,7 +145,7 @@ class AssociationPropertyPage(PropertyPageBase):
 
             do_in_tx()
 
-            self.semaphore -= 1
+            self.end_name_change_semaphore -= 1
 
     @transactional
     def _on_end_navigability_change(self, dropdown, _pspec, subject):
