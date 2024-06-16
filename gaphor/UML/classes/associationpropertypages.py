@@ -135,11 +135,16 @@ class AssociationPropertyPage(PropertyPageBase):
             builder.get_object("association-editor"), self.watcher
         )
 
-    @transactional
     def _on_end_name_change(self, entry, subject):
         if not self.semaphore:
             self.semaphore += 1
-            parse(subject, entry.get_text())
+
+            @transactional
+            def do_in_tx():
+                parse(subject, entry.get_text())
+
+            do_in_tx()
+
             self.semaphore -= 1
 
     @transactional
