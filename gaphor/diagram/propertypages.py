@@ -8,7 +8,7 @@ from __future__ import annotations
 
 import abc
 import textwrap
-from typing import Callable, List, Tuple, Type
+from typing import Iterator
 
 import gaphas.item
 from gaphas.segment import Segment
@@ -57,9 +57,7 @@ class _PropertyPages:
     """
 
     def __init__(self) -> None:
-        self.pages: List[
-            Tuple[Type[Element], Callable[[Element], PropertyPageBase]]
-        ] = []
+        self.pages: list[tuple[type[Element], type[PropertyPageBase]]] = []
 
     def register(self, subject_type, func=None):
         def reg(func):
@@ -68,10 +66,10 @@ class _PropertyPages:
 
         return reg(func) if func else reg
 
-    def __call__(self, subject):
-        for subject_type, func in self.pages:
+    def find(self, subject) -> Iterator[type[PropertyPageBase]]:
+        for subject_type, page in self.pages:
             if isinstance(subject, subject_type):
-                yield func(subject)
+                yield page
 
 
 PropertyPages = _PropertyPages()

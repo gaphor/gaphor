@@ -240,9 +240,9 @@ def test_item_flow_type(connector, element_factory):
 
 def test_item_flow_is_loaded(element_factory):
     subject = element_factory.create(UML.Connector)
-    property_pages = PropertyPages(subject)
+    property_pages = PropertyPages.find(subject)
 
-    assert any(isinstance(page, ItemFlowPropertyPage) for page in property_pages)
+    assert any(issubclass(page, ItemFlowPropertyPage) for page in property_pages)
 
 
 def test_item_flow_source_and_target(element_factory):
