@@ -45,8 +45,8 @@ class NamedElementPropertyPage(NamePropertyPage):
 
     order = 10
 
-    def __init__(self, subject: UML.NamedElement | None):
-        super().__init__(subject)
+    def __init__(self, subject: UML.NamedElement | None, event_manager):
+        super().__init__(subject, event_manager)
 
     def construct(self):
         if (

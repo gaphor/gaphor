@@ -191,12 +191,14 @@ class EditorStack:
     def _get_adapters(self, item):
         """Return an ordered list of (order, name, adapter)."""
         page_map = {}
-        # TODO: Use DI to inject services in objects
+        partial = self.component_registry.partial
+
         if isinstance(item, Presentation) and item.subject:
             for page in PropertyPages.find(item.subject):
-                page_map[(page.order, page.__name__)] = page(item.subject)  # type: ignore[call-arg]
+                page_map[(page.order, page.__name__)] = partial(page)(item.subject)
+
         for page in PropertyPages.find(item):
-            page_map[(page.order, page.__name__)] = page(item)  # type: ignore[call-arg]
+            page_map[(page.order, page.__name__)] = partial(page)(item)
 
         return sorted(page_map.items())
 

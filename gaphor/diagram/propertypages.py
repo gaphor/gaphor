@@ -14,7 +14,7 @@ import gaphas.item
 from gaphas.segment import Segment
 from gi.repository import GObject, Gtk
 
-from gaphor.core import transactional
+from gaphor.core import Transaction, transactional
 from gaphor.core.modeling import Diagram, Element, Presentation, qualifiedName
 from gaphor.i18n import gettext, translated_ui_string
 
@@ -137,10 +137,11 @@ class NamePropertyPage(PropertyPageBase):
 
     order = 10
 
-    def __init__(self, subject):
+    def __init__(self, subject, event_manager):
         assert subject is None or hasattr(subject, "name")
         super().__init__()
         self.subject = subject
+        self.event_manager = event_manager
         self.watcher = subject.watcher() if subject else None
 
     def construct(self):
@@ -171,10 +172,10 @@ class NamePropertyPage(PropertyPageBase):
             builder.get_object("name-editor"), self.watcher
         )
 
-    @transactional
     def _on_name_changed(self, entry):
-        if self.subject.name != entry.get_text():
-            self.subject.name = entry.get_text()
+        with Transaction(self.event_manager):
+            if self.subject.name != entry.get_text():
+                self.subject.name = entry.get_text()
 
 
 @PropertyPages.register(gaphas.item.Line)

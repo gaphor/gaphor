@@ -22,8 +22,10 @@ def diagrams():
 
 
 @pytest.fixture
-def component_registry():
-    return ComponentRegistry()
+def component_registry(event_manager):
+    reg = ComponentRegistry()
+    reg.register("event_manager", event_manager)
+    return reg
 
 
 class DummyProperties(dict):
