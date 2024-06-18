@@ -9,7 +9,6 @@ from __future__ import annotations
 from gi.repository import Gio
 
 from gaphor import UML
-from gaphor.core import transactional
 from gaphor.diagram.propertypages import (
     LabelValue,
     PropertyPageBase,
@@ -18,6 +17,7 @@ from gaphor.diagram.propertypages import (
     new_resource_builder,
     unsubscribe_all_on_destroy,
 )
+from gaphor.transaction import Transaction
 from gaphor.UML.states.state import StateItem
 from gaphor.UML.states.statemachine import StateMachineItem
 
@@ -32,8 +32,9 @@ class TransitionPropertyPage(PropertyPageBase):
 
     subject: UML.Transition
 
-    def __init__(self, subject):
+    def __init__(self, subject, event_manager):
         self.subject = subject
+        self.event_manager = event_manager
         self.watcher = subject.watcher()
 
     def construct(self):
@@ -60,12 +61,12 @@ class TransitionPropertyPage(PropertyPageBase):
             builder.get_object("transition-editor"), self.watcher
         )
 
-    @transactional
     def _on_guard_change(self, entry):
         value = entry.get_text().strip()
-        if not self.subject.guard:
-            self.subject.guard = self.subject.model.create(UML.Constraint)
-        self.subject.guard.specification = value
+        with Transaction(self.event_manager):
+            if not self.subject.guard:
+                self.subject.guard = self.subject.model.create(UML.Constraint)
+            self.subject.guard.specification = value
 
 
 @PropertyPages.register(UML.State)
@@ -75,8 +76,9 @@ class StatePropertyPage(PropertyPageBase):
     order = 15
     subject: UML.State
 
-    def __init__(self, subject):
+    def __init__(self, subject, event_manager):
         self.subject = subject
+        self.event_manager = event_manager
 
     def construct(self):
         subject = self.subject
@@ -144,32 +146,32 @@ class StatePropertyPage(PropertyPageBase):
 
         return options
 
-    @transactional
     def _on_entry_behavior_changed(self, dropdown, _pspec):
-        if id := dropdown.get_selected_item().value:
-            element = self.subject.model.lookup(id)
-            assert isinstance(element, UML.Behavior)
-            self.subject.entry = element
-        else:
-            del self.subject.entry
+        with Transaction(self.event_manager):
+            if id := dropdown.get_selected_item().value:
+                element = self.subject.model.lookup(id)
+                assert isinstance(element, UML.Behavior)
+                self.subject.entry = element
+            else:
+                del self.subject.entry
 
-    @transactional
     def _on_exit_behavior_changed(self, dropdown, _pspec):
-        if id := dropdown.get_selected_item().value:
-            element = self.subject.model.lookup(id)
-            assert isinstance(element, UML.Behavior)
-            self.subject.exit = element
-        else:
-            del self.subject.exit
+        with Transaction(self.event_manager):
+            if id := dropdown.get_selected_item().value:
+                element = self.subject.model.lookup(id)
+                assert isinstance(element, UML.Behavior)
+                self.subject.exit = element
+            else:
+                del self.subject.exit
 
-    @transactional
     def _on_do_activity_behavior_changed(self, dropdown, _pspec):
-        if id := dropdown.get_selected_item().value:
-            element = self.subject.model.lookup(id)
-            assert isinstance(element, UML.Behavior)
-            self.subject.doActivity = element
-        else:
-            del self.subject.doActivity
+        with Transaction(self.event_manager):
+            if id := dropdown.get_selected_item().value:
+                element = self.subject.model.lookup(id)
+                assert isinstance(element, UML.Behavior)
+                self.subject.doActivity = element
+            else:
+                del self.subject.doActivity
 
 
 @PropertyPages.register(StateItem)
@@ -177,9 +179,10 @@ class StatePropertyPage(PropertyPageBase):
 class RegionPropertyPage(PropertyPageBase):
     order = 15
 
-    def __init__(self, item: StateItem | StateMachineItem):
+    def __init__(self, item: StateItem | StateMachineItem, event_manager):
         super().__init__()
         self.item = item
+        self.event_manager = event_manager
 
     def construct(self):
         if not self.item.subject:
@@ -202,14 +205,14 @@ class RegionPropertyPage(PropertyPageBase):
 
         return builder.get_object("region-editor")
 
-    @transactional
     def _on_num_regions_changed(self, spin_button):
         num_regions = spin_button.get_value_as_int()
-        self.update_regions(num_regions)
+        with Transaction(self.event_manager):
+            self.update_regions(num_regions)
 
-    @transactional
     def _on_show_regions_changed(self, button, gparam):
-        self.item.show_regions = button.get_active()
+        with Transaction(self.event_manager):
+            self.item.show_regions = button.get_active()
 
     def update_regions(self, num_regions) -> None:
         if not self.item.subject:
