@@ -10,11 +10,13 @@ from gaphor.UML.actions.actionspropertypages import (
 )
 
 
-def test_object_node_property_page_show_ordering(diagram, element_factory):
+def test_object_node_property_page_show_ordering(
+    diagram, element_factory, event_manager
+):
     item = diagram.create(
         UML.actions.ObjectNodeItem, subject=element_factory.create(UML.ObjectNode)
     )
-    property_page = ShowObjectNodePropertyPage(item)
+    property_page = ShowObjectNodePropertyPage(item, event_manager)
 
     widget = property_page.construct()
     show_ordering = find(widget, "show-ordering")
@@ -23,9 +25,9 @@ def test_object_node_property_page_show_ordering(diagram, element_factory):
     assert item.show_ordering
 
 
-def test_object_node_property_page_upper_bound(diagram, element_factory):
+def test_object_node_property_page_upper_bound(diagram, element_factory, event_manager):
     subject = element_factory.create(UML.ObjectNode)
-    property_page = ObjectNodePropertyPage(subject)
+    property_page = ObjectNodePropertyPage(subject, event_manager)
 
     widget = property_page.construct()
     upper_bound = find(widget, "upper-bound")
@@ -34,11 +36,11 @@ def test_object_node_property_page_upper_bound(diagram, element_factory):
     assert subject.upperBound == "test"
 
 
-def test_object_node_property_page_ordering(diagram, element_factory):
+def test_object_node_property_page_ordering(diagram, element_factory, event_manager):
     subject = element_factory.create(UML.ObjectNode)
 
     assert subject.ordering == "unordered"
-    property_page = ObjectNodePropertyPage(subject)
+    property_page = ObjectNodePropertyPage(subject, event_manager)
 
     widget = property_page.construct()
     ordering = find(widget, "ordering")
@@ -47,11 +49,11 @@ def test_object_node_property_page_ordering(diagram, element_factory):
     assert subject.ordering == "FIFO"
 
 
-def test_decision_node_property_page_show_type(diagram, element_factory):
+def test_decision_node_property_page_show_type(diagram, element_factory, event_manager):
     item = diagram.create(
         UML.actions.DecisionNodeItem, subject=element_factory.create(UML.DecisionNode)
     )
-    property_page = DecisionNodePropertyPage(item)
+    property_page = DecisionNodePropertyPage(item, event_manager)
 
     widget = property_page.construct()
     show_type = find(widget, "show-type")
@@ -60,12 +62,12 @@ def test_decision_node_property_page_show_type(diagram, element_factory):
     assert item.show_underlying_type
 
 
-def test_fork_node_property_page(diagram, element_factory):
+def test_fork_node_property_page(diagram, element_factory, event_manager):
     item = diagram.create(
         UML.actions.ForkNodeItem, subject=element_factory.create(UML.ForkNode)
     )
     orig_matrix = item.matrix.tuple()
-    property_page = ForkNodePropertyPage(item)
+    property_page = ForkNodePropertyPage(item, event_manager)
 
     widget = property_page.construct()
     horizontal = find(widget, "horizontal")
@@ -74,9 +76,9 @@ def test_fork_node_property_page(diagram, element_factory):
     assert item.matrix.tuple() != orig_matrix
 
 
-def test_join_node_property_page(element_factory):
+def test_join_node_property_page(element_factory, event_manager):
     subject = element_factory.create(UML.JoinNode)
-    property_page = JoinNodePropertyPage(subject)
+    property_page = JoinNodePropertyPage(subject, event_manager)
 
     widget = property_page.construct()
     join_spec = find(widget, "join-spec")
@@ -85,9 +87,9 @@ def test_join_node_property_page(element_factory):
     assert subject.joinSpec == "test"
 
 
-def test_flow_property_page(element_factory):
+def test_flow_property_page(element_factory, event_manager):
     subject = element_factory.create(UML.ObjectFlow)
-    property_page = FlowPropertyPageAbstract(subject)
+    property_page = FlowPropertyPageAbstract(subject, event_manager)
 
     widget = property_page.construct()
     guard = find(widget, "guard")
