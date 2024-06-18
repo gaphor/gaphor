@@ -7,9 +7,9 @@ from gaphor.diagram.general.generalpropertypages import (
 from gaphor.diagram.tests.fixtures import find
 
 
-def test_comment_property_page_body(element_factory):
+def test_comment_property_page_body(element_factory, event_manager):
     subject = element_factory.create(Comment)
-    property_page = CommentPropertyPage(subject)
+    property_page = CommentPropertyPage(subject, event_manager)
 
     widget = property_page.construct()
     comment = find(widget, "comment")
@@ -18,9 +18,9 @@ def test_comment_property_page_body(element_factory):
     assert subject.body == "test"
 
 
-def test_comment_property_page_update_text(element_factory):
+def test_comment_property_page_update_text(element_factory, event_manager):
     subject = element_factory.create(Comment)
-    property_page = CommentPropertyPage(subject)
+    property_page = CommentPropertyPage(subject, event_manager)
 
     widget = property_page.construct()
     comment = find(widget, "comment")
@@ -32,10 +32,10 @@ def test_comment_property_page_update_text(element_factory):
     )
 
 
-def test_metadata_property_page(diagram):
+def test_metadata_property_page(diagram, event_manager):
     metadata = diagram.create(MetadataItem)
 
-    property_page = MetadataPropertyPage(metadata)
+    property_page = MetadataPropertyPage(metadata, event_manager)
 
     widget = property_page.construct()
     description = find(widget, "description")

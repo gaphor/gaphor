@@ -4,7 +4,7 @@ import io
 from gi.repository import Gtk
 from PIL import Image
 
-from gaphor.core import gettext, transactional
+from gaphor.core import gettext
 from gaphor.core.modeling import Comment
 from gaphor.diagram.general.metadata import MetadataItem
 from gaphor.diagram.general.picture import PictureItem
@@ -16,6 +16,7 @@ from gaphor.diagram.propertypages import (
     new_builder,
     unsubscribe_all_on_destroy,
 )
+from gaphor.transaction import Transaction
 from gaphor.ui.errorhandler import error_handler
 from gaphor.ui.filedialog import open_file_dialog
 
@@ -24,8 +25,9 @@ from gaphor.ui.filedialog import open_file_dialog
 class CommentPropertyPage(PropertyPageBase):
     """Property page for Comments."""
 
-    def __init__(self, subject):
+    def __init__(self, subject, event_manager):
         self.subject = subject
+        self.event_manager = event_manager
         self.watcher = subject and subject.watcher()
 
     def construct(self):
@@ -53,17 +55,18 @@ class CommentPropertyPage(PropertyPageBase):
             builder.get_object("comment-editor"), self.watcher
         )
 
-    @transactional
     def _on_body_change(self, buffer):
-        self.subject.body = buffer.get_text(
-            buffer.get_start_iter(), buffer.get_end_iter(), False
-        )
+        with Transaction(self.event_manager):
+            self.subject.body = buffer.get_text(
+                buffer.get_start_iter(), buffer.get_end_iter(), False
+            )
 
 
 @PropertyPages.register(MetadataItem)
 class MetadataPropertyPage(PropertyPageBase):
-    def __init__(self, item):
+    def __init__(self, item, event_manager):
         self.item = item
+        self.event_manager = event_manager
         self.watcher = item and item.watcher()
 
     def construct(self):
@@ -91,18 +94,19 @@ class MetadataPropertyPage(PropertyPageBase):
 
         return builder.get_object("metadata-editor")
 
-    @transactional
     def _on_field_change(self, entry, field_name):
-        text = entry.get_text()
-        setattr(self.item, field_name, text)
+        with Transaction(self.event_manager):
+            text = entry.get_text()
+            setattr(self.item, field_name, text)
 
 
 @PropertyPages.register(PictureItem)
 class PicturePropertyPage(PropertyPageBase):
     """Edit picture settings"""
 
-    def __init__(self, subject):
+    def __init__(self, subject, event_manager):
         self.subject = subject
+        self.event_manager = event_manager
         self.watcher = subject and subject.watcher()
 
     def construct(self):
@@ -120,7 +124,6 @@ class PicturePropertyPage(PropertyPageBase):
         )
         return builder.get_object("picture-editor")
 
-    @transactional
     def _on_select_picture_clicked(self, button):
         open_file_dialog(
             gettext("Select a picture..."),
@@ -129,7 +132,6 @@ class PicturePropertyPage(PropertyPageBase):
             parent=button.get_root(),
         )
 
-    @transactional
     def open_files(self, filenames):
         for filename in filenames:
             with open(filename, "rb") as file:
@@ -140,10 +142,13 @@ class PicturePropertyPage(PropertyPageBase):
                     image.close()
 
                     base64_encoded_data = base64.b64encode(image_data)
-                    self.subject.subject.content = base64_encoded_data.decode("ascii")
-                    self.subject.width = image.width
-                    self.subject.height = image.height
-                    return
+
+                    with Transaction(self.event_manager):
+                        self.subject.subject.content = base64_encoded_data.decode(
+                            "ascii"
+                        )
+                        self.subject.width = image.width
+                        self.subject.height = image.height
                 except Exception:
                     error_handler(
                         message=gettext("Unable to parse picture “{filename}”.").format(
@@ -151,12 +156,12 @@ class PicturePropertyPage(PropertyPageBase):
                         )
                     )
 
-    @transactional
     def _on_default_size_clicked(self, button):
         if self.subject and self.subject.subject and self.subject.subject.content:
             base64_img_bytes = self.subject.subject.content.encode("ascii")
             image_data = base64.decodebytes(base64_img_bytes)
             image = Image.open(io.BytesIO(image_data))
 
-            self.subject.width = image.width
-            self.subject.height = image.height
+            with Transaction(self.event_manager):
+                self.subject.width = image.width
+                self.subject.height = image.height
