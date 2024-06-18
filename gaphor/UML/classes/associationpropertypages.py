@@ -23,8 +23,9 @@ class AssociationPropertyPage(PropertyPageBase):
 
     order = 20
 
-    def __init__(self, subject: UML.Association):
+    def __init__(self, subject: UML.Association, event_manager):
         self.subject = subject
+        self.event_manager = event_manager
         self.watcher = subject and subject.watcher()
         self.end_name_change_semaphore = 0
 
@@ -41,7 +42,7 @@ class AssociationPropertyPage(PropertyPageBase):
         aggregation = builder.get_object(f"{end_name}-aggregation")
         aggregation.set_selected(self.AGGREGATION.index(subject.aggregation))
 
-        if stereotypes_model := stereotype_model(subject):
+        if stereotypes_model := stereotype_model(subject, self.event_manager):
             stereotype_list = builder.get_object(f"{end_name}-stereotype-list")
             stereotype_set_model_with_interaction(stereotype_list, stereotypes_model)
         else:

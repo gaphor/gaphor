@@ -6,12 +6,12 @@ from gaphor.UML.classes.associationpropertypages import (
 )
 
 
-def test_association_property_page(element_factory):
+def test_association_property_page(element_factory, event_manager):
     end1 = element_factory.create(UML.Class)
     end2 = element_factory.create(UML.Class)
     subject = UML.recipes.create_association(end1, end2)
 
-    property_page = AssociationPropertyPage(subject)
+    property_page = AssociationPropertyPage(subject, event_manager)
 
     widget = property_page.construct()
     head_name = find(widget, "head-name")
@@ -44,13 +44,13 @@ def metaclass_and_stereotype(element_factory):
     return metaclass, stereotype
 
 
-def test_association_property_with_stereotype(element_factory):
+def test_association_property_with_stereotype(element_factory, event_manager):
     end1 = element_factory.create(UML.Class)
     end2 = element_factory.create(UML.Class)
     subject = UML.recipes.create_association(end1, end2)
     metaclass_and_stereotype(element_factory)
 
-    property_page = AssociationPropertyPage(subject)
+    property_page = AssociationPropertyPage(subject, event_manager)
 
     widget = property_page.construct()
 
