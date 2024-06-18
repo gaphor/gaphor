@@ -80,12 +80,14 @@ def test_requirement_height_reset(diagram, element_factory):
     assert item.height == DEFAULT_HEIGHT
 
 
-def test_show_property_type_property_page_show_type(diagram, element_factory):
+def test_show_property_type_property_page_show_type(
+    diagram, element_factory, event_manager
+):
     item = diagram.create(
         SysML.blocks.ProxyPortItem,
         subject=element_factory.create(SysML.sysml.ProxyPort),
     )
-    property_page = ShowTypedElementPropertyPage(item)
+    property_page = ShowTypedElementPropertyPage(item, event_manager)
 
     widget = property_page.construct()
     show_parts = find(widget, "show-type")
@@ -155,12 +157,12 @@ def test_no_property_aggregation_page_for_ports(element_factory, event_manager):
     assert not widget
 
 
-def test_property_type(element_factory):
+def test_property_type(element_factory, event_manager):
     subject = element_factory.create(UML.Property)
 
     type = element_factory.create(UML.Class)
     type.name = "Bar"
-    property_page = TypedElementPropertyPage(subject)
+    property_page = TypedElementPropertyPage(subject, event_manager)
 
     widget = property_page.construct()
     dropdown = find(widget, "element-type")

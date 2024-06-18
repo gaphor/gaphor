@@ -1,7 +1,7 @@
 from gi.repository import Gdk, Gio, GLib, Gtk
 
 from gaphor import UML
-from gaphor.core import transactional
+from gaphor.core import Transaction
 from gaphor.diagram.propertypages import (
     LabelValue,
     PropertyPageBase,
@@ -15,9 +15,10 @@ new_builder = new_resource_builder("gaphor.UML")
 class TypedElementPropertyPage(PropertyPageBase):
     order = 31
 
-    def __init__(self, subject):
+    def __init__(self, subject, event_manager):
         super().__init__()
         self.subject = subject
+        self.event_manager = event_manager
 
         assert (not subject) or isinstance(
             self.typed_element, UML.TypedElement
@@ -50,23 +51,24 @@ class TypedElementPropertyPage(PropertyPageBase):
 
         return builder.get_object("typed-element-editor")
 
-    @transactional
     def _on_property_type_changed(self, dropdown, _pspec):
         typed_element = self.typed_element
-        if id := dropdown.get_selected_item().value:
-            element = typed_element.model.lookup(id)
-            assert isinstance(element, UML.Type)
-            typed_element.type = element
-        else:
-            del typed_element.type
+        with Transaction(self.event_manager):
+            if id := dropdown.get_selected_item().value:
+                element = typed_element.model.lookup(id)
+                assert isinstance(element, UML.Type)
+                typed_element.type = element
+            else:
+                del typed_element.type
 
 
 class ShowTypedElementPropertyPage(PropertyPageBase):
     order = 32
 
-    def __init__(self, item):
+    def __init__(self, item, event_manager):
         super().__init__()
         self.item = item
+        self.event_manager = event_manager
 
         assert (not item.subject) or isinstance(
             self.typed_element, UML.TypedElement
@@ -92,9 +94,9 @@ class ShowTypedElementPropertyPage(PropertyPageBase):
 
         return builder.get_object("show-typed-element-editor")
 
-    @transactional
     def _on_show_type_change(self, button, _gparam):
-        self.item.show_type = button.get_active()
+        with Transaction(self.event_manager):
+            self.item.show_type = button.get_active()
 
 
 def list_of_classifiers(element_factory, required_type):
@@ -177,7 +179,6 @@ def check_button_handlers(model_field: str):
     }
 
 
-@transactional
 def list_view_activated(list_view, _row):
     """Default action for activation: start editing."""
     selection = list_view.get_model()
@@ -186,7 +187,6 @@ def list_view_activated(list_view, _row):
     item.editing = True
 
 
-@transactional
 def list_view_key_handler(ctrl, keyval, _keycode, state):
     """Handle keyboard shortcuts in a list view in the property editor.
 

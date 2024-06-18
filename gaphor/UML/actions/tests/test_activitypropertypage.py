@@ -196,11 +196,13 @@ def test_construct_activity_item_property_page(element_factory):
     assert widget
 
 
-def test_construct_activity_parameter_node_type_property_page(element_factory):
+def test_construct_activity_parameter_node_type_property_page(
+    element_factory, event_manager
+):
     subject = element_factory.create(UML.ActivityParameterNode)
     subject.parameter = element_factory.create(UML.Parameter)
 
-    property_page = ActivityParameterNodeTypePropertyPage(subject)
+    property_page = ActivityParameterNodeTypePropertyPage(subject, event_manager)
     widget = property_page.construct()
 
     assert widget
