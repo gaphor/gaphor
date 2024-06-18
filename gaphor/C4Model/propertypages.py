@@ -1,7 +1,7 @@
 from typing import Union
 
 from gaphor.C4Model import c4model
-from gaphor.core import transactional
+from gaphor.core import Transaction
 from gaphor.diagram.propertypages import (
     PropertyPageBase,
     PropertyPages,
@@ -18,10 +18,13 @@ new_builder = new_resource_builder("gaphor.C4Model")
 class DescriptionPropertyPage(PropertyPageBase):
     order = 14
 
-    def __init__(self, subject: Union[c4model.C4Container, c4model.C4Person]):
+    def __init__(
+        self, subject: Union[c4model.C4Container, c4model.C4Person], event_manager
+    ):
         super().__init__()
         assert subject
         self.subject = subject
+        self.event_manager = event_manager
         self.watcher = subject.watcher()
 
     def construct(self):
@@ -48,21 +51,22 @@ class DescriptionPropertyPage(PropertyPageBase):
             builder.get_object("description-editor"), self.watcher
         )
 
-    @transactional
     def _on_description_changed(self, buffer):
-        self.subject.description = buffer.get_text(
-            buffer.get_start_iter(), buffer.get_end_iter(), False
-        )
+        with Transaction(self.event_manager):
+            self.subject.description = buffer.get_text(
+                buffer.get_start_iter(), buffer.get_end_iter(), False
+            )
 
 
 @PropertyPages.register(c4model.C4Container)
 class TechnologyPropertyPage(PropertyPageBase):
     order = 15
 
-    def __init__(self, subject: c4model.C4Container):
+    def __init__(self, subject: c4model.C4Container, event_manager):
         super().__init__()
         assert subject
         self.subject = subject
+        self.event_manager = event_manager
 
     def construct(self):
         builder = new_builder(
@@ -78,6 +82,6 @@ class TechnologyPropertyPage(PropertyPageBase):
 
         return builder.get_object("technology-editor")
 
-    @transactional
     def _on_technology_changed(self, entry):
-        self.subject.technology = entry.get_text()
+        with Transaction(self.event_manager):
+            self.subject.technology = entry.get_text()
