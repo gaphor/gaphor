@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 from gaphor import UML
-from gaphor.core import transactional
 from gaphor.diagram.propertypages import (
     PropertyPageBase,
     PropertyPages,
@@ -15,6 +14,7 @@ from gaphor.SysML.blocks.interfaceblock import InterfaceBlockItem
 from gaphor.SysML.blocks.property import PropertyItem
 from gaphor.SysML.blocks.proxyport import ProxyPortItem
 from gaphor.SysML.requirements import RequirementItem
+from gaphor.transaction import Transaction
 from gaphor.UML.classes.classespropertypages import (
     ATTRIBUTES_PAGE_CLASSIFIERS,
     OPERATIONS_PAGE_CLASSIFIERS,
@@ -33,10 +33,11 @@ new_builder = new_resource_builder("gaphor.SysML")
 class RequirementPropertyPage(PropertyPageBase):
     order = 15
 
-    def __init__(self, subject: sysml.Requirement):
+    def __init__(self, subject: sysml.Requirement, event_manager):
         super().__init__()
         assert subject
         self.subject = subject
+        self.event_manager = event_manager
         self.watcher = subject.watcher()
 
     def construct(self):
@@ -69,24 +70,25 @@ class RequirementPropertyPage(PropertyPageBase):
             builder.get_object("requirement-editor"), self.watcher
         )
 
-    @transactional
     def _on_id_changed(self, entry):
-        self.subject.externalId = entry.get_text()
+        with Transaction(self.event_manager):
+            self.subject.externalId = entry.get_text()
 
-    @transactional
     def _on_text_changed(self, buffer):
-        self.subject.text = buffer.get_text(
-            buffer.get_start_iter(), buffer.get_end_iter(), False
-        )
+        with Transaction(self.event_manager):
+            self.subject.text = buffer.get_text(
+                buffer.get_start_iter(), buffer.get_end_iter(), False
+            )
 
 
 @PropertyPages.register(RequirementItem)
 class RequirementItemPropertyPage(PropertyPageBase):
     order = 16
 
-    def __init__(self, item: RequirementItem):
+    def __init__(self, item: RequirementItem, event_manager):
         super().__init__()
         self.item = item
+        self.event_manager = event_manager
 
     def construct(self):
         if not self.item.subject:
@@ -104,9 +106,9 @@ class RequirementItemPropertyPage(PropertyPageBase):
 
         return builder.get_object("requirement-item-editor")
 
-    @transactional
     def _on_show_text_change(self, button, gparam):
-        self.item.show_text = button.get_active()
+        with Transaction(self.event_manager):
+            self.item.show_text = button.get_active()
 
 
 ATTRIBUTES_PAGE_CLASSIFIERS.extend([sysml.ValueType])
@@ -126,9 +128,10 @@ class CompartmentPage(PropertyPageBase):
 
     order = 30
 
-    def __init__(self, item):
+    def __init__(self, item, event_manager):
         super().__init__()
         self.item = item
+        self.event_manager = event_manager
 
     def construct(self):
         if not self.item.subject:
@@ -154,17 +157,17 @@ class CompartmentPage(PropertyPageBase):
 
         return builder.get_object("compartment-editor")
 
-    @transactional
     def _on_show_parts_change(self, button, gparam):
-        self.item.show_parts = button.get_active()
+        with Transaction(self.event_manager):
+            self.item.show_parts = button.get_active()
 
-    @transactional
     def _on_show_references_change(self, button, gparam):
-        self.item.show_references = button.get_active()
+        with Transaction(self.event_manager):
+            self.item.show_references = button.get_active()
 
-    @transactional
     def _on_show_values_change(self, button, gparam):
-        self.item.show_values = button.get_active()
+        with Transaction(self.event_manager):
+            self.item.show_values = button.get_active()
 
 
 @PropertyPages.register(InterfaceBlockItem)
@@ -173,9 +176,10 @@ class InterfaceBlockPage(PropertyPageBase):
 
     order = 30
 
-    def __init__(self, item):
+    def __init__(self, item, event_manager):
         super().__init__()
         self.item = item
+        self.event_manager = event_manager
 
     def construct(self):
         if not self.item.subject:
@@ -193,9 +197,9 @@ class InterfaceBlockPage(PropertyPageBase):
 
         return builder.get_object("interfaceblock-editor")
 
-    @transactional
     def _on_show_values_change(self, button, gparam):
-        self.item.show_values = button.get_active()
+        with Transaction(self.event_manager):
+            self.item.show_values = button.get_active()
 
 
 @PropertyPages.register(sysml.Property)
@@ -209,9 +213,10 @@ class PropertyAggregationPropertyPage(PropertyPageBase):
 
     AGGREGATION = ("none", "shared", "composite")
 
-    def __init__(self, subject: sysml.Property):
+    def __init__(self, subject: sysml.Property, event_manager):
         super().__init__()
         self.subject = subject
+        self.event_manager = event_manager
 
     def construct(self):
         if not self.subject or isinstance(self.subject, UML.Port):
@@ -229,9 +234,9 @@ class PropertyAggregationPropertyPage(PropertyPageBase):
 
         return builder.get_object("property-aggregation-editor")
 
-    @transactional
     def _on_aggregation_change(self, combo, _pspec):
-        self.subject.aggregation = self.AGGREGATION[combo.get_selected()]
+        with Transaction(self.event_manager):
+            self.subject.aggregation = self.AGGREGATION[combo.get_selected()]
 
 
 @PropertyPages.register(UML.Association)
@@ -241,9 +246,10 @@ class ItemFlowPropertyPage(PropertyPageBase):
 
     order = 35
 
-    def __init__(self, subject: UML.Association | sysml.Connector):
+    def __init__(self, subject: UML.Association | sysml.Connector, event_manager):
         super().__init__()
         self.subject = subject
+        self.event_manager = event_manager
 
     @property
     def information_flow(self):
@@ -298,51 +304,51 @@ class ItemFlowPropertyPage(PropertyPageBase):
 
         return builder.get_object("item-flow-editor")
 
-    @transactional
     def _on_item_flow_active(self, switch, gparam):
         active = switch.get_active()
         subject = self.subject
         iflow = self.information_flow
-        if active and not iflow:
-            if isinstance(subject, sysml.Connector):
-                subject.informationFlow = create_item_flow(subject)
-            elif isinstance(subject, UML.Relationship):
-                subject.abstraction = create_item_flow(subject)
-        elif not active and iflow:
-            iflow.unlink()
+        with Transaction(self.event_manager):
+            if active and not iflow:
+                if isinstance(subject, sysml.Connector):
+                    subject.informationFlow = create_item_flow(subject)
+                elif isinstance(subject, UML.Relationship):
+                    subject.abstraction = create_item_flow(subject)
+            elif not active and iflow:
+                iflow.unlink()
         self.entry.set_sensitive(switch.get_active())
         self.entry.set_text("")
 
-    @transactional
     def _on_item_flow_name_changed(self, entry):
         if not (iflow := self.information_flow):
             return
 
         assert isinstance(iflow, sysml.ItemFlow)
-        iflow.itemProperty.name = entry.get_text()
+        with Transaction(self.event_manager):
+            iflow.itemProperty.name = entry.get_text()
 
-    @transactional
     def _on_item_flow_type_changed(self, dropdown, _pspec):
         if not (iflow := self.information_flow):
             return
 
         assert isinstance(iflow, sysml.ItemFlow)
-        if id := dropdown.get_selected_item().value:
-            element = self.subject.model.lookup(id)
-            assert isinstance(element, UML.Type)
-            iflow.itemProperty.type = element
-        else:
-            del iflow.itemProperty.type
+        with Transaction(self.event_manager):
+            if id := dropdown.get_selected_item().value:
+                element = self.subject.model.lookup(id)
+                assert isinstance(element, UML.Type)
+                iflow.itemProperty.type = element
+            else:
+                del iflow.itemProperty.type
 
-    @transactional
     def on_invert_direction_changed(self, button):
         if not (iflow := self.information_flow):
             return
 
-        iflow.informationSource, iflow.informationTarget = (
-            iflow.informationTarget,
-            iflow.informationSource,
-        )
+        with Transaction(self.event_manager):
+            iflow.informationSource, iflow.informationTarget = (
+                iflow.informationTarget,
+                iflow.informationSource,
+            )
 
 
 def create_item_flow(subject: UML.Association | sysml.Connector) -> sysml.ItemFlow:

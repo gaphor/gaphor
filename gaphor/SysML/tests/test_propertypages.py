@@ -31,9 +31,9 @@ def connector(element_factory):
     return UML.recipes.create_connector(prop_a, prop_b)
 
 
-def test_requirement_property_page_id(element_factory):
+def test_requirement_property_page_id(element_factory, event_manager):
     subject = element_factory.create(SysML.sysml.Requirement)
-    property_page = RequirementPropertyPage(subject)
+    property_page = RequirementPropertyPage(subject, event_manager)
 
     widget = property_page.construct()
     requirement_id = find(widget, "requirement-id")
@@ -42,9 +42,9 @@ def test_requirement_property_page_id(element_factory):
     assert subject.externalId == "test"
 
 
-def test_requirement_property_page_text(element_factory):
+def test_requirement_property_page_text(element_factory, event_manager):
     subject = element_factory.create(SysML.sysml.Requirement)
-    property_page = RequirementPropertyPage(subject)
+    property_page = RequirementPropertyPage(subject, event_manager)
 
     widget = property_page.construct()
     requirement_text = find(widget, "requirement-text")
@@ -53,12 +53,12 @@ def test_requirement_property_page_text(element_factory):
     assert subject.text == "test"
 
 
-def test_requirement_property_page_show_text(diagram, element_factory):
+def test_requirement_property_page_show_text(diagram, element_factory, event_manager):
     item = diagram.create(
         SysML.requirements.RequirementItem,
         subject=element_factory.create(SysML.sysml.Requirement),
     )
-    property_page = RequirementItemPropertyPage(item)
+    property_page = RequirementItemPropertyPage(item, event_manager)
 
     widget = property_page.construct()
     show_requirement_text = find(widget, "show-requirement-text")
@@ -94,11 +94,11 @@ def test_show_property_type_property_page_show_type(diagram, element_factory):
     assert item.show_type
 
 
-def test_compartment_property_page_show_parts(diagram, element_factory):
+def test_compartment_property_page_show_parts(diagram, element_factory, event_manager):
     item = diagram.create(
         SysML.blocks.BlockItem, subject=element_factory.create(SysML.sysml.Block)
     )
-    property_page = CompartmentPage(item)
+    property_page = CompartmentPage(item, event_manager)
 
     widget = property_page.construct()
     show_parts = find(widget, "show-parts")
@@ -107,11 +107,13 @@ def test_compartment_property_page_show_parts(diagram, element_factory):
     assert item.show_parts
 
 
-def test_compartment_property_page_show_references(diagram, element_factory):
+def test_compartment_property_page_show_references(
+    diagram, element_factory, event_manager
+):
     item = diagram.create(
         SysML.blocks.BlockItem, subject=element_factory.create(SysML.sysml.Block)
     )
-    property_page = CompartmentPage(item)
+    property_page = CompartmentPage(item, event_manager)
 
     widget = property_page.construct()
     show_references = find(widget, "show-references")
@@ -120,11 +122,11 @@ def test_compartment_property_page_show_references(diagram, element_factory):
     assert item.show_references
 
 
-def test_compartment_property_page_show_values(diagram, element_factory):
+def test_compartment_property_page_show_values(diagram, element_factory, event_manager):
     item = diagram.create(
         SysML.blocks.BlockItem, subject=element_factory.create(SysML.sysml.Block)
     )
-    property_page = CompartmentPage(item)
+    property_page = CompartmentPage(item, event_manager)
 
     widget = property_page.construct()
     show_references = find(widget, "show-values")
@@ -133,9 +135,9 @@ def test_compartment_property_page_show_values(diagram, element_factory):
     assert item.show_values
 
 
-def test_property_aggregation_page(element_factory):
+def test_property_aggregation_page(element_factory, event_manager):
     subject = element_factory.create(SysML.sysml.Property)
-    property_page = PropertyAggregationPropertyPage(subject)
+    property_page = PropertyAggregationPropertyPage(subject, event_manager)
 
     widget = property_page.construct()
     show_references = find(widget, "aggregation")
@@ -144,9 +146,9 @@ def test_property_aggregation_page(element_factory):
     assert subject.aggregation == "composite"
 
 
-def test_no_property_aggregation_page_for_ports(element_factory):
+def test_no_property_aggregation_page_for_ports(element_factory, event_manager):
     subject = element_factory.create(UML.Port)
-    property_page = PropertyAggregationPropertyPage(subject)
+    property_page = PropertyAggregationPropertyPage(subject, event_manager)
 
     widget = property_page.construct()
 
@@ -171,8 +173,8 @@ def test_property_type(element_factory):
     assert subject.type is type
 
 
-def test_association_item_flow(association):
-    property_page = ItemFlowPropertyPage(association)
+def test_association_item_flow(association, event_manager):
+    property_page = ItemFlowPropertyPage(association, event_manager)
 
     widget = property_page.construct()
     use = find(widget, "use-item-flow")
@@ -184,8 +186,8 @@ def test_association_item_flow(association):
     assert association.abstraction[0].informationTarget is association.memberEnd[1]
 
 
-def test_connector_item_flow(connector):
-    property_page = ItemFlowPropertyPage(connector)
+def test_connector_item_flow(connector, event_manager):
+    property_page = ItemFlowPropertyPage(connector, event_manager)
 
     widget = property_page.construct()
     use = find(widget, "use-item-flow")
@@ -195,9 +197,9 @@ def test_connector_item_flow(connector):
     assert connector.informationFlow[0].itemProperty
 
 
-def test_disable_item_flow(element_factory):
+def test_disable_item_flow(element_factory, event_manager):
     subject = element_factory.create(SysML.sysml.Connector)
-    property_page = ItemFlowPropertyPage(subject)
+    property_page = ItemFlowPropertyPage(subject, event_manager)
 
     widget = property_page.construct()
     use = find(widget, "use-item-flow")
@@ -207,8 +209,8 @@ def test_disable_item_flow(element_factory):
     assert not subject.informationFlow
 
 
-def test_item_flow_name(connector):
-    property_page = ItemFlowPropertyPage(connector)
+def test_item_flow_name(connector, event_manager):
+    property_page = ItemFlowPropertyPage(connector, event_manager)
 
     widget = property_page.construct()
     use = find(widget, "use-item-flow")
@@ -220,10 +222,10 @@ def test_item_flow_name(connector):
     assert connector.informationFlow[0].itemProperty.name == "foo"
 
 
-def test_item_flow_type(connector, element_factory):
+def test_item_flow_type(connector, element_factory, event_manager):
     type = element_factory.create(UML.Class)
     type.name = "Bar"
-    property_page = ItemFlowPropertyPage(connector)
+    property_page = ItemFlowPropertyPage(connector, event_manager)
 
     widget = property_page.construct()
     use = find(widget, "use-item-flow")
@@ -245,7 +247,7 @@ def test_item_flow_is_loaded(element_factory):
     assert any(issubclass(page, ItemFlowPropertyPage) for page in property_pages)
 
 
-def test_item_flow_source_and_target(element_factory):
+def test_item_flow_source_and_target(element_factory, event_manager):
     subject = element_factory.create(UML.Connector)
     head_end = element_factory.create(UML.ConnectorEnd)
     head_end.role = element_factory.create(UML.Property)
@@ -254,7 +256,7 @@ def test_item_flow_source_and_target(element_factory):
     subject.end = head_end
     subject.end = tail_end
 
-    property_page = ItemFlowPropertyPage(subject)
+    property_page = ItemFlowPropertyPage(subject, event_manager)
 
     widget = property_page.construct()
     use = find(widget, "use-item-flow")
@@ -264,8 +266,8 @@ def test_item_flow_source_and_target(element_factory):
     assert subject.informationFlow[0].informationTarget is tail_end.role
 
 
-def test_connector_item_flow_invert_direction(connector):
-    property_page = ItemFlowPropertyPage(connector)
+def test_connector_item_flow_invert_direction(connector, event_manager):
+    property_page = ItemFlowPropertyPage(connector, event_manager)
 
     widget = property_page.construct()
     use = find(widget, "use-item-flow")
@@ -278,8 +280,8 @@ def test_connector_item_flow_invert_direction(connector):
     assert information_flow.informationTarget is connector.end[0].role
 
 
-def test_association_item_flow_invert_direction(association):
-    property_page = ItemFlowPropertyPage(association)
+def test_association_item_flow_invert_direction(association, event_manager):
+    property_page = ItemFlowPropertyPage(association, event_manager)
 
     widget = property_page.construct()
     use = find(widget, "use-item-flow")
