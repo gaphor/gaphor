@@ -9,9 +9,9 @@ from gaphor.diagram.propertypages import (
 from gaphor.diagram.tests.fixtures import find
 
 
-def test_name_page(element_factory):
+def test_name_page(element_factory, event_manager):
     diagram = element_factory.create(Diagram)
-    property_page = NamePropertyPage(diagram)
+    property_page = NamePropertyPage(diagram, event_manager)
     widget = property_page.construct()
     name = find(widget, "name-entry")
     name.set_text("A new note")
@@ -19,9 +19,9 @@ def test_name_page(element_factory):
     assert diagram.name == "A new note"
 
 
-def test_line_style_page_rectilinear(diagram):
+def test_line_style_page_rectilinear(diagram, event_manager):
     item = diagram.create(Line)
-    property_page = LineStylePage(item)
+    property_page = LineStylePage(item, event_manager)
     widget = property_page.construct()
     line_rectangular = find(widget, "line-rectilinear")
 
@@ -30,9 +30,9 @@ def test_line_style_page_rectilinear(diagram):
     assert item.orthogonal
 
 
-def test_line_style_page_orientation(diagram):
+def test_line_style_page_orientation(diagram, event_manager):
     item = diagram.create(Line)
-    property_page = LineStylePage(item)
+    property_page = LineStylePage(item, event_manager)
     widget = property_page.construct()
     flip_orientation = find(widget, "flip-orientation")
     flip_orientation.set_active(True)
@@ -40,17 +40,17 @@ def test_line_style_page_orientation(diagram):
     assert item.horizontal
 
 
-def test_note_page_with_item_without_subject(diagram):
+def test_note_page_with_item_without_subject(diagram, event_manager):
     item = diagram.create(Line)
-    property_page = NotePropertyPage(item)
+    property_page = NotePropertyPage(item, event_manager)
     widget = property_page.construct()
 
     assert not widget
 
 
-def test_note_page_with_item_with_subject(create):
+def test_note_page_with_item_with_subject(create, event_manager):
     item = create(CommentItem, Comment)
-    property_page = NotePropertyPage(item)
+    property_page = NotePropertyPage(item, event_manager)
     widget = property_page.construct()
 
     note = find(widget, "note")
@@ -59,9 +59,9 @@ def test_note_page_with_item_with_subject(create):
     assert item.subject.note == "A new note"
 
 
-def test_note_page_with_subject(element_factory):
+def test_note_page_with_subject(element_factory, event_manager):
     comment = element_factory.create(Comment)
-    property_page = NotePropertyPage(comment)
+    property_page = NotePropertyPage(comment, event_manager)
     widget = property_page.construct()
 
     note = find(widget, "note")

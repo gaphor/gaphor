@@ -23,9 +23,9 @@ def metaclass(element_factory):
     return klass
 
 
-def test_named_element_property_page(element_factory):
+def test_named_element_property_page(element_factory, event_manager):
     subject = element_factory.create(UML.Class)
-    property_page = NamedElementPropertyPage(subject)
+    property_page = NamedElementPropertyPage(subject, event_manager)
 
     widget = property_page.construct()
     name_entry = find(widget, "name-entry")
@@ -34,8 +34,8 @@ def test_named_element_property_page(element_factory):
     assert subject.name == "Name"
 
 
-def test_no_named_element_property_page_for_metaclass(metaclass):
-    property_page = NamedElementPropertyPage(metaclass)
+def test_no_named_element_property_page_for_metaclass(metaclass, event_manager):
+    property_page = NamedElementPropertyPage(metaclass, event_manager)
     widget = property_page.construct()
 
     assert widget is None

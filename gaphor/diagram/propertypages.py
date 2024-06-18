@@ -14,7 +14,7 @@ import gaphas.item
 from gaphas.segment import Segment
 from gi.repository import GObject, Gtk
 
-from gaphor.core import Transaction, transactional
+from gaphor.core import Transaction
 from gaphor.core.modeling import Diagram, Element, Presentation, qualifiedName
 from gaphor.i18n import gettext, translated_ui_string
 
@@ -184,9 +184,10 @@ class LineStylePage(PropertyPageBase):
 
     order = 400
 
-    def __init__(self, item):
+    def __init__(self, item, event_manager):
         super().__init__()
         self.item = item
+        self.event_manager = event_manager
         self.horizontal_button: Gtk.Button
 
     def construct(self):
@@ -209,20 +210,20 @@ class LineStylePage(PropertyPageBase):
 
         return builder.get_object("line-editor")
 
-    @transactional
     def _on_orthogonal_change(self, button, gparam):
-        if len(self.item.handles()) < 3:
-            line_segment = Segment(self.item, self.item.diagram)
-            line_segment.split_segment(0)
-        active = button.get_active()
-        self.item.orthogonal = active
-        self.item.request_update()
-        self.horizontal_button.set_sensitive(active)
+        with Transaction(self.event_manager):
+            if len(self.item.handles()) < 3:
+                line_segment = Segment(self.item, self.item.diagram)
+                line_segment.split_segment(0)
+            active = button.get_active()
+            self.item.orthogonal = active
+            self.item.request_update()
+            self.horizontal_button.set_sensitive(active)
 
-    @transactional
     def _on_horizontal_change(self, button, gparam):
-        self.item.horizontal = button.get_active()
-        self.item.request_update()
+        with Transaction(self.event_manager):
+            self.item.horizontal = button.get_active()
+            self.item.request_update()
 
 
 @PropertyPages.register(Element)
@@ -231,8 +232,9 @@ class NotePropertyPage(PropertyPageBase):
 
     order = 300
 
-    def __init__(self, subject):
+    def __init__(self, subject, event_manager):
         self.subject = subject.subject if isinstance(subject, Presentation) else subject
+        self.event_manager = event_manager
         self.watcher = self.subject and self.subject.watcher()
 
     def construct(self):
@@ -259,11 +261,11 @@ class NotePropertyPage(PropertyPageBase):
 
         return builder.get_object("note-editor")
 
-    @transactional
     def _on_body_change(self, buffer):
-        self.subject.note = buffer.get_text(
-            buffer.get_start_iter(), buffer.get_end_iter(), False
-        )
+        with Transaction(self.event_manager):
+            self.subject.note = buffer.get_text(
+                buffer.get_start_iter(), buffer.get_end_iter(), False
+            )
 
 
 @PropertyPages.register(Element)
