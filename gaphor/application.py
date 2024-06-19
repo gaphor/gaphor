@@ -12,7 +12,6 @@ from pathlib import Path
 from typing import Iterator, TypeVar, cast
 from uuid import uuid1
 
-from gaphor import transaction
 from gaphor.abc import ActionProvider, Service
 from gaphor.action import action
 from gaphor.core import event_handler
@@ -65,8 +64,6 @@ class Application(Service, ActionProvider):
         self.event_manager: EventManager = cast(
             EventManager, self._services_by_name["event_manager"]
         )
-
-        transaction.subscribers.add(self._transaction_proxy)
 
     def get_service(self, name):
         if not self._services_by_name:
@@ -158,8 +155,6 @@ class Application(Service, ActionProvider):
 
         This is mainly for testing purposes.
         """
-        transaction.subscribers.discard(self._transaction_proxy)
-
         while self._sessions:
             self.shutdown_session(self._sessions.pop())
 
@@ -187,10 +182,6 @@ class Application(Service, ActionProvider):
         return (
             (n, c) for n, c in self._services_by_name.items() if isinstance(c, base)
         )
-
-    def _transaction_proxy(self, event):
-        if self._active_session:
-            self._active_session.event_manager.handle(event)
 
 
 class Session(Service):
