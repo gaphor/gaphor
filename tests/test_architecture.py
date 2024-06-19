@@ -101,8 +101,7 @@ def test_modeling_languages_should_not_depend_on_ui_package():
         archrule("Modeling languages should not depend on the UI package")
         .match("gaphor.C4Model*", "gaphor.RAAML*", "gaphor.SysML*", "gaphor.UML*")
         .should_not_import("gaphor.ui*")
-        .may_import("gaphor.ui.styleeditor")
-        .check(gaphor)
+        .check(gaphor, only_direct_imports=True)
     )
 
 
