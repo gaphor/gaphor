@@ -5,7 +5,8 @@ import logging
 from gi.repository import Gio, GObject, Gtk
 
 from gaphor import UML
-from gaphor.core import gettext, transactional
+from gaphor.core import gettext
+from gaphor.core.eventmanager import EventManager
 from gaphor.core.format import format, parse
 from gaphor.diagram.propertypages import (
     NamePropertyPage,
@@ -15,6 +16,7 @@ from gaphor.diagram.propertypages import (
     new_resource_builder,
     unsubscribe_all_on_destroy,
 )
+from gaphor.transaction import Transaction
 from gaphor.UML.classes.datatype import DataTypeItem
 from gaphor.UML.classes.enumeration import EnumerationItem
 from gaphor.UML.classes.interface import Folded, InterfaceItem
@@ -65,8 +67,9 @@ class NamedElementPropertyPage(NamePropertyPage):
 class ClassifierPropertyPage(PropertyPageBase):
     order = 15
 
-    def __init__(self, subject):
+    def __init__(self, subject, event_manager):
         self.subject = subject
+        self.event_manager = event_manager
 
     def construct(self):
         if UML.recipes.is_metaclass(self.subject):
@@ -82,9 +85,9 @@ class ClassifierPropertyPage(PropertyPageBase):
 
         return builder.get_object("classifier-editor")
 
-    @transactional
     def _on_abstract_change(self, button, gparam):
-        self.subject.isAbstract = button.get_active()
+        with Transaction(self.event_manager):
+            self.subject.isAbstract = button.get_active()
 
 
 @PropertyPages.register(InterfaceItem)
@@ -93,8 +96,9 @@ class InterfacePropertyPage(PropertyPageBase):
 
     order = 15
 
-    def __init__(self, item):
+    def __init__(self, item, event_manager):
         self.item = item
+        self.event_manager = event_manager
 
     def construct(self):
         builder = new_builder(
@@ -115,48 +119,51 @@ class InterfacePropertyPage(PropertyPageBase):
 
         return builder.get_object("interface-editor")
 
-    @transactional
     def _on_fold_change(self, button, gparam):
         item = self.item
 
         fold = button.get_active()
 
-        item.folded = Folded.PROVIDED if fold else Folded.NONE
+        with Transaction(self.event_manager):
+            item.folded = Folded.PROVIDED if fold else Folded.NONE
 
 
 class AttributeView(GObject.Object):
-    def __init__(self, attr: UML.Property | None, klass: UML.Class):
+    def __init__(
+        self, attr: UML.Property | None, klass: UML.Class, event_manager: EventManager
+    ):
         super().__init__()
         self.attr = attr
         self.klass = klass
+        self.event_manager = event_manager
 
     @GObject.Property(type=str, default="")
     def attribute(self):
         return (format(self.attr, note=True) or " ") if self.attr else ""
 
     @attribute.setter  # type: ignore[no-redef]
-    @transactional
     def attribute(self, value):
-        if not self.attr:
-            if not value:
-                return
+        with Transaction(self.event_manager):
+            if not self.attr:
+                if not value:
+                    return
 
-            model = self.klass.model
-            self.attr = model.create(UML.Property)
-            self.klass.ownedAttribute = self.attr
-        parse(self.attr, value)
+                model = self.klass.model
+                self.attr = model.create(UML.Property)
+                self.klass.ownedAttribute = self.attr
+            parse(self.attr, value)
 
     @GObject.Property(type=bool, default=False)
     def static(self):
         return self.attr.isStatic if self.attr else False
 
     @static.setter  # type: ignore[no-redef]
-    @transactional
     def static(self, value):
         if not self.attr:
             return
 
-        self.attr.isStatic = value
+        with Transaction(self.event_manager):
+            self.attr.isStatic = value
 
     editing = GObject.Property(type=bool, default=False)
 
@@ -171,20 +178,22 @@ class AttributeView(GObject.Object):
         return self.klass.ownedAttribute.swap(item1.attr, item2.attr)
 
 
-def attribute_model(klass: UML.Class) -> Gio.ListStore:
+def attribute_model(klass: UML.Class, event_manager: EventManager) -> Gio.ListStore:
     return create_list_store(
         AttributeView,
         (a for a in klass.ownedAttribute if not a.association),
-        lambda attr: AttributeView(attr, klass),
+        lambda attr: AttributeView(attr, klass, event_manager),
     )
 
 
-def update_attribute_model(store: Gio.ListStore, klass: UML.Class) -> None:
+def update_attribute_model(
+    store: Gio.ListStore, klass: UML.Class, event_manager: EventManager
+) -> None:
     update_list_store(
         store,
         lambda item: item.attr,
         (a for a in klass.ownedAttribute if not a.association),
-        lambda attr: AttributeView(attr, klass),
+        lambda attr: AttributeView(attr, klass, event_manager),
     )
 
 
@@ -207,9 +216,10 @@ OPERATIONS_PAGE_CLASSIFIERS = list(ATTRIBUTES_PAGE_CLASSIFIERS)
 class AttributesPage(PropertyPageBase):
     order = 20
 
-    def __init__(self, subject):
+    def __init__(self, subject, event_manager: EventManager):
         super().__init__()
         self.subject = subject
+        self.event_manager = event_manager
         self.watcher = subject and subject.watcher()
 
     def construct(self):
@@ -250,7 +260,7 @@ class AttributesPage(PropertyPageBase):
         ):
             column.set_factory(factory)
 
-        self.model = attribute_model(self.subject)
+        self.model = attribute_model(self.subject, self.event_manager)
         selection = Gtk.SingleSelection.new(self.model)
         column_view.set_model(selection)
 
@@ -262,7 +272,7 @@ class AttributesPage(PropertyPageBase):
         )
 
     def on_attributes_changed(self, event):
-        update_attribute_model(self.model, self.subject)
+        update_attribute_model(self.model, self.subject, self.event_manager)
 
     def on_attributes_info_clicked(self, image, event):
         self.info.set_visible(True)
@@ -275,9 +285,10 @@ class AttributesPage(PropertyPageBase):
 class ShowAttributesPage(PropertyPageBase):
     order = 21
 
-    def __init__(self, item):
+    def __init__(self, item, event_manager: EventManager):
         super().__init__()
         self.item = item
+        self.event_manager = event_manager
 
     def construct(self):
         if not self.item.subject:
@@ -295,56 +306,59 @@ class ShowAttributesPage(PropertyPageBase):
 
         return builder.get_object("show-attributes-editor")
 
-    @transactional
     def on_show_attributes_changed(self, button, gparam):
-        self.item.show_attributes = button.get_active()
+        with Transaction(self.event_manager):
+            self.item.show_attributes = button.get_active()
 
 
 class OperationView(GObject.Object):
-    def __init__(self, oper: UML.Operation | None, klass: UML.Class):
+    def __init__(
+        self, oper: UML.Operation | None, klass: UML.Class, event_manager: EventManager
+    ):
         super().__init__()
         self.oper = oper
         self.klass = klass
+        self.event_manager = event_manager
 
     @GObject.Property(type=str, default="")
     def operation(self):
         return (format(self.oper, note=True) or " ") if self.oper else ""
 
     @operation.setter  # type: ignore[no-redef]
-    @transactional
     def operation(self, value):
-        if not self.oper:
-            if not value:
-                return
+        with Transaction(self.event_manager):
+            if not self.oper:
+                if not value:
+                    return
 
-            model = self.klass.model
-            self.oper = model.create(UML.Operation)
-            self.klass.ownedOperation = self.oper
-        parse(self.oper, value)
+                model = self.klass.model
+                self.oper = model.create(UML.Operation)
+                self.klass.ownedOperation = self.oper
+            parse(self.oper, value)
 
     @GObject.Property(type=bool, default=False)
     def static(self):
         return self.oper.isStatic if self.oper else False
 
     @static.setter  # type: ignore[no-redef]
-    @transactional
     def static(self, value):
         if not self.oper:
             return
 
-        self.oper.isStatic = value
+        with Transaction(self.event_manager):
+            self.oper.isStatic = value
 
     @GObject.Property(type=bool, default=False)
     def abstract(self):
         return self.oper.isAbstract if self.oper else False
 
     @abstract.setter  # type: ignore[no-redef]
-    @transactional
     def abstract(self, value):
         if not self.oper:
             return
 
-        self.oper.isAbstract = value
+        with Transaction(self.event_manager):
+            self.oper.isAbstract = value
 
     editing = GObject.Property(type=bool, default=False)
 
@@ -359,20 +373,22 @@ class OperationView(GObject.Object):
         return self.klass.ownedOperation.swap(item1.oper, item2.oper)
 
 
-def operation_model(klass: UML.Class) -> Gio.ListStore:
+def operation_model(klass: UML.Class, event_manager: EventManager) -> Gio.ListStore:
     return create_list_store(
         OperationView,
         klass.ownedOperation,
-        lambda oper: OperationView(oper, klass),
+        lambda oper: OperationView(oper, klass, event_manager),
     )
 
 
-def update_operation_model(store: Gio.ListStore, klass: UML.Class) -> None:
+def update_operation_model(
+    store: Gio.ListStore, klass: UML.Class, event_manager: EventManager
+) -> None:
     update_list_store(
         store,
         lambda item: item.oper,
         klass.ownedOperation,
-        lambda oper: OperationView(oper, klass),
+        lambda oper: OperationView(oper, klass, event_manager),
     )
 
 
@@ -382,9 +398,10 @@ def update_operation_model(store: Gio.ListStore, klass: UML.Class) -> None:
 class OperationsPage(PropertyPageBase):
     order = 30
 
-    def __init__(self, subject):
+    def __init__(self, subject, event_manager: EventManager):
         super().__init__()
         self.subject = subject
+        self.event_manager = event_manager
         self.watcher = subject and subject.watcher()
 
     def construct(self):
@@ -432,7 +449,7 @@ class OperationsPage(PropertyPageBase):
         ):
             column.set_factory(factory)
 
-        self.model = operation_model(self.subject)
+        self.model = operation_model(self.subject, self.event_manager)
         selection = Gtk.SingleSelection.new(self.model)
         column_view.set_model(selection)
 
@@ -444,7 +461,7 @@ class OperationsPage(PropertyPageBase):
         )
 
     def on_operations_changed(self, event):
-        update_operation_model(self.model, self.subject)
+        update_operation_model(self.model, self.subject, self.event_manager)
 
     def on_operations_info_clicked(self, image, event):
         self.info.set_visible(True)
@@ -457,9 +474,10 @@ class OperationsPage(PropertyPageBase):
 class ShowOperationsPage(PropertyPageBase):
     order = 31
 
-    def __init__(self, item):
+    def __init__(self, item, event_manager):
         super().__init__()
         self.item = item
+        self.event_manager = event_manager
 
     def construct(self):
         if not self.item.subject:
@@ -477,9 +495,9 @@ class ShowOperationsPage(PropertyPageBase):
 
         return builder.get_object("show-operations-editor")
 
-    @transactional
     def on_show_operations_changed(self, button, gparam):
-        self.item.show_operations = button.get_active()
+        with Transaction(self.event_manager):
+            self.item.show_operations = button.get_active()
 
 
 @PropertyPages.register(UML.Component)
@@ -488,8 +506,9 @@ class ComponentPropertyPage(PropertyPageBase):
 
     subject: UML.Component
 
-    def __init__(self, subject):
+    def __init__(self, subject, event_manager):
         self.subject = subject
+        self.event_manager = event_manager
 
     def construct(self):
         subject = self.subject
@@ -507,8 +526,8 @@ class ComponentPropertyPage(PropertyPageBase):
 
         return builder.get_object("component-editor")
 
-    @transactional
     def _on_ii_change(self, button, gparam):
         """Called when user clicks "Indirectly instantiated" check button."""
         if subject := self.subject:
-            subject.isIndirectlyInstantiated = button.get_active()
+            with Transaction(self.event_manager):
+                subject.isIndirectlyInstantiated = button.get_active()

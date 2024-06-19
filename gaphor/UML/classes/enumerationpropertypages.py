@@ -1,7 +1,8 @@
 from gi.repository import Gio, GObject, Gtk
 
 from gaphor import UML
-from gaphor.core import gettext, transactional
+from gaphor.core import gettext
+from gaphor.core.eventmanager import EventManager
 from gaphor.core.format import format, parse
 from gaphor.diagram.propertypages import (
     PropertyPageBase,
@@ -9,6 +10,7 @@ from gaphor.diagram.propertypages import (
     help_link,
     unsubscribe_all_on_destroy,
 )
+from gaphor.transaction import Transaction
 from gaphor.UML.classes.classespropertypages import new_resource_builder
 from gaphor.UML.classes.enumeration import EnumerationItem
 from gaphor.UML.propertypages import (
@@ -24,26 +26,32 @@ new_builder = new_resource_builder("gaphor.UML.classes")
 
 
 class EnumerationView(GObject.Object):
-    def __init__(self, literal: UML.EnumerationLiteral | None, enum: UML.Enumeration):
+    def __init__(
+        self,
+        literal: UML.EnumerationLiteral | None,
+        enum: UML.Enumeration,
+        event_manager: EventManager,
+    ):
         super().__init__()
         self.literal = literal
         self.enum = enum
+        self.event_manager = event_manager
 
     @GObject.Property(type=str, default="")
     def enumeration(self):
         return (format(self.literal, note=True) or " ") if self.literal else ""
 
     @enumeration.setter  # type: ignore[no-redef]
-    @transactional
     def enumeration(self, value):
-        if not self.literal:
-            if not value:
-                return
+        with Transaction(self.event_manager):
+            if not self.literal:
+                if not value:
+                    return
 
-            model = self.enum.model
-            self.literal = model.create(UML.EnumerationLiteral)
-            self.enum.ownedLiteral = self.literal
-        parse(self.literal, value)
+                model = self.enum.model
+                self.literal = model.create(UML.EnumerationLiteral)
+                self.enum.ownedLiteral = self.literal
+            parse(self.literal, value)
 
     editing = GObject.Property(type=bool, default=False)
 
@@ -58,20 +66,24 @@ class EnumerationView(GObject.Object):
         return self.enum.ownedLiteral.swap(item1.literal, item2.literal)
 
 
-def enumeration_model(enum: UML.Enumeration) -> Gio.ListStore:
+def enumeration_model(
+    enum: UML.Enumeration, event_manager: EventManager
+) -> Gio.ListStore:
     return create_list_store(
         EnumerationView,
         enum.ownedLiteral,
-        lambda literal: EnumerationView(literal, enum),
+        lambda literal: EnumerationView(literal, enum, event_manager),
     )
 
 
-def update_enumeration_model(store: Gio.ListStore, enum: UML.Enumeration) -> None:
+def update_enumeration_model(
+    store: Gio.ListStore, enum: UML.Enumeration, event_manager: EventManager
+) -> None:
     update_list_store(
         store,
         lambda item: item.literal,
         enum.ownedLiteral,
-        lambda literal: EnumerationView(literal, enum),
+        lambda literal: EnumerationView(literal, enum, event_manager),
     )
 
 
@@ -81,9 +93,10 @@ class EnumerationPage(PropertyPageBase):
 
     order = 18
 
-    def __init__(self, subject):
+    def __init__(self, subject, event_manager: EventManager):
         super().__init__()
         self.subject = subject
+        self.event_manager = event_manager
         self.watcher = subject and subject.watcher()
 
     def construct(self):
@@ -119,7 +132,7 @@ class EnumerationPage(PropertyPageBase):
         ):
             column.set_factory(factory)
 
-        self.model = enumeration_model(self.subject)
+        self.model = enumeration_model(self.subject, self.event_manager)
         selection = Gtk.SingleSelection.new(self.model)
         column_view.set_model(selection)
 
@@ -131,7 +144,7 @@ class EnumerationPage(PropertyPageBase):
         )
 
     def on_enumerations_changed(self, event):
-        update_enumeration_model(self.model, self.subject)
+        update_enumeration_model(self.model, self.subject, self.event_manager)
 
     def on_enumerations_info_clicked(self, image, event):
         self.info.set_visible(True)
@@ -143,9 +156,10 @@ class ShowEnumerationPage(PropertyPageBase):
 
     order = 19
 
-    def __init__(self, item):
+    def __init__(self, item, event_manager: EventManager):
         super().__init__()
         self.item = item
+        self.event_manager = event_manager
 
     def construct(self):
         if not isinstance(self.item.subject, UML.Enumeration):
@@ -163,6 +177,6 @@ class ShowEnumerationPage(PropertyPageBase):
 
         return builder.get_object("show-enumerations-editor")
 
-    @transactional
     def on_show_enumerations_changed(self, button, gparam):
-        self.item.show_enumerations = button.get_active()
+        with Transaction(self.event_manager):
+            self.item.show_enumerations = button.get_active()

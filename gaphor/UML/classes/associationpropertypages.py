@@ -6,7 +6,7 @@ from gaphor.diagram.propertypages import (
     help_link,
     unsubscribe_all_on_destroy,
 )
-from gaphor.transaction import transactional
+from gaphor.transaction import Transaction
 from gaphor.UML.classes.association import AssociationItem
 from gaphor.UML.classes.classespropertypages import new_builder
 from gaphor.UML.profiles.stereotypepropertypages import (
@@ -139,27 +139,22 @@ class AssociationPropertyPage(PropertyPageBase):
     def _on_end_name_change(self, entry, subject):
         if not self.end_name_change_semaphore:
             self.end_name_change_semaphore += 1
-
-            @transactional
-            def do_in_tx():
+            with Transaction(self.event_manager):
                 parse(subject, entry.get_text())
-
-            do_in_tx()
-
             self.end_name_change_semaphore -= 1
 
-    @transactional
     def _on_end_navigability_change(self, dropdown, _pspec, subject):
         if subject and subject.opposite and subject.opposite.type:
-            UML.recipes.set_navigability(
-                subject.association,
-                subject,
-                self.NAVIGABILITY[dropdown.get_selected()],
-            )
+            with Transaction(self.event_manager):
+                UML.recipes.set_navigability(
+                    subject.association,
+                    subject,
+                    self.NAVIGABILITY[dropdown.get_selected()],
+                )
 
-    @transactional
     def _on_end_aggregation_change(self, dropdown, _pspec, subject):
-        subject.aggregation = self.AGGREGATION[dropdown.get_selected()]
+        with Transaction(self.event_manager):
+            subject.aggregation = self.AGGREGATION[dropdown.get_selected()]
 
     def _on_association_info_clicked(self, widget, event):
         self.info.set_relative_to(widget)
@@ -170,8 +165,9 @@ class AssociationPropertyPage(PropertyPageBase):
 class AssociationDirectionPropertyPage(PropertyPageBase):
     order = 20
 
-    def __init__(self, item: AssociationItem):
+    def __init__(self, item: AssociationItem, event_manager):
         self.item = item
+        self.event_manager = event_manager
 
     def construct(self):
         if not self.item.subject:
@@ -190,10 +186,10 @@ class AssociationDirectionPropertyPage(PropertyPageBase):
 
         return builder.get_object("association-direction-editor")
 
-    @transactional
     def _on_show_direction_change(self, button, gparam):
-        self.item.show_direction = button.get_active()
+        with Transaction(self.event_manager):
+            self.item.show_direction = button.get_active()
 
-    @transactional
     def on_invert_direction_change(self, button):
-        self.item.invert_direction()
+        with Transaction(self.event_manager):
+            self.item.invert_direction()

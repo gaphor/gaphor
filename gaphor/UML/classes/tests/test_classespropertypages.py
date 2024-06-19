@@ -41,9 +41,9 @@ def test_no_named_element_property_page_for_metaclass(metaclass, event_manager):
     assert widget is None
 
 
-def test_classifier_property_page(element_factory):
+def test_classifier_property_page(element_factory, event_manager):
     subject = element_factory.create(UML.Class)
-    property_page = ClassifierPropertyPage(subject)
+    property_page = ClassifierPropertyPage(subject, event_manager)
 
     widget = property_page.construct()
     abstract = find(widget, "abstract")
@@ -52,18 +52,18 @@ def test_classifier_property_page(element_factory):
     assert subject.isAbstract
 
 
-def test_no_classifier_property_page_for_metaclass(metaclass):
-    property_page = ClassifierPropertyPage(metaclass)
+def test_no_classifier_property_page_for_metaclass(metaclass, event_manager):
+    property_page = ClassifierPropertyPage(metaclass, event_manager)
     widget = property_page.construct()
 
     assert widget is None
 
 
-def test_interface_property_page(diagram, element_factory):
+def test_interface_property_page(diagram, element_factory, event_manager):
     item = diagram.create(
         UML.classes.InterfaceItem, subject=element_factory.create(UML.Interface)
     )
-    property_page = InterfacePropertyPage(item)
+    property_page = InterfacePropertyPage(item, event_manager)
 
     widget = property_page.construct()
     folded = find(widget, "folded")
@@ -72,11 +72,11 @@ def test_interface_property_page(diagram, element_factory):
     assert item.folded == Folded.PROVIDED
 
 
-def test_show_attributes_page(diagram, element_factory):
+def test_show_attributes_page(diagram, element_factory, event_manager):
     item = diagram.create(
         UML.classes.InterfaceItem, subject=element_factory.create(UML.Interface)
     )
-    property_page = ShowAttributesPage(item)
+    property_page = ShowAttributesPage(item, event_manager)
 
     widget = property_page.construct()
     show_attributes = find(widget, "show-attributes")
@@ -85,10 +85,10 @@ def test_show_attributes_page(diagram, element_factory):
     assert not item.show_attributes
 
 
-def test_attributes_page_add_attribute(diagram, element_factory):
+def test_attributes_page_add_attribute(element_factory, event_manager):
     subject = element_factory.create(UML.Interface)
 
-    property_page = AttributesPage(subject)
+    property_page = AttributesPage(subject, event_manager)
 
     property_page.construct()
     property_page.model.get_item(0).attribute = "+ attr: str"
@@ -97,7 +97,7 @@ def test_attributes_page_add_attribute(diagram, element_factory):
     assert subject.attribute[0].typeValue == "str"
 
 
-def test_attribute_create_model(element_factory):
+def test_attribute_create_model(element_factory, event_manager):
     subject = element_factory.create(UML.Class)
 
     attr1 = element_factory.create(UML.Property)
@@ -110,18 +110,18 @@ def test_attribute_create_model(element_factory):
     attr3.name = "attr3"
     subject.ownedAttribute = attr3
 
-    list_store = attribute_model(subject)
+    list_store = attribute_model(subject, event_manager)
 
     assert list_store[0].attr is attr1
     assert list_store[1].attr is attr2
     assert list_store[2].attr is attr3
 
 
-def test_show_operations_page(diagram, element_factory):
+def test_show_operations_page(diagram, element_factory, event_manager):
     item = diagram.create(
         UML.classes.InterfaceItem, subject=element_factory.create(UML.Interface)
     )
-    property_page = ShowOperationsPage(item)
+    property_page = ShowOperationsPage(item, event_manager)
 
     widget = property_page.construct()
     show_operations = find(widget, "show-operations")
@@ -130,10 +130,10 @@ def test_show_operations_page(diagram, element_factory):
     assert not item.show_operations
 
 
-def test_operations_page_add_operation(element_factory):
+def test_operations_page_add_operation(element_factory, event_manager):
     subject = element_factory.create(UML.Interface)
 
-    property_page = OperationsPage(subject)
+    property_page = OperationsPage(subject, event_manager)
 
     property_page.construct()
     property_page.model.get_item(0).operation = "+ oper()"

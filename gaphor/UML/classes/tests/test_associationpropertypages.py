@@ -20,7 +20,9 @@ def test_association_property_page(element_factory, event_manager):
     assert subject.memberEnd[0].name == "head"
 
 
-def test_association_property_page_invert_direction(diagram, element_factory):
+def test_association_property_page_invert_direction(
+    diagram, element_factory, event_manager
+):
     end1 = element_factory.create(UML.Class)
     end2 = element_factory.create(UML.Class)
     item = diagram.create(
@@ -28,7 +30,7 @@ def test_association_property_page_invert_direction(diagram, element_factory):
     )
     item.head_subject = item.subject.memberEnd[0]
     item.tail_subject = item.subject.memberEnd[1]
-    property_page = AssociationDirectionPropertyPage(item)
+    property_page = AssociationDirectionPropertyPage(item, event_manager)
 
     property_page.on_invert_direction_change(None)
 

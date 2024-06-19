@@ -4,7 +4,7 @@ from gaphor.diagram.propertypages import (
     PropertyPages,
     unsubscribe_all_on_destroy,
 )
-from gaphor.transaction import transactional
+from gaphor.transaction import Transaction
 from gaphor.UML.classes.classespropertypages import new_builder
 from gaphor.UML.classes.dependency import DependencyItem
 
@@ -22,9 +22,10 @@ class DependencyPropertyPage(PropertyPageBase):
         UML.InterfaceRealization,
     )
 
-    def __init__(self, item):
+    def __init__(self, item, event_manager):
         super().__init__()
         self.item = item
+        self.event_manager = event_manager
         self.watcher = self.item.watcher()
         self.builder = new_builder(
             "dependency-editor",
@@ -59,15 +60,15 @@ class DependencyPropertyPage(PropertyPageBase):
         dropdown.props.sensitive = not self.item.auto_dependency
         dropdown.set_selected(index)
 
-    @transactional
     def _on_dependency_type_change(self, dropdown, _pspec):
         cls = self.DEPENDENCIES[dropdown.get_selected()]
-        self.item.dependency_type = cls
-        if subject := self.item.subject:
-            UML.recipes.swap_element(subject, cls)
-            self.item.request_update()
+        with Transaction(self.event_manager):
+            self.item.dependency_type = cls
+            if subject := self.item.subject:
+                UML.recipes.swap_element(subject, cls)
+                self.item.request_update()
 
-    @transactional
     def _on_auto_dependency_change(self, switch, gparam):
-        self.item.auto_dependency = switch.get_active()
-        self.update()
+        with Transaction(self.event_manager):
+            self.item.auto_dependency = switch.get_active()
+            self.update()
