@@ -167,7 +167,6 @@ def test_line_handle_on_inserted_handle(diagram, undo_manager, event_manager):
         line = diagram.create(LinePresentation)
 
     handle = Handle()
-    # Note that inserting and removing handles is *not* transactional
     line.insert_handle(1, handle)
 
     old_pos = handle.pos.tuple()
@@ -191,7 +190,6 @@ def test_line_handle_no_events_for_removed_handle(diagram, undo_manager, event_m
     with Transaction(event_manager):
         line = diagram.create(LinePresentation)
 
-    # Note that inserting and removing handles is *not* transactional
     handle = Handle()
     line.insert_handle(1, handle)
     line.remove_handle(handle)

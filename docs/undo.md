@@ -11,7 +11,7 @@ Manager. The Undo Manager works transactionally.
 A transaction must succeed or fail as a complete unit. If
 the transaction fails in the middle, it is rolled back. In Gaphor this is
 achieved by the {mod}`~gaphor.transaction` module, which provides a context manager
-{obj}`~gaphor.transaction.Transaction` and a decorator called `@transactional`.
+{obj}`~gaphor.transaction.Transaction`.
 
 When transactions take place, they emit events when the top-most transaction begins and is finished.
 The event notifications are for the begin of the transaction, and the commit of the
@@ -50,8 +50,6 @@ You only require transactions if the undo manager is active.
 ```{eval-rst}
 .. autoclass:: gaphor.transaction.Transaction
    :members:
-
-.. autofunction:: gaphor.transaction.transactional
 
 .. autoclass:: gaphor.event.TransactionBegin
 

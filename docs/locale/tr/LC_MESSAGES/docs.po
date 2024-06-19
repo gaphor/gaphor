@@ -8169,8 +8169,7 @@ msgid ""
 "Manager. The Undo Manager works transactionally. A transaction must succeed "
 "or fail as a complete unit. If the transaction fails in the middle, it is "
 "rolled back. In Gaphor this is achieved by the `transaction` module, which "
-"provides a context manager `Transaction` and a decorator called "
-"`@transactional`."
+"provides a context manager `Transaction`."
 msgstr ""
 
 #: ../undo.md:16
