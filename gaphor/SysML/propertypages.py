@@ -257,7 +257,7 @@ class ItemFlowPropertyPage(PropertyPageBase):
         if isinstance(subject, sysml.Connector):
             iflows = subject.informationFlow
         elif isinstance(subject, UML.Relationship):
-            iflows = subject.abstraction
+            iflows = subject.abstraction  # type: ignore[attr-defined]
         return iflows[0] if iflows else None
 
     def construct(self):

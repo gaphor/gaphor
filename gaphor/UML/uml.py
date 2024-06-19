@@ -54,11 +54,7 @@ class EnumerationLiteral(InstanceSpecification):
     enumeration: relation_one[Enumeration]
 
 
-class Relationship(Element):
-    abstraction: relation_many[InformationFlow]
-    relatedElement: relation_many[Element]
-
-
+from gaphor.core.modeling.coremodel import Relationship
 class DirectedRelationship(Relationship):
     source: relation_many[Element]
     target: relation_many[Element]
@@ -788,7 +784,6 @@ class ValueSpecificationAction(Action):
 # defined in umloverrides.py
 
 
-Element.relationship = derivedunion("relationship", Relationship)
 Element.directedRelationship = derivedunion("directedRelationship", DirectedRelationship)
 Element.appliedStereotype = association("appliedStereotype", InstanceSpecification, composite=True, opposite="extended")
 Element.relationship.add(Element.directedRelationship)  # type: ignore[attr-defined]
@@ -826,7 +821,6 @@ InstanceSpecification.extended = association("extended", Element, opposite="appl
 Element.ownedElement.add(InstanceSpecification.slot)  # type: ignore[attr-defined]
 EnumerationLiteral.enumeration = association("enumeration", Enumeration, upper=1, opposite="ownedLiteral")
 NamedElement.namespace.add(EnumerationLiteral.enumeration)  # type: ignore[attr-defined]
-Relationship.relatedElement = derivedunion("relatedElement", Element, lower=1)
 Relationship.abstraction = association("abstraction", InformationFlow, composite=True, opposite="realization")
 DirectedRelationship.target = derivedunion("target", Element, lower=1)
 DirectedRelationship.source = derivedunion("source", Element, lower=1)
@@ -835,6 +829,7 @@ Relationship.relatedElement.add(DirectedRelationship.source)  # type: ignore[att
 PackageMerge.mergingPackage = association("mergingPackage", Package, upper=1, opposite="packageMerge")
 PackageMerge.mergedPackage = association("mergedPackage", Package, upper=1)
 DirectedRelationship.source.add(PackageMerge.mergingPackage)  # type: ignore[attr-defined]
+from gaphor.core.modeling.coremodel import Element
 Element.owner.add(PackageMerge.mergingPackage)  # type: ignore[attr-defined]
 DirectedRelationship.target.add(PackageMerge.mergedPackage)  # type: ignore[attr-defined]
 RedefinableElement.redefinedElement = derivedunion("redefinedElement", RedefinableElement)

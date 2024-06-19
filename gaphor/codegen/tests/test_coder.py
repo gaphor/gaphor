@@ -266,11 +266,11 @@ def test_attribute_from_super_model(uml_metamodel: ElementFactory):
     class_.name = "Package"
 
     element_type, base = attribute(
-        class_, "relationship", [(UMLModelingLanguage(), uml_metamodel)]
+        class_, "member", [(UMLModelingLanguage(), uml_metamodel)]
     )
 
     assert element_type is UML.Package
-    assert base.owner.name == "Element"
+    assert base.owner.name == "Namespace"
 
 
 def test_replace_simple_attribute(uml_metamodel: ElementFactory):

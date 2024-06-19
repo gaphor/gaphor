@@ -58,23 +58,29 @@ class Picture(Element):
     content: _attribute[str] = _attribute("content", str)
 
 
+class Relationship(Element):
+    relatedElement: relation_many[Element]
 
-Element.comment = association("comment", Comment, opposite="annotatedElement")
-Element.ownedDiagram = association("ownedDiagram", Diagram, composite=True, opposite="element")
-Element.presentation = association("presentation", Presentation, composite=True, opposite="subject")
+
+
+Element.relationship = derivedunion("relationship", Relationship)
 Element.ownedElement = derivedunion("ownedElement", Element)
 Element.owner = derivedunion("owner", Element, upper=1)
+Element.presentation = association("presentation", Presentation, composite=True, opposite="subject")
+Element.ownedDiagram = association("ownedDiagram", Diagram, composite=True, opposite="element")
+Element.comment = association("comment", Comment, opposite="annotatedElement")
 Element.ownedElement.add(Element.ownedDiagram)  # type: ignore[attr-defined]
 # 10: override Diagram.qualifiedName: property[list[str]]
 # defined in gaphor.core.modeling.diagram
 
-Diagram.element = association("element", Element, upper=1, opposite="ownedDiagram")
 Diagram.ownedPresentation = association("ownedPresentation", Presentation, composite=True, opposite="diagram")
-Element.owner.add(Diagram.element)  # type: ignore[attr-defined]
+Diagram.element = association("element", Element, upper=1, opposite="ownedDiagram")
 Element.ownedElement.add(Diagram.ownedPresentation)  # type: ignore[attr-defined]
-Presentation.subject = association("subject", Element, upper=1, opposite="presentation")
+Element.owner.add(Diagram.element)  # type: ignore[attr-defined]
 Presentation.parent = association("parent", Presentation, upper=1, opposite="children")
 Presentation.children = association("children", Presentation, composite=True, opposite="parent")
 Presentation.diagram = association("diagram", Diagram, upper=1, opposite="ownedPresentation")
+Presentation.subject = association("subject", Element, upper=1, opposite="presentation")
 Element.owner.add(Presentation.diagram)  # type: ignore[attr-defined]
 Comment.annotatedElement = association("annotatedElement", Element, opposite="comment")
+Relationship.relatedElement = derivedunion("relatedElement", Element, lower=1)

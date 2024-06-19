@@ -10,7 +10,7 @@ in a diagram.
 All data models in Gaphor are generated from actual Gaphor model files.
 This allows us to provide you nice diagrams of Gaphor’s internal model.
 
-.. diagram:: core
+.. diagram:: Relationships
    :model: core
 
 The :obj:`~gaphor.core.modeling.Element` base class provides event notification and integrates
@@ -64,8 +64,24 @@ The class ``Element`` is the core of Gaphor’s data model.
    .. automethod:: gaphor.core.modeling.Element.isTypeOf
 
 
+Annotations
+-----------
+
+.. diagram:: Annotations
+   :model: core
+
+Presentations
+-------------
+
+Presentations are representations of model elements shown in a diagram.
+
+.. diagram:: Presentations
+   :model: core
+
+
 The ``Presentation`` class
---------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 
 .. autoclass:: gaphor.core.modeling.Presentation
 
@@ -77,7 +93,7 @@ The ``Presentation`` class
 
 
 The ``Diagram`` class
---------------------------
+^^^^^^^^^^^^^^^^^^^^^
 
 .. autoclass:: gaphor.core.modeling.Diagram
 
