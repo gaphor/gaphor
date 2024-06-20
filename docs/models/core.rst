@@ -10,6 +10,9 @@ in a diagram.
 All data models in Gaphor are generated from actual Gaphor model files.
 This allows us to provide you nice diagrams of Gaphor’s internal model.
 
+Relationships
+-------------
+
 .. diagram:: Relationships
    :model: core
 
@@ -25,7 +28,7 @@ mechanisms.
 
 
 The ``Element`` Class
----------------------
+^^^^^^^^^^^^^^^^^^^^^
 
 The class ``Element`` is the core of Gaphor’s data model.
 
