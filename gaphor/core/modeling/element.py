@@ -7,6 +7,7 @@ import logging
 from typing import TYPE_CHECKING, Callable, Iterator, Protocol, TypeVar, overload
 from uuid import uuid1
 
+from gaphor.core.modeling.collection import collection
 from gaphor.core.modeling.event import ElementUpdated
 from gaphor.core.modeling.properties import (
     attribute,
@@ -122,12 +123,19 @@ class Element:
                 if isinstance(prop, umlprop):
                     yield prop
 
-    def save(self, save_func) -> None:
+    def save(
+        self,
+        save_func: Callable[
+            [str, str | bool | int | Element | collection[Element]], None
+        ],
+    ) -> None:
         """Save the state by calling ``save_func(name, value)``."""
         for prop in self.umlproperties():
-            prop.save(self, save_func)
+            prop.save(self, save_func)  # type: ignore[arg-type]
 
-    def load(self, name, value) -> None:
+    def load(
+        self, name: str, value: str | bool | int | Element | collection[Element]
+    ) -> None:
         """Loads value in name.
 
         Make sure that after all elements are loaded, postload() should be called.
