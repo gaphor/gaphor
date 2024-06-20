@@ -56,8 +56,8 @@ class Presentation(Matrices, Element, Generic[S]):
         if (
             isinstance(event, AttributeUpdated)
             and hasattr(self.subject, "name")
-            and self.presentation_style is not None
-            and self.presentation_style.styleSheet is not None
+            and self.presentation_style
+            and self.presentation_style.styleSheet
         ):
             self.presentation_style.name_change(self.subject.name)
 
@@ -128,11 +128,11 @@ class Presentation(Matrices, Element, Generic[S]):
         else:
             super().load(name, value)
         if (
-            self.subject is not None
+            self.subject
             and hasattr(self.subject, "name")
-            and self.subject.name is not None
-            and self.presentation_style is not None
-            and self.presentation_style.styleSheet is not None
+            and self.subject.name
+            and self.presentation_style
+            and self.presentation_style.styleSheet
         ):
             self.presentation_style.name_change(self.subject.name)
 

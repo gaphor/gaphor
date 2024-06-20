@@ -101,7 +101,7 @@ class StyleSheet(Element):
         self.style_elements[elem] = {}
 
     def delete_style_element(self, elem: str):
-        if self.style_elements.get(elem) is not None:
+        if self.style_elements.get(elem):
             self.style_elements.pop(elem)
             self.colorPickerResult = self.update_style_element()
             self.compile_style_sheet()
@@ -109,14 +109,13 @@ class StyleSheet(Element):
         return False
 
     def change_name_style_element(self, elem: str, new_elem: str):
-        if self.style_elements.get(elem) is not None:
+        if self.style_elements.get(elem):
             self.style_elements.update({new_elem: self.style_elements.pop(elem)})
             self.colorPickerResult = self.update_style_element()
             self.compile_style_sheet()
 
     def translate_to_stylesheet(self, elem: str):
-        elem_v = self.style_elements.get(elem)
-        if elem_v is not None:
+        if elem_v := self.style_elements.get(elem):
             nested_items = "; ".join(f"{k}: {v}" for k, v in elem_v.items())
             nested_items += ";"
             self.styleSheet += "\n" + f"{elem} {{{nested_items}}}\n"

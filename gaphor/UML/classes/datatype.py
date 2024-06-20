@@ -40,8 +40,7 @@ class DataTypeItem(Classified, ElementPresentation[UML.DataType]):
         ).watch("subject[NamedElement].name").watch(
             "subject[NamedElement].namespace.name"
         )
-        self.watch("subject[DataType].name", self.change_name)
-        self.watch("subject[PrimitiveType].name", self.change_name)
+        self.watch("subject[NamedElement].name", self.change_name)
         attribute_watches(self, "DataType")
         operation_watches(self, "DataType")
         stereotype_watches(self)

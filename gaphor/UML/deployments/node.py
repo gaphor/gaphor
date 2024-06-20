@@ -40,8 +40,7 @@ class NodeItem(Classified, ElementPresentation):
         self.watch("show_stereotypes", self.update_shapes)
         self.watch("subject[NamedElement].name")
         self.watch("subject[Node].ownedConnector", self.update_shapes)
-        self.watch("subject[Node].name", self.change_name)
-        self.watch("subject[Device].name", self.change_name)
+        self.watch("subject[NamedElement].name", self.change_name)
         stereotype_watches(self)
 
         self.presentation_style = PresentationStyle(
