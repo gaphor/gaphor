@@ -1,13 +1,57 @@
 from gi.repository import Gdk, Gtk
 
 from gaphor.core import transactional
+from gaphor.core.modeling import Element
+from gaphor.diagram.propertypages import PropertyPageBase, PropertyPages, new_builder
+
+
+@PropertyPages.register(Element)
+class StylePropertyPage(PropertyPageBase):
+    """A button to open a easy-to-use CSS editor."""
+
+    order = 300
+    style_editor = None
+
+    def __init__(self, subject):
+        super().__init__()
+        self.subject = subject
+        self.watcher = subject.watcher() if subject else None
+        self.propertypages_builder = new_builder(
+            "style-editor",
+            signals={
+                "open-style-editor": (self._on_open_style_editor,),
+            },
+        )
+        self.has_style_editor = False
+
+    def construct(self):
+        if not self.subject:
+            return
+        assert self.watcher
+        return self.propertypages_builder.get_object("style-editor")
+
+    @transactional
+    def _on_open_style_editor(self, button):
+        if not self.has_style_editor:
+            if StylePropertyPage.style_editor:
+                StylePropertyPage.style_editor.close()
+            StylePropertyPage.style_editor = StyleEditor(
+                self.subject, self.close_style_editor
+            )
+            self.has_style_editor = True
+        if StylePropertyPage.style_editor:
+            StylePropertyPage.style_editor.present()
+
+    def close_style_editor(self):
+        StylePropertyPage.style_editor = None
+        self.has_style_editor = False
 
 
 class StyleEditor:
     def __init__(self, subject, close_callback):
         self.subject = subject
         self.window_builder = Gtk.Builder()
-        self.window_builder.add_from_file("gaphor/ui/styleeditor.ui")
+        self.window_builder.add_from_file("gaphor/diagram/styleeditor.ui")
         self.window = None
         self.close_callback = close_callback
         self.color_button = None

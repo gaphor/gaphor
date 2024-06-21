@@ -2,11 +2,21 @@ from gi.repository import Gdk
 
 from gaphor import UML
 from gaphor.core.modeling import StyleSheet
+from gaphor.diagram.general import Line
+from gaphor.diagram.styleeditor import StyleEditor, StylePropertyPage
 from gaphor.diagram.tests.fixtures import find
 from gaphor.transaction import Transaction
 from gaphor.ui.diagrampage import DiagramPage
-from gaphor.ui.styleeditor import StyleEditor
 from gaphor.UML.classes import ClassItem
+
+
+def test_style_editor_page(diagram):
+    item = diagram.create(Line)
+    property_page = StylePropertyPage(item)
+    widget = property_page.construct()
+    assert widget
+    style_editor = find(widget, "style-editor")
+    assert style_editor
 
 
 def test_style_editor_creation(diagram):
