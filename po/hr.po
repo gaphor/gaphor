@@ -4,19 +4,20 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version:  Gaphor\n"
+"Project-Id-Version: Gaphor\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2024-02-27 10:00-0500\n"
-"PO-Revision-Date: 2024-01-11 16:06+0000\n"
+"PO-Revision-Date: 2024-06-22 16:09+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
+"Language-Team: Croatian <https://hosted.weblate.org/projects/gaphor/gaphor/"
+"hr/>\n"
 "Language: hr\n"
-"Language-Team: Croatian "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/hr/>\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Weblate 5.6-rc\n"
 "Generated-By: Babel 2.14.0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:23 gaphor/C4Model/toolbox.py:67
@@ -972,19 +973,16 @@ msgstr ""
 "Koristi <b>-</b>/<b>=</b> za premještanje elemenata prema gore ili dolje."
 
 #: gaphor/UML/actions/propertypages.ui:377
-#, fuzzy
 msgid "In/Out"
-msgstr "NE"
+msgstr "Ulaz/Izlaz"
 
 #: gaphor/UML/actions/propertypages.ui:378
-#, fuzzy
 msgid "In"
-msgstr "Crta"
+msgstr "Ulaz"
 
 #: gaphor/UML/actions/propertypages.ui:379
-#, fuzzy
 msgid "Out"
-msgstr "NE"
+msgstr "Izlaz"
 
 #: gaphor/UML/actions/propertypages.ui:380
 #, fuzzy
@@ -2387,7 +2385,7 @@ msgstr "<Bez>"
 
 #: gaphor/ui/diagrampage.py:311
 msgid "Show in Model Browser"
-msgstr ""
+msgstr "Prikaži u pregledniku modela"
 
 #: gaphor/ui/diagrams.ui:12
 msgid "Open a Diagram"
@@ -2403,7 +2401,7 @@ msgstr ""
 
 #: gaphor/ui/elementeditor.py:413 gaphor/ui/elementeditor.ui:352
 msgid "No focused item."
-msgstr ""
+msgstr "Nijedan element nije u fokusu."
 
 #: gaphor/ui/elementeditor.ui:11
 msgid "No item selected"
@@ -2503,7 +2501,7 @@ msgstr "Stilski predložak"
 
 #: gaphor/ui/elementeditor.ui:338
 msgid "CSS nodes of focused item"
-msgstr ""
+msgstr "CSS čvorovi fokusiranog elementa"
 
 #: gaphor/ui/elementeditor.ui:363
 msgid ""
@@ -2637,7 +2635,6 @@ msgid "Save Gaphor Model As"
 msgstr "Spremi Gaphor model kao"
 
 #: gaphor/ui/filemanager.py:389 gaphor/ui/filemanager.py:424
-#, fuzzy
 msgid "New Model"
 msgstr "Novi model"
 
@@ -2716,30 +2713,27 @@ msgstr "Predložak za slojevit C4 model"
 
 #: gaphor/ui/greeter.py:66
 msgid "UML Example"
-msgstr ""
+msgstr "UML primjer"
 
 #: gaphor/ui/greeter.py:67
-#, fuzzy
 msgid "Unified Modeling Language example model"
-msgstr "Predložak za Unified Modeling Language"
+msgstr "Primjer modela za Unified Modeling Language"
 
 #: gaphor/ui/greeter.py:73
 msgid "SysML Example"
-msgstr ""
+msgstr "SysML primjer"
 
 #: gaphor/ui/greeter.py:74
-#, fuzzy
 msgid "Systems Modeling Language example model"
-msgstr "Predložak za Systems Modeling Language"
+msgstr "Primjer modela za Systems Modeling Language"
 
 #: gaphor/ui/greeter.py:80
 msgid "RAAML Example"
-msgstr ""
+msgstr "RAAML primjer"
 
 #: gaphor/ui/greeter.py:81
-#, fuzzy
 msgid "Risk Analysis and Assessment Modeling Language example model"
-msgstr "Predložak za Risk Analysis i Assessment Modeling Language"
+msgstr "Primjer modela za Risk Analysis i Assessment Modeling Language"
 
 #: gaphor/ui/greeter.ui:8 gaphor/ui/greeter.ui:53 gaphor/ui/mainwindow.py:48
 msgid "Open Model…"
@@ -2795,7 +2789,6 @@ msgid "Toggle Property Editor"
 msgstr "Uklj./Isklj. uređivač svojstava"
 
 #: gaphor/ui/modelbrowser.py:177
-#, fuzzy
 msgid "New Diagram"
 msgstr "Novi dijagram"
 
@@ -2844,13 +2837,12 @@ msgid "New Generic Diagram"
 msgstr "Novi generički dijagram"
 
 #: gaphor/ui/modelchanged.ui:6
-#, fuzzy
 msgid "Model Changed on Disk"
-msgstr "Promjene sjedinjavanja modela"
+msgstr "Model je promijenjen na disku"
 
 #: gaphor/ui/modelchanged.ui:7
 msgid "Discard Changes and Reload"
-msgstr ""
+msgstr "Odbaci promjene i učitaj ponovo"
 
 #: gaphor/ui/tests/test_treemodel.py:200 gaphor/ui/treemodel.py:64
 msgid "<Relationships>"
@@ -2861,7 +2853,6 @@ msgid "Restart Gaphor to enable language changes"
 msgstr "Za aktiviranje promjene jezika ponovo pokreni Gaphor"
 
 #: gaphor/ui/help/about.ui:13
-#, fuzzy
 msgid ""
 "Copyright © 2001 The Gaphor Development Team.\n"
 "\n"
@@ -2869,7 +2860,7 @@ msgid ""
 "Object Management Group, Inc. in the United States and/or other "
 "countries."
 msgstr ""
-"Autorska prava © 2001. – 2023., Arjan Molenaar i Dan Yeaw.\n"
+"Autorska prava © 2001. The Gaphor Development Team.\n"
 "\n"
 "UML, SysML i RAAML su registrirani zaštitni znakovi ili zaštitni znakovi "
 "organizacije Object Management Group, Inc. u SAD-u i/ili drugim zemljama."
@@ -3087,4 +3078,3 @@ msgstr "Aktualiziraj vezu „{name}”"
 
 #~ msgid "Recently Opened"
 #~ msgstr "Nedavno otvoreni"
-
