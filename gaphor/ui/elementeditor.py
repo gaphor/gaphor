@@ -64,7 +64,13 @@ class ElementEditor(UIComponent, ActionProvider):
     """
 
     def __init__(
-        self, event_manager, element_factory, modeling_language, diagrams, properties
+        self,
+        event_manager,
+        component_registry,
+        element_factory,
+        modeling_language,
+        diagrams,
+        properties,
     ):
         """Constructor.
 
@@ -74,7 +80,9 @@ class ElementEditor(UIComponent, ActionProvider):
         """
         self.event_manager = event_manager
         self.properties = properties
-        self.editors = EditorStack(event_manager, diagrams, properties)
+        self.editors = EditorStack(
+            event_manager, component_registry, diagrams, properties
+        )
         self.preferences = PreferencesStack(event_manager, diagrams, element_factory)
         self.modelmerge = ModelMerge(event_manager, element_factory, modeling_language)
         self.editor_stack: Gtk.Box | None = None
@@ -152,8 +160,9 @@ class ElementEditor(UIComponent, ActionProvider):
 
 
 class EditorStack:
-    def __init__(self, event_manager, diagrams, properties):
+    def __init__(self, event_manager, component_registry, diagrams, properties):
         self.event_manager = event_manager
+        self.component_registry = component_registry
         self.diagrams = diagrams
         self.properties = properties
 
@@ -181,14 +190,17 @@ class EditorStack:
 
     def _get_adapters(self, item):
         """Return an ordered list of (order, name, adapter)."""
-        adaptermap = {}
-        if isinstance(item, Presentation) and item.subject:
-            for adapter in PropertyPages(item.subject):
-                adaptermap[(adapter.order, adapter.__class__.__name__)] = adapter
-        for adapter in PropertyPages(item):
-            adaptermap[(adapter.order, adapter.__class__.__name__)] = adapter
+        page_map = {}
+        partial = self.component_registry.partial
 
-        return sorted(adaptermap.items())
+        if isinstance(item, Presentation) and item.subject:
+            for page in PropertyPages.find(item.subject):
+                page_map[(page.order, page.__name__)] = partial(page)(item.subject)
+
+        for page in PropertyPages.find(item):
+            page_map[(page.order, page.__name__)] = partial(page)(item)
+
+        return sorted(page_map.items())
 
     def create_pages(self, item):
         """Load all tabs that can operate on the given item."""

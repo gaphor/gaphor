@@ -3,7 +3,8 @@ from __future__ import annotations
 from gi.repository import Gio, GObject, Gtk
 
 from gaphor import UML
-from gaphor.core import event_handler, gettext, transactional
+from gaphor.core import event_handler, gettext
+from gaphor.core.eventmanager import EventManager
 from gaphor.core.format import format, parse
 from gaphor.core.modeling import AssociationUpdated
 from gaphor.diagram.propertypages import (
@@ -17,6 +18,7 @@ from gaphor.diagram.propertypages import (
 from gaphor.diagram.propertypages import (
     new_builder as diagram_new_builder,
 )
+from gaphor.transaction import Transaction
 from gaphor.UML.actions.activity import ActivityParameterNodeItem
 from gaphor.UML.propertypages import (
     ShowTypedElementPropertyPage,
@@ -33,10 +35,16 @@ new_builder = new_resource_builder("gaphor.UML.actions")
 
 
 class ActivityParameterNodeView(GObject.Object):
-    def __init__(self, node: UML.ActivityParameterNode | None, activity: UML.Activity):
+    def __init__(
+        self,
+        node: UML.ActivityParameterNode | None,
+        activity: UML.Activity,
+        event_manager: EventManager,
+    ):
         super().__init__()
         self.node = node
         self.activity = activity
+        self.event_manager = event_manager
 
     editing = GObject.Property(type=bool, default=False)
 
@@ -45,18 +53,18 @@ class ActivityParameterNodeView(GObject.Object):
         return (format(self.node.parameter) or " ") if self.node else ""
 
     @parameter.setter  # type: ignore[no-redef]
-    @transactional
     def parameter(self, value):
-        if not self.node:
-            if not value:
-                return
+        with Transaction(self.event_manager):
+            if not self.node:
+                if not value:
+                    return
 
-            model = self.activity.model
-            node = model.create(UML.ActivityParameterNode)
-            node.parameter = model.create(UML.Parameter)
-            self.node = node
-            self.activity.node = node
-        parse(self.node.parameter, value)
+                model = self.activity.model
+                node = model.create(UML.ActivityParameterNode)
+                node.parameter = model.create(UML.Parameter)
+                self.node = node
+                self.activity.node = node
+            parse(self.node.parameter, value)
 
     def empty(self):
         return not self.node
@@ -69,7 +77,9 @@ class ActivityParameterNodeView(GObject.Object):
         return self.activity.node.swap(item1.node, item2.node)
 
 
-def activity_parameter_node_model(activity: UML.Activity) -> Gio.ListModel:
+def activity_parameter_node_model(
+    activity: UML.Activity, event_manager: EventManager
+) -> Gio.ListModel:
     return create_list_store(
         ActivityParameterNodeView,
         (
@@ -77,12 +87,12 @@ def activity_parameter_node_model(activity: UML.Activity) -> Gio.ListModel:
             for node in activity.node
             if isinstance(node, UML.ActivityParameterNode) and node.parameter
         ),
-        lambda node: ActivityParameterNodeView(node, activity),
+        lambda node: ActivityParameterNodeView(node, activity, event_manager),
     )
 
 
 def update_activity_parameter_node_model(
-    store: Gio.ListStore, activity: UML.Activity
+    store: Gio.ListStore, activity: UML.Activity, event_manager: EventManager
 ) -> Gio.ListStore:
     return update_list_store(
         store,
@@ -92,7 +102,7 @@ def update_activity_parameter_node_model(
             for node in activity.node
             if isinstance(node, UML.ActivityParameterNode) and node.parameter
         ),
-        lambda node: ActivityParameterNodeView(node, activity),
+        lambda node: ActivityParameterNodeView(node, activity, event_manager),
     )
 
 
@@ -100,8 +110,9 @@ def update_activity_parameter_node_model(
 class ActivityPage(PropertyPageBase):
     order = 40
 
-    def __init__(self, subject: UML.Activity):
+    def __init__(self, subject: UML.Activity, event_manager: EventManager):
         self.subject = subject
+        self.event_manager = event_manager
         self.watcher = subject and subject.watcher()
 
     def construct(self):
@@ -139,7 +150,7 @@ class ActivityPage(PropertyPageBase):
         ):
             column.set_factory(factory)
 
-        self.model = activity_parameter_node_model(subject)
+        self.model = activity_parameter_node_model(subject, self.event_manager)
         selection = Gtk.SingleSelection.new(self.model)
         column_view.set_model(selection)
 
@@ -152,7 +163,9 @@ class ActivityPage(PropertyPageBase):
 
     @event_handler(AssociationUpdated)
     def on_nodes_changed(self, event):
-        update_activity_parameter_node_model(self.model, self.subject)
+        update_activity_parameter_node_model(
+            self.model, self.subject, self.event_manager
+        )
 
     def on_parameters_info_clicked(self, image, event):
         self.info.set_visible(True)
@@ -167,10 +180,11 @@ class ActivityParameterNodeNamePropertyPage(PropertyPageBase):
 
     order = 10
 
-    def __init__(self, subject):
+    def __init__(self, subject: UML.ActivityParameterNode, event_manager: EventManager):
         assert subject is None or hasattr(subject, "name")
         super().__init__()
         self.subject = subject
+        self.event_manager = event_manager
         self.watcher = subject.watcher() if subject else None
 
     def construct(self):
@@ -198,10 +212,10 @@ class ActivityParameterNodeNamePropertyPage(PropertyPageBase):
             builder.get_object("name-editor"), self.watcher
         )
 
-    @transactional
     def _on_name_changed(self, entry):
         if self.subject.parameter.name != entry.get_text():
-            self.subject.parameter.name = entry.get_text()
+            with Transaction(self.event_manager):
+                self.subject.parameter.name = entry.get_text()
 
 
 @PropertyPages.register(UML.ActivityParameterNode)
@@ -223,9 +237,10 @@ class ActivityParameterNodeDirectionPropertyPage(PropertyPageBase):
     DIRECTION = UML.Parameter.direction.values
     order = 40
 
-    def __init__(self, subject: UML.ActivityParameterNode):
+    def __init__(self, subject: UML.ActivityParameterNode, event_manager):
         super().__init__()
         self.subject = subject
+        self.event_manager = event_manager
 
     def construct(self):
         if not (self.subject and self.subject.parameter):
@@ -243,18 +258,19 @@ class ActivityParameterNodeDirectionPropertyPage(PropertyPageBase):
 
         return builder.get_object("parameter-direction-editor")
 
-    @transactional
     def _on_parameter_direction_changed(self, dropdown, _pspec):
-        self.subject.parameter.direction = self.DIRECTION[dropdown.get_selected()]
+        with Transaction(self.event_manager):
+            self.subject.parameter.direction = self.DIRECTION[dropdown.get_selected()]
 
 
 @PropertyPages.register(ActivityParameterNodeItem)
 class ShowActivityParameterNodeDirectionPropertyPage(PropertyPageBase):
     order = 40
 
-    def __init__(self, item: ActivityParameterNodeItem):
+    def __init__(self, item: ActivityParameterNodeItem, event_manager):
         super().__init__()
         self.item = item
+        self.event_manager = event_manager
 
     def construct(self):
         if not (self.item.subject and self.item.subject.parameter):
@@ -272,6 +288,6 @@ class ShowActivityParameterNodeDirectionPropertyPage(PropertyPageBase):
 
         return builder.get_object("show-parameter-direction-editor")
 
-    @transactional
     def _on_show_direction_changed(self, button, _gspec):
-        self.item.show_direction = button.get_active()
+        with Transaction(self.event_manager):
+            self.item.show_direction = button.get_active()

@@ -1,7 +1,6 @@
 from gi.repository import Gtk
 
 from gaphor import UML
-from gaphor.core import transactional
 from gaphor.diagram.propertypages import (
     PropertyPageBase,
     PropertyPages,
@@ -9,6 +8,7 @@ from gaphor.diagram.propertypages import (
     new_resource_builder,
     unsubscribe_all_on_destroy,
 )
+from gaphor.transaction import Transaction
 
 new_builder = new_resource_builder("gaphor.UML.profiles")
 
@@ -37,8 +37,9 @@ class MetaclassPropertyPage(PropertyPageBase):
         if _issubclass(getattr(UML, c), UML.Element) and c != "Stereotype"
     )
 
-    def __init__(self, subject: UML.Class):
+    def __init__(self, subject: UML.Class, event_manager):
         self.subject = subject
+        self.event_manager = event_manager
         self.watcher = subject.watcher()
 
     def construct(self):
@@ -65,6 +66,6 @@ class MetaclassPropertyPage(PropertyPageBase):
             builder.get_object("metaclass-editor"), self.watcher
         )
 
-    @transactional
     def _on_name_changed(self, dropdown, _pspec):
-        self.subject.name = dropdown.get_selected_item().get_string()
+        with Transaction(self.event_manager):
+            self.subject.name = dropdown.get_selected_item().get_string()

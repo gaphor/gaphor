@@ -6,6 +6,7 @@ import gaphor.UML.classes.classespropertypages  # noqa
 from gaphor import UML
 from gaphor.core.modeling.diagram import StyledItem
 from gaphor.diagram.tests.fixtures import find
+from gaphor.services.componentregistry import ComponentRegistry
 from gaphor.ui.elementeditor import ElementEditor, dump_css_tree
 from gaphor.UML.diagramitems import ClassItem, PackageItem
 
@@ -20,15 +21,29 @@ def diagrams():
     return DiagramsStub()
 
 
+@pytest.fixture
+def component_registry(event_manager):
+    reg = ComponentRegistry()
+    reg.register("event_manager", event_manager)
+    return reg
+
+
 class DummyProperties(dict):
     def set(self, key, val):
         self[key] = val
 
 
-def test_reopen_of_window(event_manager, element_factory, modeling_language, diagrams):
+def test_reopen_of_window(
+    event_manager, component_registry, element_factory, modeling_language, diagrams
+):
     properties = DummyProperties()
     editor = ElementEditor(
-        event_manager, element_factory, modeling_language, diagrams, properties
+        event_manager,
+        component_registry,
+        element_factory,
+        modeling_language,
+        diagrams,
+        properties,
     )
 
     editor.open()
@@ -38,11 +53,21 @@ def test_reopen_of_window(event_manager, element_factory, modeling_language, dia
 
 
 def test_create_pages(
-    event_manager, element_factory, modeling_language, diagrams, create
+    event_manager,
+    component_registry,
+    element_factory,
+    modeling_language,
+    diagrams,
+    create,
 ):
     properties = DummyProperties()
     editor = ElementEditor(
-        event_manager, element_factory, modeling_language, diagrams, properties
+        event_manager,
+        component_registry,
+        element_factory,
+        modeling_language,
+        diagrams,
+        properties,
     )
     package_item = create(PackageItem, UML.Package)
 

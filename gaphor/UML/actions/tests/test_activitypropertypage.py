@@ -19,19 +19,19 @@ def activity_parameter_node(element_factory, name=None):
     return node
 
 
-def test_activity_parameter_node_empty(element_factory):
+def test_activity_parameter_node_empty(element_factory, event_manager):
     activity = element_factory.create(UML.Activity)
-    model = activity_parameter_node_model(activity)
+    model = activity_parameter_node_model(activity, event_manager)
 
     empty = model.get_item(0)
 
     assert not empty.node
 
 
-def test_activity_parameter_node_in_model(element_factory):
+def test_activity_parameter_node_in_model(element_factory, event_manager):
     activity = element_factory.create(UML.Activity)
     activity.node = activity_parameter_node(element_factory, "name")
-    model = activity_parameter_node_model(activity)
+    model = activity_parameter_node_model(activity, event_manager)
 
     param = model.get_item(0)
     empty = model.get_item(1)
@@ -40,11 +40,13 @@ def test_activity_parameter_node_in_model(element_factory):
     assert not empty.node
 
 
-def test_activity_parameter_node_edit_existing_parameter(element_factory):
+def test_activity_parameter_node_edit_existing_parameter(
+    element_factory, event_manager
+):
     activity = element_factory.create(UML.Activity)
     activity.node = activity_parameter_node(element_factory)
     parameter = activity.node[0].parameter
-    model = activity_parameter_node_model(activity)
+    model = activity_parameter_node_model(activity, event_manager)
 
     view = model.get_item(0)
     view.parameter = "in attr: str"
@@ -54,9 +56,9 @@ def test_activity_parameter_node_edit_existing_parameter(element_factory):
     assert parameter.typeValue == "str"
 
 
-def test_activity_parameter_node_add_new_parameter(element_factory):
+def test_activity_parameter_node_add_new_parameter(element_factory, event_manager):
     activity = element_factory.create(UML.Activity)
-    model = activity_parameter_node_model(activity)
+    model = activity_parameter_node_model(activity, event_manager)
 
     view = model.get_item(0)
     view.parameter = "in attr: str"
@@ -68,10 +70,10 @@ def test_activity_parameter_node_add_new_parameter(element_factory):
     assert parameter.typeValue == "str"
 
 
-def test_update_model_when_new_parameter_added(element_factory):
+def test_update_model_when_new_parameter_added(element_factory, event_manager):
     subject = element_factory.create(UML.Activity)
 
-    property_page = ActivityPage(subject)
+    property_page = ActivityPage(subject, event_manager)
     property_page.construct()
 
     subject.node = activity_parameter_node(element_factory, "one")
@@ -79,10 +81,10 @@ def test_update_model_when_new_parameter_added(element_factory):
     assert property_page.model.get_n_items() == 2  # one + empty row
 
 
-def test_activity_parameter_node_name_editing(element_factory):
+def test_activity_parameter_node_name_editing(element_factory, event_manager):
     subject = element_factory.create(UML.ActivityParameterNode)
     subject.parameter = element_factory.create(UML.Parameter)
-    property_page = ActivityParameterNodeNamePropertyPage(subject)
+    property_page = ActivityParameterNodeNamePropertyPage(subject, event_manager)
 
     widget = property_page.construct()
     name = find(widget, "name-entry")
@@ -91,10 +93,12 @@ def test_activity_parameter_node_name_editing(element_factory):
     assert subject.parameter.name == "A new name"
 
 
-def test_update_model_when_new_parameter_added_via_list_model(element_factory):
+def test_update_model_when_new_parameter_added_via_list_model(
+    element_factory, event_manager
+):
     subject = element_factory.create(UML.Activity)
 
-    property_page = ActivityPage(subject)
+    property_page = ActivityPage(subject, event_manager)
     property_page.construct()
 
     new_view = property_page.model.get_item(0)
@@ -105,11 +109,13 @@ def test_update_model_when_new_parameter_added_via_list_model(element_factory):
     assert property_page.model.get_item(1).node is None
 
 
-def test_update_model_with_single_node_when_parameter_deleted(element_factory):
+def test_update_model_with_single_node_when_parameter_deleted(
+    element_factory, event_manager
+):
     subject = element_factory.create(UML.Activity)
     subject.node = node = activity_parameter_node(element_factory, "one")
 
-    property_page = ActivityPage(subject)
+    property_page = ActivityPage(subject, event_manager)
     property_page.construct()
 
     del subject.node[node]
@@ -119,12 +125,14 @@ def test_update_model_with_single_node_when_parameter_deleted(element_factory):
     assert property_page.model.get_item(0).node is None
 
 
-def test_update_model_with_multiple_nodes_when_parameter_deleted(element_factory):
+def test_update_model_with_multiple_nodes_when_parameter_deleted(
+    element_factory, event_manager
+):
     subject = element_factory.create(UML.Activity)
     subject.node = node = activity_parameter_node(element_factory, "one")
     subject.node = activity_parameter_node(element_factory, "two")
 
-    property_page = ActivityPage(subject)
+    property_page = ActivityPage(subject, event_manager)
     property_page.construct()
 
     del subject.node[node]
@@ -134,13 +142,13 @@ def test_update_model_with_multiple_nodes_when_parameter_deleted(element_factory
     assert property_page.model.get_item(1).node is None
 
 
-def test_activity_parameter_node_reorder_down(element_factory):
+def test_activity_parameter_node_reorder_down(element_factory, event_manager):
     subject = element_factory.create(UML.Activity)
     subject.node = activity_parameter_node(element_factory, "one")
     subject.node = activity_parameter_node(element_factory, "two")
     node_one, node_two = subject.node
 
-    property_page = ActivityPage(subject)
+    property_page = ActivityPage(subject, event_manager)
     widget = property_page.construct()
 
     list_view = find(widget, "parameter-list")
@@ -151,13 +159,13 @@ def test_activity_parameter_node_reorder_down(element_factory):
     assert subject.node[1] is node_one
 
 
-def test_activity_parameter_node_reorder_up(element_factory):
+def test_activity_parameter_node_reorder_up(element_factory, event_manager):
     subject = element_factory.create(UML.Activity)
     subject.node = activity_parameter_node(element_factory, "one")
     subject.node = activity_parameter_node(element_factory, "two")
     node_one, node_two = subject.node
 
-    property_page = ActivityPage(subject)
+    property_page = ActivityPage(subject, event_manager)
     widget = property_page.construct()
 
     list_view = find(widget, "parameter-list")
@@ -170,13 +178,13 @@ def test_activity_parameter_node_reorder_up(element_factory):
     assert subject.node[1] is node_one
 
 
-def test_activity_parameter_node_reorder_first_node_up(element_factory):
+def test_activity_parameter_node_reorder_first_node_up(element_factory, event_manager):
     subject = element_factory.create(UML.Activity)
     subject.node = activity_parameter_node(element_factory, "one")
     subject.node = activity_parameter_node(element_factory, "two")
     node_one, node_two = subject.node
 
-    property_page = ActivityPage(subject)
+    property_page = ActivityPage(subject, event_manager)
     widget = property_page.construct()
 
     list_view = find(widget, "parameter-list")
@@ -187,40 +195,46 @@ def test_activity_parameter_node_reorder_first_node_up(element_factory):
     assert subject.node[1] is node_two
 
 
-def test_construct_activity_item_property_page(element_factory):
+def test_construct_activity_item_property_page(element_factory, event_manager):
     subject = element_factory.create(UML.Activity)
 
-    property_page = ActivityPage(subject)
+    property_page = ActivityPage(subject, event_manager)
     widget = property_page.construct()
 
     assert widget
 
 
-def test_construct_activity_parameter_node_type_property_page(element_factory):
+def test_construct_activity_parameter_node_type_property_page(
+    element_factory, event_manager
+):
     subject = element_factory.create(UML.ActivityParameterNode)
     subject.parameter = element_factory.create(UML.Parameter)
 
-    property_page = ActivityParameterNodeTypePropertyPage(subject)
+    property_page = ActivityParameterNodeTypePropertyPage(subject, event_manager)
     widget = property_page.construct()
 
     assert widget
 
 
-def test_construct_activity_parameter_node_direction_property_page(element_factory):
+def test_construct_activity_parameter_node_direction_property_page(
+    element_factory, event_manager
+):
     subject = element_factory.create(UML.ActivityParameterNode)
     subject.parameter = element_factory.create(UML.Parameter)
 
-    property_page = ActivityParameterNodeDirectionPropertyPage(subject)
+    property_page = ActivityParameterNodeDirectionPropertyPage(subject, event_manager)
     widget = property_page.construct()
 
     assert widget
 
 
-def test_construct_activity_parameter_node_direction_changed(element_factory):
+def test_construct_activity_parameter_node_direction_changed(
+    element_factory, event_manager
+):
     subject = element_factory.create(UML.ActivityParameterNode)
     subject.parameter = element_factory.create(UML.Parameter)
 
-    property_page = ActivityParameterNodeDirectionPropertyPage(subject)
+    property_page = ActivityParameterNodeDirectionPropertyPage(subject, event_manager)
     widget = property_page.construct()
 
     direction = find(widget, "parameter-direction")

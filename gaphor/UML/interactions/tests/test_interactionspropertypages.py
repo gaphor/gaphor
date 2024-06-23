@@ -6,12 +6,12 @@ from gaphor.UML.interactions.interactionspropertypages import (
 )
 
 
-def test_lifeline_property_page(diagram, element_factory):
+def test_lifeline_property_page(diagram, element_factory, event_manager):
     subject = element_factory.create(UML.Lifeline)
 
     type = element_factory.create(UML.Interface)
     type.name = "Bar"
-    property_page = LifelinePropertyPage(subject)
+    property_page = LifelinePropertyPage(subject, event_manager)
 
     widget = property_page.construct()
     dropdown = find(widget, "element-type")
@@ -24,11 +24,11 @@ def test_lifeline_property_page(diagram, element_factory):
     assert subject.represents is type
 
 
-def test_message_property_page(diagram, element_factory):
+def test_message_property_page(diagram, element_factory, event_manager):
     item = diagram.create(
         UML.interactions.MessageItem, subject=element_factory.create(UML.Message)
     )
-    property_page = MessagePropertyPage(item)
+    property_page = MessagePropertyPage(item, event_manager)
 
     widget = property_page.construct()
     message_combo = find(widget, "message-combo")

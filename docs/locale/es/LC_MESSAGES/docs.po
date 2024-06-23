@@ -4326,14 +4326,14 @@ msgid "Overview of Transactions"
 msgstr "Resumen de las transacciones"
 
 #: ../undo.md:9
-msgid "The recording and playback of changes in Gaphor is handled by the the Undo Manager. The Undo Manager works transactionally. A transaction must succeed or fail as a complete unit. If the transaction fails in the middle, it is rolled back. In Gaphor this is achieved by the `transaction` module, which provides a context manager `Transaction` and a decorator called `@transactional`."
+msgid "The recording and playback of changes in Gaphor is handled by the the Undo Manager. The Undo Manager works transactionally. A transaction must succeed or fail as a complete unit. If the transaction fails in the middle, it is rolled back. In Gaphor this is achieved by the `transaction` module, which provides a context manager `Transaction`."
 msgstr ""
 "La grabación y reproducción de cambios en Gaphor se gestiona mediante el "
 "Gestor de deshacer. El Gestor de deshacer funciona transaccionalmente. Una "
 "transacción debe tener éxito o fallar como una unidad completa. Si la "
 "transacción falla en el medio, es revertida. En Gaphor esto se consigue "
 "mediante el módulo `transaction`, que proporciona un gestor de contexto "
-"`Transaction` y un decorador llamado `@transactional`."
+"`Transaction`."
 
 #: ../undo.md:16
 msgid "When transactions take place, they emit event notifications on the key transaction milestones so that other services can make use of the events. The event notifications are for the begin of the transaction, and the commit of the transaction if it is successful or the rollback of the transaction if it fails."

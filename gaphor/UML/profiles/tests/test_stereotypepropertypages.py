@@ -6,15 +6,17 @@ from gaphor.UML.profiles.stereotypepropertypages import (
 )
 
 
-def create_property_page(diagram, element_factory) -> StereotypePage:
-    return StereotypePage(element_factory.create(UML.Class))
+def create_property_page(diagram, element_factory, event_manager) -> StereotypePage:
+    return StereotypePage(element_factory.create(UML.Class), event_manager)
 
 
-def create_show_property_page(diagram, element_factory) -> ShowStereotypePage:
+def create_show_property_page(
+    diagram, element_factory, event_manager
+) -> ShowStereotypePage:
     item = diagram.create(
         UML.classes.ClassItem, subject=element_factory.create(UML.Class)
     )
-    return ShowStereotypePage(item)
+    return ShowStereotypePage(item, event_manager)
 
 
 def get_model(property_page: StereotypePage):
@@ -32,9 +34,11 @@ def metaclass_and_stereotype(element_factory):
     return metaclass, stereotype
 
 
-def test_show_stereotype_property_page_with_stereotype(diagram, element_factory):
+def test_show_stereotype_property_page_with_stereotype(
+    diagram, element_factory, event_manager
+):
     metaclass, stereotype = metaclass_and_stereotype(element_factory)
-    property_page = create_show_property_page(diagram, element_factory)
+    property_page = create_show_property_page(diagram, element_factory, event_manager)
 
     widget = property_page.construct()
     show_stereotypes = find(widget, "show-stereotypes")
@@ -43,10 +47,12 @@ def test_show_stereotype_property_page_with_stereotype(diagram, element_factory)
     assert property_page.item.show_stereotypes
 
 
-def test_stereotype_property_page_apply_stereotype(diagram, element_factory):
+def test_stereotype_property_page_apply_stereotype(
+    diagram, element_factory, event_manager
+):
     _metaclass, stereotype = metaclass_and_stereotype(element_factory)
 
-    property_page = create_property_page(diagram, element_factory)
+    property_page = create_property_page(diagram, element_factory, event_manager)
     subject = property_page.subject
     model = get_model(property_page)
     view = model[0]
@@ -55,7 +61,7 @@ def test_stereotype_property_page_apply_stereotype(diagram, element_factory):
     assert stereotype in subject.appliedStereotype[0].classifier
 
 
-def test_stereotype_property_page_slot_value(diagram, element_factory):
+def test_stereotype_property_page_slot_value(diagram, element_factory, event_manager):
     metaclass = element_factory.create(UML.Class)
     metaclass.name = "Class"
     stereotype = element_factory.create(UML.Stereotype)
@@ -63,7 +69,7 @@ def test_stereotype_property_page_slot_value(diagram, element_factory):
     stereotype.ownedAttribute = element_factory.create(UML.Property)
     UML.recipes.create_extension(metaclass, stereotype)
 
-    property_page = create_property_page(diagram, element_factory)
+    property_page = create_property_page(diagram, element_factory, event_manager)
     model = get_model(property_page)
     model[0].applied = True
     model[1].slot_value = "test"
@@ -74,13 +80,13 @@ def test_stereotype_property_page_slot_value(diagram, element_factory):
     assert "test" == slot.value
 
 
-def test_inherited_stereotype(diagram, element_factory):
+def test_inherited_stereotype(diagram, element_factory, event_manager):
     metaclass, stereotype = metaclass_and_stereotype(element_factory)
     substereotype = element_factory.create(UML.Stereotype)
     substereotype.name = "SubStereotype"
     UML.recipes.create_generalization(stereotype, substereotype)
 
-    property_page = create_property_page(diagram, element_factory)
+    property_page = create_property_page(diagram, element_factory, event_manager)
     model = get_model(property_page)
 
     assert model[0]
@@ -89,7 +95,7 @@ def test_inherited_stereotype(diagram, element_factory):
     assert model[1].name == "SubStereotype"
 
 
-def test_inherited_stereotype_with_attributes(diagram, element_factory):
+def test_inherited_stereotype_with_attributes(diagram, element_factory, event_manager):
     metaclass, stereotype = metaclass_and_stereotype(element_factory)
     attr = element_factory.create(UML.Property)
     attr.name = "Attr"
@@ -98,7 +104,7 @@ def test_inherited_stereotype_with_attributes(diagram, element_factory):
     substereotype.name = "SubStereotype"
     UML.recipes.create_generalization(stereotype, substereotype)
 
-    property_page = create_property_page(diagram, element_factory)
+    property_page = create_property_page(diagram, element_factory, event_manager)
     model = get_model(property_page)
 
     assert model[0]

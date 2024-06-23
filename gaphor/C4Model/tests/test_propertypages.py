@@ -3,9 +3,9 @@ from gaphor.C4Model.propertypages import DescriptionPropertyPage, TechnologyProp
 from gaphor.diagram.tests.fixtures import find
 
 
-def test_description_property_page(element_factory):
+def test_description_property_page(event_manager, element_factory):
     subject = element_factory.create(C4Model.c4model.C4Container)
-    property_page = DescriptionPropertyPage(subject)
+    property_page = DescriptionPropertyPage(subject, event_manager)
 
     widget = property_page.construct()
     description = find(widget, "description")
@@ -14,9 +14,9 @@ def test_description_property_page(element_factory):
     assert subject.description == "test"
 
 
-def test_technology_property_page(element_factory):
+def test_technology_property_page(event_manager, element_factory):
     subject = element_factory.create(C4Model.c4model.C4Container)
-    property_page = TechnologyPropertyPage(subject)
+    property_page = TechnologyPropertyPage(subject, event_manager)
 
     widget = property_page.construct()
     technology = find(widget, "technology")
