@@ -21,12 +21,10 @@ from typing import Callable
 
 from gaphor.core.modeling.element import Element
 class NamedElement(Element):
-    clientDependency: relation_many[Dependency]
     memberNamespace: relation_one[Namespace]
     name: _attribute[str] = _attribute("name", str)
     namespace: relation_one[Namespace]
     qualifiedName: derived[list[str]]
-    supplierDependency: relation_many[Dependency]
     visibility = _enumeration("visibility", ("public", "private", "package", "protected"), "public")
 
 
@@ -56,8 +54,7 @@ class EnumerationLiteral(InstanceSpecification):
 
 from gaphor.core.modeling.coremodel import Relationship
 class DirectedRelationship(Relationship):
-    source: relation_many[Element]
-    target: relation_many[Element]
+    pass
 
 
 class PackageMerge(DirectedRelationship):
@@ -171,11 +168,7 @@ class CommunicationPath(Association):
     pass
 
 
-class Dependency(DirectedRelationship, PackageableElement):
-    client: relation_one[NamedElement]
-    supplier: relation_one[NamedElement]
-
-
+from gaphor.core.modeling.coremodel import Dependency
 class Abstraction(Dependency):
     mapping: _attribute[str] = _attribute("mapping", str)
 
@@ -741,7 +734,7 @@ class Image(Element):
 
 
 class ComponentRealization(Realization):
-    abstraction: relation_one[Component]  # type: ignore[assignment]
+    abstraction: relation_one[Component]
     realizingClassifier: relation_one[Classifier]
 
 
@@ -784,11 +777,7 @@ class ValueSpecificationAction(Action):
 # defined in umloverrides.py
 
 
-Element.directedRelationship = derivedunion("directedRelationship", DirectedRelationship)
 Element.appliedStereotype = association("appliedStereotype", InstanceSpecification, composite=True, opposite="extended")
-Element.relationship.add(Element.directedRelationship)  # type: ignore[attr-defined]
-NamedElement.supplierDependency = association("supplierDependency", Dependency, opposite="supplier")
-NamedElement.clientDependency = association("clientDependency", Dependency, composite=True, opposite="client")
 NamedElement.namespace = derivedunion("namespace", Namespace, upper=1)
 # 68: override NamedElement.qualifiedName: derived[list[str]]
 
@@ -803,9 +792,6 @@ NamedElement.qualifiedName = derived(
 )
 
 NamedElement.memberNamespace = derivedunion("memberNamespace", Namespace, upper=1)
-Element.directedRelationship.add(NamedElement.supplierDependency)  # type: ignore[attr-defined]
-Element.ownedElement.add(NamedElement.clientDependency)  # type: ignore[attr-defined]
-Element.directedRelationship.add(NamedElement.clientDependency)  # type: ignore[attr-defined]
 Element.owner.add(NamedElement.namespace)  # type: ignore[attr-defined]
 NamedElement.memberNamespace.add(NamedElement.namespace)  # type: ignore[attr-defined]
 PackageableElement.owningPackage = derivedunion("owningPackage", Package, upper=1)
@@ -822,16 +808,12 @@ Element.ownedElement.add(InstanceSpecification.slot)  # type: ignore[attr-define
 EnumerationLiteral.enumeration = association("enumeration", Enumeration, upper=1, opposite="ownedLiteral")
 NamedElement.namespace.add(EnumerationLiteral.enumeration)  # type: ignore[attr-defined]
 Relationship.abstraction = association("abstraction", InformationFlow, composite=True, opposite="realization")
-DirectedRelationship.target = derivedunion("target", Element, lower=1)
-DirectedRelationship.source = derivedunion("source", Element, lower=1)
-Relationship.relatedElement.add(DirectedRelationship.target)  # type: ignore[attr-defined]
-Relationship.relatedElement.add(DirectedRelationship.source)  # type: ignore[attr-defined]
 PackageMerge.mergingPackage = association("mergingPackage", Package, upper=1, opposite="packageMerge")
 PackageMerge.mergedPackage = association("mergedPackage", Package, upper=1)
-DirectedRelationship.source.add(PackageMerge.mergingPackage)  # type: ignore[attr-defined]
+Relationship.source.add(PackageMerge.mergingPackage)  # type: ignore[attr-defined]
 from gaphor.core.modeling.coremodel import Element
 Element.owner.add(PackageMerge.mergingPackage)  # type: ignore[attr-defined]
-DirectedRelationship.target.add(PackageMerge.mergedPackage)  # type: ignore[attr-defined]
+Relationship.target.add(PackageMerge.mergedPackage)  # type: ignore[attr-defined]
 RedefinableElement.redefinedElement = derivedunion("redefinedElement", RedefinableElement)
 RedefinableElement.redefinitionContext = derivedunion("redefinitionContext", Classifier)
 # 56: override Namespace.importedMember: derivedunion[PackageableElement]
@@ -867,7 +849,7 @@ Classifier.feature = derivedunion("feature", Feature)
 Classifier.componentRealization = redefine(Classifier, "componentRealization", ComponentRealization, NamedElement.clientDependency)
 Element.ownedElement.add(Classifier.generalization)  # type: ignore[attr-defined]
 Namespace.ownedMember.add(Classifier.ownedUseCase)  # type: ignore[attr-defined]
-Element.directedRelationship.add(Classifier.specialization)  # type: ignore[attr-defined]
+Element.relationship.add(Classifier.specialization)  # type: ignore[attr-defined]
 RedefinableElement.redefinedElement.add(Classifier.redefinedClassifier)  # type: ignore[attr-defined]
 Namespace.member.add(Classifier.inheritedMember)  # type: ignore[attr-defined]
 Classifier.feature.add(Classifier.attribute)  # type: ignore[attr-defined]
@@ -908,11 +890,6 @@ ActivityEdge.target = association("target", ActivityNode, upper=1, opposite="inc
 ActivityEdge.inGroup = association("inGroup", ActivityGroup, opposite="edgeContents")
 ActivityEdge.redefinedElement = redefine(ActivityEdge, "redefinedElement", ActivityEdge, RedefinableElement.redefinedElement)
 Element.owner.add(ActivityEdge.activity)  # type: ignore[attr-defined]
-Dependency.supplier = association("supplier", NamedElement, upper=1, opposite="supplierDependency")
-Dependency.client = association("client", NamedElement, upper=1, opposite="clientDependency")
-DirectedRelationship.target.add(Dependency.supplier)  # type: ignore[attr-defined]
-Element.owner.add(Dependency.client)  # type: ignore[attr-defined]
-DirectedRelationship.target.add(Dependency.client)  # type: ignore[attr-defined]
 TypedElement.type = association("type", Type, upper=1)
 ObjectNode.selection = association("selection", Behavior, upper=1)
 # 18: override MultiplicityElement.lower(MultiplicityElement.lowerValue): _attribute[str]
@@ -923,8 +900,8 @@ MultiplicityElement.upper = MultiplicityElement.upperValue
 
 Generalization.general = association("general", Classifier, upper=1, opposite="specialization")
 Generalization.specific = association("specific", Classifier, upper=1, opposite="generalization")
-DirectedRelationship.target.add(Generalization.general)  # type: ignore[attr-defined]
-DirectedRelationship.source.add(Generalization.specific)  # type: ignore[attr-defined]
+Relationship.relatedElement.add(Generalization.general)  # type: ignore[attr-defined]
+Relationship.source.add(Generalization.specific)  # type: ignore[attr-defined]
 Element.owner.add(Generalization.specific)  # type: ignore[attr-defined]
 StructuredClassifier.role = derivedunion("role", ConnectableElement)
 # 101: override StructuredClassifier.part: property
@@ -973,13 +950,13 @@ Namespace.ownedMember.add(Node.nestedNode)  # type: ignore[attr-defined]
 NamedElement.namespace.add(Node.node)  # type: ignore[attr-defined]
 StructuralFeature.slot = association("slot", Slot, composite=True, opposite="definingFeature")
 UseCase.extensionPoint = association("extensionPoint", ExtensionPoint, composite=True, opposite="useCase")
+UseCase.subject = association("subject", Classifier, opposite="useCase")
 UseCase.extend = association("extend", Extend, composite=True, opposite="extension")
 UseCase.include = association("include", Include, composite=True, opposite="includingCase")
-UseCase.subject = association("subject", Classifier, opposite="useCase")
 Namespace.ownedMember.add(UseCase.extensionPoint)  # type: ignore[attr-defined]
-Element.directedRelationship.add(UseCase.extend)  # type: ignore[attr-defined]
+Element.relationship.add(UseCase.extend)  # type: ignore[attr-defined]
 Namespace.ownedMember.add(UseCase.extend)  # type: ignore[attr-defined]
-Element.directedRelationship.add(UseCase.include)  # type: ignore[attr-defined]
+Element.relationship.add(UseCase.include)  # type: ignore[attr-defined]
 Namespace.ownedMember.add(UseCase.include)  # type: ignore[attr-defined]
 InputPin.opaqueAction = association("opaqueAction", Action, upper=1, opposite="inputValue")
 Element.owner.add(InputPin.opaqueAction)  # type: ignore[attr-defined]
@@ -1008,17 +985,17 @@ Classifier.attribute.add(Interface.ownedAttribute)  # type: ignore[attr-defined]
 Namespace.ownedMember.add(Interface.ownedAttribute)  # type: ignore[attr-defined]
 Include.addition = association("addition", UseCase, upper=1)
 Include.includingCase = association("includingCase", UseCase, upper=1, opposite="include")
-DirectedRelationship.target.add(Include.addition)  # type: ignore[attr-defined]
+Relationship.target.add(Include.addition)  # type: ignore[attr-defined]
 NamedElement.namespace.add(Include.includingCase)  # type: ignore[attr-defined]
-DirectedRelationship.source.add(Include.includingCase)  # type: ignore[attr-defined]
+Relationship.relatedElement.add(Include.includingCase)  # type: ignore[attr-defined]
 ProfileApplication.appliedProfile = association("appliedProfile", Profile, upper=1)
 ExtensionPoint.useCase = association("useCase", UseCase, upper=1, opposite="extensionPoint")
 NamedElement.namespace.add(ExtensionPoint.useCase)  # type: ignore[attr-defined]
 ElementImport.importingNamespace = association("importingNamespace", Namespace, upper=1, opposite="elementImport")
 ElementImport.importedElement = association("importedElement", PackageableElement, upper=1)
-DirectedRelationship.source.add(ElementImport.importingNamespace)  # type: ignore[attr-defined]
+Relationship.source.add(ElementImport.importingNamespace)  # type: ignore[attr-defined]
 Element.owner.add(ElementImport.importingNamespace)  # type: ignore[attr-defined]
-DirectedRelationship.target.add(ElementImport.importedElement)  # type: ignore[attr-defined]
+Relationship.target.add(ElementImport.importedElement)  # type: ignore[attr-defined]
 Property.redefinedProperty = association("redefinedProperty", Property)
 Property.interface_ = association("interface_", Interface, upper=1, opposite="ownedAttribute")
 Property.class_ = association("class_", Class, upper=1, opposite="ownedAttribute")
@@ -1086,7 +1063,6 @@ Package.nestedPackage = association("nestedPackage", Package, composite=True, op
 Namespace.ownedMember.add(Package.packagedElement)  # type: ignore[attr-defined]
 Package.packagedElement.add(Package.ownedType)  # type: ignore[attr-defined]
 Element.ownedElement.add(Package.packageMerge)  # type: ignore[attr-defined]
-Element.directedRelationship.add(Package.packageMerge)  # type: ignore[attr-defined]
 Element.ownedElement.add(Package.appliedProfile)  # type: ignore[attr-defined]
 PackageableElement.owningPackage.add(Package.package)  # type: ignore[attr-defined]
 Package.packagedElement.add(Package.nestedPackage)  # type: ignore[attr-defined]
@@ -1158,8 +1134,8 @@ Extend.extensionLocation = association("extensionLocation", ExtensionPoint, lowe
 Extend.extendedCase = association("extendedCase", UseCase, upper=1)
 Extend.constraint = association("constraint", Constraint, upper=1, composite=True)
 NamedElement.namespace.add(Extend.extension)  # type: ignore[attr-defined]
-DirectedRelationship.source.add(Extend.extension)  # type: ignore[attr-defined]
-DirectedRelationship.target.add(Extend.extendedCase)  # type: ignore[attr-defined]
+Relationship.relatedElement.add(Extend.extension)  # type: ignore[attr-defined]
+Relationship.target.add(Extend.extendedCase)  # type: ignore[attr-defined]
 ActivityGroup.nodeContents = association("nodeContents", ActivityNode, opposite="inGroup")
 ActivityGroup.edgeContents = association("edgeContents", ActivityEdge, opposite="inGroup")
 ActivityGroup.superGroup = derivedunion("superGroup", ActivityGroup, upper=1)
@@ -1178,8 +1154,8 @@ Element.owner.add(Constraint.parameterSet)  # type: ignore[attr-defined]
 Element.owner.add(Constraint.transition)  # type: ignore[attr-defined]
 PackageImport.importedPackage = association("importedPackage", Package, upper=1)
 PackageImport.importingNamespace = association("importingNamespace", Namespace, upper=1, opposite="packageImport")
-DirectedRelationship.target.add(PackageImport.importedPackage)  # type: ignore[attr-defined]
-DirectedRelationship.source.add(PackageImport.importingNamespace)  # type: ignore[attr-defined]
+Relationship.target.add(PackageImport.importedPackage)  # type: ignore[attr-defined]
+Relationship.source.add(PackageImport.importingNamespace)  # type: ignore[attr-defined]
 Element.owner.add(PackageImport.importingNamespace)  # type: ignore[attr-defined]
 InteractionFragment.generalOrdering = association("generalOrdering", GeneralOrdering, composite=True, opposite="interactionFragment")
 InteractionFragment.enclosingInteraction = association("enclosingInteraction", Interaction, upper=1, opposite="fragment")
@@ -1321,9 +1297,9 @@ InformationFlow.realizingConnector = association("realizingConnector", Connector
 InformationFlow.informationTarget = association("informationTarget", NamedElement, upper=1)
 InformationFlow.conveyed = association("conveyed", Classifier, lower=1)
 InformationFlow.realization = association("realization", Relationship, opposite="abstraction")
-DirectedRelationship.source.add(InformationFlow.informationSource)  # type: ignore[attr-defined]
+Relationship.source.add(InformationFlow.informationSource)  # type: ignore[attr-defined]
 Element.owner.add(InformationFlow.realizingConnector)  # type: ignore[attr-defined]
-DirectedRelationship.target.add(InformationFlow.informationTarget)  # type: ignore[attr-defined]
+Relationship.target.add(InformationFlow.informationTarget)  # type: ignore[attr-defined]
 CallAction.result = association("result", OutputPin, composite=True)
 CallBehaviorAction.behavior = association("behavior", Behavior, upper=1, composite=True)
 ValueSpecificationAction.result = association("result", OutputPin, upper=1, composite=True)

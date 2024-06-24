@@ -1,5 +1,3 @@
-"""Classes related adapter connection tests."""
-
 from gaphor import UML
 from gaphor.core.modeling import Diagram
 from gaphor.diagram.tests.fixtures import allow, connect, disconnect, get_connected
@@ -79,12 +77,12 @@ def test_dependency_reconnect_should_keep_attributes(create):
     connect(dep, dep.head, a1)
     connect(dep, dep.tail, a2)
 
-    dep.subject.name = "Name"
+    dep.subject.note = "Note"
 
     # reconnect: a1 -> a3
     connect(dep, dep.tail, a3)
 
-    assert dep.subject.name == "Name"
+    assert dep.subject.note == "Note"
 
 
 def test_dependency_disconnect(create, element_factory, sanitizer_service):

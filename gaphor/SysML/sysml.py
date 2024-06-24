@@ -50,7 +50,7 @@ class DirectedRelationshipPropertyPath(DirectedRelationship):
     targetPropertyPath: relation_many[Property]
 
 
-from gaphor.UML.uml import Dependency
+from gaphor.core.modeling.coremodel import Dependency
 class Trace(Dependency, DirectedRelationshipPropertyPath):
     pass
 

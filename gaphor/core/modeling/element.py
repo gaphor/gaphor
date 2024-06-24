@@ -17,7 +17,7 @@ from gaphor.core.modeling.properties import (
 )
 
 if TYPE_CHECKING:
-    from gaphor.core.modeling.coremodel import Comment
+    from gaphor.core.modeling.coremodel import Comment, Dependency, Relationship
     from gaphor.core.modeling.diagram import Diagram
     from gaphor.core.modeling.presentation import Presentation
 
@@ -77,10 +77,11 @@ class Element:
     ownedElement: relation_many[Element]
     owner: relation_one[Element]
     presentation: relation_many[Presentation]
+    relationship: relation_many[Relationship]
+    clientDependency: relation_many[Dependency]
+    supplierDependency: relation_many[Dependency]
 
     # From UML:
-    directedRelationship: relation_many[Element]
-    relationship: relation_many[Element]
     appliedStereotype: relation_many[Element]
 
     def __init__(self, id: Id | None = None, model: RepositoryProtocol | None = None):

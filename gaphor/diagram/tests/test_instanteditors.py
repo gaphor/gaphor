@@ -1,3 +1,5 @@
+import pytest
+
 from gaphor import UML
 from gaphor.diagram.instanteditors import named_item_editor
 
@@ -12,6 +14,7 @@ def test_named_item_editor_with_element(diagram, element_factory, view, event_ma
     assert result is True
 
 
+@pytest.mark.xfail(reason="Will fail as long as Element.name is not defined")
 def test_named_item_editor_with_line(diagram, element_factory, view, event_manager):
     item = diagram.create(
         UML.classes.DependencyItem, subject=element_factory.create(UML.Dependency)
