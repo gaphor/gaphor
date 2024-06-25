@@ -71,7 +71,8 @@ class ActivityParameterNodeView(GObject.Object):
 
     def unlink(self):
         if self.node:
-            self.node.unlink()
+            with Transaction(self.event_manager):
+                self.node.unlink()
 
     def swap(self, item1, item2):
         return self.activity.node.swap(item1.node, item2.node)

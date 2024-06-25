@@ -172,7 +172,8 @@ class AttributeView(GObject.Object):
 
     def unlink(self):
         if self.attr:
-            self.attr.unlink()
+            with Transaction(self.event_manager):
+                self.attr.unlink()
 
     def swap(self, item1, item2):
         return self.klass.ownedAttribute.swap(item1.attr, item2.attr)
@@ -367,7 +368,8 @@ class OperationView(GObject.Object):
 
     def unlink(self):
         if self.oper:
-            self.oper.unlink()
+            with Transaction(self.event_manager):
+                self.oper.unlink()
 
     def swap(self, item1, item2):
         return self.klass.ownedOperation.swap(item1.oper, item2.oper)

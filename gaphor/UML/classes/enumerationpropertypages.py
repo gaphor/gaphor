@@ -60,7 +60,8 @@ class EnumerationView(GObject.Object):
 
     def unlink(self):
         if self.literal:
-            self.literal.unlink()
+            with Transaction(self.event_manager):
+                self.literal.unlink()
 
     def swap(self, item1, item2):
         return self.enum.ownedLiteral.swap(item1.literal, item2.literal)
