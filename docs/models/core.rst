@@ -16,6 +16,9 @@ Relationships
 .. diagram:: Relationships
    :model: core
 
+The ``Element`` Class
+^^^^^^^^^^^^^^^^^^^^^
+
 The :obj:`~gaphor.core.modeling.Element` base class provides event notification and integrates
 with the model repository (internally known as :obj:`~gaphor.core.modeling.ElementFactory`).
 Bi-directional relationships are also possible, as well as derived
@@ -25,10 +28,6 @@ The :obj:`~gaphor.core.modeling.element.RepositoryProtocol`, and
 :obj:`~gaphor.core.modeling.element.EventWatcherProtocol`
 protocols are important to connect the model to the repository and event handling
 mechanisms.
-
-
-The ``Element`` Class
-^^^^^^^^^^^^^^^^^^^^^
 
 The class ``Element`` is the core of Gaphor’s data model.
 
@@ -67,10 +66,22 @@ The class ``Element`` is the core of Gaphor’s data model.
    .. automethod:: gaphor.core.modeling.Element.isTypeOf
 
 
+Dependencies
+------------
+
+.. diagram:: Dependencies
+   :model: core
+
 Annotations
 -----------
 
 .. diagram:: Annotations
+   :model: core
+
+Namespaces
+-----------
+
+.. diagram:: Namespaces
    :model: core
 
 Presentations

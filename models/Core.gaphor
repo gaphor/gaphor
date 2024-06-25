@@ -9,6 +9,7 @@
 <ref refid="67914ef8-2e32-11ef-8125-be7f4daace40"/>
 <ref refid="1d89f46e-2ed1-11ef-8125-be7f4daace40"/>
 <ref refid="fbfda48a-3231-11ef-8506-be7f4daace40"/>
+<ref refid="6f96d08e-32c7-11ef-bb85-be7f4daace40"/>
 </reflist>
 </ownedDiagram>
 <ownedType>
@@ -486,6 +487,7 @@
 <ref refid="7845dfd4-2e32-11ef-8125-be7f4daace40"/>
 <ref refid="2ac32ccc-2ed1-11ef-8125-be7f4daace40"/>
 <ref refid="015ede30-3232-11ef-8506-be7f4daace40"/>
+<ref refid="76564f8a-32c7-11ef-bb85-be7f4daace40"/>
 </reflist>
 </presentation>
 <specialization>
@@ -3715,4 +3717,46 @@
 <val>relatedElement</val>
 </value>
 </Slot>
+<Diagram id="6f96d08e-32c7-11ef-bb85-be7f4daace40">
+<diagramType>
+<val></val>
+</diagramType>
+<element>
+<ref refid="3867dda4-7a95-11ea-a112-7f953848cf85"/>
+</element>
+<name>
+<val>Namespaces</val>
+</name>
+<ownedPresentation>
+<reflist>
+<ref refid="76564f8a-32c7-11ef-bb85-be7f4daace40"/>
+</reflist>
+</ownedPresentation>
+</Diagram>
+<ClassItem id="76564f8a-32c7-11ef-bb85-be7f4daace40">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 213.4609375, 96.83984375)</val>
+</matrix>
+<top-left>
+<val>(0.0, 0.0)</val>
+</top-left>
+<width>
+<val>113.5390625</val>
+</width>
+<height>
+<val>57.16015625</val>
+</height>
+<diagram>
+<ref refid="6f96d08e-32c7-11ef-bb85-be7f4daace40"/>
+</diagram>
+<show_attributes>
+<val>0</val>
+</show_attributes>
+<show_operations>
+<val>0</val>
+</show_operations>
+<subject>
+<ref refid="4cda498e-7a95-11ea-a112-7f953848cf85"/>
+</subject>
+</ClassItem>
 </gaphor>
