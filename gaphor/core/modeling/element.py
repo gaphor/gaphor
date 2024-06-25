@@ -71,6 +71,7 @@ def self_and_owners(element: Element | None) -> Iterator[Element]:
 class Element:
     """Base class for all model data classes."""
 
+    name: attribute[str] = attribute("name", str)
     note: attribute[str] = attribute("note", str)
     comment: relation_many[Comment]
     ownedDiagram: relation_many[Diagram]
@@ -113,6 +114,13 @@ class Element:
                 "Can't retrieve the model since it's not set on construction"
             )
         return self._model
+
+    @property
+    def qualifiedName(self) -> list[str]:
+        """Returns the qualified name of the element as a list."""
+        qname = [e.name or "??" for e in self_and_owners(self)]
+        qname.reverse()
+        return qname
 
     @classmethod
     def umlproperties(cls) -> Iterator[umlproperty]:

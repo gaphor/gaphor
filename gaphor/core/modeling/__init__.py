@@ -14,7 +14,6 @@ from gaphor.core.modeling.diagram import (
     Diagram,
     DrawContext,
     UpdateContext,
-    qualifiedName,
 )
 from gaphor.core.modeling.element import Element, self_and_owners
 from gaphor.core.modeling.elementfactory import ElementFactory

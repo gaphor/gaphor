@@ -22,9 +22,7 @@ from typing import Callable
 from gaphor.core.modeling.element import Element
 class NamedElement(Element):
     memberNamespace: relation_one[Namespace]
-    name: _attribute[str] = _attribute("name", str)
     namespace: relation_one[Namespace]
-    qualifiedName: derived[list[str]]
     visibility = _enumeration("visibility", ("public", "private", "package", "protected"), "public")
 
 
@@ -770,27 +768,15 @@ class ValueSpecificationAction(Action):
     value: _attribute[str] = _attribute("value", str)
 
 
-# 86: override Lifeline.parse: Callable[[Lifeline, str], None]
+# 74: override Lifeline.parse: Callable[[Lifeline, str], None]
 # defined in umloverrides.py
 
-# 89: override Lifeline.render: Callable[[Lifeline], str]
+# 77: override Lifeline.render: Callable[[Lifeline], str]
 # defined in umloverrides.py
 
 
 Element.appliedStereotype = association("appliedStereotype", InstanceSpecification, composite=True, opposite="extended")
 NamedElement.namespace = derivedunion("namespace", Namespace, upper=1)
-# 68: override NamedElement.qualifiedName: derived[list[str]]
-
-from gaphor.core.modeling import qualifiedName
-
-NamedElement.qualifiedName = derived(
-    "qualifiedName",
-    list[str],
-    0,
-    1,
-    lambda obj: [qualifiedName(obj)],
-)
-
 NamedElement.memberNamespace = derivedunion("memberNamespace", Namespace, upper=1)
 Element.owner.add(NamedElement.namespace)  # type: ignore[attr-defined]
 NamedElement.memberNamespace.add(NamedElement.namespace)  # type: ignore[attr-defined]
@@ -904,7 +890,7 @@ Relationship.relatedElement.add(Generalization.general)  # type: ignore[attr-def
 Relationship.source.add(Generalization.specific)  # type: ignore[attr-defined]
 Element.owner.add(Generalization.specific)  # type: ignore[attr-defined]
 StructuredClassifier.role = derivedunion("role", ConnectableElement)
-# 101: override StructuredClassifier.part: property
+# 89: override StructuredClassifier.part: property
 StructuredClassifier.part = property(lambda self: tuple(a for a in self.ownedAttribute if a.isComposite), doc="""
     Properties owned by a classifier by composition.
 """)
@@ -962,11 +948,11 @@ InputPin.opaqueAction = association("opaqueAction", Action, upper=1, opposite="i
 Element.owner.add(InputPin.opaqueAction)  # type: ignore[attr-defined]
 Manifestation.artifact = association("artifact", Artifact, upper=1, opposite="manifestation")
 Element.owner.add(Manifestation.artifact)  # type: ignore[attr-defined]
-# 92: override Component.provided: property
+# 80: override Component.provided: property
 # defined in umloverrides.py
 
 Component.packagedElement = association("packagedElement", PackageableElement, composite=True, opposite="component")
-# 95: override Component.required: property
+# 83: override Component.required: property
 # defined in umloverrides.py
 
 Component.realization = redefine(Component, "realization", ComponentRealization, NamedElement.supplierDependency)
@@ -1010,7 +996,7 @@ Property.datatype = association("datatype", DataType, upper=1, opposite="ownedAt
 # 59: override Property.opposite(Property.association, Association.memberEnd): relation_one[Property | None]
 # defined in umloverrides.py
 
-# 80: override Property.navigability(Property.opposite, Property.association): derived[bool | None]
+# 68: override Property.navigability(Property.opposite, Property.association): derived[bool | None]
 # defined in umloverrides.py
 
 Property.artifact = association("artifact", Artifact, upper=1, opposite="ownedAttribute")
@@ -1099,7 +1085,7 @@ Operation.redefinedOperation = association("redefinedOperation", Operation)
 Operation.raisedException = association("raisedException", Type)
 Operation.bodyCondition = association("bodyCondition", Constraint, upper=1, composite=True)
 Operation.datatype = association("datatype", DataType, upper=1, opposite="ownedOperation")
-# 83: override Operation.type: derivedunion[DataType]
+# 71: override Operation.type: derivedunion[DataType]
 Operation.type = derivedunion('type', DataType, 0, 1)
 
 Operation.artifact = association("artifact", Artifact, upper=1, opposite="ownedOperation")
@@ -1177,7 +1163,7 @@ Lifeline.interaction = association("interaction", Interaction, upper=1, opposite
 Lifeline.coveredBy = association("coveredBy", InteractionFragment, opposite="covered")
 Lifeline.represents = association("represents", ConnectableElement, upper=1, opposite="lifeline")
 NamedElement.namespace.add(Lifeline.interaction)  # type: ignore[attr-defined]
-# 98: override Message.messageKind: property
+# 86: override Message.messageKind: property
 # defined in umloverrides.py
 
 Message.sendEvent = association("sendEvent", MessageEnd, upper=1, composite=True, opposite="sendMessage")
@@ -1271,11 +1257,11 @@ Collaboration.collaborationRole = association("collaborationRole", ConnectableEl
 StructuredClassifier.role.add(Collaboration.collaborationRole)  # type: ignore[attr-defined]
 Trigger.event = association("event", Event, upper=1)
 Trigger.port = association("port", Port)
-# 110: override ExecutionSpecification.finish(ExecutionSpecification.executionOccurrenceSpecification): relation_one[ExecutionOccurrenceSpecification]
+# 98: override ExecutionSpecification.finish(ExecutionSpecification.executionOccurrenceSpecification): relation_one[ExecutionOccurrenceSpecification]
 ExecutionSpecification.finish = derived('finish', OccurrenceSpecification, 0, 1,
     lambda obj: [eos for i, eos in enumerate(obj.executionOccurrenceSpecification) if i == 1])
 
-# 106: override ExecutionSpecification.start(ExecutionSpecification.executionOccurrenceSpecification): relation_one[ExecutionOccurrenceSpecification]
+# 94: override ExecutionSpecification.start(ExecutionSpecification.executionOccurrenceSpecification): relation_one[ExecutionOccurrenceSpecification]
 ExecutionSpecification.start = derived('start', OccurrenceSpecification, 0, 1,
     lambda obj: [eos for i, eos in enumerate(obj.executionOccurrenceSpecification) if i == 0])
 

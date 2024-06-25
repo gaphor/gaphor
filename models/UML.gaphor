@@ -5181,8 +5181,8 @@
 <ownedAttribute>
 <reflist>
 <ref refid="DCE:67C4FC98-4B35-11D7-B391-02BBFE4396CE"/>
-<ref refid="DCE:B0D30324-4B35-11D7-B391-02BBFE4396CE"/>
 <ref refid="DCE:99FB75E6-4B35-11D7-B391-02BBFE4396CE"/>
+<ref refid="DCE:B0D30324-4B35-11D7-B391-02BBFE4396CE"/>
 </reflist>
 </ownedAttribute>
 <package>
@@ -6044,8 +6044,6 @@
 <ownedAttribute>
 <reflist>
 <ref refid="DCE:D33A9738-4694-11D7-B567-379CA7034986"/>
-<ref refid="90a6d158-b9b1-11eb-93ad-535118859f0b"/>
-<ref refid="98bdb712-b9b1-11eb-93ad-535118859f0b"/>
 <ref refid="aa8a8fb0-e185-11ea-b7ab-f5b4c130f24e"/>
 <ref refid="DCE:B7B7E77C-4694-11D7-B567-379CA7034986"/>
 </reflist>
@@ -17290,6 +17288,7 @@
 <ref refid="DCE:BCEBC220-4B32-11D7-B391-02BBFE4396CE"/>
 <ref refid="DCE:2889D960-6693-11D7-A84E-6C8643AD0CA4"/>
 <ref refid="DCE:F1CF4FA4-4B33-11D7-B391-02BBFE4396CE"/>
+<ref refid="DCE:99FBA804-4B35-11D7-B391-02BBFE4396CE"/>
 <ref refid="DCE:B0388110-4B34-11D7-B391-02BBFE4396CE"/>
 <ref refid="DCE:00ED6378-4B35-11D7-B391-02BBFE4396CE"/>
 <ref refid="DCE:38A9AE44-4B54-11D7-A5E6-6257AF3C5118"/>
@@ -17297,7 +17296,6 @@
 <ref refid="DCE:3EEBCC18-6698-11D7-A84E-6C8643AD0CA4"/>
 <ref refid="e9507590-e962-11ea-87d1-cbf2d1fcaed0"/>
 <ref refid="DCE:BFC7B66E-4B37-11D7-B391-02BBFE4396CE"/>
-<ref refid="DCE:99FBA804-4B35-11D7-B391-02BBFE4396CE"/>
 </reflist>
 </ownedAttribute>
 <package>
@@ -22656,10 +22654,10 @@ specially for Gaphor</val>
 </name>
 <ownedAttribute>
 <reflist>
+<ref refid="DCE:068AFED0-6692-11D7-A84E-6C8643AD0CA4"/>
 <ref refid="DCE:B7523644-6691-11D7-A84E-6C8643AD0CA4"/>
 <ref refid="DCE:54F98BE0-6692-11D7-A84E-6C8643AD0CA4"/>
 <ref refid="DCE:FE7634AE-6690-11D7-A84E-6C8643AD0CA4"/>
-<ref refid="DCE:068AFED0-6692-11D7-A84E-6C8643AD0CA4"/>
 </reflist>
 </ownedAttribute>
 <package>
@@ -49170,29 +49168,6 @@ association:not([memberEnd.navigability*=true]) {
 <val>owner</val>
 </value>
 </Slot>
-<Property id="aa8a8fb0-e185-11ea-b7ab-f5b4c130f24e">
-<class_>
-<ref refid="DCE:FF594BE0-464C-11D7-AA08-1B85D5275D8A"/>
-</class_>
-<lowerValue>
-<val>0</val>
-</lowerValue>
-<lowerValue>
-<val>0</val>
-</lowerValue>
-<name>
-<val>visibility</val>
-</name>
-<typeValue>
-<val>VisibilityKind</val>
-</typeValue>
-<upperValue>
-<val>1</val>
-</upperValue>
-<upperValue>
-<val>1</val>
-</upperValue>
-</Property>
 <InstanceSpecification id="2de9d91e-e187-11ea-b7ab-f5b4c130f24e">
 <classifier>
 <reflist>
@@ -52818,55 +52793,6 @@ have an opposite end.
 <val>memberNamespace</val>
 </value>
 </Slot>
-<Property id="90a6d158-b9b1-11eb-93ad-535118859f0b">
-<class_>
-<ref refid="DCE:FF594BE0-464C-11D7-AA08-1B85D5275D8A"/>
-</class_>
-<isDerived>
-<val>1</val>
-</isDerived>
-<lowerValue>
-<val>0</val>
-</lowerValue>
-<lowerValue>
-<val>0</val>
-</lowerValue>
-<name>
-<val>qualifiedName</val>
-</name>
-<typeValue>
-<val>String</val>
-</typeValue>
-<upperValue>
-<val>1</val>
-</upperValue>
-<upperValue>
-<val>1</val>
-</upperValue>
-</Property>
-<Property id="98bdb712-b9b1-11eb-93ad-535118859f0b">
-<class_>
-<ref refid="DCE:FF594BE0-464C-11D7-AA08-1B85D5275D8A"/>
-</class_>
-<lowerValue>
-<val>0</val>
-</lowerValue>
-<lowerValue>
-<val>0</val>
-</lowerValue>
-<name>
-<val>name</val>
-</name>
-<typeValue>
-<val>String</val>
-</typeValue>
-<upperValue>
-<val>1</val>
-</upperValue>
-<upperValue>
-<val>1</val>
-</upperValue>
-</Property>
 <Package id="34985146-ebea-11eb-8d68-2d4b211d5079">
 <name>
 <val>14. Information Flows</val>
@@ -56848,4 +56774,27 @@ have an opposite end.
 <ref refid="1579f356-3236-11ef-8506-be7f4daace40"/>
 </tail-connection>
 </CommentLineItem>
+<Property id="aa8a8fb0-e185-11ea-b7ab-f5b4c130f24e">
+<class_>
+<ref refid="DCE:FF594BE0-464C-11D7-AA08-1B85D5275D8A"/>
+</class_>
+<lowerValue>
+<val>0</val>
+</lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
+<name>
+<val>visibility</val>
+</name>
+<typeValue>
+<val>VisibilityKind</val>
+</typeValue>
+<upperValue>
+<val>1</val>
+</upperValue>
+<upperValue>
+<val>1</val>
+</upperValue>
+</Property>
 </gaphor>

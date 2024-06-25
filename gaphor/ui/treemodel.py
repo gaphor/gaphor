@@ -29,7 +29,7 @@ class TreeItem(GObject.Object):
     can_edit = GObject.Property(type=bool, default=True)
 
     def read_only(self):
-        return not self.element or not hasattr(self.element, "name")
+        return not self.element
 
     @GObject.Property(type=str)
     def editable_text(self):

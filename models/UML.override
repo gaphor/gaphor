@@ -65,18 +65,6 @@ Property.isComposite = derived('isComposite', bool, 0, 1, lambda obj: [obj.aggre
 override Constraint.context: derivedunion[Namespace]
 Constraint.context = derivedunion('context', Namespace, 0, 1)
 %%
-override NamedElement.qualifiedName: derived[list[str]]
-
-from gaphor.core.modeling import qualifiedName
-
-NamedElement.qualifiedName = derived(
-    "qualifiedName",
-    list[str],
-    0,
-    1,
-    lambda obj: [qualifiedName(obj)],
-)
-%%
 override Property.navigability(Property.opposite, Property.association): derived[bool | None]
 # defined in umloverrides.py
 %%

@@ -454,17 +454,19 @@
 <ownedAttribute>
 <reflist>
 <ref refid="8e8ab29e-eb5f-11ee-a6cb-be7f4daace3f"/>
-<ref refid="a4c6f704-ce0f-11eb-abe3-018035c40dd4"/>
+<ref refid="02a8f7fe-32f9-11ef-95f2-be7f4daace40"/>
 <ref refid="da0b2408-529e-11ec-b0e5-0456e5e540ed"/>
 <ref refid="da0b3ede-529e-11ec-b0e5-0456e5e540ed"/>
 <ref refid="69c2575a-7a95-11ea-a112-7f953848cf85"/>
 <ref refid="1ee6aec6-b9a9-11eb-93ad-535118859f0b"/>
 <ref refid="d092794e-e0b9-11ea-b7ab-f5b4c130f24e"/>
-<ref refid="f0d1199a-3234-11ef-8506-be7f4daace40"/>
-<ref refid="c65b782c-3234-11ef-8506-be7f4daace40"/>
 <ref refid="88a30320-2e32-11ef-8125-be7f4daace40"/>
 <ref refid="4fa655f0-3232-11ef-8506-be7f4daace40"/>
 <ref refid="8c1af8ce-3232-11ef-8506-be7f4daace40"/>
+<ref refid="a4c6f704-ce0f-11eb-abe3-018035c40dd4"/>
+<ref refid="2b608842-32f9-11ef-95f2-be7f4daace40"/>
+<ref refid="c65b782c-3234-11ef-8506-be7f4daace40"/>
+<ref refid="f0d1199a-3234-11ef-8506-be7f4daace40"/>
 </reflist>
 </ownedAttribute>
 <ownedOperation>
@@ -513,8 +515,6 @@
 </name>
 <ownedAttribute>
 <reflist>
-<ref refid="d2bfe41e-ba68-11eb-a73b-13340a6bc6e1"/>
-<ref refid="e3513a58-ba68-11eb-a73b-13340a6bc6e1"/>
 <ref refid="5b2c0930-6000-11ec-a085-0456e5e540ed"/>
 <ref refid="216581cb-4465-11eb-8946-9bdfa28f7a50"/>
 <ref refid="1ee6aec5-b9a9-11eb-93ad-535118859f0b"/>
@@ -1015,31 +1015,6 @@
 <val>*</val>
 </upperValue>
 </Property>
-<Property id="d2bfe41e-ba68-11eb-a73b-13340a6bc6e1">
-<class_>
-<ref refid="5cdae47e-7a95-11ea-a112-7f953848cf85"/>
-</class_>
-<name>
-<val>name</val>
-</name>
-<typeValue>
-<val>String</val>
-</typeValue>
-</Property>
-<Property id="e3513a58-ba68-11eb-a73b-13340a6bc6e1">
-<class_>
-<ref refid="5cdae47e-7a95-11ea-a112-7f953848cf85"/>
-</class_>
-<isDerived>
-<val>1</val>
-</isDerived>
-<name>
-<val>qualifiedName</val>
-</name>
-<typeValue>
-<val>String</val>
-</typeValue>
-</Property>
 <Property id="a4c6f704-ce0f-11eb-abe3-018035c40dd4">
 <class_>
 <ref refid="4cda498e-7a95-11ea-a112-7f953848cf85"/>
@@ -1048,7 +1023,7 @@
 <val>note</val>
 </name>
 <typeValue>
-<val>str</val>
+<val>String</val>
 </typeValue>
 </Property>
 <Generalization id="17b8b56e-4bbe-11ec-aa3d-0456e5e540ed">
@@ -2501,9 +2476,9 @@
 </name>
 <ownedAttribute>
 <reflist>
-<ref refid="f0d166ca-3234-11ef-8506-be7f4daace40"/>
-<ref refid="c65bad56-3234-11ef-8506-be7f4daace40"/>
 <ref refid="88a32774-2e32-11ef-8125-be7f4daace40"/>
+<ref refid="c65bad56-3234-11ef-8506-be7f4daace40"/>
+<ref refid="f0d166ca-3234-11ef-8506-be7f4daace40"/>
 </reflist>
 </ownedAttribute>
 <package>
@@ -2523,16 +2498,16 @@
 </Class>
 <ClassItem id="7845dfd4-2e32-11ef-8125-be7f4daace40">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 203.20355308219172, 87.5)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 202.03215143175805, 80.0)</val>
 </matrix>
 <top-left>
 <val>(3.7964469178082823, 0.0)</val>
 </top-left>
 <width>
-<val>149.96917808219172</val>
+<val>160.0</val>
 </width>
 <height>
-<val>175.0</val>
+<val>205.0</val>
 </height>
 <diagram>
 <ref refid="67914ef8-2e32-11ef-8125-be7f4daace40"/>
@@ -2564,7 +2539,7 @@
 <val>(1.0, 0.0, 0.0, 1.0, 68.39212328767121, 252.4765625)</val>
 </matrix>
 <points>
-<val>[(138.6078767123288, 105.5234375), (28.0, 105.5234375), (28.0, -24.9765625), (138.6078767123288, -24.9765625)]</val>
+<val>[(138.6078767123288, 105.5234375), (28.0, 105.5234375), (28.0, -8.4765625), (137.43647506189512, -8.4765625)]</val>
 </points>
 <head-connection>
 <ref refid="7323bbfc-2e32-11ef-8125-be7f4daace40"/>
@@ -2658,7 +2633,7 @@
 <val>(1.0, 0.0, 0.0, 1.0, 277.0, 154.0)</val>
 </matrix>
 <points>
-<val>[(3.813187390662222, 183.0), (2.5154109589041695, 108.5)]</val>
+<val>[(3.813187390662222, 183.0), (6.194267094285692, 131.0)]</val>
 </points>
 <head-connection>
 <ref refid="7323bbfc-2e32-11ef-8125-be7f4daace40"/>
@@ -2704,7 +2679,7 @@
 <val>(1.0, 0.0, 0.0, 1.0, 317.3780813840785, 109.78246057912301)</val>
 </matrix>
 <points>
-<val>[(-3.3780813840784845, -22.28246057912301), (-3.3780813840784845, -65.28246057912301), (142.62191861592152, -65.28246057912301), (142.62191861592152, 32.71753942087699), (39.59109669811323, 32.71753942087699)]</val>
+<val>[(2.6073071735215194, -29.78246057912301), (2.6073071735215194, -65.28246057912301), (142.62191861592152, -65.28246057912301), (142.62191861592152, 34.646110849448434), (48.45051696548785, 34.646110849448434)]</val>
 </points>
 <head-connection>
 <ref refid="7845dfd4-2e32-11ef-8125-be7f4daace40"/>
@@ -3444,7 +3419,7 @@
 <val>(1.0, 0.0, 0.0, 1.0, 69.93835616438355, 463.88671875)</val>
 </matrix>
 <points>
-<val>[(137.06164383561645, -75.0), (-11.93835616438355, -75.0), (-11.93835616438355, -288.88671875), (137.06164383561645, -288.88671875)]</val>
+<val>[(137.06164383561645, -75.0), (-11.93835616438355, -75.0), (-11.93835616438355, -288.88671875), (135.89024218518279, -288.88671875)]</val>
 </points>
 <head-connection>
 <ref refid="7323bbfc-2e32-11ef-8125-be7f4daace40"/>
@@ -3564,7 +3539,7 @@
 <val>(1.0, 0.0, 0.0, 1.0, 203.0, 428.890625)</val>
 </matrix>
 <points>
-<val>[(4.0, 6.109375), (-175.0, 6.109375), (-175.0, -309.890625), (4.0, -309.890625)]</val>
+<val>[(4.0, 6.109375), (-175.0, 6.109375), (-175.0, -309.890625), (2.8285983495663345, -309.890625)]</val>
 </points>
 <head-connection>
 <ref refid="7323bbfc-2e32-11ef-8125-be7f4daace40"/>
@@ -3759,4 +3734,29 @@
 <ref refid="4cda498e-7a95-11ea-a112-7f953848cf85"/>
 </subject>
 </ClassItem>
+<Property id="02a8f7fe-32f9-11ef-95f2-be7f4daace40">
+<class_>
+<ref refid="4cda498e-7a95-11ea-a112-7f953848cf85"/>
+</class_>
+<name>
+<val>name</val>
+</name>
+<typeValue>
+<val>String</val>
+</typeValue>
+</Property>
+<Property id="2b608842-32f9-11ef-95f2-be7f4daace40">
+<class_>
+<ref refid="4cda498e-7a95-11ea-a112-7f953848cf85"/>
+</class_>
+<isDerived>
+<val>1</val>
+</isDerived>
+<name>
+<val>qualifiedName</val>
+</name>
+<typeValue>
+<val>String</val>
+</typeValue>
+</Property>
 </gaphor>
