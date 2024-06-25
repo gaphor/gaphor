@@ -15,6 +15,7 @@ the type of dependency in an automatic way.
 """
 
 from gaphor import UML
+from gaphor.core.modeling import Dependency
 from gaphor.core.modeling.properties import attribute
 from gaphor.diagram.presentation import LinePresentation, text_name
 from gaphor.diagram.shapes import Box, stroke
@@ -24,7 +25,7 @@ from gaphor.UML.classes.interface import Folded, InterfacePort
 from gaphor.UML.compartments import text_stereotypes
 
 
-@represents(UML.Dependency, head=UML.Dependency.supplier, tail=UML.Dependency.client)
+@represents(Dependency, head=Dependency.supplier, tail=Dependency.client)
 @represents(UML.Usage, head=UML.Usage.supplier, tail=UML.Usage.client)
 class DependencyItem(LinePresentation):
     """Dependency item represents several types of dependencies, i.e. normal
@@ -45,7 +46,7 @@ class DependencyItem(LinePresentation):
             UML.InterfaceRealization: (i18nize("implements"),),
         }
 
-        self._dependency_type = UML.Dependency
+        self._dependency_type = Dependency
 
         super().__init__(
             diagram,

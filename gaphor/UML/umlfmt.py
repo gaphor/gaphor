@@ -216,13 +216,6 @@ def format_generalization(el):
     return gettext("general: {name}").format(name=el.general and el.general.name or "")
 
 
-@format.register(UML.Dependency)
-def format_dependency(el):
-    return gettext("supplier: {name}").format(
-        name=el.supplier and el.supplier.name or ""
-    )
-
-
 @format.register(UML.Extend)
 def format_extend(el):
     return gettext("extend: {name}").format(

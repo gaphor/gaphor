@@ -1,5 +1,5 @@
 from gaphor import UML
-from gaphor.core.modeling import Diagram
+from gaphor.core.modeling import Dependency, Diagram
 from gaphor.diagram.tests.fixtures import allow, connect, disconnect, get_connected
 from gaphor.UML.classes.dependency import DependencyItem
 from gaphor.UML.classes.interface import InterfaceItem
@@ -32,7 +32,7 @@ def test_dependency_connect(create, element_factory):
     connect(dep, dep.tail, actor2)
 
     assert dep.subject is not None
-    assert isinstance(dep.subject, UML.Dependency)
+    assert isinstance(dep.subject, Dependency)
     assert dep.subject in element_factory.select()
 
     hct = get_connected(dep, dep.head)
