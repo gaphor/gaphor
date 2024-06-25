@@ -6,7 +6,7 @@
 
 from functools import singledispatch
 
-from gaphor.core.modeling import Diagram, Element
+from gaphor.core.modeling import Diagram, Element, Relationship
 
 
 @singledispatch
@@ -31,3 +31,8 @@ def format_diagram(el, **kwargs) -> str:
 @parse.register(Diagram)
 def parse_Diagram(el: Diagram, text: str) -> None:
     el.name = text
+
+
+@format.register(Relationship)
+def format_relationship(el):
+    return el.__class__.__name__

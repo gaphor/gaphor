@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from gaphor import UML
+from gaphor.core.modeling import Relationship
 from gaphor.diagram.propertypages import (
     PropertyPageBase,
     PropertyPages,
@@ -256,7 +257,7 @@ class ItemFlowPropertyPage(PropertyPageBase):
         subject = self.subject
         if isinstance(subject, sysml.Connector):
             iflows = subject.informationFlow
-        elif isinstance(subject, UML.Relationship):
+        elif isinstance(subject, Relationship):
             iflows = subject.abstraction  # type: ignore[attr-defined]
         return iflows[0] if iflows else None
 
@@ -312,7 +313,7 @@ class ItemFlowPropertyPage(PropertyPageBase):
             if active and not iflow:
                 if isinstance(subject, sysml.Connector):
                     subject.informationFlow = create_item_flow(subject)
-                elif isinstance(subject, UML.Relationship):
+                elif isinstance(subject, Relationship):
                     subject.abstraction = create_item_flow(subject)
             elif not active and iflow:
                 iflow.unlink()
@@ -356,7 +357,7 @@ def create_item_flow(subject: UML.Association | sysml.Connector) -> sysml.ItemFl
     if isinstance(subject, sysml.Connector):
         iflow.informationSource = subject.end[0].role
         iflow.informationTarget = subject.end[1].role
-    elif isinstance(subject, UML.Relationship):
+    elif isinstance(subject, Relationship):
         iflow.informationSource = subject.memberEnd[0]
         iflow.informationTarget = subject.memberEnd[1]
     iflow.itemProperty = subject.model.create(sysml.Property)

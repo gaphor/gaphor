@@ -1,14 +1,14 @@
 from __future__ import annotations
 
 from gaphor import UML
-from gaphor.core.modeling import Diagram
+from gaphor.core.modeling import Diagram, Relationship
 from gaphor.diagram.drop import drop
 from gaphor.diagram.presentation import connect
 from gaphor.diagram.support import get_diagram_item, get_diagram_item_metadata
 
 
-@drop.register(UML.Relationship, Diagram)
-def drop_relationship(element: UML.Relationship, diagram: Diagram, x, y):
+@drop.register(Relationship, Diagram)
+def drop_relationship(element: Relationship, diagram: Diagram, x, y):
     item_class = get_diagram_item(type(element))
     if not item_class:
         return None

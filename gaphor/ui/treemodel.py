@@ -6,7 +6,7 @@ from gi.repository import Gio, GObject, Pango
 
 from gaphor import UML
 from gaphor.core.format import format
-from gaphor.core.modeling import Diagram, Element
+from gaphor.core.modeling import Diagram, Element, Relationship
 from gaphor.diagram.iconname import icon_name
 from gaphor.i18n import gettext
 
@@ -71,7 +71,7 @@ class Branch:
         self.relationships = Gio.ListStore.new(TreeItem.__gtype__)
 
     def append(self, element: Element):
-        if isinstance(element, UML.Relationship):
+        if isinstance(element, Relationship):
             if self.relationships.get_n_items() == 0:
                 self.elements.insert(0, RelationshipItem(self.relationships))
             self.relationships.append(TreeItem(element))
@@ -80,9 +80,7 @@ class Branch:
 
     def remove(self, element):
         list_store = (
-            self.relationships
-            if isinstance(element, UML.Relationship)
-            else self.elements
+            self.relationships if isinstance(element, Relationship) else self.elements
         )
         if (
             index := next(
@@ -105,9 +103,7 @@ class Branch:
 
     def changed(self, element: Element):
         list_store = (
-            self.relationships
-            if isinstance(element, UML.Relationship)
-            else self.elements
+            self.relationships if isinstance(element, Relationship) else self.elements
         )
         if not (
             tree_item := next((ti for ti in list_store if ti.element is element), None)
@@ -130,7 +126,7 @@ class Branch:
 
 def visible(element):
     return isinstance(
-        element, (UML.Relationship, UML.NamedElement, Diagram)
+        element, (Relationship, UML.NamedElement, Diagram)
     ) and not isinstance(
         element, (UML.InstanceSpecification, UML.OccurrenceSpecification)
     )

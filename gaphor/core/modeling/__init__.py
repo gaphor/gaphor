@@ -2,10 +2,12 @@
 
 from gaphor.core.modeling.coremodel import (
     Comment,
+    Dependency,
     ElementChange,
     PendingChange,
     Picture,
     RefChange,
+    Relationship,
     ValueChange,
 )
 from gaphor.core.modeling.diagram import (
