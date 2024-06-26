@@ -6,7 +6,14 @@ from gi.repository import Gio, GObject, Pango
 
 from gaphor import UML
 from gaphor.core.format import format
-from gaphor.core.modeling import Diagram, Element, Relationship
+from gaphor.core.modeling import (
+    Comment,
+    Diagram,
+    Element,
+    Presentation,
+    Relationship,
+    StyleSheet,
+)
 from gaphor.diagram.iconname import icon_name
 from gaphor.i18n import gettext
 
@@ -125,11 +132,16 @@ class Branch:
 
 
 def visible(element):
-    return isinstance(
-        element, (Relationship, UML.NamedElement, Diagram)
-    ) and not isinstance(
-        element, (UML.InstanceSpecification, UML.OccurrenceSpecification)
-    )
+    return not isinstance(
+        element,
+        (
+            Comment,
+            Presentation,
+            StyleSheet,
+            UML.InstanceSpecification,
+            UML.OccurrenceSpecification,
+        ),
+    ) or (not element.owner and isinstance(element, UML.MultiplicityElement))
 
 
 def tree_item_sort(a, b, _user_data=None):
@@ -188,14 +200,7 @@ class TreeModel:
         self, element: Element, former_owner=_no_value
     ) -> Branch | None:
         if (
-            owner := (
-                element.owner
-                or (
-                    element.memberNamespace
-                    if isinstance(element, UML.NamedElement)
-                    else None
-                )
-            )
+            owner := (element.owner or element.memberNamespace)
             if former_owner is _no_value
             else former_owner
         ) is None:
@@ -221,7 +226,7 @@ class TreeModel:
             owner_branch.append(element)
         elif element.owner:
             self.notify_child_model(element.owner)
-        elif isinstance(element, UML.NamedElement) and element.memberNamespace:
+        elif element.memberNamespace:
             self.notify_child_model(element.memberNamespace)
 
     def remove_element(self, element: Element, former_owner=_no_value) -> None:
@@ -237,7 +242,6 @@ class TreeModel:
             element.memberNamespace
             if (
                 former_owner is None
-                and isinstance(element, UML.NamedElement)
                 and element.memberNamespace
                 and element.memberNamespace is not element.namespace
             )
@@ -274,12 +278,7 @@ class TreeModel:
     def notify_child_model(self, element):
         # Only notify the change, the branch is created in child_model()
         owner_tree_item = self.tree_item_for_element(
-            element.owner
-            or (
-                element.memberNamespace
-                if isinstance(element, UML.NamedElement)
-                else None
-            )
+            element.owner or element.memberNamespace
         )
         if (
             not self.branches.get(self.tree_item_for_element(element))

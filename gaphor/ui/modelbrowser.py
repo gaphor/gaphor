@@ -187,8 +187,6 @@ class ModelBrowser(UIComponent, ActionProvider):
     @action(name="win.create-diagram")
     def tree_view_create_diagram(self, diagram_kind: str):
         element = self.get_selected_element()
-        while element and not isinstance(element, UML.NamedElement):
-            element = element.owner
 
         with Transaction(self.event_manager):
             diagram_type = self._diagram_type_or(
@@ -274,7 +272,7 @@ class ModelBrowser(UIComponent, ActionProvider):
         # Should check on ownedElement as well, since it may not have been updated
         # before this thing triggers
         if (
-            event.property not in (Element.owner, UML.NamedElement.memberNamespace)
+            event.property not in (Element.owner, Element.memberNamespace)
         ) or not visible(event.element):
             return
         element = event.element
