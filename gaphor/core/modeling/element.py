@@ -79,6 +79,8 @@ class Element:
     owner: relation_one[Element]
     presentation: relation_many[Presentation]
     relationship: relation_many[Relationship]
+    sourceRelationship: relation_many[Relationship]
+    targetRelationship: relation_many[Relationship]
     clientDependency: relation_many[Dependency]
     supplierDependency: relation_many[Dependency]
 
