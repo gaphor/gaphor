@@ -215,7 +215,7 @@ def variables(class_: UML.Class, overrides: Overrides | None = None):
                 comment = "  # type: ignore[assignment]" if is_reassignment(a) else ""
                 yield f"{a.name}: relation_{mult}[{a.type.name}]{comment}"
             else:
-                assert isinstance(a.owner, UML.NamedElement)
+                assert isinstance(a.owner, UML.Element)
                 raise ValueError(
                     f"{a.name}: {a.type} can not be written; owner={a.owner.name}"
                 )
@@ -280,8 +280,8 @@ def subsets(
                 element_type, d = attribute(c, value.strip(), super_models)
                 if d and d.isDerived:
                     if element_type:
-                        yield f"from {element_type.__module__} import {d.owner.name}"  # type: ignore[attr-defined]
-                    yield f"{d.owner.name}.{d.name}.add({full_name})  # type: ignore[attr-defined]"  # type: ignore[attr-defined]
+                        yield f"from {element_type.__module__} import {d.owner.name}"
+                    yield f"{d.owner.name}.{d.name}.add({full_name})  # type: ignore[attr-defined]"
                 elif not d:
                     log.warning(
                         f"{full_name} wants to subset {value.strip()}, but it is not defined"

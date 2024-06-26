@@ -39,7 +39,7 @@ class C4Database(C4Container):
 
 C4Container.ownerContainer = association("ownerContainer", C4Container, upper=1, opposite="owningContainer")
 C4Container.owningContainer = association("owningContainer", C4Container, composite=True, opposite="ownerContainer")
-from gaphor.UML.uml import NamedElement
-NamedElement.namespace.add(C4Container.ownerContainer)  # type: ignore[attr-defined]
+from gaphor.UML.uml import Element
+Element.namespace.add(C4Container.ownerContainer)  # type: ignore[attr-defined]
 from gaphor.UML.uml import Namespace
 Namespace.ownedMember.add(C4Container.owningContainer)  # type: ignore[attr-defined]

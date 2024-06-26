@@ -29,7 +29,7 @@ class InterfaceBlockItem(Classified, ElementPresentation[InterfaceBlock]):
             "show_values", self.update_shapes
         ).watch("show_operations", self.update_shapes).watch("subject.name").watch(
             "subject.name"
-        ).watch("subject[NamedElement].namespace.name").watch(
+        ).watch("subject.namespace.name").watch(
             "subject[Classifier].isAbstract", self.update_shapes
         ).watch("subject[Class].ownedAttribute.aggregation", self.update_shapes)
         operation_watches(self, "Block")

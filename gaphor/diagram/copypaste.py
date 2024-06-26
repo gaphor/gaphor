@@ -143,7 +143,7 @@ def paste_element(
     diagram,
     lookup,
     filter: Callable[[str, str | int | Element], bool] | None = None,
-):
+) -> Iterator[Element]:
     cls, _id, data = copy_data
     element = diagram.model.create(cls)
     yield element

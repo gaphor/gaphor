@@ -22,7 +22,7 @@ class ORItem(Classified, ElementPresentation):
     def __init__(self, diagram, id=None):
         super().__init__(diagram, id, width=DEFAULT_FTA_MINOR, height=DEFAULT_FTA_MAJOR)
 
-        self.watch("subject.name").watch("subject[NamedElement].namespace.name")
+        self.watch("subject.name").watch("subject.namespace.name")
 
     def update_shapes(self, event=None):
         self.shape = IconBox(

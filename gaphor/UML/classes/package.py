@@ -19,7 +19,7 @@ class PackageItem(Named, ElementPresentation):
 
         self.watch("children", self.update_shapes)
         self.watch("subject.name")
-        self.watch("subject[NamedElement].namespace.name")
+        self.watch("subject.namespace.name")
         self.watch("subject.appliedStereotype.classifier.name")
 
     def update_shapes(self, event=None):

@@ -16,6 +16,6 @@ def copy_state(element: State):
 
 @copy.register
 def copy_transition(element: Transition):
-    yield element.id, copy_named_element(element)
+    yield element.id, copy_named_element(element)  # type: ignore[arg-type]
     if element.guard:
         yield from copy(element.guard)

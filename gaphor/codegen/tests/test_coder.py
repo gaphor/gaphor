@@ -26,6 +26,14 @@ from gaphor.UML.modelinglanguage import UMLModelingLanguage
 
 
 @pytest.fixture(scope="session")
+def core_metamodel():
+    return load_model(
+        "models/Core.gaphor",
+        MockModelingLanguage(CoreModelingLanguage(), UMLModelingLanguage()),
+    )
+
+
+@pytest.fixture(scope="session")
 def uml_metamodel():
     return load_model(
         "models/UML.gaphor",
@@ -261,12 +269,19 @@ def test_coder_write_association_opposite_not_navigable(
     assert a == ['A.b = association("b", B)']
 
 
-def test_attribute_from_super_model(uml_metamodel: ElementFactory):
+def test_attribute_from_super_model(
+    uml_metamodel: ElementFactory, core_metamodel: ElementFactory
+):
     class_ = UML.Class()
     class_.name = "Package"
 
     element_type, base = attribute(
-        class_, "member", [(UMLModelingLanguage(), uml_metamodel)]
+        class_,
+        "member",
+        [
+            (UMLModelingLanguage(), uml_metamodel),
+            (CoreModelingLanguage(), core_metamodel),
+        ],
     )
 
     assert element_type is UML.Package

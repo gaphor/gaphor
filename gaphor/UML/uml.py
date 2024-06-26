@@ -21,8 +21,6 @@ from typing import Callable
 
 from gaphor.core.modeling.element import Element
 class NamedElement(Element):
-    memberNamespace: relation_one[Namespace]
-    namespace: relation_one[Namespace]
     visibility = _enumeration("visibility", ("public", "private", "package", "protected"), "public")
 
 
@@ -67,15 +65,7 @@ class RedefinableElement(NamedElement):
     visibility = _enumeration("visibility", ("public", "private", "package", "protected"), "public")
 
 
-class Namespace(NamedElement):
-    elementImport: relation_many[ElementImport]
-    importedMember: derivedunion[PackageableElement]
-    member: relation_many[NamedElement]
-    ownedMember: relation_many[NamedElement]
-    ownedRule: relation_many[Constraint]
-    packageImport: relation_many[PackageImport]
-
-
+from gaphor.core.modeling.coremodel import Namespace
 class Type(PackageableElement):
     package: relation_one[Package]
 
@@ -776,14 +766,10 @@ class ValueSpecificationAction(Action):
 
 
 Element.appliedStereotype = association("appliedStereotype", InstanceSpecification, composite=True, opposite="extended")
-NamedElement.namespace = derivedunion("namespace", Namespace, upper=1)
-NamedElement.memberNamespace = derivedunion("memberNamespace", Namespace, upper=1)
-Element.owner.add(NamedElement.namespace)  # type: ignore[attr-defined]
-NamedElement.memberNamespace.add(NamedElement.namespace)  # type: ignore[attr-defined]
 PackageableElement.owningPackage = derivedunion("owningPackage", Package, upper=1)
 PackageableElement.component = association("component", Component, upper=1, opposite="packagedElement")
-NamedElement.namespace.add(PackageableElement.owningPackage)  # type: ignore[attr-defined]
-NamedElement.namespace.add(PackageableElement.component)  # type: ignore[attr-defined]
+Element.namespace.add(PackageableElement.owningPackage)  # type: ignore[attr-defined]
+Element.namespace.add(PackageableElement.component)  # type: ignore[attr-defined]
 DeployedArtifact.deployment = association("deployment", Deployment, opposite="deployedArtifact")
 DeploymentTarget.deployment = association("deployment", Deployment, composite=True, opposite="location")
 Element.ownedElement.add(DeploymentTarget.deployment)  # type: ignore[attr-defined]
@@ -792,7 +778,7 @@ InstanceSpecification.classifier = association("classifier", Classifier, opposit
 InstanceSpecification.extended = association("extended", Element, opposite="appliedStereotype")
 Element.ownedElement.add(InstanceSpecification.slot)  # type: ignore[attr-defined]
 EnumerationLiteral.enumeration = association("enumeration", Enumeration, upper=1, opposite="ownedLiteral")
-NamedElement.namespace.add(EnumerationLiteral.enumeration)  # type: ignore[attr-defined]
+Element.namespace.add(EnumerationLiteral.enumeration)  # type: ignore[attr-defined]
 Relationship.abstraction = association("abstraction", InformationFlow, composite=True, opposite="realization")
 PackageMerge.mergingPackage = association("mergingPackage", Package, upper=1, opposite="packageMerge")
 PackageMerge.mergedPackage = association("mergedPackage", Package, upper=1)
@@ -805,13 +791,9 @@ RedefinableElement.redefinitionContext = derivedunion("redefinitionContext", Cla
 # 56: override Namespace.importedMember: derivedunion[PackageableElement]
 Namespace.importedMember = derivedunion('importedMember', PackageableElement, 0, '*')
 
-Namespace.ownedMember = derivedunion("ownedMember", NamedElement)
 Namespace.elementImport = association("elementImport", ElementImport, composite=True, opposite="importingNamespace")
-Namespace.member = derivedunion("member", NamedElement)
 Namespace.packageImport = association("packageImport", PackageImport, composite=True, opposite="importingNamespace")
 Namespace.ownedRule = association("ownedRule", Constraint, composite=True)
-Namespace.member.add(Namespace.ownedMember)  # type: ignore[attr-defined]
-Element.ownedElement.add(Namespace.ownedMember)  # type: ignore[attr-defined]
 Element.ownedElement.add(Namespace.elementImport)  # type: ignore[attr-defined]
 Element.ownedElement.add(Namespace.packageImport)  # type: ignore[attr-defined]
 Namespace.ownedMember.add(Namespace.ownedRule)  # type: ignore[attr-defined]
@@ -839,7 +821,7 @@ Element.relationship.add(Classifier.specialization)  # type: ignore[attr-defined
 RedefinableElement.redefinedElement.add(Classifier.redefinedClassifier)  # type: ignore[attr-defined]
 Namespace.member.add(Classifier.inheritedMember)  # type: ignore[attr-defined]
 Classifier.feature.add(Classifier.attribute)  # type: ignore[attr-defined]
-NamedElement.namespace.add(Classifier.nestingClass)  # type: ignore[attr-defined]
+Element.namespace.add(Classifier.nestingClass)  # type: ignore[attr-defined]
 RedefinableElement.redefinitionContext.add(Classifier.nestingClass)  # type: ignore[attr-defined]
 # 24: override Association.endType(Association.memberEnd, Property.type): derived[Type]
 
@@ -933,7 +915,7 @@ Namespace.ownedMember.add(Class.nestedClassifier)  # type: ignore[attr-defined]
 Node.nestedNode = association("nestedNode", Node, composite=True, opposite="node")
 Node.node = association("node", Node, upper=1, opposite="nestedNode")
 Namespace.ownedMember.add(Node.nestedNode)  # type: ignore[attr-defined]
-NamedElement.namespace.add(Node.node)  # type: ignore[attr-defined]
+Element.namespace.add(Node.node)  # type: ignore[attr-defined]
 StructuralFeature.slot = association("slot", Slot, composite=True, opposite="definingFeature")
 UseCase.extensionPoint = association("extensionPoint", ExtensionPoint, composite=True, opposite="useCase")
 UseCase.subject = association("subject", Classifier, opposite="useCase")
@@ -972,11 +954,11 @@ Namespace.ownedMember.add(Interface.ownedAttribute)  # type: ignore[attr-defined
 Include.addition = association("addition", UseCase, upper=1)
 Include.includingCase = association("includingCase", UseCase, upper=1, opposite="include")
 Relationship.target.add(Include.addition)  # type: ignore[attr-defined]
-NamedElement.namespace.add(Include.includingCase)  # type: ignore[attr-defined]
+Element.namespace.add(Include.includingCase)  # type: ignore[attr-defined]
 Relationship.relatedElement.add(Include.includingCase)  # type: ignore[attr-defined]
 ProfileApplication.appliedProfile = association("appliedProfile", Profile, upper=1)
 ExtensionPoint.useCase = association("useCase", UseCase, upper=1, opposite="extensionPoint")
-NamedElement.namespace.add(ExtensionPoint.useCase)  # type: ignore[attr-defined]
+Element.namespace.add(ExtensionPoint.useCase)  # type: ignore[attr-defined]
 ElementImport.importingNamespace = association("importingNamespace", Namespace, upper=1, opposite="elementImport")
 ElementImport.importedElement = association("importedElement", PackageableElement, upper=1)
 Relationship.source.add(ElementImport.importingNamespace)  # type: ignore[attr-defined]
@@ -1001,15 +983,15 @@ Property.datatype = association("datatype", DataType, upper=1, opposite="ownedAt
 
 Property.artifact = association("artifact", Artifact, upper=1, opposite="ownedAttribute")
 RedefinableElement.redefinedElement.add(Property.redefinedProperty)  # type: ignore[attr-defined]
-NamedElement.namespace.add(Property.interface_)  # type: ignore[attr-defined]
-NamedElement.namespace.add(Property.class_)  # type: ignore[attr-defined]
+Element.namespace.add(Property.interface_)  # type: ignore[attr-defined]
+Element.namespace.add(Property.class_)  # type: ignore[attr-defined]
 Feature.featuringClassifier.add(Property.class_)  # type: ignore[attr-defined]
-NamedElement.memberNamespace.add(Property.association)  # type: ignore[attr-defined]
-NamedElement.namespace.add(Property.owningAssociation)  # type: ignore[attr-defined]
+Element.memberNamespace.add(Property.association)  # type: ignore[attr-defined]
+Element.namespace.add(Property.owningAssociation)  # type: ignore[attr-defined]
 Feature.featuringClassifier.add(Property.owningAssociation)  # type: ignore[attr-defined]
 RedefinableElement.redefinitionContext.add(Property.classifier)  # type: ignore[attr-defined]
-NamedElement.namespace.add(Property.datatype)  # type: ignore[attr-defined]
-NamedElement.namespace.add(Property.artifact)  # type: ignore[attr-defined]
+Element.namespace.add(Property.datatype)  # type: ignore[attr-defined]
+Element.namespace.add(Property.artifact)  # type: ignore[attr-defined]
 ExtensionEnd.type = redefine(ExtensionEnd, "type", Stereotype, Property.type)
 DataType.ownedOperation = association("ownedOperation", Operation, composite=True, opposite="datatype")
 DataType.ownedAttribute = association("ownedAttribute", Property, composite=True, opposite="datatype")
@@ -1032,7 +1014,7 @@ Artifact.ownedAttribute = association("ownedAttribute", Property, composite=True
 Artifact.ownedOperation = association("ownedOperation", Operation, composite=True, opposite="artifact")
 Element.ownedElement.add(Artifact.manifestation)  # type: ignore[attr-defined]
 Namespace.ownedMember.add(Artifact.nestedArtifact)  # type: ignore[attr-defined]
-NamedElement.namespace.add(Artifact.artifact)  # type: ignore[attr-defined]
+Element.namespace.add(Artifact.artifact)  # type: ignore[attr-defined]
 Classifier.attribute.add(Artifact.ownedAttribute)  # type: ignore[attr-defined]
 Namespace.ownedMember.add(Artifact.ownedAttribute)  # type: ignore[attr-defined]
 Classifier.feature.add(Artifact.ownedOperation)  # type: ignore[attr-defined]
@@ -1057,7 +1039,7 @@ Profile.metaclassReference = association("metaclassReference", ElementImport, co
 Behavior.redefinedBehavior = association("redefinedBehavior", Behavior)
 Behavior.behavioredClassifier = association("behavioredClassifier", BehavioredClassifier, upper=1, opposite="ownedBehavior")
 RedefinableElement.redefinedElement.add(Behavior.redefinedBehavior)  # type: ignore[attr-defined]
-NamedElement.namespace.add(Behavior.behavioredClassifier)  # type: ignore[attr-defined]
+Element.namespace.add(Behavior.behavioredClassifier)  # type: ignore[attr-defined]
 Activity.group = association("group", ActivityGroup, composite=True, opposite="activity")
 Activity.edge = association("edge", ActivityEdge, composite=True, opposite="activity")
 Activity.node = association("node", ActivityNode, composite=True, opposite="activity")
@@ -1071,13 +1053,13 @@ Parameter.parameterSet = association("parameterSet", ParameterSet, opposite="par
 Parameter.ownerFormalParam = association("ownerFormalParam", BehavioralFeature, upper=1, opposite="ownedParameter")
 Parameter.operation = redefine(Parameter, "operation", Operation, Parameter.ownerFormalParam)
 Element.owner.add(Parameter.owningNode)  # type: ignore[attr-defined]
-NamedElement.namespace.add(Parameter.ownerFormalParam)  # type: ignore[attr-defined]
+Element.namespace.add(Parameter.ownerFormalParam)  # type: ignore[attr-defined]
 BehavioralFeature.raisedException = association("raisedException", Type)
 BehavioralFeature.ownedParameter = association("ownedParameter", Parameter, composite=True, opposite="ownerFormalParam")
 BehavioralFeature.method = association("method", Behavior)
 BehavioralFeature.ownedParameterSet = association("ownedParameterSet", ParameterSet, composite=True, opposite="behavioralFeature")
 Namespace.ownedMember.add(BehavioralFeature.ownedParameter)  # type: ignore[attr-defined]
-NamedElement.namespace.add(BehavioralFeature.ownedParameterSet)  # type: ignore[attr-defined]
+Element.namespace.add(BehavioralFeature.ownedParameterSet)  # type: ignore[attr-defined]
 Operation.precondition = association("precondition", Constraint, composite=True)
 Operation.postcondition = association("postcondition", Constraint, composite=True)
 Operation.class_ = association("class_", Class, upper=1, opposite="ownedOperation")
@@ -1093,18 +1075,18 @@ Operation.interface_ = association("interface_", Interface, upper=1, opposite="o
 Operation.ownedParameter = redefine(Operation, "ownedParameter", Parameter, BehavioralFeature.ownedParameter)
 Namespace.ownedMember.add(Operation.precondition)  # type: ignore[attr-defined]
 Namespace.ownedMember.add(Operation.postcondition)  # type: ignore[attr-defined]
-NamedElement.namespace.add(Operation.class_)  # type: ignore[attr-defined]
+Element.namespace.add(Operation.class_)  # type: ignore[attr-defined]
 RedefinableElement.redefinitionContext.add(Operation.class_)  # type: ignore[attr-defined]
 Feature.featuringClassifier.add(Operation.class_)  # type: ignore[attr-defined]
 RedefinableElement.redefinedElement.add(Operation.redefinedOperation)  # type: ignore[attr-defined]
 Namespace.ownedMember.add(Operation.bodyCondition)  # type: ignore[attr-defined]
-NamedElement.namespace.add(Operation.datatype)  # type: ignore[attr-defined]
+Element.namespace.add(Operation.datatype)  # type: ignore[attr-defined]
 RedefinableElement.redefinitionContext.add(Operation.datatype)  # type: ignore[attr-defined]
 Feature.featuringClassifier.add(Operation.datatype)  # type: ignore[attr-defined]
 Feature.featuringClassifier.add(Operation.artifact)  # type: ignore[attr-defined]
-NamedElement.namespace.add(Operation.artifact)  # type: ignore[attr-defined]
+Element.namespace.add(Operation.artifact)  # type: ignore[attr-defined]
 RedefinableElement.redefinitionContext.add(Operation.artifact)  # type: ignore[attr-defined]
-NamedElement.namespace.add(Operation.interface_)  # type: ignore[attr-defined]
+Element.namespace.add(Operation.interface_)  # type: ignore[attr-defined]
 Feature.featuringClassifier.add(Operation.interface_)  # type: ignore[attr-defined]
 OutputPin.opaqueAction = association("opaqueAction", Action, upper=1, opposite="outputValue")
 Element.owner.add(OutputPin.opaqueAction)  # type: ignore[attr-defined]
@@ -1119,7 +1101,7 @@ Extend.extension = association("extension", UseCase, upper=1, opposite="extend")
 Extend.extensionLocation = association("extensionLocation", ExtensionPoint, lower=1)
 Extend.extendedCase = association("extendedCase", UseCase, upper=1)
 Extend.constraint = association("constraint", Constraint, upper=1, composite=True)
-NamedElement.namespace.add(Extend.extension)  # type: ignore[attr-defined]
+Element.namespace.add(Extend.extension)  # type: ignore[attr-defined]
 Relationship.relatedElement.add(Extend.extension)  # type: ignore[attr-defined]
 Relationship.target.add(Extend.extendedCase)  # type: ignore[attr-defined]
 ActivityGroup.nodeContents = association("nodeContents", ActivityNode, opposite="inGroup")
@@ -1147,7 +1129,7 @@ InteractionFragment.generalOrdering = association("generalOrdering", GeneralOrde
 InteractionFragment.enclosingInteraction = association("enclosingInteraction", Interaction, upper=1, opposite="fragment")
 InteractionFragment.covered = association("covered", Lifeline, upper=1, opposite="coveredBy")
 Element.ownedElement.add(InteractionFragment.generalOrdering)  # type: ignore[attr-defined]
-NamedElement.namespace.add(InteractionFragment.enclosingInteraction)  # type: ignore[attr-defined]
+Element.namespace.add(InteractionFragment.enclosingInteraction)  # type: ignore[attr-defined]
 Interaction.lifeline = association("lifeline", Lifeline, composite=True, opposite="interaction")
 Interaction.action = association("action", Action, composite=True, opposite="interaction")
 Interaction.fragment = association("fragment", InteractionFragment, opposite="enclosingInteraction")
@@ -1162,7 +1144,7 @@ Element.ownedElement.add(StateInvariant.invariant)  # type: ignore[attr-defined]
 Lifeline.interaction = association("interaction", Interaction, upper=1, opposite="lifeline")
 Lifeline.coveredBy = association("coveredBy", InteractionFragment, opposite="covered")
 Lifeline.represents = association("represents", ConnectableElement, upper=1, opposite="lifeline")
-NamedElement.namespace.add(Lifeline.interaction)  # type: ignore[attr-defined]
+Element.namespace.add(Lifeline.interaction)  # type: ignore[attr-defined]
 # 86: override Message.messageKind: property
 # defined in umloverrides.py
 
@@ -1173,7 +1155,7 @@ Message.messageEnd = derivedunion("messageEnd", MessageEnd, upper=2)
 Message.interaction = association("interaction", Interaction, upper=1, opposite="message")
 Message.messageEnd.add(Message.sendEvent)  # type: ignore[attr-defined]
 Message.messageEnd.add(Message.receiveEvent)  # type: ignore[attr-defined]
-NamedElement.namespace.add(Message.interaction)  # type: ignore[attr-defined]
+Element.namespace.add(Message.interaction)  # type: ignore[attr-defined]
 MessageEnd.sendMessage = association("sendMessage", Message, upper=1, opposite="sendEvent")
 MessageEnd.receiveMessage = association("receiveMessage", Message, upper=1, opposite="receiveEvent")
 MessageEnd.message = derivedunion("message", Message, upper=1)
@@ -1190,7 +1172,7 @@ Connector.structuredClassifier = association("structuredClassifier", StructuredC
 Connector.informationFlow = association("informationFlow", InformationFlow, composite=True, opposite="realizingConnector")
 Element.ownedElement.add(Connector.end)  # type: ignore[attr-defined]
 RedefinableElement.redefinedElement.add(Connector.redefinedConnector)  # type: ignore[attr-defined]
-NamedElement.namespace.add(Connector.structuredClassifier)  # type: ignore[attr-defined]
+Element.namespace.add(Connector.structuredClassifier)  # type: ignore[attr-defined]
 RedefinableElement.redefinitionContext.add(Connector.structuredClassifier)  # type: ignore[attr-defined]
 Element.ownedElement.add(Connector.informationFlow)  # type: ignore[attr-defined]
 ConnectorEnd.definingEnd = derivedunion("definingEnd", Property, upper=1)
@@ -1201,29 +1183,29 @@ Namespace.ownedMember.add(StateMachine.region)  # type: ignore[attr-defined]
 Region.stateMachine = association("stateMachine", StateMachine, upper=1, opposite="region")
 Region.subvertex = association("subvertex", Vertex, composite=True, opposite="container")
 Region.state = association("state", State, upper=1, opposite="region")
-NamedElement.namespace.add(Region.stateMachine)  # type: ignore[attr-defined]
+Element.namespace.add(Region.stateMachine)  # type: ignore[attr-defined]
 Namespace.ownedMember.add(Region.subvertex)  # type: ignore[attr-defined]
-NamedElement.namespace.add(Region.state)  # type: ignore[attr-defined]
+Element.namespace.add(Region.state)  # type: ignore[attr-defined]
 Transition.container = association("container", Region, upper=1)
 Transition.effect = association("effect", Behavior, upper=1, composite=True)
 Transition.source = association("source", Vertex, upper=1, opposite="outgoing")
 Transition.target = association("target", Vertex, upper=1, opposite="incoming")
 Transition.guard = association("guard", Constraint, upper=1, composite=True, opposite="transition")
-NamedElement.namespace.add(Transition.container)  # type: ignore[attr-defined]
+Element.namespace.add(Transition.container)  # type: ignore[attr-defined]
 Element.ownedElement.add(Transition.effect)  # type: ignore[attr-defined]
 Element.ownedElement.add(Transition.guard)  # type: ignore[attr-defined]
 Vertex.container = association("container", Region, upper=1, opposite="subvertex")
 Vertex.outgoing = association("outgoing", Transition, opposite="source")
 Vertex.incoming = association("incoming", Transition, opposite="target")
-NamedElement.namespace.add(Vertex.container)  # type: ignore[attr-defined]
+Element.namespace.add(Vertex.container)  # type: ignore[attr-defined]
 Pseudostate.state = association("state", State, upper=1)
 Pseudostate.stateMachine = association("stateMachine", StateMachine, upper=1)
 Element.owner.add(Pseudostate.state)  # type: ignore[attr-defined]
-NamedElement.namespace.add(Pseudostate.stateMachine)  # type: ignore[attr-defined]
+Element.namespace.add(Pseudostate.stateMachine)  # type: ignore[attr-defined]
 ConnectionPointReference.state = association("state", State, upper=1)
 ConnectionPointReference.exit = association("exit", Pseudostate)
 ConnectionPointReference.entry = association("entry", Pseudostate)
-NamedElement.namespace.add(ConnectionPointReference.state)  # type: ignore[attr-defined]
+Element.namespace.add(ConnectionPointReference.state)  # type: ignore[attr-defined]
 State.entry = association("entry", Behavior, upper=1, composite=True)
 State.exit = association("exit", Behavior, upper=1, composite=True)
 State.doActivity = association("doActivity", Behavior, upper=1, composite=True)
@@ -1236,7 +1218,7 @@ Element.ownedElement.add(State.doActivity)  # type: ignore[attr-defined]
 Element.ownedElement.add(State.statevariant)  # type: ignore[attr-defined]
 Namespace.ownedMember.add(State.region)  # type: ignore[attr-defined]
 Port.encapsulatedClassifier = association("encapsulatedClassifier", EncapsulatedClassifier, upper=1, opposite="ownedPort")
-NamedElement.namespace.add(Port.encapsulatedClassifier)  # type: ignore[attr-defined]
+Element.namespace.add(Port.encapsulatedClassifier)  # type: ignore[attr-defined]
 Deployment.location = association("location", DeploymentTarget, upper=1, opposite="deployment")
 Deployment.deployedArtifact = association("deployedArtifact", DeployedArtifact, opposite="deployment")
 Element.owner.add(Deployment.location)  # type: ignore[attr-defined]
