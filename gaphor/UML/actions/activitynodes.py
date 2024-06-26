@@ -54,7 +54,7 @@ class InitialNodeItem(ActivityNodeItem, ElementPresentation):
             text_name(self),
         )
 
-        self.watch("subject[NamedElement].name")
+        self.watch("subject.name")
         self.watch("subject.appliedStereotype.classifier.name")
 
 
@@ -87,7 +87,7 @@ class ActivityFinalNodeItem(ActivityNodeItem, ElementPresentation):
             text_name(self),
         )
 
-        self.watch("subject[NamedElement].name")
+        self.watch("subject.name")
         self.watch("subject.appliedStereotype.classifier.name")
 
 
@@ -131,7 +131,7 @@ class FlowFinalNodeItem(ActivityNodeItem, ElementPresentation):
             text_name(self),
         )
 
-        self.watch("subject[NamedElement].name")
+        self.watch("subject.name")
         self.watch("subject.appliedStereotype.classifier.name")
 
 
@@ -167,7 +167,7 @@ class DecisionNodeItem(ActivityNodeItem, ElementPresentation):
         )
 
         self.watch("show_underlying_type")
-        self.watch("subject[NamedElement].name")
+        self.watch("subject.name")
         self.watch("subject.appliedStereotype.classifier.name")
 
     show_underlying_type: attribute[int] = attribute("show_underlying_type", int, 0)
@@ -230,7 +230,7 @@ class ForkNodeItem(Named, Presentation[UML.ForkNode], HandlePositionUpdate):
             ),
         )
 
-        self.watch("subject[NamedElement].name")
+        self.watch("subject.name")
         self.watch("subject.appliedStereotype.classifier.name")
         self.watch("subject[JoinNode].joinSpec")
 

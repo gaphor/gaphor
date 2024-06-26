@@ -74,7 +74,7 @@ class AssociationItem(Named, LinePresentation[UML.Association]):
 
         # For the association ends:
         base = "subject[Association].memberEnd[Property]"
-        self.watch("subject[NamedElement].name").watch(
+        self.watch("subject.name").watch(
             "subject.appliedStereotype.classifier.name"
         ).watch(f"{base}.name").watch(
             f"{base}.appliedStereotype.slot.definingFeature.name",

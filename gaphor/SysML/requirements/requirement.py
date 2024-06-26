@@ -32,11 +32,11 @@ class RequirementItem(Classified, ElementPresentation[Requirement]):
             "show_stereotypes", self.update_shapes
         ).watch("show_attributes", self.update_shapes).watch(
             "show_operations", self.update_shapes
-        ).watch("subject[NamedElement].name").watch(
-            "subject[NamedElement].namespace.name"
-        ).watch("subject[Classifier].isAbstract", self.update_shapes).watch(
-            "subject[AbstractRequirement].externalId", self.update_shapes
-        ).watch("subject[AbstractRequirement].text", self.update_shapes)
+        ).watch("subject.name").watch("subject[NamedElement].namespace.name").watch(
+            "subject[Classifier].isAbstract", self.update_shapes
+        ).watch("subject[AbstractRequirement].externalId", self.update_shapes).watch(
+            "subject[AbstractRequirement].text", self.update_shapes
+        )
         attribute_watches(self, "Requirement")
         operation_watches(self, "Requirement")
         stereotype_watches(self)

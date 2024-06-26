@@ -183,11 +183,9 @@ class InterfaceItem(Classified, ElementPresentation):
 
         self.watch("show_stereotypes", self.update_shapes).watch(
             "show_attributes", self.update_shapes
-        ).watch("show_operations", self.update_shapes).watch(
-            "subject[NamedElement].name"
-        ).watch("subject[NamedElement].namespace.name").watch(
-            "subject[Interface].supplierDependency", self.update_shapes
-        )
+        ).watch("show_operations", self.update_shapes).watch("subject.name").watch(
+            "subject[NamedElement].namespace.name"
+        ).watch("subject[Interface].supplierDependency", self.update_shapes)
         attribute_watches(self, "Interface")
         operation_watches(self, "Interface")
         stereotype_watches(self)

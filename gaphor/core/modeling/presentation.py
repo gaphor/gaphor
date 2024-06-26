@@ -69,7 +69,7 @@ class Presentation(Matrices, Element, Generic[S]):
 
         .. code::
 
-            self.watch("subject[NamedElement].name")
+            self.watch("subject.name")
 
         This interface is fluent: returns ``self``.
         """

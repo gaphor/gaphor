@@ -19,9 +19,7 @@ class OperationalSituationItem(Classified, ElementPresentation):
     def __init__(self, diagram, id=None):
         super().__init__(diagram, id)
 
-        self.watch("subject[NamedElement].name").watch(
-            "subject[NamedElement].namespace.name"
-        )
+        self.watch("subject.name").watch("subject[NamedElement].namespace.name")
 
     def update_shapes(self, event=None):
         self.shape = Box(

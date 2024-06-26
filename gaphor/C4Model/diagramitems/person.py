@@ -11,7 +11,7 @@ class C4PersonItem(Named, ElementPresentation):
     def __init__(self, diagram, id=None):
         super().__init__(diagram, id, width=48, height=48)
 
-        self.watch("subject[NamedElement].name")
+        self.watch("subject.name")
         self.watch("subject[C4Person].description")
 
     def update_shapes(self, event=None):
