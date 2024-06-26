@@ -22,11 +22,22 @@ def parse(el: Element, text: str) -> None:
     raise TypeError(f"Parsing routine for type {type(el)} not implemented yet")
 
 
+@format.register(Element)
+def format_namedelement(el: Element, **kwargs):
+    return el.name or ""
+
+
 @format.register(Diagram)
-def format_diagram(el, **kwargs) -> str:
+def format_diagram(el: Diagram, **kwargs) -> str:
     if el.diagramType:
         return f"[{el.diagramType}] {el.name}"
     return el.name or ""
+
+
+@parse.register(Element)
+def parse_namedelement(el: Element, text: str) -> None:
+    """Parse element by simply assigning text to its name."""
+    el.name = text
 
 
 @parse.register(Diagram)

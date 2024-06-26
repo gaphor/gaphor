@@ -69,10 +69,13 @@ class Dependency(Relationship):
     supplier: relation_one[Element]
 
 
-class Namespace(Element):
+class NamedElement(Element):
+    visibility = _enumeration("visibility", ("public", "private", "package", "protected"), "public")
+
+
+class Namespace(NamedElement):
     member: relation_many[Element]
     ownedMember: relation_many[Element]
-    visibility = _enumeration("visibility", ("public", "private", "package", "protected"), "public")
 
 
 

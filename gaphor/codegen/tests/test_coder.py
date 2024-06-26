@@ -210,8 +210,8 @@ def test_simple_attribute(uml_metamodel: ElementFactory):
 def test_order_classes(uml_metamodel):
     classes = list(order_classes(uml_metamodel.select(UML.Class)))
 
-    assert classes[0].name == "Element"
-    assert classes[1].name == "NamedElement"
+    assert classes[0].name == "NamedElement"
+    assert classes[1].name == "PackageableElement"
 
 
 def test_coder_write_association(navigable_association: UML.Association):
@@ -279,8 +279,9 @@ def test_attribute_from_super_model(
         class_,
         "member",
         [
-            (UMLModelingLanguage(), uml_metamodel),
+            # Order matters! Base model first.
             (CoreModelingLanguage(), core_metamodel),
+            (UMLModelingLanguage(), uml_metamodel),
         ],
     )
 

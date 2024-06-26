@@ -26,7 +26,7 @@ class PartitionItem(ElementPresentation[UML.ActivityPartition]):
         self.watch("subject.appliedStereotype.classifier.name")
         self.watch("partition", self.update_shapes)
         self.watch("partition.name")
-        self.watch("partition[ActivityPartition].represents[NamedElement].name")
+        self.watch("partition[ActivityPartition].represents.name")
         self.handles()[NW].pos.add_handler(self.update_width)
         self.handles()[SE].pos.add_handler(self.update_width)
 

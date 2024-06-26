@@ -182,11 +182,6 @@ def format_slot(el):
     return f'{el.definingFeature.name} = "{el.value}"'
 
 
-@format.register(UML.NamedElement)
-def format_namedelement(el, **kwargs):
-    return el.name or ""
-
-
 @format.register(UML.Pin)
 def format_pin(el, **kwargs):
     if not el:

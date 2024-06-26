@@ -19,11 +19,7 @@ from gaphor.core.modeling.properties import (
 from typing import Callable
 
 
-from gaphor.core.modeling.element import Element
-class NamedElement(Element):
-    visibility = _enumeration("visibility", ("public", "private", "package", "protected"), "public")
-
-
+from gaphor.core.modeling.coremodel import NamedElement
 class PackageableElement(NamedElement):
     component: relation_one[Component]
     owningPackage: relation_one[Package]
@@ -177,6 +173,7 @@ class ObjectNode(ActivityNode, TypedElement):
     upperBound: _attribute[str] = _attribute("upperBound", str)
 
 
+from gaphor.core.modeling.element import Element
 class MultiplicityElement(Element):
     isOrdered: _attribute[int] = _attribute("isOrdered", int, default=True)
     isUnique: _attribute[int] = _attribute("isUnique", int, default=True)
@@ -765,9 +762,9 @@ class ValueSpecificationAction(Action):
 # defined in umloverrides.py
 
 
-Element.appliedStereotype = association("appliedStereotype", InstanceSpecification, composite=True, opposite="extended")
 PackageableElement.owningPackage = derivedunion("owningPackage", Package, upper=1)
 PackageableElement.component = association("component", Component, upper=1, opposite="packagedElement")
+from gaphor.core.modeling.coremodel import Element
 Element.namespace.add(PackageableElement.owningPackage)  # type: ignore[attr-defined]
 Element.namespace.add(PackageableElement.component)  # type: ignore[attr-defined]
 DeployedArtifact.deployment = association("deployment", Deployment, opposite="deployedArtifact")
@@ -783,7 +780,6 @@ Relationship.abstraction = association("abstraction", InformationFlow, composite
 PackageMerge.mergingPackage = association("mergingPackage", Package, upper=1, opposite="packageMerge")
 PackageMerge.mergedPackage = association("mergedPackage", Package, upper=1)
 Relationship.source.add(PackageMerge.mergingPackage)  # type: ignore[attr-defined]
-from gaphor.core.modeling.coremodel import Element
 Element.owner.add(PackageMerge.mergingPackage)  # type: ignore[attr-defined]
 Relationship.target.add(PackageMerge.mergedPackage)  # type: ignore[attr-defined]
 RedefinableElement.redefinedElement = derivedunion("redefinedElement", RedefinableElement)
@@ -860,6 +856,7 @@ ActivityEdge.redefinedElement = redefine(ActivityEdge, "redefinedElement", Activ
 Element.owner.add(ActivityEdge.activity)  # type: ignore[attr-defined]
 TypedElement.type = association("type", Type, upper=1)
 ObjectNode.selection = association("selection", Behavior, upper=1)
+Element.appliedStereotype = association("appliedStereotype", InstanceSpecification, composite=True, opposite="extended")
 # 18: override MultiplicityElement.lower(MultiplicityElement.lowerValue): _attribute[str]
 MultiplicityElement.lower = MultiplicityElement.lowerValue
 
