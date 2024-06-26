@@ -17,7 +17,7 @@ the type of dependency in an automatic way.
 from gaphor import UML
 from gaphor.core.modeling import Dependency
 from gaphor.core.modeling.properties import attribute
-from gaphor.diagram.presentation import LinePresentation, text_name
+from gaphor.diagram.presentation import LinePresentation, Named, text_name
 from gaphor.diagram.shapes import Box, stroke
 from gaphor.diagram.support import represents
 from gaphor.i18n import i18nize
@@ -27,7 +27,7 @@ from gaphor.UML.compartments import text_stereotypes
 
 @represents(Dependency, head=Dependency.supplier, tail=Dependency.client)
 @represents(UML.Usage, head=UML.Usage.supplier, tail=UML.Usage.client)
-class DependencyItem(LinePresentation):
+class DependencyItem(Named, LinePresentation):
     """Dependency item represents several types of dependencies, i.e. normal
     dependency or usage.
 

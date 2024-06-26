@@ -3,7 +3,7 @@
 
 from gaphor import UML
 from gaphor.core.styling import Style
-from gaphor.diagram.presentation import LinePresentation, text_name
+from gaphor.diagram.presentation import LinePresentation, Named, text_name
 from gaphor.diagram.shapes import Box, stroke
 from gaphor.diagram.support import represents
 from gaphor.UML.classes.interface import Folded, InterfacePort
@@ -15,7 +15,7 @@ from gaphor.UML.compartments import text_stereotypes
     head=UML.InterfaceRealization.contract,
     tail=UML.InterfaceRealization.implementatingClassifier,
 )
-class InterfaceRealizationItem(LinePresentation):
+class InterfaceRealizationItem(Named, LinePresentation):
     def __init__(self, diagram, id=None):
         super().__init__(
             diagram,

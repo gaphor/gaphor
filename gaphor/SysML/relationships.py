@@ -1,11 +1,11 @@
-from gaphor.diagram.presentation import LinePresentation, text_name
+from gaphor.diagram.presentation import LinePresentation, Named, text_name
 from gaphor.diagram.shapes import Box, draw_arrow_head
 from gaphor.SysML import sysml
 from gaphor.UML.compartments import text_stereotypes
 
 
 class DirectedRelationshipPropertyPathItem(
-    LinePresentation[sysml.DirectedRelationshipPropertyPath]
+    Named, LinePresentation[sysml.DirectedRelationshipPropertyPath]
 ):
     relation_type = ""
 
