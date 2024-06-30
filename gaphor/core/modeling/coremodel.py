@@ -82,6 +82,10 @@ class Type(Namespace):
     pass
 
 
+class Feature(Type):
+    isStatic: _attribute[int] = _attribute("isStatic", int, default=False)
+
+
 
 Element.ownedElement = derivedunion("ownedElement", Element)
 Element.owner = derivedunion("owner", Element, upper=1)

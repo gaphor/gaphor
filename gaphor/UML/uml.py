@@ -110,11 +110,7 @@ class MergeNode(ControlNode):
     pass
 
 
-class Feature(NamedElement):
-    featuringClassifier: relation_many[Classifier]
-    isStatic: _attribute[int] = _attribute("isStatic", int, default=False)
-
-
+from gaphor.core.modeling.coremodel import Feature
 class ActivityEdge(NamedElement):
     activity: relation_one[Activity]
     guard: _attribute[str] = _attribute("guard", str)
