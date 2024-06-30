@@ -140,6 +140,7 @@ def visible(element):
             StyleSheet,
             UML.InstanceSpecification,
             UML.OccurrenceSpecification,
+            UML.Slot,
         ),
     ) or (not element.owner and isinstance(element, UML.MultiplicityElement))
 
