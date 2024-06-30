@@ -78,6 +78,10 @@ class Namespace(NamedElement):
     ownedMember: relation_many[Element]
 
 
+class Type(Namespace):
+    pass
+
+
 
 Element.ownedElement = derivedunion("ownedElement", Element)
 Element.owner = derivedunion("owner", Element, upper=1)

@@ -61,12 +61,8 @@ class RedefinableElement(NamedElement):
     visibility = _enumeration("visibility", ("public", "private", "package", "protected"), "public")
 
 
-from gaphor.core.modeling.coremodel import Namespace
-class Type(PackageableElement):
-    package: relation_one[Package]
-
-
-class Classifier(Namespace, RedefinableElement, Type):
+from gaphor.core.modeling.coremodel import Type
+class Classifier(PackageableElement, RedefinableElement, Type):
     attribute: relation_many[Property]
     componentRealization: relation_many[ComponentRealization]
     feature: relation_many[Feature]
@@ -77,6 +73,7 @@ class Classifier(Namespace, RedefinableElement, Type):
     isAbstract: _attribute[int] = _attribute("isAbstract", int, default=False)
     nestingClass: relation_one[Class]
     ownedUseCase: relation_many[UseCase]
+    package: relation_one[Package]
     redefinedClassifier: relation_many[Classifier]
     specialization: relation_many[Generalization]
     useCase: relation_many[UseCase]
@@ -358,10 +355,11 @@ class DecisionNode(ControlNode):
     decisionInput: relation_one[Behavior]
 
 
+from gaphor.core.modeling.coremodel import Namespace
 class Package(Namespace, PackageableElement):
     appliedProfile: relation_many[ProfileApplication]
     nestedPackage: relation_many[Package]
-    ownedType: relation_many[Type]
+    ownedType: relation_many[Classifier]
     package: relation_one[Package]
     packageMerge: relation_many[PackageMerge]
     packagedElement: relation_many[PackageableElement]
@@ -788,17 +786,6 @@ Element.owner.add(PackageMerge.mergingPackage)  # type: ignore[attr-defined]
 Relationship.target.add(PackageMerge.mergedPackage)  # type: ignore[attr-defined]
 RedefinableElement.redefinedElement = derivedunion("redefinedElement", RedefinableElement)
 RedefinableElement.redefinitionContext = derivedunion("redefinitionContext", Classifier)
-# 56: override Namespace.importedMember: derivedunion[PackageableElement]
-Namespace.importedMember = derivedunion('importedMember', PackageableElement, 0, '*')
-
-Namespace.elementImport = association("elementImport", ElementImport, composite=True, opposite="importingNamespace")
-Namespace.packageImport = association("packageImport", PackageImport, composite=True, opposite="importingNamespace")
-Namespace.ownedRule = association("ownedRule", Constraint, composite=True)
-Element.ownedElement.add(Namespace.elementImport)  # type: ignore[attr-defined]
-Element.ownedElement.add(Namespace.packageImport)  # type: ignore[attr-defined]
-Namespace.ownedMember.add(Namespace.ownedRule)  # type: ignore[attr-defined]
-Type.package = association("package", Package, upper=1, opposite="ownedType")
-PackageableElement.owningPackage.add(Type.package)  # type: ignore[attr-defined]
 Classifier.generalization = association("generalization", Generalization, composite=True, opposite="specific")
 Classifier.instanceSpecification = association("instanceSpecification", InstanceSpecification, composite=True, opposite="classifier")
 Classifier.ownedUseCase = association("ownedUseCase", UseCase, composite=True)
@@ -814,6 +801,7 @@ Classifier.general = derived('general', Classifier, 0, '*', lambda self: [g.gene
 Classifier.useCase = association("useCase", UseCase, opposite="subject")
 Classifier.nestingClass = association("nestingClass", Class, upper=1, opposite="nestedClassifier")
 Classifier.feature = derivedunion("feature", Feature)
+Classifier.package = association("package", Package, upper=1, opposite="ownedType")
 Classifier.componentRealization = redefine(Classifier, "componentRealization", ComponentRealization, NamedElement.clientDependency)
 Element.ownedElement.add(Classifier.generalization)  # type: ignore[attr-defined]
 Namespace.ownedMember.add(Classifier.ownedUseCase)  # type: ignore[attr-defined]
@@ -823,6 +811,7 @@ Namespace.member.add(Classifier.inheritedMember)  # type: ignore[attr-defined]
 Classifier.feature.add(Classifier.attribute)  # type: ignore[attr-defined]
 Element.namespace.add(Classifier.nestingClass)  # type: ignore[attr-defined]
 RedefinableElement.redefinitionContext.add(Classifier.nestingClass)  # type: ignore[attr-defined]
+PackageableElement.owningPackage.add(Classifier.package)  # type: ignore[attr-defined]
 # 24: override Association.endType(Association.memberEnd, Property.type): derived[Type]
 
 # References the classifiers that are used as types of the ends of the
@@ -1023,18 +1012,27 @@ Namespace.ownedMember.add(Artifact.ownedOperation)  # type: ignore[attr-defined]
 ActivityParameterNode.parameter = association("parameter", Parameter, upper=1, composite=True, opposite="owningNode")
 Element.ownedElement.add(ActivityParameterNode.parameter)  # type: ignore[attr-defined]
 DecisionNode.decisionInput = association("decisionInput", Behavior, upper=1)
+# 56: override Namespace.importedMember: derivedunion[PackageableElement]
+Namespace.importedMember = derivedunion('importedMember', PackageableElement, 0, '*')
+
+Namespace.elementImport = association("elementImport", ElementImport, composite=True, opposite="importingNamespace")
+Namespace.packageImport = association("packageImport", PackageImport, composite=True, opposite="importingNamespace")
+Namespace.ownedRule = association("ownedRule", Constraint, composite=True)
+Element.ownedElement.add(Namespace.elementImport)  # type: ignore[attr-defined]
+Element.ownedElement.add(Namespace.packageImport)  # type: ignore[attr-defined]
+Namespace.ownedMember.add(Namespace.ownedRule)  # type: ignore[attr-defined]
 Package.packagedElement = derivedunion("packagedElement", PackageableElement)
-Package.ownedType = association("ownedType", Type, composite=True, opposite="package")
 Package.packageMerge = association("packageMerge", PackageMerge, composite=True, opposite="mergingPackage")
 Package.appliedProfile = association("appliedProfile", ProfileApplication, composite=True)
 Package.package = association("package", Package, upper=1, opposite="nestedPackage")
 Package.nestedPackage = association("nestedPackage", Package, composite=True, opposite="package")
+Package.ownedType = association("ownedType", Classifier, composite=True, opposite="package")
 Namespace.ownedMember.add(Package.packagedElement)  # type: ignore[attr-defined]
-Package.packagedElement.add(Package.ownedType)  # type: ignore[attr-defined]
 Element.ownedElement.add(Package.packageMerge)  # type: ignore[attr-defined]
 Element.ownedElement.add(Package.appliedProfile)  # type: ignore[attr-defined]
 PackageableElement.owningPackage.add(Package.package)  # type: ignore[attr-defined]
 Package.packagedElement.add(Package.nestedPackage)  # type: ignore[attr-defined]
+Package.packagedElement.add(Package.ownedType)  # type: ignore[attr-defined]
 Profile.metamodelReference = association("metamodelReference", PackageImport, composite=True)
 Profile.metaclassReference = association("metaclassReference", ElementImport, composite=True)
 Behavior.redefinedBehavior = association("redefinedBehavior", Behavior)
