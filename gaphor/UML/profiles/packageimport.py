@@ -1,7 +1,8 @@
 """Profile Import dependency relationship."""
 
 from gaphor import UML
-from gaphor.diagram.presentation import LinePresentation
+from gaphor.core.modeling.diagram import StyledItem
+from gaphor.diagram.presentation import LinePresentation, PresentationStyle
 from gaphor.diagram.shapes import draw_arrow_head
 from gaphor.diagram.support import represents
 from gaphor.UML.compartments import text_stereotypes
@@ -29,3 +30,7 @@ class PackageImportItem(LinePresentation):
 
         self.watch("subject.appliedStereotype.classifier.name")
         self.draw_head = draw_arrow_head
+
+        self.presentation_style = PresentationStyle(
+            self.diagram.styleSheet, StyledItem(self).name()
+        )

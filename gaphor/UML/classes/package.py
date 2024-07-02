@@ -1,9 +1,11 @@
 """Package diagram item."""
 
 from gaphor import UML
+from gaphor.core.modeling.diagram import StyledItem
 from gaphor.diagram.presentation import (
     ElementPresentation,
     Named,
+    PresentationStyle,
     text_name,
 )
 from gaphor.diagram.shapes import Box, cairo_state, stroke
@@ -22,13 +24,21 @@ class PackageItem(Named, ElementPresentation):
         self.watch("subject[NamedElement].namespace.name")
         self.watch("subject.appliedStereotype.classifier.name")
 
+        self.watch("subject[Package].name", self.change_name)
+
+        self.presentation_style = PresentationStyle(
+            self.diagram.styleSheet, StyledItem(self).name()
+        )
+
     def update_shapes(self, event=None):
         self.shape = Box(
             text_stereotypes(
                 self,
-                lambda: [self.diagram.gettext("profile")]
-                if isinstance(self.subject, UML.Profile)
-                else [],
+                lambda: (
+                    [self.diagram.gettext("profile")]
+                    if isinstance(self.subject, UML.Profile)
+                    else []
+                ),
             ),
             text_name(self),
             text_from_package(self),

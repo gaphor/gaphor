@@ -29,8 +29,9 @@ from gaphas.solver import VERY_STRONG, MultiConstraint
 from gaphas.solver.constraint import BaseConstraint
 
 from gaphor import UML
+from gaphor.core.modeling.diagram import StyledItem
 from gaphor.core.modeling.properties import attribute
-from gaphor.diagram.presentation import ElementPresentation, Named
+from gaphor.diagram.presentation import ElementPresentation, Named, PresentationStyle
 from gaphor.diagram.shapes import Box, CssNode, Text, cairo_state, draw_border, stroke
 from gaphor.diagram.support import represents
 from gaphor.UML.compartments import text_stereotypes
@@ -189,7 +190,12 @@ class LifelineItem(Named, ElementPresentation[UML.Lifeline]):
         self.watch("subject[Lifeline].represents.name")
         self.watch("subject[Lifeline].represents.type.name")
         self.watch("subject[Lifeline].represents.typeValue")
+        self.watch("subject[Lifeline].name", self.change_name)
         self.setup_constraints()
+
+        self.presentation_style = PresentationStyle(
+            self.diagram.styleSheet, StyledItem(self).name()
+        )
 
     is_destroyed: attribute[int] = attribute("is_destroyed", int, default=False)
 

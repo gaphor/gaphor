@@ -1,7 +1,13 @@
 """Final state diagram item."""
 
 from gaphor import UML
-from gaphor.diagram.presentation import ElementPresentation, Named, text_name
+from gaphor.core.modeling.diagram import StyledItem
+from gaphor.diagram.presentation import (
+    ElementPresentation,
+    Named,
+    PresentationStyle,
+    text_name,
+)
 from gaphor.diagram.shapes import Box, IconBox, ellipse, stroke
 from gaphor.diagram.support import represents
 from gaphor.UML.compartments import text_stereotypes
@@ -22,6 +28,11 @@ class FinalStateItem(ElementPresentation, Named):
 
         self.watch("subject[NamedElement].name")
         self.watch("subject.appliedStereotype.classifier.name")
+        self.watch("subject[FinalState].name", self.change_name)
+
+        self.presentation_style = PresentationStyle(
+            self.diagram.styleSheet, StyledItem(self).name()
+        )
 
 
 def draw_final_state(box, context, bounding_box):

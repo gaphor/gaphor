@@ -1,7 +1,8 @@
 """Containment - A relationship that makes an item an ownedElement of another."""
 
 from gaphor.core.modeling import DrawContext
-from gaphor.diagram.presentation import LinePresentation
+from gaphor.core.modeling.diagram import StyledItem
+from gaphor.diagram.presentation import LinePresentation, PresentationStyle
 from gaphor.diagram.shapes import pi, stroke
 
 
@@ -9,6 +10,10 @@ class ContainmentItem(LinePresentation):
     def __init__(self, diagram, id=None):
         super().__init__(diagram, id)
         self.draw_head = draw_crossed_circle_head
+
+        self.presentation_style = PresentationStyle(
+            self.diagram.styleSheet, StyledItem(self).name()
+        )
 
 
 def draw_crossed_circle_head(context: DrawContext):

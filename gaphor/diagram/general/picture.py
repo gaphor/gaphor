@@ -7,7 +7,8 @@ import cairo
 from PIL import Image
 
 from gaphor.core.modeling import Picture
-from gaphor.diagram.presentation import ElementPresentation
+from gaphor.core.modeling.diagram import StyledItem
+from gaphor.diagram.presentation import ElementPresentation, PresentationStyle
 from gaphor.diagram.shapes import Box, IconBox
 from gaphor.diagram.support import represents
 
@@ -23,6 +24,10 @@ class PictureItem(ElementPresentation):
         self.shape = IconBox(Box(draw=self.draw_image))
 
         self.watch("subject[Picture].content")
+
+        self.presentation_style = PresentationStyle(
+            self.diagram.styleSheet, StyledItem(self).name()
+        )
 
     def create_default_surface(self):
         width = int(self.width)

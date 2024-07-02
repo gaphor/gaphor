@@ -1,5 +1,6 @@
+from gaphor.core.modeling.diagram import StyledItem
 from gaphor.core.modeling.properties import attribute
-from gaphor.diagram.presentation import ElementPresentation
+from gaphor.diagram.presentation import ElementPresentation, PresentationStyle
 from gaphor.diagram.shapes import (
     Box,
     CssNode,
@@ -30,6 +31,10 @@ class MetadataItem(ElementPresentation):
         ).watch("license", self.update_shapes).watch(
             "createdOn", self.update_shapes
         ).watch("updatedOn", self.update_shapes)
+
+        self.presentation_style = PresentationStyle(
+            self.diagram.styleSheet, StyledItem(self).name()
+        )
 
     def update_shapes(self, event=None):
         diagram = self.diagram
