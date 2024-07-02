@@ -27,13 +27,11 @@ class InterfaceBlockItem(Classified, ElementPresentation[InterfaceBlock]):
             "show_parts", self.update_shapes
         ).watch("show_references", self.update_shapes).watch(
             "show_values", self.update_shapes
-        ).watch("show_operations", self.update_shapes).watch(
-            "subject[NamedElement].name"
-        ).watch("subject[NamedElement].name").watch(
-            "subject[NamedElement].namespace.name"
-        ).watch("subject[Classifier].isAbstract", self.update_shapes).watch(
-            "subject[Class].ownedAttribute.aggregation", self.update_shapes
-        )
+        ).watch("show_operations", self.update_shapes).watch("subject.name").watch(
+            "subject.name"
+        ).watch("subject.namespace.name").watch(
+            "subject[Classifier].isAbstract", self.update_shapes
+        ).watch("subject[Class].ownedAttribute.aggregation", self.update_shapes)
         operation_watches(self, "Block")
         stereotype_watches(self)
 

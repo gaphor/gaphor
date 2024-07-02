@@ -15,7 +15,7 @@ from gaphas.segment import Segment
 from gi.repository import GObject, Gtk
 
 from gaphor.core import Transaction
-from gaphor.core.modeling import Diagram, Element, Presentation, qualifiedName
+from gaphor.core.modeling import Diagram, Element, Presentation
 from gaphor.i18n import gettext, translated_ui_string
 
 
@@ -138,7 +138,6 @@ class NamePropertyPage(PropertyPageBase):
     order = 10
 
     def __init__(self, subject, event_manager):
-        assert subject is None or hasattr(subject, "name")
         super().__init__()
         self.subject = subject
         self.event_manager = event_manager
@@ -305,7 +304,7 @@ class InternalsPropertyPage(PropertyPageBase):
             textwrap.dedent(
                 f"""\
                 {gettext('Model Element')}:
-                  {gettext('qname')}: {'.'.join(map(str, qualifiedName(element)))}
+                  {gettext('qname')}: {'.'.join(map(str, element.qualifiedName))}
                   {gettext('class')}: {model_element_class(element)}
                   {gettext('id')}: {element.id}"""
             )

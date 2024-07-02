@@ -20,7 +20,7 @@ class FinalStateItem(ElementPresentation, Named):
             text_name(self),
         )
 
-        self.watch("subject[NamedElement].name")
+        self.watch("subject.name")
         self.watch("subject.appliedStereotype.classifier.name")
 
 

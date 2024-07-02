@@ -63,7 +63,7 @@ class ActorItem(Classified, ElementPresentation):
         )
         add(self, constraint(vertical=(self._handles[SE].pos, self._sub_text_port.end)))
 
-        self.watch("subject[NamedElement].name")
+        self.watch("subject.name")
         self.watch("subject.appliedStereotype.classifier.name")
         self.watch("subject[Classifier].isAbstract", self.update_shapes)
 

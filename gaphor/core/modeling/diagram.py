@@ -24,7 +24,6 @@ from gaphor.core.modeling.element import (
     Id,
     RepositoryProtocol,
     generate_id,
-    self_and_owners,
 )
 from gaphor.core.modeling.event import (
     AssociationAdded,
@@ -138,13 +137,6 @@ def lookup_attribute(element: Element, name: str) -> str | None:
     return " ".join(map(attrstr, attr_values)).strip()
 
 
-def qualifiedName(element: Element) -> list[str]:
-    """Returns the qualified name of the element as a tuple."""
-    qname = [getattr(e, "name", "??") for e in self_and_owners(element)]
-    qname.reverse()
-    return qname
-
-
 class StyledDiagram:
     def __init__(
         self,
@@ -242,7 +234,7 @@ class StyledItem:
 
     def attribute(self, name: str) -> str | None:
         a = lookup_attribute(self.item, name)
-        if a is None and self.item.subject:
+        if a in (None, "") and self.item.subject:
             a = lookup_attribute(self.item.subject, name)
         return a
 
@@ -267,7 +259,6 @@ P = TypeVar("P", bound=Presentation)
 class Diagram(Element):
     """Diagrams may contain :obj:`Presentation` elements and can be owned by any element."""
 
-    name: attribute[str] = attribute("name", str)
     diagramType: attribute[str] = attribute("diagramType", str)
     element: relation_one[Element]
 
@@ -289,11 +280,6 @@ class Diagram(Element):
     ownedPresentation: relation_many[Presentation] = association(
         "ownedPresentation", Presentation, composite=True, opposite="diagram"
     )
-
-    @property
-    def qualifiedName(self) -> list[str]:
-        """Returns the qualified name of the element as a tuple."""
-        return qualifiedName(self)
 
     def _owned_presentation_changed(self, event):
         if isinstance(event, AssociationDeleted) and event.old_value:

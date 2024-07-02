@@ -17,9 +17,7 @@ class ConditionalEventItem(Classified, ElementPresentation):
     def __init__(self, diagram, id=None):
         super().__init__(diagram, id, width=70, height=35)
 
-        self.watch("subject[NamedElement].name").watch(
-            "subject[NamedElement].namespace.name"
-        )
+        self.watch("subject.name").watch("subject.namespace.name")
 
     def update_shapes(self, event=None):
         self.shape = IconBox(

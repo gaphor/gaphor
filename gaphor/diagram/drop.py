@@ -7,10 +7,10 @@ from gaphas.geometry import Rectangle
 from gaphas.item import NW, SE
 from generic.multidispatch import FunctionDispatcher, multidispatch
 
-from gaphor.core.modeling import Diagram, Element, Presentation
+from gaphor.core.modeling import Diagram, Element, Presentation, Relationship
 from gaphor.diagram.group import group, ungroup
-from gaphor.diagram.presentation import ElementPresentation
-from gaphor.diagram.support import get_diagram_item
+from gaphor.diagram.presentation import ElementPresentation, connect
+from gaphor.diagram.support import get_diagram_item, get_diagram_item_metadata
 from gaphor.UML.recipes import owner_package
 
 log = logging.getLogger(__name__)
@@ -96,3 +96,56 @@ def _bounds(item: ElementPresentation) -> Rectangle:
     x0, y0 = transform(*item.handles()[NW].pos)
     x1, y1 = transform(*item.handles()[SE].pos)
     return Rectangle(x0, y0, x1=x1, y1=y1)
+
+
+@drop.register(Relationship, Diagram)
+def drop_relationship_on_diagram(element: Relationship, diagram: Diagram, x, y):
+    item_class = get_diagram_item(type(element))
+    if not item_class:
+        return None
+
+    metadata = get_diagram_item_metadata(item_class)
+    return (
+        drop_relationship(
+            element,
+            metadata["head"].get(element),
+            metadata["tail"].get(element),
+            diagram,
+            x,
+            y,
+        )
+        if metadata
+        else None
+    )
+
+
+def drop_relationship(element, head_element, tail_element, diagram, x, y):
+    item_class = get_diagram_item(type(element))
+    if not item_class:
+        return None
+
+    head_item = diagram_has_presentation(diagram, head_element)
+    tail_item = diagram_has_presentation(diagram, tail_element)
+    if (head_element and not head_item) or (tail_element and not tail_item):
+        return None
+
+    item = diagram.create(item_class)
+    assert item
+
+    item.matrix.translate(x, y)
+    item.subject = element
+
+    if head_item:
+        connect(item, item.head, head_item)
+    if tail_item:
+        connect(item, item.tail, tail_item)
+
+    return item
+
+
+def diagram_has_presentation(diagram, element):
+    return (
+        next((p for p in element.presentation if p.diagram is diagram), None)
+        if element
+        else None
+    )

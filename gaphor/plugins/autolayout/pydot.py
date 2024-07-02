@@ -23,7 +23,6 @@ from gaphor.diagram.presentation import (
 )
 from gaphor.i18n import gettext
 from gaphor.transaction import Transaction
-from gaphor.UML import NamedElement
 from gaphor.UML.actions.activitynodes import ForkNodeItem
 
 DOT = "dot"
@@ -232,9 +231,7 @@ def _(presentation: ElementPresentation):
         graph = pydot.Cluster(
             presentation.id,
             id=presentation.id,
-            label=f"{presentation.subject.name}\n\n\n"
-            if isinstance(presentation.subject, NamedElement)
-            else "\n\n",
+            label=f"{presentation.subject.name}\n\n\n",
             margin=20,
         )
 

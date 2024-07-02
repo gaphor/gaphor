@@ -7,6 +7,7 @@ import logging
 from typing import TYPE_CHECKING, Callable, Iterator, Protocol, TypeVar, overload
 from uuid import uuid1
 
+from gaphor.core.modeling.collection import collection
 from gaphor.core.modeling.event import ElementUpdated
 from gaphor.core.modeling.properties import (
     attribute,
@@ -16,7 +17,12 @@ from gaphor.core.modeling.properties import (
 )
 
 if TYPE_CHECKING:
-    from gaphor.core.modeling.coremodel import Comment
+    from gaphor.core.modeling.coremodel import (
+        Comment,
+        Dependency,
+        Namespace,
+        Relationship,
+    )
     from gaphor.core.modeling.diagram import Diagram
     from gaphor.core.modeling.presentation import Presentation
 
@@ -70,16 +76,22 @@ def self_and_owners(element: Element | None) -> Iterator[Element]:
 class Element:
     """Base class for all model data classes."""
 
+    name: attribute[str] = attribute("name", str)
     note: attribute[str] = attribute("note", str)
     comment: relation_many[Comment]
     ownedDiagram: relation_many[Diagram]
     ownedElement: relation_many[Element]
     owner: relation_one[Element]
     presentation: relation_many[Presentation]
+    relationship: relation_many[Relationship]
+    sourceRelationship: relation_many[Relationship]
+    targetRelationship: relation_many[Relationship]
+    clientDependency: relation_many[Dependency]
+    supplierDependency: relation_many[Dependency]
+    memberNamespace: relation_one[Namespace]
+    namespace: relation_one[Namespace]
 
     # From UML:
-    directedRelationship: relation_many[Element]
-    relationship: relation_many[Element]
     appliedStereotype: relation_many[Element]
 
     def __init__(self, id: Id | None = None, model: RepositoryProtocol | None = None):
@@ -112,6 +124,13 @@ class Element:
             )
         return self._model
 
+    @property
+    def qualifiedName(self) -> list[str]:
+        """Returns the qualified name of the element as a list."""
+        qname = [e.name or "??" for e in self_and_owners(self)]
+        qname.reverse()
+        return qname
+
     @classmethod
     def umlproperties(cls) -> Iterator[umlproperty]:
         """Iterate over all properties."""
@@ -122,12 +141,19 @@ class Element:
                 if isinstance(prop, umlprop):
                     yield prop
 
-    def save(self, save_func) -> None:
+    def save(
+        self,
+        save_func: Callable[
+            [str, str | bool | int | Element | collection[Element]], None
+        ],
+    ) -> None:
         """Save the state by calling ``save_func(name, value)``."""
         for prop in self.umlproperties():
-            prop.save(self, save_func)
+            prop.save(self, save_func)  # type: ignore[arg-type]
 
-    def load(self, name, value) -> None:
+    def load(
+        self, name: str, value: str | bool | int | Element | collection[Element]
+    ) -> None:
         """Loads value in name.
 
         Make sure that after all elements are loaded, postload() should be called.

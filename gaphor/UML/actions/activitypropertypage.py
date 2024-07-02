@@ -182,7 +182,6 @@ class ActivityParameterNodeNamePropertyPage(PropertyPageBase):
     order = 10
 
     def __init__(self, subject: UML.ActivityParameterNode, event_manager: EventManager):
-        assert subject is None or hasattr(subject, "name")
         super().__init__()
         self.subject = subject
         self.event_manager = event_manager

@@ -162,7 +162,7 @@ def test_update_model_attribute(element_factory, modeling_language, change):
     add_element = tree[0]
 
     assert len(tree) == 1
-    assert add_element.label == "Update element “<None>”"
+    assert add_element.label == "Update element of type “Class”"
     assert vchange in add_element.elements
     assert not add_element.children
 

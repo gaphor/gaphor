@@ -61,7 +61,7 @@ class ObjectNodeItem(Named, ElementPresentation):
             height=30,
         )
 
-        self.watch("subject[NamedElement].name")
+        self.watch("subject.name")
         self.watch("subject.appliedStereotype.classifier.name")
         self.watch("subject[ObjectNode].upperBound")
         self.watch("subject[ObjectNode].ordering")

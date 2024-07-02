@@ -6,7 +6,14 @@ from gi.repository import Gio, GObject, Pango
 
 from gaphor import UML
 from gaphor.core.format import format
-from gaphor.core.modeling import Diagram, Element
+from gaphor.core.modeling import (
+    Comment,
+    Diagram,
+    Element,
+    Presentation,
+    Relationship,
+    StyleSheet,
+)
 from gaphor.diagram.iconname import icon_name
 from gaphor.i18n import gettext
 
@@ -29,7 +36,7 @@ class TreeItem(GObject.Object):
     can_edit = GObject.Property(type=bool, default=True)
 
     def read_only(self):
-        return not self.element or not hasattr(self.element, "name")
+        return not self.element
 
     @GObject.Property(type=str)
     def editable_text(self):
@@ -71,7 +78,7 @@ class Branch:
         self.relationships = Gio.ListStore.new(TreeItem.__gtype__)
 
     def append(self, element: Element):
-        if isinstance(element, UML.Relationship):
+        if isinstance(element, Relationship):
             if self.relationships.get_n_items() == 0:
                 self.elements.insert(0, RelationshipItem(self.relationships))
             self.relationships.append(TreeItem(element))
@@ -80,9 +87,7 @@ class Branch:
 
     def remove(self, element):
         list_store = (
-            self.relationships
-            if isinstance(element, UML.Relationship)
-            else self.elements
+            self.relationships if isinstance(element, Relationship) else self.elements
         )
         if (
             index := next(
@@ -105,9 +110,7 @@ class Branch:
 
     def changed(self, element: Element):
         list_store = (
-            self.relationships
-            if isinstance(element, UML.Relationship)
-            else self.elements
+            self.relationships if isinstance(element, Relationship) else self.elements
         )
         if not (
             tree_item := next((ti for ti in list_store if ti.element is element), None)
@@ -129,11 +132,17 @@ class Branch:
 
 
 def visible(element):
-    return isinstance(
-        element, (UML.Relationship, UML.NamedElement, Diagram)
-    ) and not isinstance(
-        element, (UML.InstanceSpecification, UML.OccurrenceSpecification)
-    )
+    return not isinstance(
+        element,
+        (
+            Comment,
+            Presentation,
+            StyleSheet,
+            UML.InstanceSpecification,
+            UML.OccurrenceSpecification,
+            UML.Slot,
+        ),
+    ) or (not element.owner and isinstance(element, UML.MultiplicityElement))
 
 
 def tree_item_sort(a, b, _user_data=None):
@@ -192,14 +201,7 @@ class TreeModel:
         self, element: Element, former_owner=_no_value
     ) -> Branch | None:
         if (
-            owner := (
-                element.owner
-                or (
-                    element.memberNamespace
-                    if isinstance(element, UML.NamedElement)
-                    else None
-                )
-            )
+            owner := (element.owner or element.memberNamespace)
             if former_owner is _no_value
             else former_owner
         ) is None:
@@ -225,7 +227,7 @@ class TreeModel:
             owner_branch.append(element)
         elif element.owner:
             self.notify_child_model(element.owner)
-        elif isinstance(element, UML.NamedElement) and element.memberNamespace:
+        elif element.memberNamespace:
             self.notify_child_model(element.memberNamespace)
 
     def remove_element(self, element: Element, former_owner=_no_value) -> None:
@@ -241,7 +243,6 @@ class TreeModel:
             element.memberNamespace
             if (
                 former_owner is None
-                and isinstance(element, UML.NamedElement)
                 and element.memberNamespace
                 and element.memberNamespace is not element.namespace
             )
@@ -278,12 +279,7 @@ class TreeModel:
     def notify_child_model(self, element):
         # Only notify the change, the branch is created in child_model()
         owner_tree_item = self.tree_item_for_element(
-            element.owner
-            or (
-                element.memberNamespace
-                if isinstance(element, UML.NamedElement)
-                else None
-            )
+            element.owner or element.memberNamespace
         )
         if (
             not self.branches.get(self.tree_item_for_element(element))

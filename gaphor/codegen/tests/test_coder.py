@@ -26,6 +26,14 @@ from gaphor.UML.modelinglanguage import UMLModelingLanguage
 
 
 @pytest.fixture(scope="session")
+def core_metamodel():
+    return load_model(
+        "models/Core.gaphor",
+        MockModelingLanguage(CoreModelingLanguage(), UMLModelingLanguage()),
+    )
+
+
+@pytest.fixture(scope="session")
 def uml_metamodel():
     return load_model(
         "models/UML.gaphor",
@@ -202,8 +210,8 @@ def test_simple_attribute(uml_metamodel: ElementFactory):
 def test_order_classes(uml_metamodel):
     classes = list(order_classes(uml_metamodel.select(UML.Class)))
 
-    assert classes[0].name == "Element"
-    assert classes[1].name == "NamedElement"
+    assert classes[0].name == "NamedElement"
+    assert classes[1].name == "PackageableElement"
 
 
 def test_coder_write_association(navigable_association: UML.Association):
@@ -261,16 +269,24 @@ def test_coder_write_association_opposite_not_navigable(
     assert a == ['A.b = association("b", B)']
 
 
-def test_attribute_from_super_model(uml_metamodel: ElementFactory):
+def test_attribute_from_super_model(
+    uml_metamodel: ElementFactory, core_metamodel: ElementFactory
+):
     class_ = UML.Class()
     class_.name = "Package"
 
     element_type, base = attribute(
-        class_, "relationship", [(UMLModelingLanguage(), uml_metamodel)]
+        class_,
+        "member",
+        [
+            # Order matters! Base model first.
+            (CoreModelingLanguage(), core_metamodel),
+            (UMLModelingLanguage(), uml_metamodel),
+        ],
     )
 
     assert element_type is UML.Package
-    assert base.owner.name == "Element"
+    assert base.owner.name == "Namespace"
 
 
 def test_replace_simple_attribute(uml_metamodel: ElementFactory):

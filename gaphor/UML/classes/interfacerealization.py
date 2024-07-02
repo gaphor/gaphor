@@ -26,7 +26,7 @@ class InterfaceRealizationItem(Named, LinePresentation):
             ),
         )
 
-        self.watch("subject[NamedElement].name")
+        self.watch("subject.name")
         self.watch("subject.appliedStereotype.classifier.name")
         self._inline_style: Style = {}
 

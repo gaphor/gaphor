@@ -1,4 +1,5 @@
 from gaphor import UML
+from gaphor.core.modeling import Dependency
 from gaphor.diagram.propertypages import (
     PropertyPageBase,
     PropertyPages,
@@ -16,7 +17,7 @@ class DependencyPropertyPage(PropertyPageBase):
     order = 20
 
     DEPENDENCIES = (
-        UML.Dependency,
+        Dependency,
         UML.Usage,
         UML.Realization,
         UML.InterfaceRealization,

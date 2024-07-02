@@ -24,7 +24,7 @@ def _directed_relationship_property_path_target_source(type):
         if element.sourceContext is self and element.targetContext
     ]
 
-from gaphor.UML.uml import NamedElement
+from gaphor.core.modeling.coremodel import NamedElement
 class AbstractRequirement(NamedElement):
     derived: derived[AbstractRequirement]
     derivedFrom: derived[AbstractRequirement]
@@ -50,7 +50,7 @@ class DirectedRelationshipPropertyPath(DirectedRelationship):
     targetPropertyPath: relation_many[Property]
 
 
-from gaphor.UML.uml import Dependency
+from gaphor.core.modeling.coremodel import Dependency
 class Trace(Dependency, DirectedRelationshipPropertyPath):
     pass
 
