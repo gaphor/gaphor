@@ -1,5 +1,21 @@
-2.25.2
+2.26.0
 ------
+- Add model recovery from an event log
+- Start migrating root model to KerML
+- Add ability to apply stereotypes to diagrams
+- Fix unexpected model changed popup
+- Fix deletion of attribute/operation in element editor
+- Fix select association AssertionError
+- Improve checks to avoid cycles in element ownership
+- Fix long Property Editor slot text doesn't wrap
+- Fix diagram renaming shortcut
+- Ensure the diagram always has default focus
+- Improve dependency injection for Property Pages
+- Fix Hypothesis tests and only run plugin tests with internet
+- Change Gaphor logo to SysML/UML Modeling
+- Improve scripting docs
+- Adding instructions for anaconda install with Windows
+- Update Italian, Spanish, and Croatian translations
 
 2.25.1
 ------
