@@ -122,11 +122,11 @@ class collection(Generic[T]):
             i1 = self.items.index(item1)
             i2 = self.items.index(item2)
             self.items[i1], self.items[i2] = self.items[i2], self.items[i1]
-
-            self.object.handle(AssociationUpdated(self.object, self.property))
-            return True
         except (IndexError, ValueError):
             return False
+        else:
+            self.object.handle(AssociationUpdated(self.object, self.property))
+            return True
 
     def order(self, key):
         self.items.sort(key=key)

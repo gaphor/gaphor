@@ -29,11 +29,9 @@ class ClassItem(Classified, ElementPresentation[UML.Class]):
 
         self.watch("show_stereotypes", self.update_shapes).watch(
             "show_attributes", self.update_shapes
-        ).watch("show_operations", self.update_shapes).watch(
-            "subject[NamedElement].name"
-        ).watch("subject[NamedElement].namespace.name").watch(
-            "subject[Classifier].isAbstract", self.update_shapes
-        )
+        ).watch("show_operations", self.update_shapes).watch("subject.name").watch(
+            "subject.namespace.name"
+        ).watch("subject[Classifier].isAbstract", self.update_shapes)
         attribute_watches(self, "Class")
         operation_watches(self, "Class")
         stereotype_watches(self)

@@ -17,6 +17,7 @@ from gaphor.core.modeling import (
     ElementUpdated,
     ModelFlushed,
     ModelReady,
+    Relationship,
 )
 from gaphor.diagram.deletable import deletable
 from gaphor.diagram.diagramtoolbox import DiagramType
@@ -186,8 +187,6 @@ class ModelBrowser(UIComponent, ActionProvider):
     @action(name="win.create-diagram")
     def tree_view_create_diagram(self, diagram_kind: str):
         element = self.get_selected_element()
-        while element and not isinstance(element, UML.NamedElement):
-            element = element.owner
 
         with Transaction(self.event_manager):
             diagram_type = self._diagram_type_or(
@@ -273,7 +272,7 @@ class ModelBrowser(UIComponent, ActionProvider):
         # Should check on ownedElement as well, since it may not have been updated
         # before this thing triggers
         if (
-            event.property not in (Element.owner, UML.NamedElement.memberNamespace)
+            event.property not in (Element.owner, Element.memberNamespace)
         ) or not visible(event.element):
             return
         element = event.element
@@ -358,7 +357,7 @@ def select_element(
             return 0
         if (n := expand_up_to_element(element.owner, expand=True)) is None:
             return None
-        is_relationship = isinstance(element, UML.Relationship)
+        is_relationship = isinstance(element, Relationship)
         while row := selection.get_item(n):
             if is_relationship and isinstance(row.get_item(), RelationshipItem):
                 row.set_expanded(True)

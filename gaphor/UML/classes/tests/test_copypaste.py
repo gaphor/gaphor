@@ -158,16 +158,8 @@ def test_copy_remove_paste_items_with_connections(diagram, element_factory):
     new_items = copy_clear_and_paste_link(
         {gen_cls_item, assoc_item, spc_cls_item}, diagram, element_factory
     )
-    new_cls1 = next(
-        element_factory.select(
-            lambda e: isinstance(e, UML.NamedElement) and e.name == "Gen"
-        )
-    )
-    new_cls2 = next(
-        element_factory.select(
-            lambda e: isinstance(e, UML.NamedElement) and e.name == "Spc"
-        )
-    )
+    new_cls1 = next(element_factory.select(lambda e: e.name == "Gen"))
+    new_cls2 = next(element_factory.select(lambda e: e.name == "Spc"))
     new_assoc = next(element_factory.select(UML.Association))
 
     assert new_assoc.memberEnd[0].type is new_cls2

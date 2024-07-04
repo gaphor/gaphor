@@ -183,7 +183,9 @@ raaml.script = """gaphor.codegen.coder:main(
 c4model.script = """gaphor.codegen.coder:main(
     modelfile='models/C4Model.gaphor',
     outfile='gaphor/C4Model/c4model.py',
-    supermodelfiles=[('UML', 'models/UML.gaphor')]
+    supermodelfiles=[
+        ('Core', 'models/Core.gaphor'),
+        ('UML', 'models/UML.gaphor')]
     )"""
 lint = "pre-commit run --all-files"
 docs = { "cwd" = "docs", "shell" = "sphinx-build -W -b html . _build/html" }

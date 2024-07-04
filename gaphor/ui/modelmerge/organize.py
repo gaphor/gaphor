@@ -165,7 +165,7 @@ def organize_changes(element_factory, modeling_language):
                 gettext("Update element “{name}”").format(
                     name=element.name or gettext("<None>")
                 )
-                if hasattr(element, "name")
+                if element.name
                 else gettext("Update element of type “{type}”").format(
                     type=type(element).__name__
                 ),

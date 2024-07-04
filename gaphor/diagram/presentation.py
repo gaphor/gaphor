@@ -23,7 +23,7 @@ DEFAULT_WIDTH = 100
 
 
 class Named:
-    """Marker for any NamedElement presentations."""
+    """Marker for any presentations with a name."""
 
 
 class Valued:

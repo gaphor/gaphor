@@ -348,9 +348,3 @@ def parse_lifeline(el: uml.Lifeline, s: str) -> None:
 
 def render_lifeline(el: uml.Lifeline) -> str:
     return el.name or ""
-
-
-@parse.register(uml.NamedElement)
-def parse_namedelement(el: uml.NamedElement, text: str) -> None:
-    """Parse named element by simply assigning text to its name."""
-    el.name = text

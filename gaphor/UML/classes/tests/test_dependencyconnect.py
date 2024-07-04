@@ -1,7 +1,5 @@
-"""Classes related adapter connection tests."""
-
 from gaphor import UML
-from gaphor.core.modeling import Diagram
+from gaphor.core.modeling import Dependency, Diagram
 from gaphor.diagram.tests.fixtures import allow, connect, disconnect, get_connected
 from gaphor.UML.classes.dependency import DependencyItem
 from gaphor.UML.classes.interface import InterfaceItem
@@ -34,7 +32,7 @@ def test_dependency_connect(create, element_factory):
     connect(dep, dep.tail, actor2)
 
     assert dep.subject is not None
-    assert isinstance(dep.subject, UML.Dependency)
+    assert isinstance(dep.subject, Dependency)
     assert dep.subject in element_factory.select()
 
     hct = get_connected(dep, dep.head)
@@ -79,12 +77,12 @@ def test_dependency_reconnect_should_keep_attributes(create):
     connect(dep, dep.head, a1)
     connect(dep, dep.tail, a2)
 
-    dep.subject.name = "Name"
+    dep.subject.note = "Note"
 
     # reconnect: a1 -> a3
     connect(dep, dep.tail, a3)
 
-    assert dep.subject.name == "Name"
+    assert dep.subject.note == "Note"
 
 
 def test_dependency_disconnect(create, element_factory, sanitizer_service):

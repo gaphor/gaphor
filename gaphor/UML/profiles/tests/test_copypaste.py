@@ -44,16 +44,8 @@ def test_cut_paste_of_stereotype(diagram, element_factory):
     copy_clear_and_paste_link(
         {m_cls_item, st_cls_item, ext_item}, diagram, element_factory
     )
-    new_m_cls = next(
-        element_factory.select(
-            lambda e: isinstance(e, UML.NamedElement) and e.name == "Class"
-        )
-    )
-    new_st_cls = next(
-        element_factory.select(
-            lambda e: isinstance(e, UML.NamedElement) and e.name == "Stereotype"
-        )
-    )
+    new_m_cls = next(element_factory.select(lambda e: e.name == "Class"))
+    new_st_cls = next(element_factory.select(lambda e: e.name == "Stereotype"))
     new_ext = next(element_factory.select(UML.Extension))
 
     assert new_m_cls in new_ext.memberEnd[:].type

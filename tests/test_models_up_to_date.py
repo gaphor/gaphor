@@ -53,7 +53,7 @@ def test_c4model_model(tmp_path):
     outfile = tmp_path / "c4model.py"
     main(
         modelfile="models/C4Model.gaphor",
-        supermodelfiles=[("UML", "models/UML.gaphor")],
+        supermodelfiles=[("Core", "models/Core.gaphor"), ("UML", "models/UML.gaphor")],
         outfile=outfile,
     )
 

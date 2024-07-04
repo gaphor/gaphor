@@ -182,11 +182,6 @@ def format_slot(el):
     return f'{el.definingFeature.name} = "{el.value}"'
 
 
-@format.register(UML.NamedElement)
-def format_namedelement(el, **kwargs):
-    return el.name or ""
-
-
 @format.register(UML.Pin)
 def format_pin(el, **kwargs):
     if not el:
@@ -211,21 +206,9 @@ def format_multiplicity(el, bare=False):
     return f"[{m}]" if m and not bare else m
 
 
-@format.register(UML.Relationship)
-def format_relationship(el):
-    return el.__class__.__name__
-
-
 @format.register(UML.Generalization)
 def format_generalization(el):
     return gettext("general: {name}").format(name=el.general and el.general.name or "")
-
-
-@format.register(UML.Dependency)
-def format_dependency(el):
-    return gettext("supplier: {name}").format(
-        name=el.supplier and el.supplier.name or ""
-    )
 
 
 @format.register(UML.Extend)

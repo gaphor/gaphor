@@ -21,11 +21,6 @@ class DependencyConnect(DirectionalRelationshipConnect):
 
     line: DependencyItem
 
-    def allow(self, handle, port):
-        return super().allow(handle, port) and isinstance(
-            self.element.subject, UML.NamedElement
-        )
-
     def connect_subject(self, handle):
         dependency_type = self.update_dependency_type(handle)
 
