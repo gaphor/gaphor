@@ -1,5 +1,8 @@
 name: Full Build
 
+permissions:
+  contents: read
+
 on:
   push:
     branches:
@@ -177,7 +180,7 @@ jobs:
           HOMEBREW_NO_INSTALL_CLEANUP: 1
         run: >
           brew update && brew install gtksourceview5 libadwaita
-          adwaita-icon-theme gobject-introspection graphviz create-dmg upx
+          adwaita-icon-theme gobject-introspection graphviz create-dmg
       - name: Set up Python
         uses: actions/setup-python@82c7e631bb3cdc910f68e0081d67478d79c6982d # v5.1.0
         with:
@@ -310,18 +313,21 @@ jobs:
     runs-on: windows-latest
     continue-on-error: true
     timeout-minutes: 15
+    permissions:
+      contents: write
     steps:
       - uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
         with:
           name: ${{ needs.windows.outputs.installer }}
           path: .
       - name: VirusTotal Scan
-        uses: crazy-max/ghaction-virustotal@v4
+        uses: crazy-max/ghaction-virustotal@92a6081d9aab8f8ef3d9081e8bb264aaccc9e74d # v4.0.0
         if: env.mainline_build == 'true'
         with:
           vt_api_key: ${{ secrets.VIRUSTOTAL_API_KEY }}
           request_rate: 4
           update_release_body: true
+          github_token: ${{ github.token }}
           files: |
             ${{ needs.windows.outputs.installer }}
 
