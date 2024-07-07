@@ -201,6 +201,21 @@ def test_parse_association_end_derived_end(factory):
     assert not p.defaultValue
 
 
+def test_parse_association_end_derived_end_without_name(factory):
+    """Test parsing derived association end without name."""
+    a = factory.create(UML.Association)
+    p = factory.create(UML.Property)
+    p.association = a
+    parse(p, "-/*")
+    assert "private" == p.visibility
+    assert p.isDerived
+    assert not p.name
+    assert not p.typeValue
+    assert not p.lowerValue
+    assert "*" == p.upperValue
+    assert not p.defaultValue
+
+
 def test_parse_association_end_with_type(factory):
     """Test parsing of association end, type is ignored."""
     a = factory.create(UML.Association)
