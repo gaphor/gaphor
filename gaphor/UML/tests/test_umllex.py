@@ -171,6 +171,21 @@ def test_parse_association_end_multiplicity2(factory):
     assert not p.defaultValue
 
 
+@pytest.mark.parametrize("text", ["-0..2", "-[0..2]"])
+def test_parse_association_end_visibility_multiplicity_no_name(text, factory):
+    """Test parsing of multiplicity with multiline constraints."""
+    a = factory.create(UML.Association)
+    p = factory.create(UML.Property)
+    p.association = a
+    parse(p, text)
+    assert not p.name
+    assert not p.typeValue
+    assert p.visibility == "private"
+    assert "0" == p.lowerValue
+    assert "2" == p.upperValue
+    assert not p.defaultValue
+
+
 def test_parse_association_end_derived_end(factory):
     """Test parsing derived association end."""
     a = factory.create(UML.Association)

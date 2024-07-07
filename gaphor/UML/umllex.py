@@ -91,7 +91,9 @@ association_end_name_pat = compile(
 
 # Association end multiplicity:
 #   [mult] [{ tagged values }]
-association_end_mult_pat = compile(f"^{multa_subpat}{tags_subpat}{garbage_subpat}")
+association_end_mult_pat = compile(
+    f"^{vis_subpat}{multa_subpat}{tags_subpat}{garbage_subpat}"
+)
 
 
 # Operation:
@@ -205,6 +207,7 @@ def parse_association_end(el: uml.Property, s: str) -> None:
 
     if m and m.group("mult_u") or m.group("tags"):
         g = m.group
+        _set_visibility(el, g("vis"))
         el.lowerValue = g("mult_l")
         el.upperValue = g("mult_u")
     else:
