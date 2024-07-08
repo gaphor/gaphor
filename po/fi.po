@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2024-02-27 10:00-0500\n"
-"PO-Revision-Date: 2024-03-29 17:02+0000\n"
+"PO-Revision-Date: 2024-07-08 15:09+0000\n"
 "Last-Translator: Jiri Grönroos <jiri.gronroos@iki.fi>\n"
 "Language-Team: Finnish <https://hosted.weblate.org/projects/gaphor/gaphor/fi/"
 ">\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.5-dev\n"
+"X-Generator: Weblate 5.7-dev\n"
 "Generated-By: Babel 2.14.0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:23 gaphor/C4Model/toolbox.py:67
@@ -2723,7 +2723,6 @@ msgid "RAAML Example"
 msgstr "RAAML-esimerkki"
 
 #: gaphor/ui/greeter.py:81
-#, fuzzy
 msgid "Risk Analysis and Assessment Modeling Language example model"
 msgstr "Risk Analysis and Assessment Modeling Language -mallipohja"
 
