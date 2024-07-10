@@ -152,9 +152,11 @@ class AssociationPropertyPage(PropertyPageBase):
                     self.NAVIGABILITY[dropdown.get_selected()],
                 )
 
-    def _on_end_aggregation_change(self, dropdown, _pspec, subject):
-        with Transaction(self.event_manager):
-            subject.aggregation = self.AGGREGATION[dropdown.get_selected()]
+    def _on_end_aggregation_change(self, dropdown, _pspec, subject: UML.Property):
+        aggregation = self.AGGREGATION[dropdown.get_selected()]
+        if aggregation != subject.aggregation:
+            with Transaction(self.event_manager):
+                subject.aggregation = aggregation
 
     def _on_association_info_clicked(self, widget, event):
         self.info.set_relative_to(widget)
