@@ -402,6 +402,8 @@ class Behavior(Class):
     behavioredClassifier: relation_one[BehavioredClassifier]
     isReentrant: _attribute[int] = _attribute("isReentrant", int)
     redefinedBehavior: relation_many[Behavior]
+    transition: relation_one[Transition]
+    transition: relation_one[Transition]
 
 
 class Activity(Behavior):
@@ -596,12 +598,14 @@ class Region(Namespace):
 
 
 class Transition(Namespace):
+    action: relation_one[Behavior]
     container: relation_one[Region]
     effect: relation_one[Behavior]
     guard: relation_one[Constraint]
     kind = _enumeration("kind", ("internal", "local", "external"), "internal")
     source: relation_one[Vertex]
     target: relation_one[Vertex]
+    trigger: relation_one[Behavior]
 
 
 class Vertex(NamedElement):
@@ -1099,8 +1103,12 @@ Profile.metamodelReference = association("metamodelReference", PackageImport, co
 Profile.metaclassReference = association("metaclassReference", ElementImport, composite=True)
 Behavior.redefinedBehavior = association("redefinedBehavior", Behavior)
 Behavior.behavioredClassifier = association("behavioredClassifier", BehavioredClassifier, upper=1, opposite="ownedBehavior")
+Behavior.transition = association("transition", Transition, upper=1, opposite="trigger")
+Behavior.transition = association("transition", Transition, upper=1, opposite="action")
 RedefinableElement.redefinedElement.add(Behavior.redefinedBehavior)  # type: ignore[attr-defined]
 NamedElement.namespace.add(Behavior.behavioredClassifier)  # type: ignore[attr-defined]
+Element.owner.add(Behavior.transition)  # type: ignore[attr-defined]
+Element.owner.add(Behavior.transition)  # type: ignore[attr-defined]
 Activity.group = association("group", ActivityGroup, composite=True, opposite="activity")
 Activity.edge = association("edge", ActivityEdge, composite=True, opposite="activity")
 Activity.node = association("node", ActivityNode, composite=True, opposite="activity")
@@ -1248,16 +1256,20 @@ NamedElement.namespace.add(Region.stateMachine)  # type: ignore[attr-defined]
 Namespace.ownedMember.add(Region.subvertex)  # type: ignore[attr-defined]
 NamedElement.namespace.add(Region.state)  # type: ignore[attr-defined]
 Transition.container = association("container", Region, upper=1)
-Transition.effect = association("effect", Behavior, upper=1, composite=True)
-Transition.source = association("source", Vertex, upper=1, opposite="outgoing")
 Transition.target = association("target", Vertex, upper=1, opposite="incoming")
+Transition.source = association("source", Vertex, upper=1, opposite="outgoing")
+Transition.effect = association("effect", Behavior, upper=1, composite=True)
+Transition.trigger = association("trigger", Behavior, upper=1, composite=True, opposite="transition")
+Transition.action = association("action", Behavior, upper=1, composite=True, opposite="transition")
 Transition.guard = association("guard", Constraint, upper=1, composite=True, opposite="transition")
 NamedElement.namespace.add(Transition.container)  # type: ignore[attr-defined]
 Element.ownedElement.add(Transition.effect)  # type: ignore[attr-defined]
+Element.ownedElement.add(Transition.trigger)  # type: ignore[attr-defined]
+Element.ownedElement.add(Transition.action)  # type: ignore[attr-defined]
 Element.ownedElement.add(Transition.guard)  # type: ignore[attr-defined]
 Vertex.container = association("container", Region, upper=1, opposite="subvertex")
-Vertex.outgoing = association("outgoing", Transition, opposite="source")
 Vertex.incoming = association("incoming", Transition, opposite="target")
+Vertex.outgoing = association("outgoing", Transition, opposite="source")
 NamedElement.namespace.add(Vertex.container)  # type: ignore[attr-defined]
 Pseudostate.state = association("state", State, upper=1)
 Pseudostate.stateMachine = association("stateMachine", StateMachine, upper=1)
@@ -1267,17 +1279,17 @@ ConnectionPointReference.state = association("state", State, upper=1)
 ConnectionPointReference.exit = association("exit", Pseudostate)
 ConnectionPointReference.entry = association("entry", Pseudostate)
 NamedElement.namespace.add(ConnectionPointReference.state)  # type: ignore[attr-defined]
-State.entry = association("entry", Behavior, upper=1, composite=True)
 State.exit = association("exit", Behavior, upper=1, composite=True)
 State.doActivity = association("doActivity", Behavior, upper=1, composite=True)
 State.statevariant = association("statevariant", Constraint, upper=1, composite=True, opposite="owningState")
 State.submachine = association("submachine", StateMachine, upper=1)
 State.region = association("region", Region, composite=True, opposite="state")
-Element.ownedElement.add(State.entry)  # type: ignore[attr-defined]
+State.entry = association("entry", Behavior, upper=1, composite=True)
 Element.ownedElement.add(State.exit)  # type: ignore[attr-defined]
 Element.ownedElement.add(State.doActivity)  # type: ignore[attr-defined]
 Element.ownedElement.add(State.statevariant)  # type: ignore[attr-defined]
 Namespace.ownedMember.add(State.region)  # type: ignore[attr-defined]
+Element.ownedElement.add(State.entry)  # type: ignore[attr-defined]
 Port.encapsulatedClassifier = association("encapsulatedClassifier", EncapsulatedClassifier, upper=1, opposite="ownedPort")
 NamedElement.namespace.add(Port.encapsulatedClassifier)  # type: ignore[attr-defined]
 Deployment.location = association("location", DeploymentTarget, upper=1, opposite="deployment")

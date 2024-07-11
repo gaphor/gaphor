@@ -26,7 +26,7 @@ new_builder = new_resource_builder("gaphor.UML.states")
 
 @PropertyPages.register(UML.Transition)
 class TransitionPropertyPage(PropertyPageBase):
-    """Transition property page allows to edit guard specification."""
+    """Transition property page allows to edit trigger, guard and action specification."""
 
     order = 15
 
@@ -42,7 +42,8 @@ class TransitionPropertyPage(PropertyPageBase):
             return
 
         builder = new_builder(
-            "transition-editor",
+            # "transition-editor",
+            "transition-editor"
         )
 
         guard = builder.get_object("guard")
@@ -50,11 +51,36 @@ class TransitionPropertyPage(PropertyPageBase):
             guard.set_text(subject.guard.specification or "")
 
         @handler_blocking(guard, "changed", self._on_guard_change)
-        def handler(event):
+        def guard_handler(event):
             if event.element is subject.guard and guard.get_text() != event.new_value:
                 guard.set_text(event.new_value or "")
 
-        self.watcher.watch("guard[Constraint].specification", handler)
+        self.watcher.watch("guard[Constraint].specification", guard_handler)
+
+        trigger = builder.get_object("trigger")
+        if subject.trigger:
+            trigger.set_text(subject.trigger.name or "")
+
+        @handler_blocking(trigger, "changed", self._on_trigger_change)
+        def trigger_handler(event):
+            if (
+                event.element is subject.trigger
+                and trigger.get_text() != event.new_value
+            ):
+                trigger.set_text(event.new_value or "")
+
+        self.watcher.watch("trigger[Behavior].name", trigger_handler)
+
+        action = builder.get_object("action")
+        if subject.action:
+            action.set_text(subject.action.name or "")
+
+        @handler_blocking(action, "changed", self._on_action_change)
+        def action_handler(event):
+            if event.element is subject.action and action.get_text() != event.new_value:
+                action.set_text(event.new_value or "")
+
+        self.watcher.watch("action[Behavior].name", action_handler)
 
         return unsubscribe_all_on_destroy(
             builder.get_object("transition-editor"), self.watcher
@@ -66,6 +92,20 @@ class TransitionPropertyPage(PropertyPageBase):
         if not self.subject.guard:
             self.subject.guard = self.subject.model.create(UML.Constraint)
         self.subject.guard.specification = value
+
+    @transactional
+    def _on_trigger_change(self, entry):
+        value = entry.get_text().strip()
+        if not self.subject.trigger:
+            self.subject.trigger = self.subject.model.create(UML.Behavior)
+        self.subject.trigger.name = value
+
+    @transactional
+    def _on_action_change(self, entry):
+        value = entry.get_text().strip()
+        if not self.subject.action:
+            self.subject.action = self.subject.model.create(UML.Behavior)
+        self.subject.action.name = value
 
 
 @PropertyPages.register(UML.State)
