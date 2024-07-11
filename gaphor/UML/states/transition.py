@@ -18,7 +18,7 @@ class TransitionItem(Named, LinePresentation[UML.Transition]):
             diagram,
             id,
             shape_middle=CssNode(
-                "guard",
+                "trigger-guard-action",
                 None,
                 Text(  # type: ignore[return-value]
                     text=lambda: self.subject
