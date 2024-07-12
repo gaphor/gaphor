@@ -1,5 +1,5 @@
 from gaphor import UML
-from gaphor.core.modeling import Dependency
+from gaphor.core.modeling import Dependency, swap_element_type
 from gaphor.diagram.propertypages import (
     PropertyPageBase,
     PropertyPages,
@@ -68,7 +68,7 @@ class DependencyPropertyPage(PropertyPageBase):
         if subject and type(subject) is not cls:
             with Transaction(self.event_manager):
                 self.item.dependency_type = cls
-                UML.recipes.swap_element(subject, cls)
+                swap_element_type(subject, cls)
                 # TODO: trigger a ReversibleEvent for type change
                 self.item.request_update()
 
