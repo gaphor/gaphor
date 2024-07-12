@@ -16,12 +16,13 @@ from gaphor.core.modeling import (
     DerivedUpdated,
     ElementCreated,
     ElementDeleted,
+    ElementTypeUpdated,
     ModelReady,
     RedefinedAdded,
     RedefinedDeleted,
     RedefinedSet,
+    swap_element_type,
 )
-from gaphor.core.modeling.element import TypeSwappedEvent, swap_element_type
 from gaphor.core.modeling.presentation import MatrixUpdated
 from gaphor.diagram.connectors import (
     ItemConnected,
@@ -383,8 +384,8 @@ class Recorder:
     def on_matrix_updated(self, event: MatrixUpdated):
         self.events.append(("mu", event.element.id, event.new_value))
 
-    @event_handler(TypeSwappedEvent)
-    def on_type_swapped_event(self, event: TypeSwappedEvent):
+    @event_handler(ElementTypeUpdated)
+    def on_type_swapped_event(self, event: ElementTypeUpdated):
         self.events.append(("ts", event.element.id, event.new_class.__name__))
 
     @event_handler(HandlePositionEvent)

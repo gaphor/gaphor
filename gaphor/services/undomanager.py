@@ -17,7 +17,7 @@ from gaphor.abc import ActionProvider, Service
 from gaphor.action import action
 from gaphor.core import event_handler
 from gaphor.core.modeling.diagram import Diagram
-from gaphor.core.modeling.element import Element, RepositoryProtocol
+from gaphor.core.modeling.element import Element, RepositoryProtocol, swap_element_type
 from gaphor.core.modeling.event import (
     AssociationAdded,
     AssociationDeleted,
@@ -25,6 +25,7 @@ from gaphor.core.modeling.event import (
     AttributeUpdated,
     ElementCreated,
     ElementDeleted,
+    ElementTypeUpdated,
     ModelFlushed,
     ModelReady,
     RevertibleEvent,
@@ -136,6 +137,7 @@ class UndoManager(Service, ActionProvider):
         event_manager.priority_subscribe(self.undo_association_set_event)
         event_manager.priority_subscribe(self.undo_association_add_event)
         event_manager.priority_subscribe(self.undo_association_delete_event)
+        event_manager.priority_subscribe(self.undo_element_type_updated_event)
         self._action_executed()
 
     def shutdown(self):
@@ -154,6 +156,7 @@ class UndoManager(Service, ActionProvider):
         self.event_manager.unsubscribe(self.undo_association_set_event)
         self.event_manager.unsubscribe(self.undo_association_add_event)
         self.event_manager.unsubscribe(self.undo_association_delete_event)
+        self.event_manager.unsubscribe(self.undo_element_type_updated_event)
 
     def clear_undo_stack(self):
         del self._undo_stack[:]
@@ -438,3 +441,19 @@ class UndoManager(Service, ActionProvider):
         del event
 
         self.add_undo_action(undo_association_delete_event)
+
+    @event_handler(ElementTypeUpdated)
+    def undo_element_type_updated_event(self, event: ElementTypeUpdated):
+        element_id = event.element.id
+        old_class = event.old_class
+
+        def undo_element_type_updated_event():
+            element = self.lookup(element_id)
+            swap_element_type(element, old_class)
+
+        undo_element_type_updated_event.__doc__ = (
+            f"{event.element} class is {old_class}."
+        )
+        del event
+
+        self.add_undo_action(undo_element_type_updated_event)

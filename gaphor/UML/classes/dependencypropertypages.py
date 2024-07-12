@@ -69,7 +69,6 @@ class DependencyPropertyPage(PropertyPageBase):
             with Transaction(self.event_manager):
                 self.item.dependency_type = cls
                 swap_element_type(subject, cls)
-                # TODO: trigger a ReversibleEvent for type change
                 self.item.request_update()
 
     def _on_auto_dependency_change(self, switch, gparam):

@@ -8,7 +8,7 @@ from typing import TYPE_CHECKING, Callable, Iterator, Protocol, TypeVar, overloa
 from uuid import uuid1
 
 from gaphor.core.modeling.collection import collection
-from gaphor.core.modeling.event import ElementUpdated, RevertibleEvent
+from gaphor.core.modeling.event import ElementTypeUpdated, ElementUpdated
 from gaphor.core.modeling.properties import (
     attribute,
     relation_many,
@@ -295,16 +295,6 @@ class EventWatcherProtocol(Protocol):
         ...
 
 
-class TypeSwappedEvent(RevertibleEvent):
-    def __init__(self, element: Element, old_class: type[Element]):
-        super().__init__(element)
-        self.old_class = old_class
-        self.new_class = element.__class__
-
-    def revert(self, target):
-        swap_element_type(target, self.old_class)
-
-
 def swap_element_type(element: Element, new_class: type[Element]) -> None:
     """A "trick" to swap the element type.
 
@@ -313,4 +303,4 @@ def swap_element_type(element: Element, new_class: type[Element]) -> None:
     if element.__class__ is not new_class:
         old_class = element.__class__
         element.__class__ = new_class
-        element.handle(TypeSwappedEvent(element, old_class))
+        element.handle(ElementTypeUpdated(element, old_class))
