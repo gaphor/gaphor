@@ -26,7 +26,7 @@ new_builder = new_resource_builder("gaphor.UML.states")
 
 @PropertyPages.register(UML.Transition)
 class TransitionPropertyPage(PropertyPageBase):
-    """Transition property page allows to edit trigger, guard and action specification."""
+    """Transition property page allows to edit trigger, guard, and action specification."""
 
     order = 15
 
@@ -41,10 +41,7 @@ class TransitionPropertyPage(PropertyPageBase):
         if not subject:
             return
 
-        builder = new_builder(
-            # "transition-editor",
-            "transition-editor"
-        )
+        builder = new_builder("transition-editor")
 
         guard = builder.get_object("guard")
         if subject.guard:

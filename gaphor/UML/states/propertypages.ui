@@ -73,7 +73,6 @@
     <property name="orientation">vertical</property>
     <child>
 
-      <!-- GH added trigger-->
       <object class="GtkLabel">
         <property name="label" translatable="yes">Trigger</property>
         <property name="halign">start</property>
@@ -100,7 +99,6 @@
     </child>
 
     <child>
-      <!-- GH added action-->
       <object class="GtkLabel">
         <property name="label" translatable="yes">Action</property>
         <property name="halign">start</property>
@@ -108,11 +106,7 @@
           <class name="title"/>
         </style>
       </object>
-
     </child>
-
-    <!-- GH added trigger & action-->
-
     <child>
       <object class="GtkEntry" id="action"/>
     </child>
