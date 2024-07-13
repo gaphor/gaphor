@@ -6,8 +6,6 @@ from gaphor.diagram.shapes import Box, CssNode, Text, draw_arrow_tail
 from gaphor.diagram.support import represents
 from gaphor.UML.compartments import text_stereotypes
 
-# mypy: ignore-errors
-
 
 @represents(UML.Transition, head=UML.Transition.source, tail=UML.Transition.target)
 class TransitionItem(Named, LinePresentation[UML.Transition]):
@@ -20,29 +18,7 @@ class TransitionItem(Named, LinePresentation[UML.Transition]):
             shape_middle=CssNode(
                 "trigger-guard-action",
                 None,
-                Text(  # type: ignore[return-value]
-                    text=lambda: self.subject
-                    and (
-                        (
-                            self.subject.trigger
-                            and self.subject.trigger.name
-                            and f"{self.subject.trigger.name}"
-                            or ""
-                        )
-                        + (
-                            self.subject.guard
-                            and self.subject.guard.specification
-                            and f" [{self.subject.guard.specification}]"
-                            or ""
-                        )
-                        + (
-                            self.subject.action
-                            and self.subject.action.name
-                            and f" /{self.subject.action.name}"
-                            or ""
-                        )
-                    )
-                ),
+                Text(text=self.trigger_guard_action_text),
             ),
             shape_tail=Box(
                 text_stereotypes(self),
@@ -52,8 +28,28 @@ class TransitionItem(Named, LinePresentation[UML.Transition]):
         self.watch("subject[NamedElement].name")
         self.watch("subject.appliedStereotype.classifier.name")
 
-        self.watch("subject[Transition].trigger[Behavior].name")
-        self.watch("subject[Transition].guard[Constraint].specification")
-        self.watch("subject[Transition].action[Behavior].name")
+        self.watch("subject[Transition].trigger.name")
+        self.watch("subject[Transition].guard.specification")
+        self.watch("subject[Transition].action.name")
 
         self.draw_tail = draw_arrow_tail
+
+    def trigger_guard_action_text(self) -> str:
+        if not self.subject:
+            return ""
+
+        trigger_text = self.subject.trigger and self.subject.trigger.name or ""
+        guard_text = (
+            self.subject.guard
+            and self.subject.guard.specification
+            and f"[{self.subject.guard.specification}]"
+            or ""
+        )
+        action_text = (
+            self.subject.action
+            and self.subject.action.name
+            and f"/{self.subject.action.name}"
+            or ""
+        )
+
+        return " ".join(t for t in [trigger_text, guard_text, action_text] if t)
