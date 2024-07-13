@@ -399,11 +399,11 @@ class Profile(Package):
 
 
 class Behavior(Class):
+    action_transition: relation_one[Transition]
     behavioredClassifier: relation_one[BehavioredClassifier]
     isReentrant: _attribute[int] = _attribute("isReentrant", int)
     redefinedBehavior: relation_many[Behavior]
-    transition: relation_one[Transition]
-    transition: relation_one[Transition]
+    trigger_transition: relation_one[Transition]
 
 
 class Activity(Behavior):
@@ -1103,12 +1103,12 @@ Profile.metamodelReference = association("metamodelReference", PackageImport, co
 Profile.metaclassReference = association("metaclassReference", ElementImport, composite=True)
 Behavior.redefinedBehavior = association("redefinedBehavior", Behavior)
 Behavior.behavioredClassifier = association("behavioredClassifier", BehavioredClassifier, upper=1, opposite="ownedBehavior")
-Behavior.transition = association("transition", Transition, upper=1, opposite="trigger")
-Behavior.transition = association("transition", Transition, upper=1, opposite="action")
+Behavior.action_transition = association("action_transition", Transition, upper=1, opposite="action")
+Behavior.trigger_transition = association("trigger_transition", Transition, upper=1, opposite="trigger")
 RedefinableElement.redefinedElement.add(Behavior.redefinedBehavior)  # type: ignore[attr-defined]
 NamedElement.namespace.add(Behavior.behavioredClassifier)  # type: ignore[attr-defined]
-Element.owner.add(Behavior.transition)  # type: ignore[attr-defined]
-Element.owner.add(Behavior.transition)  # type: ignore[attr-defined]
+Element.owner.add(Behavior.action_transition)  # type: ignore[attr-defined]
+Element.owner.add(Behavior.trigger_transition)  # type: ignore[attr-defined]
 Activity.group = association("group", ActivityGroup, composite=True, opposite="activity")
 Activity.edge = association("edge", ActivityEdge, composite=True, opposite="activity")
 Activity.node = association("node", ActivityNode, composite=True, opposite="activity")
@@ -1182,9 +1182,9 @@ Element.owner.add(ActivityGroup.superGroup)  # type: ignore[attr-defined]
 Element.owner.add(ActivityGroup.activity)  # type: ignore[attr-defined]
 Element.ownedElement.add(ActivityGroup.subgroup)  # type: ignore[attr-defined]
 Constraint.constrainedElement = association("constrainedElement", Element)
-Constraint.owningState = association("owningState", State, upper=1, opposite="statevariant")
 Constraint.stateInvariant = association("stateInvariant", StateInvariant, upper=1, opposite="invariant")
 Constraint.parameterSet = association("parameterSet", ParameterSet, upper=1, opposite="condition")
+Constraint.owningState = association("owningState", State, upper=1, opposite="statevariant")
 Constraint.transition = association("transition", Transition, upper=1, opposite="guard")
 Element.owner.add(Constraint.stateInvariant)  # type: ignore[attr-defined]
 Element.owner.add(Constraint.parameterSet)  # type: ignore[attr-defined]
@@ -1255,18 +1255,18 @@ Region.state = association("state", State, upper=1, opposite="region")
 NamedElement.namespace.add(Region.stateMachine)  # type: ignore[attr-defined]
 Namespace.ownedMember.add(Region.subvertex)  # type: ignore[attr-defined]
 NamedElement.namespace.add(Region.state)  # type: ignore[attr-defined]
-Transition.container = association("container", Region, upper=1)
 Transition.target = association("target", Vertex, upper=1, opposite="incoming")
 Transition.source = association("source", Vertex, upper=1, opposite="outgoing")
 Transition.effect = association("effect", Behavior, upper=1, composite=True)
-Transition.trigger = association("trigger", Behavior, upper=1, composite=True, opposite="transition")
-Transition.action = association("action", Behavior, upper=1, composite=True, opposite="transition")
+Transition.container = association("container", Region, upper=1)
 Transition.guard = association("guard", Constraint, upper=1, composite=True, opposite="transition")
-NamedElement.namespace.add(Transition.container)  # type: ignore[attr-defined]
+Transition.action = association("action", Behavior, upper=1, composite=True, opposite="action_transition")
+Transition.trigger = association("trigger", Behavior, upper=1, composite=True, opposite="trigger_transition")
 Element.ownedElement.add(Transition.effect)  # type: ignore[attr-defined]
-Element.ownedElement.add(Transition.trigger)  # type: ignore[attr-defined]
-Element.ownedElement.add(Transition.action)  # type: ignore[attr-defined]
+NamedElement.namespace.add(Transition.container)  # type: ignore[attr-defined]
 Element.ownedElement.add(Transition.guard)  # type: ignore[attr-defined]
+Element.ownedElement.add(Transition.action)  # type: ignore[attr-defined]
+Element.ownedElement.add(Transition.trigger)  # type: ignore[attr-defined]
 Vertex.container = association("container", Region, upper=1, opposite="subvertex")
 Vertex.incoming = association("incoming", Transition, opposite="target")
 Vertex.outgoing = association("outgoing", Transition, opposite="source")
@@ -1275,21 +1275,21 @@ Pseudostate.state = association("state", State, upper=1)
 Pseudostate.stateMachine = association("stateMachine", StateMachine, upper=1)
 Element.owner.add(Pseudostate.state)  # type: ignore[attr-defined]
 NamedElement.namespace.add(Pseudostate.stateMachine)  # type: ignore[attr-defined]
-ConnectionPointReference.state = association("state", State, upper=1)
 ConnectionPointReference.exit = association("exit", Pseudostate)
 ConnectionPointReference.entry = association("entry", Pseudostate)
+ConnectionPointReference.state = association("state", State, upper=1)
 NamedElement.namespace.add(ConnectionPointReference.state)  # type: ignore[attr-defined]
 State.exit = association("exit", Behavior, upper=1, composite=True)
 State.doActivity = association("doActivity", Behavior, upper=1, composite=True)
-State.statevariant = association("statevariant", Constraint, upper=1, composite=True, opposite="owningState")
 State.submachine = association("submachine", StateMachine, upper=1)
 State.region = association("region", Region, composite=True, opposite="state")
 State.entry = association("entry", Behavior, upper=1, composite=True)
+State.statevariant = association("statevariant", Constraint, upper=1, composite=True, opposite="owningState")
 Element.ownedElement.add(State.exit)  # type: ignore[attr-defined]
 Element.ownedElement.add(State.doActivity)  # type: ignore[attr-defined]
-Element.ownedElement.add(State.statevariant)  # type: ignore[attr-defined]
 Namespace.ownedMember.add(State.region)  # type: ignore[attr-defined]
 Element.ownedElement.add(State.entry)  # type: ignore[attr-defined]
+Element.ownedElement.add(State.statevariant)  # type: ignore[attr-defined]
 Port.encapsulatedClassifier = association("encapsulatedClassifier", EncapsulatedClassifier, upper=1, opposite="ownedPort")
 NamedElement.namespace.add(Port.encapsulatedClassifier)  # type: ignore[attr-defined]
 Deployment.location = association("location", DeploymentTarget, upper=1, opposite="deployment")
