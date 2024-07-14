@@ -342,6 +342,11 @@ Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</propert
             </child>
             <child>
               <object class="GtkColumnViewColumn">
+                <property name="title" translatable="yes">ReadOnly</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkColumnViewColumn">
                 <property name="title" translatable="yes">Static</property>
               </object>
             </child>
