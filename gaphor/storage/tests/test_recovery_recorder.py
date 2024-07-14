@@ -2,7 +2,13 @@ import pytest
 from gaphas.segment import Segment
 
 from gaphor import UML
-from gaphor.core.modeling import Comment, Diagram, ElementFactory
+from gaphor.core.modeling import (
+    Comment,
+    Diagram,
+    ElementFactory,
+    StyleSheet,
+    swap_element_type,
+)
 from gaphor.diagram.general import CommentItem, Line
 from gaphor.diagram.tests.fixtures import connect, disconnect
 from gaphor.storage.recovery import Recorder, replay_events
@@ -301,3 +307,18 @@ def test_record_merge_line_segments(
 
     assert len(new_handle_positions) == 3
     assert handle_positions == new_handle_positions
+
+
+def test_record_type_swapped(
+    recorder, event_manager, element_factory, modeling_language
+):
+    comment = element_factory.create(Comment)
+    swap_element_type(comment, StyleSheet)
+    new_model = ElementFactory(event_manager)
+    replay_events(recorder.events[:], new_model, modeling_language)
+
+    new_diagram = new_model.lookup(comment.id)
+
+    assert new_diagram
+    assert isinstance(new_diagram, StyleSheet)
+    assert all(isinstance(f, str) for f in recorder.events[-1]), recorder.events[-1]

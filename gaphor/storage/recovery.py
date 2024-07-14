@@ -16,10 +16,12 @@ from gaphor.core.modeling import (
     DerivedUpdated,
     ElementCreated,
     ElementDeleted,
+    ElementTypeUpdated,
     ModelReady,
     RedefinedAdded,
     RedefinedDeleted,
     RedefinedSet,
+    swap_element_type,
 )
 from gaphor.core.modeling.presentation import MatrixUpdated
 from gaphor.diagram.connectors import (
@@ -292,6 +294,7 @@ class Recorder:
         event_manager.subscribe(self.on_association_set_event)
         event_manager.subscribe(self.on_association_delete_event)
         event_manager.subscribe(self.on_matrix_updated)
+        event_manager.subscribe(self.on_type_swapped_event)
         event_manager.subscribe(self.on_item_connected)
         event_manager.subscribe(self.on_item_disconnected)
         event_manager.subscribe(self.on_item_reconnected)
@@ -306,6 +309,7 @@ class Recorder:
         event_manager.unsubscribe(self.on_association_set_event)
         event_manager.unsubscribe(self.on_association_delete_event)
         event_manager.unsubscribe(self.on_matrix_updated)
+        event_manager.unsubscribe(self.on_type_swapped_event)
         event_manager.unsubscribe(self.on_item_connected)
         event_manager.unsubscribe(self.on_item_disconnected)
         event_manager.unsubscribe(self.on_item_reconnected)
@@ -379,6 +383,10 @@ class Recorder:
     @event_handler(MatrixUpdated)
     def on_matrix_updated(self, event: MatrixUpdated):
         self.events.append(("mu", event.element.id, event.new_value))
+
+    @event_handler(ElementTypeUpdated)
+    def on_type_swapped_event(self, event: ElementTypeUpdated):
+        self.events.append(("ts", event.element.id, event.new_class.__name__))
 
     @event_handler(HandlePositionEvent)
     def on_handle_position_event(self, event: HandlePositionEvent):
@@ -508,5 +516,8 @@ def replay_events(events, element_factory, modeling_language):
             case ("lm", element_id, segment, count):
                 element = element_factory.lookup(element_id)
                 LineSplitSegmentEvent(element, segment, count).revert(element)
+            case ("ts", element_id, type):
+                element = element_factory.lookup(element_id)
+                swap_element_type(element, modeling_language.lookup_element(type))
             case _:
                 assert NotImplementedError(f"Event {event} not implemented")

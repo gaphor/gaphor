@@ -197,6 +197,13 @@ class RedefinedDeleted(AssociationDeleted):
         super().__init__(element, association, old_value, index)
 
 
+class ElementTypeUpdated(ElementUpdated):
+    def __init__(self, element, old_class):
+        super().__init__(element, None)
+        self.old_class = old_class
+        self.new_class = element.__class__
+
+
 class ElementCreated(ServiceEvent):
     """An element has been created."""
 

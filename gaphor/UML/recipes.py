@@ -410,12 +410,3 @@ def owner_of_type(element: Element | None, owner_type: type[T]) -> T | None:
 
 def owner_package(element: Element | None) -> Package | None:
     return owner_of_type(element, Package)
-
-
-def swap_element(element, new_class):
-    """A "trick" to swap the element type.
-
-    Used in certain cases where the underlying element type may change.
-    """
-    if element.__class__ is not new_class:
-        element.__class__ = new_class

@@ -3,7 +3,7 @@
 import pytest
 
 from gaphor.core import event_handler
-from gaphor.core.modeling import Element
+from gaphor.core.modeling import Element, swap_element_type
 from gaphor.core.modeling.event import AssociationUpdated
 from gaphor.core.modeling.properties import association, attribute, derivedunion
 from gaphor.services.undomanager import NotInTransactionException
@@ -100,6 +100,25 @@ def test_undo_attribute(element_factory, undo_manager):
     undo_manager.redo_transaction()
 
     assert a.attr == "five"
+
+
+def test_change_element_type(event_manager, element_factory, undo_manager):
+    class A(Element):
+        pass
+
+    class B(Element):
+        pass
+
+    with Transaction(event_manager):
+        a = element_factory.create(A)
+
+    with Transaction(event_manager):
+        swap_element_type(a, B)
+        assert type(a) is B
+
+    undo_manager.undo_transaction()
+
+    assert type(a) is A
 
 
 def test_no_value_change_if_not_in_transaction(

@@ -1,5 +1,5 @@
 from gaphor import UML
-from gaphor.core.modeling import Dependency
+from gaphor.core.modeling import Dependency, swap_element_type
 from gaphor.diagram.propertypages import (
     PropertyPageBase,
     PropertyPages,
@@ -63,10 +63,12 @@ class DependencyPropertyPage(PropertyPageBase):
 
     def _on_dependency_type_change(self, dropdown, _pspec):
         cls = self.DEPENDENCIES[dropdown.get_selected()]
-        with Transaction(self.event_manager):
-            self.item.dependency_type = cls
-            if subject := self.item.subject:
-                UML.recipes.swap_element(subject, cls)
+        subject = self.item.subject
+
+        if subject and type(subject) is not cls:
+            with Transaction(self.event_manager):
+                self.item.dependency_type = cls
+                swap_element_type(subject, cls)
                 self.item.request_update()
 
     def _on_auto_dependency_change(self, switch, gparam):
