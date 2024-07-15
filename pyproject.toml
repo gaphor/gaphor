@@ -47,7 +47,7 @@ tinycss2 = "^1.0.2"
 babel = "^2.10.3"
 jedi = ">=0.18.1,<0.20.0"
 better-exceptions = "^0.3.3"
-pydot = ">=1.4.2,<3.0.0"
+pydot = ">=1.4.2,<4.0.0"
 pillow = ">=10.0.0"
 defusedxml = "^0.7.1"
 pyobjc-framework-cocoa = { version = ">=9.0.1,<11.0.0", markers = "sys_platform == 'darwin'" }
