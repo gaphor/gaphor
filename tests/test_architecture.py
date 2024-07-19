@@ -14,6 +14,17 @@ GAPHOR_CORE = [
     "gaphor.settings",
 ]
 
+GLIB = [
+    "gi.repository.GLib",
+    "gi.repository.Gio",
+]
+
+# Pango is used for text rendering in diagrams
+PANGO = [
+    "gi.repository.Pango",
+    "gi.repository.PangoCairo",
+]
+
 UI_LIBRARIES = [
     "gi.repository.Adw",
     "gi.repository.Gdk",
@@ -23,13 +34,14 @@ UI_LIBRARIES = [
 
 
 def test_core_packages():
+    # It's a pitty that we rely on typelibs here through gaphor.settings.
     (
         archrule("gaphor.core does not depend on the rest of the system")
         .match("gaphor.core*")
         .exclude("*.tests.*")
-        .may_import(*GAPHOR_CORE)
+        .may_import(*GAPHOR_CORE, *GLIB)
         .should_not_import("gaphor*")
-        .should_not_import(*UI_LIBRARIES)
+        .should_not_import("gi*")
         .check(gaphor, skip_type_checking=True)
     )
 
@@ -62,7 +74,8 @@ def test_diagram_package():
         .exclude("gaphor.diagram.tools*")
         .exclude("gaphor.diagram.*editors")
         .exclude("gaphor.diagram.*propertypages")
-        .should_not_import(*UI_LIBRARIES)
+        .may_import(*GLIB, *PANGO)
+        .should_not_import("gi.repository*")
         .check(gaphor, skip_type_checking=True)
     )
 
@@ -72,11 +85,11 @@ def test_services_package():
         archrule("Services only depend on core functionality")
         .match("gaphor.services*")
         .exclude("*.tests.*")
-        .may_import(*GAPHOR_CORE)
+        .may_import(*GAPHOR_CORE, *GLIB)
         .may_import("gaphor.diagram*")
         .may_import("gaphor.services*")
         .should_not_import("gaphor*")
-        .should_not_import(*UI_LIBRARIES)
+        .should_not_import("gi*")
         .check(gaphor, skip_type_checking=True)
     )
 
@@ -86,12 +99,12 @@ def test_storage_package():
         archrule("Storage only depends on core functionality")
         .match("gaphor.storage*")
         .exclude("*.tests.*")
-        .may_import(*GAPHOR_CORE)
+        .may_import(*GAPHOR_CORE, *GLIB, *PANGO)
         .may_import("gaphor.diagram*")
         .may_import("gaphor.storage*")
         .may_import("gaphor.application", "gaphor.services.componentregistry")
         .should_not_import("gaphor*")
-        .should_not_import(*UI_LIBRARIES)
+        .should_not_import("gi*")
         .check(gaphor, skip_type_checking=True)
     )
 
