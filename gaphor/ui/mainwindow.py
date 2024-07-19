@@ -327,7 +327,7 @@ class MainWindow(Service, ActionProvider):
         self.event_manager.handle(ActiveSessionChanged(self))
 
     def _on_window_close_request(self, window, event=None):
-        self.event_manager.handle(SessionShutdownRequested(self))
+        self.event_manager.handle(SessionShutdownRequested())
         return True
 
     def _on_window_size_changed(self, window, _gspec):

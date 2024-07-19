@@ -171,7 +171,7 @@ class Application(Service, ActionProvider):
         for session in list(self._sessions):
             self._active_session = session
             event_manager = session.get_service("event_manager")
-            event_manager.handle(SessionShutdownRequested(self))
+            event_manager.handle(SessionShutdownRequested())
             if self._active_session == session:
                 logger.info("Window not closed, abort quit operation")
                 return False

@@ -10,6 +10,8 @@ If None is returned the undo action is considered to be the redo action as well.
 NOTE: it would be nice to use actions in conjunction with functools.partial.
 """
 
+from __future__ import annotations
+
 import logging
 from typing import Callable, List
 
@@ -34,7 +36,6 @@ from gaphor.core.modeling.properties import association as association_property
 from gaphor.diagram.copypaste import deserialize, serialize
 from gaphor.event import (
     ActionEnabled,
-    ServiceEvent,
     TransactionBegin,
     TransactionCommit,
     TransactionRollback,
@@ -71,8 +72,11 @@ class ActionStack:
             act()
 
 
-class UndoManagerStateChanged(ServiceEvent):
+class UndoManagerStateChanged:
     """Event class used to send state changes on the Undo Manager."""
+
+    def __init__(self, undo_manager: UndoManager):
+        self.undo_manager = undo_manager
 
 
 class _UndoManagerTransactionCommitted:
