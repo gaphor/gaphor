@@ -39,7 +39,7 @@ class ApplicationShutdown(ServiceEvent):
     down."""
 
 
-class SessionCreated(ServiceEvent):
+class SessionCreated:
     """The session is emitting this event when it's ready to shut down."""
 
     def __init__(
@@ -50,7 +50,6 @@ class SessionCreated(ServiceEvent):
         template: Path | None = None,
         force: bool = False,
     ):
-        super().__init__(application)
         self.application = application
         self.session = session
         self.filename = Path(filename) if filename else None
@@ -80,8 +79,7 @@ class ModelSaved:
 
 
 class ModelChangedOnDisk:
-    def __init__(self, service, filename: Path | None = None):
-        self.service = service
+    def __init__(self, filename: Path | None = None):
         self.filename = filename
 
 

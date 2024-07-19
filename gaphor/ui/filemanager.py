@@ -364,7 +364,7 @@ class FileManager(Service, ActionProvider):
 
     def _on_file_changed(self, _banner, _file, _other_file, _event_type):
         if not _event_type == Gio.FileMonitorEvent.ATTRIBUTE_CHANGED:
-            self.event_manager.handle(ModelChangedOnDisk(None, self._filename))
+            self.event_manager.handle(ModelChangedOnDisk(self._filename))
 
     @action(name="file-save", shortcut="<Primary>s")
     def action_save(self):
