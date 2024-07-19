@@ -323,7 +323,7 @@ class FileManager(Service, ActionProvider):
                     for percentage in storage.save_generator(out, self.element_factory):
                         status_window.progress(percentage)
                         yield
-                self.event_manager.handle(ModelSaved(self, filename))
+                self.event_manager.handle(ModelSaved(filename))
             except Exception as e:
                 error_handler(
                     message=gettext("Unable to save model “{filename}”.").format(

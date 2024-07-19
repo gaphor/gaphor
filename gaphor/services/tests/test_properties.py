@@ -23,7 +23,7 @@ def test_set_property(properties):
 
 def test_load_properties(properties, event_manager):
     properties.set("test", 1)
-    properties.on_model_saved(ModelSaved(None, "test_load_properties"))
+    properties.on_model_saved(ModelSaved("test_load_properties"))
 
     new_properties = gaphor.services.properties.Properties(event_manager)
     new_properties.on_model_loaded(SessionCreated(None, None, "test_load_properties"))
@@ -33,7 +33,7 @@ def test_load_properties(properties, event_manager):
 
 def test_load_of_corrupted_properties(properties, event_manager, caplog):
     properties.set("test", 1)
-    properties.on_model_saved(ModelSaved(None, "test_load_properties"))
+    properties.on_model_saved(ModelSaved("test_load_properties"))
     Path(properties.filename).write_text("{ invalid content }", encoding="utf-8")
 
     new_properties = gaphor.services.properties.Properties(event_manager)
