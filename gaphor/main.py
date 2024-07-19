@@ -3,7 +3,6 @@ import logging
 import os
 import sys
 
-from gaphor.application import distribution
 from gaphor.entrypoint import initialize
 from gaphor.plugins import default_plugin_path, enable_plugins
 
@@ -13,9 +12,11 @@ LOG_FORMAT = "%(name)s %(levelname)s %(message)s"
 def main(argv=None) -> int:
     """Start Gaphor from the command line."""
 
+    logging_config()
+    i18n_config()
+
     if argv is None:
         argv = sys.argv
-    logging_config()
 
     with enable_plugins(default_plugin_path()):
         commands: dict[str, argparse.ArgumentParser] = initialize("gaphor.argparsers")
@@ -170,8 +171,18 @@ def logging_config(level=logging.INFO):
         logging.basicConfig(level=logging.INFO, format=LOG_FORMAT, force=True)
 
 
+def i18n_config():
+    import gaphor.i18n
+    from gaphor.settings import settings
+
+    if settings.use_english:
+        gaphor.i18n.force_english_locale()
+
+
 class VersionAction(argparse.Action):
     def __call__(self, parser, namespace, values, option_string=None):
+        from gaphor.application import distribution
+
         print(f"Gaphor {distribution().version}")  # noqa: T201
         parser.exit()
 

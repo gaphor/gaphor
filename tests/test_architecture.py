@@ -34,12 +34,11 @@ UI_LIBRARIES = [
 
 
 def test_core_packages():
-    # It's a pitty that we rely on typelibs here through gaphor.settings.
     (
         archrule("gaphor.core does not depend on the rest of the system")
         .match("gaphor.core*")
         .exclude("*.tests.*")
-        .may_import(*GAPHOR_CORE, *GLIB)
+        .may_import(*GAPHOR_CORE)
         .should_not_import("gaphor*")
         .should_not_import("gi*")
         .check(gaphor, skip_type_checking=True)
@@ -74,7 +73,7 @@ def test_diagram_package():
         .exclude("gaphor.diagram.tools*")
         .exclude("gaphor.diagram.*editors")
         .exclude("gaphor.diagram.*propertypages")
-        .may_import(*GLIB, *PANGO)
+        .may_import(*PANGO)
         .should_not_import("gi.repository*")
         .check(gaphor, skip_type_checking=True)
     )
@@ -138,5 +137,17 @@ def test_uml_package_does_not_depend_on_other_modeling_languages():
         .match("gaphor.UML*")
         .exclude("*.tests.*")
         .should_not_import("gaphor.C4Model*", "gaphor.RAAML*", "gaphor.SysML*")
+        .check(gaphor, only_toplevel_imports=True)
+    )
+
+
+def test_allow_main_application_to_configure_i18n():
+    (
+        archrule(
+            "The main application should configure i18n, so it should not be imported anywhere yet"
+        )
+        .match("gaphor.__main__")
+        .match("gaphor.main")
+        .should_not_import("gaphor.i18n")
         .check(gaphor, only_toplevel_imports=True)
     )
