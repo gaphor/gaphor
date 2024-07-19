@@ -49,6 +49,7 @@ class SessionCreated(ServiceEvent):
         filename: Path | None,
         template: Path | None = None,
         force: bool = False,
+        interactive: bool = False,
     ):
         super().__init__(application)
         self.application = application
@@ -56,6 +57,7 @@ class SessionCreated(ServiceEvent):
         self.filename = Path(filename) if filename else None
         self.template = template
         self.force = force
+        self.interactive = interactive
 
 
 class ActiveSessionChanged(ServiceEvent):
