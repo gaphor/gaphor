@@ -189,25 +189,17 @@ class Greeter(Service, ActionProvider):
         self.close()
 
     def _on_recent_file_activated(self, row):
-        def load():
-            self.application.new_session(filename=filename)
-            self.close()
-
         filename = row.filename
         self.greeter.set_sensitive(False)
-        GLib.idle_add(load, priority=GLib.PRIORITY_LOW)
+        self.application.new_session(filename=filename)
+        self.close()
 
     def _on_template_activated(self, child):
-        def load():
-            filename = (
-                importlib.resources.files("gaphor") / "templates" / child.filename
-            )
-            session = self.application.new_session(template=filename)
-            session.get_service("properties").set("modeling-language", child.lang)
-            self.close()
-
         self.greeter.set_sensitive(False)
-        GLib.idle_add(load, priority=GLib.PRIORITY_LOW)
+        filename = importlib.resources.files("gaphor") / "templates" / child.filename
+        session = self.application.new_session(template=filename)
+        session.get_service("properties").set("modeling-language", child.lang)
+        self.close()
 
     def _on_window_close_request(self, window, event=None):
         self.close()
