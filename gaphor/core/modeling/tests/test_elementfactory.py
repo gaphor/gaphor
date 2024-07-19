@@ -7,8 +7,8 @@ from gaphor.core import event_handler
 from gaphor.core.modeling.event import (
     ElementCreated,
     ElementDeleted,
+    ModelChanged,
     ModelFlushed,
-    ServiceEvent,
 )
 from gaphor.core.modeling.presentation import Presentation
 from gaphor.UML import Operation, Parameter
@@ -96,7 +96,7 @@ events = []
 last_event = None
 
 
-@event_handler(ServiceEvent)
+@event_handler(ModelChanged)
 def handler(event):
     global handled, events, last_event
     handled = True

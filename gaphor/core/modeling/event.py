@@ -1,5 +1,4 @@
 """The core modeling events."""
-from gaphor.event import ServiceEvent
 
 
 class RevertibleEvent:
@@ -197,7 +196,14 @@ class RedefinedDeleted(AssociationDeleted):
         super().__init__(element, association, old_value, index)
 
 
-class ElementCreated(ServiceEvent):
+class ModelChanged:
+    """Emitted when the model changes."""
+
+    def __init__(self, service):
+        self.service = service
+
+
+class ElementCreated(ModelChanged):
     """An element has been created."""
 
     def __init__(self, service, element, diagram=None):
@@ -212,7 +218,7 @@ class ElementCreated(ServiceEvent):
         self.diagram = diagram
 
 
-class ElementDeleted(ServiceEvent):
+class ElementDeleted(ModelChanged):
     """An element has been deleted."""
 
     def __init__(self, service, element, diagram=None):
@@ -227,7 +233,7 @@ class ElementDeleted(ServiceEvent):
         self.diagram = diagram
 
 
-class ModelReady(ServiceEvent):
+class ModelReady(ModelChanged):
     """A generic element factory event."""
 
     def __init__(self, service, modified=False):
@@ -239,7 +245,7 @@ class ModelReady(ServiceEvent):
         self.modified = modified
 
 
-class ModelFlushed(ServiceEvent):
+class ModelFlushed(ModelChanged):
     """The element factory has been flushed."""
 
     def __init__(self, service):
