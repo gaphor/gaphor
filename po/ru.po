@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: Gaphor 0.13.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2024-02-27 10:00-0500\n"
-"PO-Revision-Date: 2024-04-08 22:01+0000\n"
-"Last-Translator: BrainKicker <peter.sabanov@gmail.com>\n"
+"PO-Revision-Date: 2024-07-19 22:09+0000\n"
+"Last-Translator: Petr <pasabanov@murena.io>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/gaphor/gaphor/ru/"
 ">\n"
 "Language: ru\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Weblate 5.5-dev\n"
+"X-Generator: Weblate 5.7-dev\n"
 "Generated-By: Babel 2.14.0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:23 gaphor/C4Model/toolbox.py:67
@@ -2840,9 +2840,8 @@ msgid "New Generic Diagram"
 msgstr "Новая Общая Диаграмма"
 
 #: gaphor/ui/modelchanged.ui:6
-#, fuzzy
 msgid "Model Changed on Disk"
-msgstr "Изменения при слиянии моделей"
+msgstr "Модель Изменена на Диске"
 
 #: gaphor/ui/modelchanged.ui:7
 msgid "Discard Changes and Reload"
