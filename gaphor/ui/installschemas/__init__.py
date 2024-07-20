@@ -44,4 +44,4 @@ def install_schemas_command(args):
     schemas_dir.mkdir(parents=True, exist_ok=True)
     schema_file = Path(__file__).parent / "org.gaphor.Gaphor.gschema.xml"
     shutil.copy(schema_file, schemas_dir)
-    subprocess.run([args.glib_compile_schemas, str(schemas_dir)])
+    subprocess.run([args.glib_compile_schemas, str(schemas_dir)], check=True)

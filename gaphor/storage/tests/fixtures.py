@@ -30,6 +30,10 @@ def create_merge_conflict(repo: Repo, filename, initial_text, our_text, their_te
 def _porcelain_merge(repo, branch):
     """Merge branch with git cli."""
 
-    subprocess.run(["git", "config", "user.name", "Alice Author"], cwd=repo.path)
-    subprocess.run(["git", "config", "user.email", "alice@gaphor.org"], cwd=repo.path)
-    subprocess.run(["git", "merge", branch], cwd=repo.path)
+    subprocess.run(
+        ["git", "config", "user.name", "Alice Author"], cwd=repo.path, check=True
+    )
+    subprocess.run(
+        ["git", "config", "user.email", "alice@gaphor.org"], cwd=repo.path, check=True
+    )
+    subprocess.run(["git", "merge", branch], cwd=repo.path, check=True)

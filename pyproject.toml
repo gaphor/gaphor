@@ -262,7 +262,7 @@ select = [
     "SLF",
     "T20",
     "W",
-    "PLW1514",
+    "PLW1",
 ]
 extend-select = ["I"]
 

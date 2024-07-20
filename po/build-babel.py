@@ -13,7 +13,8 @@ def run_babel(command: str, input: Path, output_file: Path, locale: str):
             f"--output-file={output_file}",
             f"--locale={locale}",
             "--domain=gaphor",
-        ]
+        ],
+        check=True,
     )
 
 
