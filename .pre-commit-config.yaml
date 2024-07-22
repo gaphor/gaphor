@@ -20,6 +20,6 @@ repos:
   rev: 'v0.1.14'
   hooks:
   - id: ruff
-    args: [--fix]
+    args: [--fix, --preview]
   - id: ruff-format
     types_or: [python, spec]

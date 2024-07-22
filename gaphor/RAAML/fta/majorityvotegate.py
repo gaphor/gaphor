@@ -85,7 +85,7 @@ def draw_majority_vote_gate(box, context: DrawContext, bounding_box: Rectangle):
             * (bounding_box.width + bounding_box.height)
             / (DEFAULT_FTA_MINOR + DEFAULT_FTA_MAJOR)
         )
-    x_bearing, y_bearing, width, height, x_advance, y_advance = cr.text_extents(text)
+    x_bearing, y_bearing, width, height, _x_advance, _y_advance = cr.text_extents(text)
     x = bounding_box.width / 2.0 - (width / 2 + x_bearing)
     y = bounding_box.height / 2.0 - (height / 2 + y_bearing)
     cr.move_to(x, y)

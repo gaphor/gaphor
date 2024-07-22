@@ -1,5 +1,6 @@
 import subprocess
 
+import pytest
 from dulwich import porcelain
 from dulwich.repo import Repo
 
@@ -36,4 +37,5 @@ def _porcelain_merge(repo, branch):
     subprocess.run(
         ["git", "config", "user.email", "alice@gaphor.org"], cwd=repo.path, check=True
     )
-    subprocess.run(["git", "merge", branch], cwd=repo.path, check=True)
+    with pytest.raises(subprocess.CalledProcessError):
+        subprocess.run(["git", "merge", branch], cwd=repo.path, check=True)

@@ -361,7 +361,7 @@ def test_has_pseudo_selector_with_combinator_is_not_supported():
     # able to deal with this. This test is just here to illustrate.
     css = "classitem:has(> nested) {}"
 
-    error, payload = next(compile_style_sheet(css))
+    error, _payload = next(compile_style_sheet(css))
 
     assert error == "error"
 

@@ -47,7 +47,7 @@ def test_glue_to_class(connected_association):
 
 
 def test_association_item_connect(connected_association, element_factory):
-    asc, c1, c2 = connected_association
+    asc, _c1, _c2 = connected_association
 
     # Diagram, Class *2, Property *2, Association
     assert len(element_factory.lselect()) == 9
@@ -74,7 +74,7 @@ def test_association_item_reconnect_copies_properties(connected_association, cre
 
 
 def test_association_item_reconnect_with_navigability(connected_association, create):
-    asc, c1, c2 = connected_association
+    asc, _c1, _c2 = connected_association
     c3 = create(ClassItem, UML.Class)
 
     UML.recipes.set_navigability(asc.subject, asc.tail_subject, True)
@@ -84,7 +84,7 @@ def test_association_item_reconnect_with_navigability(connected_association, cre
 
 
 def test_association_item_reconnect_with_aggregation(connected_association, create):
-    asc, c1, c2 = connected_association
+    asc, _c1, _c2 = connected_association
     c3 = create(ClassItem, UML.Class)
 
     asc.tail_subject.aggregation = "composite"
@@ -124,7 +124,7 @@ def test_disconnect_of_second_association_should_leave_model_in_tact(
 def test_disconnect_of_navigable_end_should_remove_owner_relationship(
     connected_association, element_factory, sanitizer_service
 ):
-    asc, c1, c2 = connected_association
+    asc, _c1, c2 = connected_association
 
     UML.recipes.set_navigability(asc.subject, asc.head_subject, True)
 
@@ -139,7 +139,7 @@ def test_disconnect_of_navigable_end_should_remove_owner_relationship(
 
 
 def test_allow_reconnect_for_single_presentation(connected_association, create):
-    asc, c1, c2 = connected_association
+    asc, _c1, _c2 = connected_association
     c3 = create(ClassItem, UML.Class)
 
     assert allow(asc, asc.head, c3)
@@ -158,7 +158,7 @@ def test_allow_reconnect_on_same_class_for_multiple_presentations(
 def test_allow_reconnect_if_only_one_connected_presentations(
     connected_association, clone, create
 ):
-    asc, c1, c2 = connected_association
+    asc, _c1, _c2 = connected_association
     clone(asc)
 
     c3 = create(ClassItem, UML.Class)

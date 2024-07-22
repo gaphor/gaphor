@@ -86,7 +86,7 @@ class PartitionItem(ElementPresentation[UML.ActivityPartition]):
             partition_width = self.width / 2
 
         right = self.handles()[0].pos.x
-        x, y = pos
+        x, _y = pos
         for p in partitions:
             right += partition_width
             if x < right:

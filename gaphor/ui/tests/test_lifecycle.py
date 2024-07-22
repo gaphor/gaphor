@@ -25,13 +25,13 @@ def two_sessions(application):
 
 
 def test_most_recently_created_session_is_active(application):
-    session1, session2 = two_sessions(application)
+    _session1, session2 = two_sessions(application)
 
     assert application.active_session is session2
 
 
 def test_active_window_changed(application):
-    session1, session2 = two_sessions(application)
+    session1, _session2 = two_sessions(application)
 
     session1.get_service("event_manager").handle(ActiveSessionChanged(None))
 

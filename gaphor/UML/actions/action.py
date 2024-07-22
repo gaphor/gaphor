@@ -60,7 +60,7 @@ class CallBehaviorActionItem(ActionItem):
         draw_border(box, context, bounding_box)
 
         cr = context.cairo
-        x, y, width, height = bounding_box
+        _x, _y, width, height = bounding_box
 
         x_offset = width - 15
         y_offset = height - 15
@@ -103,7 +103,7 @@ class SendSignalActionItem(Named, ElementPresentation):
     def draw_border(self, box, context, bounding_box):
         cr = context.cairo
         d = 15
-        x, y, width, height = bounding_box
+        _x, _y, width, height = bounding_box
         cr.move_to(0, 0)
         cr.line_to(width - d, 0)
         cr.line_to(width, height / 2)
@@ -131,7 +131,7 @@ class AcceptEventActionItem(Named, ElementPresentation):
     def draw_border(self, box, context, bounding_box):
         cr = context.cairo
         d = 15
-        x, y, width, height = bounding_box
+        _x, _y, width, height = bounding_box
         cr.move_to(0, 0)
         cr.line_to(width, 0)
         cr.line_to(width, height)
