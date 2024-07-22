@@ -156,24 +156,27 @@ jobs:
           cache-key: flatpak-builder-${{ github.sha }}
 
   macos:
+    strategy:
+      matrix:
+        target:
+          - runner: macos-12
+            suffix: -intel
+          - runner: macos-14
+            suffix: -arm
     name: macOS
     needs: lint
-    runs-on: macos-12
+    runs-on: ${{ matrix.target.runner }}
     permissions:
       contents: write
     timeout-minutes: 45
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     outputs:
-      artifact: ${{ steps.create.outputs.artifact }}
-    env:
-      LDFLAGS: -L/usr/local/opt/python@${python_version}/lib
-      PKG_CONFIG_PATH: /usr/local/opt/libffi/lib/pkgconfig:/usr/local/opt/python@${python_version}/lib/pkgconfig:${PKG_CONFIG_PATH:-}
+      artifact-intel: ${{ steps.output.outputs.artifact-intel }}
+      artifact-arm: ${{ steps.output.outputs.artifact-arm }}
     steps:
       - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
         with:
           ref: ${{ github.event.pull_request.head.sha }}
-      - name: Workaround for errors while upgrading Python@3.12
-        run: sudo rm -f /usr/local/bin/2to3* /usr/local/bin/idle3* /usr/local/bin/pip3* /usr/local/bin/pydoc3* /usr/local/bin/python3* /usr/local/bin/wheel3*
       - name: Install macOS Dependencies
         env:
           HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK: 1
@@ -200,27 +203,37 @@ jobs:
         uses: ./.github/actions/macos_dmg
         with:
           sign_app: ${{ env.mainline_build }}
-          version: ${{ steps.install.outputs.version }}
+          version: ${{ steps.install.outputs.version }}${{ matrix.target.suffix }}
           base64_encoded_p12: ${{ secrets.BASE64_ENCODED_P12 }}
           certpassword_p12: ${{ secrets.CERTPASSWORD_P12 }}
           notary_username:  ${{ secrets.APPLE_NOTARY_USER }}
           notary_password: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
           notary_team_id: ${{ secrets.APPLE_TEAM_ID }}
+      - name: Output
+        id: output
+        run: echo "artifact${{ matrix.target.suffix }}=${{ steps.create.outputs.artifact }}" >> $GITHUB_OUTPUT
 
   check-macos-app:
     name: Check macOS App
     needs: macos
-    runs-on: macos-12
+    strategy:
+      matrix:
+        target:
+          - runner: macos-12
+            artifact: ${{ needs.macos.outputs.artifact-intel }}
+          - runner: macos-14
+            artifact: ${{ needs.macos.outputs.artifact-arm }}
+    runs-on: ${{ matrix.target.runner }}
     timeout-minutes: 10
     steps:
       - uses: actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16 # v4.1.8
         id: download
         with:
-          name: ${{ needs.macos.outputs.artifact }}
+          name: ${{ matrix.target.artifact }}
           path: .
       - name: Perform self-test (dmg)
         run: |
-          hdiutil attach ${{ needs.macos.outputs.artifact }}
+          hdiutil attach ${{ matrix.target.artifact }}
           cd /Volumes/Gaphor*
           # Retry if first test fails
           Gaphor.app/Contents/MacOS/gaphor self-test || Gaphor.app/Contents/MacOS/gaphor self-test

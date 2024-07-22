@@ -151,7 +151,7 @@ def system_information():
     return textwrap.dedent(
         f"""\
         Gaphor version:         {distribution().version}
-        Operating System:       {platform.system()} ({platform.release()})
+        Operating System:       {platform.system()} ({platform.release()}, {platform.machine()})
         Display:                {display_type()}
         Python version:         {platform.python_version()}
         GTK version:            {Gtk.get_major_version()}.{Gtk.get_minor_version()}.{Gtk.get_micro_version()}
