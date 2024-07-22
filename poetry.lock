@@ -565,20 +565,6 @@ paramiko = ["paramiko"]
 pgp = ["gpg"]
 
 [[package]]
-name = "exceptiongroup"
-version = "1.2.1"
-description = "Backport of PEP 654 (exception groups)"
-optional = false
-python-versions = ">=3.7"
-files = [
-    {file = "exceptiongroup-1.2.1-py3-none-any.whl", hash = "sha256:5258b9ed329c5bbdd31a309f53cbfb0b155341807f6ff7606a1e801a891b29ad"},
-    {file = "exceptiongroup-1.2.1.tar.gz", hash = "sha256:a4785e48b045528f5bfe627b6ad554ff32def154f42372786903b7abcfe1aa16"},
-]
-
-[package.extras]
-test = ["pytest (>=6)"]
-
-[[package]]
 name = "executing"
 version = "2.0.1"
 description = "Get the currently executing AST node of a frame, and other information"
@@ -624,13 +610,13 @@ typing = ["typing-extensions (>=4.8)"]
 
 [[package]]
 name = "furo"
-version = "2024.5.6"
+version = "2024.7.18"
 description = "A clean customisable Sphinx documentation theme."
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "furo-2024.5.6-py3-none-any.whl", hash = "sha256:490a00d08c0a37ecc90de03ae9227e8eb5d6f7f750edf9807f398a2bdf2358de"},
-    {file = "furo-2024.5.6.tar.gz", hash = "sha256:81f205a6605ebccbb883350432b4831c0196dd3d1bc92f61e1f459045b3d2b0b"},
+    {file = "furo-2024.7.18-py3-none-any.whl", hash = "sha256:b192c7c1f59805494c8ed606d9375fdac6e6ba8178e747e72bc116745fb7e13f"},
+    {file = "furo-2024.7.18.tar.gz", hash = "sha256:37b08c5fccc95d46d8712c8be97acd46043963895edde05b0f4f135d58325c83"},
 ]
 
 [package.dependencies]
@@ -659,20 +645,14 @@ docs = ["furo (>=2022,<2024)", "sphinx (>=4.3,<8.0)"]
 
 [[package]]
 name = "generic"
-version = "1.1.2"
+version = "1.1.3"
 description = "Generic programming library for Python"
 optional = false
-python-versions = ">=3.8,<4.0"
+python-versions = "<4.0,>=3.8"
 files = [
-    {file = "generic-1.1.2-py3-none-any.whl", hash = "sha256:05ab64121496a31eb56882df64347841d7e7cd65bff9f7b12576ee14f6bd5ae2"},
-    {file = "generic-1.1.2.tar.gz", hash = "sha256:35f52f9a450801d9be519aa60568743194d588b25291e4689cf3529d577e45b0"},
+    {file = "generic-1.1.3-py3-none-any.whl", hash = "sha256:2959b6ecce3567c5d3b360b893fbac4c983335e5cb9d017e3ea28b5d060def01"},
+    {file = "generic-1.1.3.tar.gz", hash = "sha256:778f8246fd6e79c21d4b8b76ddc008df8b3f3dd20560d4177c006e4568f30944"},
 ]
-
-[package.dependencies]
-exceptiongroup = ">=1.0.0,<2.0.0"
-
-[package.extras]
-docs = ["furo (>=2022,<2024)", "sphinx (>=4.3,<7.1)"]
 
 [[package]]
 name = "greenlet"
@@ -747,13 +727,13 @@ test = ["objgraph", "psutil"]
 
 [[package]]
 name = "hypothesis"
-version = "6.105.1"
+version = "6.108.4"
 description = "A library for property-based testing"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "hypothesis-6.105.1-py3-none-any.whl", hash = "sha256:d8993472a7bccfc20172e02ba8636bb0067add92d1fa05e95a40bab02c1e8305"},
-    {file = "hypothesis-6.105.1.tar.gz", hash = "sha256:d4eedb42193da9507623f4fe27fd38f715ec19ad30ad7c30e3b25594c0b491dc"},
+    {file = "hypothesis-6.108.4-py3-none-any.whl", hash = "sha256:901b1883b51207c4c3ecbae506bc8b65d66569f9bc34e023df7d8a821eb495c1"},
+    {file = "hypothesis-6.108.4.tar.gz", hash = "sha256:bab99a308ea39be53882f1d89ab77db48e0c03b5c37fbedd2f59f9b656ada301"},
 ]
 
 [package.dependencies]
@@ -761,10 +741,10 @@ attrs = ">=22.2.0"
 sortedcontainers = ">=2.1.0,<3.0.0"
 
 [package.extras]
-all = ["backports.zoneinfo (>=0.2.1)", "black (>=19.10b0)", "click (>=7.0)", "crosshair-tool (>=0.0.59)", "django (>=3.2)", "dpcontracts (>=0.4)", "hypothesis-crosshair (>=0.0.7)", "lark (>=0.10.1)", "libcst (>=0.3.16)", "numpy (>=1.17.3)", "pandas (>=1.1)", "pytest (>=4.6)", "python-dateutil (>=1.4)", "pytz (>=2014.1)", "redis (>=3.0.0)", "rich (>=9.0.0)", "tzdata (>=2024.1)"]
+all = ["backports.zoneinfo (>=0.2.1)", "black (>=19.10b0)", "click (>=7.0)", "crosshair-tool (>=0.0.63)", "django (>=3.2)", "dpcontracts (>=0.4)", "hypothesis-crosshair (>=0.0.9)", "lark (>=0.10.1)", "libcst (>=0.3.16)", "numpy (>=1.17.3)", "pandas (>=1.1)", "pytest (>=4.6)", "python-dateutil (>=1.4)", "pytz (>=2014.1)", "redis (>=3.0.0)", "rich (>=9.0.0)", "tzdata (>=2024.1)"]
 cli = ["black (>=19.10b0)", "click (>=7.0)", "rich (>=9.0.0)"]
 codemods = ["libcst (>=0.3.16)"]
-crosshair = ["crosshair-tool (>=0.0.59)", "hypothesis-crosshair (>=0.0.7)"]
+crosshair = ["crosshair-tool (>=0.0.63)", "hypothesis-crosshair (>=0.0.9)"]
 dateutil = ["python-dateutil (>=1.4)"]
 django = ["django (>=3.2)"]
 dpcontracts = ["dpcontracts (>=0.4)"]
@@ -1653,22 +1633,22 @@ files = [
 
 [[package]]
 name = "pydot"
-version = "2.0.0"
+version = "3.0.1"
 description = "Python interface to Graphviz's Dot"
 optional = false
-python-versions = ">=3.7"
+python-versions = ">=3.8"
 files = [
-    {file = "pydot-2.0.0-py3-none-any.whl", hash = "sha256:408a47913ea7bd5d2d34b274144880c1310c4aee901f353cf21fe2e526a4ea28"},
-    {file = "pydot-2.0.0.tar.gz", hash = "sha256:60246af215123fa062f21cd791be67dda23a6f280df09f68919e637a1e4f3235"},
+    {file = "pydot-3.0.1-py3-none-any.whl", hash = "sha256:43f1e878dc1ff7c1c2e3470a6999d4e9e97771c5c862440c2f0af0ba844c231f"},
+    {file = "pydot-3.0.1.tar.gz", hash = "sha256:e18cf7f287c497d77b536a3d20a46284568fea390776dface6eabbdf1b1b5efc"},
 ]
 
 [package.dependencies]
-pyparsing = ">=3"
+pyparsing = ">=3.0.9"
 
 [package.extras]
-dev = ["black", "chardet"]
+dev = ["chardet", "parameterized", "ruff"]
 release = ["zest.releaser[recommended]"]
-tests = ["black", "chardet", "tox"]
+tests = ["chardet", "parameterized", "ruff", "tox", "unittest-parallel"]
 
 [[package]]
 name = "pygments"
@@ -1819,23 +1799,23 @@ diagrams = ["jinja2", "railroad-diagrams"]
 
 [[package]]
 name = "pytest"
-version = "8.1.2"
+version = "8.3.1"
 description = "pytest: simple powerful testing with Python"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "pytest-8.1.2-py3-none-any.whl", hash = "sha256:6c06dc309ff46a05721e6fd48e492a775ed8165d2ecdf57f156a80c7e95bb142"},
-    {file = "pytest-8.1.2.tar.gz", hash = "sha256:f3c45d1d5eed96b01a2aea70dee6a4a366d51d38f9957768083e4fecfc77f3ef"},
+    {file = "pytest-8.3.1-py3-none-any.whl", hash = "sha256:e9600ccf4f563976e2c99fa02c7624ab938296551f280835ee6516df8bc4ae8c"},
+    {file = "pytest-8.3.1.tar.gz", hash = "sha256:7e8e5c5abd6e93cb1cc151f23e57adc31fcf8cfd2a3ff2da63e23f732de35db6"},
 ]
 
 [package.dependencies]
 colorama = {version = "*", markers = "sys_platform == \"win32\""}
 iniconfig = "*"
 packaging = "*"
-pluggy = ">=1.4,<2.0"
+pluggy = ">=1.5,<2"
 
 [package.extras]
-testing = ["argcomplete", "attrs (>=19.2)", "hypothesis (>=3.56)", "mock", "pygments (>=2.7.2)", "requests", "setuptools", "xmlschema"]
+dev = ["argcomplete", "attrs (>=19.2)", "hypothesis (>=3.56)", "mock", "pygments (>=2.7.2)", "requests", "setuptools", "xmlschema"]
 
 [[package]]
 name = "pytest-archon"
@@ -2310,26 +2290,26 @@ files = [
 
 [[package]]
 name = "sphinx"
-version = "7.3.7"
+version = "7.4.7"
 description = "Python documentation generator"
 optional = false
 python-versions = ">=3.9"
 files = [
-    {file = "sphinx-7.3.7-py3-none-any.whl", hash = "sha256:413f75440be4cacf328f580b4274ada4565fb2187d696a84970c23f77b64d8c3"},
-    {file = "sphinx-7.3.7.tar.gz", hash = "sha256:a4a7db75ed37531c05002d56ed6948d4c42f473a36f46e1382b0bd76ca9627bc"},
+    {file = "sphinx-7.4.7-py3-none-any.whl", hash = "sha256:c2419e2135d11f1951cd994d6eb18a1835bd8fdd8429f9ca375dc1f3281bd239"},
+    {file = "sphinx-7.4.7.tar.gz", hash = "sha256:242f92a7ea7e6c5b406fdc2615413890ba9f699114a9c09192d7dfead2ee9cfe"},
 ]
 
 [package.dependencies]
 alabaster = ">=0.7.14,<0.8.0"
-babel = ">=2.9"
-colorama = {version = ">=0.4.5", markers = "sys_platform == \"win32\""}
-docutils = ">=0.18.1,<0.22"
+babel = ">=2.13"
+colorama = {version = ">=0.4.6", markers = "sys_platform == \"win32\""}
+docutils = ">=0.20,<0.22"
 imagesize = ">=1.3"
-Jinja2 = ">=3.0"
-packaging = ">=21.0"
-Pygments = ">=2.14"
-requests = ">=2.25.0"
-snowballstemmer = ">=2.0"
+Jinja2 = ">=3.1"
+packaging = ">=23.0"
+Pygments = ">=2.17"
+requests = ">=2.30.0"
+snowballstemmer = ">=2.2"
 sphinxcontrib-applehelp = "*"
 sphinxcontrib-devhelp = "*"
 sphinxcontrib-htmlhelp = ">=2.0.0"
@@ -2339,8 +2319,8 @@ sphinxcontrib-serializinghtml = ">=1.1.9"
 
 [package.extras]
 docs = ["sphinxcontrib-websupport"]
-lint = ["flake8 (>=3.5.0)", "importlib_metadata", "mypy (==1.9.0)", "pytest (>=6.0)", "ruff (==0.3.7)", "sphinx-lint", "tomli", "types-docutils", "types-requests"]
-test = ["cython (>=3.0)", "defusedxml (>=0.7.1)", "pytest (>=6.0)", "setuptools (>=67.0)"]
+lint = ["flake8 (>=6.0)", "importlib-metadata (>=6.0)", "mypy (==1.10.1)", "pytest (>=6.0)", "ruff (==0.5.2)", "sphinx-lint (>=0.9)", "tomli (>=2)", "types-docutils (==0.21.0.20240711)", "types-requests (>=2.30.0)"]
+test = ["cython (>=3.0)", "defusedxml (>=0.7.1)", "pytest (>=8.0)", "setuptools (>=70.0)", "typing_extensions (>=4.9)"]
 
 [[package]]
 name = "sphinx-basic-ng"
@@ -2786,4 +2766,4 @@ test = ["big-O", "importlib-resources", "jaraco.functools", "jaraco.itertools", 
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.11,<3.13"
-content-hash = "3dd23b2115cd830672d4d772796a7f56d644677373c95ab13d52c04aee8346bc"
+content-hash = "1f8d580faa3c0bb2909ef593f4c666aa2c7abae75a957c04685badd335644171"
