@@ -24,7 +24,7 @@ def test_monitor_file_changed(event_manager, tmp_path):
 
     model_changed = ModelChanged(event_manager)
     widget = model_changed.open()
-    event_manager.handle(ModelChangedOnDisk(model_changed, new_file))
+    event_manager.handle(ModelChangedOnDisk(new_file))
 
     new_file.write_text("b", encoding="utf-8")
     iteration()

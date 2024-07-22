@@ -48,21 +48,21 @@ def run(argv: list[str], *, launch_service="greeter", recover=False) -> int:
         nonlocal application
 
         @event_handler(SessionCreated)
-        def on_session_created(event):
+        def on_session_created(event: SessionCreated):
             event_manager = event.session.get_service("event_manager")
             event_manager.subscribe(on_session_changed)
             main_window = event.session.get_service("main_window")
             main_window.open(gtk_app)
 
         @event_handler(ActiveSessionChanged)
-        def on_session_changed(event):
+        def on_session_changed(event: ActiveSessionChanged):
             if isinstance(event.service, Session):
                 main_window = event.service.get_service("main_window")
                 if main_window.window:
                     main_window.window.present()
 
         @event_handler(ApplicationShutdown)
-        def on_quit(_event):
+        def on_quit(_event: ApplicationShutdown):
             gtk_app.quit()
 
         try:

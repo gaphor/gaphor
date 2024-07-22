@@ -241,7 +241,7 @@ class FileManager(Service, ActionProvider):
                     "This file does not contain a valid Gaphor model."
                 ),
                 window=self.parent_window,
-                close=lambda: self.event_manager.handle(SessionShutdown(self)),
+                close=lambda: self.event_manager.handle(SessionShutdown()),
             )
         finally:
             if done:
@@ -269,7 +269,7 @@ class FileManager(Service, ActionProvider):
 
         def handle_merge_conflict(answer):
             if answer == "cancel":
-                self.event_manager.handle(SessionShutdown(self))
+                self.event_manager.handle(SessionShutdown())
             elif answer == "current":
                 self.load(current_filename, on_load_done=done)
             elif answer == "incoming":
@@ -295,7 +295,7 @@ class FileManager(Service, ActionProvider):
                     "This file does not contain a valid Gaphor model."
                 ),
                 window=self.parent_window,
-                close=lambda: self.event_manager.handle(SessionShutdown(self)),
+                close=lambda: self.event_manager.handle(SessionShutdown()),
             )
 
     def save(self, filename, on_save_done=None):
@@ -323,7 +323,7 @@ class FileManager(Service, ActionProvider):
                     for percentage in storage.save_generator(out, self.element_factory):
                         status_window.progress(percentage)
                         yield
-                self.event_manager.handle(ModelSaved(self, filename))
+                self.event_manager.handle(ModelSaved(filename))
             except Exception as e:
                 error_handler(
                     message=gettext("Unable to save model “{filename}”.").format(
@@ -364,7 +364,7 @@ class FileManager(Service, ActionProvider):
 
     def _on_file_changed(self, _banner, _file, _other_file, _event_type):
         if not _event_type == Gio.FileMonitorEvent.ATTRIBUTE_CHANGED:
-            self.event_manager.handle(ModelChangedOnDisk(None, self._filename))
+            self.event_manager.handle(ModelChangedOnDisk(self._filename))
 
     @action(name="file-save", shortcut="<Primary>s")
     def action_save(self):
@@ -411,7 +411,7 @@ class FileManager(Service, ActionProvider):
         """
 
         def confirm_shutdown():
-            self.event_manager.handle(SessionShutdown(self))
+            self.event_manager.handle(SessionShutdown())
 
         def response(answer):
             if answer == "save":

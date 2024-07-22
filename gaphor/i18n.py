@@ -14,8 +14,6 @@ import sys
 
 import defusedxml.ElementTree as etree
 
-from gaphor.settings import settings
-
 log = logging.getLogger(__name__)
 
 localedir = importlib.resources.files("gaphor") / "locale"
@@ -57,10 +55,13 @@ def translation(lang) -> _gettext.GNUTranslations | _gettext.NullTranslations:
     return _gettext.NullTranslations()
 
 
-if settings.use_english:
+def force_english_locale():
+    """Force English locale, instead of OS language."""
+    global gettext
     gettext = translation("en_US.UTF-8").gettext
-else:
-    gettext = translation(os.getenv("LANG") or _get_os_language()).gettext
+
+
+gettext = translation(os.getenv("LANG") or _get_os_language()).gettext
 
 
 def i18nize(message):

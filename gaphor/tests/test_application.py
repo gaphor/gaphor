@@ -38,7 +38,7 @@ def test_model_loaded(application):
 
 def test_model_saved(application):
     session = application.new_session()
-    session.event_manager.handle(ModelSaved(None, Path("some_file_name")))
+    session.event_manager.handle(ModelSaved(Path("some_file_name")))
 
     assert session.filename == Path("some_file_name")
 

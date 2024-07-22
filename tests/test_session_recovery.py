@@ -137,7 +137,7 @@ def test_no_recovery_for_properly_closed_session(application: Application, test_
     with Transaction(event_manager):
         diagram = element_factory.create(Diagram)
 
-    event_manager.handle(SessionShutdown(session))
+    event_manager.handle(SessionShutdown())
 
     new_session = application.recover_session(
         session_id=session.session_id, filename=model_file
