@@ -100,6 +100,8 @@ pleasant to look at and easy to work with.
 
 ## What else?
 
+On a technical level, the following principles are also applicable:
+
 * **Idempotency** Allow the same operation to be applied multiple times. This should
   not affect the result.
 * **Event Driven** Gaphor is a user application. It acts to user events. The application

@@ -92,7 +92,9 @@ class AssociationItem(Named, LinePresentation[UML.Association]):
             f"{base}.aggregation", self.on_association_end_endings
         ).watch(
             "subject[Association].navigableOwnedEnd", self.on_association_end_endings
-        ).watch("subject[Association].ownedEnd", self.on_association_end_endings)
+        ).watch("subject[Association].ownedEnd", self.on_association_end_endings).watch(
+            "head_subject", self.on_association_end_endings
+        ).watch("tail_subject", self.on_association_end_endings)
 
         # For types, see the Association.navigability override
         for t in [UML.Class, UML.DataType, UML.Interface]:

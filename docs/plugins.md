@@ -48,7 +48,7 @@ A new Hello World entry has been added to the tools menu (![open menu](images/op
 ## Create your own plugin
 
 If you want to write a plugin yourself, you can familiarize yourself with Gaphor's
-[design principles](design_principles), [service oriented architecture](service_oriented) (includes a plugin example),
+[design principles](design_principles), [service oriented architecture](service_oriented),
 and [event driven framework](framework).
 
 ## Example plugin

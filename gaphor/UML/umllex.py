@@ -91,7 +91,9 @@ association_end_name_pat = compile(
 
 # Association end multiplicity:
 #   [mult] [{ tagged values }]
-association_end_mult_pat = compile(f"^{multa_subpat}{tags_subpat}{garbage_subpat}")
+association_end_mult_pat = compile(
+    f"^{vis_subpat}{derived_subpat}{multa_subpat}{tags_subpat}{garbage_subpat}"
+)
 
 
 # Operation:
@@ -175,7 +177,7 @@ def parse_attribute(el: uml.Property, s: str) -> None:
     else:
         g = m.group
         _set_visibility(el, g("vis"))
-        el.isDerived = g("derived") and True or False
+        el.isDerived = bool(g("derived"))
         el.name = g("name")
         el.typeValue = g("type")
         el.lowerValue = g("mult_l")
@@ -205,6 +207,8 @@ def parse_association_end(el: uml.Property, s: str) -> None:
 
     if m and m.group("mult_u") or m.group("tags"):
         g = m.group
+        _set_visibility(el, g("vis"))
+        el.isDerived = bool(g("derived"))
         el.lowerValue = g("mult_l")
         el.upperValue = g("mult_u")
     else:
@@ -217,7 +221,7 @@ def parse_association_end(el: uml.Property, s: str) -> None:
             del el.note
         else:
             _set_visibility(el, g("vis"))
-            el.isDerived = g("derived") and True or False
+            el.isDerived = bool(g("derived"))
             el.name = g("name")
             el.note = g("note")
             # Optionally, the multiplicity and tagged values may be defined:

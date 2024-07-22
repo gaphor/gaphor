@@ -165,6 +165,18 @@ class AttributeView(GObject.Object):
         with Transaction(self.event_manager):
             self.attr.isStatic = value
 
+    @GObject.Property(type=bool, default=False)
+    def read_only(self):
+        return self.attr.isReadOnly if self.attr else False
+
+    @read_only.setter  # type: ignore[no-redef]
+    def read_only(self, value):
+        if not self.attr:
+            return
+
+        with Transaction(self.event_manager):
+            self.attr.isReadOnly = value
+
     editing = GObject.Property(type=bool, default=False)
 
     def empty(self):
@@ -250,6 +262,12 @@ class AttributesPage(PropertyPageBase):
                     attribute=AttributeView.attribute,
                     placeholder_text=gettext("New Attribute…"),
                     signal_handlers=text_field_handlers("attribute"),
+                ),
+                list_item_factory(
+                    "check-button-cell.ui",
+                    klass=AttributeView,
+                    attribute=AttributeView.read_only,
+                    signal_handlers=check_button_handlers("read_only"),
                 ),
                 list_item_factory(
                     "check-button-cell.ui",

@@ -12,9 +12,9 @@ no_render_pat = re.compile(r"^\s*[+#-]", re.MULTILINE | re.DOTALL)
 vis_map = {"public": "+", "protected": "#", "package": "~", "private": "-"}
 
 
-@format.register(UML.Property)
+@format.register
 def format_property(
-    el,
+    el: UML.Property,
     visibility=False,
     is_derived=False,
     type=False,
@@ -63,10 +63,14 @@ def format_property(
     if default and el.defaultValue:
         s.append(f" = {el.defaultValue}")
 
-    if tags and (
-        slots := [format(slot) for slot in el.appliedStereotype[:].slot if slot]
-    ):
-        s.append(" { %s }" % ", ".join(slots))
+    if tags:
+        tag_vals = []
+        if el.isReadOnly:
+            tag_vals.append(gettext("readOnly"))
+        tag_vals.extend(format(slot) for slot in el.appliedStereotype[:].slot if slot)
+
+        if tag_vals:
+            s.append(" { %s }" % ", ".join(tag_vals))
 
     if note and el.note:
         s.append(f" # {el.note}")

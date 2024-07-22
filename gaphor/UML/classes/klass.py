@@ -76,6 +76,8 @@ def attribute_watches(presentation, cast):
         f"subject[{cast}].ownedAttribute.association", presentation.update_shapes
     ).watch(f"subject[{cast}].ownedAttribute.name").watch(
         f"subject[{cast}].ownedAttribute.isStatic", presentation.update_shapes
+    ).watch(
+        f"subject[{cast}].ownedAttribute.isReadOnly", presentation.update_shapes
     ).watch(f"subject[{cast}].ownedAttribute.isDerived").watch(
         f"subject[{cast}].ownedAttribute.visibility"
     ).watch(f"subject[{cast}].ownedAttribute.lowerValue").watch(
@@ -106,7 +108,7 @@ def operation_watches(presentation, cast):
 def attributes_compartment(subject):
     # We need to scope the attribute value, since the for loop changes it.
     def lazy_format(attribute):
-        return lambda: format(attribute)
+        return lambda: format(attribute, tags=True)
 
     return CssNode(
         "compartment",

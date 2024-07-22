@@ -973,10 +973,10 @@
       ]
     },
     {
-      "login": "BrainKicker",
+      "login": "pasabanov",
       "name": "Пётр Сабанов",
       "avatar_url": "https://avatars.githubusercontent.com/u/30545094?v=4",
-      "profile": "https://github.com/BrainKicker",
+      "profile": "https://github.com/pasabanov",
       "contributions": [
         "translation"
       ]
@@ -1309,7 +1309,8 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/9532378?v=4",
       "profile": "http://www.isijingi.co.za",
       "contributions": [
-        "ideas"
+        "ideas",
+        "bug"
       ]
     },
     {
@@ -1491,7 +1492,8 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/10777373?v=4",
       "profile": "https://github.com/matgaj",
       "contributions": [
-        "bug"
+        "bug",
+        "ideas"
       ]
     }
   ],
