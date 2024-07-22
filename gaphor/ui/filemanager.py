@@ -241,7 +241,7 @@ class FileManager(Service, ActionProvider):
                     "This file does not contain a valid Gaphor model."
                 ),
                 window=self.parent_window,
-                close=lambda: self.event_manager.handle(SessionShutdown(self)),
+                close=lambda: self.event_manager.handle(SessionShutdown()),
             )
         finally:
             if done:
@@ -269,7 +269,7 @@ class FileManager(Service, ActionProvider):
 
         def handle_merge_conflict(answer):
             if answer == "cancel":
-                self.event_manager.handle(SessionShutdown(self))
+                self.event_manager.handle(SessionShutdown())
             elif answer == "current":
                 self.load(current_filename, on_load_done=done)
             elif answer == "incoming":
@@ -295,7 +295,7 @@ class FileManager(Service, ActionProvider):
                     "This file does not contain a valid Gaphor model."
                 ),
                 window=self.parent_window,
-                close=lambda: self.event_manager.handle(SessionShutdown(self)),
+                close=lambda: self.event_manager.handle(SessionShutdown()),
             )
 
     def save(self, filename, on_save_done=None):
@@ -411,7 +411,7 @@ class FileManager(Service, ActionProvider):
         """
 
         def confirm_shutdown():
-            self.event_manager.handle(SessionShutdown(self))
+            self.event_manager.handle(SessionShutdown())
 
         def response(answer):
             if answer == "save":
