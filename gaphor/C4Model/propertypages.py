@@ -3,6 +3,7 @@ from typing import Union
 from gaphor.C4Model import c4model
 from gaphor.core import Transaction
 from gaphor.diagram.propertypages import (
+    NamePropertyPage,
     PropertyPageBase,
     PropertyPages,
     handler_blocking,
@@ -11,6 +12,9 @@ from gaphor.diagram.propertypages import (
 )
 
 new_builder = new_resource_builder("gaphor.C4Model")
+
+
+PropertyPages.register(c4model.C4Dependency, NamePropertyPage)
 
 
 @PropertyPages.register(c4model.C4Container)
@@ -59,10 +63,13 @@ class DescriptionPropertyPage(PropertyPageBase):
 
 
 @PropertyPages.register(c4model.C4Container)
+@PropertyPages.register(c4model.C4Dependency)
 class TechnologyPropertyPage(PropertyPageBase):
     order = 15
 
-    def __init__(self, subject: c4model.C4Container, event_manager):
+    def __init__(
+        self, subject: c4model.C4Container | c4model.C4Dependency, event_manager
+    ):
         super().__init__()
         assert subject
         self.subject = subject

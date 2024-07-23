@@ -15,7 +15,6 @@ from gaphor.diagram.diagramtoolbox import (
     new_item_factory,
 )
 from gaphor.i18n import gettext, i18nize
-from gaphor.UML import diagramitems as uml_items
 from gaphor.UML.actions.actionstoolbox import actions
 from gaphor.UML.classes.classestoolbox import classes
 from gaphor.UML.interactions.interactionstoolbox import interactions
@@ -131,7 +130,7 @@ c4 = ToolSection(
             gettext("Dependency"),
             "gaphor-dependency-symbolic",
             "d",
-            new_item_factory(uml_items.DependencyItem),
+            new_item_factory(diagramitems.C4DependencyItem),
             handle_index=0,
         ),
     ),
