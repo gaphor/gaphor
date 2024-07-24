@@ -11,7 +11,7 @@ from gaphor.diagram.copypaste import (
     paste_element,
 )
 from gaphor.UML.recipes import owner_package
-from gaphor.UML.uml import NamedElement, Package, Relationship, Type
+from gaphor.UML.uml import NamedElement, Relationship
 
 
 class NamedElementCopy(NamedTuple):
@@ -43,7 +43,7 @@ def paste_named_element(copy_data: NamedElementCopy, diagram, lookup):
     next(paster, None)
     if (
         not element.namespace
-        and isinstance(element, (Type, Package))
+        and hasattr(element, "package")
         and (package := owner_package(diagram.owner)) is not element
     ):
         element.package = package
