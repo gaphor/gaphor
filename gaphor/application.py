@@ -136,7 +136,9 @@ class Application(Service, ActionProvider):
 
         self._sessions.add(session)
 
-        session_created = SessionCreated(self, session, filename, template, force)
+        session_created = SessionCreated(
+            self, session, filename, template, force, interactive=bool(self._gtk_app)
+        )
         event_manager.handle(session_created)
         self.event_manager.handle(session_created)
         session.foreground()

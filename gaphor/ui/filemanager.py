@@ -9,7 +9,7 @@ from pathlib import Path
 from typing import Callable
 
 from gaphas.decorators import g_async
-from gi.repository import Adw, Gio, Gtk
+from gi.repository import Adw, Gio, GLib, Gtk
 
 from gaphor import UML
 from gaphor.abc import ActionProvider, Service
@@ -395,7 +395,12 @@ class FileManager(Service, ActionProvider):
     @event_handler(SessionCreated)
     def _on_session_created(self, event: SessionCreated) -> None:
         if event.filename:
-            self.load(event.filename)
+            if event.interactive:
+                # Load new model once the main loop started,
+                # so we can show the main window first.
+                GLib.idle_add(self.load, event.filename)
+            else:
+                self.load(event.filename)
         elif event.template:
             self.load_template(event.template)
         else:

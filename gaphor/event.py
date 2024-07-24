@@ -45,12 +45,14 @@ class SessionCreated:
         filename: Path | None,
         template: Path | None = None,
         force: bool = False,
+        interactive: bool = False,
     ):
         self.application = application
         self.session = session
         self.filename = Path(filename) if filename else None
         self.template = template
         self.force = force
+        self.interactive = interactive
 
 
 class ActiveSessionChanged:
