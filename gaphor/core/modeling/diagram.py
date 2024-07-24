@@ -233,10 +233,16 @@ class StyledItem:
         )
 
     def attribute(self, name: str) -> str | None:
-        a = lookup_attribute(self.item, name)
-        if a in (None, "") and self.item.subject:
-            a = lookup_attribute(self.item.subject, name)
-        return a
+        if item_value := lookup_attribute(self.item, name):
+            return item_value
+
+        if (
+            self.item.subject
+            and (subject_value := lookup_attribute(self.item.subject, name)) is not None
+        ):
+            return subject_value
+
+        return item_value
 
     def state(self) -> Sequence[str]:
         return self._state

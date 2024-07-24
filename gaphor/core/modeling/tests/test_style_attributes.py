@@ -125,3 +125,13 @@ def test_attrname_diagram_subject():
 def test_attrname_collection_subject(diagram):
     collection1 = collection(None, None, int)
     assert attrname(collection1, "subject") == "subject"
+
+
+def test_attribute_on_item_and_not_on_subject(diagram, element_factory):
+    class_ = element_factory.create(UML.Class)
+    classitem = diagram.create(ClassItem, subject=class_)
+
+    node = StyledItem(classitem)
+
+    assert node.attribute("children") == ""
+    assert node.attribute("does_not_exist") is None
