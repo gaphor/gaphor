@@ -26,7 +26,7 @@ def test_undo_should_remove_shown_item_on_diagram(
 
     undo_manager.undo_transaction()
 
-    items, removed_items = view.updates[-1]
+    _items, removed_items = view.updates[-1]
 
     assert cls in removed_items, view.updates
 
@@ -43,6 +43,6 @@ def test_redo_should_show_item_on_diagram(event_manager, element_factory, undo_m
     undo_manager.undo_transaction()
     undo_manager.redo_transaction()
 
-    items, removed_items = view.updates[-1]
+    items, _removed_items = view.updates[-1]
 
     assert cls.id in (item.id for item in items), items

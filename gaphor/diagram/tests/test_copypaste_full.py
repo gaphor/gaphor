@@ -130,7 +130,7 @@ def test_copy_diagram_with_elements(diagram, element_factory):
     copy_buffer = copy_full([diagram_item], element_factory.lookup)
 
     target_diagram: Diagram = element_factory.create(Diagram)
-    (new_diagram_item, *other) = paste_full(copy_buffer, target_diagram)
+    (new_diagram_item, *_other) = paste_full(copy_buffer, target_diagram)
 
     new_diagram = new_diagram_item.subject
 

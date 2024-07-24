@@ -34,7 +34,8 @@ def test_loading_plugins(tmp_path, monkeypatch):
             "--target",
             str(tmp_path),
             Path(__file__).parent.parent / "test-plugin",
-        ]
+        ],
+        check=True,
     )
 
     with enable_plugins(default_plugin_path()):

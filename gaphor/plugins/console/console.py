@@ -204,7 +204,7 @@ class GTKInterpreterConsole(Gtk.ScrolledWindow):
 
     def write(self, text, style=None):
         buffer = self.text.get_buffer()
-        start, end = buffer.get_bounds()
+        _start, end = buffer.get_bounds()
         if style:
             buffer.insert_with_tags(end, text, style)
         else:

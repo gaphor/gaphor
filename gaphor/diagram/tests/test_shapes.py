@@ -220,7 +220,7 @@ def test_icon_box_child_placement_center_bottom(update_context):
     )
     shape.size(update_context)
 
-    w, h = shape.sizes[0]
+    w, _h = shape.sizes[0]
     bounding_box = Rectangle(0, 0, 10, 20)
 
     x, y, _, _ = shape.child_pos(style, bounding_box)
@@ -239,7 +239,7 @@ def test_icon_box_child_placement_right_middle(update_context):
     )
     shape.size(update_context)
 
-    w, h = shape.sizes[0]
+    _w, h = shape.sizes[0]
     bounding_box = Rectangle(0, 0, 10, 20)
 
     x, y, _, _ = shape.child_pos(style, bounding_box)

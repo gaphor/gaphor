@@ -37,7 +37,7 @@ def metaclass_and_stereotype(element_factory):
 def test_show_stereotype_property_page_with_stereotype(
     diagram, element_factory, event_manager
 ):
-    metaclass, stereotype = metaclass_and_stereotype(element_factory)
+    _metaclass, _stereotype = metaclass_and_stereotype(element_factory)
     property_page = create_show_property_page(diagram, element_factory, event_manager)
 
     widget = property_page.construct()
@@ -81,7 +81,7 @@ def test_stereotype_property_page_slot_value(diagram, element_factory, event_man
 
 
 def test_inherited_stereotype(diagram, element_factory, event_manager):
-    metaclass, stereotype = metaclass_and_stereotype(element_factory)
+    _metaclass, stereotype = metaclass_and_stereotype(element_factory)
     substereotype = element_factory.create(UML.Stereotype)
     substereotype.name = "SubStereotype"
     UML.recipes.create_generalization(stereotype, substereotype)
@@ -96,7 +96,7 @@ def test_inherited_stereotype(diagram, element_factory, event_manager):
 
 
 def test_inherited_stereotype_with_attributes(diagram, element_factory, event_manager):
-    metaclass, stereotype = metaclass_and_stereotype(element_factory)
+    _metaclass, stereotype = metaclass_and_stereotype(element_factory)
     attr = element_factory.create(UML.Property)
     attr.name = "Attr"
     stereotype.ownedAttribute = attr
