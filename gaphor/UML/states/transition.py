@@ -16,15 +16,9 @@ class TransitionItem(Named, LinePresentation[UML.Transition]):
             diagram,
             id,
             shape_middle=CssNode(
-                "guard",
+                "trigger-guard-action",
                 None,
-                Text(
-                    text=lambda: self.subject
-                    and self.subject.guard
-                    and self.subject.guard.specification
-                    and f"[{self.subject.guard.specification}]"
-                    or ""
-                ),
+                Text(text=self.trigger_guard_action_text),
             ),
             shape_tail=Box(
                 text_stereotypes(self),
@@ -35,6 +29,28 @@ class TransitionItem(Named, LinePresentation[UML.Transition]):
         self.watch("subject.name")
         self.watch("subject.appliedStereotype.classifier.name")
 
-        self.watch("subject[Transition].guard[Constraint].specification")
+        self.watch("subject[Transition].trigger.name")
+        self.watch("subject[Transition].guard.specification")
+        self.watch("subject[Transition].action.name")
 
         self.draw_tail = draw_arrow_tail
+
+    def trigger_guard_action_text(self) -> str:
+        if not self.subject:
+            return ""
+
+        trigger_text = self.subject.trigger and self.subject.trigger.name or ""
+        guard_text = (
+            self.subject.guard
+            and self.subject.guard.specification
+            and f"[{self.subject.guard.specification}]"
+            or ""
+        )
+        action_text = (
+            self.subject.action
+            and self.subject.action.name
+            and f"/{self.subject.action.name}"
+            or ""
+        )
+
+        return " ".join(t for t in [trigger_text, guard_text, action_text] if t)
