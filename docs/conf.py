@@ -232,3 +232,6 @@ intersphinx_mapping = {
     "gaphas": ("https://gaphas.readthedocs.io/en/stable", None),
     "python": ("https://docs.python.org/3", None),
 }
+
+# Canonical URL required for custom domain with RTD Addons enabled
+html_baseurl = os.environ.get("READTHEDOCS_CANONICAL_URL", "")
