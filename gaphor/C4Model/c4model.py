@@ -36,6 +36,11 @@ class C4Database(C4Container):
     pass
 
 
+from gaphor.core.modeling.coremodel import Dependency
+class C4Dependency(Dependency):
+    technology: _attribute[str] = _attribute("technology", str)
+
+
 
 C4Container.ownerContainer = association("ownerContainer", C4Container, upper=1, opposite="owningContainer")
 C4Container.owningContainer = association("owningContainer", C4Container, composite=True, opposite="ownerContainer")
