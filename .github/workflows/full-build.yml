@@ -153,6 +153,7 @@ jobs:
           manifest-path: org.gaphor.Gaphor.json
           run-tests: true
           cache-key: flatpak-builder-${{ github.sha }}
+          upload-artifact: false
 
   macos:
     strategy:
