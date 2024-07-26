@@ -228,7 +228,10 @@ epub_exclude_files = ["search.html"]
 # Example configuration for intersphinx: refer to the Python standard library.
 intersphinx_mapping = {
     "gnome": ("https://amolenaar.pages.gitlab.gnome.org/pygobject-docs", None),
-    "pygobject": ("https://gnome.pages.gitlab.gnome.org/pygobject", None),
+    "pygobject": ("https://pygobject.gnome.org", None),
     "gaphas": ("https://gaphas.readthedocs.io/en/stable", None),
     "python": ("https://docs.python.org/3", None),
 }
+
+# Canonical URL required for custom domain with RTD Addons enabled
+html_baseurl = os.environ.get("READTHEDOCS_CANONICAL_URL", "")
