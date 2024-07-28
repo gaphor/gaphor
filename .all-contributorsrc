@@ -1495,6 +1495,15 @@
         "bug",
         "ideas"
       ]
+    },
+    {
+      "login": "mbledkowski",
+      "name": "echo r\"0xX4H\" | rev",
+      "avatar_url": "https://avatars.githubusercontent.com/u/23295125?v=4",
+      "profile": "http://mble.dk",
+      "contributions": [
+        "translation"
+      ]
     }
   ],
   "contributorsPerLine": 7,
