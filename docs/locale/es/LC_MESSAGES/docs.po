@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gaphor 2.18.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-04-09 15:06-0400\n"
-"PO-Revision-Date: 2024-07-28 16:42+0000\n"
+"PO-Revision-Date: 2024-07-28 16:45+0000\n"
 "Last-Translator: Dan Yeaw <dan@yeaw.me>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/gaphor/"
 "docs-gaphor-org/es/>\n"
@@ -1484,7 +1484,7 @@ msgstr "Una definición de caja de herramientas"
 
 #: ../modeling_language.md:26
 msgid "[Connectors](#connectors), allow diagram items to connect"
-msgstr "[Conectores](#conectores), permite conectar elementos del diagrama"
+msgstr "[Conectores](#connectors), permite conectar elementos del diagrama"
 
 #: ../modeling_language.md:27
 msgid "[Copy/paste](#copy-and-paste) behavior when element copying is not trivial, for example with more than one element is involved"
