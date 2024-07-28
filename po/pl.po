@@ -8,16 +8,17 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2024-02-27 10:00-0500\n"
-"PO-Revision-Date: 2024-01-02 00:06+0000\n"
-"Last-Translator: Eryk Michalak <gnu.ewm@protonmail.com>\n"
+"PO-Revision-Date: 2024-07-28 15:09+0000\n"
+"Last-Translator: Maciej Błędkowski <mble@tuta.io>\n"
+"Language-Team: Polish <https://hosted.weblate.org/projects/gaphor/gaphor/pl/>"
+"\n"
 "Language: pl\n"
-"Language-Team: Polish "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/pl/>\n"
-"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && "
-"(n%100<10 || n%100>=20) ? 1 : 2);\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2);\n"
+"X-Generator: Weblate 5.7-dev\n"
 "Generated-By: Babel 2.14.0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:23 gaphor/C4Model/toolbox.py:67
@@ -107,48 +108,41 @@ msgstr "Nowy diagram maszyny stanów"
 #: gaphor/C4Model/toolbox.py:159 gaphor/SysML/toolbox.py:133
 #: gaphor/SysML/toolbox.py:134 gaphor/SysML/toolbox.py:172
 #: gaphor/UML/toolbox.py:63
-#, fuzzy
 msgid "New Activity"
-msgstr "Czynność"
+msgstr "Nowa Czynność"
 
 #: gaphor/C4Model/toolbox.py:161 gaphor/SysML/toolbox.py:143
 #: gaphor/SysML/toolbox.py:144 gaphor/SysML/toolbox.py:179
 #: gaphor/UML/toolbox.py:80
-#, fuzzy
 msgid "New Interaction"
-msgstr "Uogólnienie"
+msgstr "Nowa Interakcja"
 
 #: gaphor/C4Model/toolbox.py:164 gaphor/SysML/toolbox.py:153
 #: gaphor/SysML/toolbox.py:154 gaphor/SysML/toolbox.py:194
 #: gaphor/UML/toolbox.py:86
-#, fuzzy
 msgid "New State Machine"
-msgstr "Nowy diagram maszyny stanów"
+msgstr "Nowa Maszyna Stanów"
 
 #: gaphor/C4Model/toolbox.py:166 gaphor/UML/toolbox.py:66
-#, fuzzy
 msgid "New Class"
-msgstr "Klasa"
+msgstr "Nowa Klasa"
 
 #: gaphor/C4Model/toolbox.py:168 gaphor/UML/toolbox.py:68
-#, fuzzy
 msgid "New Data Type"
-msgstr "TypDanych"
+msgstr "Nowy Typ Danych"
 
 #: gaphor/C4Model/toolbox.py:170 gaphor/SysML/toolbox.py:176
 #: gaphor/UML/toolbox.py:71
-#, fuzzy
 msgid "New Enumeration"
-msgstr "Uogólnienie"
+msgstr "Nowa Enumeracja"
 
 #: gaphor/C4Model/toolbox.py:173
 msgid "New Primitive Type"
-msgstr ""
+msgstr "Nowy Typ Prymitywny"
 
 #: gaphor/C4Model/toolbox.py:175
-#, fuzzy
 msgid "New Person"
-msgstr "Osoba"
+msgstr "Nowa Osoba"
 
 #: gaphor/RAAML/modelinglanguage.py:24 gaphor/ui/greeter.py:49
 msgid "RAAML"
@@ -165,22 +159,19 @@ msgstr "Nowy diagram STPA"
 #: gaphor/RAAML/toolbox.py:27
 #, fuzzy
 msgid "New Top Event"
-msgstr "Nowy komponent"
+msgstr "Nowy Główne Wydarzenie"
 
 #: gaphor/RAAML/toolbox.py:28
-#, fuzzy
 msgid "New Loss"
-msgstr "Strata"
+msgstr "Nowa Strata"
 
 #: gaphor/RAAML/toolbox.py:29
-#, fuzzy
 msgid "New Hazard"
-msgstr "Niebezpieczeństwo"
+msgstr "Nowe Niebezpieczeństwo"
 
 #: gaphor/RAAML/toolbox.py:30
-#, fuzzy
 msgid "New Situation"
-msgstr "Sytuacja"
+msgstr "Nowa Sytuacja"
 
 #: gaphor/RAAML/fta/andgate.py:34 gaphor/RAAML/fta/ftatoolbox.py:24
 msgid "AND Gate"
@@ -3104,4 +3095,3 @@ msgstr ""
 
 #~ msgid "Recently Opened"
 #~ msgstr "Ostatnio otwarte"
-
