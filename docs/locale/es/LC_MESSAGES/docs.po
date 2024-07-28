@@ -8,9 +8,8 @@ msgstr ""
 "Project-Id-Version: Gaphor 2.18.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-04-09 15:06-0400\n"
-"PO-Revision-Date: 2023-07-09 10:54+0000\n"
-"Last-Translator: Óscar Fernández Díaz <oscfdezdz@users.noreply.hosted.weblate"
-".org>\n"
+"PO-Revision-Date: 2024-07-28 16:45+0000\n"
+"Last-Translator: Dan Yeaw <dan@yeaw.me>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/gaphor/"
 "docs-gaphor-org/es/>\n"
 "Language: es\n"
@@ -18,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.0-dev\n"
+"X-Generator: Weblate 5.7-dev\n"
 
 #: ../connect.md:1
 msgid "Connection Protocol"
@@ -1485,17 +1484,17 @@ msgstr "Una definición de caja de herramientas"
 
 #: ../modeling_language.md:26
 msgid "[Connectors](#connectors), allow diagram items to connect"
-msgstr "[Conectores](#conectores), permite conectar elementos del diagrama"
+msgstr "[Conectores](#connectors), permite conectar elementos del diagrama"
 
 #: ../modeling_language.md:27
 msgid "[Copy/paste](#copy-and-paste) behavior when element copying is not trivial, for example with more than one element is involved"
 msgstr ""
-"Comportamiento [Copiar/pegar](#copiar-y-pegar) cuando la copia de elementos "
+"Comportamiento [Copiar/pegar](#copy-and-paste) cuando la copia de elementos "
 "no es trivial, por ejemplo, cuando hay más de un elemento implicado"
 
 #: ../modeling_language.md:29
 msgid "[Grouping](#grouping), allow elements to be nested in one another"
-msgstr "[Agrupación](#agrupación), permite anidar elementos entre sí"
+msgstr "[Agrupación](#grouping), permite anidar elementos entre sí"
 
 #: ../modeling_language.md:30
 msgid "[Dropping](#dropping), allow elements to be dragged from the tree view onto a diagram"
