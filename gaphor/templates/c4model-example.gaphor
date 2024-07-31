@@ -5,7 +5,21 @@
 <val>c4container[children] {
   dash-style: 11 9;
 }
-</val>
+
+c4person {
+  background-color: #8AADB8;
+}
+
+c4container[children=""],
+c4database {
+  background-color: lightblue;
+}
+
+c4container[name="E-mail System"],
+c4container[name="Mainframe Banking System"] {
+  background-color: lightgray;
+  color: #444;
+}</val>
 </styleSheet>
 </StyleSheet>
 <Package id="58d6c2e8-66f8-11ec-b4c8-0456e5e540ed">
@@ -1362,7 +1376,7 @@
 </C4ContainerItem>
 <C4ContainerItem id="8cf57bd0-4eab-11ef-b575-be7f4daace3f">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 297.2299445087324, 372.4913052100184)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 299.325669369927, 372.4913052100184)</val>
 </matrix>
 <top-left>
 <val>(-28.1484375, 0.0)</val>
@@ -1382,7 +1396,7 @@
 </C4ContainerItem>
 <C4ContainerItem id="924c74a8-4eab-11ef-b575-be7f4daace3f">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, -6.0552117412676125, 376.4092739600184)</val>
+<val>(1.0, 0.0, 0.0, 1.0, -5.879815084183349, 376.4092739600184)</val>
 </matrix>
 <top-left>
 <val>(0.0, 0.0)</val>
@@ -1792,7 +1806,7 @@
 <val>(1.0, 0.0, 0.0, 1.0, 297.2970878737182, 160.22714227396625)</val>
 </matrix>
 <points>
-<val>[(52.66661631479249, 212.26416293605217), (31.702912126281717, 47.47207647603375)]</val>
+<val>[(54.76234117598716, 212.26416293605217), (31.702912126281717, 47.47207647603375)]</val>
 </points>
 <head-connection>
 <ref refid="8cf57bd0-4eab-11ef-b575-be7f4daace3f"/>
@@ -2285,7 +2299,7 @@
 <val>(1.0, 0.0, 0.0, 1.0, 77.29708787371823, 158.88807337989329)</val>
 </matrix>
 <points>
-<val>[(13.026009168380241, 217.52120058012514), (2.5247419029034717, 33.811145370106715)]</val>
+<val>[(13.201405825464505, 217.52120058012514), (2.5247419029034717, 33.811145370106715)]</val>
 </points>
 <head-connection>
 <ref refid="924c74a8-4eab-11ef-b575-be7f4daace3f"/>
