@@ -554,11 +554,10 @@ def list_item_drop_motion(
     target: Gtk.DropTarget, x: int, y: int, list_item: Gtk.ListItem
 ) -> Gdk.DragAction:
     widget = target.get_widget()
-    style_context = widget.get_style_context()
     if y < 4:
-        style_context.add_class("move-element-above")
+        widget.add_css_class("move-element-above")
     else:
-        style_context.remove_class("move-element-above")
+        widget.remove_css_class("move-element-above")
 
     return Gdk.DragAction.COPY
 
@@ -567,8 +566,7 @@ def list_item_drop_leave(
     target: Gtk.DropTarget, list_item: Gtk.ListItem
 ) -> Gdk.DragAction:
     widget = target.get_widget()
-    style_context = widget.get_style_context()
-    style_context.remove_class("move-element-above")
+    widget.remove_css_class("move-element-above")
 
 
 def list_item_drop_drop(
