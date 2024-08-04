@@ -199,6 +199,7 @@ to the items contained in the diagram.
 ``line-width``          Set the width for lines: ``line-width: 2``. *(inherited)*
 ``min-height``          Set minimal height for an item: ``min-height: 50``.
 ``min-width``           Set minimal width for an item: ``min-width: 100``.
+``max-width``           Set maximum width (text fields only): ``max-width: 100``.
 ``padding``             CSS style padding (top, right, bottom, left).
 
                         Example: ``padding: 3 4``.

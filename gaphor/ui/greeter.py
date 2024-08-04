@@ -82,6 +82,13 @@ EXAMPLES = [
         "RAAML",
         "raaml-example.gaphor",
     ),
+    ModelTemplate(
+        gettext("C4 Model Example"),
+        gettext("C4 Model example of a banking system"),
+        "C4Model",
+        "C4Model",
+        "c4model-example.gaphor",
+    ),
 ]
 
 
