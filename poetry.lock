@@ -727,13 +727,13 @@ test = ["objgraph", "psutil"]
 
 [[package]]
 name = "hypothesis"
-version = "6.108.5"
+version = "6.108.9"
 description = "A library for property-based testing"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "hypothesis-6.108.5-py3-none-any.whl", hash = "sha256:46fd0f0d022e812940e19ef24ed0b090cc17cf505e0998960aca20c5091425f5"},
-    {file = "hypothesis-6.108.5.tar.gz", hash = "sha256:a009d777542d64691a3d27c87e4b94b2256c0bfb47791100d9e45499c304e1b9"},
+    {file = "hypothesis-6.108.9-py3-none-any.whl", hash = "sha256:52fc4617ed9dde4c24a0b7a120b8f0bbbc8987397134694786499239b3e54766"},
+    {file = "hypothesis-6.108.9.tar.gz", hash = "sha256:5b1eef70b2f1c3682935fd8fa4bc535d824b15fe3612bb0043dfdc9e370c640b"},
 ]
 
 [package.dependencies]
@@ -741,10 +741,10 @@ attrs = ">=22.2.0"
 sortedcontainers = ">=2.1.0,<3.0.0"
 
 [package.extras]
-all = ["backports.zoneinfo (>=0.2.1)", "black (>=19.10b0)", "click (>=7.0)", "crosshair-tool (>=0.0.63)", "django (>=3.2)", "dpcontracts (>=0.4)", "hypothesis-crosshair (>=0.0.9)", "lark (>=0.10.1)", "libcst (>=0.3.16)", "numpy (>=1.17.3)", "pandas (>=1.1)", "pytest (>=4.6)", "python-dateutil (>=1.4)", "pytz (>=2014.1)", "redis (>=3.0.0)", "rich (>=9.0.0)", "tzdata (>=2024.1)"]
+all = ["backports.zoneinfo (>=0.2.1)", "black (>=19.10b0)", "click (>=7.0)", "crosshair-tool (>=0.0.65)", "django (>=3.2)", "dpcontracts (>=0.4)", "hypothesis-crosshair (>=0.0.11)", "lark (>=0.10.1)", "libcst (>=0.3.16)", "numpy (>=1.17.3)", "pandas (>=1.1)", "pytest (>=4.6)", "python-dateutil (>=1.4)", "pytz (>=2014.1)", "redis (>=3.0.0)", "rich (>=9.0.0)", "tzdata (>=2024.1)"]
 cli = ["black (>=19.10b0)", "click (>=7.0)", "rich (>=9.0.0)"]
 codemods = ["libcst (>=0.3.16)"]
-crosshair = ["crosshair-tool (>=0.0.63)", "hypothesis-crosshair (>=0.0.9)"]
+crosshair = ["crosshair-tool (>=0.0.65)", "hypothesis-crosshair (>=0.0.11)"]
 dateutil = ["python-dateutil (>=1.4)"]
 django = ["django (>=3.2)"]
 dpcontracts = ["dpcontracts (>=0.4)"]
@@ -2727,13 +2727,13 @@ files = [
 
 [[package]]
 name = "xdoctest"
-version = "1.1.5"
+version = "1.1.6"
 description = "A rewrite of the builtin doctest module"
 optional = false
 python-versions = ">=3.6"
 files = [
-    {file = "xdoctest-1.1.5-py3-none-any.whl", hash = "sha256:f36fe64d7c0ad0553dbff39ff05c43a0aab69d313466f24a38d00e757182ade0"},
-    {file = "xdoctest-1.1.5.tar.gz", hash = "sha256:89b0c3ad7fe03a068e22a457ab18c38fc70c62329c2963f43954b83c29374e66"},
+    {file = "xdoctest-1.1.6-py3-none-any.whl", hash = "sha256:a6f673df8c82b8fe0adc536f14c523464f25c6d2b733ed78888b8f8d6c46012e"},
+    {file = "xdoctest-1.1.6.tar.gz", hash = "sha256:00ec7bde36addbedf5d1db0db57b6b669a7a4b29ad2d16480950556644f02109"},
 ]
 
 [package.extras]
