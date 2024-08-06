@@ -98,6 +98,18 @@ Unzip the `GTK4_Gvsbuild_VERSION_x64.zip` file to `C:\gtk`. For example with 7Zi
 7z x GTK4_Gvsbuild_*.zip  -oC:\gtk -y
 ```
 
+The resulting directory structure should look like:
+
+```
+C:\gtk
+├── bin
+├── include
+├── lib
+├── python
+├── share
+└── wheels
+```
+
 ### Setup Gaphor
 
 In the same PowerShell terminal, clone the repository:
