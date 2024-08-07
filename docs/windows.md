@@ -128,11 +128,6 @@ Install Gaphor's dependencies
 poetry install
 ```
 
-Install the git hook scripts
-```Powershell
-poetry run pre-commit install
-```
-
 Reinstall PyGObject and pycairo using gvsbuild wheels
 ```PowerShell
 poetry run pip install --force-reinstall (Resolve-Path C:\gtk\wheels\PyGObject*.whl)
@@ -148,7 +143,7 @@ poetry run gaphor
 
 When setting up a plugin workspace you need to perform the following steps:
 
-cd <your project's workspace>
+cd (your project's workspace)
 
 If your project does not already have a pyproject.toml file, create one. For details see the [Poetry documentation](https://python-poetry.org/docs/basic-usage/)
 ```PowerShell
@@ -173,7 +168,7 @@ poetry run pip install --force-reinstall (Resolve-Path C:\gtk\wheels\pycairo*.wh
 
 Install your plugin
 ```PowerShell
-py -m pip install -e .
+poetry run pip install -e .
 ```
 Note: The -e option is important for debugging: it allows you to make changes to your plugin without having to re-install the plugin. You will, however, need to restart gaphor after making changes.
 
@@ -212,11 +207,11 @@ Visual Studio Code will start the application in debug mode, and will stop at ma
 
 ### Debugging Your Plugin Using Visual Studio Code
 
-cd <your project's workspace>
+cd (your project's workspace)
 
-Look in <your project's workspace>\.venv\Lib\site-packages. Find the folder corresponding to your plugin. It will end with "...dist-info". Copy the path
+Look in (your project's workspace)\.venv\Lib\site-packages. Find the folder corresponding to your plugin. It will end with "...dist-info". Copy the path
 
-Create an .env file with GAPHOR_PLUGIN_PATH=<path from previous step>
+Create an .env file with GAPHOR_PLUGIN_PATH=(path from previous step)
 
 Start gaphor:
 1. In the menu, select Run → Start debugging
