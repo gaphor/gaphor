@@ -495,6 +495,7 @@ class Text:
     def size(self, context: UpdateContext, bounding_box: Rectangle | None = None):
         style = context.style
         min_w = style.get("min-width", 0)
+        max_w = style.get("max-width", 16384)
         min_h = style.get("min-height", 0)
         text_align = style.get("text-align", TextAlign.CENTER)
         white_space = style.get("white-space", WhiteSpace.NORMAL)
@@ -505,7 +506,7 @@ class Text:
             font=style,
             width=bounding_box.width
             if bounding_box and white_space == WhiteSpace.NORMAL
-            else -1,
+            else max_w,
             text_align=text_align,
         )
         width, height = layout.size()
@@ -513,7 +514,7 @@ class Text:
             "padding", DEFAULT_PADDING
         )
         return (
-            max(min_w, width + padding_right + padding_left),
+            min(max(min_w, width + padding_right + padding_left), max_w),
             max(min_h, height + padding_top + padding_bottom),
         )
 

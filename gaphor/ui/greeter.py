@@ -82,6 +82,13 @@ EXAMPLES = [
         "RAAML",
         "raaml-example.gaphor",
     ),
+    ModelTemplate(
+        gettext("C4 Model Example"),
+        gettext("C4 Model example of a banking system"),
+        "C4Model",
+        "C4Model",
+        "c4model-example.gaphor",
+    ),
 ]
 
 
@@ -120,7 +127,7 @@ class Greeter(Service, ActionProvider):
         self.greeter = builder.get_object("greeter")
         self.greeter.set_application(self.gtk_app)
         if ".dev" in distribution().version:
-            self.greeter.get_style_context().add_class("devel")
+            self.greeter.add_css_class("devel")
 
         listbox = builder.get_object("recent-files")
         templates = builder.get_object("templates")

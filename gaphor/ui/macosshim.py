@@ -4,6 +4,10 @@ from gi.repository import GLib, Gtk
 def init_macos_shortcuts():
     """Add <Cmd>-<..> shortcuts for macOS."""
 
+    if Gtk.get_minor_version() >= 16:
+        # GTK 4.16 contains proper key mappings for macOS
+        return
+
     def new_shortcut_with_args(shortcut, signal, *args):
         shortcut = Gtk.Shortcut.new(
             trigger=Gtk.ShortcutTrigger.parse_string(shortcut),

@@ -170,7 +170,7 @@ class MainWindow(Service, ActionProvider):
         window = self.window
         window.set_application(gtk_app)
         if ".dev" in distribution().version:
-            window.get_style_context().add_class("devel")
+            window.add_css_class("devel")
 
         select_modeling_language = builder.get_object("select-modeling-language")
         select_modeling_language.set_menu_model(

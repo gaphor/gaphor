@@ -364,11 +364,7 @@ class MockRowItem:
 class MockDropTarget:
     def get_widget(self):
         class Widget:
-            def get_style_context(self):
-                return StyleContext()
-
-        class StyleContext:
-            def remove_class(self, _):
+            def remove_css_class(self, _):
                 pass
 
         return Widget()

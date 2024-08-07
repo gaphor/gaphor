@@ -405,6 +405,9 @@ def create_popup_controller(tree_view, selection, modeling_language):
     menus: dict[str, Gtk.PopoverMenu] = {}
 
     def on_show_popup(ctrl, n_press, x, y):
+        if not ctrl.get_last_event().triggers_context_menu():
+            return
+
         selection.unselect_all()
         language_name = modeling_language.active_modeling_language
         menu = menus.get(language_name)
@@ -425,7 +428,6 @@ def create_popup_controller(tree_view, selection, modeling_language):
         menu.popup()
 
     ctrl = Gtk.GestureClick.new()
-    ctrl.set_button(Gdk.BUTTON_SECONDARY)
     ctrl.connect("pressed", on_show_popup)
     return ctrl
 
@@ -454,6 +456,9 @@ def list_item_factory_setup(
     row.menu = None
 
     def on_show_popup(ctrl, n_press, x, y):
+        if not ctrl.get_last_event().triggers_context_menu():
+            return
+
         list_item.get_child().activate_action(
             "list.select-item",
             GLib.Variant.new_tuple(
@@ -476,7 +481,6 @@ def list_item_factory_setup(
         row.menu.popup()
 
     ctrl = Gtk.GestureClick.new()
-    ctrl.set_button(Gdk.BUTTON_SECONDARY)
     ctrl.connect("pressed", on_show_popup)
     row.add_controller(ctrl)
 
@@ -550,11 +554,10 @@ def list_item_drop_motion(
     target: Gtk.DropTarget, x: int, y: int, list_item: Gtk.ListItem
 ) -> Gdk.DragAction:
     widget = target.get_widget()
-    style_context = widget.get_style_context()
     if y < 4:
-        style_context.add_class("move-element-above")
+        widget.add_css_class("move-element-above")
     else:
-        style_context.remove_class("move-element-above")
+        widget.remove_css_class("move-element-above")
 
     return Gdk.DragAction.COPY
 
@@ -563,8 +566,7 @@ def list_item_drop_leave(
     target: Gtk.DropTarget, list_item: Gtk.ListItem
 ) -> Gdk.DragAction:
     widget = target.get_widget()
-    style_context = widget.get_style_context()
-    style_context.remove_class("move-element-above")
+    widget.remove_css_class("move-element-above")
 
 
 def list_item_drop_drop(

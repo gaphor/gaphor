@@ -280,7 +280,10 @@ class DiagramPage:
 
 def context_menu_controller(context_menu, diagram):
     def on_show_popup(ctrl, n_press, x, y):
-        if Transaction.in_transaction():
+        if (
+            Transaction.in_transaction()
+            or not ctrl.get_last_event().triggers_context_menu()
+        ):
             return
 
         view = ctrl.get_widget()
@@ -300,7 +303,6 @@ def context_menu_controller(context_menu, diagram):
         context_menu.popup()
 
     ctrl = Gtk.GestureClick.new()
-    ctrl.set_button(Gdk.BUTTON_SECONDARY)
     ctrl.connect("pressed", on_show_popup)
     return ctrl
 

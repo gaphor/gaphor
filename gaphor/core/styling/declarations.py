@@ -156,6 +156,7 @@ def parse_color(prop, value):
 
 @declarations.register(
     "min-width",
+    "max-width",
     "min-height",
     "line-width",
     "vertical-spacing",
