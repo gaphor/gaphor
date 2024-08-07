@@ -144,11 +144,16 @@ Launch Gaphor!
 poetry run gaphor
 ```
 
-### Setting Up A Project That Uses Gaphor (e.g. a plugin)
+### Setting Up A Plugin Workspace for Gaphor
 
-When setting up another project you need to perform the following steps:
+When setting up a plugin workspace you need to perform the following steps:
 
-cd (to your project's workspace)
+cd <your project's workspace>
+
+If your project does not already have a pyproject.toml file, create one. For details see the [Poetry documentation](https://python-poetry.org/docs/basic-usage/)
+```PowerShell
+poetry init
+```
 
 Install your project's dependencies. If you have made your project dependent upon gaphor, this will pull in gaphor
 ```PowerShell
@@ -166,9 +171,15 @@ poetry run pip install --force-reinstall (Resolve-Path C:\gtk\wheels\PyGObject*.
 poetry run pip install --force-reinstall (Resolve-Path C:\gtk\wheels\pycairo*.whl)
 ```
 
+Install your plugin
+```PowerShell
+py -m pip install -e .
+```
+Note: The -e option is important for debugging: it allows you to make changes to your plugin without having to re-install the plugin. You will, however, need to restart gaphor after making changes.
+
 Launch Gaphor!
 ```PowerShell
-poetry run <your project>
+poetry run gaphor
 ```
 
 Note that if you have forgotten to reinstall PyGObject and pycairo, the first time you add an element to a diagram that has text, gaphor will crash!
@@ -198,6 +209,27 @@ To start the debugger, execute the following steps:
 5. Enter `gaphor` as module name
 
 Visual Studio Code will start the application in debug mode, and will stop at main.
+
+### Debugging Your Plugin Using Visual Studio Code
+
+cd <your project's workspace>
+
+Look in <your project's workspace>\.venv\Lib\site-packages. Find the folder corresponding to your plugin. It will end with "...dist-info". Copy the path
+
+Create an .env file with GAPHOR_PLUGIN_PATH=<path from previous step>
+
+Start gaphor:
+1. In the menu, select Run → Start debugging
+2. Choose Select module from the list
+3. Enter `gaphor` as module name
+
+Note: You should verify that gaphor successfully read the .env file by bringing up the Tools->Console and typing:
+```PowerShell
+import os
+os.getenv("GAPHOR_PLUGIN_PATH")
+```
+
+Your plugin should appear under the Tools menu.
 
 ## Packaging for Windows
 
