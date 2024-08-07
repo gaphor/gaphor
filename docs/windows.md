@@ -144,6 +144,35 @@ Launch Gaphor!
 poetry run gaphor
 ```
 
+### Setting Up A Project That Uses Gaphor (e.g. a plugin)
+
+When setting up another project you need to perform the following steps:
+
+cd (to your project's workspace)
+
+Install your project's dependencies. If you have made your project dependent upon gaphor, this will pull in gaphor
+```PowerShell
+poetry install
+```
+
+Install the git hook scripts
+```Powershell
+poetry run pre-commit install
+```
+
+Reinstall PyGObject and pycairo using gvsbuild wheels
+```PowerShell
+poetry run pip install --force-reinstall (Resolve-Path C:\gtk\wheels\PyGObject*.whl)
+poetry run pip install --force-reinstall (Resolve-Path C:\gtk\wheels\pycairo*.whl)
+```
+
+Launch Gaphor!
+```PowerShell
+poetry run <your project>
+```
+
+Note that if you have forgotten to reinstall PyGObject and pycairo, the first time you add an element to a diagram that has text, gaphor will crash!
+
 ### Debugging using Visual Studio Code
 
 Start a new PowerShell terminal, and set current directory to the project folder:
