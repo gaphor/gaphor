@@ -209,20 +209,10 @@ Visual Studio Code will start the application in debug mode, and will stop at ma
 
 cd (your project's workspace)
 
-Look in (your project's workspace)\.venv\Lib\site-packages. Find the folder corresponding to your plugin. It will end with "...dist-info". Copy the path
-
-Create an .env file with GAPHOR_PLUGIN_PATH=(path from previous step)
-
 Start gaphor:
-1. In the menu, select Run → Start debugging
+1. In the VSCode menu, select Run → Start debugging
 2. Choose Select module from the list
 3. Enter `gaphor` as module name
-
-Note: You should verify that gaphor successfully read the .env file by bringing up the Tools->Console and typing:
-```PowerShell
-import os
-os.getenv("GAPHOR_PLUGIN_PATH")
-```
 
 Your plugin should appear under the Tools menu.
 
