@@ -127,33 +127,33 @@ class PicturePropertyPage(PropertyPageBase):
     def _on_select_picture_clicked(self, button):
         open_file_dialog(
             gettext("Select a picture..."),
-            self.open_files,
+            self.open_file,
             image_filter=True,
             parent=button.get_root(),
+            multiple=False,
         )
 
-    def open_files(self, filenames):
-        for filename in filenames:
-            with open(filename, "rb") as file:
-                try:
-                    image_data = file.read()
-                    with Image.open(io.BytesIO(image_data)) as image:
-                        image.verify()
+    def open_file(self, filename):
+        with open(filename, "rb") as file:
+            try:
+                image_data = file.read()
+                with Image.open(io.BytesIO(image_data)) as image:
+                    image.verify()
 
-                        base64_encoded_data = base64.b64encode(image_data)
+                    base64_encoded_data = base64.b64encode(image_data)
 
-                        with Transaction(self.event_manager):
-                            self.subject.subject.content = base64_encoded_data.decode(
-                                "ascii"
-                            )
-                            self.subject.width = image.width
-                            self.subject.height = image.height
-                except Exception:
-                    error_handler(
-                        message=gettext("Unable to parse picture “{filename}”.").format(
-                            filename=filename
+                    with Transaction(self.event_manager):
+                        self.subject.subject.content = base64_encoded_data.decode(
+                            "ascii"
                         )
+                        self.subject.width = image.width
+                        self.subject.height = image.height
+            except Exception:
+                error_handler(
+                    message=gettext("Unable to parse picture “{filename}”.").format(
+                        filename=filename
                     )
+                )
 
     def _on_default_size_clicked(self, button):
         if self.subject and self.subject.subject and self.subject.subject.content:
