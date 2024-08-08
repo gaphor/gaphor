@@ -11,7 +11,7 @@
 [![Translation Status](https://hosted.weblate.org/widgets/gaphor/-/gaphor/svg-badge.svg)](https://hosted.weblate.org/engage/gaphor)
 [![Sourcery](https://img.shields.io/badge/Sourcery-enabled-brightgreen)](https://sourcery.ai)
 [![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg)](https://github.com/RichardLitt/standard-readme)
-[![All Contributors.org](https://img.shields.io/github/all-contributors/gaphor/gaphor/main)](#contributors)
+[![All Contributors.org](https://img.shields.io/github/all-contributors/gaphor/gaphor/main)](https://github.com/gaphor/gaphor/blob/main/CONTRIBUTORS.md)
 
 
 Gaphor is a UML and SysML modeling application written in Python.
