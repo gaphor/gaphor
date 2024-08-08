@@ -137,18 +137,17 @@ class PicturePropertyPage(PropertyPageBase):
             with open(filename, "rb") as file:
                 try:
                     image_data = file.read()
-                    image = Image.open(io.BytesIO(image_data))
-                    image.verify()
-                    image.close()
+                    with Image.open(io.BytesIO(image_data)) as image:
+                        image.verify()
 
-                    base64_encoded_data = base64.b64encode(image_data)
+                        base64_encoded_data = base64.b64encode(image_data)
 
-                    with Transaction(self.event_manager):
-                        self.subject.subject.content = base64_encoded_data.decode(
-                            "ascii"
-                        )
-                        self.subject.width = image.width
-                        self.subject.height = image.height
+                        with Transaction(self.event_manager):
+                            self.subject.subject.content = base64_encoded_data.decode(
+                                "ascii"
+                            )
+                            self.subject.width = image.width
+                            self.subject.height = image.height
                 except Exception:
                     error_handler(
                         message=gettext("Unable to parse picture “{filename}”.").format(
