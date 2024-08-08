@@ -140,6 +140,33 @@ Install Gaphor's dependencies
 poetry install
 ```
 
+Reinstall PyGObject and pycairo using gvsbuild wheels
+```PowerShell
+poetry run pip install --force-reinstall (Resolve-Path C:\gtk\wheels\PyGObject*.whl)
+poetry run pip install --force-reinstall (Resolve-Path C:\gtk\wheels\pycairo*.whl)
+```
+
+Launch Gaphor!
+```PowerShell
+poetry run gaphor
+```
+
+### Setting Up A Plugin Workspace for Gaphor
+
+When setting up a plugin workspace you need to perform the following steps:
+
+cd (your project's workspace)
+
+If your project does not already have a pyproject.toml file, create one. For details see the [Poetry documentation](https://python-poetry.org/docs/basic-usage/). If you already have a .toml file, make sure you have gaphor as a development dependency. For details see the [Gaphor Hello World Plugin](https://github.com/gaphor/gaphor_plugin_helloworld)
+```PowerShell
+poetry init
+```
+
+Install your project's dependencies. If you have made your project dependent upon gaphor, this will pull in gaphor
+```PowerShell
+poetry install
+```
+
 Install the git hook scripts
 ```Powershell
 poetry run pre-commit install
@@ -151,10 +178,18 @@ poetry run pip install --force-reinstall (Resolve-Path C:\gtk\wheels\PyGObject*.
 poetry run pip install --force-reinstall (Resolve-Path C:\gtk\wheels\pycairo*.whl)
 ```
 
+Install your plugin
+```PowerShell
+poetry run pip install -e .
+```
+Note: The -e option is important for debugging: it allows you to make changes to your plugin without having to re-install the plugin. You will, however, need to restart gaphor after making changes.
+
 Launch Gaphor!
 ```PowerShell
 poetry run gaphor
 ```
+
+Note that if you have forgotten to reinstall PyGObject and pycairo, the first time you add an element to a diagram that has text, gaphor will crash!
 
 ### Debugging using Visual Studio Code
 
@@ -181,6 +216,17 @@ To start the debugger, execute the following steps:
 5. Enter `gaphor` as module name
 
 Visual Studio Code will start the application in debug mode, and will stop at main.
+
+### Debugging Your Plugin Using Visual Studio Code
+
+cd (your project's workspace)
+
+Start gaphor:
+1. In the VSCode menu, select Run → Start debugging
+2. Choose Select module from the list
+3. Enter `gaphor` as module name
+
+Your plugin should appear under the Tools menu.
 
 ## Packaging for Windows
 
