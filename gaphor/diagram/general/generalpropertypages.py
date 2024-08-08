@@ -149,10 +149,13 @@ class PicturePropertyPage(PropertyPageBase):
                         )
                         self.subject.width = image.width
                         self.subject.height = image.height
-                        self.subject.subject.name = "".join(
-                            chr if chr.isalnum() or (chr in [" ", "_", "-"]) else "_"
-                            for chr in Path(filename).stem
-                        )
+                        if self.subject.subject.name is None:
+                            self.subject.subject.name = "".join(
+                                chr
+                                if chr.isalnum() or (chr in [" ", "_", "-"])
+                                else "_"
+                                for chr in Path(filename).stem
+                            )
             except Exception:
                 error_handler(
                     message=gettext("Unable to parse picture “{filename}”.").format(
