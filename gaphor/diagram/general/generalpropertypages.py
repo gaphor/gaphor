@@ -1,5 +1,6 @@
 import base64
 import io
+from pathlib import Path
 
 from gi.repository import Gtk
 from PIL import Image
@@ -148,6 +149,7 @@ class PicturePropertyPage(PropertyPageBase):
                         )
                         self.subject.width = image.width
                         self.subject.height = image.height
+                        self.subject.subject.name = Path(filename).stem
             except Exception:
                 error_handler(
                     message=gettext("Unable to parse picture “{filename}”.").format(
