@@ -145,7 +145,7 @@ When setting up a plugin workspace you need to perform the following steps:
 
 cd (your project's workspace)
 
-If your project does not already have a pyproject.toml file, create one. For details see the [Poetry documentation](https://python-poetry.org/docs/basic-usage/)
+If your project does not already have a pyproject.toml file, create one. For details see the [Poetry documentation](https://python-poetry.org/docs/basic-usage/). If you already have a .toml file, make sure you have gaphor as a development dependency. For details see the [Gaphor Hello World Plugin](https://github.com/gaphor/gaphor_plugin_helloworld)
 ```PowerShell
 poetry init
 ```
