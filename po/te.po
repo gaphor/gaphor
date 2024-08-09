@@ -10,8 +10,8 @@ msgstr ""
 "POT-Creation-Date: 2024-02-27 10:00-0500\n"
 "PO-Revision-Date: 2024-08-07 08:09+0000\n"
 "Last-Translator: purnasaivolu4 <purnasaivolu4@gmail.com>\n"
-"Language-Team: Telugu <https://hosted.weblate.org/projects/gaphor/gaphor/te/>"
-"\n"
+"Language-Team: Telugu <https://hosted.weblate.org/projects/gaphor/gaphor/te/"
+">\n"
 "Language: te\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -951,8 +951,7 @@ msgid ""
 "  • <tt>+ attr: int | bool</tt> (public, union type)\n"
 "  • <tt># /attr: int # a note</tt> (protected, derived, with remark)\n"
 "\n"
-"Press <b>Enter</b> to edit, <b>Backspace</b>/<b>Delete</b> to remove "
-"items.\n"
+"Press <b>Enter</b> to edit, <b>Backspace</b>/<b>Delete</b> to remove items.\n"
 "Use <b>-</b>/<b>=</b> to move items up or down."
 msgstr ""
 
@@ -1073,8 +1072,7 @@ msgid ""
 "  • <tt>1..2</tt>\n"
 "  • <tt>- [1..2]</tt>\n"
 "\n"
-"Press <b>Enter</b> to edit, <b>Backspace</b>/<b>Delete</b> to remove "
-"items.\n"
+"Press <b>Enter</b> to edit, <b>Backspace</b>/<b>Delete</b> to remove items.\n"
 "Use <b>-</b>/<b>=</b> to move items up or down."
 msgstr ""
 
@@ -1125,8 +1123,7 @@ msgid ""
 "  • <tt>+ attr: int | bool</tt> (public, union type)\n"
 "  • <tt># /attr: int # a note</tt> (protected, derived, with remark)\n"
 "\n"
-"Press <b>Enter</b> to edit, <b>Backspace</b>/<b>Delete</b> to remove "
-"items.\n"
+"Press <b>Enter</b> to edit, <b>Backspace</b>/<b>Delete</b> to remove items.\n"
 "Use <b>-</b>/<b>=</b> to move items up or down."
 msgstr ""
 
@@ -1181,8 +1178,7 @@ msgid ""
 "  • <tt>+ call(a: int[*], b: str): bool</tt> (public, parameters)\n"
 "  • <tt># call(a: int, b: str) # a note</tt> (protected, with remark)\n"
 "\n"
-"Press <b>Enter</b> to edit, <b>Backspace</b>/<b>Delete</b> to remove "
-"items.\n"
+"Press <b>Enter</b> to edit, <b>Backspace</b>/<b>Delete</b> to remove items.\n"
 "Use <b>-</b>/<b>=</b> to move items up or down."
 msgstr ""
 
@@ -1201,8 +1197,7 @@ msgid ""
 "\n"
 "  • <tt>enum</tt>\n"
 "\n"
-"Press <b>Enter</b> to edit, <b>Backspace</b>/<b>Delete</b> to remove "
-"items.\n"
+"Press <b>Enter</b> to edit, <b>Backspace</b>/<b>Delete</b> to remove items.\n"
 "Use <b>-</b>/<b>=</b> to move items up or down."
 msgstr ""
 
@@ -1680,8 +1675,8 @@ msgstr ""
 #: gaphor/plugins/errorreports/errorreports.py:148
 msgid ""
 "An unexpected error occurred.\n"
-"Please file an issue on GitHub and include information from Tools → Error"
-" Reports."
+"Please file an issue on GitHub and include information from Tools → Error "
+"Reports."
 msgstr ""
 
 #: gaphor/plugins/errorreports/errorreports.ui:23
@@ -1826,8 +1821,8 @@ msgstr ""
 
 #: gaphor/templates/raaml-example.gaphor gaphor/templates/raaml.gaphor
 msgid ""
-"The fault tree analysis shows which causes for the failure of a system "
-"have been considered."
+"The fault tree analysis shows which causes for the failure of a system have "
+"been considered."
 msgstr ""
 
 #: gaphor/templates/sysml-example.gaphor gaphor/templates/sysml.gaphor
@@ -2229,36 +2224,37 @@ msgstr ""
 
 #: gaphor/templates/uml-example.gaphor gaphor/templates/uml.gaphor
 msgid ""
-"Perform domain analysis by modeling domain entities and their "
-"relationships using simplified class diagram. This diagram will serve as "
-"a visual dictionary of concepts. It will also be a starting point for "
-"your design-level data model."
+"Perform domain analysis by modeling domain entities and their relationships "
+"using simplified class diagram. This diagram will serve as a visual "
+"dictionary of concepts. It will also be a starting point for your design-"
+"level data model."
 msgstr ""
 
 #: gaphor/templates/uml-example.gaphor gaphor/templates/uml.gaphor
 msgid ""
-"Prepare package dependencies diagram to group your implementation classes"
-" in appropriate way. This will help you maintain the code well structured"
-" and avoid design flaws such as cyclic dependencies or dependencies on "
-"unstable parts"
+"Prepare package dependencies diagram to group your implementation classes in "
+"appropriate way. This will help you maintain the code well structured and "
+"avoid design flaws such as cyclic dependencies or dependencies on unstable "
+"parts"
 msgstr ""
 
 #: gaphor/templates/uml-example.gaphor gaphor/templates/uml.gaphor
 msgid ""
-"Model component interactions for use case scenarios in order to find out "
-"new methods in\n"
+"Model component interactions for use case scenarios in order to find out new "
+"methods in\n"
 "existing classes or even new classes with specific responsibilities."
 msgstr ""
 
 #: gaphor/templates/uml-example.gaphor gaphor/templates/uml.gaphor
-msgid "Create detailed class diagrams to capture your object-oriented data model."
+msgid ""
+"Create detailed class diagrams to capture your object-oriented data model."
 msgstr ""
 
 #: gaphor/templates/uml-example.gaphor gaphor/templates/uml.gaphor
 msgid ""
-"Define the major artifacts that manifest implementation of your "
-"components. Indicate how they are deployed on hardware nodes, their "
-"inter-dependencies and communication protocols."
+"Define the major artifacts that manifest implementation of your components. "
+"Indicate how they are deployed on hardware nodes, their inter-dependencies "
+"and communication protocols."
 msgstr ""
 
 #: gaphor/templates/uml-example.gaphor
@@ -2275,8 +2271,7 @@ msgstr ""
 
 #: gaphor/ui/appfilemanager.py:37
 msgid ""
-"{name} is already opened. Do you want to switch to the opened window "
-"instead?"
+"{name} is already opened. Do you want to switch to the opened window instead?"
 msgstr ""
 
 #: gaphor/ui/appfilemanager.py:48
@@ -2325,8 +2320,8 @@ msgstr ""
 
 #: gaphor/ui/elementeditor.ui:44
 msgid ""
-"Add a model element from the tool box (bottom left) to the diagram. Here "
-"you will see its properties appear."
+"Add a model element from the tool box (bottom left) to the diagram. Here you "
+"will see its properties appear."
 msgstr ""
 
 #: gaphor/ui/elementeditor.ui:52
@@ -2336,16 +2331,16 @@ msgstr ""
 #: gaphor/ui/elementeditor.ui:60
 msgid ""
 "<b>Tip:</b> Most elements in the toolbox have a keyboard shortcut (e.g. "
-"\"c\" for Class). Tool selection only works from the diagram. If a tool "
-"does not get selected, click on the diagram once (so it's focused) and "
-"then hit the shortcut key."
+"\"c\" for Class). Tool selection only works from the diagram. If a tool does "
+"not get selected, click on the diagram once (so it's focused) and then hit "
+"the shortcut key."
 msgstr ""
 
 #: gaphor/ui/elementeditor.ui:68
 msgid ""
-"<b>Tip:</b> To search for an element in the model browser (top left), "
-"select an element in the model browser and start typing. A search box "
-"will automatically appear."
+"<b>Tip:</b> To search for an element in the model browser (top left), select "
+"an element in the model browser and start typing. A search box will "
+"automatically appear."
 msgstr ""
 
 #: gaphor/ui/elementeditor.ui:97 gaphor/ui/help/shortcuts.ui:113
@@ -2432,8 +2427,8 @@ msgstr ""
 
 #: gaphor/ui/errorhandler.py:19
 msgid ""
-"It looks like Gaphor is started from the command line. Do you want to "
-"open a debug session?"
+"It looks like Gaphor is started from the command line. Do you want to open a "
+"debug session?"
 msgstr ""
 
 #: gaphor/ui/errorhandler.py:28 gaphor/ui/errorhandler.py:33
@@ -2458,8 +2453,7 @@ msgstr ""
 
 #: gaphor/ui/filemanager.py:42
 msgid ""
-"Gaphor was not able to store the model, probably due to an internal "
-"error:\n"
+"Gaphor was not able to store the model, probably due to an internal error:\n"
 "{exc}\n"
 "If you think this is a bug, please contact the developers."
 msgstr ""
@@ -2530,8 +2524,8 @@ msgstr ""
 
 #: gaphor/ui/filemanager.py:446
 msgid ""
-"The model you are opening contains a merge conflict. Do you want to open "
-"the current model or the incoming change to the model?"
+"The model you are opening contains a merge conflict. Do you want to open the "
+"current model or the incoming change to the model?"
 msgstr ""
 
 #: gaphor/ui/filemanager.py:450 gaphor/ui/filemanager.py:475
@@ -2556,8 +2550,8 @@ msgstr ""
 
 #: gaphor/ui/filemanager.py:467
 msgid ""
-"The open model contains unsaved changes. Changes which are not saved will"
-" be permanently lost."
+"The open model contains unsaved changes. Changes which are not saved will be "
+"permanently lost."
 msgstr ""
 
 #: gaphor/ui/filemanager.py:476
@@ -2739,23 +2733,22 @@ msgid ""
 "Copyright © 2001 The Gaphor Development Team.\n"
 "\n"
 "UML, SysML, and RAAML are either registered trademarks or trademarks of "
-"Object Management Group, Inc. in the United States and/or other "
-"countries."
+"Object Management Group, Inc. in the United States and/or other countries."
 msgstr ""
 
 #: gaphor/ui/help/about.ui:21
 msgid ""
-"Licensed under the Apache License, Version 2.0 (the \"License\"); you may"
-" not use this application except in compliance with the License. You may "
+"Licensed under the Apache License, Version 2.0 (the \"License\"); you may "
+"not use this application except in compliance with the License. You may "
 "obtain a copy of the License at\n"
 "\n"
 "    http://www.apache.org/licenses/LICENSE-2.0\n"
 "\n"
 "Unless required by applicable law or agreed to in writing, software "
-"distributed under the License is distributed on an \"AS IS\" BASIS, "
-"WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. "
-"See the License for the specific language governing permissions and "
-"limitations under the License."
+"distributed under the License is distributed on an \"AS IS\" BASIS, WITHOUT "
+"WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the "
+"License for the specific language governing permissions and limitations "
+"under the License."
 msgstr ""
 
 #: gaphor/ui/help/preferences.ui:9
