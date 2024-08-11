@@ -23,7 +23,13 @@ jobs:
       - name: Harden Runner
         uses: step-security/harden-runner@0d381219ddf674d61a7572ddd19d7941e271515c # v2.9.0
         with:
-          egress-policy: audit
+          disable-sudo: true
+          egress-policy: block
+          allowed-endpoints: >
+            api.github.com:443
+            files.pythonhosted.org:443
+            github.com:443
+            pypi.org:443
       - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
         with:
           ref: ${{ github.event.pull_request.head.sha }}
@@ -55,7 +61,11 @@ jobs:
       - name: Harden Runner
         uses: step-security/harden-runner@0d381219ddf674d61a7572ddd19d7941e271515c # v2.9.0
         with:
-          egress-policy: audit
+          disable-sudo: true
+          egress-policy: block
+          allowed-endpoints: >
+            api.github.com:443
+            github.com:443
       - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
         with:
           ref: ${{ github.event.pull_request.head.sha }}
@@ -77,7 +87,7 @@ jobs:
       - name: Create Pull Request
         run: |
           gh pr create -B main -H gvsbuild-updates-${{ github.run_id }} \
-            --title 'Bump Gvsbuild from "$CURRENT" to "$LATEST"' \
+            --title 'Bump Gvsbuild from ${{ env.CURRENT }} to ${{ env.LATEST }}' \
             --body 'This PR updates the Gvsbuild version.'
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
