@@ -7,14 +7,16 @@ msgstr ""
 "Project-Id-Version: Gaphor master\n"
 "Report-Msgid-Bugs-To: https://github.com/gaphor/gaphor/issues\n"
 "POT-Creation-Date: 2024-02-27 10:00-0500\n"
-"PO-Revision-Date: 2021-08-31 14:20+0900\n"
-"Last-Translator: Seong-ho Cho <darkcircle.0426@gmail.com>\n"
+"PO-Revision-Date: 2024-08-11 14:09+0000\n"
+"Last-Translator: 기택 <samscientist@naver.com>\n"
+"Language-Team: Korean <https://hosted.weblate.org/projects/gaphor/gaphor/ko/>"
+"\n"
 "Language: ko\n"
-"Language-Team: 한국어 <gnome-kr@googlegroups.com>\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.7-dev\n"
 "Generated-By: Babel 2.14.0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:23 gaphor/C4Model/toolbox.py:67
@@ -32,14 +34,12 @@ msgid "Technology"
 msgstr "기술"
 
 #: gaphor/C4Model/toolbox.py:41
-#, fuzzy
 msgid "New Software System"
-msgstr "소프트웨어 시스템"
+msgstr "새로운 소프트웨어 시스템"
 
 #: gaphor/C4Model/toolbox.py:48
-#, fuzzy
 msgid "New Container"
-msgstr "컨테이너"
+msgstr "새 컨테이너"
 
 #: gaphor/C4Model/toolbox.py:55
 #, fuzzy
@@ -84,77 +84,65 @@ msgid "Dependency"
 msgstr "의존요소"
 
 #: gaphor/C4Model/toolbox.py:151
-#, fuzzy
 msgid "New C4 Diagram"
-msgstr "새 다이어그램(_D)"
+msgstr "새 C4 다이어그램"
 
 #: gaphor/C4Model/toolbox.py:152 gaphor/UML/toolbox.py:50
-#, fuzzy
 msgid "New Class Diagram"
-msgstr "새 다이어그램(_D)"
+msgstr "새 클래스 다이어그램"
 
 #: gaphor/C4Model/toolbox.py:153 gaphor/SysML/toolbox.py:129
 #: gaphor/UML/toolbox.py:54
-#, fuzzy
 msgid "New Activity Diagram"
-msgstr "새 다이어그램(_D)"
+msgstr "새 활동 다이어그램"
 
 #: gaphor/C4Model/toolbox.py:154 gaphor/SysML/toolbox.py:139
 #: gaphor/UML/toolbox.py:55
 #, fuzzy
 msgid "New Sequence Diagram"
-msgstr "새 다이어그램(_D)"
+msgstr "새 시퀀스 다이어그램"
 
 #: gaphor/C4Model/toolbox.py:155 gaphor/SysML/toolbox.py:149
 #: gaphor/UML/toolbox.py:57
-#, fuzzy
 msgid "New State Machine Diagram"
-msgstr "새 다이어그램"
+msgstr "새 상태 머신 다이어그램"
 
 #: gaphor/C4Model/toolbox.py:159 gaphor/SysML/toolbox.py:133
 #: gaphor/SysML/toolbox.py:134 gaphor/SysML/toolbox.py:172
 #: gaphor/UML/toolbox.py:63
-#, fuzzy
 msgid "New Activity"
-msgstr "활동 수행"
+msgstr "새 활동"
 
 #: gaphor/C4Model/toolbox.py:161 gaphor/SysML/toolbox.py:143
 #: gaphor/SysML/toolbox.py:144 gaphor/SysML/toolbox.py:179
 #: gaphor/UML/toolbox.py:80
-#, fuzzy
 msgid "New Interaction"
-msgstr "상호작용"
+msgstr "새로운 상호작용(Interaction)"
 
 #: gaphor/C4Model/toolbox.py:164 gaphor/SysML/toolbox.py:153
 #: gaphor/SysML/toolbox.py:154 gaphor/SysML/toolbox.py:194
 #: gaphor/UML/toolbox.py:86
-#, fuzzy
 msgid "New State Machine"
-msgstr "새 다이어그램"
+msgstr "새로운 상태 머신(State Machine)"
 
 #: gaphor/C4Model/toolbox.py:166 gaphor/UML/toolbox.py:66
-#, fuzzy
 msgid "New Class"
-msgstr "클래스"
+msgstr "새 클래스"
 
 #: gaphor/C4Model/toolbox.py:168 gaphor/UML/toolbox.py:68
-#, fuzzy
 msgid "New Data Type"
-msgstr "데이터형식"
+msgstr "새로운 데이터 형식"
 
 #: gaphor/C4Model/toolbox.py:170 gaphor/SysML/toolbox.py:176
 #: gaphor/UML/toolbox.py:71
-#, fuzzy
 msgid "New Enumeration"
-msgstr "열거"
+msgstr "새 열거(Enumeration)"
 
 #: gaphor/C4Model/toolbox.py:173
-#, fuzzy
 msgid "New Primitive Type"
-msgstr "원시"
+msgstr "새 원시 타입(Primitive Type)"
 
 #: gaphor/C4Model/toolbox.py:175
-#, fuzzy
 msgid "New Person"
 msgstr "인간"
 
@@ -163,14 +151,12 @@ msgid "RAAML"
 msgstr "RAAML"
 
 #: gaphor/RAAML/toolbox.py:22
-#, fuzzy
 msgid "New FTA Diagram"
-msgstr "새 다이어그램(_D)"
+msgstr "새 FTA 다이어그램"
 
 #: gaphor/RAAML/toolbox.py:23
-#, fuzzy
 msgid "New STPA Diagram"
-msgstr "새 다이어그램(_D)"
+msgstr "새 STPA 다이어그램"
 
 #: gaphor/RAAML/toolbox.py:27
 #, fuzzy
@@ -3183,4 +3169,3 @@ msgstr ""
 
 #~ msgid "Recently Opened"
 #~ msgstr ""
-
