@@ -17,8 +17,11 @@ permissions:
 
 jobs:
 
-  updater:
+  check-version:
     runs-on: ubuntu-22.04
+    outputs:
+      current_version: ${{ steps.current-version.outputs.current_version }}
+      latest_version: ${{ steps.latest-version.outputs.latest_version }}
     steps:
       - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
         with:
@@ -28,35 +31,45 @@ jobs:
         with:
           python-version: ${{ env.python_version }}
       - name: Get current version
+        id: current-version
         run: |
-          echo "current_version=$(yq ${{ env.yaml_key }} ${{ env.file }})" >> "GITHUB_ENV"
+          echo "current_version=$(yq ${{ env.yaml_key }} ${{ env.file }})" >> "$GITHUB_OUTPUT"
       - name: Get latest version
+        id: latest-version
         run: |
           pip install --constraint=.github/constraints.txt lastversion
-          echo "latest_version=$(python -m lastversion gvsbuild)" >> "GITHUB_ENV"
+          echo "latest_version=$(python -m lastversion gvsbuild)" >> "$GITHUB_OUTPUT"
+
+  update-version:
+    runs-on: ubuntu-22.04
+    needs: [ check-version ]
+    if: ${{ needs.check-version.outputs.current_version != needs.check-version.outputs.latest_version }}
+    env:
+      CURRENT: ${{ needs.check-version.outputs.current_version }}
+      LATEST: ${{ needs.check-version.outputs.latest_version }}
+    steps:
+      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
       - name: Update version
-        if: ${{ env.current_version != env.latest_version }}
         run: |
-          sed -i "$(yq ${{ env.yaml_key }} | line' "${{ env.file }}")s/${{ env.current_version }}/${{ env.latest_version }}/" "${{ env.file }}"
+          sed -i "$(yq ''${{ env.yaml_key }} | line' "${{ env.file }}")s/$CURRENT/$LATEST}}/" "${{ env.file }}"
       - name: Configure Git
-        if: ${{ env.current_version != env.latest_version }}
         run: |
           git config user.email "ci@gaphor.org"
           git config user.name "GitHub Actions"
       - name: Push changes to new branch
-        if: ${{ env.current_version != env.latest_version }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git switch -c gvsbuild-updates-${{ github.run_id }}
           git add ${{ env.file }}
-          git commit -m "Bump Gvsbuild to version ${{ env.latest_version }}"
+          git commit -m "Bump Gvsbuild to version $LATEST"
           git push origin gvsbuild-updates-${{ github.run_id }}
       - name: Create Pull Request
-        if: ${{ env.current_version != env.latest_version }}
         run: |
           gh pr create -B main -H gvsbuild-updates-${{ github.run_id }} \
-            --title 'Bump Gvsbuild from ${{ env.current_version }} to ${{ env.latest_version }}' \
+            --title 'Bump Gvsbuild from $CURRENT to $LATESET' \
             --body 'This PR updates the Gvsbuild version.'
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
