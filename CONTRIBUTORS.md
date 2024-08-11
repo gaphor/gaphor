@@ -215,6 +215,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/zlv"><img src="https://avatars.githubusercontent.com/u/602210?v=4?s=100" width="100px;" alt="Евгений Лежнин"/><br /><sub><b>Евгений Лежнин</b></sub></a><br /><a href="#translation-zlv" title="Translation">🌍</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/pasabanov"><img src="https://avatars.githubusercontent.com/u/30545094?v=4?s=100" width="100px;" alt="Пётр Сабанов"/><br /><sub><b>Пётр Сабанов</b></sub></a><br /><a href="#translation-pasabanov" title="Translation">🌍</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/pinxue"><img src="https://avatars.githubusercontent.com/u/958237?v=4?s=100" width="100px;" alt="品雪"/><br /><sub><b>品雪</b></sub></a><br /><a href="https://github.com/gaphor/gaphor/issues?q=author%3Apinxue" title="Bug reports">🐛</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/samscientist"><img src="https://avatars.githubusercontent.com/u/33396317?v=4?s=100" width="100px;" alt="기택"/><br /><sub><b>기택</b></sub></a><br /><a href="#translation-samscientist" title="Translation">🌍</a></td>
     </tr>
   </tbody>
 </table>
