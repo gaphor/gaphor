@@ -12,9 +12,6 @@ env:
   file: '.github/workflows/full-build.yml'
   yaml_key: '.jobs.windows.env.gvsbuild_version'
 
-permissions:
-  pull-requests: write
-
 jobs:
 
   check-version:
@@ -23,6 +20,10 @@ jobs:
       current_version: ${{ steps.current-version.outputs.current_version }}
       latest_version: ${{ steps.latest-version.outputs.latest_version }}
     steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@0d381219ddf674d61a7572ddd19d7941e271515c # v2.9.0
+        with:
+          egress-policy: audit
       - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
         with:
           ref: ${{ github.event.pull_request.head.sha }}
@@ -44,10 +45,17 @@ jobs:
     runs-on: ubuntu-22.04
     needs: [ check-version ]
     if: ${{ needs.check-version.outputs.current_version != needs.check-version.outputs.latest_version }}
+    permissions:
+      pull-requests: write
+      contents: write
     env:
       CURRENT: ${{ needs.check-version.outputs.current_version }}
       LATEST: ${{ needs.check-version.outputs.latest_version }}
     steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@0d381219ddf674d61a7572ddd19d7941e271515c # v2.9.0
+        with:
+          egress-policy: audit
       - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
         with:
           ref: ${{ github.event.pull_request.head.sha }}
@@ -69,7 +77,7 @@ jobs:
       - name: Create Pull Request
         run: |
           gh pr create -B main -H gvsbuild-updates-${{ github.run_id }} \
-            --title 'Bump Gvsbuild from $CURRENT to $LATESET' \
+            --title 'Bump Gvsbuild from "$CURRENT" to "$LATEST"' \
             --body 'This PR updates the Gvsbuild version.'
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
