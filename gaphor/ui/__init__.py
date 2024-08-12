@@ -16,6 +16,7 @@ gi.require_version("Adw", "1")
 
 from gi.repository import Adw, Gio, GtkSource
 
+import gaphor.asyncio
 import gaphor.ui.textfield  # noqa: F401
 from gaphor.application import Application, Session
 from gaphor.core import event_handler
@@ -26,6 +27,20 @@ from gaphor.ui.actiongroup import apply_application_actions
 
 Adw.init()
 GtkSource.init()
+
+
+def create_example_coro():
+    async def my_coro():
+        import asyncio
+        import logging
+
+        log = logging.getLogger(__name__)
+
+        while True:
+            log.info("I'm a coro")
+            await asyncio.sleep(2)
+
+    gaphor.asyncio.create_background_task(my_coro())
 
 
 def run(argv: list[str], *, launch_service="greeter", recover=False) -> int:
@@ -51,6 +66,8 @@ def run(argv: list[str], *, launch_service="greeter", recover=False) -> int:
         @event_handler(ApplicationShutdown)
         def on_quit(_event: ApplicationShutdown):
             gtk_app.quit()
+
+        create_example_coro()
 
         try:
             application = Application(gtk_app=gtk_app)
@@ -100,7 +117,10 @@ def run(argv: list[str], *, launch_service="greeter", recover=False) -> int:
     gtk_app.connect("startup", app_startup)
     gtk_app.connect("activate", app_activate)
     gtk_app.connect("open", app_open)
-    gtk_app.run(argv)
+
+    with gaphor.asyncio.glib_event_loop_policy():
+        gtk_app.run(argv)
+
     return gtk_app.exit_code
 
 
