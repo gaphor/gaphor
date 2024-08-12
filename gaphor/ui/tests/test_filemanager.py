@@ -1,4 +1,3 @@
-import asyncio
 import sys
 import textwrap
 
@@ -16,16 +15,18 @@ def file_manager(event_manager, element_factory, modeling_language):
     return FileManager(event_manager, element_factory, modeling_language, main_window)
 
 
-def test_save(element_factory, file_manager: FileManager, tmp_path):
+@pytest.mark.asyncio
+async def test_save(element_factory, file_manager: FileManager, tmp_path):
     element_factory.create(UML.Class)
     out_file = tmp_path / "out.gaphor"
 
-    asyncio.get_event_loop().run_until_complete(file_manager.save(filename=out_file))
+    await file_manager.save(filename=out_file)
 
     assert out_file.exists()
 
 
-def test_model_is_saved_with_utf8_encoding(
+@pytest.mark.asyncio
+async def test_model_is_saved_with_utf8_encoding(
     element_factory, file_manager: FileManager, tmp_path
 ):
     class_ = element_factory.create(UML.Class)
@@ -34,13 +35,14 @@ def test_model_is_saved_with_utf8_encoding(
     package.name = "안녕하세요 세계"
 
     model_file = tmp_path / "model.gaphor"
-    asyncio.get_event_loop().run_until_complete(file_manager.save(model_file))
+    await file_manager.save(model_file)
 
     with open(model_file, encoding="utf-8") as f:
         f.read()  # raises exception if characters can't be decoded
 
 
-def test_model_is_loaded_with_utf8_encoding(
+@pytest.mark.asyncio
+async def test_model_is_loaded_with_utf8_encoding(
     element_factory, file_manager: FileManager, tmp_path
 ):
     class_name = "üëïèàòù"
@@ -52,7 +54,7 @@ def test_model_is_loaded_with_utf8_encoding(
     package.name = package_name
 
     model_file = tmp_path / "model.gaphor"
-    asyncio.get_event_loop().run_until_complete(file_manager.save(model_file))
+    await file_manager.save(model_file)
 
     element_factory.flush()
 

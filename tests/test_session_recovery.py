@@ -1,5 +1,3 @@
-import asyncio
-
 import pytest
 
 from gaphor.application import Application
@@ -81,7 +79,10 @@ def test_no_recovery_for_new_session(application: Application):
     assert not new_element_factory.lookup(diagram.id)
 
 
-def test_no_recovery_for_saved_file(application: Application, test_models, tmp_path):
+@pytest.mark.asyncio
+async def test_no_recovery_for_saved_file(
+    application: Application, test_models, tmp_path
+):
     model_file = test_models / "simple-items.gaphor"
     session = application.new_session(filename=model_file)
     element_factory = session.get_service("element_factory")
@@ -90,9 +91,7 @@ def test_no_recovery_for_saved_file(application: Application, test_models, tmp_p
         diagram = element_factory.create(Diagram)
 
     file_manager = session.get_service("file_manager")
-    asyncio.get_event_loop().run_until_complete(
-        file_manager.save(tmp_path / "newfile.gaphor")
-    )
+    await file_manager.save(tmp_path / "newfile.gaphor")
 
     application.shutdown_session(session)
 
