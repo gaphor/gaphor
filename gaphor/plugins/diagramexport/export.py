@@ -5,6 +5,7 @@ from pathlib import Path
 from gi.repository import Gtk
 
 from gaphor.abc import ActionProvider, Service
+from gaphor.asyncio import create_background_task
 from gaphor.core import action, gettext
 from gaphor.diagram.export import (
     escape_filename,
@@ -41,19 +42,24 @@ class DiagramExport(Service, ActionProvider):
             escape_filename(diagram.name) or "export"
         ).with_suffix(dot_ext)
 
-        def save_handler(filename):
-            self.filename = filename
-            handler(filename, diagram)
+        async def save_as():
+            new_filename = await save_file_dialog(
+                title,
+                filename,
+                parent=self.main_window.window,
+                filters=[
+                    (
+                        gettext("All {ext} Files").format(ext=ext.upper()),
+                        dot_ext,
+                        mime_type,
+                    )
+                ],
+            )
+            if new_filename:
+                self.filename = new_filename
+                handler(filename, diagram)
 
-        save_file_dialog(
-            title,
-            filename,
-            save_handler,
-            parent=self.main_window.window,
-            filters=[
-                (gettext("All {ext} Files").format(ext=ext.upper()), dot_ext, mime_type)
-            ],
-        )
+        create_background_task(save_as())
 
     @action(
         name="file-export-svg",

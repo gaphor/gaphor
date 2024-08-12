@@ -22,22 +22,22 @@ class FileDialogMock(Gtk.FileDialog):
         self._error = False
         self.calls = {
             "save": 0,
-            "save_finish": 0,
             "open": 0,
             "open_finish": 0,
             "open_multiple": 0,
             "open_multiple_finish": 0,
         }
 
-    def save(self, parent, cancellable, callback):
+    # async def open(self, parent):
+    #     return self._save_response
+
+    # async def open_multiple(self, parent):
+    #     return self._save_response
+
+    async def save(self, parent):
         self.calls["save"] += 1
-        self.save_callback = callback
-        callback(self, TaskMock(self._error))
-
-    def save_finish(self, result):
-        self.calls["save_finish"] += 1
         return self._save_response
-
+ 
     def open(self, parent, cancellable, callback):
         self.calls["open"] += 1
         self.save_callback = callback
@@ -55,7 +55,7 @@ class FileDialogMock(Gtk.FileDialog):
     def open_multiple_finish(self, result):
         self.calls["open_multiple_finish"] += 1
         return self._save_response
-
+ 
     def define_response(self, response):
         if isinstance(response, list):
             self._save_response = Gio.ListStore(item_type=Gio.File)
@@ -79,77 +79,37 @@ def file_dialog(monkeypatch):
     return stub
 
 
-def test_save_dialog_cancelled(file_dialog):
+@pytest.mark.asyncio
+async def test_save_dialog(file_dialog):
     file_dialog.define_response("/test/path/model.gaphor")
-    file_dialog.define_error(True)
-    selected_file = None
-
-    def save_handler(f):
-        nonlocal selected_file
-        selected_file = f
-
-    save_file_dialog(
+    selected_file = await save_file_dialog(
         "title",
         Path("testfile.gaphor"),
-        save_handler,
         filters=[],
     )
 
     assert file_dialog.calls["save"] == 1
-    assert file_dialog.calls["save_finish"] == 0
-    assert selected_file is None
-
-
-def test_save_dialog(file_dialog):
-    file_dialog.define_response("/test/path/model.gaphor")
-    selected_file = None
-
-    def save_handler(f):
-        nonlocal selected_file
-        selected_file = f
-
-    save_file_dialog(
-        "title",
-        Path("testfile.gaphor"),
-        save_handler,
-        filters=[],
-    )
-
-    assert file_dialog.calls["save"] == 1
-    assert file_dialog.calls["save_finish"] == 1
     assert selected_file.parts == (os.path.sep, "test", "path", "model.gaphor")
 
 
-def test_save_dialog_with_full_file_name(file_dialog):
-    selected_file = None
-
-    def save_handler(f):
-        nonlocal selected_file
-        selected_file = f
-
+@pytest.mark.asyncio
+async def test_save_dialog_with_full_file_name(file_dialog):
     filename = Path("/test/path/model.gaphor")
-    save_file_dialog(
+    await save_file_dialog(
         "title",
         filename,
-        save_handler,
         filters=[],
     )
 
     assert file_dialog.get_initial_name() == filename.name
 
 
-def test_save_dialog_filename_without_extension(file_dialog):
+@pytest.mark.asyncio
+async def test_save_dialog_filename_without_extension(file_dialog):
     file_dialog.define_response("/test/path/model")
-    selected_file = None
-
-    def save_handler(f):
-        nonlocal selected_file
-        selected_file = f
-
-    save_file_dialog(
+    selected_file = await save_file_dialog(
         "title",
         Path("model"),
-        save_handler,
         filters=[],
     )
 
