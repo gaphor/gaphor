@@ -1,6 +1,7 @@
 import pytest
 
 from gaphor.application import Application
+from gaphor.asyncio import gather_background_tasks
 from gaphor.core.modeling import Diagram
 from gaphor.diagram.general import Line
 from gaphor.diagram.segment import Segment
@@ -17,7 +18,8 @@ def application():
     app.shutdown()
 
 
-def test_recovery_when_reloading_file(application: Application, test_models):
+@pytest.mark.asyncio
+async def test_recovery_when_reloading_file(application: Application, test_models):
     model_file = test_models / "simple-items.gaphor"
     session = application.new_session(filename=model_file)
     element_factory = session.get_service("element_factory")
@@ -29,12 +31,16 @@ def test_recovery_when_reloading_file(application: Application, test_models):
     new_session = application.recover_session(
         session_id=session.session_id, filename=model_file
     )
+    await gather_background_tasks()
     new_element_factory = new_session.get_service("element_factory")
 
     assert new_element_factory.lookup(diagram.id)
 
 
-def test_recovery_when_change_is_rolled_back(application: Application, test_models):
+@pytest.mark.asyncio
+async def test_recovery_when_change_is_rolled_back(
+    application: Application, test_models
+):
     model_file = test_models / "simple-items.gaphor"
     session = application.new_session(filename=model_file)
     element_factory = session.get_service("element_factory")
@@ -47,12 +53,16 @@ def test_recovery_when_change_is_rolled_back(application: Application, test_mode
     new_session = application.recover_session(
         session_id=session.session_id, filename=model_file
     )
+    await gather_background_tasks()
     new_element_factory = new_session.get_service("element_factory")
 
     assert not new_element_factory.lookup(diagram.id)
 
 
-def test_recovery_when_model_is_loaded_twice(application: Application, test_models):
+@pytest.mark.asyncio
+async def test_recovery_when_model_is_loaded_twice(
+    application: Application, test_models
+):
     model_file = test_models / "simple-items.gaphor"
     session = application.new_session(filename=model_file)
     element_factory = session.get_service("element_factory")
@@ -60,6 +70,7 @@ def test_recovery_when_model_is_loaded_twice(application: Application, test_mode
         diagram = element_factory.create(Diagram)
 
     new_session = application.new_session(filename=model_file, force=True)
+    await gather_background_tasks()
     new_element_factory = new_session.get_service("element_factory")
 
     assert not new_element_factory.lookup(diagram.id)
@@ -98,13 +109,18 @@ async def test_no_recovery_for_saved_file(
     new_session = application.recover_session(
         session_id=session.session_id, filename=model_file
     )
+    await gather_background_tasks()
+
     new_element_factory = new_session.get_service("element_factory")
 
     assert not new_element_factory.lookup(diagram.id)
     assert not log_file.exists()
 
 
-def test_no_recovey_when_model_changed(application: Application, test_models, tmp_path):
+@pytest.mark.asyncio
+async def test_no_recovey_when_model_changed(
+    application: Application, test_models, tmp_path
+):
     model_file = tmp_path / "testfile.gaphor"
     model_file.write_text(
         (test_models / "simple-items.gaphor").read_text(encoding="utf-8"),
@@ -126,13 +142,17 @@ def test_no_recovey_when_model_changed(application: Application, test_models, tm
     new_session = application.recover_session(
         session_id=session.session_id, filename=model_file
     )
+    await gather_background_tasks()
     new_element_factory = new_session.get_service("element_factory")
 
     assert not new_element_factory.lookup(diagram.id)
     assert log_file.with_suffix(".recovery.bak").exists()
 
 
-def test_no_recovery_for_properly_closed_session(application: Application, test_models):
+@pytest.mark.asyncio
+async def test_no_recovery_for_properly_closed_session(
+    application: Application, test_models
+):
     model_file = test_models / "simple-items.gaphor"
     session = application.new_session(filename=model_file)
     event_manager = session.get_service("event_manager")
@@ -145,11 +165,13 @@ def test_no_recovery_for_properly_closed_session(application: Application, test_
     new_session = application.recover_session(
         session_id=session.session_id, filename=model_file
     )
+    await gather_background_tasks()
     new_element_factory = new_session.get_service("element_factory")
 
     assert not new_element_factory.lookup(diagram.id)
 
 
+@pytest.mark.asyncio
 @pytest.mark.parametrize(
     "errorous_line",
     [
@@ -158,7 +180,7 @@ def test_no_recovery_for_properly_closed_session(application: Application, test_
         "\n",
     ],
 )
-def test_broken_recovery_log(
+async def test_broken_recovery_log(
     application: Application, test_models, caplog, errorous_line
 ):
     model_file = test_models / "simple-items.gaphor"
@@ -176,14 +198,18 @@ def test_broken_recovery_log(
     new_session = application.recover_session(
         session_id=session.session_id, filename=model_file
     )
+    await gather_background_tasks()
     new_element_factory = new_session.get_service("element_factory")
 
     assert not new_element_factory.lookup(diagram.id)
     assert "Could not recover model changes" in caplog.text
 
 
+@pytest.mark.asyncio
 @pytest.mark.parametrize("template", [True, False])
-def test_recover_from_session_files(application: Application, test_models, template):
+async def test_recover_from_session_files(
+    application: Application, test_models, template
+):
     session_id = "1234"
     class_id = "9876"
 
@@ -197,6 +223,7 @@ def test_recover_from_session_files(application: Application, test_models, templ
         [("c", "UML", "Class", class_id, None)],
     )
     recover_sessions(application)
+    await gather_background_tasks()
 
     session = next(s for s in application.sessions if s.session_id == session_id)
     element_factory = session.get_service("element_factory")
@@ -222,7 +249,8 @@ def test_recover_with_invalid_filename(application: Application):
     assert not application.sessions
 
 
-def test_recover_with_invalid_sha(application: Application, test_models):
+@pytest.mark.asyncio
+async def test_recover_with_invalid_sha(application: Application, test_models):
     session_id = "1234"
     class_id = "9876"
 
@@ -236,6 +264,7 @@ def test_recover_with_invalid_sha(application: Application, test_models):
         [("c", "Class", class_id, None)],
     )
     recover_sessions(application)
+    await gather_background_tasks()
 
     session = next(s for s in application.sessions if s.session_id == session_id)
     element_factory = session.get_service("element_factory")
