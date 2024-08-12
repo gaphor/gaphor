@@ -256,27 +256,23 @@ class FileManager(Service, ActionProvider):
                 ModelReady(self, filename=filename, modified=True)
             )
 
-        def handle_merge_conflict(answer):
+        if split:
+            answer = await resolve_merge_conflict_dialog(self.parent_window)
             if answer == "cancel":
                 self.event_manager.handle(SessionShutdown())
             elif answer == "current":
-                create_background_task(self.load(current_filename, on_load_done=done))
+                await self.load(current_filename, on_load_done=done)
             elif answer == "incoming":
-                create_background_task(self.load(incoming_filename, on_load_done=done))
+                await self.load(incoming_filename, on_load_done=done)
             elif answer == "manual":
-                create_background_task(
-                    self.merge(
-                        ancestor_filename,
-                        current_filename,
-                        incoming_filename,
-                        on_load_done=done,
-                    )
+                await self.merge(
+                    ancestor_filename,
+                    current_filename,
+                    incoming_filename,
+                    on_load_done=done,
                 )
             else:
                 raise ValueError(f"Unknown resolution for merge conflict: {answer}")
-
-        if split:
-            resolve_merge_conflict_dialog(self.parent_window, handle_merge_conflict)
         else:
             error_handler(
                 message=gettext("Unable to open model “{filename}”.").format(
@@ -406,7 +402,7 @@ class FileManager(Service, ActionProvider):
             confirm_shutdown()
 
 
-def resolve_merge_conflict_dialog(window: Gtk.Window, handler) -> None:
+async def resolve_merge_conflict_dialog(window: Gtk.Window) -> str:
     dialog = Adw.MessageDialog.new(
         window,
         gettext("Resolve Merge Conflict?"),
@@ -421,14 +417,12 @@ def resolve_merge_conflict_dialog(window: Gtk.Window, handler) -> None:
     dialog.add_response("current", gettext("Open Current"))
     dialog.add_response("incoming", gettext("Open Incoming"))
     dialog.set_close_response("cancel")
-
-    def response(dialog, answer):
-        dialog.set_transient_for(None)
-        dialog.destroy()
-        handler(answer)
-
-    dialog.connect("response", response)
     dialog.present()
+
+    answer: str = await dialog.choose()
+    dialog.set_transient_for(None)
+    dialog.destroy()
+    return answer
 
 
 def save_changes_before_close_dialog(window: Gtk.Window, handler) -> None:
