@@ -9,8 +9,7 @@ from collections.abc import Callable
 from functools import partial
 from pathlib import Path
 
-from gaphas.decorators import g_async
-from gi.repository import Adw, Gio, GLib, Gtk
+from gi.repository import Adw, Gio, Gtk
 
 from gaphor import UML
 from gaphor.abc import ActionProvider, Service
@@ -113,7 +112,9 @@ class FileManager(Service, ActionProvider):
         storage.load(translated_model, self.element_factory, self.modeling_language)
         self.event_manager.handle(ModelReady(self))
 
-    def load(self, filename: Path, on_load_done: Callable[[], None] | None = None):
+    async def load(
+        self, filename: Path, on_load_done: Callable[[], None] | None = None
+    ):
         """Load the Gaphor model from the supplied file name.
 
         A status window displays the loading progress. The load
@@ -137,16 +138,15 @@ class FileManager(Service, ActionProvider):
             else:
                 self.event_manager.handle(ModelReady(self, filename=filename))
 
-        for _ in self._load_async(filename, status_window.progress, done):
-            pass
+        await self._load_async(filename, status_window.progress, done)
 
     @action("file-reload")
     def reload(self):
         if self.filename and self.filename.exists():
             self.element_factory.flush()
-            self.load(self.filename)
+            create_background_task(self.load(self.filename))
 
-    def merge(
+    async def merge(
         self,
         ancestor_filename: Path,
         current_filename: Path,
@@ -159,58 +159,45 @@ class FileManager(Service, ActionProvider):
             parent=self.parent_window,
         )
 
-        ancestor_element_factory = ElementFactory()
-        incoming_element_factory = ElementFactory()
-
         def progress(percentage, completed=0):
             status_window.progress(completed + percentage / 3)
 
-        # Make this callback async, so we can call _load_async again: it's a generator and we can only run one at a time
-        @g_async()
-        def current_done():
+        try:
+            log.debug("Loading current model from %s", current_filename)
+            await self._load_async(current_filename, progress)
+
             log.debug("Loading ancestor model from %s", ancestor_filename)
-            for _ in self._load_async(
+            ancestor_element_factory = ElementFactory()
+            await self._load_async(
                 ancestor_filename,
                 partial(progress, completed=33),
-                ancestor_done,
                 element_factory=ancestor_element_factory,
-            ):
-                pass
+            )
 
-        @g_async()
-        def ancestor_done():
             log.debug("Loading incoming model from %s", incoming_filename)
-            for _ in self._load_async(
+            incoming_element_factory = ElementFactory()
+            await self._load_async(
                 incoming_filename,
                 partial(progress, completed=66),
-                incoming_done,
                 element_factory=incoming_element_factory,
-            ):
-                pass
+            )
 
-        def incoming_done():
-            try:
-                log.debug("Comparing models")
-                with self.element_factory.block_events():
-                    list(
-                        compare(
-                            self.element_factory,
-                            ancestor_element_factory,
-                            incoming_element_factory,
-                        )
+            log.debug("Comparing models")
+            with self.element_factory.block_events():
+                list(
+                    compare(
+                        self.element_factory,
+                        ancestor_element_factory,
+                        incoming_element_factory,
                     )
+                )
 
-                if on_load_done:
-                    on_load_done()
-            finally:
-                status_window.destroy()
+            if on_load_done:
+                on_load_done()
+        finally:
+            status_window.destroy()
 
-        log.debug("Loading current model from %s", current_filename)
-        for _ in self._load_async(current_filename, progress, current_done):
-            pass
-
-    @g_async()
-    def _load_async(
+    async def _load_async(
         self,
         filename: Path,
         progress: Callable[[int], None] | None = None,
@@ -227,10 +214,10 @@ class FileManager(Service, ActionProvider):
                 ):
                     if progress:
                         progress(percentage)
-                    yield percentage
+                    await asyncio.sleep(0)
         except MergeConflictDetected:
             self.filename = None
-            self.resolve_merge_conflict(filename)
+            await self.resolve_merge_conflict(filename)
         except Exception:
             self.filename = None
             error_handler(
@@ -247,7 +234,7 @@ class FileManager(Service, ActionProvider):
             if done:
                 done()
 
-    def resolve_merge_conflict(self, filename: Path):
+    async def resolve_merge_conflict(self, filename: Path):
         temp_dir = tempfile.TemporaryDirectory()
         ancestor_filename = Path(temp_dir.name) / f"ancestor-{filename.name}"
         current_filename = Path(temp_dir.name) / f"current-{filename.name}"
@@ -273,15 +260,17 @@ class FileManager(Service, ActionProvider):
             if answer == "cancel":
                 self.event_manager.handle(SessionShutdown())
             elif answer == "current":
-                self.load(current_filename, on_load_done=done)
+                create_background_task(self.load(current_filename, on_load_done=done))
             elif answer == "incoming":
-                self.load(incoming_filename, on_load_done=done)
+                create_background_task(self.load(incoming_filename, on_load_done=done))
             elif answer == "manual":
-                self.merge(
-                    ancestor_filename,
-                    current_filename,
-                    incoming_filename,
-                    on_load_done=done,
+                create_background_task(
+                    self.merge(
+                        ancestor_filename,
+                        current_filename,
+                        incoming_filename,
+                        on_load_done=done,
+                    )
                 )
             else:
                 raise ValueError(f"Unknown resolution for merge conflict: {answer}")
@@ -374,12 +363,7 @@ class FileManager(Service, ActionProvider):
     @event_handler(SessionCreated)
     def _on_session_created(self, event: SessionCreated) -> None:
         if event.filename:
-            if event.interactive:
-                # Load new model once the main loop started,
-                # so we can show the main window first.
-                GLib.idle_add(self.load, event.filename)
-            else:
-                self.load(event.filename)
+            create_background_task(self.load(event.filename))
         elif event.template:
             self.load_template(event.template)
         else:

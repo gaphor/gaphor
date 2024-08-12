@@ -3,6 +3,7 @@ from pathlib import Path
 import pytest
 
 from gaphor.application import Application
+from gaphor.asyncio import gather_background_tasks
 from gaphor.event import ModelSaved, SessionCreated
 
 
@@ -27,11 +28,13 @@ def test_service_load(application):
     ), "Failed to load the file manager service"
 
 
-def test_model_loaded(application):
+@pytest.mark.asyncio
+async def test_model_loaded(application):
     session = application.new_session()
     session.event_manager.handle(
         SessionCreated(None, session, filename=Path("some_file_name"))
     )
+    await gather_background_tasks()
 
     assert session.filename == Path("some_file_name")
 
