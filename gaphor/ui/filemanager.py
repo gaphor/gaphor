@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import asyncio
 import logging
 import tempfile
 from collections.abc import Callable
@@ -13,6 +14,7 @@ from gi.repository import Adw, Gio, GLib, Gtk
 
 from gaphor import UML
 from gaphor.abc import ActionProvider, Service
+from gaphor.asyncio import create_background_task
 from gaphor.babel import translate_model
 from gaphor.core import action, event_handler, gettext
 from gaphor.core.changeset.compare import compare
@@ -298,13 +300,13 @@ class FileManager(Service, ActionProvider):
                 close=lambda: self.event_manager.handle(SessionShutdown()),
             )
 
-    def save(self, filename, on_save_done=None):
-        """Save the current UML model to the specified file name.
+    async def save(self, filename, on_save_done=None):
+        """Save the current model to the specified file name.
 
         Before writing the model file, this will verify that there are
-        no orphan references.  It will also verify that the filename has
-        the correct extension.  A status window is displayed while the
-        GIdleThread is executed.  This thread actually saves the model.
+        no orphan references. It will also verify that the filename has
+        the correct extension. A status window is displayed while the
+        save operation is executed.
         """
 
         if not filename or (filename.exists() and not filename.is_file()):
@@ -316,32 +318,28 @@ class FileManager(Service, ActionProvider):
             parent=self.parent_window,
         )
 
-        @g_async()
-        def async_saver():
-            try:
-                with filename.open("w", encoding="utf-8") as out:
-                    for percentage in storage.save_generator(out, self.element_factory):
-                        status_window.progress(percentage)
-                        yield
-                self.event_manager.handle(ModelSaved(filename))
-            except Exception as e:
-                error_handler(
-                    message=gettext("Unable to save model “{filename}”.").format(
-                        filename=filename
-                    ),
-                    secondary_message=error_message(e),
-                    window=self.parent_window,
-                )
-                raise
-            else:
-                self.filename = filename
-            finally:
-                status_window.destroy()
-            if on_save_done:
-                on_save_done()
+        try:
+            with filename.open("w", encoding="utf-8") as out:
+                for percentage in storage.save_generator(out, self.element_factory):
+                    status_window.progress(percentage)
+                    await asyncio.sleep(0)
+            self.event_manager.handle(ModelSaved(filename))
+        except Exception as e:
+            error_handler(
+                message=gettext("Unable to save model “{filename}”.").format(
+                    filename=filename
+                ),
+                secondary_message=error_message(e),
+                window=self.parent_window,
+            )
+            raise
+        else:
+            self.filename = filename
+        finally:
+            status_window.destroy()
 
-        for _ in async_saver():
-            pass
+        if on_save_done:
+            on_save_done()
 
     @property
     def parent_window(self):
@@ -356,7 +354,7 @@ class FileManager(Service, ActionProvider):
         """
 
         if filename := self.filename:
-            self.save(filename)
+            create_background_task(self.save(filename))
         else:
             self.action_save_as()
 
