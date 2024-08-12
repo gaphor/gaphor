@@ -1,3 +1,5 @@
+import asyncio
+
 import pytest
 
 from gaphor.application import Application
@@ -88,7 +90,9 @@ def test_no_recovery_for_saved_file(application: Application, test_models, tmp_p
         diagram = element_factory.create(Diagram)
 
     file_manager = session.get_service("file_manager")
-    file_manager.save(tmp_path / "newfile.gaphor")
+    asyncio.get_event_loop().run_until_complete(
+        file_manager.save(tmp_path / "newfile.gaphor")
+    )
 
     application.shutdown_session(session)
 
