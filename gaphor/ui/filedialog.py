@@ -8,7 +8,7 @@ import sys
 from collections.abc import Callable
 from pathlib import Path
 
-from gi.repository import Gio, Gtk
+from gi.repository import Gio, GLib, Gtk
 
 from gaphor.i18n import gettext
 
@@ -83,29 +83,26 @@ def open_file_dialog(
     f_open(parent=parent, cancellable=None, callback=response)
 
 
-def save_file_dialog(
+async def save_file_dialog(
     title: str,
     filename: Path,
-    handler: Callable[[Path], None],
+    # handler: Callable[[Path], None],
     parent=None,
     filters=None,
-) -> Gtk.FileChooser:
+) -> Path | None:
     dialog = Gtk.FileDialog.new()
     dialog.set_title(title)
     dialog.set_initial_file(Gio.File.parse_name(str(filename.absolute())))
 
     dialog.set_filters(new_filters(filters))
 
-    def response(dialog, result):
-        if result.had_error():
-            # File dialog was cancelled
-            return
-
-        filename = Path(dialog.save_finish(result).get_path())
-        handler(filename)
-
-    dialog.save(parent=parent, cancellable=None, callback=response)
-    return dialog
+    try:
+        new_filename = await dialog.save(parent=parent)
+    except GLib.Error as e:
+        if e.matches(Gtk.dialog_error_quark(), 2):  # dismissed by user
+            return None
+        raise
+    return Path(new_filename.get_path())
 
 
 def pretty_path(path: Path) -> str:
