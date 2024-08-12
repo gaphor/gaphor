@@ -5,6 +5,7 @@ import pytest
 from dulwich.repo import Repo
 
 from gaphor import UML
+from gaphor.asyncio import gather_background_tasks
 from gaphor.storage.tests.fixtures import create_merge_conflict
 from gaphor.ui.filemanager import FileManager
 
@@ -58,7 +59,7 @@ async def test_model_is_loaded_with_utf8_encoding(
 
     element_factory.flush()
 
-    file_manager.load(model_file)
+    await file_manager.load(model_file)
     new_class = next(element_factory.select(UML.Class))
     new_package = next(element_factory.select(UML.Package))
 
@@ -69,46 +70,53 @@ async def test_model_is_loaded_with_utf8_encoding(
 @pytest.mark.skipif(
     sys.platform != "win32", reason="Standard encoding on Windows is not UTF-8"
 )
-def test_old_model_is_loaded_without_utf8_encoding(
+@pytest.mark.asyncio
+async def test_old_model_is_loaded_without_utf8_encoding(
     file_manager: FileManager, test_models
 ):
     model_file = test_models / "wrong-encoding.gaphor"
-    file_manager.load(model_file)
+    await file_manager.load(model_file)
 
 
+@pytest.mark.asyncio
 @pytest.mark.parametrize("resolution", ["current", "incoming"])
 @pytest.mark.filterwarnings("ignore:use .* Repo._get_user_identity:DeprecationWarning")
-def test_load_model_with_merge_conflict(
+async def test_load_model_with_merge_conflict(
     file_manager: FileManager, element_factory, merge_conflict, monkeypatch, resolution
 ):
     replace_merge_conflict_dialog(monkeypatch, resolution)
 
-    file_manager.resolve_merge_conflict(merge_conflict)
+    await file_manager.resolve_merge_conflict(merge_conflict)
+    await gather_background_tasks()
 
     assert element_factory.size() > 0
 
 
+@pytest.mark.asyncio
 @pytest.mark.filterwarnings("ignore:use .* Repo._get_user_identity:DeprecationWarning")
-def test_load_model_merge_conflict_and_manual_resolution(
+async def test_load_model_merge_conflict_and_manual_resolution(
     file_manager: FileManager, element_factory, merge_conflict, monkeypatch
 ):
     replace_merge_conflict_dialog(monkeypatch, "manual")
 
-    file_manager.resolve_merge_conflict(merge_conflict)
+    await file_manager.resolve_merge_conflict(merge_conflict)
+    await gather_background_tasks()
 
     from gaphor.core.modeling import PendingChange
 
     assert element_factory.lselect(PendingChange)
 
 
+@pytest.mark.asyncio
 @pytest.mark.filterwarnings("ignore:use .* Repo._get_user_identity:DeprecationWarning")
-def test_load_model_with_merge_conflict_and_unknown_resolution(
+async def test_load_model_with_merge_conflict_and_unknown_resolution(
     file_manager: FileManager, merge_conflict, monkeypatch
 ):
     replace_merge_conflict_dialog(monkeypatch, "nonsense")
 
     with pytest.raises(ValueError):
-        file_manager.resolve_merge_conflict(merge_conflict)
+        await file_manager.resolve_merge_conflict(merge_conflict)
+        await gather_background_tasks()
 
 
 def replace_merge_conflict_dialog(monkeypatch, resolution):
