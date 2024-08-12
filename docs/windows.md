@@ -155,18 +155,14 @@ Install your project's dependencies. If you have made your project dependent upo
 poetry install
 ```
 
-Install the git hook scripts
-```Powershell
-poetry run pre-commit install
-```
-
 Reinstall PyGObject and pycairo using gvsbuild wheels
 ```PowerShell
 poetry run pip install --force-reinstall (Resolve-Path C:\gtk\wheels\PyGObject*.whl)
 poetry run pip install --force-reinstall (Resolve-Path C:\gtk\wheels\pycairo*.whl)
 ```
+Note that if you have forgotten to reinstall PyGObject and pycairo, the first time you add an element to a diagram that has text, gaphor will crash!
 
-Install your plugin
+Install your plugin so that it automatically loads into gaphor when you start gaphor
 ```PowerShell
 poetry run pip install -e .
 ```
@@ -177,7 +173,6 @@ Launch Gaphor!
 poetry run gaphor
 ```
 
-Note that if you have forgotten to reinstall PyGObject and pycairo, the first time you add an element to a diagram that has text, gaphor will crash!
 
 ### Debugging using Visual Studio Code
 
