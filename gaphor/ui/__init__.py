@@ -29,20 +29,6 @@ Adw.init()
 GtkSource.init()
 
 
-def create_example_coro():
-    async def my_coro():
-        import asyncio
-        import logging
-
-        log = logging.getLogger(__name__)
-
-        while True:
-            log.info("I'm a coro")
-            await asyncio.sleep(2)
-
-    gaphor.asyncio.create_background_task(my_coro())
-
-
 def run(argv: list[str], *, launch_service="greeter", recover=False) -> int:
     application: Application | None = None
 
@@ -66,8 +52,6 @@ def run(argv: list[str], *, launch_service="greeter", recover=False) -> int:
         @event_handler(ApplicationShutdown)
         def on_quit(_event: ApplicationShutdown):
             gtk_app.quit()
-
-        create_example_coro()
 
         try:
             application = Application(gtk_app=gtk_app)
