@@ -120,8 +120,8 @@ async def test_load_model_with_merge_conflict_and_unknown_resolution(
 
 
 def replace_merge_conflict_dialog(monkeypatch, resolution):
-    def mock_merge_conflict_dialog(_window, handler):
-        handler(resolution)
+    async def mock_merge_conflict_dialog(_window):
+        return resolution
 
     monkeypatch.setattr(
         "gaphor.ui.filemanager.resolve_merge_conflict_dialog",
