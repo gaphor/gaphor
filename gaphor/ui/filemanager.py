@@ -348,13 +348,16 @@ class FileManager(Service, ActionProvider):
         """Save the model in the element_factory by allowing the user to select
         a file name."""
 
-        return save_file_dialog(
-            gettext("Save Gaphor Model As"),
-            self.filename or Path(gettext("New Model")).with_suffix(".gaphor"),
-            self.save,
-            parent=self.parent_window,
-            filters=GAPHOR_FILTER,
-        )
+        async def save_as():
+            filename = await save_file_dialog(
+                gettext("Save Gaphor Model As"),
+                self.filename or Path(gettext("New Model")).with_suffix(".gaphor"),
+                parent=self.parent_window,
+                filters=GAPHOR_FILTER,
+            )
+            await self.save(filename)
+
+        create_background_task(save_as())
 
     @event_handler(SessionCreated)
     def _on_session_created(self, event: SessionCreated) -> None:
@@ -377,27 +380,28 @@ class FileManager(Service, ActionProvider):
         def confirm_shutdown():
             self.event_manager.handle(SessionShutdown())
 
-        def response(answer):
+        async def save_or_discard_changes():
+            answer = await save_changes_before_close_dialog(self.parent_window)
             if answer == "save":
                 if filename := self.filename:
-                    self.save(filename, on_save_done=confirm_shutdown)
-
+                    await self.save(filename)
+                    confirm_shutdown()
                 else:
-                    save_file_dialog(
+                    filename = await save_file_dialog(
                         gettext("Save Gaphor Model As"),
                         self.filename
                         or Path(gettext("New Model")).with_suffix(".gaphor"),
-                        lambda filename: self.save(
-                            filename, on_save_done=confirm_shutdown
-                        ),
                         parent=self.parent_window,
                         filters=GAPHOR_FILTER,
                     )
+                    if filename:
+                        await self.save(filename)
+                        confirm_shutdown()
             elif answer == "discard":
                 confirm_shutdown()
 
         if self.main_window.model_changed:
-            save_changes_before_close_dialog(self.parent_window, response)
+            create_background_task(save_or_discard_changes())
         else:
             confirm_shutdown()
 
@@ -425,7 +429,7 @@ async def resolve_merge_conflict_dialog(window: Gtk.Window) -> str:
     return answer
 
 
-def save_changes_before_close_dialog(window: Gtk.Window, handler) -> None:
+async def save_changes_before_close_dialog(window: Gtk.Window) -> str:
     title = gettext("Save Changes?")
     body = gettext(
         "The open model contains unsaved changes. Changes which are not saved will be permanently lost."
@@ -442,13 +446,9 @@ def save_changes_before_close_dialog(window: Gtk.Window, handler) -> None:
     dialog.set_response_appearance("save", Adw.ResponseAppearance.SUGGESTED)
     dialog.set_default_response("save")
     dialog.set_close_response("cancel")
-
-    def response(dialog, answer):
-        # Unset transient window: it can cause crashes on flatpak
-        # when all windows are destroyed at once.
-        dialog.set_transient_for(None)
-        dialog.destroy()
-        handler(answer)
-
-    dialog.connect("response", response)
     dialog.present()
+
+    answer: str = await dialog.choose()
+    dialog.set_transient_for(None)
+    dialog.destroy()
+    return answer
