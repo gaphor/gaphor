@@ -6,6 +6,7 @@ from gaphor.entrypoint import load_entry_points
 GAPHOR_CORE = [
     "gaphor.core*",
     "gaphor.abc",
+    "gaphor.asyncio",
     "gaphor.action",
     "gaphor.entrypoint",
     "gaphor.i18n",

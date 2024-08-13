@@ -5,6 +5,7 @@ from pathlib import Path
 from gi.repository import Gtk
 from PIL import Image
 
+from gaphor.asyncio import create_background_task
 from gaphor.core import gettext
 from gaphor.core.modeling import Comment
 from gaphor.diagram.general.metadata import MetadataItem
@@ -125,41 +126,43 @@ class PicturePropertyPage(PropertyPageBase):
         )
         return builder.get_object("picture-editor")
 
-    def _on_select_picture_clicked(self, button):
-        open_file_dialog(
+    async def open_file(self, parent):
+        filename: Path = await open_file_dialog(  # type: ignore[assignment]
             gettext("Select a picture..."),
-            self.open_file,
             image_filter=True,
-            parent=button.get_root(),
+            parent=parent,
             multiple=False,
         )
+        if not filename:
+            return
 
-    def open_file(self, filename):
         with open(filename, "rb") as file:
             try:
                 image_data = file.read()
-                with Image.open(io.BytesIO(image_data)) as image:
-                    image.verify()
+                image = Image.open(io.BytesIO(image_data))
+                image.verify()
+                image.close()
 
-                    base64_encoded_data = base64.b64encode(image_data)
+                base64_encoded_data = base64.b64encode(image_data)
 
-                    with Transaction(self.event_manager):
-                        self.subject.subject.content = base64_encoded_data.decode(
-                            "ascii"
-                        )
-                        self.subject.width = image.width
-                        self.subject.height = image.height
-                        if self.subject.subject.name in [
-                            None,
-                            gettext("New Picture"),
-                        ] and (new_image_name := self.sanitize_image_name(filename)):
-                            self.subject.subject.name = new_image_name
+                with Transaction(self.event_manager):
+                    self.subject.subject.content = base64_encoded_data.decode("ascii")
+                    self.subject.width = image.width
+                    self.subject.height = image.height
+                    if self.subject.subject.name in [
+                        None,
+                        gettext("New Picture"),
+                    ] and (new_image_name := self.sanitize_image_name(filename)):
+                        self.subject.subject.name = new_image_name
             except Exception:
-                error_handler(
+                await error_handler(
                     message=gettext("Unable to parse picture “{filename}”.").format(
                         filename=filename
                     )
                 )
+
+    def _on_select_picture_clicked(self, button):
+        create_background_task(self.open_file(button.get_root()))
 
     def _on_default_size_clicked(self, button):
         if self.subject and self.subject.subject and self.subject.subject.content:
