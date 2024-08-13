@@ -19,7 +19,7 @@ from gaphor.diagram.propertypages import (
     unsubscribe_all_on_destroy,
 )
 from gaphor.transaction import Transaction
-from gaphor.ui.errorhandler import error_handler
+from gaphor.ui.errordialog import error_dialog
 from gaphor.ui.filedialog import open_file_dialog
 
 
@@ -155,7 +155,7 @@ class PicturePropertyPage(PropertyPageBase):
                     ] and (new_image_name := self.sanitize_image_name(filename)):
                         self.subject.subject.name = new_image_name
             except Exception:
-                await error_handler(
+                await error_dialog(
                     message=gettext("Unable to parse picture “{filename}”.").format(
                         filename=filename
                     )
