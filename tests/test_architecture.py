@@ -61,7 +61,7 @@ def test_diagram_package():
         .may_import("gaphor.UML.recipes")
         .may_import("gaphor.UML.uml")
         .may_import("gaphor.ui.filedialog")
-        .may_import("gaphor.ui.errorhandler")
+        .may_import("gaphor.ui.errordialog")
         .should_not_import("gaphor*")
         .check(gaphor, skip_type_checking=True)
     )

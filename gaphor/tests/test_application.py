@@ -29,14 +29,14 @@ def test_service_load(application):
 
 
 @pytest.mark.asyncio
-async def test_model_loaded(application):
+async def test_model_loaded(application, test_models):
     session = application.new_session()
     session.event_manager.handle(
-        SessionCreated(None, session, filename=Path("some_file_name"))
+        SessionCreated(None, session, filename=test_models / "all-elements.gaphor")
     )
     await gather_background_tasks()
 
-    assert session.filename == Path("some_file_name")
+    assert session.filename == test_models / "all-elements.gaphor"
 
 
 def test_model_saved(application):
