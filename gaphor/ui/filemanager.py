@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import asyncio
 import logging
 import tempfile
 from collections.abc import Callable
@@ -13,7 +12,7 @@ from gi.repository import Adw, Gio, Gtk
 
 from gaphor import UML
 from gaphor.abc import ActionProvider, Service
-from gaphor.asyncio import create_background_task
+from gaphor.asyncio import create_background_task, sleep
 from gaphor.babel import translate_model
 from gaphor.core import action, event_handler, gettext
 from gaphor.core.changeset.compare import compare
@@ -209,7 +208,7 @@ class FileManager(Service, ActionProvider):
                 ):
                     if progress:
                         progress(percentage)
-                    await asyncio.sleep(0)
+                    await sleep(0)
         except MergeConflictDetected:
             self.filename = None
             await self.resolve_merge_conflict(filename)
@@ -290,7 +289,7 @@ class FileManager(Service, ActionProvider):
             with filename.open("w", encoding="utf-8") as out:
                 for percentage in storage.save_generator(out, self.element_factory):
                     status_window.progress(percentage)
-                    await asyncio.sleep(0)
+                    await sleep(0)
             self.event_manager.handle(ModelSaved(filename))
         except Exception as e:
             error_handler(
