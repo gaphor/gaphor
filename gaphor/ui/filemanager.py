@@ -112,9 +112,7 @@ class FileManager(Service, ActionProvider):
         storage.load(translated_model, self.element_factory, self.modeling_language)
         self.event_manager.handle(ModelReady(self))
 
-    async def load(
-        self, filename: Path, on_load_done: Callable[[], None] | None = None
-    ):
+    async def load(self, filename: Path):
         """Load the Gaphor model from the supplied file name.
 
         A status window displays the loading progress. The load
@@ -131,27 +129,28 @@ class FileManager(Service, ActionProvider):
             parent=self.parent_window,
         )
 
-        def done():
+        try:
+            await self._load_async(filename, status_window.progress)
+        finally:
             status_window.destroy()
-            if on_load_done:
-                on_load_done()
-            else:
-                self.event_manager.handle(ModelReady(self, filename=filename))
-
-        await self._load_async(filename, status_window.progress, done)
+        self.event_manager.handle(ModelReady(self, filename=filename))
 
     @action("file-reload")
     def reload(self):
         if self.filename and self.filename.exists():
             self.element_factory.flush()
-            create_background_task(self.load(self.filename))
+
+            async def _reload(filename: Path):
+                await self.load(filename)
+                self.event_manager.handle(ModelReady(self))
+
+            create_background_task(_reload(self.filename))
 
     async def merge(
         self,
         ancestor_filename: Path,
         current_filename: Path,
         incoming_filename: Path,
-        on_load_done: Callable[[], None] | None = None,
     ):
         status_window = StatusWindow(
             gettext("Loading…"),
@@ -191,9 +190,6 @@ class FileManager(Service, ActionProvider):
                         incoming_element_factory,
                     )
                 )
-
-            if on_load_done:
-                on_load_done()
         finally:
             status_window.destroy()
 
@@ -201,7 +197,6 @@ class FileManager(Service, ActionProvider):
         self,
         filename: Path,
         progress: Callable[[int], None] | None = None,
-        done=None,
         element_factory=None,
     ):
         factory = element_factory or self.element_factory
@@ -222,7 +217,7 @@ class FileManager(Service, ActionProvider):
             self.filename = None
             error_handler(
                 message=gettext("Unable to open model “{filename}”.").format(
-                    filename=filename.name
+                    filename=filename
                 ),
                 secondary_message=gettext(
                     "This file does not contain a valid Gaphor model."
@@ -230,9 +225,6 @@ class FileManager(Service, ActionProvider):
                 window=self.parent_window,
                 close=lambda: self.event_manager.handle(SessionShutdown()),
             )
-        finally:
-            if done:
-                done()
 
     async def resolve_merge_conflict(self, filename: Path):
         temp_dir = tempfile.TemporaryDirectory()
@@ -248,31 +240,22 @@ class FileManager(Service, ActionProvider):
                 filename, ancestor_file, current_file, incoming_file
             )
 
-        def done():
-            nonlocal temp_dir
-            temp_dir.cleanup()
-            self.filename = filename
-            self.event_manager.handle(
-                ModelReady(self, filename=filename, modified=True)
-            )
-
         if split:
             answer = await resolve_merge_conflict_dialog(self.parent_window)
             if answer == "cancel":
                 self.event_manager.handle(SessionShutdown())
             elif answer == "current":
-                await self.load(current_filename, on_load_done=done)
+                await self.load(current_filename)
             elif answer == "incoming":
-                await self.load(incoming_filename, on_load_done=done)
+                await self.load(incoming_filename)
             elif answer == "manual":
-                await self.merge(
-                    ancestor_filename,
-                    current_filename,
-                    incoming_filename,
-                    on_load_done=done,
-                )
+                await self.merge(ancestor_filename, current_filename, incoming_filename)
             else:
                 raise ValueError(f"Unknown resolution for merge conflict: {answer}")
+
+            temp_dir.cleanup()
+            self.filename = filename
+            self.event_manager.handle(ModelReady(self, filename=filename, modified=True))
         else:
             error_handler(
                 message=gettext("Unable to open model “{filename}”.").format(
@@ -285,7 +268,7 @@ class FileManager(Service, ActionProvider):
                 close=lambda: self.event_manager.handle(SessionShutdown()),
             )
 
-    async def save(self, filename, on_save_done=None):
+    async def save(self, filename):
         """Save the current model to the specified file name.
 
         Before writing the model file, this will verify that there are
@@ -323,9 +306,6 @@ class FileManager(Service, ActionProvider):
         finally:
             status_window.destroy()
 
-        if on_save_done:
-            on_save_done()
-
     @property
     def parent_window(self):
         return self.main_window.window if self.main_window else None
@@ -362,7 +342,12 @@ class FileManager(Service, ActionProvider):
     @event_handler(SessionCreated)
     def _on_session_created(self, event: SessionCreated) -> None:
         if event.filename:
-            create_background_task(self.load(event.filename))
+
+            async def _load(filename: Path):
+                await self.load(filename)
+                self.event_manager.handle(ModelReady(self))
+
+            create_background_task(_load(event.filename))
         elif event.template:
             self.load_template(event.template)
         else:
