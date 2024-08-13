@@ -6,9 +6,8 @@ from gaphor.asyncio import gather_background_tasks
 from gaphor.diagram.tests.fixtures import find
 from gaphor.UML.general.generaltoolbox import general_tools
 from gaphor.UML.general.image import ImageItem
-from gaphor.UML.general.imagepropertypage import (
-    ImagePropertyPage,
-)
+from gaphor.UML.general.imagepropertypage import ImagePropertyPage
+
 
 
 @pytest.mark.asyncio
@@ -52,11 +51,11 @@ async def test_picture_property_select_valid_name(monkeypatch, diagram, event_ma
     # Prepare mocking
     called = False
 
-    async def error_handler(*args, **kwargs):
+    async def error_dialog(*args, **kwargs):
         nonlocal called
         called |= True
 
-    monkeypatch.setattr("gaphor.UML.general.imagepropertypage.error_handler", error_handler)
+    monkeypatch.setattr("gaphor.UML.general.imagepropertypage.error_dialog", error_dialog)
 
     async def open_file_dialog(*args, **kwargs):
         return Path("data/logos/gaphor-24x24.png")
@@ -85,7 +84,7 @@ async def test_picture_property_select_keep_name(monkeypatch, diagram, event_man
         called |= True
 
     monkeypatch.setattr(
-        "gaphor.UML.general.imagepropertypage.error_handler", call
+        "gaphor.UML.general.imagepropertypage.error_dialog", call
     )
 
     async def open_file_dialog(*args, **kwargs):

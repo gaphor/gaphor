@@ -7,7 +7,7 @@ from PIL import Image
 from gaphor.core import gettext
 from gaphor.diagram.propertypages import PropertyPageBase, PropertyPages, new_builder
 from gaphor.transaction import Transaction
-from gaphor.ui.errorhandler import error_handler
+from gaphor.ui.errordialog import error_dialog
 from gaphor.ui.filedialog import open_file_dialog
 from gaphor.UML.general.image import ImageItem
 from gaphor.asyncio import create_background_task
@@ -66,7 +66,7 @@ class ImagePropertyPage(PropertyPageBase):
                     ] and (new_image_name := self.sanitize_image_name(filename)):
                         self.subject.subject.name = new_image_name
             except Exception:
-                await error_handler(
+                await error_dialog(
                     message=gettext("Unable to parse picture “{filename}”.").format(
                         filename=filename
                     )

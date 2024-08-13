@@ -26,7 +26,7 @@ from gaphor.event import (
 from gaphor.storage import storage
 from gaphor.storage.mergeconflict import split_ours_and_theirs
 from gaphor.storage.parser import MergeConflictDetected
-from gaphor.ui.errorhandler import error_handler
+from gaphor.ui.errordialog import error_dialog
 from gaphor.ui.filedialog import GAPHOR_FILTER, save_file_dialog
 from gaphor.ui.statuswindow import StatusWindow
 
@@ -214,7 +214,7 @@ class FileManager(Service, ActionProvider):
             await self.resolve_merge_conflict(filename)
         except Exception:
             self.filename = None
-            error_handler(
+            await error_dialog(
                 message=gettext("Unable to open model “{filename}”.").format(
                     filename=filename
                 ),
@@ -222,8 +222,8 @@ class FileManager(Service, ActionProvider):
                     "This file does not contain a valid Gaphor model."
                 ),
                 window=self.parent_window,
-                close=lambda: self.event_manager.handle(SessionShutdown()),
             )
+            self.event_manager.handle(SessionShutdown())
 
     async def resolve_merge_conflict(self, filename: Path):
         temp_dir = tempfile.TemporaryDirectory()
@@ -256,7 +256,7 @@ class FileManager(Service, ActionProvider):
             self.filename = filename
             self.event_manager.handle(ModelReady(self, filename=filename, modified=True))
         else:
-            error_handler(
+            await error_dialog(
                 message=gettext("Unable to open model “{filename}”.").format(
                     filename=filename.name
                 ),
@@ -264,8 +264,8 @@ class FileManager(Service, ActionProvider):
                     "This file does not contain a valid Gaphor model."
                 ),
                 window=self.parent_window,
-                close=lambda: self.event_manager.handle(SessionShutdown()),
             )
+            self.event_manager.handle(SessionShutdown())
 
     async def save(self, filename):
         """Save the current model to the specified file name.
@@ -292,7 +292,7 @@ class FileManager(Service, ActionProvider):
                     await sleep(0)
             self.event_manager.handle(ModelSaved(filename))
         except Exception as e:
-            error_handler(
+            await error_dialog(
                 message=gettext("Unable to save model “{filename}”.").format(
                     filename=filename
                 ),
