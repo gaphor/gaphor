@@ -5,7 +5,6 @@ from __future__ import annotations
 
 import os
 import sys
-from collections.abc import Callable
 from pathlib import Path
 
 from gi.repository import Gio, GLib, Gtk
@@ -42,15 +41,14 @@ def new_filters(filters, images=False):
     return store
 
 
-def open_file_dialog(
+async def open_file_dialog(
     title,
-    handler,
     parent=None,
     dirname=None,
     filters=None,
     image_filter=False,
     multiple=True,
-) -> None:
+) -> list[Path] | Path | None:
     dialog = Gtk.FileDialog.new()
     dialog.set_title(title)
 
@@ -59,34 +57,22 @@ def open_file_dialog(
 
     dialog.set_filters(new_filters(filters, image_filter))
 
-    if multiple:
-        f_open = dialog.open_multiple
-        f_finish = dialog.open_multiple_finish
-
-        def to_path(files):
-            return [Path(f.get_path()) for f in files]
-    else:
-        f_open = dialog.open
-        f_finish = dialog.open_finish
-
-        def to_path(file):
-            return Path(file.get_path())
-
-    def response(dialog, result):
-        if result.had_error():
-            # File dialog was cancelled
-            return
-
-        selected = f_finish(result)
-        handler(to_path(selected))
-
-    f_open(parent=parent, cancellable=None, callback=response)
+    try:
+        if multiple:
+            files = await dialog.open_multiple(parent=parent)
+            return [Path(f.get_path()) for f in files] if files else None
+        else:
+            file = await dialog.open(parent=parent)
+            return Path(file.get_path()) if file else None
+    except GLib.Error as e:
+        if e.matches(Gtk.dialog_error_quark(), 2):  # dismissed by user
+            return None
+        raise
 
 
 async def save_file_dialog(
     title: str,
     filename: Path,
-    # handler: Callable[[Path], None],
     parent=None,
     filters=None,
 ) -> Path | None:

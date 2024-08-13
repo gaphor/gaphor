@@ -2,7 +2,7 @@ import os
 from pathlib import Path
 
 import pytest
-from gi.repository import Gio, Gtk
+from gi.repository import Gio, GLib, Gtk
 
 from gaphor.ui.filedialog import open_file_dialog, pretty_path, save_file_dialog
 
@@ -23,39 +23,27 @@ class FileDialogMock(Gtk.FileDialog):
         self.calls = {
             "save": 0,
             "open": 0,
-            "open_finish": 0,
             "open_multiple": 0,
-            "open_multiple_finish": 0,
         }
-
-    # async def open(self, parent):
-    #     return self._save_response
-
-    # async def open_multiple(self, parent):
-    #     return self._save_response
 
     async def save(self, parent):
         self.calls["save"] += 1
+        if self._error:
+            raise GLib.Error(message="", domain=Gtk.dialog_error_quark(), code=2)
         return self._save_response
- 
-    def open(self, parent, cancellable, callback):
+
+    async def open(self, parent):
         self.calls["open"] += 1
-        self.save_callback = callback
-        callback(self, TaskMock(self._error))
-
-    def open_finish(self, result):
-        self.calls["open_finish"] += 1
+        if self._error:
+            raise GLib.Error(message="", domain=Gtk.dialog_error_quark(), code=2)
         return self._save_response
 
-    def open_multiple(self, parent, cancellable, callback):
+    async def open_multiple(self, parent):
         self.calls["open_multiple"] += 1
-        self.save_callback = callback
-        callback(self, TaskMock(self._error))
-
-    def open_multiple_finish(self, result):
-        self.calls["open_multiple_finish"] += 1
+        if self._error:
+            raise GLib.Error(message="", domain=Gtk.dialog_error_quark(), code=2)
         return self._save_response
- 
+
     def define_response(self, response):
         if isinstance(response, list):
             self._save_response = Gio.ListStore(item_type=Gio.File)
@@ -77,6 +65,20 @@ def file_dialog(monkeypatch):
 
     monkeypatch.setattr("gi.repository.Gtk.FileDialog.new", new_file_dialog)
     return stub
+
+
+@pytest.mark.asyncio
+async def test_save_dialog_cancelled(file_dialog):
+    file_dialog.define_response("/test/path/model.gaphor")
+    file_dialog.define_error(True)
+    selected_file = await save_file_dialog(
+        "title",
+        Path("testfile.gaphor"),
+        filters=[],
+    )
+
+    assert file_dialog.calls["save"] == 1
+    assert selected_file is None
 
 
 @pytest.mark.asyncio
@@ -116,76 +118,49 @@ async def test_save_dialog_filename_without_extension(file_dialog):
     assert selected_file.parts == (os.path.sep, "test", "path", "model")
 
 
-def test_open_dialog_single_cancelled(file_dialog):
+@pytest.mark.asyncio
+async def test_open_dialog_single_cancelled(file_dialog):
     file_dialog.define_response("/test/path/file")
     file_dialog.define_error(True)
-    selected_file = None
-
-    def open_handler(f):
-        nonlocal selected_file
-        selected_file = f
-
-    open_file_dialog("title", open_handler, multiple=False)
+    selected_file = await open_file_dialog("title", multiple=False)
 
     assert file_dialog.calls["open"] == 1
-    assert file_dialog.calls["open_finish"] == 0
     assert selected_file is None
 
 
-def test_open_dialog_one_file_single(file_dialog):
+@pytest.mark.asyncio
+async def test_open_dialog_one_file_single(file_dialog):
     file_dialog.define_response("/test/path/file")
-    selected_file = None
-
-    def open_handler(f):
-        nonlocal selected_file
-        selected_file = f
-
-    open_file_dialog(
+    selected_file = await open_file_dialog(
         "title",
-        open_handler,
         multiple=False,
     )
 
     assert file_dialog.calls["open"] == 1
-    assert file_dialog.calls["open_finish"] == 1
     assert isinstance(selected_file, Path)
     assert selected_file.parts == (os.path.sep, "test", "path", "file")
 
 
-def test_open_dialog_multiple_cancelled(file_dialog):
+@pytest.mark.asyncio
+async def test_open_dialog_multiple_cancelled(file_dialog):
     file_dialog.define_response(["/test/path/file"])
     file_dialog.define_error(True)
-    selected_file = None
-
-    def open_handler(f):
-        nonlocal selected_file
-        selected_file = f
-
-    open_file_dialog(
+    selected_file = await open_file_dialog(
         "title",
-        open_handler,
     )
 
     assert file_dialog.calls["open_multiple"] == 1
-    assert file_dialog.calls["open_multiple_finish"] == 0
     assert selected_file is None
 
 
-def test_open_dialog_one_file_multiple(file_dialog):
+@pytest.mark.asyncio
+async def test_open_dialog_one_file_multiple(file_dialog):
     file_dialog.define_response(["/test/path/file"])
-    selected_file = None
-
-    def open_handler(f):
-        nonlocal selected_file
-        selected_file = f
-
-    open_file_dialog(
+    selected_file = await open_file_dialog(
         "title",
-        open_handler,
     )
 
     assert file_dialog.calls["open_multiple"] == 1
-    assert file_dialog.calls["open_multiple_finish"] == 1
     assert isinstance(selected_file, list)
     assert len(selected_file) == 1
     assert isinstance(selected_file[0], Path)

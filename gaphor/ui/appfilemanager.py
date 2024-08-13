@@ -5,6 +5,7 @@ from pathlib import Path
 from gi.repository import Adw
 
 from gaphor.abc import ActionProvider, Service
+from gaphor.asyncio import create_background_task
 from gaphor.core import action, gettext
 from gaphor.ui.filedialog import GAPHOR_FILTER, open_file_dialog
 
@@ -29,7 +30,16 @@ class AppFileManager(Service, ActionProvider):
     def action_open(self):
         """This menu action opens the standard model open dialog."""
 
-        def open_files(filenames):
+        async def open_files():
+            filenames = await open_file_dialog(
+                gettext("Open a Model"),
+                parent=self.window,
+                dirname=self.last_dir,
+                filters=GAPHOR_FILTER,
+            )
+            if not filenames:
+                return
+
             for filename in filenames:
                 if any(
                     session
@@ -56,24 +66,15 @@ class AppFileManager(Service, ActionProvider):
                     )
                     dialog.set_default_response("switch")
                     dialog.set_close_response("open")
-
-                    def response(dialog, answer, filename=filename):
-                        dialog.destroy()
-                        self.application.new_session(
-                            filename=filename, force=(answer == "open")
-                        )
-
-                    dialog.connect("response", response)
                     dialog.present()
+                    answer = await dialog.choose()
+                    dialog.destroy()
+                    self.application.new_session(
+                        filename=filename, force=(answer == "open")
+                    )
                 else:
                     self.application.new_session(filename=filename)
 
                 self.last_dir = os.path.dirname(filename)
 
-        open_file_dialog(
-            gettext("Open a Model"),
-            open_files,
-            parent=self.window,
-            dirname=self.last_dir,
-            filters=GAPHOR_FILTER,
-        )
+        create_background_task(open_files())
