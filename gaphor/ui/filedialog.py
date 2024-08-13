@@ -65,7 +65,7 @@ async def open_file_dialog(
             file = await dialog.open(parent=parent)
             return Path(file.get_path()) if file else None
     except GLib.Error as e:
-        if e.matches(Gtk.dialog_error_quark(), 2):  # dismissed by user
+        if e.matches(Gtk.dialog_error_quark(), Gtk.DialogError.DISMISSED):
             return None
         raise
 
@@ -85,7 +85,7 @@ async def save_file_dialog(
     try:
         new_filename = await dialog.save(parent=parent)
     except GLib.Error as e:
-        if e.matches(Gtk.dialog_error_quark(), 2):  # dismissed by user
+        if e.matches(Gtk.dialog_error_quark(), Gtk.DialogError.DISMISSED):
             return None
         raise
     return Path(new_filename.get_path())
