@@ -131,7 +131,6 @@ gaphor = "gaphor.main:main"
 "model_changed" = "gaphor.ui.modelchanged:ModelChanged"
 "console_window" = "gaphor.plugins.console.consolewindow:ConsoleWindow"
 "diagram_export" = "gaphor.plugins.diagramexport:DiagramExport"
-"xmi_export" = "gaphor.plugins.xmiexport:XMIExport"
 "auto_layout" = "gaphor.plugins.autolayout:AutoLayoutService"
 "align" = "gaphor.plugins.align:AlignService"
 
