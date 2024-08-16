@@ -54,7 +54,7 @@ def test_parse_property_simple(factory):
     assert a.defaultValue is None, a.defaultValue
 
 
-def test_parse_property_complex(factory):
+def test_parse_property_complex_1(factory):
     """Test complex property parsing."""
     a = factory.create(UML.Property)
 
@@ -66,6 +66,21 @@ def test_parse_property_complex(factory):
     assert "0" == a.lowerValue
     assert "*" == a.upperValue
     assert '"aap"' == a.defaultValue
+    assert "and a note" == a.note
+
+
+def test_parse_property_complex_2(factory):
+    """Test complex property parsing."""
+    a = factory.create(UML.Property)
+
+    parse(a, '+ / name : str[0..*] = "aap bbq" { static }# and a note')
+    assert "public" == a.visibility
+    assert a.isDerived
+    assert "name" == a.name
+    assert "str" == a.typeValue
+    assert "0" == a.lowerValue
+    assert "*" == a.upperValue
+    assert '"aap bbq"' == a.defaultValue
     assert "and a note" == a.note
 
 
