@@ -5,18 +5,14 @@
 # full list see the documentation:
 # http://www.sphinx-doc.org/en/master/config
 
-# -- Path setup --------------------------------------------------------------
-
-# If extensions (or modules to document with autodoc) are in another directory,
-# add these directories to sys.path here. If the directory is relative to the
-# documentation root, use os.path.abspath to make it absolute, like shown here.
-from __future__ import annotations
-
 import os
 
 import gi
 
-from gaphor.application import distribution
+gi.require_version("Pango", "1.0")
+gi.require_version("PangoCairo", "1.0")
+
+from gaphor.application import distribution  # noqa: E402
 
 # -- Project information -----------------------------------------------------
 
@@ -66,7 +62,7 @@ templates_path = ["_templates"]
 
 # The suffix(es) of source filenames.
 # You can specify multiple suffix as a list of string:
-source_suffix = [".rst", ".md"]
+source_suffix = {".rst": "restructuredtext", ".md": "restructuredtext"}
 
 # The master toctree document.
 master_doc = "index"
