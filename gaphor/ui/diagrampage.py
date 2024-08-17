@@ -303,6 +303,7 @@ def context_menu_controller(context_menu, diagram):
         context_menu.popup()
 
     ctrl = Gtk.GestureClick.new()
+    ctrl.set_button(0)
     ctrl.connect("pressed", on_show_popup)
     return ctrl
 
