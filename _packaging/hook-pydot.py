@@ -55,15 +55,13 @@ if is_win:
         "vcruntime140_1.dll",
     ]
 
-    binaries.extend(
-        (glob.glob(f"c:/Program Files/Graphviz*/bin/{f}")[0], "graphviz") for f in files
-    )
+    binaries.extend((f"C:/Program Files/Graphviz/bin/{f}", "graphviz") for f in files)
 
     # Instead of copying the config file, what we should really do
     # is call `dot -c` on our new plugins folder.
     datas.extend(
         (data, "graphviz")
-        for data in glob.glob("c:/Program Files/Graphviz*/bin/config*")
+        for data in glob.glob("C:/Program Files/Graphviz/bin/config*")
     )
 
 else:
