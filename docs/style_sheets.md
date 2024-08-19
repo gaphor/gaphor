@@ -362,6 +362,23 @@ diagram[owner.name=drafts] * {
 :alt: draft style
 ```
 
+### Wrap long attributes, operations, and stereotype values
+
+Sometimes attribute values get a bit lengthy. By default, Gaphor will not
+wrap text. If you want to, you can add this little snippet to wrap text for
+lengthy attributes on classes. You can also apply this to other types, of course.
+
+```css
+class * {
+ white-space: normal;
+}
+```
+
+```{diagram} wrap-text
+:model: style-sheets
+:alt: wrap long attribute
+```
+
 ### Unconnected relationships
 
 All items on a diagram that are not backed by a model element, should be drawn
