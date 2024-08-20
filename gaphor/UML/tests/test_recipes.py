@@ -297,3 +297,14 @@ def test_interaction_messages_cloning(element_factory):
 
     assert m2.sendEvent.covered is rl
     assert m2.receiveEvent.covered is sl
+
+
+def test_connector_ends(element_factory):
+    port = element_factory.create(UML.Port)
+    prop = element_factory.create(UML.Property)
+    connector = UML.recipes.create_connector(port, prop)
+
+    assert port in connector.end[:].role
+    assert prop in connector.end[:].role
+
+    assert all(e in connector.ownedElement for e in connector.end)
