@@ -181,9 +181,12 @@ jobs:
         env:
           HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK: 1
           HOMEBREW_NO_INSTALL_CLEANUP: 1
-        run: >
-          brew update && brew install gtksourceview5 libadwaita
-          adwaita-icon-theme gobject-introspection graphviz create-dmg
+        run: |
+          brew update
+          # Pre-installed Python conflicts with Homebrew Python
+          # https://github.com/actions/runner-images/issues/9966
+          brew install --overwrite python@${{ env.python_version }}
+          brew install gtksourceview5 libadwaita adwaita-icon-theme gobject-introspection graphviz create-dmg
       - name: Set up Python
         uses: actions/setup-python@39cd14951b08e74b54015e9e001cdefcf80e669f # v5.1.1
         with:
