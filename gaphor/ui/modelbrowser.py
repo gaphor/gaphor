@@ -286,7 +286,7 @@ class ModelBrowser(UIComponent, ActionProvider):
         self.sorter.changed(Gtk.SorterChange.DIFFERENT)
 
     @event_handler(ModelReady, ModelFlushed)
-    def on_model_ready(self, event=None):
+    def on_model_ready(self, _event=None):
         model = self.model
         model.clear()
 
