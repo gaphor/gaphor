@@ -43,7 +43,6 @@ if is_win:
         "cdt.dll",
         "cgraph++.dll",
         "cgraph.dll",
-        "expat.dll",
         "getopt.dll",
         "gvc++.dll",
         "gvc.dll",
