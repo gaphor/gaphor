@@ -12,23 +12,11 @@ Older releases are available from [GitHub](https://github.com/gaphor/gaphor/rele
 
 ### Choco
 
-We recommend using [Chocolately](https://chocolatey.org/) as a package manager
-in Windows.
+We recommend using [WinGet](https://learn.microsoft.com/en-us/windows/package-manager/winget) as a package manager in
+Windows. It is available on Windows 11 and modern versions of Windows 10 as a part of the App Installer.
 
-To install it, open PowerShell as an administrator, then execute:
-
-```PowerShell
-Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
-```
-
-To run local scripts in follow-on steps, also execute
-
-```PowerShell
-Set-ExecutionPolicy RemoteSigned
-```
-
-This allows for local PowerShell scripts
-to run without signing, but still requires signing for remote scripts.
+If you have a slightly older version of Windows, you can alternatively use [Chocolatey](https://chocolatey.org) as a
+package manager. After it is installed, execute `choco install` instead of the `winget install` commands below.
 
 ### Git
 
@@ -36,7 +24,7 @@ To set up a development environment in Windows first install
 [Git](https://gitforwindows.org) by executing as an administrator:
 
 ```PowerShell
-choco install git
+winget install git
 ```
 
 ### GTK and Python with Gvsbuild
@@ -69,7 +57,7 @@ Graphviz is used by Gaphor for automatic diagram formatting.
 1. Install from Chocolately with administrator PowerShell:
 
    ```PowerShell
-   choco install graphviz
+   winget install graphviz
    ```
 
 2. Restart your PowerShell terminal as a normal user and check that the dot
@@ -193,7 +181,7 @@ script that creates a Windows installer using
 administrator, then execute:
 
 ```PowerShell
-choco install nsis 7zip
+winget install nsis 7zip
 ```
 
 Then build your installer using:
