@@ -4,6 +4,10 @@ on:
   schedule:
     # min hour dom month dow
     - cron:  '0 5 * * 3'
+  # temporary - remove before merging
+  pull_request:
+    branches:
+      - main
 env:
   python_version: '3.12'
   file: '.github/workflows/full-build.yml'
@@ -77,7 +81,7 @@ jobs:
         run: |
           git checkout $COMMIT_SHA
           git switch -c gvsbuild-updates-${{ github.run_id }}
-          git checkout origin/main -- ${ROOT_DIR}/.github/workflows
+          git checkout origin/main -- .github/workflows
           git add ${{ env.file }}
           git commit -m "Bump Gvsbuild to version $LATEST"
           git push origin gvsbuild-updates-${{ github.run_id }}
