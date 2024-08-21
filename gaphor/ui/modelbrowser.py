@@ -428,6 +428,7 @@ def create_popup_controller(tree_view, selection, modeling_language):
         menu.popup()
 
     ctrl = Gtk.GestureClick.new()
+    ctrl.set_button(0)
     ctrl.connect("pressed", on_show_popup)
     return ctrl
 
@@ -481,6 +482,7 @@ def list_item_factory_setup(
         row.menu.popup()
 
     ctrl = Gtk.GestureClick.new()
+    ctrl.set_button(0)
     ctrl.connect("pressed", on_show_popup)
     row.add_controller(ctrl)
 
