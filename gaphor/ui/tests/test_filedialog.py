@@ -1,5 +1,5 @@
 import os
-from pathlib import Path, PosixPath
+from pathlib import Path
 
 import pytest
 from gi.repository import Gio, Gtk
@@ -188,7 +188,7 @@ def test_open_dialog_one_file_single(file_dialog):
 
     assert file_dialog.calls["open"] == 1
     assert file_dialog.calls["open_finish"] == 1
-    assert isinstance(selected_file, PosixPath)
+    assert isinstance(selected_file, Path)
     assert selected_file.parts == (os.path.sep, "test", "path", "file")
 
 
@@ -228,7 +228,7 @@ def test_open_dialog_one_file_multiple(file_dialog):
     assert file_dialog.calls["open_multiple_finish"] == 1
     assert isinstance(selected_file, list)
     assert len(selected_file) == 1
-    assert isinstance(selected_file[0], PosixPath)
+    assert isinstance(selected_file[0], Path)
     assert selected_file[0].parts == (os.path.sep, "test", "path", "file")
 
 
