@@ -248,7 +248,9 @@ def create_association(type_a: Type, type_b: Type):
     return assoc
 
 
-def create_connector(type_a: ConnectableElement, type_b: ConnectableElement):
+def create_connector(
+    type_a: ConnectableElement, type_b: ConnectableElement
+) -> Connector:
     """Create a connector between two items.
 
     Depending on the ends, the connector kind may be "assembly" or

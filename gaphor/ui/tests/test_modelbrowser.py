@@ -311,6 +311,17 @@ def test_unlink_element_should_not_collapse_branch(
     assert model_browser.selection.get_item(1).get_item().element is class_b
 
 
+def test_multiplicity_element_should_not_end_up_in_root(model_browser, element_factory):
+    port = element_factory.create(UML.Port)
+    prop = element_factory.create(UML.Property)
+    connector = UML.recipes.create_connector(port, prop)
+
+    model_browser.on_model_ready()
+    model = model_browser.model
+
+    assert model.tree_item_for_element(connector.end[0]) is None
+
+
 def test_stereotype_base_class_should_not_end_up_in_root(
     model_browser, element_factory
 ):
