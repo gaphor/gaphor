@@ -33,7 +33,9 @@ multa_subpat = r"\s*(\[?((?P<mult_l>[0-9]+)\s*\.\.)?\s*(?P<mult_u>([0-9]+|\*))\]
 type_subpat = r"\s*(:\s*(?P<type>[a-zA-Z_]\w*( +\w+| *\| *\w+| *<[\w\| ]*>)*))?"
 
 # default value (optional) ::= '=' default
-default_subpat = r"\s*(=\s*(?P<default>\S+))?"
+default_subpat = (
+    r"\s*(=\s*(?P<default>((?P<oq>[\"'])(?:(?=(?P<ec>\\?))(?P=ec).)*?(?P=oq))|(\S+)))?"
+)
 
 # tagged values (optional) ::= '{' tags '}'
 tags_subpat = r"\s*(\{\s*(?P<tags>.*?)\s*\})?"
