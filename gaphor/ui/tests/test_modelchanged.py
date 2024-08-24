@@ -1,6 +1,6 @@
 from gi.repository import GLib
 
-from gaphor.event import ModelChangedOnDisk
+from gaphor.core.modeling import ModelReady
 from gaphor.ui.modelchanged import ModelChanged
 
 
@@ -24,9 +24,23 @@ def test_monitor_file_changed(event_manager, tmp_path):
 
     model_changed = ModelChanged(event_manager)
     widget = model_changed.open()
-    event_manager.handle(ModelChangedOnDisk(new_file))
+    event_manager.handle(ModelReady(None, filename=new_file))
 
     new_file.write_text("b", encoding="utf-8")
     iteration()
 
     assert widget.get_revealed()
+
+
+def test_monitor_file_not_changed(event_manager, tmp_path):
+    new_file = tmp_path / "new_file"
+    new_file.write_text("a", encoding="utf-8")
+
+    model_changed = ModelChanged(event_manager)
+    widget = model_changed.open()
+    event_manager.handle(ModelReady(None, filename=new_file))
+
+    new_file.write_text("a", encoding="utf-8")
+    iteration()
+
+    assert not widget.get_revealed()

@@ -18,7 +18,6 @@ from gaphor.core import action, event_handler, gettext
 from gaphor.core.changeset.compare import compare
 from gaphor.core.modeling import Diagram, ElementFactory, ModelReady, StyleSheet
 from gaphor.event import (
-    ModelChangedOnDisk,
     ModelSaved,
     SessionCreated,
     SessionShutdown,
@@ -106,7 +105,6 @@ class FileManager(Service, ActionProvider):
 
         if filename != self._filename:
             self._filename = Path(filename) if filename else None
-            self._update_monitor()
 
     def load_template(self, template):
         translated_model = translate_model(template)
@@ -337,36 +335,17 @@ class FileManager(Service, ActionProvider):
                 raise
             else:
                 self.filename = filename
-                self._update_monitor()
             finally:
                 status_window.destroy()
             if on_save_done:
                 on_save_done()
 
-        self._cancel_monitor()
         for _ in async_saver():
             pass
 
     @property
     def parent_window(self):
         return self.main_window.window if self.main_window else None
-
-    def _update_monitor(self):
-        self._cancel_monitor()
-        monitor = Gio.File.parse_name(str(self._filename)).monitor(
-            Gio.FileMonitorFlags.NONE, None
-        )
-        monitor.connect("changed", self._on_file_changed)
-        self._monitor = monitor
-
-    def _cancel_monitor(self, _event=None):
-        if self._monitor:
-            self._monitor.disconnect_by_func(self._on_file_changed)
-            self._monitor = None
-
-    def _on_file_changed(self, _banner, _file, _other_file, _event_type):
-        if not _event_type == Gio.FileMonitorEvent.ATTRIBUTE_CHANGED:
-            self.event_manager.handle(ModelChangedOnDisk(self._filename))
 
     @action(name="file-save", shortcut="<Primary>s")
     def action_save(self):
