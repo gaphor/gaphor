@@ -1,5 +1,7 @@
 """The core modeling events."""
 
+from pathlib import Path
+
 
 class RevertibleEvent:
     """Base type for all events that can be reversed.
@@ -243,12 +245,13 @@ class ElementDeleted(ModelChanged):
 class ModelReady(ModelChanged):
     """A generic element factory event."""
 
-    def __init__(self, service, modified=False):
+    def __init__(self, service, filename: Path | None = None, modified=False):
         """Constructor.
 
         The service parameter is the service the emitted the event.
         """
         super().__init__(service)
+        self.filename = filename
         self.modified = modified
 
 

@@ -135,7 +135,7 @@ class FileManager(Service, ActionProvider):
             if on_load_done:
                 on_load_done()
             else:
-                self.event_manager.handle(ModelReady(self))
+                self.event_manager.handle(ModelReady(self, filename=filename))
 
         for _ in self._load_async(filename, status_window.progress, done):
             pass
@@ -265,7 +265,9 @@ class FileManager(Service, ActionProvider):
             nonlocal temp_dir
             temp_dir.cleanup()
             self.filename = filename
-            self.event_manager.handle(ModelReady(self, modified=True))
+            self.event_manager.handle(
+                ModelReady(self, filename=filename, modified=True)
+            )
 
         def handle_merge_conflict(answer):
             if answer == "cancel":
@@ -405,7 +407,7 @@ class FileManager(Service, ActionProvider):
             self.load_template(event.template)
         else:
             load_default_model(self.element_factory)
-            self.event_manager.handle(ModelReady(self))
+            self.event_manager.handle(ModelReady(self, filename=event.filename))
 
     @event_handler(SessionShutdownRequested)
     def _on_session_shutdown_request(self, event: SessionShutdownRequested) -> None:
