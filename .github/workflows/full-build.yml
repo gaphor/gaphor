@@ -105,7 +105,7 @@ jobs:
           mutter --wayland --no-x11 --sm-disable --headless -- poetry run pytest --cov
       - name: Upload Code Coverage to Code Climate
         if: ${{ matrix.python_version == env.python_version }}
-        uses: paambaati/codeclimate-action@7c100bd1ed15de0bdee476b38ca759d8c94207b5 # v8.0.0
+        uses: paambaati/codeclimate-action@f429536ee076d758a24705203199548125a28ca7 # v9.0.0
         env:
           CC_TEST_REPORTER_ID: 05f6288b94a87daa172d3e96a33ec331a4374be7d01eb9a42b3b21c4c550a8ff
         with:
