@@ -10,6 +10,8 @@ class Styling(Service):
     def __init__(self):
         self.style_provider = init_styling()
         init_icon_theme()
+        if sys.platform == "darwin":
+            init_macos_settings()
 
     def shutdown(self):
         Gtk.StyleContext.remove_provider_for_display(
@@ -48,3 +50,11 @@ def init_icon_theme():
     path = importlib.resources.files("gaphor.ui") / "icons"
     if icon_theme:
         icon_theme.add_search_path(str(path))
+
+
+def init_macos_settings():
+    """Tweak settings, so Gaphor on macOS looks alike Linux.
+
+    Adwaita styling only requires a close button.
+    """
+    Gtk.Settings.get_default().set_property("gtk-decoration-layout", ":close")
