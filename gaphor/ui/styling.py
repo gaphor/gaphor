@@ -23,10 +23,16 @@ def init_styling():
     css = (importlib.resources.files("gaphor.ui") / "styling.css").read_text(
         encoding="utf-8"
     )
-    if sys.platform in ("darwin", "win32"):
-        css += (
-            importlib.resources.files("gaphor.ui") / "styling-box-shadow.css"
-        ).read_text(encoding="utf-8")
+    match sys.platform:
+        case "win32":
+            css += (
+                importlib.resources.files("gaphor.ui") / "styling-windows.css"
+            ).read_text(encoding="utf-8")
+        case "darwin":
+            css += (
+                importlib.resources.files("gaphor.ui") / "styling-macos.css"
+            ).read_text(encoding="utf-8")
+
     style_provider.load_from_string(css)
 
     Gtk.StyleContext.add_provider_for_display(
