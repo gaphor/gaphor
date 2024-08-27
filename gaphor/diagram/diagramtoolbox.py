@@ -127,6 +127,10 @@ def metadata_config(metadata_item: general.MetadataItem) -> None:
     metadata_item.createdOn = time.strftime("%Y-%m-%d")
 
 
+def picture_config(picture_item: general.PictureItem) -> None:
+    picture_item.subject.name = gettext("New Picture")
+
+
 general_tools = ToolSection(
     gettext("General"),
     (
@@ -194,7 +198,7 @@ general_tools = ToolSection(
             gettext("Picture"),
             "gaphor-picture-symbolic",
             None,
-            new_item_factory(general.PictureItem, Picture),
+            new_item_factory(general.PictureItem, Picture, config_func=picture_config),
         ),
     ),
 )
