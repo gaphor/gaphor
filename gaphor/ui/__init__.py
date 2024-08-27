@@ -29,9 +29,8 @@ Adw.init()
 GtkSource.init()
 
 if sys.platform == "darwin":
-    from gaphor.ui.macosshim import init_macos_settings, init_macos_shortcuts
+    from gaphor.ui.macosshim import init_macos_shortcuts
 
-    init_macos_settings()
     try:
         init_macos_shortcuts()
     except TypeError:
