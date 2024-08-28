@@ -149,7 +149,7 @@ class PicturePropertyPage(PropertyPageBase):
                         )
                         self.subject.width = image.width
                         self.subject.height = image.height
-                        if self.subject.subject.name is None:
+                        if self.subject.subject.name in [None, gettext("New Picture")]:
                             self.subject.subject.name = "".join(
                                 chr
                                 if chr.isalnum() or (chr in [" ", "_", "-"])
