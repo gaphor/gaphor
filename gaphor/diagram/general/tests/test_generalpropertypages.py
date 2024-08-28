@@ -124,11 +124,11 @@ def test_picture_property_select_replace_name_chars(mocker, diagram, event_manag
     )
 
     # Test code
-    temp_image = os.path.abspath("gaphor/diagram/general/tests/test.+gaphor$48*48.png")
+    temp_image = os.path.abspath("gaphor/diagram/general/tests/test.+gaphor$48-48.png")
     property_page.open_file(temp_image)
 
     assert mocked_error_handler.called is False
-    assert picture.subject.name == "test__gaphor_48_48"
+    assert picture.subject.name == "test__gaphor_48-48"
 
 
 def test_picture_property_select_empty_name(mocker, diagram, event_manager):
