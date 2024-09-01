@@ -54,19 +54,8 @@ class PackageMerge(DirectedRelationship):
     mergingPackage: relation_one[Package]
 
 
-class RedefinableElement(NamedElement):
-    isLeaf: _attribute[int] = _attribute("isLeaf", int, default=True)
-    redefinedElement: relation_many[RedefinableElement]
-    redefinitionContext: relation_many[Classifier]
-    visibility = _enumeration("visibility", ("public", "private", "package", "protected"), "public")
-
-
-from gaphor.core.modeling.coremodel import Namespace
-class Type(PackageableElement):
-    package: relation_one[Package]
-
-
-class Classifier(Namespace, RedefinableElement, Type):
+from gaphor.core.modeling.coremodel import Type
+class Classifier(PackageableElement, Type):
     attribute: relation_many[Property]
     componentRealization: relation_many[ComponentRealization]
     feature: relation_many[Feature]
@@ -77,7 +66,7 @@ class Classifier(Namespace, RedefinableElement, Type):
     isAbstract: _attribute[int] = _attribute("isAbstract", int, default=False)
     nestingClass: relation_one[Class]
     ownedUseCase: relation_many[UseCase]
-    redefinedClassifier: relation_many[Classifier]
+    package: relation_one[Package]
     specialization: relation_many[Generalization]
     useCase: relation_many[UseCase]
 
@@ -105,13 +94,12 @@ class Actor(BehavioredClassifier):
     pass
 
 
-class ActivityNode(RedefinableElement):
+class ActivityNode(NamedElement):
     activity: relation_one[Activity]
     inGroup: relation_many[ActivityGroup]
     inPartition: relation_many[ActivityPartition]
     incoming: relation_many[ActivityEdge]
     outgoing: relation_many[ActivityEdge]
-    redefinedElement: relation_many[ActivityNode]  # type: ignore[assignment]
 
 
 class ControlNode(ActivityNode):
@@ -122,16 +110,11 @@ class MergeNode(ControlNode):
     pass
 
 
-class Feature(RedefinableElement):
-    featuringClassifier: relation_many[Classifier]
-    isStatic: _attribute[int] = _attribute("isStatic", int, default=False)
-
-
-class ActivityEdge(RedefinableElement):
+from gaphor.core.modeling.coremodel import Feature
+class ActivityEdge(NamedElement):
     activity: relation_one[Activity]
     guard: _attribute[str] = _attribute("guard", str)
     inGroup: relation_many[ActivityGroup]
-    redefinedElement: relation_many[ActivityEdge]  # type: ignore[assignment]
     source: relation_one[ActivityNode]
     target: relation_one[ActivityNode]
 
@@ -271,7 +254,7 @@ class ProfileApplication(DirectedRelationship):
     appliedProfile: relation_one[Profile]
 
 
-class ExtensionPoint(RedefinableElement):
+class ExtensionPoint(NamedElement):
     useCase: relation_one[UseCase]
 
 
@@ -358,10 +341,11 @@ class DecisionNode(ControlNode):
     decisionInput: relation_one[Behavior]
 
 
+from gaphor.core.modeling.coremodel import Namespace
 class Package(Namespace, PackageableElement):
     appliedProfile: relation_many[ProfileApplication]
     nestedPackage: relation_many[Package]
-    ownedType: relation_many[Type]
+    ownedType: relation_many[Classifier]
     package: relation_one[Package]
     packageMerge: relation_many[PackageMerge]
     packagedElement: relation_many[PackageableElement]
@@ -786,24 +770,10 @@ PackageMerge.mergedPackage = association("mergedPackage", Package, upper=1)
 Relationship.source.add(PackageMerge.mergingPackage)  # type: ignore[attr-defined]
 Element.owner.add(PackageMerge.mergingPackage)  # type: ignore[attr-defined]
 Relationship.target.add(PackageMerge.mergedPackage)  # type: ignore[attr-defined]
-RedefinableElement.redefinedElement = derivedunion("redefinedElement", RedefinableElement)
-RedefinableElement.redefinitionContext = derivedunion("redefinitionContext", Classifier)
-# 56: override Namespace.importedMember: derivedunion[PackageableElement]
-Namespace.importedMember = derivedunion('importedMember', PackageableElement, 0, '*')
-
-Namespace.elementImport = association("elementImport", ElementImport, composite=True, opposite="importingNamespace")
-Namespace.packageImport = association("packageImport", PackageImport, composite=True, opposite="importingNamespace")
-Namespace.ownedRule = association("ownedRule", Constraint, composite=True)
-Element.ownedElement.add(Namespace.elementImport)  # type: ignore[attr-defined]
-Element.ownedElement.add(Namespace.packageImport)  # type: ignore[attr-defined]
-Namespace.ownedMember.add(Namespace.ownedRule)  # type: ignore[attr-defined]
-Type.package = association("package", Package, upper=1, opposite="ownedType")
-PackageableElement.owningPackage.add(Type.package)  # type: ignore[attr-defined]
 Classifier.generalization = association("generalization", Generalization, composite=True, opposite="specific")
 Classifier.instanceSpecification = association("instanceSpecification", InstanceSpecification, composite=True, opposite="classifier")
 Classifier.ownedUseCase = association("ownedUseCase", UseCase, composite=True)
 Classifier.specialization = association("specialization", Generalization, opposite="general")
-Classifier.redefinedClassifier = association("redefinedClassifier", Classifier)
 # 47: override Classifier.inheritedMember: derivedunion[NamedElement]
 Classifier.inheritedMember = derivedunion('inheritedMember', NamedElement, 0, '*')
 
@@ -814,15 +784,15 @@ Classifier.general = derived('general', Classifier, 0, '*', lambda self: [g.gene
 Classifier.useCase = association("useCase", UseCase, opposite="subject")
 Classifier.nestingClass = association("nestingClass", Class, upper=1, opposite="nestedClassifier")
 Classifier.feature = derivedunion("feature", Feature)
+Classifier.package = association("package", Package, upper=1, opposite="ownedType")
 Classifier.componentRealization = redefine(Classifier, "componentRealization", ComponentRealization, NamedElement.clientDependency)
 Element.ownedElement.add(Classifier.generalization)  # type: ignore[attr-defined]
 Namespace.ownedMember.add(Classifier.ownedUseCase)  # type: ignore[attr-defined]
 Element.relationship.add(Classifier.specialization)  # type: ignore[attr-defined]
-RedefinableElement.redefinedElement.add(Classifier.redefinedClassifier)  # type: ignore[attr-defined]
 Namespace.member.add(Classifier.inheritedMember)  # type: ignore[attr-defined]
 Classifier.feature.add(Classifier.attribute)  # type: ignore[attr-defined]
 Element.namespace.add(Classifier.nestingClass)  # type: ignore[attr-defined]
-RedefinableElement.redefinitionContext.add(Classifier.nestingClass)  # type: ignore[attr-defined]
+PackageableElement.owningPackage.add(Classifier.package)  # type: ignore[attr-defined]
 # 24: override Association.endType(Association.memberEnd, Property.type): derived[Type]
 
 # References the classifiers that are used as types of the ends of the
@@ -849,14 +819,12 @@ ActivityNode.outgoing = association("outgoing", ActivityEdge, opposite="source")
 ActivityNode.inPartition = association("inPartition", ActivityPartition, opposite="node")
 ActivityNode.activity = association("activity", Activity, upper=1, opposite="node")
 ActivityNode.inGroup = association("inGroup", ActivityGroup, opposite="nodeContents")
-ActivityNode.redefinedElement = redefine(ActivityNode, "redefinedElement", ActivityNode, RedefinableElement.redefinedElement)
 Element.owner.add(ActivityNode.activity)  # type: ignore[attr-defined]
 Feature.featuringClassifier = derivedunion("featuringClassifier", Classifier, lower=1)
 ActivityEdge.source = association("source", ActivityNode, upper=1, opposite="outgoing")
 ActivityEdge.activity = association("activity", Activity, upper=1, opposite="edge")
 ActivityEdge.target = association("target", ActivityNode, upper=1, opposite="incoming")
 ActivityEdge.inGroup = association("inGroup", ActivityGroup, opposite="edgeContents")
-ActivityEdge.redefinedElement = redefine(ActivityEdge, "redefinedElement", ActivityEdge, RedefinableElement.redefinedElement)
 Element.owner.add(ActivityEdge.activity)  # type: ignore[attr-defined]
 TypedElement.type = association("type", Type, upper=1)
 ObjectNode.selection = association("selection", Behavior, upper=1)
@@ -949,7 +917,6 @@ Interface.ownedAttribute = association("ownedAttribute", Property, composite=Tru
 Classifier.feature.add(Interface.ownedOperation)  # type: ignore[attr-defined]
 Namespace.ownedMember.add(Interface.ownedOperation)  # type: ignore[attr-defined]
 Namespace.ownedMember.add(Interface.nestedClassifier)  # type: ignore[attr-defined]
-RedefinableElement.redefinedElement.add(Interface.redefinedInterface)  # type: ignore[attr-defined]
 Classifier.attribute.add(Interface.ownedAttribute)  # type: ignore[attr-defined]
 Namespace.ownedMember.add(Interface.ownedAttribute)  # type: ignore[attr-defined]
 Include.addition = association("addition", UseCase, upper=1)
@@ -983,14 +950,12 @@ Property.datatype = association("datatype", DataType, upper=1, opposite="ownedAt
 # defined in umloverrides.py
 
 Property.artifact = association("artifact", Artifact, upper=1, opposite="ownedAttribute")
-RedefinableElement.redefinedElement.add(Property.redefinedProperty)  # type: ignore[attr-defined]
 Element.namespace.add(Property.interface_)  # type: ignore[attr-defined]
 Element.namespace.add(Property.class_)  # type: ignore[attr-defined]
 Feature.featuringClassifier.add(Property.class_)  # type: ignore[attr-defined]
 Element.memberNamespace.add(Property.association)  # type: ignore[attr-defined]
 Element.namespace.add(Property.owningAssociation)  # type: ignore[attr-defined]
 Feature.featuringClassifier.add(Property.owningAssociation)  # type: ignore[attr-defined]
-RedefinableElement.redefinitionContext.add(Property.classifier)  # type: ignore[attr-defined]
 Element.namespace.add(Property.datatype)  # type: ignore[attr-defined]
 Element.namespace.add(Property.artifact)  # type: ignore[attr-defined]
 ExtensionEnd.type = redefine(ExtensionEnd, "type", Stereotype, Property.type)
@@ -1023,25 +988,33 @@ Namespace.ownedMember.add(Artifact.ownedOperation)  # type: ignore[attr-defined]
 ActivityParameterNode.parameter = association("parameter", Parameter, upper=1, composite=True, opposite="owningNode")
 Element.ownedElement.add(ActivityParameterNode.parameter)  # type: ignore[attr-defined]
 DecisionNode.decisionInput = association("decisionInput", Behavior, upper=1)
+# 56: override Namespace.importedMember: derivedunion[PackageableElement]
+Namespace.importedMember = derivedunion('importedMember', PackageableElement, 0, '*')
+
+Namespace.elementImport = association("elementImport", ElementImport, composite=True, opposite="importingNamespace")
+Namespace.packageImport = association("packageImport", PackageImport, composite=True, opposite="importingNamespace")
+Namespace.ownedRule = association("ownedRule", Constraint, composite=True)
+Element.ownedElement.add(Namespace.elementImport)  # type: ignore[attr-defined]
+Element.ownedElement.add(Namespace.packageImport)  # type: ignore[attr-defined]
+Namespace.ownedMember.add(Namespace.ownedRule)  # type: ignore[attr-defined]
 Package.packagedElement = derivedunion("packagedElement", PackageableElement)
-Package.ownedType = association("ownedType", Type, composite=True, opposite="package")
 Package.packageMerge = association("packageMerge", PackageMerge, composite=True, opposite="mergingPackage")
 Package.appliedProfile = association("appliedProfile", ProfileApplication, composite=True)
 Package.package = association("package", Package, upper=1, opposite="nestedPackage")
 Package.nestedPackage = association("nestedPackage", Package, composite=True, opposite="package")
+Package.ownedType = association("ownedType", Classifier, composite=True, opposite="package")
 Namespace.ownedMember.add(Package.packagedElement)  # type: ignore[attr-defined]
-Package.packagedElement.add(Package.ownedType)  # type: ignore[attr-defined]
 Element.ownedElement.add(Package.packageMerge)  # type: ignore[attr-defined]
 Element.ownedElement.add(Package.appliedProfile)  # type: ignore[attr-defined]
 PackageableElement.owningPackage.add(Package.package)  # type: ignore[attr-defined]
 Package.packagedElement.add(Package.nestedPackage)  # type: ignore[attr-defined]
+Package.packagedElement.add(Package.ownedType)  # type: ignore[attr-defined]
 Profile.metamodelReference = association("metamodelReference", PackageImport, composite=True)
 Profile.metaclassReference = association("metaclassReference", ElementImport, composite=True)
 Behavior.redefinedBehavior = association("redefinedBehavior", Behavior)
 Behavior.behavioredClassifier = association("behavioredClassifier", BehavioredClassifier, upper=1, opposite="ownedBehavior")
 Behavior.action_transition = association("action_transition", Transition, upper=1, opposite="action")
 Behavior.trigger_transition = association("trigger_transition", Transition, upper=1, opposite="trigger")
-RedefinableElement.redefinedElement.add(Behavior.redefinedBehavior)  # type: ignore[attr-defined]
 Element.namespace.add(Behavior.behavioredClassifier)  # type: ignore[attr-defined]
 Element.owner.add(Behavior.action_transition)  # type: ignore[attr-defined]
 Element.owner.add(Behavior.trigger_transition)  # type: ignore[attr-defined]
@@ -1081,16 +1054,12 @@ Operation.ownedParameter = redefine(Operation, "ownedParameter", Parameter, Beha
 Namespace.ownedMember.add(Operation.precondition)  # type: ignore[attr-defined]
 Namespace.ownedMember.add(Operation.postcondition)  # type: ignore[attr-defined]
 Element.namespace.add(Operation.class_)  # type: ignore[attr-defined]
-RedefinableElement.redefinitionContext.add(Operation.class_)  # type: ignore[attr-defined]
 Feature.featuringClassifier.add(Operation.class_)  # type: ignore[attr-defined]
-RedefinableElement.redefinedElement.add(Operation.redefinedOperation)  # type: ignore[attr-defined]
 Namespace.ownedMember.add(Operation.bodyCondition)  # type: ignore[attr-defined]
 Element.namespace.add(Operation.datatype)  # type: ignore[attr-defined]
-RedefinableElement.redefinitionContext.add(Operation.datatype)  # type: ignore[attr-defined]
 Feature.featuringClassifier.add(Operation.datatype)  # type: ignore[attr-defined]
 Feature.featuringClassifier.add(Operation.artifact)  # type: ignore[attr-defined]
 Element.namespace.add(Operation.artifact)  # type: ignore[attr-defined]
-RedefinableElement.redefinitionContext.add(Operation.artifact)  # type: ignore[attr-defined]
 Element.namespace.add(Operation.interface_)  # type: ignore[attr-defined]
 Feature.featuringClassifier.add(Operation.interface_)  # type: ignore[attr-defined]
 OutputPin.opaqueAction = association("opaqueAction", Action, upper=1, opposite="outputValue")
@@ -1176,9 +1145,7 @@ Connector.redefinedConnector = association("redefinedConnector", Connector)
 Connector.structuredClassifier = association("structuredClassifier", StructuredClassifier, upper=1, opposite="ownedConnector")
 Connector.informationFlow = association("informationFlow", InformationFlow, composite=True, opposite="realizingConnector")
 Element.ownedElement.add(Connector.end)  # type: ignore[attr-defined]
-RedefinableElement.redefinedElement.add(Connector.redefinedConnector)  # type: ignore[attr-defined]
 Element.namespace.add(Connector.structuredClassifier)  # type: ignore[attr-defined]
-RedefinableElement.redefinitionContext.add(Connector.structuredClassifier)  # type: ignore[attr-defined]
 Element.ownedElement.add(Connector.informationFlow)  # type: ignore[attr-defined]
 ConnectorEnd.definingEnd = derivedunion("definingEnd", Property, upper=1)
 ConnectorEnd.role = association("role", ConnectableElement, upper=1, opposite="end")
