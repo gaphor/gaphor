@@ -104,3 +104,12 @@ class HelloWorldPlugin(Service, ActionProvider):     # 1.
     perform some cleanup when it's shut down.
 5.  The action that can be invoked. The action is defined and will be
     picked up by `add_actions()` method (see 3.)
+
+## Plugin Development FAQ
+
+### How do I acceess gaphor services in my plugin?
+
+Gaphor's services can be made accessible by listing the service names in the init function of your plugin class.
+This also requires including Service as a base class. In the HelloWorldPlugin example, the tools_menu service is included.
+
+A more complete description of this approach can be found in the [Service Oriented Architecture documentation page](service_oriented.md)
