@@ -142,7 +142,7 @@ class UndoManager(Service, ActionProvider):
         event_manager.priority_subscribe(self.undo_association_add_event)
         event_manager.priority_subscribe(self.undo_association_delete_event)
         event_manager.priority_subscribe(self.undo_element_type_updated_event)
-        self._action_executed()
+        self._action_executed(state_changed=False)
 
     def shutdown(self):
         self.event_manager.unsubscribe(self.ready)
@@ -210,19 +210,20 @@ class UndoManager(Service, ActionProvider):
         if event is None:
             event = _UndoManagerTransactionCommitted(None)
 
-        if event.context != "rollback" and self._current_transaction.can_execute():
+        current_transaction = self._current_transaction
+        self._current_transaction = None
+
+        if event.context != "rollback" and current_transaction.can_execute():
             if event.context == "undo":
-                self._redo_stack.append(self._current_transaction)
+                self._redo_stack.append(current_transaction)
             else:
                 if event.context != "redo":
                     self.clear_redo_stack()
-                self._undo_stack.append(self._current_transaction)
+                self._undo_stack.append(current_transaction)
                 while len(self._undo_stack) > self._stack_depth:
                     del self._undo_stack[0]
 
-        self._current_transaction = None
-
-        self._action_executed()
+            self._action_executed()
 
     @event_handler(TransactionRollback)
     def _on_transaction_rollback(self, event: TransactionRollback):

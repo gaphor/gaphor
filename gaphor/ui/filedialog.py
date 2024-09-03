@@ -49,6 +49,7 @@ def open_file_dialog(
     dirname=None,
     filters=None,
     image_filter=False,
+    multiple=True,
 ) -> None:
     dialog = Gtk.FileDialog.new()
     dialog.set_title(title)
@@ -58,15 +59,28 @@ def open_file_dialog(
 
     dialog.set_filters(new_filters(filters, image_filter))
 
+    if multiple:
+        f_open = dialog.open_multiple
+        f_finish = dialog.open_multiple_finish
+
+        def to_path(files):
+            return [Path(f.get_path()) for f in files]
+    else:
+        f_open = dialog.open
+        f_finish = dialog.open_finish
+
+        def to_path(file):
+            return Path(file.get_path())
+
     def response(dialog, result):
         if result.had_error():
             # File dialog was cancelled
             return
 
-        files = dialog.open_multiple_finish(result)
-        handler([Path(f.get_path()) for f in files])
+        selected = f_finish(result)
+        handler(to_path(selected))
 
-    dialog.open_multiple(parent=parent, cancellable=None, callback=response)
+    f_open(parent=parent, cancellable=None, callback=response)
 
 
 def save_file_dialog(

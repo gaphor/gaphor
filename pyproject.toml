@@ -61,20 +61,20 @@ pytest-randomly = "^3.12.0"
 xdoctest = "^1.1.0"
 hypothesis = "^6.54.5"
 ipython = "^8.5.0"
-sphinx = ">=6,<8"
+sphinx = ">=6,<9"
 babelgladeextractor = "^0.7"
 
 [tool.poetry.group.lint.dependencies]
 pre-commit = ">=2.20,<4.0"
 
 [tool.poetry.group.automation.dependencies]
-poethepoet = ">=0.27.0,<0.28.0"
+poethepoet = ">=0.27.0,<0.29.0"
 
 [tool.poetry.group.docs]
 optional=true
 
 [tool.poetry.group.docs.dependencies]
-sphinx = ">=6,<8"
+sphinx = ">=6,<9"
 sphinx-copybutton = "^0.5.0"
 sphinx-intl = "^2.1.0"
 myst-nb = ">=0.17.1,<1.2.0"
@@ -131,7 +131,6 @@ gaphor = "gaphor.main:main"
 "model_changed" = "gaphor.ui.modelchanged:ModelChanged"
 "console_window" = "gaphor.plugins.console.consolewindow:ConsoleWindow"
 "diagram_export" = "gaphor.plugins.diagramexport:DiagramExport"
-"xmi_export" = "gaphor.plugins.xmiexport:XMIExport"
 "auto_layout" = "gaphor.plugins.autolayout:AutoLayoutService"
 "align" = "gaphor.plugins.align:AlignService"
 

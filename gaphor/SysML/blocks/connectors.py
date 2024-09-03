@@ -91,4 +91,6 @@ class PropertyConnectorConnector(RelationshipConnect):
             assert isinstance(c2.subject, UML.ConnectableElement)
             connector = UML.recipes.create_connector(c1.subject, c2.subject)
             line.subject = connector
-            connector.structuredClassifier = c1.subject.owner or c2.subject.owner
+            owner = c1.subject.owner or c2.subject.owner
+            assert isinstance(owner, UML.StructuredClassifier)
+            connector.structuredClassifier = owner

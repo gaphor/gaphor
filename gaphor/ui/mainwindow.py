@@ -293,7 +293,7 @@ class MainWindow(Service, ActionProvider):
         )
 
     @event_handler(UndoManagerStateChanged)
-    def _on_undo_manager_state_changed(self, event):
+    def _on_undo_manager_state_changed(self, event: UndoManagerStateChanged):
         self.model_changed = True
 
     @event_handler(ActionEnabled)

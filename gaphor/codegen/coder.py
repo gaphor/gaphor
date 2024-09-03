@@ -305,7 +305,12 @@ def default_value(a):
         if a.typeValue == "int":
             defaultValue = a.defaultValue.title()
         elif a.typeValue == "str":
-            defaultValue = f'"{a.defaultValue}"'
+            if (a.defaultValue[0] == a.defaultValue[-1]) and (
+                a.defaultValue[0] in ['"', "'"]
+            ):
+                defaultValue = a.defaultValue
+            else:
+                defaultValue = f'"{a.defaultValue}"'
         else:
             raise ValueError(
                 f"Unknown default value type: {a.owner.name}.{a.name}: {a.typeValue} = {a.defaultValue}"

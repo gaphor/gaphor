@@ -4,7 +4,7 @@
   "repoType": "github",
   "repoHost": "https://github.com",
   "files": [
-    "README.md"
+    "CONTRIBUTORS.md"
   ],
   "imageSize": 100,
   "contributorsSortAlphabetically": true,
@@ -1503,6 +1503,24 @@
       "profile": "http://mble.dk",
       "contributions": [
         "translation"
+      ]
+    },
+    {
+      "login": "samscientist",
+      "name": "기택",
+      "avatar_url": "https://avatars.githubusercontent.com/u/33396317?v=4",
+      "profile": "https://github.com/samscientist",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "itafraze",
+      "name": "Emanuele Zarfati",
+      "avatar_url": "https://avatars.githubusercontent.com/u/6855318?v=4",
+      "profile": "https://github.com/itafraze",
+      "contributions": [
+        "code"
       ]
     }
   ],

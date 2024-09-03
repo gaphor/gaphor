@@ -1,5 +1,5 @@
 /*
- * Styling workarounds on macOS and Windows.
+ * Styling workarounds for Windows.
  *
  * The issue: shadows defined by LibAdwaita are very wide: up to 60px.
  * The shadow is drawn inside the (clickable) window.

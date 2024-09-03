@@ -118,6 +118,7 @@
                             <child>
                               <object class="GtkLabel" id="subtitle">
                                 <property name="label" translatable="yes">New model</property>
+                                <property name="ellipsize">middle</property>
                                 <style>
                                   <class name="subtitle"/>
                                 </style>

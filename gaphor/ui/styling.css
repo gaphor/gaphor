@@ -141,10 +141,6 @@ tabbar > revealer > box,
   font-weight: bold;
 }
 
-#element_editor {
-  min-width: 270px;
-}
-
 #toolbox > viewport > box {
   margin: 6px;
 }

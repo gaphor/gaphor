@@ -131,18 +131,25 @@ class Branch:
         yield from self.relationships
 
 
-def visible(element):
-    return not isinstance(
-        element,
-        (
-            Comment,
-            Presentation,
-            StyleSheet,
-            UML.InstanceSpecification,
-            UML.OccurrenceSpecification,
-            UML.Slot,
-        ),
-    ) or (not element.owner and isinstance(element, UML.MultiplicityElement))
+def visible(element: Element) -> bool:
+    return not (
+        isinstance(
+            element,
+            (
+                Comment,
+                Presentation,
+                StyleSheet,
+                UML.InstanceSpecification,
+                UML.OccurrenceSpecification,
+                UML.Slot,
+            ),
+        )
+        or (
+            # Some types we want to show, except at top level
+            (not (element.owner or element.memberNamespace))
+            and isinstance(element, UML.MultiplicityElement)
+        )
+    )
 
 
 def tree_item_sort(a, b, _user_data=None):

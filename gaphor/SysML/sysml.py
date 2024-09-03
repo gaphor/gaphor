@@ -176,7 +176,7 @@ class AcceptChangeStructuralFeatureEventAction(AcceptEventAction):
     pass
 
 
-from gaphor.UML.uml import Feature
+from gaphor.core.modeling.coremodel import Feature
 class DirectedFeature(Feature):
     featureDirection = _enumeration("featureDirection", ("provided", "providedRequired", "required"), "provided")
 
