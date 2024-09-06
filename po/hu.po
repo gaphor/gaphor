@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2024-02-27 10:00-0500\n"
-"PO-Revision-Date: 2024-04-20 21:07+0000\n"
+"PO-Revision-Date: 2024-09-07 17:09+0000\n"
 "Last-Translator: ovari <ovari123@zoho.com>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/gaphor/gaphor/"
 "hu/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.5-dev\n"
+"X-Generator: Weblate 5.8-dev\n"
 "Generated-By: Babel 2.14.0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:23 gaphor/C4Model/toolbox.py:67
@@ -2532,7 +2532,7 @@ msgstr "Modellek egyesítése"
 
 #: gaphor/ui/elementeditor.ui:391
 msgid "Merge Model Changes"
-msgstr "Modellváltozások egyesítése"
+msgstr "Modellmódosítások egyesítése"
 
 #: gaphor/ui/elementeditor.ui:402
 msgid ""
@@ -2683,15 +2683,15 @@ msgstr "Bejövő megnyitása"
 
 #: gaphor/ui/filemanager.py:466
 msgid "Save Changes?"
-msgstr "Változtatások mentése?"
+msgstr "Módosítások mentése?"
 
 #: gaphor/ui/filemanager.py:467
 msgid ""
 "The open model contains unsaved changes. Changes which are not saved will"
 " be permanently lost."
 msgstr ""
-"A megnyitott modell nem mentett változtatásokat tartalmaz. A nem mentett "
-"változtatások véglegesen elvesznek."
+"A megnyitott modell nem mentett módosításokat tartalmaz. A nem mentett "
+"módosítások véglegesen elvesznek."
 
 #: gaphor/ui/filemanager.py:476
 msgid "Discard"
@@ -2733,28 +2733,28 @@ msgid "UML Example"
 msgstr "UML példa"
 
 #: gaphor/ui/greeter.py:67
-#, fuzzy
 msgid "Unified Modeling Language example model"
-msgstr "UML-sablon (Unified Modeling Language - Egységes modellezési nyelv)"
+msgstr ""
+"UML-példamodell (Unified Modeling Language - Egységes modellezési nyelv)"
 
 #: gaphor/ui/greeter.py:73
 msgid "SysML Example"
-msgstr ""
+msgstr "SysML-példa (Systems Modeling Language - Rendszerek modellezési nyelve)"
 
 #: gaphor/ui/greeter.py:74
-#, fuzzy
 msgid "Systems Modeling Language example model"
-msgstr "SML-sablon (Systems Modeling Language - Rendszermodellező nyelv)"
+msgstr "SML-példamodell (Systems Modeling Language - Rendszermodellező nyelv)"
 
 #: gaphor/ui/greeter.py:80
 msgid "RAAML Example"
 msgstr ""
+"RAAML-példa (Risk Analysis and Assessment Modeling Language - "
+"Kockázatelemzési és -értékelési modellezési nyelv)"
 
 #: gaphor/ui/greeter.py:81
-#, fuzzy
 msgid "Risk Analysis and Assessment Modeling Language example model"
 msgstr ""
-"RAAML-sablon (Risk Analysis and Assessment Modeling Language - "
+"RAAML-példamodell (Risk Analysis and Assessment Modeling Language - "
 "Kockázatelemzési és -értékelési modellezési nyelv)"
 
 #: gaphor/ui/greeter.ui:8 gaphor/ui/greeter.ui:53 gaphor/ui/mainwindow.py:48
@@ -2811,7 +2811,6 @@ msgid "Toggle Property Editor"
 msgstr "Tulajdonságszerkesztő átváltása"
 
 #: gaphor/ui/modelbrowser.py:177
-#, fuzzy
 msgid "New Diagram"
 msgstr "Új ábra"
 
@@ -2860,13 +2859,12 @@ msgid "New Generic Diagram"
 msgstr "Új általános-ábra"
 
 #: gaphor/ui/modelchanged.ui:6
-#, fuzzy
 msgid "Model Changed on Disk"
-msgstr "Modellváltozások egyesítése"
+msgstr "Modell módosított a lemezen"
 
 #: gaphor/ui/modelchanged.ui:7
 msgid "Discard Changes and Reload"
-msgstr ""
+msgstr "Módosítások elvetése és újratöltés"
 
 #: gaphor/ui/tests/test_treemodel.py:200 gaphor/ui/treemodel.py:64
 msgid "<Relationships>"
