@@ -1,0 +1,29 @@
+gaphor.ui.selftest INFO System information:
+
+	Gaphor version:         2.26.0
+	Operating System:       Windows (10, AMD64)
+	Display:                GdkWin32Display
+	Python version:         3.12.4
+	GTK version:            4.14.4
+	Adwaita version:        1.5.2
+	GtkSourceView version:  5.12.1
+	Cairo version:          1.18.0
+	Pango version:          1.54.0
+	PyGObject version:      3.48.2
+	Pycairo version:        1.26.1
+
+gaphor.ui.selftest INFO Schema org.gtk.gtk4.Settings.FileChooser found
+gaphor.ui.selftest ERROR Test test_gsettings_schemas failed
+Traceback (most recent call last):
+  File "c:\Users\pbrow\Workspaces\Gaphor\gaphor\gaphor\ui\selftest.py", line 51, in wrapper
+    return func(self, status)
+           ^^^^^^^^^^^^^^^^^^
+  File "c:\Users\pbrow\Workspaces\Gaphor\gaphor\gaphor\ui\selftest.py", line 131, in test_gsettings_schemas
+    raise RuntimeError(
+RuntimeError: Could not find schema org.gaphor.Gaphor in data dirs: C:\users\pbrown\.local\share:C:\ProgramData:C:\Users\Public\Documents:C:\gtk\share:C:\Users\pbrow\AppData\Local\Programs\Python\Python312\share
+gaphor.storage.storage INFO Read 28 elements from file
+gaphor.ui.selftest ERROR Not all tests have passed
+gaphor.ui.selftest INFO test_library_versions: completed
+gaphor.ui.selftest INFO test_gsettings_schemas: failed
+gaphor.ui.selftest INFO test_new_session: completed
+gaphor.ui.selftest INFO test_auto_layout: completed
