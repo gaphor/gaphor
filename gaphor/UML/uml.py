@@ -374,7 +374,7 @@ class Activity(Behavior):
 
 class InterfaceRealization(Realization):
     contract: relation_many[Interface]
-    implementatingClassifier: relation_one[BehavioredClassifier]
+    implementingClassifier: relation_one[BehavioredClassifier]
 
 
 class Parameter(ConnectableElement, MultiplicityElement):
@@ -1025,7 +1025,7 @@ Element.ownedElement.add(Activity.group)  # type: ignore[attr-defined]
 Element.ownedElement.add(Activity.edge)  # type: ignore[attr-defined]
 Element.ownedElement.add(Activity.node)  # type: ignore[attr-defined]
 InterfaceRealization.contract = redefine(InterfaceRealization, "contract", Interface, Dependency.supplier)
-InterfaceRealization.implementatingClassifier = redefine(InterfaceRealization, "implementatingClassifier", BehavioredClassifier, Dependency.client)
+InterfaceRealization.implementingClassifier = redefine(InterfaceRealization, "implementingClassifier", BehavioredClassifier, Dependency.client)
 Parameter.owningNode = association("owningNode", ActivityParameterNode, upper=1, opposite="parameter")
 Parameter.parameterSet = association("parameterSet", ParameterSet, opposite="parameter")
 Parameter.ownerFormalParam = association("ownerFormalParam", BehavioralFeature, upper=1, opposite="ownedParameter")

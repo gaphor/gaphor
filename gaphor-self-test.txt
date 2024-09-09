@@ -1,0 +1,1762 @@
+gaphor.ui.selftest INFO System information:
+
+	Gaphor version:         2.26.0
+	Operating System:       Windows (10, AMD64)
+	Display:                GdkWin32Display
+	Python version:         3.12.4
+	GTK version:            4.14.4
+	Adwaita version:        1.5.2
+	GtkSourceView version:  5.12.1
+	Cairo version:          1.18.0
+	Pango version:          1.54.0
+	PyGObject version:      3.48.2
+	Pycairo version:        1.26.1
+
+gaphor.ui.selftest INFO Schema org.gtk.gtk4.Settings.FileChooser found
+gaphor.ui.selftest DEBUG Schemas found: ['org.gtk.gtk4.Settings.FileChooser', 'org.gtk.gtk4.Settings.Debug', 'org.gtk.gtk4.Settings.EmojiChooser', 'org.gtk.gtk4.Settings.ColorChooser'] []
+gaphor.ui.selftest ERROR Test test_gsettings_schemas failed
+Traceback (most recent call last):
+  File "C:\Users\pbrow\workspaces\Gaphor\gaphor\gaphor\ui\selftest.py", line 51, in wrapper
+    return func(self, status)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\pbrow\workspaces\Gaphor\gaphor\gaphor\ui\selftest.py", line 131, in test_gsettings_schemas
+    raise RuntimeError(
+RuntimeError: Could not find schema org.gaphor.Gaphor in data dirs: C:\users\pbrown\.local\share:C:\ProgramData:C:\Users\Public\Documents:C:\gtk\share:C:\Users\pbrow\AppData\Local\Programs\Python\Python312\share
+gaphor.entrypoint DEBUG found entry point "gaphor.services.align"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.auto_layout"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.component_registry"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.console_window"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.copy"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.diagram_export"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.diagrams"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.element_dispatcher"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.element_editor"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.element_factory"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.event_manager"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.export_menu"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.file_manager"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.main_window"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.model_browser"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.model_changed"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.modeling_language"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.properties"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.recent_files"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.recovery"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.sanitizer"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.toolbox"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.tools_menu"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.undo_manager"
+gaphor.entrypoint DEBUG found entry point "gaphor.modelinglanguages.C4Model"
+gaphor.entrypoint DEBUG found entry point "gaphor.modelinglanguages.Core"
+gaphor.entrypoint DEBUG found entry point "gaphor.modelinglanguages.RAAML"
+gaphor.entrypoint DEBUG found entry point "gaphor.modelinglanguages.SysML"
+gaphor.entrypoint DEBUG found entry point "gaphor.modelinglanguages.UML"
+gaphor.application DEBUG Initializing service event_manager
+gaphor.application DEBUG Initializing service properties
+gaphor.application DEBUG Initializing service modeling_language
+gaphor.application DEBUG Initializing service element_dispatcher
+gaphor.application DEBUG Initializing service element_factory
+gaphor.application DEBUG Initializing service toolbox
+gaphor.application DEBUG Initializing service diagrams
+gaphor.application DEBUG Initializing service tools_menu
+gaphor.application DEBUG Initializing service align
+gaphor.application DEBUG Initializing service auto_layout
+gaphor.application DEBUG Initializing service component_registry
+gaphor.application DEBUG Initializing service export_menu
+gaphor.application DEBUG Initializing service main_window
+gaphor.application DEBUG Initializing service console_window
+gaphor.application DEBUG Initializing service copy
+gaphor.application DEBUG Initializing service diagram_export
+gaphor.application DEBUG Initializing service element_editor
+gaphor.application DEBUG Initializing service file_manager
+gaphor.application DEBUG Initializing service model_browser
+gaphor.application DEBUG Initializing service model_changed
+gaphor.application DEBUG Initializing service recent_files
+gaphor.application DEBUG Initializing service recovery
+gaphor.application DEBUG Initializing service sanitizer
+gaphor.application DEBUG Initializing service undo_manager
+gaphor.storage.storage INFO Read 28 elements from file
+gaphor.storage.storage DEBUG Loading 28 elements
+gaphor.application DEBUG Set active session to <gaphor.application.Session object at 0x00000294E0B9D190>
+gaphor.entrypoint DEBUG found entry point "gaphor.services.align"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.auto_layout"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.component_registry"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.console_window"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.copy"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.diagram_export"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.diagrams"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.element_dispatcher"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.element_editor"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.element_factory"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.event_manager"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.export_menu"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.file_manager"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.main_window"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.model_browser"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.model_changed"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.modeling_language"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.properties"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.recent_files"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.recovery"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.sanitizer"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.toolbox"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.tools_menu"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.undo_manager"
+gaphor.entrypoint DEBUG found entry point "gaphor.modelinglanguages.C4Model"
+gaphor.entrypoint DEBUG found entry point "gaphor.modelinglanguages.Core"
+gaphor.entrypoint DEBUG found entry point "gaphor.modelinglanguages.RAAML"
+gaphor.entrypoint DEBUG found entry point "gaphor.modelinglanguages.SysML"
+gaphor.entrypoint DEBUG found entry point "gaphor.modelinglanguages.UML"
+gaphor.application DEBUG Initializing service event_manager
+gaphor.application DEBUG Initializing service properties
+gaphor.application DEBUG Initializing service modeling_language
+gaphor.application DEBUG Initializing service element_dispatcher
+gaphor.application DEBUG Initializing service element_factory
+gaphor.application DEBUG Initializing service toolbox
+gaphor.application DEBUG Initializing service diagrams
+gaphor.application DEBUG Initializing service tools_menu
+gaphor.application DEBUG Initializing service align
+gaphor.application DEBUG Initializing service auto_layout
+gaphor.application DEBUG Initializing service component_registry
+gaphor.application DEBUG Initializing service export_menu
+gaphor.application DEBUG Initializing service main_window
+gaphor.application DEBUG Initializing service console_window
+gaphor.application DEBUG Initializing service copy
+gaphor.application DEBUG Initializing service diagram_export
+gaphor.application DEBUG Initializing service element_editor
+gaphor.application DEBUG Initializing service file_manager
+gaphor.application DEBUG Initializing service model_browser
+gaphor.application DEBUG Initializing service model_changed
+gaphor.application DEBUG Initializing service recent_files
+gaphor.application DEBUG Initializing service recovery
+gaphor.application DEBUG Initializing service sanitizer
+gaphor.application DEBUG Initializing service undo_manager
+gaphor.application DEBUG Set active session to <gaphor.application.Session object at 0x00000294E2F662A0>
+gaphor.ui.selftest ERROR Not all tests have passed
+gaphor.ui.selftest INFO test_library_versions: completed
+gaphor.ui.selftest INFO test_gsettings_schemas: failed
+gaphor.ui.selftest INFO test_new_session: completed
+gaphor.ui.selftest INFO test_auto_layout: completed
+gaphor.diagram._connector DEBUG Disconnect callback <gaphor.UML.states.transition.TransitionItem element bddc0e2c-6eb2-11ef-8352-14abc554333b>.<Handle object on (Variable(0, 20), Variable(0, 20))>
+gaphor.diagram._connector DEBUG Disconnect callback <gaphor.UML.states.transition.TransitionItem element bddc0e2c-6eb2-11ef-8352-14abc554333b>.<Handle object on (Variable(10, 20), Variable(0, 20))>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.states.state.StateItem element bddb9ad3-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.states.state.StateItem element bddbe8a8-6eb2-11ef-bb80-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.states.transition.TransitionItem element bddc0e2c-6eb2-11ef-8352-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element bddb7263-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.State element bddb9ad2-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.State element bddbe8a7-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Constraint element bddc3689-6eb2-11ef-a179-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Transition element bddc3688-6eb2-11ef-94eb-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Constraint element bddc3689-6eb2-11ef-a179-14abc554333b>
+gaphor.diagram._connector DEBUG Disconnect callback <gaphor.UML.classes.association.AssociationItem element bddfdc1e-6eb2-11ef-8352-14abc554333b>.<Handle object on (Variable(0, 20), Variable(0, 20))>
+gaphor.core.modeling.elementdispatcher DEBUG Handler <function Presentation.__init__.<locals>.update at 0x00000294E2DA3100> is not registered for <gaphor.UML.uml.Property element bde004a6-6eb2-11ef-a179-14abc554333b>.<association type: Type[0..1]>
+Traceback (most recent call last):
+  File "C:\Users\pbrow\workspaces\Gaphor\gaphor\gaphor\core\modeling\elementdispatcher.py", line 221, in _remove_handlers
+    del handlers[handler]
+        ~~~~~~~~^^^^^^^^^
+KeyError: <function Presentation.__init__.<locals>.update at 0x00000294E2DA3100>
+gaphor.core.modeling.elementdispatcher DEBUG Handler <function Presentation.__init__.<locals>.update at 0x00000294E2DA3100> is not registered for <gaphor.UML.uml.Property element bde004a7-6eb2-11ef-8208-14abc554333b>.<association type: Type[0..1]>
+Traceback (most recent call last):
+  File "C:\Users\pbrow\workspaces\Gaphor\gaphor\gaphor\core\modeling\elementdispatcher.py", line 221, in _remove_handlers
+    del handlers[handler]
+        ~~~~~~~~^^^^^^^^^
+KeyError: <function Presentation.__init__.<locals>.update at 0x00000294E2DA3100>
+gaphor.core.modeling.elementdispatcher DEBUG Handler <function Presentation.__init__.<locals>.update at 0x00000294E2DA3100> is not registered for <gaphor.UML.uml.Association element bde004a5-6eb2-11ef-94eb-14abc554333b>.<association memberEnd: Property[2..*] <>-> association>
+Traceback (most recent call last):
+  File "C:\Users\pbrow\workspaces\Gaphor\gaphor\gaphor\core\modeling\elementdispatcher.py", line 221, in _remove_handlers
+    del handlers[handler]
+        ~~~~~~~~^^^^^^^^^
+KeyError: <function Presentation.__init__.<locals>.update at 0x00000294E2DA3100>
+gaphor.core.modeling.elementdispatcher DEBUG Handler <function Presentation.__init__.<locals>.update at 0x00000294E2DA3100> is not registered for <gaphor.UML.uml.Association element bde004a5-6eb2-11ef-94eb-14abc554333b>.<association memberEnd: Property[2..*] <>-> association>
+Traceback (most recent call last):
+  File "C:\Users\pbrow\workspaces\Gaphor\gaphor\gaphor\core\modeling\elementdispatcher.py", line 221, in _remove_handlers
+    del handlers[handler]
+        ~~~~~~~~^^^^^^^^^
+KeyError: <function Presentation.__init__.<locals>.update at 0x00000294E2DA3100>
+gaphor.core.modeling.elementdispatcher DEBUG Handler <function Presentation.__init__.<locals>.update at 0x00000294E2DA3100> is not registered for <gaphor.UML.uml.Association element bde004a5-6eb2-11ef-94eb-14abc554333b>.<association memberEnd: Property[2..*] <>-> association>
+Traceback (most recent call last):
+  File "C:\Users\pbrow\workspaces\Gaphor\gaphor\gaphor\core\modeling\elementdispatcher.py", line 221, in _remove_handlers
+    del handlers[handler]
+        ~~~~~~~~^^^^^^^^^
+KeyError: <function Presentation.__init__.<locals>.update at 0x00000294E2DA3100>
+gaphor.core.modeling.elementdispatcher DEBUG Handler <function Presentation.__init__.<locals>.update at 0x00000294E2DA3100> is not registered for <gaphor.UML.uml.Association element bde004a5-6eb2-11ef-94eb-14abc554333b>.<association memberEnd: Property[2..*] <>-> association>
+Traceback (most recent call last):
+  File "C:\Users\pbrow\workspaces\Gaphor\gaphor\gaphor\core\modeling\elementdispatcher.py", line 221, in _remove_handlers
+    del handlers[handler]
+        ~~~~~~~~^^^^^^^^^
+KeyError: <function Presentation.__init__.<locals>.update at 0x00000294E2DA3100>
+gaphor.core.modeling.elementdispatcher DEBUG Handler <function Presentation.__init__.<locals>.update at 0x00000294E2DA3100> is not registered for <gaphor.UML.uml.Association element bde004a5-6eb2-11ef-94eb-14abc554333b>.<association memberEnd: Property[2..*] <>-> association>
+Traceback (most recent call last):
+  File "C:\Users\pbrow\workspaces\Gaphor\gaphor\gaphor\core\modeling\elementdispatcher.py", line 221, in _remove_handlers
+    del handlers[handler]
+        ~~~~~~~~^^^^^^^^^
+KeyError: <function Presentation.__init__.<locals>.update at 0x00000294E2DA3100>
+gaphor.core.modeling.elementdispatcher DEBUG Handler <function Presentation.__init__.<locals>.update at 0x00000294E2DA3100> is not registered for <gaphor.UML.uml.Association element bde004a5-6eb2-11ef-94eb-14abc554333b>.<association memberEnd: Property[2..*] <>-> association>
+Traceback (most recent call last):
+  File "C:\Users\pbrow\workspaces\Gaphor\gaphor\gaphor\core\modeling\elementdispatcher.py", line 221, in _remove_handlers
+    del handlers[handler]
+        ~~~~~~~~^^^^^^^^^
+KeyError: <function Presentation.__init__.<locals>.update at 0x00000294E2DA3100>
+gaphor.core.modeling.elementdispatcher DEBUG Handler <function Presentation.__init__.<locals>.update at 0x00000294E2DA3100> is not registered for <gaphor.UML.uml.Association element bde004a5-6eb2-11ef-94eb-14abc554333b>.<association memberEnd: Property[2..*] <>-> association>
+Traceback (most recent call last):
+  File "C:\Users\pbrow\workspaces\Gaphor\gaphor\gaphor\core\modeling\elementdispatcher.py", line 221, in _remove_handlers
+    del handlers[handler]
+        ~~~~~~~~^^^^^^^^^
+KeyError: <function Presentation.__init__.<locals>.update at 0x00000294E2DA3100>
+gaphor.core.modeling.elementdispatcher DEBUG Handler <function Presentation.__init__.<locals>.update at 0x00000294E2DA3100> is not registered for <gaphor.UML.uml.Association element bde004a5-6eb2-11ef-94eb-14abc554333b>.<association memberEnd: Property[2..*] <>-> association>
+Traceback (most recent call last):
+  File "C:\Users\pbrow\workspaces\Gaphor\gaphor\gaphor\core\modeling\elementdispatcher.py", line 221, in _remove_handlers
+    del handlers[handler]
+        ~~~~~~~~^^^^^^^^^
+KeyError: <function Presentation.__init__.<locals>.update at 0x00000294E2DA3100>
+gaphor.core.modeling.elementdispatcher DEBUG Handler <function Presentation.__init__.<locals>.update at 0x00000294E2DA3100> is not registered for <gaphor.UML.uml.Association element bde004a5-6eb2-11ef-94eb-14abc554333b>.<association memberEnd: Property[2..*] <>-> association>
+Traceback (most recent call last):
+  File "C:\Users\pbrow\workspaces\Gaphor\gaphor\gaphor\core\modeling\elementdispatcher.py", line 221, in _remove_handlers
+    del handlers[handler]
+        ~~~~~~~~^^^^^^^^^
+KeyError: <function Presentation.__init__.<locals>.update at 0x00000294E2DA3100>
+gaphor.core.modeling.elementdispatcher DEBUG Handler <function Presentation.__init__.<locals>.update at 0x00000294E2DA3100> is not registered for <gaphor.UML.uml.Association element bde004a5-6eb2-11ef-94eb-14abc554333b>.<association memberEnd: Property[2..*] <>-> association>
+Traceback (most recent call last):
+  File "C:\Users\pbrow\workspaces\Gaphor\gaphor\gaphor\core\modeling\elementdispatcher.py", line 221, in _remove_handlers
+    del handlers[handler]
+        ~~~~~~~~^^^^^^^^^
+KeyError: <function Presentation.__init__.<locals>.update at 0x00000294E2DA3100>
+gaphor.core.modeling.elementdispatcher DEBUG Handler <function Presentation.__init__.<locals>.update at 0x00000294E2DA3100> is not registered for <gaphor.UML.uml.Association element bde004a5-6eb2-11ef-94eb-14abc554333b>.<association memberEnd: Property[2..*] <>-> association>
+Traceback (most recent call last):
+  File "C:\Users\pbrow\workspaces\Gaphor\gaphor\gaphor\core\modeling\elementdispatcher.py", line 221, in _remove_handlers
+    del handlers[handler]
+        ~~~~~~~~^^^^^^^^^
+KeyError: <function Presentation.__init__.<locals>.update at 0x00000294E2DA3100>
+gaphor.diagram._connector DEBUG Disconnect callback <gaphor.UML.classes.association.AssociationItem element bddfdc1e-6eb2-11ef-8352-14abc554333b>.<Handle object on (Variable(10, 20), Variable(0, 20))>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.classes.klass.ClassItem element bddf68c1-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.classes.klass.ClassItem element bddfb6b6-6eb2-11ef-bb80-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.classes.association.AssociationItem element bddfdc1e-6eb2-11ef-8352-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element bddf4056-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Class element bddf68c0-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Class element bddfb6b5-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Property element bde004a6-6eb2-11ef-a179-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Property element bde004a7-6eb2-11ef-8208-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Association element bde004a5-6eb2-11ef-94eb-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Property element bde004a6-6eb2-11ef-a179-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Property element bde004a7-6eb2-11ef-8208-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.classes.klass.ClassItem element bde57f22-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element bde556bf-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.InstanceSpecification element bde5f3f7-6eb2-11ef-bb80-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Stereotype element bde57f20-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Class element bde57f21-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.InstanceSpecification element bde5f3f7-6eb2-11ef-bb80-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.ActivityPartition element bde88986-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.ActivityPartition element bde8b04b-6eb2-11ef-bb80-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.ActivityPartition element bde8b04c-6eb2-11ef-8352-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.ActivityPartition element bde8b04d-6eb2-11ef-94eb-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.actions.partition.PartitionItem element bde88987-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element bde86262-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Activity element bde8b04a-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.states.state.StateItem element bdeb5d58-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element bdeb37e9-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Activity element bdebaccc-6eb2-11ef-bb80-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Activity element bdeb85df-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.State element bdeb5d57-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Activity element bdeb85df-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Activity element bdebaccc-6eb2-11ef-bb80-14abc554333b>
+gaphor.diagram._connector DEBUG Disconnect callback <gaphor.UML.classes.association.AssociationItem element bdef046b-6eb2-11ef-8352-14abc554333b>.<Handle object on (Variable(0, 20), Variable(0, 20))>
+gaphor.core.modeling.elementdispatcher DEBUG Handler <function Presentation.__init__.<locals>.update at 0x00000294E2DA37E0> is not registered for <gaphor.UML.uml.Property element bdef2b4e-6eb2-11ef-a179-14abc554333b>.<association type: Type[0..1]>
+Traceback (most recent call last):
+  File "C:\Users\pbrow\workspaces\Gaphor\gaphor\gaphor\core\modeling\elementdispatcher.py", line 221, in _remove_handlers
+    del handlers[handler]
+        ~~~~~~~~^^^^^^^^^
+KeyError: <function Presentation.__init__.<locals>.update at 0x00000294E2DA37E0>
+gaphor.core.modeling.elementdispatcher DEBUG Handler <function Presentation.__init__.<locals>.update at 0x00000294E2DA37E0> is not registered for <gaphor.UML.uml.Property element bdef2b4f-6eb2-11ef-8208-14abc554333b>.<association type: Type[0..1]>
+Traceback (most recent call last):
+  File "C:\Users\pbrow\workspaces\Gaphor\gaphor\gaphor\core\modeling\elementdispatcher.py", line 221, in _remove_handlers
+    del handlers[handler]
+        ~~~~~~~~^^^^^^^^^
+KeyError: <function Presentation.__init__.<locals>.update at 0x00000294E2DA37E0>
+gaphor.core.modeling.elementdispatcher DEBUG Handler <function Presentation.__init__.<locals>.update at 0x00000294E2DA37E0> is not registered for <gaphor.UML.uml.Association element bdef2b4d-6eb2-11ef-94eb-14abc554333b>.<association memberEnd: Property[2..*] <>-> association>
+Traceback (most recent call last):
+  File "C:\Users\pbrow\workspaces\Gaphor\gaphor\gaphor\core\modeling\elementdispatcher.py", line 221, in _remove_handlers
+    del handlers[handler]
+        ~~~~~~~~^^^^^^^^^
+KeyError: <function Presentation.__init__.<locals>.update at 0x00000294E2DA37E0>
+gaphor.core.modeling.elementdispatcher DEBUG Handler <function Presentation.__init__.<locals>.update at 0x00000294E2DA37E0> is not registered for <gaphor.UML.uml.Association element bdef2b4d-6eb2-11ef-94eb-14abc554333b>.<association memberEnd: Property[2..*] <>-> association>
+Traceback (most recent call last):
+  File "C:\Users\pbrow\workspaces\Gaphor\gaphor\gaphor\core\modeling\elementdispatcher.py", line 221, in _remove_handlers
+    del handlers[handler]
+        ~~~~~~~~^^^^^^^^^
+KeyError: <function Presentation.__init__.<locals>.update at 0x00000294E2DA37E0>
+gaphor.core.modeling.elementdispatcher DEBUG Handler <function Presentation.__init__.<locals>.update at 0x00000294E2DA37E0> is not registered for <gaphor.UML.uml.Association element bdef2b4d-6eb2-11ef-94eb-14abc554333b>.<association memberEnd: Property[2..*] <>-> association>
+Traceback (most recent call last):
+  File "C:\Users\pbrow\workspaces\Gaphor\gaphor\gaphor\core\modeling\elementdispatcher.py", line 221, in _remove_handlers
+    del handlers[handler]
+        ~~~~~~~~^^^^^^^^^
+KeyError: <function Presentation.__init__.<locals>.update at 0x00000294E2DA37E0>
+gaphor.core.modeling.elementdispatcher DEBUG Handler <function Presentation.__init__.<locals>.update at 0x00000294E2DA37E0> is not registered for <gaphor.UML.uml.Association element bdef2b4d-6eb2-11ef-94eb-14abc554333b>.<association memberEnd: Property[2..*] <>-> association>
+Traceback (most recent call last):
+  File "C:\Users\pbrow\workspaces\Gaphor\gaphor\gaphor\core\modeling\elementdispatcher.py", line 221, in _remove_handlers
+    del handlers[handler]
+        ~~~~~~~~^^^^^^^^^
+KeyError: <function Presentation.__init__.<locals>.update at 0x00000294E2DA37E0>
+gaphor.core.modeling.elementdispatcher DEBUG Handler <function Presentation.__init__.<locals>.update at 0x00000294E2DA37E0> is not registered for <gaphor.UML.uml.Association element bdef2b4d-6eb2-11ef-94eb-14abc554333b>.<association memberEnd: Property[2..*] <>-> association>
+Traceback (most recent call last):
+  File "C:\Users\pbrow\workspaces\Gaphor\gaphor\gaphor\core\modeling\elementdispatcher.py", line 221, in _remove_handlers
+    del handlers[handler]
+        ~~~~~~~~^^^^^^^^^
+KeyError: <function Presentation.__init__.<locals>.update at 0x00000294E2DA37E0>
+gaphor.core.modeling.elementdispatcher DEBUG Handler <function Presentation.__init__.<locals>.update at 0x00000294E2DA37E0> is not registered for <gaphor.UML.uml.Association element bdef2b4d-6eb2-11ef-94eb-14abc554333b>.<association memberEnd: Property[2..*] <>-> association>
+Traceback (most recent call last):
+  File "C:\Users\pbrow\workspaces\Gaphor\gaphor\gaphor\core\modeling\elementdispatcher.py", line 221, in _remove_handlers
+    del handlers[handler]
+        ~~~~~~~~^^^^^^^^^
+KeyError: <function Presentation.__init__.<locals>.update at 0x00000294E2DA37E0>
+gaphor.core.modeling.elementdispatcher DEBUG Handler <function Presentation.__init__.<locals>.update at 0x00000294E2DA37E0> is not registered for <gaphor.UML.uml.Association element bdef2b4d-6eb2-11ef-94eb-14abc554333b>.<association memberEnd: Property[2..*] <>-> association>
+Traceback (most recent call last):
+  File "C:\Users\pbrow\workspaces\Gaphor\gaphor\gaphor\core\modeling\elementdispatcher.py", line 221, in _remove_handlers
+    del handlers[handler]
+        ~~~~~~~~^^^^^^^^^
+KeyError: <function Presentation.__init__.<locals>.update at 0x00000294E2DA37E0>
+gaphor.core.modeling.elementdispatcher DEBUG Handler <function Presentation.__init__.<locals>.update at 0x00000294E2DA37E0> is not registered for <gaphor.UML.uml.Association element bdef2b4d-6eb2-11ef-94eb-14abc554333b>.<association memberEnd: Property[2..*] <>-> association>
+Traceback (most recent call last):
+  File "C:\Users\pbrow\workspaces\Gaphor\gaphor\gaphor\core\modeling\elementdispatcher.py", line 221, in _remove_handlers
+    del handlers[handler]
+        ~~~~~~~~^^^^^^^^^
+KeyError: <function Presentation.__init__.<locals>.update at 0x00000294E2DA37E0>
+gaphor.core.modeling.elementdispatcher DEBUG Handler <function Presentation.__init__.<locals>.update at 0x00000294E2DA37E0> is not registered for <gaphor.UML.uml.Association element bdef2b4d-6eb2-11ef-94eb-14abc554333b>.<association memberEnd: Property[2..*] <>-> association>
+Traceback (most recent call last):
+  File "C:\Users\pbrow\workspaces\Gaphor\gaphor\gaphor\core\modeling\elementdispatcher.py", line 221, in _remove_handlers
+    del handlers[handler]
+        ~~~~~~~~^^^^^^^^^
+KeyError: <function Presentation.__init__.<locals>.update at 0x00000294E2DA37E0>
+gaphor.core.modeling.elementdispatcher DEBUG Handler <function Presentation.__init__.<locals>.update at 0x00000294E2DA37E0> is not registered for <gaphor.UML.uml.Association element bdef2b4d-6eb2-11ef-94eb-14abc554333b>.<association memberEnd: Property[2..*] <>-> association>
+Traceback (most recent call last):
+  File "C:\Users\pbrow\workspaces\Gaphor\gaphor\gaphor\core\modeling\elementdispatcher.py", line 221, in _remove_handlers
+    del handlers[handler]
+        ~~~~~~~~^^^^^^^^^
+KeyError: <function Presentation.__init__.<locals>.update at 0x00000294E2DA37E0>
+gaphor.core.modeling.elementdispatcher DEBUG Handler <function Presentation.__init__.<locals>.update at 0x00000294E2DA37E0> is not registered for <gaphor.UML.uml.Association element bdef2b4d-6eb2-11ef-94eb-14abc554333b>.<association memberEnd: Property[2..*] <>-> association>
+Traceback (most recent call last):
+  File "C:\Users\pbrow\workspaces\Gaphor\gaphor\gaphor\core\modeling\elementdispatcher.py", line 221, in _remove_handlers
+    del handlers[handler]
+        ~~~~~~~~^^^^^^^^^
+KeyError: <function Presentation.__init__.<locals>.update at 0x00000294E2DA37E0>
+gaphor.diagram._connector DEBUG Disconnect callback <gaphor.UML.classes.association.AssociationItem element bdef046b-6eb2-11ef-8352-14abc554333b>.<Handle object on (Variable(10, 20), Variable(0, 20))>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.classes.klass.ClassItem element bdee8f8c-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.classes.klass.ClassItem element bdeedd77-6eb2-11ef-bb80-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.classes.association.AssociationItem element bdef046b-6eb2-11ef-8352-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element bdee68c1-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Class element bdee8f8b-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Class element bdeedd76-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Property element bdef2b4e-6eb2-11ef-a179-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Property element bdef2b4f-6eb2-11ef-8208-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Association element bdef2b4d-6eb2-11ef-94eb-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Property element bdef2b4e-6eb2-11ef-a179-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Property element bdef2b4f-6eb2-11ef-8208-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.classes.klass.ClassItem element bdf40b80-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element bdf40b7e-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Property element bdf45976-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Parameter element bdf47ed9-6eb2-11ef-8352-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Parameter element bdf47eda-6eb2-11ef-94eb-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Operation element bdf45977-6eb2-11ef-bb80-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Class element bdf40b7f-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Property element bdf45976-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Operation element bdf45977-6eb2-11ef-bb80-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Parameter element bdf47ed9-6eb2-11ef-8352-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Parameter element bdf47eda-6eb2-11ef-94eb-14abc554333b>
+gaphor.diagram._connector DEBUG Disconnect callback <gaphor.SysML.blocks.proxyport.ProxyPortItem element bdf7c266-6eb2-11ef-8352-14abc554333b>.<Handle object on (Variable(0, 30), Variable(0, 30))>
+gaphor.diagram._connector DEBUG Disconnect callback <gaphor.UML.deployments.connector.ConnectorItem element bdf7c267-6eb2-11ef-94eb-14abc554333b>.<Handle object on (Variable(0, 20), Variable(-8, 20))>
+gaphor.diagram._connector DEBUG Disconnect callback <gaphor.UML.deployments.connector.ConnectorItem element bdf7c267-6eb2-11ef-94eb-14abc554333b>.<Handle object on (Variable(10, 20), Variable(0, 20))>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.SysML.blocks.block.BlockItem element bdf74d9a-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.SysML.blocks.proxyport.ProxyPortItem element bdf7c266-6eb2-11ef-8352-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.SysML.blocks.property.PropertyItem element bdf79b6c-6eb2-11ef-bb80-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.deployments.connector.ConnectorItem element bdf7c267-6eb2-11ef-94eb-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element bdf72689-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.ConnectorEnd element bdf85e34-6eb2-11ef-b7f2-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.ConnectorEnd element bdf85e35-6eb2-11ef-b9f6-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Connector element bdf85e33-6eb2-11ef-8208-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.SysML.sysml.ProxyPort element bdf8373f-6eb2-11ef-a179-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.SysML.sysml.Block element bdf74d99-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Property element bdf79b6b-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.SysML.sysml.ProxyPort element bdf8373f-6eb2-11ef-a179-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Connector element bdf85e33-6eb2-11ef-8208-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.ConnectorEnd element bdf85e34-6eb2-11ef-b7f2-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.ConnectorEnd element bdf85e35-6eb2-11ef-b9f6-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Property element bdf88532-6eb2-11ef-880e-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.SysML.sysml.ItemFlow element bdf85e36-6eb2-11ef-93d3-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Property element bdf88532-6eb2-11ef-880e-14abc554333b>
+gaphor.diagram._connector DEBUG Disconnect callback <gaphor.UML.actions.activity.ActivityParameterNodeItem element bdfd8eb3-6eb2-11ef-8352-14abc554333b>.<Handle object on (Variable(0, 30), Variable(0, 30))>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.actions.activity.ActivityParameterNodeItem element bdfd8eb3-6eb2-11ef-8352-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.actions.activity.ActivityItem element bdfd67c9-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element bdfd40bb-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Parameter element bdfd8eb2-6eb2-11ef-bb80-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.ActivityParameterNode element bdfd8eb1-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Activity element bdfd67c8-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.ActivityParameterNode element bdfd8eb1-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Parameter element bdfd8eb2-6eb2-11ef-bb80-14abc554333b>
+gaphor.diagram._connector DEBUG Disconnect callback <gaphor.UML.profiles.extension.ExtensionItem element be0119c2-6eb2-11ef-8352-14abc554333b>.<Handle object on (Variable(0, 20), Variable(0, 20))>
+gaphor.diagram._connector DEBUG Disconnect callback <gaphor.UML.profiles.extension.ExtensionItem element be0119c2-6eb2-11ef-8352-14abc554333b>.<Handle object on (Variable(10, 20), Variable(0, 20))>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.classes.klass.ClassItem element be00a4f2-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.classes.klass.ClassItem element be00f2db-6eb2-11ef-bb80-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.profiles.extension.ExtensionItem element be0119c2-6eb2-11ef-8352-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element be007d00-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.ExtensionEnd element be0140b7-6eb2-11ef-8208-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Class element be00a4f1-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Property element be0140b6-6eb2-11ef-a179-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Stereotype element be00f2da-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Extension element be0140b5-6eb2-11ef-94eb-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Property element be0140b6-6eb2-11ef-a179-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.ExtensionEnd element be0140b7-6eb2-11ef-8208-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element be063dbb-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.ActivityPartition element be0eeb9b-6eb2-11ef-a3e4-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.actions.partition.PartitionItem element be0e76de-6eb2-11ef-8b01-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.ActivityPartition element be0e76dd-6eb2-11ef-91f5-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Activity element be0ec4b2-6eb2-11ef-a0d5-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.ActivityPartition element be0eeb9b-6eb2-11ef-a3e4-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.ActivityPartition element be0f8783-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.ActivityPartition element be0fae7d-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.actions.partition.PartitionItem element be0f8782-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element be0e4fd4-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.ActivityPartition element be121dd6-6eb2-11ef-a3e4-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.actions.partition.PartitionItem element be1244af-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.ActivityPartition element be11f6df-6eb2-11ef-91f5-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.ActivityPartition element be121dd6-6eb2-11ef-a3e4-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.actions.partition.PartitionItem element be11f6e0-6eb2-11ef-8b01-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element be11cfee-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Activity element be11f6e1-6eb2-11ef-a0d5-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.ActivityPartition element be15020d-6eb2-11ef-91f5-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.ActivityPartition element be152922-6eb2-11ef-a3e4-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.actions.partition.PartitionItem element be15020e-6eb2-11ef-8b01-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element be15020c-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Activity element be152921-6eb2-11ef-a0d5-14abc554333b>
+gaphor.diagram._connector DEBUG Disconnect callback <gaphor.UML.interactions.message.MessageItem element be18f6d5-6eb2-11ef-b7f2-14abc554333b>.<Handle object on (Variable(40, 20), Variable(0, 20))>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.MessageOccurrenceSpecification element be196bba-6eb2-11ef-880e-14abc554333b>
+gaphor.diagram._connector DEBUG Disconnect callback <gaphor.UML.interactions.executionspecification.ExecutionSpecificationItem element be18d004-6eb2-11ef-8352-14abc554333b>.<Handle object on (Variable(0, 30), Variable(0, 30))>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.MessageOccurrenceSpecification element be1944c5-6eb2-11ef-93d3-14abc554333b>
+gaphor.diagram._connector DEBUG Disconnect callback <gaphor.UML.interactions.message.MessageItem element be18f6d5-6eb2-11ef-b7f2-14abc554333b>.<Handle object on (Variable(-6, 20), Variable(0, 20))>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.interactions.interaction.InteractionItem element be180da0-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.interactions.lifeline.LifelineItem element be183438-6eb2-11ef-bb80-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.interactions.executionspecification.ExecutionSpecificationItem element be18d004-6eb2-11ef-8352-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.interactions.message.MessageItem element be18f6d5-6eb2-11ef-b7f2-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element be17e643-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Lifeline element be183437-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Message element be191dee-6eb2-11ef-b9f6-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Interaction element be180d9f-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Lifeline element be183437-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.ExecutionOccurrenceSpecification element be18d006-6eb2-11ef-a179-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.ExecutionOccurrenceSpecification element be18d007-6eb2-11ef-8208-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.BehaviorExecutionSpecification element be18d005-6eb2-11ef-94eb-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.ExecutionOccurrenceSpecification element be18d006-6eb2-11ef-a179-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.ExecutionOccurrenceSpecification element be18d007-6eb2-11ef-8208-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Message element be191dee-6eb2-11ef-b9f6-14abc554333b>
+gaphor.diagram._connector DEBUG Disconnect callback <gaphor.UML.interactions.message.MessageItem element be1d12d0-6eb2-11ef-965c-14abc554333b>.<Handle object on (Variable(0, 20), Variable(0, 20))>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.MessageOccurrenceSpecification element be1d39b9-6eb2-11ef-8352-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.interactions.lifeline.LifelineItem element be1c9de2-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.interactions.lifeline.LifelineItem element be1cc4d4-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.interactions.message.MessageItem element be1d12d0-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element be1c76e8-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Message element be1d12d1-6eb2-11ef-bb80-14abc554333b>
+gaphor.diagram._connector DEBUG Disconnect callback <gaphor.UML.interactions.message.MessageItem element be1fd002-6eb2-11ef-9837-14abc554333b>.<Handle object on (Variable(0, 20), Variable(0, 20))>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.MessageOccurrenceSpecification element be1ff6f9-6eb2-11ef-bb80-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.interactions.lifeline.LifelineItem element be1f821b-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.interactions.message.MessageItem element be1fd002-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element be1f821a-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Message element be1fd003-6eb2-11ef-965c-14abc554333b>
+gaphor.diagram._connector DEBUG Disconnect callback <gaphor.UML.interactions.message.MessageItem element be22db2d-6eb2-11ef-965c-14abc554333b>.<Handle object on (Variable(0, 20), Variable(0, 20))>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.MessageOccurrenceSpecification element be230235-6eb2-11ef-8352-14abc554333b>
+gaphor.diagram._connector DEBUG Disconnect callback <gaphor.UML.interactions.message.MessageItem element be22db2d-6eb2-11ef-965c-14abc554333b>.<Handle object on (Variable(40, 20), Variable(0, 20))>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.MessageOccurrenceSpecification element be230236-6eb2-11ef-94eb-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.interactions.lifeline.LifelineItem element be223f57-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.interactions.lifeline.LifelineItem element be226652-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.interactions.message.MessageItem element be22db2d-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element be221867-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Message element be230234-6eb2-11ef-bb80-14abc554333b>
+gaphor.diagram._connector DEBUG Disconnect callback <gaphor.UML.interactions.executionspecification.ExecutionSpecificationItem element be25bf6c-6eb2-11ef-965c-14abc554333b>.<Handle object on (Variable(0, 30), Variable(0, 30))>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.MessageOccurrenceSpecification element be260d43-6eb2-11ef-b7f2-14abc554333b>
+gaphor.diagram._connector DEBUG Disconnect callback <gaphor.UML.interactions.message.MessageItem element be25e65a-6eb2-11ef-bb80-14abc554333b>.<Handle object on (Variable(-6, 20), Variable(0, 20))>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.interactions.lifeline.LifelineItem element be25717d-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.interactions.executionspecification.ExecutionSpecificationItem element be25bf6c-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.interactions.message.MessageItem element be25e65a-6eb2-11ef-bb80-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element be25717b-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Lifeline element be25717c-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.ExecutionOccurrenceSpecification element be25e65c-6eb2-11ef-94eb-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.ExecutionOccurrenceSpecification element be25e65d-6eb2-11ef-a179-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.BehaviorExecutionSpecification element be25e65b-6eb2-11ef-8352-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.ExecutionOccurrenceSpecification element be25e65c-6eb2-11ef-94eb-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.ExecutionOccurrenceSpecification element be25e65d-6eb2-11ef-a179-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Message element be260d42-6eb2-11ef-8208-14abc554333b>
+gaphor.diagram._connector DEBUG Disconnect callback <gaphor.UML.interactions.message.MessageItem element be28ca82-6eb2-11ef-8352-14abc554333b>.<Handle object on (Variable(0, 20), Variable(0, 20))>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.MessageOccurrenceSpecification element be28ca84-6eb2-11ef-a179-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.interactions.interaction.InteractionItem element be2855a8-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.interactions.lifeline.LifelineItem element be287ca3-6eb2-11ef-bb80-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.interactions.message.MessageItem element be28ca82-6eb2-11ef-8352-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element be282eb6-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Lifeline element be287ca2-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Message element be28ca83-6eb2-11ef-94eb-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Interaction element be2855a7-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Lifeline element be287ca2-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Message element be28ca83-6eb2-11ef-94eb-14abc554333b>
+gaphor.diagram._connector DEBUG Disconnect callback <gaphor.UML.interactions.message.MessageItem element be2b39e2-6eb2-11ef-9837-14abc554333b>.<Handle object on (Variable(40, 20), Variable(0, 20))>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.MessageOccurrenceSpecification element be2b60d8-6eb2-11ef-bb80-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.interactions.lifeline.LifelineItem element be2b12ee-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.interactions.message.MessageItem element be2b39e2-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element be2aebf8-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Message element be2b60d7-6eb2-11ef-965c-14abc554333b>
+gaphor.diagram._connector DEBUG Disconnect callback <gaphor.UML.interactions.message.MessageItem element be2da92f-6eb2-11ef-965c-14abc554333b>.<Handle object on (Variable(0, 20), Variable(0, 20))>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.MessageOccurrenceSpecification element be2dd022-6eb2-11ef-8352-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.interactions.lifeline.LifelineItem element be2d5b48-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.interactions.lifeline.LifelineItem element be2d8250-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.interactions.message.MessageItem element be2da92f-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element be2d3456-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Message element be2da930-6eb2-11ef-bb80-14abc554333b>
+gaphor.diagram._connector DEBUG Disconnect callback <gaphor.UML.interactions.message.MessageItem element be2fcaa7-6eb2-11ef-9837-14abc554333b>.<Handle object on (Variable(0, 20), Variable(0, 20))>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.MessageOccurrenceSpecification element be308d62-6eb2-11ef-94eb-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.interactions.lifeline.LifelineItem element be2ff1a6-6eb2-11ef-bb80-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.interactions.message.MessageItem element be2fcaa7-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element be2fcaa5-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Lifeline element be2ff1a5-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Message element be308d61-6eb2-11ef-8352-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Interaction element be2fcaa6-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Lifeline element be2ff1a5-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Message element be308d61-6eb2-11ef-8352-14abc554333b>
+gaphor.diagram._connector DEBUG Disconnect callback <gaphor.UML.interactions.message.MessageItem element be32fcc2-6eb2-11ef-bb80-14abc554333b>.<Handle object on (Variable(-6, 20), Variable(0, 20))>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.MessageOccurrenceSpecification element be334ab3-6eb2-11ef-b7f2-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Message element be334ab2-6eb2-11ef-8208-14abc554333b>
+gaphor.diagram._connector DEBUG Disconnect callback <gaphor.UML.interactions.executionspecification.ExecutionSpecificationItem element be32fcc1-6eb2-11ef-965c-14abc554333b>.<Handle object on (Variable(0, 30), Variable(0, 30))>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.interactions.lifeline.LifelineItem element be32d5cb-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.interactions.executionspecification.ExecutionSpecificationItem element be32fcc1-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.interactions.message.MessageItem element be32fcc2-6eb2-11ef-bb80-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element be3287e5-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Lifeline element be32d5ca-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.ExecutionOccurrenceSpecification element be3323bf-6eb2-11ef-94eb-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.ExecutionOccurrenceSpecification element be3323c0-6eb2-11ef-a179-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.BehaviorExecutionSpecification element be3323be-6eb2-11ef-8352-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.ExecutionOccurrenceSpecification element be3323bf-6eb2-11ef-94eb-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.ExecutionOccurrenceSpecification element be3323c0-6eb2-11ef-a179-14abc554333b>
+gaphor.diagram._connector DEBUG Disconnect callback <gaphor.UML.interactions.message.MessageItem element be35e0f8-6eb2-11ef-965c-14abc554333b>.<Handle object on (Variable(0, 20), Variable(0, 20))>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.MessageOccurrenceSpecification element be3607ee-6eb2-11ef-8352-14abc554333b>
+gaphor.diagram._connector DEBUG Disconnect callback <gaphor.UML.interactions.message.MessageItem element be35e0f8-6eb2-11ef-965c-14abc554333b>.<Handle object on (Variable(40, 20), Variable(0, 20))>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.MessageOccurrenceSpecification element be3607ef-6eb2-11ef-94eb-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.interactions.lifeline.LifelineItem element be359312-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.interactions.lifeline.LifelineItem element be35ba03-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.interactions.message.MessageItem element be35e0f8-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element be356c18-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Message element be3607ed-6eb2-11ef-bb80-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.interactions.lifeline.LifelineItem element be380271-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.interactions.message.MessageItem element be385058-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element be380270-6eb2-11ef-86c9-14abc554333b>
+gaphor.diagram._connector DEBUG Disconnect callback <gaphor.UML.interactions.message.MessageItem element be3a4aba-6eb2-11ef-8052-14abc554333b>.<Handle object on (Variable(0, 20), Variable(0, 20))>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.MessageOccurrenceSpecification element be3ae69a-6eb2-11ef-8352-14abc554333b>
+gaphor.diagram._connector DEBUG Disconnect callback <gaphor.UML.interactions.message.MessageItem element be3a4aba-6eb2-11ef-8052-14abc554333b>.<Handle object on (Variable(40, 20), Variable(0, 20))>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.MessageOccurrenceSpecification element be3ae69b-6eb2-11ef-94eb-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.interactions.lifeline.LifelineItem element be3a71b1-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.interactions.lifeline.LifelineItem element be3a98b4-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.interactions.message.MessageItem element be3a4aba-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element be3a23e1-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Message element be3ae699-6eb2-11ef-bb80-14abc554333b>
+gaphor.diagram._connector DEBUG Disconnect callback <gaphor.UML.interactions.message.MessageItem element be3d7d15-6eb2-11ef-8352-14abc554333b>.<Handle object on (Variable(40, 20), Variable(0, 20))>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.MessageOccurrenceSpecification element be3d7d17-6eb2-11ef-a179-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.interactions.interaction.InteractionItem element be3d0800-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.interactions.lifeline.LifelineItem element be3d2efb-6eb2-11ef-bb80-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.interactions.message.MessageItem element be3d7d15-6eb2-11ef-8352-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element be3ce120-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Lifeline element be3d2efa-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Message element be3d7d16-6eb2-11ef-94eb-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Interaction element be3d07ff-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Lifeline element be3d2efa-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Message element be3d7d16-6eb2-11ef-94eb-14abc554333b>
+gaphor.diagram._connector DEBUG Disconnect callback <gaphor.UML.interactions.message.MessageItem element be40132b-6eb2-11ef-965c-14abc554333b>.<Handle object on (Variable(0, 20), Variable(0, 20))>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.MessageOccurrenceSpecification element be40132d-6eb2-11ef-8352-14abc554333b>
+gaphor.diagram._connector DEBUG Disconnect callback <gaphor.UML.interactions.message.MessageItem element be40132b-6eb2-11ef-965c-14abc554333b>.<Handle object on (Variable(40, 20), Variable(0, 20))>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.MessageOccurrenceSpecification element be403a26-6eb2-11ef-94eb-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.interactions.lifeline.LifelineItem element be3fc544-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.interactions.lifeline.LifelineItem element be3fec38-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.interactions.message.MessageItem element be40132b-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element be3f9e42-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Message element be40132c-6eb2-11ef-bb80-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.interactions.lifeline.LifelineItem element be4234a0-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.interactions.message.MessageItem element be425b9c-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element be420dad-6eb2-11ef-86c9-14abc554333b>
+gaphor.diagram._connector DEBUG Disconnect callback <gaphor.UML.interactions.message.MessageItem element be442f11-6eb2-11ef-9837-14abc554333b>.<Handle object on (Variable(40, 20), Variable(0, 20))>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.MessageOccurrenceSpecification element be44a3f6-6eb2-11ef-94eb-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.interactions.lifeline.LifelineItem element be445600-6eb2-11ef-bb80-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.interactions.message.MessageItem element be442f11-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element be442f0f-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Lifeline element be4455ff-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Message element be44a3f5-6eb2-11ef-8352-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Interaction element be442f10-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Lifeline element be4455ff-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Message element be44a3f5-6eb2-11ef-8352-14abc554333b>
+gaphor.diagram._connector DEBUG Disconnect callback <gaphor.UML.interactions.message.MessageItem element be471347-6eb2-11ef-965c-14abc554333b>.<Handle object on (Variable(40, 20), Variable(0, 20))>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.MessageOccurrenceSpecification element be473a42-6eb2-11ef-8352-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.interactions.lifeline.LifelineItem element be469e62-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.interactions.lifeline.LifelineItem element be46c559-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.interactions.message.MessageItem element be471347-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element be469e61-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Message element be473a41-6eb2-11ef-bb80-14abc554333b>
+gaphor.diagram._connector DEBUG Disconnect callback <gaphor.UML.interactions.message.MessageItem element be490dba-6eb2-11ef-8052-14abc554333b>.<Handle object on (Variable(40, 20), Variable(0, 20))>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.MessageOccurrenceSpecification element be49f776-6eb2-11ef-94eb-14abc554333b>
+gaphor.diagram._connector DEBUG Disconnect callback <gaphor.UML.interactions.message.MessageItem element be490dba-6eb2-11ef-8052-14abc554333b>.<Handle object on (Variable(0, 20), Variable(0, 20))>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.MessageOccurrenceSpecification element be49d07f-6eb2-11ef-8352-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.interactions.lifeline.LifelineItem element be4934ac-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.interactions.lifeline.LifelineItem element be495baa-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.interactions.message.MessageItem element be490dba-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element be490db9-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Message element be49d07e-6eb2-11ef-bb80-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.interactions.lifeline.LifelineItem element be4c8dce-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element be4c66c6-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Lifeline element be4c8dcd-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Interface element be4cb4c4-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.classes.klass.ClassItem element be4f98e3-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.classes.klass.ClassItem element be5034c0-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element be4f71ec-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Class element be4f98e2-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.classes.klass.ClassItem element be534016-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.classes.klass.ClassItem element be538dcf-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.classes.klass.ClassItem element be53b4c3-6eb2-11ef-bb80-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.classes.klass.ClassItem element be5402b1-6eb2-11ef-8352-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element be52f20c-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Class element be534015-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.diagram.general.simpleitem.Box element be569907-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.diagram.general.simpleitem.Ellipse element be569908-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.diagram.general.simpleitem.Line element be56bff3-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.diagram.general.simpleitem.Box element be570de7-6eb2-11ef-bb80-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.diagram.general.simpleitem.Ellipse element be5734e1-6eb2-11ef-8352-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.diagram.general.simpleitem.Line element be575bfe-6eb2-11ef-94eb-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element be567205-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.elementdispatcher DEBUG Handler <function Presentation.__init__.<locals>.update at 0x00000294E0BC2700> is not registered for <gaphor.UML.uml.Class element be597d2e-6eb2-11ef-9837-14abc554333b>.<association ownedOperation: Operation[0..*] <>-> class_>
+Traceback (most recent call last):
+  File "C:\Users\pbrow\workspaces\Gaphor\gaphor\gaphor\core\modeling\elementdispatcher.py", line 221, in _remove_handlers
+    del handlers[handler]
+        ~~~~~~~~^^^^^^^^^
+KeyError: <function Presentation.__init__.<locals>.update at 0x00000294E0BC2700>
+gaphor.core.modeling.elementdispatcher DEBUG Handler <function Presentation.__init__.<locals>.update at 0x00000294E0BC2700> is not registered for <gaphor.UML.uml.Class element be597d2e-6eb2-11ef-9837-14abc554333b>.<association ownedOperation: Operation[0..*] <>-> class_>
+Traceback (most recent call last):
+  File "C:\Users\pbrow\workspaces\Gaphor\gaphor\gaphor\core\modeling\elementdispatcher.py", line 221, in _remove_handlers
+    del handlers[handler]
+        ~~~~~~~~^^^^^^^^^
+KeyError: <function Presentation.__init__.<locals>.update at 0x00000294E0BC2700>
+gaphor.core.modeling.elementdispatcher DEBUG Handler <function Presentation.__init__.<locals>.update at 0x00000294E0BC2700> is not registered for <gaphor.UML.uml.Class element be597d2e-6eb2-11ef-9837-14abc554333b>.<association ownedOperation: Operation[0..*] <>-> class_>
+Traceback (most recent call last):
+  File "C:\Users\pbrow\workspaces\Gaphor\gaphor\gaphor\core\modeling\elementdispatcher.py", line 221, in _remove_handlers
+    del handlers[handler]
+        ~~~~~~~~^^^^^^^^^
+KeyError: <function Presentation.__init__.<locals>.update at 0x00000294E0BC2700>
+gaphor.core.modeling.elementdispatcher DEBUG Handler <function Presentation.__init__.<locals>.update at 0x00000294E0BC2700> is not registered for <gaphor.UML.uml.Class element be597d2e-6eb2-11ef-9837-14abc554333b>.<association ownedAttribute: Property[0..*] <>-> class_>
+Traceback (most recent call last):
+  File "C:\Users\pbrow\workspaces\Gaphor\gaphor\gaphor\core\modeling\elementdispatcher.py", line 221, in _remove_handlers
+    del handlers[handler]
+        ~~~~~~~~^^^^^^^^^
+KeyError: <function Presentation.__init__.<locals>.update at 0x00000294E0BC2700>
+gaphor.core.modeling.elementdispatcher DEBUG Handler <function Presentation.__init__.<locals>.update at 0x00000294E0BC2700> is not registered for <gaphor.UML.uml.Class element be597d2e-6eb2-11ef-9837-14abc554333b>.<association ownedAttribute: Property[0..*] <>-> class_>
+Traceback (most recent call last):
+  File "C:\Users\pbrow\workspaces\Gaphor\gaphor\gaphor\core\modeling\elementdispatcher.py", line 221, in _remove_handlers
+    del handlers[handler]
+        ~~~~~~~~^^^^^^^^^
+KeyError: <function Presentation.__init__.<locals>.update at 0x00000294E0BC2700>
+gaphor.core.modeling.elementdispatcher DEBUG Handler <function Presentation.__init__.<locals>.update at 0x00000294E0BC2700> is not registered for <gaphor.UML.uml.Class element be597d2e-6eb2-11ef-9837-14abc554333b>.<association ownedAttribute: Property[0..*] <>-> class_>
+Traceback (most recent call last):
+  File "C:\Users\pbrow\workspaces\Gaphor\gaphor\gaphor\core\modeling\elementdispatcher.py", line 221, in _remove_handlers
+    del handlers[handler]
+        ~~~~~~~~^^^^^^^^^
+KeyError: <function Presentation.__init__.<locals>.update at 0x00000294E0BC2700>
+gaphor.core.modeling.elementdispatcher DEBUG Handler <function Presentation.__init__.<locals>.update at 0x00000294E0BC2700> is not registered for <gaphor.UML.uml.Class element be597d2e-6eb2-11ef-9837-14abc554333b>.<association ownedAttribute: Property[0..*] <>-> class_>
+Traceback (most recent call last):
+  File "C:\Users\pbrow\workspaces\Gaphor\gaphor\gaphor\core\modeling\elementdispatcher.py", line 221, in _remove_handlers
+    del handlers[handler]
+        ~~~~~~~~^^^^^^^^^
+KeyError: <function Presentation.__init__.<locals>.update at 0x00000294E0BC2700>
+gaphor.core.modeling.elementdispatcher DEBUG Handler <function Presentation.__init__.<locals>.update at 0x00000294E0BC2700> is not registered for <gaphor.UML.uml.Class element be597d2e-6eb2-11ef-9837-14abc554333b>.<association ownedAttribute: Property[0..*] <>-> class_>
+Traceback (most recent call last):
+  File "C:\Users\pbrow\workspaces\Gaphor\gaphor\gaphor\core\modeling\elementdispatcher.py", line 221, in _remove_handlers
+    del handlers[handler]
+        ~~~~~~~~^^^^^^^^^
+KeyError: <function Presentation.__init__.<locals>.update at 0x00000294E0BC2700>
+gaphor.core.modeling.elementdispatcher DEBUG Handler <function Presentation.__init__.<locals>.update at 0x00000294E0BC2700> is not registered for <gaphor.UML.uml.Class element be597d2e-6eb2-11ef-9837-14abc554333b>.<association ownedOperation: Operation[0..*] <>-> class_>
+Traceback (most recent call last):
+  File "C:\Users\pbrow\workspaces\Gaphor\gaphor\gaphor\core\modeling\elementdispatcher.py", line 221, in _remove_handlers
+    del handlers[handler]
+        ~~~~~~~~^^^^^^^^^
+KeyError: <function Presentation.__init__.<locals>.update at 0x00000294E0BC2700>
+gaphor.core.modeling.elementdispatcher DEBUG Handler <function Presentation.__init__.<locals>.update at 0x00000294E0BC2700> is not registered for <gaphor.UML.uml.Class element be597d2e-6eb2-11ef-9837-14abc554333b>.<association ownedOperation: Operation[0..*] <>-> class_>
+Traceback (most recent call last):
+  File "C:\Users\pbrow\workspaces\Gaphor\gaphor\gaphor\core\modeling\elementdispatcher.py", line 221, in _remove_handlers
+    del handlers[handler]
+        ~~~~~~~~^^^^^^^^^
+KeyError: <function Presentation.__init__.<locals>.update at 0x00000294E0BC2700>
+gaphor.core.modeling.elementdispatcher DEBUG Handler <function Presentation.__init__.<locals>.update at 0x00000294E0BC2700> is not registered for <gaphor.UML.uml.Class element be597d2e-6eb2-11ef-9837-14abc554333b>.<association appliedStereotype: InstanceSpecification[0..*] <>-> extended>
+Traceback (most recent call last):
+  File "C:\Users\pbrow\workspaces\Gaphor\gaphor\gaphor\core\modeling\elementdispatcher.py", line 221, in _remove_handlers
+    del handlers[handler]
+        ~~~~~~~~^^^^^^^^^
+KeyError: <function Presentation.__init__.<locals>.update at 0x00000294E0BC2700>
+gaphor.core.modeling.elementdispatcher DEBUG Handler <function Presentation.__init__.<locals>.update at 0x00000294E0BC2700> is not registered for <gaphor.UML.uml.Class element be597d2e-6eb2-11ef-9837-14abc554333b>.<association ownedAttribute: Property[0..*] <>-> class_>
+Traceback (most recent call last):
+  File "C:\Users\pbrow\workspaces\Gaphor\gaphor\gaphor\core\modeling\elementdispatcher.py", line 221, in _remove_handlers
+    del handlers[handler]
+        ~~~~~~~~^^^^^^^^^
+KeyError: <function Presentation.__init__.<locals>.update at 0x00000294E0BC2700>
+gaphor.core.modeling.elementdispatcher DEBUG Handler <function Presentation.__init__.<locals>.update at 0x00000294E0BC2700> is not registered for <gaphor.UML.uml.Class element be597d2e-6eb2-11ef-9837-14abc554333b>.<association ownedOperation: Operation[0..*] <>-> class_>
+Traceback (most recent call last):
+  File "C:\Users\pbrow\workspaces\Gaphor\gaphor\gaphor\core\modeling\elementdispatcher.py", line 221, in _remove_handlers
+    del handlers[handler]
+        ~~~~~~~~^^^^^^^^^
+KeyError: <function Presentation.__init__.<locals>.update at 0x00000294E0BC2700>
+gaphor.core.modeling.elementdispatcher DEBUG Handler <function Presentation.__init__.<locals>.update at 0x00000294E0BC2700> is not registered for <gaphor.UML.uml.Class element be597d2e-6eb2-11ef-9837-14abc554333b>.<association ownedAttribute: Property[0..*] <>-> class_>
+Traceback (most recent call last):
+  File "C:\Users\pbrow\workspaces\Gaphor\gaphor\gaphor\core\modeling\elementdispatcher.py", line 221, in _remove_handlers
+    del handlers[handler]
+        ~~~~~~~~^^^^^^^^^
+KeyError: <function Presentation.__init__.<locals>.update at 0x00000294E0BC2700>
+gaphor.core.modeling.elementdispatcher DEBUG Handler <function Presentation.__init__.<locals>.update at 0x00000294E0BC2700> is not registered for <gaphor.UML.uml.Class element be597d2e-6eb2-11ef-9837-14abc554333b>.<association ownedAttribute: Property[0..*] <>-> class_>
+Traceback (most recent call last):
+  File "C:\Users\pbrow\workspaces\Gaphor\gaphor\gaphor\core\modeling\elementdispatcher.py", line 221, in _remove_handlers
+    del handlers[handler]
+        ~~~~~~~~^^^^^^^^^
+KeyError: <function Presentation.__init__.<locals>.update at 0x00000294E0BC2700>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.classes.klass.ClassItem element be59a437-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Class element be597d2e-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Package element be597d2d-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Class element be597d2e-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.classes.klass.ClassItem element be5b796c-6eb2-11ef-8352-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element be59564a-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Class element be5bc58f-6eb2-11ef-94eb-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Package element be5a4007-6eb2-11ef-bb80-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Class element be5bc58f-6eb2-11ef-94eb-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.classes.klass.ClassItem element be5de725-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element be5de722-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.classes.klass.ClassItem element be5e366b-6eb2-11ef-bb80-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element be5de723-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Class element be5de724-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.classes.klass.ClassItem element be6064d8-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Class element be6064d7-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.classes.klass.ClassItem element be60d9b9-6eb2-11ef-bb80-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element be603dde-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Class element be6100ab-6eb2-11ef-8352-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Package element be6064d6-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Class element be6100ab-6eb2-11ef-8352-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.classes.klass.ClassItem element be63161f-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.classes.klass.ClassItem element be63641d-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element be63161d-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Class element be63161e-6eb2-11ef-8052-14abc554333b>
+gaphor.diagram._connector DEBUG Disconnect callback <gaphor.UML.classes.generalization.GeneralizationItem element be65ea2a-6eb2-11ef-8352-14abc554333b>.<Handle object on (Variable(30, 20), Variable(0, 20))>
+gaphor.diagram._connector DEBUG Disconnect callback <gaphor.UML.classes.generalization.GeneralizationItem element be65ea2a-6eb2-11ef-8352-14abc554333b>.<Handle object on (Variable(0, 20), Variable(0, 20))>
+gaphor.diagram._connector DEBUG Disconnect callback <gaphor.UML.classes.generalization.GeneralizationItem element be668600-6eb2-11ef-8208-14abc554333b>.<Handle object on (Variable(30, 20), Variable(0, 20))>
+gaphor.diagram._connector DEBUG Disconnect callback <gaphor.UML.classes.generalization.GeneralizationItem element be668600-6eb2-11ef-8208-14abc554333b>.<Handle object on (Variable(0, 20), Variable(0, 20))>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.classes.klass.ClassItem element be65754e-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.classes.klass.ClassItem element be65c337-6eb2-11ef-bb80-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.classes.klass.ClassItem element be66381d-6eb2-11ef-a179-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.classes.klass.ClassItem element be66ad09-6eb2-11ef-b7f2-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.classes.generalization.GeneralizationItem element be65ea2a-6eb2-11ef-8352-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.classes.generalization.GeneralizationItem element be668600-6eb2-11ef-8208-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element be65754b-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Generalization element be661120-6eb2-11ef-94eb-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Class element be65754c-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Class element be65754d-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Generalization element be661120-6eb2-11ef-94eb-14abc554333b>
+gaphor.diagram._connector DEBUG Disconnect callback <gaphor.UML.classes.generalization.GeneralizationItem element be6a2ea5-6eb2-11ef-8352-14abc554333b>.<Handle object on (Variable(30, 20), Variable(0, 20))>
+gaphor.diagram._connector DEBUG Disconnect callback <gaphor.UML.classes.generalization.GeneralizationItem element be6a2ea5-6eb2-11ef-8352-14abc554333b>.<Handle object on (Variable(0, 20), Variable(0, 20))>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.classes.generalization.GeneralizationItem element be6a2ea5-6eb2-11ef-8352-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Generalization element be6a7c6d-6eb2-11ef-94eb-14abc554333b>
+gaphor.core.modeling.elementdispatcher DEBUG Handler <function Presentation.__init__.<locals>.update at 0x00000294E0C19E40> is not registered for <gaphor.UML.uml.Class element be69b83c-6eb2-11ef-8052-14abc554333b>.<association ownedOperation: Operation[0..*] <>-> class_>
+Traceback (most recent call last):
+  File "C:\Users\pbrow\workspaces\Gaphor\gaphor\gaphor\core\modeling\elementdispatcher.py", line 221, in _remove_handlers
+    del handlers[handler]
+        ~~~~~~~~^^^^^^^^^
+KeyError: <function Presentation.__init__.<locals>.update at 0x00000294E0C19E40>
+gaphor.core.modeling.elementdispatcher DEBUG Handler <function Presentation.__init__.<locals>.update at 0x00000294E0C19E40> is not registered for <gaphor.UML.uml.Class element be69b83c-6eb2-11ef-8052-14abc554333b>.<association ownedOperation: Operation[0..*] <>-> class_>
+Traceback (most recent call last):
+  File "C:\Users\pbrow\workspaces\Gaphor\gaphor\gaphor\core\modeling\elementdispatcher.py", line 221, in _remove_handlers
+    del handlers[handler]
+        ~~~~~~~~^^^^^^^^^
+KeyError: <function Presentation.__init__.<locals>.update at 0x00000294E0C19E40>
+gaphor.core.modeling.elementdispatcher DEBUG Handler <function Presentation.__init__.<locals>.update at 0x00000294E0C19E40> is not registered for <gaphor.UML.uml.Class element be69b83c-6eb2-11ef-8052-14abc554333b>.<association ownedOperation: Operation[0..*] <>-> class_>
+Traceback (most recent call last):
+  File "C:\Users\pbrow\workspaces\Gaphor\gaphor\gaphor\core\modeling\elementdispatcher.py", line 221, in _remove_handlers
+    del handlers[handler]
+        ~~~~~~~~^^^^^^^^^
+KeyError: <function Presentation.__init__.<locals>.update at 0x00000294E0C19E40>
+gaphor.core.modeling.elementdispatcher DEBUG Handler <function Presentation.__init__.<locals>.update at 0x00000294E0C19E40> is not registered for <gaphor.UML.uml.Class element be69b83c-6eb2-11ef-8052-14abc554333b>.<association ownedAttribute: Property[0..*] <>-> class_>
+Traceback (most recent call last):
+  File "C:\Users\pbrow\workspaces\Gaphor\gaphor\gaphor\core\modeling\elementdispatcher.py", line 221, in _remove_handlers
+    del handlers[handler]
+        ~~~~~~~~^^^^^^^^^
+KeyError: <function Presentation.__init__.<locals>.update at 0x00000294E0C19E40>
+gaphor.core.modeling.elementdispatcher DEBUG Handler <function Presentation.__init__.<locals>.update at 0x00000294E0C19E40> is not registered for <gaphor.UML.uml.Class element be69b83c-6eb2-11ef-8052-14abc554333b>.<association ownedAttribute: Property[0..*] <>-> class_>
+Traceback (most recent call last):
+  File "C:\Users\pbrow\workspaces\Gaphor\gaphor\gaphor\core\modeling\elementdispatcher.py", line 221, in _remove_handlers
+    del handlers[handler]
+        ~~~~~~~~^^^^^^^^^
+KeyError: <function Presentation.__init__.<locals>.update at 0x00000294E0C19E40>
+gaphor.core.modeling.elementdispatcher DEBUG Handler <function Presentation.__init__.<locals>.update at 0x00000294E0C19E40> is not registered for <gaphor.UML.uml.Class element be69b83c-6eb2-11ef-8052-14abc554333b>.<association ownedAttribute: Property[0..*] <>-> class_>
+Traceback (most recent call last):
+  File "C:\Users\pbrow\workspaces\Gaphor\gaphor\gaphor\core\modeling\elementdispatcher.py", line 221, in _remove_handlers
+    del handlers[handler]
+        ~~~~~~~~^^^^^^^^^
+KeyError: <function Presentation.__init__.<locals>.update at 0x00000294E0C19E40>
+gaphor.core.modeling.elementdispatcher DEBUG Handler <function Presentation.__init__.<locals>.update at 0x00000294E0C19E40> is not registered for <gaphor.UML.uml.Class element be69b83c-6eb2-11ef-8052-14abc554333b>.<association ownedAttribute: Property[0..*] <>-> class_>
+Traceback (most recent call last):
+  File "C:\Users\pbrow\workspaces\Gaphor\gaphor\gaphor\core\modeling\elementdispatcher.py", line 221, in _remove_handlers
+    del handlers[handler]
+        ~~~~~~~~^^^^^^^^^
+KeyError: <function Presentation.__init__.<locals>.update at 0x00000294E0C19E40>
+gaphor.core.modeling.elementdispatcher DEBUG Handler <function Presentation.__init__.<locals>.update at 0x00000294E0C19E40> is not registered for <gaphor.UML.uml.Class element be69b83c-6eb2-11ef-8052-14abc554333b>.<association ownedAttribute: Property[0..*] <>-> class_>
+Traceback (most recent call last):
+  File "C:\Users\pbrow\workspaces\Gaphor\gaphor\gaphor\core\modeling\elementdispatcher.py", line 221, in _remove_handlers
+    del handlers[handler]
+        ~~~~~~~~^^^^^^^^^
+KeyError: <function Presentation.__init__.<locals>.update at 0x00000294E0C19E40>
+gaphor.core.modeling.elementdispatcher DEBUG Handler <function Presentation.__init__.<locals>.update at 0x00000294E0C19E40> is not registered for <gaphor.UML.uml.Class element be69b83c-6eb2-11ef-8052-14abc554333b>.<association ownedOperation: Operation[0..*] <>-> class_>
+Traceback (most recent call last):
+  File "C:\Users\pbrow\workspaces\Gaphor\gaphor\gaphor\core\modeling\elementdispatcher.py", line 221, in _remove_handlers
+    del handlers[handler]
+        ~~~~~~~~^^^^^^^^^
+KeyError: <function Presentation.__init__.<locals>.update at 0x00000294E0C19E40>
+gaphor.core.modeling.elementdispatcher DEBUG Handler <function Presentation.__init__.<locals>.update at 0x00000294E0C19E40> is not registered for <gaphor.UML.uml.Class element be69b83c-6eb2-11ef-8052-14abc554333b>.<association ownedOperation: Operation[0..*] <>-> class_>
+Traceback (most recent call last):
+  File "C:\Users\pbrow\workspaces\Gaphor\gaphor\gaphor\core\modeling\elementdispatcher.py", line 221, in _remove_handlers
+    del handlers[handler]
+        ~~~~~~~~^^^^^^^^^
+KeyError: <function Presentation.__init__.<locals>.update at 0x00000294E0C19E40>
+gaphor.core.modeling.elementdispatcher DEBUG Handler <function Presentation.__init__.<locals>.update at 0x00000294E0C19E40> is not registered for <gaphor.UML.uml.Class element be69b83c-6eb2-11ef-8052-14abc554333b>.<association appliedStereotype: InstanceSpecification[0..*] <>-> extended>
+Traceback (most recent call last):
+  File "C:\Users\pbrow\workspaces\Gaphor\gaphor\gaphor\core\modeling\elementdispatcher.py", line 221, in _remove_handlers
+    del handlers[handler]
+        ~~~~~~~~^^^^^^^^^
+KeyError: <function Presentation.__init__.<locals>.update at 0x00000294E0C19E40>
+gaphor.core.modeling.elementdispatcher DEBUG Handler <function Presentation.__init__.<locals>.update at 0x00000294E0C19E40> is not registered for <gaphor.UML.uml.Class element be69b83c-6eb2-11ef-8052-14abc554333b>.<association ownedAttribute: Property[0..*] <>-> class_>
+Traceback (most recent call last):
+  File "C:\Users\pbrow\workspaces\Gaphor\gaphor\gaphor\core\modeling\elementdispatcher.py", line 221, in _remove_handlers
+    del handlers[handler]
+        ~~~~~~~~^^^^^^^^^
+KeyError: <function Presentation.__init__.<locals>.update at 0x00000294E0C19E40>
+gaphor.core.modeling.elementdispatcher DEBUG Handler <function Presentation.__init__.<locals>.update at 0x00000294E0C19E40> is not registered for <gaphor.UML.uml.Class element be69b83c-6eb2-11ef-8052-14abc554333b>.<association ownedOperation: Operation[0..*] <>-> class_>
+Traceback (most recent call last):
+  File "C:\Users\pbrow\workspaces\Gaphor\gaphor\gaphor\core\modeling\elementdispatcher.py", line 221, in _remove_handlers
+    del handlers[handler]
+        ~~~~~~~~^^^^^^^^^
+KeyError: <function Presentation.__init__.<locals>.update at 0x00000294E0C19E40>
+gaphor.core.modeling.elementdispatcher DEBUG Handler <function Presentation.__init__.<locals>.update at 0x00000294E0C19E40> is not registered for <gaphor.UML.uml.Class element be69b83c-6eb2-11ef-8052-14abc554333b>.<association ownedAttribute: Property[0..*] <>-> class_>
+Traceback (most recent call last):
+  File "C:\Users\pbrow\workspaces\Gaphor\gaphor\gaphor\core\modeling\elementdispatcher.py", line 221, in _remove_handlers
+    del handlers[handler]
+        ~~~~~~~~^^^^^^^^^
+KeyError: <function Presentation.__init__.<locals>.update at 0x00000294E0C19E40>
+gaphor.core.modeling.elementdispatcher DEBUG Handler <function Presentation.__init__.<locals>.update at 0x00000294E0C19E40> is not registered for <gaphor.UML.uml.Class element be69b83c-6eb2-11ef-8052-14abc554333b>.<association ownedAttribute: Property[0..*] <>-> class_>
+Traceback (most recent call last):
+  File "C:\Users\pbrow\workspaces\Gaphor\gaphor\gaphor\core\modeling\elementdispatcher.py", line 221, in _remove_handlers
+    del handlers[handler]
+        ~~~~~~~~^^^^^^^^^
+KeyError: <function Presentation.__init__.<locals>.update at 0x00000294E0C19E40>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.classes.klass.ClassItem element be69b83e-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Class element be69b83c-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.elementdispatcher DEBUG Handler <function Presentation.__init__.<locals>.update at 0x00000294E0BC3B00> is not registered for <gaphor.UML.uml.Class element be69b83d-6eb2-11ef-9837-14abc554333b>.<association ownedOperation: Operation[0..*] <>-> class_>
+Traceback (most recent call last):
+  File "C:\Users\pbrow\workspaces\Gaphor\gaphor\gaphor\core\modeling\elementdispatcher.py", line 221, in _remove_handlers
+    del handlers[handler]
+        ~~~~~~~~^^^^^^^^^
+KeyError: <function Presentation.__init__.<locals>.update at 0x00000294E0BC3B00>
+gaphor.core.modeling.elementdispatcher DEBUG Handler <function Presentation.__init__.<locals>.update at 0x00000294E0BC3B00> is not registered for <gaphor.UML.uml.Class element be69b83d-6eb2-11ef-9837-14abc554333b>.<association ownedOperation: Operation[0..*] <>-> class_>
+Traceback (most recent call last):
+  File "C:\Users\pbrow\workspaces\Gaphor\gaphor\gaphor\core\modeling\elementdispatcher.py", line 221, in _remove_handlers
+    del handlers[handler]
+        ~~~~~~~~^^^^^^^^^
+KeyError: <function Presentation.__init__.<locals>.update at 0x00000294E0BC3B00>
+gaphor.core.modeling.elementdispatcher DEBUG Handler <function Presentation.__init__.<locals>.update at 0x00000294E0BC3B00> is not registered for <gaphor.UML.uml.Class element be69b83d-6eb2-11ef-9837-14abc554333b>.<association ownedOperation: Operation[0..*] <>-> class_>
+Traceback (most recent call last):
+  File "C:\Users\pbrow\workspaces\Gaphor\gaphor\gaphor\core\modeling\elementdispatcher.py", line 221, in _remove_handlers
+    del handlers[handler]
+        ~~~~~~~~^^^^^^^^^
+KeyError: <function Presentation.__init__.<locals>.update at 0x00000294E0BC3B00>
+gaphor.core.modeling.elementdispatcher DEBUG Handler <function Presentation.__init__.<locals>.update at 0x00000294E0BC3B00> is not registered for <gaphor.UML.uml.Class element be69b83d-6eb2-11ef-9837-14abc554333b>.<association ownedAttribute: Property[0..*] <>-> class_>
+Traceback (most recent call last):
+  File "C:\Users\pbrow\workspaces\Gaphor\gaphor\gaphor\core\modeling\elementdispatcher.py", line 221, in _remove_handlers
+    del handlers[handler]
+        ~~~~~~~~^^^^^^^^^
+KeyError: <function Presentation.__init__.<locals>.update at 0x00000294E0BC3B00>
+gaphor.core.modeling.elementdispatcher DEBUG Handler <function Presentation.__init__.<locals>.update at 0x00000294E0BC3B00> is not registered for <gaphor.UML.uml.Class element be69b83d-6eb2-11ef-9837-14abc554333b>.<association ownedAttribute: Property[0..*] <>-> class_>
+Traceback (most recent call last):
+  File "C:\Users\pbrow\workspaces\Gaphor\gaphor\gaphor\core\modeling\elementdispatcher.py", line 221, in _remove_handlers
+    del handlers[handler]
+        ~~~~~~~~^^^^^^^^^
+KeyError: <function Presentation.__init__.<locals>.update at 0x00000294E0BC3B00>
+gaphor.core.modeling.elementdispatcher DEBUG Handler <function Presentation.__init__.<locals>.update at 0x00000294E0BC3B00> is not registered for <gaphor.UML.uml.Class element be69b83d-6eb2-11ef-9837-14abc554333b>.<association ownedAttribute: Property[0..*] <>-> class_>
+Traceback (most recent call last):
+  File "C:\Users\pbrow\workspaces\Gaphor\gaphor\gaphor\core\modeling\elementdispatcher.py", line 221, in _remove_handlers
+    del handlers[handler]
+        ~~~~~~~~^^^^^^^^^
+KeyError: <function Presentation.__init__.<locals>.update at 0x00000294E0BC3B00>
+gaphor.core.modeling.elementdispatcher DEBUG Handler <function Presentation.__init__.<locals>.update at 0x00000294E0BC3B00> is not registered for <gaphor.UML.uml.Class element be69b83d-6eb2-11ef-9837-14abc554333b>.<association ownedAttribute: Property[0..*] <>-> class_>
+Traceback (most recent call last):
+  File "C:\Users\pbrow\workspaces\Gaphor\gaphor\gaphor\core\modeling\elementdispatcher.py", line 221, in _remove_handlers
+    del handlers[handler]
+        ~~~~~~~~^^^^^^^^^
+KeyError: <function Presentation.__init__.<locals>.update at 0x00000294E0BC3B00>
+gaphor.core.modeling.elementdispatcher DEBUG Handler <function Presentation.__init__.<locals>.update at 0x00000294E0BC3B00> is not registered for <gaphor.UML.uml.Class element be69b83d-6eb2-11ef-9837-14abc554333b>.<association ownedAttribute: Property[0..*] <>-> class_>
+Traceback (most recent call last):
+  File "C:\Users\pbrow\workspaces\Gaphor\gaphor\gaphor\core\modeling\elementdispatcher.py", line 221, in _remove_handlers
+    del handlers[handler]
+        ~~~~~~~~^^^^^^^^^
+KeyError: <function Presentation.__init__.<locals>.update at 0x00000294E0BC3B00>
+gaphor.core.modeling.elementdispatcher DEBUG Handler <function Presentation.__init__.<locals>.update at 0x00000294E0BC3B00> is not registered for <gaphor.UML.uml.Class element be69b83d-6eb2-11ef-9837-14abc554333b>.<association ownedOperation: Operation[0..*] <>-> class_>
+Traceback (most recent call last):
+  File "C:\Users\pbrow\workspaces\Gaphor\gaphor\gaphor\core\modeling\elementdispatcher.py", line 221, in _remove_handlers
+    del handlers[handler]
+        ~~~~~~~~^^^^^^^^^
+KeyError: <function Presentation.__init__.<locals>.update at 0x00000294E0BC3B00>
+gaphor.core.modeling.elementdispatcher DEBUG Handler <function Presentation.__init__.<locals>.update at 0x00000294E0BC3B00> is not registered for <gaphor.UML.uml.Class element be69b83d-6eb2-11ef-9837-14abc554333b>.<association ownedOperation: Operation[0..*] <>-> class_>
+Traceback (most recent call last):
+  File "C:\Users\pbrow\workspaces\Gaphor\gaphor\gaphor\core\modeling\elementdispatcher.py", line 221, in _remove_handlers
+    del handlers[handler]
+        ~~~~~~~~^^^^^^^^^
+KeyError: <function Presentation.__init__.<locals>.update at 0x00000294E0BC3B00>
+gaphor.core.modeling.elementdispatcher DEBUG Handler <function Presentation.__init__.<locals>.update at 0x00000294E0BC3B00> is not registered for <gaphor.UML.uml.Class element be69b83d-6eb2-11ef-9837-14abc554333b>.<association appliedStereotype: InstanceSpecification[0..*] <>-> extended>
+Traceback (most recent call last):
+  File "C:\Users\pbrow\workspaces\Gaphor\gaphor\gaphor\core\modeling\elementdispatcher.py", line 221, in _remove_handlers
+    del handlers[handler]
+        ~~~~~~~~^^^^^^^^^
+KeyError: <function Presentation.__init__.<locals>.update at 0x00000294E0BC3B00>
+gaphor.core.modeling.elementdispatcher DEBUG Handler <function Presentation.__init__.<locals>.update at 0x00000294E0BC3B00> is not registered for <gaphor.UML.uml.Class element be69b83d-6eb2-11ef-9837-14abc554333b>.<association ownedAttribute: Property[0..*] <>-> class_>
+Traceback (most recent call last):
+  File "C:\Users\pbrow\workspaces\Gaphor\gaphor\gaphor\core\modeling\elementdispatcher.py", line 221, in _remove_handlers
+    del handlers[handler]
+        ~~~~~~~~^^^^^^^^^
+KeyError: <function Presentation.__init__.<locals>.update at 0x00000294E0BC3B00>
+gaphor.core.modeling.elementdispatcher DEBUG Handler <function Presentation.__init__.<locals>.update at 0x00000294E0BC3B00> is not registered for <gaphor.UML.uml.Class element be69b83d-6eb2-11ef-9837-14abc554333b>.<association ownedOperation: Operation[0..*] <>-> class_>
+Traceback (most recent call last):
+  File "C:\Users\pbrow\workspaces\Gaphor\gaphor\gaphor\core\modeling\elementdispatcher.py", line 221, in _remove_handlers
+    del handlers[handler]
+        ~~~~~~~~^^^^^^^^^
+KeyError: <function Presentation.__init__.<locals>.update at 0x00000294E0BC3B00>
+gaphor.core.modeling.elementdispatcher DEBUG Handler <function Presentation.__init__.<locals>.update at 0x00000294E0BC3B00> is not registered for <gaphor.UML.uml.Class element be69b83d-6eb2-11ef-9837-14abc554333b>.<association ownedAttribute: Property[0..*] <>-> class_>
+Traceback (most recent call last):
+  File "C:\Users\pbrow\workspaces\Gaphor\gaphor\gaphor\core\modeling\elementdispatcher.py", line 221, in _remove_handlers
+    del handlers[handler]
+        ~~~~~~~~^^^^^^^^^
+KeyError: <function Presentation.__init__.<locals>.update at 0x00000294E0BC3B00>
+gaphor.core.modeling.elementdispatcher DEBUG Handler <function Presentation.__init__.<locals>.update at 0x00000294E0BC3B00> is not registered for <gaphor.UML.uml.Class element be69b83d-6eb2-11ef-9837-14abc554333b>.<association ownedAttribute: Property[0..*] <>-> class_>
+Traceback (most recent call last):
+  File "C:\Users\pbrow\workspaces\Gaphor\gaphor\gaphor\core\modeling\elementdispatcher.py", line 221, in _remove_handlers
+    del handlers[handler]
+        ~~~~~~~~^^^^^^^^^
+KeyError: <function Presentation.__init__.<locals>.update at 0x00000294E0BC3B00>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.classes.klass.ClassItem element be69e09a-6eb2-11ef-bb80-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Class element be69b83d-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Generalization element be6a7c6d-6eb2-11ef-94eb-14abc554333b>
+gaphor.diagram._connector DEBUG Disconnect callback <gaphor.UML.classes.generalization.GeneralizationItem element be6c9dfa-6eb2-11ef-a179-14abc554333b>.<Handle object on (Variable(30, 20), Variable(0, 20))>
+gaphor.diagram._connector DEBUG Disconnect callback <gaphor.UML.classes.generalization.GeneralizationItem element be6c9dfa-6eb2-11ef-a179-14abc554333b>.<Handle object on (Variable(0, 20), Variable(0, 20))>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.classes.klass.ClassItem element be6cc500-6eb2-11ef-93d3-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.classes.klass.ClassItem element be6d113d-6eb2-11ef-880e-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.classes.generalization.GeneralizationItem element be6c9dfa-6eb2-11ef-a179-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element be696a34-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Generalization element be6c9dfb-6eb2-11ef-8208-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Class element be6c9dfc-6eb2-11ef-b7f2-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Class element be6cc4ff-6eb2-11ef-b9f6-14abc554333b>
+gaphor.diagram._connector DEBUG Disconnect callback <gaphor.UML.classes.generalization.GeneralizationItem element be6ff74f-6eb2-11ef-965c-14abc554333b>.<Handle object on (Variable(30, 20), Variable(0, 20))>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.classes.klass.ClassItem element be6fd01e-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.classes.klass.ClassItem element be701c5c-6eb2-11ef-bb80-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.classes.generalization.GeneralizationItem element be6ff74f-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element be6fa86b-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Class element be6fd01d-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element be76057e-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.tests.test_diagram_style.DemoItem element be77b21f-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element be778b23-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.tests.test_diagram_style.DemoItem element be795eb5-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element be79379c-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Class element be7b7a30-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Class element be7b7a31-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Class element be7dc27d-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Class element be7de96a-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Class element be7de96b-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Class element be8031c8-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Class element be8031c7-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Class element be8031c8-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Class element be831606-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Class element be831607-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Class element be85d33f-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Class element be85d340-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Class element be85fa4c-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.SysML.blocks.proxyport.ProxyPortItem element be994935-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element be9923e3-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.SysML.blocks.proxyport.ProxyPortItem element be9b1cbf-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element be9b1cbe-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.SysML.blocks.proxyport.ProxyPortItem element be9d1734-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element be9cf142-6eb2-11ef-86c9-14abc554333b>
+gaphor.diagram._connector DEBUG Disconnect callback <gaphor.SysML.blocks.proxyport.ProxyPortItem element be9ec3b8-6eb2-11ef-8052-14abc554333b>.<Handle object on (Variable(0, 30), Variable(0, 30))>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.SysML.blocks.block.BlockItem element be9eeab1-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.SysML.blocks.proxyport.ProxyPortItem element be9ec3b8-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element be9e9cc3-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.SysML.sysml.ProxyPort element be9f389b-6eb2-11ef-bb80-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.SysML.sysml.Block element be9eeab0-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.SysML.sysml.ProxyPort element be9f389b-6eb2-11ef-bb80-14abc554333b>
+gaphor.storage.storage INFO Read 5 elements from file
+gaphor.storage.storage DEBUG Loading 5 elements
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element be9e9cc3-6eb2-11ef-86c9-14abc554333b>
+gaphor.diagram._connector DEBUG Disconnect callback <gaphor.SysML.blocks.proxyport.ProxyPortItem element be9ec3b8-6eb2-11ef-8052-14abc554333b>.<Handle object on (Variable(0, 30), Variable(0, 30))>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.SysML.blocks.block.BlockItem element be9eeab1-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.SysML.blocks.proxyport.ProxyPortItem element be9ec3b8-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element be9e9cc3-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.SysML.sysml.ProxyPort element be9f389b-6eb2-11ef-bb80-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.SysML.sysml.Block element be9eeab0-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.SysML.sysml.ProxyPort element be9f389b-6eb2-11ef-bb80-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.stylesheet.StyleSheet element bea098c2-6eb2-11ef-8352-14abc554333b>
+gaphor.storage.storage INFO Read 2575 elements from file
+gaphor.storage.storage DEBUG Loading 2575 elements
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Property element c6a0de38-6eb2-11ef-a3e4-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Class element c6a0b723-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Property element c6a0de37-6eb2-11ef-a0d5-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Class element c6a0b724-6eb2-11ef-91f5-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Association element c6a0de36-6eb2-11ef-8b01-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Property element c6a0de37-6eb2-11ef-a0d5-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Property element c6a0de38-6eb2-11ef-a3e4-14abc554333b>
+gaphor.storage.storage INFO Read 239 elements from file
+gaphor.storage.storage DEBUG Loading 239 elements
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Property element c733e785-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Class element c733e784-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Property element c733e785-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Property element c7340e5d-6eb2-11ef-bb80-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Property element c7340e5e-6eb2-11ef-8352-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Class element c7340e5c-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Property element c7340e5d-6eb2-11ef-bb80-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Property element c7340e5e-6eb2-11ef-8352-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Property element c737b54e-6eb2-11ef-a3e4-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Class element c737b54a-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Class element c737b54b-6eb2-11ef-91f5-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Property element c737b54d-6eb2-11ef-a0d5-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Association element c737b54c-6eb2-11ef-8b01-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Property element c737b54d-6eb2-11ef-a0d5-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Property element c737b54e-6eb2-11ef-a3e4-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Property element c73bb8b2-6eb2-11ef-a3e4-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Class element c73bb8ae-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Property element c73bb8b1-6eb2-11ef-a0d5-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Class element c73bb8af-6eb2-11ef-91f5-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Association element c73bb8b0-6eb2-11ef-8b01-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Property element c73bb8b1-6eb2-11ef-a0d5-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Property element c73bb8b2-6eb2-11ef-a3e4-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Class element c73dda10-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Property element c73dda13-6eb2-11ef-a0d5-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Class element c73dda11-6eb2-11ef-91f5-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Property element c73dda14-6eb2-11ef-a3e4-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Association element c73dda12-6eb2-11ef-8b01-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Property element c73dda13-6eb2-11ef-a0d5-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Property element c73dda14-6eb2-11ef-a3e4-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Property element c746a1e3-6eb2-11ef-a3e4-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Class element c746a1df-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Property element c746a1e2-6eb2-11ef-a0d5-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Class element c746a1e0-6eb2-11ef-91f5-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Association element c746a1e1-6eb2-11ef-8b01-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Property element c746a1e2-6eb2-11ef-a0d5-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Property element c746a1e3-6eb2-11ef-a3e4-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Property element c74c1c38-6eb2-11ef-a3e4-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Class element c74c1c34-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Property element c74c1c37-6eb2-11ef-a0d5-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Class element c74c1c35-6eb2-11ef-91f5-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Association element c74c1c36-6eb2-11ef-8b01-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Property element c74c1c37-6eb2-11ef-a0d5-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Property element c74c1c38-6eb2-11ef-a3e4-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Property element c74e3db8-6eb2-11ef-a3e4-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Class element c74e3db4-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Property element c74e3db7-6eb2-11ef-a0d5-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Class element c74e3db5-6eb2-11ef-91f5-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Association element c74e3db6-6eb2-11ef-8b01-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Property element c74e3db7-6eb2-11ef-a0d5-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Property element c74e3db8-6eb2-11ef-a3e4-14abc554333b>
+gaphor.entrypoint DEBUG found entry point "gaphor.modelinglanguages.Core"
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Property element c751e4b0-6eb2-11ef-a3e4-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Class element c751e4ac-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Property element c751e4af-6eb2-11ef-a0d5-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Class element c751e4ad-6eb2-11ef-91f5-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Association element c751e4ae-6eb2-11ef-8b01-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Property element c751e4af-6eb2-11ef-a0d5-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Property element c751e4b0-6eb2-11ef-a3e4-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.ExtensionEnd element c7542e4e-6eb2-11ef-8352-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Class element c7542e4a-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Property element c7542e4d-6eb2-11ef-bb80-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Stereotype element c7542e4b-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Extension element c7542e4c-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Property element c7542e4d-6eb2-11ef-bb80-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.ExtensionEnd element c7542e4e-6eb2-11ef-8352-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.ActivityPartition element c7571263-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.ActivityPartition element c7573844-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Action element c7573845-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Action element c7573846-6eb2-11ef-bb80-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Action element c7590bc1-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Activity element c7590bc2-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.actions.partition.PartitionItem element c75adf3c-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.actions.action.ActionItem element c75b0776-6eb2-11ef-bb80-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.actions.action.ActionItem element c75b2e63-6eb2-11ef-94eb-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element c75adf3a-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.ActivityPartition element c75adf3b-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Action element c75b0775-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Action element c75b2e62-6eb2-11ef-8352-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.ActivityPartition element c75d4faf-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Action element c75d4fb0-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.ActivityPartition element c75d4fb1-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.ActivityPartition element c75d4fb2-6eb2-11ef-bb80-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Action element c75efc38-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Activity element c75efc39-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.ActivityPartition element c760cfb4-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Action element c760cfb5-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Action element c760cfb6-6eb2-11ef-965c-14abc554333b>
+gaphor.diagram._connector DEBUG Disconnect callback <gaphor.UML.classes.association.AssociationItem element c763b3ed-6eb2-11ef-8352-14abc554333b>.<Handle object on (Variable(0, 20), Variable(0, 20))>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Property element c76400bb-6eb2-11ef-a179-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Property element c76400bc-6eb2-11ef-8208-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Association element c76400ba-6eb2-11ef-94eb-14abc554333b>
+gaphor.core.modeling.elementdispatcher DEBUG Handler <function Presentation.__init__.<locals>.update at 0x00000294FED8B880> is not registered for <gaphor.UML.uml.Association element c76400ba-6eb2-11ef-94eb-14abc554333b>.<association memberEnd: Property[2..*] <>-> association>
+Traceback (most recent call last):
+  File "C:\Users\pbrow\workspaces\Gaphor\gaphor\gaphor\core\modeling\elementdispatcher.py", line 221, in _remove_handlers
+    del handlers[handler]
+        ~~~~~~~~^^^^^^^^^
+KeyError: <function Presentation.__init__.<locals>.update at 0x00000294FED8B880>
+gaphor.core.modeling.elementdispatcher DEBUG Handler <function Presentation.__init__.<locals>.update at 0x00000294FED8B880> is not registered for <gaphor.UML.uml.Association element c76400ba-6eb2-11ef-94eb-14abc554333b>.<association memberEnd: Property[2..*] <>-> association>
+Traceback (most recent call last):
+  File "C:\Users\pbrow\workspaces\Gaphor\gaphor\gaphor\core\modeling\elementdispatcher.py", line 221, in _remove_handlers
+    del handlers[handler]
+        ~~~~~~~~^^^^^^^^^
+KeyError: <function Presentation.__init__.<locals>.update at 0x00000294FED8B880>
+gaphor.core.modeling.elementdispatcher DEBUG Handler <function Presentation.__init__.<locals>.update at 0x00000294FED8B880> is not registered for <gaphor.UML.uml.Association element c76400ba-6eb2-11ef-94eb-14abc554333b>.<association memberEnd: Property[2..*] <>-> association>
+Traceback (most recent call last):
+  File "C:\Users\pbrow\workspaces\Gaphor\gaphor\gaphor\core\modeling\elementdispatcher.py", line 221, in _remove_handlers
+    del handlers[handler]
+        ~~~~~~~~^^^^^^^^^
+KeyError: <function Presentation.__init__.<locals>.update at 0x00000294FED8B880>
+gaphor.core.modeling.elementdispatcher DEBUG Handler <function Presentation.__init__.<locals>.update at 0x00000294FED8B880> is not registered for <gaphor.UML.uml.Association element c76400ba-6eb2-11ef-94eb-14abc554333b>.<association memberEnd: Property[2..*] <>-> association>
+Traceback (most recent call last):
+  File "C:\Users\pbrow\workspaces\Gaphor\gaphor\gaphor\core\modeling\elementdispatcher.py", line 221, in _remove_handlers
+    del handlers[handler]
+        ~~~~~~~~^^^^^^^^^
+KeyError: <function Presentation.__init__.<locals>.update at 0x00000294FED8B880>
+gaphor.core.modeling.elementdispatcher DEBUG Handler <function Presentation.__init__.<locals>.update at 0x00000294FED8B880> is not registered for <gaphor.UML.uml.Association element c76400ba-6eb2-11ef-94eb-14abc554333b>.<association memberEnd: Property[2..*] <>-> association>
+Traceback (most recent call last):
+  File "C:\Users\pbrow\workspaces\Gaphor\gaphor\gaphor\core\modeling\elementdispatcher.py", line 221, in _remove_handlers
+    del handlers[handler]
+        ~~~~~~~~^^^^^^^^^
+KeyError: <function Presentation.__init__.<locals>.update at 0x00000294FED8B880>
+gaphor.core.modeling.elementdispatcher DEBUG Handler <function Presentation.__init__.<locals>.update at 0x00000294FED8B880> is not registered for <gaphor.UML.uml.Association element c76400ba-6eb2-11ef-94eb-14abc554333b>.<association memberEnd: Property[2..*] <>-> association>
+Traceback (most recent call last):
+  File "C:\Users\pbrow\workspaces\Gaphor\gaphor\gaphor\core\modeling\elementdispatcher.py", line 221, in _remove_handlers
+    del handlers[handler]
+        ~~~~~~~~^^^^^^^^^
+KeyError: <function Presentation.__init__.<locals>.update at 0x00000294FED8B880>
+gaphor.core.modeling.elementdispatcher DEBUG Handler <function Presentation.__init__.<locals>.update at 0x00000294FED8B880> is not registered for <gaphor.UML.uml.Association element c76400ba-6eb2-11ef-94eb-14abc554333b>.<association memberEnd: Property[2..*] <>-> association>
+Traceback (most recent call last):
+  File "C:\Users\pbrow\workspaces\Gaphor\gaphor\gaphor\core\modeling\elementdispatcher.py", line 221, in _remove_handlers
+    del handlers[handler]
+        ~~~~~~~~^^^^^^^^^
+KeyError: <function Presentation.__init__.<locals>.update at 0x00000294FED8B880>
+gaphor.core.modeling.elementdispatcher DEBUG Handler <function Presentation.__init__.<locals>.update at 0x00000294FED8B880> is not registered for <gaphor.UML.uml.Association element c76400ba-6eb2-11ef-94eb-14abc554333b>.<association memberEnd: Property[2..*] <>-> association>
+Traceback (most recent call last):
+  File "C:\Users\pbrow\workspaces\Gaphor\gaphor\gaphor\core\modeling\elementdispatcher.py", line 221, in _remove_handlers
+    del handlers[handler]
+        ~~~~~~~~^^^^^^^^^
+KeyError: <function Presentation.__init__.<locals>.update at 0x00000294FED8B880>
+gaphor.core.modeling.elementdispatcher DEBUG Handler <function Presentation.__init__.<locals>.update at 0x00000294FED8B880> is not registered for <gaphor.UML.uml.Association element c76400ba-6eb2-11ef-94eb-14abc554333b>.<association memberEnd: Property[2..*] <>-> association>
+Traceback (most recent call last):
+  File "C:\Users\pbrow\workspaces\Gaphor\gaphor\gaphor\core\modeling\elementdispatcher.py", line 221, in _remove_handlers
+    del handlers[handler]
+        ~~~~~~~~^^^^^^^^^
+KeyError: <function Presentation.__init__.<locals>.update at 0x00000294FED8B880>
+gaphor.core.modeling.elementdispatcher DEBUG Handler <function Presentation.__init__.<locals>.update at 0x00000294FED8B880> is not registered for <gaphor.UML.uml.Association element c76400ba-6eb2-11ef-94eb-14abc554333b>.<association memberEnd: Property[2..*] <>-> association>
+Traceback (most recent call last):
+  File "C:\Users\pbrow\workspaces\Gaphor\gaphor\gaphor\core\modeling\elementdispatcher.py", line 221, in _remove_handlers
+    del handlers[handler]
+        ~~~~~~~~^^^^^^^^^
+KeyError: <function Presentation.__init__.<locals>.update at 0x00000294FED8B880>
+gaphor.core.modeling.elementdispatcher DEBUG Handler <function Presentation.__init__.<locals>.update at 0x00000294FED8B880> is not registered for <gaphor.UML.uml.Association element c76400ba-6eb2-11ef-94eb-14abc554333b>.<association memberEnd: Property[2..*] <>-> association>
+Traceback (most recent call last):
+  File "C:\Users\pbrow\workspaces\Gaphor\gaphor\gaphor\core\modeling\elementdispatcher.py", line 221, in _remove_handlers
+    del handlers[handler]
+        ~~~~~~~~^^^^^^^^^
+KeyError: <function Presentation.__init__.<locals>.update at 0x00000294FED8B880>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Class element c762f120-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.classes.klass.ClassItem element c762f121-6eb2-11ef-9837-14abc554333b>
+gaphor.diagram._connector DEBUG Disconnect callback <gaphor.UML.classes.association.AssociationItem element c763b3ed-6eb2-11ef-8352-14abc554333b>.<Handle object on (Variable(10, 20), Variable(0, 20))>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Class element c7633f34-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.classes.klass.ClassItem element c7633f35-6eb2-11ef-bb80-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.classes.association.AssociationItem element c763b3ed-6eb2-11ef-8352-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element c762ca47-6eb2-11ef-86c9-14abc554333b>
+gaphor.services.properties ERROR Invalid syntax in property file C:\Users\pbrow\AppData\Local\Temp\pytest-of-pbrow\pytest-21\test_load_of_corrupted_propert0\18d64bb4809cfe7b5a9f0af9865823d27ee6aafc28dc2f35
+gaphor.diagram._connector DEBUG Disconnect callback <gaphor.UML.classes.containment.ContainmentItem element c773d48c-6eb2-11ef-bb80-14abc554333b>.<Handle object on (Variable(0, 20), Variable(0, 20))>
+gaphor.diagram._connector DEBUG Disconnect callback <gaphor.UML.classes.containment.ContainmentItem element c773d48c-6eb2-11ef-bb80-14abc554333b>.<Handle object on (Variable(10, 20), Variable(0, 20))>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.classes.klass.ClassItem element c7738673-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.classes.klass.ClassItem element c773fb50-6eb2-11ef-94eb-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.classes.containment.ContainmentItem element c773d48c-6eb2-11ef-bb80-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element c7735f87-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Class element c773fb4f-6eb2-11ef-8352-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Package element c7735f88-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Class element c7738672-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Class element c773fb4f-6eb2-11ef-8352-14abc554333b>
+gaphor.diagram._connector DEBUG Disconnect callback <gaphor.UML.classes.containment.ContainmentItem element c77a868b-6eb2-11ef-b7f2-14abc554333b>.<Handle object on (Variable(0, 20), Variable(0, 20))>
+gaphor.diagram._connector DEBUG Disconnect callback <gaphor.UML.classes.containment.ContainmentItem element c778da14-6eb2-11ef-8052-14abc554333b>.<Handle object on (Variable(0, 20), Variable(0, 20))>
+gaphor.diagram._connector DEBUG Disconnect callback <gaphor.UML.classes.containment.ContainmentItem element c778da14-6eb2-11ef-8052-14abc554333b>.<Handle object on (Variable(10, 20), Variable(0, 20))>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.classes.klass.ClassItem element c77900f2-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.classes.klass.ClassItem element c77975d6-6eb2-11ef-8352-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.classes.containment.ContainmentItem element c778da14-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element c7786523-6eb2-11ef-86c9-14abc554333b>
+gaphor.diagram._connector DEBUG Disconnect callback <gaphor.UML.classes.containment.ContainmentItem element c77a868b-6eb2-11ef-b7f2-14abc554333b>.<Handle object on (Variable(10, 20), Variable(0, 20))>
+gaphor.diagram._connector DEBUG Disconnect callback <gaphor.UML.classes.containment.ContainmentItem element c77a868b-6eb2-11ef-b7f2-14abc554333b>.<Handle object on (Variable(0, 20), Variable(0, 20))>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.classes.klass.ClassItem element c77a11ba-6eb2-11ef-a179-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.classes.klass.ClassItem element c77a38ac-6eb2-11ef-8208-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.classes.klass.ClassItem element c77aad92-6eb2-11ef-93d3-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.classes.containment.ContainmentItem element c77a868b-6eb2-11ef-b7f2-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element c779eabe-6eb2-11ef-94eb-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Class element c77900f1-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Class element c7794ed6-6eb2-11ef-bb80-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Class element c77aad91-6eb2-11ef-b9f6-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.classes.package.PackageItem element c77e5483-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.classes.containment.ContainmentItem element c77ea267-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element c77e2d87-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Package element c77e5482-6eb2-11ef-8052-14abc554333b>
+gaphor.diagram._connector DEBUG Disconnect callback <gaphor.UML.classes.containment.ContainmentItem element c78138b8-6eb2-11ef-8352-14abc554333b>.<Handle object on (Variable(0, 20), Variable(0, 20))>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.classes.package.PackageItem element c7809ce2-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.classes.klass.ClassItem element c780c3dd-6eb2-11ef-bb80-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.classes.containment.ContainmentItem element c78138b8-6eb2-11ef-8352-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element c78075ec-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Class element c780c3dc-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Package element c7809ce1-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Class element c780c3dc-6eb2-11ef-965c-14abc554333b>
+gaphor.diagram._connector DEBUG Disconnect callback <gaphor.UML.classes.containment.ContainmentItem element c783f5fd-6eb2-11ef-965c-14abc554333b>.<Handle object on (Variable(0, 20), Variable(0, 20))>
+gaphor.diagram._connector DEBUG Disconnect callback <gaphor.UML.classes.containment.ContainmentItem element c783f5fd-6eb2-11ef-965c-14abc554333b>.<Handle object on (Variable(10, 20), Variable(0, 20))>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.classes.package.PackageItem element c783cefb-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.classes.klass.ClassItem element c783f5ff-6eb2-11ef-8352-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.classes.containment.ContainmentItem element c783f5fd-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element c7838112-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Package element c783cefa-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Class element c783f5fe-6eb2-11ef-bb80-14abc554333b>
+gaphor.diagram._connector DEBUG Disconnect callback <gaphor.UML.classes.containment.ContainmentItem element c787280b-6eb2-11ef-bb80-14abc554333b>.<Handle object on (Variable(0, 20), Variable(0, 20))>
+gaphor.diagram._connector DEBUG Disconnect callback <gaphor.UML.classes.containment.ContainmentItem element c787280b-6eb2-11ef-bb80-14abc554333b>.<Handle object on (Variable(10, 20), Variable(0, 20))>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.classes.package.PackageItem element c786da28-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.classes.klass.ClassItem element c7874f09-6eb2-11ef-94eb-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.classes.containment.ContainmentItem element c787280b-6eb2-11ef-bb80-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element c786b334-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Class element c7874f08-6eb2-11ef-8352-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Package element c786b335-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Package element c786da27-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Class element c7874f08-6eb2-11ef-8352-14abc554333b>
+gaphor.diagram._connector DEBUG Disconnect callback <gaphor.UML.classes.containment.ContainmentItem element c78acf15-6eb2-11ef-8352-14abc554333b>.<Handle object on (Variable(0, 20), Variable(0, 20))>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.classes.package.PackageItem element c78a812e-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.classes.package.PackageItem element c78aa823-6eb2-11ef-bb80-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.classes.containment.ContainmentItem element c78acf15-6eb2-11ef-8352-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element c78a5a30-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Package element c78a812d-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Package element c78aa822-6eb2-11ef-965c-14abc554333b>
+gaphor.diagram._connector DEBUG Disconnect callback <gaphor.UML.classes.containment.ContainmentItem element c78d3e6d-6eb2-11ef-bb80-14abc554333b>.<Handle object on (Variable(0, 20), Variable(0, 20))>
+gaphor.diagram._connector DEBUG Disconnect callback <gaphor.UML.classes.containment.ContainmentItem element c78d3e6d-6eb2-11ef-bb80-14abc554333b>.<Handle object on (Variable(10, 20), Variable(0, 20))>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.classes.klass.ClassItem element c78cc986-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.classes.klass.ClassItem element c78d3e6f-6eb2-11ef-94eb-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.classes.containment.ContainmentItem element c78d3e6d-6eb2-11ef-bb80-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element c78cc983-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Class element c78cc985-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Package element c78cc984-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Class element c78cc985-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Class element c78d3e6e-6eb2-11ef-8352-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.actions.activitynodes.InitialNodeItem element c79022a8-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element c78ffbae-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.InitialNode element c79022a7-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Activity element c79022a6-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.InitialNode element c79022a7-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.actions.action.AcceptEventActionItem element c792b8f1-6eb2-11ef-bb80-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element c7926b07-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.AcceptEventAction element c792b8f0-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Activity element c792b8ef-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Package element c7929202-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Activity element c792b8ef-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.AcceptEventAction element c792b8f0-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.actions.action.AcceptEventActionItem element c795015e-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element c794da53-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.AcceptEventAction element c795015d-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Activity element c795015c-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.AcceptEventAction element c795015d-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.actions.activitynodes.ActivityFinalNodeItem element c79722c6-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element c796fbcb-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.ActivityFinalNode element c79722c5-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Activity element c79770ad-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.actions.objectnode.ObjectNodeItem element c7994abe-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element c79923c3-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.ObjectNode element c7994abd-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Activity element c7994abc-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.ObjectNode element c7994abd-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.actions.action.SendSignalActionItem element c79c0843-6eb2-11ef-bb80-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element c79b6d94-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.SendSignalAction element c79c0842-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Activity element c79c0841-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Package element c79b9447-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Activity element c79c0841-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.SendSignalAction element c79c0842-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.actions.action.AcceptEventActionItem element c79e505f-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element c79e296b-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.AcceptEventAction element c79e505e-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Activity element c79e7753-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.actions.activitynodes.DecisionNodeItem element c7a04ae4-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element c7a04ae2-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.DecisionNode element c7a04ae3-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Activity element c7a098c4-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.actions.activitynodes.FlowFinalNodeItem element c7a2ba3e-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element c7a29350-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.FlowFinalNode element c7a2ba3d-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Activity element c7a2ba3c-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.FlowFinalNode element c7a2ba3d-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.actions.action.ActionItem element c7a4dcdc-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element c7a48daf-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Action element c7a4dcdb-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Activity element c7a4b5cc-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Action element c7a4dcdb-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.actions.activitynodes.FlowFinalNodeItem element c7a6fcff-6eb2-11ef-bb80-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element c7a6af0f-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.FlowFinalNode element c7a6fcfe-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Activity element c7a6d60b-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Package element c7a6d60a-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Activity element c7a6d60b-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.FlowFinalNode element c7a6fcfe-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.actions.action.ActionItem element c7a96c5f-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element c7a9455c-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Action element c7a96c5e-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Activity element c7a99357-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.actions.action.SendSignalActionItem element c7ab66c1-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element c7ab4076-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.SendSignalAction element c7ab66c0-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Activity element c7abb4d4-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.actions.activitynodes.DecisionNodeItem element c7adaf2b-6eb2-11ef-bb80-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element c7ad882f-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.DecisionNode element c7adaf2a-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Activity element c7adaf29-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Package element c7adaf28-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Activity element c7adaf29-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.DecisionNode element c7adaf2a-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.actions.objectnode.ObjectNodeItem element c7b04579-6eb2-11ef-bb80-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element c7aff788-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.ObjectNode element c7b01e7d-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Activity element c7b01e7c-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Package element c7aff789-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Activity element c7b01e7c-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.ObjectNode element c7b01e7d-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.actions.activitynodes.InitialNodeItem element c7b2b4d8-6eb2-11ef-bb80-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element c7b266f1-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.InitialNode element c7b28de8-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Activity element c7b28de7-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Package element c7b28de6-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Activity element c7b28de7-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.InitialNode element c7b28de8-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.actions.action.SendSignalActionItem element c7b4fe5c-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element c7b4d63b-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.SendSignalAction element c7b4fe5b-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Activity element c7b4fe5a-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.SendSignalAction element c7b4fe5b-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.actions.activitynodes.ForkNodeItem element c7b745a5-6eb2-11ef-bb80-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element c7b6f7a3-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.JoinNode element c7b745a4-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Activity element c7b71ea6-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Package element c7b71ea5-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Activity element c7b71ea6-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.JoinNode element c7b745a4-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.actions.objectnode.ObjectNodeItem element c7b9331d-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element c7b9331b-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.ObjectNode element c7b9331c-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Activity element c7b9a7f8-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.actions.activitynodes.ForkNodeItem element c7bbf056-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element c7bbc966-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.JoinNode element c7bbf055-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Activity element c7bbf054-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.JoinNode element c7bbf055-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.actions.activitynodes.ActivityFinalNodeItem element c7be38c0-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element c7bdead5-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.ActivityFinalNode element c7be38bf-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Activity element c7be38be-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.ActivityFinalNode element c7be38bf-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.actions.activitynodes.ForkNodeItem element c7c05a2b-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element c7c03329-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.JoinNode element c7c05a2a-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Activity element c7c0811b-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.actions.activitynodes.ActivityFinalNodeItem element c7c25803-6eb2-11ef-bb80-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element c7c2310a-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.ActivityFinalNode element c7c25802-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Activity element c7c25801-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Package element c7c2310b-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Activity element c7c25801-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.ActivityFinalNode element c7c25802-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.actions.activitynodes.FlowFinalNodeItem element c7c4ee41-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element c7c4a05b-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.FlowFinalNode element c7c4c759-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Activity element c7c51546-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.actions.activitynodes.InitialNodeItem element c7c7067e-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element c7c6df83-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.InitialNode element c7c7067d-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Activity element c7c75343-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.actions.activitynodes.DecisionNodeItem element c7c974b5-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element c7c926c6-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.DecisionNode element c7c974b4-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Activity element c7c974b3-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.DecisionNode element c7c974b4-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.actions.action.ActionItem element c7cbbd0d-6eb2-11ef-bb80-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element c7cb6f28-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Action element c7cbbd0c-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Activity element c7cb9742-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Package element c7cb9741-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Activity element c7cb9742-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Action element c7cbbd0c-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element c7cf8b0c-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.coremodel.ValueChange element c7cf8b0d-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element c7d15fb4-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.coremodel.ValueChange element c7d15fb5-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.coremodel.ElementChange element c7d30b0f-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Property element c7d4b8be-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.coremodel.ValueChange element c7d4b8bf-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.diagram.general.simpleitem.Box element 1234>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element c7d6641e-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.coremodel.ElementChange element c7d6641f-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Class element c7d85fbe-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.coremodel.ValueChange element c7d85fbf-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element 12234>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.coremodel.ElementChange element c7da0c4c-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element c7dbb7ab-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.coremodel.ValueChange element c7dbb7ac-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.element.Element element 1234>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.coremodel.ElementChange element c7dd6442-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element c7df111d-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.coremodel.ElementChange element c7df38b5-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Class element c7e0bd54-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.coremodel.ValueChange element c7e0bd55-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element c7e291cb-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.coremodel.ValueChange element c7e291cc-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.coremodel.ElementChange element c7e465d7-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element c7e610cf-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.element.Element element c7e610ce-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.coremodel.RefChange element c7e610d0-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.coremodel.RefChange element c7e610d1-6eb2-11ef-bb80-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element c7e7bd5c-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.element.Element element c7e7bd5b-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.coremodel.RefChange element c7e7bd5d-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.coremodel.ElementChange element c7e990e6-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element c7eb1839-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.element.Element element c7eb1838-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.coremodel.RefChange element c7eb183a-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element c7ecea08-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.element.Element element c7ecea07-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.coremodel.RefChange element c7ecea09-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element c7ef0b66-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.coremodel.ElementChange element c7ef0b67-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element c7f17abd-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.element.Element element c7f17abc-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.coremodel.RefChange element c7f17abe-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.coremodel.ValueChange element c7f37533-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.actions.action.ActionItem element c7f60b93-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element c7f5e482-6eb2-11ef-86c9-14abc554333b>
+gaphor.storage.storage INFO Read 2 elements from file
+gaphor.storage.storage DEBUG Loading 2 elements
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element c7f5e482-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.actions.action.ActionItem element c7f60b93-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element c7f5e482-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.stylesheet.StyleSheet element c7f7431c-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.actions.action.ActionItem element c7fb5f00-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element c7fb3810-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Action element c7fb5eff-6eb2-11ef-8052-14abc554333b>
+gaphor.entrypoint DEBUG found entry point "gaphor.services.align"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.auto_layout"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.component_registry"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.console_window"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.copy"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.diagram_export"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.diagrams"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.element_dispatcher"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.element_editor"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.element_factory"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.event_manager"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.export_menu"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.file_manager"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.main_window"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.model_browser"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.model_changed"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.modeling_language"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.properties"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.recent_files"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.recovery"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.sanitizer"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.toolbox"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.tools_menu"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.undo_manager"
+gaphor.entrypoint DEBUG found entry point "gaphor.modelinglanguages.C4Model"
+gaphor.entrypoint DEBUG found entry point "gaphor.modelinglanguages.Core"
+gaphor.entrypoint DEBUG found entry point "gaphor.modelinglanguages.RAAML"
+gaphor.entrypoint DEBUG found entry point "gaphor.modelinglanguages.SysML"
+gaphor.entrypoint DEBUG found entry point "gaphor.modelinglanguages.UML"
+gaphor.application DEBUG Initializing service event_manager
+gaphor.application DEBUG Initializing service properties
+gaphor.application DEBUG Initializing service modeling_language
+gaphor.application DEBUG Initializing service element_dispatcher
+gaphor.application DEBUG Initializing service element_factory
+gaphor.application DEBUG Initializing service toolbox
+gaphor.application DEBUG Initializing service diagrams
+gaphor.application DEBUG Initializing service tools_menu
+gaphor.application DEBUG Initializing service align
+gaphor.application DEBUG Initializing service auto_layout
+gaphor.application DEBUG Initializing service component_registry
+gaphor.application DEBUG Initializing service export_menu
+gaphor.application DEBUG Initializing service main_window
+gaphor.application DEBUG Initializing service console_window
+gaphor.application DEBUG Initializing service copy
+gaphor.application DEBUG Initializing service diagram_export
+gaphor.application DEBUG Initializing service element_editor
+gaphor.application DEBUG Initializing service file_manager
+gaphor.application DEBUG Initializing service model_browser
+gaphor.application DEBUG Initializing service model_changed
+gaphor.application DEBUG Initializing service recent_files
+gaphor.application DEBUG Initializing service recovery
+gaphor.application DEBUG Initializing service sanitizer
+gaphor.application DEBUG Initializing service undo_manager
+gaphor.diagram._connector DEBUG Disconnect callback <gaphor.UML.classes.association.AssociationItem element c8010082-6eb2-11ef-a3e4-14abc554333b>.<Handle object on (Variable(0, 20), Variable(0, 20))>
+gaphor.diagram._connector DEBUG Disconnect callback <gaphor.UML.classes.association.AssociationItem element c8010082-6eb2-11ef-a3e4-14abc554333b>.<Handle object on (Variable(10, 20), Variable(0, 20))>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.classes.association.AssociationItem element c8010082-6eb2-11ef-a3e4-14abc554333b>
+gaphor.application DEBUG Shutting down service undo_manager
+gaphor.application DEBUG Shutting down service sanitizer
+gaphor.application DEBUG Shutting down service recovery
+gaphor.application DEBUG Shutting down service recent_files
+gaphor.application DEBUG Shutting down service model_changed
+gaphor.application DEBUG Shutting down service model_browser
+gaphor.application DEBUG Shutting down service file_manager
+gaphor.application DEBUG Shutting down service element_editor
+gaphor.application DEBUG Shutting down service diagram_export
+gaphor.application DEBUG Shutting down service copy
+gaphor.application DEBUG Shutting down service console_window
+gaphor.application DEBUG Shutting down service main_window
+gaphor.application DEBUG Shutting down service export_menu
+gaphor.application DEBUG Shutting down service component_registry
+gaphor.application DEBUG Shutting down service auto_layout
+gaphor.application DEBUG Shutting down service align
+gaphor.application DEBUG Shutting down service tools_menu
+gaphor.application DEBUG Shutting down service diagrams
+gaphor.application DEBUG Shutting down service toolbox
+gaphor.application DEBUG Shutting down service element_factory
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.classes.klass.ClassItem element c800d988-6eb2-11ef-a0d5-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element c800b28f-6eb2-11ef-91f5-14abc554333b>
+gaphor.diagram._connector DEBUG Disconnect callback <gaphor.UML.classes.association.AssociationItem element c8023833-6eb2-11ef-a947-14abc554333b>.<Handle object on (Variable(10, 20), Variable(0, 20))>
+gaphor.diagram._connector DEBUG Disconnect callback <gaphor.UML.classes.association.AssociationItem element c8023833-6eb2-11ef-a947-14abc554333b>.<Handle object on (Variable(0, 20), Variable(0, 20))>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.classes.klass.ClassItem element c801ea3a-6eb2-11ef-952e-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.classes.association.AssociationItem element c8023833-6eb2-11ef-a947-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element c801ea39-6eb2-11ef-80e7-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Property element c8014e6c-6eb2-11ef-a42e-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Class element c800b290-6eb2-11ef-8b01-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Property element c8014e6d-6eb2-11ef-a724-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Association element c8014e6b-6eb2-11ef-bca6-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Property element c8014e6c-6eb2-11ef-a42e-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Property element c8014e6d-6eb2-11ef-a724-14abc554333b>
+gaphor.application DEBUG Shutting down service element_dispatcher
+gaphor.application DEBUG Shutting down service modeling_language
+gaphor.application DEBUG Shutting down service properties
+gaphor.application DEBUG Shutting down service event_manager
+gaphor.entrypoint DEBUG found entry point "gaphor.services.align"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.auto_layout"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.component_registry"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.console_window"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.copy"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.diagram_export"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.diagrams"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.element_dispatcher"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.element_editor"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.element_factory"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.event_manager"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.export_menu"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.file_manager"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.main_window"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.model_browser"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.model_changed"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.modeling_language"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.properties"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.recent_files"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.recovery"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.sanitizer"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.toolbox"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.tools_menu"
+gaphor.entrypoint DEBUG found entry point "gaphor.services.undo_manager"
+gaphor.entrypoint DEBUG found entry point "gaphor.modelinglanguages.C4Model"
+gaphor.entrypoint DEBUG found entry point "gaphor.modelinglanguages.Core"
+gaphor.entrypoint DEBUG found entry point "gaphor.modelinglanguages.RAAML"
+gaphor.entrypoint DEBUG found entry point "gaphor.modelinglanguages.SysML"
+gaphor.entrypoint DEBUG found entry point "gaphor.modelinglanguages.UML"
+gaphor.application DEBUG Initializing service event_manager
+gaphor.application DEBUG Initializing service properties
+gaphor.application DEBUG Initializing service modeling_language
+gaphor.application DEBUG Initializing service element_dispatcher
+gaphor.application DEBUG Initializing service element_factory
+gaphor.application DEBUG Initializing service toolbox
+gaphor.application DEBUG Initializing service diagrams
+gaphor.application DEBUG Initializing service tools_menu
+gaphor.application DEBUG Initializing service align
+gaphor.application DEBUG Initializing service auto_layout
+gaphor.application DEBUG Initializing service component_registry
+gaphor.application DEBUG Initializing service export_menu
+gaphor.application DEBUG Initializing service main_window
+gaphor.application DEBUG Initializing service console_window
+gaphor.application DEBUG Initializing service copy
+gaphor.application DEBUG Initializing service diagram_export
+gaphor.application DEBUG Initializing service element_editor
+gaphor.application DEBUG Initializing service file_manager
+gaphor.application DEBUG Initializing service model_browser
+gaphor.application DEBUG Initializing service model_changed
+gaphor.application DEBUG Initializing service recent_files
+gaphor.application DEBUG Initializing service recovery
+gaphor.application DEBUG Initializing service sanitizer
+gaphor.application DEBUG Initializing service undo_manager
+gaphor.diagram._connector DEBUG Disconnect callback <gaphor.UML.classes.association.AssociationItem element c80e8bd8-6eb2-11ef-a947-14abc554333b>.<Handle object on (Variable(10, 20), Variable(0, 20))>
+gaphor.diagram._connector DEBUG Disconnect callback <gaphor.UML.classes.association.AssociationItem element c80e8bd8-6eb2-11ef-a947-14abc554333b>.<Handle object on (Variable(0, 20), Variable(0, 20))>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.classes.association.AssociationItem element c80e8bd8-6eb2-11ef-a947-14abc554333b>
+gaphor.application DEBUG Shutting down service undo_manager
+gaphor.application DEBUG Shutting down service sanitizer
+gaphor.application DEBUG Shutting down service recovery
+gaphor.application DEBUG Shutting down service recent_files
+gaphor.application DEBUG Shutting down service model_changed
+gaphor.application DEBUG Shutting down service model_browser
+gaphor.application DEBUG Shutting down service file_manager
+gaphor.application DEBUG Shutting down service element_editor
+gaphor.application DEBUG Shutting down service diagram_export
+gaphor.application DEBUG Shutting down service copy
+gaphor.application DEBUG Shutting down service console_window
+gaphor.application DEBUG Shutting down service main_window
+gaphor.application DEBUG Shutting down service export_menu
+gaphor.application DEBUG Shutting down service component_registry
+gaphor.application DEBUG Shutting down service auto_layout
+gaphor.application DEBUG Shutting down service align
+gaphor.application DEBUG Shutting down service tools_menu
+gaphor.application DEBUG Shutting down service diagrams
+gaphor.application DEBUG Shutting down service toolbox
+gaphor.application DEBUG Shutting down service element_factory
+gaphor.diagram._connector DEBUG Disconnect callback <gaphor.UML.classes.association.AssociationItem element c80cb842-6eb2-11ef-a3e4-14abc554333b>.<Handle object on (Variable(10, 20), Variable(0, 20))>
+gaphor.diagram._connector DEBUG Disconnect callback <gaphor.UML.classes.association.AssociationItem element c80cb842-6eb2-11ef-a3e4-14abc554333b>.<Handle object on (Variable(0, 20), Variable(0, 20))>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.classes.klass.ClassItem element c80c6a8a-6eb2-11ef-a0d5-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.classes.association.AssociationItem element c80cb842-6eb2-11ef-a3e4-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element c80c437e-6eb2-11ef-91f5-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.classes.klass.ClassItem element c80e3dd2-6eb2-11ef-952e-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element c80e3dd1-6eb2-11ef-80e7-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Property element c80d063a-6eb2-11ef-a42e-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Class element c80c6a89-6eb2-11ef-8b01-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Property element c80d063b-6eb2-11ef-a724-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Association element c80d0639-6eb2-11ef-bca6-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Property element c80d063a-6eb2-11ef-a42e-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Property element c80d063b-6eb2-11ef-a724-14abc554333b>
+gaphor.application DEBUG Shutting down service element_dispatcher
+gaphor.application DEBUG Shutting down service modeling_language
+gaphor.application DEBUG Shutting down service properties
+gaphor.application DEBUG Shutting down service event_manager
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.actions.activitynodes.ForkNodeItem element c89890c0-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element c89869c6-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.ForkNode element c89890bf-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.actions.activitynodes.ForkNodeItem element c89b4e2c-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element c89b2700-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.JoinNode element c89b4e2b-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.actions.activity.ActivityParameterNodeItem element c89e801b-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element c89e5934-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Parameter element c89f90d2-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.ActivityParameterNode element c89e801a-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Parameter element c89f90d2-6eb2-11ef-965c-14abc554333b>
+gaphor.entrypoint DEBUG found entry point "gaphor.modelinglanguages.C4Model"
+gaphor.entrypoint DEBUG found entry point "gaphor.modelinglanguages.Core"
+gaphor.entrypoint DEBUG found entry point "gaphor.modelinglanguages.RAAML"
+gaphor.entrypoint DEBUG found entry point "gaphor.modelinglanguages.SysML"
+gaphor.entrypoint DEBUG found entry point "gaphor.modelinglanguages.UML"
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element c8a99c09-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element c8a9c333-6eb2-11ef-9837-14abc554333b>
+gaphor.entrypoint DEBUG found entry point "gaphor.modelinglanguages.C4Model"
+gaphor.entrypoint DEBUG found entry point "gaphor.modelinglanguages.Core"
+gaphor.entrypoint DEBUG found entry point "gaphor.modelinglanguages.RAAML"
+gaphor.entrypoint DEBUG found entry point "gaphor.modelinglanguages.SysML"
+gaphor.entrypoint DEBUG found entry point "gaphor.modelinglanguages.UML"
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element c8b04e49-6eb2-11ef-8052-14abc554333b>
+gaphor.entrypoint DEBUG found entry point "gaphor.modelinglanguages.C4Model"
+gaphor.entrypoint DEBUG found entry point "gaphor.modelinglanguages.Core"
+gaphor.entrypoint DEBUG found entry point "gaphor.modelinglanguages.RAAML"
+gaphor.entrypoint DEBUG found entry point "gaphor.modelinglanguages.SysML"
+gaphor.entrypoint DEBUG found entry point "gaphor.modelinglanguages.UML"
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element c8b52ce8-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element c8b52ce9-6eb2-11ef-9837-14abc554333b>
+gaphor.entrypoint DEBUG found entry point "gaphor.modelinglanguages.C4Model"
+gaphor.entrypoint DEBUG found entry point "gaphor.modelinglanguages.Core"
+gaphor.entrypoint DEBUG found entry point "gaphor.modelinglanguages.RAAML"
+gaphor.entrypoint DEBUG found entry point "gaphor.modelinglanguages.SysML"
+gaphor.entrypoint DEBUG found entry point "gaphor.modelinglanguages.UML"
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element c8ba328c-6eb2-11ef-8052-14abc554333b>
+gaphor.entrypoint DEBUG found entry point "gaphor.modelinglanguages.C4Model"
+gaphor.entrypoint DEBUG found entry point "gaphor.modelinglanguages.Core"
+gaphor.entrypoint DEBUG found entry point "gaphor.modelinglanguages.RAAML"
+gaphor.entrypoint DEBUG found entry point "gaphor.modelinglanguages.SysML"
+gaphor.entrypoint DEBUG found entry point "gaphor.modelinglanguages.UML"
+gaphor.entrypoint DEBUG found entry point "gaphor.modelinglanguages.C4Model"
+gaphor.entrypoint DEBUG found entry point "gaphor.modelinglanguages.Core"
+gaphor.entrypoint DEBUG found entry point "gaphor.modelinglanguages.RAAML"
+gaphor.entrypoint DEBUG found entry point "gaphor.modelinglanguages.SysML"
+gaphor.entrypoint DEBUG found entry point "gaphor.modelinglanguages.UML"
+gaphor.transaction ERROR Transaction terminated due to an exception, performing a rollback
+gaphor.core.modeling.element DEBUG unlinking <gaphor.diagram.general.comment.CommentItem element c8d53cfa-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element c8d515fc-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.coremodel.Comment element c8d53cf9-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Property element c8d8fe7d-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Association element c8d8fe7e-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Association element c8db6dbc-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Association element c8db6dbd-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Package element c8db46c9-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Association element c8db6dbc-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Association element c8db6dbd-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Class element c8dd8f1c-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Package element c8dd8f1d-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Class element c8df62ae-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Package element c8df62af-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Class element c8e15d13-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Package element c8e15d14-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Class element c8e3acb9-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Class element c8e5a725-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Class element c8e7c889-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Package element c8e7c88a-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Association element c8eaaccb-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Class element c8eea1a4-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Package element c8eea1a5-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Association element c8f0ea08-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Package element c8f0ea07-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Association element c8f0ea08-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Class element c8f3595d-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Package element c8f3595e-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Class element c8f57ac2-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Class element c8f7c324-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Association element c8f991eb-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Package element c8f991ea-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Association element c8f991eb-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.classes.component.ComponentItem element c8fe2297-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.usecases.usecase.UseCaseItem element c8fe7082-6eb2-11ef-bb80-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element c8fdfba2-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Component element c8fe2296-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.UseCase element c8fe7081-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.classes.component.ComponentItem element c90106d1-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.usecases.usecase.UseCaseItem element c9012db8-6eb2-11ef-bb80-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.usecases.usecase.UseCaseItem element c90154ae-6eb2-11ef-94eb-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element c900dfe7-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Component element c90106d0-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.UseCase element c9012db7-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.UseCase element c90154ad-6eb2-11ef-8352-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.classes.component.ComponentItem element c903eb08-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.usecases.usecase.UseCaseItem element c90411fa-6eb2-11ef-bb80-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.usecases.usecase.UseCaseItem element c90438f0-6eb2-11ef-94eb-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element c903c403-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Component element c903eb07-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.UseCase element c90411f9-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.UseCase element c90438ef-6eb2-11ef-8352-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.interactions.lifeline.LifelineItem element c906f62c-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element c906cf38-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Lifeline element c906f62b-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Interaction element c9076b16-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.interactions.lifeline.LifelineItem element c90a016d-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element c90a016a-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Lifeline element c90a016c-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Interaction element c90a016b-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Lifeline element c90a016c-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.interactions.lifeline.LifelineItem element c90c8faa-6eb2-11ef-965c-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element c90c68b0-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Lifeline element c90c8fa9-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Interaction element c90cb6dc-6eb2-11ef-bb80-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Package element c90c68b1-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Lifeline element c90c8fa9-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Interaction element c90cb6dc-6eb2-11ef-bb80-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.interactions.lifeline.LifelineItem element c90f727e-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.interactions.interaction.InteractionItem element c90f4b90-6eb2-11ef-8b01-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element c90f24a1-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Lifeline element c90f727d-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Interaction element c90f4b8f-6eb2-11ef-91f5-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Lifeline element c90f727d-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.classes.dependency.DependencyItem element c912a49f-6eb2-11ef-9837-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element c9127dae-6eb2-11ef-86c9-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.uml.Realization element c912a49e-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.UML.classes.dependency.DependencyItem element c915fda3-6eb2-11ef-8052-14abc554333b>
+gaphor.core.modeling.element DEBUG unlinking <gaphor.core.modeling.diagram.Diagram element c915fda2-6eb2-11ef-86c9-14abc554333b>

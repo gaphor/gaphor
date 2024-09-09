@@ -13,7 +13,7 @@ from gaphor.UML.compartments import text_stereotypes
 @represents(
     UML.InterfaceRealization,
     head=UML.InterfaceRealization.contract,
-    tail=UML.InterfaceRealization.implementatingClassifier,
+    tail=UML.InterfaceRealization.implementingClassifier,
 )
 class InterfaceRealizationItem(Named, LinePresentation):
     def __init__(self, diagram, id=None):

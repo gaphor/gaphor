@@ -51,7 +51,7 @@ def test_connection(create):
     assert ct is iface
     assert impl.subject is not None
     assert impl.subject.contract is iface.subject
-    assert impl.subject.implementatingClassifier is clazz.subject
+    assert impl.subject.implementingClassifier is clazz.subject
 
 
 def test_reconnection(create):
@@ -72,5 +72,5 @@ def test_reconnection(create):
 
     assert s is not impl.subject
     assert iface.subject is impl.subject.contract
-    assert c2.subject is impl.subject.implementatingClassifier
-    assert c1.subject is not impl.subject.implementatingClassifier
+    assert c2.subject is impl.subject.implementingClassifier
+    assert c1.subject is not impl.subject.implementingClassifier
