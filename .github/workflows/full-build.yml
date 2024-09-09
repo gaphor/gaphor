@@ -371,7 +371,7 @@ jobs:
           name: ${{ needs.linux-wheel.outputs.wheel }}
           path: dist
       - name: Publish package distributions to PyPI
-        uses: pypa/gh-action-pypi-publish@8a08d616893759ef8e1aa1f2785787c0b97e20d6 # release/v1
+        uses: pypa/gh-action-pypi-publish@0ab0b79471669eb3a4d647e625009c62f9f3b241 # release/v1
 
   trigger-website-version-update:
     name: Trigger version update on gaphor/gaphor.github.io
