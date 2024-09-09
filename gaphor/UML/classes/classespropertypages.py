@@ -77,17 +77,29 @@ class ClassifierPropertyPage(PropertyPageBase):
 
         builder = new_builder(
             "classifier-editor",
-            signals={"abstract-changed": (self._on_abstract_change,)},
+            signals={
+                "abstract-changed": (self._on_abstract_change,),
+                "isFinalSpecialization-changed": (
+                    self._on_isFinalSpecialization_change,
+                ),
+            },
         )
 
         abstract = builder.get_object("abstract")
         abstract.set_active(self.subject.isAbstract)
+
+        ifFinalSpecialization = builder.get_object("isFinalSpecialization")
+        ifFinalSpecialization.set_active(self.subject.isFinalSpecialization)
 
         return builder.get_object("classifier-editor")
 
     def _on_abstract_change(self, button, gparam):
         with Transaction(self.event_manager):
             self.subject.isAbstract = button.get_active()
+
+    def _on_isFinalSpecialization_change(self, button, gparam):
+        with Transaction(self.event_manager):
+            self.subject.isFinalSpecialization = button.get_active()
 
 
 @PropertyPages.register(InterfaceItem)
