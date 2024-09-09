@@ -408,6 +408,23 @@ Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</propert
         </child>
       </object>
     </child>
+    <child>
+      <object class="GtkBox">
+        <child>
+          <object class="GtkLabel">
+            <property name="label" translatable="yes">Final Specialization</property>
+            <property name="halign">start</property>
+            <property name="hexpand">yes</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkSwitch" id="isFinalSpecialization">
+            <property name="focusable">1</property>
+            <signal name="notify::active" handler="isFinalSpecialization-changed" swapped="no"/>
+          </object>
+        </child>
+      </object>
+    </child>
     <style>
       <class name="propertypage"/>
     </style>
