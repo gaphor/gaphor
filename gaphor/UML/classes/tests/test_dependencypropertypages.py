@@ -1,11 +1,14 @@
 from gaphor import UML
 from gaphor.core.modeling import Dependency
 from gaphor.diagram.tests.fixtures import find
-from gaphor.UML.classes.dependencypropertypages import DependencyPropertyPage, DependencyItemPropertyPage
+from gaphor.UML.classes.dependencypropertypages import (
+    DependencyItemPropertyPage,
+    DependencyPropertyPage,
+)
 
 
 def test_dependency_property_page(diagram, element_factory, event_manager):
-    subject=element_factory.create(Dependency)
+    subject = element_factory.create(Dependency)
     source = element_factory.create(UML.Class)
     source.name = "A"
     target = element_factory.create(UML.Class)
@@ -23,6 +26,7 @@ def test_dependency_property_page(diagram, element_factory, event_manager):
 
     assert head_text == "Source: A"
     assert tail_text == "Target: B"
+
 
 def test_dependency_item_property_page(diagram, element_factory, event_manager):
     item = diagram.create(
