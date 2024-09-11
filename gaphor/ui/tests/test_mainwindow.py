@@ -1,11 +1,11 @@
 import pytest
-from gi.repository import GLib
 
 from gaphor.application import Session
 from gaphor.core.modeling import Comment, Diagram
 from gaphor.diagram.event import DiagramOpened
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.event import ElementOpened
+from gaphor.ui.tests.fixtures import iterate_until
 
 
 @pytest.fixture
@@ -108,7 +108,7 @@ def test_window_mode_maximized(session):
 
     main_window.window.unfullscreen()
     main_window.window.maximize()
-    iteration(lambda: properties.get("ui.window-mode") == "maximized")
+    iterate_until(lambda: properties.get("ui.window-mode") == "maximized")
 
     assert properties.get("ui.window-mode") == "maximized"
 
@@ -121,7 +121,7 @@ def test_window_mode_fullscreened(session):
     properties = session.get_service("properties")
 
     main_window.window.fullscreen()
-    iteration(lambda: properties.get("ui.window-mode") == "fullscreened")
+    iterate_until(lambda: properties.get("ui.window-mode") == "fullscreened")
 
     assert properties.get("ui.window-mode") == "fullscreened"
 
@@ -134,32 +134,6 @@ def test_window_mode_normal(session):
 
     main_window.window.unfullscreen()
     main_window.window.unmaximize()
-    iteration(lambda: properties.get("ui.window-mode") == "")
+    iterate_until(lambda: properties.get("ui.window-mode") == "")
 
     assert properties.get("ui.window-mode") == ""
-
-
-def iteration(condition, timeout=5):
-    sentinel = False
-
-    def check_condition():
-        nonlocal sentinel
-        if condition():
-            sentinel = True
-        return GLib.SOURCE_REMOVE if sentinel else GLib.SOURCE_CONTINUE
-
-    def do_timeout():
-        nonlocal sentinel
-        sentinel = True
-        return GLib.SOURCE_REMOVE
-
-    GLib.idle_add(check_condition, priority=GLib.PRIORITY_LOW)
-    timeout_id = GLib.timeout_add(interval=timeout * 1_000, function=do_timeout)
-
-    ctx = GLib.main_context_default()
-    while ctx.pending():
-        if sentinel:
-            break
-        ctx.iteration(False)
-
-    GLib.source_remove(timeout_id)
