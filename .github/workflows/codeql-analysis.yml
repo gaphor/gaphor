@@ -45,8 +45,5 @@ jobs:
       uses: github/codeql-action/init@883d8588e56d1753a8a58c1c86e88976f0c23449 # v3.26.3
       with:
         languages: python
-        # Override the default behavior so that the action doesn't attempt
-        # to auto-install Python dependencies
-        setup-python-dependencies: false
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@883d8588e56d1753a8a58c1c86e88976f0c23449 # v3.26.3
