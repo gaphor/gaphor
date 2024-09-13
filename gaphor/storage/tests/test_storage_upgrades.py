@@ -111,7 +111,7 @@ def test_upgrade_flow_item_to_object_flow_item(element_factory, modeling_languag
     assert element_factory.lselect(diagramitems.ObjectFlowItem)
 
 
-def test_upgradedecision_node_item_show_type(loader):
+def test_upgrade_decision_node_item_show_type(loader):
     parsed_item = element(id="2", type="DecisionNodeItem")
     parsed_item.values["show_type"] = "1"
     item = loader(parsed_item)[0]
