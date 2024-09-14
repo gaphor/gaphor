@@ -1,0 +1,28 @@
+version = 1
+SPDX-PackageName = "Gaphor"
+SPDX-PackageSupplier = ["Dan Yeaw <dan@yeaw.me>", "Arjan Molenaar <gaphor@gmail.com>"]
+SPDX-PackageDownloadLocation = "https://gaphor.org"
+
+[[annotations]]
+path = "**"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "The Gaphor Development Team"
+SPDX-License-Identifier = "Apache-2.0"
+
+[[annotations]]
+path = "gaphor/core/styling/selectors.py"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2012 by Simon Sapin, 2017 by Guillaume Ayoub, 2020 The Gaphor Development Team"
+SPDX-License-Identifier = "BSD-3-Clause"
+
+[[annotations]]
+path = "_packaging/hook-pydot.py"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2021 PyInstaller Development Team"
+SPDX-License-Identifier = "GPL-2.0-or-later"
+
+[[annotations]]
+path = "gaphor/ui/language-specs/gaphorcss.lang"
+precedence = "aggregate"
+SPDX-FileCopyrightText = ["2004, Scott Martin <scott@coffeeblack.org>", "2010, Patryk Zawadzki <patrys@pld-linux.org>", "2016, Tobias Schönberg <tobias47n9e@gmail.com>", "2018, Jeffery To <jeffery.to@gmail.com>", "2022, Arjan Molenaar <gaphor@gmail.com>"]
+SPDX-License-Identifier = "LGPL-2.1-or-later"
