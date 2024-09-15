@@ -49,15 +49,21 @@ def test_metadata_property_page(diagram, event_manager):
     assert metadata.description == "my text"
 
 
-def test_picture_property_select_opens_dialog(mocker, diagram, event_manager):
+def test_picture_property_select_opens_dialog(monkeypatch, diagram, event_manager):
     # Init objects
     picture = diagram.create(PictureItem)
     property_page = PicturePropertyPage(picture, event_manager)
     widget = property_page.construct()
 
     # Prepare mocking
-    mocked_open_file_dialog = mocker.patch(
-        "gaphor.diagram.general.generalpropertypages.open_file_dialog"
+    called = False
+
+    def call(*args, **kwargs):
+        nonlocal called
+        called |= True
+
+    monkeypatch.setattr(
+        "gaphor.diagram.general.generalpropertypages.open_file_dialog", call
     )
 
     # Emulate the button click event
@@ -67,10 +73,10 @@ def test_picture_property_select_opens_dialog(mocker, diagram, event_manager):
     # Test code
     button_widget.activate()
 
-    assert mocked_open_file_dialog.called is True
+    assert called is True
 
 
-def test_picture_property_select_valid_name(mocker, diagram, event_manager):
+def test_picture_property_select_valid_name(monkeypatch, diagram, event_manager):
     # Init objects
     picture = next(
         tl for tl in general_tools.tools if tl.id == "toolbox-picture"
@@ -78,19 +84,24 @@ def test_picture_property_select_valid_name(mocker, diagram, event_manager):
     property_page = PicturePropertyPage(picture, event_manager)
 
     # Prepare mocking
-    mocked_error_handler = mocker.patch(
-        "gaphor.diagram.general.generalpropertypages.error_handler"
-    )
+    called = False
 
+    def call(*args, **kwargs):
+        nonlocal called
+        called |= True
+
+    monkeypatch.setattr(
+        "gaphor.diagram.general.generalpropertypages.error_handler", call
+    )
     # Test code
     temp_image = Path("data/logos/gaphor-24x24.png")
     property_page.open_file(temp_image)
 
-    assert mocked_error_handler.called is False
+    assert called is False
     assert picture.subject.name == "gaphor-24x24"
 
 
-def test_picture_property_select_keep_name(mocker, diagram, event_manager):
+def test_picture_property_select_keep_name(monkeypatch, diagram, event_manager):
     # Init objects
     picture = next(
         tl for tl in general_tools.tools if tl.id == "toolbox-picture"
@@ -98,8 +109,14 @@ def test_picture_property_select_keep_name(mocker, diagram, event_manager):
     property_page = PicturePropertyPage(picture, event_manager)
 
     # Prepare mocking
-    mocked_error_handler = mocker.patch(
-        "gaphor.diagram.general.generalpropertypages.error_handler"
+    called = False
+
+    def call(*args, **kwargs):
+        nonlocal called
+        called |= True
+
+    monkeypatch.setattr(
+        "gaphor.diagram.general.generalpropertypages.error_handler", call
     )
 
     # Test code
@@ -107,7 +124,7 @@ def test_picture_property_select_keep_name(mocker, diagram, event_manager):
     temp_image = Path("data/logos/gaphor-24x24.png")
     property_page.open_file(temp_image)
 
-    assert mocked_error_handler.called is False
+    assert called is False
     assert picture.subject.name == "old_name"
 
 
