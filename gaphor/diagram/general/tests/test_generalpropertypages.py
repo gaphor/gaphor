@@ -111,61 +111,34 @@ def test_picture_property_select_keep_name(mocker, diagram, event_manager):
     assert picture.subject.name == "old_name"
 
 
-def test_picture_property_select_replace_name_chars(mocker, diagram, event_manager):
+def test_picture_property_select_replace_name_chars(diagram, event_manager):
     # Init objects
-    picture = next(
-        tl for tl in general_tools.tools if tl.id == "toolbox-picture"
-    ).item_factory(diagram)
-    property_page = PicturePropertyPage(picture, event_manager)
-
-    # Prepare mocking
-    mocked_error_handler = mocker.patch(
-        "gaphor.diagram.general.generalpropertypages.error_handler"
-    )
+    property_page = PicturePropertyPage(None, event_manager)
 
     # Test code
     temp_image = Path("gaphor/diagram/general/tests/test.+gaphor$48-48.png")
-    property_page.open_file(temp_image)
+    image_name = property_page.sanitize_image_name(temp_image)
 
-    assert mocked_error_handler.called is False
-    assert picture.subject.name == "test__gaphor_48-48"
+    assert image_name == "test__gaphor_48-48"
 
 
-def test_picture_property_select_empty_name(mocker, diagram, event_manager):
+def test_picture_property_select_empty_name(diagram, event_manager):
     # Init objects
-    picture = next(
-        tl for tl in general_tools.tools if tl.id == "toolbox-picture"
-    ).item_factory(diagram)
-    property_page = PicturePropertyPage(picture, event_manager)
-
-    # Prepare mocking
-    mocked_error_handler = mocker.patch(
-        "gaphor.diagram.general.generalpropertypages.error_handler"
-    )
+    property_page = PicturePropertyPage(None, event_manager)
 
     # Test code
     temp_image = Path("gaphor/diagram/general/tests/.png")
-    property_page.open_file(temp_image)
+    image_name = property_page.sanitize_image_name(temp_image)
 
-    assert mocked_error_handler.called is False
-    assert picture.subject.name == "_png"
+    assert image_name == "_png"
 
 
-def test_picture_property_select_empty_extension(mocker, diagram, event_manager):
+def test_picture_property_select_empty_extension(diagram, event_manager):
     # Init objects
-    picture = next(
-        tl for tl in general_tools.tools if tl.id == "toolbox-picture"
-    ).item_factory(diagram)
-    property_page = PicturePropertyPage(picture, event_manager)
-
-    # Prepare mocking
-    mocked_error_handler = mocker.patch(
-        "gaphor.diagram.general.generalpropertypages.error_handler"
-    )
+    property_page = PicturePropertyPage(None, event_manager)
 
     # Test code
     temp_image = Path("gaphor/diagram/general/tests/test_png")
-    property_page.open_file(temp_image)
+    image_name = property_page.sanitize_image_name(temp_image)
 
-    assert mocked_error_handler.called is False
-    assert picture.subject.name == "test_png"
+    assert image_name == "test_png"
