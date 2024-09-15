@@ -1,4 +1,4 @@
-import os
+from pathlib import Path
 
 from gaphor.core.modeling import Comment
 from gaphor.diagram.diagramtoolbox import general_tools
@@ -83,7 +83,7 @@ def test_picture_property_select_valid_name(mocker, diagram, event_manager):
     )
 
     # Test code
-    temp_image = os.path.abspath("data/logos/gaphor-24x24.png")
+    temp_image = Path("data/logos/gaphor-24x24.png")
     property_page.open_file(temp_image)
 
     assert mocked_error_handler.called is False
@@ -104,7 +104,7 @@ def test_picture_property_select_keep_name(mocker, diagram, event_manager):
 
     # Test code
     picture.subject.name = "old_name"
-    temp_image = os.path.abspath("data/logos/gaphor-24x24.png")
+    temp_image = Path("data/logos/gaphor-24x24.png")
     property_page.open_file(temp_image)
 
     assert mocked_error_handler.called is False
@@ -124,7 +124,7 @@ def test_picture_property_select_replace_name_chars(mocker, diagram, event_manag
     )
 
     # Test code
-    temp_image = os.path.abspath("gaphor/diagram/general/tests/test.+gaphor$48-48.png")
+    temp_image = Path("gaphor/diagram/general/tests/test.+gaphor$48-48.png")
     property_page.open_file(temp_image)
 
     assert mocked_error_handler.called is False
@@ -144,7 +144,7 @@ def test_picture_property_select_empty_name(mocker, diagram, event_manager):
     )
 
     # Test code
-    temp_image = os.path.abspath("gaphor/diagram/general/tests/.png")
+    temp_image = Path("gaphor/diagram/general/tests/.png")
     property_page.open_file(temp_image)
 
     assert mocked_error_handler.called is False
@@ -164,7 +164,7 @@ def test_picture_property_select_empty_extension(mocker, diagram, event_manager)
     )
 
     # Test code
-    temp_image = os.path.abspath("gaphor/diagram/general/tests/test_png")
+    temp_image = Path("gaphor/diagram/general/tests/test_png")
     property_page.open_file(temp_image)
 
     assert mocked_error_handler.called is False
