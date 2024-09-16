@@ -162,17 +162,10 @@ poetry run pip install --force-reinstall (Resolve-Path C:\gtk\wheels\pycairo*.wh
 ```
 Note that if you have forgotten to reinstall PyGObject and pycairo, the first time you add an element to a diagram that has text, gaphor will crash!
 
-Install your plugin so that it automatically loads into gaphor when you start gaphor
-```PowerShell
-poetry run pip install -e .
-```
-Note: The -e option is important for debugging: it allows you to make changes to your plugin without having to re-install the plugin. You will, however, need to restart gaphor after making changes.
-
 Launch Gaphor!
 ```PowerShell
 poetry run gaphor
 ```
-
 
 ### Debugging using Visual Studio Code
 
