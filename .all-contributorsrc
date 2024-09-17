@@ -1522,6 +1522,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "pbrown12303",
+      "name": "Paul C Brown",
+      "avatar_url": "https://avatars.githubusercontent.com/u/18626700?v=4",
+      "profile": "https://github.com/pbrown12303",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,
