@@ -129,7 +129,7 @@ class FileManager(Service, ActionProvider):
         )
 
         def done():
-            status_window.destroy()
+            status_window.done()
             if on_load_done:
                 on_load_done()
             else:
@@ -201,7 +201,7 @@ class FileManager(Service, ActionProvider):
                 if on_load_done:
                     on_load_done()
             finally:
-                status_window.destroy()
+                status_window.done()
 
         log.debug("Loading current model from %s", current_filename)
         for _ in self._load_async(current_filename, progress, current_done):
@@ -336,7 +336,7 @@ class FileManager(Service, ActionProvider):
             else:
                 self.filename = filename
             finally:
-                status_window.destroy()
+                status_window.done()
             if on_save_done:
                 on_save_done()
 

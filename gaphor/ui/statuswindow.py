@@ -1,7 +1,8 @@
 """Defines a status window class for displaying the progress of a queue."""
 
-from gaphas.decorators import g_async
-from gi.repository import Gtk, Pango
+from __future__ import annotations
+
+from gi.repository import GLib, Gtk, Pango
 
 
 class StatusWindow:
@@ -19,18 +20,9 @@ class StatusWindow:
         indicate what is happening.  The parent parameter is the parent
         window to display the window in.
         """
-
-        self.title = title
-        self.message = message
-        self.parent = parent
-        self.window: Gtk.Window = None
-
-        self.display()
-
-    def init_window(self):
         frame = Gtk.Frame.new(None)
         vbox = Gtk.Box.new(Gtk.Orientation.VERTICAL, spacing=12)
-        label = Gtk.Label.new(self.message)
+        label = Gtk.Label.new(message)
         label.set_ellipsize(Pango.EllipsizeMode.MIDDLE)
 
         self.progress_bar = Gtk.ProgressBar.new()
@@ -42,33 +34,23 @@ class StatusWindow:
         vbox.append(label)
         vbox.append(self.progress_bar)
 
-        self.window.set_title(self.title)
+        self.window.set_title(title)
         self.window.add_css_class("status-window")
-        if self.parent:
-            self.window.set_transient_for(self.parent)
+        if parent:
+            self.window.set_transient_for(parent)
         self.window.set_modal(True)
         self.window.set_resizable(False)
         self.window.set_decorated(False)
-
-    @g_async()
-    def display(self):
-        if not self.window:
-            self.init_window()
-
-        assert self.window
-
-        self.window.set_visible(True)
+        self.window.present()
 
     def progress(self, percentage: int):
         """Update progress percentage (0..100)."""
         if self.progress_bar:
             self.progress_bar.set_fraction(min(percentage, 100.0) / 100.0)
 
-    def destroy(self):
-        """Destroy the status window.
-
-        This will also remove the gobject handler.
-        """
+    def done(self):
+        """Close the status window."""
         if self.window:
-            self.window.destroy()
+            # Allow the GUI to do some upates before we actually close the dialog
+            GLib.idle_add(self.window.close, priority=GLib.PRIORITY_LOW)
             self.window = None
