@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import asyncio
 import logging
 import tempfile
 from collections.abc import Callable
@@ -395,26 +396,27 @@ class FileManager(Service, ActionProvider, TaskOwner):
 
 
 async def resolve_merge_conflict_dialog(window: Gtk.Window) -> str:
-    dialog = Adw.MessageDialog.new(
-        window,
+    dialog = Adw.AlertDialog.new(
         gettext("Resolve Merge Conflict?"),
-    )
-    dialog.set_body(
         gettext(
             "The model you are opening contains a merge conflict. Do you want to open the current model or the incoming change to the model?"
-        )
+        ),
     )
     dialog.add_response("cancel", gettext("Cancel"))
     dialog.add_response("manual", gettext("Open Merge Editor"))
     dialog.add_response("current", gettext("Open Current"))
     dialog.add_response("incoming", gettext("Open Incoming"))
     dialog.set_close_response("cancel")
-    dialog.present()
 
-    answer: str = await dialog.choose()
-    dialog.set_transient_for(None)
-    dialog.destroy()
-    return answer
+    response = asyncio.get_running_loop().create_future()
+
+    def response_cb(_dialog, answer):
+        response.set_result(answer)
+
+    dialog.connect("response", response_cb)
+    dialog.present(window)
+
+    return await response  # type: ignore[no-any-return]
 
 
 async def save_changes_before_close_dialog(window: Gtk.Window) -> str:
@@ -422,11 +424,7 @@ async def save_changes_before_close_dialog(window: Gtk.Window) -> str:
     body = gettext(
         "The open model contains unsaved changes. Changes which are not saved will be permanently lost."
     )
-    dialog = Adw.MessageDialog.new(
-        window,
-        title,
-    )
-    dialog.set_body(body)
+    dialog = Adw.AlertDialog.new(title, body)
     dialog.add_response("cancel", gettext("Cancel"))
     dialog.add_response("discard", gettext("Discard"))
     dialog.add_response("save", gettext("Save"))
@@ -434,9 +432,13 @@ async def save_changes_before_close_dialog(window: Gtk.Window) -> str:
     dialog.set_response_appearance("save", Adw.ResponseAppearance.SUGGESTED)
     dialog.set_default_response("save")
     dialog.set_close_response("cancel")
-    dialog.present()
 
-    answer: str = await dialog.choose()
-    dialog.set_transient_for(None)
-    dialog.destroy()
-    return answer
+    response = asyncio.get_running_loop().create_future()
+
+    def response_cb(_dialog, answer):
+        response.set_result(answer)
+
+    dialog.connect("response", response_cb)
+    dialog.present(window)
+
+    return await response  # type: ignore[no-any-return]
