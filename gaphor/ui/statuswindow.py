@@ -1,6 +1,8 @@
 """Defines a status window class for displaying the progress of a queue."""
 
-from gi.repository import GLib, Gtk, Pango
+from __future__ import annotations
+
+from gi.repository import Adw, GLib, Gtk, Pango
 
 
 class StatusWindow:
@@ -10,7 +12,7 @@ class StatusWindow:
     The progress bar is updated as the queue is updated.
     """
 
-    def __init__(self, title, message, parent=None):
+    def __init__(self, title: str, message: str, parent: Gtk.Widget | None = None):
         """Create the status window.
 
         The title parameter is the title of the window.  The message
@@ -18,27 +20,20 @@ class StatusWindow:
         indicate what is happening.  The parent parameter is the parent
         window to display the window in.
         """
-        frame = Gtk.Frame.new(None)
         vbox = Gtk.Box.new(Gtk.Orientation.VERTICAL, spacing=12)
         label = Gtk.Label.new(message)
         label.set_ellipsize(Pango.EllipsizeMode.MIDDLE)
+        vbox.append(label)
 
         self.progress_bar = Gtk.ProgressBar.new()
         self.progress_bar.set_size_request(400, -1)
-
-        self.window = Gtk.Window.new()
-        self.window.set_child(frame)
-        frame.set_child(vbox)
-        vbox.append(label)
         vbox.append(self.progress_bar)
 
+        self.window = Adw.Dialog.new()
+        self.window.set_child(vbox)
         self.window.set_title(title)
         self.window.add_css_class("status-window")
-        if parent:
-            self.window.set_transient_for(parent)
-        self.window.set_modal(True)
-        self.window.set_resizable(False)
-        self.window.set_decorated(False)
+        self.window.present(parent)
 
     def progress(self, percentage: int):
         """Update progress percentage (0..100)."""
