@@ -145,12 +145,16 @@ When setting up a plugin workspace you need to perform the following steps:
 
 cd (your project's workspace)
 
-If your project does not already have a pyproject.toml file, create one. For details see the [Poetry documentation](https://python-poetry.org/docs/basic-usage/). If you already have a .toml file, make sure you have gaphor as a development dependency. For details see the [Gaphor Hello World Plugin](https://github.com/gaphor/gaphor_plugin_helloworld)
+If your project does not already have a pyproject.toml file, create one. For details see the [Poetry
+documentation](https://python-poetry.org/docs/basic-usage/). If you already have a .toml file, make sure you have gaphor
+as a development dependency. For details see the [Gaphor Hello World Plugin](https://github.com/gaphor/gaphor_plugin_helloworld).
+
 ```PowerShell
 poetry init
 ```
 
-Install your project's dependencies. If you have made your project dependent upon gaphor, this will pull in gaphor
+Install your project's dependencies. If you have made your project dependent upon Gaphor, this will pull in Gaphor.
+
 ```PowerShell
 poetry install
 ```
@@ -160,7 +164,9 @@ Reinstall PyGObject and pycairo using gvsbuild wheels
 poetry run pip install --force-reinstall (Resolve-Path C:\gtk\wheels\PyGObject*.whl)
 poetry run pip install --force-reinstall (Resolve-Path C:\gtk\wheels\pycairo*.whl)
 ```
-Note that if you have forgotten to reinstall PyGObject and pycairo, the first time you add an element to a diagram that has text, gaphor will crash!
+
+Note that if you have forgotten to reinstall PyGObject and pycairo, the first time you add an element to a diagram that
+has text, gaphor will crash!
 
 Launch Gaphor!
 ```PowerShell
