@@ -120,12 +120,20 @@ def test_drop_message_received_connected(diagram, element_factory):
 
 def test_drop_pin(diagram, element_factory):
     action = element_factory.create(UML.Action)
-    pin = element_factory.create(UML.Pin)
-    pin.opaqueAction = action
+    input_pin = element_factory.create(UML.InputPin)
+    input_pin.opaqueAction = action
+    output_pin = element_factory.create(UML.OutputPin)
+    output_pin.opaqueAction = action
 
     drop(action, diagram, 0, 0)
-    item = drop(pin, diagram, 0, 0)
+    input_item = drop(input_pin, diagram, 0, 0)
 
-    assert item
-    assert item.subject is pin
-    assert item.parent.subject is action
+    assert input_item
+    assert input_item.subject is input_pin
+    assert input_item.parent.subject is action
+
+    ouput_item = drop(output_pin, diagram, 0, 0)
+
+    assert ouput_item
+    assert ouput_item.subject is output_pin
+    assert ouput_item.parent.subject is action
