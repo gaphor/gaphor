@@ -1,3 +1,6 @@
+import contextlib
+import functools
+
 from gaphor import UML
 from gaphor.core.format import format, parse
 from gaphor.diagram.propertypages import (
@@ -14,6 +17,25 @@ from gaphor.UML.profiles.stereotypepropertypages import (
     stereotype_model,
     stereotype_set_model_with_interaction,
 )
+
+
+def blockable(func):
+    blocked = 0
+
+    def _blockable(*args, **kwargs):
+        if not blocked:
+            return func(*args, **kwargs)
+
+    @contextlib.contextmanager
+    def block():
+        nonlocal blocked
+        blocked += 1
+        yield
+        blocked -= 1
+
+    wrapped = functools.update_wrapper(_blockable, func)
+    wrapped.block = block  # type: ignore[attr-defined]
+    return wrapped
 
 
 @PropertyPages.register(UML.Association)
@@ -37,10 +59,12 @@ class AssociationPropertyPage(PropertyPageBase):
         self.update_end_name(builder, end_name, subject)
 
         navigation = builder.get_object(f"{end_name}-navigation")
-        navigation.set_selected(self.NAVIGABILITY.index(subject.navigability))
+        with self._on_end_navigability_change.block():
+            navigation.set_selected(self.NAVIGABILITY.index(subject.navigability))
 
         aggregation = builder.get_object(f"{end_name}-aggregation")
-        aggregation.set_selected(self.AGGREGATION.index(subject.aggregation))
+        with self._on_end_aggregation_change.block():
+            aggregation.set_selected(self.AGGREGATION.index(subject.aggregation))
 
         if stereotypes_model := stereotype_model(subject, self.event_manager):
             stereotype_list = builder.get_object(f"{end_name}-stereotype-list")
@@ -49,6 +73,7 @@ class AssociationPropertyPage(PropertyPageBase):
             stereotype_frame = builder.get_object(f"{end_name}-stereotype-frame")
             stereotype_frame.set_visible(False)
 
+    @blockable
     def update_end_name(self, builder, end_name, subject):
         name = builder.get_object(f"{end_name}-name")
         new_name = (
@@ -60,10 +85,8 @@ class AssociationPropertyPage(PropertyPageBase):
             )
             or ""
         )
-        if not (name.is_focus() or self.end_name_change_semaphore):
-            self.end_name_change_semaphore += 1
+        with self._on_end_name_change.block():
             name.set_text(new_name)
-            self.end_name_change_semaphore -= 1
         return name
 
     def construct(self):
@@ -136,13 +159,13 @@ class AssociationPropertyPage(PropertyPageBase):
             builder.get_object("association-editor"), self.watcher
         )
 
+    @blockable
     def _on_end_name_change(self, entry, subject):
-        if not self.end_name_change_semaphore:
-            self.end_name_change_semaphore += 1
+        with self.update_end_name.block():
             with Transaction(self.event_manager):
                 parse(subject, entry.get_text())
-            self.end_name_change_semaphore -= 1
 
+    @blockable
     def _on_end_navigability_change(self, dropdown, _pspec, subject):
         if subject and subject.opposite and subject.opposite.type:
             with Transaction(self.event_manager):
@@ -152,6 +175,7 @@ class AssociationPropertyPage(PropertyPageBase):
                     self.NAVIGABILITY[dropdown.get_selected()],
                 )
 
+    @blockable
     def _on_end_aggregation_change(self, dropdown, _pspec, subject: UML.Property):
         aggregation = self.AGGREGATION[dropdown.get_selected()]
         if aggregation != subject.aggregation:
