@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from gaphor import UML
 from gaphor.core.modeling import Diagram
-from gaphor.diagram.drop import drop, drop_relationship, drop_pin_on_diagram
+from gaphor.diagram.drop import drop, drop_pin_on_diagram, drop_relationship
 
 
 @drop.register(UML.Association, Diagram)
@@ -33,6 +33,7 @@ def drop_message(element: UML.Message, diagram: Diagram, x, y):
         x,
         y,
     )
+
 
 @drop.register(UML.Pin, Diagram)
 def drop_pin(element: UML.Pin, diagram: Diagram, x, y):
