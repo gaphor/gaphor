@@ -79,11 +79,6 @@ class ModelSaved:
         self.filename = filename
 
 
-class ModelChangedOnDisk:
-    def __init__(self, filename: Path | None = None):
-        self.filename = filename
-
-
 class TransactionBegin:
     """This event denotes the beginning of a transaction.
 

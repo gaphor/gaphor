@@ -1,24 +1,12 @@
 import sys
 import textwrap
-import time
 
 import pytest
 from dulwich.repo import Repo
-from gi.repository import GLib
 
 from gaphor import UML
-from gaphor.core import event_handler
-from gaphor.event import ModelChangedOnDisk
 from gaphor.storage.tests.fixtures import create_merge_conflict
 from gaphor.ui.filemanager import FileManager
-
-
-def iteration(sentinel):
-    ctx = GLib.main_context_default()
-    while ctx.pending():
-        ctx.iteration(False)
-        if not sentinel():
-            time.sleep(0.1)
 
 
 @pytest.fixture
@@ -73,26 +61,6 @@ def test_model_is_loaded_with_utf8_encoding(
 
     assert new_class.name == class_name
     assert new_package.name == package_name
-
-
-def test_notify_changes(
-    event_manager, element_factory, file_manager: FileManager, tmp_path
-):
-    @event_handler(ModelChangedOnDisk)
-    def on_changed_on_disk(_event):
-        nonlocal notified
-        notified = True
-
-    element_factory.create(UML.Class)
-    out_file = tmp_path / "out.gaphor"
-    file_manager.save(filename=out_file)
-    notified = False
-    event_manager.subscribe(on_changed_on_disk)
-
-    out_file.write_text("a", encoding="utf-8")
-    iteration(lambda: notified)
-
-    assert notified
 
 
 @pytest.mark.skipif(
