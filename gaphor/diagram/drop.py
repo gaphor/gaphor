@@ -164,6 +164,25 @@ def drop_relationship(element, head_element, tail_element, diagram, x, y):
 
     return item
 
+def drop_pin_on_diagram(element, owner, diagram, x, y):
+    item_class = get_diagram_item(type(element))
+    if not item_class:
+        return None
+
+    owner_item = diagram_has_presentation(diagram, owner)
+    if owner and not owner_item:
+        return None
+
+    item = diagram.create(item_class)
+    assert item
+
+    item.matrix.translate(x, y)
+    item.subject = element
+    handle = item.handles()[-1]
+    if owner_item:
+        connect(item, handle, owner_item)
+
+    return item
 
 def diagram_has_presentation(diagram, element):
     return (
