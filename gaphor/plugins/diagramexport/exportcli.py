@@ -5,7 +5,7 @@ import logging
 import re
 
 from gaphor.application import Session
-from gaphor.diagram.export import save_pdf, save_png, save_svg
+from gaphor.diagram.export import save_eps, save_pdf, save_png, save_svg
 from gaphor.plugins.diagramexport.exportall import export_all
 from gaphor.storage import storage
 
@@ -31,7 +31,7 @@ def export_parser():
         metavar="format",
         help="output file format, default pdf",
         default="pdf",
-        choices=["pdf", "svg", "png"],
+        choices=["pdf", "svg", "png", "eps"],
     )
     parser.add_argument(
         "-r",
@@ -75,6 +75,8 @@ def export_command(args):
             out_fn = save_svg
         elif args.format == "png":
             out_fn = save_png
+        elif args.format == "eps":
+            out_fn = save_eps
         else:
             raise RuntimeError(f"Unknown file format: {args.format}")
 
