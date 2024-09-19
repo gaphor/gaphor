@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from pathlib import Path
 
+from gi.repository import Gtk
+
 from gaphor.abc import ActionProvider, Service
 from gaphor.core import action, gettext
 from gaphor.diagram.export import (
@@ -11,19 +13,23 @@ from gaphor.diagram.export import (
     save_png,
     save_svg,
 )
+from gaphor.plugins.diagramexport.exportall import export_all
 from gaphor.ui.filedialog import save_file_dialog
 
 
 class DiagramExport(Service, ActionProvider):
     """Service for exporting diagrams as images (SVG, PNG, PDF)."""
 
-    def __init__(self, diagrams=None, export_menu=None, main_window=None):
+    def __init__(
+        self, diagrams=None, export_menu=None, main_window=None, element_factory=None
+    ):
         self.diagrams = diagrams
         self.export_menu = export_menu
         self.main_window = main_window
         if export_menu:
             export_menu.add_actions(self)
         self.filename: Path = Path("export").absolute()
+        self.factory = element_factory
 
     def shutdown(self):
         if self.export_menu:
@@ -100,3 +106,83 @@ class DiagramExport(Service, ActionProvider):
             "application/postscript",
             save_eps,
         )
+
+    @action(
+        name="all-export-svg",
+        label=gettext("Export all diagrams as SVG"),
+        tooltip=gettext(
+            "Export all diagrams as SVG diagrams in a specified" "directory"
+        ),
+    )
+    def export_all_svg_action(self):
+        dialog = Gtk.FileDialog.new()
+        dialog.set_title(gettext("Export all diagrams"))
+
+        def response(dialog, result):
+            if result.had_error():
+                return
+
+            folder = dialog.select_folder_finish(result).get_path()
+            export_all(self.factory, folder, save_svg, "svg")
+
+        dialog.select_folder(callback=response)
+
+    @action(
+        name="all-export-png",
+        label=gettext("Export all diagrams as PNG"),
+        tooltip=gettext(
+            "Export all diagrams as PNG diagrams in a specified" "directory"
+        ),
+    )
+    def export_all_png_action(self):
+        dialog = Gtk.FileDialog.new()
+        dialog.set_title(gettext("Export all diagrams"))
+
+        def response(dialog, result):
+            if result.had_error():
+                return
+
+            folder = dialog.select_folder_finish(result).get_path()
+            export_all(self.factory, folder, save_png, "png")
+
+        dialog.select_folder(callback=response)
+
+    @action(
+        name="all-export-pdf",
+        label=gettext("Export all diagrams as PDF"),
+        tooltip=gettext(
+            "Export all diagrams as PDF diagrams in a specified" "directory"
+        ),
+    )
+    def export_all_pdf_action(self):
+        dialog = Gtk.FileDialog.new()
+        dialog.set_title(gettext("Export all diagrams"))
+
+        def response(dialog, result):
+            if result.had_error():
+                return
+
+            folder = dialog.select_folder_finish(result).get_path()
+            export_all(self.factory, folder, save_pdf, "pdf")
+
+        dialog.select_folder(callback=response)
+
+    @action(
+        name="all-export-eps",
+        label=gettext("Export all diagrams as EPS"),
+        tooltip=gettext(
+            "Export all diagrams as EPS diagrams in a specified" "directory"
+        ),
+    )
+    def export_all_eps_action(self):
+        dialog = Gtk.FileDialog.new()
+        dialog.set_title(gettext("Export all diagrams"))
+
+        def response(dialog, result):
+            if result.had_error():
+                return
+
+            folder = dialog.select_folder_finish(result).get_path()
+            export_all(self.factory, folder, save_eps, "eps")
+
+        dialog.select_folder(callback=response)

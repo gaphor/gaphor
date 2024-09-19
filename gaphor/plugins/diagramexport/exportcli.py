@@ -3,24 +3,13 @@
 import argparse
 import logging
 import re
-from pathlib import Path
-from typing import List
 
 from gaphor.application import Session
-from gaphor.core.modeling import Diagram
-from gaphor.diagram.export import escape_filename, save_pdf, save_png, save_svg
+from gaphor.diagram.export import save_pdf, save_png, save_svg
+from gaphor.plugins.diagramexport.exportall import export_all
 from gaphor.storage import storage
 
 log = logging.getLogger(__name__)
-
-
-def pkg2dir(package):
-    """Return directory path from package class."""
-    name: List[str] = []
-    while package:
-        name.insert(0, package.name)
-        package = package.package
-    return "/".join(name)
 
 
 def export_parser():
@@ -79,38 +68,14 @@ def export_command(args):
             storage.load(file_obj, factory, modeling_language)
         log.debug("ready for rendering")
 
-        for diagram in factory.select(Diagram):
-            odir = pkg2dir(diagram.owner)
+        out_fn = None
+        if args.format == "pdf":
+            out_fn = save_pdf
+        elif args.format == "svg":
+            out_fn = save_svg
+        elif args.format == "png":
+            out_fn = save_png
+        else:
+            raise RuntimeError(f"Unknown file format: {args.format}")
 
-            # just diagram name
-            dname = escape_filename(diagram.name)
-            # full diagram name including package path
-            pname = f"{odir}/{dname}"
-
-            if args.underscores:
-                odir = odir.replace(" ", "_")
-                dname = dname.replace(" ", "_")
-
-            if name_re and not name_re.search(pname):
-                log.debug("skipping %s", pname)
-                continue
-
-            if args.dir:
-                odir = f"{args.dir}/{odir}"
-
-            outfilename = f"{odir}/{dname}.{args.format}"
-
-            if not Path(odir).exists():
-                log.debug("creating dir %s", odir)
-                Path(odir).mkdir(parents=True)
-
-            log.debug("rendering: %s -> %s...", pname, outfilename)
-
-            if args.format == "pdf":
-                save_pdf(outfilename, diagram)
-            elif args.format == "svg":
-                save_svg(outfilename, diagram)
-            elif args.format == "png":
-                save_png(outfilename, diagram)
-            else:
-                raise RuntimeError(f"Unknown file format: {args.format}")
+        export_all(factory, args.dir, out_fn, args.format, name_re, args.underscores)
