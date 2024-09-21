@@ -1531,6 +1531,15 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "frankvanbever",
+      "name": "Frank Vanbever",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1665441?v=4",
+      "profile": "https://github.com/frankvanbever",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
