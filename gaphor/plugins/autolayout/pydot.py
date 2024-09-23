@@ -24,6 +24,7 @@ from gaphor.diagram.presentation import (
 from gaphor.i18n import gettext
 from gaphor.transaction import Transaction
 from gaphor.UML.actions.activitynodes import ForkNodeItem
+from gaphor.UML.classes.generalization import GeneralizationItem
 
 DOT = "dot"
 DPI = 72.0
@@ -168,7 +169,8 @@ class AutoLayout:
             if presentation := presentation_for_object(diagram, edge):
                 presentation.orthogonal = False
 
-                points = parse_edge_pos(edge.get_pos(), height)
+                reverse = isinstance(presentation, GeneralizationItem)
+                points = parse_edge_pos(edge.get_pos(), height, reverse)
                 segment = Segment(presentation, diagram)
                 while len(points) > len(presentation.handles()):
                     segment.split_segment(0)
@@ -283,9 +285,16 @@ def _(presentation: LinePresentation):
         if as_cluster(tail_connection.connected):
             extra_args["ltail"] = f"cluster_{tail_connection.connected.id}"
 
+        if isinstance(presentation, GeneralizationItem):
+            head_id = tail_connection.connected.id
+            tail_id = head_connection.connected.id
+        else:
+            head_id = head_connection.connected.id
+            tail_id = tail_connection.connected.id
+
         yield pydot.Edge(
-            tail_connection.connected.id,
-            head_connection.connected.id,
+            head_id,
+            tail_id,
             id=presentation.id,
             minlen=3,
             arrowhead="none",
@@ -343,7 +352,7 @@ def add_to_graph(graph, edge_or_node) -> None:
         raise ValueError(f"Can't transform {edge_or_node} to something DOT'ish?")
 
 
-def parse_edge_pos(pos_str: str, height: float) -> list[Point]:
+def parse_edge_pos(pos_str: str, height: float, reverse:bool) -> list[Point]:
     raw_points = strip_quotes(pos_str).split(" ")
 
     points = [parse_point(raw_points.pop(0), height)]
@@ -353,7 +362,8 @@ def parse_edge_pos(pos_str: str, height: float) -> list[Point]:
         raw_points.pop(0)
         raw_points.pop(0)
         points.append(parse_point(raw_points.pop(0), height))
-    points.reverse()
+    if reverse:
+        points.reverse()
     return points
 
 
