@@ -21,13 +21,9 @@ class Service(abc.ABC):
         """Shutdown the services, free resources."""
 
 
-class ActionProvider(abc.ABC):
+class ActionProvider:
     """An action provider is a special service that provides actions via
     ``@action`` decorators on its methods (see gaphor/action.py)."""
-
-    @abc.abstractmethod
-    def __init__(self):
-        pass
 
 
 class ModelingLanguage(abc.ABC):

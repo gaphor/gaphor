@@ -4,20 +4,21 @@ from pathlib import Path
 
 from PIL import Image
 
+from gaphor.asyncio import TaskOwner
 from gaphor.core import gettext
 from gaphor.diagram.propertypages import PropertyPageBase, PropertyPages, new_builder
 from gaphor.transaction import Transaction
 from gaphor.ui.errordialog import error_dialog
 from gaphor.ui.filedialog import open_file_dialog
 from gaphor.UML.general.image import ImageItem
-from gaphor.asyncio import create_background_task
 
 
 @PropertyPages.register(ImageItem)
-class ImagePropertyPage(PropertyPageBase):
+class ImagePropertyPage(PropertyPageBase, TaskOwner):
     """Edit image settings"""
 
     def __init__(self, subject, event_manager):
+        super().__init__()
         self.subject = subject
         self.event_manager = event_manager
         self.watcher = subject and subject.watcher()
@@ -73,7 +74,7 @@ class ImagePropertyPage(PropertyPageBase):
                 )
 
     def _on_select_picture_clicked(self, button):
-        create_background_task(self.open_file(button.get_root()))
+        self.create_background_task(self.open_file(button.get_root()))
 
     def _on_default_size_clicked(self, button):
         if self.subject and self.subject.subject and self.subject.subject.content:

@@ -5,7 +5,7 @@ from pathlib import Path
 from gi.repository import Gtk
 
 from gaphor.abc import ActionProvider, Service
-from gaphor.asyncio import create_background_task
+from gaphor.asyncio import TaskOwner
 from gaphor.core import action, gettext
 from gaphor.diagram.export import (
     escape_filename,
@@ -18,12 +18,13 @@ from gaphor.plugins.diagramexport.exportall import export_all
 from gaphor.ui.filedialog import save_file_dialog
 
 
-class DiagramExport(Service, ActionProvider):
+class DiagramExport(Service, ActionProvider, TaskOwner):
     """Service for exporting diagrams as images (SVG, PNG, PDF)."""
 
     def __init__(
         self, diagrams=None, export_menu=None, main_window=None, element_factory=None
     ):
+        super().__init__()
         self.diagrams = diagrams
         self.export_menu = export_menu
         self.main_window = main_window
@@ -33,6 +34,7 @@ class DiagramExport(Service, ActionProvider):
         self.factory = element_factory
 
     def shutdown(self):
+        self.cancel_background_task()
         if self.export_menu:
             self.export_menu.remove_actions(self)
 
@@ -59,7 +61,7 @@ class DiagramExport(Service, ActionProvider):
                 self.filename = new_filename
                 handler(filename, diagram)
 
-        create_background_task(save_as())
+        self.create_background_task(save_as())
 
     @action(
         name="file-export-svg",

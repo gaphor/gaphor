@@ -19,7 +19,6 @@ import gaphor.ui  # noqa: F401
 
 from gaphas.view import GtkView
 
-from gaphor.asyncio import _background_tasks
 from gaphor.core import Transaction
 from gaphor.core.eventmanager import EventManager
 from gaphor.core.modeling import Diagram, ElementFactory
@@ -40,12 +39,6 @@ from gaphor.UML.sanitizerservice import SanitizerService
 @pytest.fixture(autouse=True)
 def assert_not_in_transaction():
     assert not Transaction.in_transaction()
-
-
-@pytest.fixture(autouse=True)
-def assert_no_lingering_background_tasks():
-    yield
-    assert not _background_tasks
 
 
 @pytest.fixture

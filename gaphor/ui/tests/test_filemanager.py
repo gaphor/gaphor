@@ -5,7 +5,6 @@ import pytest
 from dulwich.repo import Repo
 
 from gaphor import UML
-from gaphor.asyncio import gather_background_tasks
 from gaphor.storage.tests.fixtures import create_merge_conflict
 from gaphor.ui.filemanager import FileManager
 
@@ -13,7 +12,11 @@ from gaphor.ui.filemanager import FileManager
 @pytest.fixture
 def file_manager(event_manager, element_factory, modeling_language):
     main_window = None
-    return FileManager(event_manager, element_factory, modeling_language, main_window)
+    file_manager = FileManager(
+        event_manager, element_factory, modeling_language, main_window
+    )
+    yield file_manager
+    file_manager.shutdown()
 
 
 @pytest.mark.asyncio
@@ -87,7 +90,6 @@ async def test_load_model_with_merge_conflict(
     replace_merge_conflict_dialog(monkeypatch, resolution)
 
     await file_manager.resolve_merge_conflict(merge_conflict)
-    await gather_background_tasks()
 
     assert element_factory.size() > 0
 
@@ -100,7 +102,6 @@ async def test_load_model_merge_conflict_and_manual_resolution(
     replace_merge_conflict_dialog(monkeypatch, "manual")
 
     await file_manager.resolve_merge_conflict(merge_conflict)
-    await gather_background_tasks()
 
     from gaphor.core.modeling import PendingChange
 
@@ -116,7 +117,6 @@ async def test_load_model_with_merge_conflict_and_unknown_resolution(
 
     with pytest.raises(ValueError):
         await file_manager.resolve_merge_conflict(merge_conflict)
-        await gather_background_tasks()
 
 
 def replace_merge_conflict_dialog(monkeypatch, resolution):

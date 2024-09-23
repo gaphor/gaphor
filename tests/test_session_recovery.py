@@ -1,7 +1,6 @@
 import pytest
 
 from gaphor.application import Application
-from gaphor.asyncio import gather_background_tasks
 from gaphor.core.modeling import Diagram
 from gaphor.diagram.general import Line
 from gaphor.diagram.segment import Segment
@@ -31,7 +30,7 @@ async def test_recovery_when_reloading_file(application: Application, test_model
     new_session = application.recover_session(
         session_id=session.session_id, filename=model_file
     )
-    await gather_background_tasks()
+    await new_session.get_service("file_manager").gather_background_task()
     new_element_factory = new_session.get_service("element_factory")
 
     assert new_element_factory.lookup(diagram.id)
@@ -53,7 +52,6 @@ async def test_recovery_when_change_is_rolled_back(
     new_session = application.recover_session(
         session_id=session.session_id, filename=model_file
     )
-    await gather_background_tasks()
     new_element_factory = new_session.get_service("element_factory")
 
     assert not new_element_factory.lookup(diagram.id)
@@ -70,7 +68,6 @@ async def test_recovery_when_model_is_loaded_twice(
         diagram = element_factory.create(Diagram)
 
     new_session = application.new_session(filename=model_file, force=True)
-    await gather_background_tasks()
     new_element_factory = new_session.get_service("element_factory")
 
     assert not new_element_factory.lookup(diagram.id)
@@ -109,7 +106,6 @@ async def test_no_recovery_for_saved_file(
     new_session = application.recover_session(
         session_id=session.session_id, filename=model_file
     )
-    await gather_background_tasks()
 
     new_element_factory = new_session.get_service("element_factory")
 
@@ -142,7 +138,7 @@ async def test_no_recovey_when_model_changed(
     new_session = application.recover_session(
         session_id=session.session_id, filename=model_file
     )
-    await gather_background_tasks()
+    await new_session.get_service("file_manager").gather_background_task()
     new_element_factory = new_session.get_service("element_factory")
 
     assert not new_element_factory.lookup(diagram.id)
@@ -165,7 +161,6 @@ async def test_no_recovery_for_properly_closed_session(
     new_session = application.recover_session(
         session_id=session.session_id, filename=model_file
     )
-    await gather_background_tasks()
     new_element_factory = new_session.get_service("element_factory")
 
     assert not new_element_factory.lookup(diagram.id)
@@ -198,7 +193,7 @@ async def test_broken_recovery_log(
     new_session = application.recover_session(
         session_id=session.session_id, filename=model_file
     )
-    await gather_background_tasks()
+    await new_session.get_service("file_manager").gather_background_task()
     new_element_factory = new_session.get_service("element_factory")
 
     assert not new_element_factory.lookup(diagram.id)
@@ -223,7 +218,8 @@ async def test_recover_from_session_files(
         [("c", "UML", "Class", class_id, None)],
     )
     recover_sessions(application)
-    await gather_background_tasks()
+    for session in application.sessions:
+        await session.get_service("file_manager").gather_background_task()
 
     session = next(s for s in application.sessions if s.session_id == session_id)
     element_factory = session.get_service("element_factory")
@@ -264,7 +260,6 @@ async def test_recover_with_invalid_sha(application: Application, test_models):
         [("c", "Class", class_id, None)],
     )
     recover_sessions(application)
-    await gather_background_tasks()
 
     session = next(s for s in application.sessions if s.session_id == session_id)
     element_factory = session.get_service("element_factory")
