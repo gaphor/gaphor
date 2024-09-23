@@ -1,3 +1,30 @@
+2.27.0
+------
+- Improve file changed notification
+- Show main window first when loading model from command line
+- Support macOS ARM (Apple Silicon) and improve macOS styling
+- Add read-only attribute support
+- Allow spaces in string attribute value
+- Select single image file and avoid accessing image attributes after close
+- Add trigger and action for State Machine transitions
+- Pick new picture name from filename
+- Move Types to Core model
+- Add a special C4 Dependency with a technology field
+- Be more lenient with association end multiplicity
+- Fix recursive updates for association property editor
+- Fix InterfaceRealization.implementingClassifier name
+- Fix long file names and loaded models showing as modified
+- Fix unowned elements
+- Fix exception when dropping an association on a diagram
+- Fix undo and recovery of Dependency type
+- Automatically update Gvsbuild version
+- Add option to export all diagrams from UI
+- Remove XMI export plugin
+- Use Gdk.Event.triggers_context_menu()
+- Remove ServiceEvent
+- Update docs for plugin development, CSS examples, and C4 banking example
+- Update translations for Gaphor
+
 2.26.0
 ------
 - After a crash, Gaphor can now restore your modeling sessions
