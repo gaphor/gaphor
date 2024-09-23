@@ -3,7 +3,6 @@
 from hypothesis import settings
 
 from gaphor.conftest import (
-    assert_no_lingering_background_tasks,
     assert_not_in_transaction,
     create,
     diagram,

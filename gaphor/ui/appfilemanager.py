@@ -5,22 +5,23 @@ from pathlib import Path
 from gi.repository import Adw
 
 from gaphor.abc import ActionProvider, Service
-from gaphor.asyncio import create_background_task
+from gaphor.asyncio import TaskOwner
 from gaphor.core import action, gettext
 from gaphor.ui.filedialog import GAPHOR_FILTER, open_file_dialog
 
 log = logging.getLogger(__name__)
 
 
-class AppFileManager(Service, ActionProvider):
+class AppFileManager(Service, ActionProvider, TaskOwner):
     """Handle application level file loading."""
 
     def __init__(self, application):
+        super().__init__()
         self.application = application
         self.last_dir = None
 
     def shutdown(self):
-        pass
+        self.cancel_background_task()
 
     @property
     def window(self):
@@ -31,7 +32,7 @@ class AppFileManager(Service, ActionProvider):
         """This menu action opens the standard model open dialog."""
 
         async def open_files():
-            filenames = await open_file_dialog(
+            filenames: list[Path] | None = await open_file_dialog(  # type: ignore[assignment]
                 gettext("Open a Model"),
                 parent=self.window,
                 dirname=self.last_dir,
@@ -77,4 +78,4 @@ class AppFileManager(Service, ActionProvider):
 
                 self.last_dir = os.path.dirname(filename)
 
-        create_background_task(open_files())
+        self.create_background_task(open_files())

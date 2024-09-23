@@ -6,6 +6,7 @@ async tasks.
 
 import asyncio
 import contextlib
+from collections.abc import Coroutine
 
 from gi.events import GLibEventLoopPolicy
 from gi.repository import GLib
@@ -22,30 +23,33 @@ def glib_event_loop_policy():
         asyncio.set_event_loop_policy(original)
 
 
-_background_tasks = set()
+class TaskOwner:
+    """Mixin that allows an object to manage an asyncio task.
 
-
-def create_background_task(coro) -> asyncio.Task:
-    """Create and track a task.
-
-    Normally tasks are weak-referenced by asyncio.
-    We keep track of them, so they can be completed
-    before GC kicks in.
+    The TaskOwner allows for managing one (!) task at a time.
     """
-    task = asyncio.create_task(coro)
-    _background_tasks.add(task)
-    task.add_done_callback(_background_tasks.discard)
-    return task
 
+    def __init__(self):
+        self._background_task: asyncio.Task | None = None
 
-async def gather_background_tasks():
-    """Gather (run) all background tasks.
+    def create_background_task(self, coro: Coroutine) -> asyncio.Task:
+        assert self._background_task is None or self._background_task.done()
+        task = asyncio.create_task(coro)
+        self._background_task = task
 
-    This is sort of a stop gap solution since not
-    all code is async/await aware.
-    """
-    if _background_tasks:
-        await asyncio.gather(*_background_tasks)
+        def task_done(task):
+            assert self._background_task is task
+            self._background_task = None
+
+        task.add_done_callback(task_done)
+        return task
+
+    def cancel_background_task(self) -> bool:
+        return (self._background_task is not None) and self._background_task.cancel()
+
+    async def gather_background_task(self):
+        if self._background_task:
+            await asyncio.gather(self._background_task)
 
 
 def sleep(delay, result=None, priority=GLib.PRIORITY_LOW):

@@ -2,7 +2,6 @@ from pathlib import Path
 
 import pytest
 
-from gaphor.asyncio import gather_background_tasks
 from gaphor.core.modeling import Comment
 from gaphor.diagram.diagramtoolbox import general_tools
 from gaphor.diagram.general import MetadataItem
@@ -79,7 +78,7 @@ async def test_picture_property_select_opens_dialog(
     # Test code
     button_widget.activate()
 
-    await gather_background_tasks()
+    await property_page.gather_background_task()
 
     assert called is True
 

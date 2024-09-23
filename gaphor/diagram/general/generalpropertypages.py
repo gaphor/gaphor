@@ -5,7 +5,7 @@ from pathlib import Path
 from gi.repository import Gtk
 from PIL import Image
 
-from gaphor.asyncio import create_background_task
+from gaphor.asyncio import TaskOwner
 from gaphor.core import gettext
 from gaphor.core.modeling import Comment
 from gaphor.diagram.general.metadata import MetadataItem
@@ -103,10 +103,11 @@ class MetadataPropertyPage(PropertyPageBase):
 
 
 @PropertyPages.register(PictureItem)
-class PicturePropertyPage(PropertyPageBase):
+class PicturePropertyPage(PropertyPageBase, TaskOwner):
     """Edit picture settings"""
 
     def __init__(self, subject, event_manager):
+        super().__init__()
         self.subject = subject
         self.event_manager = event_manager
         self.watcher = subject and subject.watcher()
@@ -162,7 +163,7 @@ class PicturePropertyPage(PropertyPageBase):
                 )
 
     def _on_select_picture_clicked(self, button):
-        create_background_task(self.open_file(button.get_root()))
+        self.create_background_task(self.open_file(button.get_root()))
 
     def _on_default_size_clicked(self, button):
         if self.subject and self.subject.subject and self.subject.subject.content:
