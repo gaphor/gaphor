@@ -3,7 +3,6 @@ from pathlib import Path
 import pytest
 
 from gaphor.application import Application
-from gaphor.asyncio import gather_background_tasks
 from gaphor.event import ModelSaved, SessionCreated
 
 
@@ -34,7 +33,6 @@ async def test_model_loaded(application, test_models):
     session.event_manager.handle(
         SessionCreated(None, session, filename=test_models / "all-elements.gaphor")
     )
-    await gather_background_tasks()
 
     assert session.filename == test_models / "all-elements.gaphor"
 

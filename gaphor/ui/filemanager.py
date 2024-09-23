@@ -12,7 +12,7 @@ from gi.repository import Adw, Gio, Gtk
 
 from gaphor import UML
 from gaphor.abc import ActionProvider, Service
-from gaphor.asyncio import create_background_task, sleep
+from gaphor.asyncio import TaskOwner, sleep
 from gaphor.babel import translate_model
 from gaphor.core import action, event_handler, gettext
 from gaphor.core.changeset.compare import compare
@@ -65,7 +65,7 @@ def load_default_model(element_factory):
         diagram.name = gettext("New diagram")
 
 
-class FileManager(Service, ActionProvider):
+class FileManager(Service, ActionProvider, TaskOwner):
     """The file service, responsible for loading and saving Gaphor models."""
 
     def __init__(self, event_manager, element_factory, modeling_language, main_window):
@@ -73,6 +73,7 @@ class FileManager(Service, ActionProvider):
 
         There is no current filename yet.
         """
+        super().__init__()
         self.event_manager = event_manager
         self.element_factory = element_factory
         self.modeling_language = modeling_language
@@ -85,6 +86,7 @@ class FileManager(Service, ActionProvider):
 
     def shutdown(self):
         """Called when shutting down the file manager service."""
+        self.cancel_background_task()
         self.event_manager.unsubscribe(self._on_session_shutdown_request)
         self.event_manager.unsubscribe(self._on_session_created)
 
@@ -143,7 +145,7 @@ class FileManager(Service, ActionProvider):
                 await self.load(filename)
                 self.event_manager.handle(ModelReady(self))
 
-            create_background_task(_reload(self.filename))
+            self.create_background_task(_reload(self.filename))
 
     async def merge(
         self,
@@ -254,7 +256,9 @@ class FileManager(Service, ActionProvider):
 
             temp_dir.cleanup()
             self.filename = filename
-            self.event_manager.handle(ModelReady(self, filename=filename, modified=True))
+            self.event_manager.handle(
+                ModelReady(self, filename=filename, modified=True)
+            )
         else:
             await error_dialog(
                 message=gettext("Unable to open model “{filename}”.").format(
@@ -318,7 +322,7 @@ class FileManager(Service, ActionProvider):
         """
 
         if filename := self.filename:
-            create_background_task(self.save(filename))
+            self.create_background_task(self.save(filename))
         else:
             self.action_save_as()
 
@@ -336,7 +340,7 @@ class FileManager(Service, ActionProvider):
             )
             await self.save(filename)
 
-        create_background_task(save_as())
+        self.create_background_task(save_as())
 
     @event_handler(SessionCreated)
     def _on_session_created(self, event: SessionCreated) -> None:
@@ -346,7 +350,7 @@ class FileManager(Service, ActionProvider):
                 await self.load(filename)
                 self.event_manager.handle(ModelReady(self))
 
-            create_background_task(_load(event.filename))
+            self.create_background_task(_load(event.filename))
         elif event.template:
             self.load_template(event.template)
         else:
@@ -385,7 +389,7 @@ class FileManager(Service, ActionProvider):
                 confirm_shutdown()
 
         if self.main_window.model_changed:
-            create_background_task(save_or_discard_changes())
+            self.create_background_task(save_or_discard_changes())
         else:
             confirm_shutdown()
 
