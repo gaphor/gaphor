@@ -64,5 +64,5 @@ def sleep(delay, result=None, priority=GLib.PRIORITY_LOW):
         f.set_result(result)
         return GLib.SOURCE_REMOVE
 
-    GLib.timeout_add(delay, timeout_func, f, priority=priority)
+    GLib.timeout_add(int(delay * 1000), timeout_func, f, priority=priority)
     return f
