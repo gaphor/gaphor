@@ -352,7 +352,7 @@ def add_to_graph(graph, edge_or_node) -> None:
         raise ValueError(f"Can't transform {edge_or_node} to something DOT'ish?")
 
 
-def parse_edge_pos(pos_str: str, height: float, reverse:bool) -> list[Point]:
+def parse_edge_pos(pos_str: str, height: float, reverse: bool) -> list[Point]:
     raw_points = strip_quotes(pos_str).split(" ")
 
     points = [parse_point(raw_points.pop(0), height)]
