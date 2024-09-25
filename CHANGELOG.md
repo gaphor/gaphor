@@ -1,27 +1,19 @@
 2.27.0
 ------
-- Improve file changed notification
-- Show main window first when loading model from command line
+- File changed notification only show when the file really changed.
 - Support macOS ARM (Apple Silicon) and improve macOS styling
-- Add read-only attribute support
-- Allow spaces in string attribute value
-- Select single image file and avoid accessing image attributes after close
-- Add trigger and action for State Machine transitions
-- Pick new picture name from filename
-- Move Types to Core model
-- Add a special C4 Dependency with a technology field
-- Be more lenient with association end multiplicity
-- Fix recursive updates for association property editor
-- Fix InterfaceRealization.implementingClassifier name
-- Fix long file names and loaded models showing as modified
-- Fix unowned elements
-- Fix exception when dropping an association on a diagram
-- Fix undo and recovery of Dependency type
-- Automatically update Gvsbuild version
 - Add option to export all diagrams from UI
 - Remove XMI export plugin
-- Use Gdk.Event.triggers_context_menu()
-- Remove ServiceEvent
+- Show main window and progress indicator when loading model from command line
+- Model improvements: Move Types to Core model, InterfaceRealization.implementingClassifier
+- Add trigger and action for State Machine transitions
+- Add a special C4 Dependency with a technology field
+- Class attributes: add read-only attribute support, and allow spaces in values
+- Improved Picture selection and provide a default name based on the filename
+- Be more lenient with association end multiplicity
+- Model Browser: fix elements showing up in the root of the model
+- Fix long file names and loaded models showing as modified
+- Fix exception when dropping an association on a diagram
 - Update docs for plugin development, CSS examples, and C4 banking example
 - Update translations for Gaphor
 
