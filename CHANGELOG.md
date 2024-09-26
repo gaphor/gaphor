@@ -1,3 +1,22 @@
+2.27.0
+------
+- File changed notification only show when the file really changed.
+- Support macOS ARM (Apple Silicon) and improve macOS styling
+- Add option to export all diagrams from UI
+- Remove XMI export plugin
+- Show main window and progress indicator when loading model from command line
+- Model improvements: Move Types to Core model, InterfaceRealization.implementingClassifier
+- Add trigger and action for State Machine transitions
+- Add a special C4 Dependency with a technology field
+- Class attributes: add read-only attribute support, and allow spaces in values
+- Improved Picture selection and provide a default name based on the filename
+- Be more lenient with association end multiplicity
+- Model Browser: fix elements showing up in the root of the model
+- Fix long file names and loaded models showing as modified
+- Fix exception when dropping an association on a diagram
+- Update docs for plugin development, CSS examples, and C4 banking example
+- Update translations for Gaphor
+
 2.26.0
 ------
 - After a crash, Gaphor can now restore your modeling sessions
