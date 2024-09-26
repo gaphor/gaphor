@@ -1,5 +1,10 @@
 from gaphor.core.modeling import Diagram
-from gaphor.diagram.drop import drop, grow_parent
+from gaphor.diagram.drop import (
+    drop,
+    drop_on_presentation,
+    drop_relationship_on_diagram,
+    grow_parent,
+)
 from gaphor.diagram.group import group, ungroup
 from gaphor.diagram.presentation import connect
 from gaphor.diagram.support import get_diagram_item
@@ -12,7 +17,7 @@ from gaphor.UML.actions.action import (
 )
 from gaphor.UML.actions.objectnode import ObjectNodeItem
 from gaphor.UML.actions.partition import PartitionItem
-from gaphor.UML.uml import ActivityParameterNode
+from gaphor.UML.uml import ActivityParameterNode, ActivityPartition
 
 
 @drop.register(ActivityParameterNode, Diagram)
@@ -40,6 +45,46 @@ def drop_relationship(element: ActivityParameterNode, diagram: Diagram, x, y):
     item.matrix.translate(x, y)
     item.change_parent(appendable_item)
     connect(item, item.handles()[0], appendable_item)
+
+    return item
+
+
+@drop.register(ActivityPartition, Diagram)
+def drop_partition(partition: ActivityPartition, diagram: Diagram, x: float, y: float):
+    item_class = get_diagram_item(type(partition))
+    if not item_class:
+        return None
+
+    item = diagram.create(item_class)
+    assert item
+
+    item.matrix.translate(x, y)
+    item.subject = partition
+    item.partition = partition
+
+    for node in partition.node:
+        child_class = get_diagram_item(type(node))
+        if not child_class:
+            continue
+        child_item = diagram.create(child_class)
+        assert child_item
+        child_item.subject = node
+        child_item.diagram = diagram
+        child_item.matrix.translate(x, y)
+        drop_on_presentation(child_item, item, x, y)
+
+    for node in partition.node:
+        for outgoing in node.outgoing:
+            if not outgoing.target:
+                continue
+            if partition.node.includes(outgoing.target):
+                # outgoing_class = get_diagram_item(type(outgoing))
+                # if not outgoing_class:
+                #     continue
+                # outgoing_item = diagram.create(outgoing_class)
+                # outgoing_item.subject = outgoing
+                # outgoing_item.diagram = diagram
+                drop_relationship_on_diagram(outgoing, diagram, x, y)
 
     return item
 
