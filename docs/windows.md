@@ -114,7 +114,7 @@ pipx install poetry
 
 Add GTK to your environmental variables:
 ```PowerShell
-$env:Path = $env:Path + ";C:\gtk\bin"
+$env:Path = $env:Path + ";C:\gtk\bin;C:\Program Files\Graphviz\bin"
 $env:LIB = "C:\gtk\lib"
 $env:INCLUDE = "C:\gtk\include;C:\gtk\include\cairo;C:\gtk\include\glib-2.0;C:\gtk\include\gobject-introspection-1.0;C:\gtk\lib\glib-2.0\include;"
 $env:XDG_DATA_HOME = "$HOME\.local\share"
