@@ -4,9 +4,8 @@
 """
 import logging
 import sys
-import webbrowser
 
-from gi.repository import Adw, GObject, Gtk
+from gi.repository import Adw, Gtk
 
 from gaphor.abc import ActionProvider, Service
 from gaphor.application import distribution
@@ -42,7 +41,6 @@ class HelpService(Service, ActionProvider):
 
         about.set_version(distribution().version)
         about.set_transient_for(self.window)
-        about.connect("activate-link", activate_link)
         about.set_modal(True)
         about.set_visible(True)
 
@@ -102,10 +100,3 @@ class HelpService(Service, ActionProvider):
 
         self.preferences_window.set_visible(True)
         return self.preferences_window
-
-
-def activate_link(window, uri):
-    """D-Bus does not work on macOS, so we open URL's ourselves."""
-    if sys.platform == "darwin":
-        GObject.signal_stop_emission_by_name(window, "activate-link")
-        webbrowser.open(uri)
