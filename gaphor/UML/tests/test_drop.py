@@ -116,3 +116,24 @@ def test_drop_message_received_connected(diagram, element_factory):
     assert item
     assert not diagram.connections.get_connection(item.head)
     assert diagram.connections.get_connection(item.tail).connected is b.presentation[0]
+
+
+def test_drop_pin(diagram, element_factory):
+    action = element_factory.create(UML.Action)
+    input_pin = element_factory.create(UML.InputPin)
+    input_pin.opaqueAction = action
+    output_pin = element_factory.create(UML.OutputPin)
+    output_pin.opaqueAction = action
+
+    drop(action, diagram, 0, 0)
+    input_item = drop(input_pin, diagram, 0, 0)
+
+    assert input_item
+    assert input_item.subject is input_pin
+    assert input_item.parent.subject is action
+
+    ouput_item = drop(output_pin, diagram, 0, 0)
+
+    assert ouput_item
+    assert ouput_item.subject is output_pin
+    assert ouput_item.parent.subject is action

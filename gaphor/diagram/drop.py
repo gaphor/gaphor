@@ -12,6 +12,7 @@ from gaphor.diagram.group import group, ungroup
 from gaphor.diagram.presentation import ElementPresentation, connect
 from gaphor.diagram.support import get_diagram_item, get_diagram_item_metadata
 from gaphor.UML.recipes import owner_package
+from gaphor.UML.uml import ActivityEdge
 
 log = logging.getLogger(__name__)
 
@@ -99,6 +100,7 @@ def _bounds(item: ElementPresentation) -> Rectangle:
 
 
 @drop.register(Relationship, Diagram)
+@drop.register(ActivityEdge, Diagram)
 def drop_relationship_on_diagram(element: Relationship, diagram: Diagram, x, y):
     item_class = get_diagram_item(type(element))
     if not item_class:
@@ -139,6 +141,27 @@ def drop_relationship(element, head_element, tail_element, diagram, x, y):
         connect(item, item.head, head_item)
     if tail_item:
         connect(item, item.tail, tail_item)
+
+    return item
+
+
+def drop_pin_on_diagram(element, owner, diagram, x, y):
+    item_class = get_diagram_item(type(element))
+    if not item_class:
+        return None
+
+    owner_item = diagram_has_presentation(diagram, owner)
+    if owner and not owner_item:
+        return None
+
+    item = diagram.create(item_class)
+    assert item
+
+    item.matrix.translate(x, y)
+    item.subject = element
+    handle = item.handles()[-1]
+    if owner_item:
+        connect(item, handle, owner_item)
 
     return item
 

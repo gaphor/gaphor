@@ -99,14 +99,14 @@ def test_layout_fork_node_item(diagram, create, event_manager):
 
 
 def test_parse_pos():
-    points = parse_edge_pos('"1.0,2.0 3.0,4 5.0,6.0 7,8.0"', 10)
+    points = parse_edge_pos('"1.0,2.0 3.0,4 5.0,6.0 7,8.0"', 10, True)
 
     assert points == [(7.0, 2.0), (1.0, 8.0)]
 
 
 def test_parse_pos_invalid_number_of_points():
     with pytest.raises(IndexError):
-        parse_edge_pos('"1.0,2.0 3.0,4 5.0,6.0"', 10)
+        parse_edge_pos('"1.0,2.0 3.0,4 5.0,6.0"', 10, True)
 
 
 def test_strip_line_endings():

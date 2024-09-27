@@ -1,5 +1,5 @@
 from gaphor.diagram.drop import drop
-from gaphor.UML import uml
+from gaphor.UML import Action, ControlFlow, ObjectFlow, ObjectNode, uml
 from gaphor.UML.actions.action import ActionItem
 from gaphor.UML.actions.actionstoolbox import partition_config
 from gaphor.UML.actions.activity import ActivityItem, ActivityParameterNodeItem
@@ -66,6 +66,38 @@ def test_activity_parameter_drop_with_two_same_activity_items(diagram, element_f
     assert isinstance(parameter_item_2, ActivityParameterNodeItem)
     assert parameter_item_2.subject is activity_parameter_node
     assert parameter_item_2.parent is activity_item_2
+
+
+def test_drop_control_flow(diagram, element_factory):
+    a = element_factory.create(Action)
+    b = element_factory.create(Action)
+    control_flow = element_factory.create(ControlFlow)
+    control_flow.source = a
+    control_flow.target = b
+
+    drop(a, diagram, 0, 0)
+    drop(b, diagram, 0, 0)
+    item = drop(control_flow, diagram, 0, 0)
+
+    assert item
+    assert diagram.connections.get_connection(item.head).connected is a.presentation[0]
+    assert diagram.connections.get_connection(item.tail).connected is b.presentation[0]
+
+
+def test_drop_object_flow(diagram, element_factory):
+    a = element_factory.create(Action)
+    b = element_factory.create(ObjectNode)
+    control_flow = element_factory.create(ObjectFlow)
+    control_flow.source = a
+    control_flow.target = b
+
+    drop(a, diagram, 0, 0)
+    drop(b, diagram, 0, 0)
+    item = drop(control_flow, diagram, 0, 0)
+
+    assert item
+    assert diagram.connections.get_connection(item.head).connected is a.presentation[0]
+    assert diagram.connections.get_connection(item.tail).connected is b.presentation[0]
 
 
 def test_drop_on_swimlane_on_first_partition(create):

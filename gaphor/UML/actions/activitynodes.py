@@ -202,6 +202,7 @@ def draw_decision_node(_box, context, _bounding_box):
 
 
 @represents(UML.ForkNode)
+@represents(UML.JoinNode)
 class ForkNodeItem(Named, Presentation[UML.ForkNode], HandlePositionUpdate):
     """Representation of fork and join node."""
 
