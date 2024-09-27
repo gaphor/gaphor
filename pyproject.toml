@@ -130,7 +130,7 @@ gaphor = "gaphor.main:main"
 "element_editor" = "gaphor.ui.elementeditor:ElementEditor"
 "model_changed" = "gaphor.ui.modelchanged:ModelChanged"
 "console_window" = "gaphor.plugins.console.consolewindow:ConsoleWindow"
-"diagram_export" = "gaphor.plugins.diagramexport:DiagramExport"
+"diagram_export" = "gaphor.plugins.diagramexport.export:DiagramExport"
 "auto_layout" = "gaphor.plugins.autolayout:AutoLayoutService"
 "align" = "gaphor.plugins.align:AlignService"
 
