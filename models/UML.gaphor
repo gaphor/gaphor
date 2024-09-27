@@ -17074,7 +17074,7 @@
 <ref refid="DCE:882D4230-A35C-11D8-9D85-00C00C03A405"/>
 </class_>
 <name>
-<val>implementatingClassifier</val>
+<val>implementingClassifier</val>
 </name>
 <type>
 <ref refid="DCE:555F3576-6679-11D7-A84E-6C8643AD0CA4"/>

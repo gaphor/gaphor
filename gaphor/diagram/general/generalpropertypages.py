@@ -1,5 +1,6 @@
 import base64
 import io
+from pathlib import Path
 
 from gi.repository import Gtk
 from PIL import Image
@@ -148,6 +149,11 @@ class PicturePropertyPage(PropertyPageBase):
                         )
                         self.subject.width = image.width
                         self.subject.height = image.height
+                        if self.subject.subject.name in [
+                            None,
+                            gettext("New Picture"),
+                        ] and (new_image_name := self.sanitize_image_name(filename)):
+                            self.subject.subject.name = new_image_name
             except Exception:
                 error_handler(
                     message=gettext("Unable to parse picture “{filename}”.").format(
@@ -164,3 +170,9 @@ class PicturePropertyPage(PropertyPageBase):
             with Transaction(self.event_manager):
                 self.subject.width = image.width
                 self.subject.height = image.height
+
+    def sanitize_image_name(self, filename):
+        return "".join(
+            chr if chr.isalnum() or (chr in [" ", "_", "-"]) else "_"
+            for chr in Path(filename).stem
+        )

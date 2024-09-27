@@ -18,7 +18,7 @@ jobs:
       latest_version: ${{ steps.latest-version.outputs.latest_version }}
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@5c7944e73c4c2a096b17a9cb74d65b6c2bbafbde # v2.9.1
+        uses: step-security/harden-runner@91182cccc01eb5e619899d80e4e971d6181294a7 # v2.10.1
         with:
           disable-sudo: true
           egress-policy: block
@@ -29,7 +29,7 @@ jobs:
             pypi.org:443
       - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
         with:
-          ref: ${{ github.event.pull_request.head.sha }}
+          ref: main
       - name: Set up Python
         uses: actions/setup-python@f677139bbe7f9c59b41e40162b753c062f5d49a3 # v5.2.0
         with:
@@ -55,7 +55,7 @@ jobs:
       LATEST: ${{ needs.check-version.outputs.latest_version }}
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@5c7944e73c4c2a096b17a9cb74d65b6c2bbafbde # v2.9.1
+        uses: step-security/harden-runner@91182cccc01eb5e619899d80e4e971d6181294a7 # v2.10.1
         with:
           disable-sudo: true
           egress-policy: block
@@ -64,27 +64,19 @@ jobs:
             github.com:443
       - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
         with:
-          ref: ${{ github.event.pull_request.head.sha }}
+          ref: main
       - name: Update version
         run: sed -i "$(yq '${{ env.yaml_key }} | line' "${{ env.file }}")s/$CURRENT/$LATEST/" "${{ env.file }}"
-      - name: Configure Git
-        run: |
-          git config user.email "ci@gaphor.org"
-          git config user.name "GitHub Actions"
-      - name: Push changes to new branch
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          git checkout $COMMIT_SHA
-          git switch -c gvsbuild-updates-${{ github.run_id }}
-          git checkout origin/main -- ${ROOT_DIR}/.github/workflows
-          git add ${{ env.file }}
-          git commit -m "Bump Gvsbuild to version $LATEST"
-          git push origin gvsbuild-updates-${{ github.run_id }}
       - name: Create Pull Request
-        run: |
-          gh pr create -B main -H gvsbuild-updates-${{ github.run_id }} \
-            --title 'Bump Gvsbuild from ${{ env.CURRENT }} to ${{ env.LATEST }}' \
-            --body 'This PR updates the Gvsbuild version.'
-        env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: peter-evans/create-pull-request@5e914681df9dc83aa4e4905692ca88beb2f9e91f # v7.0.5
+        with:
+          token: ${{ secrets.PR_CREATOR }}
+          commit-message: Bump Gvsbuild to version ${{ env.LATEST }}
+          branch: gvsbuild-update
+          delete-branch: true
+          title: 'Bump Gvsbuild from ${{ env.CURRENT }} to ${{ env.LATEST }}'
+          body: |
+            This PR was automatically created to make the following update:
+            - Update to Gvsbuild version ${{ env.LATEST }}
+          labels: |
+            skip-changelog
