@@ -10,7 +10,7 @@ Older releases are available from [GitHub](https://github.com/gaphor/gaphor/rele
 
 ## Development Environment
 
-### Choco
+### WinGet
 
 We recommend using [WinGet](https://learn.microsoft.com/en-us/windows/package-manager/winget) as a package manager in
 Windows. It is available on Windows 11 and modern versions of Windows 10 as a part of the App Installer.
@@ -54,17 +54,10 @@ The default installation options should be fine for use with Gaphor.
 
 Graphviz is used by Gaphor for automatic diagram formatting.
 
-1. Install from Chocolately with administrator PowerShell:
+1. Install from WinGet with administrator PowerShell:
 
    ```PowerShell
    winget install graphviz
-   ```
-
-2. Restart your PowerShell terminal as a normal user and check that the dot
-   command is available:
-
-   ```PowerShell
-   dot -?
    ```
 
 #### Install pipx
