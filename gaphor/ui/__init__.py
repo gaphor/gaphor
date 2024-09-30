@@ -1,7 +1,7 @@
 """This module contains user interface related code, such as the main screen
 and diagram windows."""
 
-# ruff: noqa: E402,F401
+# ruff: noqa: E402
 
 from __future__ import annotations
 
@@ -17,7 +17,7 @@ gi.require_version("Adw", "1")
 
 from gi.repository import Adw, Gio, GtkSource
 
-import gaphor.ui.textfield
+import gaphor.ui.textfield  # noqa: F401
 from gaphor.application import Application, Session
 from gaphor.core import event_handler
 from gaphor.event import ActiveSessionChanged, ApplicationShutdown, SessionCreated
