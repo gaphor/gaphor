@@ -1,0 +1,78 @@
+name: Release
+
+on:
+  # Run the workflow each time new commits are pushed to the candidate branch. 
+  push:
+    branches: [ "main" ]
+    paths:
+      - 'snap/**'
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  get-architectures:
+    name: 🖥 Get snap architectures
+    runs-on: ubuntu-latest
+    outputs:
+      architectures: ${{ steps.get-architectures.outputs.architectures }}
+      architectures-list: ${{ steps.get-architectures.outputs.architectures-list }}
+    steps:
+      - name: 🖥 Get snap architectures
+        id: get-architectures
+        uses: snapcrafters/ci/get-architectures@main
+
+  release:
+    name: 🚢 Release to latest/edge
+    needs: get-architectures
+    runs-on: ubuntu-latest
+    environment: "Edge Branch"
+    strategy:
+      matrix:
+        architecture: ${{ fromJSON(needs.get-architectures.outputs.architectures-list) }}
+    steps:
+      - name: 🚢 Release to latest/edge
+        uses: snapcrafters/ci/release-to-candidate@main
+        with:
+          architecture: ${{ matrix.architecture }}
+          launchpad-token: ${{ secrets.LP_BUILD_SECRET }}
+          repo-token: ${{ secrets.SNAPCRAFTERS_BOT_COMMIT }}
+          store-token: ${{ secrets.SNAP_STORE }}
+          channel: latest/edge
+  
+  call-for-testing:
+    name: 📣 Create call for testing
+    needs: [release, get-architectures]
+    environment: "Edge Branch"
+    runs-on: ubuntu-latest
+    outputs:
+      issue-number: ${{ steps.issue.outputs.issue-number }}
+    steps:
+      - name: 📣 Create call for testing
+        id: issue
+        uses: snapcrafters/ci/call-for-testing@main
+        with:
+          architectures: ${{ needs.get-architectures.outputs.architectures }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          channel: latest/edge
+
+  screenshots:
+    name: 📸 Gather screenshots
+    needs: call-for-testing
+    environment: "Edge Branch"
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📸 Gather screenshots
+        uses: snapcrafters/ci/get-screenshots@main
+        with:
+          issue-number: ${{ needs.call-for-testing.outputs.issue-number }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          screenshots-token: ${{ secrets.SNAPCRAFTERS_BOT_COMMIT }}
+          screenshots-repo: anrouxel/ci-screenshots
+          channel: latest/edge

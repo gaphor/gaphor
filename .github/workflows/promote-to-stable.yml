@@ -1,0 +1,25 @@
+name: Promote
+
+on:
+  issue_comment:
+    types:
+      - created
+
+permissions:
+  issues: write
+
+jobs:
+  promote:
+    name: ⬆️ Promote to stable
+    environment: "Edge Branch"
+    runs-on: ubuntu-latest
+    if: |
+      ( !github.event.issue.pull_request )
+      && contains(github.event.comment.body, '/promote ')
+      && contains(github.event.*.labels.*.name, 'testing')
+    steps:
+      - name: ⬆️ Promote to stable
+        uses: snapcrafters/ci/promote-to-stable@main
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          store-token: ${{ secrets.SNAP_STORE }}
