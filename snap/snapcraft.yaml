@@ -1,0 +1,45 @@
+name: gaphor
+version: 2.26.0 
+summary: Gaphor is the simple modeling tool
+description: |
+  Gaphor is the simple modeling tool
+icon: snap/gui/gaphor.svg
+license: Apache-2.0
+
+base: core24
+grade: stable
+confinement: strict
+adopt-info: gaphor
+compression: lzo
+
+platforms:
+  amd64:
+
+apps:
+  gaphor:
+    extensions: [gnome]
+    command: bin/gaphor
+    environment:
+      TMPDIR: $XDG_RUNTIME_DIR
+      # Included temporarily until https://github.com/snapcore/snapcraft-desktop-integration/issues/28
+      # is resolved.
+      NOTIFY_IGNORE_PORTAL: 1
+    plugs:
+      - desktop
+      - desktop-legacy
+      - opengl
+      - x11
+      - wayland
+      - gsettings
+      - browser-support
+      - home
+      - network
+      - removable-media
+      - unity7
+
+parts:
+  gaphor:
+    plugin: python
+    source: .
+    python-packages:
+      - gaphor==$SNAPCRAFT_PROJECT_VERSION
