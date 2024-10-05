@@ -89,7 +89,7 @@ runs:
       id: dmg
       run: |
         cd _packaging
-        create-dmg --volname "Gaphor ${{ inputs.version }}" \
+        create-dmg --hdiutil-verbose --volname "Gaphor ${{ inputs.version }}" \
         --background "macos/background.png" \
         --window-pos 200 120 --window-size 700 400 --icon-size 100 \
         --icon "Gaphor.app" 200 240 --hide-extension "Gaphor.app" \
