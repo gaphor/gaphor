@@ -159,9 +159,9 @@ jobs:
     strategy:
       matrix:
         target:
-          - runner: macos-12
+          - runner: macos-13
             suffix: -intel
-          - runner: macos-14
+          - runner: macos-15
             suffix: -arm
     name: macOS
     needs: lint

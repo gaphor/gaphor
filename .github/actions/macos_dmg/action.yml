@@ -89,7 +89,11 @@ runs:
       id: dmg
       run: |
         cd _packaging
-        create-dmg --volname "Gaphor ${{ inputs.version }}" \
+        # Improve hdiutil reliability
+        # https://github.com/actions/runner-images/issues/7522#issuecomment-1556766641
+        echo killing...; sudo pkill -9 XProtect >/dev/null || true;
+        echo waiting...; while pgrep XProtect; do sleep 3; done;
+        create-dmg --hdiutil-verbose --volname "Gaphor ${{ inputs.version }}" \
         --background "macos/background.png" \
         --window-pos 200 120 --window-size 700 400 --icon-size 100 \
         --icon "Gaphor.app" 200 240 --hide-extension "Gaphor.app" \
