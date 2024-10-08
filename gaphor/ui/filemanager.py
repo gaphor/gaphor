@@ -129,7 +129,7 @@ class FileManager(Service, ActionProvider):
         )
 
         def done():
-            status_window.destroy()
+            status_window.done()
             if on_load_done:
                 on_load_done()
             else:
@@ -201,7 +201,7 @@ class FileManager(Service, ActionProvider):
                 if on_load_done:
                     on_load_done()
             finally:
-                status_window.destroy()
+                status_window.done()
 
         log.debug("Loading current model from %s", current_filename)
         for _ in self._load_async(current_filename, progress, current_done):
@@ -336,7 +336,7 @@ class FileManager(Service, ActionProvider):
             else:
                 self.filename = filename
             finally:
-                status_window.destroy()
+                status_window.done()
             if on_save_done:
                 on_save_done()
 
@@ -425,14 +425,11 @@ class FileManager(Service, ActionProvider):
 
 
 def resolve_merge_conflict_dialog(window: Gtk.Window, handler) -> None:
-    dialog = Adw.MessageDialog.new(
-        window,
+    dialog = Adw.AlertDialog.new(
         gettext("Resolve Merge Conflict?"),
-    )
-    dialog.set_body(
         gettext(
             "The model you are opening contains a merge conflict. Do you want to open the current model or the incoming change to the model?"
-        )
+        ),
     )
     dialog.add_response("cancel", gettext("Cancel"))
     dialog.add_response("manual", gettext("Open Merge Editor"))
@@ -441,12 +438,10 @@ def resolve_merge_conflict_dialog(window: Gtk.Window, handler) -> None:
     dialog.set_close_response("cancel")
 
     def response(dialog, answer):
-        dialog.set_transient_for(None)
-        dialog.destroy()
         handler(answer)
 
     dialog.connect("response", response)
-    dialog.present()
+    dialog.present(window)
 
 
 def save_changes_before_close_dialog(window: Gtk.Window, handler) -> None:
@@ -454,11 +449,7 @@ def save_changes_before_close_dialog(window: Gtk.Window, handler) -> None:
     body = gettext(
         "The open model contains unsaved changes. Changes which are not saved will be permanently lost."
     )
-    dialog = Adw.MessageDialog.new(
-        window,
-        title,
-    )
-    dialog.set_body(body)
+    dialog = Adw.AlertDialog.new(title, body)
     dialog.add_response("cancel", gettext("Cancel"))
     dialog.add_response("discard", gettext("Discard"))
     dialog.add_response("save", gettext("Save"))
@@ -468,11 +459,7 @@ def save_changes_before_close_dialog(window: Gtk.Window, handler) -> None:
     dialog.set_close_response("cancel")
 
     def response(dialog, answer):
-        # Unset transient window: it can cause crashes on flatpak
-        # when all windows are destroyed at once.
-        dialog.set_transient_for(None)
-        dialog.destroy()
         handler(answer)
 
     dialog.connect("response", response)
-    dialog.present()
+    dialog.present(window)
