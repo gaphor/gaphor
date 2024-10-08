@@ -160,9 +160,9 @@ jobs:
       matrix:
         target:
           - runner: macos-13
-            suffix: -intel
+            suffix: intel
           - runner: macos-15
-            suffix: -arm
+            suffix: arm
     name: macOS
     needs: lint
     runs-on: ${{ matrix.target.runner }}
@@ -206,7 +206,8 @@ jobs:
         uses: ./.github/actions/macos_dmg
         with:
           sign_app: ${{ env.mainline_build }}
-          version: ${{ steps.install.outputs.version }}${{ matrix.target.suffix }}
+          version: ${{ steps.install.outputs.version }}
+          arch: ${{ matrix.target.suffix }}
           base64_encoded_p12: ${{ secrets.BASE64_ENCODED_P12 }}
           certpassword_p12: ${{ secrets.CERTPASSWORD_P12 }}
           notary_username:  ${{ secrets.APPLE_NOTARY_USER }}
@@ -214,7 +215,7 @@ jobs:
           notary_team_id: ${{ secrets.APPLE_TEAM_ID }}
       - name: Output
         id: output
-        run: echo "artifact${{ matrix.target.suffix }}=${{ steps.create.outputs.artifact }}" >> $GITHUB_OUTPUT
+        run: echo "artifact-${{ matrix.target.suffix }}=${{ steps.create.outputs.artifact }}" >> $GITHUB_OUTPUT
 
   check-macos-app:
     name: Check macOS App
