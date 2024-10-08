@@ -160,9 +160,9 @@ jobs:
       matrix:
         target:
           - runner: macos-13
-            suffix: intel
+            arch: intel
           - runner: macos-15
-            suffix: arm
+            arch: arm
     name: macOS
     needs: lint
     runs-on: ${{ matrix.target.runner }}
@@ -207,7 +207,7 @@ jobs:
         with:
           sign_app: ${{ env.mainline_build }}
           version: ${{ steps.install.outputs.version }}
-          arch: ${{ matrix.target.suffix }}
+          arch: ${{ matrix.target.arch }}
           base64_encoded_p12: ${{ secrets.BASE64_ENCODED_P12 }}
           certpassword_p12: ${{ secrets.CERTPASSWORD_P12 }}
           notary_username:  ${{ secrets.APPLE_NOTARY_USER }}
@@ -215,7 +215,7 @@ jobs:
           notary_team_id: ${{ secrets.APPLE_TEAM_ID }}
       - name: Output
         id: output
-        run: echo "artifact-${{ matrix.target.suffix }}=${{ steps.create.outputs.artifact }}" >> $GITHUB_OUTPUT
+        run: echo "artifact-${{ matrix.target.arch }}=${{ steps.create.outputs.artifact }}" >> $GITHUB_OUTPUT
 
   check-macos-app:
     name: Check macOS App
