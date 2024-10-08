@@ -58,3 +58,4 @@ package/gaphor.iconset/
 
 # SonarCloud
 .scannerwork
+gaphor-self-test.txt

@@ -372,6 +372,185 @@ def test_association_unlink_2():
     assert a1 in b2.two
 
 
+def test_association_subsettable_0_n(element_factory):
+    class A(Element):
+        pass
+
+    class C(Element):
+        original: relation_many[A]
+        subset: relation_many[A]
+
+    C.original = association("original", A, 0, "*")
+    C.subset = association("subset", A, 0, "*")
+
+    C.original.add(C.subset)
+
+    a1 = A()
+    a2 = A()
+
+    # Subset changes, superset has multiplicity *, subset has multiplicity 1 or *:
+    #     Both sets {}: subset {a1} => superset {a1}
+    c1 = C()
+    assert len(c1.original) == 0
+    assert len(c1.subset) == 0
+    c1.subset = a1
+    assert len(c1.original) == 1
+    assert a1 in c1.original
+
+    #     Superset {a1}, subset {}, subset {a2} => superset {a1, a2}
+    c2 = C()
+    c2.original = a1
+    assert len(c2.subset) == 0
+    c2.subset = a2
+    assert len(c2.original) == 2
+    assert a1 in c2.original
+    assert a2 in c2.original
+
+    #     Superset {a1}, subset {a1}: subset {a2}, => superset {a2} ***POLICY***
+    c3 = C()
+    c3.subset = a1
+    assert a1 in c3.original
+    c3.subset.remove(a1)
+    c3.subset = a2
+    assert len(c3.original) == 1
+    assert a2 in c3.original
+
+    #     Superset {a1}, subset {a1}: subset {} => superset {} ***POLICY***
+    c4 = C()
+    c4.original = a1
+    c4.subset = a1
+    c4.subset.remove(a1)
+    assert len(c4.original) == 0
+
+    # Superset changes, superset has multiplicity *, subset has multiplicity 1 or *:
+    #     Both sets {}: superset {a1} => subset {}
+    c5 = C()
+    c5.original = a1
+    assert len(c5.subset) == 0
+
+    #     Subset {a1}, superset {a1}: superset {} => subset {}
+    c6 = C()
+    c6.subset = a1
+    assert len(c6.original) == 1
+    c6.original.remove(a1)
+    assert len(c6.subset) == 0
+
+    #     Superset {a1}, subset {a1}, superset {a2} => subset {} ***POLICY***
+    c7 = C()
+    c7.subset = a1
+    assert a1 in c7.original
+    c7.original.remove(a1)
+    c7.original = a2
+    assert len(c7.subset) == 0
+
+
+def test_association_subsettable_0_1(element_factory):
+    class A(Element):
+        pass
+
+    class C(Element):
+        original: relation_many[A]
+        subset: relation_many[A]
+
+    C.original = association("original", A, 0, 1)
+    C.subset = association("subset", A, 0, 1)
+
+    C.original.add(C.subset)
+
+    a1 = A()
+    a2 = A()
+
+    # Subset changes, superset has multiplicity 0..1, subset has multiplicity 0..1:
+    #     Both sets {}: subset {a1} => superset {a1}
+    c1 = C()
+    assert c1.original is None
+    assert c1.subset is None
+    c1.subset = a1
+    assert c1.original is a1
+
+    #     Superset {a1}, subset {}, subset {a2} => superset {a2}
+    c2 = C()
+    c2.original = a1
+    assert c2.subset is None
+    c2.subset = a2
+    assert c2.original is a2
+
+    #     Superset {a1}, subset {a1}: subset {a2}, => superset {a2} ***POLICY***
+    c3 = C()
+    c3.subset = a1
+    assert c3.original is a1
+    c3.subset = a2
+    assert c3.original is a2
+
+    #     Superset {a1}, subset {a1}: subset {} => superset {} ***POLICY***
+    c4 = C()
+    c4.original = a1
+    c4.subset = a1
+    c4.subset = None
+    assert c4.original is None
+
+    # Superset changes, superset has multiplicity *, subset has multiplicity 1 or *:
+    #     Both sets {}: superset {a1} => subset {}
+    c5 = C()
+    c5.original = a1
+    assert c5.subset is None
+
+    #     Subset {a1}, superset {a1}: superset {} => subset {}
+    c6 = C()
+    c6.subset = a1
+    assert c6.original is a1
+    c6.original = None
+    assert c6.subset is None
+
+    #     Superset {a1}, subset {a1}, superset {a2} => subset {} ***POLICY***
+    c7 = C()
+    c7.subset = a1
+    assert c7.original is a1
+    c7.original = a2
+    assert c7.subset is None
+
+
+def test_association_subsettable_updates_derived_union(element_factory):
+    class A(Element):
+        pass
+
+    class C(Element):
+        original: relation_many[A]
+        subset: relation_many[A]
+        union: relation_many[A]
+
+    C.original = association("original", A, 0, 1)
+    C.subset = association("subset", A, 0, 1)
+    C.original.add(C.subset)
+    C.union = derivedunion("u", object, 0, "*", C.original)
+
+    a1 = A()
+    a2 = A()
+
+    c1 = C()
+    c1.subset = a1
+    assert a1 in c1.union
+    c1.subset = a2
+    assert a2 in c1.union
+    assert a1 not in c1.union
+
+
+# def test_association_subsettable_add_fails_when_subset_multiplicity_exceeds_superset_multiplicity(element_factory):
+#     class A(Element):
+#         pass
+
+#     class C(Element):
+#         original: relation_many[A]
+#         subset: relation_many[A]
+
+#     C.original = association("original", A, 0, 1)
+#     C.subset = association("subset", A, 0, "*")
+
+#     with pytest.raises(Exception) as execinfo:
+#         C.original.add(C.subset)
+#     # assert str(execinfo.value) == "Cannot add a multiplicity * subset to a multiplicity 1 superset"
+
+
 def test_can_not_set_association_to_owner(element_factory, event_manager):
     class A(Element):
         pass

@@ -116,6 +116,7 @@ class relation_many(Protocol[E]):
 
 relation = Union[relation_one, relation_many]
 
+
 T = TypeVar("T")
 
 Lower = Union[Literal[0], Literal[1], Literal[2]]
@@ -138,7 +139,7 @@ class umlproperty:
     upper: Upper = 1
 
     def __init__(self, name: str):
-        self.dependent_properties: set[derived | redefine] = set()
+        self.dependent_properties: set[subsettable_umlproperty | redefine] = set()
         self.name = name
         self._name = f"_{name}"
 
@@ -181,6 +182,33 @@ class umlproperty:
         event.element.handle(event)
         for d in self.dependent_properties:
             d.propagate(event)
+
+
+class subsettable_umlproperty(umlproperty):
+    """Base class for properties that can be subsetted"""
+
+    subsets: set[umlproperty]
+
+    def __init__(self, name: str):
+        super().__init__(name)
+        self.subsets = set()
+
+    def add(self, subset):
+        if self.upper == 1 and subset.upper == "*":
+            log.warning(
+                "Modeling error: Cannot add a multiplicity * subset "
+                + subset.name
+                + " to a multiplicity 1 superset "
+                + self.name
+            )
+        self.subsets.add(subset)
+        assert isinstance(
+            subset, (association, derived)
+        ), f"have element {subset}, expected association"
+        subset.dependent_properties.add(self)
+
+    def propagate(self, event):
+        ...
 
 
 class attribute(umlproperty, Generic[T]):
@@ -299,7 +327,7 @@ class enumeration(umlproperty):
             self.handle(AttributeUpdated(obj, self, old, self.default))
 
 
-class association(umlproperty):
+class association(subsettable_umlproperty):
     """Association, both uni- and bi-directional.
 
     Element.assoc = association('assoc', Element, opposite='other')
@@ -310,6 +338,43 @@ class association(umlproperty):
 
     If the association is a composite relationship, the association will
     unlink all elements attached to if it is unlinked.
+
+    Associations may be subsets of other associations or sets. The subset must have a
+    multiplicity less than or equal to the superset.
+
+    The logic of maintaining the set contets is complex. While this logic is constrained by set
+    theory, there are cases that arise in which set theory alone would allow multiple outcomes.
+    Making the outcomes deterministic requires making some policy choices. In the cases below,
+    those marked with ***POLICY*** are not solely determined by the logic of set theory.
+
+    There is a significant design assumption that drives the policy decisions: there is only one superset-subset path
+    by which an element may become a member of the superset. In other words, if the superset has two or more subsets,
+    a given element can be a member of at most one subset. This is really an assumption about the metamodel architecture.
+    The implication is that if an element is removed from a subset, it must be removed from the superset. Furthermore,
+    if an element is present in both the superset and the subset, and the element is removed from the superset, it must
+    also be removed from the subset.
+
+    Subset changes, both sets have a multiplicity of 1:
+        Both sets {}: subset {a1} => superset {a1}
+        Superset {a1}, subset {}: subset {a2} => superset {a2} ***POLICY***
+        Superset {a1}, subset {a1}: subset {} => superset {} ***POLICY***
+        Superset {a1}, subset {a1}: subset {a2} => superset {a2} ***POLICY***
+
+    Superset changes, both sets have a multiplicity of 1:
+        Both sets {}: superset {a1} => subset {}
+        Subset {a1}, superset {a1}: superset {}, => subset {}
+        Superset {a1}, subset {a1}: superset {a2} => subset {}
+
+    Subset changes, superset has multiplicity *, subset has multiplicity 1 or *:
+        Both sets {}: subset {a1} => superset {a1}
+        Superset {a1}, subset {}, subset {a2} => superset {a1, a2}
+        Superset {a1}, subset {a1}: subset {} => superset {} ***POLICY***
+        Superset {a1}, subset {a1}: subset {a2}, => superset {a2} ***POLICY***
+
+    Superset changes, superset has multiplicity *, subset has multiplicity 1 or *:
+        Both sets {}: superset {a1} => subset {}
+        Superset {a1}, subset {a1}: superset {} => subset {}
+        Superset {a1}, subset {a1}, superset {a2} => subset {}
     """
 
     def __init__(
@@ -477,6 +542,9 @@ class association(umlproperty):
         else:
             if do_notify:
                 self.handle(AssociationSet(obj, self, value, None))
+            for subset in self.subsets:
+                if value == subset.get(obj):
+                    subset.delete(obj, value)
 
     def _del_many(self, obj, value, from_opposite=False, do_notify=True):
         if not value:
@@ -495,6 +563,10 @@ class association(umlproperty):
             else:
                 if do_notify:
                     self.handle(AssociationDeleted(obj, self, value, index))
+                for subset in self.subsets:
+                    col: collection[umlproperty] | umlproperty | None = subset.get(obj)
+                    if isinstance(col, collection) and value in col:
+                        subset.delete(obj, value)
 
             # Remove items collection if empty
             if not items:
@@ -517,6 +589,23 @@ class association(umlproperty):
                 self.delete(obj, value)
                 if composite:
                     value.unlink()
+
+    def propagate(self, event):
+        if event.property not in self.subsets:
+            return
+        if not isinstance(event, AssociationUpdated):
+            return
+
+        current_value = self.get(event.element)
+
+        if isinstance(event, AssociationSet):
+            if event.new_value != current_value:
+                self.set(event.element, event.new_value)
+        elif isinstance(event, AssociationDeleted):
+            if event.old_value in self.get(event.element):
+                self.delete(event.element, event.old_value)
+        elif isinstance(event, AssociationAdded):
+            self.set(event.element, event.new_value)
 
 
 class AssociationStubError(Exception):
@@ -582,7 +671,7 @@ class unioncache:
         self.version = version
 
 
-class derived(umlproperty, Generic[T]):
+class derived(subsettable_umlproperty, Generic[T]):
     """Base class for derived properties, both derived unions and custom
     properties.
 
@@ -611,17 +700,9 @@ class derived(umlproperty, Generic[T]):
         self.lower = lower
         self.upper = upper
         self.filter = filter
-        self.subsets: set[umlproperty] = set()
 
         for s in subsets:
             self.add(s)
-
-    def add(self, subset):
-        self.subsets.add(subset)
-        assert isinstance(
-            subset, (association, derived)
-        ), f"have element {subset}, expected association"
-        subset.dependent_properties.add(self)
 
     def load(self, obj, value):
         raise ValueError(

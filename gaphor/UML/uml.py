@@ -390,7 +390,7 @@ class BehavioralFeature(Feature, Namespace):
     isAbstract: _attribute[int] = _attribute("isAbstract", int)
     method: relation_many[Behavior]
     ownedParameter: relation_many[Parameter]
-    ownedParameterSet: relation_many[ParameterSet]
+    ownedParameterSet: relation_one[ParameterSet]
     raisedException: relation_many[Type]
 
 
@@ -1035,7 +1035,7 @@ Element.namespace.add(Parameter.ownerFormalParam)  # type: ignore[attr-defined]
 BehavioralFeature.raisedException = association("raisedException", Type)
 BehavioralFeature.ownedParameter = association("ownedParameter", Parameter, composite=True, opposite="ownerFormalParam")
 BehavioralFeature.method = association("method", Behavior)
-BehavioralFeature.ownedParameterSet = association("ownedParameterSet", ParameterSet, composite=True, opposite="behavioralFeature")
+BehavioralFeature.ownedParameterSet = association("ownedParameterSet", ParameterSet, upper=1, composite=True, opposite="behavioralFeature")
 Namespace.ownedMember.add(BehavioralFeature.ownedParameter)  # type: ignore[attr-defined]
 Element.namespace.add(BehavioralFeature.ownedParameterSet)  # type: ignore[attr-defined]
 Operation.precondition = association("precondition", Constraint, composite=True)
