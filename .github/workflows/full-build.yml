@@ -223,9 +223,9 @@ jobs:
     strategy:
       matrix:
         target:
-          - runner: macos-12
+          - runner: macos-13
             artifact: ${{ needs.macos.outputs.artifact-intel }}
-          - runner: macos-14
+          - runner: macos-15
             artifact: ${{ needs.macos.outputs.artifact-arm }}
     runs-on: ${{ matrix.target.runner }}
     timeout-minutes: 10
