@@ -12,19 +12,25 @@ from gaphor.ui.filemanager import FileManager
 @pytest.fixture
 def file_manager(event_manager, element_factory, modeling_language):
     main_window = None
-    return FileManager(event_manager, element_factory, modeling_language, main_window)
+    file_manager = FileManager(
+        event_manager, element_factory, modeling_language, main_window
+    )
+    yield file_manager
+    file_manager.shutdown()
 
 
-def test_save(element_factory, file_manager: FileManager, tmp_path):
+@pytest.mark.asyncio
+async def test_save(element_factory, file_manager: FileManager, tmp_path):
     element_factory.create(UML.Class)
     out_file = tmp_path / "out.gaphor"
 
-    file_manager.save(filename=out_file)
+    await file_manager.save(filename=out_file)
 
     assert out_file.exists()
 
 
-def test_model_is_saved_with_utf8_encoding(
+@pytest.mark.asyncio
+async def test_model_is_saved_with_utf8_encoding(
     element_factory, file_manager: FileManager, tmp_path
 ):
     class_ = element_factory.create(UML.Class)
@@ -33,13 +39,14 @@ def test_model_is_saved_with_utf8_encoding(
     package.name = "안녕하세요 세계"
 
     model_file = tmp_path / "model.gaphor"
-    file_manager.save(model_file)
+    await file_manager.save(model_file)
 
     with open(model_file, encoding="utf-8") as f:
         f.read()  # raises exception if characters can't be decoded
 
 
-def test_model_is_loaded_with_utf8_encoding(
+@pytest.mark.asyncio
+async def test_model_is_loaded_with_utf8_encoding(
     element_factory, file_manager: FileManager, tmp_path
 ):
     class_name = "üëïèàòù"
@@ -51,11 +58,11 @@ def test_model_is_loaded_with_utf8_encoding(
     package.name = package_name
 
     model_file = tmp_path / "model.gaphor"
-    file_manager.save(model_file)
+    await file_manager.save(model_file)
 
     element_factory.flush()
 
-    file_manager.load(model_file)
+    await file_manager.load(model_file)
     new_class = next(element_factory.select(UML.Class))
     new_package = next(element_factory.select(UML.Package))
 
@@ -66,51 +73,55 @@ def test_model_is_loaded_with_utf8_encoding(
 @pytest.mark.skipif(
     sys.platform != "win32", reason="Standard encoding on Windows is not UTF-8"
 )
-def test_old_model_is_loaded_without_utf8_encoding(
+@pytest.mark.asyncio
+async def test_old_model_is_loaded_without_utf8_encoding(
     file_manager: FileManager, test_models
 ):
     model_file = test_models / "wrong-encoding.gaphor"
-    file_manager.load(model_file)
+    await file_manager.load(model_file)
 
 
+@pytest.mark.asyncio
 @pytest.mark.parametrize("resolution", ["current", "incoming"])
 @pytest.mark.filterwarnings("ignore:use .* Repo._get_user_identity:DeprecationWarning")
-def test_load_model_with_merge_conflict(
+async def test_load_model_with_merge_conflict(
     file_manager: FileManager, element_factory, merge_conflict, monkeypatch, resolution
 ):
     replace_merge_conflict_dialog(monkeypatch, resolution)
 
-    file_manager.resolve_merge_conflict(merge_conflict)
+    await file_manager.resolve_merge_conflict(merge_conflict)
 
     assert element_factory.size() > 0
 
 
+@pytest.mark.asyncio
 @pytest.mark.filterwarnings("ignore:use .* Repo._get_user_identity:DeprecationWarning")
-def test_load_model_merge_conflict_and_manual_resolution(
+async def test_load_model_merge_conflict_and_manual_resolution(
     file_manager: FileManager, element_factory, merge_conflict, monkeypatch
 ):
     replace_merge_conflict_dialog(monkeypatch, "manual")
 
-    file_manager.resolve_merge_conflict(merge_conflict)
+    await file_manager.resolve_merge_conflict(merge_conflict)
 
     from gaphor.core.modeling import PendingChange
 
     assert element_factory.lselect(PendingChange)
 
 
+@pytest.mark.asyncio
 @pytest.mark.filterwarnings("ignore:use .* Repo._get_user_identity:DeprecationWarning")
-def test_load_model_with_merge_conflict_and_unknown_resolution(
+async def test_load_model_with_merge_conflict_and_unknown_resolution(
     file_manager: FileManager, merge_conflict, monkeypatch
 ):
     replace_merge_conflict_dialog(monkeypatch, "nonsense")
 
     with pytest.raises(ValueError):
-        file_manager.resolve_merge_conflict(merge_conflict)
+        await file_manager.resolve_merge_conflict(merge_conflict)
 
 
 def replace_merge_conflict_dialog(monkeypatch, resolution):
-    def mock_merge_conflict_dialog(_window, handler):
-        handler(resolution)
+    async def mock_merge_conflict_dialog(_window):
+        return resolution
 
     monkeypatch.setattr(
         "gaphor.ui.filemanager.resolve_merge_conflict_dialog",
