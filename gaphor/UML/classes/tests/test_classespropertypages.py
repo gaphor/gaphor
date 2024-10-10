@@ -48,8 +48,8 @@ def test_classifier_property_page(element_factory, event_manager):
     widget = property_page.construct()
     abstract = find(widget, "abstract")
     abstract.set_active(True)
-    isFinalSpecialization = find(widget, "isFinalSpecialization")
-    isFinalSpecialization.set_active(True)
+    is_final_specialization = find(widget, "is-final-specialization")
+    is_final_specialization.set_active(True)
 
     assert subject.isAbstract
     assert subject.isFinalSpecialization

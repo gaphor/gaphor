@@ -418,9 +418,9 @@ Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</propert
           </object>
         </child>
         <child>
-          <object class="GtkSwitch" id="isFinalSpecialization">
+          <object class="GtkSwitch" id="is-final-specialization">
             <property name="focusable">1</property>
-            <signal name="notify::active" handler="isFinalSpecialization-changed" swapped="no"/>
+            <signal name="notify::active" handler="is-final-specialization-changed" swapped="no"/>
           </object>
         </child>
       </object>
