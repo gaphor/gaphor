@@ -4538,9 +4538,6 @@
 <class_>
 <ref refid="DCE:B445FB00-4695-11D7-B567-379CA7034986"/>
 </class_>
-<isDerived>
-<val>1</val>
-</isDerived>
 <name>
 <val>packagedElement</val>
 </name>
@@ -11419,9 +11416,6 @@
 <class_>
 <ref refid="DCE:6D987F90-464D-11D7-AA08-1B85D5275D8A"/>
 </class_>
-<isDerived>
-<val>1</val>
-</isDerived>
 <lowerValue>
 <val>0</val>
 </lowerValue>
@@ -11510,6 +11504,9 @@
 <class_>
 <ref refid="DCE:7DDD179A-4B3D-11D7-B391-02BBFE4396CE"/>
 </class_>
+<isDerived>
+<val>1</val>
+</isDerived>
 <lowerValue>
 <val>0</val>
 </lowerValue>
@@ -16369,12 +16366,12 @@
 <ref refid="DCE:F1CF4FA4-4B33-11D7-B391-02BBFE4396CE"/>
 <ref refid="DCE:99FBA804-4B35-11D7-B391-02BBFE4396CE"/>
 <ref refid="DCE:00ED6378-4B35-11D7-B391-02BBFE4396CE"/>
-<ref refid="DCE:38A9AE44-4B54-11D7-A5E6-6257AF3C5118"/>
 <ref refid="DCE:E1377E1A-4B34-11D7-B391-02BBFE4396CE"/>
 <ref refid="DCE:3EEBCC18-6698-11D7-A84E-6C8643AD0CA4"/>
 <ref refid="e9507590-e962-11ea-87d1-cbf2d1fcaed0"/>
 <ref refid="DCE:BFC7B66E-4B37-11D7-B391-02BBFE4396CE"/>
 <ref refid="b31a411e-3719-11ef-a318-be7f4daace40"/>
+<ref refid="DCE:38A9AE44-4B54-11D7-A5E6-6257AF3C5118"/>
 </reflist>
 </ownedAttribute>
 <package>
@@ -18882,7 +18879,6 @@
 <ref refid="DCE:C0FF5892-4B53-11D7-A5E6-6257AF3C5118"/>
 <ref refid="DCE:0E0139EC-4B56-11D7-A5E6-6257AF3C5118"/>
 <ref refid="DCE:8CB23AE8-4B56-11D7-A5E6-6257AF3C5118"/>
-<ref refid="DCE:38A97D1E-4B54-11D7-A5E6-6257AF3C5118"/>
 <ref refid="DCE:EBC42EBE-4B52-11D7-A5E6-6257AF3C5118"/>
 <ref refid="DCE:C5CC49BE-4B52-11D7-A5E6-6257AF3C5118"/>
 <ref refid="DCE:0BC178A2-4B53-11D7-A5E6-6257AF3C5118"/>
@@ -18891,6 +18887,7 @@
 <ref refid="DCE:E46BF7B4-4B52-11D7-A5E6-6257AF3C5118"/>
 <ref refid="2219719a-ff42-11de-8fc8-00224128e79d"/>
 <ref refid="13d6094b-62d2-11eb-9492-9757bcbe474b"/>
+<ref refid="DCE:38A97D1E-4B54-11D7-A5E6-6257AF3C5118"/>
 </reflist>
 </ownedAttribute>
 <package>

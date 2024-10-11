@@ -512,7 +512,12 @@ class association(subsettable_umlproperty):
             opposite = getattr(type(value), self.opposite)
             if not opposite.opposite:
                 opposite.stub = self
-            opposite.set(value, obj, from_opposite=True)
+            if not isinstance(opposite, derived):
+                opposite.set(value, obj, from_opposite=True)
+            else:
+                log.warning(
+                    f"Cannot set opposite of association {self.name} since the opposite {opposite.name} is derived"
+                )
         elif not self.opposite:
             if not self.stub:
                 self.stub = associationstub(self)
