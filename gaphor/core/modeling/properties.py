@@ -607,7 +607,11 @@ class association(subsettable_umlproperty):
             if event.new_value != current_value:
                 self.set(event.element, event.new_value)
         elif isinstance(event, AssociationDeleted):
-            if event.old_value in self.get(event.element):
+            value = self.get(event.element)
+            if isinstance(value, collection):
+                if event.old_value in self.get(event.element):
+                    self.delete(event.element, event.old_value)
+            elif event.old_value is value:
                 self.delete(event.element, event.old_value)
         elif isinstance(event, AssociationAdded):
             self.set(event.element, event.new_value)
