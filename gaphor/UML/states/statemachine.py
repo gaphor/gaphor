@@ -3,7 +3,6 @@ from __future__ import annotations
 from gaphas.types import Pos
 
 from gaphor import UML
-from gaphor.core.modeling.element import Element
 from gaphor.core.modeling.properties import attribute
 from gaphor.diagram.presentation import Classified, ElementPresentation, text_name
 from gaphor.diagram.shapes import Box, CssNode, draw_border
@@ -65,7 +64,7 @@ class StateMachineItem(Classified, ElementPresentation[UML.StateMachine]):
         super().update(context)
         self._region_heights = [h for _w, h in self._shape.children[-1].child.sizes]  # type: ignore[union-attr]
 
-    def region_at_point(self, pos: Pos) -> Element | None:
+    def region_at_point(self, pos: Pos) -> UML.Region | UML.StateMachine | None:
         region_offset = self.height - sum(self._region_heights)
         _x, y = pos
         for region, h in zip(self.subject.region, self._region_heights):
