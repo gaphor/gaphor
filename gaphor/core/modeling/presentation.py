@@ -9,7 +9,8 @@ from typing import TYPE_CHECKING, Generic, Self, TypeVar
 
 from gaphas.item import Matrices
 
-from gaphor.core.modeling.element import Element, Handler, Id, UnlinkEvent
+from gaphor.core.modeling.base import Handler, Id, UnlinkEvent
+from gaphor.core.modeling.element import Element
 from gaphor.core.modeling.event import RevertibleEvent
 from gaphor.core.modeling.properties import relation_many, relation_one
 

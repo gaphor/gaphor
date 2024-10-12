@@ -6,7 +6,7 @@ import logging
 
 from gaphor.abc import Service
 from gaphor.core import event_handler
-from gaphor.core.modeling.element import Base, Handler
+from gaphor.core.modeling.base import Base, Handler
 from gaphor.core.modeling.event import (
     AssociationAdded,
     AssociationDeleted,

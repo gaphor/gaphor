@@ -18,13 +18,9 @@ from typing import (
 import gaphas
 from cairo import Context as CairoContext
 
+from gaphor.core.modeling.base import Id, RepositoryProtocol, generate_id
 from gaphor.core.modeling.collection import collection
-from gaphor.core.modeling.element import (
-    Element,
-    Id,
-    RepositoryProtocol,
-    generate_id,
-)
+from gaphor.core.modeling.element import Element
 from gaphor.core.modeling.event import (
     AssociationAdded,
     AssociationDeleted,

@@ -25,9 +25,8 @@ from collections.abc import Iterable
 from functools import singledispatch
 from typing import Callable, Collection, Iterator, NamedTuple
 
-from gaphor.core.modeling import Diagram, Presentation
+from gaphor.core.modeling import Diagram, Element, Id, Presentation
 from gaphor.core.modeling.collection import collection
-from gaphor.core.modeling.element import Element, Id
 
 Opaque = object
 

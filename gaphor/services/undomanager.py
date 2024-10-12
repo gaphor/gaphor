@@ -18,8 +18,8 @@ from typing import Callable, List
 from gaphor.abc import ActionProvider, Service
 from gaphor.action import action
 from gaphor.core import event_handler
+from gaphor.core.modeling.base import Base, RepositoryProtocol, swap_element_type
 from gaphor.core.modeling.diagram import Diagram
-from gaphor.core.modeling.element import Element, RepositoryProtocol, swap_element_type
 from gaphor.core.modeling.event import (
     AssociationAdded,
     AssociationDeleted,
@@ -295,7 +295,7 @@ class UndoManager(Service, ActionProvider):
         if state_changed:
             self.event_manager.handle(UndoManagerStateChanged(self))
 
-    def lookup(self, id: str) -> Element:
+    def lookup(self, id: str) -> Base:
         if element := self.element_factory.lookup(id):
             return element
         else:

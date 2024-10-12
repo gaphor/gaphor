@@ -8,8 +8,7 @@ from typing import Callable, Iterator, Protocol, TypeVar, overload
 
 from gaphor.abc import Service
 from gaphor.core.eventmanager import EventManager, event_handler
-from gaphor.core.modeling.diagram import Diagram
-from gaphor.core.modeling.element import (
+from gaphor.core.modeling.base import (
     Base,
     EventWatcherProtocol,
     Handler,
@@ -18,6 +17,7 @@ from gaphor.core.modeling.element import (
     UnlinkEvent,
     generate_id,
 )
+from gaphor.core.modeling.diagram import Diagram
 from gaphor.core.modeling.elementdispatcher import ElementDispatcher, EventWatcher
 from gaphor.core.modeling.event import (
     ElementCreated,
