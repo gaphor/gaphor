@@ -13,7 +13,7 @@ from typing import Callable
 
 from generic.multidispatch import FunctionDispatcher, multidispatch
 
-from gaphor.core.modeling import Diagram, Element, self_and_owners
+from gaphor.core.modeling import Base, Diagram, Element, self_and_owners
 
 
 def change_owner(new_parent, element):
@@ -56,17 +56,15 @@ class GroupPreconditions:
         return self.__func(parent, element)  # type: ignore[no-any-return]
 
 
-group: FunctionDispatcher[Callable[[Element, Element], bool]] = GroupPreconditions(
+group: FunctionDispatcher[Callable[[Base, Base], bool]] = GroupPreconditions(
     multidispatch(object, object)(no_group)
 )
 group.register(None, object)(no_group)
 
 
-def can_group(parent: Element, element_or_type: Element | type[Element]) -> bool:
+def can_group(parent: Base, element_or_type: Base | type[Base]) -> bool:
     element_type = (
-        type(element_or_type)
-        if isinstance(element_or_type, Element)
-        else element_or_type
+        type(element_or_type) if isinstance(element_or_type, Base) else element_or_type
     )
     parent_mro = type(parent).__mro__ if parent else [None]
     get_registration = group.registry.get_registration

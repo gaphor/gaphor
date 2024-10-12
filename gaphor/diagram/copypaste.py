@@ -25,7 +25,7 @@ from collections.abc import Iterable
 from functools import singledispatch
 from typing import Callable, Collection, Iterator, NamedTuple
 
-from gaphor.core.modeling import Diagram, Element, Id, Presentation
+from gaphor.core.modeling import Base, Diagram, Element, Id, Presentation
 from gaphor.core.modeling.collection import collection
 
 Opaque = object
@@ -91,7 +91,7 @@ def paste(
 
 
 def serialize(value):
-    if isinstance(value, Element):
+    if isinstance(value, Base):
         return ("r", value.id)
     elif isinstance(value, collection):
         return ("c", [serialize(v) for v in value])
