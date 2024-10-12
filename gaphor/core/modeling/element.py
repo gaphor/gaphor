@@ -26,8 +26,6 @@ if TYPE_CHECKING:
     from gaphor.core.modeling.diagram import Diagram
     from gaphor.core.modeling.presentation import Presentation
 
-__all__ = ["Element"]
-
 log = logging.getLogger(__name__)
 
 
@@ -38,7 +36,7 @@ class UnlinkEvent:
     `gaphor.core.modeling`.
     """
 
-    def __init__(self, element: Element, diagram: Diagram | None = None):
+    def __init__(self, element: Base, diagram: Diagram | None = None):
         self.element = element
         self.diagram = diagram
 
@@ -61,38 +59,8 @@ def generate_id(generator=None):
     return next(_generator)
 
 
-def self_and_owners(element: Element | None) -> Iterator[Element]:
-    """Return the element and the ancestors (Element.owner)."""
-    seen = set()
-    e = element
-    while e:
-        if e in seen:
-            return
-        yield e
-        seen.add(e)
-        e = e.owner
-
-
-class Element:
+class Base:
     """Base class for all model data classes."""
-
-    name: attribute[str] = attribute("name", str)
-    note: attribute[str] = attribute("note", str)
-    comment: relation_many[Comment]
-    ownedDiagram: relation_many[Diagram]
-    ownedElement: relation_many[Element]
-    owner: relation_one[Element]
-    presentation: relation_many[Presentation]
-    relationship: relation_many[Relationship]
-    sourceRelationship: relation_many[Relationship]
-    targetRelationship: relation_many[Relationship]
-    clientDependency: relation_many[Dependency]
-    supplierDependency: relation_many[Dependency]
-    memberNamespace: relation_one[Namespace]
-    namespace: relation_one[Namespace]
-
-    # From UML:
-    appliedStereotype: relation_many[Element]
 
     def __init__(self, id: Id | None = None, model: RepositoryProtocol | None = None):
         """Create an element. As optional parameters an id and model can be
@@ -124,13 +92,6 @@ class Element:
             )
         return self._model
 
-    @property
-    def qualifiedName(self) -> list[str]:
-        """Returns the qualified name of the element as a list."""
-        qname = [e.name or "??" for e in self_and_owners(self)]
-        qname.reverse()
-        return qname
-
     @classmethod
     def umlproperties(cls) -> Iterator[umlproperty]:
         """Iterate over all properties."""
@@ -143,16 +104,14 @@ class Element:
 
     def save(
         self,
-        save_func: Callable[
-            [str, str | bool | int | Element | collection[Element]], None
-        ],
+        save_func: Callable[[str, str | bool | int | Base | collection[Base]], None],
     ) -> None:
         """Save the state by calling ``save_func(name, value)``."""
         for prop in self.umlproperties():
             prop.save(self, save_func)  # type: ignore[arg-type]
 
     def load(
-        self, name: str, value: str | bool | int | Element | collection[Element]
+        self, name: str, value: str | bool | int | Base | collection[Base]
     ) -> None:
         """Loads value in name.
 
@@ -226,11 +185,11 @@ class Element:
             return model.watcher(self, default_handler)
         return DummyEventWatcher()
 
-    def isKindOf(self, class_: type[Element]) -> bool:
+    def isKindOf(self, class_: type[Base]) -> bool:
         """Returns :const:`True` if the object is an instance of ``class_``."""
         return isinstance(self, class_)
 
-    def isTypeOf(self, other: Element) -> bool:
+    def isTypeOf(self, other: Base) -> bool:
         """Returns :const:`True` if the object is of the same type as the ``other``."""
         return isinstance(self, type(other))
 
@@ -251,7 +210,7 @@ class DummyEventWatcher:
         pass
 
 
-T = TypeVar("T", bound=Element)
+T = TypeVar("T", bound=Base)
 
 Handler = Callable[[ElementUpdated], None]
 
@@ -264,7 +223,7 @@ class RepositoryProtocol(Protocol):
         ...
 
     @overload
-    def select(self, expression: Callable[[Element], bool]) -> Iterator[Element]:
+    def select(self, expression: Callable[[Base], bool]) -> Iterator[Base]:
         ...
 
     @overload
@@ -272,14 +231,14 @@ class RepositoryProtocol(Protocol):
         ...
 
     @overload
-    def select(self, expression: None) -> Iterator[Element]:
+    def select(self, expression: None) -> Iterator[Base]:
         ...
 
-    def lookup(self, id: str) -> Element | None:
+    def lookup(self, id: str) -> Base | None:
         ...
 
     def watcher(
-        self, element: Element, default_handler: Handler | None = None
+        self, element: Base, default_handler: Handler | None = None
     ) -> EventWatcherProtocol:
         ...
 
@@ -295,7 +254,7 @@ class EventWatcherProtocol(Protocol):
         ...
 
 
-def swap_element_type(element: Element, new_class: type[Element]) -> None:
+def swap_element_type(element: Base, new_class: type[Base]) -> None:
     """A "trick" to swap the element type.
 
     Used in certain cases where the underlying element type may change.
@@ -304,3 +263,45 @@ def swap_element_type(element: Element, new_class: type[Element]) -> None:
         old_class = element.__class__
         element.__class__ = new_class
         element.handle(ElementTypeUpdated(element, old_class))
+
+
+__all__ = ["Element"]
+
+
+def self_and_owners(element: Element | None) -> Iterator[Element]:
+    """Return the element and the ancestors (Element.owner)."""
+    seen = set()
+    e = element
+    while e:
+        if e in seen:
+            return
+        yield e
+        seen.add(e)
+        e = e.owner
+
+
+class Element(Base):
+    name: attribute[str] = attribute("name", str)
+    note: attribute[str] = attribute("note", str)
+    comment: relation_many[Comment]
+    ownedDiagram: relation_many[Diagram]
+    ownedElement: relation_many[Element]
+    owner: relation_one[Element]
+    presentation: relation_many[Presentation]
+    relationship: relation_many[Relationship]
+    sourceRelationship: relation_many[Relationship]
+    targetRelationship: relation_many[Relationship]
+    clientDependency: relation_many[Dependency]
+    supplierDependency: relation_many[Dependency]
+    memberNamespace: relation_one[Namespace]
+    namespace: relation_one[Namespace]
+
+    # From UML:
+    appliedStereotype: relation_many[Element]
+
+    @property
+    def qualifiedName(self) -> list[str]:
+        """Returns the qualified name of the element as a list."""
+        qname = [e.name or "??" for e in self_and_owners(self)]
+        qname.reverse()
+        return qname

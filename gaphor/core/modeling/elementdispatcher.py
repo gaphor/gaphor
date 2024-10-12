@@ -6,7 +6,7 @@ import logging
 
 from gaphor.abc import Service
 from gaphor.core import event_handler
-from gaphor.core.modeling.element import Element, Handler
+from gaphor.core.modeling.element import Base, Handler
 from gaphor.core.modeling.event import (
     AssociationAdded,
     AssociationDeleted,
@@ -24,7 +24,7 @@ class EventWatcher:
 
     def __init__(
         self,
-        element: Element,
+        element: Base,
         element_dispatcher: ElementDispatcher | None,
         default_handler: Handler | None = None,
     ):
@@ -109,11 +109,11 @@ class ElementDispatcher(Service):
 
         # Table used to fire events:
         # (event.element, event.property): { handler: set(path, ..), ..}
-        self._handlers: dict[tuple[Element, umlproperty], dict[Handler, set]] = {}
+        self._handlers: dict[tuple[Base, umlproperty], dict[Handler, set]] = {}
 
         # Fast resolution when handlers are disconnected
         # handler: [(element, property), ..]
-        self._reverse: dict[Handler, list[tuple[Element, umlproperty]]] = {}
+        self._reverse: dict[Handler, list[tuple[Base, umlproperty]]] = {}
 
         self.event_manager.subscribe(self.on_model_loaded)
         self.event_manager.subscribe(self.on_element_change_event)
@@ -122,7 +122,7 @@ class ElementDispatcher(Service):
         self.event_manager.unsubscribe(self.on_element_change_event)
         self.event_manager.unsubscribe(self.on_model_loaded)
 
-    def subscribe(self, handler: Handler, element: Element, path: str) -> None:
+    def subscribe(self, handler: Handler, element: Base, path: str) -> None:
         props = self._path_to_properties(element, path)
         self._add_handlers(element, props, handler)
 
