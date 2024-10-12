@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="2.26.0">
+<gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="2.27.0">
 <Package id="3867dda4-7a95-11ea-a112-7f953848cf85">
 <name>
 <val>Root</val>
@@ -61,7 +61,6 @@
 <ref refid="68e63fac-7a95-11ea-a112-7f953848cf85"/>
 <ref refid="1875194e-7a96-11ea-a112-7f953848cf85"/>
 <ref refid="c9b0922c-7a97-11ea-a112-7f953848cf85"/>
-<ref refid="29de062c-9f17-11ea-b537-dfaaecc5bf61"/>
 <ref refid="ada170c7-9f17-11ea-b537-dfaaecc5bf61"/>
 <ref refid="216581ca-4465-11eb-8946-9bdfa28f7a50"/>
 <ref refid="446a3744-4465-11eb-8946-9bdfa28f7a50"/>
@@ -223,7 +222,7 @@
 </GeneralizationItem>
 <ClassItem id="15e4b0b3-9f17-11ea-b537-dfaaecc5bf61">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 706.1386901855468, 306.1990051269531)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 797.1386901855468, 480.9060466240388)</val>
 </matrix>
 <top-left>
 <val>(0.0, 0.0)</val>
@@ -244,35 +243,9 @@
 <ref refid="15e4b0b2-9f17-11ea-b537-dfaaecc5bf61"/>
 </subject>
 </ClassItem>
-<GeneralizationItem id="29de062c-9f17-11ea-b537-dfaaecc5bf61">
-<diagram>
-<ref refid="3867dda5-7a95-11ea-a112-7f953848cf85"/>
-</diagram>
-<horizontal>
-<val>0</val>
-</horizontal>
-<orthogonal>
-<val>1</val>
-</orthogonal>
-<subject>
-<ref refid="53513194-3e9a-11ed-812d-0456e5e540ed"/>
-</subject>
-<matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 578.8867180749799, 121.22430419921875)</val>
-</matrix>
-<points>
-<val>[(210.75197211056707, 184.97470092773438), (210.75197211056707, 74.77569580078125), (104.98294134884793, 74.77569580078125), (104.98294134884793, 15.29913330078125)]</val>
-</points>
-<head-connection>
-<ref refid="15e4b0b3-9f17-11ea-b537-dfaaecc5bf61"/>
-</head-connection>
-<tail-connection>
-<ref refid="4cda498f-7a95-11ea-a112-7f953848cf85"/>
-</tail-connection>
-</GeneralizationItem>
 <CommentItem id="9bdd3fed-9f17-11ea-b537-dfaaecc5bf61">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 816.9043762207032, 439.3287963867187)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 910.0577399536637, 617.9060466240388)</val>
 </matrix>
 <top-left>
 <val>(0.0, 0.0)</val>
@@ -304,11 +277,14 @@
 <val>(1.0, 0.0, 0.0, 1.0, 432.1161416499558, 523.8687744140625)</val>
 </matrix>
 <points>
-<val>[(401.33705652578635, -125.66976928710938), (429.43878118972657, -86.68961773496676)]</val>
+<val>[(492.33705652578635, 49.03727220997632), (513.4385719842378, 94.03727220997632)]</val>
 </points>
 <head-connection>
 <ref refid="15e4b0b3-9f17-11ea-b537-dfaaecc5bf61"/>
 </head-connection>
+<tail-connection>
+<ref refid="9bdd3fed-9f17-11ea-b537-dfaaecc5bf61"/>
+</tail-connection>
 </CommentLineItem>
 <AssociationItem id="216581ca-4465-11eb-8946-9bdfa28f7a50">
 <diagram>
@@ -504,7 +480,6 @@
 <ref refid="17b8b56e-4bbe-11ec-aa3d-0456e5e540ed"/>
 <ref refid="419c2424-4bbe-11ec-aa3d-0456e5e540ed"/>
 <ref refid="58d8be2c-4bbe-11ec-aa3d-0456e5e540ed"/>
-<ref refid="53513194-3e9a-11ed-812d-0456e5e540ed"/>
 <ref refid="d7dfe61e-5ee6-11ed-9155-0456e5e540ed"/>
 <ref refid="05872486-3c56-11ee-99bb-48a4721e5d5c"/>
 <ref refid="87f4ff18-2e33-11ef-8125-be7f4daace40"/>
@@ -683,11 +658,11 @@
 </typeValue>
 </Property>
 <Class id="15e4b0b2-9f17-11ea-b537-dfaaecc5bf61">
-<generalization>
+<comment>
 <reflist>
-<ref refid="53513194-3e9a-11ed-812d-0456e5e540ed"/>
+<ref refid="9bdd3fec-9f17-11ea-b537-dfaaecc5bf61"/>
 </reflist>
-</generalization>
+</comment>
 <name>
 <val>StyleSheet</val>
 </name>
@@ -718,6 +693,11 @@
 </typeValue>
 </Property>
 <Comment id="9bdd3fec-9f17-11ea-b537-dfaaecc5bf61">
+<annotatedElement>
+<reflist>
+<ref refid="15e4b0b2-9f17-11ea-b537-dfaaecc5bf61"/>
+</reflist>
+</annotatedElement>
 <body>
 <val>One instance per model.</val>
 </body>
@@ -1567,19 +1547,6 @@
 <val>String</val>
 </typeValue>
 </Property>
-<Generalization id="53513194-3e9a-11ed-812d-0456e5e540ed">
-<general>
-<ref refid="4cda498e-7a95-11ea-a112-7f953848cf85"/>
-</general>
-<presentation>
-<reflist>
-<ref refid="29de062c-9f17-11ea-b537-dfaaecc5bf61"/>
-</reflist>
-</presentation>
-<specific>
-<ref refid="15e4b0b2-9f17-11ea-b537-dfaaecc5bf61"/>
-</specific>
-</Generalization>
 <Package id="65f4352a-5ee4-11ed-9155-0456e5e540ed">
 <name>
 <val>Change Set</val>
