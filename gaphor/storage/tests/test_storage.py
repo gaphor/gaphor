@@ -52,10 +52,10 @@ def test_save_uml(element_factory):
     storage.save(out, element_factory=element_factory)
     out.close()
 
-    assert "<Package " in out.data
-    assert "<Diagram " in out.data
-    assert "<Comment " in out.data
-    assert "<Class " in out.data
+    assert "<UML:Package " in out.data
+    assert "<Core:Diagram " in out.data
+    assert "<Core:Comment " in out.data
+    assert "<UML:Class " in out.data
 
 
 def test_save_item(diagram, element_factory):
@@ -67,10 +67,10 @@ def test_save_item(diagram, element_factory):
     storage.save(out, element_factory=element_factory)
     out.close()
 
-    assert "<Diagram " in out.data
-    assert "<Comment " in out.data
+    assert "<Core:Diagram " in out.data
+    assert "<Core:Comment " in out.data
     assert "<canvas>" not in out.data
-    assert "<CommentItem " in out.data, out.data
+    assert "<UML:CommentItem " in out.data, out.data
 
 
 def test_load_uml(element_factory, saver, loader):

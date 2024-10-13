@@ -18,3 +18,6 @@ __all__ = [
     "MetadataItem",
     "PictureItem",
 ]
+
+# For historical reasons:
+__modeling_language__ = "UML"

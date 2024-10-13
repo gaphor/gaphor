@@ -6,6 +6,7 @@ file. `save(file_obj)` stores the current model in a file.
 
 __all__ = ["load", "save"]
 
+import importlib
 import io
 import logging
 from collections.abc import Callable, Iterable
@@ -19,8 +20,9 @@ from gaphor.core.modeling.stylesheet import StyleSheet
 from gaphor.storage.parser import GaphorLoader, element, parse_generator
 from gaphor.storage.xmlwriter import XMLWriter
 
-FILE_FORMAT_VERSION = "3.0"
-NAMESPACE_MODEL = "http://gaphor.sourceforge.net/model"
+FILE_FORMAT_VERSION = "4"
+MODEL_NS = "https://gaphor.org/model"
+MODELING_LANGUAGE_NS = "https://gaphor.org/modelinglanguage"
 
 log = logging.getLogger(__name__)
 
@@ -37,29 +39,35 @@ def save_generator(out, element_factory):
 
     writer = XMLWriter(out)
     writer.startDocument()
-    writer.startPrefixMapping("", NAMESPACE_MODEL)
+    writer.startPrefixMapping("", MODEL_NS)
+    for ml in sorted({modeling_language_name(e) for e in element_factory}):
+        writer.startPrefixMapping(ml, f"{MODELING_LANGUAGE_NS}/{ml}")
+
     writer.startElementNS(
-        (NAMESPACE_MODEL, "gaphor"),
+        (MODEL_NS, "gaphor"),
         None,
         {
-            (NAMESPACE_MODEL, "version"): FILE_FORMAT_VERSION,
-            (NAMESPACE_MODEL, "gaphor-version"): application.distribution().version,
+            (MODEL_NS, "version"): FILE_FORMAT_VERSION,
+            (MODEL_NS, "gaphor-version"): application.distribution().version,
         },
     )
+    writer.startElementNS((MODEL_NS, "model"), None, {})
 
     size = element_factory.size()
     save_func = partial(save_element, element_factory=element_factory, writer=writer)
-    for n, e in enumerate(element_factory.values(), start=1):
+    for n, e in enumerate(element_factory, start=1):
         clazz = e.__class__.__name__
         assert e.id
-        writer.startElement(clazz, {"id": str(e.id)})
+        ns = f"{MODELING_LANGUAGE_NS}/{modeling_language_name(e)}"
+        writer.startElementNS((ns, clazz), None, {(MODEL_NS, "id"): str(e.id)})
         e.save(save_func)
-        writer.endElement(clazz)
+        writer.endElementNS((ns, clazz), None)
 
         if n % 25 == 0:
             yield (n * 100) / size
 
-    writer.endElementNS((NAMESPACE_MODEL, "gaphor"), None)
+    writer.endElementNS((MODEL_NS, "model"), None)
+    writer.endElementNS((MODEL_NS, "gaphor"), None)
     writer.endPrefixMapping("")
     writer.endDocument()
 
@@ -122,6 +130,21 @@ def save_element(name, value, element_factory, writer):
         save_collection(name, value)
     else:
         save_value(name, value)
+
+
+def modeling_language_name(element):
+    module_name = ""
+    parent_name = element.__module__
+    while module_name != parent_name:
+        module_name = parent_name
+        mod = importlib.import_module(module_name)
+        if ml := getattr(mod, "__modeling_language__", None):
+            return ml
+        parent_name = module_name.rsplit(".", 1)[0]
+
+    raise AttributeError(
+        f"module '{element.__module__}' or its parents have no attribute '__modeling_language__'"
+    )
 
 
 def load_elements(elements, element_factory, modeling_language, gaphor_version="1.0.0"):
