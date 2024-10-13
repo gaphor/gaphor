@@ -37,39 +37,32 @@ def save_generator(out, element_factory):
     """Save the current model using @writer, which is a
     gaphor.storage.xmlwriter.XMLWriter instance."""
 
-    writer = XMLWriter(out)
-    writer.startDocument()
-    writer.startPrefixMapping("", MODEL_NS)
-    for ml in sorted({modeling_language_name(e) for e in element_factory}):
-        writer.startPrefixMapping(ml, f"{MODELING_LANGUAGE_NS}/{ml}")
+    with XMLWriter(out).document() as writer:
+        writer.prefix_mapping("", MODEL_NS)
+        for ml in sorted({modeling_language_name(e) for e in element_factory}):
+            writer.prefix_mapping(ml, f"{MODELING_LANGUAGE_NS}/{ml}")
 
-    writer.startElementNS(
-        (MODEL_NS, "gaphor"),
-        None,
-        {
-            (MODEL_NS, "version"): FILE_FORMAT_VERSION,
-            (MODEL_NS, "gaphor-version"): application.distribution().version,
-        },
-    )
-    writer.startElementNS((MODEL_NS, "model"), None, {})
+        with writer.element_ns(
+            (MODEL_NS, "gaphor"),
+            {
+                (MODEL_NS, "version"): FILE_FORMAT_VERSION,
+                (MODEL_NS, "gaphor-version"): application.distribution().version,
+            },
+        ):
+            with writer.element_ns((MODEL_NS, "model"), {}):
+                size = element_factory.size()
+                save_func = partial(
+                    save_element, element_factory=element_factory, writer=writer
+                )
+                for n, e in enumerate(element_factory, start=1):
+                    clazz = e.__class__.__name__
+                    assert e.id
+                    ns = f"{MODELING_LANGUAGE_NS}/{modeling_language_name(e)}"
+                    with writer.element_ns((ns, clazz), {(MODEL_NS, "id"): str(e.id)}):
+                        e.save(save_func)
 
-    size = element_factory.size()
-    save_func = partial(save_element, element_factory=element_factory, writer=writer)
-    for n, e in enumerate(element_factory, start=1):
-        clazz = e.__class__.__name__
-        assert e.id
-        ns = f"{MODELING_LANGUAGE_NS}/{modeling_language_name(e)}"
-        writer.startElementNS((ns, clazz), None, {(MODEL_NS, "id"): str(e.id)})
-        e.save(save_func)
-        writer.endElementNS((ns, clazz), None)
-
-        if n % 25 == 0:
-            yield (n * 100) / size
-
-    writer.endElementNS((MODEL_NS, "model"), None)
-    writer.endElementNS((MODEL_NS, "gaphor"), None)
-    writer.endPrefixMapping("")
-    writer.endDocument()
+                    if n % 25 == 0:
+                        yield (n * 100) / size
 
 
 def save_element(name, value, element_factory, writer):
@@ -94,35 +87,30 @@ def save_element(name, value, element_factory, writer):
         This applies to both UML and canvas items.
         """
         if resolvable(value):
-            writer.startElement(name, {})
-            writer.startElement("ref", {"refid": value.id})
-            writer.endElement("ref")
-            writer.endElement(name)
+            with writer.element(name, {}):
+                with writer.element("ref", {"refid": value.id}):
+                    pass
 
     def save_collection(name, value):
         """Save a list of references."""
         if value:
-            writer.startElement(name, {})
-            writer.startElement("reflist", {})
-            for v in value:
-                if resolvable(v):
-                    writer.startElement("ref", {"refid": v.id})
-                    writer.endElement("ref")
-            writer.endElement("reflist")
-            writer.endElement(name)
+            with writer.element(name, {}):
+                with writer.element("reflist", {}):
+                    for v in value:
+                        if resolvable(v):
+                            with writer.element("ref", {"refid": v.id}):
+                                pass
 
     def save_value(name, value):
         """Save a value (attribute)."""
         if value is not None:
-            writer.startElement(name, {})
-            writer.startElement("val", {})
-            if isinstance(value, bool):
-                # Write booleans as 0/1.
-                writer.characters(str(int(value)))
-            else:
-                writer.characters(str(value))
-            writer.endElement("val")
-            writer.endElement(name)
+            with writer.element(name, {}):
+                with writer.element("val", {}):
+                    if isinstance(value, bool):
+                        # Write booleans as 0/1.
+                        writer.characters(str(int(value)))
+                    else:
+                        writer.characters(str(value))
 
     if isinstance(value, Base):
         save_reference(name, value)
