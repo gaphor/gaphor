@@ -278,7 +278,7 @@ def subsets(
             full_name = f"{c.name}.{a.name}"
             for value in slot.value.split(","):
                 element_type, d = attribute(c, value.strip(), super_models)
-                if d and d.isDerived:
+                if d:  # and d.isDerived:
                     if element_type:
                         yield f"from {element_type.__module__} import {d.owner.name}"
                     yield f"{d.owner.name}.{d.name}.add({full_name})  # type: ignore[attr-defined]"
