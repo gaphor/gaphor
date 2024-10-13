@@ -101,6 +101,7 @@ runs:
         --window-pos 200 120 --window-size 700 400 --icon-size 100 \
         --icon "Gaphor.app" 200 240 --hide-extension "Gaphor.app" \
         --app-drop-link 500 240 "dist/Gaphor-${{ inputs.version }}-${{ inputs.arch }}.dmg" \
+        --disk-image-size 55 \
         "dist/Gaphor.app"
         echo "artifact=Gaphor-${{ inputs.version }}-${{ inputs.arch }}.dmg" >> $GITHUB_OUTPUT
       shell: bash
