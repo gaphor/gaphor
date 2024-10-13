@@ -21,7 +21,8 @@ class CoreModelingLanguage(ModelingLanguage):
     def element_types(self):
         return ValueError("No element types for the core model")
 
-    def lookup_element(self, name):
+    def lookup_element(self, name, ns=None):
+        assert ns in ("Core", None)
         return getattr(coremodel, name, None)
 
 
@@ -47,7 +48,7 @@ class MockModelingLanguage(ModelingLanguage):
     def element_types(self):
         return ()
 
-    def lookup_element(self, name):
+    def lookup_element(self, name, ns=None):
         return next(
             filter(
                 None,

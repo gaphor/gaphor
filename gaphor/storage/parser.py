@@ -77,6 +77,7 @@ class canvas(base):
 
 XMLNS_V3 = "http://gaphor.sourceforge.net/model"
 XMLNS_PREFIX = "https://gaphor.org/"
+XMLNS_ML_PREFIX = "https://gaphor.org/modelinglanguage"
 
 
 class ParserException(Exception):
@@ -150,6 +151,7 @@ class GaphorLoader(handler.ContentHandler):
         self.gaphor_version = ""
         self.elements: dict[str, element] = OrderedDict()
         self._stack: list[tuple[element | canvas, State]] = []
+        self._model_mapping: dict[str, str | None] = {}
         self.text = ""
         self._start_element_handlers = (
             self.start_element,
@@ -166,6 +168,10 @@ class GaphorLoader(handler.ContentHandler):
     def endDocument(self):
         if len(self._stack) != 0:
             raise ParserException("Invalid XML document.")
+
+    def startPrefixMapping(self, prefix: str | None, uri: str) -> None:
+        if uri.startswith(XMLNS_ML_PREFIX):
+            self._model_mapping[uri] = uri.rsplit("/", 1)[-1]
 
     def startElement(self, name, attrs):
         # All Gaphor models use namespaces.
@@ -194,7 +200,7 @@ class GaphorLoader(handler.ContentHandler):
         for h in self._start_element_handlers:
             if h(
                 state,
-                name[0],
+                self._model_mapping.get(name[0], None),
                 name[1],
                 {key[1]: val for key, val in list(attrs.items())},
             ):
@@ -206,7 +212,7 @@ class GaphorLoader(handler.ContentHandler):
             if "id" not in attrs:
                 raise ParserException(f"File corrupt: Element {name} has no id")
             id = attrs["id"]
-            e = element(id, name)
+            e = element(id, name, ns=ns)
             if id in self.elements.keys():
                 log.exception(
                     f"File corrupt: duplicate element. Remove element {name} with id {id} and try again"

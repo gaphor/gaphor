@@ -214,7 +214,7 @@ def _load_elements_and_canvasitems(
             elem = upgrade_decision_node_item_show_type(elem)
         if version_lower_than(gaphor_version, (2, 20, 0)):
             elem = upgrade_note_on_model_element_only(elem, elements)
-        if not (cls := modeling_language.lookup_element(elem.type)):
+        if not (cls := modeling_language.lookup_element(elem.type, elem.ns)):
             raise UnknownModelElementError(
                 f"Type {elem.type} cannot be loaded: no such element"
             )
