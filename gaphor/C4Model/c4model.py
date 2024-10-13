@@ -17,34 +17,34 @@ from gaphor.core.modeling.properties import (
 
 
 from gaphor.UML.uml import Actor
-class C4Person(Actor):
+class Person(Actor):
     description: _attribute[str] = _attribute("description", str)
     location: _attribute[str] = _attribute("location", str)
 
 
 from gaphor.UML.uml import Package
-class C4Container(Package):
+class Container(Package):
     description: _attribute[str] = _attribute("description", str)
     location: _attribute[str] = _attribute("location", str)
-    ownerContainer: relation_one[C4Container]
-    owningContainer: relation_many[C4Container]
+    ownerContainer: relation_one[Container]
+    owningContainer: relation_many[Container]
     technology: _attribute[str] = _attribute("technology", str)
     type: _attribute[str] = _attribute("type", str)
 
 
-class C4Database(C4Container):
+class Database(Container):
     pass
 
 
-from gaphor.core.modeling.coremodel import Dependency
-class C4Dependency(Dependency):
+from gaphor.core.modeling.coremodel import Dependency as _Dependency
+class Dependency(_Dependency):
     technology: _attribute[str] = _attribute("technology", str)
 
 
 
-C4Container.ownerContainer = association("ownerContainer", C4Container, upper=1, opposite="owningContainer")
-C4Container.owningContainer = association("owningContainer", C4Container, composite=True, opposite="ownerContainer")
+Container.ownerContainer = association("ownerContainer", Container, upper=1, opposite="owningContainer")
+Container.owningContainer = association("owningContainer", Container, composite=True, opposite="ownerContainer")
 from gaphor.UML.uml import Element
-Element.namespace.add(C4Container.ownerContainer)  # type: ignore[attr-defined]
+Element.namespace.add(Container.ownerContainer)  # type: ignore[attr-defined]
 from gaphor.UML.uml import Namespace
-Namespace.ownedMember.add(C4Container.owningContainer)  # type: ignore[attr-defined]
+Namespace.ownedMember.add(Container.owningContainer)  # type: ignore[attr-defined]

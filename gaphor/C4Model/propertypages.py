@@ -12,15 +12,15 @@ from gaphor.diagram.propertypages import (
 new_builder = new_resource_builder("gaphor.C4Model")
 
 
-PropertyPages.register(c4model.C4Dependency, NamePropertyPage)
+PropertyPages.register(c4model.Dependency, NamePropertyPage)
 
 
-@PropertyPages.register(c4model.C4Container)
-@PropertyPages.register(c4model.C4Person)
+@PropertyPages.register(c4model.Container)
+@PropertyPages.register(c4model.Person)
 class DescriptionPropertyPage(PropertyPageBase):
     order = 14
 
-    def __init__(self, subject: c4model.C4Container | c4model.C4Person, event_manager):
+    def __init__(self, subject: c4model.Container | c4model.Person, event_manager):
         super().__init__()
         assert subject
         self.subject = subject
@@ -58,14 +58,12 @@ class DescriptionPropertyPage(PropertyPageBase):
             )
 
 
-@PropertyPages.register(c4model.C4Container)
-@PropertyPages.register(c4model.C4Dependency)
+@PropertyPages.register(c4model.Container)
+@PropertyPages.register(c4model.Dependency)
 class TechnologyPropertyPage(PropertyPageBase):
     order = 15
 
-    def __init__(
-        self, subject: c4model.C4Container | c4model.C4Dependency, event_manager
-    ):
+    def __init__(self, subject: c4model.Container | c4model.Dependency, event_manager):
         super().__init__()
         assert subject
         self.subject = subject

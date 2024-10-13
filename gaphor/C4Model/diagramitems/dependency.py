@@ -6,11 +6,11 @@ from gaphor.UML.compartments import text_stereotypes
 
 
 @represents(
-    c4model.C4Dependency,
-    head=c4model.C4Dependency.supplier,
-    tail=c4model.C4Dependency.client,
+    c4model.Dependency,
+    head=c4model.Dependency.supplier,
+    tail=c4model.Dependency.client,
 )
-class C4DependencyItem(Named, LinePresentation[c4model.C4Dependency]):
+class C4DependencyItem(Named, LinePresentation[c4model.Dependency]):
     def __init__(self, diagram, id=None):
         super().__init__(
             diagram,
@@ -27,7 +27,7 @@ class C4DependencyItem(Named, LinePresentation[c4model.C4Dependency]):
 
         self.watch("subject")
         self.watch("subject.name")
-        self.watch("subject[C4Dependency].technology")
+        self.watch("subject[Dependency].technology")
         self.watch("subject.appliedStereotype.classifier.name")
 
         self.draw_head = draw_arrow_head
