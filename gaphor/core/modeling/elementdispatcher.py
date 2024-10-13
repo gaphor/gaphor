@@ -154,6 +154,7 @@ class ElementDispatcher(Service):
             tpath.append(prop)
 
             if cname:
+                # TODO: allow for namespacing here
                 c = self.modeling_language.lookup_element(cname)
                 assert c and issubclass(
                     c, prop.type

@@ -156,12 +156,16 @@ def coder(
             yield overrides.get_override(c.name)
             continue
 
-        element_type, cls = in_super_model(c.name, super_models)
-        if element_type and cls:
-            line = f"from {element_type.__module__} import {element_type.__name__}"
-            yield line
-            already_imported.add(line)
-            continue
+        if not any(bases(c)):
+            element_type, cls = in_super_model(c.name, super_models)
+            if element_type and cls:
+                line = f"from {element_type.__module__} import {element_type.__name__}"
+                if len([t for t in classes if t.name == c.name]) > 1:
+                    line += f" as _{c.name}"
+                    c.name = f"_{c.name}"
+                yield line
+                already_imported.add(line)
+                continue
 
         yield class_declaration(c)
         if properties := list(variables(c, overrides)):

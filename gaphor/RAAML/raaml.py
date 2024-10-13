@@ -23,16 +23,16 @@ class Situation(Block, Class):
 
 
 from gaphor.SysML.sysml import DirectedRelationshipPropertyPath
-from gaphor.core.modeling.coremodel import Dependency
-class RelevantTo(Dependency, DirectedRelationshipPropertyPath):
+from gaphor.core.modeling.coremodel import Dependency as _Dependency
+class RelevantTo(DirectedRelationshipPropertyPath, _Dependency):
     pass
 
 
-class ControllingMeasure(Dependency, DirectedRelationshipPropertyPath):
+class ControllingMeasure(DirectedRelationshipPropertyPath, _Dependency):
     affects: relation_many[Property]
 
 
-class Violates(Dependency):
+class Violates(_Dependency):
     pass
 
 
@@ -125,7 +125,10 @@ class EventDef(FTAElement):
     pass
 
 
-from gaphor.UML.uml import Event
+class Event(Class):
+    pass
+
+
 class Gate(Class):
     pass
 
@@ -186,8 +189,8 @@ class TopEvent(Class):
     pass
 
 
-from gaphor.UML.uml import Property
-class TransferIn(Property):
+from gaphor.UML.uml import Property as _Property
+class TransferIn(_Property):
     pass
 
 
@@ -438,7 +441,7 @@ class Inverted(AnyMalfunction):
 
 
 
-ControllingMeasure.affects = association("affects", Property, composite=True)
+ControllingMeasure.affects = association("affects", _Property, composite=True)
 AnySituation.to = association("to", AnySituation, opposite="from_")
 AnySituation.from_ = association("from_", AnySituation, opposite="to")
 AbstractCause.error = association("error", DysfunctionalEvent, opposite="fault")
