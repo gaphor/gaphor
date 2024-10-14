@@ -5,6 +5,7 @@ from pathlib import Path
 from gi.repository import Gtk
 
 from gaphor.abc import ActionProvider, Service
+from gaphor.asyncio import TaskOwner
 from gaphor.core import action, gettext
 from gaphor.diagram.export import (
     escape_filename,
@@ -17,12 +18,13 @@ from gaphor.plugins.diagramexport.exportall import export_all
 from gaphor.ui.filedialog import save_file_dialog
 
 
-class DiagramExport(Service, ActionProvider):
+class DiagramExport(Service, ActionProvider, TaskOwner):
     """Service for exporting diagrams as images (SVG, PNG, PDF)."""
 
     def __init__(
         self, diagrams=None, export_menu=None, main_window=None, element_factory=None
     ):
+        super().__init__()
         self.diagrams = diagrams
         self.export_menu = export_menu
         self.main_window = main_window
@@ -32,6 +34,7 @@ class DiagramExport(Service, ActionProvider):
         self.factory = element_factory
 
     def shutdown(self):
+        self.cancel_background_task()
         if self.export_menu:
             self.export_menu.remove_actions(self)
 
@@ -41,19 +44,24 @@ class DiagramExport(Service, ActionProvider):
             escape_filename(diagram.name) or "export"
         ).with_suffix(dot_ext)
 
-        def save_handler(filename):
-            self.filename = filename
-            handler(filename, diagram)
+        async def save_as():
+            new_filename = await save_file_dialog(
+                title,
+                filename,
+                parent=self.main_window.window,
+                filters=[
+                    (
+                        gettext("All {ext} Files").format(ext=ext.upper()),
+                        dot_ext,
+                        mime_type,
+                    )
+                ],
+            )
+            if new_filename:
+                self.filename = new_filename
+                handler(filename, diagram)
 
-        save_file_dialog(
-            title,
-            filename,
-            save_handler,
-            parent=self.main_window.window,
-            filters=[
-                (gettext("All {ext} Files").format(ext=ext.upper()), dot_ext, mime_type)
-            ],
-        )
+        self.create_background_task(save_as())
 
     @action(
         name="file-export-svg",

@@ -1,5 +1,7 @@
 from pathlib import Path
 
+import pytest
+
 from gaphor.core.modeling import Comment
 from gaphor.diagram.diagramtoolbox import general_tools
 from gaphor.diagram.general import MetadataItem
@@ -49,7 +51,10 @@ def test_metadata_property_page(diagram, event_manager):
     assert metadata.description == "my text"
 
 
-def test_picture_property_select_opens_dialog(monkeypatch, diagram, event_manager):
+@pytest.mark.asyncio
+async def test_picture_property_select_opens_dialog(
+    monkeypatch, diagram, event_manager
+):
     # Init objects
     picture = diagram.create(PictureItem)
     property_page = PicturePropertyPage(picture, event_manager)
@@ -58,7 +63,7 @@ def test_picture_property_select_opens_dialog(monkeypatch, diagram, event_manage
     # Prepare mocking
     called = False
 
-    def call(*args, **kwargs):
+    async def call(*args, **kwargs):
         nonlocal called
         called |= True
 
@@ -73,10 +78,13 @@ def test_picture_property_select_opens_dialog(monkeypatch, diagram, event_manage
     # Test code
     button_widget.activate()
 
+    await property_page.gather_background_task()
+
     assert called is True
 
 
-def test_picture_property_select_valid_name(monkeypatch, diagram, event_manager):
+@pytest.mark.asyncio
+async def test_picture_property_select_valid_name(monkeypatch, diagram, event_manager):
     # Init objects
     picture = next(
         tl for tl in general_tools.tools if tl.id == "toolbox-picture"
@@ -86,22 +94,29 @@ def test_picture_property_select_valid_name(monkeypatch, diagram, event_manager)
     # Prepare mocking
     called = False
 
-    def call(*args, **kwargs):
+    async def error_dialog(*args, **kwargs):
         nonlocal called
         called |= True
 
     monkeypatch.setattr(
-        "gaphor.diagram.general.generalpropertypages.error_handler", call
+        "gaphor.diagram.general.generalpropertypages.error_dialog", error_dialog
     )
-    # Test code
-    temp_image = Path("data/logos/gaphor-24x24.png")
-    property_page.open_file(temp_image)
+
+    async def open_file_dialog(*args, **kwargs):
+        return Path("data/logos/gaphor-24x24.png")
+
+    monkeypatch.setattr(
+        "gaphor.diagram.general.generalpropertypages.open_file_dialog", open_file_dialog
+    )
+
+    await property_page.open_file(None)
 
     assert called is False
     assert picture.subject.name == "gaphor-24x24"
 
 
-def test_picture_property_select_keep_name(monkeypatch, diagram, event_manager):
+@pytest.mark.asyncio
+async def test_picture_property_select_keep_name(monkeypatch, diagram, event_manager):
     # Init objects
     picture = next(
         tl for tl in general_tools.tools if tl.id == "toolbox-picture"
@@ -111,18 +126,24 @@ def test_picture_property_select_keep_name(monkeypatch, diagram, event_manager):
     # Prepare mocking
     called = False
 
-    def call(*args, **kwargs):
+    async def call(*args, **kwargs):
         nonlocal called
         called |= True
 
     monkeypatch.setattr(
-        "gaphor.diagram.general.generalpropertypages.error_handler", call
+        "gaphor.diagram.general.generalpropertypages.error_dialog", call
+    )
+
+    async def open_file_dialog(*args, **kwargs):
+        return Path("data/logos/gaphor-24x24.png")
+
+    monkeypatch.setattr(
+        "gaphor.diagram.general.generalpropertypages.open_file_dialog", open_file_dialog
     )
 
     # Test code
     picture.subject.name = "old_name"
-    temp_image = Path("data/logos/gaphor-24x24.png")
-    property_page.open_file(temp_image)
+    await property_page.open_file(None)
 
     assert called is False
     assert picture.subject.name == "old_name"
