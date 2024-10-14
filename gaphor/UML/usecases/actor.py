@@ -78,7 +78,7 @@ class ActorItem(Classified, ElementPresentation):
 
     def update(self, context):
         super().update(context)
-        _xs, ys = list(zip(*self.shape.sizes))
+        _xs, ys = list(zip(*self.shape.sizes, strict=False))
         self.text_height = sum(ys)
 
     def point(self, x: float, y: float) -> float:

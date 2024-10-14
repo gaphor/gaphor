@@ -2,6 +2,7 @@
 
 Diagrams can be visualized and edited.
 """
+
 from __future__ import annotations
 
 import logging
@@ -390,16 +391,13 @@ class Diagram(Element):
     @overload
     def select(
         self, expression: Callable[[Presentation], bool]
-    ) -> Iterator[Presentation]:
-        ...
+    ) -> Iterator[Presentation]: ...
 
     @overload
-    def select(self, expression: type[P]) -> Iterator[P]:
-        ...
+    def select(self, expression: type[P]) -> Iterator[P]: ...
 
     @overload
-    def select(self, expression: None) -> Iterator[Presentation]:
-        ...
+    def select(self, expression: None) -> Iterator[Presentation]: ...
 
     def select(self, expression=None):
         """Return an iterator of all canvas items that match expression."""
@@ -503,5 +501,4 @@ class Diagram(Element):
 
 @runtime_checkable
 class PresentationRepositoryProtocol(Protocol):
-    def create_as(self, type: type[P], id: str, diagram: Diagram) -> P:
-        ...
+    def create_as(self, type: type[P], id: str, diagram: Diagram) -> P: ...

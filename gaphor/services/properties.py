@@ -4,7 +4,6 @@ system.
 These are things like preferences.
 """
 
-
 import ast
 import logging
 import pprint

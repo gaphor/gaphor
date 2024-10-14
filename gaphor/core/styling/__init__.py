@@ -78,14 +78,11 @@ class StyleNode(Hashable, Protocol):
     pseudo: str | None
     dark_mode: bool | None
 
-    def name(self) -> str:
-        ...
+    def name(self) -> str: ...
 
-    def parent(self) -> StyleNode | None:
-        ...
+    def parent(self) -> StyleNode | None: ...
 
-    def children(self) -> Iterator[StyleNode]:
-        ...
+    def children(self) -> Iterator[StyleNode]: ...
 
     def attribute(self, name: str) -> str | None:
         """Obtain a string representation of an attribute.
@@ -93,8 +90,7 @@ class StyleNode(Hashable, Protocol):
         If the attribute does not exist, ``None`` is returned.
         """
 
-    def state(self) -> Sequence[str]:
-        ...
+    def state(self) -> Sequence[str]: ...
 
 
 def merge_styles(*styles: Style) -> Style:

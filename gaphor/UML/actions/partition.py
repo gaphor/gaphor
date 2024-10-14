@@ -1,6 +1,5 @@
 """Activity Partition item."""
 
-
 from gaphas.geometry import Rectangle
 from gaphas.item import NW, SE
 from gaphas.types import Pos

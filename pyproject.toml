@@ -240,6 +240,7 @@ ignore_errors = true
 
 [tool.ruff]
 line-length = 88
+target-version = "py311"
 
 [tool.ruff.lint]
 exclude = [
@@ -251,7 +252,11 @@ exclude = [
     "gaphor/SysML/sysml.py",
     "gaphor/UML/uml.py",
 ]
-ignore = ["E501"]
+ignore = [
+    "E501",
+    "B909",
+    "C419",
+]
 select = [
     "B",
     "B9",

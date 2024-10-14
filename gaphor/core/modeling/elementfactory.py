@@ -31,8 +31,7 @@ P = TypeVar("P", bound=Presentation)
 
 
 class EventHandler(Protocol):
-    def handle(self, *events):
-        ...
+    def handle(self, *events): ...
 
 
 class RecordingEventManager:
@@ -134,16 +133,13 @@ class ElementFactory(Service):
         return self.lookup(element.id) is element
 
     @overload
-    def select(self, expression: Callable[[Element], bool]) -> Iterator[Element]:
-        ...
+    def select(self, expression: Callable[[Element], bool]) -> Iterator[Element]: ...
 
     @overload
-    def select(self, expression: type[T]) -> Iterator[T]:
-        ...
+    def select(self, expression: type[T]) -> Iterator[T]: ...
 
     @overload
-    def select(self, expression: None) -> Iterator[Element]:
-        ...
+    def select(self, expression: None) -> Iterator[Element]: ...
 
     def select(self, expression=None):
         """Iterate elements that comply with expression."""

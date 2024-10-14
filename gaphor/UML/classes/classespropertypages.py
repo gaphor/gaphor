@@ -276,6 +276,7 @@ class AttributesPage(PropertyPageBase):
                     signal_handlers=check_button_handlers("static"),
                 ),
             ],
+            strict=False,
         ):
             column.set_factory(factory)
 
@@ -466,6 +467,7 @@ class OperationsPage(PropertyPageBase):
                     signal_handlers=check_button_handlers("static"),
                 ),
             ],
+            strict=False,
         ):
             column.set_factory(factory)
 

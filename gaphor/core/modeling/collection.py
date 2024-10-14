@@ -29,12 +29,10 @@ class collection(Generic[T]):
         self.remove(key)
 
     @overload
-    def __getitem__(self, key: int) -> T:
-        ...
+    def __getitem__(self, key: int) -> T: ...
 
     @overload  # Literal[slice(None, None, None)]
-    def __getitem__(self, key: slice) -> recurseproxy[T]:
-        ...
+    def __getitem__(self, key: slice) -> recurseproxy[T]: ...
 
     def __getitem__(self, key):
         if key == _recurseproxy_trigger:

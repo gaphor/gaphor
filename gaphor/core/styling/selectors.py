@@ -314,7 +314,13 @@ class CompoundSelector:
     def specificity(self):
         if self.simple_selectors:
             return tuple(
-                map(sum, zip(*(sel.specificity for sel in self.simple_selectors)))
+                map(
+                    sum,
+                    zip(
+                        *(sel.specificity for sel in self.simple_selectors),
+                        strict=False,
+                    ),
+                )
             )
         return 0, 0, 0
 

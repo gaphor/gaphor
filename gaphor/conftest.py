@@ -3,6 +3,7 @@
 Everything is about services so the Case can define it's required
 services and start off.
 """
+
 # ruff: noqa: I001
 from __future__ import annotations
 

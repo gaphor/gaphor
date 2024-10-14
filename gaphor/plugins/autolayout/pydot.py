@@ -180,7 +180,7 @@ class AutoLayout:
                 assert len(points) == len(presentation.handles())
 
                 matrix = presentation.matrix_i2c.inverse()
-                for handle, point in zip(presentation.handles(), points):
+                for handle, point in zip(presentation.handles(), points, strict=False):
                     handle.pos = matrix.transform_point(*point)
 
                 for handle in (presentation.head, presentation.tail):

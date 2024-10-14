@@ -1,6 +1,5 @@
 """CommentItem diagram item."""
 
-
 from gaphor.core.modeling import Comment
 from gaphor.diagram.presentation import ElementPresentation
 from gaphor.diagram.shapes import Box, CssNode, Text, stroke

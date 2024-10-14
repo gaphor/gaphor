@@ -210,7 +210,7 @@ def _paste(copy_data: Opaque, diagram: Diagram, full: bool) -> set[Presentation]
     model = diagram.model
 
     # Map the original diagram ids to our new target diagram
-    new_elements: dict[Id, Element] = {ref: diagram for ref in copy_data.diagram_refs}
+    new_elements: dict[Id, Element] = dict.fromkeys(copy_data.diagram_refs, diagram)
 
     def element_lookup(ref: Id):
         if ref in new_elements:
