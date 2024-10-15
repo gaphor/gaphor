@@ -254,7 +254,6 @@ exclude = [
 ]
 ignore = [
     "E501",
-    "B909",
     "C419",
 ]
 select = [

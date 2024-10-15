@@ -138,13 +138,13 @@ def get_stereotypes(element: Element) -> list[Stereotype]:
 
     stereotypes = list({ext.ownedEnd.type for cls in classes for ext in cls.extension})
 
+    all_stereotypes = stereotypes
     for s in stereotypes:
         for sub in s.specialization[:].specific:
-            if isinstance(sub, Stereotype) and sub not in stereotypes:
-                stereotypes.append(sub)
+            if isinstance(sub, Stereotype) and sub not in all_stereotypes:
+                all_stereotypes.append(sub)
 
-    # Lambda key sort issue in mypy: https://github.com/python/mypy/issues/9656
-    return sorted(stereotypes, key=lambda st: st.name)
+    return sorted(all_stereotypes, key=lambda st: st.name)
 
 
 def get_applied_stereotypes(element: Element) -> Sequence[Stereotype]:
