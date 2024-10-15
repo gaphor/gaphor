@@ -8,7 +8,7 @@ from __future__ import annotations
 
 import abc
 import textwrap
-from typing import Iterator
+from collections.abc import Iterator
 
 import gaphas.item
 from gaphas.segment import Segment

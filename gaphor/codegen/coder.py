@@ -27,8 +27,8 @@ import contextlib
 import logging
 import sys
 import textwrap
+from collections.abc import Iterable
 from pathlib import Path
-from typing import Iterable
 
 from gaphor import UML
 from gaphor.codegen.override import Overrides

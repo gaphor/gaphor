@@ -3,8 +3,9 @@
 from __future__ import annotations
 
 from collections import OrderedDict
+from collections.abc import Callable, Iterator
 from contextlib import contextmanager
-from typing import Callable, Iterator, Protocol, TypeVar, overload
+from typing import Protocol, TypeVar, overload
 
 from gaphor.abc import Service
 from gaphor.core.eventmanager import EventManager, event_handler

@@ -4,7 +4,8 @@
 from __future__ import annotations
 
 import logging
-from typing import TYPE_CHECKING, Callable, Iterator, Protocol, TypeVar, overload
+from collections.abc import Callable, Iterator
+from typing import TYPE_CHECKING, Protocol, TypeVar, overload
 from uuid import uuid1
 
 from gaphor.core.modeling.collection import collection

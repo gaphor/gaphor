@@ -1,7 +1,7 @@
 """The RAAML Modeling Language module is the entrypoint for RAAML related
 assets."""
 
-from typing import Iterable
+from collections.abc import Iterable
 
 from gaphor.abc import ModelingLanguage
 from gaphor.core import gettext

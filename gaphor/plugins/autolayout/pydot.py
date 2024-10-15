@@ -1,7 +1,7 @@
 from __future__ import annotations
 
+from collections.abc import Iterable, Iterator
 from functools import singledispatch
-from typing import Iterable, Iterator
 
 import pydot
 from gaphas.connector import ConnectionSink, Connector

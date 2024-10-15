@@ -9,7 +9,8 @@ Functions collected in this module allow to
 from __future__ import annotations
 
 import itertools
-from typing import Iterable, Sequence, TypeVar
+from collections.abc import Iterable, Sequence
+from typing import TypeVar
 
 from gaphor.UML.uml import (
     Artifact,

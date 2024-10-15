@@ -4,9 +4,9 @@ from __future__ import annotations
 
 import logging
 import tempfile
+from collections.abc import Callable
 from functools import partial
 from pathlib import Path
-from typing import Callable
 
 from gaphas.decorators import g_async
 from gi.repository import Adw, Gio, GLib, Gtk

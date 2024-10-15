@@ -7,7 +7,7 @@ from __future__ import annotations
 
 import contextlib
 import itertools
-from typing import Iterable
+from collections.abc import Iterable
 
 import hypothesis
 from hypothesis import settings

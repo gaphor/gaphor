@@ -55,7 +55,7 @@ class NamedElementPropertyPage(NamePropertyPage):
             not self.subject
             or UML.recipes.is_metaclass(self.subject)
             or isinstance(
-                self.subject, (UML.ActivityPartition, UML.ActivityParameterNode)
+                self.subject, UML.ActivityPartition | UML.ActivityParameterNode
             )
         ):
             return

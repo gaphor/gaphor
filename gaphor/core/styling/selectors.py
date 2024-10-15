@@ -298,7 +298,7 @@ class CombinedSelector:
         return a1 + a2, b1 + b2, c1 + c2
 
     def __repr__(self):
-        return "{!r}{}{!r}".format(self.left, self.combinator, self.right)
+        return f"{self.left!r}{self.combinator}{self.right!r}"
 
 
 class CompoundSelector:
@@ -347,7 +347,7 @@ class NamespaceSelector:
         self.namespace = namespace
 
     def __repr__(self):
-        return "|" if self.namespace == "" else "{%s}|" % self.namespace
+        return "|" if self.namespace == "" else f"{{{self.namespace}}}|"
 
 
 class IDSelector:
@@ -382,8 +382,8 @@ class AttributeSelector:
         self.value = value
 
     def __repr__(self):
-        namespace = "*|" if self.namespace is None else "{%s}" % self.namespace
-        return "[{}{}{}{!r}]".format(namespace, self.name, self.operator, self.value)
+        namespace = "*|" if self.namespace is None else f"{{{self.namespace}}}"
+        return f"[{namespace}{self.name}{self.operator}{self.value!r}]"
 
 
 class PseudoClassSelector:
@@ -414,4 +414,4 @@ class FunctionalPseudoClassSelector:
         self.arguments = arguments
 
     def __repr__(self):
-        return ":{}{!r}".format(self.name, tuple(self.arguments))
+        return f":{self.name}{tuple(self.arguments)!r}"

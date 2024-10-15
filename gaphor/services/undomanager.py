@@ -13,7 +13,7 @@ NOTE: it would be nice to use actions in conjunction with functools.partial.
 from __future__ import annotations
 
 import logging
-from typing import Callable, List
+from collections.abc import Callable
 
 from gaphor.abc import ActionProvider, Service
 from gaphor.action import action
@@ -57,7 +57,7 @@ class ActionStack:
     """
 
     def __init__(self):
-        self._actions: List[Callable[[], None]] = []
+        self._actions: list[Callable[[], None]] = []
 
     def add(self, action):
         self._actions.append(action)
@@ -121,8 +121,8 @@ class UndoManager(Service, ActionProvider):
     def __init__(self, event_manager, element_factory):
         self.event_manager = event_manager
         self.element_factory: RepositoryProtocol = element_factory
-        self._undo_stack: List[ActionStack] = []
-        self._redo_stack: List[ActionStack] = []
+        self._undo_stack: list[ActionStack] = []
+        self._redo_stack: list[ActionStack] = []
         self._stack_depth = 20
         self._current_transaction = None
 

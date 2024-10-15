@@ -21,9 +21,9 @@ complete the model loading.
 
 from __future__ import annotations
 
-from collections.abc import Iterable
+from collections.abc import Callable, Collection, Iterable, Iterator
 from functools import singledispatch
-from typing import Callable, Collection, Iterator, NamedTuple
+from typing import NamedTuple
 
 from gaphor.core.modeling import Diagram, Presentation
 from gaphor.core.modeling.collection import collection

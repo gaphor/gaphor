@@ -1,11 +1,11 @@
 from __future__ import annotations
 
 import math
-from collections.abc import Iterable, Iterator, Sequence
+from collections.abc import Callable, Iterable, Iterator, Sequence
 from dataclasses import replace
 from enum import Enum
 from math import pi
-from typing import Callable, Protocol
+from typing import Protocol
 
 from gaphas.geometry import Rectangle
 

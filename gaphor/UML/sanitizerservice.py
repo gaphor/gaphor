@@ -1,7 +1,7 @@
 """The Sanitize module is dedicated to adapters (stuff) that keeps the model
 clean and in sync with diagrams."""
 
-from typing import Iterable
+from collections.abc import Iterable
 
 from gaphor import UML
 from gaphor.abc import Service

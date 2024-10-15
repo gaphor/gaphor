@@ -80,7 +80,7 @@ class DrawContext:
     dropzone: bool
 
 
-@lru_cache()
+@lru_cache
 def attrname(obj, lower_name):
     """Look up a real attribute name based on a lower case (normalized)
     name."""
@@ -94,7 +94,7 @@ def rgetattr(obj, names):
     """Recursively get a name, based on a list of names."""
     name, *tail = names
     v = getattr(obj, attrname(obj, name), NO_ATTR)
-    if isinstance(v, (collection, list, tuple)):
+    if isinstance(v, collection | list | tuple):
         if tail and not v:
             yield NO_ATTR
         if tail:
@@ -112,7 +112,7 @@ def attrstr(obj):
     """Returns lower-case string representation of an attribute."""
     if isinstance(obj, str):
         return obj.lower()
-    elif isinstance(obj, (bool, int)):
+    elif isinstance(obj, bool | int):
         return "true" if obj else ""
     elif isinstance(obj, Element):
         return obj.__class__.__name__.lower()

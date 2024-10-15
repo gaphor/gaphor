@@ -2,7 +2,8 @@
 
 from __future__ import annotations
 
-from typing import Any, Callable, Iterator, get_type_hints
+from collections.abc import Callable, Iterator
+from typing import Any, get_type_hints
 
 
 class action:

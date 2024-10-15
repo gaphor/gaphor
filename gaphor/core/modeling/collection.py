@@ -3,7 +3,8 @@
 from __future__ import annotations
 
 import contextlib
-from typing import Generic, Iterator, Sequence, Type, TypeVar, overload
+from collections.abc import Iterator, Sequence
+from typing import Generic, TypeVar, overload
 
 from gaphor.core.modeling.event import AssociationUpdated
 
@@ -13,7 +14,7 @@ T = TypeVar("T")
 class collection(Generic[T]):
     """Collection (set-like) for model elements' 1:n and n:m relationships."""
 
-    def __init__(self, property, object, type: Type[T]):
+    def __init__(self, property, object, type: type[T]):
         self.property = property
         self.object = object
         self.type = type

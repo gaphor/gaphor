@@ -62,8 +62,8 @@ def property_navigability(self: uml.Property) -> list[bool | None]:
         return [None]  # assume unknown
     owner = self.opposite.type
     if (
-        isinstance(owner, (uml.Class, uml.DataType, uml.Interface))
-        and isinstance(self.type, (uml.Class, uml.DataType, uml.Interface))
+        isinstance(owner, uml.Class | uml.DataType | uml.Interface)
+        and isinstance(self.type, uml.Class | uml.DataType | uml.Interface)
         and (self in owner.ownedAttribute)
         or self in assoc.navigableOwnedEnd
     ):
