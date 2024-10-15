@@ -97,16 +97,16 @@ Element.clientDependency = association("clientDependency", Dependency, composite
 Element.supplierDependency = association("supplierDependency", Dependency, opposite="supplier")
 Element.memberNamespace = derivedunion("memberNamespace", Namespace, upper=1)
 Element.namespace = derivedunion("namespace", Namespace, upper=1)
-Element.sourceRelationship = derivedunion("sourceRelationship", Relationship)
 Element.targetRelationship = derivedunion("targetRelationship", Relationship)
+Element.sourceRelationship = derivedunion("sourceRelationship", Relationship)
 Element.ownedElement.add(Element.ownedDiagram)  # type: ignore[attr-defined]
 Element.ownedElement.add(Element.clientDependency)  # type: ignore[attr-defined]
 Element.sourceRelationship.add(Element.clientDependency)  # type: ignore[attr-defined]
 Element.targetRelationship.add(Element.supplierDependency)  # type: ignore[attr-defined]
 Element.memberNamespace.add(Element.namespace)  # type: ignore[attr-defined]
 Element.owner.add(Element.namespace)  # type: ignore[attr-defined]
-Element.relationship.add(Element.sourceRelationship)  # type: ignore[attr-defined]
 Element.relationship.add(Element.targetRelationship)  # type: ignore[attr-defined]
+Element.relationship.add(Element.sourceRelationship)  # type: ignore[attr-defined]
 Diagram.ownedPresentation = association("ownedPresentation", Presentation, composite=True, opposite="diagram")
 Diagram.element = association("element", Element, upper=1, opposite="ownedDiagram")
 Element.ownedElement.add(Diagram.ownedPresentation)  # type: ignore[attr-defined]
@@ -118,10 +118,10 @@ Presentation.subject = association("subject", Element, upper=1, opposite="presen
 Element.owner.add(Presentation.diagram)  # type: ignore[attr-defined]
 Comment.annotatedElement = association("annotatedElement", Element, opposite="comment")
 Relationship.relatedElement = derivedunion("relatedElement", Element, lower=1)
-Relationship.source = derivedunion("source", Element)
 Relationship.target = derivedunion("target", Element)
-Relationship.relatedElement.add(Relationship.source)  # type: ignore[attr-defined]
+Relationship.source = derivedunion("source", Element)
 Relationship.relatedElement.add(Relationship.target)  # type: ignore[attr-defined]
+Relationship.relatedElement.add(Relationship.source)  # type: ignore[attr-defined]
 Dependency.client = association("client", Element, upper=1, opposite="clientDependency")
 Dependency.supplier = association("supplier", Element, upper=1, opposite="supplierDependency")
 Element.owner.add(Dependency.client)  # type: ignore[attr-defined]
