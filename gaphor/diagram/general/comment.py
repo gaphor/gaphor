@@ -23,7 +23,7 @@ class CommentItem(ElementPresentation):
             ),
             draw=draw_border,
         )
-        self.watch("subject[Comment].body")
+        self.watch("subject[Core:Comment].body")
 
 
 def draw_border(box, context, bounding_box):
