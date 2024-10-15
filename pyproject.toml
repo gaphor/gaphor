@@ -252,10 +252,7 @@ exclude = [
     "gaphor/SysML/sysml.py",
     "gaphor/UML/uml.py",
 ]
-ignore = [
-    "E501",
-    "C419",
-]
+ignore = ["E501"]
 select = [
     "B",
     "B9",
