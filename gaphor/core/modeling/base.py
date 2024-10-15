@@ -3,8 +3,10 @@
 
 from __future__ import annotations
 
+import importlib
 import logging
 from collections.abc import Callable, Iterator
+from functools import cache
 from typing import TYPE_CHECKING, Protocol, TypeVar, overload
 from uuid import uuid1
 
@@ -48,6 +50,14 @@ def generate_id(generator=None):
     return next(_generator)
 
 
+class classproperty:
+    def __init__(self, func):
+        self.fget = func
+
+    def __get__(self, _instance, owner):
+        return self.fget(owner)
+
+
 class Base:
     """Base class for all model data classes."""
 
@@ -80,6 +90,14 @@ class Base:
                 "Can't retrieve the model since it's not set on construction"
             )
         return self._model
+
+    @classproperty
+    def __modeling_language__(cls):
+        if ml := _resolve_modeling_language(cls.__module__):
+            return ml
+        raise AttributeError(
+            f"module '{cls.__module__}' or its parents have no attribute '__modeling_language__'"
+        )
 
     @classmethod
     def umlproperties(cls) -> Iterator[umlproperty]:
@@ -244,3 +262,14 @@ def swap_element_type(element: Base, new_class: type[Base]) -> None:
         old_class = element.__class__
         element.__class__ = new_class
         element.handle(ElementTypeUpdated(element, old_class))
+
+
+@cache
+def _resolve_modeling_language(module_name: str) -> str | None:
+    mod = importlib.import_module(module_name)
+    if ml := getattr(mod, "__modeling_language__", None):
+        return str(ml)
+    parent_name = module_name.rsplit(".", 1)[0]
+    if parent_name == module_name:
+        return None
+    return _resolve_modeling_language(parent_name)

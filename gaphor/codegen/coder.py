@@ -159,6 +159,7 @@ def coder(
         if not any(bases(c)):
             element_type, cls = in_super_model(c.name, super_models)
             if element_type and cls:
+                # always alias imported name
                 line = f"from {element_type.__module__} import {element_type.__name__}"
                 if len([t for t in classes if t.name == c.name]) > 1:
                     line += f" as _{c.name}"
@@ -286,6 +287,7 @@ def subsets(
                 element_type, d = attribute(c, value.strip(), super_models)
                 if d and d.isDerived:
                     if element_type:
+                        # TODO: Use aliasses
                         yield f"from {element_type.__module__} import {d.owner.name}"
                     yield f"{d.owner.name}.{d.name}.add({full_name})  # type: ignore[attr-defined]"
                 elif not d:
@@ -415,6 +417,9 @@ def is_in_toplevel_package(c: UML.Class, package_name: str) -> bool:
 
 
 def redefines(a: UML.Property) -> str | None:
+    # TODO: look up element name and add underscore if needed.
+    # maybe resolve redefines before we start writing?
+    # Redefine is the only one where
     return next(
         (
             slot.value

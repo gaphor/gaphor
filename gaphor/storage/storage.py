@@ -6,7 +6,6 @@ file. `save(file_obj)` stores the current model in a file.
 
 __all__ = ["load", "save"]
 
-import importlib
 import io
 import logging
 from collections.abc import Callable, Iterable
@@ -33,13 +32,13 @@ def save(out=None, element_factory=None, status_queue=None):
             status_queue(status)
 
 
-def save_generator(out, element_factory):
+def save_generator(out, element_factory: ElementFactory):
     """Save the current model using @writer, which is a
     gaphor.storage.xmlwriter.XMLWriter instance."""
 
     with XMLWriter(out).document() as writer:
         writer.prefix_mapping("", MODEL_NS)
-        for ml in sorted({modeling_language_name(e) for e in element_factory}):
+        for ml in sorted({e.__modeling_language__ for e in element_factory}):
             writer.prefix_mapping(ml, f"{MODELING_LANGUAGE_NS}/{ml}")
 
         with writer.element_ns(
@@ -57,7 +56,7 @@ def save_generator(out, element_factory):
                 for n, e in enumerate(element_factory, start=1):
                     clazz = e.__class__.__name__
                     assert e.id
-                    ns = f"{MODELING_LANGUAGE_NS}/{modeling_language_name(e)}"
+                    ns = f"{MODELING_LANGUAGE_NS}/{e.__modeling_language__}"
                     with writer.element_ns((ns, clazz), {(MODEL_NS, "id"): str(e.id)}):
                         e.save(save_func)
 
@@ -118,21 +117,6 @@ def save_element(name, value, element_factory, writer):
         save_collection(name, value)
     else:
         save_value(name, value)
-
-
-def modeling_language_name(element):
-    module_name = ""
-    parent_name = element.__module__
-    while module_name != parent_name:
-        module_name = parent_name
-        mod = importlib.import_module(module_name)
-        if ml := getattr(mod, "__modeling_language__", None):
-            return ml
-        parent_name = module_name.rsplit(".", 1)[0]
-
-    raise AttributeError(
-        f"module '{element.__module__}' or its parents have no attribute '__modeling_language__'"
-    )
 
 
 def load_elements(elements, element_factory, modeling_language, gaphor_version="1.0.0"):
