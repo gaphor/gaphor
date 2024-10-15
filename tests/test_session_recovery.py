@@ -191,7 +191,7 @@ def test_recover_from_session_files(application: Application, test_models, templ
             "sha256": sha256sum(test_models / "all-elements.gaphor"),
             "template": template,
         },
-        [("c", "Class", class_id, None)],
+        [("c", "UML", "Class", class_id, None)],
     )
     recover_sessions(application)
 
@@ -212,7 +212,7 @@ def test_recover_with_invalid_filename(application: Application):
             "sha256": "1234",
             "template": False,
         },
-        [("c", "Class", class_id, None)],
+        [("c", "UML", "Class", class_id, None)],
     )
     recover_sessions(application)
 
