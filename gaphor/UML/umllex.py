@@ -6,7 +6,6 @@ operations. The regular expressions are constructed based on a series of
 attribute/operation.
 """
 
-
 import contextlib
 
 __all__ = ["parse_property", "parse_operation"]

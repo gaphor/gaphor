@@ -1,7 +1,6 @@
 """Formatting of UML elements like attributes, operations, stereotypes, etc."""
 
 import re
-from typing import Tuple
 
 from gaphor.core.format import format
 from gaphor.i18n import gettext
@@ -70,7 +69,7 @@ def format_property(
         tag_vals.extend(format(slot) for slot in el.appliedStereotype[:].slot if slot)
 
         if tag_vals:
-            s.append(" { %s }" % ", ".join(tag_vals))
+            s.append(f" {{ {', '.join(tag_vals)} }}")
 
     if note and el.note:
         s.append(f" # {el.note}")
@@ -78,7 +77,7 @@ def format_property(
     return "".join(s)
 
 
-def format_association_end(el) -> Tuple[str, str]:
+def format_association_end(el) -> tuple[str, str]:
     """Format association end."""
     name = ""
     if el.name:
@@ -91,7 +90,7 @@ def format_association_end(el) -> Tuple[str, str]:
 
     m = [format_multiplicity(el, bare=True)]
     if slots := [format(slot) for slot in el.appliedStereotype[:].slot if slot]:
-        m.append(" { %s }" % ",\n".join(slots))
+        m.append(" {{ {} }}".format(",\n".join(slots)))
     mult = "".join(m)
 
     return name, mult

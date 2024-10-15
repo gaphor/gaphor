@@ -1,7 +1,7 @@
 from __future__ import annotations
 
+from collections.abc import Iterable, Sequence
 from itertools import groupby
-from typing import Iterable, Sequence
 
 from gi.repository import Gio, GObject
 
@@ -93,7 +93,7 @@ def organize_changes(element_factory, modeling_language):
 
     def not_presentation(change: RefChange):
         element_type = lookup_element(change.property_ref)
-        return element_type and not issubclass(element_type, (Diagram, Presentation))
+        return element_type and not issubclass(element_type, Diagram | Presentation)
 
     def composite_and_not_presentation(change: RefChange):
         return composite(change) and not_presentation(change)

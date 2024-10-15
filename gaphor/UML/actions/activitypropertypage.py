@@ -148,6 +148,7 @@ class ActivityPage(PropertyPageBase):
                     signal_handlers=text_field_handlers("parameter"),
                 ),
             ],
+            strict=False,
         ):
             column.set_factory(factory)
 

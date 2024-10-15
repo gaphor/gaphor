@@ -1,6 +1,5 @@
 """Implementation of interface."""
 
-
 from gaphor import UML
 from gaphor.core.styling import Style
 from gaphor.diagram.presentation import LinePresentation, Named, text_name

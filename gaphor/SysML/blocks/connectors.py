@@ -1,5 +1,3 @@
-from typing import Union
-
 from gaphas.connector import Handle, Port
 
 from gaphor import UML
@@ -18,7 +16,7 @@ from gaphor.UML.deployments import ConnectorItem
 class BlockProperyProxyPortConnector:
     def __init__(
         self,
-        block_or_property: Union[BlockItem, PropertyItem, InterfaceBlockItem],
+        block_or_property: BlockItem | PropertyItem | InterfaceBlockItem,
         proxy_port: ProxyPortItem,
     ) -> None:
         self.element = block_or_property
@@ -71,14 +69,14 @@ class PropertyConnectorConnector(RelationshipConnect):
     """Connect a Connector to a Port or Property."""
 
     line: ConnectorItem
-    element: Union[PropertyItem, ProxyPortItem]
+    element: PropertyItem | ProxyPortItem
 
     def allow(self, handle, port):
         element = self.element
 
         # Element should be connected -> have a subject
         return super().allow(handle, port) and isinstance(
-            element.subject, (UML.Port, UML.Property)
+            element.subject, UML.Port | UML.Property
         )
 
     def connect_subject(self, handle):

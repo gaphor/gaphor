@@ -8,8 +8,8 @@ __all__ = ["load", "save"]
 
 import io
 import logging
+from collections.abc import Callable, Iterable
 from functools import partial
-from typing import Callable, Iterable
 
 from gaphor import application
 from gaphor.core.modeling import Diagram, Element, ElementFactory, Presentation

@@ -4,12 +4,10 @@ system.
 These are things like preferences.
 """
 
-
 import ast
 import logging
 import pprint
 from pathlib import Path
-from typing import Dict
 
 from gaphor import settings
 from gaphor.abc import Service
@@ -49,7 +47,7 @@ class Properties(Service):
     def __init__(self, event_manager):
         self.event_manager = event_manager
         self.filename: Path = properties_filename("")
-        self._properties: Dict[str, object] = {}
+        self._properties: dict[str, object] = {}
 
         event_manager.subscribe(self.on_model_loaded)
         event_manager.subscribe(self.on_model_saved)

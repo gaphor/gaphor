@@ -1,7 +1,5 @@
 """Message item connection adapters."""
 
-from typing import Optional
-
 from gaphor import UML
 from gaphor.core.modeling import Element, Presentation
 from gaphor.diagram.connectors import BaseConnector, Connector
@@ -12,7 +10,7 @@ from gaphor.UML.interactions.lifeline import LifelineItem
 from gaphor.UML.interactions.message import MessageItem
 
 
-def get_connected(item, handle) -> Optional[Presentation[Element]]:
+def get_connected(item, handle) -> Presentation[Element] | None:
     """Get item connected to a handle."""
     if cinfo := item.diagram.connections.get_connection(handle):
         return cinfo.connected  # type: ignore[no-any-return] # noqa: F723
@@ -145,7 +143,7 @@ class MessageLifelineConnect(BaseConnector):
 
     def disconnect(self, handle):
         line = self.line
-        send: Optional[Presentation[Element]] = get_connected(line, line.head)
+        send: Presentation[Element] | None = get_connected(line, line.head)
         received = self.get_connected(line.tail)
 
         # if a message is a deleted message, then the disconnection causes
@@ -248,7 +246,7 @@ class ExecutionSpecificationExecutionSpecificationConnect(BaseConnector):
             # Can connect child exec spec if parent is not connected
             return True
 
-        connected_item: Optional[Presentation[Element]]
+        connected_item: Presentation[Element] | None
         connected_item = self.get_connected(self.element.handles()[0])
         assert connected_item
         Connector(connected_item, self.line).connect(handle, None)

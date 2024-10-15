@@ -21,7 +21,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  python_version: '3.12'
+  python_version: '3.13'
   mainline_build: ${{ github.ref == 'refs/heads/main' || github.event.label.name == 'translation' || github.event_name == 'release' }}
 
 jobs:
@@ -39,9 +39,11 @@ jobs:
           egress-policy: block
           allowed-endpoints: >
             files.pythonhosted.org:443
-            github.com:443
             pypi.org:443
-            objects.githubusercontent.com
+            github.com:443
+            api.github.com:443
+            objects.githubusercontent.com:443
+            raw.githubusercontent.com:443
       - uses: actions/checkout@eef61447b9ff4aafe5dcd4e0bbf5d482be7e7871 # v4.2.1
         with:
           ref: ${{ github.event.pull_request.head.sha }}
@@ -70,7 +72,7 @@ jobs:
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     strategy:
       matrix:
-        python_version: ['3.11', '3.12']
+        python_version: ['3.11', '3.12', '3.13']
     outputs:
       targz: gaphor-${{ steps.install.outputs.version }}.tar.gz
       wheel: gaphor-${{ steps.install.outputs.version }}-py3-none-any.whl
@@ -284,13 +286,13 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@f677139bbe7f9c59b41e40162b753c062f5d49a3 # v5.2.0
         with:
-          python-version: ${{ env.python_version }}
+          python-version: 3.12
           cache: pip
       - name: Install Dependencies
         id: install
         uses: ./.github/actions/install
         with:
-          python-command: py -${{ env.python_version }}
+          python-command: py -3.12
       - name: Run Gaphor Tests
         run: poetry run pytest --cov
       - name: Create Windows Executables

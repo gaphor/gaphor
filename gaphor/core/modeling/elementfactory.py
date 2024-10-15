@@ -3,8 +3,9 @@
 from __future__ import annotations
 
 from collections import OrderedDict
+from collections.abc import Callable, Iterator
 from contextlib import contextmanager
-from typing import Callable, Iterator, Protocol, TypeVar, overload
+from typing import Protocol, TypeVar, overload
 
 from gaphor.abc import Service
 from gaphor.core.eventmanager import EventManager, event_handler
@@ -31,8 +32,7 @@ P = TypeVar("P", bound=Presentation)
 
 
 class EventHandler(Protocol):
-    def handle(self, *events):
-        ...
+    def handle(self, *events): ...
 
 
 class RecordingEventManager:
@@ -134,16 +134,13 @@ class ElementFactory(Service):
         return self.lookup(element.id) is element
 
     @overload
-    def select(self, expression: Callable[[Element], bool]) -> Iterator[Element]:
-        ...
+    def select(self, expression: Callable[[Element], bool]) -> Iterator[Element]: ...
 
     @overload
-    def select(self, expression: type[T]) -> Iterator[T]:
-        ...
+    def select(self, expression: type[T]) -> Iterator[T]: ...
 
     @overload
-    def select(self, expression: None) -> Iterator[Element]:
-        ...
+    def select(self, expression: None) -> Iterator[Element]: ...
 
     def select(self, expression=None):
         """Iterate elements that comply with expression."""

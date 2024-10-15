@@ -20,6 +20,7 @@ What's the difference?
 Stick with BehaviorExecutionSpecification, since it has a [0..1] relation to
 behavior, whereas ActionExecutionSpecification has a [1] relation to action.
 """
+
 from gaphas import Handle
 from gaphas.connector import Position
 from gaphas.constraint import constraint
@@ -123,7 +124,7 @@ class ExecutionSpecificationItem(
     def load(self, name, value):
         if name == "points":
             points = literal_eval(value)
-            for h, p in zip(self._handles, points):
+            for h, p in zip(self._handles, points, strict=False):
                 h.pos = p
         elif name == "head-connection":
             self._load_head_connection = value

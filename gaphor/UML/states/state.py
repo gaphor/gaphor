@@ -88,7 +88,7 @@ class StateItem(ElementPresentation[UML.State], Named):
     def region_at_point(self, pos: Pos) -> Element | None:
         region_offset = self.height - sum(self._region_heights)
         _x, y = pos
-        for region, h in zip(self.subject.region, self._region_heights):
+        for region, h in zip(self.subject.region, self._region_heights, strict=False):
             region_offset += h
             if y < region_offset:
                 return region

@@ -1,6 +1,5 @@
 """Defines a status window class for displaying the progress of a queue."""
 
-
 from gaphas.decorators import g_async
 from gi.repository import Gtk, Pango
 

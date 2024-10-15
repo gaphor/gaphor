@@ -1,15 +1,16 @@
 """Definitions (types) for style sheets."""
 
+from collections.abc import Callable, Sequence
 from enum import Enum
-from typing import Callable, Dict, List, NamedTuple, Optional, Sequence, Tuple, Union
+from typing import NamedTuple
 
 import tinycss2.color3
 from tinycss2.ast import FunctionBlock
 from tinycss2.parser import parse_declaration_list
 
-Number = Union[int, float]
-Color = Tuple[float, float, float, float]  # RGBA
-Padding = Tuple[Number, Number, Number, Number]  # top/right/bottom/left
+Number = int | float
+Color = tuple[float, float, float, float]  # RGBA
+Padding = tuple[Number, Number, Number, Number]  # top/right/bottom/left
 
 
 class TextAlign(Enum):
@@ -82,9 +83,7 @@ class _Declarations:
     """Convert raw CSS declarations into Gaphor styling declarations."""
 
     def __init__(self) -> None:
-        self.declarations: List[
-            Tuple[str, Callable[[str, object], Optional[object]]]
-        ] = []
+        self.declarations: list[tuple[str, Callable[[str, object], object | None]]] = []
 
     def register(self, *properties):
         def reg(func):
@@ -162,19 +161,19 @@ def parse_color(prop, value):
     "vertical-spacing",
     "border-radius",
 )
-def parse_positive_number(prop, value) -> Optional[Number]:
+def parse_positive_number(prop, value) -> Number | None:
     return value if isinstance(value, number) and value >= 0 else None
 
 
 @declarations.register(
     "opacity",
 )
-def parse_factor(prop, value) -> Optional[Number]:
+def parse_factor(prop, value) -> Number | None:
     return value if isinstance(value, number) and 0 <= value <= 1 else None
 
 
 @declarations.register("font-family")
-def parse_string(prop, value) -> Optional[str]:
+def parse_string(prop, value) -> str | None:
     if isinstance(value, str):
         return value
     elif value:
@@ -183,14 +182,14 @@ def parse_string(prop, value) -> Optional[str]:
 
 
 @declarations.register("font-size")
-def parse_font_size(prop, value) -> Union[None, int, float, str]:
+def parse_font_size(prop, value) -> None | int | float | str:
     if isinstance(value, number) and value > 0:
         return value
     return value if isinstance(value, str) and value in FONT_SIZE_VALUES else None
 
 
 @declarations.register("padding")
-def parse_padding(prop, value) -> Optional[Padding]:
+def parse_padding(prop, value) -> Padding | None:
     if isinstance(value, number):
         return (value, value, value, value)
     n = len(value)
@@ -207,18 +206,18 @@ def parse_padding(prop, value) -> Optional[Padding]:
 
 @declarations.register("dash-style")
 def parse_sequence_numbers(
-    prop, value: Union[Number, Sequence[Number]]
-) -> Optional[Sequence[Number]]:
+    prop, value: Number | Sequence[Number]
+) -> Sequence[Number] | None:
     if value == 0:
         return ()
     if isinstance(value, number):
         return (value, value)
-    elif all(isinstance(v, (int, float)) for v in value):
+    elif all(isinstance(v, int | float) for v in value):
         return value
     return None
 
 
-enum_styles: Dict[str, Dict[str, object]] = {
+enum_styles: dict[str, dict[str, object]] = {
     "font-style": {e.value: e for e in FontStyle},
     "font-weight": {e.value: e for e in FontWeight},
     "justify-content": {e.value: e for e in JustifyContent},

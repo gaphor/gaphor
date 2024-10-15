@@ -7,14 +7,9 @@ the actions bound to the toolbuttons should change as well.
 
 import getpass
 import time
+from collections.abc import Callable, Collection, Sequence
 from typing import (
-    Callable,
-    Collection,
     NamedTuple,
-    Optional,
-    Sequence,
-    Tuple,
-    Type,
     TypeVar,
 )
 
@@ -25,7 +20,7 @@ from gaphor.core.modeling import Comment, Diagram, Element, Picture, Presentatio
 from gaphor.diagram import general
 from gaphor.diagram.group import group
 
-ItemFactory = Callable[[Diagram, Optional[Presentation]], Presentation]
+ItemFactory = Callable[[Diagram, Presentation | None], Presentation]
 P = TypeVar("P", bound=Presentation, covariant=True)
 ConfigFuncType = Callable[[P], None]
 
@@ -34,8 +29,8 @@ class ToolDef(NamedTuple):
     id: str
     name: str
     icon_name: str
-    shortcut: Optional[str]
-    item_factory: Optional[ItemFactory]
+    shortcut: str | None
+    item_factory: ItemFactory | None
     handle_index: int = -1
 
 
@@ -57,7 +52,7 @@ class DiagramType:
         self.name = name
         self.sections = sections
 
-    def allowed(self, element: Type[Element]) -> bool:
+    def allowed(self, element: type[Element]) -> bool:
         return True
 
     def create(self, element_factory, element):
@@ -75,11 +70,11 @@ DiagramTypes = Sequence[DiagramType]
 class ElementCreateInfo(NamedTuple):
     id: str
     name: str
-    element_type: Type[Element]
-    allowed_owning_elements: Collection[Type[Element]]
+    element_type: type[Element]
+    allowed_owning_elements: Collection[type[Element]]
 
 
-def tooliter(toolbox_actions: Sequence[Tuple[str, Sequence[ToolDef]]]):
+def tooliter(toolbox_actions: Sequence[tuple[str, Sequence[ToolDef]]]):
     """Iterate toolbox items, regardless of section headers."""
     for _name, section in toolbox_actions:
         yield from section
@@ -92,9 +87,9 @@ def get_tool_def(modeling_language, tool_name):
 
 
 def new_item_factory(
-    item_class: Type[Presentation],
-    subject_class: Optional[Type[Element]] = None,
-    config_func: Optional[ConfigFuncType] = None,
+    item_class: type[Presentation],
+    subject_class: type[Element] | None = None,
+    config_func: ConfigFuncType | None = None,
 ):
     """``config_func`` may be a function accepting the newly created item."""
 
