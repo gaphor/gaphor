@@ -49,5 +49,5 @@ def test_line_presentations_have_metadata(diagram_item):
     assert "head" in metadata
     assert "tail" in metadata
     assert issubclass(element_class, Element)
-    assert metadata["head"] in element_class.umlproperties()
-    assert metadata["tail"] in element_class.umlproperties()
+    assert metadata["head"] in element_class.__properties__
+    assert metadata["tail"] in element_class.__properties__
