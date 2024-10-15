@@ -74,7 +74,7 @@ def test_class(factory):
     ), f"Classifier.feature does not contain ownedOperation - {element.feature}"
     assert (
         operation1 in element.ownedMember
-    ), "Namespace.ownedMember does not contain ownedOperation".format()
+    ), "Namespace.ownedMember does not contain ownedOperation"
 
 
 def test_comment(factory):

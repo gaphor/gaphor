@@ -69,7 +69,7 @@ def format_property(
         tag_vals.extend(format(slot) for slot in el.appliedStereotype[:].slot if slot)
 
         if tag_vals:
-            s.append(" {{ {} }}".format(", ".join(tag_vals)))
+            s.append(f" {{ {', '.join(tag_vals)} }}")
 
     if note and el.note:
         s.append(f" # {el.note}")
