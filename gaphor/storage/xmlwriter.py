@@ -1,5 +1,4 @@
 import xml.sax.handler
-from typing import Dict, List, Tuple
 from xml.sax.saxutils import escape, quoteattr
 
 # See whether the xmlcharrefreplace error handler is
@@ -18,9 +17,9 @@ class XMLWriter(xml.sax.handler.ContentHandler):
         super().__init__()
         self._out = out
         self._encoding = encoding
-        self._ns_contexts: List[Dict[str, str]] = [{}]  # contains uri -> prefix dicts
+        self._ns_contexts: list[dict[str, str]] = [{}]  # contains uri -> prefix dicts
         self._current_context = self._ns_contexts[-1]
-        self._undeclared_ns_maps: List[Tuple[str, str]] = []
+        self._undeclared_ns_maps: list[tuple[str, str]] = []
 
         self._in_cdata = False
         self._in_start_tag = False

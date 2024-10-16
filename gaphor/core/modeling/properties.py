@@ -26,16 +26,13 @@ methods:
 from __future__ import annotations
 
 import logging
+from collections.abc import Callable, Iterable, Sequence
 from typing import (
     Any,
-    Callable,
     Generic,
-    Iterable,
     Literal,
     Protocol,
-    Sequence,
     TypeVar,
-    Union,
     overload,
 )
 
@@ -65,61 +62,47 @@ E = TypeVar("E")
 
 
 class relation_one(Protocol[E]):
-    def get(self, obj) -> E | None:
-        ...
+    def get(self, obj) -> E | None: ...
 
-    def set(self, obj, value: E | None) -> None:
-        ...
+    def set(self, obj, value: E | None) -> None: ...
 
-    def delete(self, obj, value: E | None) -> None:
-        ...
+    def delete(self, obj, value: E | None) -> None: ...
 
     @overload
-    def __get__(self, obj: None, class_=None) -> relation_one[E]:
-        ...
+    def __get__(self, obj: None, class_=None) -> relation_one[E]: ...
 
     @overload
-    def __get__(self, obj, class_=None) -> E:
-        ...
+    def __get__(self, obj, class_=None) -> E: ...
 
-    def __set__(self, obj, value: E | None) -> None:
-        ...
+    def __set__(self, obj, value: E | None) -> None: ...
 
-    def __delete__(self, obj) -> None:
-        ...
+    def __delete__(self, obj) -> None: ...
 
 
 class relation_many(Protocol[E]):
-    def get(self, obj) -> collection[E]:
-        ...
+    def get(self, obj) -> collection[E]: ...
 
-    def set(self, obj, value: E) -> None:
-        ...
+    def set(self, obj, value: E) -> None: ...
 
-    def delete(self, obj, value: E) -> None:
-        ...
+    def delete(self, obj, value: E) -> None: ...
 
     @overload
-    def __get__(self, obj: None, class_=None) -> relation_many[E]:
-        ...
+    def __get__(self, obj: None, class_=None) -> relation_many[E]: ...
 
     @overload
-    def __get__(self, obj, class_=None) -> collection[E]:
-        ...
+    def __get__(self, obj, class_=None) -> collection[E]: ...
 
-    def __set__(self, obj, value: E) -> None:
-        ...
+    def __set__(self, obj, value: E) -> None: ...
 
-    def __delete__(self, obj) -> None:
-        ...
+    def __delete__(self, obj) -> None: ...
 
 
-relation = Union[relation_one, relation_many]
+relation = relation_one | relation_many
 
 T = TypeVar("T")
 
-Lower = Union[Literal[0], Literal[1], Literal[2]]
-Upper = Union[Literal[1], Literal[2], Literal["*"]]
+Lower = Literal[0] | Literal[1] | Literal[2]
+Upper = Literal[1] | Literal[2] | Literal["*"]
 
 
 class umlproperty:
@@ -224,7 +207,7 @@ class attribute(umlproperty, Generic[T]):
                 or self.type
             )
 
-        if self.type is int and isinstance(value, (str, bool)):
+        if self.type is int and isinstance(value, str | bool):
             value = 0 if value == "False" else 1 if value == "True" else int(value)
 
         if value == self.get(obj):
@@ -453,7 +436,7 @@ class association(umlproperty):
                 self.stub = associationstub(self)
                 # Do not let property start with underscore, or it will not be found
                 # as an umlproperty.
-                setattr(self.type, "GAPHOR__associationstub__%x" % id(self), self.stub)
+                setattr(self.type, f"GAPHOR__associationstub__{id(self):x}", self.stub)
             self.stub.set(value, obj)
 
     def delete(self, obj, value, from_opposite=False, do_notify=True):
@@ -533,7 +516,7 @@ class associationstub(umlproperty):
     """
 
     def __init__(self, association: association):
-        super().__init__("stub_%x" % id(self))
+        super().__init__(f"stub_{id(self):x}")
         self.association = association
 
     def __get__(self, obj, class_=None):
@@ -619,7 +602,7 @@ class derived(umlproperty, Generic[T]):
     def add(self, subset):
         self.subsets.add(subset)
         assert isinstance(
-            subset, (association, derived)
+            subset, association | derived
         ), f"have element {subset}, expected association"
         subset.dependent_properties.add(self)
 
@@ -828,7 +811,7 @@ class redefine(umlproperty):
     ):
         super().__init__(name)
         assert isinstance(
-            original, (association, derived)
+            original, association | derived
         ), f"expected association or derived, got {original}"
         self.decl_class = decl_class
         self.type = type

@@ -18,7 +18,7 @@ def test_elements_1():
     xml_w.startElement("foo", {})
     xml_w.endElement("foo")
 
-    xml = """<?xml version="1.0" encoding="%s"?>\n<foo/>""" % sys.getdefaultencoding()
+    xml = f"""<?xml version="1.0" encoding="{sys.getdefaultencoding()}"?>\n<foo/>"""
     assert w.s == xml, f"{w.s} != {xml}"
 
 
@@ -31,10 +31,7 @@ def test_elements_2():
     xml_w.endElement("bar")
     xml_w.endElement("foo")
 
-    xml = (
-        """<?xml version="1.0" encoding="%s"?>\n<foo>\n<bar/>\n</foo>"""
-        % sys.getdefaultencoding()
-    )
+    xml = f"""<?xml version="1.0" encoding="{sys.getdefaultencoding()}"?>\n<foo>\n<bar/>\n</foo>"""
     assert w.s == xml, w.s
 
 
@@ -48,10 +45,7 @@ def test_elements_test():
     xml_w.endElement("bar")
     xml_w.endElement("foo")
 
-    xml = (
-        """<?xml version="1.0" encoding="%s"?>\n<foo>\n<bar>hello</bar>\n</foo>"""
-        % sys.getdefaultencoding()
-    )
+    xml = f"""<?xml version="1.0" encoding="{sys.getdefaultencoding()}"?>\n<foo>\n<bar>hello</bar>\n</foo>"""
     assert w.s == xml, w.s
 
 
@@ -63,10 +57,7 @@ def test_elements_ns_default():
     xml_w.startElementNS(("http://gaphor.devjavu.com/schema", "foo"), "qn", {})
     xml_w.endElementNS(("http://gaphor.devjavu.com/schema", "foo"), "qn")
 
-    xml = (
-        """<?xml version="1.0" encoding="%s"?>\n<foo xmlns="http://gaphor.devjavu.com/schema"/>"""
-        % sys.getdefaultencoding()
-    )
+    xml = f"""<?xml version="1.0" encoding="{sys.getdefaultencoding()}"?>\n<foo xmlns="http://gaphor.devjavu.com/schema"/>"""
     assert w.s == xml, w.s
 
 
@@ -78,8 +69,5 @@ def test_elements_ns_1():
     xml_w.startElementNS(("http://gaphor.devjavu.com/schema", "foo"), "qn", {})
     xml_w.endElementNS(("http://gaphor.devjavu.com/schema", "foo"), "qn")
 
-    xml = (
-        """<?xml version="1.0" encoding="%s"?>\n<g:foo xmlns:g="http://gaphor.devjavu.com/schema"/>"""
-        % sys.getdefaultencoding()
-    )
+    xml = f"""<?xml version="1.0" encoding="{sys.getdefaultencoding()}"?>\n<g:foo xmlns:g="http://gaphor.devjavu.com/schema"/>"""
     assert w.s == xml, w.s

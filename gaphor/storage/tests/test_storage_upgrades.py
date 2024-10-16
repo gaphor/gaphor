@@ -26,13 +26,13 @@ def loader(element_factory, modeling_language):
 def test_upgrade_metaclass_item_to_class_item(loader):
     item = loader(element(id="2", type="MetaclassItem"))[0]
 
-    assert type(item) == diagramitems.ClassItem
+    assert type(item) is diagramitems.ClassItem
 
 
 def test_upgrade_subsystem_item_to_class_item(loader):
     item = loader(element(id="2", type="SubsystemItem"))[0]
 
-    assert type(item) == diagramitems.ComponentItem
+    assert type(item) is diagramitems.ComponentItem
 
 
 def test_rename_stereotype_attrs_field(loader):

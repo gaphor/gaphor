@@ -24,9 +24,9 @@ from __future__ import annotations
 
 import contextlib
 import itertools
+from collections.abc import Iterable
 from functools import singledispatch
 from io import StringIO
-from typing import Iterable
 
 import hypothesis
 from gaphas.connector import Handle

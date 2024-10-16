@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2024-02-27 10:00-0500\n"
-"PO-Revision-Date: 2024-07-08 15:09+0000\n"
+"PO-Revision-Date: 2024-10-13 15:15+0000\n"
 "Last-Translator: Jiri Grönroos <jiri.gronroos@iki.fi>\n"
 "Language-Team: Finnish <https://hosted.weblate.org/projects/gaphor/gaphor/fi/"
 ">\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.7-dev\n"
+"X-Generator: Weblate 5.8-dev\n"
 "Generated-By: Babel 2.14.0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:23 gaphor/C4Model/toolbox.py:67
@@ -2395,7 +2395,7 @@ msgstr ""
 
 #: gaphor/ui/elementeditor.py:413 gaphor/ui/elementeditor.ui:352
 msgid "No focused item."
-msgstr ""
+msgstr "Ei kohdistettua tietuetta."
 
 #: gaphor/ui/elementeditor.ui:11
 msgid "No item selected"
@@ -2426,6 +2426,10 @@ msgid ""
 "does not get selected, click on the diagram once (so it's focused) and "
 "then hit the shortcut key."
 msgstr ""
+"<b>Vinkki:</b> Useimmilla elementeillä on pikanäppäin (esim. \"c\" luokalle -"
+" Class). Työkaluvalinta toimii vain kaaviossa. Jos työkalu ei tule "
+"valituksi, napsauta kaaviota kerran (niin että se on kohdistettuna) ja paina "
+"sitten pikanäppäintä."
 
 #: gaphor/ui/elementeditor.ui:68
 msgid ""
@@ -2433,6 +2437,9 @@ msgid ""
 "select an element in the model browser and start typing. A search box "
 "will automatically appear."
 msgstr ""
+"<b>Vinkki:</b> Etsiäseksi elementtiä malliselaimessa (vasemmassa yläkulmassa)"
+", valitse elementti malliselaimesta ja aloita kirjoittaminen. Hakukenttä "
+"ilmestyy näkyviin automaattisesti."
 
 #: gaphor/ui/elementeditor.ui:97 gaphor/ui/help/shortcuts.ui:113
 msgid "Undo"

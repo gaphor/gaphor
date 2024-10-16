@@ -9,7 +9,6 @@ Plan:
 
 from dataclasses import replace
 from math import pi
-from typing import Optional
 
 from gaphas.connector import Handle
 from gaphas.geometry import Rectangle, distance_rectangle_point
@@ -328,7 +327,7 @@ class AssociationEnd:
     be recreated by the owning Association.
     """
 
-    def __init__(self, owner: AssociationItem, end: Optional[str] = None):
+    def __init__(self, owner: AssociationItem, end: str | None = None):
         self._canvas = None
         self._owner = owner
         self._end = end
@@ -358,7 +357,7 @@ class AssociationEnd:
         return self._owner.head if self is self._owner.head_end else self._owner.tail
 
     @property
-    def subject(self) -> Optional[UML.Property]:
+    def subject(self) -> UML.Property | None:
         return getattr(self.owner, f"{self._end}_subject")  # type:ignore[no-any-return]
 
     @property

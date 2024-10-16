@@ -8,8 +8,9 @@ from __future__ import annotations
 
 import importlib.metadata
 import logging
+from collections.abc import Iterator
 from pathlib import Path
-from typing import Iterator, TypeVar, cast
+from typing import TypeVar, cast
 from uuid import uuid1
 
 from gaphor.abc import ActionProvider, Service

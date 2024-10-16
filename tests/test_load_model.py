@@ -1,7 +1,6 @@
 """Diagram could not be loaded due to JuggleError (presumed cyclic resolving of
 diagram items)."""
 
-
 from gaphor import UML
 from gaphor.storage.storage import load
 from gaphor.UML.classes.association import (

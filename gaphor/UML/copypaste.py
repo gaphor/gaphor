@@ -1,6 +1,7 @@
 from __future__ import annotations
 
-from typing import Iterator, NamedTuple
+from collections.abc import Iterator
+from typing import NamedTuple
 
 from gaphor.core.modeling.base import Id
 from gaphor.diagram.copypaste import (

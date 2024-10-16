@@ -55,7 +55,7 @@ class TreeItem(GObject.Object):
             self.icon_visible = bool(
                 self.icon
                 and not isinstance(
-                    element, (UML.Parameter, UML.Property, UML.Operation)
+                    element, UML.Parameter | UML.Property | UML.Operation
                 )
             )
             self.attributes = pango_attributes(element)
@@ -135,14 +135,12 @@ def visible(element: Element) -> bool:
     return not (
         isinstance(
             element,
-            (
-                Comment,
-                Presentation,
-                StyleSheet,
-                UML.InstanceSpecification,
-                UML.OccurrenceSpecification,
-                UML.Slot,
-            ),
+            Comment
+            | Presentation
+            | StyleSheet
+            | UML.InstanceSpecification
+            | UML.OccurrenceSpecification
+            | UML.Slot,
         )
         or (
             # Some types we want to show, except at top level
@@ -311,7 +309,7 @@ def pango_attributes(element):
     attrs.insert(
         Pango.attr_style_new(
             Pango.Style.ITALIC
-            if isinstance(element, (UML.Classifier, UML.BehavioralFeature))
+            if isinstance(element, UML.Classifier | UML.BehavioralFeature)
             and element.isAbstract
             else Pango.Style.NORMAL
         )

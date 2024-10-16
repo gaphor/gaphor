@@ -1,7 +1,5 @@
 """Flow item adapter connections."""
 
-from typing import Type, Union
-
 from gaphor import UML
 from gaphor.core.modeling import swap_element_type
 from gaphor.diagram.connectors import Connector, RelationshipConnect
@@ -25,7 +23,7 @@ from gaphor.UML.actions.pin import InputPinItem, OutputPinItem
 class FlowConnect(RelationshipConnect):
     """Connect FlowItem and Action, initial/final nodes."""
 
-    line: Union[ControlFlowItem, ObjectFlowItem]
+    line: ControlFlowItem | ObjectFlowItem
 
     def allow(self, handle, port):
         line = self.line
@@ -33,9 +31,9 @@ class FlowConnect(RelationshipConnect):
 
         if (
             handle is line.head
-            and isinstance(subject, (UML.FinalNode, UML.InputPin))
+            and isinstance(subject, UML.FinalNode | UML.InputPin)
             or handle is line.tail
-            and isinstance(subject, (UML.InitialNode, UML.OutputPin))
+            and isinstance(subject, UML.InitialNode | UML.OutputPin)
         ):
             return False
 
@@ -65,7 +63,7 @@ class FlowConnect(RelationshipConnect):
 
         element_type = get_model_element(type(line))
         metadata = get_diagram_item_metadata(type(line))
-        relation: Union[UML.ControlFlow, UML.ObjectFlow] = self.relationship_or_new(
+        relation: UML.ControlFlow | UML.ObjectFlow = self.relationship_or_new(
             element_type, metadata["head"], metadata["tail"]
         )
 
@@ -81,8 +79,8 @@ class FlowConnect(RelationshipConnect):
         otc = self.get_connected(opposite)
         if (
             opposite
-            and (isinstance(line, (ControlFlowItem, ObjectFlowItem)))
-            and isinstance(otc, (ForkNodeItem, DecisionNodeItem))
+            and (isinstance(line, ControlFlowItem | ObjectFlowItem))
+            and isinstance(otc, ForkNodeItem | DecisionNodeItem)
         ):
             adapter = Connector(otc, line)
             adapter.combine_nodes()
@@ -94,8 +92,8 @@ class FlowConnect(RelationshipConnect):
         otc = self.get_connected(opposite)
         if (
             opposite
-            and (isinstance(line, (ControlFlowItem, ObjectFlowItem)))
-            and isinstance(otc, (ForkNodeItem, DecisionNodeItem))
+            and (isinstance(line, ControlFlowItem | ObjectFlowItem))
+            and isinstance(otc, ForkNodeItem | DecisionNodeItem)
         ):
             adapter = Connector(otc, line)
             adapter.decombine_nodes()
@@ -120,9 +118,9 @@ class FlowForkDecisionNodeFlowConnect(FlowConnect):
     """Abstract class with common behaviour for Fork/Join node and
     Decision/Merge node."""
 
-    element: Union[ForkNodeItem, DecisionNodeItem]
-    fork_node_cls: Type[UML.ControlNode]
-    join_node_cls: Type[UML.ControlNode]
+    element: ForkNodeItem | DecisionNodeItem
+    fork_node_cls: type[UML.ControlNode]
+    join_node_cls: type[UML.ControlNode]
 
     def allow(self, handle, port):
         # No cyclic connect is possible on a Flow/Decision node:

@@ -1,7 +1,6 @@
 """Connect comments."""
 
 import logging
-from typing import Union
 
 from gaphor.core.modeling import Comment
 from gaphor.diagram.connectors import BaseConnector, Connector
@@ -17,7 +16,7 @@ logger = logging.getLogger(__name__)
 class CommentLineElementConnect(BaseConnector):
     """Connect a comment line to any element item."""
 
-    element: Union[CommentItem, ElementPresentation]
+    element: CommentItem | ElementPresentation
     line: CommentLineItem
 
     def allow(self, handle, port):

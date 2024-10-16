@@ -1,4 +1,5 @@
 """The action definition for the C4 Model toolbox."""
+
 from functools import partial
 
 from gaphas.item import SE

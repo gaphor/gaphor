@@ -1,7 +1,7 @@
 from __future__ import annotations
 
+from collections.abc import Iterable
 from operator import setitem
-from typing import Iterable
 
 from gaphor.core.modeling import (
     Base,

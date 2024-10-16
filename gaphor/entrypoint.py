@@ -2,14 +2,14 @@ import functools
 import importlib.metadata
 import inspect
 import logging
-from typing import Dict, TypeVar
+from typing import TypeVar
 
 T = TypeVar("T")
 
 logger = logging.getLogger(__name__)
 
 
-def initialize(scope, services=None, **known_services: T) -> Dict[str, T]:
+def initialize(scope, services=None, **known_services: T) -> dict[str, T]:
     return init_entry_points(load_entry_points(scope, services), **known_services)
 
 
@@ -18,7 +18,7 @@ def list_entry_points(group):
     return importlib.metadata.entry_points(group=group)
 
 
-def load_entry_points(scope, services=None) -> Dict[str, type]:
+def load_entry_points(scope, services=None) -> dict[str, type]:
     """Load services from resources."""
     uninitialized_services = {}
     for ep in list_entry_points(scope):
@@ -30,15 +30,15 @@ def load_entry_points(scope, services=None) -> Dict[str, type]:
 
 
 def init_entry_points(
-    uninitialized_services: Dict[str, type[T]], **known_services: T
-) -> Dict[str, T]:
+    uninitialized_services: dict[str, type[T]], **known_services: T
+) -> dict[str, T]:
     """Instantiate service definitions, taking into account dependencies
     defined in the constructor.
 
     Given a dictionary `{name: service-class}`, return a map `{name:
     service-instance}`.
     """
-    ready: Dict[str, T] = known_services.copy()
+    ready: dict[str, T] = known_services.copy()
 
     def pop(name):
         try:

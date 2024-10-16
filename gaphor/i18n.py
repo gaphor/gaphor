@@ -2,6 +2,7 @@
 
 Translate text in to your native language using the gettext() function.
 """
+
 from __future__ import annotations
 
 import functools
