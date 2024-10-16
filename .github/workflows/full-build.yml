@@ -90,7 +90,7 @@ jobs:
       - name: Set ownership of checkout directory
         run: chown -R $(id -u):$(id -g) $PWD
       - name: Use Python Dependency Cache
-        uses: actions/cache@2cdf405574d6ef1f33a1d12acccd3ae82f47b3f2 # v4.1.0
+        uses: actions/cache@3624ceb22c1c5a301c8db4169662070a689d9ea8 # v4.1.1
         with:
           path: ~/.cache/pip
           key: ${{ runner.os }}-python${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}-39
@@ -117,13 +117,13 @@ jobs:
         run: poetry build
       - name: Upload gaphor-${{ steps.install.outputs.version }}.tar.gz
         if: ${{ matrix.python_version == env.python_version }}
-        uses: actions/upload-artifact@604373da6381bf24206979c74d06a550515601b9 # v4.4.1
+        uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882 # v4.4.3
         with:
           name: gaphor-${{ steps.install.outputs.version }}.tar.gz
           path: dist/gaphor-${{ steps.install.outputs.version }}.tar.gz
       - name: Upload gaphor-${{ steps.install.outputs.version }}-py3-none-any.whl
         if: ${{ matrix.python_version == env.python_version }}
-        uses: actions/upload-artifact@604373da6381bf24206979c74d06a550515601b9 # v4.4.1
+        uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882 # v4.4.3
         with:
           name: gaphor-${{ steps.install.outputs.version }}-py3-none-any.whl
           path: dist/gaphor-${{ steps.install.outputs.version }}-py3-none-any.whl
@@ -145,7 +145,7 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Use Python Dependency Cache
-        uses: actions/cache@2cdf405574d6ef1f33a1d12acccd3ae82f47b3f2 # v4.1.0
+        uses: actions/cache@3624ceb22c1c5a301c8db4169662070a689d9ea8 # v4.1.1
         with:
           path: ~/.cache/pip
           key: ${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}-22.04
@@ -260,7 +260,7 @@ jobs:
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     steps:
       - name: GTK binaries get from cache
-        uses: actions/cache@2cdf405574d6ef1f33a1d12acccd3ae82f47b3f2 # v4.1.0
+        uses: actions/cache@3624ceb22c1c5a301c8db4169662070a689d9ea8 # v4.1.1
         id: cache
         with:
           path: C:\gtk\**
