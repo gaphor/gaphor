@@ -40,8 +40,8 @@ def test_dependency_connect(create, element_factory):
     assert hct is actor1
     assert tct is actor2
 
-    assert actor1.subject is dep.subject.supplier
-    assert actor2.subject is dep.subject.client
+    assert actor1.subject in dep.subject.supplier
+    assert actor2.subject in dep.subject.client
 
 
 def test_dependency_reconnect(create):
@@ -61,9 +61,9 @@ def test_dependency_reconnect(create):
     connect(dep, dep.tail, a3)
 
     assert d is not dep.subject
-    assert a1.subject is dep.subject.supplier
-    assert a3.subject is dep.subject.client
-    assert a2.subject is not dep.subject.client, dep.subject.client
+    assert a1.subject in dep.subject.supplier
+    assert a3.subject in dep.subject.client
+    assert a2.subject not in dep.subject.client, dep.subject.client
 
 
 def test_dependency_reconnect_should_keep_attributes(create):
@@ -206,10 +206,10 @@ def test_dependency_reconnect_in_new_diagram(create, element_factory):
     connect(dep2, dep2.head, c5)
 
     assert dep.subject is not dep2.subject
-    assert dep.subject.supplier is c1.subject
-    assert dep.subject.client is c2.subject
-    assert dep2.subject.supplier is c5.subject
-    assert dep2.subject.client is c4.subject
+    assert c1.subject in dep.subject.supplier
+    assert c2.subject in dep.subject.client
+    assert c5.subject in dep2.subject.supplier
+    assert c4.subject in dep2.subject.client
 
 
 def test_dependency_reconnect_twice_in_new_diagram(create, element_factory):
@@ -235,5 +235,5 @@ def test_dependency_reconnect_twice_in_new_diagram(create, element_factory):
     connect(dep2, dep2.head, c3)
 
     assert dep.subject is dep2.subject
-    assert dep.subject.supplier is c3.subject
-    assert dep.subject.client is c4.subject
+    assert c3.subject in dep.subject.supplier
+    assert c4.subject in dep.subject.client

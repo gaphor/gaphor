@@ -479,6 +479,8 @@ class association(subsettable_umlproperty):
     def _set_many(
         self, obj, value, index, from_opposite=False, from_load=False
     ) -> None:
+        if not value:
+            return None
         if not isinstance(value, self.type):
             raise TypeError(f"Value should be of type {self.type.__name__}")
 

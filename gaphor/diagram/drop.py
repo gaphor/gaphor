@@ -100,8 +100,25 @@ def _bounds(item: ElementPresentation) -> Rectangle:
 
 
 @drop.register(Relationship, Diagram)
-@drop.register(ActivityEdge, Diagram)
 def drop_relationship_on_diagram(element: Relationship, diagram: Diagram, x, y):
+    item_class = get_diagram_item(type(element))
+    if not item_class:
+        return None
+
+    metadata = get_diagram_item_metadata(item_class)
+    added_items = []
+    if metadata:
+        # Relationships are many-to-many, so we need to create multiple items
+        for head in metadata["head"].get(element):
+            for tail in metadata["tail"].get(element):
+                new_item = drop_relationship(element, head, tail, diagram, x, y)
+                if new_item:
+                    added_items.append(new_item)
+        return added_items
+
+
+@drop.register(ActivityEdge, Diagram)
+def drop_activity_edge_on_diagram(element: ActivityEdge, diagram: Diagram, x, y):
     item_class = get_diagram_item(type(element))
     if not item_class:
         return None

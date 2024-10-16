@@ -466,14 +466,14 @@
 <ref refid="1ee6aec6-b9a9-11eb-93ad-535118859f0b"/>
 <ref refid="d092794e-e0b9-11ea-b7ab-f5b4c130f24e"/>
 <ref refid="88a30320-2e32-11ef-8125-be7f4daace40"/>
-<ref refid="4fa655f0-3232-11ef-8506-be7f4daace40"/>
-<ref refid="8c1af8ce-3232-11ef-8506-be7f4daace40"/>
 <ref refid="a4c6f704-ce0f-11eb-abe3-018035c40dd4"/>
 <ref refid="2b608842-32f9-11ef-95f2-be7f4daace40"/>
 <ref refid="ef22d04a-331d-11ef-84c5-be7f4daace40"/>
 <ref refid="ed92bb78-331d-11ef-84c5-be7f4daace40"/>
 <ref refid="f0d1199a-3234-11ef-8506-be7f4daace40"/>
 <ref refid="c65b782c-3234-11ef-8506-be7f4daace40"/>
+<ref refid="8c1af8ce-3232-11ef-8506-be7f4daace40"/>
+<ref refid="4fa655f0-3232-11ef-8506-be7f4daace40"/>
 </reflist>
 </ownedAttribute>
 <ownedOperation>
@@ -3022,8 +3022,8 @@
 </name>
 <ownedAttribute>
 <reflist>
-<ref refid="4fa678b4-3232-11ef-8506-be7f4daace40"/>
 <ref refid="8c1ac37c-3232-11ef-8506-be7f4daace40"/>
+<ref refid="4fa678b4-3232-11ef-8506-be7f4daace40"/>
 </reflist>
 </ownedAttribute>
 <package>
@@ -3136,6 +3136,9 @@
 <ref refid="4fa678b4-3232-11ef-8506-be7f4daace40"/>
 </reflist>
 </memberEnd>
+<name>
+<val></val>
+</name>
 <package>
 <ref refid="3867dda4-7a95-11ea-a112-7f953848cf85"/>
 </package>
@@ -3191,6 +3194,12 @@
 <class_>
 <ref refid="15dbc42c-3232-11ef-8506-be7f4daace40"/>
 </class_>
+<lowerValue>
+<val>1</val>
+</lowerValue>
+<lowerValue>
+<val>1</val>
+</lowerValue>
 <name>
 <val>client</val>
 </name>
@@ -3198,10 +3207,10 @@
 <ref refid="4cda498e-7a95-11ea-a112-7f953848cf85"/>
 </type>
 <upperValue>
-<val>1</val>
+<val>*</val>
 </upperValue>
 <upperValue>
-<val>1</val>
+<val>*</val>
 </upperValue>
 </Property>
 <InstanceSpecification id="72f8448c-3232-11ef-8506-be7f4daace40">
@@ -3281,6 +3290,12 @@
 <class_>
 <ref refid="15dbc42c-3232-11ef-8506-be7f4daace40"/>
 </class_>
+<lowerValue>
+<val>1</val>
+</lowerValue>
+<lowerValue>
+<val>1</val>
+</lowerValue>
 <name>
 <val>supplier</val>
 </name>
@@ -3288,10 +3303,10 @@
 <ref refid="4cda498e-7a95-11ea-a112-7f953848cf85"/>
 </type>
 <upperValue>
-<val>1</val>
+<val>*</val>
 </upperValue>
 <upperValue>
-<val>1</val>
+<val>*</val>
 </upperValue>
 </Property>
 <Property id="8c1af8ce-3232-11ef-8506-be7f4daace40">
@@ -3378,7 +3393,7 @@
 <ref refid="326b312a-3234-11ef-8506-be7f4daace40"/>
 </owningInstance>
 <value>
-<val>owner, source</val>
+<val>source</val>
 </value>
 </Slot>
 <Slot id="60769604-3234-11ef-8506-be7f4daace40">

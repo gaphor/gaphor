@@ -85,8 +85,8 @@ def _pr_interface_deps(classifier: Element, dep_type):
         dep.supplier
         for dep in classifier.clientDependency
         if dep.isKindOf(dep_type)
-        and dep.supplier
-        and dep.supplier.isKindOf(uml.Interface)
+        and len(dep.supplier) > 0
+        and dep.supplier[0].isKindOf(uml.Interface)
     )
 
 
