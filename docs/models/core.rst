@@ -3,7 +3,8 @@ Modeling Language Core
 
 The Core modeling language is the the basis for any other language.
 
-The :obj:`~gaphor.core.modeling.Element` class acts as the root for all gaphor domain classes.
+The :obj:`~gaphor.core.modeling.Base` class acts as the root for all gaphor domain classes.
+All models derive from  :obj:`~gaphor.core.modeling.Element`, which supports ownership.
 :obj:`~gaphor.core.modeling.Diagram` and :obj:`~gaphor.core.modeling.Presentation` form the basis for everything you see
 in a diagram.
 
@@ -16,54 +17,54 @@ Relationships
 .. diagram:: Relationships
    :model: core
 
-The ``Element`` Class
-^^^^^^^^^^^^^^^^^^^^^
+The ``Base`` Class
+^^^^^^^^^^^^^^^^^^
 
-The :obj:`~gaphor.core.modeling.Element` base class provides event notification and integrates
+The :obj:`~gaphor.core.modeling.Base` base class provides event notification and integrates
 with the model repository (internally known as :obj:`~gaphor.core.modeling.ElementFactory`).
 Bi-directional relationships are also possible, as well as derived
 relations.
 
-The :obj:`~gaphor.core.modeling.element.RepositoryProtocol`, and
-:obj:`~gaphor.core.modeling.element.EventWatcherProtocol`
+The :obj:`~gaphor.core.modeling.base.RepositoryProtocol`, and
+:obj:`~gaphor.core.modeling.base.EventWatcherProtocol`
 protocols are important to connect the model to the repository and event handling
 mechanisms.
 
-The class ``Element`` is the core of Gaphor’s data model.
+The class ``Base`` is the core of Gaphor’s data model.
 
-.. autoclass:: gaphor.core.modeling.Element
+.. autoclass:: gaphor.core.modeling.Base
 
 
-   .. autoproperty:: gaphor.core.modeling.Element.id
+   .. autoproperty:: gaphor.core.modeling.Base.id
 
-   .. autoproperty:: gaphor.core.modeling.Element.model
+   .. autoproperty:: gaphor.core.modeling.Base.model
 
-   .. automethod:: gaphor.core.modeling.Element.unlink
+   .. automethod:: gaphor.core.modeling.Base.unlink
 
    Event handling
    --------------
 
-   .. automethod:: gaphor.core.modeling.Element.handle
+   .. automethod:: gaphor.core.modeling.Base.handle
 
-   .. automethod:: gaphor.core.modeling.Element.watcher
+   .. automethod:: gaphor.core.modeling.Base.watcher
 
 
    Loading and saving
    ------------------
 
-   .. automethod:: gaphor.core.modeling.Element.load
+   .. automethod:: gaphor.core.modeling.Base.load
 
-   .. automethod:: gaphor.core.modeling.Element.postload
+   .. automethod:: gaphor.core.modeling.Base.postload
 
-   .. automethod:: gaphor.core.modeling.Element.save
+   .. automethod:: gaphor.core.modeling.Base.save
 
 
    OCL-style methods
    -----------------
 
-   .. automethod:: gaphor.core.modeling.Element.isKindOf
+   .. automethod:: gaphor.core.modeling.Base.isKindOf
 
-   .. automethod:: gaphor.core.modeling.Element.isTypeOf
+   .. automethod:: gaphor.core.modeling.Base.isTypeOf
 
 
 Dependencies
@@ -130,13 +131,13 @@ The ``Diagram`` class
 Protocols
 ---------
 
-.. autoclass:: gaphor.core.modeling.element.RepositoryProtocol
+.. autoclass:: gaphor.core.modeling.base.RepositoryProtocol
 
-   .. automethod:: gaphor.core.modeling.element.RepositoryProtocol.create
+   .. automethod:: gaphor.core.modeling.base.RepositoryProtocol.create
 
       Create a new element in the repository.
 
-   .. method:: select(self, expression: Callable[[Element], bool]) -> Iterator[Element]
+   .. method:: select(self, expression: Callable[[Base], bool]) -> Iterator[Base]
 
       Select elements from the repository that fulfill ``expression``.
 
@@ -145,27 +146,27 @@ Protocols
 
       Select all elements from the repository of type ``type_``.
 
-   .. method:: select(self, expression: None) -> Iterator[Element]
+   .. method:: select(self, expression: None) -> Iterator[Base]
       :noindex:
 
       Select all elements from the repository.
 
-   .. automethod:: gaphor.core.modeling.element.RepositoryProtocol.lookup
+   .. automethod:: gaphor.core.modeling.base.RepositoryProtocol.lookup
 
       Get an element by id from the repository.
 
       Returns :const:`None` if no such element exists.
 
-.. autoclass:: gaphor.core.modeling.element.EventWatcherProtocol
+.. autoclass:: gaphor.core.modeling.base.EventWatcherProtocol
 
-   .. automethod:: gaphor.core.modeling.element.EventWatcherProtocol.watch
+   .. automethod:: gaphor.core.modeling.base.EventWatcherProtocol.watch
 
       Add a watch for a specific path. The path is relative to the element
       that created the watcher object.
 
       Returns ``self``, so watch operations can be chained.
 
-   .. automethod:: gaphor.core.modeling.element.EventWatcherProtocol.unsubscribe_all
+   .. automethod:: gaphor.core.modeling.base.EventWatcherProtocol.unsubscribe_all
 
       Should be called before the watcher is disposed, to release all watched paths.
 

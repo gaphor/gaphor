@@ -291,7 +291,7 @@ class ModelBrowser(UIComponent, ActionProvider):
         model.clear()
 
         for element in self.element_factory.select(
-            lambda e: (e.owner is None) and visible(e)
+            lambda e: isinstance(e, Element) and (e.owner is None) and visible(e)
         ):
             model.add_element(element)
 

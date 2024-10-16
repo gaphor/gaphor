@@ -19,13 +19,9 @@ from typing import (
 import gaphas
 from cairo import Context as CairoContext
 
+from gaphor.core.modeling.base import Base, Id, RepositoryProtocol, generate_id
 from gaphor.core.modeling.collection import collection
-from gaphor.core.modeling.element import (
-    Element,
-    Id,
-    RepositoryProtocol,
-    generate_id,
-)
+from gaphor.core.modeling.element import Element
 from gaphor.core.modeling.event import (
     AssociationAdded,
     AssociationDeleted,
@@ -114,7 +110,7 @@ def attrstr(obj):
         return obj.lower()
     elif isinstance(obj, bool | int):
         return "true" if obj else ""
-    elif isinstance(obj, Element):
+    elif isinstance(obj, Base):
         return obj.__class__.__name__.lower()
     log.warn(
         f'Can not make a string out of {obj}, returning "". Please raise an issue.'
@@ -122,7 +118,7 @@ def attrstr(obj):
     return ""
 
 
-def lookup_attribute(element: Element, name: str) -> str | None:
+def lookup_attribute(element: Base, name: str) -> str | None:
     """Look up an attribute from an element.
 
     Attributes can be nested, e.g. ``owner.name``.

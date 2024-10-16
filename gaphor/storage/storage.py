@@ -12,7 +12,7 @@ from collections.abc import Callable, Iterable
 from functools import partial
 
 from gaphor import application
-from gaphor.core.modeling import Diagram, Element, ElementFactory, Presentation
+from gaphor.core.modeling import Base, Diagram, ElementFactory, Presentation
 from gaphor.core.modeling.collection import collection
 from gaphor.core.modeling.modelinglanguage import ModelingLanguage
 from gaphor.core.modeling.stylesheet import StyleSheet
@@ -116,7 +116,7 @@ def save_element(name, value, element_factory, writer):
             writer.endElement("val")
             writer.endElement(name)
 
-    if isinstance(value, Element):
+    if isinstance(value, Base):
         save_reference(name, value)
     elif isinstance(value, collection):
         save_collection(name, value)

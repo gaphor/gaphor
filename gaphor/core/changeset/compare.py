@@ -4,7 +4,7 @@ from collections.abc import Iterable
 from operator import setitem
 
 from gaphor.core.modeling import (
-    Element,
+    Base,
     ElementChange,
     ElementFactory,
     Presentation,
@@ -88,10 +88,10 @@ def compare(
 
 
 def updated_properties(ancestor, incoming, create) -> Iterable[ValueChange | RefChange]:
-    ancestor_vals: dict[str, Element | collection[Element] | str | int | None] = {}
+    ancestor_vals: dict[str, Base | collection[Base] | str | int | None] = {}
     if ancestor:
         ancestor.save(lambda n, v: setitem(ancestor_vals, n, v))
-    incoming_vals: dict[str, Element | collection[Element] | str | int | None] = {}
+    incoming_vals: dict[str, Base | collection[Base] | str | int | None] = {}
     incoming.save(lambda n, v: setitem(incoming_vals, n, v))
 
     for name in {*ancestor_vals.keys(), *incoming_vals.keys()}:
@@ -100,9 +100,9 @@ def updated_properties(ancestor, incoming, create) -> Iterable[ValueChange | Ref
         value = incoming_vals.get(name)
         other = ancestor_vals.get(name)
         id = ancestor.id if ancestor else incoming.id
-        if isinstance(value, Element):
+        if isinstance(value, Base):
             # Allow values to be None
-            assert other is None or isinstance(other, Element)
+            assert other is None or isinstance(other, Base)
             if other is None or value.id != other.id:
                 yield create(
                     RefChange,
@@ -127,7 +127,7 @@ def updated_properties(ancestor, incoming, create) -> Iterable[ValueChange | Ref
                 if v.id not in other_ids
             )
         elif value != other:
-            if isinstance(other, Element):
+            if isinstance(other, Base):
                 yield create(
                     RefChange,
                     op="update",
