@@ -200,7 +200,7 @@ def _load_elements_and_canvasitems(
             elem = upgrade_note_on_model_element_only(elem, elements)
         if not (cls := modeling_language.lookup_element(elem.type, elem.ns)):
             raise UnknownModelElementError(
-                f"Type {elem.type} cannot be loaded: no such element"
+                f"Type {elem.ns}:{elem.type} cannot be loaded: no such element"
             )
 
         if issubclass(cls, Presentation):

@@ -70,7 +70,7 @@ def test_save_item(diagram, element_factory):
     assert "<Core:Diagram " in out.data
     assert "<Core:Comment " in out.data
     assert "<canvas>" not in out.data
-    assert "<UML:CommentItem " in out.data, out.data
+    assert "<general:CommentItem " in out.data, out.data
 
 
 def test_load_uml(element_factory, saver, loader):

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<gaphor xmlns="https://gaphor.org/model" xmlns:Core="https://gaphor.org/modelinglanguage/Core" xmlns:UML="https://gaphor.org/modelinglanguage/UML" version="4" gaphor-version="2.27.0">
+<gaphor xmlns="https://gaphor.org/model" xmlns:Core="https://gaphor.org/modelinglanguage/Core" xmlns:UML="https://gaphor.org/modelinglanguage/UML" xmlns:general="https://gaphor.org/modelinglanguage/general" version="4" gaphor-version="2.27.0">
 <model>
 <UML:Package id="3867dda4-7a95-11ea-a112-7f953848cf85">
 <name>
@@ -244,7 +244,7 @@
 <ref refid="15e4b0b2-9f17-11ea-b537-dfaaecc5bf61"/>
 </subject>
 </UML:ClassItem>
-<UML:CommentItem id="9bdd3fed-9f17-11ea-b537-dfaaecc5bf61">
+<general:CommentItem id="9bdd3fed-9f17-11ea-b537-dfaaecc5bf61">
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 910.0577399536637, 617.9060466240388)</val>
 </matrix>
@@ -263,8 +263,8 @@
 <subject>
 <ref refid="9bdd3fec-9f17-11ea-b537-dfaaecc5bf61"/>
 </subject>
-</UML:CommentItem>
-<UML:CommentLineItem id="ada170c7-9f17-11ea-b537-dfaaecc5bf61">
+</general:CommentItem>
+<general:CommentLineItem id="ada170c7-9f17-11ea-b537-dfaaecc5bf61">
 <diagram>
 <ref refid="3867dda5-7a95-11ea-a112-7f953848cf85"/>
 </diagram>
@@ -286,7 +286,7 @@
 <tail-connection>
 <ref refid="9bdd3fed-9f17-11ea-b537-dfaaecc5bf61"/>
 </tail-connection>
-</UML:CommentLineItem>
+</general:CommentLineItem>
 <UML:AssociationItem id="216581ca-4465-11eb-8946-9bdfa28f7a50">
 <diagram>
 <ref refid="3867dda5-7a95-11ea-a112-7f953848cf85"/>
@@ -351,7 +351,7 @@
 <ref refid="639b48d1-7a95-11ea-a112-7f953848cf85"/>
 </tail-connection>
 </UML:AssociationItem>
-<UML:CommentItem id="d6e5886b-478f-11eb-a938-8fcfae32d12c">
+<general:CommentItem id="d6e5886b-478f-11eb-a938-8fcfae32d12c">
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 483.7265625, 323.96893310546875)</val>
 </matrix>
@@ -370,8 +370,8 @@
 <subject>
 <ref refid="d6e5886a-478f-11eb-a938-8fcfae32d12c"/>
 </subject>
-</UML:CommentItem>
-<UML:CommentLineItem id="f4982c28-478f-11eb-a938-8fcfae32d12c">
+</general:CommentItem>
+<general:CommentLineItem id="f4982c28-478f-11eb-a938-8fcfae32d12c">
 <diagram>
 <ref refid="3867dda5-7a95-11ea-a112-7f953848cf85"/>
 </diagram>
@@ -393,7 +393,7 @@
 <tail-connection>
 <ref refid="d6e5886b-478f-11eb-a938-8fcfae32d12c"/>
 </tail-connection>
-</UML:CommentLineItem>
+</general:CommentLineItem>
 <UML:AssociationItem id="1cb6f4e2-b9a9-11eb-93ad-535118859f0b">
 <diagram>
 <ref refid="3867dda5-7a95-11ea-a112-7f953848cf85"/>
@@ -4066,7 +4066,7 @@
 </reflist>
 </presentation>
 </Core:Comment>
-<UML:CommentItem id="a0ad1b36-331e-11ef-84c5-be7f4daace40">
+<general:CommentItem id="a0ad1b36-331e-11ef-84c5-be7f4daace40">
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 151.619140625, 396.5)</val>
 </matrix>
@@ -4085,8 +4085,8 @@
 <subject>
 <ref refid="a0ad1352-331e-11ef-84c5-be7f4daace40"/>
 </subject>
-</UML:CommentItem>
-<UML:CommentLineItem id="b22512f6-331e-11ef-84c5-be7f4daace40">
+</general:CommentItem>
+<general:CommentLineItem id="b22512f6-331e-11ef-84c5-be7f4daace40">
 <diagram>
 <ref refid="6f96d08e-32c7-11ef-bb85-be7f4daace40"/>
 </diagram>
@@ -4108,7 +4108,7 @@
 <tail-connection>
 <ref refid="a0ad1b36-331e-11ef-84c5-be7f4daace40"/>
 </tail-connection>
-</UML:CommentLineItem>
+</general:CommentLineItem>
 <UML:Association id="ed926808-331d-11ef-84c5-be7f4daace40">
 <memberEnd>
 <reflist>
@@ -4678,7 +4678,7 @@
 </reflist>
 </presentation>
 </Core:Comment>
-<UML:CommentItem id="66c7bc7c-3720-11ef-a318-be7f4daace40">
+<general:CommentItem id="66c7bc7c-3720-11ef-a318-be7f4daace40">
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 423.5, 268.48046875)</val>
 </matrix>
@@ -4697,8 +4697,8 @@
 <subject>
 <ref refid="66c7b006-3720-11ef-a318-be7f4daace40"/>
 </subject>
-</UML:CommentItem>
-<UML:CommentLineItem id="73992e90-3720-11ef-a318-be7f4daace40">
+</general:CommentItem>
+<general:CommentLineItem id="73992e90-3720-11ef-a318-be7f4daace40">
 <diagram>
 <ref refid="167226a4-3720-11ef-a318-be7f4daace40"/>
 </diagram>
@@ -4720,7 +4720,7 @@
 <tail-connection>
 <ref refid="66c7bc7c-3720-11ef-a318-be7f4daace40"/>
 </tail-connection>
-</UML:CommentLineItem>
+</general:CommentLineItem>
 <UML:Property id="4b56115e-8b90-11ef-87a5-be7f4daace40">
 <class_>
 <ref refid="7996a2fc-5ee4-11ed-9155-0456e5e540ed"/>

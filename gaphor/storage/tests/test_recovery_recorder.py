@@ -46,7 +46,7 @@ def test_record_create_presentation(
 
     replay_events(recorder.events[:], new_model, modeling_language)
 
-    assert ("c", "UML", "CommentItem", comment.id, diagram.id) in recorder.events
+    assert ("c", "general", "CommentItem", comment.id, diagram.id) in recorder.events
 
     assert new_model.lookup(comment.id)
 
@@ -75,7 +75,7 @@ def test_record_delete_presentation(
     new_model.create_as(Diagram, diagram.id)
     replay_events(recorder.events[:], new_model, modeling_language)
 
-    assert ("c", "UML", "CommentItem", comment.id, diagram.id) in recorder.events
+    assert ("c", "general", "CommentItem", comment.id, diagram.id) in recorder.events
     assert ("u", comment.id, diagram.id) in recorder.events
     assert not new_model.lookup(comment.id)
 

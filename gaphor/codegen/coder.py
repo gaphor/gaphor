@@ -38,6 +38,7 @@ from gaphor.core.modeling.modelinglanguage import (
     MockModelingLanguage,
     ModelingLanguage,
 )
+from gaphor.diagram.general.modelinglanguage import GeneralModelingLanguage
 from gaphor.entrypoint import initialize
 from gaphor.storage import storage
 from gaphor.SysML.modelinglanguage import SysMLModelingLanguage
@@ -87,7 +88,12 @@ def main(
     )
     modeling_language = MockModelingLanguage(
         *(
-            [CoreModelingLanguage(), UMLModelingLanguage(), SysMLModelingLanguage()]
+            [
+                CoreModelingLanguage(),
+                GeneralModelingLanguage(),
+                UMLModelingLanguage(),
+                SysMLModelingLanguage(),
+            ]
             + extra_langs
         )
     )
