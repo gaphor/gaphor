@@ -140,6 +140,7 @@ gaphor = "gaphor.main:main"
 "SysML" = "gaphor.SysML.modelinglanguage:SysMLModelingLanguage"
 "C4Model" = "gaphor.C4Model.modelinglanguage:C4ModelLanguage"
 "RAAML" = "gaphor.RAAML.modelinglanguage:RAAMLModelingLanguage"
+"general" = "gaphor.diagram.general.modelinglanguage:GeneralModelingLanguage"
 
 [tool.poetry.plugins."gaphor.argparsers"]
 gui = "gaphor.main:gui_parser"

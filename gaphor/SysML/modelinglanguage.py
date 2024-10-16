@@ -35,5 +35,6 @@ class SysMLModelingLanguage(ModelingLanguage):
     def element_types(self) -> Iterable[ElementCreateInfo]:
         yield from sysml_element_types
 
-    def lookup_element(self, name):
+    def lookup_element(self, name, ns=None):
+        assert ns in ("SysML", None)
         return getattr(sysml, name, None) or getattr(diagramitems, name, None)

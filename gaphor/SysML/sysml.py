@@ -37,8 +37,8 @@ class AbstractRequirement(NamedElement):
     verifiedBy: derived[NamedElement]
 
 
-from gaphor.UML.uml import Class
-class Requirement(AbstractRequirement, Class):
+from gaphor.UML.uml import Class as _Class
+class Requirement(AbstractRequirement, _Class):
     pass
 
 
@@ -76,7 +76,7 @@ class TestCase(Behavior):
     pass
 
 
-class Block(Class):
+class Block(_Class):
     isEncapsulated: _attribute[int] = _attribute("isEncapsulated", int, default=False)
 
 
@@ -186,12 +186,12 @@ class Conform(Generalization):
     pass
 
 
-class View(Class):
+class View(_Class):
     stakeholder: relation_many[Stakeholder]
     viewpoint: relation_one[Viewpoint]
 
 
-class Viewpoint(Class):
+class Viewpoint(_Class):
     concernList: relation_many[Comment]
     language: _attribute[str] = _attribute("language", str)
     method: relation_many[Behavior]

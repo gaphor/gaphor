@@ -2,14 +2,13 @@ import pytest
 
 from gaphor import UML
 from gaphor.core.modeling import Comment
+from gaphor.diagram.general.diagramitems import CommentItem, CommentLineItem
 from gaphor.diagram.tests.fixtures import connect
 from gaphor.plugins.autolayout.pydot import AutoLayout, parse_edge_pos, strip_quotes
 from gaphor.UML.diagramitems import (
     ActionItem,
     AssociationItem,
     ClassItem,
-    CommentItem,
-    CommentLineItem,
     ForkNodeItem,
     GeneralizationItem,
     InputPinItem,

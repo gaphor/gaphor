@@ -140,7 +140,7 @@ class ElementDispatcher(Service):
                     del self._handlers[key]
         del self._reverse[handler]
 
-    def _path_to_properties(self, element, path):
+    def _path_to_properties(self, element: Base, path: str) -> tuple[umlproperty]:
         """Given a start element and a path, return a tuple of properties
         (association, attribute, etc.) representing the path."""
         c = type(element)
@@ -154,15 +154,19 @@ class ElementDispatcher(Service):
             tpath.append(prop)
 
             if cname:
-                c = self.modeling_language.lookup_element(cname)
+                if ":" in cname:
+                    ns, cname = cname.split(":")
+                else:
+                    ns = c.__modeling_language__
+                c = self.modeling_language.lookup_element(cname, ns)
                 assert c and issubclass(
                     c, prop.type
-                ), f"{c} should be a subclass of {prop.type}"
+                ), f"{ns}:{cname} (== {c}) should be a subclass of {prop.type}"
             else:
                 c = prop.type
         return tuple(tpath)
 
-    def _add_handlers(self, element, props, handler):
+    def _add_handlers(self, element: Base, props: tuple[umlproperty], handler: Handler):
         """Provided an element and a path of properties (props), register the
         handler for each property."""
         property, remainder = props[0], props[1:]
@@ -202,7 +206,7 @@ class ElementDispatcher(Service):
                 if e and remainder:
                     self._add_handlers(e, remainder, handler)
 
-    def _remove_handlers(self, element, property, handler):
+    def _remove_handlers(self, element: Base, property, handler: Handler):
         """Remove the handler of the path of elements."""
         key = element, property
         handlers = self._handlers.get(key)
@@ -232,7 +236,7 @@ class ElementDispatcher(Service):
             del self._handlers[key]
 
     @event_handler(ElementUpdated)
-    def on_element_change_event(self, event):
+    def on_element_change_event(self, event: ElementUpdated):
         if not (handlers := self._handlers.get((event.element, event.property))):
             return
         try:
