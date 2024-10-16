@@ -42,6 +42,7 @@ class PendingChange(Element):
 class ElementChange(PendingChange):
     diagram_id: _attribute[str] = _attribute("diagram_id", str)
     element_name: _attribute[str] = _attribute("element_name", str)
+    modeling_language: _attribute[str] = _attribute("modeling_language", str)
 
 
 class ValueChange(PendingChange):

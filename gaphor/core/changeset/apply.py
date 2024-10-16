@@ -30,7 +30,9 @@ def _(change: ElementChange, element_factory, modeling_factory):
     if change.applied:
         return
     if change.op == "add":
-        element_type = modeling_factory.lookup_element(change.element_name)
+        element_type = modeling_factory.lookup_element(
+            change.element_name, change.modeling_language
+        )
         diagram = (
             element_factory.lookup(change.diagram_id) if change.diagram_id else None
         )
