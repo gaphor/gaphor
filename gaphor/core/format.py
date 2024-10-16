@@ -53,5 +53,5 @@ def format_relationship(el):
 @format.register(Dependency)
 def format_dependency(el):
     return gettext("supplier: {name}").format(
-        name=el.supplier and el.supplier.name or ""
+        name=len(el.supplier) > 0 and el.supplier[0].name or ""
     )

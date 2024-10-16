@@ -257,6 +257,10 @@ class RelationshipConnect(BaseConnector):
         head.set(relation, line_head.subject)
         tail.set(relation, line_tail.subject)
 
+        # TODO uncomment the following after Dependency is made a subclass of PackageableElement
+        # owning_package = line_tail.subject.owningPackage
+        # relation.owningPackage = owning_package
+
         assert isinstance(relation, type)
         return relation
 
