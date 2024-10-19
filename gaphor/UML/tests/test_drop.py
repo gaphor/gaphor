@@ -1,5 +1,4 @@
 from gaphor import UML
-from gaphor.core.modeling import Dependency
 from gaphor.diagram.drop import drop
 from gaphor.UML.interactions import MessageItem
 from gaphor.UML.interactions.interactionsconnect import connect_lifelines
@@ -18,7 +17,7 @@ def test_drop_class(diagram, element_factory):
 def test_drop_dependency(diagram, element_factory):
     client = element_factory.create(UML.Class)
     supplier = element_factory.create(UML.Class)
-    dependency = element_factory.create(Dependency)
+    dependency = element_factory.create(UML.Dependency)
     dependency.client = client
     dependency.supplier = supplier
 

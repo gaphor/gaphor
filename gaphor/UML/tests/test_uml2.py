@@ -3,7 +3,7 @@ import pytest
 from gaphor import UML
 from gaphor.core.eventmanager import EventManager
 from gaphor.core.format import parse
-from gaphor.core.modeling import Comment, Dependency, ElementFactory
+from gaphor.core.modeling import Comment, ElementFactory
 
 
 @pytest.fixture
@@ -111,7 +111,7 @@ def test_constraint(factory):
 def test_dependency(factory):
     """Testing Dependency elements in the meta-model."""
 
-    element = factory.create(Dependency)
+    element = factory.create(UML.Dependency)
 
     client = factory.create(UML.Package)
     supplier = factory.create(UML.Package)

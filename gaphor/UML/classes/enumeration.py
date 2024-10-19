@@ -36,7 +36,7 @@ class EnumerationItem(Classified, ElementPresentation[UML.Enumeration]):
         self.watch("show_attributes", self.update_shapes).watch(
             "show_operations", self.update_shapes
         ).watch("show_enumerations", self.update_shapes).watch("subject.name").watch(
-            "subject.namespace.name"
+            "subject[NamedElement].namespace.name"
         ).watch("subject[Enumeration].ownedLiteral", self.update_shapes).watch(
             "subject[Enumeration].ownedLiteral.name", self.update_shapes
         )

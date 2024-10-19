@@ -30,7 +30,7 @@ class BlockItem(Classified, ElementPresentation[Block]):
             "show_values", self.update_shapes
         ).watch("show_operations", self.update_shapes).watch("subject.name").watch(
             "subject.name"
-        ).watch("subject.namespace.name").watch(
+        ).watch("subject[UML:NamedElement].namespace.name").watch(
             "subject[Classifier].isAbstract", self.update_shapes
         ).watch("subject[Class].ownedAttribute.aggregation", self.update_shapes)
         operation_watches(self, "Block")

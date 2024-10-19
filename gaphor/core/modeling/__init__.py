@@ -3,7 +3,6 @@
 from gaphor.core.modeling.base import Base, Id, swap_element_type
 from gaphor.core.modeling.coremodel import (
     Comment,
-    Dependency,
     ElementChange,
     PendingChange,
     Picture,

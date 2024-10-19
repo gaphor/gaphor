@@ -16,7 +16,7 @@ class ComponentItem(Classified, ElementPresentation):
 
         self.watch("show_stereotypes", self.update_shapes)
         self.watch("subject.name")
-        self.watch("subject.namespace.name")
+        self.watch("subject[NamedElement].namespace.name")
         self.watch("subject[Classifier].useCase", self.update_shapes)
         self.watch("children", self.update_shapes)
         stereotype_watches(self)

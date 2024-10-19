@@ -6,6 +6,14 @@ from gaphor.core.format import format
 from gaphor.i18n import gettext
 from gaphor.UML import uml as UML
 
+
+@format.register(UML.Dependency)
+def format_dependency(el):
+    return gettext("supplier: {name}").format(
+        name=el.supplier and el.supplier.name or ""
+    )
+
+
 # Do not render if the name still contains a visibility element
 no_render_pat = re.compile(r"^\s*[+#-]", re.MULTILINE | re.DOTALL)
 vis_map = {"public": "+", "protected": "#", "package": "~", "private": "-"}

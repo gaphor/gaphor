@@ -1,7 +1,6 @@
 import pytest
 
 from gaphor import UML
-from gaphor.core.modeling import Dependency
 from gaphor.diagram.presentation import ElementPresentation, LinePresentation
 from gaphor.diagram.tests.fixtures import connect
 from gaphor.UML import diagramitems
@@ -83,7 +82,7 @@ def test_element_loading(element_factory, diagram):
 
 
 def test_line_saving(element_factory, diagram):
-    subject = element_factory.create(Dependency)
+    subject = element_factory.create(UML.Dependency)
     p = diagram.create(StubLine, subject=subject)
 
     properties = {}
@@ -123,7 +122,7 @@ def test_line_saving_without_subject(diagram):
 
 def test_line_loading(element_factory, diagram):
     with element_factory.block_events():
-        subject = element_factory.create(Dependency)
+        subject = element_factory.create(UML.Dependency)
         p = diagram.create(StubLine)
 
         p.load("matrix", "(2.0, 0.0, 0.0, 2.0, 0.0, 0.0)")

@@ -6,8 +6,7 @@
 
 from functools import singledispatch
 
-from gaphor.core.modeling import Dependency, Diagram, Element, Relationship
-from gaphor.i18n import gettext
+from gaphor.core.modeling import Diagram, Element, Relationship
 
 
 @singledispatch
@@ -48,10 +47,3 @@ def parse_Diagram(el: Diagram, text: str) -> None:
 @format.register(Relationship)
 def format_relationship(el):
     return el.__class__.__name__
-
-
-@format.register(Dependency)
-def format_dependency(el):
-    return gettext("supplier: {name}").format(
-        name=el.supplier and el.supplier.name or ""
-    )
