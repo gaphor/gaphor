@@ -37,7 +37,7 @@ class CopyData(NamedTuple):
 
 
 def copy_full(
-    items: Collection, lookup: Callable[[Id], Element | None] | None = None
+    items: Collection, lookup: Callable[[Id], Base | None] | None = None
 ) -> CopyData:
     """Copy items, including owned elements."""
     elements = {ref: data for item in items for ref, data in copy(item)}
@@ -46,7 +46,7 @@ def copy_full(
     if not lookup:
         return CopyData(elements=elements, diagram_refs=diagram_refs)
 
-    def copy_owned(e):
+    def copy_owned(e: Element):
         for o in e.ownedElement:
             if o.owner is e:
                 for ref, data in copy(o):
@@ -55,7 +55,8 @@ def copy_full(
                         copy_owned(o)
 
     for ref in list(elements.keys()):
-        copy_owned(lookup(ref))
+        if isinstance(element := lookup(ref), Element):
+            copy_owned(element)
 
     return CopyData(elements=elements, diagram_refs=diagram_refs)
 
@@ -69,7 +70,7 @@ def paste_full(copy_data: Opaque, diagram: Diagram) -> set[Presentation]:
 
 
 @singledispatch
-def copy(obj: Element | Iterable) -> Iterator[tuple[Id, Opaque]]:
+def copy(obj: Base | Iterable) -> Iterator[tuple[Id, Opaque]]:
     """Create a copy of an element (or list of elements).
 
     The returned type should be distinct, so the `paste()` function can
@@ -80,8 +81,8 @@ def copy(obj: Element | Iterable) -> Iterator[tuple[Id, Opaque]]:
 
 @singledispatch
 def paste(
-    copy_data: Opaque, diagram: Diagram, lookup: Callable[[Id], Element | None]
-) -> Iterator[Element]:
+    copy_data: Opaque, diagram: Diagram, lookup: Callable[[Id], Base | None]
+) -> Iterator[Base]:
     """Paste previously copied data.
 
     Based on the data type created in the `copy()` function, try to
@@ -113,6 +114,19 @@ def deserialize(ser, lookup):
         yield value
 
 
+def copy_base(
+    element: Base, blacklist: list[str] | None = None
+) -> dict[str, tuple[str, str]]:
+    data = {}
+
+    def save_func(name, value):
+        if blacklist is None or name not in blacklist:
+            data[name] = serialize(value)
+
+    element.save(save_func)
+    return data
+
+
 class ElementCopy(NamedTuple):
     cls: type[Element]
     id: Id
@@ -120,15 +134,9 @@ class ElementCopy(NamedTuple):
 
 
 def copy_element(element: Element, blacklist: list[str] | None = None) -> ElementCopy:
-    data = {}
-    # do not copy Element.presentation, to avoid cyclic dependencies
-    blacklist_ = blacklist + ["presentation"] if blacklist else ["presentation"]
-
-    def save_func(name, value):
-        if name not in blacklist_:
-            data[name] = serialize(value)
-
-    element.save(save_func)
+    data = copy_base(
+        element, blacklist + ["presentation"] if blacklist else ["presentation"]
+    )
     return ElementCopy(cls=element.__class__, id=element.id, data=data)
 
 
@@ -157,8 +165,12 @@ paste.register(ElementCopy, paste_element)
 
 
 @copy.register
-def _copy_diagram(element: Diagram) -> Iterator[tuple[Id, ElementCopy]]:
+def _copy_diagram(element: Diagram) -> Iterator[tuple[Id, Opaque]]:
     yield element.id, copy_element(element, blacklist=["ownedPresentation"])
+    for presentation in element.ownedPresentation:
+        if presentation.subject is element:
+            continue
+        yield from copy(presentation)
 
 
 class PresentationCopy(NamedTuple):
@@ -174,7 +186,7 @@ def copy_presentation(item: Presentation) -> PresentationCopy:
     parent = item.parent
     return PresentationCopy(
         cls=item.__class__,
-        data=copy_element(item, blacklist=["diagram", "parent", "children"]).data,
+        data=copy_base(item, blacklist=["diagram", "parent", "children"]),
         diagram=item.diagram.id,
         parent=parent.id if parent else None,
     )
@@ -209,7 +221,7 @@ def _paste(copy_data: Opaque, diagram: Diagram, full: bool) -> set[Presentation]
     model = diagram.model
 
     # Map the original diagram ids to our new target diagram
-    new_elements: dict[Id, Element] = dict.fromkeys(copy_data.diagram_refs, diagram)
+    new_elements: dict[Id, Base] = dict.fromkeys(copy_data.diagram_refs, diagram)
 
     def element_lookup(ref: Id):
         if ref in new_elements:
