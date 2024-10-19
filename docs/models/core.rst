@@ -85,12 +85,6 @@ Namespaces
 .. diagram:: Namespaces
    :model: core
 
-Types
------
-
-.. diagram:: Types
-   :model: core
-
 Presentations
 -------------
 
