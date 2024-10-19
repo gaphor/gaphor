@@ -79,13 +79,11 @@ Element.relationship.add(Element.sourceRelationship)  # type: ignore[attr-define
 Element.relationship.add(Element.targetRelationship)  # type: ignore[attr-defined]
 Diagram.ownedPresentation = association("ownedPresentation", Presentation, composite=True, opposite="diagram")
 Diagram.element = association("element", Element, upper=1, opposite="ownedDiagram")
-Element.ownedElement.add(Diagram.ownedPresentation)  # type: ignore[attr-defined]
 Element.owner.add(Diagram.element)  # type: ignore[attr-defined]
 Presentation.parent = association("parent", Presentation, upper=1, opposite="children")
 Presentation.children = association("children", Presentation, composite=True, opposite="parent")
 Presentation.diagram = association("diagram", Diagram, upper=1, opposite="ownedPresentation")
 Presentation.subject = association("subject", Element, upper=1, opposite="presentation")
-Element.owner.add(Presentation.diagram)  # type: ignore[attr-defined]
 Comment.annotatedElement = association("annotatedElement", Element, opposite="comment")
 Relationship.relatedElement = derivedunion("relatedElement", Element, lower=1)
 Relationship.source = derivedunion("source", Element)
