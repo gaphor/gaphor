@@ -23,7 +23,7 @@ class Situation(Block, Class):
 
 
 from gaphor.SysML.sysml import DirectedRelationshipPropertyPath
-from gaphor.core.modeling.coremodel import Dependency as _Dependency
+from gaphor.UML.uml import Dependency as _Dependency
 class RelevantTo(DirectedRelationshipPropertyPath, _Dependency):
     pass
 
@@ -87,7 +87,7 @@ class AbstractRisk(Scenario):
     trigger: relation_many[AbstractEvent]
 
 
-from gaphor.core.modeling.coremodel import Dependency
+from gaphor.UML.uml import Dependency
 class Detection(ControllingMeasure, Dependency):
     pass
 

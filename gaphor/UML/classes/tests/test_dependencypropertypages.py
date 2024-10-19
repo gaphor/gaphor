@@ -1,12 +1,11 @@
 from gaphor import UML
-from gaphor.core.modeling import Dependency
 from gaphor.diagram.tests.fixtures import find
 from gaphor.UML.classes.dependencypropertypages import DependencyPropertyPage
 
 
 def test_dependency_property_page(diagram, element_factory, event_manager):
     item = diagram.create(
-        UML.classes.DependencyItem, subject=element_factory.create(Dependency)
+        UML.classes.DependencyItem, subject=element_factory.create(UML.Dependency)
     )
     property_page = DependencyPropertyPage(item, event_manager)
 
