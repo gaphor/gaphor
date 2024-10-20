@@ -27,13 +27,14 @@ def test_service_load(application):
     ), "Failed to load the file manager service"
 
 
-def test_model_loaded(application):
+@pytest.mark.asyncio
+async def test_model_loaded(application, test_models):
     session = application.new_session()
     session.event_manager.handle(
-        SessionCreated(None, session, filename=Path("some_file_name"))
+        SessionCreated(None, session, filename=test_models / "all-elements.gaphor")
     )
 
-    assert session.filename == Path("some_file_name")
+    assert session.filename == test_models / "all-elements.gaphor"
 
 
 def test_model_saved(application):

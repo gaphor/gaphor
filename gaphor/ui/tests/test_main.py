@@ -21,7 +21,7 @@ def fake_run(monkeypatch):
 
     def fake_run(self, args):
         run.extend(args)
-        idle = GLib.Idle(GLib.PRIORITY_LOW)
+        idle = GLib.Idle(GLib.PRIORITY_LOW + GLib.PRIORITY_LOW)
         idle.set_callback(lambda *a: self.quit())
         idle.attach()
         app_run(self, args)

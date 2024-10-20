@@ -6,6 +6,7 @@ from gaphor.entrypoint import load_entry_points
 GAPHOR_CORE = [
     "gaphor.core*",
     "gaphor.abc",
+    "gaphor.asyncio",
     "gaphor.action",
     "gaphor.entrypoint",
     "gaphor.i18n",
@@ -60,7 +61,7 @@ def test_diagram_package():
         .may_import("gaphor.UML.recipes")
         .may_import("gaphor.UML.uml")
         .may_import("gaphor.ui.filedialog")
-        .may_import("gaphor.ui.errorhandler")
+        .may_import("gaphor.ui.errordialog")
         .should_not_import("gaphor*")
         .check(gaphor, skip_type_checking=True)
     )
