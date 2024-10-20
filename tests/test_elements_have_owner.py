@@ -47,9 +47,9 @@ def all_presented_uml_and_sysml_elements():
     )
 
 
-def concrete_owner_property(class_):
+def concrete_owner_property(class_: Element):
     return (
-        p for p in class_.umlproperties() if p in all_subset_properties(Element.owner)
+        p for p in class_.__properties__ if p in all_subset_properties(Element.owner)
     )
 
 

@@ -57,7 +57,7 @@ class DelayedFunction:
 
 
 class ElementEditor(UIComponent, ActionProvider):
-    """The ElementEditor class is a utility window used to edit UML elements.
+    """The ElementEditor class is a utility window used to edit model elements.
 
     It will display the properties of the currently selected element in
     the diagram.

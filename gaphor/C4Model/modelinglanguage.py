@@ -34,5 +34,6 @@ class C4ModelLanguage(ModelingLanguage):
     def element_types(self) -> Iterable[ElementCreateInfo]:
         yield from c4model_element_types
 
-    def lookup_element(self, name):
+    def lookup_element(self, name, ns=None):
+        assert ns in ("C4Model", None)
         return getattr(c4model, name, None) or getattr(diagramitems, name, None)

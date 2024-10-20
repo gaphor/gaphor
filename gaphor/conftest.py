@@ -27,6 +27,7 @@ from gaphor.core.modeling.modelinglanguage import (
     CoreModelingLanguage,
     MockModelingLanguage,
 )
+from gaphor.diagram.general.modelinglanguage import GeneralModelingLanguage
 from gaphor.diagram.painter import ItemPainter
 from gaphor.diagram.selection import Selection
 from gaphor.storage import storage
@@ -57,7 +58,10 @@ def element_factory(event_manager, modeling_language):
 @pytest.fixture
 def modeling_language():
     return MockModelingLanguage(
-        CoreModelingLanguage(), UMLModelingLanguage(), SysMLModelingLanguage()
+        CoreModelingLanguage(),
+        GeneralModelingLanguage(),
+        UMLModelingLanguage(),
+        SysMLModelingLanguage(),
     )
 
 

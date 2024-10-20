@@ -27,7 +27,7 @@ def text_position(position):
 class ProxyPortItem(Named, AttachedPresentation[sysml.ProxyPort]):
     def __init__(self, diagram, id=None):
         super().__init__(diagram, id, width=16, height=16)
-        self.watch("subject.name").watch("subject[TypedElement].type.name").watch(
+        self.watch("subject.name").watch("subject[UML:TypedElement].type.name").watch(
             "show_type"
         )
 

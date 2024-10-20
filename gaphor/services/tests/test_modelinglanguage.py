@@ -22,4 +22,4 @@ def test_lookup_sysml_element(modeling_language):
 
 
 def test_lookup_c4model_element(modeling_language):
-    assert modeling_language.lookup_element("C4Database")
+    assert modeling_language.lookup_element("Database")

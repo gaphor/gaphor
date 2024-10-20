@@ -32,7 +32,7 @@ def test_record_create_element(
 
     replay_events(recorder.events[:], new_model, modeling_language)
 
-    assert ("c", "Comment", comment.id, None) in recorder.events
+    assert ("c", "Core", "Comment", comment.id, None) in recorder.events
     assert new_model.lookup(comment.id)
 
 
@@ -46,7 +46,7 @@ def test_record_create_presentation(
 
     replay_events(recorder.events[:], new_model, modeling_language)
 
-    assert ("c", "CommentItem", comment.id, diagram.id) in recorder.events
+    assert ("c", "general", "CommentItem", comment.id, diagram.id) in recorder.events
 
     assert new_model.lookup(comment.id)
 
@@ -60,7 +60,7 @@ def test_record_delete_element(
     new_model = ElementFactory(event_manager)
     replay_events(recorder.events[:], new_model, modeling_language)
 
-    assert ("c", "Comment", comment.id, None) in recorder.events
+    assert ("c", "Core", "Comment", comment.id, None) in recorder.events
     assert ("u", comment.id, None) in recorder.events
     assert not new_model.lookup(comment.id)
 
@@ -75,7 +75,7 @@ def test_record_delete_presentation(
     new_model.create_as(Diagram, diagram.id)
     replay_events(recorder.events[:], new_model, modeling_language)
 
-    assert ("c", "CommentItem", comment.id, diagram.id) in recorder.events
+    assert ("c", "general", "CommentItem", comment.id, diagram.id) in recorder.events
     assert ("u", comment.id, diagram.id) in recorder.events
     assert not new_model.lookup(comment.id)
 
@@ -89,7 +89,7 @@ def test_record_update_attribute(
     new_model = ElementFactory(event_manager)
     replay_events(recorder.events[:], new_model, modeling_language)
 
-    assert ("c", "Comment", comment.id, None) in recorder.events
+    assert ("c", "Core", "Comment", comment.id, None) in recorder.events
     assert ("a", comment.id, "body", "Foo") in recorder.events
     assert new_model.lookup(comment.id)
     assert new_model.lookup(comment.id).body == "Foo"

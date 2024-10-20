@@ -1,11 +1,11 @@
 from gaphor import UML
-from gaphor.C4Model.c4model import C4Container
+from gaphor.C4Model.c4model import Container
 from gaphor.C4Model.diagramitems import C4ContainerItem
 from gaphor.diagram.group import group
 
 
 def container(diagram, element_factory):
-    subject = element_factory.create(C4Container)
+    subject = element_factory.create(Container)
     return diagram.create(C4ContainerItem, subject=subject)
 
 

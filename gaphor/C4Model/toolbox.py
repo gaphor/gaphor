@@ -73,7 +73,7 @@ c4 = ToolSection(
             "P",
             new_item_factory(
                 diagramitems.C4PersonItem,
-                c4model.C4Person,
+                c4model.Person,
                 config_func=partial(namespace_config, name=i18nize("Person")),
             ),
             handle_index=SE,
@@ -85,7 +85,7 @@ c4 = ToolSection(
             "<Shift>S",
             new_item_factory(
                 diagramitems.C4ContainerItem,
-                c4model.C4Container,
+                c4model.Container,
                 config_func=software_system_config,
             ),
             handle_index=SE,
@@ -97,7 +97,7 @@ c4 = ToolSection(
             "u",
             new_item_factory(
                 diagramitems.C4ContainerItem,
-                c4model.C4Container,
+                c4model.Container,
                 config_func=container_config,
             ),
             handle_index=SE,
@@ -109,7 +109,7 @@ c4 = ToolSection(
             "<Shift>B",
             new_item_factory(
                 diagramitems.C4DatabaseItem,
-                c4model.C4Database,
+                c4model.Database,
                 config_func=container_database_config,
             ),
             handle_index=SE,
@@ -121,7 +121,7 @@ c4 = ToolSection(
             "<Shift>X",
             new_item_factory(
                 diagramitems.C4ContainerItem,
-                c4model.C4Container,
+                c4model.Container,
                 config_func=component_config,
             ),
             handle_index=SE,
@@ -172,8 +172,8 @@ c4model_element_types = (
     ElementCreateInfo(
         "primitive", i18nize("New Primitive Type"), PrimitiveType, (Package,)
     ),
-    ElementCreateInfo("person", i18nize("New Person"), c4model.C4Person, (Package,)),
+    ElementCreateInfo("person", i18nize("New Person"), c4model.Person, (Package,)),
     ElementCreateInfo(
-        "database", i18nize("New Database"), c4model.C4Database, (Package,)
+        "database", i18nize("New Database"), c4model.Database, (Package,)
     ),
 )
