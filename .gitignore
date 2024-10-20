@@ -15,6 +15,7 @@ html
 gaphor.prof
 .gpg
 pip-wheel-metadata
+gaphor-self-test.txt
 
 # Gaphor test models and notebooks in project root
 /*.gaphor

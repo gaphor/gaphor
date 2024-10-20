@@ -64,6 +64,7 @@ class Classifier(PackageableElement, Type):
     inheritedMember: derivedunion[NamedElement]
     instanceSpecification: relation_many[InstanceSpecification]
     isAbstract: _attribute[int] = _attribute("isAbstract", int, default=False)
+    isFinalSpecialization: _attribute[int] = _attribute("isFinalSpecialization", int, default=False)
     nestingClass: relation_one[Class]
     ownedUseCase: relation_many[UseCase]
     package: relation_one[Package]
