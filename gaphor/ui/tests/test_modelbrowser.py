@@ -1,8 +1,8 @@
 import pytest
 
 from gaphor import UML
-from gaphor.i18n import gettext
 from gaphor.core.modeling import Diagram, ModelReady
+from gaphor.i18n import gettext
 from gaphor.ui.modelbrowser import (
     ElementDragData,
     ModelBrowser,
@@ -267,7 +267,7 @@ def test_generalization_text(model_browser, element_factory):
     assert tree_item
     assert branch.relationships[0].element is generalization
     assert branch.relationships[0].readonly_text == gettext("general: General")
-    
+
 
 def test_drop_multiple_elements(model_browser, element_factory, event_manager):
     class_a = element_factory.create(UML.Class)
