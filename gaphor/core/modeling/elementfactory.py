@@ -49,15 +49,13 @@ class RecordingEventManager:
 
 
 class ElementFactory(Service):
-    """The ElementFactory is used to create elements and do lookups to
-    elements.
+    """The ``ElementFactory`` is used as a central repository for a model.
 
-    Notifications are sent as arguments (name, element, `*user_data`).
-    The following names are used:
-    create - a new model element is created (element is newly created element)
-    remove - a model element is removed (element is to be removed element)
-    model - a new model has been loaded (element is None) flush - model is
-      flushed: all element are removed from the factory (element is None)
+    New model elements should be created by
+    :obj:`~gaphor.core.modeling.ElementFactory.create`.
+
+    Methods like :obj:`~gaphor.core.modeling.ElementFactory.select` can
+    be used to find elements in the model.
     """
 
     def __init__(
@@ -77,7 +75,12 @@ class ElementFactory(Service):
             self.event_manager.unsubscribe(self._on_unlink_event)
 
     def create(self, type: type[T]) -> T:
-        """Create a new model element of type ``type``."""
+        """Create a new model element of type ``type``.
+
+        This method will only create model elements,
+        not :obj:`~gaphor.core.modeling.Presentation` elements: those
+        are created by :obj:`~gaphor.core.modeling.Diagram`.
+        """
         return self.create_as(type, generate_id())
 
     def create_as(self, type: type[T], id: Id, diagram: Diagram | None = None) -> T:
@@ -143,7 +146,14 @@ class ElementFactory(Service):
     def select(self, expression: None) -> Iterator[Base]: ...
 
     def select(self, expression=None):
-        """Iterate elements that comply with expression."""
+        """Iterate elements that comply with expression.
+
+        Expressions can be:
+
+        * :obj:`None`: return all elements.
+        * A type: return all elements of that type, or subtypes.
+        * An expression.
+        """
         if expression is None:
             yield from self._elements.values()
         elif isinstance(expression, type):
@@ -154,25 +164,21 @@ class ElementFactory(Service):
     def lselect(
         self, expression: Callable[[Base], bool] | type[T] | None = None
     ) -> list[Base]:
-        """Get a list of elements that comply with expression.
-
-        The expression can be one of:
-        - None: return all elements
-        - class name: return all elements of type `class name`
-        - expression(e: Element) -> bool: return elements that comply with expression
+        """Like :obj:`~gaphor.core.modeling.ElementFactory.select`, but
+        return a list, instead of an iterator.
         """
         return list(self.select(expression))
 
     def keys(self) -> Iterator[Id]:
-        """Return a list with all id's in the factory."""
+        """Iterate all id's in the factory."""
         return iter(self._elements.keys())
 
     def values(self) -> Iterator[Base]:
-        """Return a list with all elements in the factory."""
+        """Iterate all elements in the factory."""
         return iter(self._elements.values())
 
     def is_empty(self) -> bool:
-        """Returns True if the factory holds no elements."""
+        """Returns ``True`` if the factory holds no elements."""
         return bool(self._elements)
 
     def watcher(
