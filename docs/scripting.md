@@ -24,7 +24,8 @@ up a Python development environment.
 
 ## Query a model
 
-The first step is to load a model. For this you’ll need an `ElementFactory`. The
+The first step is to load a model. For this you’ll need an
+{obj}`gaphor.core.modeling.ElementFactory`. The
 `ElementFactory` is responsible to creating and maintaining the model. It acts
 as a repository for the model while you’re working on it.
 
@@ -323,8 +324,8 @@ with Transaction(event_manager) as ctx:
         my_class.externalId = f"{req_id}"
 
         drop(my_class, my_diagram, x=0, y=0)
-    with open(outfile, "w") as out:
-        storage.save(out, element_factory)
+
+    # Save the model or export diagrams.
 
 ```
 
@@ -356,9 +357,7 @@ with Transaction(event_manager) as ctx:
         drop(my_class, my_diagram, x=0, y=0)
 
 
-    with open(outfile, "w") as out:
-        storage.save(out, element_factory)
-
+    # Save the model or export diagrams.
 ```
 
 ### Basic Validation
