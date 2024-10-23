@@ -14,7 +14,7 @@ from gaphor.UML.classes.dependency import DependencyItem
 class DependencyPropertyPage(PropertyPageBase):
     """Dependency editor."""
 
-    order = 20
+    order = 15
 
     DEPENDENCIES = (
         Dependency,
@@ -32,14 +32,14 @@ class DependencyPropertyPage(PropertyPageBase):
         )
 
     def construct(self):
-        head_title = self.builder.get_object("head-title")
-        tail_title = self.builder.get_object("tail-title")
+        head = self.builder.get_object("head")
+        tail = self.builder.get_object("tail")
         source = self.subject.source[0]
         target = self.subject.target[0]
         if source:
-            head_title.set_text("Source: " + ":".join(source.qualifiedName))
+            head.set_text(".".join(source.qualifiedName))
         if target:
-            tail_title.set_text("Target: " + ":".join(target.qualifiedName))
+            tail.set_text(".".join(target.qualifiedName))
 
         return unsubscribe_all_on_destroy(
             self.builder.get_object("dependency-editor"), self.watcher

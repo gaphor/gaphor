@@ -412,7 +412,7 @@ Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</propert
       <object class="GtkBox">
         <child>
           <object class="GtkLabel">
-            <property name="label" translatable="yes">Final Specialization</property>
+            <property name="label" translatable="yes">Final specialization</property>
             <property name="halign">start</property>
             <property name="hexpand">yes</property>
           </object>
@@ -433,23 +433,51 @@ Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</propert
   <object class="GtkBox" id="dependency-editor">
     <property name="orientation">vertical</property>
     <child>
-      <object class="GtkLabel" id="head-title">
-        <property name="label" translatable="yes">Head:</property>
-        <property name="xalign">0</property>
-        <property name="hexpand">1</property>
-        <style>
-          <class name="title"/>
-        </style>
+      <object class="GtkBox">
+        <property name="orientation">horizontal</property>
+          <child>
+            <object class="GtkLabel">
+              <property name="label" translatable="yes">Source:</property>
+              <property name="xalign">0</property>
+              <property name="hexpand">0</property>
+              <style>
+                <class name="title"/>
+              </style>
+            </object>
+          </child>
+          <child>
+            <object class="GtkLabel" id="head">
+              <property name="xalign">0</property>
+              <property name="hexpand">1</property>
+              <style>
+                <class name="plaintext"/>
+              </style>
+            </object>
+          </child>
       </object>
     </child>
     <child>
-      <object class="GtkLabel" id="tail-title">
-        <property name="label" translatable="yes">Tail:</property>
-        <property name="xalign">0</property>
-        <property name="hexpand">1</property>
-        <style>
-          <class name="title"/>
-        </style>
+      <object class="GtkBox">
+        <property name="orientation">horizontal</property>
+          <child>
+            <object class="GtkLabel">
+              <property name="label" translatable="yes">Target:</property>
+              <property name="xalign">0</property>
+              <property name="hexpand">0</property>
+              <style>
+                <class name="title"/>
+              </style>
+            </object>
+          </child>
+          <child>
+            <object class="GtkLabel" id="tail">
+              <property name="xalign">0</property>
+              <property name="hexpand">1</property>
+              <style>
+                <class name="plaintext"/>
+              </style>
+            </object>
+          </child>
       </object>
     </child>
     <style>
@@ -461,7 +489,7 @@ Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</propert
     <property name="orientation">vertical</property>
     <child>
       <object class="GtkLabel">
-        <property name="label" translatable="yes">Dependency Type</property>
+        <property name="label" translatable="yes">Dependency type</property>
         <property name="xalign">0</property>
         <style>
           <class name="title"/>
