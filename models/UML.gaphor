@@ -10473,7 +10473,7 @@
 <val>108.0</val>
 </width>
 <height>
-<val>51.0</val>
+<val>54.0</val>
 </height>
 <diagram>
 <ref refid="DCE:34764E0C-4A89-11D7-B08E-133D836EF880"/>
@@ -10502,7 +10502,7 @@
 <val>102.44444444444446</val>
 </width>
 <height>
-<val>51.0</val>
+<val>54.0</val>
 </height>
 <diagram>
 <ref refid="DCE:34764E0C-4A89-11D7-B08E-133D836EF880"/>
@@ -15556,7 +15556,7 @@
 <val>155.0</val>
 </width>
 <height>
-<val>52.0</val>
+<val>54.0</val>
 </height>
 <diagram>
 <ref refid="DCE:E71AAA3E-45CE-11D7-B5CA-613352B2821F"/>
@@ -15617,7 +15617,7 @@
 <val>(1.0, 0.0, 0.0, 1.0, 361.5, 451.0)</val>
 </matrix>
 <points>
-<val>[(1.9691780821917177, 48.0), (1.9691780821917177, -33.5)]</val>
+<val>[(1.9691780821917177, 48.0), (1.9691780821917177, -31.5)]</val>
 </points>
 <head-connection>
 <ref refid="DCE:3F0AFFA8-45D1-11D7-B5CA-613352B2821F"/>
@@ -16375,6 +16375,7 @@
 <ref refid="e9507590-e962-11ea-87d1-cbf2d1fcaed0"/>
 <ref refid="DCE:BFC7B66E-4B37-11D7-B391-02BBFE4396CE"/>
 <ref refid="b31a411e-3719-11ef-a318-be7f4daace40"/>
+<ref refid="0cdeb851-8bc7-11ef-9d96-14abc554333b"/>
 </reflist>
 </ownedAttribute>
 <package>
@@ -23181,7 +23182,7 @@ specially for Gaphor</val>
 <val>(0.0, 0.0)</val>
 </top-left>
 <width>
-<val>216.0</val>
+<val>289.0</val>
 </width>
 <height>
 <val>609.6363636363637</val>
@@ -23216,7 +23217,7 @@ specially for Gaphor</val>
 <val>(1.0, 0.0, 0.0, 1.0, 669.0, 142.5)</val>
 </matrix>
 <points>
-<val>[(-22.218391395468416, 74.36363636363632), (-147.59588646647467, 6.0)]</val>
+<val>[(26.543448549581626, 74.36363636363632), (-147.59588646647467, 6.0)]</val>
 </points>
 <head-connection>
 <ref refid="DCE:EF08ECE4-4B33-11D7-B391-02BBFE4396CE"/>
@@ -23248,7 +23249,7 @@ specially for Gaphor</val>
 <val>(1.0, 0.0, 0.0, 1.0, 718.5, 424.5)</val>
 </matrix>
 <points>
-<val>[(0.0, 0.0), (120.5, 0.0), (120.5, 56.5), (0.0, 56.5)]</val>
+<val>[(73.0, 0.0), (120.5, 0.0), (120.5, 56.5), (73.0, 56.5)]</val>
 </points>
 <head-connection>
 <ref refid="DCE:EF08ECE4-4B33-11D7-B391-02BBFE4396CE"/>
@@ -23338,7 +23339,7 @@ specially for Gaphor</val>
 <val>(1.0, 0.0, 0.0, 1.0, 718.5, 321.03515625)</val>
 </matrix>
 <points>
-<val>[(0.0, 4.453586315845314), (355.727272727273, 4.453586315845314)]</val>
+<val>[(73.0, 4.453586315845314), (355.727272727273, 4.453586315845314)]</val>
 </points>
 <head-connection>
 <ref refid="DCE:EF08ECE4-4B33-11D7-B391-02BBFE4396CE"/>
@@ -23370,7 +23371,7 @@ specially for Gaphor</val>
 <val>(1.0, 0.0, 0.0, 1.0, 718.5, 262.0)</val>
 </matrix>
 <points>
-<val>[(0.0, 0.0), (166.0, 0.0), (166.0, 30.988742565845314), (355.727272727273, 30.988742565845314)]</val>
+<val>[(73.0, 0.0), (166.0, 0.0), (166.0, 30.988742565845314), (355.727272727273, 30.988742565845314)]</val>
 </points>
 <head-connection>
 <ref refid="DCE:EF08ECE4-4B33-11D7-B391-02BBFE4396CE"/>
@@ -23506,7 +23507,7 @@ specially for Gaphor</val>
 <val>143.0</val>
 </width>
 <height>
-<val>51.0</val>
+<val>54.0</val>
 </height>
 <diagram>
 <ref refid="DCE:90F60210-4B33-11D7-B391-02BBFE4396CE"/>
@@ -23608,7 +23609,7 @@ specially for Gaphor</val>
 <val>(1.0, 0.0, 0.0, 1.0, 718.5, 548.5)</val>
 </matrix>
 <points>
-<val>[(0.0, 0.0), (348.727272727273, 0.5)]</val>
+<val>[(73.0, 0.0), (348.727272727273, 0.5)]</val>
 </points>
 <head-connection>
 <ref refid="DCE:EF08ECE4-4B33-11D7-B391-02BBFE4396CE"/>
@@ -23669,7 +23670,7 @@ specially for Gaphor</val>
 <val>(1.0, 0.0, 0.0, 1.0, 1067.227272727273, 609.0)</val>
 </matrix>
 <points>
-<val>[(0.0, 0.0), (-348.727272727273, 3.0)]</val>
+<val>[(0.0, 0.0), (-275.727272727273, 3.0)]</val>
 </points>
 <head-connection>
 <ref refid="e864f917-e896-11ea-96dc-bf74f1f80424"/>
@@ -53171,7 +53172,7 @@ association:not([memberEnd.navigability*=true]) {
 <val>(0.0, 0.0)</val>
 </top-left>
 <width>
-<val>214.0</val>
+<val>243.0</val>
 </width>
 <height>
 <val>74.0</val>
@@ -53478,7 +53479,7 @@ association:not([memberEnd.navigability*=true]) {
 <val>(0.0, 0.0)</val>
 </top-left>
 <width>
-<val>140.0</val>
+<val>158.0</val>
 </width>
 <height>
 <val>57.0</val>
@@ -54192,7 +54193,7 @@ association:not([memberEnd.navigability*=true]) {
 <val>(0.0, 0.0)</val>
 </top-left>
 <width>
-<val>180.0</val>
+<val>203.0</val>
 </width>
 <height>
 <val>57.0</val>
@@ -54395,10 +54396,10 @@ association:not([memberEnd.navigability*=true]) {
 <val>(0.0, 0.0)</val>
 </top-left>
 <width>
-<val>152.94000244140625</val>
+<val>154.0</val>
 </width>
 <height>
-<val>70.0</val>
+<val>71.0</val>
 </height>
 <diagram>
 <ref refid="55e45c06-30f2-11ee-99ab-a79c71fcd46c"/>
@@ -55162,10 +55163,10 @@ association:not([memberEnd.navigability*=true]) {
 <val>(-1.0879139972149119, 19.0)</val>
 </top-left>
 <width>
-<val>151.0879139972149</val>
+<val>170.0</val>
 </width>
 <height>
-<val>60.0</val>
+<val>67.0</val>
 </height>
 <diagram>
 <ref refid="DCE:90F60210-4B33-11D7-B391-02BBFE4396CE"/>
@@ -55197,7 +55198,7 @@ association:not([memberEnd.navigability*=true]) {
 <val>(1.0, 0.0, 0.0, 1.0, 709.5332581803677, 133.2694477380632)</val>
 </matrix>
 <points>
-<val>[(-68.00000000000006, 83.59418862557311), (-1.456043001392601, 15.230552261936793)]</val>
+<val>[(-21.011908114968264, 83.59418862557311), (-1.456043001392601, 22.230552261936793)]</val>
 </points>
 <head-connection>
 <ref refid="DCE:EF08ECE4-4B33-11D7-B391-02BBFE4396CE"/>
@@ -55230,7 +55231,7 @@ association:not([memberEnd.navigability*=true]) {
 <val>143.96875</val>
 </width>
 <height>
-<val>51.0</val>
+<val>54.0</val>
 </height>
 <diagram>
 <ref refid="DCE:2817DA5A-50A1-11D7-9F0D-F80F4B06507D"/>
@@ -55256,7 +55257,7 @@ association:not([memberEnd.navigability*=true]) {
 <val>100.0</val>
 </width>
 <height>
-<val>53.0</val>
+<val>59.0</val>
 </height>
 <diagram>
 <ref refid="DCE:2817DA5A-50A1-11D7-9F0D-F80F4B06507D"/>
@@ -55566,4 +55567,18 @@ association:not([memberEnd.navigability*=true]) {
 </reflist>
 </ownedType>
 </Package>
+<Property id="0cdeb851-8bc7-11ef-9d96-14abc554333b">
+<class_>
+<ref refid="DCE:F10D682A-4A87-11D7-B08B-133D836EF880"/>
+</class_>
+<defaultValue>
+<val>false</val>
+</defaultValue>
+<name>
+<val>isFinalSpecialization</val>
+</name>
+<typeValue>
+<val>Boolean</val>
+</typeValue>
+</Property>
 </gaphor>
