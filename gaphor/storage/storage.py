@@ -19,8 +19,9 @@ from gaphor.core.modeling.stylesheet import StyleSheet
 from gaphor.storage.parser import GaphorLoader, element, parse_generator
 from gaphor.storage.xmlwriter import XMLWriter
 
-FILE_FORMAT_VERSION = "3.0"
-NAMESPACE_MODEL = "http://gaphor.sourceforge.net/model"
+FILE_FORMAT_VERSION = "4"
+MODEL_NS = "https://gaphor.org/model"
+MODELING_LANGUAGE_NS = "https://gaphor.org/modelinglanguage"
 
 log = logging.getLogger(__name__)
 
@@ -31,37 +32,36 @@ def save(out=None, element_factory=None, status_queue=None):
             status_queue(status)
 
 
-def save_generator(out, element_factory):
+def save_generator(out, element_factory: ElementFactory):
     """Save the current model using @writer, which is a
     gaphor.storage.xmlwriter.XMLWriter instance."""
 
-    writer = XMLWriter(out)
-    writer.startDocument()
-    writer.startPrefixMapping("", NAMESPACE_MODEL)
-    writer.startElementNS(
-        (NAMESPACE_MODEL, "gaphor"),
-        None,
-        {
-            (NAMESPACE_MODEL, "version"): FILE_FORMAT_VERSION,
-            (NAMESPACE_MODEL, "gaphor-version"): application.distribution().version,
-        },
-    )
+    with XMLWriter(out).document() as writer:
+        writer.prefix_mapping("", MODEL_NS)
+        for ml in sorted({e.__modeling_language__ for e in element_factory}):
+            writer.prefix_mapping(ml, f"{MODELING_LANGUAGE_NS}/{ml}")
 
-    size = element_factory.size()
-    save_func = partial(save_element, element_factory=element_factory, writer=writer)
-    for n, e in enumerate(element_factory.values(), start=1):
-        clazz = e.__class__.__name__
-        assert e.id
-        writer.startElement(clazz, {"id": str(e.id)})
-        e.save(save_func)
-        writer.endElement(clazz)
+        with writer.element_ns(
+            (MODEL_NS, "gaphor"),
+            {
+                (MODEL_NS, "version"): FILE_FORMAT_VERSION,
+                (MODEL_NS, "gaphor-version"): application.distribution().version,
+            },
+        ):
+            with writer.element_ns((MODEL_NS, "model"), {}):
+                size = element_factory.size()
+                save_func = partial(
+                    save_element, element_factory=element_factory, writer=writer
+                )
+                for n, e in enumerate(element_factory, start=1):
+                    clazz = e.__class__.__name__
+                    assert e.id
+                    ns = f"{MODELING_LANGUAGE_NS}/{e.__modeling_language__}"
+                    with writer.element_ns((ns, clazz), {(MODEL_NS, "id"): str(e.id)}):
+                        e.save(save_func)
 
-        if n % 25 == 0:
-            yield (n * 100) / size
-
-    writer.endElementNS((NAMESPACE_MODEL, "gaphor"), None)
-    writer.endPrefixMapping("")
-    writer.endDocument()
+                    if n % 25 == 0:
+                        yield (n * 100) / size
 
 
 def save_element(name, value, element_factory, writer):
@@ -86,35 +86,30 @@ def save_element(name, value, element_factory, writer):
         This applies to both UML and canvas items.
         """
         if resolvable(value):
-            writer.startElement(name, {})
-            writer.startElement("ref", {"refid": value.id})
-            writer.endElement("ref")
-            writer.endElement(name)
+            with writer.element(name, {}):
+                with writer.element("ref", {"refid": value.id}):
+                    pass
 
     def save_collection(name, value):
         """Save a list of references."""
         if value:
-            writer.startElement(name, {})
-            writer.startElement("reflist", {})
-            for v in value:
-                if resolvable(v):
-                    writer.startElement("ref", {"refid": v.id})
-                    writer.endElement("ref")
-            writer.endElement("reflist")
-            writer.endElement(name)
+            with writer.element(name, {}):
+                with writer.element("reflist", {}):
+                    for v in value:
+                        if resolvable(v):
+                            with writer.element("ref", {"refid": v.id}):
+                                pass
 
     def save_value(name, value):
         """Save a value (attribute)."""
         if value is not None:
-            writer.startElement(name, {})
-            writer.startElement("val", {})
-            if isinstance(value, bool):
-                # Write booleans as 0/1.
-                writer.characters(str(int(value)))
-            else:
-                writer.characters(str(value))
-            writer.endElement("val")
-            writer.endElement(name)
+            with writer.element(name, {}):
+                with writer.element("val", {}):
+                    if isinstance(value, bool):
+                        # Write booleans as 0/1.
+                        writer.characters(str(int(value)))
+                    else:
+                        writer.characters(str(value))
 
     if isinstance(value, Base):
         save_reference(name, value)
@@ -203,9 +198,11 @@ def _load_elements_and_canvasitems(
             elem = upgrade_decision_node_item_show_type(elem)
         if version_lower_than(gaphor_version, (2, 20, 0)):
             elem = upgrade_note_on_model_element_only(elem, elements)
-        if not (cls := modeling_language.lookup_element(elem.type)):
+        if version_lower_than(gaphor_version, (2, 28, 0)):
+            elem = upgrade_modeling_language(elem)
+        if not (cls := modeling_language.lookup_element(elem.type, elem.ns)):
             raise UnknownModelElementError(
-                f"Type {elem.type} cannot be loaded: no such element"
+                f"Type {elem.ns}:{elem.type} cannot be loaded: no such element"
             )
 
         if issubclass(cls, Presentation):
@@ -463,4 +460,17 @@ def upgrade_note_on_model_element_only(
             else:
                 subject.values["note"] = elem.values["note"]
             del elem.values["note"]
+    return elem
+
+
+# since 2.28.0
+def upgrade_modeling_language(elem: element) -> element:
+    if elem.ns:
+        return elem
+
+    if elem.type == "Dependency":
+        elem.ns = "UML"
+    elif elem.type in ("C4Person", "C4Container", "C4Database", "C4Dependency"):
+        elem.type = elem.type[2:]
+        elem.ns = "C4Model"
     return elem

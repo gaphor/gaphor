@@ -9,7 +9,7 @@ SysML, RAAML and the C4 model.
 
 A modeling language in Gaphor is defined by a class implementing the
 `gaphor.abc.ModelingLanguage` abstract base class. The modeling language should
-be registered as a `gaphor.modelinglanguage` entry point.
+be registered as a `gaphor.modelinglanguages` entry point.
 
 The `ModelingLanguage` interface is fairly minimal. It allows other services to
 look up elements and diagram items, as well as a toolbox, and diagram types.
@@ -52,6 +52,24 @@ the `gaphor.modules` entrypoint.
 ```{eval-rst}
 .. autoclass:: gaphor.abc.ModelingLanguage
    :members:
+```
+
+As a convention, the package containing the modeling language should have an attribute `__modeling_language__`
+that has the same value as the modeling language name in the entry point.
+
+To illustrate:
+
+The file `mytool/mylang/__init__.py` contains an entry:
+
+```python
+__modeling_language__ = "MyLang"
+```
+
+`pyproject.toml` contains an entry point:
+
+```toml
+[project.entry-points."gaphor.modelinglanguages"]
+"MyLang" = "mytool.mylang.modelinglanguage:MyLangModelingLanguage"
 ```
 
 ## Connectors

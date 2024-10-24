@@ -1,4 +1,7 @@
-import xml.sax.handler
+from __future__ import annotations
+
+from collections.abc import Iterator
+from contextlib import contextmanager
 from xml.sax.saxutils import escape, quoteattr
 
 # See whether the xmlcharrefreplace error handler is
@@ -12,20 +15,19 @@ except ImportError:
     _error_handling = "strict"
 
 
-class XMLWriter(xml.sax.handler.ContentHandler):
+class XMLWriter:
     def __init__(self, out, encoding="utf-8"):
         super().__init__()
         self._out = out
         self._encoding = encoding
-        self._ns_contexts: list[dict[str, str]] = [{}]  # contains uri -> prefix dicts
-        self._current_context = self._ns_contexts[-1]
+        self._current_context: dict[str, str] = {}  # contains uri -> prefix mapping
         self._undeclared_ns_maps: list[tuple[str, str]] = []
 
         self._in_cdata = False
         self._in_start_tag = False
         self._next_newline = False
 
-    def _write(self, text, start_tag=False, end_tag=False):
+    def _write(self, text: str, start_tag=False, end_tag=False) -> None:
         """Write data.
 
         Tags should not be escaped. They should be marked by setting
@@ -65,7 +67,7 @@ class XMLWriter(xml.sax.handler.ContentHandler):
 
         self._out.write(text)
 
-    def _qname(self, name):
+    def _qname(self, name: tuple[str, str]) -> str:
         """Builds a qualified name from a (ns_url, localname) pair."""
         if name[0]:
             if prefix := self._current_context[name[0]]:
@@ -74,65 +76,81 @@ class XMLWriter(xml.sax.handler.ContentHandler):
         # Return the unqualified name
         return name[1]
 
-    # ContentHandler methods
-
-    def startDocument(self):
+    @contextmanager
+    def document(self) -> Iterator[XMLWriter]:
         self._write(f'<?xml version="1.0" encoding="{self._encoding}"?>\n')
+        yield self
 
-    def startPrefixMapping(self, prefix, uri):
-        self._ns_contexts.append(self._current_context.copy())
-        self._current_context[uri] = prefix
+    @contextmanager
+    def element_ns(
+        self, name: tuple[str, str], attrs: dict[tuple[str, str], str]
+    ) -> Iterator[XMLWriter]:
+        with self._prefix_mappings() as xmlns:
+            self._write(self._qname(name), start_tag=True)
+            self._out.write(xmlns)
+
+            for attr, value in list(attrs.items()):
+                self._out.write(f" {self._qname(attr)}={quoteattr(value)}")
+
+            yield self
+
+            self._write(f"{self._qname(name)}", end_tag=True)
+
+    @contextmanager
+    def element(self, name: str, attrs: dict[str, str]) -> Iterator[XMLWriter]:
+        """Create new element in default namespace."""
+        ns = next(
+            (uri for uri, prefix in self._current_context.items() if prefix == ""), ""
+        )
+        with self.element_ns(
+            (ns, name), {(ns, name): value for name, value in attrs.items()}
+        ):
+            yield self
+
+    @contextmanager
+    def cdata(self) -> Iterator[XMLWriter]:
+        self._write("<![CDATA[")
+        self._in_cdata = True
+
+        yield self
+
+        self._write("]]>")
+        self._in_cdata = False
+
+    def prefix_mapping(self, prefix: str, uri: str) -> None:
         self._undeclared_ns_maps.append((prefix, uri))
 
-    def endPrefixMapping(self, prefix):
-        self._current_context = self._ns_contexts[-1]
-        del self._ns_contexts[-1]
+    @contextmanager
+    def _prefix_mappings(self) -> Iterator[str]:
+        if not self._undeclared_ns_maps:
+            yield ""
+        else:
+            current_context = self._current_context.copy()
 
-    def startElement(self, name, attrs):
-        self._write(name, start_tag=True)
-        for name, value in list(attrs.items()):
-            self._out.write(f" {name}={quoteattr(value)}")
+            xmlns = ""
+            for prefix, uri in self._undeclared_ns_maps:
+                self._current_context[uri] = prefix
+                if prefix:
+                    xmlns += f' xmlns:{prefix}="{uri}"'
+                else:
+                    xmlns += f' xmlns="{uri}"'
 
-    def endElement(self, name):
-        self._write(name, end_tag=True)
+            self._undeclared_ns_maps = []
 
-    def startElementNS(self, name, qname, attrs):
-        self._write(self._qname(name), start_tag=True)
+            yield xmlns
 
-        for prefix, uri in self._undeclared_ns_maps:
-            if prefix:
-                self._out.write(f' xmlns:{prefix}="{uri}"')
-            else:
-                self._out.write(f' xmlns="{uri}"')
-        self._undeclared_ns_maps = []
+            self._current_context = current_context
 
-        for name, value in list(attrs.items()):
-            self._out.write(f" {self._qname(name)}={quoteattr(value)}")
-
-    def endElementNS(self, name, qname):
-        self._write(f"{self._qname(name)}", end_tag=True)
-
-    def characters(self, content):
+    def characters(self, content: str) -> None:
         if self._in_cdata:
             self._write(content.replace("]]>", "] ]>"))
         else:
             self._write(escape(content))
 
-    def ignorableWhitespace(self, content):
-        self._write(content)
-
-    def processingInstruction(self, target, data):
+    def processing_instruction(self, target: str, data: str) -> None:
         self._write(f"<?{target} {data}?>")
 
-    def comment(self, comment):
+    def comment(self, comment: str) -> None:
         self._write("<!-- ")
         self._write(comment.replace("-->", "- ->"))
         self._write(" -->")
-
-    def startCDATA(self):
-        self._write("<![CDATA[")
-        self._in_cdata = True
-
-    def endCDATA(self):
-        self._write("]]>")
-        self._in_cdata = False

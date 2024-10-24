@@ -71,7 +71,14 @@ class ModelingLanguageService(Service, ActionProvider, ModelingLanguage):
     def element_types(self):
         return self._modeling_language().element_types
 
-    def lookup_element(self, name):
+    def lookup_element(self, name, ns=None):
+        if ns:
+            if ns not in self._modeling_languages:
+                raise ValueError(
+                    f"Invalid namespace '{ns}', should be one of {list(self._modeling_languages.keys())}"
+                )
+            return self._modeling_languages[ns].lookup_element(name)
+
         return next(
             filter(
                 None,
