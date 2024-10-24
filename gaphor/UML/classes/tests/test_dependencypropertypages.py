@@ -19,13 +19,13 @@ def test_dependency_property_page(diagram, element_factory, event_manager):
     property_page = DependencyPropertyPage(subject, event_manager)
 
     widget = property_page.construct()
-    head_title = find(widget, "head-title")
-    tail_title = find(widget, "tail-title")
+    head_title = find(widget, "head")
+    tail_title = find(widget, "tail")
     head_text = head_title.get_text()
     tail_text = tail_title.get_text()
 
-    assert head_text == "Source: A"
-    assert tail_text == "Target: B"
+    assert head_text == "A"
+    assert tail_text == "B"
 
 
 def test_dependency_item_property_page(diagram, element_factory, event_manager):
