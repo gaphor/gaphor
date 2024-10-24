@@ -21,13 +21,12 @@ complete the model loading.
 
 from __future__ import annotations
 
-from collections.abc import Iterable
+from collections.abc import Callable, Collection, Iterable, Iterator
 from functools import singledispatch
-from typing import Callable, Collection, Iterator, NamedTuple
+from typing import NamedTuple
 
-from gaphor.core.modeling import Diagram, Presentation
+from gaphor.core.modeling import Base, Diagram, Element, Id, Presentation
 from gaphor.core.modeling.collection import collection
-from gaphor.core.modeling.element import Element, Id
 
 Opaque = object
 
@@ -92,7 +91,7 @@ def paste(
 
 
 def serialize(value):
-    if isinstance(value, Element):
+    if isinstance(value, Base):
         return ("r", value.id)
     elif isinstance(value, collection):
         return ("c", [serialize(v) for v in value])
@@ -210,7 +209,7 @@ def _paste(copy_data: Opaque, diagram: Diagram, full: bool) -> set[Presentation]
     model = diagram.model
 
     # Map the original diagram ids to our new target diagram
-    new_elements: dict[Id, Element] = {ref: diagram for ref in copy_data.diagram_refs}
+    new_elements: dict[Id, Element] = dict.fromkeys(copy_data.diagram_refs, diagram)
 
     def element_lookup(ref: Id):
         if ref in new_elements:

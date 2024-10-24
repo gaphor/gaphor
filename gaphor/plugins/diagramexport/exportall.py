@@ -1,6 +1,5 @@
 import logging
 from pathlib import Path
-from typing import List
 
 from gaphor.core.modeling import Diagram
 from gaphor.diagram.export import escape_filename
@@ -10,7 +9,7 @@ log = logging.getLogger(__name__)
 
 def pkg2dir(package):
     """Return directory path from package class."""
-    name: List[str] = []
+    name: list[str] = []
     while package:
         name.insert(0, package.name)
         package = package.package

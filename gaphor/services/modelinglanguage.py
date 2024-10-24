@@ -1,4 +1,4 @@
-from typing import Dict, Iterable
+from collections.abc import Iterable
 
 from gaphor.abc import ActionProvider, ModelingLanguage, Service
 from gaphor.action import action
@@ -27,7 +27,7 @@ class ModelingLanguageService(Service, ActionProvider, ModelingLanguage):
         self.event_manager = event_manager
         self.properties = properties
 
-        self._modeling_languages: Dict[str, ModelingLanguage] = initialize(
+        self._modeling_languages: dict[str, ModelingLanguage] = initialize(
             "gaphor.modelinglanguages"
         )
         if event_manager:

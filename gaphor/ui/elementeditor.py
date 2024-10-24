@@ -2,7 +2,7 @@
 
 import importlib.resources
 import logging
-from typing import Iterator, Optional
+from collections.abc import Iterator
 from unicodedata import normalize
 
 from babel import Locale
@@ -166,7 +166,7 @@ class EditorStack:
         self.diagrams = diagrams
         self.properties = properties
 
-        self.vbox: Optional[Gtk.Box] = None
+        self.vbox: Gtk.Box | None = None
         self._current_item = None
 
     def open(self, builder):

@@ -130,6 +130,7 @@ class EnumerationPage(PropertyPageBase):
                     signal_handlers=text_field_handlers("enumeration"),
                 ),
             ],
+            strict=False,
         ):
             column.set_factory(factory)
 

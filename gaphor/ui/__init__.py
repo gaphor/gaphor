@@ -1,12 +1,11 @@
 """This module contains user interface related code, such as the main screen
 and diagram windows."""
 
-# ruff: noqa: E402,F401
+# ruff: noqa: E402
 
 from __future__ import annotations
 
 import sys
-import warnings
 
 import gi
 
@@ -17,7 +16,7 @@ gi.require_version("Adw", "1")
 
 from gi.repository import Adw, Gio, GtkSource
 
-import gaphor.ui.textfield
+import gaphor.ui.textfield  # noqa: F401
 from gaphor.application import Application, Session
 from gaphor.core import event_handler
 from gaphor.event import ActiveSessionChanged, ApplicationShutdown, SessionCreated
@@ -27,17 +26,6 @@ from gaphor.ui.actiongroup import apply_application_actions
 
 Adw.init()
 GtkSource.init()
-
-if sys.platform == "darwin":
-    from gaphor.ui.macosshim import init_macos_shortcuts
-
-    try:
-        init_macos_shortcuts()
-    except TypeError:
-        # Initialization can fail if Gtk is mocked
-        warnings.warn(
-            "macOS shortcuts were not initialized", RuntimeWarning, stacklevel=1
-        )
 
 
 def run(argv: list[str], *, launch_service="greeter", recover=False) -> int:

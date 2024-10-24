@@ -8,7 +8,8 @@ from __future__ import annotations
 
 import functools
 import itertools
-from typing import Iterator, Protocol, TypeVar
+from collections.abc import Iterator
+from typing import Protocol, TypeVar
 
 from gaphas.connections import Connection
 from gaphas.connector import ConnectionSink, Handle, Port
@@ -30,17 +31,13 @@ class ConnectorProtocol(Protocol):
         self,
         element: Presentation,
         line: Presentation,
-    ) -> None:
-        ...
+    ) -> None: ...
 
-    def allow(self, handle: Handle, port: Port) -> bool:
-        ...
+    def allow(self, handle: Handle, port: Port) -> bool: ...
 
-    def connect(self, handle: Handle, port: Port) -> bool:
-        ...
+    def connect(self, handle: Handle, port: Port) -> bool: ...
 
-    def disconnect(self, handle: Handle) -> None:
-        ...
+    def disconnect(self, handle: Handle) -> None: ...
 
 
 class BaseConnector:
@@ -133,7 +130,7 @@ Connector: FunctionDispatcher[type[ConnectorProtocol]] = multidispatch(object, o
 )
 
 
-@functools.lru_cache()
+@functools.lru_cache
 def can_connect(parent, element_type) -> bool:
     parent_type = type(parent)
     get_registration = Connector.registry.get_registration
@@ -174,8 +171,8 @@ class RelationshipConnect(BaseConnector):
         head - tuple (association name on the line, association name on the element)
         tail - tuple (association name on the line, association name on the element)
         """
-        assert isinstance(head, (association, redefine)), f"head is {head}"
-        assert isinstance(tail, (association, redefine)), f"tail is {tail}"
+        assert isinstance(head, association | redefine), f"head is {head}"
+        assert isinstance(tail, association | redefine), f"tail is {tail}"
 
         line = self.line
 

@@ -31,7 +31,7 @@ class ActionPinConnector:
                 UML.InputPin if isinstance(pin, InputPinItem) else UML.OutputPin
             )
 
-        assert isinstance(pin.subject, (UML.InputPin, UML.OutputPin))
+        assert isinstance(pin.subject, UML.InputPin | UML.OutputPin)
         pin.subject.opaqueAction = self.action.subject
 
         # This raises the item in the item hierarchy

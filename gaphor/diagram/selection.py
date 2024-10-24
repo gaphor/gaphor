@@ -1,4 +1,4 @@
-from typing import Iterable, Optional, Set
+from collections.abc import Iterable
 
 from gaphas.item import Item
 from gaphas.selection import Selection as _Selection
@@ -7,8 +7,8 @@ from gaphas.selection import Selection as _Selection
 class Selection(_Selection):
     def __init__(self):
         super().__init__()
-        self._dropzone_item: Optional[Item] = None
-        self._grayed_out_items: Set[Item] = set()
+        self._dropzone_item: Item | None = None
+        self._grayed_out_items: set[Item] = set()
 
     def clear(self):
         self._dropzone_item = None
@@ -16,16 +16,16 @@ class Selection(_Selection):
         super().clear()
 
     @property
-    def dropzone_item(self) -> Optional[Item]:
+    def dropzone_item(self) -> Item | None:
         return self._dropzone_item
 
     @dropzone_item.setter
-    def dropzone_item(self, item: Optional[Item]) -> None:
+    def dropzone_item(self, item: Item | None) -> None:
         if item is not self._dropzone_item:
             self._dropzone_item = item
 
     @property
-    def grayed_out_items(self) -> Set[Item]:
+    def grayed_out_items(self) -> set[Item]:
         return self._grayed_out_items
 
     @grayed_out_items.setter

@@ -1,7 +1,7 @@
 """The SysML Modeling Language module is the entrypoint for SysML related
 assets."""
 
-from typing import Iterable
+from collections.abc import Iterable
 
 from gaphor.abc import ModelingLanguage
 from gaphor.core import gettext

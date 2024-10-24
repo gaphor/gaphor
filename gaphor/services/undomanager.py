@@ -13,13 +13,13 @@ NOTE: it would be nice to use actions in conjunction with functools.partial.
 from __future__ import annotations
 
 import logging
-from typing import Callable, List
+from collections.abc import Callable
 
 from gaphor.abc import ActionProvider, Service
 from gaphor.action import action
 from gaphor.core import event_handler
+from gaphor.core.modeling.base import Base, RepositoryProtocol, swap_element_type
 from gaphor.core.modeling.diagram import Diagram
-from gaphor.core.modeling.element import Element, RepositoryProtocol, swap_element_type
 from gaphor.core.modeling.event import (
     AssociationAdded,
     AssociationDeleted,
@@ -57,7 +57,7 @@ class ActionStack:
     """
 
     def __init__(self):
-        self._actions: List[Callable[[], None]] = []
+        self._actions: list[Callable[[], None]] = []
 
     def add(self, action):
         self._actions.append(action)
@@ -121,8 +121,8 @@ class UndoManager(Service, ActionProvider):
     def __init__(self, event_manager, element_factory):
         self.event_manager = event_manager
         self.element_factory: RepositoryProtocol = element_factory
-        self._undo_stack: List[ActionStack] = []
-        self._redo_stack: List[ActionStack] = []
+        self._undo_stack: list[ActionStack] = []
+        self._redo_stack: list[ActionStack] = []
         self._stack_depth = 20
         self._current_transaction = None
 
@@ -295,7 +295,7 @@ class UndoManager(Service, ActionProvider):
         if state_changed:
             self.event_manager.handle(UndoManagerStateChanged(self))
 
-    def lookup(self, id: str) -> Element:
+    def lookup(self, id: str) -> Base:
         if element := self.element_factory.lookup(id):
             return element
         else:

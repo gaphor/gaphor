@@ -2,6 +2,7 @@
 
 Diagrams can be visualized and edited.
 """
+
 from __future__ import annotations
 
 import logging
@@ -18,13 +19,9 @@ from typing import (
 import gaphas
 from cairo import Context as CairoContext
 
+from gaphor.core.modeling.base import Base, Id, RepositoryProtocol, generate_id
 from gaphor.core.modeling.collection import collection
-from gaphor.core.modeling.element import (
-    Element,
-    Id,
-    RepositoryProtocol,
-    generate_id,
-)
+from gaphor.core.modeling.element import Element
 from gaphor.core.modeling.event import (
     AssociationAdded,
     AssociationDeleted,
@@ -79,7 +76,7 @@ class DrawContext:
     dropzone: bool
 
 
-@lru_cache()
+@lru_cache
 def attrname(obj, lower_name):
     """Look up a real attribute name based on a lower case (normalized)
     name."""
@@ -93,7 +90,7 @@ def rgetattr(obj, names):
     """Recursively get a name, based on a list of names."""
     name, *tail = names
     v = getattr(obj, attrname(obj, name), NO_ATTR)
-    if isinstance(v, (collection, list, tuple)):
+    if isinstance(v, collection | list | tuple):
         if tail and not v:
             yield NO_ATTR
         if tail:
@@ -111,9 +108,9 @@ def attrstr(obj):
     """Returns lower-case string representation of an attribute."""
     if isinstance(obj, str):
         return obj.lower()
-    elif isinstance(obj, (bool, int)):
+    elif isinstance(obj, bool | int):
         return "true" if obj else ""
-    elif isinstance(obj, Element):
+    elif isinstance(obj, Base):
         return obj.__class__.__name__.lower()
     log.warn(
         f'Can not make a string out of {obj}, returning "". Please raise an issue.'
@@ -121,7 +118,7 @@ def attrstr(obj):
     return ""
 
 
-def lookup_attribute(element: Element, name: str) -> str | None:
+def lookup_attribute(element: Base, name: str) -> str | None:
     """Look up an attribute from an element.
 
     Attributes can be nested, e.g. ``owner.name``.
@@ -390,16 +387,13 @@ class Diagram(Element):
     @overload
     def select(
         self, expression: Callable[[Presentation], bool]
-    ) -> Iterator[Presentation]:
-        ...
+    ) -> Iterator[Presentation]: ...
 
     @overload
-    def select(self, expression: type[P]) -> Iterator[P]:
-        ...
+    def select(self, expression: type[P]) -> Iterator[P]: ...
 
     @overload
-    def select(self, expression: None) -> Iterator[Presentation]:
-        ...
+    def select(self, expression: None) -> Iterator[Presentation]: ...
 
     def select(self, expression=None):
         """Return an iterator of all canvas items that match expression."""
@@ -503,5 +497,4 @@ class Diagram(Element):
 
 @runtime_checkable
 class PresentationRepositoryProtocol(Protocol):
-    def create_as(self, type: type[P], id: str, diagram: Diagram) -> P:
-        ...
+    def create_as(self, type: type[P], id: str, diagram: Diagram) -> P: ...
