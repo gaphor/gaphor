@@ -12,7 +12,7 @@ Once a merge conflict has been detected (i.e., when the model file contains git 
 Gaphor will offer the option to open the current model,
 the incoming model or merge changes manually via the Merge Editor.
 
-![merge dialog](images/merge-dialog.png)
+![A dialog showing options on how to deal with a merge conflict.](images/merge-dialog.png)
 
 If you choose *Open Merge Editor*, both models will be loaded. The current model remains as is.
 In addition, the changes made to the incoming model are calculated. Those changes are stored as _pending change_ objects in the model.
@@ -23,7 +23,7 @@ Pending changes are part of the model, you can save the model with changes and r
 
 The Merge Editor is shown on the right side, replacing the (normal) Property Editor.
 
-![merge conflict window](images/merge-conflict-window.png)
+![The Gaphor main window, showing the merge editor on the right.](images/merge-conflict-window.png)
 
 Merge actions are grouped by diagram, where possible.
 When you apply a change, all changes listed as children are also applied.
