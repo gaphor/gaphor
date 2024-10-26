@@ -182,15 +182,7 @@ class GaphorLoader(handler.ContentHandler):
         raise ParserException("Invalid XML document.")
 
     def startElementNS(self, name, _qname, attrs):
-        if not name[0] or name[0] == XMLNS_V3:
-            # a = {key[1]: val for key, val in list(attrs.items())}
-            # self.startElement(name[1], a)
-            pass
-        elif name[0].startswith(XMLNS_PREFIX):
-            # a = {key[1]: val for key, val in list(attrs.items())}
-            # self.startElement(name[1], a)
-            pass
-        else:
+        if name[0] and name[0] != XMLNS_V3 and not name[0].startswith(XMLNS_PREFIX):
             raise ParserException(f"Invalid XML document: invalid element {name}.")
 
         self.text = ""
