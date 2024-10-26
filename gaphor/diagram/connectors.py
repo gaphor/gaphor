@@ -16,7 +16,7 @@ from gaphas.connector import ConnectionSink, Handle, Port
 from gaphas.connector import Connector as ConnectorAspect
 from generic.multidispatch import FunctionDispatcher, multidispatch
 
-from gaphor.core.modeling import Diagram, Element, Presentation
+from gaphor.core.modeling import Base, Diagram, Element, Presentation
 from gaphor.core.modeling.event import RevertibleEvent
 from gaphor.core.modeling.properties import association, redefine, relation
 from gaphor.diagram.copypaste import copy, paste
@@ -401,8 +401,8 @@ class MetadataRelationConnect(DirectionalRelationshipConnect):
         return True
 
 
-def paste_model(copy_data, diagram) -> Iterator[Element]:
-    new_elements: dict[str, Element] = {}
+def paste_model(copy_data, diagram) -> Iterator[Base]:
+    new_elements: dict[str, Base] = {}
 
     def create(ref: str):
         if ref in new_elements:

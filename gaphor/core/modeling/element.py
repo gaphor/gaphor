@@ -32,7 +32,7 @@ def self_and_owners(element: Element | None) -> Iterator[Element]:
     """Return the element and the ancestors (Element.owner)."""
     seen = set()
     e = element
-    while e:
+    while isinstance(e, Element):
         if e in seen:
             return
         yield e

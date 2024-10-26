@@ -18,7 +18,14 @@ in all changes to elements, we can also register `ElementUpdated` and receive al
 
 ```{eval-rst}
 .. autoclass:: gaphor.core.eventmanager.EventManager
-   :members:
+
+   .. autoclass:: gaphor.core.eventmanager.EventManager.subscribe
+
+   .. autoclass:: gaphor.core.eventmanager.EventManager.unsubscribe
+
+   .. autoclass:: gaphor.core.eventmanager.EventManager.handle
+
+.. autofunction:: gaphor.core.event_handler
 ```
 
 Under the hood events are handled by the Generics library.

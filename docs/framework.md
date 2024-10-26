@@ -45,14 +45,10 @@ This is the central component used for event dispatching. Every service that
 does something with events (both sending and receiving) depends on this
 component.
 
-### file_manager
-
-Loading and saving a model is done through this service.
-
 ### element_factory
 
 The [data model](models/core) itself is maintained in the element factory
-(`gaphor.core.modeling.elementfactory`). This service is used to create model elements,
+({obj}`~gaphor.core.modeling.ElementFactory`). This service is used to create model elements,
 as well as to lookup elements or query for a set of elements.
 
 ### undo_manager
@@ -65,3 +61,8 @@ if a transaction is active. If a transaction is completed (committed) a new
 undo action is stored. Transactions can also be rolled back, in which case all
 changes are played back directly. For more information see the full description
 of the [undo manager](undo.md).
+
+### file_manager
+
+Loading and saving a model is done through this service.
+

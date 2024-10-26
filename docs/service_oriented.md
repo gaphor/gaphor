@@ -21,7 +21,9 @@ other objects living within the application.
 Each service should implement the Service interface. This interface
 defines one method:
 
-    shutdown(self)
+```{code-block} python
+shutdown(self)
+```
 
 Which is called when a service needs to be cleaned up.
 
@@ -38,18 +40,20 @@ A service can also depend on another services. Service initialization resolves
 these dependencies. To define a service dependency, just add it to the
 constructor by its name defined in the entry point:
 
-    class MyService(Service):
+```{code-block} python
+class MyService(Service):
 
-        def __init__(self, event_manager, element_factory):
-            self.event_manager = event_manager
-            self.element_factory = element_factory
-            event_manager.subscribe(self._element_changed)
+    def __init__(self, event_manager, element_factory):
+        self.event_manager = event_manager
+        self.element_factory = element_factory
+        event_manager.subscribe(self._element_changed)
 
-        def shutdown(self):
-            self.event_manager.unsubscribe(self._element_changed)
+    def shutdown(self):
+        self.event_manager.unsubscribe(self._element_changed)
 
-        @event_handler(ElementChanged)
-        def _element_changed(self, event):
+    @event_handler(ElementChanged)
+    def _element_changed(self, event):
+```
 
 Services that expose actions should also inherit from the ActionProvider
 interface. This interface does not require any additional methods to be
@@ -57,18 +61,19 @@ implemented. Action methods should be annotated with an `@action` annotation.
 
 ## Example: ElementFactory
 
-A nice example of a service in use is the ElementFactory. It is one of the core services.
+A nice example of a service in use is the
+{obj}`~gaphor.core.modeling.ElementFactory`. It is one of the core services.
 
-The UndoManager depends on the events emitted by the ElementFactory. When an
+When an
 important events occurs, like an element is created or destroyed, that event is
-emitted. We then use an event handler for ElementFactory that stores the
+emitted. We then use an event handler for `ElementFactory` that stores the
 add/remove signals in the undo system. Another example of events that are
-emitted are with `UML.Element`s. Those classes, or more specifically, the
+emitted are with {obj}`~gaphor.core.modeling.Element`'s. Those classes, or more specifically, the
 properties, send notifications every time their state changes.
 
 ## Entry Points
 
-Gaphor uses a main entry point group called `gaphor.services`.
+Gaphor uses a main :ref`entry point <https://packaging.python.org/en/latest/specifications/entry-points/>` group called `gaphor.services`.
 
 Services are used to perform the core functionality of the application while
 breaking the functions in to individual components. For example, the element
