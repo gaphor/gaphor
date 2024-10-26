@@ -27,12 +27,12 @@ import contextlib
 import logging
 import sys
 import textwrap
+from collections.abc import Iterable
 from pathlib import Path
-from typing import Iterable
 
 from gaphor import UML
 from gaphor.codegen.override import Overrides
-from gaphor.core.modeling import Element, ElementFactory
+from gaphor.core.modeling import Base, ElementFactory
 from gaphor.core.modeling.modelinglanguage import (
     CoreModelingLanguage,
     MockModelingLanguage,
@@ -103,9 +103,11 @@ def main(
     )
     overrides = Overrides(overridesfile) if overridesfile else None
 
-    with open(outfile, "w", encoding="utf-8") if outfile else contextlib.nullcontext(
-        sys.stdout
-    ) as out:  # type: ignore[attr-defined]
+    with (
+        open(outfile, "w", encoding="utf-8")
+        if outfile
+        else contextlib.nullcontext(sys.stdout) as out  # type: ignore[attr-defined]
+    ):
         for line in coder(model, super_models, overrides):
             print(line, file=out)
 
@@ -215,7 +217,7 @@ def variables(class_: UML.Class, overrides: Overrides | None = None):
                 comment = "  # type: ignore[assignment]" if is_reassignment(a) else ""
                 yield f"{a.name}: relation_{mult}[{a.type.name}]{comment}"
             else:
-                assert isinstance(a.owner, UML.Element)
+                assert isinstance(a.owner, Base)
                 raise ValueError(
                     f"{a.name}: {a.type} can not be written; owner={a.owner.name}"
                 )
@@ -421,7 +423,7 @@ def redefines(a: UML.Property) -> str | None:
 
 def attribute(
     c: UML.Class, name: str, super_models: list[tuple[ModelingLanguage, ElementFactory]]
-) -> tuple[type[Element] | None, UML.Property | None]:
+) -> tuple[type[Base] | None, UML.Property | None]:
     a: UML.Property | None
     for a in c.ownedAttribute:
         if a.name == name:
@@ -442,7 +444,7 @@ def attribute(
 
 def in_super_model(
     name: str, super_models: list[tuple[ModelingLanguage, ElementFactory]]
-) -> tuple[type[Element], UML.Class] | tuple[None, None]:
+) -> tuple[type[Base], UML.Class] | tuple[None, None]:
     for modeling_language, factory in super_models:
         cls: UML.Class
         for cls in factory.select(  # type: ignore[assignment]

@@ -1,5 +1,4 @@
 import logging
-from typing import Optional
 
 from gaphas.decorators import g_async
 from gaphas.handlemove import HandleMove
@@ -23,7 +22,7 @@ class PlacementState:
         self.factory = factory
         self.event_manager = event_manager
         self.handle_index = handle_index
-        self.moving: Optional[MoveType] = None
+        self.moving: MoveType | None = None
 
 
 def placement_tool(factory: ItemFactory, event_manager, handle_index: int):

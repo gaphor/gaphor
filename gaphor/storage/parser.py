@@ -28,7 +28,7 @@ from xml.sax import SAXParseException, handler, xmlreader
 
 from defusedxml.sax import make_parser
 
-from gaphor.core.modeling import Element
+from gaphor.core.modeling import Base
 from gaphor.storage.upgrade_canvasitem import upgrade_canvasitem
 
 __all__ = ["parse", "ParserException"]
@@ -67,7 +67,7 @@ class element(base):
         base.__init__(self)
         self.id = id
         self.type = type
-        self.element: Element | None = None
+        self.element: Base | None = None
 
 
 class canvas(base):

@@ -4,7 +4,6 @@ Contains also implementation to split flows using activity edge
 connectors.
 """
 
-
 from gaphor import UML
 from gaphor.diagram.presentation import LinePresentation, Named, text_name
 from gaphor.diagram.shapes import Box, CssNode, Text, draw_arrow_tail

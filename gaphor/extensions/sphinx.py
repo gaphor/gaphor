@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import functools
+import os
 from pathlib import Path
 
 import sphinx.util.docutils
@@ -95,7 +96,9 @@ class DiagramDirective(sphinx.util.docutils.SphinxDirective):
         save_pdf(outfile.with_suffix(".pdf"), diagram)
 
         # Image needs a relative path. Make our outfile path relative to the doc
-        outdir = outdir.relative_to(self.env.srcdir)
+        # os.path.relpath is used because Path.relative_to doesn't support going up
+        # to a common parent directory before Python 3.12 with the walk_up option
+        outdir = Path(os.path.relpath(outdir, self.env.srcdir))
         outfile = outdir / f"{diagram.id}"
 
         for _ in Path(self.env.docname).parts[:-1]:

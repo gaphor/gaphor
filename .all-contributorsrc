@@ -869,7 +869,8 @@
       "profile": "https://github.com/nomisge",
       "contributions": [
         "bug",
-        "ideas"
+        "ideas",
+        "code"
       ]
     },
     {
@@ -1539,6 +1540,15 @@
       "name": "Frank Vanbever",
       "avatar_url": "https://avatars.githubusercontent.com/u/1665441?v=4",
       "profile": "https://github.com/frankvanbever",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "clauniel",
+      "name": "clauniel",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1885748?v=4",
+      "profile": "https://github.com/clauniel",
       "contributions": [
         "code"
       ]

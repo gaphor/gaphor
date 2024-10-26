@@ -10,7 +10,7 @@ Older releases are available from [GitHub](https://github.com/gaphor/gaphor/rele
 
 ## Development Environment
 
-### Choco
+### WinGet
 
 We recommend using [WinGet](https://learn.microsoft.com/en-us/windows/package-manager/winget) as a package manager in
 Windows. It is available on Windows 11 and modern versions of Windows 10 as a part of the App Installer.
@@ -54,17 +54,10 @@ The default installation options should be fine for use with Gaphor.
 
 Graphviz is used by Gaphor for automatic diagram formatting.
 
-1. Install from Chocolately with administrator PowerShell:
+1. Install from WinGet with administrator PowerShell:
 
    ```PowerShell
    winget install graphviz
-   ```
-
-2. Restart your PowerShell terminal as a normal user and check that the dot
-   command is available:
-
-   ```PowerShell
-   dot -?
    ```
 
 #### Install pipx
@@ -114,7 +107,7 @@ pipx install poetry
 
 Add GTK to your environmental variables:
 ```PowerShell
-$env:Path = $env:Path + ";C:\gtk\bin"
+$env:Path = $env:Path + ";C:\gtk\bin;C:\Program Files\Graphviz\bin"
 $env:LIB = "C:\gtk\lib"
 $env:INCLUDE = "C:\gtk\include;C:\gtk\include\cairo;C:\gtk\include\glib-2.0;C:\gtk\include\gobject-introspection-1.0;C:\gtk\lib\glib-2.0\include;"
 $env:XDG_DATA_HOME = "$HOME\.local\share"

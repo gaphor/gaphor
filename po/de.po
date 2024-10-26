@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2024-02-27 10:00-0500\n"
-"PO-Revision-Date: 2024-02-11 21:02+0000\n"
-"Last-Translator: Lenny Angst <lenny@familie-angst.ch>\n"
+"PO-Revision-Date: 2024-10-26 11:15+0000\n"
+"Last-Translator: Arjan Molenaar <gaphor@gmail.com>\n"
+"Language-Team: German <https://hosted.weblate.org/projects/gaphor/gaphor/de/>"
+"\n"
 "Language: de\n"
-"Language-Team: German "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/de/>\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.8.2-dev\n"
 "Generated-By: Babel 2.14.0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:23 gaphor/C4Model/toolbox.py:67
@@ -763,7 +764,7 @@ msgstr "Aktion"
 
 #: gaphor/UML/actions/actionstoolbox.py:91
 msgid "Call behavior action"
-msgstr ""
+msgstr "Anrufverhaltensaktion"
 
 #: gaphor/UML/actions/actionstoolbox.py:98
 #, fuzzy
@@ -1401,9 +1402,8 @@ msgid "Show Stereotypes"
 msgstr "Stereotypen anzeigen"
 
 #: gaphor/UML/profiles/stereotypepropertypages.py:139
-#, fuzzy
 msgid "New Slot Value…"
-msgstr "Wertetyp"
+msgstr "Neuer Slot-Wert…"
 
 #: gaphor/UML/states/propertypages.ui:9
 msgid "Activities"
@@ -2409,7 +2409,7 @@ msgstr "<Keine>"
 
 #: gaphor/ui/diagrampage.py:311
 msgid "Show in Model Browser"
-msgstr ""
+msgstr "Im Modellbrowser anzeigen"
 
 #: gaphor/ui/diagrams.ui:12
 msgid "Open a Diagram"
@@ -2425,7 +2425,7 @@ msgstr ""
 
 #: gaphor/ui/elementeditor.py:413 gaphor/ui/elementeditor.ui:352
 msgid "No focused item."
-msgstr ""
+msgstr "Kein fokussiertes Element."
 
 #: gaphor/ui/elementeditor.ui:11
 msgid "No item selected"
@@ -2530,7 +2530,7 @@ msgstr "Stilvorlagen"
 
 #: gaphor/ui/elementeditor.ui:338
 msgid "CSS nodes of focused item"
-msgstr ""
+msgstr "CSS-Knoten des fokussierten Elements"
 
 #: gaphor/ui/elementeditor.ui:363
 msgid ""
@@ -2751,7 +2751,7 @@ msgstr "Layered C4 Model Vorlage"
 
 #: gaphor/ui/greeter.py:66
 msgid "UML Example"
-msgstr ""
+msgstr "UML-Beispiel"
 
 #: gaphor/ui/greeter.py:67
 #, fuzzy
@@ -2760,7 +2760,7 @@ msgstr "Unified Modeling Language Vorlage"
 
 #: gaphor/ui/greeter.py:73
 msgid "SysML Example"
-msgstr ""
+msgstr "SysML-Beispiel"
 
 #: gaphor/ui/greeter.py:74
 #, fuzzy
@@ -2769,7 +2769,7 @@ msgstr "Systems Modeling Language Vorlage"
 
 #: gaphor/ui/greeter.py:80
 msgid "RAAML Example"
-msgstr ""
+msgstr "RAAML-Beispiel"
 
 #: gaphor/ui/greeter.py:81
 #, fuzzy
@@ -2885,7 +2885,7 @@ msgstr "Modelländerungen zusammenführen"
 
 #: gaphor/ui/modelchanged.ui:7
 msgid "Discard Changes and Reload"
-msgstr ""
+msgstr "Änderungen verwerfen und neu laden"
 
 #: gaphor/ui/tests/test_treemodel.py:200 gaphor/ui/treemodel.py:64
 msgid "<Relationships>"
@@ -3124,4 +3124,3 @@ msgstr "Verbindung “{name}” aktualisieren"
 
 #~ msgid "Recently Opened"
 #~ msgstr "Zuletzt geöffnete"
-

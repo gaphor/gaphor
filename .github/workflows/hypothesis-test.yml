@@ -23,19 +23,19 @@ jobs:
           mutter dbus-x11 gtk4 gobject-introspection-devel
           cairo-gobject-devel gtksourceview5-devel libadwaita-devel cairo-devel
           python${{ env.python_version }}-devel
-      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+      - uses: actions/checkout@eef61447b9ff4aafe5dcd4e0bbf5d482be7e7871 # v4.2.1
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Set ownership of checkout directory
         run: chown -R $(id -u):$(id -g) $PWD
       - name: Use Python Dependency Cache
-        uses: actions/cache@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9 # v4.0.2
+        uses: actions/cache@3624ceb22c1c5a301c8db4169662070a689d9ea8 # v4.1.1
         with:
           path: ~/.cache/pip
           key: ${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}-39
       - name: Use Hypothesis Cache
         id: restore-cache
-        uses: actions/cache/restore@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9 # v4.0.2
+        uses: actions/cache/restore@3624ceb22c1c5a301c8db4169662070a689d9ea8 # v4.1.1
         with:
           path: .hypothesis
           key: ${{ runner.os }}-hypothesis
@@ -58,7 +58,7 @@ jobs:
           filename: .github/hypothesis-test-failed.md
           update_existing: true
       - name: Save cache
-        uses: actions/cache/save@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9 # v4.0.2
+        uses: actions/cache/save@3624ceb22c1c5a301c8db4169662070a689d9ea8 # v4.1.1
         if: always()
         with:
           path: .hypothesis

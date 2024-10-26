@@ -1,6 +1,6 @@
 """C4 Model Language entrypoint."""
 
-from typing import Iterable
+from collections.abc import Iterable
 
 from gaphor.abc import ModelingLanguage
 from gaphor.C4Model import c4model, diagramitems

@@ -1,5 +1,3 @@
-from typing import Union
-
 from gaphor.C4Model import c4model
 from gaphor.core import Transaction
 from gaphor.diagram.propertypages import (
@@ -22,9 +20,7 @@ PropertyPages.register(c4model.C4Dependency, NamePropertyPage)
 class DescriptionPropertyPage(PropertyPageBase):
     order = 14
 
-    def __init__(
-        self, subject: Union[c4model.C4Container, c4model.C4Person], event_manager
-    ):
+    def __init__(self, subject: c4model.C4Container | c4model.C4Person, event_manager):
         super().__init__()
         assert subject
         self.subject = subject

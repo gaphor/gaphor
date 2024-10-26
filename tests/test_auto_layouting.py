@@ -7,7 +7,7 @@ from __future__ import annotations
 
 import contextlib
 import itertools
-from typing import Iterable
+from collections.abc import Iterable
 
 import hypothesis
 from hypothesis import settings
@@ -23,8 +23,8 @@ from hypothesis.strategies import data, integers, sampled_from
 from gaphor.application import Session
 from gaphor.C4Model.toolbox import c4
 from gaphor.core import Transaction
-from gaphor.core.modeling import Diagram, ElementFactory, Presentation
-from gaphor.core.modeling.element import Element, generate_id, uuid_generator
+from gaphor.core.modeling import Diagram, Element, ElementFactory, Presentation
+from gaphor.core.modeling.base import generate_id, uuid_generator
 from gaphor.diagram.group import can_group, change_owner
 from gaphor.diagram.presentation import LinePresentation
 from gaphor.diagram.tests.fixtures import allow, connect

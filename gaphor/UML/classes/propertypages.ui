@@ -408,12 +408,84 @@ Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</propert
         </child>
       </object>
     </child>
+    <child>
+      <object class="GtkBox">
+        <child>
+          <object class="GtkLabel">
+            <property name="label" translatable="yes">Final specialization</property>
+            <property name="halign">start</property>
+            <property name="hexpand">yes</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkSwitch" id="is-final-specialization">
+            <property name="focusable">1</property>
+            <signal name="notify::active" handler="is-final-specialization-changed" swapped="no"/>
+          </object>
+        </child>
+      </object>
+    </child>
     <style>
       <class name="propertypage"/>
     </style>
   </object>
 
   <object class="GtkBox" id="dependency-editor">
+    <property name="orientation">vertical</property>
+    <child>
+      <object class="GtkBox">
+        <property name="orientation">horizontal</property>
+          <child>
+            <object class="GtkLabel">
+              <property name="label" translatable="yes">Source:</property>
+              <property name="xalign">0</property>
+              <property name="hexpand">0</property>
+              <style>
+                <class name="title"/>
+              </style>
+            </object>
+          </child>
+          <child>
+            <object class="GtkLabel" id="head">
+              <property name="xalign">0</property>
+              <property name="hexpand">1</property>
+              <style>
+                <class name="plaintext"/>
+              </style>
+            </object>
+          </child>
+      </object>
+    </child>
+    <child>
+      <object class="GtkBox">
+        <property name="orientation">horizontal</property>
+          <child>
+            <object class="GtkLabel">
+              <property name="label" translatable="yes">Target:</property>
+              <property name="xalign">0</property>
+              <property name="hexpand">0</property>
+              <style>
+                <class name="title"/>
+              </style>
+            </object>
+          </child>
+          <child>
+            <object class="GtkLabel" id="tail">
+              <property name="xalign">0</property>
+              <property name="hexpand">1</property>
+              <style>
+                <class name="plaintext"/>
+              </style>
+            </object>
+          </child>
+      </object>
+    </child>
+    <style>
+      <class name="propertypage"/>
+    </style>
+  </object>
+
+  <object class="GtkBox" id="dependency-item-editor">
     <property name="orientation">vertical</property>
     <child>
       <object class="GtkLabel">

@@ -24,9 +24,9 @@ from __future__ import annotations
 
 import contextlib
 import itertools
+from collections.abc import Iterable
 from functools import singledispatch
 from io import StringIO
-from typing import Iterable
 
 import hypothesis
 from gaphas.connector import Handle
@@ -45,8 +45,14 @@ from gaphor import UML
 from gaphor.application import Session
 from gaphor.C4Model.toolbox import c4
 from gaphor.core import Transaction
-from gaphor.core.modeling import Diagram, ElementFactory, Presentation, StyleSheet
-from gaphor.core.modeling.element import Element, generate_id, uuid_generator
+from gaphor.core.modeling import (
+    Diagram,
+    Element,
+    ElementFactory,
+    Presentation,
+    StyleSheet,
+)
+from gaphor.core.modeling.base import generate_id, uuid_generator
 from gaphor.diagram.copypaste import copy_full, paste_full, paste_link
 from gaphor.diagram.deletable import deletable
 from gaphor.diagram.drop import drop

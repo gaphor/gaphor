@@ -164,12 +164,12 @@ def test_association_1_n():
     b2 = B()
 
     b1.two = a1
-    assert len(b1.two) == 1, "len(b1.two) == %d" % len(b1.two)
+    assert len(b1.two) == 1, f"len(b1.two) == {len(b1.two)}"
     assert a1 in b1.two
     assert a1.one is b1, f"{a1.one}/{b1}"
     b1.two = a1
     b1.two = a1
-    assert len(b1.two) == 1, "len(b1.two) == %d" % len(b1.two)
+    assert len(b1.two) == 1, f"len(b1.two) == {len(b1.two)}"
     assert a1 in b1.two
     assert a1.one is b1, f"{a1.one}/{b1}"
 

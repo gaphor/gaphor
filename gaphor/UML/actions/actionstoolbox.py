@@ -1,4 +1,5 @@
 """The definition for the actions section of the toolbox."""
+
 from functools import partial
 
 from gaphas.item import SE

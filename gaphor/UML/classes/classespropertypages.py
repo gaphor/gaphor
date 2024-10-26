@@ -55,7 +55,7 @@ class NamedElementPropertyPage(NamePropertyPage):
             not self.subject
             or UML.recipes.is_metaclass(self.subject)
             or isinstance(
-                self.subject, (UML.ActivityPartition, UML.ActivityParameterNode)
+                self.subject, UML.ActivityPartition | UML.ActivityParameterNode
             )
         ):
             return
@@ -77,17 +77,29 @@ class ClassifierPropertyPage(PropertyPageBase):
 
         builder = new_builder(
             "classifier-editor",
-            signals={"abstract-changed": (self._on_abstract_change,)},
+            signals={
+                "abstract-changed": (self._on_abstract_change,),
+                "is-final-specialization-changed": (
+                    self._on_is_final_specialization_change,
+                ),
+            },
         )
 
         abstract = builder.get_object("abstract")
         abstract.set_active(self.subject.isAbstract)
+
+        is_final_specialization = builder.get_object("is-final-specialization")
+        is_final_specialization.set_active(self.subject.isFinalSpecialization)
 
         return builder.get_object("classifier-editor")
 
     def _on_abstract_change(self, button, gparam):
         with Transaction(self.event_manager):
             self.subject.isAbstract = button.get_active()
+
+    def _on_is_final_specialization_change(self, button, gparam):
+        with Transaction(self.event_manager):
+            self.subject.isFinalSpecialization = button.get_active()
 
 
 @PropertyPages.register(InterfaceItem)
@@ -276,6 +288,7 @@ class AttributesPage(PropertyPageBase):
                     signal_handlers=check_button_handlers("static"),
                 ),
             ],
+            strict=False,
         ):
             column.set_factory(factory)
 
@@ -466,6 +479,7 @@ class OperationsPage(PropertyPageBase):
                     signal_handlers=check_button_handlers("static"),
                 ),
             ],
+            strict=False,
         ):
             column.set_factory(factory)
 

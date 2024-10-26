@@ -1,4 +1,5 @@
 """Test transition item and state vertices connections."""
+
 import pytest
 
 from gaphor import UML

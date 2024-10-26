@@ -5,7 +5,6 @@ This is the toolbox in the lower left of the screen.
 
 import functools
 import logging
-from typing import Optional, Tuple
 
 from gi.repository import Gdk, GLib, GObject, Gtk
 
@@ -34,8 +33,8 @@ class Toolbox(UIComponent):
         self.event_manager = event_manager
         self.properties = properties
         self.modeling_language = modeling_language
-        self._toolbox: Optional[Gtk.Box] = None
-        self._toolbox_container: Optional[Gtk.ScrolledWindow] = None
+        self._toolbox: Gtk.Box | None = None
+        self._toolbox_container: Gtk.ScrolledWindow | None = None
         self._current_diagram_type = ""
 
     def open(self) -> Gtk.ScrolledWindow:
@@ -201,7 +200,7 @@ def create_toolbox_button(
     action_name: str,
     icon_name: str,
     label: str,
-    shortcut: Optional[str],
+    shortcut: str | None,
     draggable: bool,
 ) -> Gtk.Button:
     """Creates a tool button for the toolbox."""
@@ -255,6 +254,6 @@ _upper_offset: int = ord("A") - ord("a")
 
 
 @functools.cache
-def parse_shortcut(shortcut: str) -> Tuple[Tuple[int, int], Gdk.ModifierType]:
+def parse_shortcut(shortcut: str) -> tuple[tuple[int, int], Gdk.ModifierType]:
     _, key, mod = Gtk.accelerator_parse(shortcut)
     return (key, key + _upper_offset), mod

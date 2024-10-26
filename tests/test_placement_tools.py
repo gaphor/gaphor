@@ -1,5 +1,3 @@
-from typing import Dict, List
-
 import pytest
 from gi.repository import Gtk
 
@@ -110,7 +108,7 @@ def test_placement_partition(tab, element_factory, event_manager):
     ],
 )
 def test_uml_toolbox_actions_shortcut_unique(toolbox_actions):
-    shortcuts: Dict[str, List[str]] = {}
+    shortcuts: dict[str, list[str]] = {}
 
     for _category, items in toolbox_actions:
         for action_name, _label, _icon_name, shortcut, *_rest in items:

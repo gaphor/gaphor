@@ -4,13 +4,14 @@
 [![Docs build state](https://readthedocs.org/projects/gaphor/badge/?version=latest)](https://docs.gaphor.org)
 [![PyPI](https://img.shields.io/pypi/v/gaphor.svg)](https://pypi.org/project/gaphor)
 [![PyPI - Downloads](https://img.shields.io/pypi/dm/gaphor)](https://pypistats.org/packages/gaphor)
+[![All Contributors.org](https://img.shields.io/github/all-contributors/gaphor/gaphor/main)](https://github.com/gaphor/gaphor/blob/main/CONTRIBUTORS.md)
 [![Matrix](https://img.shields.io/badge/chat-on%20Matrix-success)](https://app.element.io/#/room/#gaphor_Lobby:gitter.im)
 
 [![Maintainability](https://api.codeclimate.com/v1/badges/f00974f5d7fe69fe4ecd/maintainability)](https://codeclimate.com/github/gaphor/gaphor/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/f00974f5d7fe69fe4ecd/test_coverage)](https://codeclimate.com/github/gaphor/gaphor/test_coverage)
 [![Translation Status](https://hosted.weblate.org/widgets/gaphor/-/gaphor/svg-badge.svg)](https://hosted.weblate.org/engage/gaphor)
+[![OpenSSF Best Practices](https://www.bestpractices.dev/projects/9512/badge)](https://www.bestpractices.dev/projects/9512)
 [![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg)](https://github.com/RichardLitt/standard-readme)
-[![All Contributors.org](https://img.shields.io/github/all-contributors/gaphor/gaphor/main)](https://github.com/gaphor/gaphor/blob/main/CONTRIBUTORS.md)
 
 
 Gaphor is a UML and SysML modeling application written in Python.

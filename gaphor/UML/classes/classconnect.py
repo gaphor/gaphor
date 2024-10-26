@@ -116,7 +116,7 @@ class AssociationConnect(RelationshipConnect):
         if relation:
             relation.memberEnd[0].type = head_subject
             relation.memberEnd[1].type = tail_subject
-            for end, nav in zip(relation.memberEnd, self._navigabilities):
+            for end, nav in zip(relation.memberEnd, self._navigabilities, strict=False):
                 UML.recipes.set_navigability(relation, end, nav)
         else:
             relation = self.new_relation(head_subject, tail_subject)
