@@ -251,6 +251,9 @@ class TreeModel:
             self.notify_child_model(element.memberNamespace)
 
     def remove_element(self, element: Element, former_owner=_no_value) -> None:
+        if not isinstance(element, Element):
+            return
+
         for child in element.ownedElement:
             self.remove_element(child)
 

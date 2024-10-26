@@ -156,7 +156,7 @@ app = BUNDLE(  # type: ignore
         "UTExportedTypeDeclarations": [
             {
                 "UTTypeIdentifier": "org.gaphor.model",
-                "UTTypeConformsTo": ["gaphor.model"],
+                "UTTypeConformsTo": ["public.xml"],
                 "UTTypeDescription": "Gaphor Model",
                 "UTTypeIconFile": "gaphor.icns",
                 "UTTypeReferenceURL": "https://gaphor.org",

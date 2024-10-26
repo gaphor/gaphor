@@ -17095,6 +17095,7 @@
 <ref refid="DCE:3EEBCC18-6698-11D7-A84E-6C8643AD0CA4"/>
 <ref refid="e9507590-e962-11ea-87d1-cbf2d1fcaed0"/>
 <ref refid="DCE:BFC7B66E-4B37-11D7-B391-02BBFE4396CE"/>
+<ref refid="0cdeb851-8bc7-11ef-9d96-14abc554333b"/>
 </reflist>
 </ownedAttribute>
 <package>
@@ -24183,7 +24184,7 @@ specially for Gaphor</val>
 <val>(0.0, 0.0)</val>
 </top-left>
 <width>
-<val>216.0</val>
+<val>254.0</val>
 </width>
 <height>
 <val>609.6363636363637</val>
@@ -24247,7 +24248,7 @@ specially for Gaphor</val>
 <val>(1.0, 0.0, 0.0, 1.0, 669.0, 142.5)</val>
 </matrix>
 <points>
-<val>[(-22.21839139546836, 74.36363636363632), (27.3279308926368, 4.0)]</val>
+<val>[(3.164484192365876, 74.36363636363632), (27.3279308926368, 4.0)]</val>
 </points>
 <head-connection>
 <ref refid="DCE:EF08ECE4-4B33-11D7-B391-02BBFE4396CE"/>
@@ -24273,7 +24274,7 @@ specially for Gaphor</val>
 <val>(1.0, 0.0, 0.0, 1.0, 470.8828658291744, 144.0)</val>
 </matrix>
 <points>
-<val>[(98.11713417082558, 72.86363636363632), (49.11713417082558, 1.0)]</val>
+<val>[(109.8162082448996, 72.86363636363632), (49.11713417082558, 1.0)]</val>
 </points>
 <head-connection>
 <ref refid="DCE:EF08ECE4-4B33-11D7-B391-02BBFE4396CE"/>
@@ -24427,7 +24428,7 @@ specially for Gaphor</val>
 <val>(1.0, 0.0, 0.0, 1.0, 718.5, 424.5)</val>
 </matrix>
 <points>
-<val>[(0.0, 0.0), (120.5, 0.0), (120.5, 56.5), (0.0, 56.5)]</val>
+<val>[(38.0, 0.0), (120.5, 0.0), (120.5, 56.5), (38.0, 56.5)]</val>
 </points>
 <head-connection>
 <ref refid="DCE:EF08ECE4-4B33-11D7-B391-02BBFE4396CE"/>
@@ -24517,7 +24518,7 @@ specially for Gaphor</val>
 <val>(1.0, 0.0, 0.0, 1.0, 718.5, 321.03515625)</val>
 </matrix>
 <points>
-<val>[(0.0, 4.453586315845314), (355.727272727273, 4.453586315845314)]</val>
+<val>[(38.0, 4.453586315845314), (355.727272727273, 4.453586315845314)]</val>
 </points>
 <head-connection>
 <ref refid="DCE:EF08ECE4-4B33-11D7-B391-02BBFE4396CE"/>
@@ -24549,7 +24550,7 @@ specially for Gaphor</val>
 <val>(1.0, 0.0, 0.0, 1.0, 718.5, 262.0)</val>
 </matrix>
 <points>
-<val>[(0.0, 0.0), (166.0, 0.0), (166.0, 30.988742565845314), (355.727272727273, 30.988742565845314)]</val>
+<val>[(38.0, 0.0), (166.0, 0.0), (166.0, 30.988742565845314), (355.727272727273, 30.988742565845314)]</val>
 </points>
 <head-connection>
 <ref refid="DCE:EF08ECE4-4B33-11D7-B391-02BBFE4396CE"/>
@@ -24787,7 +24788,7 @@ specially for Gaphor</val>
 <val>(1.0, 0.0, 0.0, 1.0, 718.5, 548.5)</val>
 </matrix>
 <points>
-<val>[(0.0, 0.0), (348.727272727273, 0.5)]</val>
+<val>[(38.0, 0.0), (348.727272727273, 0.5)]</val>
 </points>
 <head-connection>
 <ref refid="DCE:EF08ECE4-4B33-11D7-B391-02BBFE4396CE"/>
@@ -24848,7 +24849,7 @@ specially for Gaphor</val>
 <val>(1.0, 0.0, 0.0, 1.0, 1067.227272727273, 609.0)</val>
 </matrix>
 <points>
-<val>[(0.0, 0.0), (-348.727272727273, 3.0)]</val>
+<val>[(0.0, 0.0), (-310.727272727273, 3.0)]</val>
 </points>
 <head-connection>
 <ref refid="e864f917-e896-11ea-96dc-bf74f1f80424"/>
@@ -24882,8 +24883,8 @@ specially for Gaphor</val>
 <ownedAttribute>
 <reflist>
 <ref refid="DCE:C022C54A-4695-11D7-B567-379CA7034986"/>
-<ref refid="DCE:04842A92-4696-11D7-B567-379CA7034986"/>
 <ref refid="DCE:7D121220-4697-11D7-B567-379CA7034986"/>
+<ref refid="DCE:04842A92-4696-11D7-B567-379CA7034986"/>
 </reflist>
 </ownedAttribute>
 <package>
@@ -57875,5 +57876,19 @@ association:not([memberEnd.navigability*=true]) {
 <ref refid="47840aba-8e18-11ef-9861-be7f4daace40"/>
 </tail-connection>
 </general:CommentLineItem>
+<UML:Property id="0cdeb851-8bc7-11ef-9d96-14abc554333b">
+<class_>
+<ref refid="DCE:F10D682A-4A87-11D7-B08B-133D836EF880"/>
+</class_>
+<defaultValue>
+<val>false</val>
+</defaultValue>
+<name>
+<val>isFinalSpecialization</val>
+</name>
+<typeValue>
+<val>Boolean</val>
+</typeValue>
+</UML:Property>
 </model>
 </gaphor>
