@@ -9,7 +9,6 @@ from __future__ import annotations
 
 import itertools
 
-from gaphor.core.modeling import Element
 from gaphor.core.modeling.properties import derived
 from gaphor.UML import uml, umllex
 
@@ -78,7 +77,7 @@ def property_navigability(self: uml.Property) -> list[bool | None]:
 uml.Property.navigability = derived("navigability", bool, 0, 1, property_navigability)
 
 
-def _pr_interface_deps(classifier: Element, dep_type):
+def _pr_interface_deps(classifier: uml.NamedElement, dep_type):
     """Return all interfaces, which are connected to a classifier with given
     dependency type."""
     return (

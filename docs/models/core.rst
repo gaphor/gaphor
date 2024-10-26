@@ -67,29 +67,12 @@ The class ``Base`` is the core of Gaphor’s data model.
    .. automethod:: gaphor.core.modeling.Base.isTypeOf
 
 
-Dependencies
-------------
-
-.. diagram:: Dependencies
-   :model: core
-
 Annotations
 -----------
 
 .. diagram:: Annotations
    :model: core
 
-Namespaces
-----------
-
-.. diagram:: Namespaces
-   :model: core
-
-Types
------
-
-.. diagram:: Types
-   :model: core
 
 Presentations
 -------------

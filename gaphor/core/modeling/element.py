@@ -17,8 +17,6 @@ from gaphor.core.modeling.properties import (
 if TYPE_CHECKING:
     from gaphor.core.modeling.coremodel import (
         Comment,
-        Dependency,
-        Namespace,
         Relationship,
     )
     from gaphor.core.modeling.diagram import Diagram
@@ -53,10 +51,6 @@ class Element(Base):
     relationship: relation_many[Relationship]
     sourceRelationship: relation_many[Relationship]
     targetRelationship: relation_many[Relationship]
-    clientDependency: relation_many[Dependency]
-    supplierDependency: relation_many[Dependency]
-    memberNamespace: relation_one[Namespace]
-    namespace: relation_one[Namespace]
 
     # From UML:
     appliedStereotype: relation_many[Element]
