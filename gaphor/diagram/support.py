@@ -1,7 +1,5 @@
 """For ease of creation, maintain a mapping from Element to Diagram Item."""
 
-from typing import Dict
-
 from gaphor.core.modeling import Element, Presentation
 
 
@@ -16,8 +14,8 @@ def represents(uml_element, **metadata):
 
 
 # Map elements to their (default) representation.
-_element_to_item_map: Dict[type[Element], type[Presentation]] = {}
-_item_to_metadata_map: Dict[type[Presentation], dict[str, object]] = {}
+_element_to_item_map: dict[type[Element], type[Presentation]] = {}
+_item_to_metadata_map: dict[type[Presentation], dict[str, object]] = {}
 
 
 def get_diagram_item(element_cls: type[Element]) -> type[Presentation] | None:

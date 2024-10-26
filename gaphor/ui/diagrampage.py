@@ -1,7 +1,6 @@
 import functools
 import importlib
 import logging
-from typing import Optional
 
 from gaphas.guide import GuidePainter
 from gaphas.painter import FreeHandPainter, HandlePainter, PainterChain
@@ -79,9 +78,9 @@ class DiagramPage:
         self.modeling_language = modeling_language
         self.style_manager = Adw.StyleManager.get_default()
 
-        self.view: Optional[GtkView] = None
-        self.widget: Optional[Gtk.Widget] = None
-        self.diagram_css: Optional[Gtk.CssProvider] = None
+        self.view: GtkView | None = None
+        self.widget: Gtk.Widget | None = None
+        self.diagram_css: Gtk.CssProvider | None = None
 
         self.rubberband_state = RubberbandState()
         self.context_menu = Gtk.PopoverMenu.new_from_model(popup_model(diagram))

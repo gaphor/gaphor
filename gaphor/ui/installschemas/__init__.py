@@ -6,6 +6,7 @@ Install our schema:
     glib-compile-schemas ~/.local/share/glib-2.0/schemas/
 
 """
+
 import argparse
 import shutil
 import subprocess

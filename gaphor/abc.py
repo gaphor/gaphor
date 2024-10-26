@@ -1,7 +1,8 @@
 from __future__ import annotations
 
 import abc
-from typing import TYPE_CHECKING, Iterable
+from collections.abc import Iterable
+from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from gaphor.core.modeling import Element

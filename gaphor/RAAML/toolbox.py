@@ -1,4 +1,5 @@
 """The action definition for the RAAML toolbox."""
+
 from gaphor.diagram.diagramtoolbox import (
     DiagramType,
     DiagramTypes,

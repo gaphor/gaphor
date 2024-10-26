@@ -65,6 +65,10 @@ flowboxchild {
   margin-top: 6px;
 }
 
+.propertypage .plaintext {
+  margin-top: 6px
+}
+
 frame .internals-label,
 frame > textview {
   padding: 6px;

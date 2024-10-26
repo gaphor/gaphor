@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Callable, Collection
+from collections.abc import Callable, Collection
 
 from gi.repository import Gdk, GLib, GObject
 

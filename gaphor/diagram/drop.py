@@ -1,13 +1,13 @@
 from __future__ import annotations
 
 import logging
-from typing import Callable
+from collections.abc import Callable
 
 from gaphas.geometry import Rectangle
 from gaphas.item import NW, SE
 from generic.multidispatch import FunctionDispatcher, multidispatch
 
-from gaphor.core.modeling import Diagram, Element, Presentation, Relationship
+from gaphor.core.modeling import Base, Diagram, Element, Presentation, Relationship
 from gaphor.diagram.group import group, ungroup
 from gaphor.diagram.presentation import ElementPresentation, connect
 from gaphor.diagram.support import get_diagram_item, get_diagram_item_metadata
@@ -17,6 +17,16 @@ from gaphor.UML.uml import ActivityEdge
 log = logging.getLogger(__name__)
 
 
+def no_drop(element: Base, diagram: Diagram, x: float, y: float):
+    return None
+
+
+drop: FunctionDispatcher[Callable[[Element, Element], bool]] = multidispatch(
+    Base, Diagram
+)(no_drop)
+
+
+@drop.register(Element, Diagram)
 def drop_element(
     element: Element, diagram: Diagram, x: float, y: float
 ) -> Presentation | None:
@@ -29,11 +39,6 @@ def drop_element(
 
         return item
     return None
-
-
-drop: FunctionDispatcher[Callable[[Element, Element], bool]] = multidispatch(
-    Element, Diagram
-)(drop_element)
 
 
 @drop.register(Presentation, Diagram)

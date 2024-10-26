@@ -61,7 +61,7 @@ def test_all_named_elements_have_named_items(item_class, element_class):
         assert issubclass(item_class, Named)
 
     if issubclass(item_class, Named):
-        assert issubclass(element_class, (NamedElement, Relationship))
+        assert issubclass(element_class, NamedElement | Relationship)
 
 
 CLASSIFIED_EXCLUSIONS = [

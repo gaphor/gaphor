@@ -1,8 +1,8 @@
 from __future__ import annotations
 
 import functools
-from collections.abc import Hashable
-from typing import Callable, Iterator, Protocol, Sequence, TypedDict, Union
+from collections.abc import Callable, Hashable, Iterator, Sequence
+from typing import Protocol, TypedDict
 
 from gaphor.core.styling.compiler import compile_style_sheet
 from gaphor.core.styling.declarations import (
@@ -38,7 +38,7 @@ Style = TypedDict(
         "dash-style": Sequence[Number],
         "padding": Padding,
         "font-family": str,
-        "font-size": Union[int, float, str],
+        "font-size": int | float | str,
         "font-style": FontStyle,
         "font-weight": FontWeight,
         "justify-content": JustifyContent,
@@ -78,14 +78,11 @@ class StyleNode(Hashable, Protocol):
     pseudo: str | None
     dark_mode: bool | None
 
-    def name(self) -> str:
-        ...
+    def name(self) -> str: ...
 
-    def parent(self) -> StyleNode | None:
-        ...
+    def parent(self) -> StyleNode | None: ...
 
-    def children(self) -> Iterator[StyleNode]:
-        ...
+    def children(self) -> Iterator[StyleNode]: ...
 
     def attribute(self, name: str) -> str | None:
         """Obtain a string representation of an attribute.
@@ -93,8 +90,7 @@ class StyleNode(Hashable, Protocol):
         If the attribute does not exist, ``None`` is returned.
         """
 
-    def state(self) -> Sequence[str]:
-        ...
+    def state(self) -> Sequence[str]: ...
 
 
 def merge_styles(*styles: Style) -> Style:

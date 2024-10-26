@@ -3,7 +3,7 @@ from __future__ import annotations
 import importlib.resources
 import textwrap
 
-from gaphor.core.modeling.element import Element
+from gaphor.core.modeling.base import Base
 from gaphor.core.modeling.event import AttributeUpdated
 from gaphor.core.modeling.properties import attribute
 from gaphor.core.styling import CompiledStyleSheet
@@ -21,7 +21,7 @@ DEFAULT_STYLE_SHEET = textwrap.dedent(
 )
 
 
-class StyleSheet(Element):
+class StyleSheet(Base):
     _compiled_style_sheet: CompiledStyleSheet
 
     def __init__(self, id=None, model=None):

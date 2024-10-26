@@ -3,14 +3,14 @@
 from __future__ import annotations
 
 from collections import OrderedDict
+from collections.abc import Callable, Iterator
 from contextlib import contextmanager
-from typing import Callable, Iterator, Protocol, TypeVar, overload
+from typing import Protocol, TypeVar, overload
 
 from gaphor.abc import Service
 from gaphor.core.eventmanager import EventManager, event_handler
-from gaphor.core.modeling.diagram import Diagram
-from gaphor.core.modeling.element import (
-    Element,
+from gaphor.core.modeling.base import (
+    Base,
     EventWatcherProtocol,
     Handler,
     Id,
@@ -18,6 +18,7 @@ from gaphor.core.modeling.element import (
     UnlinkEvent,
     generate_id,
 )
+from gaphor.core.modeling.diagram import Diagram
 from gaphor.core.modeling.elementdispatcher import ElementDispatcher, EventWatcher
 from gaphor.core.modeling.event import (
     ElementCreated,
@@ -26,13 +27,12 @@ from gaphor.core.modeling.event import (
 )
 from gaphor.core.modeling.presentation import Presentation
 
-T = TypeVar("T", bound=Element)
+T = TypeVar("T", bound=Base)
 P = TypeVar("P", bound=Presentation)
 
 
 class EventHandler(Protocol):
-    def handle(self, *events):
-        ...
+    def handle(self, *events): ...
 
 
 class RecordingEventManager:
@@ -67,7 +67,7 @@ class ElementFactory(Service):
     ):
         self.event_manager: EventHandler | None = event_manager
         self.element_dispatcher = element_dispatcher
-        self._elements: dict[Id, Element] = OrderedDict()
+        self._elements: dict[Id, Base] = OrderedDict()
         if event_manager:
             event_manager.subscribe(self._on_unlink_event)
 
@@ -99,7 +99,7 @@ class ElementFactory(Service):
             if not diagram:
                 raise TypeError("Presentation types require a diagram")
             type_args = {"diagram": diagram}
-        elif issubclass(type, Element):
+        elif issubclass(type, Base):
             if diagram:
                 raise TypeError("Element types require no diagram")
             type_args = {"model": self}
@@ -119,31 +119,28 @@ class ElementFactory(Service):
         """Return the amount of elements currently in the factory."""
         return len(self._elements)
 
-    def lookup(self, id: Id) -> Element | None:
+    def lookup(self, id: Id) -> Base | None:
         """Find element with a specific id."""
         return self._elements.get(id)
 
-    def __getitem__(self, id: Id) -> Element:
+    def __getitem__(self, id: Id) -> Base:
         return self._elements[id]
 
     def __iter__(self):
         return iter(self._elements.values())
 
-    def __contains__(self, element: Element) -> bool:
+    def __contains__(self, element: Base) -> bool:
         assert isinstance(element.id, Id)
         return self.lookup(element.id) is element
 
     @overload
-    def select(self, expression: Callable[[Element], bool]) -> Iterator[Element]:
-        ...
+    def select(self, expression: Callable[[Base], bool]) -> Iterator[Base]: ...
 
     @overload
-    def select(self, expression: type[T]) -> Iterator[T]:
-        ...
+    def select(self, expression: type[T]) -> Iterator[T]: ...
 
     @overload
-    def select(self, expression: None) -> Iterator[Element]:
-        ...
+    def select(self, expression: None) -> Iterator[Base]: ...
 
     def select(self, expression=None):
         """Iterate elements that comply with expression."""
@@ -155,8 +152,8 @@ class ElementFactory(Service):
             yield from (e for e in self._elements.values() if expression(e))
 
     def lselect(
-        self, expression: Callable[[Element], bool] | type[T] | None = None
-    ) -> list[Element]:
+        self, expression: Callable[[Base], bool] | type[T] | None = None
+    ) -> list[Base]:
         """Get a list of elements that comply with expression.
 
         The expression can be one of:
@@ -170,7 +167,7 @@ class ElementFactory(Service):
         """Return a list with all id's in the factory."""
         return iter(self._elements.keys())
 
-    def values(self) -> Iterator[Element]:
+    def values(self) -> Iterator[Base]:
         """Return a list with all elements in the factory."""
         return iter(self._elements.values())
 
@@ -179,7 +176,7 @@ class ElementFactory(Service):
         return bool(self._elements)
 
     def watcher(
-        self, element: Element, default_handler: Handler | None = None
+        self, element: Base, default_handler: Handler | None = None
     ) -> EventWatcherProtocol:
         element_dispatcher = self.element_dispatcher
         return EventWatcher(element, element_dispatcher, default_handler)

@@ -1,7 +1,7 @@
 import hashlib
 from pathlib import Path
 
-from gi.repository import Adw, Gio, Gtk
+from gi.repository import Adw, Gio, GLib, Gtk
 
 from gaphor.abc import ActionProvider
 from gaphor.core import event_handler
@@ -38,6 +38,7 @@ class ModelChanged(UIComponent, ActionProvider):
         self._file_digest: bytes | None = None
         self._banner: Adw.Banner | None = None
         self._monitor: Gio.FileMonitor | None = None
+        self._timeout_id: int = 0
         self.event_manager.subscribe(self._on_model_reset)
 
     def shutdown(self):
@@ -70,18 +71,30 @@ class ModelChanged(UIComponent, ActionProvider):
 
     def _on_file_changed(self, _monitor, _file, _other_file, event_type):
         if (
-            self._banner
+            self._timeout_id == 0
+            and self._banner
             and event_type != Gio.FileMonitorEvent.ATTRIBUTE_CHANGED
             and self._file_digest != file_digest(self._filename)
         ):
+            self._timeout_id = GLib.timeout_add(1000, self._delayed_reveal)
+
+    def _delayed_reveal(self):
+        if self._banner:
             self._banner.set_revealed(True)
+        self._timeout_id = 0
+        return GLib.SOURCE_REMOVE
 
     @event_handler(ModelReady, ModelSaved)
     def _on_model_reset(self, event: ModelReady | ModelSaved):
         if event.filename != self._filename:
             self._filename = event.filename
-            self._file_digest = file_digest(self._filename)
             self._update_monitor()
+
+        self._file_digest = file_digest(self._filename)
+
+        if self._timeout_id:
+            GLib.source_remove(self._timeout_id)
+            self._timeout_id = 0
 
         if self._banner:
             self._banner.set_revealed(False)

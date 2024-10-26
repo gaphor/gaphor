@@ -1,4 +1,5 @@
 """Stereotype property page."""
+
 from unicodedata import normalize
 
 from gi.repository import Gdk, Gio, GLib, GObject, Gtk
@@ -102,6 +103,7 @@ def stereotype_set_model_with_interaction(stereotype_list, model):
                 signal_handlers=text_field_handlers("slot_value"),
             ),
         ],
+        strict=False,
     ):
         column.set_factory(factory)
 

@@ -21,7 +21,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  python_version: '3.12'
+  python_version: '3.13'
   mainline_build: ${{ github.ref == 'refs/heads/main' || github.event.label.name == 'translation' || github.event_name == 'release' }}
 
 jobs:
@@ -39,10 +39,12 @@ jobs:
           egress-policy: block
           allowed-endpoints: >
             files.pythonhosted.org:443
-            github.com:443
             pypi.org:443
-            objects.githubusercontent.com
-      - uses: actions/checkout@d632683dd7b4114ad314bca15554477dd762a938 # v4.2.0
+            github.com:443
+            api.github.com:443
+            objects.githubusercontent.com:443
+            raw.githubusercontent.com:443
+      - uses: actions/checkout@eef61447b9ff4aafe5dcd4e0bbf5d482be7e7871 # v4.2.1
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Set up Python
@@ -70,7 +72,7 @@ jobs:
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     strategy:
       matrix:
-        python_version: ['3.11', '3.12']
+        python_version: ['3.11', '3.12', '3.13']
     outputs:
       targz: gaphor-${{ steps.install.outputs.version }}.tar.gz
       wheel: gaphor-${{ steps.install.outputs.version }}-py3-none-any.whl
@@ -82,13 +84,13 @@ jobs:
           mutter dbus-x11 gtk4 gobject-introspection-devel
           cairo-gobject-devel gtksourceview5-devel libadwaita-devel cairo-devel
           python${{ matrix.python_version }}-devel
-      - uses: actions/checkout@d632683dd7b4114ad314bca15554477dd762a938 # v4.2.0
+      - uses: actions/checkout@eef61447b9ff4aafe5dcd4e0bbf5d482be7e7871 # v4.2.1
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Set ownership of checkout directory
         run: chown -R $(id -u):$(id -g) $PWD
       - name: Use Python Dependency Cache
-        uses: actions/cache@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9 # v4.0.2
+        uses: actions/cache@3624ceb22c1c5a301c8db4169662070a689d9ea8 # v4.1.1
         with:
           path: ~/.cache/pip
           key: ${{ runner.os }}-python${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}-39
@@ -115,13 +117,13 @@ jobs:
         run: poetry build
       - name: Upload gaphor-${{ steps.install.outputs.version }}.tar.gz
         if: ${{ matrix.python_version == env.python_version }}
-        uses: actions/upload-artifact@50769540e7f4bd5e21e526ee35c689e35e0d6874 # v4.4.0
+        uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882 # v4.4.3
         with:
           name: gaphor-${{ steps.install.outputs.version }}.tar.gz
           path: dist/gaphor-${{ steps.install.outputs.version }}.tar.gz
       - name: Upload gaphor-${{ steps.install.outputs.version }}-py3-none-any.whl
         if: ${{ matrix.python_version == env.python_version }}
-        uses: actions/upload-artifact@50769540e7f4bd5e21e526ee35c689e35e0d6874 # v4.4.0
+        uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882 # v4.4.3
         with:
           name: gaphor-${{ steps.install.outputs.version }}-py3-none-any.whl
           path: dist/gaphor-${{ steps.install.outputs.version }}-py3-none-any.whl
@@ -139,11 +141,11 @@ jobs:
         with:
           egress-policy: audit
 
-      - uses: actions/checkout@d632683dd7b4114ad314bca15554477dd762a938 # v4.2.0
+      - uses: actions/checkout@eef61447b9ff4aafe5dcd4e0bbf5d482be7e7871 # v4.2.1
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Use Python Dependency Cache
-        uses: actions/cache@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9 # v4.0.2
+        uses: actions/cache@3624ceb22c1c5a301c8db4169662070a689d9ea8 # v4.1.1
         with:
           path: ~/.cache/pip
           key: ${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}-22.04
@@ -159,10 +161,10 @@ jobs:
     strategy:
       matrix:
         target:
-          - runner: macos-12
-            suffix: -intel
-          - runner: macos-14
-            suffix: -arm
+          - runner: macos-13
+            arch: intel
+          - runner: macos-15
+            arch: arm
     name: macOS
     needs: lint
     runs-on: ${{ matrix.target.runner }}
@@ -174,7 +176,7 @@ jobs:
       artifact-intel: ${{ steps.output.outputs.artifact-intel }}
       artifact-arm: ${{ steps.output.outputs.artifact-arm }}
     steps:
-      - uses: actions/checkout@d632683dd7b4114ad314bca15554477dd762a938 # v4.2.0
+      - uses: actions/checkout@eef61447b9ff4aafe5dcd4e0bbf5d482be7e7871 # v4.2.1
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Install macOS Dependencies
@@ -206,7 +208,8 @@ jobs:
         uses: ./.github/actions/macos_dmg
         with:
           sign_app: ${{ env.mainline_build }}
-          version: ${{ steps.install.outputs.version }}${{ matrix.target.suffix }}
+          version: ${{ steps.install.outputs.version }}
+          arch: ${{ matrix.target.arch }}
           base64_encoded_p12: ${{ secrets.BASE64_ENCODED_P12 }}
           certpassword_p12: ${{ secrets.CERTPASSWORD_P12 }}
           notary_username:  ${{ secrets.APPLE_NOTARY_USER }}
@@ -214,7 +217,7 @@ jobs:
           notary_team_id: ${{ secrets.APPLE_TEAM_ID }}
       - name: Output
         id: output
-        run: echo "artifact${{ matrix.target.suffix }}=${{ steps.create.outputs.artifact }}" >> $GITHUB_OUTPUT
+        run: echo "artifact-${{ matrix.target.arch }}=${{ steps.create.outputs.artifact }}" >> $GITHUB_OUTPUT
 
   check-macos-app:
     name: Check macOS App
@@ -222,9 +225,9 @@ jobs:
     strategy:
       matrix:
         target:
-          - runner: macos-12
+          - runner: macos-13
             artifact: ${{ needs.macos.outputs.artifact-intel }}
-          - runner: macos-14
+          - runner: macos-15
             artifact: ${{ needs.macos.outputs.artifact-arm }}
     runs-on: ${{ matrix.target.runner }}
     timeout-minutes: 10
@@ -257,7 +260,7 @@ jobs:
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     steps:
       - name: GTK binaries get from cache
-        uses: actions/cache@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9 # v4.0.2
+        uses: actions/cache@3624ceb22c1c5a301c8db4169662070a689d9ea8 # v4.1.1
         id: cache
         with:
           path: C:\gtk\**
@@ -277,19 +280,19 @@ jobs:
           Write-Output "XDG_DATA_HOME=$HOME\.local\share" >> $env:GITHUB_ENV
           Write-Output "C:\gtk\bin" >> $env:GITHUB_PATH
           choco install graphviz -y
-      - uses: actions/checkout@d632683dd7b4114ad314bca15554477dd762a938 # v4.2.0
+      - uses: actions/checkout@eef61447b9ff4aafe5dcd4e0bbf5d482be7e7871 # v4.2.1
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Set up Python
         uses: actions/setup-python@f677139bbe7f9c59b41e40162b753c062f5d49a3 # v5.2.0
         with:
-          python-version: ${{ env.python_version }}
+          python-version: 3.12
           cache: pip
       - name: Install Dependencies
         id: install
         uses: ./.github/actions/install
         with:
-          python-command: py -${{ env.python_version }}
+          python-command: py -3.12
       - name: Run Gaphor Tests
         run: poetry run pytest --cov
       - name: Create Windows Executables
@@ -371,7 +374,7 @@ jobs:
           name: ${{ needs.linux-wheel.outputs.wheel }}
           path: dist
       - name: Publish package distributions to PyPI
-        uses: pypa/gh-action-pypi-publish@897895f1e160c830e369f9779632ebc134688e1b # release/v1
+        uses: pypa/gh-action-pypi-publish@f7600683efdcb7656dec5b29656edb7bc586e597 # release/v1
 
   trigger-website-version-update:
     name: Trigger version update on gaphor/gaphor.github.io

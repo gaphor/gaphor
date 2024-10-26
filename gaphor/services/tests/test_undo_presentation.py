@@ -5,6 +5,7 @@
 * Variables
 * Solver: add_constraint, remove_constraint
 """
+
 import pytest
 from gaphas.connector import Handle
 from gaphas.segment import Segment
