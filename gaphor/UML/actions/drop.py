@@ -78,12 +78,6 @@ def drop_partition(partition: ActivityPartition, diagram: Diagram, x: float, y: 
             if not outgoing.target:
                 continue
             if partition.node.includes(outgoing.target):
-                # outgoing_class = get_diagram_item(type(outgoing))
-                # if not outgoing_class:
-                #     continue
-                # outgoing_item = diagram.create(outgoing_class)
-                # outgoing_item.subject = outgoing
-                # outgoing_item.diagram = diagram
                 drop_relationship_on_diagram(outgoing, diagram, x, y)
 
     return item
