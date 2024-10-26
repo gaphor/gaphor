@@ -1,7 +1,7 @@
 name: Release
 
 on:
-  # Run the workflow each time new commits are pushed to the candidate branch. 
+  # Run the workflow each time new commits are pushed to the candidate branch.
   push:
     branches: [ "main" ]
     paths:
@@ -45,7 +45,7 @@ jobs:
           repo-token: ${{ secrets.SNAPCRAFTERS_BOT_COMMIT }}
           store-token: ${{ secrets.SNAP_STORE }}
           channel: latest/edge
-  
+
   call-for-testing:
     name: 📣 Create call for testing
     needs: [release, get-architectures]
