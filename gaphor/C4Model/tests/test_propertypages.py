@@ -4,7 +4,7 @@ from gaphor.diagram.tests.fixtures import find
 
 
 def test_description_property_page(event_manager, element_factory):
-    subject = element_factory.create(C4Model.c4model.C4Container)
+    subject = element_factory.create(C4Model.c4model.Container)
     property_page = DescriptionPropertyPage(subject, event_manager)
 
     widget = property_page.construct()
@@ -15,7 +15,7 @@ def test_description_property_page(event_manager, element_factory):
 
 
 def test_technology_property_page(event_manager, element_factory):
-    subject = element_factory.create(C4Model.c4model.C4Container)
+    subject = element_factory.create(C4Model.c4model.Container)
     property_page = TechnologyPropertyPage(subject, event_manager)
 
     widget = property_page.construct()

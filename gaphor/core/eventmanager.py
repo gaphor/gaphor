@@ -10,7 +10,27 @@ from gaphor.abc import Service
 
 def event_handler(*event_types):
     """Mark a function/method as an event handler for a particular type of
-    event."""
+    event.
+
+    Given a custom event type:
+
+    >>> class CustomEvent:
+    ...     def __str__(self):
+    ...         return type(self).__name__
+
+    You can apply this to a handler method or function:
+
+    >>> @event_handler(CustomEvent)
+    ... def custom_handler(event: CustomEvent):
+    ...     print(event)
+
+    This will allow you to let the even be handled by an event manager:
+
+    >>> event_manager = EventManager()
+    >>> event_manager.subscribe(custom_handler)
+    >>> event_manager.handle(CustomEvent())
+    CustomEvent
+    """
 
     def wrapper(func):
         func.__event_types__ = event_types
@@ -20,7 +40,13 @@ def event_handler(*event_types):
 
 
 class EventManager(Service):
-    """The Event Manager."""
+    """The Event Manager provides a flexible way to dispatch events.
+
+    Event dispatching is a central component in Gaphor. It allows components
+    in Gaphor to react to changes in the application.
+
+    Events are dispatched by type.
+    """
 
     def __init__(self) -> None:
         self._events = _Manager()
@@ -34,8 +60,8 @@ class EventManager(Service):
     def subscribe(self, handler: Handler) -> None:
         """Register a handler.
 
-        Handlers are triggered (executed) when specific events are
-        emitted through the handle() method.
+        Handlers are triggered (executed) when events are
+        emitted through the :obj:`~gaphor.core.eventmanager.EventManager.handle` method.
         """
         self._subscribe(handler, self._events)
 

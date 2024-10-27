@@ -17,7 +17,7 @@ from gaphas.item import SE
 
 from gaphor.core import gettext
 from gaphor.core.modeling import Comment, Diagram, Element, Picture, Presentation
-from gaphor.diagram import general
+from gaphor.diagram.general import diagramitems as general
 from gaphor.diagram.group import group
 
 ItemFactory = Callable[[Diagram, Presentation | None], Presentation]

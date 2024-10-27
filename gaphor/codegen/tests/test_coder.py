@@ -22,6 +22,7 @@ from gaphor.core.modeling.modelinglanguage import (
     CoreModelingLanguage,
     MockModelingLanguage,
 )
+from gaphor.diagram.general.modelinglanguage import GeneralModelingLanguage
 from gaphor.UML.modelinglanguage import UMLModelingLanguage
 
 
@@ -29,7 +30,9 @@ from gaphor.UML.modelinglanguage import UMLModelingLanguage
 def core_metamodel():
     return load_model(
         "models/Core.gaphor",
-        MockModelingLanguage(CoreModelingLanguage(), UMLModelingLanguage()),
+        MockModelingLanguage(
+            CoreModelingLanguage(), GeneralModelingLanguage(), UMLModelingLanguage()
+        ),
     )
 
 
@@ -37,7 +40,9 @@ def core_metamodel():
 def uml_metamodel():
     return load_model(
         "models/UML.gaphor",
-        MockModelingLanguage(CoreModelingLanguage(), UMLModelingLanguage()),
+        MockModelingLanguage(
+            CoreModelingLanguage(), GeneralModelingLanguage(), UMLModelingLanguage()
+        ),
     )
 
 
@@ -210,8 +215,8 @@ def test_simple_attribute(uml_metamodel: ElementFactory):
 def test_order_classes(uml_metamodel):
     classes = list(order_classes(uml_metamodel.select(UML.Class)))
 
-    assert classes[0].name == "NamedElement"
-    assert classes[1].name == "PackageableElement"
+    assert classes[0].name == "Element"
+    assert classes[1].name == "NamedElement"
 
 
 def test_coder_write_association(navigable_association: UML.Association):

@@ -1,5 +1,5 @@
 from gaphor import UML
-from gaphor.core.modeling import Dependency, swap_element_type
+from gaphor.core.modeling import swap_element_type
 from gaphor.diagram.propertypages import (
     PropertyPageBase,
     PropertyPages,
@@ -10,20 +10,20 @@ from gaphor.UML.classes.classespropertypages import new_builder
 from gaphor.UML.classes.dependency import DependencyItem
 
 
-@PropertyPages.register(Dependency)
+@PropertyPages.register(UML.Dependency)
 class DependencyPropertyPage(PropertyPageBase):
     """Dependency editor."""
 
     order = 15
 
     DEPENDENCIES = (
-        Dependency,
+        UML.Dependency,
         UML.Usage,
         UML.Realization,
         UML.InterfaceRealization,
     )
 
-    def __init__(self, subject: Dependency, event_manager):
+    def __init__(self, subject: UML.Dependency, event_manager):
         self.subject = subject
         self.event_manager = event_manager
         self.watcher = subject.watcher()
@@ -59,7 +59,7 @@ class DependencyItemPropertyPage(PropertyPageBase):
     order = 20
 
     DEPENDENCIES = (
-        Dependency,
+        UML.Dependency,
         UML.Usage,
         UML.Realization,
         UML.InterfaceRealization,

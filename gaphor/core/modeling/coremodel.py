@@ -42,6 +42,7 @@ class PendingChange(Element):
 class ElementChange(PendingChange):
     diagram_id: _attribute[str] = _attribute("diagram_id", str)
     element_name: _attribute[str] = _attribute("element_name", str)
+    modeling_language: _attribute[str] = _attribute("modeling_language", str)
 
 
 class ValueChange(PendingChange):
@@ -64,28 +65,6 @@ class Relationship(Element):
     target: relation_many[Element]
 
 
-class Dependency(Relationship):
-    client: relation_one[Element]
-    supplier: relation_one[Element]
-
-
-class NamedElement(Element):
-    visibility = _enumeration("visibility", ("public", "private", "package", "protected"), "public")
-
-
-class Namespace(NamedElement):
-    member: relation_many[Element]
-    ownedMember: relation_many[Element]
-
-
-class Type(Namespace):
-    pass
-
-
-class Feature(Type):
-    isStatic: _attribute[int] = _attribute("isStatic", int, default=False)
-
-
 
 Element.ownedElement = derivedunion("ownedElement", Element)
 Element.owner = derivedunion("owner", Element, upper=1)
@@ -93,41 +72,21 @@ Element.presentation = association("presentation", Presentation, composite=True,
 Element.ownedDiagram = association("ownedDiagram", Diagram, composite=True, opposite="element")
 Element.comment = association("comment", Comment, opposite="annotatedElement")
 Element.relationship = derivedunion("relationship", Relationship)
-Element.clientDependency = association("clientDependency", Dependency, composite=True, opposite="client")
-Element.supplierDependency = association("supplierDependency", Dependency, opposite="supplier")
-Element.memberNamespace = derivedunion("memberNamespace", Namespace, upper=1)
-Element.namespace = derivedunion("namespace", Namespace, upper=1)
 Element.sourceRelationship = derivedunion("sourceRelationship", Relationship)
 Element.targetRelationship = derivedunion("targetRelationship", Relationship)
 Element.ownedElement.add(Element.ownedDiagram)  # type: ignore[attr-defined]
-Element.ownedElement.add(Element.clientDependency)  # type: ignore[attr-defined]
-Element.sourceRelationship.add(Element.clientDependency)  # type: ignore[attr-defined]
-Element.targetRelationship.add(Element.supplierDependency)  # type: ignore[attr-defined]
-Element.memberNamespace.add(Element.namespace)  # type: ignore[attr-defined]
-Element.owner.add(Element.namespace)  # type: ignore[attr-defined]
 Element.relationship.add(Element.sourceRelationship)  # type: ignore[attr-defined]
 Element.relationship.add(Element.targetRelationship)  # type: ignore[attr-defined]
 Diagram.ownedPresentation = association("ownedPresentation", Presentation, composite=True, opposite="diagram")
 Diagram.element = association("element", Element, upper=1, opposite="ownedDiagram")
-Element.ownedElement.add(Diagram.ownedPresentation)  # type: ignore[attr-defined]
 Element.owner.add(Diagram.element)  # type: ignore[attr-defined]
 Presentation.parent = association("parent", Presentation, upper=1, opposite="children")
 Presentation.children = association("children", Presentation, composite=True, opposite="parent")
 Presentation.diagram = association("diagram", Diagram, upper=1, opposite="ownedPresentation")
 Presentation.subject = association("subject", Element, upper=1, opposite="presentation")
-Element.owner.add(Presentation.diagram)  # type: ignore[attr-defined]
 Comment.annotatedElement = association("annotatedElement", Element, opposite="comment")
 Relationship.relatedElement = derivedunion("relatedElement", Element, lower=1)
 Relationship.source = derivedunion("source", Element)
 Relationship.target = derivedunion("target", Element)
 Relationship.relatedElement.add(Relationship.source)  # type: ignore[attr-defined]
 Relationship.relatedElement.add(Relationship.target)  # type: ignore[attr-defined]
-Dependency.client = association("client", Element, upper=1, opposite="clientDependency")
-Dependency.supplier = association("supplier", Element, upper=1, opposite="supplierDependency")
-Element.owner.add(Dependency.client)  # type: ignore[attr-defined]
-Relationship.source.add(Dependency.client)  # type: ignore[attr-defined]
-Relationship.target.add(Dependency.supplier)  # type: ignore[attr-defined]
-Namespace.member = derivedunion("member", Element)
-Namespace.ownedMember = derivedunion("ownedMember", Element)
-Namespace.member.add(Namespace.ownedMember)  # type: ignore[attr-defined]
-Element.ownedElement.add(Namespace.ownedMember)  # type: ignore[attr-defined]

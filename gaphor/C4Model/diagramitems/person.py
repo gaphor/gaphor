@@ -6,13 +6,13 @@ from gaphor.diagram.shapes import Box, CssNode, Text, stroke
 from gaphor.diagram.support import represents
 
 
-@represents(c4model.C4Person)
+@represents(c4model.Person)
 class C4PersonItem(Named, ElementPresentation):
     def __init__(self, diagram, id=None):
         super().__init__(diagram, id, width=48, height=48)
 
         self.watch("subject.name")
-        self.watch("subject[C4Person].description")
+        self.watch("subject[Person].description")
 
     def update_shapes(self, event=None):
         self.shape = Box(

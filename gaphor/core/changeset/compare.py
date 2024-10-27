@@ -53,6 +53,7 @@ def compare(
                 ElementChange,
                 op="remove",
                 element_name=type(e).__name__,
+                modeling_language=type(e).__modeling_language__,
                 element_id=key,
             )
 
@@ -65,6 +66,7 @@ def compare(
                 ElementChange,
                 op="add",
                 element_name=type(e).__name__,
+                modeling_language=type(e).__modeling_language__,
                 element_id=key,
                 diagram_id=e.diagram.id if isinstance(e, Presentation) else None,
             )

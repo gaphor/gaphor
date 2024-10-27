@@ -142,7 +142,6 @@ def test_upgrade_note_on_model_element(loader, element_factory):
     loader(cls_item, cls)
     _, cls_item, cls, *_ = element_factory.lselect()
 
-    assert not cls_item.note
     assert cls.note == "my note"
 
 
@@ -158,6 +157,4 @@ def test_upgrade_append_notes_on_model_element(loader, element_factory):
     loader(cls_item1, cls_item2, cls)
     _, cls_item1, cls_item2, cls, *_ = element_factory.lselect()
 
-    assert not cls_item1.note
-    assert not cls_item2.note
     assert cls.note == "my note\n\nanother note"

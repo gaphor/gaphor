@@ -55,5 +55,9 @@ class ModelingLanguage(abc.ABC):
         """Iterate element types."""
 
     @abc.abstractmethod
-    def lookup_element(self, name: str) -> type[Element] | None:
-        """Look up a model element type by (class) name."""
+    def lookup_element(self, name: str, ns: str | None = None) -> type[Element] | None:
+        """Look up a model element type by (class) name.
+
+        A namespace may be provided. This will allow the model to be loaded from
+        that specific modeling language only.
+        """

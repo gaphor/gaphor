@@ -14,7 +14,7 @@ from gaphor.core.modeling.event import (
     DiagramUpdateRequested,
 )
 from gaphor.diagram.deletable import deletable
-from gaphor.diagram.general import CommentLineItem
+from gaphor.diagram.general.diagramitems import CommentLineItem
 from gaphor.event import Notification
 from gaphor.i18n import gettext
 from gaphor.transaction import TransactionBegin, TransactionCommit, TransactionRollback

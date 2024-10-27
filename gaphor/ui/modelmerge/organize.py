@@ -8,6 +8,7 @@ from gi.repository import Gio, GObject
 from gaphor.core.changeset.apply import applicable
 from gaphor.core.modeling import (
     Diagram,
+    Element,
     ElementChange,
     PendingChange,
     Presentation,
@@ -165,7 +166,7 @@ def organize_changes(element_factory, modeling_language):
                 gettext("Update element “{name}”").format(
                     name=element.name or gettext("<None>")
                 )
-                if element.name
+                if (isinstance(element, Element) and element.name)
                 else gettext("Update element of type “{type}”").format(
                     type=type(element).__name__
                 ),

@@ -144,7 +144,15 @@ def visible(element: Element) -> bool:
         )
         or (
             # Some types we want to show, except at top level
-            (not (element.owner or element.memberNamespace))
+            (
+                not (
+                    element.owner
+                    or (
+                        isinstance(element, UML.NamedElement)
+                        and element.memberNamespace
+                    )
+                )
+            )
             and isinstance(element, UML.MultiplicityElement)
         )
     )
@@ -206,7 +214,14 @@ class TreeModel:
         self, element: Element, former_owner=_no_value
     ) -> Branch | None:
         if (
-            owner := (element.owner or element.memberNamespace)
+            owner := (
+                element.owner
+                or (
+                    element.memberNamespace
+                    if isinstance(element, UML.NamedElement)
+                    else None
+                )
+            )
             if former_owner is _no_value
             else former_owner
         ) is None:
@@ -232,10 +247,13 @@ class TreeModel:
             owner_branch.append(element)
         elif element.owner:
             self.notify_child_model(element.owner)
-        elif element.memberNamespace:
+        elif isinstance(element, UML.NamedElement) and element.memberNamespace:
             self.notify_child_model(element.memberNamespace)
 
     def remove_element(self, element: Element, former_owner=_no_value) -> None:
+        if not isinstance(element, Element):
+            return
+
         for child in element.ownedElement:
             self.remove_element(child)
 
@@ -248,6 +266,7 @@ class TreeModel:
             element.memberNamespace
             if (
                 former_owner is None
+                and isinstance(element, UML.NamedElement)
                 and element.memberNamespace
                 and element.memberNamespace is not element.namespace
             )
@@ -279,12 +298,18 @@ class TreeModel:
 
         del self.branches[tree_item]
 
-        self.notify_child_model(tree_item.element)
+        if tree_item.element:
+            self.notify_child_model(tree_item.element)
 
-    def notify_child_model(self, element):
+    def notify_child_model(self, element: Element):
         # Only notify the change, the branch is created in child_model()
         owner_tree_item = self.tree_item_for_element(
-            element.owner or element.memberNamespace
+            element.owner
+            or (
+                element.memberNamespace
+                if isinstance(element, UML.NamedElement)
+                else None
+            )
         )
         if (
             not self.branches.get(self.tree_item_for_element(element))

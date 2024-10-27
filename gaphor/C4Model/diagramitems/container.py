@@ -4,15 +4,15 @@ from gaphor.diagram.shapes import Box, CssNode, Text, draw_border
 from gaphor.diagram.support import represents
 
 
-@represents(c4model.C4Container)
+@represents(c4model.Container)
 class C4ContainerItem(Named, ElementPresentation):
     def __init__(self, diagram, id=None):
         super().__init__(diagram, id)
 
         self.watch("subject.name")
-        self.watch("subject[C4Container].technology")
-        self.watch("subject[C4Container].description")
-        self.watch("subject[C4Container].type")
+        self.watch("subject[Container].technology")
+        self.watch("subject[Container].description")
+        self.watch("subject[Container].type")
         self.watch("children", self.update_shapes)
 
     def update_shapes(self, event=None):

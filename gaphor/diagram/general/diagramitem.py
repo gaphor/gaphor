@@ -6,7 +6,6 @@ from gaphor.core.modeling.diagram import Diagram
 from gaphor.diagram.presentation import ElementPresentation, Named, text_name
 from gaphor.diagram.shapes import Box, CssNode, IconBox, Text, draw_border, stroke
 from gaphor.diagram.support import represents
-from gaphor.UML.compartments import text_stereotypes
 
 
 @represents(Diagram)
@@ -15,6 +14,8 @@ class DiagramItem(ElementPresentation, Named):
         super().__init__(diagram, id, width=30, height=30)
         for h in self.handles():
             h.movable = False
+
+        from gaphor.UML.compartments import text_stereotypes
 
         self.shape = IconBox(
             Box(
@@ -32,8 +33,8 @@ class DiagramItem(ElementPresentation, Named):
             text_name(self),
         )
 
-        self.watch("subject[Diagram].name")
-        self.watch("subject[Diagram].diagramType")
+        self.watch("subject[Core:Diagram].name")
+        self.watch("subject[Core:Diagram].diagramType")
         self.watch("subject.appliedStereotype.classifier.name")
 
 

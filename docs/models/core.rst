@@ -11,17 +11,13 @@ in a diagram.
 All data models in Gaphor are generated from actual Gaphor model files.
 This allows us to provide you nice diagrams of Gaphor’s internal model.
 
-Relationships
--------------
-
-.. diagram:: Relationships
-   :model: core
-
 The ``Base`` Class
 ^^^^^^^^^^^^^^^^^^
 
-The :obj:`~gaphor.core.modeling.Base` base class provides event notification and integrates
+The :obj:`~gaphor.core.modeling.Base` class provides event notification and integrates
 with the model repository (internally known as :obj:`~gaphor.core.modeling.ElementFactory`).
+All classes in a model should derive from this class. If a model does not show a base class
+for an element, it will derive from :obj:`~gaphor.core.modeling.Base`.
 Bi-directional relationships are also possible, as well as derived
 relations.
 
@@ -67,11 +63,12 @@ The class ``Base`` is the core of Gaphor’s data model.
    .. automethod:: gaphor.core.modeling.Base.isTypeOf
 
 
-Dependencies
-------------
+Relationships
+-------------
 
-.. diagram:: Dependencies
+.. diagram:: Relationships
    :model: core
+
 
 Annotations
 -----------
@@ -79,17 +76,6 @@ Annotations
 .. diagram:: Annotations
    :model: core
 
-Namespaces
-----------
-
-.. diagram:: Namespaces
-   :model: core
-
-Types
------
-
-.. diagram:: Types
-   :model: core
 
 Presentations
 -------------
@@ -175,3 +161,4 @@ Protocols
    :hidden:
 
    core_changeset
+   core_services
