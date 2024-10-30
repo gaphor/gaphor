@@ -23,6 +23,7 @@ from gaphor.diagram.tools import (
     apply_placement_tool_set,
 )
 from gaphor.diagram.tools.magnet import MagnetPainter
+from gaphor.i18n import translated_ui_string
 from gaphor.transaction import Transaction
 from gaphor.ui.event import DiagramClosed, ToolSelected
 
@@ -37,6 +38,12 @@ def placement_icon_base():
 
 if hasattr(GtkView, "set_css_name"):
     GtkView.set_css_name("diagramview")
+
+
+def new_builder():
+    builder = Gtk.Builder()
+    builder.add_from_string(translated_ui_string("gaphor.ui", "diagrampage.ui"))
+    return builder
 
 
 @functools.cache
@@ -79,7 +86,6 @@ class DiagramPage:
         self.style_manager = Adw.StyleManager.get_default()
 
         self.view: GtkView | None = None
-        self.widget: Gtk.Widget | None = None
         self.diagram_css: Gtk.CssProvider | None = None
 
         self.rubberband_state = RubberbandState()
@@ -106,7 +112,9 @@ class DiagramPage:
         """
         assert self.diagram
 
-        view = GtkView(selection=Selection())
+        builder = new_builder()
+        view = builder.get_object("view")
+        view.selection = Selection()
         view.add_css_class(self._css_class())
 
         self.diagram_css = Gtk.CssProvider.new()
@@ -116,16 +124,9 @@ class DiagramPage:
             Gtk.STYLE_PROVIDER_PRIORITY_USER,
         )
 
-        scrolled_window = Gtk.ScrolledWindow()
-        scrolled_window.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
-        scrolled_window.set_child(view)
-        scrolled_window.add_css_class("view")
-        self.style_manager.connect_object(
-            "notify::dark", self._on_notify_dark, scrolled_window
-        )
+        self.style_manager.connect("notify::dark", self._on_notify_dark)
 
         self.view = view
-        self.widget = scrolled_window
         self.context_menu.set_parent(view)
 
         self.select_tool("toolbox-pointer")
@@ -135,7 +136,7 @@ class DiagramPage:
         # Set model only after the painters are set
         view.model = self.diagram
 
-        return self.widget
+        return builder.get_object("diagrampage")
 
     def apply_tool_set(self, tool_name):
         """Return a tool associated with an id (action name).
@@ -220,7 +221,7 @@ class DiagramPage:
 
         Do the same thing that would be done if Close was pressed.
         """
-        assert self.widget
+        assert self.view
 
         Gtk.StyleContext.remove_provider_for_display(
             Gdk.Display.get_default(),
