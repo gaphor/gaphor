@@ -37,10 +37,10 @@
                     </child>
                     <child type="end">
                       <object class="GtkMenuButton">
-                        <property name="popover">hamburger</property>
-                        <property name="icon_name">open-menu-symbolic</property>
-                        <property name="tooltip-text" translatable="yes">Open application menu</property>
-                        <property name="primary">1</property>
+                        <property name="icon_name">list-add-symbolic</property>
+                        <property name="popover">diagram-types</property>
+                        <property name="tooltip-text" translatable="yes">New diagram menu</property>
+                        <property name="always-show-arrow">1</property>
                       </object>
                     </child>
                   </object>
@@ -126,12 +126,12 @@
                             </child>
                           </object>
                         </property>
-                        <child>
+                        <child type="end">
                           <object class="GtkMenuButton">
-                            <property name="icon_name">list-add-symbolic</property>
-                            <property name="popover">diagram-types</property>
-                            <property name="tooltip-text" translatable="yes">New diagram menu</property>
-                            <property name="always-show-arrow">1</property>
+                            <property name="popover">hamburger</property>
+                            <property name="icon_name">open-menu-symbolic</property>
+                            <property name="tooltip-text" translatable="yes">Open application menu</property>
+                            <property name="primary">1</property>
                           </object>
                         </child>
                         <child type="end">
