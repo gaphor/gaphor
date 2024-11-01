@@ -1,10 +1,7 @@
 # ruff: noqa: F401
 
-from gaphor.diagram.general import connectors
 from gaphor.diagram.general.diagramitems import (
     Box,
-    CommentItem,
-    CommentLineItem,
     DiagramItem,
     Ellipse,
     Line,
@@ -13,8 +10,6 @@ from gaphor.diagram.general.diagramitems import (
 )
 
 __all__ = [
-    "CommentItem",
-    "CommentLineItem",
     "DiagramItem",
     "Box",
     "Ellipse",

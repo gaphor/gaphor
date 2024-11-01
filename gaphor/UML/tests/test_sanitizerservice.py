@@ -1,10 +1,10 @@
 import pytest
 
 from gaphor import UML
-from gaphor.core.modeling import Comment, Diagram
-from gaphor.diagram.general import CommentItem, CommentLineItem
+from gaphor.core.modeling import Diagram
 from gaphor.diagram.tests.fixtures import connect
 from gaphor.UML.classes import ClassItem, GeneralizationItem, PackageItem
+from gaphor.UML.general import CommentItem, CommentLineItem
 from gaphor.UML.profiles import ExtensionItem
 from gaphor.UML.sanitizerservice import SanitizerService
 
@@ -28,7 +28,7 @@ def create_item(element_factory, diagram):
 
 
 def test_connect_element_with_comments(create_item, diagram):
-    comment = create_item(CommentItem, Comment)
+    comment = create_item(CommentItem, UML.Comment)
     line = create_item(CommentLineItem)
     gi = create_item(GeneralizationItem)
     clazz1 = create_item(ClassItem, UML.Class)
@@ -275,7 +275,7 @@ def test_extension_generalization_with_attribute_from_super_type(element_factory
 
 def test_diagram_redraw_on_owner_change(element_factory, monkeypatch):
     diagram = element_factory.create(Diagram)
-    diagram.create(CommentItem, subject=element_factory.create(Comment))
+    diagram.create(CommentItem, subject=element_factory.create(UML.Comment))
 
     request_update_called = 0
 

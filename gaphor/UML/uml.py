@@ -785,6 +785,11 @@ class ValueSpecificationAction(Action):
     value: _attribute[str] = _attribute("value", str)
 
 
+class Comment(Element):
+    annotatedElement: relation_many[Element]
+    body: _attribute[str] = _attribute("body", str)
+
+
 # 74: override Lifeline.parse: Callable[[Lifeline, str], None]
 # defined in umloverrides.py
 
@@ -794,6 +799,7 @@ class ValueSpecificationAction(Action):
 
 Element.appliedStereotype = association("appliedStereotype", InstanceSpecification, composite=True, opposite="extended")
 Element.relationship = derivedunion("relationship", Relationship)
+Element.comment = association("comment", Comment, opposite="annotatedElement")
 NamedElement.clientDependency = association("clientDependency", Dependency, composite=True, opposite="client")
 NamedElement.supplierDependency = association("supplierDependency", Dependency, opposite="supplier")
 NamedElement.memberNamespace = derivedunion("memberNamespace", Namespace, upper=1)
@@ -1340,3 +1346,4 @@ DirectedRelationship.target.add(InformationFlow.informationTarget)  # type: igno
 CallAction.result = association("result", OutputPin, composite=True)
 CallBehaviorAction.behavior = association("behavior", Behavior, upper=1, composite=True)
 ValueSpecificationAction.result = association("result", OutputPin, upper=1, composite=True)
+Comment.annotatedElement = association("annotatedElement", Element, opposite="comment")

@@ -1,11 +1,11 @@
 from gaphas.handlemove import HandleMove
 
 from gaphor.core import event_handler
-from gaphor.core.modeling import Comment
 from gaphor.diagram.connectors import ItemTemporaryDisconnected
-from gaphor.diagram.general import CommentItem, CommentLineItem
 from gaphor.diagram.presentation import LinePresentation
 from gaphor.diagram.tests.fixtures import connect
+from gaphor.UML import Comment
+from gaphor.UML.general import CommentItem, CommentLineItem
 
 
 def test_handle_move_has_guides(create, view):

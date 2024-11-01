@@ -5,12 +5,12 @@ from gaphor.diagram.diagramtoolbox import (
     DiagramTypes,
     ElementCreateInfo,
     ToolboxDefinition,
-    general_tools,
 )
 from gaphor.i18n import i18nize
 from gaphor.UML.actions.actionstoolbox import actions
 from gaphor.UML.classes.classestoolbox import classes
 from gaphor.UML.deployments.deploymentstoolbox import deployments
+from gaphor.UML.general.generaltoolbox import general_tools
 from gaphor.UML.interactions.interactionstoolbox import interactions
 from gaphor.UML.profiles.profilestoolbox import profiles
 from gaphor.UML.states.statestoolbox import states

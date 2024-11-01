@@ -6,11 +6,11 @@ from io import StringIO
 import pytest
 
 from gaphor import UML
-from gaphor.core.modeling import Comment, Diagram, StyleSheet
-from gaphor.diagram.general import CommentItem
+from gaphor.core.modeling import Diagram, StyleSheet
 from gaphor.diagram.tests.fixtures import connect
 from gaphor.storage import storage
 from gaphor.UML.classes import AssociationItem, ClassItem, InterfaceItem
+from gaphor.UML.general import CommentItem
 
 
 class PseudoFile:
@@ -45,7 +45,7 @@ def test_save_uml(element_factory):
     """Saving gaphor.UML model elements."""
     element_factory.create(UML.Package)
     element_factory.create(Diagram)
-    element_factory.create(Comment)
+    element_factory.create(UML.Comment)
     element_factory.create(UML.Class)
 
     out = PseudoFile()
@@ -54,30 +54,30 @@ def test_save_uml(element_factory):
 
     assert "<UML:Package " in out.data
     assert "<Core:Diagram " in out.data
-    assert "<Core:Comment " in out.data
+    assert "<UML:Comment " in out.data
     assert "<UML:Class " in out.data
 
 
 def test_save_item(diagram, element_factory):
     """Save a diagram item too."""
     diagram = element_factory.create(Diagram)
-    diagram.create(CommentItem, subject=element_factory.create(Comment))
+    diagram.create(CommentItem, subject=element_factory.create(UML.Comment))
 
     out = PseudoFile()
     storage.save(out, element_factory=element_factory)
     out.close()
 
     assert "<Core:Diagram " in out.data
-    assert "<Core:Comment " in out.data
+    assert "<UML:Comment " in out.data
     assert "<canvas>" not in out.data
-    assert "<general:CommentItem " in out.data, out.data
+    assert "<UML:CommentItem " in out.data, out.data
 
 
 def test_load_uml(element_factory, saver, loader):
     """Test loading of a freshly saved model."""
     element_factory.create(UML.Package)
     # diagram is created in case's init
-    element_factory.create(Comment)
+    element_factory.create(UML.Comment)
     element_factory.create(UML.Class)
 
     data = saver()
@@ -85,7 +85,7 @@ def test_load_uml(element_factory, saver, loader):
 
     assert len(element_factory.lselect()) == 4
     assert len(element_factory.lselect(UML.Package)) == 1
-    assert len(element_factory.lselect(Comment)) == 1
+    assert len(element_factory.lselect(UML.Comment)) == 1
     assert len(element_factory.lselect(UML.Class)) == 1
     assert len(element_factory.lselect(StyleSheet)) == 1
 
@@ -93,7 +93,7 @@ def test_load_uml(element_factory, saver, loader):
 def test_load_uml_2(create, element_factory, saver, loader):
     """Test loading of a freshly saved model."""
     element_factory.create(UML.Package)
-    create(CommentItem, Comment)
+    create(CommentItem, UML.Comment)
     create(ClassItem, UML.Class)
     iface = create(InterfaceItem, UML.Interface)
     iface.subject.name = "Circus"
@@ -106,7 +106,7 @@ def test_load_uml_2(create, element_factory, saver, loader):
     assert len(element_factory.lselect(UML.Package)) == 1
     assert len(element_factory.lselect(Diagram)) == 1
     d = element_factory.lselect(Diagram)[0]
-    assert len(element_factory.lselect(Comment)) == 1
+    assert len(element_factory.lselect(UML.Comment)) == 1
     assert len(element_factory.lselect(UML.Class)) == 1
     assert len(element_factory.lselect(UML.Interface)) == 1
 
@@ -144,7 +144,7 @@ def test_save_and_load_model_with_relationships(
     create, diagram, element_factory, saver, loader
 ):
     element_factory.create(UML.Package)
-    create(CommentItem, Comment)
+    create(CommentItem, UML.Comment)
     create(ClassItem, UML.Class)
 
     a = diagram.create(AssociationItem)
@@ -161,7 +161,7 @@ def test_save_and_load_model_with_relationships(
     assert len(element_factory.lselect(UML.Package)) == 1
     assert len(element_factory.lselect(Diagram)) == 1
     d = element_factory.lselect(Diagram)[0]
-    assert len(element_factory.lselect(Comment)) == 1
+    assert len(element_factory.lselect(UML.Comment)) == 1
     assert len(element_factory.lselect(UML.Class)) == 1
     assert len(element_factory.lselect(UML.Association)) == 0
 

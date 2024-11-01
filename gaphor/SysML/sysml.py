@@ -208,7 +208,7 @@ class Expose(Dependency):
     pass
 
 
-from gaphor.core.modeling.coremodel import Comment
+from gaphor.UML.uml import Comment
 class Rationale(Comment):
     pass
 

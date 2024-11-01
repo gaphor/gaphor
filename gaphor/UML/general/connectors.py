@@ -2,11 +2,10 @@
 
 import logging
 
-from gaphor.core.modeling import Comment
 from gaphor.diagram.connectors import BaseConnector, Connector
-from gaphor.diagram.general.comment import CommentItem
-from gaphor.diagram.general.commentline import CommentLineItem
 from gaphor.diagram.presentation import ElementPresentation, LinePresentation
+from gaphor.UML import Comment
+from gaphor.UML.general.comment import CommentItem, CommentLineItem
 
 logger = logging.getLogger(__name__)
 

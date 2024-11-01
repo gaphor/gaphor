@@ -5,12 +5,12 @@ from gaphor.diagram.diagramtoolbox import (
     DiagramTypes,
     ElementCreateInfo,
     ToolboxDefinition,
-    general_tools,
 )
 from gaphor.i18n import i18nize
 from gaphor.RAAML.fta.ftatoolbox import fta
 from gaphor.RAAML.raaml import Hazard, Loss, Situation, TopEvent
 from gaphor.RAAML.stpa.stpatoolbox import stpa
+from gaphor.UML.general.generaltoolbox import general_tools
 from gaphor.UML.uml import Package
 
 raaml_toolbox_actions: ToolboxDefinition = (

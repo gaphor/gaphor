@@ -4,7 +4,6 @@ from gaphor.application import Session
 from gaphor.core import Transaction
 from gaphor.core.modeling import Diagram
 from gaphor.diagram.diagramtoolbox import new_item_factory
-from gaphor.diagram.general import CommentLineItem
 from gaphor.diagram.tools.placement import (
     PlacementState,
     on_drag_begin,
@@ -13,6 +12,7 @@ from gaphor.diagram.tools.placement import (
 )
 from gaphor.ui.diagrampage import DiagramPage
 from gaphor.ui.filemanager import load_default_model
+from gaphor.UML.general import CommentLineItem
 
 
 @pytest.fixture

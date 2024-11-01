@@ -1,9 +1,10 @@
 """CommentItem diagram item."""
 
-from gaphor.core.modeling import Comment
-from gaphor.diagram.presentation import ElementPresentation
+from gaphor.diagram.connectors import Connector
+from gaphor.diagram.presentation import ElementPresentation, LinePresentation
 from gaphor.diagram.shapes import Box, CssNode, Text, stroke
 from gaphor.diagram.support import represents
+from gaphor.UML import Comment
 
 
 @represents(Comment)
@@ -23,7 +24,7 @@ class CommentItem(ElementPresentation):
             ),
             draw=draw_border,
         )
-        self.watch("subject[Core:Comment].body")
+        self.watch("subject[UML:Comment].body")
 
 
 def draw_border(box, context, bounding_box):
@@ -41,3 +42,16 @@ def draw_border(box, context, bounding_box):
     line_to(w, h)
     line_to(w, y + ear)
     stroke(context, fill=True)
+
+
+class CommentLineItem(LinePresentation):
+    def __init__(self, diagram, id=None):
+        super().__init__(diagram, id)
+
+    def unlink(self):
+        c1 = self._connections.get_connection(self.head)
+        c2 = self._connections.get_connection(self.tail)
+        if c1 and c2:
+            adapter = Connector(c1.connected, self)
+            adapter.disconnect(self.head)
+        super().unlink()

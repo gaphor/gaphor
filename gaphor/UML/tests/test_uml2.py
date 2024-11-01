@@ -3,7 +3,7 @@ import pytest
 from gaphor import UML
 from gaphor.core.eventmanager import EventManager
 from gaphor.core.format import parse
-from gaphor.core.modeling import Comment, ElementFactory
+from gaphor.core.modeling import ElementFactory
 
 
 @pytest.fixture
@@ -78,13 +78,15 @@ def test_class(factory):
 
 
 def test_comment(factory):
-    """Testing Comment elements in the meta-model."""
-    element = factory.create(Comment)
-    element.body = "Comment body"
+    """Testing UML.Comment elements in the meta-model."""
+    element = factory.create(UML.Comment)
+    element.body = "UML.Comment body"
     annotatedElement = factory.create(UML.Class)
     element.annotatedElement = annotatedElement
 
-    assert element.body == "Comment body", f"Incorrect comment body - {element.body}"
+    assert (
+        element.body == "UML.Comment body"
+    ), f"Incorrect comment body - {element.body}"
     assert (
         annotatedElement in element.annotatedElement
     ), f"Incorrect annotated element - {element.annotatedElement}"

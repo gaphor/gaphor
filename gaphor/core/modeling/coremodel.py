@@ -25,11 +25,6 @@ from gaphor.core.modeling.diagram import Diagram
 # 7: override Presentation
 from gaphor.core.modeling.presentation import Presentation
 
-class Comment(Element):
-    annotatedElement: relation_many[Element]
-    body: _attribute[str] = _attribute("body", str)
-
-
 # 13: override StyleSheet
 from gaphor.core.modeling.stylesheet import StyleSheet
 
@@ -64,7 +59,6 @@ Element.ownedElement = derivedunion("ownedElement", Element)
 Element.owner = derivedunion("owner", Element, upper=1)
 Element.presentation = association("presentation", Presentation, composite=True, opposite="subject")
 Element.ownedDiagram = association("ownedDiagram", Diagram, composite=True, opposite="element")
-Element.comment = association("comment", Comment, opposite="annotatedElement")
 Element.ownedElement.add(Element.ownedDiagram)  # type: ignore[attr-defined]
 Diagram.ownedPresentation = association("ownedPresentation", Presentation, composite=True, opposite="diagram")
 Diagram.element = association("element", Element, upper=1, opposite="ownedDiagram")
@@ -73,4 +67,3 @@ Presentation.parent = association("parent", Presentation, upper=1, opposite="chi
 Presentation.children = association("children", Presentation, composite=True, opposite="parent")
 Presentation.diagram = association("diagram", Diagram, upper=1, opposite="ownedPresentation")
 Presentation.subject = association("subject", Element, upper=1, opposite="presentation")
-Comment.annotatedElement = association("annotatedElement", Element, opposite="comment")

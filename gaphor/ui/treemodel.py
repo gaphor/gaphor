@@ -7,7 +7,6 @@ from gi.repository import Gio, GObject, Pango
 from gaphor import UML
 from gaphor.core.format import format
 from gaphor.core.modeling import (
-    Comment,
     Diagram,
     Element,
     Presentation,
@@ -138,9 +137,9 @@ def visible(element: Element) -> bool:
     return not (
         isinstance(
             element,
-            Comment
-            | Presentation
+            Presentation
             | StyleSheet
+            | UML.Comment
             | UML.InstanceSpecification
             | UML.OccurrenceSpecification
             | UML.Slot,

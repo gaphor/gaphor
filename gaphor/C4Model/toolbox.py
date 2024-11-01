@@ -12,12 +12,12 @@ from gaphor.diagram.diagramtoolbox import (
     ToolboxDefinition,
     ToolDef,
     ToolSection,
-    general_tools,
     new_item_factory,
 )
 from gaphor.i18n import gettext, i18nize
 from gaphor.UML.actions.actionstoolbox import actions
 from gaphor.UML.classes.classestoolbox import classes
+from gaphor.UML.general.generaltoolbox import general_tools
 from gaphor.UML.interactions.interactionstoolbox import interactions
 from gaphor.UML.states.statestoolbox import states
 from gaphor.UML.toolboxconfig import default_namespace, namespace_config
