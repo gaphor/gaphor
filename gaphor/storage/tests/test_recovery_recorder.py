@@ -212,8 +212,8 @@ def test_record_connect_both_ends(
     cinfo_tail = new_diagram.connections.get_connection(new_dependency_item.tail)
 
     assert new_dependency_item.subject
-    assert new_dependency_item.subject.supplier is new_class_item.subject
-    assert new_dependency_item.subject.client is new_other_class_item.subject
+    assert new_class_item.subject in new_dependency_item.subject.supplier
+    assert new_other_class_item.subject in new_dependency_item.subject.client
     assert cinfo_head
     assert cinfo_tail
     assert cinfo_head.item is new_dependency_item
