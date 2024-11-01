@@ -32,7 +32,7 @@ def test_component_required_relation():
     component.clientDependency = usage
     usage.supplier = interface
 
-    assert [interface] == component.required
+    assert [interface] in component.required
 
 
 def test_component_provided_relation():
@@ -43,4 +43,4 @@ def test_component_provided_relation():
     component.interfaceRealization = realization
     realization.contract = interface
 
-    assert [interface] == component.provided
+    assert [interface] in component.provided

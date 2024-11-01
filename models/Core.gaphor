@@ -2618,7 +2618,7 @@
 <val>(1.0, 0.0, 0.0, 1.0, 69.93835616438355, 463.88671875)</val>
 </matrix>
 <points>
-<val>[(139.64794766463484, -75.0), (-11.93835616438355, -75.0), (-11.93835616438355, -288.88671875), (135.89024218518279, -288.88671875)]</val>
+<val>[(139.64794766463484, -75.0), (-32.96460115352954, -75.0), (-32.96460115352954, -288.88671875), (135.89024218518279, -288.88671875)]</val>
 </points>
 <head-connection>
 <ref refid="7323bbfc-2e32-11ef-8125-be7f4daace40"/>
@@ -2680,12 +2680,24 @@
 <isDerived>
 <val>1</val>
 </isDerived>
+<lowerValue>
+<val>0</val>
+</lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>source</val>
 </name>
 <type>
 <ref refid="4cda498e-7a95-11ea-a112-7f953848cf85"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 </UML:Property>
 <UML:InstanceSpecification id="e09dabba-3234-11ef-8506-be7f4daace40">
 <classifier>
@@ -2738,7 +2750,7 @@
 <val>(1.0, 0.0, 0.0, 1.0, 203.0, 428.890625)</val>
 </matrix>
 <points>
-<val>[(6.586303829018391, 6.109375), (-175.0, 6.109375), (-175.0, -309.890625), (2.8285983495663345, -309.890625)]</val>
+<val>[(6.586303829018391, 6.109375), (-190.026244989146, 6.109375), (-190.026244989146, -309.890625), (2.8285983495663345, -309.890625)]</val>
 </points>
 <head-connection>
 <ref refid="7323bbfc-2e32-11ef-8125-be7f4daace40"/>
@@ -2800,12 +2812,24 @@
 <isDerived>
 <val>1</val>
 </isDerived>
+<lowerValue>
+<val>0</val>
+</lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>target</val>
 </name>
 <type>
 <ref refid="4cda498e-7a95-11ea-a112-7f953848cf85"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 </UML:Property>
 <UML:InstanceSpecification id="0090308c-3235-11ef-8506-be7f4daace40">
 <classifier>

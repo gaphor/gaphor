@@ -171,8 +171,8 @@ class CommunicationPath(Association):
 
 
 class Dependency(DirectedRelationship, PackageableElement):
-    client: relation_one[NamedElement]
-    supplier: relation_one[NamedElement]
+    client: relation_many[NamedElement]
+    supplier: relation_many[NamedElement]
 
 
 class Abstraction(Dependency):
@@ -427,7 +427,7 @@ class BehavioralFeature(Feature, Namespace):
     isAbstract: _attribute[int] = _attribute("isAbstract", int)
     method: relation_many[Behavior]
     ownedParameter: relation_many[Parameter]
-    ownedParameterSet: relation_many[ParameterSet]
+    ownedParameterSet: relation_one[ParameterSet]
     raisedException: relation_many[Type]
 
 
@@ -792,18 +792,18 @@ NamedElement.clientDependency = association("clientDependency", Dependency, comp
 NamedElement.supplierDependency = association("supplierDependency", Dependency, opposite="supplier")
 NamedElement.memberNamespace = derivedunion("memberNamespace", Namespace, upper=1)
 NamedElement.namespace = derivedunion("namespace", Namespace, upper=1)
-Element.ownedElement.add(NamedElement.clientDependency)  # type: ignore[attr-defined]
 Element.sourceRelationship.add(NamedElement.clientDependency)  # type: ignore[attr-defined]
 Element.targetRelationship.add(NamedElement.supplierDependency)  # type: ignore[attr-defined]
 NamedElement.memberNamespace.add(NamedElement.namespace)  # type: ignore[attr-defined]
 Element.owner.add(NamedElement.namespace)  # type: ignore[attr-defined]
-PackageableElement.owningPackage = derivedunion("owningPackage", Package, upper=1)
+PackageableElement.owningPackage = association("owningPackage", Package, upper=1, opposite="packagedElement")
 PackageableElement.component = association("component", Component, upper=1, opposite="packagedElement")
 NamedElement.namespace.add(PackageableElement.owningPackage)  # type: ignore[attr-defined]
 NamedElement.namespace.add(PackageableElement.component)  # type: ignore[attr-defined]
 DeployedArtifact.deployment = association("deployment", Deployment, opposite="deployedArtifact")
 DeploymentTarget.deployment = association("deployment", Deployment, composite=True, opposite="location")
 Element.ownedElement.add(DeploymentTarget.deployment)  # type: ignore[attr-defined]
+NamedElement.clientDependency.add(DeploymentTarget.deployment)  # type: ignore[attr-defined]
 InstanceSpecification.slot = association("slot", Slot, composite=True, opposite="owningInstance")
 InstanceSpecification.classifier = association("classifier", Classifier, opposite="instanceSpecification")
 InstanceSpecification.extended = association("extended", Element, opposite="appliedStereotype")
@@ -872,6 +872,7 @@ Association.navigableOwnedEnd = association("navigableOwnedEnd", Property)
 Classifier.feature.add(Association.ownedEnd)  # type: ignore[attr-defined]
 Namespace.ownedMember.add(Association.ownedEnd)  # type: ignore[attr-defined]
 Namespace.member.add(Association.memberEnd)  # type: ignore[attr-defined]
+Association.ownedEnd.add(Association.navigableOwnedEnd)  # type: ignore[attr-defined]
 # 44: override Extension.metaclass(Extension.ownedEnd, Association.memberEnd): property
 # defined in umloverrides.py
 
@@ -885,6 +886,7 @@ ActivityNode.inPartition = association("inPartition", ActivityPartition, opposit
 ActivityNode.activity = association("activity", Activity, upper=1, opposite="node")
 ActivityNode.inGroup = association("inGroup", ActivityGroup, opposite="nodeContents")
 ActivityNode.redefinedElement = redefine(ActivityNode, "redefinedElement", ActivityNode, RedefinableElement.redefinedElement)
+ActivityNode.inGroup.add(ActivityNode.inPartition)  # type: ignore[attr-defined]
 Element.owner.add(ActivityNode.activity)  # type: ignore[attr-defined]
 Feature.featuringClassifier = derivedunion("featuringClassifier", Classifier, lower=1)
 ActivityEdge.source = association("source", ActivityNode, upper=1, opposite="outgoing")
@@ -893,9 +895,8 @@ ActivityEdge.target = association("target", ActivityNode, upper=1, opposite="inc
 ActivityEdge.inGroup = association("inGroup", ActivityGroup, opposite="edgeContents")
 ActivityEdge.redefinedElement = redefine(ActivityEdge, "redefinedElement", ActivityEdge, RedefinableElement.redefinedElement)
 Element.owner.add(ActivityEdge.activity)  # type: ignore[attr-defined]
-Dependency.client = association("client", NamedElement, upper=1, opposite="clientDependency")
-Dependency.supplier = association("supplier", NamedElement, upper=1, opposite="supplierDependency")
-Element.owner.add(Dependency.client)  # type: ignore[attr-defined]
+Dependency.client = association("client", NamedElement, lower=1, opposite="clientDependency")
+Dependency.supplier = association("supplier", NamedElement, lower=1, opposite="supplierDependency")
 Relationship.source.add(Dependency.client)  # type: ignore[attr-defined]
 Relationship.target.add(Dependency.supplier)  # type: ignore[attr-defined]
 TypedElement.type = association("type", Type, upper=1)
@@ -969,6 +970,7 @@ Namespace.ownedMember.add(UseCase.include)  # type: ignore[attr-defined]
 InputPin.opaqueAction = association("opaqueAction", Action, upper=1, opposite="inputValue")
 Element.owner.add(InputPin.opaqueAction)  # type: ignore[attr-defined]
 Manifestation.artifact = association("artifact", Artifact, upper=1, opposite="manifestation")
+Dependency.client.add(Manifestation.artifact)  # type: ignore[attr-defined]
 Element.owner.add(Manifestation.artifact)  # type: ignore[attr-defined]
 # 80: override Component.provided: property
 # defined in umloverrides.py
@@ -1010,7 +1012,7 @@ Property.class_ = association("class_", Class, upper=1, opposite="ownedAttribute
 Property.subsettedProperty = association("subsettedProperty", Property)
 Property.association = association("association", Association, upper=1, opposite="memberEnd")
 Property.owningAssociation = association("owningAssociation", Association, upper=1, opposite="ownedEnd")
-Property.classifier = association("classifier", Classifier, upper=1, opposite="attribute")
+Property.classifier = derivedunion("classifier", Classifier, upper=1)
 # 62: override Property.isComposite(Property.aggregation): derived[bool]
 Property.isComposite = derived('isComposite', bool, 0, 1, lambda obj: [obj.aggregation == 'composite'])
 
@@ -1023,7 +1025,9 @@ Property.datatype = association("datatype", DataType, upper=1, opposite="ownedAt
 
 Property.artifact = association("artifact", Artifact, upper=1, opposite="ownedAttribute")
 RedefinableElement.redefinedElement.add(Property.redefinedProperty)  # type: ignore[attr-defined]
+Property.classifier.add(Property.interface_)  # type: ignore[attr-defined]
 NamedElement.namespace.add(Property.interface_)  # type: ignore[attr-defined]
+Property.classifier.add(Property.class_)  # type: ignore[attr-defined]
 NamedElement.namespace.add(Property.class_)  # type: ignore[attr-defined]
 Feature.featuringClassifier.add(Property.class_)  # type: ignore[attr-defined]
 NamedElement.memberNamespace.add(Property.association)  # type: ignore[attr-defined]
@@ -1031,6 +1035,8 @@ NamedElement.namespace.add(Property.owningAssociation)  # type: ignore[attr-defi
 Feature.featuringClassifier.add(Property.owningAssociation)  # type: ignore[attr-defined]
 RedefinableElement.redefinitionContext.add(Property.classifier)  # type: ignore[attr-defined]
 NamedElement.namespace.add(Property.datatype)  # type: ignore[attr-defined]
+Property.classifier.add(Property.datatype)  # type: ignore[attr-defined]
+Property.classifier.add(Property.artifact)  # type: ignore[attr-defined]
 NamedElement.namespace.add(Property.artifact)  # type: ignore[attr-defined]
 ExtensionEnd.type = redefine(ExtensionEnd, "type", Stereotype, Property.type)
 DataType.ownedOperation = association("ownedOperation", Operation, composite=True, opposite="datatype")
@@ -1053,6 +1059,7 @@ Artifact.artifact = association("artifact", Artifact, upper=1, opposite="nestedA
 Artifact.ownedAttribute = association("ownedAttribute", Property, composite=True, opposite="artifact")
 Artifact.ownedOperation = association("ownedOperation", Operation, composite=True, opposite="artifact")
 Element.ownedElement.add(Artifact.manifestation)  # type: ignore[attr-defined]
+NamedElement.clientDependency.add(Artifact.manifestation)  # type: ignore[attr-defined]
 Namespace.ownedMember.add(Artifact.nestedArtifact)  # type: ignore[attr-defined]
 NamedElement.namespace.add(Artifact.artifact)  # type: ignore[attr-defined]
 Classifier.attribute.add(Artifact.ownedAttribute)  # type: ignore[attr-defined]
@@ -1062,7 +1069,7 @@ Namespace.ownedMember.add(Artifact.ownedOperation)  # type: ignore[attr-defined]
 ActivityParameterNode.parameter = association("parameter", Parameter, upper=1, composite=True, opposite="owningNode")
 Element.ownedElement.add(ActivityParameterNode.parameter)  # type: ignore[attr-defined]
 DecisionNode.decisionInput = association("decisionInput", Behavior, upper=1)
-Package.packagedElement = derivedunion("packagedElement", PackageableElement)
+Package.packagedElement = association("packagedElement", PackageableElement, composite=True, opposite="owningPackage")
 Package.ownedType = association("ownedType", Type, composite=True, opposite="package")
 Package.packageMerge = association("packageMerge", PackageMerge, composite=True, opposite="mergingPackage")
 Package.appliedProfile = association("appliedProfile", ProfileApplication, composite=True)
@@ -1076,6 +1083,8 @@ PackageableElement.owningPackage.add(Package.package)  # type: ignore[attr-defin
 Package.packagedElement.add(Package.nestedPackage)  # type: ignore[attr-defined]
 Profile.metamodelReference = association("metamodelReference", PackageImport, composite=True)
 Profile.metaclassReference = association("metaclassReference", ElementImport, composite=True)
+Namespace.packageImport.add(Profile.metamodelReference)  # type: ignore[attr-defined]
+Namespace.elementImport.add(Profile.metaclassReference)  # type: ignore[attr-defined]
 Behavior.redefinedBehavior = association("redefinedBehavior", Behavior)
 Behavior.behavioredClassifier = association("behavioredClassifier", BehavioredClassifier, upper=1, opposite="ownedBehavior")
 Behavior.action_transition = association("action_transition", Transition, upper=1, opposite="action")
@@ -1101,7 +1110,7 @@ NamedElement.namespace.add(Parameter.ownerFormalParam)  # type: ignore[attr-defi
 BehavioralFeature.raisedException = association("raisedException", Type)
 BehavioralFeature.ownedParameter = association("ownedParameter", Parameter, composite=True, opposite="ownerFormalParam")
 BehavioralFeature.method = association("method", Behavior)
-BehavioralFeature.ownedParameterSet = association("ownedParameterSet", ParameterSet, composite=True, opposite="behavioralFeature")
+BehavioralFeature.ownedParameterSet = association("ownedParameterSet", ParameterSet, upper=1, composite=True, opposite="behavioralFeature")
 Namespace.ownedMember.add(BehavioralFeature.ownedParameter)  # type: ignore[attr-defined]
 NamedElement.namespace.add(BehavioralFeature.ownedParameterSet)  # type: ignore[attr-defined]
 Operation.precondition = association("precondition", Constraint, composite=True)
@@ -1118,6 +1127,7 @@ Operation.artifact = association("artifact", Artifact, upper=1, opposite="ownedO
 Operation.interface_ = association("interface_", Interface, upper=1, opposite="ownedOperation")
 Operation.ownedParameter = redefine(Operation, "ownedParameter", Parameter, BehavioralFeature.ownedParameter)
 Namespace.ownedMember.add(Operation.precondition)  # type: ignore[attr-defined]
+Namespace.ownedRule.add(Operation.precondition)  # type: ignore[attr-defined]
 Namespace.ownedMember.add(Operation.postcondition)  # type: ignore[attr-defined]
 NamedElement.namespace.add(Operation.class_)  # type: ignore[attr-defined]
 RedefinableElement.redefinitionContext.add(Operation.class_)  # type: ignore[attr-defined]
@@ -1266,10 +1276,13 @@ Element.ownedElement.add(State.doActivity)  # type: ignore[attr-defined]
 Element.ownedElement.add(State.statevariant)  # type: ignore[attr-defined]
 Namespace.ownedMember.add(State.region)  # type: ignore[attr-defined]
 Port.encapsulatedClassifier = association("encapsulatedClassifier", EncapsulatedClassifier, upper=1, opposite="ownedPort")
+Property.classifier.add(Port.encapsulatedClassifier)  # type: ignore[attr-defined]
 NamedElement.namespace.add(Port.encapsulatedClassifier)  # type: ignore[attr-defined]
 Deployment.location = association("location", DeploymentTarget, upper=1, opposite="deployment")
 Deployment.deployedArtifact = association("deployedArtifact", DeployedArtifact, opposite="deployment")
+Dependency.client.add(Deployment.location)  # type: ignore[attr-defined]
 Element.owner.add(Deployment.location)  # type: ignore[attr-defined]
+Dependency.supplier.add(Deployment.deployedArtifact)  # type: ignore[attr-defined]
 ActivityPartition.node = association("node", ActivityNode, opposite="inPartition")
 ActivityPartition.subpartition = association("subpartition", ActivityPartition)
 ActivityPartition.represents = association("represents", Element, upper=1)

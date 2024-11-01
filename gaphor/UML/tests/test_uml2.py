@@ -120,10 +120,10 @@ def test_dependency(factory):
     element.supplier = supplier
 
     assert (
-        client is element.client
+        client in element.client
     ), f"Dependency.client does not contain client - {element.client}"
     assert (
-        supplier is element.supplier
+        supplier in element.supplier
     ), f"Dependency.supplier does not contain supplier - {element.supplier}"
 
 
