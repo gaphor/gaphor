@@ -59,24 +59,13 @@ class Picture(Element):
     content: _attribute[str] = _attribute("content", str)
 
 
-class Relationship(Element):
-    relatedElement: relation_many[Element]
-    source: relation_many[Element]
-    target: relation_many[Element]
-
-
 
 Element.ownedElement = derivedunion("ownedElement", Element)
 Element.owner = derivedunion("owner", Element, upper=1)
 Element.presentation = association("presentation", Presentation, composite=True, opposite="subject")
 Element.ownedDiagram = association("ownedDiagram", Diagram, composite=True, opposite="element")
 Element.comment = association("comment", Comment, opposite="annotatedElement")
-Element.relationship = derivedunion("relationship", Relationship)
-Element.sourceRelationship = derivedunion("sourceRelationship", Relationship)
-Element.targetRelationship = derivedunion("targetRelationship", Relationship)
 Element.ownedElement.add(Element.ownedDiagram)  # type: ignore[attr-defined]
-Element.relationship.add(Element.sourceRelationship)  # type: ignore[attr-defined]
-Element.relationship.add(Element.targetRelationship)  # type: ignore[attr-defined]
 Diagram.ownedPresentation = association("ownedPresentation", Presentation, composite=True, opposite="diagram")
 Diagram.element = association("element", Element, upper=1, opposite="ownedDiagram")
 Element.owner.add(Diagram.element)  # type: ignore[attr-defined]
@@ -85,8 +74,3 @@ Presentation.children = association("children", Presentation, composite=True, op
 Presentation.diagram = association("diagram", Diagram, upper=1, opposite="ownedPresentation")
 Presentation.subject = association("subject", Element, upper=1, opposite="presentation")
 Comment.annotatedElement = association("annotatedElement", Element, opposite="comment")
-Relationship.relatedElement = derivedunion("relatedElement", Element, lower=1)
-Relationship.source = derivedunion("source", Element)
-Relationship.target = derivedunion("target", Element)
-Relationship.relatedElement.add(Relationship.source)  # type: ignore[attr-defined]
-Relationship.relatedElement.add(Relationship.target)  # type: ignore[attr-defined]

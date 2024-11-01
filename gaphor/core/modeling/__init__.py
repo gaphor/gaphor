@@ -7,7 +7,6 @@ from gaphor.core.modeling.coremodel import (
     PendingChange,
     Picture,
     RefChange,
-    Relationship,
     ValueChange,
 )
 from gaphor.core.modeling.diagram import (

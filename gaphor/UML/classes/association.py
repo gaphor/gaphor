@@ -201,12 +201,12 @@ class AssociationItem(Named, LinePresentation[UML.Association]):
     def draw(self, context):
         super().draw(context)
 
-        if self.subject and self.subject.abstraction:  # type: ignore[attr-defined]
+        if self.subject and self.subject.abstraction:
             draw_information_flow(
                 self,
                 context,
                 self.subject.memberEnd[0]
-                in self.subject.abstraction[:].informationTarget,  # type: ignore[attr-defined]
+                in self.subject.abstraction[:].informationTarget,
             )
 
         if self.show_direction:

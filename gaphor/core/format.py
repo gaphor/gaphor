@@ -6,7 +6,7 @@
 
 from functools import singledispatch
 
-from gaphor.core.modeling import Diagram, Element, Relationship
+from gaphor.core.modeling import Diagram, Element
 
 
 @singledispatch
@@ -42,8 +42,3 @@ def parse_namedelement(el: Element, text: str) -> None:
 @parse.register(Diagram)
 def parse_Diagram(el: Diagram, text: str) -> None:
     el.name = text
-
-
-@format.register(Relationship)
-def format_relationship(el):
-    return el.__class__.__name__

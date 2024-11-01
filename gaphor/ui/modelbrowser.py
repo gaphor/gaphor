@@ -17,7 +17,6 @@ from gaphor.core.modeling import (
     ElementUpdated,
     ModelFlushed,
     ModelReady,
-    Relationship,
 )
 from gaphor.diagram.deletable import deletable
 from gaphor.diagram.diagramtoolbox import DiagramType
@@ -359,7 +358,7 @@ def select_element(
             return 0
         if (n := expand_up_to_element(element.owner, expand=True)) is None:
             return None
-        is_relationship = isinstance(element, Relationship)
+        is_relationship = isinstance(element, UML.Relationship)
         while row := selection.get_item(n):
             if is_relationship and isinstance(row.get_item(), RelationshipItem):
                 row.set_expanded(True)

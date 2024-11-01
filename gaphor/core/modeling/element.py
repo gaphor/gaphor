@@ -17,10 +17,10 @@ from gaphor.core.modeling.properties import (
 if TYPE_CHECKING:
     from gaphor.core.modeling.coremodel import (
         Comment,
-        Relationship,
     )
     from gaphor.core.modeling.diagram import Diagram
     from gaphor.core.modeling.presentation import Presentation
+    from gaphor.UML import Relationship
 
 log = logging.getLogger(__name__)
 

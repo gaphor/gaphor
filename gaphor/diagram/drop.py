@@ -7,12 +7,12 @@ from gaphas.geometry import Rectangle
 from gaphas.item import NW, SE
 from generic.multidispatch import FunctionDispatcher, multidispatch
 
-from gaphor.core.modeling import Base, Diagram, Element, Presentation, Relationship
+from gaphor.core.modeling import Base, Diagram, Element, Presentation
 from gaphor.diagram.group import group, ungroup
 from gaphor.diagram.presentation import ElementPresentation, connect
 from gaphor.diagram.support import get_diagram_item, get_diagram_item_metadata
 from gaphor.UML.recipes import owner_package
-from gaphor.UML.uml import ActivityEdge
+from gaphor.UML.uml import ActivityEdge, Relationship
 
 log = logging.getLogger(__name__)
 
