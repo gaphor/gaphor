@@ -1,8 +1,8 @@
 from gi.repository import Gdk, Gtk
 
-from gaphor.diagram.general.comment import CommentItem
 from gaphor.diagram.instanteditors import instant_editor, show_popover
 from gaphor.transaction import Transaction
+from gaphor.UML.general.comment import CommentItem
 
 
 @instant_editor.register(CommentItem)

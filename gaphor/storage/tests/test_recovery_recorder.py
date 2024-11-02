@@ -3,16 +3,16 @@ from gaphas.segment import Segment
 
 from gaphor import UML
 from gaphor.core.modeling import (
-    Comment,
     Diagram,
     ElementFactory,
     StyleSheet,
     swap_element_type,
 )
-from gaphor.diagram.general import CommentItem, Line
+from gaphor.diagram.general import Line
 from gaphor.diagram.tests.fixtures import connect, disconnect
 from gaphor.storage.recovery import Recorder, replay_events
 from gaphor.UML.diagramitems import ClassItem, DependencyItem
+from gaphor.UML.general import CommentItem
 
 
 @pytest.fixture
@@ -26,13 +26,13 @@ def recorder(event_manager):
 def test_record_create_element(
     recorder, event_manager, element_factory, modeling_language
 ):
-    comment = element_factory.create(Comment)
+    comment = element_factory.create(UML.Comment)
 
     new_model = ElementFactory(event_manager)
 
     replay_events(recorder.events[:], new_model, modeling_language)
 
-    assert ("c", "Core", "Comment", comment.id, None) in recorder.events
+    assert ("c", "UML", "Comment", comment.id, None) in recorder.events
     assert new_model.lookup(comment.id)
 
 
@@ -46,7 +46,7 @@ def test_record_create_presentation(
 
     replay_events(recorder.events[:], new_model, modeling_language)
 
-    assert ("c", "general", "CommentItem", comment.id, diagram.id) in recorder.events
+    assert ("c", "UML", "CommentItem", comment.id, diagram.id) in recorder.events
 
     assert new_model.lookup(comment.id)
 
@@ -54,13 +54,13 @@ def test_record_create_presentation(
 def test_record_delete_element(
     recorder, event_manager, element_factory, modeling_language
 ):
-    comment = element_factory.create(Comment)
+    comment = element_factory.create(UML.Comment)
     comment.unlink()
 
     new_model = ElementFactory(event_manager)
     replay_events(recorder.events[:], new_model, modeling_language)
 
-    assert ("c", "Core", "Comment", comment.id, None) in recorder.events
+    assert ("c", "UML", "Comment", comment.id, None) in recorder.events
     assert ("u", comment.id, None) in recorder.events
     assert not new_model.lookup(comment.id)
 
@@ -75,7 +75,7 @@ def test_record_delete_presentation(
     new_model.create_as(Diagram, diagram.id)
     replay_events(recorder.events[:], new_model, modeling_language)
 
-    assert ("c", "general", "CommentItem", comment.id, diagram.id) in recorder.events
+    assert ("c", "UML", "CommentItem", comment.id, diagram.id) in recorder.events
     assert ("u", comment.id, diagram.id) in recorder.events
     assert not new_model.lookup(comment.id)
 
@@ -83,13 +83,13 @@ def test_record_delete_presentation(
 def test_record_update_attribute(
     recorder, event_manager, element_factory, modeling_language
 ):
-    comment = element_factory.create(Comment)
+    comment = element_factory.create(UML.Comment)
     comment.body = "Foo"
 
     new_model = ElementFactory(event_manager)
     replay_events(recorder.events[:], new_model, modeling_language)
 
-    assert ("c", "Core", "Comment", comment.id, None) in recorder.events
+    assert ("c", "UML", "Comment", comment.id, None) in recorder.events
     assert ("a", comment.id, "body", "Foo") in recorder.events
     assert new_model.lookup(comment.id)
     assert new_model.lookup(comment.id).body == "Foo"
@@ -98,7 +98,7 @@ def test_record_update_attribute(
 def test_record_set_association(
     recorder, event_manager, element_factory, modeling_language
 ):
-    comment = element_factory.create(Comment)
+    comment = element_factory.create(UML.Comment)
     diagram = element_factory.create(Diagram)
     diagram.element = comment
 
@@ -118,7 +118,7 @@ def test_record_set_association(
 def test_record_delete_association(
     recorder, event_manager, element_factory, modeling_language
 ):
-    comment = element_factory.create(Comment)
+    comment = element_factory.create(UML.Comment)
     diagram = element_factory.create(Diagram)
     diagram.element = comment
     del diagram.element
@@ -312,7 +312,7 @@ def test_record_merge_line_segments(
 def test_record_type_swapped(
     recorder, event_manager, element_factory, modeling_language
 ):
-    comment = element_factory.create(Comment)
+    comment = element_factory.create(UML.Comment)
     swap_element_type(comment, StyleSheet)
     new_model = ElementFactory(event_manager)
     replay_events(recorder.events[:], new_model, modeling_language)

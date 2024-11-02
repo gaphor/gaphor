@@ -1,7 +1,7 @@
 from gaphor import UML
 from gaphor.core.modeling import Diagram
-from gaphor.diagram.general import CommentLineItem
 from gaphor.diagram.tests.fixtures import connect
+from gaphor.UML.general import CommentLineItem
 from gaphor.UML.usecases.actor import ActorItem
 
 

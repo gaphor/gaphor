@@ -3,10 +3,11 @@ import os
 import pytest
 from gi.repository import Gdk
 
-from gaphor.core.modeling import Comment, Diagram
+from gaphor.core.modeling import Diagram
 from gaphor.diagram.general import Box
-from gaphor.diagram.general.comment import CommentItem
 from gaphor.ui.diagrampage import DiagramPage, get_placement_cursor, placement_icon_base
+from gaphor.UML import Comment
+from gaphor.UML.general.comment import CommentItem
 
 
 @pytest.fixture

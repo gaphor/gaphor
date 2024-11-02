@@ -243,7 +243,7 @@
 <ref refid="DCE:109C134E-8402-11D8-82A2-7B88E55A3BEC"/>
 </type>
 </UML:Property>
-<Core:Comment id="DCE:091092E0-A41D-11D8-B0B1-00061BC22919">
+<UML:Comment id="DCE:091092E0-A41D-11D8-B0B1-00061BC22919">
 <annotatedElement>
 <reflist>
 <ref refid="DCE:FA7C37C2-A41C-11D8-B0B1-00061BC22919"/>
@@ -257,7 +257,7 @@
 <ref refid="DCE:09103310-A41D-11D8-B0B1-00061BC22919"/>
 </reflist>
 </presentation>
-</Core:Comment>
+</UML:Comment>
 <UML:Property id="DCE:78779FB6-4A87-11D7-B089-133D836EF880">
 <association>
 <ref refid="DCE:7876B574-4A87-11D7-B089-133D836EF880"/>
@@ -835,7 +835,7 @@
 <ref refid="DCE:441ED6C8-863A-11D7-8239-5A25B8C2F569"/>
 </tail-connection>
 </UML:AssociationItem>
-<general:CommentItem id="DCE:91252432-863B-11D7-8239-5A25B8C2F569">
+<UML:CommentItem id="DCE:91252432-863B-11D7-8239-5A25B8C2F569">
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 303.0, 296.5)</val>
 </matrix>
@@ -854,8 +854,8 @@
 <subject>
 <ref refid="DCE:9125AC98-863B-11D7-8239-5A25B8C2F569"/>
 </subject>
-</general:CommentItem>
-<general:CommentLineItem id="DCE:4248A63C-A35B-11D8-B05A-00C00C03A405">
+</UML:CommentItem>
+<UML:CommentLineItem id="DCE:4248A63C-A35B-11D8-B05A-00C00C03A405">
 <diagram>
 <ref refid="DCE:DD80D3EC-4A86-11D7-B086-133D836EF880"/>
 </diagram>
@@ -877,7 +877,7 @@
 <tail-connection>
 <ref refid="DCE:91252432-863B-11D7-8239-5A25B8C2F569"/>
 </tail-connection>
-</general:CommentLineItem>
+</UML:CommentLineItem>
 <UML:Property id="DCE:E945429A-A419-11D8-A88E-00061BC22919">
 <appliedStereotype>
 <reflist>
@@ -1088,6 +1088,11 @@
 <ref refid="a75a194a-8e16-11ef-9861-be7f4daace40"/>
 <ref refid="edcf544e-8e16-11ef-9861-be7f4daace40"/>
 <ref refid="f9402514-8e17-11ef-9861-be7f4daace40"/>
+<ref refid="5bf20e98-9868-11ef-9979-be7f4daace40"/>
+<ref refid="91547a1c-9868-11ef-9979-be7f4daace40"/>
+<ref refid="9ad6c144-9868-11ef-9979-be7f4daace40"/>
+<ref refid="badf0f52-986b-11ef-9979-be7f4daace40"/>
+<ref refid="dc843754-986b-11ef-9979-be7f4daace40"/>
 </reflist>
 </ownedType>
 <packagedElement>
@@ -1127,6 +1132,11 @@
 <ref refid="a75a194a-8e16-11ef-9861-be7f4daace40"/>
 <ref refid="edcf544e-8e16-11ef-9861-be7f4daace40"/>
 <ref refid="f9402514-8e17-11ef-9861-be7f4daace40"/>
+<ref refid="5bf20e98-9868-11ef-9979-be7f4daace40"/>
+<ref refid="91547a1c-9868-11ef-9979-be7f4daace40"/>
+<ref refid="9ad6c144-9868-11ef-9979-be7f4daace40"/>
+<ref refid="badf0f52-986b-11ef-9979-be7f4daace40"/>
+<ref refid="dc843754-986b-11ef-9979-be7f4daace40"/>
 </reflist>
 </packagedElement>
 <presentation>
@@ -1845,7 +1855,7 @@
 <ref refid="DCE:DCD70090-A419-11D8-A88E-00061BC22919"/>
 </tail-connection>
 </UML:GeneralizationItem>
-<general:CommentItem id="4b2d6c5d-652b-11eb-9492-9757bcbe474b">
+<UML:CommentItem id="4b2d6c5d-652b-11eb-9492-9757bcbe474b">
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 745.0, 336.0078125)</val>
 </matrix>
@@ -1864,8 +1874,8 @@
 <subject>
 <ref refid="4b2d6c5c-652b-11eb-9492-9757bcbe474b"/>
 </subject>
-</general:CommentItem>
-<general:CommentLineItem id="63051bb8-652b-11eb-9492-9757bcbe474b">
+</UML:CommentItem>
+<UML:CommentLineItem id="63051bb8-652b-11eb-9492-9757bcbe474b">
 <diagram>
 <ref refid="DCE:4A9E3AF4-A419-11D8-B4C8-00061BC22919"/>
 </diagram>
@@ -1887,8 +1897,8 @@
 <tail-connection>
 <ref refid="4b2d6c5d-652b-11eb-9492-9757bcbe474b"/>
 </tail-connection>
-</general:CommentLineItem>
-<general:CommentLineItem id="6618f892-652b-11eb-9492-9757bcbe474b">
+</UML:CommentLineItem>
+<UML:CommentLineItem id="6618f892-652b-11eb-9492-9757bcbe474b">
 <diagram>
 <ref refid="DCE:4A9E3AF4-A419-11D8-B4C8-00061BC22919"/>
 </diagram>
@@ -1910,7 +1920,7 @@
 <tail-connection>
 <ref refid="4b2d6c5d-652b-11eb-9492-9757bcbe474b"/>
 </tail-connection>
-</general:CommentLineItem>
+</UML:CommentLineItem>
 <UML:Property id="DCE:74F4E620-509D-11D7-811E-AF5893A6470D">
 <appliedStereotype>
 <reflist>
@@ -2880,6 +2890,11 @@
 </tail-connection>
 </UML:AssociationItem>
 <UML:Class id="DCE:38CB97A8-45CF-11D7-B5CA-613352B2821F">
+<generalization>
+<reflist>
+<ref refid="5693129e-9868-11ef-9979-be7f4daace40"/>
+</reflist>
+</generalization>
 <isAbstract>
 <val>1</val>
 </isAbstract>
@@ -2889,6 +2904,7 @@
 <ownedAttribute>
 <reflist>
 <ref refid="3ae046f2-ebeb-11eb-8d68-2d4b211d5079"/>
+<ref refid="5bf298f4-9868-11ef-9979-be7f4daace40"/>
 </reflist>
 </ownedAttribute>
 <owningPackage>
@@ -4297,7 +4313,7 @@
 <ref refid="DCE:BE828126-509B-11D7-811E-AF5893A6470D"/>
 </subject>
 </UML:ClassItem>
-<general:CommentItem id="bb156365-e89c-11ea-96dc-bf74f1f80424">
+<UML:CommentItem id="bb156365-e89c-11ea-96dc-bf74f1f80424">
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 1283.4410609037327, 245.0)</val>
 </matrix>
@@ -4316,7 +4332,7 @@
 <subject>
 <ref refid="bb156364-e89c-11ea-96dc-bf74f1f80424"/>
 </subject>
-</general:CommentItem>
+</UML:CommentItem>
 <UML:Property id="DCE:C22988EA-A418-11D8-B4C8-00061BC22919">
 <aggregation>
 <val>composite</val>
@@ -7118,6 +7134,11 @@
 </presentation>
 </UML:Association>
 <UML:Class id="DCE:FC139C48-45CE-11D7-B5CA-613352B2821F">
+<comment>
+<reflist>
+<ref refid="0a355dbe-52b9-11ec-b0e5-0456e5e540ed"/>
+</reflist>
+</comment>
 <isAbstract>
 <val>1</val>
 </isAbstract>
@@ -7127,6 +7148,8 @@
 <ownedAttribute>
 <reflist>
 <ref refid="DCE:53614994-E81E-11DD-BD54-000D936B094A"/>
+<ref refid="5bf29002-9868-11ef-9979-be7f4daace40"/>
+<ref refid="dc84abbc-986b-11ef-9979-be7f4daace40"/>
 </reflist>
 </ownedAttribute>
 <owningPackage>
@@ -7153,6 +7176,8 @@
 <ref refid="d3ad48ee-b5bf-11e9-ac46-784f435640ba"/>
 <ref refid="01a5b826-e968-11ea-96dc-bf74f1f80424"/>
 <ref refid="6b30b9c8-8e17-11ef-9861-be7f4daace40"/>
+<ref refid="5693129e-9868-11ef-9979-be7f4daace40"/>
+<ref refid="c921c582-986b-11ef-9979-be7f4daace40"/>
 </reflist>
 </specialization>
 </UML:Class>
@@ -8249,7 +8274,7 @@
 <ref refid="DCE:6B38D020-83D9-11D7-ADE2-4B1972AF3391"/>
 </subject>
 </UML:ClassItem>
-<general:CommentItem id="e917354a-909e-11ea-85c4-7f4489bdcce3">
+<UML:CommentItem id="e917354a-909e-11ea-85c4-7f4489bdcce3">
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 74.5662841796875, 60.68159484863281)</val>
 </matrix>
@@ -8268,7 +8293,7 @@
 <subject>
 <ref refid="e9171588-909e-11ea-85c4-7f4489bdcce3"/>
 </subject>
-</general:CommentItem>
+</UML:CommentItem>
 <UML:ClassItem id="0363f802-909f-11ea-85c4-7f4489bdcce3">
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 906.0, 871.0575561523438)</val>
@@ -9545,7 +9570,7 @@
 <ref refid="96e3d64e-e967-11ea-96dc-bf74f1f80424"/>
 </tail-connection>
 </UML:GeneralizationItem>
-<general:CommentItem id="553d8abb-c90f-11e9-97bf-90784199a5ed">
+<UML:CommentItem id="553d8abb-c90f-11e9-97bf-90784199a5ed">
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 1159.10546875, 284.4140625)</val>
 </matrix>
@@ -9564,7 +9589,7 @@
 <subject>
 <ref refid="553d8aba-c90f-11e9-97bf-90784199a5ed"/>
 </subject>
-</general:CommentItem>
+</UML:CommentItem>
 <UML:ClassItem id="96e3d64e-e967-11ea-96dc-bf74f1f80424">
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 71.91796875, -18.0)</val>
@@ -16542,7 +16567,7 @@
 <ref refid="92ab6c33-ea01-11ea-96dc-bf74f1f80424"/>
 </tail-connection>
 </UML:AssociationItem>
-<general:CommentItem id="92ab6c38-ea01-11ea-96dc-bf74f1f80424">
+<UML:CommentItem id="92ab6c38-ea01-11ea-96dc-bf74f1f80424">
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 913.5, 428.0)</val>
 </matrix>
@@ -16561,7 +16586,7 @@
 <subject>
 <ref refid="f6b9acac-b619-11de-86be-000d93868322"/>
 </subject>
-</general:CommentItem>
+</UML:CommentItem>
 <UML:ClassItem id="92ab6c3a-ea01-11ea-96dc-bf74f1f80424">
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 563.0, 43.0)</val>
@@ -16643,11 +16668,16 @@
 <ref refid="DCE:FC12D436-45CE-11D7-B5CA-613352B2821F"/>
 <ref refid="DCE:38CAFEF6-45CF-11D7-B5CA-613352B2821F"/>
 <ref refid="DCE:3F0AFFA8-45D1-11D7-B5CA-613352B2821F"/>
-<ref refid="a06fc75a-7cf9-11ea-b719-1f391582df99"/>
 <ref refid="0a356994-52b9-11ec-b0e5-0456e5e540ed"/>
+<ref refid="bae02d24-986b-11ef-9979-be7f4daace40"/>
 <ref refid="DCE:4D4F8048-45D1-11D7-B5CA-613352B2821F"/>
 <ref refid="cc955e1a-52bc-11ec-b0e5-0456e5e540ed"/>
-<ref refid="d4d1c5ec-2e32-11ef-8125-be7f4daace40"/>
+<ref refid="55581546-9868-11ef-9979-be7f4daace40"/>
+<ref refid="59eb3c00-9868-11ef-9979-be7f4daace40"/>
+<ref refid="8fc709c6-9868-11ef-9979-be7f4daace40"/>
+<ref refid="99eb4804-9868-11ef-9979-be7f4daace40"/>
+<ref refid="c7e4d826-986b-11ef-9979-be7f4daace40"/>
+<ref refid="db6a2c8e-986b-11ef-9979-be7f4daace40"/>
 </reflist>
 </ownedPresentation>
 </Core:Diagram>
@@ -16761,26 +16791,6 @@
 <ref refid="DCE:38CAFEF6-45CF-11D7-B5CA-613352B2821F"/>
 </tail-connection>
 </UML:GeneralizationItem>
-<general:CommentItem id="a06fc75a-7cf9-11ea-b719-1f391582df99">
-<matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 515.5, 356.5)</val>
-</matrix>
-<top-left>
-<val>(0.0, 0.0)</val>
-</top-left>
-<width>
-<val>183.0</val>
-</width>
-<height>
-<val>61.0</val>
-</height>
-<diagram>
-<ref refid="DCE:E71AAA3E-45CE-11D7-B5CA-613352B2821F"/>
-</diagram>
-<subject>
-<ref refid="a06fc759-7cf9-11ea-b719-1f391582df99"/>
-</subject>
-</general:CommentItem>
 <UML:Generalization id="DCE:DC267B64-A41C-11D8-B0B1-00061BC22919">
 <general>
 <ref refid="DCE:CE617CC2-A41C-11D8-B0B1-00061BC22919"/>
@@ -17546,6 +17556,12 @@
 <name>
 <val>DirectedRelationship</val>
 </name>
+<ownedAttribute>
+<reflist>
+<ref refid="9154c4ae-9868-11ef-9979-be7f4daace40"/>
+<ref refid="9ad74df8-9868-11ef-9979-be7f4daace40"/>
+</reflist>
+</ownedAttribute>
 <owningPackage>
 <ref refid="DCE:E085A412-45CE-11D7-B5CA-613352B2821F"/>
 </owningPackage>
@@ -17941,7 +17957,7 @@
 <ref refid="DCE:F40FF82A-A41C-11D8-B0B1-00061BC22919"/>
 </tail-connection>
 </UML:GeneralizationItem>
-<general:CommentItem id="DCE:09103310-A41D-11D8-B0B1-00061BC22919">
+<UML:CommentItem id="DCE:09103310-A41D-11D8-B0B1-00061BC22919">
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 551.0, 359.0)</val>
 </matrix>
@@ -17960,8 +17976,8 @@
 <subject>
 <ref refid="DCE:091092E0-A41D-11D8-B0B1-00061BC22919"/>
 </subject>
-</general:CommentItem>
-<general:CommentLineItem id="DCE:1813E7EE-A41D-11D8-B0B1-00061BC22919">
+</UML:CommentItem>
+<UML:CommentLineItem id="DCE:1813E7EE-A41D-11D8-B0B1-00061BC22919">
 <diagram>
 <ref refid="DCE:954E534C-A41C-11D8-BCB9-00061BC22919"/>
 </diagram>
@@ -17983,7 +17999,7 @@
 <tail-connection>
 <ref refid="DCE:FA7BE228-A41C-11D8-B0B1-00061BC22919"/>
 </tail-connection>
-</general:CommentLineItem>
+</UML:CommentLineItem>
 <UML:AssociationItem id="dd22f5a2-b0ae-11de-8491-000d93868322">
 <diagram>
 <ref refid="DCE:954E534C-A41C-11D8-BCB9-00061BC22919"/>
@@ -18098,7 +18114,7 @@
 <val>*</val>
 </upperValue>
 </UML:Property>
-<Core:Comment id="DCE:9125AC98-863B-11D7-8239-5A25B8C2F569">
+<UML:Comment id="DCE:9125AC98-863B-11D7-8239-5A25B8C2F569">
 <annotatedElement>
 <reflist>
 <ref refid="DCE:52EE3722-863A-11D7-8239-5A25B8C2F569"/>
@@ -18112,7 +18128,7 @@
 <ref refid="DCE:91252432-863B-11D7-8239-5A25B8C2F569"/>
 </reflist>
 </presentation>
-</Core:Comment>
+</UML:Comment>
 <UML:Property id="DCE:4170D88A-8402-11D8-82A2-7B88E55A3BEC">
 <association>
 <ref refid="DCE:416F3ADC-8402-11D8-82A2-7B88E55A3BEC"/>
@@ -19055,7 +19071,7 @@
 <ref refid="92207e4a-e95e-11ea-87d1-cbf2d1fcaed0"/>
 </tail-connection>
 </UML:GeneralizationItem>
-<general:CommentItem id="9c52ec0e-e95e-11ea-87d1-cbf2d1fcaed0">
+<UML:CommentItem id="9c52ec0e-e95e-11ea-87d1-cbf2d1fcaed0">
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 94.34375, 90.34375)</val>
 </matrix>
@@ -19074,8 +19090,8 @@
 <subject>
 <ref refid="9c52d08e-e95e-11ea-87d1-cbf2d1fcaed0"/>
 </subject>
-</general:CommentItem>
-<general:CommentLineItem id="a7cf06d0-e95e-11ea-87d1-cbf2d1fcaed0">
+</UML:CommentItem>
+<UML:CommentLineItem id="a7cf06d0-e95e-11ea-87d1-cbf2d1fcaed0">
 <diagram>
 <ref refid="DCE:2D47DA48-50A5-11D7-807A-302CB4EF44FD"/>
 </diagram>
@@ -19097,8 +19113,8 @@
 <tail-connection>
 <ref refid="96ea2548-e95e-11ea-87d1-cbf2d1fcaed0"/>
 </tail-connection>
-</general:CommentLineItem>
-<general:CommentItem id="0f3df241-63e4-11eb-9492-9757bcbe474b">
+</UML:CommentLineItem>
+<UML:CommentItem id="0f3df241-63e4-11eb-9492-9757bcbe474b">
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 253.0, 538.0)</val>
 </matrix>
@@ -19117,8 +19133,8 @@
 <subject>
 <ref refid="0f3df240-63e4-11eb-9492-9757bcbe474b"/>
 </subject>
-</general:CommentItem>
-<general:CommentLineItem id="16c5d578-63e4-11eb-9492-9757bcbe474b">
+</UML:CommentItem>
+<UML:CommentLineItem id="16c5d578-63e4-11eb-9492-9757bcbe474b">
 <diagram>
 <ref refid="DCE:2D47DA48-50A5-11D7-807A-302CB4EF44FD"/>
 </diagram>
@@ -19140,7 +19156,7 @@
 <tail-connection>
 <ref refid="0f3df241-63e4-11eb-9492-9757bcbe474b"/>
 </tail-connection>
-</general:CommentLineItem>
+</UML:CommentLineItem>
 <UML:Class id="DCE:882D4230-A35C-11D8-9D85-00C00C03A405">
 <generalization>
 <reflist>
@@ -19707,7 +19723,7 @@
 <ref refid="DCE:6B38D020-83D9-11D7-ADE2-4B1972AF3391"/>
 </subject>
 </UML:ClassItem>
-<general:CommentItem id="bb7078e7-e966-11ea-96dc-bf74f1f80424">
+<UML:CommentItem id="bb7078e7-e966-11ea-96dc-bf74f1f80424">
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 99.5, 483.5)</val>
 </matrix>
@@ -19726,8 +19742,8 @@
 <subject>
 <ref refid="bb7078e6-e966-11ea-96dc-bf74f1f80424"/>
 </subject>
-</general:CommentItem>
-<general:CommentItem id="cf01a549-e966-11ea-96dc-bf74f1f80424">
+</UML:CommentItem>
+<UML:CommentItem id="cf01a549-e966-11ea-96dc-bf74f1f80424">
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 853.0, 150.5)</val>
 </matrix>
@@ -19746,8 +19762,8 @@
 <subject>
 <ref refid="cf01a548-e966-11ea-96dc-bf74f1f80424"/>
 </subject>
-</general:CommentItem>
-<general:CommentLineItem id="34f17280-63d2-11eb-9492-9757bcbe474b">
+</UML:CommentItem>
+<UML:CommentLineItem id="34f17280-63d2-11eb-9492-9757bcbe474b">
 <diagram>
 <ref refid="DCE:2817DA5A-50A1-11D7-9F0D-F80F4B06507D"/>
 </diagram>
@@ -19766,7 +19782,7 @@
 <tail-connection>
 <ref refid="DCE:7D9AA7B4-50A3-11D7-807A-302CB4EF44FD"/>
 </tail-connection>
-</general:CommentLineItem>
+</UML:CommentLineItem>
 <UML:Class id="DCE:555F3576-6679-11D7-A84E-6C8643AD0CA4">
 <generalization>
 <reflist>
@@ -20326,7 +20342,7 @@
 </reflist>
 </presentation>
 </UML:Association>
-<Core:Comment id="DCE:7515C0FA-83DF-11D7-ADE2-4B1972AF3391">
+<UML:Comment id="DCE:7515C0FA-83DF-11D7-ADE2-4B1972AF3391">
 <annotatedElement>
 <reflist>
 <ref refid="DCE:BDC038A2-4A88-11D7-B08D-133D836EF880"/>
@@ -20341,7 +20357,7 @@ specially for Gaphor</val>
 <ref refid="47cb97a4-e20d-11ea-b7ab-f5b4c130f24e"/>
 </reflist>
 </presentation>
-</Core:Comment>
+</UML:Comment>
 <UML:Association id="DCE:8F7C5ED8-464D-11D7-AA08-1B85D5275D8A">
 <memberEnd>
 <reflist>
@@ -20966,7 +20982,7 @@ specially for Gaphor</val>
 <ref refid="DCE:F91A720A-4B37-11D7-B391-02BBFE4396CE"/>
 </subject>
 </UML:ClassItem>
-<general:CommentItem id="8996d432-1cae-11df-b8ca-00224128e79d">
+<UML:CommentItem id="8996d432-1cae-11df-b8ca-00224128e79d">
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 751.4564220183486, 57.5)</val>
 </matrix>
@@ -20985,8 +21001,8 @@ specially for Gaphor</val>
 <subject>
 <ref refid="89968efa-1cae-11df-b8ca-00224128e79d"/>
 </subject>
-</general:CommentItem>
-<general:CommentLineItem id="f481e64a-1cb0-11df-b8ca-00224128e79d">
+</UML:CommentItem>
+<UML:CommentLineItem id="f481e64a-1cb0-11df-b8ca-00224128e79d">
 <diagram>
 <ref refid="DCE:039A7C82-4B32-11D7-B391-02BBFE4396CE"/>
 </diagram>
@@ -21008,7 +21024,7 @@ specially for Gaphor</val>
 <tail-connection>
 <ref refid="8996d432-1cae-11df-b8ca-00224128e79d"/>
 </tail-connection>
-</general:CommentLineItem>
+</UML:CommentLineItem>
 <UML:ClassItem id="62c1394e-ed57-11ea-96dc-bf74f1f80424">
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, -74.0, 33.0)</val>
@@ -25878,7 +25894,7 @@ specially for Gaphor</val>
 </reflist>
 </ownedPresentation>
 </Core:Diagram>
-<general:CommentItem id="DCE:07E37B3C-B7DF-11D8-8AD1-9AC43285B64C">
+<UML:CommentItem id="DCE:07E37B3C-B7DF-11D8-8AD1-9AC43285B64C">
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 71.0, 111.0)</val>
 </matrix>
@@ -25897,7 +25913,7 @@ specially for Gaphor</val>
 <subject>
 <ref refid="DCE:07E6AF82-B7DF-11D8-8AD1-9AC43285B64C"/>
 </subject>
-</general:CommentItem>
+</UML:CommentItem>
 <UML:ClassItem id="DCE:C6A7D496-AAE5-11DA-B34F-000D936B094A">
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 495.0, 252.5)</val>
@@ -25988,7 +26004,7 @@ specially for Gaphor</val>
 <ref refid="DCE:22B3AA56-4B32-11D7-B391-02BBFE4396CE"/>
 </subject>
 </UML:ClassItem>
-<Core:Comment id="DCE:07E6AF82-B7DF-11D8-8AD1-9AC43285B64C">
+<UML:Comment id="DCE:07E6AF82-B7DF-11D8-8AD1-9AC43285B64C">
 <body>
 <val>Stereotypes are normally
 defined at the model's
@@ -26001,7 +26017,7 @@ directly in a model.</val>
 <ref refid="DCE:07E37B3C-B7DF-11D8-8AD1-9AC43285B64C"/>
 </reflist>
 </presentation>
-</Core:Comment>
+</UML:Comment>
 <UML:Package id="DCE:599504CC-379C-11D9-9FA4-00C00C03A405">
 <name>
 <val>A. Gaphor Specific Constructs</val>
@@ -28527,7 +28543,7 @@ directly in a model.</val>
 <ref refid="DCE:441F77EA-3B8B-11D9-96AF-B1C16A765BD4"/>
 </tail-connection>
 </UML:GeneralizationItem>
-<general:CommentItem id="c3cce7e8-3488-11e0-b5fb-0021e9e5a3cd">
+<UML:CommentItem id="c3cce7e8-3488-11e0-b5fb-0021e9e5a3cd">
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 75.0, 499.5)</val>
 </matrix>
@@ -28546,8 +28562,8 @@ directly in a model.</val>
 <subject>
 <ref refid="c3ccb4d0-3488-11e0-b5fb-0021e9e5a3cd"/>
 </subject>
-</general:CommentItem>
-<general:CommentLineItem id="e30ee9bc-3488-11e0-b5fb-0021e9e5a3cd">
+</UML:CommentItem>
+<UML:CommentLineItem id="e30ee9bc-3488-11e0-b5fb-0021e9e5a3cd">
 <diagram>
 <ref refid="DCE:14C6D1BC-3B17-11D9-83CE-A0BAF22E8A12"/>
 </diagram>
@@ -28569,7 +28585,7 @@ directly in a model.</val>
 <tail-connection>
 <ref refid="DCE:8273C5F8-3B17-11D9-83CE-A0BAF22E8A12"/>
 </tail-connection>
-</general:CommentLineItem>
+</UML:CommentLineItem>
 <UML:AssociationItem id="6176dd5e-55b4-11ea-8c7d-fd01dce16f0a">
 <diagram>
 <ref refid="DCE:14C6D1BC-3B17-11D9-83CE-A0BAF22E8A12"/>
@@ -37053,7 +37069,7 @@ directly in a model.</val>
 <val>*</val>
 </upperValue>
 </UML:Property>
-<Core:Comment id="f6b9acac-b619-11de-86be-000d93868322">
+<UML:Comment id="f6b9acac-b619-11de-86be-000d93868322">
 <body>
 <val>ActivitiyPartition.subpartition cannot
 be composite, so we can rearrange
@@ -37064,7 +37080,7 @@ swimlanes</val>
 <ref refid="92ab6c38-ea01-11ea-96dc-bf74f1f80424"/>
 </reflist>
 </presentation>
-</Core:Comment>
+</UML:Comment>
 <UML:Association id="b872a8c2-b76d-11de-a410-000d93868322">
 <memberEnd>
 <reflist>
@@ -37521,6 +37537,10 @@ swimlanes</val>
 <ref refid="929cfa1e-8e15-11ef-9861-be7f4daace40"/>
 <ref refid="293c7c96-8e17-11ef-9861-be7f4daace40"/>
 <ref refid="30d0c08e-8e17-11ef-9861-be7f4daace40"/>
+<ref refid="daa0e624-9868-11ef-9979-be7f4daace40"/>
+<ref refid="dfe8188c-9868-11ef-9979-be7f4daace40"/>
+<ref refid="00d16aee-9869-11ef-9979-be7f4daace40"/>
+<ref refid="09f54866-9869-11ef-9979-be7f4daace40"/>
 </reflist>
 </instanceSpecification>
 <name>
@@ -37892,6 +37912,10 @@ swimlanes</val>
 <ref refid="958f376e-8e15-11ef-9861-be7f4daace40"/>
 <ref refid="2fb6d148-8e17-11ef-9861-be7f4daace40"/>
 <ref refid="3b538514-8e17-11ef-9861-be7f4daace40"/>
+<ref refid="de3b6070-9868-11ef-9979-be7f4daace40"/>
+<ref refid="ed078c5a-9868-11ef-9979-be7f4daace40"/>
+<ref refid="07f0b85c-9869-11ef-9979-be7f4daace40"/>
+<ref refid="1bc508f6-9869-11ef-9979-be7f4daace40"/>
 </reflist>
 </slot>
 <typeValue>
@@ -44032,7 +44056,7 @@ swimlanes</val>
 <val>Boolean</val>
 </typeValue>
 </UML:Property>
-<Core:Comment id="89968efa-1cae-11df-b8ca-00224128e79d">
+<UML:Comment id="89968efa-1cae-11df-b8ca-00224128e79d">
 <annotatedElement>
 <reflist>
 <ref refid="DCE:3A818386-4B3E-11D7-B391-02BBFE4396CE"/>
@@ -44050,7 +44074,7 @@ removed.</val>
 <ref refid="8996d432-1cae-11df-b8ca-00224128e79d"/>
 </reflist>
 </presentation>
-</Core:Comment>
+</UML:Comment>
 <UML:Class id="8fe711d2-1ed7-11df-9455-000d93868322">
 <generalization>
 <reflist>
@@ -44111,7 +44135,7 @@ removed.</val>
 </reflist>
 </extended>
 </UML:InstanceSpecification>
-<Core:Comment id="c3ccb4d0-3488-11e0-b5fb-0021e9e5a3cd">
+<UML:Comment id="c3ccb4d0-3488-11e0-b5fb-0021e9e5a3cd">
 <annotatedElement>
 <reflist>
 <ref refid="DCE:8389D414-3B17-11D9-83CE-A0BAF22E8A12"/>
@@ -44126,7 +44150,7 @@ to accommodate simpleAttribute</val>
 <ref refid="c3cce7e8-3488-11e0-b5fb-0021e9e5a3cd"/>
 </reflist>
 </presentation>
-</Core:Comment>
+</UML:Comment>
 <UML:Package id="a3b505ae-3801-11e0-87bf-0021e9e5a3cd">
 <name>
 <val>10. Actions</val>
@@ -44998,7 +45022,7 @@ to accommodate simpleAttribute</val>
 <ref refid="5765c343-909d-11ea-9685-03ae027faeeb"/>
 </tail-connection>
 </UML:GeneralizationItem>
-<general:CommentItem id="d3ee7c43-909d-11ea-9685-03ae027faeeb">
+<UML:CommentItem id="d3ee7c43-909d-11ea-9685-03ae027faeeb">
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 291.0439758300781, 97.78932189941406)</val>
 </matrix>
@@ -45017,7 +45041,7 @@ to accommodate simpleAttribute</val>
 <subject>
 <ref refid="d3ee7c42-909d-11ea-9685-03ae027faeeb"/>
 </subject>
-</general:CommentItem>
+</UML:CommentItem>
 <UML:Class id="6035fd5a-3802-11e0-87bf-0021e9e5a3cd">
 <generalization>
 <reflist>
@@ -46228,7 +46252,7 @@ to accommodate simpleAttribute</val>
 <ref refid="0237193e-4066-11e0-b382-0019d2b28af0"/>
 </tail-connection>
 </UML:AssociationItem>
-<general:CommentItem id="aef476e9-e965-11ea-96dc-bf74f1f80424">
+<UML:CommentItem id="aef476e9-e965-11ea-96dc-bf74f1f80424">
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 57.0, 61.0)</val>
 </matrix>
@@ -46247,7 +46271,7 @@ to accommodate simpleAttribute</val>
 <subject>
 <ref refid="aef476e8-e965-11ea-96dc-bf74f1f80424"/>
 </subject>
-</general:CommentItem>
+</UML:CommentItem>
 <UML:Class id="0236b1ce-4066-11e0-b382-0019d2b28af0">
 <generalization>
 <reflist>
@@ -47175,7 +47199,7 @@ to accommodate simpleAttribute</val>
 <val>Property.type</val>
 </value>
 </UML:Slot>
-<Core:Comment id="553d8aba-c90f-11e9-97bf-90784199a5ed">
+<UML:Comment id="553d8aba-c90f-11e9-97bf-90784199a5ed">
 <body>
 <val>Can not redefine, since multiplicity is different from parent type.</val>
 </body>
@@ -47184,7 +47208,7 @@ to accommodate simpleAttribute</val>
 <ref refid="553d8abb-c90f-11e9-97bf-90784199a5ed"/>
 </reflist>
 </presentation>
-</Core:Comment>
+</UML:Comment>
 <UML:InstanceSpecification id="db3ce42e-54f3-11ea-8c7d-fd01dce16f0a">
 <classifier>
 <reflist>
@@ -48348,7 +48372,7 @@ to accommodate simpleAttribute</val>
 <ref refid="63a12bfc-55b9-11ea-8c7d-fd01dce16f0a"/>
 </tail-connection>
 </UML:AssociationItem>
-<general:CommentItem id="3c13aeef-573e-11ea-8c7d-fd01dce16f0a">
+<UML:CommentItem id="3c13aeef-573e-11ea-8c7d-fd01dce16f0a">
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 297.61489361702115, 73.00393676757812)</val>
 </matrix>
@@ -48367,7 +48391,7 @@ to accommodate simpleAttribute</val>
 <subject>
 <ref refid="3c13aeee-573e-11ea-8c7d-fd01dce16f0a"/>
 </subject>
-</general:CommentItem>
+</UML:CommentItem>
 <UML:Association id="d12cdc47-55b6-11ea-8c7d-fd01dce16f0a">
 <memberEnd>
 <reflist>
@@ -49115,7 +49139,7 @@ to accommodate simpleAttribute</val>
 <ref refid="5c724236-55b8-11ea-8c7d-fd01dce16f0a"/>
 </specific>
 </UML:Generalization>
-<Core:Comment id="3c13aeee-573e-11ea-8c7d-fd01dce16f0a">
+<UML:Comment id="3c13aeee-573e-11ea-8c7d-fd01dce16f0a">
 <body>
 <val>Some changes have been made to the original model,
 to make it fit more to what we need in Gaphor.</val>
@@ -49125,7 +49149,7 @@ to make it fit more to what we need in Gaphor.</val>
 <ref refid="3c13aeef-573e-11ea-8c7d-fd01dce16f0a"/>
 </reflist>
 </presentation>
-</Core:Comment>
+</UML:Comment>
 <UML:InstanceSpecification id="8678ec7a-611a-11ea-b792-718e3bcfaa5c">
 <classifier>
 <reflist>
@@ -49177,16 +49201,6 @@ to make it fit more to what we need in Gaphor.</val>
 <val>1</val>
 </upperValue>
 </UML:Property>
-<Core:Comment id="a06fc759-7cf9-11ea-b719-1f391582df99">
-<body>
-<val>Comment is defined in the Core model.</val>
-</body>
-<presentation>
-<reflist>
-<ref refid="a06fc75a-7cf9-11ea-b719-1f391582df99"/>
-</reflist>
-</presentation>
-</Core:Comment>
 <UML:Class id="73962226-909a-11ea-9685-03ae027faeeb">
 <generalization>
 <reflist>
@@ -49425,7 +49439,7 @@ to make it fit more to what we need in Gaphor.</val>
 <val>Boolean</val>
 </typeValue>
 </UML:Property>
-<Core:Comment id="d3ee7c42-909d-11ea-9685-03ae027faeeb">
+<UML:Comment id="d3ee7c42-909d-11ea-9685-03ae027faeeb">
 <body>
 <val>UML v2.5.1
 Fig. 16.36
@@ -49436,8 +49450,8 @@ Partly</val>
 <ref refid="d3ee7c43-909d-11ea-9685-03ae027faeeb"/>
 </reflist>
 </presentation>
-</Core:Comment>
-<Core:Comment id="e9171588-909e-11ea-85c4-7f4489bdcce3">
+</UML:Comment>
+<UML:Comment id="e9171588-909e-11ea-85c4-7f4489bdcce3">
 <body>
 <val>UML v2.2
 with ParameterSet from 2.5.1
@@ -49448,7 +49462,7 @@ Fig. 9.9</val>
 <ref refid="e917354a-909e-11ea-85c4-7f4489bdcce3"/>
 </reflist>
 </presentation>
-</Core:Comment>
+</UML:Comment>
 <UML:Class id="03639394-909f-11ea-85c4-7f4489bdcce3">
 <generalization>
 <reflist>
@@ -50560,7 +50574,7 @@ association:not([memberEnd.navigability*=true]) {
 <ref refid="DCE:5BACF5C0-4A87-11D7-B089-133D836EF880"/>
 </subject>
 </UML:ClassItem>
-<general:CommentItem id="47cb97a4-e20d-11ea-b7ab-f5b4c130f24e">
+<UML:CommentItem id="47cb97a4-e20d-11ea-b7ab-f5b4c130f24e">
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 740.5, 436.5)</val>
 </matrix>
@@ -50579,8 +50593,8 @@ association:not([memberEnd.navigability*=true]) {
 <subject>
 <ref refid="DCE:7515C0FA-83DF-11D7-ADE2-4B1972AF3391"/>
 </subject>
-</general:CommentItem>
-<general:CommentLineItem id="47cb97a6-e20d-11ea-b7ab-f5b4c130f24e">
+</UML:CommentItem>
+<UML:CommentLineItem id="47cb97a6-e20d-11ea-b7ab-f5b4c130f24e">
 <diagram>
 <ref refid="3bf6ebec-e20d-11ea-b7ab-f5b4c130f24e"/>
 </diagram>
@@ -50602,7 +50616,7 @@ association:not([memberEnd.navigability*=true]) {
 <tail-connection>
 <ref refid="47cb97a4-e20d-11ea-b7ab-f5b4c130f24e"/>
 </tail-connection>
-</general:CommentLineItem>
+</UML:CommentLineItem>
 <UML:GeneralizationItem id="47cb97a8-e20d-11ea-b7ab-f5b4c130f24e">
 <diagram>
 <ref refid="3bf6ebec-e20d-11ea-b7ab-f5b4c130f24e"/>
@@ -50844,7 +50858,7 @@ association:not([memberEnd.navigability*=true]) {
 <val>ownedMember, redefinableElement</val>
 </value>
 </UML:Slot>
-<Core:Comment id="bb156364-e89c-11ea-96dc-bf74f1f80424">
+<UML:Comment id="bb156364-e89c-11ea-96dc-bf74f1f80424">
 <body>
 <val>fix associations</val>
 </body>
@@ -50853,7 +50867,7 @@ association:not([memberEnd.navigability*=true]) {
 <ref refid="bb156365-e89c-11ea-96dc-bf74f1f80424"/>
 </reflist>
 </presentation>
-</Core:Comment>
+</UML:Comment>
 <UML:Property id="DCE:3B1BE0C8-61DF-11D9-A154-0050040A5923">
 <aggregation>
 <val>composite</val>
@@ -51322,7 +51336,7 @@ association:not([memberEnd.navigability*=true]) {
 <ref refid="DCE:3B6508EE-A35C-11D8-9D85-00C00C03A405"/>
 </specific>
 </UML:Generalization>
-<Core:Comment id="9c52d08e-e95e-11ea-87d1-cbf2d1fcaed0">
+<UML:Comment id="9c52d08e-e95e-11ea-87d1-cbf2d1fcaed0">
 <annotatedElement>
 <reflist>
 <ref refid="9845a6ba-e95e-11ea-87d1-cbf2d1fcaed0"/>
@@ -51336,7 +51350,7 @@ association:not([memberEnd.navigability*=true]) {
 <ref refid="9c52ec0e-e95e-11ea-87d1-cbf2d1fcaed0"/>
 </reflist>
 </presentation>
-</Core:Comment>
+</UML:Comment>
 <UML:Property id="c0c3efbc-e962-11ea-87d1-cbf2d1fcaed0">
 <class_>
 <ref refid="DCE:6C8F2E88-4B3D-11D7-B391-02BBFE4396CE"/>
@@ -51830,7 +51844,7 @@ association:not([memberEnd.navigability*=true]) {
 <ref refid="aac36824-e964-11ea-96dc-bf74f1f80424"/>
 </tail-connection>
 </UML:GeneralizationItem>
-<Core:Comment id="aef476e8-e965-11ea-96dc-bf74f1f80424">
+<UML:Comment id="aef476e8-e965-11ea-96dc-bf74f1f80424">
 <body>
 <val>!! Partly implemented</val>
 </body>
@@ -51839,7 +51853,7 @@ association:not([memberEnd.navigability*=true]) {
 <ref refid="aef476e9-e965-11ea-96dc-bf74f1f80424"/>
 </reflist>
 </presentation>
-</Core:Comment>
+</UML:Comment>
 <UML:Slot id="7ffc63ca-e966-11ea-96dc-bf74f1f80424">
 <definingFeature>
 <ref refid="16f8dfbe-fa90-11de-bd51-00224128e79d"/>
@@ -51862,7 +51876,7 @@ association:not([memberEnd.navigability*=true]) {
 <val>namespace</val>
 </value>
 </UML:Slot>
-<Core:Comment id="bb7078e6-e966-11ea-96dc-bf74f1f80424">
+<UML:Comment id="bb7078e6-e966-11ea-96dc-bf74f1f80424">
 <body>
 <val>Use "package" instead of "nestingPackage" to keep symmetry with "Type.package"</val>
 </body>
@@ -51871,8 +51885,8 @@ association:not([memberEnd.navigability*=true]) {
 <ref refid="bb7078e7-e966-11ea-96dc-bf74f1f80424"/>
 </reflist>
 </presentation>
-</Core:Comment>
-<Core:Comment id="cf01a548-e966-11ea-96dc-bf74f1f80424">
+</UML:Comment>
+<UML:Comment id="cf01a548-e966-11ea-96dc-bf74f1f80424">
 <body>
 <val>Should be called
 /ownedType</val>
@@ -51882,7 +51896,7 @@ association:not([memberEnd.navigability*=true]) {
 <ref refid="cf01a549-e966-11ea-96dc-bf74f1f80424"/>
 </reflist>
 </presentation>
-</Core:Comment>
+</UML:Comment>
 <UML:Generalization id="d8d24bbc-e967-11ea-96dc-bf74f1f80424">
 <general>
 <ref refid="DCE:6C8F2E88-4B3D-11D7-B391-02BBFE4396CE"/>
@@ -53452,7 +53466,7 @@ association:not([memberEnd.navigability*=true]) {
 <ref refid="DCE:6C8F2E88-4B3D-11D7-B391-02BBFE4396CE"/>
 </specific>
 </UML:Generalization>
-<Core:Comment id="0f3df240-63e4-11eb-9492-9757bcbe474b">
+<UML:Comment id="0f3df240-63e4-11eb-9492-9757bcbe474b">
 <annotatedElement>
 <reflist>
 <ref refid="DCE:C229073A-A418-11D8-B4C8-00061BC22919"/>
@@ -53466,7 +53480,7 @@ association:not([memberEnd.navigability*=true]) {
 <ref refid="0f3df241-63e4-11eb-9492-9757bcbe474b"/>
 </reflist>
 </presentation>
-</Core:Comment>
+</UML:Comment>
 <UML:Class id="d778d11e-6527-11eb-9492-9757bcbe474b">
 <generalization>
 <reflist>
@@ -53607,7 +53621,7 @@ association:not([memberEnd.navigability*=true]) {
 <val>ownedMember</val>
 </value>
 </UML:Slot>
-<Core:Comment id="4b2d6c5c-652b-11eb-9492-9757bcbe474b">
+<UML:Comment id="4b2d6c5c-652b-11eb-9492-9757bcbe474b">
 <annotatedElement>
 <reflist>
 <ref refid="DCE:40E9D2EC-A41A-11D8-A88E-00061BC22919"/>
@@ -53622,7 +53636,7 @@ association:not([memberEnd.navigability*=true]) {
 <ref refid="4b2d6c5d-652b-11eb-9492-9757bcbe474b"/>
 </reflist>
 </presentation>
-</Core:Comment>
+</UML:Comment>
 <UML:Slot id="7656921e-aa7c-11eb-ad49-8b526b5558f5">
 <definingFeature>
 <ref refid="16f8dfbe-fa90-11de-bd51-00224128e79d"/>
@@ -55182,7 +55196,7 @@ association:not([memberEnd.navigability*=true]) {
 <ref refid="DCE:F10D682A-4A87-11D7-B08B-133D836EF880"/>
 </specific>
 </UML:Generalization>
-<Core:Comment id="c61993d0-4c90-11ec-8c4e-0456e5e540ed">
+<UML:Comment id="c61993d0-4c90-11ec-8c4e-0456e5e540ed">
 <body>
 <val>Specialization is added to improve navigability.</val>
 </body>
@@ -55191,8 +55205,8 @@ association:not([memberEnd.navigability*=true]) {
 <ref refid="c619a000-4c90-11ec-8c4e-0456e5e540ed"/>
 </reflist>
 </presentation>
-</Core:Comment>
-<general:CommentItem id="c619a000-4c90-11ec-8c4e-0456e5e540ed">
+</UML:Comment>
+<UML:CommentItem id="c619a000-4c90-11ec-8c4e-0456e5e540ed">
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 1021.227272727273, 369.0)</val>
 </matrix>
@@ -55211,8 +55225,13 @@ association:not([memberEnd.navigability*=true]) {
 <subject>
 <ref refid="c61993d0-4c90-11ec-8c4e-0456e5e540ed"/>
 </subject>
-</general:CommentItem>
-<Core:Comment id="0a355dbe-52b9-11ec-b0e5-0456e5e540ed">
+</UML:CommentItem>
+<UML:Comment id="0a355dbe-52b9-11ec-b0e5-0456e5e540ed">
+<annotatedElement>
+<reflist>
+<ref refid="DCE:FC139C48-45CE-11D7-B5CA-613352B2821F"/>
+</reflist>
+</annotatedElement>
 <body>
 <val>Defined in Core model.</val>
 </body>
@@ -55221,10 +55240,10 @@ association:not([memberEnd.navigability*=true]) {
 <ref refid="0a356994-52b9-11ec-b0e5-0456e5e540ed"/>
 </reflist>
 </presentation>
-</Core:Comment>
-<general:CommentItem id="0a356994-52b9-11ec-b0e5-0456e5e540ed">
+</UML:Comment>
+<UML:CommentItem id="0a356994-52b9-11ec-b0e5-0456e5e540ed">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 507.0, 251.9567180669331)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 440.9691780821917, 232.0)</val>
 </matrix>
 <top-left>
 <val>(0.0, 0.0)</val>
@@ -55241,8 +55260,8 @@ association:not([memberEnd.navigability*=true]) {
 <subject>
 <ref refid="0a355dbe-52b9-11ec-b0e5-0456e5e540ed"/>
 </subject>
-</general:CommentItem>
-<general:CommentLineItem id="cc955e1a-52bc-11ec-b0e5-0456e5e540ed">
+</UML:CommentItem>
+<UML:CommentLineItem id="cc955e1a-52bc-11ec-b0e5-0456e5e540ed">
 <diagram>
 <ref refid="DCE:E71AAA3E-45CE-11D7-B5CA-613352B2821F"/>
 </diagram>
@@ -55256,12 +55275,15 @@ association:not([memberEnd.navigability*=true]) {
 <val>(1.0, 0.0, 0.0, 1.0, 389.2109375, 235.44926264044943)</val>
 </matrix>
 <points>
-<val>[(33.7890625, 2.5142513752965527), (117.7890625, 45.55073735955057)]</val>
+<val>[(33.7890625, 2.5142513752965527), (51.75824058219172, 36.11254607542298)]</val>
 </points>
 <head-connection>
 <ref refid="DCE:FC12D436-45CE-11D7-B5CA-613352B2821F"/>
 </head-connection>
-</general:CommentLineItem>
+<tail-connection>
+<ref refid="0a356994-52b9-11ec-b0e5-0456e5e540ed"/>
+</tail-connection>
+</UML:CommentLineItem>
 <UML:InstanceSpecification id="659e28da-9a43-11ec-8e48-0456e5e540ed">
 <classifier>
 <reflist>
@@ -55793,7 +55815,7 @@ association:not([memberEnd.navigability*=true]) {
 <val>*</val>
 </upperValue>
 </UML:Property>
-<Core:Comment id="0ab9c422-bcd7-11ec-bbef-0456e5e540ed">
+<UML:Comment id="0ab9c422-bcd7-11ec-bbef-0456e5e540ed">
 <annotatedElement>
 <reflist>
 <ref refid="fb7d0c30-bcd6-11ec-bbef-0456e5e540ed"/>
@@ -55808,8 +55830,8 @@ association:not([memberEnd.navigability*=true]) {
 <ref refid="0ab9cbf2-bcd7-11ec-bbef-0456e5e540ed"/>
 </reflist>
 </presentation>
-</Core:Comment>
-<general:CommentItem id="0ab9cbf2-bcd7-11ec-bbef-0456e5e540ed">
+</UML:Comment>
+<UML:CommentItem id="0ab9cbf2-bcd7-11ec-bbef-0456e5e540ed">
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 271.0, 439.0)</val>
 </matrix>
@@ -55828,8 +55850,8 @@ association:not([memberEnd.navigability*=true]) {
 <subject>
 <ref refid="0ab9c422-bcd7-11ec-bbef-0456e5e540ed"/>
 </subject>
-</general:CommentItem>
-<general:CommentLineItem id="0f76233e-bcd7-11ec-bbef-0456e5e540ed">
+</UML:CommentItem>
+<UML:CommentLineItem id="0f76233e-bcd7-11ec-bbef-0456e5e540ed">
 <diagram>
 <ref refid="DCE:47C3C202-8325-11D8-8D1E-00C00C03A405"/>
 </diagram>
@@ -55851,8 +55873,8 @@ association:not([memberEnd.navigability*=true]) {
 <tail-connection>
 <ref refid="e8f92f0e-bb63-11ec-a9db-0456e5e540ed"/>
 </tail-connection>
-</general:CommentLineItem>
-<general:CommentLineItem id="15f5aa2c-bcd7-11ec-bbef-0456e5e540ed">
+</UML:CommentLineItem>
+<UML:CommentLineItem id="15f5aa2c-bcd7-11ec-bbef-0456e5e540ed">
 <diagram>
 <ref refid="DCE:47C3C202-8325-11D8-8D1E-00C00C03A405"/>
 </diagram>
@@ -55874,7 +55896,7 @@ association:not([memberEnd.navigability*=true]) {
 <tail-connection>
 <ref refid="a7c9194e-bb64-11ec-a9db-0456e5e540ed"/>
 </tail-connection>
-</general:CommentLineItem>
+</UML:CommentLineItem>
 <UML:InstanceSpecification id="c4841624-bd99-11ec-8a35-0456e5e540ed">
 <classifier>
 <reflist>
@@ -55998,7 +56020,7 @@ association:not([memberEnd.navigability*=true]) {
 <val>String</val>
 </typeValue>
 </UML:Property>
-<Core:Comment id="f98ed18e-0dac-11ed-bc4b-0456e5e540ed">
+<UML:Comment id="f98ed18e-0dac-11ed-bc4b-0456e5e540ed">
 <annotatedElement>
 <reflist>
 <ref refid="DCE:BCEB5704-4B32-11D7-B391-02BBFE4396CE"/>
@@ -56012,8 +56034,8 @@ association:not([memberEnd.navigability*=true]) {
 <ref refid="f98edd28-0dac-11ed-bc4b-0456e5e540ed"/>
 </reflist>
 </presentation>
-</Core:Comment>
-<general:CommentItem id="f98edd28-0dac-11ed-bc4b-0456e5e540ed">
+</UML:Comment>
+<UML:CommentItem id="f98edd28-0dac-11ed-bc4b-0456e5e540ed">
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 311.5, 530.12109375)</val>
 </matrix>
@@ -56032,8 +56054,8 @@ association:not([memberEnd.navigability*=true]) {
 <subject>
 <ref refid="f98ed18e-0dac-11ed-bc4b-0456e5e540ed"/>
 </subject>
-</general:CommentItem>
-<general:CommentLineItem id="1d86ba48-0dad-11ed-bc4b-0456e5e540ed">
+</UML:CommentItem>
+<UML:CommentLineItem id="1d86ba48-0dad-11ed-bc4b-0456e5e540ed">
 <diagram>
 <ref refid="DCE:039A7C82-4B32-11D7-B391-02BBFE4396CE"/>
 </diagram>
@@ -56055,7 +56077,7 @@ association:not([memberEnd.navigability*=true]) {
 <tail-connection>
 <ref refid="f98edd28-0dac-11ed-bc4b-0456e5e540ed"/>
 </tail-connection>
-</general:CommentLineItem>
+</UML:CommentLineItem>
 <UML:InstanceSpecification id="7fa5739e-22df-11ed-9227-0456e5e540ed">
 <classifier>
 <reflist>
@@ -57620,26 +57642,6 @@ association:not([memberEnd.navigability*=true]) {
 <val>ownedElement</val>
 </value>
 </UML:Slot>
-<general:CommentLineItem id="d4d1c5ec-2e32-11ef-8125-be7f4daace40">
-<diagram>
-<ref refid="DCE:E71AAA3E-45CE-11D7-B5CA-613352B2821F"/>
-</diagram>
-<horizontal>
-<val>0</val>
-</horizontal>
-<orthogonal>
-<val>0</val>
-</orthogonal>
-<matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 389.0, 367.0)</val>
-</matrix>
-<points>
-<val>[(0.0, -1.5), (118.0, -70.0)]</val>
-</points>
-<head-connection>
-<ref refid="DCE:38CAFEF6-45CF-11D7-B5CA-613352B2821F"/>
-</head-connection>
-</general:CommentLineItem>
 <UML:ClassItem id="DCE:483FA366-464D-11D7-AA08-1B85D5275D8A">
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 911.4999999999999, 77.81510416666663)</val>
@@ -58668,7 +58670,7 @@ association:not([memberEnd.navigability*=true]) {
 <val>target</val>
 </value>
 </UML:Slot>
-<Core:Comment id="b61645d6-8e15-11ef-9861-be7f4daace40">
+<UML:Comment id="b61645d6-8e15-11ef-9861-be7f4daace40">
 <annotatedElement>
 <reflist>
 <ref refid="029ae67e-8e15-11ef-9861-be7f4daace40"/>
@@ -58682,8 +58684,8 @@ association:not([memberEnd.navigability*=true]) {
 <ref refid="b616560c-8e15-11ef-9861-be7f4daace40"/>
 </reflist>
 </presentation>
-</Core:Comment>
-<general:CommentItem id="b616560c-8e15-11ef-9861-be7f4daace40">
+</UML:Comment>
+<UML:CommentItem id="b616560c-8e15-11ef-9861-be7f4daace40">
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 328.37890625, 97.0)</val>
 </matrix>
@@ -58702,8 +58704,8 @@ association:not([memberEnd.navigability*=true]) {
 <subject>
 <ref refid="b61645d6-8e15-11ef-9861-be7f4daace40"/>
 </subject>
-</general:CommentItem>
-<general:CommentLineItem id="dcc01716-8e15-11ef-9861-be7f4daace40">
+</UML:CommentItem>
+<UML:CommentLineItem id="dcc01716-8e15-11ef-9861-be7f4daace40">
 <diagram>
 <ref refid="DCE:4E445586-50A4-11D7-807A-302CB4EF44FD"/>
 </diagram>
@@ -58725,8 +58727,8 @@ association:not([memberEnd.navigability*=true]) {
 <tail-connection>
 <ref refid="0149c074-8e15-11ef-9861-be7f4daace40"/>
 </tail-connection>
-</general:CommentLineItem>
-<general:CommentLineItem id="1ac73d32-8e16-11ef-9861-be7f4daace40">
+</UML:CommentLineItem>
+<UML:CommentLineItem id="1ac73d32-8e16-11ef-9861-be7f4daace40">
 <diagram>
 <ref refid="DCE:4E445586-50A4-11D7-807A-302CB4EF44FD"/>
 </diagram>
@@ -58745,7 +58747,7 @@ association:not([memberEnd.navigability*=true]) {
 <tail-connection>
 <ref refid="6196862e-8e15-11ef-9861-be7f4daace40"/>
 </tail-connection>
-</general:CommentLineItem>
+</UML:CommentLineItem>
 <UML:GeneralizationItem id="4cc6bd26-8e16-11ef-9861-be7f4daace40">
 <diagram>
 <ref refid="DCE:D2653A36-464C-11D7-AA08-1B85D5275D8A"/>
@@ -59369,7 +59371,7 @@ association:not([memberEnd.navigability*=true]) {
 <ref refid="95c3c964-8e17-11ef-9861-be7f4daace40"/>
 </type>
 </UML:Property>
-<Core:Comment id="4783f840-8e18-11ef-9861-be7f4daace40">
+<UML:Comment id="4783f840-8e18-11ef-9861-be7f4daace40">
 <annotatedElement>
 <reflist>
 <ref refid="DCE:FF594BE0-464C-11D7-AA08-1B85D5275D8A"/>
@@ -59383,8 +59385,8 @@ association:not([memberEnd.navigability*=true]) {
 <ref refid="47840aba-8e18-11ef-9861-be7f4daace40"/>
 </reflist>
 </presentation>
-</Core:Comment>
-<general:CommentItem id="47840aba-8e18-11ef-9861-be7f4daace40">
+</UML:Comment>
+<UML:CommentItem id="47840aba-8e18-11ef-9861-be7f4daace40">
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 533.3884579030923, 149.7721453535974)</val>
 </matrix>
@@ -59403,8 +59405,8 @@ association:not([memberEnd.navigability*=true]) {
 <subject>
 <ref refid="4783f840-8e18-11ef-9861-be7f4daace40"/>
 </subject>
-</general:CommentItem>
-<general:CommentLineItem id="4eb261ec-8e18-11ef-9861-be7f4daace40">
+</UML:CommentItem>
+<UML:CommentLineItem id="4eb261ec-8e18-11ef-9861-be7f4daace40">
 <diagram>
 <ref refid="DCE:D2653A36-464C-11D7-AA08-1B85D5275D8A"/>
 </diagram>
@@ -59426,7 +59428,7 @@ association:not([memberEnd.navigability*=true]) {
 <tail-connection>
 <ref refid="47840aba-8e18-11ef-9861-be7f4daace40"/>
 </tail-connection>
-</general:CommentLineItem>
+</UML:CommentLineItem>
 <UML:Property id="0cdeb851-8bc7-11ef-9d96-14abc554333b">
 <class_>
 <ref refid="DCE:F10D682A-4A87-11D7-B08B-133D836EF880"/>
@@ -59440,6 +59442,684 @@ association:not([memberEnd.navigability*=true]) {
 <typeValue>
 <val>Boolean</val>
 </typeValue>
+</UML:Property>
+<UML:GeneralizationItem id="55581546-9868-11ef-9979-be7f4daace40">
+<diagram>
+<ref refid="DCE:E71AAA3E-45CE-11D7-B5CA-613352B2821F"/>
+</diagram>
+<horizontal>
+<val>0</val>
+</horizontal>
+<orthogonal>
+<val>0</val>
+</orthogonal>
+<subject>
+<ref refid="5693129e-9868-11ef-9979-be7f4daace40"/>
+</subject>
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 361.0, 282.0)</val>
+</matrix>
+<points>
+<val>[(0.0, 83.5), (0.0, -1.0)]</val>
+</points>
+<head-connection>
+<ref refid="DCE:38CAFEF6-45CF-11D7-B5CA-613352B2821F"/>
+</head-connection>
+<tail-connection>
+<ref refid="DCE:FC12D436-45CE-11D7-B5CA-613352B2821F"/>
+</tail-connection>
+</UML:GeneralizationItem>
+<UML:Generalization id="5693129e-9868-11ef-9979-be7f4daace40">
+<general>
+<ref refid="DCE:FC139C48-45CE-11D7-B5CA-613352B2821F"/>
+</general>
+<presentation>
+<reflist>
+<ref refid="55581546-9868-11ef-9979-be7f4daace40"/>
+</reflist>
+</presentation>
+<specific>
+<ref refid="DCE:38CB97A8-45CF-11D7-B5CA-613352B2821F"/>
+</specific>
+</UML:Generalization>
+<UML:AssociationItem id="59eb3c00-9868-11ef-9979-be7f4daace40">
+<diagram>
+<ref refid="DCE:E71AAA3E-45CE-11D7-B5CA-613352B2821F"/>
+</diagram>
+<head_subject>
+<ref refid="5bf29002-9868-11ef-9979-be7f4daace40"/>
+</head_subject>
+<horizontal>
+<val>1</val>
+</horizontal>
+<orthogonal>
+<val>1</val>
+</orthogonal>
+<subject>
+<ref refid="5bf20e98-9868-11ef-9979-be7f4daace40"/>
+</subject>
+<tail_subject>
+<ref refid="5bf298f4-9868-11ef-9979-be7f4daace40"/>
+</tail_subject>
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 126.00213317634916, 351.9134361338662)</val>
+</matrix>
+<points>
+<val>[(159.96704490584256, 35.086563866133815), (51.47802993722837, 35.086563866133815), (51.47802993722837, -91.91343613386618), (174.99786682365084, -91.91343613386618)]</val>
+</points>
+<head-connection>
+<ref refid="DCE:38CAFEF6-45CF-11D7-B5CA-613352B2821F"/>
+</head-connection>
+<tail-connection>
+<ref refid="DCE:FC12D436-45CE-11D7-B5CA-613352B2821F"/>
+</tail-connection>
+</UML:AssociationItem>
+<UML:Association id="5bf20e98-9868-11ef-9979-be7f4daace40">
+<memberEnd>
+<reflist>
+<ref refid="5bf29002-9868-11ef-9979-be7f4daace40"/>
+<ref refid="5bf298f4-9868-11ef-9979-be7f4daace40"/>
+</reflist>
+</memberEnd>
+<owningPackage>
+<ref refid="DCE:E085A412-45CE-11D7-B5CA-613352B2821F"/>
+</owningPackage>
+<package>
+<ref refid="DCE:E085A412-45CE-11D7-B5CA-613352B2821F"/>
+</package>
+<presentation>
+<reflist>
+<ref refid="59eb3c00-9868-11ef-9979-be7f4daace40"/>
+</reflist>
+</presentation>
+</UML:Association>
+<UML:Property id="5bf29002-9868-11ef-9979-be7f4daace40">
+<association>
+<ref refid="5bf20e98-9868-11ef-9979-be7f4daace40"/>
+</association>
+<class_>
+<ref refid="DCE:FC139C48-45CE-11D7-B5CA-613352B2821F"/>
+</class_>
+<isDerived>
+<val>1</val>
+</isDerived>
+<name>
+<val>relationship</val>
+</name>
+<type>
+<ref refid="DCE:38CB97A8-45CF-11D7-B5CA-613352B2821F"/>
+</type>
+<upperValue>
+<val>*</val>
+</upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
+</UML:Property>
+<UML:Property id="5bf298f4-9868-11ef-9979-be7f4daace40">
+<association>
+<ref refid="5bf20e98-9868-11ef-9979-be7f4daace40"/>
+</association>
+<class_>
+<ref refid="DCE:38CB97A8-45CF-11D7-B5CA-613352B2821F"/>
+</class_>
+<isDerived>
+<val>1</val>
+</isDerived>
+<lowerValue>
+<val>1</val>
+</lowerValue>
+<lowerValue>
+<val>1</val>
+</lowerValue>
+<name>
+<val>relatedElement</val>
+</name>
+<type>
+<ref refid="DCE:FC139C48-45CE-11D7-B5CA-613352B2821F"/>
+</type>
+<upperValue>
+<val>*</val>
+</upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
+</UML:Property>
+<UML:AssociationItem id="8fc709c6-9868-11ef-9979-be7f4daace40">
+<diagram>
+<ref refid="DCE:E71AAA3E-45CE-11D7-B5CA-613352B2821F"/>
+</diagram>
+<head_subject>
+<ref refid="9154bf54-9868-11ef-9979-be7f4daace40"/>
+</head_subject>
+<horizontal>
+<val>1</val>
+</horizontal>
+<orthogonal>
+<val>1</val>
+</orthogonal>
+<subject>
+<ref refid="91547a1c-9868-11ef-9979-be7f4daace40"/>
+</subject>
+<tail_subject>
+<ref refid="9154c4ae-9868-11ef-9979-be7f4daace40"/>
+</tail_subject>
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 265.0, 526.8984375)</val>
+</matrix>
+<points>
+<val>[(-8.780821917808282, 0.1015625), (-132.0, 0.1015625), (-132.0, -310.3366287841276), (36.0, -310.3366287841276)]</val>
+</points>
+<head-connection>
+<ref refid="DCE:3F0AFFA8-45D1-11D7-B5CA-613352B2821F"/>
+</head-connection>
+<tail-connection>
+<ref refid="DCE:FC12D436-45CE-11D7-B5CA-613352B2821F"/>
+</tail-connection>
+</UML:AssociationItem>
+<UML:Association id="91547a1c-9868-11ef-9979-be7f4daace40">
+<memberEnd>
+<reflist>
+<ref refid="9154bf54-9868-11ef-9979-be7f4daace40"/>
+<ref refid="9154c4ae-9868-11ef-9979-be7f4daace40"/>
+</reflist>
+</memberEnd>
+<ownedEnd>
+<reflist>
+<ref refid="9154bf54-9868-11ef-9979-be7f4daace40"/>
+</reflist>
+</ownedEnd>
+<owningPackage>
+<ref refid="DCE:E085A412-45CE-11D7-B5CA-613352B2821F"/>
+</owningPackage>
+<package>
+<ref refid="DCE:E085A412-45CE-11D7-B5CA-613352B2821F"/>
+</package>
+<presentation>
+<reflist>
+<ref refid="8fc709c6-9868-11ef-9979-be7f4daace40"/>
+</reflist>
+</presentation>
+</UML:Association>
+<UML:Property id="9154bf54-9868-11ef-9979-be7f4daace40">
+<appliedStereotype>
+<reflist>
+<ref refid="daa0e624-9868-11ef-9979-be7f4daace40"/>
+</reflist>
+</appliedStereotype>
+<association>
+<ref refid="91547a1c-9868-11ef-9979-be7f4daace40"/>
+</association>
+<isDerived>
+<val>1</val>
+</isDerived>
+<name>
+<val>targetRelationship</val>
+</name>
+<owningAssociation>
+<ref refid="91547a1c-9868-11ef-9979-be7f4daace40"/>
+</owningAssociation>
+<type>
+<ref refid="DCE:3F0B9972-45D1-11D7-B5CA-613352B2821F"/>
+</type>
+<upperValue>
+<val>*</val>
+</upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
+</UML:Property>
+<UML:Property id="9154c4ae-9868-11ef-9979-be7f4daace40">
+<appliedStereotype>
+<reflist>
+<ref refid="dfe8188c-9868-11ef-9979-be7f4daace40"/>
+</reflist>
+</appliedStereotype>
+<association>
+<ref refid="91547a1c-9868-11ef-9979-be7f4daace40"/>
+</association>
+<class_>
+<ref refid="DCE:3F0B9972-45D1-11D7-B5CA-613352B2821F"/>
+</class_>
+<isDerived>
+<val>1</val>
+</isDerived>
+<lowerValue>
+<val>1</val>
+</lowerValue>
+<lowerValue>
+<val>1</val>
+</lowerValue>
+<name>
+<val>target</val>
+</name>
+<type>
+<ref refid="DCE:FC139C48-45CE-11D7-B5CA-613352B2821F"/>
+</type>
+<upperValue>
+<val>*</val>
+</upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
+</UML:Property>
+<UML:AssociationItem id="99eb4804-9868-11ef-9979-be7f4daace40">
+<diagram>
+<ref refid="DCE:E71AAA3E-45CE-11D7-B5CA-613352B2821F"/>
+</diagram>
+<head_subject>
+<ref refid="9ad74524-9868-11ef-9979-be7f4daace40"/>
+</head_subject>
+<horizontal>
+<val>1</val>
+</horizontal>
+<orthogonal>
+<val>1</val>
+</orthogonal>
+<subject>
+<ref refid="9ad6c144-9868-11ef-9979-be7f4daace40"/>
+</subject>
+<tail_subject>
+<ref refid="9ad74df8-9868-11ef-9979-be7f4daace40"/>
+</tail_subject>
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 272.0, 570.140625)</val>
+</matrix>
+<points>
+<val>[(-15.780821917808282, -1.140625), (-185.0, -1.140625), (-185.0, -398.140625), (29.0, -398.140625)]</val>
+</points>
+<head-connection>
+<ref refid="DCE:3F0AFFA8-45D1-11D7-B5CA-613352B2821F"/>
+</head-connection>
+<tail-connection>
+<ref refid="DCE:FC12D436-45CE-11D7-B5CA-613352B2821F"/>
+</tail-connection>
+</UML:AssociationItem>
+<UML:Association id="9ad6c144-9868-11ef-9979-be7f4daace40">
+<memberEnd>
+<reflist>
+<ref refid="9ad74524-9868-11ef-9979-be7f4daace40"/>
+<ref refid="9ad74df8-9868-11ef-9979-be7f4daace40"/>
+</reflist>
+</memberEnd>
+<ownedEnd>
+<reflist>
+<ref refid="9ad74524-9868-11ef-9979-be7f4daace40"/>
+</reflist>
+</ownedEnd>
+<owningPackage>
+<ref refid="DCE:E085A412-45CE-11D7-B5CA-613352B2821F"/>
+</owningPackage>
+<package>
+<ref refid="DCE:E085A412-45CE-11D7-B5CA-613352B2821F"/>
+</package>
+<presentation>
+<reflist>
+<ref refid="99eb4804-9868-11ef-9979-be7f4daace40"/>
+</reflist>
+</presentation>
+</UML:Association>
+<UML:Property id="9ad74524-9868-11ef-9979-be7f4daace40">
+<appliedStereotype>
+<reflist>
+<ref refid="09f54866-9869-11ef-9979-be7f4daace40"/>
+</reflist>
+</appliedStereotype>
+<association>
+<ref refid="9ad6c144-9868-11ef-9979-be7f4daace40"/>
+</association>
+<name>
+<val>sourceRelationship</val>
+</name>
+<owningAssociation>
+<ref refid="9ad6c144-9868-11ef-9979-be7f4daace40"/>
+</owningAssociation>
+<type>
+<ref refid="DCE:3F0B9972-45D1-11D7-B5CA-613352B2821F"/>
+</type>
+<upperValue>
+<val>*</val>
+</upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
+</UML:Property>
+<UML:Property id="9ad74df8-9868-11ef-9979-be7f4daace40">
+<appliedStereotype>
+<reflist>
+<ref refid="00d16aee-9869-11ef-9979-be7f4daace40"/>
+</reflist>
+</appliedStereotype>
+<association>
+<ref refid="9ad6c144-9868-11ef-9979-be7f4daace40"/>
+</association>
+<class_>
+<ref refid="DCE:3F0B9972-45D1-11D7-B5CA-613352B2821F"/>
+</class_>
+<isDerived>
+<val>1</val>
+</isDerived>
+<lowerValue>
+<val>1</val>
+</lowerValue>
+<lowerValue>
+<val>1</val>
+</lowerValue>
+<name>
+<val>source</val>
+</name>
+<type>
+<ref refid="DCE:FC139C48-45CE-11D7-B5CA-613352B2821F"/>
+</type>
+<upperValue>
+<val>*</val>
+</upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
+</UML:Property>
+<UML:InstanceSpecification id="daa0e624-9868-11ef-9979-be7f4daace40">
+<classifier>
+<reflist>
+<ref refid="16f6b5f4-fa90-11de-bd51-00224128e79d"/>
+</reflist>
+</classifier>
+<extended>
+<reflist>
+<ref refid="9154bf54-9868-11ef-9979-be7f4daace40"/>
+</reflist>
+</extended>
+<slot>
+<reflist>
+<ref refid="de3b6070-9868-11ef-9979-be7f4daace40"/>
+</reflist>
+</slot>
+</UML:InstanceSpecification>
+<UML:Slot id="de3b6070-9868-11ef-9979-be7f4daace40">
+<definingFeature>
+<ref refid="16f8dfbe-fa90-11de-bd51-00224128e79d"/>
+</definingFeature>
+<owningInstance>
+<ref refid="daa0e624-9868-11ef-9979-be7f4daace40"/>
+</owningInstance>
+<value>
+<val>relationship</val>
+</value>
+</UML:Slot>
+<UML:InstanceSpecification id="dfe8188c-9868-11ef-9979-be7f4daace40">
+<classifier>
+<reflist>
+<ref refid="16f6b5f4-fa90-11de-bd51-00224128e79d"/>
+</reflist>
+</classifier>
+<extended>
+<reflist>
+<ref refid="9154c4ae-9868-11ef-9979-be7f4daace40"/>
+</reflist>
+</extended>
+<slot>
+<reflist>
+<ref refid="ed078c5a-9868-11ef-9979-be7f4daace40"/>
+</reflist>
+</slot>
+</UML:InstanceSpecification>
+<UML:Slot id="ed078c5a-9868-11ef-9979-be7f4daace40">
+<definingFeature>
+<ref refid="16f8dfbe-fa90-11de-bd51-00224128e79d"/>
+</definingFeature>
+<owningInstance>
+<ref refid="dfe8188c-9868-11ef-9979-be7f4daace40"/>
+</owningInstance>
+<value>
+<val>relatedElement</val>
+</value>
+</UML:Slot>
+<UML:InstanceSpecification id="00d16aee-9869-11ef-9979-be7f4daace40">
+<classifier>
+<reflist>
+<ref refid="16f6b5f4-fa90-11de-bd51-00224128e79d"/>
+</reflist>
+</classifier>
+<extended>
+<reflist>
+<ref refid="9ad74df8-9868-11ef-9979-be7f4daace40"/>
+</reflist>
+</extended>
+<slot>
+<reflist>
+<ref refid="07f0b85c-9869-11ef-9979-be7f4daace40"/>
+</reflist>
+</slot>
+</UML:InstanceSpecification>
+<UML:Slot id="07f0b85c-9869-11ef-9979-be7f4daace40">
+<definingFeature>
+<ref refid="16f8dfbe-fa90-11de-bd51-00224128e79d"/>
+</definingFeature>
+<owningInstance>
+<ref refid="00d16aee-9869-11ef-9979-be7f4daace40"/>
+</owningInstance>
+<value>
+<val>relatedElement</val>
+</value>
+</UML:Slot>
+<UML:InstanceSpecification id="09f54866-9869-11ef-9979-be7f4daace40">
+<classifier>
+<reflist>
+<ref refid="16f6b5f4-fa90-11de-bd51-00224128e79d"/>
+</reflist>
+</classifier>
+<extended>
+<reflist>
+<ref refid="9ad74524-9868-11ef-9979-be7f4daace40"/>
+</reflist>
+</extended>
+<slot>
+<reflist>
+<ref refid="1bc508f6-9869-11ef-9979-be7f4daace40"/>
+</reflist>
+</slot>
+</UML:InstanceSpecification>
+<UML:Slot id="1bc508f6-9869-11ef-9979-be7f4daace40">
+<definingFeature>
+<ref refid="16f8dfbe-fa90-11de-bd51-00224128e79d"/>
+</definingFeature>
+<owningInstance>
+<ref refid="09f54866-9869-11ef-9979-be7f4daace40"/>
+</owningInstance>
+<value>
+<val>relationship</val>
+</value>
+</UML:Slot>
+<UML:Class id="badf0f52-986b-11ef-9979-be7f4daace40">
+<generalization>
+<reflist>
+<ref refid="c921c582-986b-11ef-9979-be7f4daace40"/>
+</reflist>
+</generalization>
+<name>
+<val>Comment</val>
+</name>
+<ownedAttribute>
+<reflist>
+<ref refid="c14b9d74-986b-11ef-9979-be7f4daace40"/>
+<ref refid="dc84a45a-986b-11ef-9979-be7f4daace40"/>
+</reflist>
+</ownedAttribute>
+<owningPackage>
+<ref refid="DCE:E085A412-45CE-11D7-B5CA-613352B2821F"/>
+</owningPackage>
+<package>
+<ref refid="DCE:E085A412-45CE-11D7-B5CA-613352B2821F"/>
+</package>
+<presentation>
+<reflist>
+<ref refid="bae02d24-986b-11ef-9979-be7f4daace40"/>
+</reflist>
+</presentation>
+</UML:Class>
+<UML:ClassItem id="bae02d24-986b-11ef-9979-be7f4daace40">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 520.0, 365.5)</val>
+</matrix>
+<top-left>
+<val>(0.0, 0.0)</val>
+</top-left>
+<width>
+<val>100.0</val>
+</width>
+<height>
+<val>70.0</val>
+</height>
+<diagram>
+<ref refid="DCE:E71AAA3E-45CE-11D7-B5CA-613352B2821F"/>
+</diagram>
+<show_operations>
+<val>0</val>
+</show_operations>
+<subject>
+<ref refid="badf0f52-986b-11ef-9979-be7f4daace40"/>
+</subject>
+</UML:ClassItem>
+<UML:Property id="c14b9d74-986b-11ef-9979-be7f4daace40">
+<class_>
+<ref refid="badf0f52-986b-11ef-9979-be7f4daace40"/>
+</class_>
+<name>
+<val>body</val>
+</name>
+<typeValue>
+<val>String</val>
+</typeValue>
+</UML:Property>
+<UML:GeneralizationItem id="c7e4d826-986b-11ef-9979-be7f4daace40">
+<diagram>
+<ref refid="DCE:E71AAA3E-45CE-11D7-B5CA-613352B2821F"/>
+</diagram>
+<horizontal>
+<val>0</val>
+</horizontal>
+<orthogonal>
+<val>1</val>
+</orthogonal>
+<subject>
+<ref refid="c921c582-986b-11ef-9979-be7f4daace40"/>
+</subject>
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 399.0, 283.0)</val>
+</matrix>
+<points>
+<val>[(171.0, 82.5), (171.0, 40.0), (0.0, 40.0), (0.0, -2.0)]</val>
+</points>
+<head-connection>
+<ref refid="bae02d24-986b-11ef-9979-be7f4daace40"/>
+</head-connection>
+<tail-connection>
+<ref refid="DCE:FC12D436-45CE-11D7-B5CA-613352B2821F"/>
+</tail-connection>
+</UML:GeneralizationItem>
+<UML:Generalization id="c921c582-986b-11ef-9979-be7f4daace40">
+<general>
+<ref refid="DCE:FC139C48-45CE-11D7-B5CA-613352B2821F"/>
+</general>
+<presentation>
+<reflist>
+<ref refid="c7e4d826-986b-11ef-9979-be7f4daace40"/>
+</reflist>
+</presentation>
+<specific>
+<ref refid="badf0f52-986b-11ef-9979-be7f4daace40"/>
+</specific>
+</UML:Generalization>
+<UML:AssociationItem id="db6a2c8e-986b-11ef-9979-be7f4daace40">
+<diagram>
+<ref refid="DCE:E71AAA3E-45CE-11D7-B5CA-613352B2821F"/>
+</diagram>
+<head_subject>
+<ref refid="dc84a45a-986b-11ef-9979-be7f4daace40"/>
+</head_subject>
+<horizontal>
+<val>1</val>
+</horizontal>
+<orthogonal>
+<val>1</val>
+</orthogonal>
+<subject>
+<ref refid="dc843754-986b-11ef-9979-be7f4daace40"/>
+</subject>
+<tail_subject>
+<ref refid="dc84abbc-986b-11ef-9979-be7f4daace40"/>
+</tail_subject>
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 496.0, 180.0)</val>
+</matrix>
+<points>
+<val>[(-73.0, 0.0), (206.0, 0.0), (206.0, 220.5), (124.0, 220.5)]</val>
+</points>
+<head-connection>
+<ref refid="DCE:FC12D436-45CE-11D7-B5CA-613352B2821F"/>
+</head-connection>
+<tail-connection>
+<ref refid="bae02d24-986b-11ef-9979-be7f4daace40"/>
+</tail-connection>
+</UML:AssociationItem>
+<UML:Association id="dc843754-986b-11ef-9979-be7f4daace40">
+<memberEnd>
+<reflist>
+<ref refid="dc84a45a-986b-11ef-9979-be7f4daace40"/>
+<ref refid="dc84abbc-986b-11ef-9979-be7f4daace40"/>
+</reflist>
+</memberEnd>
+<owningPackage>
+<ref refid="DCE:E085A412-45CE-11D7-B5CA-613352B2821F"/>
+</owningPackage>
+<package>
+<ref refid="DCE:E085A412-45CE-11D7-B5CA-613352B2821F"/>
+</package>
+<presentation>
+<reflist>
+<ref refid="db6a2c8e-986b-11ef-9979-be7f4daace40"/>
+</reflist>
+</presentation>
+</UML:Association>
+<UML:Property id="dc84a45a-986b-11ef-9979-be7f4daace40">
+<association>
+<ref refid="dc843754-986b-11ef-9979-be7f4daace40"/>
+</association>
+<class_>
+<ref refid="badf0f52-986b-11ef-9979-be7f4daace40"/>
+</class_>
+<name>
+<val>annotatedElement</val>
+</name>
+<type>
+<ref refid="DCE:FC139C48-45CE-11D7-B5CA-613352B2821F"/>
+</type>
+<upperValue>
+<val>*</val>
+</upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
+</UML:Property>
+<UML:Property id="dc84abbc-986b-11ef-9979-be7f4daace40">
+<association>
+<ref refid="dc843754-986b-11ef-9979-be7f4daace40"/>
+</association>
+<class_>
+<ref refid="DCE:FC139C48-45CE-11D7-B5CA-613352B2821F"/>
+</class_>
+<name>
+<val>comment</val>
+</name>
+<type>
+<ref refid="badf0f52-986b-11ef-9979-be7f4daace40"/>
+</type>
+<upperValue>
+<val>*</val>
+</upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 </UML:Property>
 </model>
 </gaphor>

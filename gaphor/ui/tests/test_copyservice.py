@@ -1,10 +1,10 @@
 import pytest
 
 from gaphor import UML
-from gaphor.core.modeling import Comment, Diagram
-from gaphor.diagram.general import CommentItem
+from gaphor.core.modeling import Diagram
 from gaphor.ui.copyservice import CopyService
 from gaphor.UML.classes import PackageItem
+from gaphor.UML.general import CommentItem
 
 
 class DiagramsStub:
@@ -45,7 +45,7 @@ def copy_service(event_manager, element_factory, diagrams, monkeypatch):
 
 def test_copy_link(copy_service, element_factory):
     diagram = element_factory.create(Diagram)
-    ci = diagram.create(CommentItem, subject=element_factory.create(Comment))
+    ci = diagram.create(CommentItem, subject=element_factory.create(UML.Comment))
 
     copy_service.copy({ci})
     assert list(diagram.get_all_items()) == [ci]

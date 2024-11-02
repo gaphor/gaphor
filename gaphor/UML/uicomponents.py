@@ -15,5 +15,6 @@ from gaphor.UML.classes import (
     dependencypropertypages,
     enumerationpropertypages,
 )
+from gaphor.UML.general import commenteditor, commentpropertypage
 from gaphor.UML.interactions import interactionspropertypages
 from gaphor.UML.profiles import metaclasspropertypage, stereotypepropertypages

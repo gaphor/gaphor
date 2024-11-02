@@ -13,7 +13,7 @@ import pytest
 import gaphor.SysML.diagramitems
 import gaphor.UML.diagramitems
 from gaphor import UML
-from gaphor.core.modeling import Comment, Element
+from gaphor.core.modeling import Element
 from gaphor.core.modeling.properties import derived
 from gaphor.diagram.support import get_model_element
 
@@ -31,7 +31,7 @@ def all_presented_elements(module):
         get_model_element(getattr(module, name))
         for name in dir(module)
         if not name.startswith("_")
-        and get_model_element(getattr(module, name) not in (None, Comment))
+        and get_model_element(getattr(module, name) not in (None, UML.Comment))
     )
 
 

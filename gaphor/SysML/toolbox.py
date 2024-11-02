@@ -7,7 +7,6 @@ from gaphor.diagram.diagramtoolbox import (
     ToolboxDefinition,
     ToolDef,
     ToolSection,
-    general_tools,
     new_item_factory,
 )
 from gaphor.i18n import gettext, i18nize
@@ -25,6 +24,7 @@ from gaphor.SysML.sysml import (
 )
 from gaphor.UML import diagramitems as uml_items
 from gaphor.UML.actions.actionstoolbox import actions
+from gaphor.UML.general.generaltoolbox import general_tools
 from gaphor.UML.interactions.interactionstoolbox import interactions
 from gaphor.UML.states.statestoolbox import states
 from gaphor.UML.toolboxconfig import named_element_config

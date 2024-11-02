@@ -1,8 +1,8 @@
 from gaphas.segment import Segment
 
-from gaphor.diagram.general.commentline import CommentLineItem
 from gaphor.diagram.general.simpleitem import Line
 from gaphor.diagram.tests.fixtures import connect
+from gaphor.UML.general import CommentLineItem
 
 
 def test_expose_merge_issue(diagram):

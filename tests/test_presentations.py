@@ -29,7 +29,7 @@ diagramitems = [
 blacklist = [
     # These lines have no subject of their own
     general_diagramitems.Line,
-    general_diagramitems.CommentLineItem,
+    uml_diagramitems.CommentLineItem,
     uml_diagramitems.ContainmentItem,
     # These lines have extra objects at the line ends
     uml_diagramitems.AssociationItem,
