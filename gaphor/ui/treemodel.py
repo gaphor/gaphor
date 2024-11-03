@@ -171,6 +171,24 @@ def _(element: UML.NamedElement):
     return element.owner or element.memberNamespace
 
 
+@singledispatch
+def owns(_element: Base) -> list[Base]:
+    return []
+
+
+@owns.register
+def _(element: Element):
+    return [e for e in element.ownedElement if e.owner is element and visible(e)] + (
+        [
+            e
+            for e in element.member
+            if e.memberNamespace is element and not e.owner and visible(e)
+        ]
+        if isinstance(element, UML.Namespace)
+        else []
+    )
+
+
 def tree_item_sort(a, b, _user_data=None):
     if isinstance(a, RelationshipItem):
         return -1
@@ -203,22 +221,7 @@ class TreeModel:
             return item.child_model
         elif not item.element:
             return None
-        elif isinstance(item.element, Element) and (
-            owned_elements := [
-                e
-                for e in item.element.ownedElement
-                if e.owner is item.element and visible(e)
-            ]
-            + (
-                [
-                    e
-                    for e in item.element.member
-                    if e.memberNamespace is item.element and not e.owner and visible(e)
-                ]
-                if isinstance(item.element, UML.Namespace)
-                else []
-            )
-        ):
+        elif owned_elements := owns(item.element):
             new_branch = Branch()
             self.branches[item] = new_branch
             for e in owned_elements:
@@ -256,15 +259,11 @@ class TreeModel:
             self.notify_child_model(own)
 
     def remove_element(self, element: Base, former_owner=_no_value) -> None:
-        if not isinstance(element, Element):
+        if not isinstance(element, Base):
             return
 
-        for child in element.ownedElement:
+        for child in owns(element):
             self.remove_element(child)
-
-        if isinstance(element, UML.Namespace):
-            for child in element.member:
-                self.remove_element(child)
 
         # Deal with member relation, but exclude namespace, since it also relates to the owner
         former_namespace = (
