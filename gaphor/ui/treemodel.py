@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from functools import singledispatch
 from unicodedata import normalize
 
 from gi.repository import Gio, GObject, Pango
@@ -7,10 +8,9 @@ from gi.repository import Gio, GObject, Pango
 from gaphor import UML
 from gaphor.core.format import format
 from gaphor.core.modeling import (
+    Base,
     Diagram,
     Element,
-    Presentation,
-    StyleSheet,
 )
 from gaphor.diagram.iconname import icon_name
 from gaphor.i18n import gettext
@@ -133,13 +133,18 @@ class Branch:
         yield from self.relationships
 
 
-def visible(element: Element) -> bool:
+@singledispatch
+def visible(base: Base) -> bool:
+    return False
+
+
+# Only UML elements:
+@visible.register
+def _(element: Element) -> bool:
     return not (
         isinstance(
             element,
-            Presentation
-            | StyleSheet
-            | UML.Comment
+            UML.Comment
             | UML.InstanceSpecification
             | UML.OccurrenceSpecification
             | UML.Slot,
