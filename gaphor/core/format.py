@@ -6,17 +6,17 @@
 
 from functools import singledispatch
 
-from gaphor.core.modeling import Diagram, Element
+from gaphor.core.modeling import Base, Diagram, Element
 
 
 @singledispatch
-def format(el: Element, **kwargs) -> str:
+def format(el: Base, **kwargs) -> str:
     """Format an element."""
     raise TypeError(f"Format routine for type {type(el)} not implemented yet")
 
 
 @singledispatch
-def parse(el: Element, text: str) -> None:
+def parse(el: Base, text: str) -> None:
     """Parse text and update `el` accordingly."""
     raise TypeError(f"Parsing routine for type {type(el)} not implemented yet")
 
