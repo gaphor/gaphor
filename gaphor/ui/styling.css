@@ -137,7 +137,7 @@ tabbar > revealer > box,
 }
 
 .pseudo-sidebar-pane {
-  background-color: @sidebar_bg_color;
+  background-color: @sidebar_backdrop_color;
   color: @sidebar_fg_color;
 }
 
