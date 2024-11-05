@@ -5,7 +5,7 @@ on:
     # min hour dom month dow
     - cron:  '0 5 * * 3'
 env:
-  python_version: '3.12'
+  python_version: '3.13'
   file: '.github/workflows/full-build.yml'
   yaml_key: '.jobs.windows.env.gvsbuild_version'
 
