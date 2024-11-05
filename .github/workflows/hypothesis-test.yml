@@ -5,7 +5,7 @@ on:
     # min hour dom month dow
     - cron:  '0 6 * * 3'
 env:
-  python_version: '3.12'
+  python_version: '3.13'
 
 permissions:
   issues: write

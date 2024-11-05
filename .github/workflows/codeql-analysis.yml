@@ -6,7 +6,7 @@ on:
   pull_request:
     branches: [main]
 env:
-  python_version: '3.12'
+  python_version: '3.13'
 
 permissions:
   contents: read
@@ -19,10 +19,22 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
     - name: Harden Runner
-      uses: step-security/harden-runner@91182cccc01eb5e619899d80e4e971d6181294a7 # v2.10.1
+      uses: step-security/harden-runner@446798f8213ac2e75931c1b0769676d927801858 # v2.10.0
       with:
-        egress-policy: audit
-
+        egress-policy: block
+        allowed-endpoints: >
+          api.github.com:443
+          github.com:443
+          objects.githubusercontent.com:443
+          uploads.github.com:443
+          azure.archive.ubuntu.com:80
+          esm.ubuntu.com:443
+          motd.ubuntu.com:443
+          packages.microsoft.com:443
+          ppa.launchpadcontent.net:443
+          files.pythonhosted.org:443
+          pypi.org:443
+          gitlab.gnome.org:443
     - name: Checkout repository
       uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
     - name: Set up Python

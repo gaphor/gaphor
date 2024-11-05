@@ -155,7 +155,7 @@ class MainWindow(Service, ActionProvider):
 
     @property
     def model_changed(self) -> bool:
-        return self.modified.get_visible() if self.modified else False  # type: ignore[no-any-return]
+        return self.modified.get_visible() if self.modified else False
 
     @model_changed.setter
     def model_changed(self, model_changed: bool):

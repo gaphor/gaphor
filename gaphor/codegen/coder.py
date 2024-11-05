@@ -112,7 +112,7 @@ def main(
     with (
         open(outfile, "w", encoding="utf-8")
         if outfile
-        else contextlib.nullcontext(sys.stdout) as out  # type: ignore[attr-defined]
+        else contextlib.nullcontext(sys.stdout) as out
     ):
         for line in coder(model, super_models, overrides):
             print(line, file=out)

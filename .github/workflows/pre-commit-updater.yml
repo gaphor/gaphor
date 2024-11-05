@@ -5,7 +5,7 @@ on:
     # min hour dom month dow
     - cron:  '0 5 * * 3'
 env:
-  python_version: '3.12'
+  python_version: '3.13'
 
 jobs:
 
@@ -20,9 +20,10 @@ jobs:
           egress-policy: block
           allowed-endpoints: >
             files.pythonhosted.org:443
+            pypi.org:443
             github.com:443
             objects.githubusercontent.com:443
-            pypi.org:443
+            raw.githubusercontent.com:443
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           ref: main

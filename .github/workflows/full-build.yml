@@ -251,7 +251,7 @@ jobs:
     env:
       INCLUDE: C:\gtk\include;C:\gtk\include\cairo;C:\gtk\include\glib-2.0;C:\gtk\include\gobject-introspection-1.0;C:\gtk\lib\glib-2.0\include;
       LIB: C:\gtk\lib
-      gvsbuild_version: 2024.10.0
+      gvsbuild_version: 2024.11.0
     permissions:
       contents: write
     timeout-minutes: 45
@@ -286,13 +286,13 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b # v5.3.0
         with:
-          python-version: 3.12
+          python-version: ${{ env.python_version }}
           cache: pip
       - name: Install Dependencies
         id: install
         uses: ./.github/actions/install
         with:
-          python-command: py -3.12
+          python-command: py -${{ env.python_version }}
       - name: Run Gaphor Tests
         run: poetry run pytest --cov
       - name: Create Windows Executables
