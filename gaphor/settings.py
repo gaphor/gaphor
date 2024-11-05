@@ -95,7 +95,7 @@ class Settings:
 
     @property
     def use_english(self) -> bool:
-        return (  # type: ignore[no-any-return]
+        return (
             self._gio_settings.get_boolean("use-english")
             if self._gio_settings
             else False

@@ -23,7 +23,9 @@ class Node(GObject.Object):
         super().__init__()
         self.elements = elements
         self.label = label
-        self.children: Sequence[Node] = as_list_store(children) if children else None
+        self.children: Sequence[Node] | None = (
+            as_list_store(children) if children else None
+        )
         self.sync()
 
     label = GObject.Property(type=str, default="")
