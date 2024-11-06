@@ -75,7 +75,7 @@ flowboxchild {
 }
 
 .propertypage .plaintext {
-  margin-top: 6px
+  margin-top: 6px;
 }
 
 frame .internals-label,
@@ -146,7 +146,7 @@ tabbar > revealer > box,
 }
 
 .pseudo-sidebar-pane {
-  background-color: @sidebar_backdrop_color;
+  background-color: @sidebar_bg_color;
   color: @sidebar_fg_color;
 }
 
