@@ -19,6 +19,15 @@ diagramview {
   background: white;
 }
 
+.diagram-toolbar {
+  margin: 12px;
+  padding: 6px;
+  border-radius: 12px;
+  background-color: alpha(@window_bg_color, 0.95);
+  border: 1px solid @borders;
+  box-shadow: 0px 3px 6px @shade_color;
+}
+
 .status-window box {
   padding: 12px;
 }
@@ -66,7 +75,7 @@ flowboxchild {
 }
 
 .propertypage .plaintext {
-  margin-top: 6px
+  margin-top: 6px;
 }
 
 frame .internals-label,
@@ -137,8 +146,12 @@ tabbar > revealer > box,
 }
 
 .pseudo-sidebar-pane {
-  background-color: @sidebar_backdrop_color;
+  background-color: @sidebar_bg_color;
   color: @sidebar_fg_color;
+}
+
+#element_editor {
+  min-width: 320px;
 }
 
 #element_editor .title {

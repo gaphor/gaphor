@@ -133,16 +133,15 @@ class ElementEditor(UIComponent, ActionProvider):
         if not self.editor_stack:
             return
 
+        self.editor_stack.set_visible_child_name(
+            "preferences"
+            if active
+            else "modelmerge"
+            if self.modelmerge.needs_merge
+            else "editors"
+        )
         if not self.editor_stack.get_mapped():
             self.editor_stack.activate_action("win.show-editors", None)
-        else:
-            self.editor_stack.set_visible_child_name(
-                "preferences"
-                if active
-                else "modelmerge"
-                if self.modelmerge.needs_merge
-                else "editors"
-            )
 
     @action(
         name="reset-tool-after-create",
