@@ -14,7 +14,7 @@ gi.require_version("Gdk", "4.0")
 gi.require_version("GtkSource", "5")
 gi.require_version("Adw", "1")
 
-from gi.repository import Adw, Gio, GtkSource
+from gi.repository import Adw, Gio, Gtk, GtkSource
 
 import gaphor.asyncio
 import gaphor.ui.diagramview  # noqa: F401
@@ -22,6 +22,7 @@ import gaphor.ui.textfield  # noqa: F401
 from gaphor.application import Application, Session
 from gaphor.core import event_handler
 from gaphor.event import ActiveSessionChanged, ApplicationShutdown, SessionCreated
+from gaphor.i18n import translated_ui_string
 from gaphor.settings import APPLICATION_ID, StyleVariant, settings
 from gaphor.storage.recovery import all_sessions
 from gaphor.ui.actiongroup import apply_application_actions
@@ -53,6 +54,10 @@ def run(argv: list[str], *, launch_service="greeter", recover=False) -> int:
         @event_handler(ApplicationShutdown)
         def on_quit(_event: ApplicationShutdown):
             gtk_app.quit()
+
+        builder = Gtk.Builder()
+        builder.add_from_string(translated_ui_string("gaphor.ui", "menubar.ui"))
+        gtk_app.set_menubar(builder.get_object("menu"))
 
         try:
             application = Application(gtk_app=gtk_app)
