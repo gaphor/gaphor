@@ -277,7 +277,7 @@ class ModelBrowser(UIComponent, ActionProvider):
         ) or not visible(event.element):
             return
         element = event.element
-        self.model.remove_element(element, former_owner=event.old_value)
+        self.model.remove_element(element)
         self.model.add_element(element)
         self.select_element_quietly(element)
 

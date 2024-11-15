@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from enum import Enum
 from functools import singledispatch
 from unicodedata import normalize
 
@@ -156,19 +157,34 @@ def _(element: Element):
     )
 
 
+class RootType(Enum):
+    Root = 1
+
+
+Root = RootType.Root
+
+
 @singledispatch
-def owner(_element: Base) -> Base | None:
+def owner(_element: Base) -> Base | RootType | None:
     return None
 
 
 @owner.register
 def _(element: Element):
-    return element.owner
+    if isinstance(element, UML.MultiplicityElement | UML.Slot):
+        return None
+
+    return element.owner or Root
 
 
 @owner.register
 def _(element: UML.NamedElement):
-    return element.owner or element.memberNamespace
+    if isinstance(
+        element, UML.Comment | UML.InstanceSpecification | UML.OccurrenceSpecification
+    ):
+        return None
+
+    return element.owner or element.memberNamespace or Root
 
 
 @singledispatch
@@ -202,11 +218,11 @@ def tree_item_sort(a, b, _user_data=None):
 class TreeModel:
     def __init__(self):
         super().__init__()
-        self.branches: dict[TreeItem | None, Branch] = {None: Branch()}
+        self.branches: dict[TreeItem | RootType, Branch] = {Root: Branch()}
 
     @property
     def root(self) -> Gio.ListStore:
-        return self.branches[None].elements
+        return self.branches[Root].elements
 
     def sync(self, element):
         if visible(element) and (tree_item := self.tree_item_for_element(element)):
@@ -229,21 +245,21 @@ class TreeModel:
             return new_branch.elements
         return None
 
-    def owner_branch_for_element(
-        self, element: Base, former_owner=_no_value
-    ) -> Branch | None:
-        if (
-            own := (owner(element)) if former_owner is _no_value else former_owner
-        ) is None:
-            return self.branches[None]
+    def owner_branch_for_element(self, element: Base) -> Branch | None:
+        if (own := owner(element)) is Root:
+            return self.branches[Root]
 
         return next(
-            (m for ti, m in self.branches.items() if ti and ti.element is own),
+            (
+                m
+                for ti, m in self.branches.items()
+                if isinstance(ti, TreeItem) and ti.element is own
+            ),
             None,
         )
 
-    def tree_item_for_element(self, element: Base | None) -> TreeItem | None:
-        if element is None:
+    def tree_item_for_element(self, element: Base | RootType) -> TreeItem | None:
+        if element is Root:
             return None
         if owner_branch := self.owner_branch_for_element(element):
             return next((ti for ti in owner_branch if ti.element is element), None)
@@ -255,38 +271,24 @@ class TreeModel:
 
         if (owner_branch := self.owner_branch_for_element(element)) is not None:
             owner_branch.append(element)
-        elif own := owner(element):
+        elif isinstance((own := owner(element)), Base):
             self.notify_child_model(own)
 
-    def remove_element(self, element: Base, former_owner=_no_value) -> None:
+    def remove_element(self, element: Base) -> None:
         if not isinstance(element, Base):
             return
 
         for child in owns(element):
             self.remove_element(child)
 
-        # Deal with member relation, but exclude namespace, since it also relates to the owner
-        former_namespace = (
-            element.memberNamespace
-            if (
-                former_owner is None
-                and isinstance(element, UML.NamedElement)
-                and element.memberNamespace
-                and element.memberNamespace is not element.namespace
-            )
-            else None
-        )
-
         if (
-            owner_branch := (
-                self.owner_branch_for_element(element, former_owner=former_owner)
-                or (
-                    former_namespace
-                    and self.owner_branch_for_element(
-                        element, former_owner=former_namespace
-                    )
-                    or None
-                )
+            owner_branch := next(
+                (
+                    b
+                    for b in self.branches.values()
+                    if element in (i.element for i in b)
+                ),
+                None,
             )
         ) is not None:
             owner_branch.remove(element)
@@ -296,7 +298,7 @@ class TreeModel:
 
     def remove_branch(self, branch: Branch) -> None:
         tree_item = next(ti for ti, b in self.branches.items() if b is branch)
-        if tree_item is None:
+        if tree_item is Root:
             # Do never remove the root branch
             return
 
@@ -307,18 +309,18 @@ class TreeModel:
 
     def notify_child_model(self, element: Base):
         # Only notify the change, the branch is created in child_model()
-        owner_tree_item = self.tree_item_for_element(owner(element))
-        if (
-            not self.branches.get(self.tree_item_for_element(element))
-            and (owner_branch := self.branches.get(owner_tree_item)) is not None
+        if not self.branches.get(self.tree_item_for_element(element) or Root) and (
+            owner_branch := self.branches.get(
+                self.tree_item_for_element(owner(element) or Root) or Root
+            )
         ):
             owner_branch.changed(element)
 
     def clear(self) -> None:
-        root = self.branches[None]
+        root = self.branches[Root]
         root.remove_all()
         self.branches.clear()
-        self.branches[None] = root
+        self.branches[Root] = root
 
 
 def pango_attributes(element):
