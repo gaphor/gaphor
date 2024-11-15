@@ -16,8 +16,6 @@ from gaphor.core.modeling import (
 from gaphor.diagram.iconname import icon_name
 from gaphor.i18n import gettext
 
-_no_value = object()
-
 
 class TreeItem(GObject.Object):
     def __init__(self, element: Base | None):
@@ -134,29 +132,6 @@ class Branch:
         yield from self.relationships
 
 
-@singledispatch
-def visible(base: Base) -> bool:
-    return False
-
-
-# Only UML elements:
-@visible.register
-def _(element: Element):
-    return not (
-        isinstance(
-            element,
-            UML.Comment
-            | UML.InstanceSpecification
-            | UML.OccurrenceSpecification
-            | UML.Slot,
-        )
-        or (
-            # Some types we want to show, except at top level
-            not owner(element) and isinstance(element, UML.MultiplicityElement)
-        )
-    )
-
-
 class RootType(Enum):
     Root = 1
 
@@ -171,10 +146,15 @@ def owner(_element: Base) -> Base | RootType | None:
 
 @owner.register
 def _(element: Element):
-    if isinstance(element, UML.MultiplicityElement | UML.Slot):
+    if not element.owner and isinstance(element, UML.MultiplicityElement):
         return None
 
     return element.owner or Root
+
+
+@owner.register
+def _(_element: UML.Slot):
+    return None
 
 
 @owner.register
@@ -194,11 +174,11 @@ def owns(_element: Base) -> list[Base]:
 
 @owns.register
 def _(element: Element):
-    return [e for e in element.ownedElement if e.owner is element and visible(e)] + (
+    return [e for e in element.ownedElement if e.owner is element and owner(e)] + (
         [
             e
             for e in element.member
-            if e.memberNamespace is element and not e.owner and visible(e)
+            if e.memberNamespace is element and not e.owner and owner(e)
         ]
         if isinstance(element, UML.Namespace)
         else []
@@ -225,7 +205,7 @@ class TreeModel:
         return self.branches[Root].elements
 
     def sync(self, element):
-        if visible(element) and (tree_item := self.tree_item_for_element(element)):
+        if owner(element) and (tree_item := self.tree_item_for_element(element)):
             tree_item.sync()
 
     def child_model(self, item: TreeItem, _user_data=None) -> Gio.ListStore:
@@ -266,7 +246,7 @@ class TreeModel:
         return None
 
     def add_element(self, element: Base) -> None:
-        if (not visible(element)) or self.tree_item_for_element(element):
+        if (not owner(element)) or self.tree_item_for_element(element):
             return
 
         if (owner_branch := self.owner_branch_for_element(element)) is not None:
