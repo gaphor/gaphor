@@ -153,18 +153,26 @@ def _(element: Element):
 
 
 @owner.register
-def _(_element: UML.Slot):
-    return None
+def _(element: UML.NamedElement):
+    return element.owner or element.memberNamespace or Root
 
 
 @owner.register
-def _(element: UML.NamedElement):
-    if isinstance(
-        element, UML.Comment | UML.InstanceSpecification | UML.OccurrenceSpecification
-    ):
+def _(element: UML.StructuralFeature):
+    if not (element.owner or element.memberNamespace):
         return None
 
-    return element.owner or element.memberNamespace or Root
+    return element.owner or element.memberNamespace
+
+
+@owner.register
+def _(
+    _element: UML.Slot
+    | UML.Comment
+    | UML.InstanceSpecification
+    | UML.OccurrenceSpecification,
+):
+    return None
 
 
 @singledispatch
