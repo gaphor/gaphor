@@ -269,16 +269,10 @@ class TreeModel:
         for child in owns(element):
             self.remove_element(child)
 
-        if (
-            owner_branch := next(
-                (
-                    b
-                    for b in self.branches.values()
-                    if element in (i.element for i in b)
-                ),
-                None,
-            )
-        ) is not None:
+        if owner_branch := next(
+            (b for b in self.branches.values() if element in (i.element for i in b)),
+            None,
+        ):
             owner_branch.remove(element)
 
             if not len(owner_branch):
