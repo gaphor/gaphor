@@ -1,3 +1,6 @@
+override Base
+from gaphor.core.modeling.base import Base
+%%
 override Element
 from gaphor.core.modeling.element import Element
 %%

@@ -16,19 +16,22 @@ from gaphor.core.modeling.properties import (
 )
 
 
-# 1: override Element
+# 4: override Element
 from gaphor.core.modeling.element import Element
 
-# 4: override Diagram
+# 7: override Diagram
 from gaphor.core.modeling.diagram import Diagram
 
-# 7: override Presentation
+# 10: override Presentation
 from gaphor.core.modeling.presentation import Presentation
 
-# 13: override StyleSheet
+# 16: override StyleSheet
 from gaphor.core.modeling.stylesheet import StyleSheet
 
-class PendingChange(Element):
+# 1: override Base
+from gaphor.core.modeling.base import Base
+
+class PendingChange(Base):
     applied: _attribute[int] = _attribute("applied", int, default=0)
     element_id: _attribute[str] = _attribute("element_id", str)
     op = _enumeration("op", ("add", "remove", "update"), "add")
