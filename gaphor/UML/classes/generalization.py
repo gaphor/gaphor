@@ -27,7 +27,7 @@ class GeneralizationItem(LinePresentation):
         self._handles[0].pos = (30, 20)
         self._handles[1].pos = (0, 0)
 
-        self.watch("subject.appliedStereotype.classifier.name")
+        self.watch("subject[Element].appliedStereotype.classifier.name")
 
     def draw_tail(self, context: DrawContext):
         cr = context.cairo

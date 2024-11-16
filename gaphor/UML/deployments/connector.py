@@ -137,8 +137,8 @@ class ConnectorItem(Named, LinePresentation[UML.Connector]):
             ),
         )
 
-        self.watch("subject.name")
-        self.watch("subject.appliedStereotype.classifier.name")
+        self.watch("subject[NamedElement].name")
+        self.watch("subject[Element].appliedStereotype.classifier.name")
         watch_information_flow(self, "Connector", "informationFlow")
 
     def draw(self, context):

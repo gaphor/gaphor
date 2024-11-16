@@ -36,8 +36,8 @@ class ControlFlowItem(Named, LinePresentation):
             shape_tail=Box(text_stereotypes(self), text_name(self)),
         )
 
-        self.watch("subject.name")
-        self.watch("subject.appliedStereotype.classifier.name")
+        self.watch("subject[NamedElement].name")
+        self.watch("subject[Element].appliedStereotype.classifier.name")
 
         self.watch("subject[ControlFlow].guard")
 
@@ -69,8 +69,8 @@ class ObjectFlowItem(Named, LinePresentation):
             shape_tail=Box(text_stereotypes(self), text_name(self)),
         )
 
-        self.watch("subject.name")
-        self.watch("subject.appliedStereotype.classifier.name")
+        self.watch("subject[NamedElement].name")
+        self.watch("subject[Element].appliedStereotype.classifier.name")
 
         self.watch("subject[ObjectFlow].guard")
 

@@ -18,9 +18,9 @@ class PackageItem(Named, ElementPresentation):
         super().__init__(diagram, id, width=70, height=70)
 
         self.watch("children", self.update_shapes)
-        self.watch("subject.name")
+        self.watch("subject[NamedElement].name")
         self.watch("subject[NamedElement].namespace.name")
-        self.watch("subject.appliedStereotype.classifier.name")
+        self.watch("subject[Element].appliedStereotype.classifier.name")
 
     def update_shapes(self, event=None):
         self.shape = Box(

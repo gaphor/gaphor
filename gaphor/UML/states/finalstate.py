@@ -20,8 +20,8 @@ class FinalStateItem(ElementPresentation, Named):
             text_name(self),
         )
 
-        self.watch("subject.name")
-        self.watch("subject.appliedStereotype.classifier.name")
+        self.watch("subject[NamedElement].name")
+        self.watch("subject[Element].appliedStereotype.classifier.name")
 
 
 def draw_final_state(box, context, bounding_box):

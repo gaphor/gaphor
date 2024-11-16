@@ -9,7 +9,7 @@ class C4ContainerItem(Named, ElementPresentation):
     def __init__(self, diagram, id=None):
         super().__init__(diagram, id)
 
-        self.watch("subject.name")
+        self.watch("subject[UML:NamedElement].name")
         self.watch("subject[Container].technology")
         self.watch("subject[Container].description")
         self.watch("subject[Container].type")
