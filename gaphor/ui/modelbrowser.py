@@ -588,6 +588,8 @@ def list_item_drop_drop(
     dest_element = tree_item.element
     if y < 4:
         dest_element = owner(dest_element)
+        if dest_element is Root:
+            dest_element = None
 
     with Transaction(event_manager) as tx:
         # This view is concerned with owner relationships.
