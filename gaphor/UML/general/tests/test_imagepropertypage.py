@@ -86,7 +86,7 @@ def test_picture_property_select_replace_name_chars(diagram, event_manager):
     property_page = ImagePropertyPage(None, event_manager)
 
     # Test code
-    temp_image = Path("gaphor/diagram/general/tests/test.+gaphor$48-48.png")
+    temp_image = Path("gaphor/UML/general/tests/test.+gaphor$48-48.png")
     image_name = property_page.sanitize_image_name(temp_image)
 
     assert image_name == "test__gaphor_48-48"
@@ -97,7 +97,7 @@ def test_picture_property_select_empty_name(diagram, event_manager):
     property_page = ImagePropertyPage(None, event_manager)
 
     # Test code
-    temp_image = Path("gaphor/diagram/general/tests/.png")
+    temp_image = Path("gaphor/UML/general/tests/.png")
     image_name = property_page.sanitize_image_name(temp_image)
 
     assert image_name == "_png"
@@ -108,7 +108,7 @@ def test_picture_property_select_empty_extension(diagram, event_manager):
     property_page = ImagePropertyPage(None, event_manager)
 
     # Test code
-    temp_image = Path("gaphor/diagram/general/tests/test_png")
+    temp_image = Path("gaphor/UML/general/tests/test_png")
     image_name = property_page.sanitize_image_name(temp_image)
 
     assert image_name == "test_png"

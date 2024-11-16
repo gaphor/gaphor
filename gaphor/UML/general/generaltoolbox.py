@@ -89,6 +89,7 @@ general_tools = ToolSection(
             "gaphor-picture-symbolic",
             None,
             new_item_factory(ImageItem, Image, config_func=image_config),
+            handle_index=SE,
         ),
     ),
 )

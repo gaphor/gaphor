@@ -46,31 +46,20 @@ class ImagePropertyPage(PropertyPageBase):
         )
 
     def open_file(self, filename):
-        with open(filename, "rb") as file:
-            try:
-                image_data = file.read()
-                with Image.open(io.BytesIO(image_data)) as image:
-                    image.verify()
-
-                    base64_encoded_data = base64.b64encode(image_data)
-
-                    with Transaction(self.event_manager):
-                        self.subject.subject.content = base64_encoded_data.decode(
-                            "ascii"
-                        )
-                        self.subject.width = image.width
-                        self.subject.height = image.height
-                        if self.subject.subject.name in [
-                            None,
-                            gettext("New Image"),
-                        ] and (new_image_name := self.sanitize_image_name(filename)):
-                            self.subject.subject.name = new_image_name
-            except Exception:
-                error_handler(
-                    message=gettext("Unable to parse picture “{filename}”.").format(
-                        filename=filename
-                    )
+        try:
+            with Transaction(self.event_manager):
+                self.subject.load_image_from_file(filename)
+                if self.subject.subject.name in [
+                    None,
+                    gettext("New Image"),
+                ] and (new_image_name := self.sanitize_image_name(filename)):
+                    self.subject.subject.name = new_image_name
+        except Exception:
+            error_handler(
+                message=gettext("Unable to parse picture “{filename}”.").format(
+                    filename=filename
                 )
+            )
 
     def _on_default_size_clicked(self, button):
         if self.subject and self.subject.subject and self.subject.subject.content:
