@@ -2,7 +2,8 @@ from gaphas.view import GtkView
 from gi.repository import Gdk, Gtk
 
 from gaphor.core import Transaction
-from gaphor.core.modeling import Presentation, self_and_owners
+from gaphor.core.modeling import Presentation
+from gaphor.diagram.group import self_and_owners
 
 
 def shortcut_tool(event_manager):

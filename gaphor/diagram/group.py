@@ -9,11 +9,23 @@
 from __future__ import annotations
 
 import itertools
-from collections.abc import Callable
+from collections.abc import Callable, Iterator
 
 from generic.multidispatch import FunctionDispatcher, multidispatch
 
-from gaphor.core.modeling import Base, Diagram, Element, self_and_owners
+from gaphor.core.modeling import Base, Diagram, Element
+
+
+def self_and_owners(element: Element | None) -> Iterator[Element]:
+    """Return the element and the ancestors (Element.owner)."""
+    seen = set()
+    e = element
+    while isinstance(e, Element):
+        if e in seen:
+            return
+        yield e
+        seen.add(e)
+        e = e.owner
 
 
 def change_owner(new_parent, element):

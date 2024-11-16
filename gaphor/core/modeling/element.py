@@ -4,7 +4,6 @@
 from __future__ import annotations
 
 import logging
-from collections.abc import Iterator
 from typing import TYPE_CHECKING
 
 from gaphor.core.modeling.base import Base
@@ -20,21 +19,6 @@ if TYPE_CHECKING:
     from gaphor.UML import Comment, Relationship
 
 log = logging.getLogger(__name__)
-
-
-__all__ = ["Element", "self_and_owners"]
-
-
-def self_and_owners(element: Element | None) -> Iterator[Element]:
-    """Return the element and the ancestors (Element.owner)."""
-    seen = set()
-    e = element
-    while isinstance(e, Element):
-        if e in seen:
-            return
-        yield e
-        seen.add(e)
-        e = e.owner
 
 
 class Element(Base):
@@ -55,6 +39,8 @@ class Element(Base):
     @property
     def qualifiedName(self) -> list[str]:
         """Returns the qualified name of the element as a list."""
+        from gaphor.diagram.group import self_and_owners
+
         qname = [e.name or "??" for e in self_and_owners(self)]
         qname.reverse()
         return qname

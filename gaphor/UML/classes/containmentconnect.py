@@ -1,9 +1,9 @@
 """Containment connection adapters."""
 
 from gaphor import UML
-from gaphor.core.modeling import Diagram, self_and_owners
+from gaphor.core.modeling import Diagram
 from gaphor.diagram.connectors import BaseConnector, Connector
-from gaphor.diagram.group import group, ungroup
+from gaphor.diagram.group import group, self_and_owners, ungroup
 from gaphor.diagram.presentation import ElementPresentation
 from gaphor.UML.classes.containment import ContainmentItem
 from gaphor.UML.recipes import owner_package
