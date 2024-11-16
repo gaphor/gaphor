@@ -4,16 +4,16 @@ import base64
 import io
 
 import cairo
-from PIL import Image
+from PIL import Image as PILImage
 
-from gaphor.core.modeling import Picture
 from gaphor.diagram.presentation import ElementPresentation
 from gaphor.diagram.shapes import Box, IconBox
 from gaphor.diagram.support import represents
+from gaphor.UML.uml import Image
 
 
-@represents(Picture)
-class PictureItem(ElementPresentation):
+@represents(Image)
+class ImageItem(ElementPresentation[Image]):
     def __init__(self, diagram, id=None):
         super().__init__(diagram, id)
 
@@ -22,7 +22,7 @@ class PictureItem(ElementPresentation):
 
         self.shape = IconBox(Box(draw=self.draw_image))
 
-        self.watch("subject[Picture].content")
+        self.watch("subject[Image].content")
 
     def create_default_surface(self):
         width = int(self.width)
@@ -60,7 +60,7 @@ class PictureItem(ElementPresentation):
     def create_content_surface(self):
         base64_img_bytes = self.subject.content.encode("ascii")
         image_data = base64.decodebytes(base64_img_bytes)
-        image = Image.open(io.BytesIO(image_data))
+        image = PILImage.open(io.BytesIO(image_data))
         surface = self._from_pil(image)
 
         surface_width = surface.get_width()
@@ -95,19 +95,19 @@ class PictureItem(ElementPresentation):
 
     def _from_pil(
         self,
-        im: Image,
+        im: PILImage,
         alpha: float = 1.0,
         format: cairo.Format = cairo.FORMAT_ARGB32,
     ) -> cairo.ImageSurface:
         """Create a new Cairo image surface from a Pillow Image
 
         Args:
-            im (Image): Pillow Image
-            alpha (float): 0..1 alpha to add to non-alpha images
-            format (cairo.Format): Pixel format for output surface
+            im: Pillow Image
+            alpha: 0..1 alpha to add to non-alpha images
+            format: Pixel format for output surface
 
         Returns:
-            cairo.ImageSurface: The image surface representing the pillow image
+            The image surface representing the pillow image
         """
         assert format in (
             cairo.FORMAT_RGB24,

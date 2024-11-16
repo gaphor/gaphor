@@ -4,11 +4,10 @@ import time
 from gaphas.item import SE
 
 from gaphor.core import gettext
-from gaphor.core.modeling import Picture
 from gaphor.diagram.diagramtoolbox import ToolDef, ToolSection, new_item_factory
 from gaphor.diagram.general import diagramitems as general
-from gaphor.UML import Comment
-from gaphor.UML.general import comment
+from gaphor.UML import Comment, Image
+from gaphor.UML.general import CommentItem, CommentLineItem, ImageItem
 
 
 def metadata_config(metadata_item: general.MetadataItem) -> None:
@@ -18,8 +17,8 @@ def metadata_config(metadata_item: general.MetadataItem) -> None:
     metadata_item.createdOn = time.strftime("%Y-%m-%d")
 
 
-def picture_config(picture_item: general.PictureItem) -> None:
-    picture_item.subject.name = gettext("New Picture")
+def image_config(image_item: ImageItem) -> None:
+    image_item.subject.name = gettext("New Image")
 
 
 general_tools = ToolSection(
@@ -67,7 +66,7 @@ general_tools = ToolSection(
             gettext("Comment"),
             "gaphor-comment-symbolic",
             "k",
-            new_item_factory(comment.CommentItem, Comment),
+            new_item_factory(CommentItem, Comment),
             handle_index=SE,
         ),
         ToolDef(
@@ -75,7 +74,7 @@ general_tools = ToolSection(
             gettext("Comment line"),
             "gaphor-comment-line-symbolic",
             "<Shift>K",
-            new_item_factory(comment.CommentLineItem),
+            new_item_factory(CommentLineItem),
         ),
         ToolDef(
             "toolbox-metadata",
@@ -85,11 +84,11 @@ general_tools = ToolSection(
             new_item_factory(general.MetadataItem, config_func=metadata_config),
         ),
         ToolDef(
-            "toolbox-picture",
+            "toolbox-image",
             gettext("Picture"),
             "gaphor-picture-symbolic",
             None,
-            new_item_factory(general.PictureItem, Picture, config_func=picture_config),
+            new_item_factory(ImageItem, Image, config_func=image_config),
         ),
     ),
 )

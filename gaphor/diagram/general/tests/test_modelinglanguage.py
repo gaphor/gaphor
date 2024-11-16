@@ -17,7 +17,6 @@ def test_lookup_element():
     assert modeling_language.lookup_element("Line")
     assert modeling_language.lookup_element("Ellipse")
     assert modeling_language.lookup_element("MetadataItem")
-    assert modeling_language.lookup_element("PictureItem")
 
 
 def test_toolbox():

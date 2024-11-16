@@ -6,7 +6,6 @@ from gaphor.diagram.general.diagramitems import (
     Ellipse,
     Line,
     MetadataItem,
-    PictureItem,
 )
 
 __all__ = [
@@ -15,7 +14,6 @@ __all__ = [
     "Ellipse",
     "Line",
     "MetadataItem",
-    "PictureItem",
 ]
 
 __modeling_language__ = "general"

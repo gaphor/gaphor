@@ -2,7 +2,6 @@
 
 from gaphor.diagram.general.diagramitem import DiagramItem
 from gaphor.diagram.general.metadata import MetadataItem
-from gaphor.diagram.general.picture import PictureItem
 from gaphor.diagram.general.simpleitem import Box, Ellipse, Line
 
 __all__ = [
@@ -11,5 +10,4 @@ __all__ = [
     "Ellipse",
     "Line",
     "MetadataItem",
-    "PictureItem",
 ]
