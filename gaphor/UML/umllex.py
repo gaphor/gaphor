@@ -237,6 +237,12 @@ def parse_association_end(el: uml.Property, s: str) -> None:
                 el.upperValue = "*"
 
 
+@parse.register(uml.Element)
+def parse_namedelement(el: uml.Element, text: str) -> None:
+    """Parse element by simply assigning text to its name."""
+    el.name = text
+
+
 @parse.register(uml.Property)
 def parse_property(el: uml.Property, s: str) -> None:
     if el.association:

@@ -7,6 +7,11 @@ from gaphor.i18n import gettext
 from gaphor.UML import uml as UML
 
 
+@format.register(UML.Element)
+def format_namedelement(el: UML.Element, **kwargs):
+    return el.name or ""
+
+
 @format.register(UML.Relationship)
 def format_relationship(el):
     return el.__class__.__name__
