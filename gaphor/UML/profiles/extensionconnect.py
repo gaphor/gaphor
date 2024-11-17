@@ -69,5 +69,6 @@ class ExtensionConnect(DirectionalRelationshipConnect):
                         return
             # Create a new Extension relationship
             relation = UML.recipes.create_extension(head_type, tail_type)
+            assert isinstance(element.diagram, UML.Diagram)
             relation.package = owner_package(element.diagram.owner)
             line.subject = relation

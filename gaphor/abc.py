@@ -5,7 +5,7 @@ from collections.abc import Iterable
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from gaphor.core.modeling import Element
+    from gaphor.core.modeling import Base
     from gaphor.diagram.diagramtoolbox import (
         DiagramType,
         ElementCreateInfo,
@@ -55,7 +55,7 @@ class ModelingLanguage(abc.ABC):
         """Iterate element types."""
 
     @abc.abstractmethod
-    def lookup_element(self, name: str, ns: str | None = None) -> type[Element] | None:
+    def lookup_element(self, name: str, ns: str | None = None) -> type[Base] | None:
         """Look up a model element type by (class) name.
 
         A namespace may be provided. This will allow the model to be loaded from

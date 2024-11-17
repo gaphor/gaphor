@@ -13,7 +13,8 @@ from collections.abc import Callable, Iterator
 
 from generic.multidispatch import FunctionDispatcher, multidispatch
 
-from gaphor.core.modeling import Base, Diagram, Element
+from gaphor.core.modeling import Base, Diagram
+from gaphor.UML.uml import Element
 
 
 def self_and_owners(element: Element | None) -> Iterator[Element]:

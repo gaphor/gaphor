@@ -21,7 +21,6 @@ from cairo import Context as CairoContext
 
 from gaphor.core.modeling.base import Base, Id, RepositoryProtocol, generate_id
 from gaphor.core.modeling.collection import collection
-from gaphor.core.modeling.element import Element
 from gaphor.core.modeling.event import (
     AssociationAdded,
     AssociationDeleted,
@@ -32,7 +31,6 @@ from gaphor.core.modeling.properties import (
     association,
     attribute,
     relation_many,
-    relation_one,
 )
 from gaphor.core.modeling.stylesheet import StyleSheet
 from gaphor.core.styling import CompiledStyleSheet, Style, StyleNode
@@ -259,11 +257,11 @@ class StyledItem:
 P = TypeVar("P", bound=Presentation)
 
 
-class Diagram(Element):
+class Diagram(Base):
     """Diagrams may contain :obj:`Presentation` elements and can be owned by any element."""
 
+    name: attribute[str] = attribute("name", str)
     diagramType: attribute[str] = attribute("diagramType", str)
-    element: relation_one[Element]
 
     def __init__(self, id: Id | None = None, model: RepositoryProtocol | None = None):
         """Initialize the diagram with an optional id and element model."""
@@ -340,7 +338,7 @@ class Diagram(Element):
         self,
         type_: type[P],
         parent: Presentation | None = None,
-        subject: Element | None = None,
+        subject: Base | None = None,
     ) -> P:
         """Create a new diagram item on the diagram.
 
@@ -357,7 +355,7 @@ class Diagram(Element):
         type_: type[P],
         id: Id,
         parent: Presentation | None = None,
-        subject: Element | None = None,
+        subject: Base | None = None,
     ) -> P:
         assert isinstance(self.model, PresentationRepositoryProtocol)
         item = self.model.create_as(type_, id, diagram=self)

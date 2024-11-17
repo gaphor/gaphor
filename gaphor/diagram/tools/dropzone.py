@@ -8,7 +8,7 @@ from gaphas.tool.itemtool import item_at_point
 from gaphas.view import GtkView
 from gi.repository import Gtk
 
-from gaphor.core.modeling import Element
+from gaphor.core.modeling import Base
 from gaphor.diagram.connectors import can_connect
 from gaphor.diagram.drop import drop
 from gaphor.diagram.group import can_group
@@ -20,7 +20,7 @@ from gaphor.diagram.presentation import (
 
 
 def drop_zone_tool(
-    item_class: type[Presentation], subject_class: type[Element] | None
+    item_class: type[Presentation], subject_class: type[Base] | None
 ) -> Gtk.EventController:
     ctrl = Gtk.EventControllerMotion.new()
     ctrl.connect("motion", on_motion, item_class, subject_class)
@@ -32,7 +32,7 @@ def on_motion(
     x,
     y,
     item_class: type[Presentation],
-    subject_class: type[Element] | None,
+    subject_class: type[Base] | None,
 ):
     view: GtkView = controller.get_widget()
     model = view.model

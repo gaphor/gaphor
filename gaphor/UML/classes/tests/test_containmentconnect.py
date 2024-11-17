@@ -1,7 +1,6 @@
 """Test connection of containment relationship."""
 
 from gaphor import UML
-from gaphor.core.modeling import Diagram
 from gaphor.diagram.tests.fixtures import allow, connect, disconnect
 from gaphor.UML.classes import ClassItem, PackageItem
 from gaphor.UML.classes.containment import ContainmentItem
@@ -114,7 +113,7 @@ def test_containment_reconnect_in_new_diagram(create, element_factory):
     connect(rel, rel.tail, c2)
 
     # Now do the same on a new diagram:
-    diagram2 = element_factory.create(Diagram)
+    diagram2 = element_factory.create(UML.Diagram)
     c3 = diagram2.create(ClassItem, subject=c1.subject)
     c4 = diagram2.create(ClassItem, subject=c2.subject)
     rel2 = diagram2.create(ContainmentItem)

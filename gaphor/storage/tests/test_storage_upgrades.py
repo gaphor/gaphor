@@ -3,7 +3,7 @@ import pytest
 from gaphor.storage.parser import element
 from gaphor.storage.storage import load_elements
 from gaphor.storage.upgrade_canvasitem import upgrade_canvasitem
-from gaphor.UML import Image, diagramitems
+from gaphor.UML import Diagram, Image, diagramitems
 
 
 @pytest.fixture
@@ -169,3 +169,14 @@ def test_upgrade_picture_to_image(loader, element_factory):
 
     assert isinstance(image, Image)
     assert isinstance(image_item, diagramitems.ImageItem)
+
+
+def test_upgrade_diagram_to_uml_diagram(loader, element_factory):
+    diagram = element(id="2", type="Diagram")
+    core_diagram = element(id="3", type="Diagram", ns="Core")
+
+    loader(diagram, core_diagram)
+    _, new_diagram, new_core_diagram, *_ = element_factory.lselect()
+
+    assert isinstance(new_diagram, Diagram)
+    assert isinstance(new_core_diagram, Diagram)

@@ -15,10 +15,6 @@ from gaphor.core.modeling.properties import (
     relation_one,
 )
 
-
-# 4: override Element
-from gaphor.core.modeling.element import Element
-
 # 7: override Diagram
 from gaphor.core.modeling.diagram import Diagram
 
@@ -54,15 +50,9 @@ class RefChange(PendingChange):
 
 
 
-Element.ownedElement = derivedunion("ownedElement", Element)
-Element.owner = derivedunion("owner", Element, upper=1)
-Element.presentation = association("presentation", Presentation, composite=True, opposite="subject")
-Element.ownedDiagram = association("ownedDiagram", Diagram, composite=True, opposite="element")
-Element.ownedElement.add(Element.ownedDiagram)  # type: ignore[attr-defined]
+Base.presentation = association("presentation", Presentation, composite=True, opposite="subject")
 Diagram.ownedPresentation = association("ownedPresentation", Presentation, composite=True, opposite="diagram")
-Diagram.element = association("element", Element, upper=1, opposite="ownedDiagram")
-Element.owner.add(Diagram.element)  # type: ignore[attr-defined]
 Presentation.parent = association("parent", Presentation, upper=1, opposite="children")
 Presentation.children = association("children", Presentation, composite=True, opposite="parent")
 Presentation.diagram = association("diagram", Diagram, upper=1, opposite="ownedPresentation")
-Presentation.subject = association("subject", Element, upper=1, opposite="presentation")
+Presentation.subject = association("subject", Base, upper=1, opposite="presentation")

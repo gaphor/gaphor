@@ -1,10 +1,10 @@
-"""For ease of creation, maintain a mapping from Element to Diagram Item."""
+"""For ease of creation, maintain a mapping from Base to Diagram Item."""
 
-from gaphor.core.modeling import Element, Presentation
+from gaphor.core.modeling import Base, Presentation
 
 
 def represents(uml_element, **metadata):
-    """A decorator to assign a default Element type to a diagram item."""
+    """A decorator to assign a default Base type to a diagram item."""
 
     def wrapper(presentation):
         set_diagram_item(uml_element, presentation, metadata)
@@ -14,11 +14,11 @@ def represents(uml_element, **metadata):
 
 
 # Map elements to their (default) representation.
-_element_to_item_map: dict[type[Element], type[Presentation]] = {}
+_element_to_item_map: dict[type[Base], type[Presentation]] = {}
 _item_to_metadata_map: dict[type[Presentation], dict[str, object]] = {}
 
 
-def get_diagram_item(element_cls: type[Element]) -> type[Presentation] | None:
+def get_diagram_item(element_cls: type[Base]) -> type[Presentation] | None:
     global _element_to_item_map
     return _element_to_item_map.get(element_cls)
 

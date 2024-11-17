@@ -9,7 +9,7 @@ from typing import Protocol
 
 from gaphas.geometry import Rectangle
 
-from gaphor.core.modeling import DrawContext, Element, UpdateContext
+from gaphor.core.modeling import Base, DrawContext, UpdateContext
 from gaphor.core.modeling.diagram import lookup_attribute
 from gaphor.core.styling import (
     JustifyContent,
@@ -543,7 +543,7 @@ class CssNode:
     def __init__(
         self,
         name: str,
-        element: Element | None,
+        element: Base | None,
         child: Shape,
     ):
         self.name = name

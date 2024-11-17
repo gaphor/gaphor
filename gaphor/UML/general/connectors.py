@@ -4,7 +4,7 @@ import logging
 
 from gaphor.diagram.connectors import BaseConnector, Connector
 from gaphor.diagram.presentation import ElementPresentation, LinePresentation
-from gaphor.UML import Comment
+from gaphor.UML import Comment, Element
 from gaphor.UML.general.comment import CommentItem, CommentLineItem
 
 logger = logging.getLogger(__name__)
@@ -75,6 +75,7 @@ class CommentLineElementConnect(BaseConnector):
                     connected_to.subject.annotatedElement = self.element.subject
                 else:
                     assert isinstance(self.element.subject, Comment)
+                    assert isinstance(connected_to.subject, Element)
                     self.element.subject.annotatedElement = connected_to.subject
 
     def disconnect(self, handle):
@@ -87,9 +88,11 @@ class CommentLineElementConnect(BaseConnector):
             try:
                 if hct.subject:
                     if isinstance(oct.subject, Comment):
+                        assert isinstance(hct.subject, Element)
                         del oct.subject.annotatedElement[hct.subject]
                     elif oct.subject:
                         assert isinstance(hct.subject, Comment)
+                        assert isinstance(oct.subject, Element)
                         del hct.subject.annotatedElement[oct.subject]
             except ValueError:
                 logger.debug(
@@ -135,6 +138,7 @@ class CommentLineLineConnect(BaseConnector):
                     c.subject.annotatedElement = self.element.subject
                 else:
                     assert isinstance(self.element.subject, Comment)
+                    assert isinstance(c.subject, Element)
                     self.element.subject.annotatedElement = c.subject
 
     def disconnect(self, handle):
@@ -144,11 +148,13 @@ class CommentLineLineConnect(BaseConnector):
         if c1 and c2:
             if (
                 isinstance(c1.subject, Comment)
+                and isinstance(c2.subject, Element)
                 and c2.subject in c1.subject.annotatedElement
             ):
                 del c1.subject.annotatedElement[c2.subject]
             elif (
-                isinstance(c2.subject, Comment)
+                isinstance(c1.subject, Element)
+                and isinstance(c2.subject, Comment)
                 and c1.subject in c2.subject.annotatedElement
             ):
                 del c2.subject.annotatedElement[c1.subject]

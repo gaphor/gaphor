@@ -15,8 +15,9 @@ from gaphas.segment import Segment
 from gi.repository import GObject, Gtk
 
 from gaphor.core import Transaction
-from gaphor.core.modeling import Diagram, Element, Presentation
+from gaphor.core.modeling import Base, Diagram, Presentation
 from gaphor.i18n import gettext, translated_ui_string
+from gaphor.UML import Element
 
 
 class LabelValue(GObject.Object):
@@ -57,7 +58,7 @@ class _PropertyPages:
     """
 
     def __init__(self) -> None:
-        self.pages: list[tuple[type[Element], type[PropertyPageBase]]] = []
+        self.pages: list[tuple[type[Base], type[PropertyPageBase]]] = []
 
     def register(self, subject_type, func=None):
         def reg(func):

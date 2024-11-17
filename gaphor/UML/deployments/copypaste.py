@@ -1,6 +1,6 @@
-from gaphor.diagram.copypaste import copy, copy_element
+from gaphor.diagram.copypaste import copy
 from gaphor.UML import Connector, ConnectorEnd
-from gaphor.UML.copypaste import copy_named_element
+from gaphor.UML.copypaste import copy_element, copy_named_element
 
 
 @copy.register

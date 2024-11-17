@@ -19,7 +19,28 @@ from gaphor.core.modeling.properties import (
 from typing import Callable
 
 
-from gaphor.core.modeling.element import Element
+from gaphor.core.modeling.base import Base as _Base
+class Element(_Base):
+    name: _attribute[str] = _attribute("name", str)
+    note: _attribute[str] = _attribute("note", str)
+    qualifiedName: property
+    comment: relation_many[Comment]
+    ownedDiagram: relation_many[Diagram]
+    ownedElement: relation_many[Element]
+    owner: relation_one[Element]
+    relationship: relation_many[Relationship]
+    sourceRelationship: relation_many[Relationship]
+    targetRelationship: relation_many[Relationship]
+
+    # From UML:
+    appliedStereotype: relation_many[Element]
+
+
+from gaphor.core.modeling.diagram import Diagram as _Diagram
+class Diagram(_Diagram, Element):
+    element: relation_one[Element]
+
+
 class NamedElement(Element):
     clientDependency: relation_many[Dependency]
     memberNamespace: relation_one[Namespace]
@@ -796,7 +817,12 @@ class Comment(Element):
 # 77: override Lifeline.render: Callable[[Lifeline], str]
 # defined in umloverrides.py
 
-
+Element.ownedElement = derivedunion("ownedElement", Element)
+Element.owner = derivedunion("owner", Element, upper=1)
+Element.ownedDiagram = association("ownedDiagram", Diagram, composite=True, opposite="element")
+Element.ownedElement.add(Element.ownedDiagram)  # type: ignore[attr-defined]
+Diagram.element = association("element", Element, upper=1, opposite="ownedDiagram")
+Element.owner.add(Diagram.element)  # type: ignore[attr-defined]
 Element.appliedStereotype = association("appliedStereotype", InstanceSpecification, composite=True, opposite="extended")
 Element.relationship = derivedunion("relationship", Relationship)
 Element.comment = association("comment", Comment, opposite="annotatedElement")

@@ -229,7 +229,7 @@ class attribute(umlproperty, Generic[T]):
             and not isinstance(value, str)
         ):
             raise TypeError(
-                f'Value should be of type {hasattr(self.type, "__name__")}'
+                f"Value should be of type {self.type}"
                 and self.type.__name__
                 or self.type
             )
@@ -435,7 +435,7 @@ class association(subsettable_umlproperty):
     def _set_one(self, obj, value, from_opposite=False) -> None:
         if not (isinstance(value, self.type) or (value is None)):
             raise TypeError(
-                f"Value should be of type {self.type.__name__}, got a {type(value)} instead"
+                f"Value should be of type {self.type.__modeling_language__}:{self.type.__name__}, got a {type(value)} instead"  # type: ignore[attr-defined]
             )
 
         old = self._get_one(obj)
@@ -464,7 +464,9 @@ class association(subsettable_umlproperty):
         if not value:
             return None
         if not isinstance(value, self.type):
-            raise TypeError(f"Value should be of type {self.type.__name__}")
+            raise TypeError(
+                f"Value should be of type {self.type.__modeling_language__}:{self.type.__name__}"  # type: ignore[attr-defined]
+            )
 
         # Set the actual value
         c: collection = self._get_many(obj)
@@ -949,7 +951,7 @@ class redefine(umlproperty):
     def set(self, obj, value, from_opposite=False):
         if not (isinstance(value, self.type) or (self.upper == 1 and value is None)):
             raise TypeError(
-                f"Value should be of type {self.type.__name__}, got a {type(value)} instead"
+                f"Value should be of type {self.type.__modeling_language__}:{self.type.__name__}, got a {type(value)} instead"  # type: ignore[attr-defined]
             )
         assert isinstance(self.original, association)
         return self.original.set(obj, value, from_opposite=from_opposite)

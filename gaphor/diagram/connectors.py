@@ -16,14 +16,14 @@ from gaphas.connector import ConnectionSink, Handle, Port
 from gaphas.connector import Connector as ConnectorAspect
 from generic.multidispatch import FunctionDispatcher, multidispatch
 
-from gaphor.core.modeling import Base, Diagram, Element, Presentation
+from gaphor.core.modeling import Base, Diagram, Presentation
 from gaphor.core.modeling.event import RevertibleEvent
 from gaphor.core.modeling.properties import association, redefine, relation
 from gaphor.diagram.copypaste import copy, paste
 from gaphor.diagram.presentation import ElementPresentation, LinePresentation
 from gaphor.diagram.support import get_diagram_item_metadata, get_model_element
 
-T = TypeVar("T", bound=Element)
+T = TypeVar("T", bound=Base)
 
 
 class ConnectorProtocol(Protocol):
@@ -53,8 +53,8 @@ class BaseConnector:
 
     def __init__(
         self,
-        element: Presentation[Element],
-        line: Presentation[Element],
+        element: Presentation[Base],
+        line: Presentation[Base],
     ) -> None:
         self.element = element
         self.line = line
@@ -68,7 +68,7 @@ class BaseConnector:
         self.diagram: Diagram = element.diagram or line.diagram
         assert self.diagram
 
-    def get_connected(self, handle: Handle) -> Presentation[Element] | None:
+    def get_connected(self, handle: Handle) -> Presentation[Base] | None:
         """Get item connected to a handle."""
         if cinfo := self.diagram.connections.get_connection(handle):
             return cinfo.connected  # type: ignore[no-any-return] # noqa: F723
@@ -152,11 +152,9 @@ class RelationshipConnect(BaseConnector):
     """
 
     element: Presentation
-    line: LinePresentation[Element]
+    line: LinePresentation[Base]
 
-    def __init__(
-        self, element: Presentation[Element], line: Presentation[Element]
-    ) -> None:
+    def __init__(self, element: Presentation[Base], line: Presentation[Base]) -> None:
         super().__init__(element, line)
         self.copy_buffer = dict(copy(line.subject)) if line.subject else {}
 
@@ -197,7 +195,7 @@ class RelationshipConnect(BaseConnector):
         if not (head_subject and tail.opposite):
             return None
 
-        gen: Element
+        gen: Base
         for gen in getattr(tail_subject, tail.opposite):
             if not isinstance(gen, required_type):
                 continue

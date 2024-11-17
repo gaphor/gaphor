@@ -3,13 +3,13 @@ import itertools
 import pytest
 
 from gaphor.C4Model import diagramitems as c4_diagramitems
-from gaphor.core.modeling.element import Element
 from gaphor.diagram.general import diagramitems as general_diagramitems
 from gaphor.diagram.presentation import LinePresentation
 from gaphor.diagram.support import get_diagram_item_metadata, get_model_element
 from gaphor.RAAML import diagramitems as raaml_diagramitems
 from gaphor.SysML import diagramitems as sysml_diagramitems
 from gaphor.UML import diagramitems as uml_diagramitems
+from gaphor.UML.uml import Element
 
 diagramitems = [
     c

@@ -100,7 +100,7 @@ class ValueType(DataType):
 
 
 from gaphor.UML.uml import InstanceSpecification
-from gaphor.core.modeling.element import Element
+from gaphor.UML.uml import Element
 class ElementPropertyPath(Element):
     propertyPath: relation_many[Property]
 
@@ -293,7 +293,7 @@ class ItemFlow(InformationFlow):
     itemProperty: relation_one[Property]
 
 
-from gaphor.core.modeling.diagram import Diagram
+from gaphor.UML.uml import Diagram
 from gaphor.UML.uml import Class
 class SysMLDiagram(Diagram):
     pass

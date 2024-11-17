@@ -16,7 +16,7 @@ from gaphor.abc import ActionProvider, Service
 from gaphor.babel import translate_model
 from gaphor.core import action, event_handler, gettext
 from gaphor.core.changeset.compare import compare
-from gaphor.core.modeling import Diagram, ElementFactory, ModelReady, StyleSheet
+from gaphor.core.modeling import ElementFactory, ModelReady, StyleSheet
 from gaphor.event import (
     ModelSaved,
     SessionCreated,
@@ -60,7 +60,7 @@ def load_default_model(element_factory):
         element_factory.create(StyleSheet)
         model = element_factory.create(UML.Package)
         model.name = gettext("New model")
-        diagram = element_factory.create(Diagram)
+        diagram = element_factory.create(UML.Diagram)
         diagram.element = model
         diagram.name = gettext("New diagram")
 

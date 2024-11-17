@@ -6,7 +6,8 @@
 
 from functools import singledispatch
 
-from gaphor.core.modeling import Base, Diagram, Element
+from gaphor.core.modeling import Base, Diagram
+from gaphor.UML.uml import Element
 
 
 @singledispatch

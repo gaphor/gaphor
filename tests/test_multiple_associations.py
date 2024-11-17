@@ -46,7 +46,7 @@ def element_factory(session):
 @pytest.fixture
 def diagram(event_manager, element_factory):
     with Transaction(event_manager):
-        return element_factory.create(Diagram)
+        return element_factory.create(UML.Diagram)
 
 
 @pytest.fixture

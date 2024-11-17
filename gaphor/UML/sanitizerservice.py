@@ -6,7 +6,7 @@ from collections.abc import Iterable
 from gaphor import UML
 from gaphor.abc import Service
 from gaphor.core import event_handler
-from gaphor.core.modeling import Diagram, Element, Presentation
+from gaphor.core.modeling import Diagram, Presentation
 from gaphor.core.modeling.event import (
     AssociationDeleted,
     AssociationSet,
@@ -146,7 +146,7 @@ class SanitizerService(Service):
     @event_handler(DerivedSet)
     @undo_guard
     def _redraw_diagram_on_move(self, event):
-        if event.property is Element.owner and isinstance(event.element, Diagram):
+        if event.property is UML.Element.owner and isinstance(event.element, Diagram):
             diagram = event.element
             for item in diagram.get_all_items():
                 diagram.request_update(item)
@@ -161,7 +161,7 @@ def update_stereotype_application(stereotype: UML.Stereotype, seen=None):
 
     for instance_spec in list(stereotype.instanceSpecification):
         for e in list(instance_spec.extended):
-            names = {c.__name__ for c in type(e).__mro__ if issubclass(c, Element)}
+            names = {c.__name__ for c in type(e).__mro__ if issubclass(c, UML.Element)}
             if names.isdisjoint(metaclass_names):
                 del instance_spec.extended[e]
         if not instance_spec.extended:

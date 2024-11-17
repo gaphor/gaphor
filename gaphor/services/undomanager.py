@@ -19,7 +19,6 @@ from gaphor.abc import ActionProvider, Service
 from gaphor.action import action
 from gaphor.core import event_handler
 from gaphor.core.modeling.base import Base, RepositoryProtocol, swap_element_type
-from gaphor.core.modeling.diagram import Diagram
 from gaphor.core.modeling.event import (
     AssociationAdded,
     AssociationDeleted,
@@ -42,6 +41,7 @@ from gaphor.event import (
     TransactionRollback,
 )
 from gaphor.transaction import Transaction
+from gaphor.UML.uml import Diagram
 
 logger = logging.getLogger(__name__)
 

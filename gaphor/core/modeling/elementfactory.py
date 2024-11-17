@@ -93,7 +93,7 @@ class ElementFactory(Service):
             element = self._elements[id]
             if not isinstance(element, type):
                 raise TypeError(
-                    "Element {element} already exists but has a different type  {type}"
+                    f"Element {element} already exists but has a different type {type}"
                 )
             return element
 

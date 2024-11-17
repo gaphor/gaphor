@@ -12,10 +12,11 @@ from uuid import uuid1
 
 from gaphor.core.modeling.collection import collection
 from gaphor.core.modeling.event import ElementTypeUpdated, ElementUpdated
-from gaphor.core.modeling.properties import umlproperty
+from gaphor.core.modeling.properties import relation_many, umlproperty
 
 if TYPE_CHECKING:
     from gaphor.core.modeling.diagram import Diagram
+    from gaphor.core.modeling.presentation import Presentation
 
 log = logging.getLogger(__name__)
 
@@ -60,6 +61,8 @@ class classproperty:
 
 class Base:
     """Base class for all model data classes."""
+
+    presentation: relation_many[Presentation]
 
     def __init__(self, id: Id | None = None, model: RepositoryProtocol | None = None):
         """Create an element. As optional parameters an id and model can be

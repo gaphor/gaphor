@@ -11,8 +11,9 @@ from typing import (
     TypeVar,
 )
 
-from gaphor.core.modeling import Diagram, Element, Presentation
+from gaphor.core.modeling import Presentation
 from gaphor.diagram.group import group
+from gaphor.UML.uml import Diagram, Element
 
 ItemFactory = Callable[[Diagram, Presentation | None], Presentation]
 P = TypeVar("P", bound=Presentation, covariant=True)

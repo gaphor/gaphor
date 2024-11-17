@@ -8,11 +8,7 @@ from gi.repository import Gio, GObject, Pango
 
 from gaphor import UML
 from gaphor.core.format import format
-from gaphor.core.modeling import (
-    Base,
-    Diagram,
-    Element,
-)
+from gaphor.core.modeling import Base, Diagram
 from gaphor.diagram.iconname import icon_name
 from gaphor.i18n import gettext
 
@@ -145,7 +141,7 @@ def owner(_element: Base) -> Base | RootType | None:
 
 
 @owner.register
-def _(element: Element):
+def _(element: UML.Element):
     if not element.owner and isinstance(element, UML.MultiplicityElement):
         return None
 
@@ -181,7 +177,7 @@ def owns(_element: Base) -> list[Base]:
 
 
 @owns.register
-def _(element: Element):
+def _(element: UML.Element):
     return [e for e in element.ownedElement if e.owner is element and owner(e)] + (
         [
             e

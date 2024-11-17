@@ -466,10 +466,11 @@ def upgrade_note_on_model_element_only(
 
 # since 2.28.0
 def upgrade_modeling_language(elem: element) -> element:
-    if elem.ns:
-        return elem
-
-    if elem.type == "Dependency":
+    if elem.type == "Diagram" and elem.ns in (None, "", "Core"):
+        elem.ns = "UML"
+    elif elem.ns:
+        pass
+    elif elem.type == "Dependency":
         elem.ns = "UML"
     elif elem.type in ("C4Person", "C4Container", "C4Database", "C4Dependency"):
         elem.type = elem.type[2:]

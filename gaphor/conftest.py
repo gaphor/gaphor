@@ -21,7 +21,7 @@ from gaphas.view import GtkView
 
 from gaphor.core import Transaction
 from gaphor.core.eventmanager import EventManager
-from gaphor.core.modeling import Diagram, ElementFactory
+from gaphor.core.modeling import ElementFactory
 from gaphor.core.modeling.elementdispatcher import ElementDispatcher
 from gaphor.core.modeling.modelinglanguage import (
     CoreModelingLanguage,
@@ -34,6 +34,7 @@ from gaphor.storage import storage
 from gaphor.SysML.modelinglanguage import SysMLModelingLanguage
 from gaphor.UML.modelinglanguage import UMLModelingLanguage
 from gaphor.UML.sanitizerservice import SanitizerService
+from gaphor.UML.uml import Diagram
 
 
 @pytest.fixture(autouse=True)
