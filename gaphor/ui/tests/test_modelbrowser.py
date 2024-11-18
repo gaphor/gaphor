@@ -222,6 +222,39 @@ def test_delete_element(model_browser, element_factory):
     assert not element_factory.lselect()
 
 
+def test_association_end(model_browser: ModelBrowser, element_factory):
+    tree_model = model_browser.model
+    head_class = element_factory.create(UML.Class)
+    tail_class = element_factory.create(UML.Class)
+    association = recipes.create_association(head_class, tail_class)
+
+    recipes.set_navigability(association, association.memberEnd[0], True)
+    recipes.set_navigability(association, association.memberEnd[0], None)
+
+    association_item = tree_model.tree_item_for_element(association)
+    association_children = tree_model.child_model(association_item)
+
+    assert association.memberEnd[0] in (t.element for t in association_children)
+    assert association.memberEnd[1] in (t.element for t in association_children)
+
+
+def test_navigable_association_end(model_browser: ModelBrowser, element_factory):
+    tree_model = model_browser.model
+    head_class = element_factory.create(UML.Class)
+    tail_class = element_factory.create(UML.Class)
+    association = recipes.create_association(head_class, tail_class)
+
+    recipes.set_navigability(association, association.memberEnd[0], True)
+
+    association_item = tree_model.tree_item_for_element(association)
+    tail_class_item = tree_model.tree_item_for_element(tail_class)
+    association_children = tree_model.child_model(association_item)
+    tail_class_children = tree_model.child_model(tail_class_item)
+
+    assert association.memberEnd[0] not in (t.element for t in association_children)
+    assert association.memberEnd[0] in (t.element for t in tail_class_children)
+
+
 def test_search_next(model_browser, element_factory):
     class_a = element_factory.create(UML.Class)
     class_a.name = "a"

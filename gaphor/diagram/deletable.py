@@ -1,9 +1,9 @@
 from functools import singledispatch
 
-from gaphor.core.modeling import Element
+from gaphor.core.modeling import Base
 
 
 @singledispatch
-def deletable(element: Element) -> bool:
+def deletable(_element: Base) -> bool:
     """Determine if a single element can safely be deleted."""
     return True

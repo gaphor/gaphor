@@ -50,10 +50,6 @@ class RefChange(PendingChange):
     property_ref: _attribute[str] = _attribute("property_ref", str)
 
 
-class Picture(Element):
-    content: _attribute[str] = _attribute("content", str)
-
-
 
 Element.ownedElement = derivedunion("ownedElement", Element)
 Element.owner = derivedunion("owner", Element, upper=1)

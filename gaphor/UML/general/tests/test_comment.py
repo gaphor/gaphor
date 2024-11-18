@@ -1,16 +1,11 @@
 """UML.Comment and comment line items connection adapters tests."""
 
-from typing import TypeVar
-
 from gaphor import UML
 from gaphor.diagram.tests.fixtures import allow, connect, disconnect
 from gaphor.UML.classes.generalization import GeneralizationItem
 from gaphor.UML.classes.klass import ClassItem
 from gaphor.UML.general.comment import CommentItem, CommentLineItem
 from gaphor.UML.usecases.actor import ActorItem
-
-T = TypeVar("T")
-
 
 # NOTE: Still have to test what happens if one Item at the CommentLineItem
 #       end is removed, while the item still has references and is not

@@ -200,6 +200,7 @@ def _load_elements_and_canvasitems(
             elem = upgrade_note_on_model_element_only(elem, elements)
         if version_lower_than(gaphor_version, (2, 28, 0)):
             elem = upgrade_modeling_language(elem)
+
         if not (cls := modeling_language.lookup_element(elem.type, elem.ns)):
             raise UnknownModelElementError(
                 f"Type {elem.ns}:{elem.type} cannot be loaded: no such element"
@@ -473,4 +474,10 @@ def upgrade_modeling_language(elem: element) -> element:
     elif elem.type in ("C4Person", "C4Container", "C4Database", "C4Dependency"):
         elem.type = elem.type[2:]
         elem.ns = "C4Model"
+    elif elem.type == "Picture":
+        elem.ns = "UML"
+        elem.type = "Image"
+    elif elem.type == "PictureItem":
+        elem.ns = "UML"
+        elem.type = "ImageItem"
     return elem

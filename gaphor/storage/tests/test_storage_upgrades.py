@@ -3,7 +3,7 @@ import pytest
 from gaphor.storage.parser import element
 from gaphor.storage.storage import load_elements
 from gaphor.storage.upgrade_canvasitem import upgrade_canvasitem
-from gaphor.UML import diagramitems
+from gaphor.UML import Image, diagramitems
 
 
 @pytest.fixture
@@ -158,3 +158,14 @@ def test_upgrade_append_notes_on_model_element(loader, element_factory):
     _, cls_item1, cls_item2, cls, *_ = element_factory.lselect()
 
     assert cls.note == "my note\n\nanother note"
+
+
+def test_upgrade_picture_to_image(loader, element_factory):
+    picture = element(id="2", type="Picture")
+    picture_item = element(id="3", type="PictureItem")
+
+    loader(picture, picture_item)
+    _, image, image_item, *_ = element_factory.lselect()
+
+    assert isinstance(image, Image)
+    assert isinstance(image_item, diagramitems.ImageItem)
