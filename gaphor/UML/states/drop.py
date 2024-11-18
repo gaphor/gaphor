@@ -1,5 +1,5 @@
 from gaphor.diagram.drop import drop, grow_parent
-from gaphor.diagram.group import group, ungroup
+from gaphor.diagram.group import change_owner, ungroup
 from gaphor.UML.states.pseudostates import PseudostateItem
 from gaphor.UML.states.state import StateItem
 from gaphor.UML.states.statemachine import StateMachineItem
@@ -28,6 +28,6 @@ def drop_region(item, new_parent: StateItem | StateMachineItem, x, y):
         item.change_parent(None)
         old_parent.request_update()
 
-    if group(target_subject, item.subject):
+    if change_owner(target_subject, item.subject):
         grow_parent(new_parent, item)
         item.change_parent(new_parent)

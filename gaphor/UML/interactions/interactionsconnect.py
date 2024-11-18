@@ -3,7 +3,7 @@
 from gaphor import UML
 from gaphor.core.modeling import Presentation
 from gaphor.diagram.connectors import BaseConnector, Connector
-from gaphor.diagram.group import group
+from gaphor.diagram.group import change_owner
 from gaphor.UML.interactions.executionspecification import ExecutionSpecificationItem
 from gaphor.UML.interactions.interaction import InteractionItem
 from gaphor.UML.interactions.lifeline import LifelineItem
@@ -62,7 +62,7 @@ def owner_for_message(line, lifeline):
         return
     elif isinstance(maybe_interaction, InteractionItem):
         line.parent = maybe_interaction
-        group(maybe_interaction, line)
+        change_owner(maybe_interaction, line)
     elif lifeline.subject and lifeline.subject.interaction:
         line.subject.interaction = lifeline.subject.interaction
 

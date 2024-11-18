@@ -1,81 +1,98 @@
 """Grouping functionality allows nesting of one item within another item
 (parent item). This is useful in several use cases.
 
-- artifact deployed within a node
-- a class within a package, or a component
-- composite structures (i.e. component within a node)
+These concepts are mostly used in the ownership module (`change_owner`)
 """
 
 from __future__ import annotations
 
 import itertools
 from collections.abc import Callable, Iterator
+from enum import Enum
+from functools import singledispatch
 
 from generic.multidispatch import FunctionDispatcher, multidispatch
 
-from gaphor.core.modeling import Base, Diagram
-from gaphor.UML.uml import Element
+from gaphor.core.modeling import Base, Diagram, Presentation
 
 
-def self_and_owners(element: Element | None) -> Iterator[Element]:
+def self_and_owners(element: Base | RootType | None) -> Iterator[Base]:
     """Return the element and the ancestors (Element.owner)."""
     seen = set()
     e = element
-    while isinstance(e, Element):
+    while isinstance(e, Base):
         if e in seen:
             return
         yield e
         seen.add(e)
-        e = e.owner
+        e = owner(e)
 
 
-def change_owner(new_parent, element):
+def change_owner(new_parent: Base | None, element: Base) -> bool:
     if new_parent and element.model is not new_parent.model:
         return False
 
-    if new_parent and element.owner is new_parent:
+    o = owner(element)
+    if o is Root:
+        o = None
+
+    if new_parent and o is new_parent:
         return False
 
     if new_parent and element in self_and_owners(new_parent):
         return False
 
-    if new_parent is None and element.owner:
-        return ungroup(element.owner, element)
+    if new_parent is None and isinstance(o, Base):
+        return ungroup(o, element)  # type: ignore[no-any-return]
 
     if not can_group(new_parent, element):
         return False
 
-    if element.owner:
-        ungroup(element.owner, element)
+    if isinstance(o, Base):
+        ungroup(o, element)
 
-    return group(new_parent, element)
+    return group(new_parent, element)  # type: ignore[no-any-return]
+
+
+class RootType(Enum):
+    Root = 1
+
+
+Root = RootType.Root
+
+
+@singledispatch
+def owner(_element: Base) -> Base | RootType | None:
+    return None
+
+
+@owner.register
+def _(element: Presentation):
+    return element.diagram
+
+
+@singledispatch
+def owns(_element: Base) -> list[Base]:
+    return []
+
+
+@owns.register
+def _(element: Diagram):
+    return element.ownedPresentation
 
 
 def no_group(parent, element) -> bool:
     return False
 
 
-class GroupPreconditions:
-    def __init__(self, func):
-        self.__func = func
-
-    def __getattr__(self, key):
-        return getattr(self.__func, key)
-
-    def __call__(self, parent, element) -> bool:
-        if element in self_and_owners(parent):
-            return False
-
-        return self.__func(parent, element)  # type: ignore[no-any-return]
-
-
-group: FunctionDispatcher[Callable[[Base, Base], bool]] = GroupPreconditions(
-    multidispatch(object, object)(no_group)
+group: FunctionDispatcher[Callable[[Base, Base], bool]] = multidispatch(object, object)(
+    no_group
 )
+
 group.register(None, object)(no_group)
 
 
-def can_group(parent: Base, element_or_type: Base | type[Base]) -> bool:
+def can_group(parent: Base | None, element_or_type: Base | type[Base]) -> bool:
     element_type = (
         type(element_or_type) if isinstance(element_or_type, Base) else element_or_type
     )
@@ -92,22 +109,8 @@ def ungroup(parent, element) -> bool:
     return False
 
 
-@ungroup.register(None, Element)
+@ungroup.register(None, Base)
 def none_ungroup(none, element):
     """In the rare (error?) case a model element has no parent, but is grouped
     in a diagram, allow it to ungroup."""
     return True
-
-
-@group.register(Element, Diagram)
-def diagram_group(element, diagram):
-    diagram.element = element
-    return True
-
-
-@ungroup.register(Element, Diagram)
-def diagram_ungroup(element, diagram):
-    if diagram.element is element:
-        del diagram.element
-        return True
-    return False

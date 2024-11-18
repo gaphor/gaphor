@@ -17,7 +17,7 @@ from gaphor.UML import uml, umllex
 def named_element_qualified_name(self) -> list[str]:
     """Returns the qualified name of the element as a list."""
 
-    qname = [e.name or "??" for e in self_and_owners(self)]
+    qname = [getattr(e, "name", "??") or "??" for e in self_and_owners(self)]
     qname.reverse()
     return qname
 

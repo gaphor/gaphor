@@ -27,6 +27,7 @@ from typing import NamedTuple
 
 from gaphor.core.modeling import Base, Diagram, Id, Presentation
 from gaphor.core.modeling.collection import collection
+from gaphor.diagram.group import owner, owns
 
 Opaque = object
 
@@ -40,7 +41,6 @@ def copy_full(
     items: Collection, lookup: Callable[[Id], Base | None] | None = None
 ) -> CopyData:
     """Copy items, including owned elements."""
-    from gaphor import UML
 
     elements = {ref: data for item in items for ref, data in copy(item)}
     diagram_refs = {item.diagram.id for item in items if isinstance(item, Presentation)}
@@ -48,16 +48,16 @@ def copy_full(
     if not lookup:
         return CopyData(elements=elements, diagram_refs=diagram_refs)
 
-    def copy_owned(e: UML.Element):
-        for o in e.ownedElement:
-            if o.owner is e:
+    def copy_owned(e: Base):
+        for o in owns(e):
+            if owner(o) is e:
                 for ref, data in copy(o):
                     if ref not in elements:
                         elements[ref] = data
                         copy_owned(o)
 
     for ref in list(elements.keys()):
-        if isinstance(element := lookup(ref), UML.Element):
+        if element := lookup(ref):
             copy_owned(element)
 
     return CopyData(elements=elements, diagram_refs=diagram_refs)

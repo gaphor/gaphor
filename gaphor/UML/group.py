@@ -1,5 +1,63 @@
-from gaphor import UML
-from gaphor.diagram.group import group, ungroup
+import gaphor.UML.uml as UML
+from gaphor.diagram.group import Root, group, owner, owns, ungroup
+
+
+@owner.register
+def _(element: UML.Element):
+    if not element.owner and isinstance(element, UML.MultiplicityElement):
+        return None
+
+    return element.owner or Root
+
+
+@owner.register
+def _(element: UML.NamedElement):
+    return element.owner or element.memberNamespace or Root
+
+
+@owner.register
+def _(element: UML.StructuralFeature):
+    if not (element.owner or element.memberNamespace):
+        return None
+
+    return element.owner or element.memberNamespace
+
+
+@owner.register
+def _(
+    _element: UML.Slot
+    | UML.Comment
+    | UML.InstanceSpecification
+    | UML.OccurrenceSpecification,
+):
+    return None
+
+
+@owns.register
+def _(element: UML.Element):
+    return [e for e in element.ownedElement if e.owner is element and owner(e)] + (
+        [
+            e
+            for e in element.member
+            if e.memberNamespace is element and not e.owner and owner(e)
+        ]
+        if isinstance(element, UML.Namespace)
+        else []
+    )
+
+
+@group.register(UML.Element, UML.Diagram)
+def diagram_group(element, diagram):
+    diagram.element = element
+    return True
+
+
+@ungroup.register(UML.Element, UML.Diagram)
+def diagram_ungroup(element, diagram):
+    if diagram.element is element:
+        del diagram.element
+        return True
+    return False
 
 
 @group.register(UML.Package, UML.Type)

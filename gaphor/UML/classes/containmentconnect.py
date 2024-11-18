@@ -3,7 +3,7 @@
 from gaphor import UML
 from gaphor.core.modeling import Diagram
 from gaphor.diagram.connectors import BaseConnector, Connector
-from gaphor.diagram.group import group, self_and_owners, ungroup
+from gaphor.diagram.group import change_owner, self_and_owners, ungroup
 from gaphor.diagram.presentation import ElementPresentation
 from gaphor.UML.classes.containment import ContainmentItem
 from gaphor.UML.recipes import owner_package
@@ -50,7 +50,7 @@ class ContainmentConnect(BaseConnector):
 
     def connect(self, handle, port) -> bool:
         container, contained = self.container_and_contained_element(handle)
-        return group(container, contained) if container and contained else False
+        return change_owner(container, contained) if container and contained else False
 
     def disconnect(self, handle):
         opposite = self.line.opposite(handle)

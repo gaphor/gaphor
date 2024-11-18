@@ -1,14 +1,13 @@
 from __future__ import annotations
 
-from enum import Enum
-from functools import singledispatch
 from unicodedata import normalize
 
 from gi.repository import Gio, GObject, Pango
 
-from gaphor import UML
+import gaphor.UML.uml as UML
 from gaphor.core.format import format
 from gaphor.core.modeling import Base, Diagram
+from gaphor.diagram.group import Root, RootType, owner, owns
 from gaphor.diagram.iconname import icon_name
 from gaphor.i18n import gettext
 
@@ -126,67 +125,6 @@ class Branch:
     def __iter__(self):
         yield from self.elements
         yield from self.relationships
-
-
-class RootType(Enum):
-    Root = 1
-
-
-Root = RootType.Root
-
-
-@singledispatch
-def owner(_element: Base) -> Base | RootType | None:
-    return None
-
-
-@owner.register
-def _(element: UML.Element):
-    if not element.owner and isinstance(element, UML.MultiplicityElement):
-        return None
-
-    return element.owner or Root
-
-
-@owner.register
-def _(element: UML.NamedElement):
-    return element.owner or element.memberNamespace or Root
-
-
-@owner.register
-def _(element: UML.StructuralFeature):
-    if not (element.owner or element.memberNamespace):
-        return None
-
-    return element.owner or element.memberNamespace
-
-
-@owner.register
-def _(
-    _element: UML.Slot
-    | UML.Comment
-    | UML.InstanceSpecification
-    | UML.OccurrenceSpecification,
-):
-    return None
-
-
-@singledispatch
-def owns(_element: Base) -> list[Base]:
-    return []
-
-
-@owns.register
-def _(element: UML.Element):
-    return [e for e in element.ownedElement if e.owner is element and owner(e)] + (
-        [
-            e
-            for e in element.member
-            if e.memberNamespace is element and not e.owner and owner(e)
-        ]
-        if isinstance(element, UML.Namespace)
-        else []
-    )
 
 
 def tree_item_sort(a, b, _user_data=None):
