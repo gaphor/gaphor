@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: Gaphor 0.13.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2024-02-27 10:00-0500\n"
-"PO-Revision-Date: 2024-09-28 13:16+0000\n"
-"Last-Translator: knacky34 <gw.janssoone@protonmail.com>\n"
+"PO-Revision-Date: 2024-11-19 12:00+0000\n"
+"Last-Translator: Stan SZLAPKA <stansz@free.fr>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/gaphor/gaphor/fr/>"
 "\n"
 "Language: fr\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.8-dev\n"
+"X-Generator: Weblate 5.9-dev\n"
 "Generated-By: Babel 2.14.0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:23 gaphor/C4Model/toolbox.py:67
@@ -275,8 +275,9 @@ msgid "Intermediate Event"
 msgstr "Événement intermédiaire"
 
 #: gaphor/RAAML/fta/seqgate.py:34
+#, fuzzy
 msgid "Sequence Enforcing Gate"
-msgstr ""
+msgstr "Porte de renforcement des séquences"
 
 #: gaphor/RAAML/fta/xorgate.py:33
 msgid "XOR Gate"
@@ -345,7 +346,6 @@ msgid "Relevant To"
 msgstr "Pertinent Pour"
 
 #: gaphor/SysML/modelinglanguage.py:24 gaphor/ui/greeter.py:42
-#, fuzzy
 msgid "SysML"
 msgstr "SysML"
 
@@ -386,7 +386,6 @@ msgid "Show Values"
 msgstr "Montrer les Valeurs"
 
 #: gaphor/SysML/propertypages.ui:183
-#, fuzzy
 msgid "Aggregation"
 msgstr "Aggregation"
 
@@ -1602,7 +1601,7 @@ msgstr "Diagramme de Méta-data"
 
 #: gaphor/diagram/diagramtoolbox.py:194 gaphor/diagram/propertypages.ui:260
 msgid "Picture"
-msgstr ""
+msgstr "Image"
 
 #: gaphor/diagram/propertypages.ui:70
 msgid "Style"
@@ -1634,9 +1633,8 @@ msgid "Revision"
 msgstr "Révision"
 
 #: gaphor/diagram/propertypages.ui:211
-#, fuzzy
 msgid "License"
-msgstr "License"
+msgstr "Licence"
 
 #: gaphor/diagram/propertypages.ui:225
 msgid "Created On"
@@ -1659,9 +1657,8 @@ msgid "Select a picture..."
 msgstr ""
 
 #: gaphor/diagram/general/generalpropertypages.py:149
-#, fuzzy
 msgid "Unable to parse picture “{filename}”."
-msgstr "Enregistrer an ficher {filename}"
+msgstr "Impossible d'analyser l'image \"{nom de fichier}\"."
 
 #: gaphor/diagram/tools/dnd.py:50
 msgid "Element can’t be represented on a diagram."
@@ -1670,10 +1667,12 @@ msgstr ""
 #: gaphor/extensions/sphinx.py:63
 msgid "No model file configured for model '{model_name}'."
 msgstr ""
+"Aucun fichier de modèle n'est configuré pour le modèle \"{nom_du_modèle}\"."
 
 #: gaphor/extensions/sphinx.py:88
 msgid "No diagram '{name}' in model '{model_name}' ({model_file})."
 msgstr ""
+"Pas de diagramme '{nom}' dans le modèle '{nom_modèle}' ({fichier_modèle})."
 
 #: gaphor/plugins/align/align.py:31
 #, fuzzy
@@ -1727,6 +1726,9 @@ msgid ""
 "{version}\n"
 "Type \"help\" for more information.\n"
 msgstr ""
+"Console Python interactive de Gaphor\n"
+"{version}\n"
+"Tapez « help » pour plus d'informations.\n"
 
 #: gaphor/plugins/console/consolewindow.py:38
 #, fuzzy
@@ -1747,7 +1749,6 @@ msgstr "Exporter en SVG"
 
 #: gaphor/plugins/diagramexport/__init__.py:55
 #: gaphor/plugins/diagramexport/__init__.py:60
-#, fuzzy
 msgid "Export diagram as SVG"
 msgstr "Exporter le diagramme en SVG"
 
@@ -1792,7 +1793,7 @@ msgstr "Aucune erreur n’a été interceptée. Tout va bien."
 
 #: gaphor/plugins/errorreports/errorreports.py:99
 msgid "Errors:"
-msgstr "Erreurs:"
+msgstr "Erreurs :"
 
 #: gaphor/plugins/errorreports/errorreports.py:148
 msgid ""
@@ -1809,21 +1810,19 @@ msgstr ""
 
 #: gaphor/plugins/xmiexport/__init__.py:25
 msgid "Export as XMI"
-msgstr ""
+msgstr "Exporter en XMI"
 
 #: gaphor/plugins/xmiexport/__init__.py:26
-#, fuzzy
 msgid "Export model as XMI (XML Model Interchange) format"
-msgstr "Exporter le modèle au format XMI (XML Model Interchange)"
+msgstr "Exporter le modèle au format XMI (XML Metadata Interchange)"
 
 #: gaphor/plugins/xmiexport/__init__.py:43
-#, fuzzy
 msgid "Export model as XMI file"
-msgstr "Exporter en XMI"
+msgstr "Exporter le modèle en XMI"
 
 #: gaphor/plugins/xmiexport/__init__.py:46
 msgid "All XMI Files"
-msgstr ""
+msgstr "Tous les fichiers XMI"
 
 #: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:63
 #: gaphor/ui/mainwindow.py:255 gaphor/ui/mainwindow.ui:46
@@ -1831,61 +1830,54 @@ msgid "New model"
 msgstr "Nouveau modèle"
 
 #: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:66
-#, fuzzy
 msgid "New diagram"
-msgstr "Nouveau _Diagramme"
+msgstr "Nouveau Diagramme"
 
 #: gaphor/templates/c4model.gaphor
-#, fuzzy
 msgid "1. Context diagrams"
-msgstr "Nouveau _Diagramme"
+msgstr "1. Diagrammes de contexte"
 
 #: gaphor/templates/c4model.gaphor
-#, fuzzy
 msgid "2. Container diagrams"
-msgstr "Nouveau _Diagramme"
+msgstr "2. Diagrammes de conteneurs"
 
 #: gaphor/templates/c4model.gaphor
-#, fuzzy
 msgid "4. Code diagrams"
-msgstr "Nouveau _Diagramme"
+msgstr "4. Diagrammes de code"
 
 #: gaphor/templates/c4model.gaphor
 msgid "3. Component diagrams"
-msgstr ""
+msgstr "3. Diagrammes des composants"
 
 #: gaphor/templates/c4model.gaphor
-#, fuzzy
 msgid "Context diagram"
-msgstr "Nouveau _Diagramme"
+msgstr "Diagramme de contexte"
 
 #: gaphor/templates/c4model.gaphor
-#, fuzzy
 msgid "Container diagram"
-msgstr "Nouveau _Diagramme"
+msgstr "Diagramme de conteneur"
 
 #: gaphor/templates/c4model.gaphor
-#, fuzzy
 msgid "Component diagram"
-msgstr "Nouveau _Diagramme"
+msgstr "Diagramme de composant"
 
 #: gaphor/templates/c4model.gaphor
-#, fuzzy
 msgid "Code diagram"
-msgstr "Nouveau _Diagramme"
+msgstr "Diagramme de code"
 
 #: gaphor/templates/raaml-example.gaphor gaphor/templates/raaml.gaphor
 #: gaphor/templates/uml-example.gaphor gaphor/templates/uml.gaphor
 msgid "Model Name Here"
-msgstr ""
+msgstr "Nom du modèle ici"
 
 #: gaphor/templates/raaml-example.gaphor gaphor/templates/raaml.gaphor
 msgid "STPA"
 msgstr ""
 
 #: gaphor/templates/raaml-example.gaphor gaphor/templates/raaml.gaphor
+#, fuzzy
 msgid "Loss Definition"
-msgstr ""
+msgstr "Définition de la perte"
 
 #: gaphor/templates/raaml-example.gaphor gaphor/templates/raaml.gaphor
 msgid "FTA"
@@ -1893,11 +1885,11 @@ msgstr ""
 
 #: gaphor/templates/raaml-example.gaphor
 msgid "Loss of System"
-msgstr ""
+msgstr "Perte du système"
 
 #: gaphor/templates/raaml-example.gaphor
 msgid "Loss of Subsystem 1"
-msgstr ""
+msgstr "Perte du sous-système 1"
 
 #: gaphor/templates/raaml-example.gaphor
 msgid "Loss of Subsystem 2"
@@ -1909,15 +1901,17 @@ msgstr ""
 
 #: gaphor/templates/raaml-example.gaphor
 msgid "Loss of Life or Injury of People"
-msgstr ""
+msgstr "Perte de vie ou blessure de personnes"
 
 #: gaphor/templates/raaml-example.gaphor
+#, fuzzy
 msgid "Loss of Mission"
-msgstr ""
+msgstr "Perte de mission"
 
 #: gaphor/templates/raaml-example.gaphor
+#, fuzzy
 msgid "Loss of Customer Satisfaction"
-msgstr ""
+msgstr "Perte de satisfaction client"
 
 #: gaphor/templates/raaml-example.gaphor
 msgid "Hazard 2"
@@ -1933,19 +1927,19 @@ msgstr ""
 
 #: gaphor/templates/raaml-example.gaphor gaphor/templates/raaml.gaphor
 msgid "Operational Situations"
-msgstr ""
+msgstr "Situations opérationnelles"
 
 #: gaphor/templates/raaml-example.gaphor
 msgid "Operational Situation 1"
-msgstr ""
+msgstr "Situation opérationnelle 1"
 
 #: gaphor/templates/raaml-example.gaphor gaphor/templates/raaml.gaphor
 msgid "Context of UCAs"
-msgstr ""
+msgstr "Contexte des UCA"
 
 #: gaphor/templates/raaml-example.gaphor gaphor/templates/raaml.gaphor
 msgid "Situational Context"
-msgstr ""
+msgstr "Contexte situationnel"
 
 #: gaphor/templates/raaml-example.gaphor gaphor/templates/raaml.gaphor
 msgid "Situation Hierarchy"
@@ -1956,24 +1950,24 @@ msgid ""
 "The fault tree analysis shows which causes for the failure of a system "
 "have been considered."
 msgstr ""
+"L'analyse de l'arbre des défaillances montre quelles sont les causes de la "
+"défaillance d'un système qui ont été prises en compte."
 
 #: gaphor/templates/sysml-example.gaphor gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "1. Concept Level"
-msgstr "Implémentation"
+msgstr "1. Niveau conceptuel"
 
 #: gaphor/templates/sysml-example.gaphor gaphor/templates/sysml.gaphor
 msgid "2. Logical Level"
-msgstr ""
+msgstr "2. Niveau logique"
 
 #: gaphor/templates/sysml-example.gaphor gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "3. Technology Level"
-msgstr "Technologie"
+msgstr "3. Niveau technologique"
 
 #: gaphor/templates/sysml-example.gaphor
 msgid "User"
-msgstr ""
+msgstr "Utilisateur"
 
 #: gaphor/templates/sysml-example.gaphor
 #, fuzzy
