@@ -116,7 +116,7 @@ def deserialize(ser, lookup):
         yield value
 
 
-def copy_base(
+def copy_base_data(
     element: Base, blacklist: list[str] | None = None
 ) -> dict[str, tuple[str, str]]:
     data = {}
@@ -127,6 +127,52 @@ def copy_base(
 
     element.save(save_func)
     return data
+
+
+class BaseCopy(NamedTuple):
+    cls: type[Base]
+    id: Id
+    data: dict[str, tuple[str, str]]
+
+
+def copy_element(element: Base, blacklist: list[str] | None = None) -> BaseCopy:
+    data = copy_base_data(
+        element, blacklist + ["presentation"] if blacklist else ["presentation"]
+    )
+    return BaseCopy(cls=element.__class__, id=element.id, data=data)
+
+
+@copy.register
+def _copy_element(element: Base) -> Iterator[tuple[Id, BaseCopy]]:
+    yield element.id, copy_element(element)
+
+
+@copy.register
+def copy_diagram(element: Diagram) -> Iterator[tuple[Id, Opaque]]:
+    yield element.id, copy_element(element, blacklist=["ownedPresentation"])
+    for presentation in element.ownedPresentation:
+        if presentation.subject is element:
+            continue
+        yield from copy(presentation)
+
+
+def paste_element(
+    copy_data: BaseCopy,
+    diagram,
+    lookup,
+    filter: Callable[[str, str | int | Base], bool] | None = None,
+) -> Iterator[Base]:
+    cls, _id, data = copy_data
+    element = diagram.model.create(cls)
+    yield element
+    for name, ser in data.items():
+        for value in deserialize(ser, lookup):
+            if not filter or filter(name, value):
+                element.load(name, value)
+    element.postload()
+
+
+paste.register(BaseCopy, paste_element)
 
 
 class PresentationCopy(NamedTuple):
@@ -142,7 +188,7 @@ def copy_presentation(item: Presentation) -> PresentationCopy:
     parent = item.parent
     return PresentationCopy(
         cls=item.__class__,
-        data=copy_base(item, blacklist=["diagram", "parent", "children"]),
+        data=copy_base_data(item, blacklist=["diagram", "parent", "children"]),
         diagram=item.diagram.id,
         parent=parent.id if parent else None,
     )
