@@ -413,3 +413,19 @@ jobs:
           repository: flathub/org.gaphor.Gaphor
           event-type: version-update
           client-payload: '{ "version": "${{ needs.publish-to-pypi.outputs.version }}" }'
+
+  trigger-snapcraft-version-update:
+    name: Trigger version update on snapcrafters/gaphor
+    needs: [ publish-to-pypi ]
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Wait for PyPI to sync after version update
+        run: sleep 30s
+      - name: 🔄 Sync version with upstream
+        uses: snapcrafters/ci/sync-version@main
+        with:
+          branch: main
+          token: ${{ secrets.SNAPCRAFTERS_BOT_COMMIT }}
+          update-script: |
+            VERSION=${{ steps.install.outputs.version }}
+            sed -i 's/^\(version: \).*$/\1'"$VERSION"'/' snap/snapcraft.yaml
