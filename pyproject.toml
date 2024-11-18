@@ -169,23 +169,23 @@ sysml.script = """gaphor.codegen.coder:main(
     overridesfile='models/SysML.override',
     outfile='gaphor/SysML/sysml.py',
     supermodelfiles=[
-        ('Core', 'models/Core.gaphor'),
-        ('UML', 'models/UML.gaphor')]
+        ('UML', 'models/UML.gaphor'),
+        ('Core', 'models/Core.gaphor')]
     )"""
 raaml.script = """gaphor.codegen.coder:main(
     modelfile='models/RAAML.gaphor',
     outfile='gaphor/RAAML/raaml.py',
     supermodelfiles=[
-        ('Core', 'models/Core.gaphor'),
+        ('SysML', 'models/SysML.gaphor'),
         ('UML', 'models/UML.gaphor'),
-        ('SysML', 'models/SysML.gaphor')]
+        ('Core', 'models/Core.gaphor')]
     )"""
 c4model.script = """gaphor.codegen.coder:main(
     modelfile='models/C4Model.gaphor',
     outfile='gaphor/C4Model/c4model.py',
     supermodelfiles=[
-        ('Core', 'models/Core.gaphor'),
-        ('UML', 'models/UML.gaphor')]
+        ('UML', 'models/UML.gaphor'),
+        ('Core', 'models/Core.gaphor')]
     )"""
 lint = "pre-commit run --all-files"
 docs = { "cwd" = "docs", "shell" = "sphinx-build -W -b html . _build/html" }

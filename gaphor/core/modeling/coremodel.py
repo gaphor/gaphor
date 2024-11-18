@@ -15,6 +15,10 @@ from gaphor.core.modeling.properties import (
     relation_one,
 )
 
+
+# 1: override Base
+from gaphor.core.modeling.base import Base
+
 # 7: override Diagram
 from gaphor.core.modeling.diagram import Diagram
 
@@ -23,9 +27,6 @@ from gaphor.core.modeling.presentation import Presentation
 
 # 16: override StyleSheet
 from gaphor.core.modeling.stylesheet import StyleSheet
-
-# 1: override Base
-from gaphor.core.modeling.base import Base
 
 class PendingChange(Base):
     applied: _attribute[int] = _attribute("applied", int, default=0)

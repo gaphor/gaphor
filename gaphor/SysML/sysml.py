@@ -342,7 +342,6 @@ DirectedRelationshipPropertyPath.sourcePropertyPath = association("sourcePropert
 DirectedRelationshipPropertyPath.targetPropertyPath = association("targetPropertyPath", Property)
 DirectedRelationshipPropertyPath.targetContext = association("targetContext", Classifier, upper=1, opposite="targetDirectedRelationshipPropertyPath_")
 DirectedRelationshipPropertyPath.sourceContext = association("sourceContext", Classifier, upper=1)
-from gaphor.UML.uml import Element
 Element.owner.add(DirectedRelationshipPropertyPath.targetContext)  # type: ignore[attr-defined]
 Property.itemFlow = association("itemFlow", ItemFlow, upper=1, opposite="itemProperty")
 Element.owner.add(Property.itemFlow)  # type: ignore[attr-defined]
