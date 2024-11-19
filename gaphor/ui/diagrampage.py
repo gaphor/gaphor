@@ -10,13 +10,11 @@ from gaphas.tool.rubberband import RubberbandPainter, RubberbandState
 from gaphas.view import GtkView
 from gi.repository import Adw, Gdk, GdkPixbuf, Gio, GLib, Gtk
 
-from gaphor import UML
 from gaphor.core import event_handler, gettext
-from gaphor.core.modeling import Presentation, StyleSheet
+from gaphor.core.modeling import StyleSheet
 from gaphor.core.modeling.diagram import Diagram, StyledDiagram
 from gaphor.core.modeling.event import AttributeUpdated, ElementDeleted
 from gaphor.diagram.diagramtoolbox import get_tool_def, tooliter
-from gaphor.diagram.group import self_and_owners
 from gaphor.diagram.painter import DiagramTypePainter, ItemPainter
 from gaphor.diagram.tools import (
     apply_default_tool_set,
@@ -289,10 +287,6 @@ def delete_selected_items(view: GtkView, event_manager):
     with Transaction(event_manager):
         items = view.selection.selected_items
         for i in list(items):
-            assert isinstance(i, Presentation)
-            assert isinstance(i.diagram, UML.Diagram)
-            if i.subject and i.subject in self_and_owners(i.diagram):
-                del i.diagram.element
             i.unlink()
 
 

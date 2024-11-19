@@ -13,7 +13,7 @@ from gaphor.ui.diagrampage import (
     placement_icon_base,
 )
 from gaphor.UML import Comment
-from gaphor.UML.diagramitems import PackageItem
+from gaphor.UML.diagramitems import ClassItem, PackageItem
 from gaphor.UML.general.comment import CommentItem
 
 
@@ -71,12 +71,26 @@ def test_delete_selected_items(create, diagram, view, event_manager):
     assert not diagram.ownedPresentation
 
 
-def test_delete_selected_owner(create, diagram, view, event_manager):
+def test_delete_selected_owner(create, diagram, view, event_manager, sanitizer_service):
+    class_item = create(ClassItem, UML.Class)
+    diagram.element = class_item.subject
+    view.selection.select_items(class_item)
+
+    delete_selected_items(view, event_manager)
+
+    assert not diagram.ownedPresentation
+    assert diagram.element is None
+
+
+def test_not_delete_selected_package_owner(
+    create, diagram, view, event_manager, sanitizer_service
+):
     package_item = create(PackageItem, UML.Package)
+    package = package_item.subject
     diagram.element = package_item.subject
     view.selection.select_items(package_item)
 
     delete_selected_items(view, event_manager)
 
     assert not diagram.ownedPresentation
-    assert diagram.element is None
+    assert diagram.element is package
