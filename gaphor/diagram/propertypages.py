@@ -17,7 +17,6 @@ from gi.repository import GObject, Gtk
 from gaphor.core import Transaction
 from gaphor.core.modeling import Base, Diagram, Presentation
 from gaphor.i18n import gettext, translated_ui_string
-from gaphor.UML import Element
 
 
 class LabelValue(GObject.Object):
@@ -226,7 +225,6 @@ class LineStylePage(PropertyPageBase):
             self.item.request_update()
 
 
-@PropertyPages.register(Element)
 class NotePropertyPage(PropertyPageBase):
     """A facility to add a little note/remark."""
 
@@ -268,7 +266,7 @@ class NotePropertyPage(PropertyPageBase):
             )
 
 
-@PropertyPages.register(Element)
+@PropertyPages.register(Base)
 class InternalsPropertyPage(PropertyPageBase):
     """Show internals.
 
@@ -305,7 +303,7 @@ class InternalsPropertyPage(PropertyPageBase):
             textwrap.dedent(
                 f"""\
                 {gettext('Model Element')}:
-                  {gettext('qname')}: {'.'.join(map(str, element.qualifiedName))}
+                  {gettext('qname')}: {'.'.join(map(str, getattr(element, "qualifiedName", ["-"])))}
                   {gettext('class')}: {model_element_class(element)}
                   {gettext('id')}: {element.id}"""
             )

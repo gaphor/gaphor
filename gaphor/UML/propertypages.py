@@ -4,12 +4,16 @@ from gaphor import UML
 from gaphor.core import Transaction
 from gaphor.diagram.propertypages import (
     LabelValue,
+    NotePropertyPage,
     PropertyPageBase,
+    PropertyPages,
     new_resource_builder,
 )
 from gaphor.i18n import translated_ui_string
 
 new_builder = new_resource_builder("gaphor.UML")
+
+PropertyPages.register(UML.Element)(NotePropertyPage)
 
 
 class TypedElementPropertyPage(PropertyPageBase):
