@@ -167,16 +167,13 @@ class Base:
         self._unlink_lock += 1
 
         try:
-            self.inner_unlink(UnlinkEvent(self))
+            for prop in self.__properties__:
+                prop.unlink(self)
+
+            log.debug("unlinking %s", self)
+            self.handle(UnlinkEvent(self))
         finally:
             self._unlink_lock -= 1
-
-    def inner_unlink(self, unlink_event: UnlinkEvent):
-        for prop in self.__properties__:
-            prop.unlink(self)
-
-        log.debug("unlinking %s", self)
-        self.handle(unlink_event)
 
     def handle(self, event) -> None:
         """Propagate incoming events.
