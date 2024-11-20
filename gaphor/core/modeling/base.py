@@ -68,11 +68,11 @@ class Base:
         """Create an element. As optional parameters an id and model can be
         given.
 
-        Id is a serial number for the element. The default id is None and will
-        result in an automatic creation of an id. An existing id (such as an
-        int or string) can be provided as well.
+        Id is a serial number for the element. If no id is provided, one will automatically
+        be created. Id's should be unique within the model.
 
-        A model can be provided to refer to the model this element belongs to.
+        A model can be provided to refer to the model
+        (:class:~gaphor.core.modeling.ElementFactory) this element belongs to.
         """
         self._id: Id = id or generate_id()
         # The model this element belongs to.
@@ -82,7 +82,7 @@ class Base:
 
     @property
     def id(self) -> Id:
-        "An id (read-only), unique within the model."
+        """An id (read-only), unique within the model."""
         return self._id
 
     @property

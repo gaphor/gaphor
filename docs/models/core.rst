@@ -4,12 +4,15 @@ Modeling Language Core
 The Core modeling language is the the basis for any other language.
 
 The :obj:`~gaphor.core.modeling.Base` class acts as the root for all gaphor domain classes.
-All models derive from  :obj:`~gaphor.core.modeling.Element`, which supports ownership.
 :obj:`~gaphor.core.modeling.Diagram` and :obj:`~gaphor.core.modeling.Presentation` form the basis for everything you see
 in a diagram.
 
 All data models in Gaphor are generated from actual Gaphor model files.
 This allows us to provide you nice diagrams of Gaphor’s internal model.
+
+.. diagram:: Presentations
+   :model: core
+
 
 The ``Base`` Class
 ^^^^^^^^^^^^^^^^^^
@@ -61,22 +64,6 @@ The class ``Base`` is the core of Gaphor’s data model.
    .. automethod:: gaphor.core.modeling.Base.isKindOf
 
    .. automethod:: gaphor.core.modeling.Base.isTypeOf
-
-
-Element
--------
-
-.. diagram:: Element
-   :model: core
-
-
-Presentations
--------------
-
-Presentations are representations of model elements shown in a diagram.
-
-.. diagram:: Presentations
-   :model: core
 
 
 The ``Presentation`` class

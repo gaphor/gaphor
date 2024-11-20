@@ -28,6 +28,8 @@ def literal_eval(value: str):
 class Presentation(Matrices, Base, Generic[S]):
     """A special type of :obj:`Base` that can be displayed on a :obj:`Diagram`.
 
+    Presentation instances can only be owned by diagrams.
+
     Subtypes of ``Presentation`` should implement the :obj:`gaphas.item.Item` protocol.
     """
 

@@ -169,7 +169,7 @@ from gaphor.extensions.ipython import auto_layout
 
 temp_diagram = element_factory.create(Diagram)
 
-for name in ["Presentation", "Diagram", "Element"]:
+for name in ["Presentation", "Diagram", "Base"]:
     element = next(element_factory.select(
         lambda e: isinstance(e, UML.Class) and e.name == name
     ))
@@ -311,7 +311,7 @@ txts = ['req1', 'req2', 'bob the cat']
 outfile = "requirement_example.gaphor"
 with Transaction(event_manager) as ctx:
     my_diagram = element_factory.create(Diagram)
-    my_diagram.name=' my diagram'
+    my_diagram.name= 'my diagram'
     reqPackage = element_factory.create(UML.Package)
     reqPackage.name = "Requirements"
     drop(reqPackage, my_diagram, x=0, y=0)
@@ -337,7 +337,7 @@ interfaces = {'Interface1': ['signal1:type1', 'signal2:type1', 'signal3:type1'],
               'Interface2': ['signal4:type2', 'signal5:type2', 'signal6:type2']}
 outfile = 'interface_example.gaphor'
 with Transaction(event_manager) as ctx:
-    my_diagram = element_factory.create(Diagram)
+    my_diagram = element_factory.create(UML.Diagram)
     my_diagram.name=' my diagram'
     intPackage = element_factory.create(UML.Package)
     intPackage.name = "Interfaces"

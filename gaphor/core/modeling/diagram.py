@@ -258,7 +258,11 @@ P = TypeVar("P", bound=Presentation)
 
 
 class Diagram(Base):
-    """Diagrams may contain :obj:`Presentation` elements and can be owned by any element."""
+    """Diagrams may contain :obj:`Presentation` elements.
+
+    If diagrams need to be owned, the modeling language (e.g. UML)
+    should subclass ``Diagram`` and add ownership relationships and rules.
+    """
 
     name: attribute[str] = attribute("name", str)
     diagramType: attribute[str] = attribute("diagramType", str)
