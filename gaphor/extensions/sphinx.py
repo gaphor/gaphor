@@ -10,12 +10,11 @@ from docutils.parsers.rst import directives
 from docutils.parsers.rst.directives import images
 from sphinx.util import logging
 
-from gaphor.core.modeling import ElementFactory
+from gaphor.core.modeling import Diagram, ElementFactory
 from gaphor.diagram.export import save_pdf, save_svg
 from gaphor.i18n import gettext
 from gaphor.services.modelinglanguage import ModelingLanguageService
 from gaphor.storage import storage
-from gaphor.UML import Diagram
 
 log = logging.getLogger(__name__)
 
@@ -75,7 +74,7 @@ class DiagramDirective(sphinx.util.docutils.SphinxDirective):
 
         diagram = next(
             model.select(
-                lambda e: isinstance(e, Diagram) and ".".join(e.qualifiedName) == name
+                lambda e: isinstance(e, Diagram) and ".".join(e.qualifiedName) == name  # type: ignore[attr-defined]
             ),
             None,
         )
