@@ -26,7 +26,7 @@ env:
 
 jobs:
   lint:
-    name: Lint
+    name: 🕵️ Lint
     runs-on: ubuntu-latest
     timeout-minutes: 10
     if: "!contains(github.event.head_commit.message, 'skip ci')"
@@ -64,7 +64,7 @@ jobs:
           poetry check
 
   linux-wheel:
-    name: Linux (Wheel) with Python ${{ matrix.python_version }}
+    name:  🐧 Linux (Wheel) with Python ${{ matrix.python_version }}
     needs: lint
     runs-on: ubuntu-22.04
     container: fedora:39
@@ -129,7 +129,7 @@ jobs:
           path: dist/gaphor-${{ steps.install.outputs.version }}-py3-none-any.whl
 
   linux-flatpak-devel:
-    name: Linux (Devel Flatpak)
+    name: 📦 Linux (Devel Flatpak)
     needs: lint
     runs-on: ubuntu-22.04
     container:
@@ -165,7 +165,7 @@ jobs:
             arch: intel
           - runner: macos-15
             arch: arm
-    name: macOS
+    name: 🍏 macOS
     needs: lint
     runs-on: ${{ matrix.target.runner }}
     permissions:
@@ -220,7 +220,7 @@ jobs:
         run: echo "artifact-${{ matrix.target.arch }}=${{ steps.create.outputs.artifact }}" >> $GITHUB_OUTPUT
 
   check-macos-app:
-    name: Check macOS App
+    name: 🕵️ Check macOS App
     needs: macos
     strategy:
       matrix:
@@ -245,7 +245,7 @@ jobs:
           Gaphor.app/Contents/MacOS/gaphor self-test || Gaphor.app/Contents/MacOS/gaphor self-test
 
   windows:
-    name: Windows
+    name: 🪟 Windows
     needs: lint
     runs-on: windows-latest
     env:
@@ -304,7 +304,7 @@ jobs:
           base64_encoded_pfx: ${{ secrets.BASE64_ENCODED_PFX }}
 
   check-windows-installer:
-    name: Check Windows Installer
+    name: 🕵️ Check Windows Installer
     needs: windows
     runs-on: windows-latest
     timeout-minutes: 15
@@ -327,7 +327,7 @@ jobs:
         shell: cmd
 
   scan-for-viruses:
-    name: Virus Check
+    name: 🦠 Virus Check
     needs: windows
     runs-on: windows-latest
     continue-on-error: true
@@ -351,7 +351,7 @@ jobs:
             ${{ needs.windows.outputs.installer }}
 
   publish-to-pypi:
-    name: Publish to PyPI (release only)
+    name: 🧀 Publish to PyPI (release only)
     needs: [ linux-wheel, linux-flatpak-devel, check-macos-app, check-windows-installer ]
     runs-on: ubuntu-22.04
     permissions:
@@ -377,7 +377,7 @@ jobs:
         uses: pypa/gh-action-pypi-publish@15c56dba361d8335944d31a2ecd17d700fc7bcbc # release/v1
 
   trigger-website-version-update:
-    name: Trigger version update on gaphor/gaphor.github.io
+    name: ⏩ gaphor.org version update
     needs: [ publish-to-pypi ]
     runs-on: ubuntu-22.04
     steps:
@@ -395,7 +395,7 @@ jobs:
           client-payload: '{ "version": "${{ needs.publish-to-pypi.outputs.version }}" }'
 
   trigger-flatpak-version-update:
-    name: Trigger version update on flathub/org.gaphor.Gaphor
+    name: ⏩ Flathub version update
     needs: [ publish-to-pypi ]
     runs-on: ubuntu-22.04
     steps:
