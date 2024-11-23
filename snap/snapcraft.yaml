@@ -14,6 +14,8 @@ compression: lzo
 
 platforms:
   amd64:
+  arm64:
+  armhf:
 
 apps:
   gaphor:
