@@ -8,7 +8,6 @@ from gaphor.UML.general.image import ImageItem
 from gaphor.UML.general.imagepropertypage import ImagePropertyPage
 
 
-
 @pytest.mark.asyncio
 async def test_picture_property_select_opens_dialog(
     monkeypatch, diagram, event_manager
@@ -54,12 +53,16 @@ async def test_picture_property_select_valid_name(monkeypatch, diagram, event_ma
         nonlocal called
         called |= True
 
-    monkeypatch.setattr("gaphor.UML.general.imagepropertypage.error_dialog", error_dialog)
+    monkeypatch.setattr(
+        "gaphor.UML.general.imagepropertypage.error_dialog", error_dialog
+    )
 
     async def open_file_dialog(*args, **kwargs):
         return Path("data/logos/gaphor-24x24.png")
 
-    monkeypatch.setattr("gaphor.UML.general.imagepropertypage.open_file_dialog", open_file_dialog)
+    monkeypatch.setattr(
+        "gaphor.UML.general.imagepropertypage.open_file_dialog", open_file_dialog
+    )
 
     await property_page.open_file(None)
 
@@ -82,9 +85,7 @@ async def test_picture_property_select_keep_name(monkeypatch, diagram, event_man
         nonlocal called
         called |= True
 
-    monkeypatch.setattr(
-        "gaphor.UML.general.imagepropertypage.error_dialog", call
-    )
+    monkeypatch.setattr("gaphor.UML.general.imagepropertypage.error_dialog", call)
 
     async def open_file_dialog(*args, **kwargs):
         return Path("data/logos/gaphor-24x24.png")
