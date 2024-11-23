@@ -1,6 +1,5 @@
 """Defines a status window class for displaying the progress of a queue."""
 
-from gaphas.decorators import g_async
 from gi.repository import Gtk, Pango
 
 
@@ -50,14 +49,13 @@ class StatusWindow:
         self.window.set_resizable(False)
         self.window.set_decorated(False)
 
-    @g_async()
     def display(self):
         if not self.window:
             self.init_window()
 
         assert self.window
 
-        self.window.set_visible(True)
+        self.window.present()
 
     def progress(self, percentage: int):
         """Update progress percentage (0..100)."""
