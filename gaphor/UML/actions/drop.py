@@ -5,7 +5,7 @@ from gaphor.diagram.drop import (
     drop_relationship_on_diagram,
     grow_parent,
 )
-from gaphor.diagram.group import group, ungroup
+from gaphor.diagram.group import change_owner, ungroup
 from gaphor.diagram.presentation import connect
 from gaphor.diagram.support import get_diagram_item
 from gaphor.UML.actions.action import (
@@ -105,6 +105,6 @@ def drop_on_partition(item, new_parent, x, y):
         item.change_parent(None)
         old_parent.request_update()
 
-    if group(target_subject, item.subject):
+    if change_owner(target_subject, item.subject):
         grow_parent(new_parent, item)
         item.change_parent(new_parent)

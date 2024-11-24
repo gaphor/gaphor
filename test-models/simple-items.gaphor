@@ -11,7 +11,7 @@
 </reflist>
 </ownedDiagram>
 </UML:Package>
-<Core:Diagram id="DCE:658E851A-3A1D-11DC-8B61-000D93868322">
+<UML:Diagram id="DCE:658E851A-3A1D-11DC-8B61-000D93868322">
 <element>
 <ref refid="DCE:658E43CC-3A1D-11DC-8B61-000D93868322"/>
 </element>
@@ -25,7 +25,7 @@
 <ref refid="DCE:6719E9C4-3A1D-11DC-8B61-000D93868322"/>
 </reflist>
 </ownedPresentation>
-</Core:Diagram>
+</UML:Diagram>
 <general:Line id="DCE:6719E9C4-3A1D-11DC-8B61-000D93868322">
 <diagram>
 <ref refid="DCE:658E851A-3A1D-11DC-8B61-000D93868322"/>

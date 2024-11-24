@@ -13,7 +13,6 @@ def test_lookup_element():
     modeling_language = CoreModelingLanguage()
 
     assert modeling_language.lookup_element("Diagram")
-    assert modeling_language.lookup_element("Element")
     assert modeling_language.lookup_element("Presentation")
     assert modeling_language.lookup_element("StyleSheet")
     assert not modeling_language.lookup_element("NonExistent")

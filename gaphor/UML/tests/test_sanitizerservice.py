@@ -1,7 +1,6 @@
 import pytest
 
 from gaphor import UML
-from gaphor.core.modeling import Diagram
 from gaphor.diagram.tests.fixtures import connect
 from gaphor.UML.classes import ClassItem, GeneralizationItem, PackageItem
 from gaphor.UML.general import CommentItem, CommentLineItem
@@ -274,7 +273,7 @@ def test_extension_generalization_with_attribute_from_super_type(element_factory
 
 
 def test_diagram_redraw_on_owner_change(element_factory, monkeypatch):
-    diagram = element_factory.create(Diagram)
+    diagram = element_factory.create(UML.Diagram)
     diagram.create(CommentItem, subject=element_factory.create(UML.Comment))
 
     request_update_called = 0

@@ -13,7 +13,7 @@ from gaphas.segment import Segment
 import gaphor.UML.interactions
 from gaphor.abc import ActionProvider, Service
 from gaphor.action import action
-from gaphor.core.modeling import Diagram, Element, Presentation
+from gaphor.core.modeling import Base, Diagram, Presentation
 from gaphor.diagram.connectors import ItemTemporaryDisconnected
 from gaphor.diagram.presentation import (
     AttachedPresentation,
@@ -223,7 +223,7 @@ def diagram_as_pydot(diagram: Diagram, splines: str) -> pydot.Dot:
 
 
 @singledispatch
-def as_pydot(element: Element) -> Iterator[pydot.Common]:
+def as_pydot(element: Base) -> Iterator[pydot.Common]:
     return iter(())
 
 

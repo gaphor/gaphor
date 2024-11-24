@@ -184,8 +184,8 @@ class LifelineItem(Named, ElementPresentation[UML.Lifeline]):
             draw=draw_border,
         )
 
-        self.watch("subject.name")
-        self.watch("subject.appliedStereotype.classifier.name")
+        self.watch("subject[NamedElement].name")
+        self.watch("subject[Element].appliedStereotype.classifier.name")
         self.watch("subject[Lifeline].represents.name")
         self.watch("subject[Lifeline].represents.type.name")
         self.watch("subject[Lifeline].represents.typeValue")

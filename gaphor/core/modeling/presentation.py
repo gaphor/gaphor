@@ -10,7 +10,6 @@ from typing import TYPE_CHECKING, Generic, Self, TypeVar
 from gaphas.item import Matrices
 
 from gaphor.core.modeling.base import Base, Handler, Id, UnlinkEvent
-from gaphor.core.modeling.element import Element
 from gaphor.core.modeling.event import RevertibleEvent
 from gaphor.core.modeling.properties import relation_many, relation_one
 
@@ -19,7 +18,7 @@ if TYPE_CHECKING:
 
 log = logging.getLogger(__name__)
 
-S = TypeVar("S", bound=Element)
+S = TypeVar("S", bound=Base)
 
 
 def literal_eval(value: str):
@@ -28,6 +27,8 @@ def literal_eval(value: str):
 
 class Presentation(Matrices, Base, Generic[S]):
     """A special type of :obj:`Base` that can be displayed on a :obj:`Diagram`.
+
+    Presentation instances can only be owned by diagrams.
 
     Subtypes of ``Presentation`` should implement the :obj:`gaphas.item.Item` protocol.
     """

@@ -3,9 +3,9 @@ from __future__ import annotations
 from collections.abc import Iterator
 from typing import NamedTuple
 
-from gaphor.core.modeling.base import Id
+from gaphor.core.modeling import Id
 from gaphor.diagram.copypaste import (
-    ElementCopy,
+    BaseCopy,
     copy,
     copy_element,
     paste,
@@ -16,7 +16,7 @@ from gaphor.UML.uml import NamedElement, Package, Relationship, Type
 
 
 class NamedElementCopy(NamedTuple):
-    element_copy: ElementCopy
+    element_copy: BaseCopy
 
 
 def copy_named_element(

@@ -13,7 +13,6 @@ import pytest
 import gaphor.SysML.diagramitems
 import gaphor.UML.diagramitems
 from gaphor import UML
-from gaphor.core.modeling import Element
 from gaphor.core.modeling.properties import derived
 from gaphor.diagram.support import get_model_element
 
@@ -47,15 +46,17 @@ def all_presented_uml_and_sysml_elements():
     )
 
 
-def concrete_owner_property(class_: Element):
+def concrete_owner_property(class_: UML.Element):
     return (
-        p for p in class_.__properties__ if p in all_subset_properties(Element.owner)
+        p
+        for p in class_.__properties__
+        if p in all_subset_properties(UML.Element.owner)
     )
 
 
 def test_all_presented_uml_and_sysml_elements():
     elements = all_presented_uml_and_sysml_elements()
-    assert all(issubclass(c, Element) for c in elements)
+    assert all(issubclass(c, UML.Element) for c in elements)
 
 
 @pytest.mark.parametrize("class_", all_presented_uml_and_sysml_elements())

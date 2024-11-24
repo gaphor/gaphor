@@ -1,9 +1,9 @@
 """Containment connection adapters."""
 
 from gaphor import UML
-from gaphor.core.modeling import Diagram, self_and_owners
+from gaphor.core.modeling import Diagram
 from gaphor.diagram.connectors import BaseConnector, Connector
-from gaphor.diagram.group import group, ungroup
+from gaphor.diagram.group import change_owner, self_and_owners, ungroup
 from gaphor.diagram.presentation import ElementPresentation
 from gaphor.UML.classes.containment import ContainmentItem
 from gaphor.UML.recipes import owner_package
@@ -50,7 +50,7 @@ class ContainmentConnect(BaseConnector):
 
     def connect(self, handle, port) -> bool:
         container, contained = self.container_and_contained_element(handle)
-        return group(container, contained) if container and contained else False
+        return change_owner(container, contained) if container and contained else False
 
     def disconnect(self, handle):
         opposite = self.line.opposite(handle)
@@ -58,13 +58,21 @@ class ContainmentConnect(BaseConnector):
         hct = self.get_connected(handle)
 
         if hct and oct:
-            if oct.subject and hct.subject in oct.subject.ownedElement:
+            if (
+                isinstance(oct.subject, UML.Element)
+                and hct.subject in oct.subject.ownedElement
+            ):
                 assert isinstance(hct.subject, UML.Type | UML.Package)
                 ungroup(oct.subject, hct.subject)
+                assert isinstance(hct.diagram, UML.Diagram)
                 hct.subject.package = owner_package(hct.diagram.owner)
-            if hct.subject and oct.subject in hct.subject.ownedElement:
+            if (
+                isinstance(hct.subject, UML.Element)
+                and oct.subject in hct.subject.ownedElement
+            ):
                 assert isinstance(oct.subject, UML.Type | UML.Package)
                 ungroup(hct.subject, oct.subject)
+                assert isinstance(oct.diagram, UML.Diagram)
                 oct.subject.package = owner_package(oct.diagram.owner)
 
         super().disconnect(handle)

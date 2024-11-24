@@ -7,12 +7,12 @@ from gaphas.geometry import Rectangle
 from gaphas.item import NW, SE
 from generic.multidispatch import FunctionDispatcher, multidispatch
 
-from gaphor.core.modeling import Base, Diagram, Element, Presentation
-from gaphor.diagram.group import group, ungroup
+from gaphor.core.modeling import Base, Diagram, Presentation
+from gaphor.diagram.group import change_owner, ungroup
 from gaphor.diagram.presentation import ElementPresentation, connect
 from gaphor.diagram.support import get_diagram_item, get_diagram_item_metadata
 from gaphor.UML.recipes import owner_package
-from gaphor.UML.uml import ActivityEdge, Relationship
+from gaphor.UML.uml import ActivityEdge, Element, Relationship
 
 log = logging.getLogger(__name__)
 
@@ -71,12 +71,12 @@ def drop_on_presentation(
         item.change_parent(None)
         old_parent.request_update()
 
-    if new_parent and item.subject and group(new_parent.subject, item.subject):
+    if new_parent and item.subject and change_owner(new_parent.subject, item.subject):
         grow_parent(new_parent, item)
         item.change_parent(new_parent)
-    elif item.subject:
+    elif item.subject and isinstance(item.diagram, Element):
         diagram_parent = owner_package(item.diagram)
-        group(diagram_parent, item.subject)
+        change_owner(diagram_parent, item.subject)
 
 
 def grow_parent(parent: Presentation, item: Presentation) -> None:

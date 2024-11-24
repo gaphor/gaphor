@@ -26,9 +26,9 @@ class C4DependencyItem(Named, LinePresentation[c4model.Dependency]):
         self._handles[1].pos = (0, 0)
 
         self.watch("subject")
-        self.watch("subject.name")
+        self.watch("subject[UML:NamedElement].name")
         self.watch("subject[Dependency].technology")
-        self.watch("subject.appliedStereotype.classifier.name")
+        self.watch("subject[UML:Element].appliedStereotype.classifier.name")
 
         self.draw_head = draw_arrow_head
 

@@ -6,11 +6,13 @@ from gaphor.diagram.shapes import Box, CssNode, Text, draw_top_separator
 
 
 def stereotype_watches(presentation: ElementPresentation) -> None:
-    presentation.watch("subject.appliedStereotype", presentation.update_shapes).watch(
-        "subject.appliedStereotype.classifier.name"
-    ).watch("subject.appliedStereotype.slot", presentation.update_shapes).watch(
-        "subject.appliedStereotype.slot.definingFeature.name"
-    ).watch("subject.appliedStereotype.slot.value", presentation.update_shapes)
+    presentation.watch(
+        "subject[Element].appliedStereotype", presentation.update_shapes
+    ).watch("subject[Element].appliedStereotype.classifier.name").watch(
+        "subject[Element].appliedStereotype.slot", presentation.update_shapes
+    ).watch("subject[Element].appliedStereotype.slot.definingFeature.name").watch(
+        "subject[Element].appliedStereotype.slot.value", presentation.update_shapes
+    )
 
 
 def stereotype_compartments(subject):

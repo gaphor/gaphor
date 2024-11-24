@@ -35,7 +35,7 @@ class DiagramItem(ElementPresentation, Named):
 
         self.watch("subject[Core:Diagram].name")
         self.watch("subject[Core:Diagram].diagramType")
-        self.watch("subject.appliedStereotype.classifier.name")
+        self.watch("subject[UML:Element].appliedStereotype.classifier.name")
 
 
 def draw_diagram(box, context, bounding_box):

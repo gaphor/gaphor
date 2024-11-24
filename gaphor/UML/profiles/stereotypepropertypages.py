@@ -6,7 +6,7 @@ from gi.repository import Gdk, Gio, GLib, GObject, Gtk
 
 from gaphor import UML
 from gaphor.core.eventmanager import EventManager
-from gaphor.core.modeling import Element, Presentation
+from gaphor.core.modeling import Presentation
 from gaphor.diagram.propertypages import PropertyPageBase, PropertyPages
 from gaphor.i18n import gettext, translated_ui_string
 from gaphor.transaction import Transaction
@@ -14,7 +14,7 @@ from gaphor.UML.profiles.metaclasspropertypage import new_builder
 from gaphor.UML.propertypages import text_field_handlers
 
 
-@PropertyPages.register(Element)
+@PropertyPages.register(UML.Element)
 class StereotypePage(PropertyPageBase):
     order = 40
 
@@ -114,7 +114,7 @@ def stereotype_set_model_with_interaction(stereotype_list, model):
 class StereotypeView(GObject.Object):
     def __init__(
         self,
-        target: Element,
+        target: UML.Element,
         stereotype: UML.Stereotype,
         attr: UML.Property | None,
         event_manager: EventManager,
@@ -198,7 +198,7 @@ class StereotypeView(GObject.Object):
                 del self.instance.slot[slot]
 
 
-def stereotype_model(subject: Element, event_manager: EventManager):
+def stereotype_model(subject: UML.Element, event_manager: EventManager):
     model = Gio.ListStore.new(StereotypeView.__gtype__)
     stereotypes = UML.recipes.get_stereotypes(subject)
 

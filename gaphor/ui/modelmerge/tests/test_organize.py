@@ -5,7 +5,6 @@ import pytest
 from gaphor import UML
 from gaphor.core.modeling import (
     Diagram,
-    Element,
     ElementChange,
     RefChange,
     ValueChange,
@@ -170,7 +169,7 @@ def test_update_model_attribute(element_factory, modeling_language, change):
 def test_update_reference_without_name(element_factory, modeling_language):
     diagram = element_factory.create(Diagram)
     diagram.name = "my diagram"
-    element = element_factory.create(Element)
+    element = element_factory.create(UML.Element)
     vchange: RefChange = element_factory.create(RefChange)
     vchange.op = "add"
     vchange.element_id = diagram.id
@@ -192,7 +191,7 @@ def test_update_reference_without_name(element_factory, modeling_language):
 def test_update_reference_with_name(element_factory, modeling_language):
     diagram = element_factory.create(Diagram)
     diagram.name = "my diagram"
-    element = element_factory.create(Element)
+    element = element_factory.create(UML.Element)
     vchange: RefChange = element_factory.create(RefChange)
     vchange.op = "add"
     vchange.element_id = element.id
@@ -216,7 +215,7 @@ def test_update_reference_with_name(element_factory, modeling_language):
 def test_remove_reference_with_name(element_factory, modeling_language):
     diagram = element_factory.create(Diagram)
     diagram.name = "my diagram"
-    element = element_factory.create(Element)
+    element = element_factory.create(UML.Element)
     vchange: RefChange = element_factory.create(RefChange)
     vchange.op = "remove"
     vchange.element_id = element.id

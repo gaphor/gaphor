@@ -20,7 +20,7 @@ class StateMachineItem(Classified, ElementPresentation[UML.StateMachine]):
         self.watch("children", self.update_shapes)
         self.watch("show_stereotypes", self.update_shapes)
         self.watch("show_regions", self.update_shapes)
-        self.watch("subject.name")
+        self.watch("subject[NamedElement].name")
         self.watch("subject[StateMachine].region.name")
         self.watch("subject[StateMachine].region", self.update_shapes)
         stereotype_watches(self)

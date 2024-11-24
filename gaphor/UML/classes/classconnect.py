@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from gaphor import UML
-from gaphor.core.modeling import Element, Presentation
+from gaphor.core.modeling import Presentation
 from gaphor.diagram.connectors import (
     Connector,
     DirectionalRelationshipConnect,
@@ -55,7 +55,9 @@ class AssociationConnect(RelationshipConnect):
 
     line: AssociationItem
 
-    def __init__(self, element: Presentation[Element], line: AssociationItem) -> None:
+    def __init__(
+        self, element: Presentation[UML.Element], line: AssociationItem
+    ) -> None:
         super().__init__(element, line)
         self._navigabilities = (
             list(line.subject.memberEnd[:].navigability) if line.subject else []
@@ -131,6 +133,7 @@ class AssociationConnect(RelationshipConnect):
             line.preferred_tail_navigability = "none"
 
         assert isinstance(relation, UML.Association)
+        assert isinstance(self.diagram, UML.Diagram)
 
         relation.package = owner_package(self.diagram.owner)
 

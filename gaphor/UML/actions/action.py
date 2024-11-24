@@ -20,8 +20,8 @@ class ActionItem(Named, ElementPresentation):
             draw=draw_border,
         )
 
-        self.watch("subject.name")
-        self.watch("subject.appliedStereotype.classifier.name")
+        self.watch("subject[NamedElement].name")
+        self.watch("subject[Element].appliedStereotype.classifier.name")
 
 
 @represents(UML.ValueSpecificationAction)
@@ -97,8 +97,8 @@ class SendSignalActionItem(Named, ElementPresentation):
             draw=self.draw_border,
         )
 
-        self.watch("subject.name")
-        self.watch("subject.appliedStereotype.classifier.name")
+        self.watch("subject[NamedElement].name")
+        self.watch("subject[Element].appliedStereotype.classifier.name")
 
     def draw_border(self, box, context, bounding_box):
         cr = context.cairo
@@ -125,8 +125,8 @@ class AcceptEventActionItem(Named, ElementPresentation):
             draw=self.draw_border,
         )
 
-        self.watch("subject.name")
-        self.watch("subject.appliedStereotype.classifier.name")
+        self.watch("subject[NamedElement].name")
+        self.watch("subject[Element].appliedStereotype.classifier.name")
 
     def draw_border(self, box, context, bounding_box):
         cr = context.cairo

@@ -215,8 +215,9 @@ def test_simple_attribute(uml_metamodel: ElementFactory):
 def test_order_classes(uml_metamodel):
     classes = list(order_classes(uml_metamodel.select(UML.Class)))
 
-    assert classes[0].name == "Element"
-    assert classes[1].name == "NamedElement"
+    assert classes[0].name == "Base"
+    assert classes[1].name == "Element"
+    assert classes[2].name == "NamedElement"
 
 
 def test_coder_write_association(navigable_association: UML.Association):

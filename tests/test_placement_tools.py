@@ -4,7 +4,6 @@ from gi.repository import Gtk
 from gaphor import UML
 from gaphor.C4Model.toolbox import c4model_toolbox_actions
 from gaphor.core.eventmanager import EventManager
-from gaphor.core.modeling import Diagram
 from gaphor.core.modeling.elementfactory import ElementFactory
 from gaphor.diagram.diagramtoolbox import get_tool_def
 from gaphor.diagram.tools.placement import PlacementState, on_drag_begin
@@ -34,7 +33,7 @@ def properties():
 
 @pytest.fixture
 def tab(event_manager, element_factory):
-    diagram = element_factory.create(Diagram)
+    diagram = element_factory.create(UML.Diagram)
     tab = DiagramPage(diagram, event_manager, UMLModelingLanguage())
 
     window = Gtk.Window.new()

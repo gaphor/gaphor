@@ -46,8 +46,8 @@ from gaphor.application import Session
 from gaphor.C4Model.toolbox import c4
 from gaphor.core import Transaction
 from gaphor.core.modeling import (
+    Base,
     Diagram,
-    Element,
     ElementFactory,
     Presentation,
     StyleSheet,
@@ -309,7 +309,7 @@ def get_connected(diagram: Diagram, handle: Handle) -> Presentation | None:
     return None
 
 
-def ordered(elements: Iterable[Element]) -> list[Element]:
+def ordered(elements: Iterable[Base]) -> list[Base]:
     return sorted(elements, key=lambda e: e.id)
 
 

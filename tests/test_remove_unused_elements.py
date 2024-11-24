@@ -3,7 +3,6 @@ import pytest
 from gaphor import UML
 from gaphor.application import Session
 from gaphor.core import Transaction
-from gaphor.core.modeling import Diagram
 from gaphor.diagram.tests.fixtures import connect
 from gaphor.UML import diagramitems
 
@@ -34,7 +33,7 @@ def properties(session):
 @pytest.fixture
 def diagram(event_manager, element_factory):
     with Transaction(event_manager):
-        return element_factory.create(Diagram)
+        return element_factory.create(UML.Diagram)
 
 
 @pytest.fixture

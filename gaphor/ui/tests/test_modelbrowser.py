@@ -137,7 +137,7 @@ def test_element_name_changed(model_browser, element_factory):
 
 
 def test_element_weight_changed(model_browser, element_factory):
-    diagram = element_factory.create(Diagram)
+    diagram = element_factory.create(UML.Diagram)
     tree_item = model_browser.model.tree_item_for_element(diagram)
     weight, style = tree_item.attributes.get_attributes()
 
@@ -379,11 +379,11 @@ def test_drag_and_drop_parent_on_child(model_browser, element_factory, event_man
     root = element_factory.create(UML.Package)
     parent = element_factory.create(UML.Package)
     parent.package = root
-    parent_diagram = element_factory.create(Diagram)
+    parent_diagram = element_factory.create(UML.Diagram)
     parent_diagram.element = parent
     child = element_factory.create(UML.Package)
     child.package = parent
-    child_diagram = element_factory.create(Diagram)
+    child_diagram = element_factory.create(UML.Diagram)
     child_diagram.element = child
 
     model_browser.select_element(parent)

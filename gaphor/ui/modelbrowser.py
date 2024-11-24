@@ -12,7 +12,6 @@ from gaphor.core.modeling import (
     DerivedDeleted,
     DerivedSet,
     Diagram,
-    Element,
     ElementCreated,
     ElementDeleted,
     ElementUpdated,
@@ -270,7 +269,7 @@ class ModelBrowser(UIComponent, ActionProvider):
     @event_handler(DerivedAdded, DerivedDeleted)
     def on_owned_element_changed(self, event):
         """Ensure we update the node once owned elements change."""
-        if event.property in (Element.ownedElement, UML.Namespace.member):
+        if event.property in (UML.Element.ownedElement, UML.Namespace.member):
             self.model.notify_child_model(event.element)
 
     @event_handler(DerivedSet)
@@ -278,7 +277,7 @@ class ModelBrowser(UIComponent, ActionProvider):
         # Should check on ownedElement as well, since it may not have been updated
         # before this thing triggers
         if (
-            event.property in (Element.owner, UML.NamedElement.memberNamespace)
+            event.property in (UML.Element.owner, UML.NamedElement.memberNamespace)
         ) and owner(event.element):
             element = event.element
             self.model.remove_element(element)
@@ -588,6 +587,8 @@ def list_item_drop_drop(
     dest_element = tree_item.element
     if y < 4:
         dest_element = owner(dest_element)
+        if dest_element is Root:
+            dest_element = None
 
     with Transaction(event_manager) as tx:
         # This view is concerned with owner relationships.

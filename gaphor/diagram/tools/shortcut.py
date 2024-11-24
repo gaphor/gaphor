@@ -1,8 +1,10 @@
 from gaphas.view import GtkView
 from gi.repository import Gdk, Gtk
 
+from gaphor import UML
 from gaphor.core import Transaction
-from gaphor.core.modeling import Presentation, self_and_owners
+from gaphor.core.modeling import Presentation
+from gaphor.diagram.group import self_and_owners
 
 
 def shortcut_tool(event_manager):
@@ -29,6 +31,7 @@ def delete_selected_items(view: GtkView, event_manager):
         items = view.selection.selected_items
         for i in list(items):
             assert isinstance(i, Presentation)
+            assert isinstance(i.diagram, UML.Diagram)
             if i.subject and i.subject in self_and_owners(i.diagram):
                 del i.diagram.element
             i.unlink()

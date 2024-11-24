@@ -56,7 +56,7 @@ def test_copy_link(copy_service, element_factory):
 
 
 def test_copy_full_with_owned_element(copy_service, element_factory):
-    diagram = element_factory.create(Diagram)
+    diagram = element_factory.create(UML.Diagram)
     package_item = diagram.create(
         PackageItem, subject=element_factory.create(UML.Package)
     )

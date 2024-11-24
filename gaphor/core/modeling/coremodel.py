@@ -16,19 +16,19 @@ from gaphor.core.modeling.properties import (
 )
 
 
-# 1: override Element
-from gaphor.core.modeling.element import Element
+# 1: override Base
+from gaphor.core.modeling.base import Base
 
-# 4: override Diagram
+# 7: override Diagram
 from gaphor.core.modeling.diagram import Diagram
 
-# 7: override Presentation
+# 10: override Presentation
 from gaphor.core.modeling.presentation import Presentation
 
-# 13: override StyleSheet
+# 16: override StyleSheet
 from gaphor.core.modeling.stylesheet import StyleSheet
 
-class PendingChange(Element):
+class PendingChange(Base):
     applied: _attribute[int] = _attribute("applied", int, default=0)
     element_id: _attribute[str] = _attribute("element_id", str)
     op = _enumeration("op", ("add", "remove", "update"), "add")
@@ -51,15 +51,9 @@ class RefChange(PendingChange):
 
 
 
-Element.ownedElement = derivedunion("ownedElement", Element)
-Element.owner = derivedunion("owner", Element, upper=1)
-Element.presentation = association("presentation", Presentation, composite=True, opposite="subject")
-Element.ownedDiagram = association("ownedDiagram", Diagram, composite=True, opposite="element")
-Element.ownedElement.add(Element.ownedDiagram)  # type: ignore[attr-defined]
+Base.presentation = association("presentation", Presentation, composite=True, opposite="subject")
 Diagram.ownedPresentation = association("ownedPresentation", Presentation, composite=True, opposite="diagram")
-Diagram.element = association("element", Element, upper=1, opposite="ownedDiagram")
-Element.owner.add(Diagram.element)  # type: ignore[attr-defined]
 Presentation.parent = association("parent", Presentation, upper=1, opposite="children")
 Presentation.children = association("children", Presentation, composite=True, opposite="parent")
 Presentation.diagram = association("diagram", Diagram, upper=1, opposite="ownedPresentation")
-Presentation.subject = association("subject", Element, upper=1, opposite="presentation")
+Presentation.subject = association("subject", Base, upper=1, opposite="presentation")

@@ -15,6 +15,9 @@ header
 from typing import Callable
 
 %%
+override Element.qualifiedName: property
+# defined in umloverrides.py
+%%
 override MultiplicityElement.lower(MultiplicityElement.lowerValue): _attribute[str]
 MultiplicityElement.lower = MultiplicityElement.lowerValue
 %%

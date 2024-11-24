@@ -8,7 +8,6 @@ from gi.repository import Gio, GObject
 from gaphor.core.changeset.apply import applicable
 from gaphor.core.modeling import (
     Diagram,
-    Element,
     ElementChange,
     PendingChange,
     Presentation,
@@ -16,6 +15,7 @@ from gaphor.core.modeling import (
     ValueChange,
 )
 from gaphor.i18n import gettext
+from gaphor.UML import Element
 
 
 class Node(GObject.Object):

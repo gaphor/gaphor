@@ -1,12 +1,11 @@
 import pytest
 
 from gaphor.application import Session
-from gaphor.core.modeling import Diagram
 from gaphor.diagram.event import DiagramOpened
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.event import ElementOpened
 from gaphor.ui.tests.fixtures import iterate_until
-from gaphor.UML import Comment
+from gaphor.UML import Comment, Diagram
 
 
 @pytest.fixture

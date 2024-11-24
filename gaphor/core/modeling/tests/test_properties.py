@@ -3,7 +3,7 @@ from __future__ import annotations
 import pytest
 
 from gaphor.core import event_handler
-from gaphor.core.modeling import Element
+from gaphor.core.modeling import Base
 from gaphor.core.modeling.collection import collection
 from gaphor.core.modeling.event import AssociationUpdated
 from gaphor.core.modeling.properties import (
@@ -21,10 +21,10 @@ def test_association_1_x():
     #
     # 1:-
     #
-    class A(Element):
+    class A(Base):
         one: relation_one[B | None]
 
-    class B(Element):
+    class B(Base):
         two: relation_one[A]
 
     A.one = association("one", B, 0, 1, opposite="two")
@@ -49,10 +49,10 @@ def test_association_1_x():
 
 
 def test_association_n_1():
-    class A(Element):
+    class A(Base):
         one: relation_many[B]
 
-    class B(Element):
+    class B(Base):
         two: relation_one[A]
 
     A.one = association("one", B, 0, "*", opposite="two")
@@ -66,10 +66,10 @@ def test_association_n_1():
 
 
 def test_reassign_association_n_1():
-    class A(Element):
+    class A(Base):
         many: relation_many[B]
 
-    class B(Element):
+    class B(Base):
         one: relation_one[A]
 
     A.many = association("many", B, 0, "*", opposite="one")
@@ -85,10 +85,10 @@ def test_reassign_association_n_1():
 
 
 def test_association_load_does_not_steal_references():
-    class A(Element):
+    class A(Base):
         many: relation_many[B]
 
-    class B(Element):
+    class B(Base):
         one: relation_one[A]
 
     A.many = association("many", B, 0, "*", opposite="one")
@@ -106,13 +106,13 @@ def test_association_load_does_not_steal_references():
 
 
 def test_association_1_1():
-    class A(Element):
+    class A(Base):
         one: relation_one[B]
 
-    class B(Element):
+    class B(Base):
         two: relation_one[A]
 
-    class C(Element):
+    class C(Base):
         pass
 
     A.one = association("one", B, 0, 1, opposite="two")
@@ -146,13 +146,13 @@ def test_association_1_n():
     #
     # 1:n
     #
-    class A(Element):
+    class A(Base):
         one: relation_one[B]
 
-    class B(Element):
+    class B(Base):
         two: relation_many[A]
 
-    class C(Element):
+    class C(Base):
         pass
 
     A.one = association("one", B, lower=0, upper=1, opposite="two")
@@ -213,13 +213,13 @@ def test_association_1_n():
 def test_association_n_n():
     """Test association n:n."""
 
-    class A(Element):
+    class A(Base):
         one: relation_many[B]
 
-    class B(Element):
+    class B(Base):
         two: relation_many[A]
 
-    class C(Element):
+    class C(Base):
         pass
 
     A.one = association("one", B, 0, "*", opposite="two")
@@ -269,13 +269,13 @@ def test_association_n_n():
 
 
 def test_association_swap():
-    class A(Element):
+    class A(Base):
         one: relation_many[B]
 
-    class B(Element):
+    class B(Base):
         pass
 
-    class C(Element):
+    class C(Base):
         pass
 
     A.one = association("one", B, 0, "*")
@@ -304,13 +304,13 @@ def test_association_swap():
 
 
 def test_association_unlink_1():
-    class A(Element):
+    class A(Base):
         one: relation_many[B]
 
-    class B(Element):
+    class B(Base):
         pass
 
-    class C(Element):
+    class C(Base):
         pass
 
     A.one = association("one", B, 0, "*")
@@ -339,10 +339,10 @@ def test_association_unlink_2():
     #
     # unlink
     #
-    class A(Element):
+    class A(Base):
         one: relation_many[B]
 
-    class B(Element):
+    class B(Base):
         two: relation_many[A]
 
     A.one = association("one", B, 0, "*", opposite="two")
@@ -373,10 +373,10 @@ def test_association_unlink_2():
 
 
 def test_association_subsettable_0_n(element_factory):
-    class A(Element):
+    class A(Base):
         pass
 
-    class C(Element):
+    class C(Base):
         original: relation_many[A]
         subset: relation_many[A]
 
@@ -445,10 +445,10 @@ def test_association_subsettable_0_n(element_factory):
 
 
 def test_association_subsettable_0_1(element_factory):
-    class A(Element):
+    class A(Base):
         pass
 
-    class C(Element):
+    class C(Base):
         original: relation_many[A]
         subset: relation_many[A]
 
@@ -511,10 +511,10 @@ def test_association_subsettable_0_1(element_factory):
 
 
 def test_association_subsettable_updates_derived_union(element_factory):
-    class A(Element):
+    class A(Base):
         pass
 
-    class C(Element):
+    class C(Base):
         original: relation_many[A]
         subset: relation_many[A]
         union: relation_many[A]
@@ -536,10 +536,10 @@ def test_association_subsettable_updates_derived_union(element_factory):
 
 
 # def test_association_subsettable_add_fails_when_subset_multiplicity_exceeds_superset_multiplicity(element_factory):
-#     class A(Element):
+#     class A(Base):
 #         pass
 
-#     class C(Element):
+#     class C(Base):
 #         original: relation_many[A]
 #         subset: relation_many[A]
 
@@ -552,7 +552,7 @@ def test_association_subsettable_updates_derived_union(element_factory):
 
 
 def test_can_not_set_association_to_owner(element_factory, event_manager):
-    class A(Element):
+    class A(Base):
         pass
 
     A.a = association("a", A, upper=1)
@@ -564,7 +564,7 @@ def test_can_not_set_association_to_owner(element_factory, event_manager):
 
 
 def test_attributes():
-    class A(Element):
+    class A(Base):
         a: attribute[str]
 
     A.a = attribute("a", str, "default")
@@ -594,7 +594,7 @@ def test_attributes():
     ],
 )
 def test_int_and_boolean_attributes(input, expected):
-    class A(Element):
+    class A(Base):
         a = attribute("a", int, 0)
 
     a = A()
@@ -604,7 +604,7 @@ def test_int_and_boolean_attributes(input, expected):
 
 
 def test_attributes_loading_failure():
-    class A(Element):
+    class A(Base):
         a: attribute[int]
 
     A.a = attribute("a", int, 0)
@@ -616,7 +616,7 @@ def test_attributes_loading_failure():
 
 
 def test_enumerations():
-    class A(Element):
+    class A(Base):
         a: enumeration
 
     A.a = enumeration("a", ("one", "two", "three"), "one")
@@ -637,7 +637,7 @@ def test_enumerations():
 
 
 def test_derived():
-    class A(Element):
+    class A(Base):
         a: relation_many[A]
 
     A.a = derived("a", str, 0, "*", lambda self: ["a", "b", "c"])
@@ -649,10 +649,10 @@ def test_derived():
 
 
 def test_derived_single_properties():
-    class A(Element):
+    class A(Base):
         pass
 
-    class E(Element):
+    class E(Base):
         notified = attribute("notified", int)
         a: relation_one[A]
         u: relation_one[A]
@@ -672,10 +672,10 @@ def test_derived_single_properties():
 
 
 def test_derived_multi_properties():
-    class A(Element):
+    class A(Base):
         pass
 
-    class E(Element):
+    class E(Base):
         notified = attribute("notified", int)
         a: relation_one[A]
         b: relation_many[A]
@@ -699,7 +699,7 @@ def test_derived_multi_properties():
 
 
 def test_derivedunion():
-    class A(Element):
+    class A(Base):
         a: relation_many[A]
         b: relation_one[A]
         u: relation_many[A]
@@ -732,10 +732,10 @@ def test_derivedunion():
 
 
 def test_derivedunion_notify_for_single_derived_property():
-    class A(Element):
+    class A(Base):
         pass
 
-    class E(Element):
+    class E(Base):
         notified = False
 
         a: relation_many[A]
@@ -755,10 +755,10 @@ def test_derivedunion_notify_for_single_derived_property():
 
 
 def test_derivedunion_notify_for_multiple_derived_properties():
-    class A(Element):
+    class A(Base):
         pass
 
-    class E(Element):
+    class E(Base):
         notified = False
 
         a: relation_many[A]
@@ -780,10 +780,10 @@ def test_derivedunion_notify_for_multiple_derived_properties():
 
 
 def test_derivedunion_notify_for_single_and_multi_derived_properties():
-    class A(Element):
+    class A(Base):
         pass
 
-    class E(Element):
+    class E(Base):
         a: relation_one[A]
         b: relation_many[A]
         u: relation_many[A]
@@ -801,7 +801,7 @@ def test_derivedunion_notify_for_single_and_multi_derived_properties():
 
 
 def test_derivedunion_listmixins():
-    class A(Element):
+    class A(Base):
         a: relation_many[A]
         b: relation_many[A]
         u: relation_many[A]
@@ -825,7 +825,7 @@ def test_derivedunion_listmixins():
 
 
 def test_composite():
-    class A(Element):
+    class A(Base):
         is_unlinked = False
         name = attribute("name", str)
         comp: relation_many[A]
@@ -833,7 +833,7 @@ def test_composite():
 
         def unlink(self):
             self.is_unlinked = True
-            Element.unlink(self)
+            Base.unlink(self)
 
     A.comp = association("comp", A, composite=True, opposite="other")
     A.other = association("other", A, composite=False, opposite="comp")

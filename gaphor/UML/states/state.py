@@ -18,8 +18,8 @@ class StateItem(ElementPresentation[UML.State], Named):
     def __init__(self, diagram, id=None):
         super().__init__(diagram, id, width=50, height=30)
         self._region_heights = []
-        self.watch("subject.name")
-        self.watch("subject.appliedStereotype.classifier.name")
+        self.watch("subject[NamedElement].name")
+        self.watch("subject[Element].appliedStereotype.classifier.name")
         self.watch("subject[State].entry.name", self.update_shapes)
         self.watch("subject[State].exit.name", self.update_shapes)
         self.watch("subject[State].doActivity.name", self.update_shapes)

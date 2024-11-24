@@ -21,8 +21,8 @@ class PartitionItem(ElementPresentation[UML.ActivityPartition]):
         super().__init__(diagram, id)
         self.min_height = 300
         self._loading = False
-        self.watch("subject.name")
-        self.watch("subject.appliedStereotype.classifier.name")
+        self.watch("subject[NamedElement].name")
+        self.watch("subject[Element].appliedStereotype.classifier.name")
         self.watch("partition", self.update_shapes)
         self.watch("partition.name")
         self.watch("partition[ActivityPartition].represents.name")

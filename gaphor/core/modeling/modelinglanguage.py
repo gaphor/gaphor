@@ -49,6 +49,17 @@ class MockModelingLanguage(ModelingLanguage):
         return ()
 
     def lookup_element(self, name, ns=None):
+        if ns:
+            # This is sort of hackish.
+            # It's better to lookup modeling languages from entry points
+            for m in self._modeling_languages:
+                if m.__class__.__name__.lower().startswith(ns.lower()):
+                    return m.lookup_element(name, ns)
+
+            raise ValueError(
+                f"Invalid namespace '{ns}', should be one of {self._modeling_languages}"
+            )
+
         return next(
             filter(
                 None,

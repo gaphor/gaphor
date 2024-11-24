@@ -11,8 +11,9 @@ from typing import (
     TypeVar,
 )
 
-from gaphor.core.modeling import Diagram, Element, Presentation
+from gaphor.core.modeling import Base, Presentation
 from gaphor.diagram.group import group
+from gaphor.UML.uml import Diagram
 
 ItemFactory = Callable[[Diagram, Presentation | None], Presentation]
 P = TypeVar("P", bound=Presentation, covariant=True)
@@ -46,7 +47,7 @@ class DiagramType:
         self.name = name
         self.sections = sections
 
-    def allowed(self, element: type[Element]) -> bool:
+    def allowed(self, element: type[Base]) -> bool:
         return True
 
     def create(self, element_factory, element):
@@ -64,8 +65,8 @@ DiagramTypes = Sequence[DiagramType]
 class ElementCreateInfo(NamedTuple):
     id: str
     name: str
-    element_type: type[Element]
-    allowed_owning_elements: Collection[type[Element]]
+    element_type: type[Base]
+    allowed_owning_elements: Collection[type[Base]]
 
 
 def tooliter(toolbox_actions: Sequence[tuple[str, Sequence[ToolDef]]]):
@@ -82,7 +83,7 @@ def get_tool_def(modeling_language, tool_name):
 
 def new_item_factory(
     item_class: type[Presentation],
-    subject_class: type[Element] | None = None,
+    subject_class: type[Base] | None = None,
     config_func: ConfigFuncType | None = None,
 ):
     """``config_func`` may be a function accepting the newly created item."""
