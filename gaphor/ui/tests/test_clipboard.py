@@ -1,20 +1,9 @@
 import pytest
 
 from gaphor import UML
-from gaphor.diagram.painter import ItemPainter
 from gaphor.ui.clipboard import Clipboard
-from gaphor.ui.diagramview import DiagramView
 from gaphor.UML.classes import PackageItem
 from gaphor.UML.general import CommentItem
-
-
-@pytest.fixture
-def view(diagram):
-    view = DiagramView(model=diagram)
-    item_painter = ItemPainter(view.selection)
-    view.painter = item_painter
-    view.bounding_box_painter = item_painter
-    return view
 
 
 class MockSystemClipboard:

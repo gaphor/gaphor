@@ -13,10 +13,10 @@ from gi.repository import Adw, Gdk, GdkPixbuf, Gio, GLib, Gtk
 from gaphor import UML
 from gaphor.core import event_handler, gettext
 from gaphor.core.modeling import Presentation, StyleSheet
-from gaphor.diagram.group import self_and_owners
 from gaphor.core.modeling.diagram import Diagram, StyledDiagram
 from gaphor.core.modeling.event import AttributeUpdated, ElementDeleted
 from gaphor.diagram.diagramtoolbox import get_tool_def, tooliter
+from gaphor.diagram.group import self_and_owners
 from gaphor.diagram.painter import DiagramTypePainter, ItemPainter
 from gaphor.diagram.tools import (
     apply_default_tool_set,
