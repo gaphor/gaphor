@@ -50,7 +50,7 @@ msgstr ""
 
 #: ../../CHANGELOG.md:6
 msgid "Fix header bars for various windows"
-msgstr "Correction : barres d'en-tête pour diverses fenêtres"
+msgstr "Correction des barres d'en-tête pour diverses fenêtres"
 
 #: ../../CHANGELOG.md:7
 msgid "Various smaller UX improvements: greeter, diagram background, empty parameters"
@@ -68,7 +68,7 @@ msgstr "Atténuation des fausses alertes de virus sous Windows"
 
 #: ../../CHANGELOG.md:10
 msgid "Fix issue when undoing fails"
-msgstr "Correction : problème lorsque l'annulation échoue"
+msgstr "Correction d'un problème lorsque l'annulation échoue"
 
 #: ../../CHANGELOG.md:12
 msgid "2.23.2"
@@ -84,7 +84,7 @@ msgstr ""
 #: ../../CHANGELOG.md:15
 msgid "Fix file filters for export image dialog"
 msgstr ""
-"Correction : filtres de fichiers pour la boîte de dialogue d'exportation "
+"Correction des filtres de fichiers pour la boîte de dialogue d'exportation "
 "d'images"
 
 #: ../../CHANGELOG.md:16
@@ -101,11 +101,11 @@ msgstr "2.23.1"
 
 #: ../../CHANGELOG.md:21
 msgid "Fix Activity Swimlanes aren't visible"
-msgstr "Correction : couloirs d'activité qui ne sont pas visibles"
+msgstr "Correction des couloirs d'activité qui ne sont pas visibles"
 
 #: ../../CHANGELOG.md:22
 msgid "Fix CSS attribute rules"
-msgstr "Correction : règles d'attributs CSS"
+msgstr "Fixer les règles d'attributs CSS"
 
 #: ../../CHANGELOG.md:23
 msgid "Remove duplicate stereotypes at root of model browser"
@@ -174,29 +174,30 @@ msgstr "macOS et Windows : Appliquer une ombre de fenêtre personnalisée"
 #: ../../CHANGELOG.md:39
 msgid "Fix Gaphor should work if GSettings schema is not available"
 msgstr ""
-"Correction : Gaphor devrait fonctionner si le schéma GSettings n'est pas "
+"Résolu : Gaphor devrait fonctionner si le schéma GSettings n'est pas "
 "disponible"
 
 #: ../../CHANGELOG.md:40
 msgid "Fix values showing under part compartment in SysML Block elements"
 msgstr ""
-"Correction : valeurs affichées sous le compartiment de la pièce dans les "
+"Correction des valeurs affichées sous le compartiment de la pièce dans les "
 "éléments SysML Block"
 
 #: ../../CHANGELOG.md:41
 msgid "Fix merge-node icon"
-msgstr "Correction : icône du nœud de fusion"
+msgstr "Correction de l'icône du nœud de fusion"
 
 #: ../../CHANGELOG.md:42
 msgid "Fix connecting lines when model is loaded and documentation updates"
 msgstr ""
-"Correction : lignes de connexion lors du chargement du modèle et des mises à "
-"jour de la documentation"
+"Correction des lignes de connexion lors du chargement du modèle et des mises "
+"à jour de la documentation"
 
 #: ../../CHANGELOG.md:43
 msgid "Fix macOS build and documentation generation"
 msgstr ""
-"Correction : génération de la documentation et de la compilation pour macOS"
+"Correction de la génération de la documentation et de la compilation pour "
+"macOS"
 
 #: ../../CHANGELOG.md:44
 msgid "Update Russian, Chinese, Polish, Hungarian, Turkish and German translations"
@@ -217,12 +218,12 @@ msgstr ""
 #: ../../CHANGELOG.md:49
 msgid "Fix TypeError when changing to dark mode and refactor settings"
 msgstr ""
-"Correction : erreur de type (TypeError) lors du passage en mode sombre et de "
-"la refonte des paramètres"
+"Correction d'une erreur de type (TypeError) lors du passage en mode sombre "
+"et de la refonte des paramètres"
 
 #: ../../CHANGELOG.md:50
 msgid "Fix grouping: allow to group to \"root\""
-msgstr "Correction : regroupement : autoriser le regroupement vers \"root\""
+msgstr "Correction du regroupement : autoriser le regroupement vers \"root\""
 
 #: ../../CHANGELOG.md:51
 #, fuzzy
@@ -236,11 +237,11 @@ msgstr "Signal des erreurs lorsque le presse-papiers est vide"
 
 #: ../../CHANGELOG.md:53
 msgid "Fix DnD file opening on macOS"
-msgstr "Correction : l'ouverture des fichiers DnD sur macOS"
+msgstr "Correction de l'ouverture des fichiers DnD sur macOS"
 
 #: ../../CHANGELOG.md:54
 msgid "Fix libadwaita 1.4.0 missing for hypothesis tests"
-msgstr "Correction : absence de libadwaita 1.4.0 pour les tests d'hypothèse"
+msgstr "Correction de l'absence de libadwaita 1.4.0 pour les tests d'hypothèse"
 
 #: ../../CHANGELOG.md:55
 msgid "Make ActivityParameterNode droppable"
@@ -361,12 +362,12 @@ msgstr "Réactiver les raccourcis clavier de macOS"
 #: ../../CHANGELOG.md:86
 msgid "Fix missing derive relationship icon in the model browser"
 msgstr ""
-"Correction : absence de l'icône de la relation dérivée dans le navigateur de "
-"modèle"
+"Correction de l'absence de l'icône de la relation dérivée dans le navigateur "
+"de modèle"
 
 #: ../../CHANGELOG.md:87
 msgid "Fix block not showing parts and references"
-msgstr "Correction : bloc n'affichant pas les parties et les références"
+msgstr "Correction d'un bloc n'affichant pas les parties et les références"
 
 #: ../../CHANGELOG.md:88
 msgid "Fixed Profile is created instead of Stereotype in model browser"
@@ -391,7 +392,7 @@ msgstr "Présenter le greffon, au lieu de le rendre seulement visible"
 
 #: ../../CHANGELOG.md:92
 msgid "Fix derive-reqt model browser icon"
-msgstr "Correction : icône du navigateur du modèle 'derive-reqt'"
+msgstr "Correction de l'icône du navigateur du modèle 'derive-reqt'"
 
 #: ../../CHANGELOG.md:93
 msgid "Improve coverage reporting"
@@ -539,12 +540,12 @@ msgstr "Windows : Correction des icônes manquantes dans la barre d'outils"
 
 #: ../../CHANGELOG.md:129
 msgid "Fix loading of ProxyPorts with informationFlow attached"
-msgstr "Correction : chargement des ProxyPorts avec informationFlow attaché"
+msgstr "Correction du chargement des ProxyPorts avec informationFlow attaché"
 
 #: ../../CHANGELOG.md:130
 msgid "Fix to resolve CSS style variables before using the values"
 msgstr ""
-"Correction : résolution des variables de style CSS avant d'utiliser les "
+"Correction pour résoudre les variables de style CSS avant d'utiliser les "
 "valeurs"
 
 #: ../../CHANGELOG.md:132
@@ -559,7 +560,7 @@ msgstr "Ajouter les unions dérivées de la trace des exigences SysML"
 #: ../../CHANGELOG.md:135
 msgid "Fix Parameter Node and Execution Specification with Dark mode"
 msgstr ""
-"Correction : nœud de paramètres et de la spécification d'exécution en mode "
+"Correction du nœud de paramètres et de la spécification d'exécution en mode "
 "sombre"
 
 #: ../../CHANGELOG.md:136
