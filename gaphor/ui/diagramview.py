@@ -1,8 +1,11 @@
 import logging
 import sys
 
+from gaphas.model import Model
 from gaphas.view import GtkView
 from gi.repository import GObject, Gtk
+
+from gaphor.diagram.selection import Selection
 
 log = logging.getLogger(__name__)
 
@@ -10,21 +13,24 @@ log = logging.getLogger(__name__)
 class DiagramView(GtkView):
     __gtype_name__ = "DiagramView"
 
+    def __init__(self, model: Model | None = None):
+        super().__init__(model, Selection())
+
     @GObject.Signal(name="cut-clipboard", flags=GObject.SignalFlags.RUN_LAST)
     def _cut_clipboard(self):
-        log.info("cut-clipboard")
+        pass
 
     @GObject.Signal(name="copy-clipboard", flags=GObject.SignalFlags.RUN_LAST)
     def _copy_clipboard(self):
-        log.info("copy-clipboard")
+        pass
 
     @GObject.Signal(name="paste-clipboard", flags=GObject.SignalFlags.RUN_LAST)
     def _paste_clipboard(self):
-        log.info("paste-clipboard")
+        pass
 
     @GObject.Signal(name="paste-full-clipboard", flags=GObject.SignalFlags.RUN_LAST)
     def _paste_full_clipboard(self):
-        log.info("paste-full-clipboard")
+        pass
 
     @GObject.Signal(name="delete", flags=GObject.SignalFlags.RUN_LAST)
     def _delete(self):

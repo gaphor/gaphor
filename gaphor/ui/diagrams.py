@@ -123,6 +123,7 @@ class Diagrams(UIComponent, ActionProvider):
         page = DiagramPage(
             diagram,
             self.event_manager,
+            self.element_factory,
             self.modeling_language,
         )
         widget = page.construct()

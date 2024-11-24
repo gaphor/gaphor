@@ -18,7 +18,6 @@ from gaphor.core.modeling.diagram import Diagram, StyledDiagram
 from gaphor.core.modeling.event import AttributeUpdated, ElementDeleted
 from gaphor.diagram.diagramtoolbox import get_tool_def, tooliter
 from gaphor.diagram.painter import DiagramTypePainter, ItemPainter
-from gaphor.diagram.selection import Selection
 from gaphor.diagram.tools import (
     apply_default_tool_set,
     apply_magnet_tool_set,
@@ -27,6 +26,7 @@ from gaphor.diagram.tools import (
 from gaphor.diagram.tools.magnet import MagnetPainter
 from gaphor.i18n import translated_ui_string
 from gaphor.transaction import Transaction
+from gaphor.ui.clipboard import Clipboard
 from gaphor.ui.event import DiagramClosed, ToolSelected
 
 log = logging.getLogger(__name__)
@@ -81,10 +81,11 @@ def get_placement_cursor(display, icon_name):
 
 
 class DiagramPage:
-    def __init__(self, diagram, event_manager, modeling_language):
+    def __init__(self, diagram, event_manager, element_factory, modeling_language):
         self.event_manager = event_manager
         self.diagram = diagram
         self.modeling_language = modeling_language
+        self.clipboard = Clipboard(event_manager, element_factory)
         self.style_manager = Adw.StyleManager.get_default()
 
         self.view: GtkView | None = None
@@ -116,9 +117,12 @@ class DiagramPage:
 
         builder = new_builder()
         view = builder.get_object("view")
-        view.selection = Selection()
         view.add_css_class(self._css_class())
         view.connect("delete", delete_selected_items, self.event_manager)
+        view.connect("cut-clipboard", self.clipboard.cut)
+        view.connect("copy-clipboard", self.clipboard.copy)
+        view.connect("paste-clipboard", self.clipboard.paste_link)
+        view.connect("paste-full-clipboard", self.clipboard.paste_full)
 
         self.diagram_css = Gtk.CssProvider.new()
         Gtk.StyleContext.add_provider_for_display(

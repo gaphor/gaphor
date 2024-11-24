@@ -18,8 +18,8 @@ from gaphor.UML.general.comment import CommentItem
 
 
 @pytest.fixture
-def page(diagram, event_manager, modeling_language):
-    page = DiagramPage(diagram, event_manager, modeling_language)
+def page(diagram, event_manager, element_factory, modeling_language):
+    page = DiagramPage(diagram, event_manager, element_factory, modeling_language)
     page.construct()
     assert page.diagram == diagram
     assert page.view.model == diagram
