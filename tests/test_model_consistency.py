@@ -28,7 +28,6 @@ from collections.abc import Iterable
 from functools import singledispatch
 from io import StringIO
 
-import hypothesis
 from gaphas.connector import Handle
 from hypothesis import reproduce_failure, settings  # noqa
 from hypothesis.control import assume, cleanup
@@ -365,10 +364,4 @@ def _(relation: diagramitems.MessageItem, head, tail):
     assert subject.receiveEvent.covered is tail.subject
 
 
-ModelConsistency.TestCase.settings = settings(
-    max_examples=5,
-    stateful_step_count=100,
-    deadline=20000,
-    phases=[hypothesis.Phase.generate],
-)
 TestModelConsistency = ModelConsistency.TestCase
