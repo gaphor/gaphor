@@ -213,11 +213,11 @@ class MainWindow(Service, ActionProvider):
 
         self.action_group, shortcuts = window_action_group(self.component_registry)
         window.insert_action_group("win", self.action_group)
+        window.add_controller(Gtk.ShortcutController.new_for_model(shortcuts))
 
         self._on_modeling_language_selection_changed()
         self.in_app_notifier = InAppNotifier(builder.get_object("main-overlay"))
 
-        window.add_controller(Gtk.ShortcutController.new_for_model(shortcuts))
         window.connect("close-request", self._on_window_close_request)
         window.connect("notify::default-height", self._on_window_size_changed)
         window.connect("notify::default-width", self._on_window_size_changed)

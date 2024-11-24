@@ -5,7 +5,7 @@
     <child>
       <object class="GtkScrolledWindow">
         <child>
-          <object class="GaphasView" id="view">
+          <object class="DiagramView" id="view">
           </object>
         </child>
         <style>
