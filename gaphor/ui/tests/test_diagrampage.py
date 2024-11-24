@@ -3,10 +3,17 @@ import os
 import pytest
 from gi.repository import Gdk
 
+from gaphor import UML
 from gaphor.core.modeling import Diagram
 from gaphor.diagram.general import Box
-from gaphor.ui.diagrampage import DiagramPage, get_placement_cursor, placement_icon_base
+from gaphor.ui.diagrampage import (
+    DiagramPage,
+    delete_selected_items,
+    get_placement_cursor,
+    placement_icon_base,
+)
 from gaphor.UML import Comment
+from gaphor.UML.diagramitems import PackageItem
 from gaphor.UML.general.comment import CommentItem
 
 
@@ -53,3 +60,23 @@ def test_placement_cursor():
     cursor = get_placement_cursor(display, "gaphor-box-symbolic")
 
     assert cursor
+
+
+def test_delete_selected_items(create, diagram, view, event_manager):
+    package_item = create(PackageItem, UML.Package)
+    view.selection.select_items(package_item)
+
+    delete_selected_items(view, event_manager)
+
+    assert not diagram.ownedPresentation
+
+
+def test_delete_selected_owner(create, diagram, view, event_manager):
+    package_item = create(PackageItem, UML.Package)
+    diagram.element = package_item.subject
+    view.selection.select_items(package_item)
+
+    delete_selected_items(view, event_manager)
+
+    assert not diagram.ownedPresentation
+    assert diagram.element is None
