@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gaphor 2.18.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-04-09 15:06-0400\n"
-"PO-Revision-Date: 2024-02-26 10:01+0000\n"
+"PO-Revision-Date: 2024-11-25 01:50+0000\n"
 "Last-Translator: ovari <ovari123@zoho.com>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/gaphor/"
 "docs-gaphor-org/hu/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.5-dev\n"
+"X-Generator: Weblate 5.9-dev\n"
 
 #: ../connect.md:1
 msgid "Connection Protocol"
@@ -34,6 +34,9 @@ msgstr ""
 #: ../connect.md:12
 msgid "The check if a connection is allowed should also check if it is valid to create a relation to/from the same element (like associations, but not generalizations)."
 msgstr ""
+"A kapcsolat engedélyezett-e az ellenőrzésnek azt is ellenőriznie kell, hogy "
+"érvényes-e reláció létrehozása ugyanabból az elemből (például asszociációk, "
+"de nem általánosítások)."
 
 #: ../container.md:1
 msgid "Gaphor in a Container"
@@ -42,6 +45,8 @@ msgstr "Gaphor egy tartályban"
 #: ../container.md:3
 msgid "Instead of setting up a development environment locally, the easiest way to contribute to the project is using GitHub Codespaces."
 msgstr ""
+"A fejlesztői környezet helyben történő létrehozása helyett a GitHub Kódterek "
+"használata a legegyszerűbb módja a projekthez való hozzájárulásnak."
 
 #: ../container.md:6
 msgid "GitHub Codespaces"
@@ -63,107 +68,151 @@ msgstr ""
 
 #: ../container.md:11
 msgid "Select **+ New codespace** at the bottom on the pane."
-msgstr ""
+msgstr "Válassza a **+ Új kódtér** lehetőséget a panel alján."
 
 #: ../container.md:13
 msgid "For more info, check out the [GitHub documentation](https://docs.github.com/en/free-pro-team@latest/github/developing-online-with-codespaces/creating-a-codespace#creating-a-codespace)."
 msgstr ""
+"További információért tekintse meg a [GitHub dokumentációját](https://docs."
+"github.com/en/free-pro-team@latest/github/developing-online-with-codespaces/"
+"creating-a-codespace#creating-a-codespace)."
 
 #: ../design_principles.md:1
 msgid "Design Principles"
-msgstr ""
+msgstr "Tervezési alapelvek"
 
 #: ../design_principles.md:3
 msgid "Gaphor has been around for quite a few years. In those years we (the Gaphor developers) learned a few things on how to build it. Gaphor tries to be easily accessible for novice users as well as a useful tool for more experienced users."
 msgstr ""
+"A Gaphor már jó néhány éve létezik. Azokban az években mi (a Gaphor "
+"fejlesztői) megtanultunk néhány dolgot az elkészítéséhez. A Gaphor igyekszik "
+"könnyen elérhetővé tenni a kezdő felhasználók számára, valamint hasznos "
+"eszközt nyújtani a tapasztaltabb felhasználók számára."
 
 #: ../design_principles.md:7
 msgid "Gaphor is not your average editor. It's a modeling environment. This implies there is a language underpinning the models. Languages adhere to rules and Gaphor tries to follow those rules."
 msgstr ""
+"A Gaphor nem az átlagos szerkesztő. Ez egy modellező környezet. Ez azt "
+"jelenti, hogy van egy nyelv a modellek mögött. A nyelvek betartják a "
+"szabályokat, a Gaphor pedig megpróbálja betartani ezeket a szabályokat."
 
 #: ../design_principles.md:11
 msgid "Usability is very important. When you're new to Gaphor, it should be easy to find your way around. Minimal knowledge of UML should at least allow you to create a class diagram."
 msgstr ""
+"A használhatóság nagyon fontos. Ha új a Gaphorban, könnyen eligazodhat. Az "
+"UML minimális ismeretének lehetővé kell tennie legalább egy osztálydiagram "
+"létrehozását."
 
 #: ../design_principles.md:15
 msgid "Guidance"
-msgstr ""
+msgstr "Útmutató"
 
 #: ../design_principles.md:17
 msgid "To help users, Gaphor should provide guidance where it can."
 msgstr ""
+"A felhasználók segítése érdekében a Gaphornak útmutatást kell nyújtania, "
+"ahol tud."
 
 #: ../design_principles.md:19
 msgid "Help with relationships"
-msgstr ""
+msgstr "Segítség a kapcsolatokban"
 
 #: ../design_principles.md:21
 msgid "The diagram has a feature that it grays out all elements a relationship can not connect to. This helps you to decide where a relation can connect to. You can still mix different elements, but we try to make it as simple as possible to make consistent models."
 msgstr ""
+"Az ábra olyan tulajdonsággal rendelkezik, hogy kiszürkít minden olyan "
+"elemet, amelyhez egy kapcsolat nem tud kapcsolódni. Ez segít eldönteni, hogy "
+"egy kapcsolat hova kapcsolódhat. Továbbra is keverhet különböző elemeket, de "
+"igyekszünk a lehető legegyszerűbbé tenni az egységes modellek elkészítését."
 
 #: ../design_principles.md:26
 msgid "Keep the model in sync"
-msgstr ""
+msgstr "A modellt tartsa szinkronban"
 
 #: ../design_principles.md:28
 msgid "An important part of modeling is to design a system in abstractions and be able to explain those to others. As systems become more complicated, it's important to have the design (model) layed out in diagrams."
 msgstr ""
+"A modellezés fontos része, hogy egy absztrakciós rendszert tervezzünk, és "
+"ezeket el tudjuk magyarázni másoknak. A rendszerek bonyolultabbá válásával "
+"fontos, hogy a tervezés (modell) ábrákon legyen feltüntetve."
 
 #: ../design_principles.md:32
 msgid "Gaphor goes through great lengths to keep the model in sync with the diagrams. In doing so, unused elements can be automatically removed from the model if they're no longer shown in any diagram."
 msgstr ""
+"A Gaphor nagy erőfeszítéseket tesz annak érdekében, hogy a modell "
+"szinkronban legyen az ábrákkal. Ennek során a fel nem használt elemek "
+"automatikusan eltávolíthatók a modellből, ha már nem szerepelnek az ábrán."
 
 #: ../design_principles.md:36
 msgid "Out of your way"
-msgstr ""
+msgstr "Félre az utadból"
 
 #: ../design_principles.md:38
 msgid "When modeling, you should be busy with your problem or solution domain, not with the tool. Gaphor tries to stay out of your way as much as possible. It does not try to nag you with error messages, because the model is not \"correct\"."
 msgstr ""
+"A modellezés során a probléma- vagy megoldási területtel kell elfoglalnia, "
+"nem az eszközzel. Gaphor igyekszik távol maradni az utadból, amennyire csak "
+"lehetséges. Nem próbál hibaüzenetekkel nyaggatni, mert a modell nem „helyes”."
 
 #: ../design_principles.md:42
 msgid "Avoid dialogs"
-msgstr ""
+msgstr "Párbeszédpanelek elkerülése"
 
 #: ../design_principles.md:44
 msgid "In doing the right thing, and staying out of the way of users, Gaphor avoids the use of dialogs as much as possible."
 msgstr ""
+"Ha helyesen cselekszik, és távol tartja magát a felhasználók útjából, a "
+"Gaphor a lehető legnagyobb mértékben kerüli a párbeszédpanelek használatát."
 
 #: ../design_principles.md:47
 msgid "Gaphor should allow you to do the sensible thing (see above) and not get you out of your flow with all sorts of questions."
 msgstr ""
+"A Gaphornak lehetővé kell tennie, hogy az értelmes dolgot megtegye (lásd "
+"fent), és nem szabad kiszakítania mindenféle kérdésével."
 
 #: ../design_principles.md:50
 msgid "Notify on changes"
-msgstr ""
+msgstr "Értesítés a változásokról"
 
 #: ../design_principles.md:52
 msgid "When Gaphor is doing something that is not directly visible, you'll see a notification, for example, an element that's indirectly removed from the model. It will not interrupt you with dialogs, but only provide a small in-app notification. If the change is undesired, hit `undo`."
 msgstr ""
+"Amikor a Gaphor olyasmit csinál, ami közvetlenül nem látható, értesítést fog "
+"látni, például egy olyan elemet, amelyet közvetve eltávolítottak a "
+"modellből. Nem szakítja meg a párbeszédpaneleket, csak egy kis alkalmazáson "
+"belüli értesítést ad. Ha a változtatás nem kívánatos, nyomja meg a "
+"`Visszavonás` gombot."
 
 #: ../design_principles.md:57
 msgid "Balanced"
-msgstr ""
+msgstr "Kiegyensúlyozott"
 
 #: ../design_principles.md:59
 msgid "Although Gaphor implements quite a bit of the UML 2 model, it's not complete. We try to find the right balance in features to suite both expert and novice modellers."
 msgstr ""
+"Bár a Gaphor az UML 2 modell egy részét implementálja, mégsem teljes. "
+"Igyekszünk megtalálni a megfelelő egyensúlyt a funkciók között, hogy mind a "
+"szakértő, mind a kezdő modellezőknek megfeleljenek."
 
 #: ../design_principles.md:63
 msgid "Continuity"
-msgstr ""
+msgstr "Folytonosság"
 
 #: ../design_principles.md:65
 msgid "A model that is created should be usable in the future. Gaphor does acknowledge that. We care about compatibility."
 msgstr ""
+"A létrehozott modellnek a jövőben is használhatónak kell lennie. Gaphor ezt "
+"elismeri. A kompatibilitás fontos számunkra."
 
 #: ../design_principles.md:68
 msgid "Backwards compatibility"
-msgstr ""
+msgstr "Visszamenőleges kompatibilitás"
 
 #: ../design_principles.md:70
 msgid "Gaphor is capable of loading models going back to Gaphor 1.0. It's important for a tool to always allow older models to be loaded."
 msgstr ""
+"A Gaphor képes a Gaphor 1.0-s verziójára visszamenő modellek betöltésére. "
+"Fontos, hogy egy eszköz mindig lehetővé tegye a régebbi modellek betöltését."
 
 #: ../design_principles.md:73
 msgid "Multi-platform"
@@ -172,206 +221,294 @@ msgstr "Többplatformos"
 #: ../design_principles.md:75
 msgid "We put a lot of effort in making Gaphor run on all major platforms: Windows, macOS, and Linux. Having Gaphor available on all platforms is essential if the model needs to be shared. It would be awful if you need to run one specific operating system in order to open a model."
 msgstr ""
+"Nagy erőfeszítéseket teszünk annak érdekében, hogy a Gaphor minden nagyobb "
+"platformon fusson: Windowson, macOS-en és Linuxon. A Gaphor elérhetősége "
+"minden platformon elengedhetetlen, ha a modellt meg kell osztani. Szörnyű "
+"lenne, ha egy adott operációs rendszert kellene futtatnia egy modell "
+"megnyitásához."
 
 #: ../design_principles.md:80
 msgid "So far, we do not support the fourth major platform (web). Native applications provide a better user experience (once installed). But this may change."
 msgstr ""
+"Egyelőre nem támogatjuk a negyedik nagy platformot (web). A natív "
+"alkalmazások jobb felhasználói élményt biztosítanak (a telepítést követően). "
+"De ez változhat."
 
 #: ../design_principles.md:83
 msgid "User interaction"
-msgstr ""
+msgstr "Felhasználói tevékenység"
 
 #: ../design_principles.md:85
 msgid "Gaphor is originally written on Linux. It uses [GTK](https://gtk.org) as it's user interface toolkit. This sort of implies that Gaphor follows the [GNOME Human Interface Guidelines (HIG)](https://developer.gnome.org/hig/). Gaphor is also a multi-platform application. We try to stay close to the GNOME HIG, but try not to introduce concepts that are not available on Windows and macOS."
 msgstr ""
+"A Gaphor eredetileg Linuxra íródott. A [GTK](https://gtk.org)-t használja "
+"felhasználói felületként. Ez azt jelenti, hogy a Gaphor követi a [GNOME HIG ("
+"Human Interface Guidelines – emberi interfész irányelvei)](https://developer."
+"gnome.org/hig/) előírásait. A Gaphor egy többplatformos alkalmazás is. "
+"Igyekszünk a GNOME HIG közelében maradni, de igyekezzünk ne olyan "
+"koncepciókat bevezetni, amelyek nem érhetők el Windows és macOS operációs "
+"rendszereken."
 
 #: ../design_principles.md:91
 msgid "User interface components are not generated. We found that UI generation (like many enterprise modeling tools do) provides an awful user experience. We want users to use Gaphor on a regular basis, so we aim for it to be a tool that's pleasant to look at and easy to work with."
 msgstr ""
+"A felhasználói felület összetevői nem jönnek létre. Azt találtuk, hogy a "
+"felhasználói felület generálása (mint sok vállalati modellező eszköz) "
+"borzasztó felhasználói élményt nyújt. Szeretnénk, ha a felhasználók "
+"rendszeresen használnák a Gaphort, ezért arra törekszünk, hogy olyan eszköz "
+"legyen, amelyet kellemes nézni és könnyű vele dolgozni."
 
 #: ../design_principles.md:97
 msgid "What else?"
-msgstr ""
+msgstr "Mi mást?"
 
 #: ../design_principles.md:99
 msgid "**Idempotency** Allow the same operation to be applied multiple times. This should not affect the result."
 msgstr ""
+"**Idempotencia** Lehetővé teszi ugyanazt a műveletet többször is. Ez nem "
+"befolyásolhatja az eredményt."
 
 #: ../design_principles.md:101
 msgid "**Event Driven** Gaphor is a user application. It acts to user events. The application uses an internal event dispatches (event bus) to distribute events to interested parties. Everyone should be able to listen to events."
 msgstr ""
+"**Eseményvezérelt** A Gaphor egy felhasználói alkalmazás. A felhasználói "
+"eseményekre hat. Az alkalmazás belső eseményküldést (eseménybusz) használ az "
+"eseményeknek az érdekelt felekhez való eljuttatására. Mindenkinek képesnek "
+"kell lennie az események meghallgatására."
 
 #: ../event_system.md:1
 msgid "Event System"
-msgstr ""
+msgstr "Eseményrendszer"
 
 #: ../event_system.md:3
 msgid "The event system in Gaphor provides an API to *handle* events and to *subscribe* to events."
 msgstr ""
+"A Gaphor eseményrendszere API-t biztosít az események *kezeléséhez* és "
+"*feliratkozásához* az eseményekhez."
 
 #: ../event_system.md:6
 msgid "In Gaphor we manage event handler subscriptions through the `EventManager` service. Gaphor is highly event driven:"
 msgstr ""
+"A Gaphorban az eseménykezelő előfizetéseket az `EventManager` (Eseménykezelő)"
+" szolgáltatáson keresztül kezeljük. A Gaphor erősen eseményvezérelt:"
 
 #: ../event_system.md:9
 msgid "Changes in the loaded model are emitted as events"
-msgstr ""
+msgstr "A betöltött modell változásai eseményként kerülnek kiadásra"
 
 #: ../event_system.md:10
 msgid "Changes on diagrams are emitted as events"
-msgstr ""
+msgstr "Az ábrákon a változások eseményként jelennek meg"
 
 #: ../event_system.md:11
 msgid "Changes in the UI are emitted as events"
-msgstr ""
+msgstr "A felhasználói felület változásai eseményként jelennek meg"
 
 #: ../event_system.md:13
 msgid "Although Gaphor depends heavily on GTK for its user interface, Gaphor is using its own event dispatcher. Events can be structured in hierarchies. For example, an `AttributeUpdated` event is a subtype of `ElementUpdated`. If we are interested in all changes to elements, we can also register `ElementUpdated` and receive all `AttributeUpdated` events as well."
 msgstr ""
+"Bár a Gaphor felhasználói felülete nagymértékben függ a GTK-tól, a Gaphor "
+"saját esemény diszpécserét használja. Az események hierarchiába "
+"strukturálhatók. Például egy `AttributeUpdated` (AttribútumFrissítve) "
+"esemény az `ElementUpdated` (ElemFrissítve) altípusa. Ha az elemek minden "
+"változása érdekel minket, akkor regisztrálhatjuk az `ElementUpdated`-et is, "
+"és megkaphatjuk az összes `AttributeUpdated` eseményt is."
 
 #: ../../gaphor/core/eventmanager.py:docstring of gaphor.core.eventmanager.EventManager:1
 msgid "The Event Manager."
-msgstr ""
+msgstr "Az eseménykezelő."
 
 #: ../../gaphor/core/eventmanager.py:docstring of gaphor.core.eventmanager.EventManager.handle:1
 msgid "Send event notifications to registered handlers."
-msgstr ""
+msgstr "Eseményértesítések küldése a regisztrált kezelőknek."
 
 #: ../../gaphor/core/eventmanager.py:docstring of gaphor.core.eventmanager.EventManager.priority_subscribe:1
 #: ../../gaphor/core/eventmanager.py:docstring of gaphor.core.eventmanager.EventManager.subscribe:1
 msgid "Register a handler."
-msgstr ""
+msgstr "Regisztráljon kezelőt."
 
 #: ../../gaphor/core/eventmanager.py:docstring of gaphor.core.eventmanager.EventManager.priority_subscribe:3
 msgid "Priority handlers are executed directly. They should not raise other events, cause that can cause a problem in the exection order."
 msgstr ""
+"A prioritáskezelők közvetlenül végrehajtásra kerülnek. Más eseményt, okot "
+"nem szabad felvetni, ami a végrehajtási sorrendben problémát okozhat."
 
 #: ../../gaphor/core/eventmanager.py:docstring of gaphor.core.eventmanager.EventManager.priority_subscribe:6
 msgid "It's basically to make sure that all events are recorded by the undo manager."
 msgstr ""
+"Ez alapvetően annak biztosítása, hogy minden eseményt rögzítsen a "
+"visszavonáskezelő."
 
 #: ../../gaphor/abc.py:docstring of gaphor.abc.Service.shutdown:1
 #: ../../gaphor/core/eventmanager.py:docstring of gaphor.core.eventmanager.EventManager.shutdown:1
 msgid "Shutdown the services, free resources."
-msgstr ""
+msgstr "Állítsa le a szolgáltatásokat, szabadítsa fel az erőforrásokat."
 
 #: ../../gaphor/core/eventmanager.py:docstring of gaphor.core.eventmanager.EventManager.subscribe:3
 msgid "Handlers are triggered (executed) when specific events are emitted through the handle() method."
 msgstr ""
+"A kezelők akkor indulnak el (végrehajtják), ha meghatározott eseményeket "
+"bocsátanak ki a handle() metóduson keresztül."
 
 #: ../../gaphor/core/eventmanager.py:docstring of gaphor.core.eventmanager.EventManager.unsubscribe:1
 msgid "Unregister a previously registered handler."
-msgstr ""
+msgstr "Korábban regisztrált kezelő regisztrációjának törlése."
 
 #: ../event_system.md:24
 msgid "Under the hood events are handled by the Generics library. For more information about how the Generic library handles events see the [Generic documentation](https://generic.readthedocs.io)."
 msgstr ""
+"A háttérben az eseményeket a Generics könyvtár kezeli. További információért "
+"arról, hogy az Általános könyvtár hogyan kezeli az eseményeket, tekintse meg "
+"az [Általános dokumentációt](https://generic.readthedocs.io)."
 
 #: ../first_model.md:1
 msgid "Your First Model"
-msgstr ""
+msgstr "Az első modelled"
 
 #: ../first_model.md:4
 msgid "In this tutorial we refer to the different parts of the gaphor interface: {ref}`Model Browser <getting_started:model browser>`, [Toolbox](getting_started:toolbox), {ref}`Property Editor <getting_started:property editor>`."
 msgstr ""
+"Ebben az oktatóanyagban a gaphor felület különböző részeire hivatkozunk: "
+"{ref}`Modell böngésző <getting_started:model browser>`, "
+"[Eszköztár](getting_started:toolbox), {ref}`Tulajdonságszerkesztő "
+"<getting_started:property editor>`."
 
 #: ../first_model.md:8
 msgid "Although the names should speak for themselves, you can check out the [Getting Started](getting_started) page for more information about those sections."
 msgstr ""
+"Bár a nevek önmagukért beszélnek, a [Kezdő lépések](getting_started) oldalon "
+"további információkat találhat ezekről a szakaszokról."
 
 #: ../first_model.md:12
 msgid "Once Gaphor is started, and you can start a new model with the _Generic_ template. The initial diagram is already open in the Diagram section."
 msgstr ""
+"A Gaphor elindítása után elindíthat egy új modellt az _Általános_ sablonnal. "
+"A kezdeti diagram már nyitva van az Ábra részben."
 
 #: ../first_model.md:15
 msgid "Select an element you want to place, in this case a Class (![new class](../gaphor/ui/icons/hicolor/scalable/actions/gaphor-class-symbolic.svg)) by clicking on the icon in the Toolbox and click on the diagram. This will place a new Class item instance on the diagram and add a new Class to the model -- it shows up in the Model Browser. The selected tool will reset itself to the Pointer tool after the element is placed on the diagram."
 msgstr ""
+"Válassza ki az elhelyezni kívánt elemet, jelen esetben egy osztályt (![új "
+"osztály](../gaphor/ui/icons/hicolor/scalable/actions/gaphor-class-symbolic."
+"svg)) az ikonra kattintva az Eszköztárat, és kattintson a diagramra. Ezzel "
+"egy új osztályelem példányt helyez el a diagramon, és egy új osztályt ad a "
+"modellhez – ez megjelenik a Modellböngészőben. A kiválasztott eszköz "
+"visszaáll a Mutató eszközre, miután az elemet az ábrára helyezte."
 
 #: ../first_model.md:15
 msgid "newclass"
-msgstr ""
+msgstr "új osztály"
 
 #: ../first_model.md:22
 msgid "The Property Editor on the right side will show you details about the newly added class, such as its name (_New Class_), attributes and operations (methods)."
 msgstr ""
+"A jobb oldalon található Tulajdonságszerkesztő részleteket jelenít meg az "
+"újonnan hozzáadott osztályról, például a nevét (_Új osztály_), az "
+"attribútumokat és a műveleteket (metódusokat)."
 
 #: ../first_model.md:25
 msgid "![image](images/first-model-class.png)"
-msgstr ""
+msgstr "![kép](images/first-model-class.png)"
 
 #: ../first_model.md:25
 #: ../first_model.md:48
 #: ../first_model.md:60
 msgid "image"
-msgstr ""
+msgstr "kép"
 
 #: ../first_model.md:27
 msgid "It's simple to add elements to a diagram."
-msgstr ""
+msgstr "Egyszerű elemeket hozzáadni egy ábrához."
 
 #: ../first_model.md:29
 msgid "Gaphor does not make any assumptions about which elements should be placed on a diagram. A diagram is a diagram. UML defines all different kinds of diagrams, such as Class diagrams, Component diagrams, Action diagrams, Sequence diagrams. But Gaphor does not place any restrictions."
 msgstr ""
+"A Gaphor nem tesz feltevéseket arról, hogy mely elemeket kell elhelyezni egy "
+"ábrán. Az ábra egy ábra. Az UML mindenféle ábrát meghatároz, például "
+"osztályábrákat, komponens ábrákat, műveleti ábrákat, szekvenciaábrákat. De a "
+"Gaphor nem szab semmilyen korlátozást."
 
 #: ../first_model.md:34
 msgid "Adding Relations"
-msgstr ""
+msgstr "Kapcsolatok hozzáadása"
 
 #: ../first_model.md:36
 msgid "Add another Class. Change the names to `Shape` and `Circle`. Let's define that `Circle` is a sub-type of `Shape`. You can do this by selecting one and changing the name in the Property Editor, or by double-clicking the element."
 msgstr ""
+"Adjon hozzá egy másik osztályt. Módosítsa a neveket `Alakzat`-ra és `Kör`-"
+"re. Határozzuk meg, hogy a `Kör` az `Alakzat` altípusa. Ezt úgy teheti meg, "
+"hogy kiválaszt egyet, és megváltoztatja a nevet a Tulajdonságszerkesztőben, "
+"vagy kattintson duplán az elemre."
 
 #: ../first_model.md:40
 msgid "Select Generalization (![new generalization](../gaphor/ui/icons/hicolor/scalable/actions/gaphor-generalization-symbolic.svg))."
 msgstr ""
+"Általánosítás kijelölése (![Új általánosítás](../gaphor/ui/icons/hicolor/"
+"scalable/actions/gaphor-generalization-symbolic.svg))."
 
 #: ../first_model.md:40
 msgid "newgeneralization"
-msgstr ""
+msgstr "új általánosítás"
 
 #: ../first_model.md:43
 msgid "Move the mouse cursor over `Shape`. Click, hold and drag the line end over `Circle`. Release the mouse button, and you should have your relationship between `Shape` and `Circle`. You can see both ends of the relation are red, indicating they are connected to their class."
 msgstr ""
+"Vigye az egeret az `Alakzat` fölé. Kattintson, tartsa lenyomva, és húzza a "
+"vonal végét a `Kör` fölé. Engedje el az egérgombot, és meg kell teremtenie a "
+"kapcsolatot az `Alak` és a `Kör` között. Láthatja, hogy a reláció mindkét "
+"vége piros, ami azt jelzi, hogy az osztályukhoz kapcsolódnak."
 
 #: ../first_model.md:48
 msgid "![image](images/first-model-generalization.png)"
-msgstr ""
+msgstr "![kép](images/first-model-generalization.png)"
 
 #: ../first_model.md:50
 msgid "Optionally you can run the auto-layout (![open menu](images/open-menu-symbolic.svg) → Tools → Auto Layout) to align the elements on the diagram."
 msgstr ""
+"Opcionálisan futtathatja az automatikus elrendezést (![menü megnyitása]("
+"images/open-menu-symbolic.svg) → Eszközök → Automatikus elrendezés) az "
+"elemek igazításához az ábrán."
 
 #: ../first_model.md:50
 msgid "openmenu"
-msgstr ""
+msgstr "menü megnyitása"
 
 #: ../first_model.md:54
 msgid "Creating New Diagrams"
-msgstr ""
+msgstr "Új ábrák létrehozása"
 
 #: ../first_model.md:56
 msgid "To create a new diagram, use the Model Browser. Select the element that should contain the new diagram. For now, select _New Model_. Click the New Diagram menu (![new diagram](images/list-add-symbolic.svg)) in the header bar."
 msgstr ""
+"Új ábra létrehozásához használja a Modellböngészőt. Jelölje ki azt az "
+"elemet, amelynek tartalmaznia kell az új ábrát. Egyelőre válassza az _Új "
+"modell_ lehetőséget. Kattintson az Új diagram menüre (![új ábra](images/list-"
+"add-symbolic.svg)) a fejlécsorban."
 
 #: ../first_model.md:56
 msgid "new diagram"
-msgstr ""
+msgstr "új ábra"
 
 #: ../first_model.md:60
 msgid "![image](/images/first-model-new-diagram-popup.png)"
-msgstr ""
+msgstr "![kép](/images/first-model-new-diagram-popup.png)"
 
 #: ../first_model.md:62
 msgid "Select _New Generic Diagram_ and a new diagram is created."
-msgstr ""
+msgstr "Jelölje ki az _Új általános ábra_ értéket, és létrejön egy új ábra."
 
 #: ../first_model.md:64
 msgid "Now drag the elements from the Model Browser onto the new diagram. First the classes `Shape` and `Circle`. Add the generalization last. Drop it somewhere between the two classes. The relation will be created to the diagram."
 msgstr ""
+"Most húzza át az elemeket a Modellböngészőből az új ábrára. Először az `Alak`"
+" és a `Kör` osztályok. Utoljára adja hozzá az általánosítást. Dobja el "
+"valahova a két osztály közé. A kapcsolat létrejön az ábrához."
 
 #: ../first_model.md:68
 msgid "Now change the name of class `Circle` to `Ellipse`. Check the other diagram. The name has been changed there as well."
 msgstr ""
+"Most változtassa meg a „Kör” osztály nevét „Ellipszis”-re. Ellenőrizze a "
+"másik ábrát. Ott is megváltozott a név."
 
 #: ../first_model.md:73
 msgid "Elements in a diagram are only a _representation_ of the elements in the underlying model. The model is what you see in the Model Browser."
