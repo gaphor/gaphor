@@ -29,6 +29,11 @@
           </lookup>
         </binding>
         <signal name="done-editing" handler="on_done_editing" object="GtkColumnViewCell" swapped="no" />
+        <child>
+          <object class="GtkGestureClick">
+            <signal name="pressed" handler="stereotype-click-pressed" />
+          </object>
+        </child>
       </object>
     </property>
   </template>
