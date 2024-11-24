@@ -1,7 +1,7 @@
 {
   "app-id": "org.gaphor.Gaphor.Devel",
   "runtime": "org.gnome.Platform",
-  "runtime-version": "45",
+  "runtime-version": "47",
   "tags": [
     "devel",
     "development",
