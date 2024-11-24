@@ -108,7 +108,7 @@ class Application(Service, ActionProvider):
             force=force,
         )
 
-    def recover_session(self, *, session_id, filename=None, template=None):
+    def recover_session(self, *, session_id, filename=None, template=None) -> Session:
         """Recover a (crashed) session."""
 
         return self._spawn_session(
@@ -117,7 +117,7 @@ class Application(Service, ActionProvider):
 
     def _spawn_session(
         self, session: Session, filename=None, template=None, force=False
-    ):
+    ) -> Session:
         @event_handler(ActiveSessionChanged)
         def on_active_session_changed(_event):
             logger.debug("Set active session to %s", session)

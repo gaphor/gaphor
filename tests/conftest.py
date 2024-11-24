@@ -3,6 +3,7 @@
 from hypothesis import settings
 
 from gaphor.conftest import (
+    assert_not_in_transaction,
     create,
     diagram,
     element_factory,

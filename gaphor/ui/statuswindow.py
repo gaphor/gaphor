@@ -1,7 +1,5 @@
 """Defines a status window class for displaying the progress of a queue."""
 
-from __future__ import annotations
-
 from gi.repository import GLib, Gtk, Pango
 
 
@@ -41,7 +39,6 @@ class StatusWindow:
         self.window.set_modal(True)
         self.window.set_resizable(False)
         self.window.set_decorated(False)
-        self.window.present()
 
     def progress(self, percentage: int):
         """Update progress percentage (0..100)."""

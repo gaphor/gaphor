@@ -14,7 +14,7 @@ Linux (Flatpak), Windows, and macOS.
 Once Gaphor is launched, it provides you a welcome screen. It shows you
 previously opened models and model templates.
 
-![welcome screen](images/getting-started-greeter.png)
+![Gaphor's welcome screen showing recently opened models and model templates.](images/getting-started-greeter.png)
 
 You can select a template to get started.
 
@@ -26,7 +26,7 @@ You can select a template to get started.
 
 Once the model interface is loaded you'll see the modeling interface.
 
-![new model](images/getting-started-new-model.png)
+![The Gaphor main window, with numbers refering to parts of the UI.](images/getting-started-new-model.png)
 
 The layout of the Gaphor interface is divided into four sections,
 namely:
@@ -146,14 +146,14 @@ The Property Editor is present on the right side of the diagrams. When no item
 is selected in the diagram, it shows you some tips and tricks. When an item is
 selected on the diagram, it contains the item details like name, attributes and
 stereotypes. It can be opened with <kbd>F9</kbd> and the
-![sidebar-show-right-symbolic](images/sidebar-show-right-symbolic.svg) icon in
+![Icon for showing and hiding the Property Editor.](images/sidebar-show-right-symbolic.svg) icon in
 the header bar.
 
 The properties that are shown depend on the item that is selected.
 
 ## Model Preferences
 
-The Property Editor also contains model preferences: Click the ![document-properties-symbolic](images/document-properties-symbolic.svg)
+The Property Editor also contains model preferences: Click the ![Document with wrench icon for model specific configuration.](images/document-properties-symbolic.svg)
 button.
 
 ### Reset Tool Automatically
