@@ -48,6 +48,7 @@ autodoc_mock_imports = [
     "gi.repository.Gtk",
     "gi.repository.Adw",
     "gi.repository.GtkSource",
+    "gi.repository.Graphene",
 ]
 gi.require_version = lambda *_: ...
 

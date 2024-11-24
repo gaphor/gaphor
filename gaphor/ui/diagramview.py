@@ -44,29 +44,35 @@ def _trigger_signal(signal_name):
     return _trigger_action
 
 
-DiagramView.install_action("clipboard.cut", None, _trigger_signal("cut-clipboard"))
-DiagramView.install_action("clipboard.copy", None, _trigger_signal("copy-clipboard"))
-DiagramView.install_action("clipboard.paste", None, _trigger_signal("paste-clipboard"))
-DiagramView.install_action(
-    "clipboard.paste-full", None, _trigger_signal("paste-full-clipboard")
-)
-DiagramView.install_action("diagram.delete", None, _trigger_signal("delete"))
-
-
-def _new_named_shortcut(shortcut, action_name):
-    return Gtk.Shortcut.new(
-        trigger=Gtk.ShortcutTrigger.parse_string(shortcut),
-        action=Gtk.NamedAction.new(action_name),
+if hasattr(DiagramView, "install_action"):
+    # Deal with Gtk being mocked when generating docs
+    DiagramView.install_action("clipboard.cut", None, _trigger_signal("cut-clipboard"))
+    DiagramView.install_action(
+        "clipboard.copy", None, _trigger_signal("copy-clipboard")
     )
+    DiagramView.install_action(
+        "clipboard.paste", None, _trigger_signal("paste-clipboard")
+    )
+    DiagramView.install_action(
+        "clipboard.paste-full", None, _trigger_signal("paste-full-clipboard")
+    )
+    DiagramView.install_action("diagram.delete", None, _trigger_signal("delete"))
 
+    def _new_named_shortcut(shortcut, action_name):
+        return Gtk.Shortcut.new(
+            trigger=Gtk.ShortcutTrigger.parse_string(shortcut),
+            action=Gtk.NamedAction.new(action_name),
+        )
 
-_mod = "<Meta>" if sys.platform == "darwin" else "<Control>"
+    _mod = "<Meta>" if sys.platform == "darwin" else "<Control>"
 
-DiagramView.add_shortcut(_new_named_shortcut(f"{_mod}x", "clipboard.cut"))
-DiagramView.add_shortcut(_new_named_shortcut(f"{_mod}c", "clipboard.copy"))
-DiagramView.add_shortcut(_new_named_shortcut(f"{_mod}v", "clipboard.paste"))
-DiagramView.add_shortcut(_new_named_shortcut(f"{_mod}<Shift>v", "clipboard.paste-full"))
-DiagramView.add_shortcut(
-    _new_named_shortcut("Delete|BackSpace|<Meta>BackSpace", "diagram.delete")
-)
-del _mod
+    DiagramView.add_shortcut(_new_named_shortcut(f"{_mod}x", "clipboard.cut"))
+    DiagramView.add_shortcut(_new_named_shortcut(f"{_mod}c", "clipboard.copy"))
+    DiagramView.add_shortcut(_new_named_shortcut(f"{_mod}v", "clipboard.paste"))
+    DiagramView.add_shortcut(
+        _new_named_shortcut(f"{_mod}<Shift>v", "clipboard.paste-full")
+    )
+    DiagramView.add_shortcut(
+        _new_named_shortcut("Delete|BackSpace|<Meta>BackSpace", "diagram.delete")
+    )
+    del _mod
