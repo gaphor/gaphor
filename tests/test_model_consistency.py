@@ -28,7 +28,6 @@ from collections.abc import Iterable
 from functools import singledispatch
 from io import StringIO
 
-import hypothesis
 from gaphas.connector import Handle
 from hypothesis import reproduce_failure, settings  # noqa
 from hypothesis.control import assume, cleanup
@@ -319,9 +318,17 @@ def check_relation(relation: Presentation, head: Presentation, tail: Presentatio
     assert subject
 
     metadata = get_diagram_item_metadata(type(relation))
+
+    def end_elements(end):
+        return (
+            [metadata[end].get(subject)]
+            if metadata[end].upper == 1
+            else metadata[end].get(subject)
+        )
+
     assert metadata, f"No comparison function for {relation}"
-    assert metadata["head"].get(subject) is head.subject
-    assert metadata["tail"].get(subject) is tail.subject
+    assert head.subject in end_elements("head")
+    assert tail.subject in end_elements("tail")
 
 
 @check_relation.register
@@ -357,10 +364,4 @@ def _(relation: diagramitems.MessageItem, head, tail):
     assert subject.receiveEvent.covered is tail.subject
 
 
-ModelConsistency.TestCase.settings = settings(
-    max_examples=5,
-    stateful_step_count=100,
-    deadline=20000,
-    phases=[hypothesis.Phase.generate],
-)
 TestModelConsistency = ModelConsistency.TestCase

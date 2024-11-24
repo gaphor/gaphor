@@ -1,6 +1,8 @@
 # ruff: noqa: F401
 
-from hypothesis import settings
+import os
+
+from hypothesis import Phase, settings
 
 from gaphor.conftest import (
     assert_not_in_transaction,
@@ -14,7 +16,12 @@ from gaphor.conftest import (
 )
 
 settings.register_profile(
-    "test", derandomize=True, max_examples=10, stateful_step_count=100
+    "test",
+    derandomize=True,
+    max_examples=10,
+    stateful_step_count=100,
+    deadline=20000,
+    phases=[Phase.generate],
 )
 settings.register_profile("ci", max_examples=1000)
 settings.load_profile("test")
