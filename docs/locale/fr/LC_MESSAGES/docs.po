@@ -8,490 +8,566 @@ msgstr ""
 "Project-Id-Version: Gaphor 2.23.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-02-15 20:49-0500\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2024-11-25 01:50+0000\n"
+"Last-Translator: Stan SZLAPKA <stansz@free.fr>\n"
+"Language-Team: French <https://hosted.weblate.org/projects/gaphor/"
+"docs-gaphor-org/fr/>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 5.9-dev\n"
 
 #: ../changelog.rst:2
 msgid "Change Log"
-msgstr ""
+msgstr "Journal des modifications"
 
 #: ../changelog.rst:4
 msgid "This is a curated list of the changes per version."
-msgstr ""
+msgstr "Il s'agit d'une liste de changements par version."
 
 #: ../changelog.rst:8
 msgid "The latest version may not have been released yet."
-msgstr ""
+msgstr "Il se peut que la dernière version n'ait pas encore été publiée."
 
 #: ../../CHANGELOG.md:1
 msgid "2.24.0"
-msgstr ""
+msgstr "2.24.0"
 
 #: ../../CHANGELOG.md:3
 msgid "Fine grained CSS styling for model elements"
-msgstr ""
+msgstr "Stylisation CSS fine des éléments du modèle"
 
 #: ../../CHANGELOG.md:4
 msgid "Gaphor is now REUSE compliant"
-msgstr ""
+msgstr "Gaphor est désormais conforme à la norme REUSE"
 
 #: ../../CHANGELOG.md:5
 msgid "Connected elements are no longer automatcally removed from a diagram"
 msgstr ""
+"Les éléments connectés ne sont plus automatiquement supprimés d'un diagramme"
 
 #: ../../CHANGELOG.md:6
 msgid "Fix header bars for various windows"
-msgstr ""
+msgstr "Correction des barres d'en-tête pour diverses fenêtres"
 
 #: ../../CHANGELOG.md:7
 msgid "Various smaller UX improvements: greeter, diagram background, empty parameters"
 msgstr ""
+"Diverses améliorations mineures de l'interface utilisateur : greeter, "
+"arrière-plan du diagramme, paramètres vides"
 
 #: ../../CHANGELOG.md:8
 msgid "Install schemas by running `gaphor install-schemas`"
-msgstr ""
+msgstr "Installer les schémas en exécutant `gaphor install-schemas`"
 
 #: ../../CHANGELOG.md:9
 msgid "Mitigations for false virus warnings on Windows"
-msgstr ""
+msgstr "Atténuation des fausses alertes de virus sous Windows"
 
 #: ../../CHANGELOG.md:10
 msgid "Fix issue when undoing fails"
-msgstr ""
+msgstr "Correction d'un problème lorsque l'annulation échoue"
 
 #: ../../CHANGELOG.md:12
 msgid "2.23.2"
-msgstr ""
+msgstr "2.23.2"
 
 #: ../../CHANGELOG.md:14
+#, fuzzy
 msgid "Fix models failing to load for collection not hashable TypeError"
 msgstr ""
+"Correction des modèles qui ne se chargent pas lorsque la collection n'est "
+"pas modifiable TypeError"
 
 #: ../../CHANGELOG.md:15
 msgid "Fix file filters for export image dialog"
 msgstr ""
+"Correction des filtres de fichiers pour la boîte de dialogue d'exportation "
+"d'images"
 
 #: ../../CHANGELOG.md:16
 msgid "Add CSS for \"from: \", stereotypes, and compartments"
-msgstr ""
+msgstr "Ajouter CSS pour \"des : \", stéréotypes, et compartiments"
 
 #: ../../CHANGELOG.md:17
 msgid "Update Hungarian translations"
-msgstr ""
+msgstr "Mise à jour des traductions en hongrois"
 
 #: ../../CHANGELOG.md:19
 msgid "2.23.1"
-msgstr ""
+msgstr "2.23.1"
 
 #: ../../CHANGELOG.md:21
 msgid "Fix Activity Swimlanes aren't visible"
-msgstr ""
+msgstr "Correction des couloirs d'activité qui ne sont pas visibles"
 
 #: ../../CHANGELOG.md:22
 msgid "Fix CSS attribute rules"
-msgstr ""
+msgstr "Fixer les règles d'attributs CSS"
 
 #: ../../CHANGELOG.md:23
 msgid "Remove duplicate stereotypes at root of model browser"
 msgstr ""
+"Supprimer les stéréotypes en double à la racine de l'explorateur de modèles"
 
 #: ../../CHANGELOG.md:24
 #: ../../CHANGELOG.md:124
 msgid "Update Croatian translations"
-msgstr ""
+msgstr "Mise à jour des traductions en croate"
 
 #: ../../CHANGELOG.md:26
 msgid "2.23.0"
-msgstr ""
+msgstr "2.23.0"
 
 #: ../../CHANGELOG.md:28
 msgid "Support types for parameters"
-msgstr ""
+msgstr "Types de support pour les paramètres"
 
 #: ../../CHANGELOG.md:29
 msgid "Restore windows in maximized and full-screen state"
-msgstr ""
+msgstr "Restauration des fenêtres en mode maximisé et plein écran"
 
 #: ../../CHANGELOG.md:30
 msgid "Fine grained CSS: elements in a presentation item can be changed from CSS (experimental)"
 msgstr ""
+"CSS à granularité fine : les éléments d'une présentation peuvent être "
+"modifiés à partir de CSS (expérimental)"
 
 #: ../../CHANGELOG.md:31
 msgid "Very long element names are now wrapped"
-msgstr ""
+msgstr "Les noms d'éléments très longs sont désormais enveloppés"
 
 #: ../../CHANGELOG.md:32
 msgid "Format files accessed from Flatpak via portals"
-msgstr ""
+msgstr "Format des fichiers accessibles à partir des portails de Flatpak"
 
 #: ../../CHANGELOG.md:33
 msgid "Update Property Editor to use Gtk.ColumnView and ListView"
 msgstr ""
+"Mise à jour de l'éditeur de propriétés pour utiliser Gtk.ColumnView et "
+"ListView"
 
 #: ../../CHANGELOG.md:34
 msgid "Replace deprecated Gtk.FileChooser by FileDialog"
-msgstr ""
+msgstr "Remplacer le Gtk.FileChooser obsolète par FileDialog"
 
 #: ../../CHANGELOG.md:35
+#, fuzzy
 msgid "Replace in-app notifications by Adwaita Toasts"
-msgstr ""
+msgstr "Remplacer les notifications in-app par des Tuiles Adwaita"
 
 #: ../../CHANGELOG.md:36
 msgid "macOS: Update app icon"
-msgstr ""
+msgstr "macOS : Mise à jour de l'icône de l'application"
 
 #: ../../CHANGELOG.md:37
 msgid "macOS: Fix ⓘ icon in Property Editor isn't displayed"
 msgstr ""
+"macOS : Fixé l'icône ⓘ dans l'éditeur de propriétés qui ne s'affiche pas"
 
 #: ../../CHANGELOG.md:38
 msgid "macOS and Windows: Apply custom window shadow"
-msgstr ""
+msgstr "macOS et Windows : Appliquer une ombre de fenêtre personnalisée"
 
 #: ../../CHANGELOG.md:39
 msgid "Fix Gaphor should work if GSettings schema is not available"
 msgstr ""
+"Résolu : Gaphor devrait fonctionner si le schéma GSettings n'est pas "
+"disponible"
 
 #: ../../CHANGELOG.md:40
 msgid "Fix values showing under part compartment in SysML Block elements"
 msgstr ""
+"Correction des valeurs affichées sous le compartiment de la pièce dans les "
+"éléments SysML Block"
 
 #: ../../CHANGELOG.md:41
 msgid "Fix merge-node icon"
-msgstr ""
+msgstr "Correction de l'icône du nœud de fusion"
 
 #: ../../CHANGELOG.md:42
 msgid "Fix connecting lines when model is loaded and documentation updates"
 msgstr ""
+"Correction des lignes de connexion lors du chargement du modèle et des mises "
+"à jour de la documentation"
 
 #: ../../CHANGELOG.md:43
 msgid "Fix macOS build and documentation generation"
 msgstr ""
+"Correction de la génération de la documentation et de la compilation pour "
+"macOS"
 
 #: ../../CHANGELOG.md:44
 msgid "Update Russian, Chinese, Polish, Hungarian, Turkish and German translations"
 msgstr ""
+"Mise à jour des traductions en russe, chinois, polonais, hongrois, turc et "
+"allemand"
 
 #: ../../CHANGELOG.md:46
 msgid "2.22.1"
-msgstr ""
+msgstr "2.22.1"
 
 #: ../../CHANGELOG.md:48
 msgid "Flatpak: Fix app preferences aren't saved"
 msgstr ""
+"Flatpak : Correction des préférences de l'application qui ne sont pas "
+"sauvegardées"
 
 #: ../../CHANGELOG.md:49
 msgid "Fix TypeError when changing to dark mode and refactor settings"
 msgstr ""
+"Correction d'une erreur de type (TypeError) lors du passage en mode sombre "
+"et de la refonte des paramètres"
 
 #: ../../CHANGELOG.md:50
 msgid "Fix grouping: allow to group to \"root\""
-msgstr ""
+msgstr "Correction du regroupement : autoriser le regroupement vers \"root\""
 
 #: ../../CHANGELOG.md:51
+#, fuzzy
 msgid "Add support for dropping SysML diagrams on diagrams"
 msgstr ""
+"Ajout d'un support pour déposer des diagrammes SysML dans des diagrammes"
 
 #: ../../CHANGELOG.md:52
 msgid "Catch errors when a clipboard is empty"
-msgstr ""
+msgstr "Signal des erreurs lorsque le presse-papiers est vide"
 
 #: ../../CHANGELOG.md:53
 msgid "Fix DnD file opening on macOS"
-msgstr ""
+msgstr "Correction de l'ouverture des fichiers DnD sur macOS"
 
 #: ../../CHANGELOG.md:54
 msgid "Fix libadwaita 1.4.0 missing for hypothesis tests"
-msgstr ""
+msgstr "Correction de l'absence de libadwaita 1.4.0 pour les tests d'hypothèse"
 
 #: ../../CHANGELOG.md:55
 msgid "Make ActivityParameterNode droppable"
-msgstr ""
+msgstr "Rendre ActivityParameterNode détachable"
 
 #: ../../CHANGELOG.md:57
 msgid "2.22.0"
-msgstr ""
+msgstr "2.22.0"
 
 #: ../../CHANGELOG.md:59
 msgid "Proxy port improvements"
-msgstr ""
+msgstr "Amélioration des ports proxy"
 
 #: ../../CHANGELOG.md:60
 msgid "Add preferences for overriding dark mode and language to English"
 msgstr ""
+"Ajout de préférences pour remplacer le mode sombre et la langue en anglais"
 
 #: ../../CHANGELOG.md:61
 msgid "Add allocations toolbox with allocate relationship item"
 msgstr ""
+"Ajout d'une boîte à outils pour les allocations avec un élément de relation "
+"d'allocation"
 
 #: ../../CHANGELOG.md:62
 msgid "Add members in model browser"
-msgstr ""
+msgstr "Ajouter des membres dans le navigateur de modèle"
 
 #: ../../CHANGELOG.md:63
 msgid "Make line selection easier by increasing tolerance"
-msgstr ""
+msgstr "Faciliter la sélection des lignes en augmentant la tolérance"
 
 #: ../../CHANGELOG.md:64
 msgid "Make model loading more lenient"
-msgstr ""
+msgstr "Rendre le chargement des modèles plus souple"
 
 #: ../../CHANGELOG.md:65
 msgid "Remove duplicated elements in Component.provided property"
-msgstr ""
+msgstr "Supprimer les éléments dupliqués dans la propriété Component.provided"
 
 #: ../../CHANGELOG.md:66
 msgid "Replace Black, check toml, isort, and refurb with Ruff"
-msgstr ""
+msgstr "Remplacer Black, vérifier toml, isort, et réparer avec Ruff"
 
 #: ../../CHANGELOG.md:67
 msgid "macOS: fix About dialog links"
-msgstr ""
+msgstr "macOS : correction des liens de la boîte de dialogue « À propos de »"
 
 #: ../../CHANGELOG.md:68
 msgid "macOS: upgrade notarization from altool to notarytool"
-msgstr ""
+msgstr "macOS : mise à jour de la procédure de l'altool vers le notarytool"
 
 #: ../../CHANGELOG.md:69
 msgid "Upgrade to libadwaita 1.4.0"
-msgstr ""
+msgstr "Mise à jour vers libadwaita 1.4.0"
 
 #: ../../CHANGELOG.md:70
 msgid "Update Sphinx to version 6.0"
-msgstr ""
+msgstr "Mise à jour de Sphinx à la version 6.0"
 
 #: ../../CHANGELOG.md:71
 msgid "Update PyInstaller to version 6.1"
-msgstr ""
+msgstr "Mise à jour de PyInstaller vers la version 6.1"
 
 #: ../../CHANGELOG.md:72
 msgid "Clean up transactional event handling"
-msgstr ""
+msgstr "Nettoyer la gestion des événements transactionnels"
 
 #: ../../CHANGELOG.md:73
 msgid "Use defusedxml to avoid loading potentially dangerous xml"
 msgstr ""
+"Utilisez defusedxml pour éviter de charger des fichiers xml potentiellement "
+"dangereux"
 
 #: ../../CHANGELOG.md:74
 msgid "Update Portuguese (Brazilian), Italian, Tamil,"
-msgstr ""
+msgstr "Mise à jour portugais (brésilien), italien, tamoul,"
 
 #: ../../CHANGELOG.md:76
 msgid "2.21.0"
-msgstr ""
+msgstr "2.21.0"
 
 #: ../../CHANGELOG.md:78
 msgid "Add picture as core element"
-msgstr ""
+msgstr "Ajouter une image comme élément principal"
 
 #: ../../CHANGELOG.md:79
 msgid "Move diagram elements with the arrow keys"
-msgstr ""
+msgstr "Déplacer les éléments du diagramme à l'aide des touches fléchées"
 
 #: ../../CHANGELOG.md:80
 msgid "Add interface block to element creation menu"
-msgstr ""
+msgstr "Ajouter un bloc d'interface au menu de création d'éléments"
 
 #: ../../CHANGELOG.md:81
 msgid "Support state entry, exit, and do behavior selection via dropdown"
 msgstr ""
+"Prise en charge de l'entrée et de la sortie d'un état, ainsi que de la "
+"sélection d'un comportement par le biais d'une liste déroulante"
 
 #: ../../CHANGELOG.md:82
 msgid "Add feature to align diagram elements"
 msgstr ""
+"Ajout d'une fonctionnalité permettant d'aligner les éléments du diagramme"
 
 #: ../../CHANGELOG.md:83
 msgid "Display type of element in the properties panel"
-msgstr ""
+msgstr "Affichage du type d'élément dans le panneau des propriétés"
 
 #: ../../CHANGELOG.md:84
 msgid "Removed unnecessary operations and attributes for requirements"
-msgstr ""
+msgstr "Suppression des opérations et attributs inutiles pour les exigences"
 
 #: ../../CHANGELOG.md:85
 msgid "Enable macOS keybindings again"
-msgstr ""
+msgstr "Réactiver les raccourcis clavier de macOS"
 
 #: ../../CHANGELOG.md:86
 msgid "Fix missing derive relationship icon in the model browser"
 msgstr ""
+"Correction de l'absence de l'icône de la relation dérivée dans le navigateur "
+"de modèle"
 
 #: ../../CHANGELOG.md:87
 msgid "Fix block not showing parts and references"
-msgstr ""
+msgstr "Correction d'un bloc n'affichant pas les parties et les références"
 
 #: ../../CHANGELOG.md:88
 msgid "Fixed Profile is created instead of Stereotype in model browser"
 msgstr ""
+"Le profil fixe est créé à la place du stéréotype dans l'explorateur de "
+"modèles"
 
 #: ../../CHANGELOG.md:89
 msgid "Add ownership rules to DirectedRelationshipPropertyPath.targetContext"
 msgstr ""
+"Ajouter des règles de propriété à DirectedRelationshipPropertyPath."
+"targetContext"
 
 #: ../../CHANGELOG.md:90
 msgid "Add tests and fix `Component.required`"
-msgstr ""
+msgstr "Ajout de tests et correction de `Component.required`"
 
 #: ../../CHANGELOG.md:91
+#, fuzzy
 msgid "Present the Greeter, instead of only making it visible"
-msgstr ""
+msgstr "Présenter le greffon, au lieu de le rendre seulement visible"
 
 #: ../../CHANGELOG.md:92
 msgid "Fix derive-reqt model browser icon"
-msgstr ""
+msgstr "Correction de l'icône du navigateur du modèle 'derive-reqt'"
 
 #: ../../CHANGELOG.md:93
 msgid "Improve coverage reporting"
-msgstr ""
+msgstr "Améliorer les rapports de couverture"
 
 #: ../../CHANGELOG.md:94
 msgid "Add system style sheet to the documentation"
-msgstr ""
+msgstr "Ajouter une feuille de style à la documentation"
 
 #: ../../CHANGELOG.md:96
 msgid "2.20.0"
-msgstr ""
+msgstr "2.20.0"
 
 #: ../../CHANGELOG.md:98
+#, fuzzy
 msgid "Add ValueSpecificationAction"
-msgstr ""
+msgstr "Ajouter 'ValueSpecificationAction'"
 
 #: ../../CHANGELOG.md:99
 msgid "New element creation through model browser"
 msgstr ""
+"Création d'un nouvel élément par l'intermédiaire du navigateur de modèles"
 
 #: ../../CHANGELOG.md:100
 msgid "Interface block support on diagram"
-msgstr ""
+msgstr "Support du bloc d'interface sur le diagramme"
 
 #: ../../CHANGELOG.md:101
 msgid "Constrain SysML diagram creation in the model explorer to conform with SysML 1.6 specification"
 msgstr ""
+"Contraindre la création de diagrammes SysML dans l'explorateur de modèles à "
+"se conformer à la spécification SysML 1.6"
 
 #: ../../CHANGELOG.md:102
 msgid "Add type selection for Lifelines"
-msgstr ""
+msgstr "Ajouter une sélection de types pour les Lignes de Vie"
 
 #: ../../CHANGELOG.md:103
 msgid "Support SysMLDiagram type and diagram type specific header formatting"
 msgstr ""
+"Prise en charge du type de diagramme SysMLDiagram et du formatage de l'en-"
+"tête spécifique au type de diagramme"
 
 #: ../../CHANGELOG.md:104
 msgid "Pin type multiplicity"
-msgstr ""
+msgstr "Multiplicité du type de broche"
 
 #: ../../CHANGELOG.md:105
 msgid "Deep copy for packages and diagrams"
-msgstr ""
+msgstr "Copie approfondie pour les paquets et les diagrammes"
 
 #: ../../CHANGELOG.md:106
 msgid "Add Direct association to toolbar menu"
-msgstr ""
+msgstr "Ajouter l'association directe au menu de la barre d'outils"
 
 #: ../../CHANGELOG.md:107
 msgid "Add CallBehaviorAction to Activity profile"
-msgstr ""
+msgstr "Ajouter CallBehaviorAction au profil d'activité"
 
 #: ../../CHANGELOG.md:108
 msgid "Add operations compartment to Blocks"
-msgstr ""
+msgstr "Ajouter un compartiment d'opérations aux blocs"
 
 #: ../../CHANGELOG.md:109
 msgid "Toggle visibility of ProxyPort type"
-msgstr ""
+msgstr "Basculer la visibilité du type ProxyPort"
 
 #: ../../CHANGELOG.md:110
 msgid "Provide value for 'Show value' in properties page"
 msgstr ""
+"Fournir une valeur pour 'Afficher la valeur' dans la page des propriétés"
 
 #: ../../CHANGELOG.md:111
+#, fuzzy
 msgid "Format pins by their name"
-msgstr ""
+msgstr "Classer les broches par leur nom"
 
 #: ../../CHANGELOG.md:112
 msgid "Do not remove unused Packages with children"
-msgstr ""
+msgstr "Ne pas retirer les emballages non utilisés en présence d'enfants"
 
 #: ../../CHANGELOG.md:113
 msgid "Fix: tree view should not collapse when an element is deleted"
 msgstr ""
+"Correction : l'arborescence ne doit pas se réduire lorsqu'un élément est "
+"supprimé"
 
 #: ../../CHANGELOG.md:114
 msgid "Fix: only open model browser elements with a model element"
 msgstr ""
+"Correction : n'ouvrir les éléments du navigateur de modèle qu'avec un "
+"élément de modèle"
 
 #: ../../CHANGELOG.md:115
 msgid "Upgrade Gvsbuild to 2023.7.1"
-msgstr ""
+msgstr "Mise à jour de Gvsbuild vers 2023.7.1"
 
 #: ../../CHANGELOG.md:116
 msgid "Update minimal Python version to 3.10"
-msgstr ""
+msgstr "Update Gvsbuild to 2023.7.1"
 
 #: ../../CHANGELOG.md:117
 msgid "Fix: ensure a newly placed item is no longer a dropzone item"
 msgstr ""
+"Correction : s'assurer qu'un objet nouvellement placé n'est plus un objet de "
+"la zone de saut"
 
 #: ../../CHANGELOG.md:118
 msgid "Fix: incorrect filling between shapes"
-msgstr ""
+msgstr "Correction : remplissage incorrect entre les formes"
 
 #: ../../CHANGELOG.md:119
 msgid "Fix: weird pin rendering"
-msgstr ""
+msgstr "Correction : rendu bizarre de la broche"
 
 #: ../../CHANGELOG.md:120
 msgid "Fix: diagram background shouldn't be shared between open models"
 msgstr ""
+"Correction : l'arrière-plan du diagramme ne doit pas être partagé entre les "
+"modèles ouverts"
 
 #: ../../CHANGELOG.md:121
 msgid "Fix: activity parameter node is always stuck to the activity when moving"
 msgstr ""
+"Correction : le nœud des paramètres de l'activité est toujours collé à "
+"l'activité lorsqu'il est déplacé"
 
 #: ../../CHANGELOG.md:122
 msgid "Fix: notes should be applied to model elements and will be named \"Note\""
 msgstr ""
+"Correction : les notes doivent être appliquées aux éléments du modèle et "
+"seront nommées \"Note\""
 
 #: ../../CHANGELOG.md:123
 msgid "Fix: error when inverting association"
-msgstr ""
+msgstr "Correction : erreur lors de l'inversion de l'association"
 
 #: ../../CHANGELOG.md:126
 msgid "2.19.3"
-msgstr ""
+msgstr "2.19.3"
 
 #: ../../CHANGELOG.md:128
 msgid "Windows: Fix missing toolbar icons"
-msgstr ""
+msgstr "Windows : Correction des icônes manquantes dans la barre d'outils"
 
 #: ../../CHANGELOG.md:129
 msgid "Fix loading of ProxyPorts with informationFlow attached"
-msgstr ""
+msgstr "Correction du chargement des ProxyPorts avec informationFlow attaché"
 
 #: ../../CHANGELOG.md:130
 msgid "Fix to resolve CSS style variables before using the values"
 msgstr ""
+"Correction pour résoudre les variables de style CSS avant d'utiliser les "
+"valeurs"
 
 #: ../../CHANGELOG.md:132
 msgid "2.19.2"
-msgstr ""
+msgstr "2.19.2"
 
 #: ../../CHANGELOG.md:134
+#, fuzzy
 msgid "Add SysML Requirements trace derived unions"
-msgstr ""
+msgstr "Ajouter les unions dérivées de la trace des exigences SysML"
 
 #: ../../CHANGELOG.md:135
 msgid "Fix Parameter Node and Execution Specification with Dark mode"
 msgstr ""
+"Correction du nœud de paramètres et de la spécification d'exécution en mode "
+"sombre"
 
 #: ../../CHANGELOG.md:136
 msgid "Scale parameter nodes to contain long names"
 msgstr ""
+"Mise à l'échelle des nœuds de paramètres pour qu'ils contiennent des noms "
+"longs"
 
 #: ../../CHANGELOG.md:137
 msgid "Lenient derived unions"
