@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: Gaphor 0.13.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2024-02-27 10:00-0500\n"
-"PO-Revision-Date: 2024-11-24 11:54+0000\n"
+"PO-Revision-Date: 2024-11-24 12:55+0000\n"
 "Last-Translator: Dan Yeaw <dan@yeaw.me>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/gaphor/gaphor/fr/>"
 "\n"
@@ -2995,7 +2995,7 @@ msgstr "Coller (copie éléments de définition)"
 
 #: gaphor/ui/modelmerge/organize.py:134
 msgid "Update diagram “{name}”"
-msgstr "Mettre à jour le diagramme \"{name\"}"
+msgstr "Mettre à jour le diagramme \"{name}\""
 
 #: gaphor/ui/modelmerge/organize.py:165 gaphor/ui/modelmerge/organize.py:307
 msgid "Update element “{name}”"
