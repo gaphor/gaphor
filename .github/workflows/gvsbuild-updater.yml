@@ -12,7 +12,7 @@ env:
 jobs:
 
   check-version:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     outputs:
       current_version: ${{ steps.current-version.outputs.current_version }}
       latest_version: ${{ steps.latest-version.outputs.latest_version }}
@@ -46,7 +46,7 @@ jobs:
           echo "latest_version=$(python -m lastversion gvsbuild)" >> "$GITHUB_OUTPUT"
 
   update-version:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     needs: [ check-version ]
     if: ${{ needs.check-version.outputs.current_version != needs.check-version.outputs.latest_version }}
     permissions:

@@ -27,7 +27,7 @@ env:
 jobs:
   lint:
     name: 🕵️ Lint
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 10
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     steps:
@@ -66,7 +66,7 @@ jobs:
   linux-wheel:
     name:  🐧 Linux (Wheel) with Python ${{ matrix.python_version }}
     needs: lint
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     container: fedora:39
     timeout-minutes: 30
     if: "!contains(github.event.head_commit.message, 'skip ci')"
@@ -131,7 +131,7 @@ jobs:
   linux-flatpak-devel:
     name: 📦 Linux (Devel Flatpak)
     needs: lint
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     container:
       image: bilelmoussaoui/flatpak-github-actions:gnome-45
       options: --privileged
@@ -354,7 +354,7 @@ jobs:
   publish-to-pypi:
     name: 🧀 Publish to PyPI (release only)
     needs: [ linux-wheel, linux-flatpak-devel, check-macos-app, check-windows-installer ]
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     permissions:
       id-token: write
     if: github.event_name == 'release'
@@ -380,7 +380,7 @@ jobs:
   trigger-website-version-update:
     name: ⏩ gaphor.org version update
     needs: [ publish-to-pypi ]
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
       - name: Harden Runner
         uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f # v2.10.2
@@ -398,7 +398,7 @@ jobs:
   trigger-flatpak-version-update:
     name: ⏩ Flathub version update
     needs: [ publish-to-pypi ]
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
       - name: Harden Runner
         uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f # v2.10.2
