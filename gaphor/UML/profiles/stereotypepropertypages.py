@@ -37,7 +37,6 @@ class StereotypePage(PropertyPageBase):
         builder = new_builder(
             "stereotypes-editor",
             signals={
-                "stereotype-activated": (stereotype_activated,),
                 "stereotype-key-pressed": (stereotype_key_handler,),
             },
         )
@@ -100,7 +99,10 @@ def stereotype_set_model_with_interaction(stereotype_list, model):
                 },
             ),
             value_list_item_factory(
-                signal_handlers=text_field_handlers("slot_value"),
+                signal_handlers={
+                    "stereotype-click-pressed": stereotype_click_handler,
+                    **text_field_handlers("slot_value"),
+                },
             ),
         ],
         strict=False,
@@ -257,14 +259,10 @@ def value_list_item_factory(signal_handlers=None):
     )
 
 
-def stereotype_activated(list_view, _row):
-    selection = list_view.get_model()
-    item = selection.get_selected_item()
-
-    if item.attr:
-        item.editing = True
-    else:
-        item.applied = not item.applied
+def stereotype_click_handler(ctrl, n_press, x, y):
+    if n_press == 2:
+        cell = ctrl.get_widget()
+        cell.editing = True
 
 
 def stereotype_key_handler(ctrl, keyval, _keycode, state):
