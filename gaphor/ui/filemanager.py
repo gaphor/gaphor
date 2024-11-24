@@ -133,7 +133,7 @@ class FileManager(Service, ActionProvider, TaskOwner):
         try:
             await self._load_async(filename, status_window.progress)
         finally:
-            status_window.destroy()
+            status_window.done()
         self.event_manager.handle(ModelReady(self, filename=filename))
 
     @action("file-reload")
@@ -192,7 +192,7 @@ class FileManager(Service, ActionProvider, TaskOwner):
                     )
                 )
         finally:
-            status_window.destroy()
+            status_window.done()
 
     async def _load_async(
         self,
@@ -307,7 +307,7 @@ class FileManager(Service, ActionProvider, TaskOwner):
         else:
             self.filename = filename
         finally:
-            status_window.destroy()
+            status_window.done()
 
     @property
     def parent_window(self):
