@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: Gaphor 0.13.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2024-02-27 10:00-0500\n"
-"PO-Revision-Date: 2024-11-22 06:00+0000\n"
+"PO-Revision-Date: 2024-11-24 11:54+0000\n"
 "Last-Translator: Stan SZLAPKA <stansz@free.fr>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/gaphor/gaphor/fr/>"
 "\n"
@@ -302,7 +302,7 @@ msgstr "Accident"
 #: gaphor/RAAML/stpa/stpatoolbox.py:27 gaphor/RAAML/stpa/stpatoolbox.py:116
 #: gaphor/templates/raaml-example.gaphor
 msgid "Abstract Operational Situation"
-msgstr "Situation Opérationnel Abstraite"
+msgstr "Situation Opérationnelle Abstraite"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:35 gaphor/SysML/blocks/blockstoolbox.py:100
 #: gaphor/UML/classes/classestoolbox.py:127
@@ -381,7 +381,7 @@ msgstr "Afficher les Valeurs"
 
 #: gaphor/SysML/propertypages.ui:183
 msgid "Aggregation"
-msgstr "Aggrégation"
+msgstr "Agrégation"
 
 #: gaphor/SysML/propertypages.ui:195 gaphor/UML/classes/propertypages.ui:116
 #: gaphor/UML/classes/propertypages.ui:227
@@ -534,7 +534,7 @@ msgstr "Bloc Interface"
 #: gaphor/SysML/blocks/blockstoolbox.py:51
 #: gaphor/UML/classes/classestoolbox.py:51
 msgid "Package"
-msgstr "Paquetage"
+msgstr "Paquet"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:63
 #: gaphor/UML/classes/classestoolbox.py:82
@@ -564,7 +564,7 @@ msgstr "Type de la Valeur"
 #: gaphor/SysML/blocks/blockstoolbox.py:118
 #: gaphor/UML/classes/classestoolbox.py:154
 msgid "Enumeration"
-msgstr "Enumération"
+msgstr "Énumération"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:130
 #: gaphor/UML/classes/classestoolbox.py:166
@@ -865,11 +865,11 @@ msgstr "Nouveau Couloir"
 
 #: gaphor/UML/actions/pin.py:58
 msgid "input pin"
-msgstr "Broche d'Entrée"
+msgstr "broche d'entrée"
 
 #: gaphor/UML/actions/pin.py:64
 msgid "output pin"
-msgstr "Broche de Sortie"
+msgstr "broche de sortie"
 
 #: gaphor/UML/actions/propertypages.ui:11
 msgid "Show type"
@@ -893,7 +893,7 @@ msgstr "Partitions"
 
 #: gaphor/UML/actions/propertypages.ui:130
 msgid "Upper Bound"
-msgstr "Limite supérieure"
+msgstr "Limite Supérieure"
 
 #: gaphor/UML/actions/propertypages.ui:147
 msgid "Show Ordering"
@@ -929,7 +929,7 @@ msgstr "Garde"
 #: gaphor/UML/actions/propertypages.ui:296
 #: gaphor/UML/actions/propertypages.ui:351
 msgid "Parameter Nodes"
-msgstr "Paramètres des Nœuds"
+msgstr "Nœuds de paramètre"
 
 #: gaphor/UML/actions/propertypages.ui:308
 #: gaphor/UML/classes/propertypages.ui:59
@@ -980,7 +980,7 @@ msgstr "Sortie"
 
 #: gaphor/UML/actions/propertypages.ui:380
 msgid "Return"
-msgstr "Retourner"
+msgstr "Retour"
 
 #: gaphor/UML/actions/propertypages.ui:391
 #: gaphor/UML/classes/propertypages.ui:11
