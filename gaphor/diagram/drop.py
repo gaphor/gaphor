@@ -10,9 +10,7 @@ from generic.multidispatch import FunctionDispatcher, multidispatch
 from gaphor.core.modeling import Base, Diagram, Presentation
 from gaphor.diagram.group import change_owner, ungroup
 from gaphor.diagram.presentation import ElementPresentation, connect
-from gaphor.diagram.support import get_diagram_item, get_diagram_item_metadata
-from gaphor.UML.recipes import owner_package
-from gaphor.UML.uml import ActivityEdge, Element, Relationship
+from gaphor.diagram.support import get_diagram_item
 
 log = logging.getLogger(__name__)
 
@@ -21,24 +19,9 @@ def no_drop(element: Base, diagram: Diagram, x: float, y: float):
     return None
 
 
-drop: FunctionDispatcher[Callable[[Element, Element], bool]] = multidispatch(
-    Base, Diagram
-)(no_drop)
-
-
-@drop.register(Element, Diagram)
-def drop_element(
-    element: Element, diagram: Diagram, x: float, y: float
-) -> Presentation | None:
-    if item_class := get_diagram_item(type(element)):
-        item = diagram.create(item_class)
-        assert item
-
-        item.matrix.translate(x, y)
-        item.subject = element
-
-        return item
-    return None
+drop: FunctionDispatcher[Callable[[Base, Base], bool]] = multidispatch(Base, Diagram)(
+    no_drop
+)
 
 
 @drop.register(Presentation, Diagram)
@@ -74,9 +57,6 @@ def drop_on_presentation(
     if new_parent and item.subject and change_owner(new_parent.subject, item.subject):
         grow_parent(new_parent, item)
         item.change_parent(new_parent)
-    elif item.subject and isinstance(item.diagram, Element):
-        diagram_parent = owner_package(item.diagram)
-        change_owner(diagram_parent, item.subject)
 
 
 def grow_parent(parent: Presentation, item: Presentation) -> None:
@@ -104,45 +84,6 @@ def _bounds(item: ElementPresentation) -> Rectangle:
     return Rectangle(x0, y0, x1=x1, y1=y1)
 
 
-@drop.register(Relationship, Diagram)
-def drop_relationship_on_diagram(element: Relationship, diagram: Diagram, x, y):
-    item_class = get_diagram_item(type(element))
-    if not item_class:
-        return None
-
-    metadata = get_diagram_item_metadata(item_class)
-    added_items = []
-    if metadata:
-        # Relationships are many-to-many, so we need to create multiple items
-        for head in metadata["head"].get(element):
-            for tail in metadata["tail"].get(element):
-                new_item = drop_relationship(element, head, tail, diagram, x, y)
-                if new_item:
-                    added_items.append(new_item)
-        return added_items
-
-
-@drop.register(ActivityEdge, Diagram)
-def drop_activity_edge_on_diagram(element: ActivityEdge, diagram: Diagram, x, y):
-    item_class = get_diagram_item(type(element))
-    if not item_class:
-        return None
-
-    metadata = get_diagram_item_metadata(item_class)
-    return (
-        drop_relationship(
-            element,
-            metadata["head"].get(element),
-            metadata["tail"].get(element),
-            diagram,
-            x,
-            y,
-        )
-        if metadata
-        else None
-    )
-
-
 def drop_relationship(element, head_element, tail_element, diagram, x, y):
     item_class = get_diagram_item(type(element))
     if not item_class:
@@ -163,27 +104,6 @@ def drop_relationship(element, head_element, tail_element, diagram, x, y):
         connect(item, item.head, head_item)
     if tail_item:
         connect(item, item.tail, tail_item)
-
-    return item
-
-
-def drop_pin_on_diagram(element, owner, diagram, x, y):
-    item_class = get_diagram_item(type(element))
-    if not item_class:
-        return None
-
-    owner_item = diagram_has_presentation(diagram, owner)
-    if owner and not owner_item:
-        return None
-
-    item = diagram.create(item_class)
-    assert item
-
-    item.matrix.translate(x, y)
-    item.subject = element
-    handle = item.handles()[-1]
-    if owner_item:
-        connect(item, handle, owner_item)
 
     return item
 

@@ -2,7 +2,24 @@ from __future__ import annotations
 
 from gaphor import UML
 from gaphor.core.modeling import Diagram
-from gaphor.diagram.drop import drop, drop_pin_on_diagram, drop_relationship
+from gaphor.diagram.drop import diagram_has_presentation, drop, drop_relationship
+from gaphor.diagram.presentation import Presentation, connect
+from gaphor.diagram.support import get_diagram_item, get_diagram_item_metadata
+
+
+@drop.register(UML.Element, Diagram)
+def drop_element(
+    element: UML.Element, diagram: Diagram, x: float, y: float
+) -> Presentation | None:
+    if item_class := get_diagram_item(type(element)):
+        item = diagram.create(item_class)
+        assert item
+
+        item.matrix.translate(x, y)
+        item.subject = element
+
+        return item
+    return None
 
 
 @drop.register(UML.Association, Diagram)
@@ -38,3 +55,42 @@ def drop_message(element: UML.Message, diagram: Diagram, x, y):
 @drop.register(UML.Pin, Diagram)
 def drop_pin(element: UML.Pin, diagram: Diagram, x, y):
     return drop_pin_on_diagram(element, element.owner, diagram, x, y)
+
+
+def drop_pin_on_diagram(element, owner, diagram, x, y):
+    item_class = get_diagram_item(type(element))
+    if not item_class:
+        return None
+
+    owner_item = diagram_has_presentation(diagram, owner)
+    if owner and not owner_item:
+        return None
+
+    item = diagram.create(item_class)
+    assert item
+
+    item.matrix.translate(x, y)
+    item.subject = element
+    handle = item.handles()[-1]
+    if owner_item:
+        connect(item, handle, owner_item)
+
+    return item
+
+
+@drop.register(UML.Relationship, Diagram)
+def drop_relationship_on_diagram(element: UML.Relationship, diagram: Diagram, x, y):
+    item_class = get_diagram_item(type(element))
+    if not item_class:
+        return None
+
+    metadata = get_diagram_item_metadata(item_class)
+    added_items = []
+    if metadata:
+        # Relationships are many-to-many, so we need to create multiple items
+        for head in metadata["head"].get(element):
+            for tail in metadata["tail"].get(element):
+                new_item = drop_relationship(element, head, tail, diagram, x, y)
+                if new_item:
+                    added_items.append(new_item)
+        return added_items

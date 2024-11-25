@@ -2,12 +2,12 @@ from gaphor.core.modeling import Diagram
 from gaphor.diagram.drop import (
     drop,
     drop_on_presentation,
-    drop_relationship_on_diagram,
+    drop_relationship,
     grow_parent,
 )
 from gaphor.diagram.group import change_owner, ungroup
 from gaphor.diagram.presentation import connect
-from gaphor.diagram.support import get_diagram_item
+from gaphor.diagram.support import get_diagram_item, get_diagram_item_metadata
 from gaphor.UML.actions.action import (
     AcceptEventActionItem,
     ActionItem,
@@ -17,11 +17,33 @@ from gaphor.UML.actions.action import (
 )
 from gaphor.UML.actions.objectnode import ObjectNodeItem
 from gaphor.UML.actions.partition import PartitionItem
-from gaphor.UML.uml import ActivityParameterNode, ActivityPartition
+from gaphor.UML.drop import drop_relationship_on_diagram
+from gaphor.UML.uml import ActivityEdge, ActivityParameterNode, ActivityPartition
+
+
+@drop.register(ActivityEdge, Diagram)
+def drop_activity_edge_on_diagram(element: ActivityEdge, diagram: Diagram, x, y):
+    item_class = get_diagram_item(type(element))
+    if not item_class:
+        return None
+
+    metadata = get_diagram_item_metadata(item_class)
+    return (
+        drop_relationship(
+            element,
+            metadata["head"].get(element),
+            metadata["tail"].get(element),
+            diagram,
+            x,
+            y,
+        )
+        if metadata
+        else None
+    )
 
 
 @drop.register(ActivityParameterNode, Diagram)
-def drop_relationship(element: ActivityParameterNode, diagram: Diagram, x, y):
+def drop_parameter_node(element: ActivityParameterNode, diagram: Diagram, x, y):
     item_class = get_diagram_item(type(element))
     if not item_class:
         return None
