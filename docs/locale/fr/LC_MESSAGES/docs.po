@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gaphor 2.23.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-02-15 20:49-0500\n"
-"PO-Revision-Date: 2024-11-25 01:50+0000\n"
+"PO-Revision-Date: 2024-11-26 01:53+0000\n"
 "Last-Translator: Stan SZLAPKA <stansz@free.fr>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/gaphor/"
 "docs-gaphor-org/fr/>\n"
@@ -576,142 +576,159 @@ msgstr ""
 #: ../../CHANGELOG.md:138
 msgid "Fix segfault by reverting Gtk.ListVew for Parameters"
 msgstr ""
+"Correction d'une erreur de segmentation en inversant les paramètres de Gtk."
+"ListVew"
 
 #: ../../CHANGELOG.md:139
 msgid "Fix connect interaction fragments"
-msgstr ""
+msgstr "Correction des fragments d'interaction de connexion"
 
 #: ../../CHANGELOG.md:140
 msgid "chore: clean up deprecated properties from UIComponent"
-msgstr ""
+msgstr "contrainte : nettoyage des propriétés obsolètes de UIComponent"
 
 #: ../../CHANGELOG.md:141
 msgid "Add Python 3.12 Support, Update Poetry to version 1.5.1"
 msgstr ""
+"Ajout du support de Python 3.12, mise à jour de Poetry vers la version 1.5.1"
 
 #: ../../CHANGELOG.md:142
 msgid "Apply security best practices to GitHub Actions"
-msgstr ""
+msgstr "Appliquer les meilleures pratiques de sécurité aux actions GitHub"
 
 #: ../../CHANGELOG.md:143
 msgid "Create a Security Policy and Run Scorecard Checks"
-msgstr ""
+msgstr "Créer une Politique de Sécurité et Vérification des cartes de pointage"
 
 #: ../../CHANGELOG.md:144
 msgid "Only use mature translations for released versions of Gaphor"
 msgstr ""
+"N'utilisez que des traductions matures pour les versions publiées de Gaphor"
 
 #: ../../CHANGELOG.md:145
 msgid "Update Spanish, Hungarian, and Finnish translations"
-msgstr ""
+msgstr "Mise à jour des traductions en espagnol, hongrois et finnois"
 
 #: ../../CHANGELOG.md:146
 msgid "Fix scaling of Activity Parameter nodes"
-msgstr ""
+msgstr "Fixer l'échelle des nœuds des paramètres d'activité"
 
 #: ../../CHANGELOG.md:148
 msgid "2.19.1"
-msgstr ""
+msgstr "2.19.1"
 
 #: ../../CHANGELOG.md:150
 msgid "Fix: order is preserved when undoing a change"
 msgstr ""
+"Correction : l'ordre est préservé lors de l'annulation d'une modification"
 
 #: ../../CHANGELOG.md:151
 msgid "Actions: ObjectNode now also connects to decision/merge and join/fork nodes."
 msgstr ""
+"Actions : ObjectNode se connecte désormais également aux nœuds de décision/"
+"fusion et de jointure/fonctionnement."
 
 #: ../../CHANGELOG.md:152
 msgid "Fix: ports should be nested under properties"
-msgstr ""
+msgstr "Correction : les ports devraient être regroupés sous les propriétés"
 
 #: ../../CHANGELOG.md:153
 msgid "Experimental: support for plugins"
-msgstr ""
+msgstr "Expérimental : prise en charge des plugins"
 
 #: ../../CHANGELOG.md:154
 msgid "Add fullscreen mode with F11"
-msgstr ""
+msgstr "Ajouter le mode plein écran avec F11"
 
 #: ../../CHANGELOG.md:155
 msgid "Remove Tkinter from packaging"
-msgstr ""
+msgstr "Retirer Tkinter de la boîte"
 
 #: ../../CHANGELOG.md:157
 msgid "2.19.0"
-msgstr ""
+msgstr "2.19.0"
 
 #: ../../CHANGELOG.md:159
 msgid "Dropped support for AppImage"
-msgstr ""
+msgstr "Suppression du support pour AppImage"
 
 #: ../../CHANGELOG.md:160
 msgid "Add Information Flow support for Associations"
-msgstr ""
+msgstr "Ajouter la prise en charge du flux d'informations pour les associations"
 
 #: ../../CHANGELOG.md:161
 msgid "Interactions: fixed DnD for partially connected messages"
-msgstr ""
+msgstr "Interactions : corrigé DnD pour les messages partiellement connectés"
 
 #: ../../CHANGELOG.md:162
 msgid "Restore CSS auto-complete"
-msgstr ""
+msgstr "Restaurer l'auto-complétion CSS"
 
 #: ../../CHANGELOG.md:163
 msgid "Docs: A coffee machine tutorial has been added"
-msgstr ""
+msgstr "Docs : Un tutoriel sur la machine à café a été ajouté"
 
 #: ../../CHANGELOG.md:164
 msgid "Make model loading more lenient to model corruption"
 msgstr ""
+"Rendre le chargement des modèles plus tolérant à l'égard de la corruption "
+"des modèles"
 
 #: ../../CHANGELOG.md:165
 msgid "CLI: export diagrams and run scripts within Gaphor"
-msgstr ""
+msgstr "CLI : exporter des diagrammes et exécuter des scripts dans Gaphor"
 
 #: ../../CHANGELOG.md:166
 msgid "Enable PyPI Trusted Publisher"
-msgstr ""
+msgstr "Activer PyPI Trusted Publisher"
 
 #: ../../CHANGELOG.md:167
 msgid "Replace deprecated Gtk.TreeView with ListView: Activity Parameter Nodes"
 msgstr ""
+"Remplacer le Gtk.TreeView obsolète par le ListView : Nœuds de paramètres "
+"d'activité"
 
 #: ../../CHANGELOG.md:168
 msgid "Use consistent naming for element_factory in storage module"
 msgstr ""
+"Utiliser un nom cohérent pour element_factory dans le module de stockage"
 
 #: ../../CHANGELOG.md:169
 msgid "Use new style Dropdowns for selecting items in property editor"
 msgstr ""
+"Utiliser le nouveau style de liste déroulante pour sélectionner des éléments "
+"dans l'éditeur de propriétés"
 
 #: ../../CHANGELOG.md:170
 msgid "Updates to translations"
-msgstr ""
+msgstr "Mises à jour des traductions"
 
 #: ../../CHANGELOG.md:172
 msgid "2.18.1"
-msgstr ""
+msgstr "2.18.1"
 
 #: ../../CHANGELOG.md:174
 msgid "Make operations visible on Blocks"
-msgstr ""
+msgstr "Rendre les opérations visibles sur les blocs"
 
 #: ../../CHANGELOG.md:175
 msgid "A quick fix for crashes in the CSS editor, disable autocomplete"
 msgstr ""
+"Une solution rapide pour les plantages dans l'éditeur CSS, désactiver "
+"l'autocomplétion"
 
 #: ../../CHANGELOG.md:176
 msgid "Fix doc translation catalogs not found"
-msgstr ""
+msgstr "Correction des catalogues de traduction de documents non trouvés"
 
 #: ../../CHANGELOG.md:177
 msgid "Fix encoding warnings for no encoding argument"
 msgstr ""
+"Correction des avertissements relatifs à l'encodage en l'absence d'argument"
 
 #: ../../CHANGELOG.md:178
 msgid "Update AppImage build with GTK 4.10"
-msgstr ""
+msgstr "Mise à jour de l'AppImage avec GTK 4.10"
 
 #: ../../CHANGELOG.md:179
 msgid "Add non-goals to README"
@@ -720,542 +737,605 @@ msgstr ""
 #: ../../CHANGELOG.md:180
 msgid "Enable translation of docs, and add Crotian, German, and Dutch"
 msgstr ""
+"Permettre la traduction des documents, et ajouter le croate, l'allemand et "
+"le néerlandais"
 
 #: ../../CHANGELOG.md:181
 msgid "Updates to most translations and add Tamil"
-msgstr ""
+msgstr "Mise à jour de la plupart des traductions et ajout du Tamoul"
 
 #: ../../CHANGELOG.md:183
 msgid "2.18.0"
-msgstr ""
+msgstr "2.18.0"
 
 #: ../../CHANGELOG.md:185
 msgid "Support for manually resolving Git merge conflicts"
-msgstr ""
+msgstr "Prise en charge de la résolution manuelle des conflits de fusion Git"
 
 #: ../../CHANGELOG.md:186
 msgid "Drop support for GTK3, bundle macOS with GTK4"
 msgstr ""
+"Suppression de la prise en charge de GTK3, intégration de GTK4 dans macOS"
 
 #: ../../CHANGELOG.md:187
 msgid "Enable middle-click mouse scrolling of diagrams"
-msgstr ""
+msgstr "Activer le défilement des diagrammes par un clic du milieu de la souris"
 
 #: ../../CHANGELOG.md:188
 msgid "Support for changing the spoken language in a model"
-msgstr ""
+msgstr "Aide pour modifier la langue parlée dans un modèle"
 
 #: ../../CHANGELOG.md:189
 msgid "Add diagrams in diagrams"
-msgstr ""
+msgstr "Ajouter des diagrammes dans les diagrammes"
 
 #: ../../CHANGELOG.md:190
 msgid "Upgrade development build to GNOME 44"
-msgstr ""
+msgstr "Mise à jour de la version de développement vers GNOME 44"
 
 #: ../../CHANGELOG.md:191
 msgid "Clean up application architecture for copy service"
-msgstr ""
+msgstr "Nettoyer l'architecture de l'application pour le service de copie"
 
 #: ../../CHANGELOG.md:192
 msgid "Css editor dark mode"
-msgstr ""
+msgstr "Editeur Css mode sombre"
 
 #: ../../CHANGELOG.md:193
 msgid "macOS: update notarize, staple, and cert actions"
-msgstr ""
+msgstr "macOS : mise à jour des actions notarize, staple et cert"
 
 #: ../../CHANGELOG.md:194
 msgid "Just load modules for gaphor.modules entry points"
 msgstr ""
+"Il suffit de charger les modules pour les points d'entrée de gaphor.modules"
 
 #: ../../CHANGELOG.md:195
 msgid "Finnish, Dutch, Spanish, Polish, Portuguese (BRA) translation update"
 msgstr ""
+"Mise à jour des traductions en finnois, néerlandais, espagnol, polonais et "
+"portugais (BRA)"
 
 #: ../../CHANGELOG.md:196
 msgid "Toggle the \"no tabs\" background based on notebook activity"
 msgstr ""
+"Basculer l'arrière-plan « pas d'onglets » en fonction de l'activité du bloc-"
+"note"
 
 #: ../../CHANGELOG.md:197
 msgid "Fix drag from model browser"
-msgstr ""
+msgstr "Correction du glisser-déposer à partir du navigateur de modèles"
 
 #: ../../CHANGELOG.md:198
 msgid "Fix orthogonal lines during copy/paste"
-msgstr ""
+msgstr "Correction des lignes orthogonales lors du copier/coller"
 
 #: ../../CHANGELOG.md:199
 msgid "Update diagram directly when partitions change"
-msgstr ""
+msgstr "Mise à jour directe du diagramme en cas de modification des partitions"
 
 #: ../../CHANGELOG.md:200
 msgid "Make main window always available to avoid warnings"
 msgstr ""
+"Faire en sorte que la fenêtre principale soit toujours disponible pour "
+"éviter les avertissements"
 
 #: ../../CHANGELOG.md:202
 msgid "2.17.0"
-msgstr ""
+msgstr "2.17.0"
 
 #: ../../CHANGELOG.md:204
 msgid "Add support for diagram metadata"
-msgstr ""
+msgstr "Ajout de la prise en charge des métadonnées de diagramme"
 
 #: ../../CHANGELOG.md:205
 msgid "macOS: Fix freeze creating new diagram"
-msgstr ""
+msgstr "macOS : Correction du figeage à la création d'un nouveau diagramme"
 
 #: ../../CHANGELOG.md:206
 msgid "Properly unsubscribe when property page is removed"
-msgstr ""
+msgstr "Désinscription correcte en cas de suppression d'une page de propriété"
 
 #: ../../CHANGELOG.md:207
+#, fuzzy
 msgid "Package GSettings daemon schemas for AppImage"
-msgstr ""
+msgstr "Paquet 'schémas du démon GSettings' pour AppImage"
 
 #: ../../CHANGELOG.md:208
 msgid "Consider only default modifiers in toolbox shortcuts"
 msgstr ""
+"Ne prendre en compte que les modificateurs par défaut dans les raccourcis de "
+"la boîte à outils"
 
 #: ../../CHANGELOG.md:209
 msgid "New status page icon"
-msgstr ""
+msgstr "Nouvelle icône de la page d'état"
 
 #: ../../CHANGELOG.md:210
 msgid "Workaround removing skip-changelog labels"
-msgstr ""
+msgstr "Solution pour supprimer les étiquettes du journal des modifications"
 
 #: ../../CHANGELOG.md:211
 msgid "Update gvsbuild to version 2023.2.0"
-msgstr ""
+msgstr "Mise à jour de gvsbuild vers la version 2023.2.0"
 
 #: ../../CHANGELOG.md:212
 msgid "meta: Add .doap-file"
-msgstr ""
+msgstr "méta : Ajout d'un fichier .doap"
 
 #: ../../CHANGELOG.md:213
 msgid "Update \"Keep model in sync\" design principle"
 msgstr ""
+"Mise à jour du principe de conception « Keep model in sync » ("
+"synchronisation du modèle)"
 
 #: ../../CHANGELOG.md:214
 msgid "Update to using the GNOME Code of Conduct"
-msgstr ""
+msgstr "Mise à jour de l'utilisation du code de conduite de GNOME"
 
 #: ../../CHANGELOG.md:215
 msgid "Add Polish translation"
-msgstr ""
+msgstr "Ajouter une traduction en polonais"
 
 #: ../../CHANGELOG.md:216
 msgid "Spanish, Dutch, Croatian, Turkish, and German Translation Updates"
 msgstr ""
+"Mises à jour des traductions en espagnol, néerlandais, croate, turc et "
+"allemand"
 
 #: ../../CHANGELOG.md:218
 msgid "2.16.0"
-msgstr ""
+msgstr "2.16.0"
 
 #: ../../CHANGELOG.md:220
 msgid "Automatic switching to dark mode in diagrams"
-msgstr ""
+msgstr "Passage automatique en mode sombre dans les diagrammes"
 
 #: ../../CHANGELOG.md:221
 msgid "Add Model browser multi select and popup menu"
 msgstr ""
+"Ajout d'une sélection multiple et d'un menu contextuel pour le navigateur de "
+"modèles"
 
 #: ../../CHANGELOG.md:222
 msgid "Refactor and improve model browser"
-msgstr ""
+msgstr "Refonte et amélioration du navigateur de modèles"
 
 #: ../../CHANGELOG.md:223
 msgid "Use normal + icon for new diagram dropdown"
-msgstr ""
+msgstr "Utiliser l'icône + normale pour le nouveau diagramme déroulant"
 
 #: ../../CHANGELOG.md:224
 msgid "Add support for CSS variables and named colors"
-msgstr ""
+msgstr "Ajout de la prise en charge des variables CSS et des couleurs nommées"
 
 #: ../../CHANGELOG.md:225
 msgid "Apply development mode for dev releases"
-msgstr ""
+msgstr "Appliquer le mode développement pour les versions dev"
 
 #: ../../CHANGELOG.md:226
 msgid "Show diagram name in header"
-msgstr ""
+msgstr "Afficher le nom du diagramme dans l'en-tête"
 
 #: ../../CHANGELOG.md:227
 msgid "Show something when no diagrams are opened"
-msgstr ""
+msgstr "Afficher quelque chose lorsqu'aucun diagramme n'est ouvert"
 
 #: ../../CHANGELOG.md:228
 msgid "Fix the packaged data dirs"
-msgstr ""
+msgstr "Correction des répertoires de données packagés"
 
 #: ../../CHANGELOG.md:229
 msgid "Stabilize macOS/GTK tests"
-msgstr ""
+msgstr "Stabilisation des tests macOS/GTK"
 
 #: ../../CHANGELOG.md:230
 msgid "Add a comments option to our documentation"
-msgstr ""
+msgstr "Ajouter une option de commentaires à notre documentation"
 
 #: ../../CHANGELOG.md:231
 msgid "Split tips in to multiple labels"
-msgstr ""
+msgstr "Diviser les conseils en plusieurs étiquettes"
 
 #: ../../CHANGELOG.md:232
 msgid "Win and macOS: Fix wrong language selected when region not default"
 msgstr ""
+"Win et macOS : Correction de la mauvaise langue sélectionnée lorsque la "
+"région n'est pas celle par défaut"
 
 #: ../../CHANGELOG.md:233
 msgid "Fix translation warning never logged with missing mo files"
 msgstr ""
+"Correction de l'avertissement de traduction qui n'est jamais enregistré en "
+"cas de fichiers mo manquants"
 
 #: ../../CHANGELOG.md:234
 msgid "Spanish, Russian, Hungarian, Czech translation update"
-msgstr ""
+msgstr "Mise à jour des traductions en espagnol, russe, hongrois et tchèque"
 
 #: ../../CHANGELOG.md:236
 msgid "2.15.0"
-msgstr ""
+msgstr "2.15.0"
 
 #: ../../CHANGELOG.md:238
 msgid "Add basic git merge conflict support by asking which model to load"
 msgstr ""
+"Ajout d'un support de base pour les conflits de fusion git en demandant quel "
+"modèle charger"
 
 #: ../../CHANGELOG.md:239
 msgid "Improvements to CSS autocomplete with function completion"
-msgstr ""
+msgstr "Amélioration de l'autocomplétion CSS avec complétion des fonctions"
 
 #: ../../CHANGELOG.md:240
 msgid "Insert colons, spaces, and () automatically for CSS autocomplete"
 msgstr ""
+"Insérer automatiquement des points de suspension, des espaces et des () pour "
+"l'autocomplétion CSS"
 
 #: ../../CHANGELOG.md:241
 msgid "Use native file chooser in Windows"
-msgstr ""
+msgstr "Utiliser le sélecteur de fichiers natif dans Windows"
 
 #: ../../CHANGELOG.md:242
 msgid "Fix translations not loading in Windows, macOS, and AppImage"
 msgstr ""
+"Correction des traductions qui ne se chargent pas dans Windows, macOS et "
+"AppImage"
 
 #: ../../CHANGELOG.md:243
 msgid "Fix PyInstaller versionfile parse error with pre-release versions"
 msgstr ""
+"Corriger l'erreur d'analyse du fichier de version de PyInstaller avec les "
+"versions antérieures"
 
 #: ../../CHANGELOG.md:244
 msgid "Update CI to publish to PyPI after all other jobs have passed"
 msgstr ""
+"Mise à jour de CI pour publier sur PyPI après que toutes les autres tâches "
+"aient été effectuées"
 
 #: ../../CHANGELOG.md:245
 msgid "Replace pytest-mock with monkeypatch for tests"
-msgstr ""
+msgstr "Remplacer pytest-mock par monkeypatch pour les tests"
 
 #: ../../CHANGELOG.md:246
 msgid "Fix PEP597 encoding warnings"
-msgstr ""
+msgstr "Correction des avertissements de PEP597 concernant l'encodage"
 
 #: ../../CHANGELOG.md:247
 msgid "Fix regression that caused line handles to not snap to elements"
 msgstr ""
+"Correction d'une régression qui faisait que les poignées de ligne ne "
+"s'accrochaient pas aux éléments"
 
 #: ../../CHANGELOG.md:248
 msgid "Add Turkish, and update French, Russian, and Swedish translations"
 msgstr ""
+"Ajout du turc et mise à jour des traductions en français, russe et suédois"
 
 #: ../../CHANGELOG.md:249
 msgid "Remove translation Makefile"
-msgstr ""
+msgstr "Supprimer la traduction Makefile"
 
 #: ../../CHANGELOG.md:251
 msgid "2.14.2"
-msgstr ""
+msgstr "2.14.2"
 
 #: ../../CHANGELOG.md:253
 msgid "Fix macOS release failed"
-msgstr ""
+msgstr "Correction de l'échec de la version de macOS"
 
 #: ../../CHANGELOG.md:255
 msgid "2.14.1"
-msgstr ""
+msgstr "2.14.1"
 
 #: ../../CHANGELOG.md:257
 msgid "Add autocompletion for CSS properties"
-msgstr ""
+msgstr "Ajout d'une autocomplétion pour les propriétés CSS"
 
 #: ../../CHANGELOG.md:258
 msgid "Fix coredumps on Flatpak"
-msgstr ""
+msgstr "Correction des' cores dumps' sur Flatpak"
 
 #: ../../CHANGELOG.md:259
 msgid "Hide New Package menu unless package selected"
-msgstr ""
+msgstr "Cacher le menu Nouveau Paquet si aucun paquet n'est sélectionné"
 
 #: ../../CHANGELOG.md:260
 msgid "Update Getting Started pages"
-msgstr ""
+msgstr "Mise à jour des pages Getting Started"
 
 #: ../../CHANGELOG.md:261
 msgid "Spanish translation update"
-msgstr ""
+msgstr "Mise à jour de la traduction en espagnol"
 
 #: ../../CHANGELOG.md:263
 msgid "2.14.0"
-msgstr ""
+msgstr "2.14.0"
 
 #: ../../CHANGELOG.md:265
 msgid "Simplify the greeter and provide more info to new users"
 msgstr ""
+"Simplifier l'accueil et fournir plus d'informations aux nouveaux utilisateurs"
 
 #: ../../CHANGELOG.md:266
 msgid "New element handle and toolbox styles"
-msgstr ""
+msgstr "Nouveaux styles de poignées d'éléments et de boîtes à outils"
 
 #: ../../CHANGELOG.md:267
 msgid "Use system fonts by default for diagrams"
-msgstr ""
+msgstr "Utiliser les polices système par défaut pour les diagrammes"
 
 #: ../../CHANGELOG.md:268
 msgid "Add tooltips to the application header icons"
-msgstr ""
+msgstr "Ajouter des infobulles aux icônes de l'en-tête de l'application"
 
 #: ../../CHANGELOG.md:269
 msgid "Make sequence diagram messages horizontal by default"
-msgstr ""
+msgstr "Rendre les messages du diagramme de séquence horizontaux par défaut"
 
 #: ../../CHANGELOG.md:270
 msgid "Make keyboard shortcuts more standard especially on macOS"
-msgstr ""
+msgstr "Rendre les raccourcis clavier plus standard, en particulier sur macOS"
 
 #: ../../CHANGELOG.md:271
 msgid "macOS: cursor shortcuts for text entry widgets"
-msgstr ""
+msgstr "macOS : raccourcis curseur pour les éléments de saisie de texte"
 
 #: ../../CHANGELOG.md:272
 msgid "Load template as part of CI self-test"
-msgstr ""
+msgstr "Charger le modèle dans le cadre de l'autotest du CI"
 
 #: ../../CHANGELOG.md:273
 msgid "Update docs to make it more clear how to edit CSS"
 msgstr ""
+"Mise à jour de la documentation pour rendre plus claire la manière d'éditer "
+"les CSS"
 
 #: ../../CHANGELOG.md:274
 msgid "Switch doc style to Furo"
-msgstr ""
+msgstr "Changer le style de document pour Furo"
 
 #: ../../CHANGELOG.md:275
 msgid "Add custom style sheet language"
-msgstr ""
+msgstr "Ajouter une feuille de style personnalisée"
 
 #: ../../CHANGELOG.md:276
 msgid "Support non-standard Sphinx directory structures"
-msgstr ""
+msgstr "Prise en charge des structures de répertoire Sphinx non standard"
 
 #: ../../CHANGELOG.md:277
 msgid "Continue to make model loading and saving more reliable"
 msgstr ""
+"Continuer à rendre le chargement et l'enregistrement des modèles plus fiables"
 
 #: ../../CHANGELOG.md:278
 msgid "Move Control Flow line style to CSS"
-msgstr ""
+msgstr "Déplacer le style de ligne Control Flow vers CSS"
 
 #: ../../CHANGELOG.md:279
 msgid "Do not auto-layout sequence diagrams"
-msgstr ""
+msgstr "Ne pas mettre en page automatiquement les diagrammes de séquence"
 
 #: ../../CHANGELOG.md:280
 msgid "Use new actions/cache/(save|restore)"
-msgstr ""
+msgstr "Utiliser de nouvelles actions/cache/(save|restore)"
 
 #: ../../CHANGELOG.md:281
 msgid "Remove querymixin from modeling lists"
-msgstr ""
+msgstr "Supprimer querymixin des listes de modélisation"
 
 #: ../../CHANGELOG.md:282
 msgid "Improve Windows build reliability by limiting cores to 2"
 msgstr ""
+"Améliorer la fiabilité de la construction dans Windows en limitant le nombre "
+"de cœurs à 2"
 
 #: ../../CHANGELOG.md:283
 msgid "Croatian, Hungarian, Czech, Swedish, and Finnish translation updates"
 msgstr ""
+"Mises à jour des traductions en Croate, Hongrois, Tchèque, Suédois et "
+"Finlandais"
 
 #: ../../CHANGELOG.md:285
 msgid "2.13.0"
-msgstr ""
+msgstr "2.13.0"
 
 #: ../../CHANGELOG.md:287
 msgid "Auto-layout for diagrams"
-msgstr ""
+msgstr "Mise en page automatique des diagrammes"
 
 #: ../../CHANGELOG.md:288
 msgid "Relations to actors can connect below actor name"
 msgstr ""
+"Les relations avec les acteurs peuvent être connectées sous le nom de "
+"l'acteur"
 
 #: ../../CHANGELOG.md:289
 msgid "Export to EPS"
-msgstr ""
+msgstr "Exporter vers EPS"
 
 #: ../../CHANGELOG.md:290
 msgid "Zoom with Ctrl+scroll wheel works again"
-msgstr ""
+msgstr "Le zoom avec Ctrl+roue de défilement fonctionne à nouveau"
 
 #: ../../CHANGELOG.md:291
 msgid "Recent files is disabled if none are present"
-msgstr ""
+msgstr "Les fichiers récents sont désactivés s'il n'y en a pas"
 
 #: ../../CHANGELOG.md:292
 msgid "Windows and AppImage are upgraded to GTK4"
-msgstr ""
+msgstr "Windows et AppImage sont mis à jour vers GTK4"
 
 #: ../../CHANGELOG.md:293
 msgid "Update packaging to use Python 3.11"
-msgstr ""
+msgstr "Mise à jour du packaging pour utiliser Python 3.11"
 
 #: ../../CHANGELOG.md:294
 msgid "Many GTK4 improvements: About window, diagram tabs, message dialogs"
 msgstr ""
+"Nombreuses améliorations de GTK4 : Fenêtre « À propos », onglets de "
+"diagramme, boîtes de dialogue de messages"
 
 #: ../../CHANGELOG.md:295
 msgid "Ensure toolbox is always visible"
-msgstr ""
+msgstr "S'assure que la boîte à outils est toujours visible"
 
 #: ../../CHANGELOG.md:296
 msgid "Add additional tests around architectural rules"
-msgstr ""
+msgstr "Ajouter des tests supplémentaires autour des règles architecturales"
 
 #: ../../CHANGELOG.md:297
 msgid "Many translation updates and bug fixes"
-msgstr ""
+msgstr "Nombreuses mises à jour de traductions et corrections de bugs"
 
 #: ../../CHANGELOG.md:299
 msgid "2.12.1"
-msgstr ""
+msgstr "2.12.1"
 
 #: ../../CHANGELOG.md:301
 msgid "Fix/move connected handle"
-msgstr ""
+msgstr "Fixer/déplacer la poignée connectée"
 
 #: ../../CHANGELOG.md:302
 msgid "Fix error when disconnecting line with multiple segments"
 msgstr ""
+"Correction d'une erreur lors de la déconnexion d'une ligne comportant "
+"plusieurs segments"
 
 #: ../../CHANGELOG.md:303
 msgid "Fail CI build if Windows certificate signing fails"
 msgstr ""
+"Échec de la construction du CI en cas d'échec de la signature du certificat "
+"Windows"
 
 #: ../../CHANGELOG.md:304
 msgid "namespace.py: Actually set properties for rectangle"
-msgstr ""
+msgstr "namespace.py : Définir les propriétés du rectangle"
 
 #: ../../CHANGELOG.md:305
 msgid "Update Shortcuts window"
-msgstr ""
+msgstr "Mise à jour de la fenêtre des raccourcis"
 
 #: ../../CHANGELOG.md:307
 msgid "2.12.0"
-msgstr ""
+msgstr "2.12.0"
 
 #: ../../CHANGELOG.md:309
 msgid "GTK4 is now the default for Flatpak; Windows, macOS, and AppImage still use GTK3"
 msgstr ""
+"GTK4 est maintenant la valeur par défaut pour Flatpak ; Windows, macOS et "
+"AppImage utilisent toujours GTK3"
 
 #: ../../CHANGELOG.md:310
 msgid "Save folder is remembered across save actions"
 msgstr ""
+"Le dossier d'enregistrement est mémorisé dans toutes les actions "
+"d'enregistrement"
 
 #: ../../CHANGELOG.md:311
 msgid "State machine functionality has been expanded, including support for regions"
 msgstr ""
+"La fonctionnalité des machines d'État a été étendue, y compris la prise en "
+"charge des régions"
 
 #: ../../CHANGELOG.md:312
 msgid "Resize of partition keeps actions in the same swimlane"
 msgstr ""
+"Le redimensionnement de la partition maintient les actions dans le même "
+"couloir"
 
 #: ../../CHANGELOG.md:313
 msgid "Activities (behaviors) can be assigned to classifiers"
 msgstr ""
+"Les activités (comportements) peuvent être attribuées à des classificateurs"
 
 #: ../../CHANGELOG.md:314
 msgid "Stereotypes can be inherited from other stereotypes"
-msgstr ""
+msgstr "Les stéréotypes peuvent être hérités d'autres stéréotypes"
 
 #: ../../CHANGELOG.md:315
 msgid "Many GTK4 fixes: rename, search, instant editors"
 msgstr ""
+"Nombreux correctifs pour GTK4 : renommer, rechercher, éditeurs instantanés"
 
 #: ../../CHANGELOG.md:316
 msgid "Many translation updates"
-msgstr ""
+msgstr "Nombreuses mises à jour des traductions"
 
 #: ../../CHANGELOG.md:318
 msgid "2.11.0"
-msgstr ""
+msgstr "2.11.0"
 
 #: ../../CHANGELOG.md:320
 msgid "Add Copy/Paste for GTK4"
-msgstr ""
+msgstr "Ajouter le copier/coller pour GTK4"
 
 #: ../../CHANGELOG.md:321
 msgid "Make dialogs work with GTK4"
-msgstr ""
+msgstr "Faire fonctionner les dialogues avec GTK4"
 
 #: ../../CHANGELOG.md:322
 msgid "Fix instant editors for GTK4"
-msgstr ""
+msgstr "Correction des éditeurs instantanés pour GTK4"
 
 #: ../../CHANGELOG.md:323
 msgid "Update list view for GTK4"
-msgstr ""
+msgstr "Mise à jour de l'affichage des listes pour GTK4"
 
 #: ../../CHANGELOG.md:324
 msgid "Make SysML Enumerations also ValueTypes"
 msgstr ""
+"Faire en sorte que les énumérations SysML soient également des ValueTypes"
 
 #: ../../CHANGELOG.md:325
 msgid "Add union types"
-msgstr ""
+msgstr "Ajouter des types d'union"
 
 #: ../../CHANGELOG.md:326
 msgid "Let Gaphor check for its own health"
-msgstr ""
+msgstr "Laisse Gaphor contrôler sa propre santé"
 
 #: ../../CHANGELOG.md:327
 msgid "Add error reports window"
-msgstr ""
+msgstr "Ajouter une fenêtre de rapport d'erreur"
 
 #: ../../CHANGELOG.md:328
 msgid "Add element to diagram by double click"
-msgstr ""
+msgstr "Ajouter un élément au diagramme par un double clic"
 
 #: ../../CHANGELOG.md:329
 msgid "Ensure all models are saved with UTF-8 encoding"
-msgstr ""
+msgstr "S'assurer que tous les modèles sont sauvegardés avec le codage UTF-8"
 
 #: ../../CHANGELOG.md:330
 msgid "Fix states can't transition to themselves"
-msgstr ""
+msgstr "Les états fixes ne peuvent pas se transformer eux-mêmes"
 
 #: ../../CHANGELOG.md:331
 msgid "Fix unlinking elements from the model"
-msgstr ""
+msgstr "Correction de la déliaison d'éléments du modèle"
 
 #: ../../CHANGELOG.md:332
 msgid "Fix issue with fully pasting a diagram"
-msgstr ""
+msgstr "Correction d'un problème lié au collage complet d'un diagramme"
 
 #: ../../CHANGELOG.md:333
 msgid "Fix scroll speed for touch screens"
-msgstr ""
+msgstr "Correction de la vitesse de défilement pour les écrans tactiles"
 
 #: ../../CHANGELOG.md:334
 msgid "Fix codeql warnings and error"
-msgstr ""
+msgstr "Corriger les avertissements et les erreurs de codeql"
 
 #: ../../CHANGELOG.md:335
 msgid "Improve text placement for Associations"
-msgstr ""
+msgstr "Améliorer l'emplacement du texte pour les Associations"
 
 #: ../../CHANGELOG.md:336
 msgid "Enable additional pre-commit hooks"
-msgstr ""
+msgstr "Activer les 'pré-commits' de 'hooks' supplémentaires"
 
 #: ../../CHANGELOG.md:337
 msgid "Add example in docs of color for comments using CSS"
