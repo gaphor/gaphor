@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gaphor 2.18.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-04-09 15:06-0400\n"
-"PO-Revision-Date: 2024-11-25 06:19+0000\n"
+"PO-Revision-Date: 2024-11-25 07:36+0000\n"
 "Last-Translator: ovari <ovari123@zoho.com>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/gaphor/"
 "docs-gaphor-org/hu/>\n"
@@ -533,18 +533,34 @@ msgstr "Áttekintés"
 #: ../framework.md:5
 msgid "Gaphor is built in a light, service oriented fashion. The application is split in a series of services, such as a file, event, and undo managers. Those services are loaded based on entry points defined in the `pyproject.toml` file. To learn more about the architecture, please see the description about the [Service Oriented Architecture](service_oriented.md)."
 msgstr ""
+"A Gaphor könnyed, szolgáltatás-orientált módon épül fel. Az alkalmazás egy "
+"sor szolgáltatásra van felosztva, például fájl-, esemény- és "
+"visszavonáskezelőkre. Ezek a szolgáltatások a `pyproject.toml`-fájlban "
+"meghatározott belépési pontok alapján töltődnek be. Ha többet szeretne "
+"megtudni az építészetről, tekintse meg a [szolgáltatásorientált "
+"építészet](service_oriented.md) leírását."
 
 #: ../framework.md:11
 msgid "Event driven"
-msgstr ""
+msgstr "Eseményvezérelt"
 
 #: ../framework.md:13
 msgid "Parts of Gaphor communicate with each other through events. Whenever something important happens, for example, an attribute of a model element changes, an event is sent. When other parts of the application are interested in a change, they register an event handler for that event type. Events are emitted though a central broker so you do not have to register on every individual element that can send an event they are interested in. For example, a diagram item could register an event rule and then check if the element that sent the event is actually the event the item is representing. For more information see the full description of the [event system](event_system.md)."
 msgstr ""
+"A Gaphor részei eseményeken keresztül kommunikálnak egymással. Amikor valami "
+"fontos történik, például egy modellelem attribútuma megváltozik, a rendszer "
+"egy eseményt küld. Amikor az alkalmazás más részei érdeklődnek a változás "
+"iránt, regisztrálnak egy eseménykezelőt az adott eseménytípushoz. Az "
+"eseményeket egy központi közvetítő bocsátja ki, így nem kell minden egyes "
+"elemre regisztrálnia, amely elküldheti az őket érdeklő eseményt. Például egy "
+"ábra elem regisztrálhat egy eseményszabályt, majd ellenőrizheti, hogy az "
+"eseményt küldő elem valójában az az esemény, amelyet az elem képvisel. "
+"További információért tekintse meg az [eseményrendszer](event_system.md) "
+"teljes leírását."
 
 #: ../framework.md:23
 msgid "Transactional"
-msgstr ""
+msgstr "Tranzakciós"
 
 #: ../framework.md:25
 msgid "Gaphor is [transactional](transaction.md), which means it keeps track of the functions it performs as a series of transactions. The transactions work by sending an event when a transaction starts and sending another when a transaction ends. This allows, for example, the undo manager to keep a running log of the previous transactions so that a transaction can be reversed if the undo button is pressed."
@@ -666,105 +682,131 @@ msgstr ""
 #: ../gaphor-services.md:89
 msgid "To make the dependency look good, we have to add a style sheet. If you create a new diagram via the GUI, this element is automatically added."
 msgstr ""
+"Ahhoz, hogy a függőség jól nézzen ki, hozzá kell adnunk egy stíluslapot. Ha "
+"új ábrát hoz létre a grafikus felhasználói felületen keresztül, ez az elem "
+"automatikusan hozzáadódik."
 
 #: ../gaphor-services.md:103
 msgid "Last step is to layout and draw the diagram."
-msgstr ""
+msgstr "Az utolsó lépés az ábra elrendezése és megrajzolása."
 
 #: ../gaphor-services.md:113
 msgid "That's all. As you can see from the diagram, a lot of services rely on `EventManager`."
 msgstr ""
+"Ez minden. Amint az az ábrán látható, sok szolgáltatás az `EventManager\" "
+"(eseménykezelőre) támaszkodik."
 
 #: ../getting_started.md:1
 msgid "Get Started with Gaphor"
-msgstr ""
+msgstr "Kezdje el a Gaphor használatát"
 
 #: ../getting_started.md:3
 msgid "Gaphor is more than a diagram editor: it's a modeling environment. Where simple diagram editors such as Microsoft Visio and [draw.io](https://draw.io) allow you to create pictures, Gaphor actually keeps track of the elements you add to the model. In Gaphor you can create diagrams to track and visualize different aspects of the system you're developing."
 msgstr ""
+"A Gaphor több, mint egy ábraszerkesztő: ez egy modellező környezet. Ahol az "
+"egyszerű ábraszerkesztők, például a Microsoft Visio és a [draw."
+"io](https://draw.io) lehetővé teszik képek készítését, a Gaphor valójában "
+"nyomon követi a modellhez hozzáadott elemeket. A Gaphorban ábrákat hozhat "
+"létre, amelyek nyomon követhetik és megjeleníthetik a fejlesztendő rendszer "
+"különböző szempontjait."
 
 #: ../getting_started.md:9
 msgid "Enough talk, let's get started."
-msgstr ""
+msgstr "Elég a beszédből, kezdjük."
 
 #: ../getting_started.md:11
 msgid "You can find installers for Gaphor on the [Gaphor Website](https://gaphor.org/download). Gaphor can be installed on Linux (Flatpak, AppImage), Windows, and macOS."
 msgstr ""
+"A Gaphor telepítőit a [Gaphor webhelyén](https://gaphor.org/download) "
+"találja. A Gaphor telepíthető Linux (Flatpak, AppImage), macOS és Windows "
+"operációs rendszerekre."
 
 #: ../getting_started.md:14
 msgid "Once Gaphor is launched, it provides you a welcome screen. It shows you previously opened models and model templates."
 msgstr ""
+"A Gaphor elindítása után üdvözlőképernyőt biztosít. Megmutatja a korábban "
+"megnyitott modelleket és modellsablonokat."
 
 #: ../getting_started.md:17
 msgid "![welcome screen](images/getting-started-greeter.png)"
-msgstr ""
+msgstr "![üdvözlőképernyő](images/getting-started-greeter.png)"
 
 #: ../getting_started.md:17
 msgid "welcome screen"
-msgstr ""
+msgstr "üdvözlőképernyő"
 
 #: ../getting_started.md:19
 msgid "You can select a template to get started."
-msgstr ""
+msgstr "A kezdéshez kijelölhet egy sablont."
 
 #: ../getting_started.md:21
 msgid "**Generic:** a blank model to start with"
-msgstr ""
+msgstr "**Általános:** kezdésként üres modell"
 
 #: ../getting_started.md:22
 msgid "**UML:** A template for the *Unified Modeling Language* for modeling a software system"
 msgstr ""
+"**UML:** Az *Unified Modeling Language (egységes modellezési nyelv)* "
+"sablonja szoftverrendszerek modellezéséhez"
 
 #: ../getting_started.md:23
 msgid "**SysML:** A template for the *Systems Modeling Language* for modeling a wide range of systems and systems-of-systems"
 msgstr ""
+"**SysML:** A *Systems Modeling Language (rendszermodellező nyelv)* sablonja "
+"számos rendszerek és rendszerrendszerek modellezéséhez"
 
 #: ../getting_started.md:24
 msgid "**RAAML:** A template for the *Risk Analysis and Assessment Modeling language* for safety and reliability analysis"
 msgstr ""
+"**RAAML:** Sablon a *Kockázatelemzési és -értékelési modellezési nyelvhez ("
+"kockázatelemzés és -értékelés modellezési nyelv)* a biztonsági és "
+"megbízhatósági elemzéshez"
 
 #: ../getting_started.md:25
 msgid "**C4 Model:** A template for *Context, Containers, Components, and Code* which for lean modeling of software architecture"
 msgstr ""
+"**C4 modell:** Sablon a *Context, Containers, Components, and Code ("
+"kontextushoz, tárolókhoz, összetevőkhez és kódhoz)*, amely a "
+"szoftverarchitektúra lean modellezéséhez"
 
 #: ../getting_started.md:27
 msgid "Once the model interface is loaded you'll see the modeling interface."
-msgstr ""
+msgstr "A modellfelület betöltése után megjelenik a modellező felület."
 
 #: ../getting_started.md:29
 msgid "![new model](images/getting-started-new-model.png)"
-msgstr ""
+msgstr "![új modell](images/getting-started-new-model.png)"
 
 #: ../getting_started.md:29
 msgid "new model"
-msgstr ""
+msgstr "új modell"
 
 #: ../getting_started.md:31
 msgid "The layout of the Gaphor interface is divided into four sections, namely:"
-msgstr ""
+msgstr "A Gaphor-felület elrendezése négy részre oszlik, nevezetesen:"
 
 #: ../getting_started.md:34
 #: ../getting_started.md:41
 msgid "Model Browser"
-msgstr ""
+msgstr "Modellböngésző"
 
 #: ../getting_started.md:35
 msgid "Diagram Element Toolbox"
-msgstr ""
+msgstr "Ábra elem eszköztár"
 
 #: ../getting_started.md:36
 #: ../getting_started.md:80
 msgid "Diagrams"
-msgstr ""
+msgstr "Ábrák"
 
 #: ../getting_started.md:37
 #: ../getting_started.md:130
 msgid "Property Editor"
-msgstr ""
+msgstr "Tulajdonságszerkesztő"
 
 #: ../getting_started.md:39
 msgid "Each section has its own specific function."
-msgstr ""
+msgstr "Minden szakasznak megvan a maga sajátos funkciója."
 
 #: ../getting_started.md:43
 msgid "The Model Browser section of the interface displays a hierarchical view of your model. Every model element you create will be inserted into the Model Browser. This view acts as a tree where you can expand and collapse different elements of your model. This provides an easy way to view the elements of your model from an elided perspective. That is, you can collapse those model elements that are irrelevant to the task at hand."
