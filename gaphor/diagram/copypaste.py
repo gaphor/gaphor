@@ -38,7 +38,7 @@ class CopyData(NamedTuple):
 
 
 def copy_full(
-    items: Collection, lookup: Callable[[Id], Base | None] | None = None
+    items: Collection[Base], lookup: Callable[[Id], Base | None] | None = None
 ) -> CopyData:
     """Copy items, including owned elements."""
 
