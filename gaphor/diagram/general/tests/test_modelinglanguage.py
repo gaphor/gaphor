@@ -12,7 +12,6 @@ def test_name():
 def test_lookup_element():
     modeling_language = GeneralModelingLanguage()
 
-    assert modeling_language.lookup_element("DiagramItem")
     assert modeling_language.lookup_element("Box")
     assert modeling_language.lookup_element("Line")
     assert modeling_language.lookup_element("Ellipse")

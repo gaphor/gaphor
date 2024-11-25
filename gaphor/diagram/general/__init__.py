@@ -2,14 +2,12 @@
 
 from gaphor.diagram.general.diagramitems import (
     Box,
-    DiagramItem,
     Ellipse,
     Line,
     MetadataItem,
 )
 
 __all__ = [
-    "DiagramItem",
     "Box",
     "Ellipse",
     "Line",
