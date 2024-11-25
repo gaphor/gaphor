@@ -16,7 +16,7 @@ jobs:
     permissions:
       security-events: write  # for github/codeql-action/autobuild to send a status report
     name: Analyze
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
     - name: Harden Runner
       uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f # v2.10.2
@@ -25,7 +25,8 @@ jobs:
         allowed-endpoints: >
           api.github.com:443
           github.com:443
-          objects.githubusercontent.com:443
+          *.githubusercontent.com:443
+          ghcr.io
           uploads.github.com:443
           azure.archive.ubuntu.com:80
           esm.ubuntu.com:443
@@ -45,7 +46,7 @@ jobs:
     - name: Install Linux Dependencies
       run: >
         sudo apt-get update -qq && sudo apt-get install -qq --no-install-recommends
-        libgirepository1.0-dev
+        libgirepository1.0-dev libcairo2-dev
     - name: Install Poetry
       run: python${{ env.python_version }} -m pip install --constraint=.github/constraints.txt poetry
     - name: Configure Poetry

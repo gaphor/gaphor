@@ -13,7 +13,7 @@ permissions: read-all
 jobs:
   analysis:
     name: Scorecard analysis
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     permissions:
       # Needed to upload the results to code-scanning dashboard.
       security-events: write
@@ -29,13 +29,15 @@ jobs:
           allowed-endpoints: >
             api.deps.dev:443
             api.github.com:443
+            github.com:443
+            *.githubusercontent.com:443
+            ghcr.io
             api.osv.dev:443
             api.scorecard.dev:443
             api.securityscorecards.dev:443
             auth.docker.io:443
             cdn.fwupd.org:443
             fulcio.sigstore.dev:443
-            github.com:443
             index.docker.io:443
             oss-fuzz-build-logs.storage.googleapis.com:443
             rekor.sigstore.dev:443

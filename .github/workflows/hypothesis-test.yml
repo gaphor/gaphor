@@ -13,7 +13,7 @@ permissions:
 jobs:
 
   hypothesis:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     container: fedora:39
     timeout-minutes: 60
     steps:
