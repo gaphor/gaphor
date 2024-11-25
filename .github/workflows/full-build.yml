@@ -149,7 +149,7 @@ jobs:
         with:
           path: ~/.cache/pip
           key: ${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}-22.04
-      - uses: flatpak/flatpak-github-actions/flatpak-builder@dcbd3a30d991a38708c318d17f5352cc1268c215 # master
+      - uses: flatpak/flatpak-github-actions/flatpak-builder@acbc99edf9fca4bfcc47d9f57a5e105f9ec13e50 # master
         with:
           bundle: gaphor.flatpak
           manifest-path: org.gaphor.Gaphor.json
