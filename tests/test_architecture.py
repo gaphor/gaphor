@@ -47,7 +47,6 @@ def test_core_packages():
     )
 
 
-@pytest.mark.xfail(reason="Shortcut tool imports gaphor.UML")
 def test_diagram_package():
     # NB1. gaphor.diagram.tools.dropzone includes gaphor.UML.recipes,
     # so it can assign the right owner package to a newly created element.
