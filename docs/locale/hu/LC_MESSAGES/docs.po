@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gaphor 2.18.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-04-09 15:06-0400\n"
-"PO-Revision-Date: 2024-11-25 01:50+0000\n"
+"PO-Revision-Date: 2024-11-25 06:19+0000\n"
 "Last-Translator: ovari <ovari123@zoho.com>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/gaphor/"
 "docs-gaphor-org/hu/>\n"
@@ -513,18 +513,22 @@ msgstr ""
 #: ../first_model.md:73
 msgid "Elements in a diagram are only a _representation_ of the elements in the underlying model. The model is what you see in the Model Browser."
 msgstr ""
+"Az ábra elemei csak az alapul szolgáló modell elemeinek _ábrázolásai_. A "
+"modell az, amit a Modellböngészőben lát."
 
 #: ../first_model.md:76
 msgid "Elements in the model are automatically removed when there are no more representations in any of the diagrams."
 msgstr ""
+"A modell elemei automatikusan eltávolításra kerülnek, ha egyik diagramon sem "
+"szerepel több ábrázolás."
 
 #: ../framework.md:1
 msgid "Framework"
-msgstr ""
+msgstr "Keretrendszer"
 
 #: ../framework.md:3
 msgid "Overview"
-msgstr ""
+msgstr "Áttekintés"
 
 #: ../framework.md:5
 msgid "Gaphor is built in a light, service oriented fashion. The application is split in a series of services, such as a file, event, and undo managers. Those services are loaded based on entry points defined in the `pyproject.toml` file. To learn more about the architecture, please see the description about the [Service Oriented Architecture](service_oriented.md)."
@@ -545,82 +549,119 @@ msgstr ""
 #: ../framework.md:25
 msgid "Gaphor is [transactional](transaction.md), which means it keeps track of the functions it performs as a series of transactions. The transactions work by sending an event when a transaction starts and sending another when a transaction ends. This allows, for example, the undo manager to keep a running log of the previous transactions so that a transaction can be reversed if the undo button is pressed."
 msgstr ""
+"A Gaphor [tranzakciós](transaction.md), ami azt jelenti, hogy nyomon követi "
+"az általa végrehajtott funkciókat tranzakciók sorozataként. A tranzakciók "
+"úgy működnek, hogy egy eseményt küldenek, amikor egy tranzakció kezdődik, és "
+"egy másikat, amikor egy tranzakció véget ér. Ez lehetővé teszi például, hogy "
+"a visszavonáskezelő naplót vezessen az előző tranzakciókról, így a "
+"tranzakció visszavonható a visszavonás gomb megnyomásával."
 
 #: ../framework.md:32
 msgid "Main Components"
-msgstr ""
+msgstr "Fő összetevők"
 
 #: ../framework.md:34
 msgid "The main portion of Gaphor that executes first is called the `Application`. Gaphor can have multiple models open at any time. Each model is kept in a `Session`. Only one Application instance is active. Each session will load its own services defined as [gaphor.services](service_oriented.md)."
 msgstr ""
+"A Gaphor fő részét, amely először fut le, `Application`(alkalmazásnak) "
+"nevezik. A Gaphor több modellt is megnyithat bármikor. Minden modell egy "
+"`Session`(munkamenetben) van tárolva. Csak egy alkalmazáspéldány aktív. "
+"Minden munkamenet betölti a saját [gaphor.services](service_oriented.md) "
+"szolgáltatásait."
 
 #: ../framework.md:40
 msgid "The most notable services are:"
-msgstr ""
+msgstr "A legjelentősebb szolgáltatások a következők:"
 
 #: ../framework.md:42
 msgid "event_manager"
-msgstr ""
+msgstr "event_manager (eseménykezelő)"
 
 #: ../framework.md:44
 msgid "This is the central component used for event dispatching. Every service that does something with events (both sending and receiving) depends on this component."
 msgstr ""
+"Ez az eseményküldéshez használt központi komponens. Minden olyan "
+"szolgáltatás, amely az eseményekkel foglalkozik (mind küldés, mind fogadás), "
+"ettől az összetevőtől függ."
 
 #: ../framework.md:48
 msgid "file_manager"
-msgstr ""
+msgstr "file_manager (fájlkezelő)"
 
 #: ../framework.md:50
 msgid "Loading and saving a model is done through this service."
-msgstr ""
+msgstr "A modell betöltése és mentése ezen a szolgáltatáson keresztül történik."
 
 #: ../framework.md:52
 msgid "element_factory"
-msgstr ""
+msgstr "element_factory (elemgyár)"
 
 #: ../framework.md:54
 msgid "The [data model](models/core.md) itself is maintained in the element factory (`gaphor.core.modeling.elementfactory`). This service is used to create model elements, as well as to lookup elements or query for a set of elements."
 msgstr ""
+"Maga az [adatmodell](models/core.md) az elemgyárban van karbantartva (`gaphor"
+".core.modeling.elementfactory`). Ez a szolgáltatás modellelemek "
+"létrehozására, valamint elemek kikeresésére vagy elemkészletek lekérdezésére "
+"szolgál."
 
 #: ../framework.md:58
 msgid "undo_manager"
-msgstr ""
+msgstr "undo_manager (visszavonáskezelő)"
 
 #: ../framework.md:60
 msgid "One of the most appreciated services. It allows users to make a mistake every now and then!"
 msgstr ""
+"Az egyik legértékesebb szolgáltatás. Lehetővé teszi a felhasználók számára, "
+"hogy időnként hibát kövessenek el!"
 
 #: ../framework.md:63
 msgid "The undo manager is transactional. Actions performed by a user are only stored if a transaction is active. If a transaction is completed (committed) a new undo action is stored. Transactions can also be rolled back, in which case all changes are played back directly. For more information see the full description of the [undo manager](undo.md)."
 msgstr ""
+"A visszavonáskezelő tranzakciós. A felhasználó által végrehajtott műveletek "
+"csak akkor tárolódnak, ha a tranzakció aktív. Ha egy tranzakció befejeződött "
+"(elvégeztetett), egy új visszavonási művelet kerül tárolásra. A "
+"tranzakciókat vissza is lehet görgetni, ebben az esetben az összes változás "
+"közvetlenül lejátszásra kerül. További információkért tekintse meg a "
+"[visszavonáskezelő](undo.md) teljes leírását."
 
 #: ../gaphor-services.md:5
 msgid "Example: Gaphor services"
-msgstr ""
+msgstr "Példa: Gaphor-szolgáltatások"
 
 #: ../gaphor-services.md:7
 msgid "In this example we're doing something a little less trivial. In Gaphor, services are defined as entry points. Each service is a class, and takes parameters with names that match other services. This allows services to depend on other services."
 msgstr ""
+"Ebben a példában valami kevésbé jelentéktelen dolgot csinálunk. A Gaphorban "
+"a szolgáltatások belépési pontként vannak definiálva. Minden szolgáltatás "
+"egy osztály, és olyan paramétereket vesz fel, amelyek neve megegyezik a "
+"többi szolgáltatással. Ez lehetővé teszi, hogy a szolgáltatások más "
+"szolgáltatásoktól függjenek."
 
 #: ../gaphor-services.md:12
 msgid "It looks something like this:"
-msgstr ""
+msgstr "Valahogy így néz ki:"
 
 #: ../gaphor-services.md:43
 msgid "Let's first load the entry points."
-msgstr ""
+msgstr "Először töltsük be a belépési pontokat."
 
 #: ../gaphor-services.md:53
 msgid "Now let's create a component in our model for every service."
 msgstr ""
+"Most hozzunk létre egy komponenst a modellünkben minden szolgáltatáshoz."
 
 #: ../gaphor-services.md:70
 msgid "With all components mapped, we can create dependencies between those components, based on the constructor parameter names."
 msgstr ""
+"Az összes komponens leképezése esetén a konstruktor paraméterek neve alapján "
+"függőséget hozhatunk létre az összetevők között."
 
 #: ../gaphor-services.md:86
 msgid "With all elements in the model, we can create a diagram. Let's drop the components and dependencies on the diagram and let auto-layout do its magic."
 msgstr ""
+"A modell összes elemével ábrát készíthetünk. Hagyjuk a komponenseket és a "
+"függőségeket az ábrán, és hagyjuk, hogy az automatikus elrendezés megtegye a "
+"varázsát."
 
 #: ../gaphor-services.md:89
 msgid "To make the dependency look good, we have to add a style sheet. If you create a new diagram via the GUI, this element is automatically added."
