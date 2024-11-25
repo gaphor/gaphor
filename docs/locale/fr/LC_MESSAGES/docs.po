@@ -576,12 +576,12 @@ msgstr ""
 #: ../../CHANGELOG.md:138
 msgid "Fix segfault by reverting Gtk.ListVew for Parameters"
 msgstr ""
-"Correction : erreur de segmentation en inversant les paramètres de Gtk."
+"Correction d'une erreur de segmentation en inversant les paramètres de Gtk."
 "ListVew"
 
 #: ../../CHANGELOG.md:139
 msgid "Fix connect interaction fragments"
-msgstr "Correction : fragments d'interaction de connexion"
+msgstr "Correction des fragments d'interaction de connexion"
 
 #: ../../CHANGELOG.md:140
 msgid "chore: clean up deprecated properties from UIComponent"
@@ -611,7 +611,7 @@ msgstr "Mise à jour des traductions en espagnol, hongrois et finnois"
 
 #: ../../CHANGELOG.md:146
 msgid "Fix scaling of Activity Parameter nodes"
-msgstr "Correction : échelle des nœuds des paramètres d'activité"
+msgstr "Fixer l'échelle des nœuds des paramètres d'activité"
 
 #: ../../CHANGELOG.md:148
 msgid "2.19.1"
@@ -719,12 +719,12 @@ msgstr ""
 
 #: ../../CHANGELOG.md:176
 msgid "Fix doc translation catalogs not found"
-msgstr "Correction : catalogues de traduction de documents non trouvés"
+msgstr "Correction des catalogues de traduction de documents non trouvés"
 
 #: ../../CHANGELOG.md:177
 msgid "Fix encoding warnings for no encoding argument"
 msgstr ""
-"Correction : avertissements relatifs à l'encodage en l'absence d'argument"
+"Correction des avertissements relatifs à l'encodage en l'absence d'argument"
 
 #: ../../CHANGELOG.md:178
 msgid "Update AppImage build with GTK 4.10"
@@ -804,11 +804,11 @@ msgstr ""
 
 #: ../../CHANGELOG.md:197
 msgid "Fix drag from model browser"
-msgstr "Correction : glisser-déposer à partir du navigateur de modèles"
+msgstr "Correction du glisser-déposer à partir du navigateur de modèles"
 
 #: ../../CHANGELOG.md:198
 msgid "Fix orthogonal lines during copy/paste"
-msgstr "Correction : lignes orthogonales lors du copier/coller"
+msgstr "Correction des lignes orthogonales lors du copier/coller"
 
 #: ../../CHANGELOG.md:199
 msgid "Update diagram directly when partitions change"
@@ -923,7 +923,7 @@ msgstr "Afficher quelque chose lorsqu'aucun diagramme n'est ouvert"
 
 #: ../../CHANGELOG.md:228
 msgid "Fix the packaged data dirs"
-msgstr "Correction : répertoires de données packagés"
+msgstr "Correction des répertoires de données packagés"
 
 #: ../../CHANGELOG.md:229
 msgid "Stabilize macOS/GTK tests"
@@ -946,8 +946,8 @@ msgstr ""
 #: ../../CHANGELOG.md:233
 msgid "Fix translation warning never logged with missing mo files"
 msgstr ""
-"Correction : avertissement de traduction qui n'est jamais enregistré en cas "
-"de fichiers mo manquants"
+"Correction de l'avertissement de traduction qui n'est jamais enregistré en "
+"cas de fichiers mo manquants"
 
 #: ../../CHANGELOG.md:234
 msgid "Spanish, Russian, Hungarian, Czech translation update"
@@ -980,13 +980,13 @@ msgstr "Utiliser le sélecteur de fichiers natif dans Windows"
 #: ../../CHANGELOG.md:242
 msgid "Fix translations not loading in Windows, macOS, and AppImage"
 msgstr ""
-"Correction : traductions qui ne se chargent pas dans Windows, macOS et "
+"Correction des traductions qui ne se chargent pas dans Windows, macOS et "
 "AppImage"
 
 #: ../../CHANGELOG.md:243
 msgid "Fix PyInstaller versionfile parse error with pre-release versions"
 msgstr ""
-"Corriection : erreur d'analyse du fichier de version de PyInstaller avec les "
+"Corriger l'erreur d'analyse du fichier de version de PyInstaller avec les "
 "versions antérieures"
 
 #: ../../CHANGELOG.md:244
@@ -1001,12 +1001,12 @@ msgstr "Remplacer pytest-mock par monkeypatch pour les tests"
 
 #: ../../CHANGELOG.md:246
 msgid "Fix PEP597 encoding warnings"
-msgstr "Correction : avertissements de PEP597 concernant l'encodage"
+msgstr "Correction des avertissements de PEP597 concernant l'encodage"
 
 #: ../../CHANGELOG.md:247
 msgid "Fix regression that caused line handles to not snap to elements"
 msgstr ""
-"Correction : régression qui faisait que les poignées de ligne ne "
+"Correction d'une régression qui faisait que les poignées de ligne ne "
 "s'accrochaient pas aux éléments"
 
 #: ../../CHANGELOG.md:248
@@ -1024,7 +1024,7 @@ msgstr "2.14.2"
 
 #: ../../CHANGELOG.md:253
 msgid "Fix macOS release failed"
-msgstr "Correction : échec de la version de macOS"
+msgstr "Correction de l'échec de la version de macOS"
 
 #: ../../CHANGELOG.md:255
 msgid "2.14.1"
@@ -1036,7 +1036,7 @@ msgstr "Ajout d'une autocomplétion pour les propriétés CSS"
 
 #: ../../CHANGELOG.md:258
 msgid "Fix coredumps on Flatpak"
-msgstr "Correction : ' cores dumps' sur Flatpak"
+msgstr "Correction des' cores dumps' sur Flatpak"
 
 #: ../../CHANGELOG.md:259
 msgid "Hide New Package menu unless package selected"
@@ -1201,8 +1201,8 @@ msgstr "Fixer/déplacer la poignée connectée"
 #: ../../CHANGELOG.md:302
 msgid "Fix error when disconnecting line with multiple segments"
 msgstr ""
-"Correction : erreur lors de la déconnexion d'une ligne comportant plusieurs "
-"segments"
+"Correction d'une erreur lors de la déconnexion d'une ligne comportant "
+"plusieurs segments"
 
 #: ../../CHANGELOG.md:303
 msgid "Fail CI build if Windows certificate signing fails"
@@ -1278,7 +1278,7 @@ msgstr "Faire fonctionner les dialogues avec GTK4"
 
 #: ../../CHANGELOG.md:322
 msgid "Fix instant editors for GTK4"
-msgstr "Correction : éditeurs instantanés pour GTK4"
+msgstr "Correction des éditeurs instantanés pour GTK4"
 
 #: ../../CHANGELOG.md:323
 msgid "Update list view for GTK4"
@@ -1311,23 +1311,23 @@ msgstr "S'assurer que tous les modèles sont sauvegardés avec le codage UTF-8"
 
 #: ../../CHANGELOG.md:330
 msgid "Fix states can't transition to themselves"
-msgstr "Correction : les états ne peuvent pas se transformer en eux-mêmes"
+msgstr "Les états fixes ne peuvent pas se transformer eux-mêmes"
 
 #: ../../CHANGELOG.md:331
 msgid "Fix unlinking elements from the model"
-msgstr "Correction : délier les éléments du modèle"
+msgstr "Correction de la déliaison d'éléments du modèle"
 
 #: ../../CHANGELOG.md:332
 msgid "Fix issue with fully pasting a diagram"
-msgstr "Correction : problème lié au collage complet d'un diagramme"
+msgstr "Correction d'un problème lié au collage complet d'un diagramme"
 
 #: ../../CHANGELOG.md:333
 msgid "Fix scroll speed for touch screens"
-msgstr "Correction : la vitesse de défilement pour les écrans tactiles"
+msgstr "Correction de la vitesse de défilement pour les écrans tactiles"
 
 #: ../../CHANGELOG.md:334
 msgid "Fix codeql warnings and error"
-msgstr "Correction : avertissements et les erreurs de codeql"
+msgstr "Corriger les avertissements et les erreurs de codeql"
 
 #: ../../CHANGELOG.md:335
 msgid "Improve text placement for Associations"
