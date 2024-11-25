@@ -39,10 +39,16 @@ jobs:
         run: pre-commit autoupdate --freeze
       - name: Run pre-commit hooks
         run: pre-commit run --all-files
+      - name: Create GitHub App Token
+        uses: actions/create-github-app-token@5d869da34e18e7287c1daad50e0b8ea0f506ce69 # v1.11.0
+        id: generate-token
+        with:
+          app-id: ${{ secrets.GAPHOR_UPDATER_APP_ID }}
+          private-key: ${{ secrets.GAPHOR_UPDATER_APP_PRIVATE_KEY }}
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@5e914681df9dc83aa4e4905692ca88beb2f9e91f # v7.0.5
         with:
-          token: ${{ secrets.PR_CREATOR }}
+          token: ${{ steps.generate-token.outputs.token }}
           commit-message: Update pre-commit hooks
           branch: pre-commit-update
           delete-branch: true
