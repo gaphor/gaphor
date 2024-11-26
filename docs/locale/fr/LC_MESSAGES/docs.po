@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gaphor 2.23.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-02-15 20:49-0500\n"
-"PO-Revision-Date: 2024-11-27 00:58+0000\n"
+"PO-Revision-Date: 2024-11-26 07:21+0000\n"
 "Last-Translator: Stan SZLAPKA <stansz@free.fr>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/gaphor/"
 "docs-gaphor-org/fr/>\n"
@@ -1610,7 +1610,7 @@ msgstr "Fixer la position des éléments imbriqués lors de l'annulation"
 
 #: ../../CHANGELOG.md:414
 msgid "Fix ownership of Connector, ProxyPort, and ItemFlow"
-msgstr "Correction : propriété des Connecteurs, ProxyPort et ItemFlow"
+msgstr "Corrigé la propriété des Connecteurs, ProxyPort et ItemFlow"
 
 #: ../../CHANGELOG.md:415
 msgid "Improve GTK4 compatibility"
@@ -1668,7 +1668,7 @@ msgstr "2.7.1"
 
 #: ../../CHANGELOG.md:428
 msgid "Fix lines don't disconnect when moved"
-msgstr "Correction : lignes ne se déconnectent pas lorsqu'elles sont déplacées"
+msgstr "Corrigé les lignes ne se déconnectent pas lorsqu'elles sont déplacées"
 
 #: ../../CHANGELOG.md:429
 msgid "No GTK required anymore for generating docs"
