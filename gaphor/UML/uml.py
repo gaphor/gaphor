@@ -803,7 +803,7 @@ class Comment(Element):
 
 
 from gaphor.core.modeling.diagram import Diagram as _Diagram
-class Diagram(Element, _Diagram):
+class Diagram(NamedElement, _Diagram):
     element: relation_one[Element]
 
 
