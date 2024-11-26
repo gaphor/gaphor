@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gaphor 2.23.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-02-15 20:49-0500\n"
-"PO-Revision-Date: 2024-11-26 01:53+0000\n"
+"PO-Revision-Date: 2024-11-26 07:05+0000\n"
 "Last-Translator: Stan SZLAPKA <stansz@free.fr>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/gaphor/"
 "docs-gaphor-org/fr/>\n"
@@ -732,7 +732,7 @@ msgstr "Mise à jour de l'AppImage avec GTK 4.10"
 
 #: ../../CHANGELOG.md:179
 msgid "Add non-goals to README"
-msgstr ""
+msgstr "Ajouter les non-objectifs au README"
 
 #: ../../CHANGELOG.md:180
 msgid "Enable translation of docs, and add Crotian, German, and Dutch"
@@ -1340,242 +1340,257 @@ msgstr "Activer les 'pré-commits' de 'hooks' supplémentaires"
 #: ../../CHANGELOG.md:337
 msgid "Add example in docs of color for comments using CSS"
 msgstr ""
+"Ajouter dans la documentation un exemple de couleur pour les commentaires à "
+"l'aide de CSS"
 
 #: ../../CHANGELOG.md:338
 msgid "Hungarian translation updates"
-msgstr ""
+msgstr "Mise à jour de la traduction en hongrois"
 
 #: ../../CHANGELOG.md:340
 msgid "2.10.0"
-msgstr ""
+msgstr "2.10.0"
 
 #: ../../CHANGELOG.md:342
 msgid "Pin support for activity diagram"
-msgstr ""
+msgstr "Prise en charge des broches pour les diagrammes d'activité"
 
 #: ../../CHANGELOG.md:343
 msgid "Add Activity item to diagram"
-msgstr ""
+msgstr "Ajouter un élément d'activité au diagramme"
 
 #: ../../CHANGELOG.md:344
 msgid "Allow to drag and drop all elements from tree view to diagram"
 msgstr ""
+"Permettre de glisser-déposer tous les éléments de l'arborescence vers le "
+"diagramme"
 
 #: ../../CHANGELOG.md:345
 msgid "Codegen use all defined modeling languages"
-msgstr ""
+msgstr "Codegen utilise tous les langages de modélisation définis"
 
 #: ../../CHANGELOG.md:346
 msgid "Fix diagram dependency cycle"
-msgstr ""
+msgstr "Corrigé le cycle de dépendance du diagramme"
 
 #: ../../CHANGELOG.md:347
 msgid "Add Skip Duplicate Action and Release-Drafter Permissions"
-msgstr ""
+msgstr "Ajout de l'action Skip Duplicate et des autorisations Release-Drafter"
 
 #: ../../CHANGELOG.md:348
 msgid "Update permissions for CodeQL GitHub Action"
-msgstr ""
+msgstr "Mise à jour des permissions pour l'action CodeQL GitHub"
 
 #: ../../CHANGELOG.md:349
 msgid "Include all diagram items in test model"
-msgstr ""
+msgstr "Inclure tous les éléments du diagramme dans le modèle de test"
 
 #: ../../CHANGELOG.md:350
 msgid "Fix GTK4 property page layouts"
-msgstr ""
+msgstr "Correction de la présentation des pages de propriétés de GTK4"
 
 #: ../../CHANGELOG.md:351
 msgid "Use official RAAML logo in greeter"
-msgstr ""
+msgstr "Utiliser le logo officiel de RAAML dans le message d'accueil"
 
 #: ../../CHANGELOG.md:352
 msgid "Relation metadata to allow better reuse"
-msgstr ""
+msgstr "Métadonnées sur les relations pour une meilleure réutilisation"
 
 #: ../../CHANGELOG.md:353
 msgid "Rename relationship connector base classes"
-msgstr ""
+msgstr "Renommer le connecteur de relation des classes de base"
 
 #: ../../CHANGELOG.md:354
 msgid "Add design principles to docs"
-msgstr ""
+msgstr "Ajouter des principes de conception aux documents"
 
 #: ../../CHANGELOG.md:355
 msgid "French, Finnish, Croatian translation update"
-msgstr ""
+msgstr "Mise à jour des traductions en français, finnois et croate"
 
 #: ../../CHANGELOG.md:357
 msgid "2.9.2"
-msgstr ""
+msgstr "2.9.2"
 
 #: ../../CHANGELOG.md:359
 msgid "Fix Windows build"
-msgstr ""
+msgstr "Correction de la version de Windows"
 
 #: ../../CHANGELOG.md:361
 msgid "2.9.1"
-msgstr ""
+msgstr "2.9.1"
 
 #: ../../CHANGELOG.md:363
 msgid "Fix bad release of version 2.9.0"
-msgstr ""
+msgstr "Correction d'une mauvaise version de la version 2.9.0"
 
 #: ../../CHANGELOG.md:364
 msgid "Cleanup try except blocks and add more f-strings"
-msgstr ""
+msgstr "Nettoyer les blocs « try except » et ajouter plus de « f-strings »"
 
 #: ../../CHANGELOG.md:366
 msgid "2.9.0"
-msgstr ""
+msgstr "2.9.0"
 
 #: ../../CHANGELOG.md:368
 msgid "Separate Control and Object Flow"
-msgstr ""
+msgstr "Séparer le flux de contrôle et le flux d'objets"
 
 #: ../../CHANGELOG.md:369
 msgid "Automatically select dark mode for macOS and Windows"
-msgstr ""
+msgstr "Sélection automatique du mode sombre pour macOS et Windows"
 
 #: ../../CHANGELOG.md:370
 msgid "Automatically Enable Rename Prompt for Newly Created Diagrams"
 msgstr ""
+"Activer automatiquement l'invite à renommer les diagrammes nouvellement créés"
 
 #: ../../CHANGELOG.md:371
 msgid "New group function for element grouping"
-msgstr ""
+msgstr "Nouvelle fonction de groupe pour le regroupement d'éléments"
 
 #: ../../CHANGELOG.md:372
 msgid "Simulate user behavior with Hypothesis and fix uncovered bugs"
 msgstr ""
+"Simuler le comportement de l'utilisateur avec Hypothesis et corriger les "
+"bogues découverts"
 
 #: ../../CHANGELOG.md:373
 msgid "Proxyport: update ports when proxyport is moved"
-msgstr ""
+msgstr "Proxyport : mise à jour des ports lorsque le proxyport est déplacé"
 
 #: ../../CHANGELOG.md:374
 msgid "Fix AppImage Crashes on Save Command"
-msgstr ""
+msgstr "Correction du plantage de l'AppImage lors de la commande Save"
 
 #: ../../CHANGELOG.md:375
 msgid "Improve reconnect for relationships"
-msgstr ""
+msgstr "Améliorer la reconnexion pour les relations"
 
 #: ../../CHANGELOG.md:376
 msgid "Update connection behavior for Association"
-msgstr ""
+msgstr "Mise à jour du comportement de connexion pour l'Association"
 
 #: ../../CHANGELOG.md:377
 msgid "Enable preferences shortcut"
-msgstr ""
+msgstr "Activer le raccourci des préférences"
 
 #: ../../CHANGELOG.md:378
 msgid "Rename Component Toolbox to Deployment"
-msgstr ""
+msgstr "Renommer la boîte à outils des composants en Déploiement"
 
 #: ../../CHANGELOG.md:379
 msgid "Update Finnish, Spanish, Croation, and German translatio"
-msgstr ""
+msgstr "Mise à jour des traductions en Finnois, Espagnol, Croate et Allemand"
 
 #: ../../CHANGELOG.md:381
 msgid "2.8.2"
-msgstr ""
+msgstr "2.8.2"
 
 #: ../../CHANGELOG.md:383
 msgid "Fix splitting of lines"
-msgstr ""
+msgstr "Corriger le fractionnement des lignes"
 
 #: ../../CHANGELOG.md:384
 msgid "Update README to reflect new functionality"
-msgstr ""
+msgstr "Mise à jour du README pour refléter les nouvelles fonctionnalités"
 
 #: ../../CHANGELOG.md:385
 msgid "Add additional strings to translations"
-msgstr ""
+msgstr "Ajouter des chaînes de caractères supplémentaires aux traductions"
 
 #: ../../CHANGELOG.md:386
 msgid "Update Hungarian, Spanish, and Finnish translations"
-msgstr ""
+msgstr "Mise à jour des traductions en Hongrois, Espagnol et Finnois"
 
 #: ../../CHANGELOG.md:388
 msgid "2.8.1"
-msgstr ""
+msgstr "2.8.1"
 
 #: ../../CHANGELOG.md:390
 msgid "Fix Gaphor fails to load when launched in German"
-msgstr ""
+msgstr "Correction Gaphor ne se charge pas lorsqu'il est lancé en allemand"
 
 #: ../../CHANGELOG.md:391
 msgid "Simplify the greeter dialogs"
-msgstr ""
+msgstr "Simplifier les dialogues d'accueil"
 
 #: ../../CHANGELOG.md:392
 msgid "Update Hungarian, Finnish, and Chinese (Simplified) translations"
-msgstr ""
+msgstr "Mise à jour des traductions en Hongrois, Finnois et Chinois (simplifié)"
 
 #: ../../CHANGELOG.md:394
 msgid "2.8.0"
-msgstr ""
+msgstr "2.8.0"
 
 #: ../../CHANGELOG.md:396
 msgid "Add diagram type support"
-msgstr ""
+msgstr "Ajout de la prise en charge des types de diagrammes"
 
 #: ../../CHANGELOG.md:397
 msgid "Improve the welcoming experience with a greeter window and starting templates"
 msgstr ""
+"Améliorer l'expérience d'accueil avec une fenêtre d'accueil et des modèles "
+"de départ"
 
 #: ../../CHANGELOG.md:398
 msgid "Add a Magnet-tool"
-msgstr ""
+msgstr "Ajouter un outil magnétique"
 
 #: ../../CHANGELOG.md:399
 msgid "Support SysML Item flow"
-msgstr ""
+msgstr "Prise en charge du flux d'éléments SysML"
 
 #: ../../CHANGELOG.md:400
 msgid "Stereotypes for ItemFlow properties"
-msgstr ""
+msgstr "Stéréotypes pour les propriétés de ItemFlow"
 
 #: ../../CHANGELOG.md:401
 msgid "Full Copy/Paste of model elements"
-msgstr ""
+msgstr "Copier/coller complet des éléments du modèle"
 
 #: ../../CHANGELOG.md:402
 msgid "Allow for deleting elements in the tree view"
-msgstr ""
+msgstr "Permettre la suppression d'éléments dans l'arborescence"
 
 #: ../../CHANGELOG.md:403
 msgid "Allocation of structural types to swimlane partitions"
-msgstr ""
+msgstr "Attribution des types de structures aux séparations des couloirs"
 
 #: ../../CHANGELOG.md:404
 msgid "User notification when model elements are automatically removed"
 msgstr ""
+"Notification à l'utilisateur lorsque des éléments du modèle sont "
+"automatiquement supprimés"
 
 #: ../../CHANGELOG.md:405
 msgid "Store toolbox settings per modeling language"
-msgstr ""
+msgstr "Stocker les paramètres de la boîte à outils par langage de modélisation"
 
 #: ../../CHANGELOG.md:406
 msgid "Grow item when an item is dropped on it"
-msgstr ""
+msgstr "Agrandir l'objet lorsqu'un objet est déposé dessus"
 
 #: ../../CHANGELOG.md:407
 msgid "Add \"values\" compartment to Block item and set a minimal height for compartments"
 msgstr ""
+"Ajouter un compartiment « valeurs » à l'élément de bloc et fixer une hauteur "
+"minimale à ceux-ci"
 
 #: ../../CHANGELOG.md:408
 msgid "Support empty square bracket notation in an Operation"
-msgstr ""
+msgstr "Prise en charge de la notation des crochets vides dans une opération"
 
 #: ../../CHANGELOG.md:409
 msgid "New code generator"
-msgstr ""
+msgstr "Nouveau générateur de code"
 
 #: ../../CHANGELOG.md:410
 msgid "Fix AppImage GLIBC Error on Older Distro Versions"
 msgstr ""
+"Corriger l'erreur GLIBC d'AppImage sur les versions des distributions plus "
+"anciennes"
 
 #: ../../CHANGELOG.md:411
 msgid "Fix Sequence diagram loading when message is close to lifeline body"
