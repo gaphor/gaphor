@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gaphor 2.23.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-02-15 20:49-0500\n"
-"PO-Revision-Date: 2024-11-26 07:07+0000\n"
+"PO-Revision-Date: 2024-11-26 07:21+0000\n"
 "Last-Translator: Stan SZLAPKA <stansz@free.fr>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/gaphor/"
 "docs-gaphor-org/fr/>\n"
@@ -1610,79 +1610,91 @@ msgstr "Fixer la position des éléments imbriqués lors de l'annulation"
 
 #: ../../CHANGELOG.md:414
 msgid "Fix ownership of Connector, ProxyPort, and ItemFlow"
-msgstr ""
+msgstr "Corrigé la propriété des Connecteurs, ProxyPort et ItemFlow"
 
 #: ../../CHANGELOG.md:415
 msgid "Improve GTK4 compatibility"
-msgstr ""
+msgstr "Amélioration de la compatibilité avec GTK4"
 
 #: ../../CHANGELOG.md:416
 msgid "Improve clarity of syntax for attributes and operations using a popover"
 msgstr ""
+"Ajouter une info-bulle pour améliorer la clarté de la syntaxe des attributs "
+"et des opérations"
 
 #: ../../CHANGELOG.md:417
 msgid "Clean up Toolbox and remove some legacy code"
 msgstr ""
+"Nettoyage de la boîte à outils et suppression de certains codes obsolètes"
 
 #: ../../CHANGELOG.md:418
 msgid "Invert association creation"
-msgstr ""
+msgstr "Inverser la création d'associations"
 
 #: ../../CHANGELOG.md:419
 msgid "Ensure model consistency on save and fork node loading fixes"
 msgstr ""
+"Assurer la cohérence du modèle lors de la sauvegarde et du chargement des "
+"corrections des nœuds de séparation"
 
 #: ../../CHANGELOG.md:420
+#, fuzzy
 msgid "Core as a separate ModelingLanguage"
-msgstr ""
+msgstr "Core en tant que « ModelingLanguage » séparé"
 
 #: ../../CHANGELOG.md:421
+#, fuzzy
 msgid "Use symbolic close icon for notebook tabs"
-msgstr ""
+msgstr "Utiliser l'icône de fermeture symbolique pour les onglets du carnet"
 
 #: ../../CHANGELOG.md:422
 msgid "Update to latest gvsbuild, switch to wingtk repo"
 msgstr ""
+"Mise à jour vers la dernière version de gvsbuild, passage au repo de wingtk"
 
 #: ../../CHANGELOG.md:423
 msgid "Spanish, Hungarian, Finnish, Dutch, Portuguese, Croation, Espanian, and Galician translations updates"
 msgstr ""
+"Mises à jour des traductions en Espagnol, Hongrois, Finlandais, Néerlandais, "
+"Portugais, Croate, Espagnol et Galicien"
 
 #: ../../CHANGELOG.md:424
 msgid "Add Chinese (Simplified) translation"
-msgstr ""
+msgstr "Ajouter la traduction en Chinois (simplifié)"
 
 #: ../../CHANGELOG.md:426
 msgid "2.7.1"
-msgstr ""
+msgstr "2.7.1"
 
 #: ../../CHANGELOG.md:428
 msgid "Fix lines don't disconnect when moved"
-msgstr ""
+msgstr "Corrigé les lignes ne se déconnectent pas lorsqu'elles sont déplacées"
 
 #: ../../CHANGELOG.md:429
 msgid "No GTK required anymore for generating docs"
-msgstr ""
+msgstr "GTK n'est plus nécessaire pour générer des documents"
 
 #: ../../CHANGELOG.md:430
 msgid "Update Python to 3.10.0"
-msgstr ""
+msgstr "Mise à jour de Python vers 3.10.0"
 
 #: ../../CHANGELOG.md:431
 msgid "Spanish translation updates"
-msgstr ""
+msgstr "Mise à jour de la traduction en Espagnol"
 
 #: ../../CHANGELOG.md:433
 msgid "2.7.0"
-msgstr ""
+msgstr "2.7.0"
 
 #: ../../CHANGELOG.md:435
 msgid "Add Reflexive Message item for Interactions"
-msgstr ""
+msgstr "Ajouter un élément de message réflexif pour les interactions"
 
 #: ../../CHANGELOG.md:436
+#, fuzzy
 msgid "Allow messages to move freely on Lifeline and ExecutionSpec"
 msgstr ""
+"Permettre aux messages de circuler librement sur Lifeline et ExecutionSpec"
 
 #: ../../CHANGELOG.md:437
 msgid "Pop-up element name editor on creation of a new element"
