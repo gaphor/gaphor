@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gaphor 2.23.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-02-15 20:49-0500\n"
-"PO-Revision-Date: 2024-11-26 07:50+0000\n"
+"PO-Revision-Date: 2024-11-27 00:58+0000\n"
 "Last-Translator: Stan SZLAPKA <stansz@free.fr>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/gaphor/"
 "docs-gaphor-org/fr/>\n"
@@ -50,7 +50,7 @@ msgstr ""
 
 #: ../../CHANGELOG.md:6
 msgid "Fix header bars for various windows"
-msgstr "Correction des barres d'en-tête pour diverses fenêtres"
+msgstr "Correction : barres d'en-tête pour diverses fenêtres"
 
 #: ../../CHANGELOG.md:7
 msgid "Various smaller UX improvements: greeter, diagram background, empty parameters"
@@ -68,7 +68,7 @@ msgstr "Atténuation des fausses alertes de virus sous Windows"
 
 #: ../../CHANGELOG.md:10
 msgid "Fix issue when undoing fails"
-msgstr "Correction d'un problème lorsque l'annulation échoue"
+msgstr "Correction : problème lorsque l'annulation échoue"
 
 #: ../../CHANGELOG.md:12
 msgid "2.23.2"
@@ -84,7 +84,7 @@ msgstr ""
 #: ../../CHANGELOG.md:15
 msgid "Fix file filters for export image dialog"
 msgstr ""
-"Correction des filtres de fichiers pour la boîte de dialogue d'exportation "
+"Correction : filtres de fichiers pour la boîte de dialogue d'exportation "
 "d'images"
 
 #: ../../CHANGELOG.md:16
@@ -101,11 +101,11 @@ msgstr "2.23.1"
 
 #: ../../CHANGELOG.md:21
 msgid "Fix Activity Swimlanes aren't visible"
-msgstr "Correction des couloirs d'activité qui ne sont pas visibles"
+msgstr "Correction : couloirs d'activité qui ne sont pas visibles"
 
 #: ../../CHANGELOG.md:22
 msgid "Fix CSS attribute rules"
-msgstr "Fixer les règles d'attributs CSS"
+msgstr "Correction : règles d'attributs CSS"
 
 #: ../../CHANGELOG.md:23
 msgid "Remove duplicate stereotypes at root of model browser"
@@ -174,30 +174,29 @@ msgstr "macOS et Windows : Appliquer une ombre de fenêtre personnalisée"
 #: ../../CHANGELOG.md:39
 msgid "Fix Gaphor should work if GSettings schema is not available"
 msgstr ""
-"Résolu : Gaphor devrait fonctionner si le schéma GSettings n'est pas "
+"Correction : Gaphor devrait fonctionner si le schéma GSettings n'est pas "
 "disponible"
 
 #: ../../CHANGELOG.md:40
 msgid "Fix values showing under part compartment in SysML Block elements"
 msgstr ""
-"Correction des valeurs affichées sous le compartiment de la pièce dans les "
+"Correction : valeurs affichées sous le compartiment de la pièce dans les "
 "éléments SysML Block"
 
 #: ../../CHANGELOG.md:41
 msgid "Fix merge-node icon"
-msgstr "Correction de l'icône du nœud de fusion"
+msgstr "Correction : icône du nœud de fusion"
 
 #: ../../CHANGELOG.md:42
 msgid "Fix connecting lines when model is loaded and documentation updates"
 msgstr ""
-"Correction des lignes de connexion lors du chargement du modèle et des mises "
-"à jour de la documentation"
+"Correction : lignes de connexion lors du chargement du modèle et des mises à "
+"jour de la documentation"
 
 #: ../../CHANGELOG.md:43
 msgid "Fix macOS build and documentation generation"
 msgstr ""
-"Correction de la génération de la documentation et de la compilation pour "
-"macOS"
+"Correction : génération de la documentation et de la compilation pour macOS"
 
 #: ../../CHANGELOG.md:44
 msgid "Update Russian, Chinese, Polish, Hungarian, Turkish and German translations"
@@ -218,12 +217,12 @@ msgstr ""
 #: ../../CHANGELOG.md:49
 msgid "Fix TypeError when changing to dark mode and refactor settings"
 msgstr ""
-"Correction d'une erreur de type (TypeError) lors du passage en mode sombre "
-"et de la refonte des paramètres"
+"Correction : erreur de type (TypeError) lors du passage en mode sombre et de "
+"la refonte des paramètres"
 
 #: ../../CHANGELOG.md:50
 msgid "Fix grouping: allow to group to \"root\""
-msgstr "Correction du regroupement : autoriser le regroupement vers \"root\""
+msgstr "Correction : regroupement : autoriser le regroupement vers \"root\""
 
 #: ../../CHANGELOG.md:51
 #, fuzzy
@@ -237,11 +236,11 @@ msgstr "Signal des erreurs lorsque le presse-papiers est vide"
 
 #: ../../CHANGELOG.md:53
 msgid "Fix DnD file opening on macOS"
-msgstr "Correction de l'ouverture des fichiers DnD sur macOS"
+msgstr "Correction : l'ouverture des fichiers DnD sur macOS"
 
 #: ../../CHANGELOG.md:54
 msgid "Fix libadwaita 1.4.0 missing for hypothesis tests"
-msgstr "Correction de l'absence de libadwaita 1.4.0 pour les tests d'hypothèse"
+msgstr "Correction : absence de libadwaita 1.4.0 pour les tests d'hypothèse"
 
 #: ../../CHANGELOG.md:55
 msgid "Make ActivityParameterNode droppable"
@@ -362,12 +361,12 @@ msgstr "Réactiver les raccourcis clavier de macOS"
 #: ../../CHANGELOG.md:86
 msgid "Fix missing derive relationship icon in the model browser"
 msgstr ""
-"Correction de l'absence de l'icône de la relation dérivée dans le navigateur "
-"de modèle"
+"Correction : absence de l'icône de la relation dérivée dans le navigateur de "
+"modèle"
 
 #: ../../CHANGELOG.md:87
 msgid "Fix block not showing parts and references"
-msgstr "Correction d'un bloc n'affichant pas les parties et les références"
+msgstr "Correction : bloc n'affichant pas les parties et les références"
 
 #: ../../CHANGELOG.md:88
 msgid "Fixed Profile is created instead of Stereotype in model browser"
@@ -392,7 +391,7 @@ msgstr "Présenter le greffon, au lieu de le rendre seulement visible"
 
 #: ../../CHANGELOG.md:92
 msgid "Fix derive-reqt model browser icon"
-msgstr "Correction de l'icône du navigateur du modèle 'derive-reqt'"
+msgstr "Correction : icône du navigateur du modèle 'derive-reqt'"
 
 #: ../../CHANGELOG.md:93
 msgid "Improve coverage reporting"
@@ -540,12 +539,12 @@ msgstr "Windows : Correction des icônes manquantes dans la barre d'outils"
 
 #: ../../CHANGELOG.md:129
 msgid "Fix loading of ProxyPorts with informationFlow attached"
-msgstr "Correction du chargement des ProxyPorts avec informationFlow attaché"
+msgstr "Correction : chargement des ProxyPorts avec informationFlow attaché"
 
 #: ../../CHANGELOG.md:130
 msgid "Fix to resolve CSS style variables before using the values"
 msgstr ""
-"Correction pour résoudre les variables de style CSS avant d'utiliser les "
+"Correction : résolution des variables de style CSS avant d'utiliser les "
 "valeurs"
 
 #: ../../CHANGELOG.md:132
@@ -560,7 +559,7 @@ msgstr "Ajouter les unions dérivées de la trace des exigences SysML"
 #: ../../CHANGELOG.md:135
 msgid "Fix Parameter Node and Execution Specification with Dark mode"
 msgstr ""
-"Correction du nœud de paramètres et de la spécification d'exécution en mode "
+"Correction : nœud de paramètres et de la spécification d'exécution en mode "
 "sombre"
 
 #: ../../CHANGELOG.md:136
@@ -576,12 +575,12 @@ msgstr ""
 #: ../../CHANGELOG.md:138
 msgid "Fix segfault by reverting Gtk.ListVew for Parameters"
 msgstr ""
-"Correction d'une erreur de segmentation en inversant les paramètres de Gtk."
+"Correction : erreur de segmentation en inversant les paramètres de Gtk."
 "ListVew"
 
 #: ../../CHANGELOG.md:139
 msgid "Fix connect interaction fragments"
-msgstr "Correction des fragments d'interaction de connexion"
+msgstr "Correction : fragments d'interaction de connexion"
 
 #: ../../CHANGELOG.md:140
 msgid "chore: clean up deprecated properties from UIComponent"
@@ -611,7 +610,7 @@ msgstr "Mise à jour des traductions en espagnol, hongrois et finnois"
 
 #: ../../CHANGELOG.md:146
 msgid "Fix scaling of Activity Parameter nodes"
-msgstr "Fixer l'échelle des nœuds des paramètres d'activité"
+msgstr "Correction : échelle des nœuds des paramètres d'activité"
 
 #: ../../CHANGELOG.md:148
 msgid "2.19.1"
@@ -719,12 +718,12 @@ msgstr ""
 
 #: ../../CHANGELOG.md:176
 msgid "Fix doc translation catalogs not found"
-msgstr "Correction des catalogues de traduction de documents non trouvés"
+msgstr "Correction : catalogues de traduction de documents non trouvés"
 
 #: ../../CHANGELOG.md:177
 msgid "Fix encoding warnings for no encoding argument"
 msgstr ""
-"Correction des avertissements relatifs à l'encodage en l'absence d'argument"
+"Correction : avertissements relatifs à l'encodage en l'absence d'argument"
 
 #: ../../CHANGELOG.md:178
 msgid "Update AppImage build with GTK 4.10"
@@ -804,11 +803,11 @@ msgstr ""
 
 #: ../../CHANGELOG.md:197
 msgid "Fix drag from model browser"
-msgstr "Correction du glisser-déposer à partir du navigateur de modèles"
+msgstr "Correction : glisser-déposer à partir du navigateur de modèles"
 
 #: ../../CHANGELOG.md:198
 msgid "Fix orthogonal lines during copy/paste"
-msgstr "Correction des lignes orthogonales lors du copier/coller"
+msgstr "Correction : lignes orthogonales lors du copier/coller"
 
 #: ../../CHANGELOG.md:199
 msgid "Update diagram directly when partitions change"
@@ -923,7 +922,7 @@ msgstr "Afficher quelque chose lorsqu'aucun diagramme n'est ouvert"
 
 #: ../../CHANGELOG.md:228
 msgid "Fix the packaged data dirs"
-msgstr "Correction des répertoires de données packagés"
+msgstr "Correction : répertoires de données packagés"
 
 #: ../../CHANGELOG.md:229
 msgid "Stabilize macOS/GTK tests"
@@ -946,8 +945,8 @@ msgstr ""
 #: ../../CHANGELOG.md:233
 msgid "Fix translation warning never logged with missing mo files"
 msgstr ""
-"Correction de l'avertissement de traduction qui n'est jamais enregistré en "
-"cas de fichiers mo manquants"
+"Correction : avertissement de traduction qui n'est jamais enregistré en cas "
+"de fichiers mo manquants"
 
 #: ../../CHANGELOG.md:234
 msgid "Spanish, Russian, Hungarian, Czech translation update"
@@ -980,13 +979,13 @@ msgstr "Utiliser le sélecteur de fichiers natif dans Windows"
 #: ../../CHANGELOG.md:242
 msgid "Fix translations not loading in Windows, macOS, and AppImage"
 msgstr ""
-"Correction des traductions qui ne se chargent pas dans Windows, macOS et "
+"Correction : traductions qui ne se chargent pas dans Windows, macOS et "
 "AppImage"
 
 #: ../../CHANGELOG.md:243
 msgid "Fix PyInstaller versionfile parse error with pre-release versions"
 msgstr ""
-"Corriger l'erreur d'analyse du fichier de version de PyInstaller avec les "
+"Corriection : erreur d'analyse du fichier de version de PyInstaller avec les "
 "versions antérieures"
 
 #: ../../CHANGELOG.md:244
@@ -1001,12 +1000,12 @@ msgstr "Remplacer pytest-mock par monkeypatch pour les tests"
 
 #: ../../CHANGELOG.md:246
 msgid "Fix PEP597 encoding warnings"
-msgstr "Correction des avertissements de PEP597 concernant l'encodage"
+msgstr "Correction : avertissements de PEP597 concernant l'encodage"
 
 #: ../../CHANGELOG.md:247
 msgid "Fix regression that caused line handles to not snap to elements"
 msgstr ""
-"Correction d'une régression qui faisait que les poignées de ligne ne "
+"Correction : régression qui faisait que les poignées de ligne ne "
 "s'accrochaient pas aux éléments"
 
 #: ../../CHANGELOG.md:248
@@ -1024,7 +1023,7 @@ msgstr "2.14.2"
 
 #: ../../CHANGELOG.md:253
 msgid "Fix macOS release failed"
-msgstr "Correction de l'échec de la version de macOS"
+msgstr "Correction : échec de la version de macOS"
 
 #: ../../CHANGELOG.md:255
 msgid "2.14.1"
@@ -1036,7 +1035,7 @@ msgstr "Ajout d'une autocomplétion pour les propriétés CSS"
 
 #: ../../CHANGELOG.md:258
 msgid "Fix coredumps on Flatpak"
-msgstr "Correction des' cores dumps' sur Flatpak"
+msgstr "Correction : ' cores dumps' sur Flatpak"
 
 #: ../../CHANGELOG.md:259
 msgid "Hide New Package menu unless package selected"
@@ -1201,8 +1200,8 @@ msgstr "Fixer/déplacer la poignée connectée"
 #: ../../CHANGELOG.md:302
 msgid "Fix error when disconnecting line with multiple segments"
 msgstr ""
-"Correction d'une erreur lors de la déconnexion d'une ligne comportant "
-"plusieurs segments"
+"Correction : erreur lors de la déconnexion d'une ligne comportant plusieurs "
+"segments"
 
 #: ../../CHANGELOG.md:303
 msgid "Fail CI build if Windows certificate signing fails"
@@ -1278,7 +1277,7 @@ msgstr "Faire fonctionner les dialogues avec GTK4"
 
 #: ../../CHANGELOG.md:322
 msgid "Fix instant editors for GTK4"
-msgstr "Correction des éditeurs instantanés pour GTK4"
+msgstr "Correction : éditeurs instantanés pour GTK4"
 
 #: ../../CHANGELOG.md:323
 msgid "Update list view for GTK4"
@@ -1311,23 +1310,23 @@ msgstr "S'assurer que tous les modèles sont sauvegardés avec le codage UTF-8"
 
 #: ../../CHANGELOG.md:330
 msgid "Fix states can't transition to themselves"
-msgstr "Les états fixes ne peuvent pas se transformer eux-mêmes"
+msgstr "Correction : les états ne peuvent pas se transformer en eux-mêmes"
 
 #: ../../CHANGELOG.md:331
 msgid "Fix unlinking elements from the model"
-msgstr "Correction de la déliaison d'éléments du modèle"
+msgstr "Correction : délier les éléments du modèle"
 
 #: ../../CHANGELOG.md:332
 msgid "Fix issue with fully pasting a diagram"
-msgstr "Correction d'un problème lié au collage complet d'un diagramme"
+msgstr "Correction : problème lié au collage complet d'un diagramme"
 
 #: ../../CHANGELOG.md:333
 msgid "Fix scroll speed for touch screens"
-msgstr "Correction de la vitesse de défilement pour les écrans tactiles"
+msgstr "Correction : la vitesse de défilement pour les écrans tactiles"
 
 #: ../../CHANGELOG.md:334
 msgid "Fix codeql warnings and error"
-msgstr "Corriger les avertissements et les erreurs de codeql"
+msgstr "Correction : avertissements et les erreurs de codeql"
 
 #: ../../CHANGELOG.md:335
 msgid "Improve text placement for Associations"
@@ -1371,7 +1370,7 @@ msgstr "Codegen utilise tous les langages de modélisation définis"
 
 #: ../../CHANGELOG.md:346
 msgid "Fix diagram dependency cycle"
-msgstr "Corrigé le cycle de dépendance du diagramme"
+msgstr "Correction : cycle de dépendance du diagramme"
 
 #: ../../CHANGELOG.md:347
 msgid "Add Skip Duplicate Action and Release-Drafter Permissions"
@@ -1387,7 +1386,7 @@ msgstr "Inclure tous les éléments du diagramme dans le modèle de test"
 
 #: ../../CHANGELOG.md:350
 msgid "Fix GTK4 property page layouts"
-msgstr "Correction de la présentation des pages de propriétés de GTK4"
+msgstr "Correction : présentation des pages de propriétés de GTK4"
 
 #: ../../CHANGELOG.md:351
 msgid "Use official RAAML logo in greeter"
@@ -1415,7 +1414,7 @@ msgstr "2.9.2"
 
 #: ../../CHANGELOG.md:359
 msgid "Fix Windows build"
-msgstr "Correction de la version de Windows"
+msgstr "Correction : version de Windows"
 
 #: ../../CHANGELOG.md:361
 msgid "2.9.1"
@@ -1423,7 +1422,7 @@ msgstr "2.9.1"
 
 #: ../../CHANGELOG.md:363
 msgid "Fix bad release of version 2.9.0"
-msgstr "Correction d'une mauvaise version de la version 2.9.0"
+msgstr "Correction : mauvaise version de la version 2.9.0"
 
 #: ../../CHANGELOG.md:364
 msgid "Cleanup try except blocks and add more f-strings"
@@ -1462,7 +1461,7 @@ msgstr "Proxyport : mise à jour des ports lorsque le proxyport est déplacé"
 
 #: ../../CHANGELOG.md:374
 msgid "Fix AppImage Crashes on Save Command"
-msgstr "Correction du plantage de l'AppImage lors de la commande Save"
+msgstr "Correction : plantage de l'AppImage lors de la commande Save"
 
 #: ../../CHANGELOG.md:375
 msgid "Improve reconnect for relationships"
@@ -1490,7 +1489,7 @@ msgstr "2.8.2"
 
 #: ../../CHANGELOG.md:383
 msgid "Fix splitting of lines"
-msgstr "Corriger le fractionnement des lignes"
+msgstr "Correction : fractionnement des lignes"
 
 #: ../../CHANGELOG.md:384
 msgid "Update README to reflect new functionality"
@@ -1510,7 +1509,7 @@ msgstr "2.8.1"
 
 #: ../../CHANGELOG.md:390
 msgid "Fix Gaphor fails to load when launched in German"
-msgstr "Correction Gaphor ne se charge pas lorsqu'il est lancé en allemand"
+msgstr "Correction : Gaphor ne se charge pas lorsqu'il est lancé en allemand"
 
 #: ../../CHANGELOG.md:391
 msgid "Simplify the greeter dialogs"
@@ -1589,14 +1588,14 @@ msgstr "Nouveau générateur de code"
 #: ../../CHANGELOG.md:410
 msgid "Fix AppImage GLIBC Error on Older Distro Versions"
 msgstr ""
-"Corriger l'erreur GLIBC d'AppImage sur les versions des distributions plus "
+"Correction : erreur GLIBC d'AppImage sur les versions des distributions plus "
 "anciennes"
 
 #: ../../CHANGELOG.md:411
 msgid "Fix Sequence diagram loading when message is close to lifeline body"
 msgstr ""
-"Corrigé le chargement du diagramme de séquence lorsque le message est proche "
-"du corps de la ligne de vie"
+"Correction : chargement du diagramme de séquence lorsque le message est "
+"proche du corps de la ligne de vie"
 
 #: ../../CHANGELOG.md:412
 msgid "Support for loading .gaphor files directly from the macOS Finder"
@@ -1606,11 +1605,11 @@ msgstr ""
 
 #: ../../CHANGELOG.md:413
 msgid "Fix positions of nested items during undo"
-msgstr "Fixer la position des éléments imbriqués lors de l'annulation"
+msgstr "Correction : position des éléments imbriqués lors de l'annulation"
 
 #: ../../CHANGELOG.md:414
 msgid "Fix ownership of Connector, ProxyPort, and ItemFlow"
-msgstr "Corrigé la propriété des Connecteurs, ProxyPort et ItemFlow"
+msgstr "Correction : propriété des Connecteurs, ProxyPort et ItemFlow"
 
 #: ../../CHANGELOG.md:415
 msgid "Improve GTK4 compatibility"
@@ -1668,7 +1667,7 @@ msgstr "2.7.1"
 
 #: ../../CHANGELOG.md:428
 msgid "Fix lines don't disconnect when moved"
-msgstr "Corrigé les lignes ne se déconnectent pas lorsqu'elles sont déplacées"
+msgstr "Correction : lignes ne se déconnectent pas lorsqu'elles sont déplacées"
 
 #: ../../CHANGELOG.md:429
 msgid "No GTK required anymore for generating docs"
@@ -1730,8 +1729,8 @@ msgstr ""
 #: ../../CHANGELOG.md:443
 msgid "Fix lifeline ordering when not all items are linked in a diagram"
 msgstr ""
-"Correction de l'ordre des lignes de vie lorsque tous les éléments ne sont "
-"pas liés dans un diagramme"
+"Correction : ordre des lignes de vie lorsque tous les éléments ne sont pas "
+"liés dans un diagramme"
 
 #: ../../CHANGELOG.md:444
 msgid "Allow generalizations to be reused"
@@ -1745,7 +1744,7 @@ msgstr ""
 
 #: ../../CHANGELOG.md:446
 msgid "Fix Windows build by updating to Python 3.9.9"
-msgstr "Corriger la version Windows en mettant à jour Python 3.9.9"
+msgstr "Correction : version Windows en mettant à jour Python 3.9.9"
 
 #: ../../CHANGELOG.md:447
 msgid "Emit events for Diagram.ownedPresentation and Presentation.diagram after element creation"
@@ -1785,12 +1784,12 @@ msgstr "Ajouter gtksourceview à la documentation Windows"
 
 #: ../../CHANGELOG.md:456
 msgid "Fix Python 3.10 warnings"
-msgstr "Correction des avertissements de Python 3.10"
+msgstr "Correction : avertissements de Python 3.10"
 
 #: ../../CHANGELOG.md:457
 msgid "Fix indentation in Style Sheet docs"
 msgstr ""
-"Correction de l'indentation dans la documentation sur les feuilles de style"
+"Correction : indentation dans la documentation sur les feuilles de style"
 
 #: ../../CHANGELOG.md:458
 msgid "Expand the number of strings translated"
@@ -1825,7 +1824,7 @@ msgstr "Veiller à ce que toutes les relations soient optimisées"
 #: ../../CHANGELOG.md:466
 msgid "Fix errors in Italian translation which prevented model saving"
 msgstr ""
-"Correction d'erreurs dans la traduction italienne qui empêchaient la "
+"Correction : erreurs dans la traduction italienne qui empêchaient la "
 "sauvegarde du modèle"
 
 #: ../../CHANGELOG.md:467
@@ -1853,8 +1852,8 @@ msgstr "2.6.4"
 #: ../../CHANGELOG.md:474
 msgid "Fix Flatpak build failure by reverting to previous dependencies"
 msgstr ""
-"Correction de l'échec de la construction de Flatpak en revenant aux "
-"dépendances précédentes"
+"Correction : échec de la construction de Flatpak en revenant aux dépendances "
+"précédentes"
 
 #: ../../CHANGELOG.md:476
 msgid "2.6.3"
