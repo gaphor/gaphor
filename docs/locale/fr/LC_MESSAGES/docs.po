@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gaphor 2.23.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-02-15 20:49-0500\n"
-"PO-Revision-Date: 2024-11-26 07:44+0000\n"
+"PO-Revision-Date: 2024-11-26 07:50+0000\n"
 "Last-Translator: Stan SZLAPKA <stansz@free.fr>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/gaphor/"
 "docs-gaphor-org/fr/>\n"
@@ -1952,47 +1952,49 @@ msgstr ""
 
 #: ../../CHANGELOG.md:502
 msgid "Fixed closing of about dialog"
-msgstr ""
+msgstr "Correction : fermeture du dialogue « à propos de »"
 
 #: ../../CHANGELOG.md:503
 msgid "Add VSCode debug instructions for Windows"
-msgstr ""
+msgstr "Ajouter les instructions de débogage du VSCode pour Windows"
 
 #: ../../CHANGELOG.md:504
 msgid "Rename usage of Partitions to Swimlanes"
-msgstr ""
+msgstr "Renommer l'utilisation des partitions en Swimlanes"
 
 #: ../../CHANGELOG.md:505
 msgid "Update Dutch and Hungarian Translations"
-msgstr ""
+msgstr "Mise à jour des traductions en Néerlandais et en Hongrois"
 
 #: ../../CHANGELOG.md:506
 msgid "Croatian translation updates"
-msgstr ""
+msgstr "Mise à jour de la traduction en Croate"
 
 #: ../../CHANGELOG.md:507
 msgid "Simplify attribute and enumeration lookup"
-msgstr ""
+msgstr "Simplifieé : recherche d'attributs et d'énumérations"
 
 #: ../../CHANGELOG.md:509
 msgid "2.6.0"
-msgstr ""
+msgstr "2.6.0"
 
 #: ../../CHANGELOG.md:511
 msgid "Improve zoom and pan for mouse"
-msgstr ""
+msgstr "Amélioration : zoom et panoramique pour la souris"
 
 #: ../../CHANGELOG.md:512
 msgid "Add Finnish, Galician, Hungarian, and Korean, update Spanish translations"
 msgstr ""
+"Ajout du Finnois, du Galicien, du Hongrois et du Coréen, mise à jour des "
+"traductions en Espagnol"
 
 #: ../../CHANGELOG.md:513
 msgid "Fix disappearing elements from tree view on Windows"
-msgstr ""
+msgstr "Correction : disparition d'éléments dans l'arborescence sous Windows"
 
 #: ../../CHANGELOG.md:514
 msgid "Convert CI from mingw to gvsbuild"
-msgstr ""
+msgstr "Convertir l'IC de mingw à gvsbuild"
 
 #: ../../CHANGELOG.md:515
 msgid "Upgrade Windows Build Script from Bash to Python"
