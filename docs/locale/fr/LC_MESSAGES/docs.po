@@ -1371,7 +1371,7 @@ msgstr "Codegen utilise tous les langages de modélisation définis"
 
 #: ../../CHANGELOG.md:346
 msgid "Fix diagram dependency cycle"
-msgstr "Correction : cycle de dépendance du diagramme"
+msgstr "Corrigé le cycle de dépendance du diagramme"
 
 #: ../../CHANGELOG.md:347
 msgid "Add Skip Duplicate Action and Release-Drafter Permissions"
@@ -1387,7 +1387,7 @@ msgstr "Inclure tous les éléments du diagramme dans le modèle de test"
 
 #: ../../CHANGELOG.md:350
 msgid "Fix GTK4 property page layouts"
-msgstr "Correction : présentation des pages de propriétés de GTK4"
+msgstr "Correction de la présentation des pages de propriétés de GTK4"
 
 #: ../../CHANGELOG.md:351
 msgid "Use official RAAML logo in greeter"
@@ -1415,7 +1415,7 @@ msgstr "2.9.2"
 
 #: ../../CHANGELOG.md:359
 msgid "Fix Windows build"
-msgstr "Correction : version de Windows"
+msgstr "Correction de la version de Windows"
 
 #: ../../CHANGELOG.md:361
 msgid "2.9.1"
@@ -1423,7 +1423,7 @@ msgstr "2.9.1"
 
 #: ../../CHANGELOG.md:363
 msgid "Fix bad release of version 2.9.0"
-msgstr "Correction : mauvaise version de la version 2.9.0"
+msgstr "Correction d'une mauvaise version de la version 2.9.0"
 
 #: ../../CHANGELOG.md:364
 msgid "Cleanup try except blocks and add more f-strings"
@@ -1462,7 +1462,7 @@ msgstr "Proxyport : mise à jour des ports lorsque le proxyport est déplacé"
 
 #: ../../CHANGELOG.md:374
 msgid "Fix AppImage Crashes on Save Command"
-msgstr "Correction : plantage de l'AppImage lors de la commande Save"
+msgstr "Correction du plantage de l'AppImage lors de la commande Save"
 
 #: ../../CHANGELOG.md:375
 msgid "Improve reconnect for relationships"
@@ -1490,7 +1490,7 @@ msgstr "2.8.2"
 
 #: ../../CHANGELOG.md:383
 msgid "Fix splitting of lines"
-msgstr "Correction : fractionnement des lignes"
+msgstr "Corriger le fractionnement des lignes"
 
 #: ../../CHANGELOG.md:384
 msgid "Update README to reflect new functionality"
@@ -1510,7 +1510,7 @@ msgstr "2.8.1"
 
 #: ../../CHANGELOG.md:390
 msgid "Fix Gaphor fails to load when launched in German"
-msgstr "Correction : Gaphor ne se charge pas lorsqu'il est lancé en allemand"
+msgstr "Correction Gaphor ne se charge pas lorsqu'il est lancé en allemand"
 
 #: ../../CHANGELOG.md:391
 msgid "Simplify the greeter dialogs"
@@ -1589,7 +1589,7 @@ msgstr "Nouveau générateur de code"
 #: ../../CHANGELOG.md:410
 msgid "Fix AppImage GLIBC Error on Older Distro Versions"
 msgstr ""
-"Correction : erreur GLIBC d'AppImage sur les versions des distributions plus "
+"Corriger l'erreur GLIBC d'AppImage sur les versions des distributions plus "
 "anciennes"
 
 #: ../../CHANGELOG.md:411
