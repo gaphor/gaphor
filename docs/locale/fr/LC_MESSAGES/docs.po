@@ -1595,8 +1595,8 @@ msgstr ""
 #: ../../CHANGELOG.md:411
 msgid "Fix Sequence diagram loading when message is close to lifeline body"
 msgstr ""
-"Correction : chargement du diagramme de séquence lorsque le message est "
-"proche du corps de la ligne de vie"
+"Corrigé le chargement du diagramme de séquence lorsque le message est proche "
+"du corps de la ligne de vie"
 
 #: ../../CHANGELOG.md:412
 msgid "Support for loading .gaphor files directly from the macOS Finder"
