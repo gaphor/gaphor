@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gaphor 2.23.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-02-15 20:49-0500\n"
-"PO-Revision-Date: 2024-11-26 07:06+0000\n"
+"PO-Revision-Date: 2024-11-26 07:07+0000\n"
 "Last-Translator: Stan SZLAPKA <stansz@free.fr>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/gaphor/"
 "docs-gaphor-org/fr/>\n"
@@ -1601,10 +1601,12 @@ msgstr ""
 #: ../../CHANGELOG.md:412
 msgid "Support for loading .gaphor files directly from the macOS Finder"
 msgstr ""
+"Prise en charge du chargement des fichiers .gaphor directement depuis le "
+"Finder de macOS"
 
 #: ../../CHANGELOG.md:413
 msgid "Fix positions of nested items during undo"
-msgstr ""
+msgstr "Fixer la position des éléments imbriqués lors de l'annulation"
 
 #: ../../CHANGELOG.md:414
 msgid "Fix ownership of Connector, ProxyPort, and ItemFlow"
