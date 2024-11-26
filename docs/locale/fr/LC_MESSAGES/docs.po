@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gaphor 2.23.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-02-15 20:49-0500\n"
-"PO-Revision-Date: 2024-11-26 07:21+0000\n"
+"PO-Revision-Date: 2024-11-26 07:44+0000\n"
 "Last-Translator: Stan SZLAPKA <stansz@free.fr>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/gaphor/"
 "docs-gaphor-org/fr/>\n"
@@ -1699,42 +1699,53 @@ msgstr ""
 #: ../../CHANGELOG.md:437
 msgid "Pop-up element name editor on creation of a new element"
 msgstr ""
+"Pop-up avec éditeur de noms d'éléments lors de la création d'un nouvel "
+"élément"
 
 #: ../../CHANGELOG.md:438
 msgid "Add option to show underlying DecisionNode type"
 msgstr ""
+"Ajout d'une option permettant d'afficher le type de nœud décisionnel sous-"
+"jacent"
 
 #: ../../CHANGELOG.md:439
 msgid "Add InformationFlow for Connectors"
-msgstr ""
+msgstr "Ajouter un flux d'informations pour les connecteurs"
 
 #: ../../CHANGELOG.md:440
 msgid "Swap relationship direction for Generalization, Dependency, Import, Include, and Extend"
 msgstr ""
+"Remplacer la direction des relations par la Généralisation, la Dépendance, "
+"l'Importation, l'Inclusion et l'Extension"
 
 #: ../../CHANGELOG.md:441
 msgid "Use Jedi for autocomplete in the Python Console"
-msgstr ""
+msgstr "Utiliser Jedi pour l'autocomplétion dans la console Python"
 
 #: ../../CHANGELOG.md:442
 msgid "Sphinx directive for embedding Gaphor models into docs"
 msgstr ""
+"Directive Sphinx pour l'intégration des modèles Gaphor dans les documents"
 
 #: ../../CHANGELOG.md:443
 msgid "Fix lifeline ordering when not all items are linked in a diagram"
 msgstr ""
+"Correction de l'ordre des lignes de vie lorsque tous les éléments ne sont "
+"pas liés dans un diagramme"
 
 #: ../../CHANGELOG.md:444
 msgid "Allow generalizations to be reused"
-msgstr ""
+msgstr "Permettre la réutilisation des généralisations"
 
 #: ../../CHANGELOG.md:445
 msgid "Allow auto-generated elements (Activity, State Machine, Interaction, Region) to be removed"
 msgstr ""
+"Permettre la suppression des éléments générés automatiquement (Activité, "
+"Etat Machine, Interaction, Région)"
 
 #: ../../CHANGELOG.md:446
 msgid "Fix Windows build by updating to Python 3.9.9"
-msgstr ""
+msgstr "Corriger la version Windows en mettant à jour Python 3.9.9"
 
 #: ../../CHANGELOG.md:447
 msgid "Emit events for Diagram.ownedPresentation and Presentation.diagram after element creation"
@@ -1742,179 +1753,202 @@ msgstr ""
 
 #: ../../CHANGELOG.md:448
 msgid "Show underlying DecisionNode type"
-msgstr ""
+msgstr "Afficher le type de nœud décisionnel sous-jacent"
 
 #: ../../CHANGELOG.md:449
 msgid "Add documentation dependencies to pyproject.toml"
-msgstr ""
+msgstr "Ajouter les dépendances de la documentation à pyproject.toml"
 
 #: ../../CHANGELOG.md:450
 msgid "Move enumeration layout to UML.classes"
-msgstr ""
+msgstr "Déplacer la présentation des énumérations vers UML.classes"
 
 #: ../../CHANGELOG.md:451
 msgid "Rename packaging to _packaging"
-msgstr ""
+msgstr "Renommer packaging en _packaging"
 
 #: ../../CHANGELOG.md:452
 msgid "Remove names for initial/final nodes"
-msgstr ""
+msgstr "Supprimer les noms des nœuds initiaux/finaux"
 
 #: ../../CHANGELOG.md:453
 msgid "Update to latest gvsbuild"
-msgstr ""
+msgstr "Mise à jour vers la dernière version de gvsbuild"
 
 #: ../../CHANGELOG.md:454
 msgid "Update to PyInstaller 4.6"
-msgstr ""
+msgstr "Mise à jour vers PyInstaller 4.6"
 
 #: ../../CHANGELOG.md:455
 msgid "Add gtksourceview to Windows docs"
-msgstr ""
+msgstr "Ajouter gtksourceview à la documentation Windows"
 
 #: ../../CHANGELOG.md:456
 msgid "Fix Python 3.10 warnings"
-msgstr ""
+msgstr "Correction des avertissements de Python 3.10"
 
 #: ../../CHANGELOG.md:457
 msgid "Fix indentation in Style Sheet docs"
 msgstr ""
+"Correction de l'indentation dans la documentation sur les feuilles de style"
 
 #: ../../CHANGELOG.md:458
 msgid "Expand the number of strings translated"
-msgstr ""
+msgstr "Augmenter le nombre de chaînes traduites"
 
 #: ../../CHANGELOG.md:459
 msgid "Hungarian, Spanish, Japanese, Finnish, and Croatian translation updates"
 msgstr ""
+"Mises à jour des traductions en Hongrois, Espagnol, Japonais, Finnois et "
+"Croate"
 
 #: ../../CHANGELOG.md:461
 msgid "2.6.5"
-msgstr ""
+msgstr "2.6.5"
 
 #: ../../CHANGELOG.md:463
 msgid "Update style sheet editor to be a code editor"
 msgstr ""
+"Mise à jour de l'éditeur de feuilles de style pour en faire un éditeur de "
+"code"
 
 #: ../../CHANGELOG.md:464
 msgid "Update strings to improve ability to translate"
 msgstr ""
+"Mise à jour des chaînes de caractères pour améliorer la capacité de "
+"traduction"
 
 #: ../../CHANGELOG.md:465
 msgid "Ensure all relationships are brought to top"
-msgstr ""
+msgstr "Veiller à ce que toutes les relations soient optimisées"
 
 #: ../../CHANGELOG.md:466
 msgid "Fix errors in Italian translation which prevented model saving"
 msgstr ""
+"Correction d'erreurs dans la traduction italienne qui empêchaient la "
+"sauvegarde du modèle"
 
 #: ../../CHANGELOG.md:467
 msgid "Add association end properties to editor pane"
-msgstr ""
+msgstr "Ajouter les propriétés de fin d'association au panneau de l'éditeur"
 
 #: ../../CHANGELOG.md:468
 msgid "Restore rename right click option to diagrams in tree view"
 msgstr ""
+"Restaurer l'option « renommer » du clic droit sur les diagrammes dans "
+"l'arborescence"
 
 #: ../../CHANGELOG.md:469
 msgid "Add Japanese translation"
-msgstr ""
+msgstr "Ajouter une traduction en Japonais"
 
 #: ../../CHANGELOG.md:470
 msgid "Update Hungarian, Croatian, and Spanish translations"
-msgstr ""
+msgstr "Mise à jour des traductions en Hongrois, Croate et Espagnol"
 
 #: ../../CHANGELOG.md:472
 msgid "2.6.4"
-msgstr ""
+msgstr "2.6.4"
 
 #: ../../CHANGELOG.md:474
 msgid "Fix Flatpak build failure by reverting to previous dependencies"
 msgstr ""
+"Correction de l'échec de la construction de Flatpak en revenant aux "
+"dépendances précédentes"
 
 #: ../../CHANGELOG.md:476
 msgid "2.6.3"
-msgstr ""
+msgstr "2.6.3"
 
 #: ../../CHANGELOG.md:478
 msgid "Fix about dialog logo"
-msgstr ""
+msgstr "Correction du logo de la boîte de dialogue"
 
 #: ../../CHANGELOG.md:479
 msgid "Add translation of more elements"
-msgstr ""
+msgstr "Ajouter la traduction d'autres éléments"
 
 #: ../../CHANGELOG.md:480
+#, fuzzy
 msgid "Remove importlib_metadata dependency"
-msgstr ""
+msgstr "Suppression de la dépendance importlib_metadata"
 
 #: ../../CHANGELOG.md:481
 msgid "Simpler services for about dialog"
-msgstr ""
+msgstr "Des services plus simples pour un dialogue plus approfondi"
 
 #: ../../CHANGELOG.md:482
 msgid "Up typing compliance to 3.9, and remove typing_extensions"
-msgstr ""
+msgstr "Augmenter la conformité du typage à 3.9, et supprimer typing_extensions"
 
 #: ../../CHANGELOG.md:483
 msgid "Finnish translation updates"
-msgstr ""
+msgstr "Mise à jour de la traduction en Finnois"
 
 #: ../../CHANGELOG.md:485
 msgid "2.6.2"
-msgstr ""
+msgstr "2.6.2"
 
 #: ../../CHANGELOG.md:487
 msgid "Fix localization of UI files"
-msgstr ""
+msgstr "Correction de la localisation des fichiers de l'interface utilisateur"
 
 #: ../../CHANGELOG.md:488
 msgid "Fix icons in dark mode"
-msgstr ""
+msgstr "Correction des icônes en mode sombre"
 
 #: ../../CHANGELOG.md:489
 msgid "Update Spanish, Finnish, Hugarian, and Portuguese (Br) translations"
 msgstr ""
+"Mise à jour des traductions en Espagnol, Finnois, Hongrois et Portugais (Br)"
 
 #: ../../CHANGELOG.md:491
 msgid "2.6.1"
-msgstr ""
+msgstr "2.6.1"
 
 #: ../../CHANGELOG.md:493
 msgid "Display guard conditions in square brackets"
-msgstr ""
+msgstr "Afficher les conditions de garde entre crochets"
 
 #: ../../CHANGELOG.md:494
 msgid "Use flat buttons in the header bar"
-msgstr ""
+msgstr "Utiliser des boutons plats dans la barre d'en-tête"
 
 #: ../../CHANGELOG.md:495
 msgid "Fix translation support"
-msgstr ""
+msgstr "Correction de la prise en charge des traductions"
 
 #: ../../CHANGELOG.md:496
 msgid "Fix drag and drop of elements does not work on diagrams"
 msgstr ""
+"Correction : le glisser-déposer d'éléments ne fonctionne pas sur les "
+"diagrammes"
 
 #: ../../CHANGELOG.md:497
 msgid "Fix parameter is incorrect error with \";;\" in path"
-msgstr ""
+msgstr "Corriction : erreur de paramètre avec « ; ; » dans le chemin d'accès"
 
 #: ../../CHANGELOG.md:498
 msgid "Fix fork/join node incorrectly rotates"
-msgstr ""
+msgstr "Correction : rotation incorrecte du nœud fork/join"
 
 #: ../../CHANGELOG.md:499
 msgid "Fix close button on about dialog doesn't work in Windows"
 msgstr ""
+"Correction : bouton de fermeture de la boîte de dialogue « à propos » ne "
+"fonctionne pas sous Windows"
 
 #: ../../CHANGELOG.md:500
 msgid "Fix wrong label is displayed when object node ordering is enabled"
 msgstr ""
+"Correction : étiquette erronée est affichée lorsque l'ordre des nœuds "
+"d'objets est activé"
 
 #: ../../CHANGELOG.md:501
 msgid "Improve inline editor undo/redo behavior"
 msgstr ""
+"Amélioration du comportement d'annulation et de rétablissement de l'éditeur "
+"en ligne"
 
 #: ../../CHANGELOG.md:502
 msgid "Fixed closing of about dialog"
