@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gaphor 2.23.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-02-15 20:49-0500\n"
-"PO-Revision-Date: 2024-11-26 07:05+0000\n"
+"PO-Revision-Date: 2024-11-26 07:06+0000\n"
 "Last-Translator: Stan SZLAPKA <stansz@free.fr>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/gaphor/"
 "docs-gaphor-org/fr/>\n"
@@ -1595,6 +1595,8 @@ msgstr ""
 #: ../../CHANGELOG.md:411
 msgid "Fix Sequence diagram loading when message is close to lifeline body"
 msgstr ""
+"Corrigé le chargement du diagramme de séquence lorsque le message est proche "
+"du corps de la ligne de vie"
 
 #: ../../CHANGELOG.md:412
 msgid "Support for loading .gaphor files directly from the macOS Finder"
