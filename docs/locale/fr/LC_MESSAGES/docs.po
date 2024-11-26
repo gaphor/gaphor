@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gaphor 2.23.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-02-15 20:49-0500\n"
-"PO-Revision-Date: 2024-11-26 07:21+0000\n"
+"PO-Revision-Date: 2024-11-26 07:44+0000\n"
 "Last-Translator: Stan SZLAPKA <stansz@free.fr>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/gaphor/"
 "docs-gaphor-org/fr/>\n"
@@ -1730,8 +1730,8 @@ msgstr ""
 #: ../../CHANGELOG.md:443
 msgid "Fix lifeline ordering when not all items are linked in a diagram"
 msgstr ""
-"Correction : ordre des lignes de vie lorsque tous les éléments ne sont pas "
-"liés dans un diagramme"
+"Correction de l'ordre des lignes de vie lorsque tous les éléments ne sont "
+"pas liés dans un diagramme"
 
 #: ../../CHANGELOG.md:444
 msgid "Allow generalizations to be reused"
@@ -1745,7 +1745,7 @@ msgstr ""
 
 #: ../../CHANGELOG.md:446
 msgid "Fix Windows build by updating to Python 3.9.9"
-msgstr "Correction : version Windows en mettant à jour Python 3.9.9"
+msgstr "Corriger la version Windows en mettant à jour Python 3.9.9"
 
 #: ../../CHANGELOG.md:447
 msgid "Emit events for Diagram.ownedPresentation and Presentation.diagram after element creation"
@@ -1785,12 +1785,12 @@ msgstr "Ajouter gtksourceview à la documentation Windows"
 
 #: ../../CHANGELOG.md:456
 msgid "Fix Python 3.10 warnings"
-msgstr "Correction : avertissements de Python 3.10"
+msgstr "Correction des avertissements de Python 3.10"
 
 #: ../../CHANGELOG.md:457
 msgid "Fix indentation in Style Sheet docs"
 msgstr ""
-"Correction : indentation dans la documentation sur les feuilles de style"
+"Correction de l'indentation dans la documentation sur les feuilles de style"
 
 #: ../../CHANGELOG.md:458
 msgid "Expand the number of strings translated"
@@ -1825,7 +1825,7 @@ msgstr "Veiller à ce que toutes les relations soient optimisées"
 #: ../../CHANGELOG.md:466
 msgid "Fix errors in Italian translation which prevented model saving"
 msgstr ""
-"Correction : erreurs dans la traduction italienne qui empêchaient la "
+"Correction d'erreurs dans la traduction italienne qui empêchaient la "
 "sauvegarde du modèle"
 
 #: ../../CHANGELOG.md:467
@@ -1853,8 +1853,8 @@ msgstr "2.6.4"
 #: ../../CHANGELOG.md:474
 msgid "Fix Flatpak build failure by reverting to previous dependencies"
 msgstr ""
-"Correction : échec de la construction de Flatpak en revenant aux dépendances "
-"précédentes"
+"Correction de l'échec de la construction de Flatpak en revenant aux "
+"dépendances précédentes"
 
 #: ../../CHANGELOG.md:476
 msgid "2.6.3"
