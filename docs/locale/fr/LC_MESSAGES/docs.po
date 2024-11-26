@@ -1606,7 +1606,7 @@ msgstr ""
 
 #: ../../CHANGELOG.md:413
 msgid "Fix positions of nested items during undo"
-msgstr "Correction : position des éléments imbriqués lors de l'annulation"
+msgstr "Fixer la position des éléments imbriqués lors de l'annulation"
 
 #: ../../CHANGELOG.md:414
 msgid "Fix ownership of Connector, ProxyPort, and ItemFlow"
