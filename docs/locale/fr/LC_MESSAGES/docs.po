@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gaphor 2.23.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-02-15 20:49-0500\n"
-"PO-Revision-Date: 2024-11-27 00:58+0000\n"
+"PO-Revision-Date: 2024-11-27 18:35+0000\n"
 "Last-Translator: Stan SZLAPKA <stansz@free.fr>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/gaphor/"
 "docs-gaphor-org/fr/>\n"
@@ -1861,7 +1861,7 @@ msgstr "2.6.3"
 
 #: ../../CHANGELOG.md:478
 msgid "Fix about dialog logo"
-msgstr "Correction du logo de la boîte de dialogue"
+msgstr "Correction : logo de la boîte de dialogue"
 
 #: ../../CHANGELOG.md:479
 msgid "Add translation of more elements"
@@ -1890,11 +1890,11 @@ msgstr "2.6.2"
 
 #: ../../CHANGELOG.md:487
 msgid "Fix localization of UI files"
-msgstr "Correction de la localisation des fichiers de l'interface utilisateur"
+msgstr "Correction : localisation des fichiers de l'interface utilisateur"
 
 #: ../../CHANGELOG.md:488
 msgid "Fix icons in dark mode"
-msgstr "Correction des icônes en mode sombre"
+msgstr "Correction : icônes en mode sombre"
 
 #: ../../CHANGELOG.md:489
 msgid "Update Spanish, Finnish, Hugarian, and Portuguese (Br) translations"
@@ -1915,17 +1915,16 @@ msgstr "Utiliser des boutons plats dans la barre d'en-tête"
 
 #: ../../CHANGELOG.md:495
 msgid "Fix translation support"
-msgstr "Correction de la prise en charge des traductions"
+msgstr "Correction : prise en charge des traductions"
 
 #: ../../CHANGELOG.md:496
 msgid "Fix drag and drop of elements does not work on diagrams"
 msgstr ""
-"Correction : le glisser-déposer d'éléments ne fonctionne pas sur les "
-"diagrammes"
+"Correction : glisser-déposer d'éléments ne fonctionne pas sur les diagrammes"
 
 #: ../../CHANGELOG.md:497
 msgid "Fix parameter is incorrect error with \";;\" in path"
-msgstr "Corriction : erreur de paramètre avec « ; ; » dans le chemin d'accès"
+msgstr "Correction : erreur de paramètre avec « ; ; » dans le chemin d'accès"
 
 #: ../../CHANGELOG.md:498
 msgid "Fix fork/join node incorrectly rotates"
@@ -1971,7 +1970,7 @@ msgstr "Mise à jour de la traduction en Croate"
 
 #: ../../CHANGELOG.md:507
 msgid "Simplify attribute and enumeration lookup"
-msgstr "Simplifieé : recherche d'attributs et d'énumérations"
+msgstr "Simplifiée : recherche d'attributs et d'énumérations"
 
 #: ../../CHANGELOG.md:509
 msgid "2.6.0"
@@ -1997,863 +1996,1173 @@ msgstr "Convertir l'IC de mingw à gvsbuild"
 
 #: ../../CHANGELOG.md:515
 msgid "Upgrade Windows Build Script from Bash to Python"
-msgstr ""
+msgstr "Mise à jour : Script de construction de Windows de Bash à Python"
 
 #: ../../CHANGELOG.md:516
 msgid "Refactor GitHub Actions to use composite actions"
-msgstr ""
+msgstr "Refactoriser les actions GitHub pour utiliser des actions composites"
 
 #: ../../CHANGELOG.md:517
 msgid "Add translations for UI files"
-msgstr ""
+msgstr "Ajouté : traductions pour les fichiers de l'interface utilisateur"
 
 #: ../../CHANGELOG.md:518
 msgid "Add information flows to UML model"
-msgstr ""
+msgstr "Ajouté : les flux d'information au modèle UML"
 
 #: ../../CHANGELOG.md:519
 msgid "Add extra rules to avoid cyclic references"
 msgstr ""
+"Ajouté : des règles supplémentaires pour éviter les références cycliques"
 
 #: ../../CHANGELOG.md:520
 msgid "Fix typo in UML.gaphor"
-msgstr ""
+msgstr "Correction : typo dans UML.gaphor"
 
 #: ../../CHANGELOG.md:521
 msgid "Refactor class property pages in to multiple modules"
-msgstr ""
+msgstr "Refonte des pages de propriétés de classes en plusieurs modules"
 
 #: ../../CHANGELOG.md:522
 msgid "Fix Windows and other developer documentation updates"
 msgstr ""
+"Correction : Mise à jour de la documentation pour Windows et pour les "
+"développeurs"
 
 #: ../../CHANGELOG.md:523
 msgid "Enable pyupgrade"
-msgstr ""
+msgstr "Activation de pyupgrade"
 
 #: ../../CHANGELOG.md:524
 msgid "Update the README for Flatpak string translation"
-msgstr ""
+msgstr "Mise à jour du README pour la traduction des chaînes de Flatpak"
 
 #: ../../CHANGELOG.md:525
 msgid "Fix documentation build errors, update dependencies"
 msgstr ""
+"Correction : erreurs de compilation de la documentation, mise à jour des "
+"dépendances"
 
 #: ../../CHANGELOG.md:527
 msgid "2.5.1"
-msgstr ""
+msgstr "2.5.1"
 
 #: ../../CHANGELOG.md:529
 msgid "Fix app release signing in Windows and macOS"
 msgstr ""
+"Correction : signature de la version de l'application dans Windows et macOS"
 
 #: ../../CHANGELOG.md:531
 msgid "2.5.0"
-msgstr ""
+msgstr "2.5.0"
 
 #: ../../CHANGELOG.md:533
 msgid "Add initial support for STPA in RAAML"
-msgstr ""
+msgstr "Ajout d'un support initial pour STPA dans RAAML"
 
 #: ../../CHANGELOG.md:534
 msgid "Add support for notes in property pages and attributes"
 msgstr ""
+"Ajout d'un support pour les notes dans les pages de propriétés et les "
+"attributs"
 
 #: ../../CHANGELOG.md:535
 msgid "Allow for diagrams to be nested under all elements"
-msgstr ""
+msgstr "Permettre aux diagrammes d'être imbriqués sous tous les éléments"
 
 #: ../../CHANGELOG.md:536
 msgid "Fix delete and undo of a diagram"
-msgstr ""
+msgstr "Correction : suppression et annulation d'un diagramme"
 
 #: ../../CHANGELOG.md:537
 msgid "Rename C4ContainerDatabaseItem to C4DatabaseItem"
-msgstr ""
+msgstr "Renommé : C4ContainerDatabaseItem en C4DatabaseItem"
 
 #: ../../CHANGELOG.md:538
 msgid "Cleanup model loading"
-msgstr ""
+msgstr "Chargement du modèle de nettoyage"
 
 #: ../../CHANGELOG.md:539
 msgid "Change diagram item management to the element factory"
 msgstr ""
+"Modifier la gestion des objets du diagramme vers la structure de l'élément ("
+"element factory)"
 
 #: ../../CHANGELOG.md:540
 msgid "Organize and simplify element events"
-msgstr ""
+msgstr "Organiser et simplifier les événements liés aux éléments"
 
 #: ../../CHANGELOG.md:541
 msgid "Cleanup toolbox and diagram action code"
-msgstr ""
+msgstr "Nettoyé : la boîte à outils et le code d'action du diagramme"
 
 #: ../../CHANGELOG.md:543
 msgid "2.4.2"
-msgstr ""
+msgstr "2.4.2"
 
 #: ../../CHANGELOG.md:545
 msgid "Fix AttributeError when creating composite associations"
 msgstr ""
+"Correction : Erreur d'attribut lors de la création d'associations composites"
 
 #: ../../CHANGELOG.md:546
 msgid "Add tooltips for A and S in attribute editor"
-msgstr ""
+msgstr "Ajout : infobulles pour A et S dans l'éditeur d'attributs"
 
 #: ../../CHANGELOG.md:547
 msgid "Improve drag and drop for TreeView"
-msgstr ""
+msgstr "Amélioration : glisser/déposer pour TreeView"
 
 #: ../../CHANGELOG.md:548
 msgid "Started to add support for GTK4"
-msgstr ""
+msgstr "Début de la prise en charge de GTK4"
 
 #: ../../CHANGELOG.md:549
 msgid "Upload Linux assets during release automatically"
-msgstr ""
+msgstr "Téléchargement automatique des ressources Linux lors de la publication"
 
 #: ../../CHANGELOG.md:550
 msgid "Sign only builds on the master branch"
-msgstr ""
+msgstr "Signer uniquement les constructions sur la branche master"
 
 #: ../../CHANGELOG.md:552
 msgid "2.4.1"
-msgstr ""
+msgstr "2.4.1"
 
 #: ../../CHANGELOG.md:554
 msgid "Fix reordering attributes and operations with drag and drop"
 msgstr ""
+"Correction : réorganisation des attributs et des opérations par glisser-"
+"déposer"
 
 #: ../../CHANGELOG.md:556
 msgid "2.4.0"
-msgstr ""
+msgstr "2.4.0"
 
 #: ../../CHANGELOG.md:558
 msgid "Add support for DataType, ValueType, Primitive, and Enumeration"
-msgstr ""
+msgstr "Prise en charge des types DataType, ValueType, Primitive et Enumeration"
 
 #: ../../CHANGELOG.md:559
 msgid "Model state is stored per model, restores where you left off"
 msgstr ""
+"L'état du modèle est stocké par modèle ; il est rétabli là où vous l'avez "
+"laissé"
 
 #: ../../CHANGELOG.md:560
 msgid "Add support for Containment Relationship"
-msgstr ""
+msgstr "Ajout de la prise en charge de la relation de confinement"
 
 #: ../../CHANGELOG.md:561
 msgid "Focus already opened model when opening a model file"
 msgstr ""
+"Focus sur un modèle déjà ouvert lors de l'ouverture d'un fichier de modèle"
 
 #: ../../CHANGELOG.md:562
 msgid "Remove the New From Template option"
-msgstr ""
+msgstr "Supprimée : l'option Nouveau à partir d'un modèle"
 
 #: ../../CHANGELOG.md:563
 msgid "Upgrade toolbox to be compatible with GTK 4"
-msgstr ""
+msgstr "Mise à jour de la boîte à outils pour la rendre compatible avec GTK 4"
 
 #: ../../CHANGELOG.md:564
 msgid "Add regression tests"
-msgstr ""
+msgstr "Ajouter des tests de régression"
 
 #: ../../CHANGELOG.md:565
 msgid "Fix build fails when GitHub Actions secrets are not available"
 msgstr ""
+"Correction : la compilation échoue lorsque les détails de l'action GitHub ne "
+"sont pas disponibles"
 
 #: ../../CHANGELOG.md:566
 msgid "Fix association direction arrow is not updated"
 msgstr ""
+"Correction : la flèche de direction de l'association n'est pas mise à jour"
 
 #: ../../CHANGELOG.md:568
 msgid "2.3.2"
-msgstr ""
+msgstr "2.3.2"
 
 #: ../../CHANGELOG.md:570
 msgid "Fix issue where ornaments were not show on associations after loading a model"
 msgstr ""
+"Correction : problème où les ornements n'apparaissaient pas dans les "
+"associations après le chargement d'un modèle"
 
 #: ../../CHANGELOG.md:573
 msgid "2.3.1"
-msgstr ""
+msgstr "2.3.1"
 
 #: ../../CHANGELOG.md:575
 msgid "Fix scrollbars cause the diagram to disappear"
-msgstr ""
+msgstr "Correction : les barres de défilement font disparaître le diagramme"
 
 #: ../../CHANGELOG.md:576
 #: ../../CHANGELOG.md:626
 msgid "Update Italian translation"
-msgstr ""
+msgstr "Mise à jour de la traduction italienne"
 
 #: ../../CHANGELOG.md:577
 msgid "Left align the toolbox header labels"
-msgstr ""
+msgstr "Alignement à gauche des étiquettes d'en-tête de la boîte à outils"
 
 #: ../../CHANGELOG.md:579
 msgid "2.3.0"
-msgstr ""
+msgstr "2.3.0"
 
 #: ../../CHANGELOG.md:581
 msgid "Add support for C4 model"
-msgstr ""
+msgstr "Ajoutée : la prise en charge du modèle C4"
 
 #: ../../CHANGELOG.md:582
 msgid "Add support for Fault Tree Analysis with RAAML"
 msgstr ""
+"Ajout de la prise en charge de l'analyse de l'arbre des défaillances avec "
+"RAAML"
 
 #: ../../CHANGELOG.md:583
 msgid "Update the UML data model to align closer to version 2.5.1"
 msgstr ""
+"Mise à jour du modèle de données UML pour se rapprocher de la version 2.5.1"
 
 #: ../../CHANGELOG.md:584
 msgid "Enable arrow keys to expand and collapse namespace tree"
 msgstr ""
+"Activées : les touches fléchées pour développer et réduire l'arborescence de "
+"l'espace de noms"
 
 #: ../../CHANGELOG.md:585
 msgid "Allow Gaphor profiles to be copy and pasted between models"
-msgstr ""
+msgstr "Permettre le copier-coller des profils Gaphor entre les modèles"
 
 #: ../../CHANGELOG.md:586
 msgid "Improve diagram drawing and scrolling speed"
-msgstr ""
+msgstr "Amélioration de la vitesse de dessin et de défilement des diagrammes"
 
 #: ../../CHANGELOG.md:587
 msgid "Add Croatian translation"
-msgstr ""
+msgstr "Ajouter la traduction en Croate"
 
 #: ../../CHANGELOG.md:588
 msgid "Remove gray borders around editable text"
-msgstr ""
+msgstr "Supprimer : les bordures grises autour du texte éditable"
 
 #: ../../CHANGELOG.md:589
 msgid "Complete converting all tests to pytest"
-msgstr ""
+msgstr "Terminer la conversion de tous les tests en pytest"
 
 #: ../../CHANGELOG.md:590
 msgid "Fix guides are misaligned when top-left handle is moved"
 msgstr ""
+"Correction : les guides sont mal alignés lorsque la poignée supérieure "
+"gauche est déplacée"
 
 #: ../../CHANGELOG.md:591
 msgid "Update development environment instructions"
 msgstr ""
+"Mise à jour des instructions relatives à l'environnement de développement"
 
 #: ../../CHANGELOG.md:592
 msgid "Fix undo and redo does not set attributes"
 msgstr ""
+"Correction : l'annulation et le rétablissement ne définissent pas les "
+"attributs"
 
 #: ../../CHANGELOG.md:593
 msgid "Fix selection lasso is in the wrong place after scrolling"
 msgstr ""
+"Correction : le lasso de sélection se trouve au mauvais endroit après le "
+"défilement"
 
 #: ../../CHANGELOG.md:595
 msgid "2.2.2"
-msgstr ""
+msgstr "2.2.2"
 
 #: ../../CHANGELOG.md:597
 msgid "Fix undo of deleted elements"
-msgstr ""
+msgstr "Correction : annulation des éléments supprimés"
 
 #: ../../CHANGELOG.md:598
 msgid "Fix requirements are missing ID and text"
-msgstr ""
+msgstr "Correction : il manque l'ID et le texte des exigences"
 
 #: ../../CHANGELOG.md:599
 msgid "Add CSS styling to dropzone and grayed out elements"
-msgstr ""
+msgstr "Ajout : un style CSS à la zone de dépôt et aux éléments grisés"
 
 #: ../../CHANGELOG.md:600
 msgid "Start to remove use of inline styles"
-msgstr ""
+msgstr "Commencer à supprimer l'utilisation des styles en ligne"
 
 #: ../../CHANGELOG.md:602
 msgid "2.2.1"
-msgstr ""
+msgstr "2.2.1"
 
 #: ../../CHANGELOG.md:604
 msgid "Fix drawing of composite association"
-msgstr ""
+msgstr "Correction : dessin de l'association composite"
 
 #: ../../CHANGELOG.md:606
 msgid "2.2.0"
-msgstr ""
+msgstr "2.2.0"
 
 #: ../../CHANGELOG.md:608
 msgid "Guide users to create valid relationships"
-msgstr ""
+msgstr "Guider les utilisateurs pour qu'ils créent des relations valides"
 
 #: ../../CHANGELOG.md:609
 msgid "macOS builds are signed and notarized"
-msgstr ""
+msgstr "Les versions de macOS sont signées et certifiées"
 
 #: ../../CHANGELOG.md:610
 msgid "New app icon"
-msgstr ""
+msgstr "Nouvelle icône de l'application"
 
 #: ../../CHANGELOG.md:611
 msgid "Improvements to copy and paste, and undo robustness"
-msgstr ""
+msgstr "Amélioration du copier-coller et de la robustesse de l'annulation"
 
 #: ../../CHANGELOG.md:612
 msgid "Fix RuntimeError caused by style sheet creation"
-msgstr ""
+msgstr "Correction : RuntimeError causé par la création d'une feuille de style"
 
 #: ../../CHANGELOG.md:613
 msgid "Use EventControllers from GTK 3.24"
-msgstr ""
+msgstr "Utiliser les contrôleurs d'événements de GTK 3.24"
 
 #: ../../CHANGELOG.md:615
 msgid "2.1.1"
-msgstr ""
+msgstr "2.1.1"
 
 #: ../../CHANGELOG.md:617
 msgid "Fix copy and paste in Linux with Wayland"
-msgstr ""
+msgstr "Correction : copier-coller sous Linux avec Wayland"
 
 #: ../../CHANGELOG.md:619
 msgid "2.1.0"
-msgstr ""
+msgstr "2.1.0"
 
 #: ../../CHANGELOG.md:621
 msgid "Improve swimlane behavior"
-msgstr ""
+msgstr "Améliorer le comportement de la ligne d'eau"
 
 #: ../../CHANGELOG.md:622
 msgid "Add auto select in tree view"
-msgstr ""
+msgstr "Ajouter la sélection automatique dans l'arborescence"
 
 #: ../../CHANGELOG.md:623
 msgid "Add in-app notifications"
-msgstr ""
+msgstr "Ajouter notifications in-app"
 
 #: ../../CHANGELOG.md:624
 msgid "Improve file load and save dialogs"
 msgstr ""
+"Amélioration des dialogues de chargement et d'enregistrement de fichiers"
 
 #: ../../CHANGELOG.md:625
 msgid "Show more elements and relationships in namespace tree"
 msgstr ""
+"Afficher plus d'éléments et de relations dans l'arbre de l'espace de noms"
 
 #: ../../CHANGELOG.md:627
 msgid "Make lifelines and messages owned by interactions"
 msgstr ""
+"Faire en sorte que les lignes de vie et les messages soient la propriété des "
+"interactions"
 
 #: ../../CHANGELOG.md:629
 msgid "2.0.1"
-msgstr ""
+msgstr "2.0.1"
 
 #: ../../CHANGELOG.md:631
 msgid "Fix Gaphor fails to launch in macOS"
-msgstr ""
+msgstr "Correction : Gaphor ne se lance pas dans macOS"
 
 #: ../../CHANGELOG.md:632
 msgid "Use certificate to sign Windows binaries"
-msgstr ""
+msgstr "Utiliser un certificat pour signer les binaires Windows"
 
 #: ../../CHANGELOG.md:633
 msgid "Fix copy/paste issue that causes association ends to be removed"
 msgstr ""
+"Correction : problème de copier/coller entraînant la suppression des fins "
+"d'association"
 
 #: ../../CHANGELOG.md:634
 msgid "Improve editing for inline editors (popovers)"
-msgstr ""
+msgstr "Amélioration de l'édition pour les éditeurs en ligne (popovers)"
 
 #: ../../CHANGELOG.md:635
 msgid "Fix undo on diagram items corrupts the model"
-msgstr ""
+msgstr "Correction : l'annulation d'éléments de diagramme corrompt le modèle"
 
 #: ../../CHANGELOG.md:636
 msgid "Fix UML composite and shared association tools"
-msgstr ""
+msgstr "Correction : Outils UML pour les associations composites et partagées"
 
 #: ../../CHANGELOG.md:638
 msgid "2.0.0"
-msgstr ""
+msgstr "2.0.0"
 
 #: ../../CHANGELOG.md:640
 msgid "Add initial support for SysML"
-msgstr ""
+msgstr "Ajout d'un support initial pour SysML"
 
 #: ../../CHANGELOG.md:641
 msgid "Add support for styling using CSS"
-msgstr ""
+msgstr "Ajout de la prise en charge de la stylisation à l'aide de CSS"
 
 #: ../../CHANGELOG.md:642
 msgid "Translate to Italian"
-msgstr ""
+msgstr "Traduire en Italien"
 
 #: ../../CHANGELOG.md:643
 msgid "Improve dmg for macOS"
-msgstr ""
+msgstr "Améliorer le dmg pour macOS"
 
 #: ../../CHANGELOG.md:644
 msgid "Improve Copy/Paste for nested items"
-msgstr ""
+msgstr "Améliorer le copier/coller pour les éléments imbriqués"
 
 #: ../../CHANGELOG.md:645
 msgid "Add new modeling language service"
-msgstr ""
+msgstr "Ajouter un nouveau service de langue de modélisation"
 
 #: ../../CHANGELOG.md:646
 msgid "Show the element editor by default"
-msgstr ""
+msgstr "Afficher l'éditeur d'éléments par défaut"
 
 #: ../../CHANGELOG.md:647
 msgid "Create completely new data model code generator"
-msgstr ""
+msgstr "Créer un générateur de code de modèle de données entièrement nouveau"
 
 #: ../../CHANGELOG.md:648
 msgid "Add part and shared associations to tool palette"
 msgstr ""
+"Ajouter des associations de pièces et des associations partagées à la "
+"palette d'outils"
 
 #: ../../CHANGELOG.md:649
 msgid "Remove unused imports, enable flake8 checks"
 msgstr ""
+"Suppression des importations inutilisées, activation des contrôles flake8"
 
 #: ../../CHANGELOG.md:650
 msgid "Update App icons"
-msgstr ""
+msgstr "Mise à jour des icônes de l'application"
 
 #: ../../CHANGELOG.md:651
 msgid "Update animation gif in README"
-msgstr ""
+msgstr "Mise à jour du gif d'animation dans le README"
 
 #: ../../CHANGELOG.md:652
 msgid "Fix Windows Build Errors caused by Missing ZST Archives"
 msgstr ""
+"Correction : Erreurs de construction de Windows causées par des archives ZST "
+"manquantes"
 
 #: ../../CHANGELOG.md:653
 msgid "Fix installation on Windows"
-msgstr ""
+msgstr "Correction : installation sur Windows"
 
 #: ../../CHANGELOG.md:654
 msgid "Add extra diagram item tests"
-msgstr ""
+msgstr "Ajouter des tests d'éléments de diagramme supplémentaires"
 
 #: ../../CHANGELOG.md:655
 msgid "Fix macOS Python version problem"
-msgstr ""
+msgstr "Correction : problème de version Python de macOS"
 
 #: ../../CHANGELOG.md:656
 msgid "Place UML model and diagram items closer together"
-msgstr ""
+msgstr "Rapprocher les éléments du modèle et du diagramme UML"
 
 #: ../../CHANGELOG.md:657
 msgid "Refactor Code Generator to New Module and add CLI"
-msgstr ""
+msgstr "Refonte du générateur de code en nouveau module et ajout d'un CLI"
 
 #: ../../CHANGELOG.md:658
 msgid "Fix MSYS2 package names and disable system update"
 msgstr ""
+"Correction : noms des paquets MSYS2 et désactivation de la mise à jour du "
+"système"
 
 #: ../../CHANGELOG.md:659
 msgid "Remove CI workaround for console plugin"
 msgstr ""
+"Suppression de la solution de contournement de CI pour le plugin de console"
 
 #: ../../CHANGELOG.md:660
 msgid "Move core modeling concepts to a separate package"
-msgstr ""
+msgstr "Déplacer les concepts de base de la modélisation dans un paquet séparé"
 
 #: ../../CHANGELOG.md:661
 msgid "Convert Some Profile Tests to Pytest"
-msgstr ""
+msgstr "Convertir certains tests de profil en Pytest"
 
 #: ../../CHANGELOG.md:662
 msgid "Speed up text rendering"
-msgstr ""
+msgstr "Accélérer le rendu du texte"
 
 #: ../../CHANGELOG.md:663
 msgid "Fix tree view text to allow names with angle brackets"
 msgstr ""
+"Correction : le texte de l'arborescence pour permettre les noms avec des "
+"crochets d'angle"
 
 #: ../../CHANGELOG.md:664
 msgid "Clear the clipboard when diagram items are copied"
-msgstr ""
+msgstr "Effacer le presse-papiers lorsque des éléments du diagramme sont copiés"
 
 #: ../../CHANGELOG.md:665
 msgid "Fix name change for activity partitions"
-msgstr ""
+msgstr "Correction : changement de nom pour les partitions d'activité"
 
 #: ../coffee_machine.md:1
 msgid "Tutorial: Coffee Machine"
-msgstr ""
+msgstr "Tutoriel : Machine à café"
 
 #: ../coffee_machine.md:4
 #: ../first_model.md:4
 msgid "In this tutorial we refer to the different parts of the gaphor interface: {ref}`Model Browser <getting_started:model browser>`, [Toolbox](getting_started:toolbox), {ref}`Property Editor <getting_started:property editor>`."
 msgstr ""
+"Dans ce tutoriel, nous nous référons aux différentes parties de l'interface "
+"gaphor : {ref}`Navigateur de modèle <getting_started:model browser>`, [Boîte "
+"à outils](get_started:toolbox), {ref}`Éditeur de propriétés <getting_started:"
+"property editor>`."
 
 #: ../coffee_machine.md:8
 msgid "Although the names should speak for themselves, you can check out the [Getting Started](getting_started) page for more information about those sections."
 msgstr ""
+"Bien que les noms parlent d'eux-mêmes, vous pouvez consulter la page [Mise "
+"en route](get_started) pour plus d'informations sur ces sections."
 
 #: ../coffee_machine.md:12
 #: ../coffee_machine_concept.md:7
 #: ../coffee_machine_logical.md:7
 msgid "Introduction"
-msgstr ""
+msgstr "Introduction"
 
 #: ../coffee_machine.md:14
 msgid "In the bustling town of Antville, a colony of ants had formed a Systems Engineering consulting company called AntSource. They value collaboration, transparency, and community-driven engineering, and seeks to empower their employees and customers through open communication and participation in the systems engineering process."
 msgstr ""
+"Dans la ville animée d'Antville, une colonie de fourmis a créé une société "
+"de conseil en ingénierie des systèmes appelée AntSource. Elle valorise la "
+"collaboration, la transparence et l'ingénierie communautaire, et cherche à "
+"responsabiliser ses employés et ses clients par une communication ouverte et "
+"la participation au processus d'ingénierie des systèmes."
 
 #: ../coffee_machine.md:20
 msgid "The engineers at AntSource all have nicknames that reflect the key principles and concepts of their craft: Qual-ant, Reli-ant, Safe-ant, Usa-ant, and Sust-ant. They were experts in designing and optimizing complex systems, and they took pride in their work."
 msgstr ""
+"Les ingénieurs d'AntSource ont tous des surnoms qui reflètent les principes "
+"et concepts clés de leur métier : Qual-ant, Reli-ant, Safe-ant, Usa-ant et "
+"Sust-ant. Ils étaient experts dans la conception et l'optimisation de "
+"systèmes complexes, et ils étaient fiers de leur travail."
 
 #: ../coffee_machine.md:25
 msgid "One day, a new client approached AntSource with an unusual request. Cappuccino, a cat who owned a popular coffee shop called Milk & Whiskers Café, needed a custom espresso machine designed specifically for felines. Cats just love their coffee strong, with a creamy and smooth body and topped with the perfect foamy layer of crema. The ants were intrigued by the challenge and immediately set to work."
 msgstr ""
+"Un jour, un nouveau client s'est adressé à AntSource avec une demande "
+"inhabituelle. Cappuccino, un chat propriétaire d'un café populaire appelé "
+"Milk & Whiskers Café, avait besoin d'une machine à expresso personnalisée, "
+"conçue spécialement pour les félins. Les chats aiment leur café fort, avec "
+"un corps crémeux et lisse, et recouvert d'une parfaite couche de crème "
+"mousseuse. Les fourmis ont été intriguées par le défi et se sont "
+"immédiatement mises au travail."
 
 #: ../coffee_machine.md:32
 msgid "Qual-ant was responsible for ensuring that the machine met all quality standards and specifications, while Reli-ant was tasked with making sure that the machine was dependable and would work correctly every time it was used. Safe-ant designed the machine with safety in mind, ensuring that it wouldn't cause harm to anyone who used it. Usa-ant designed the machine to be easy and intuitive to use, while Sust-ant ensured that the machine was environmentally friendly and sustainable. In this tutorial we follow the adventures of AntSource to create the perfect kittie espresso machine."
 msgstr ""
+"Qual-ant était chargé de veiller à ce que la machine réponde à toutes les "
+"normes et spécifications de qualité, tandis que Reli-ant avait pour mission "
+"de s'assurer que la machine était fiable et qu'elle fonctionnerait "
+"correctement à chaque fois qu'elle serait utilisée. Safe-ant a conçu la "
+"machine dans un souci de sécurité, en veillant à ce qu'elle ne cause aucun "
+"dommage à quiconque l'utilise. Usa-ant a conçu la machine pour qu'elle soit "
+"facile et intuitive à utiliser, tandis que Sust-ant a veillé à ce qu'elle "
+"soit respectueuse de l'environnement et durable. Dans ce tutoriel, nous "
+"suivons les aventures d'AntSource pour créer la machine à expresso idéale "
+"pour les chatons."
 
 #: ../coffee_machine.md:41
 msgid "![Two shots of espresso being pulled from an espresso machine](images/coffee-machine-double-shot.jpg)"
 msgstr ""
+"![Deux photos d'un expresso tiré d'une machine à expresso] (images/coffee-"
+"machine-double-shot.jpg)"
 
 #: ../coffee_machine.md:41
 msgid "Two shots of espresso being pulled from an espressomachine"
-msgstr ""
+msgstr "Deux doses d'espresso tirées d'une machine à espresso"
 
 #: ../coffee_machine.md:44
 msgid "The first thing the ants did was to open Gaphor to the Greeter window and start a new model with the _SysML_ template."
 msgstr ""
+"La première chose que les fourmis ont faite a été d'ouvrir Gaphor dans la "
+"fenêtre du Greeter et de démarrer un nouveau modèle avec le modèle _SysML_."
 
 #: ../coffee_machine.md:47
 msgid "Abstraction Levels"
-msgstr ""
+msgstr "Niveaux d'abstraction"
 
 #: ../coffee_machine.md:48
 msgid "Abstraction is a way of simplifying complex systems by focusing on only the most important details, while ignoring the rest. It's a process of reducing complexity by removing unnecessary details and highlighting the key aspects of a system in order to focus on the problem to be solved. It is the key to rigorous analysis of a system."
 msgstr ""
+"L'abstraction est un moyen de simplifier les systèmes complexes en se "
+"concentrant sur les détails les plus importants et en ignorant le reste. "
+"C'est un processus qui permet de réduire la complexité en supprimant les "
+"détails inutiles et en mettant en évidence les aspects essentiels d'un "
+"système afin de se concentrer sur le problème à résoudre. C'est la clé de "
+"l'analyse rigoureuse d'un système."
 
 #: ../coffee_machine.md:54
 msgid "To understand abstraction, think about a painting. When you look at a painting, you see a representation of something - perhaps a person, a landscape, or an object. The artist has simplified the real world into a set of lines, shapes, and colors that represent the most important details of the subject. In the same way, systems engineers, like our friends the ants, use abstraction to represent complex systems by breaking them down into their essential components and highlighting the most important aspects."
 msgstr ""
+"Pour comprendre l'abstraction, il faut penser à une peinture. Lorsque vous "
+"regardez une peinture, vous voyez une représentation de quelque chose - peut-"
+"être une personne, un paysage ou un objet. L'artiste a simplifié le monde "
+"réel en un ensemble de lignes, de formes et de couleurs qui représentent les "
+"détails les plus importants du sujet. De la même manière, les ingénieurs "
+"systèmes, comme nos amis les fourmis, utilisent l'abstraction pour "
+"représenter des systèmes complexes en les décomposant en leurs éléments "
+"essentiels et en mettant en évidence les aspects les plus importants."
 
 #: ../coffee_machine.md:62
 msgid "Abstraction levels refer to the different levels of detail at which a system can be represented. These levels are used to break down complex systems into smaller, more manageable parts that can be analyzed and optimized. Said another way, abstraction levels group portions of a design where similar types of questions are answered."
 msgstr ""
+"Les niveaux d'abstraction désignent les différents niveaux de détail "
+"auxquels un système peut être représenté. Ces niveaux sont utilisés pour "
+"décomposer des systèmes complexes en parties plus petites et plus faciles à "
+"gérer, qui peuvent être analysées et optimisées. En d'autres termes, les "
+"niveaux d'abstraction regroupent les parties d'une conception où l'on répond "
+"à des types de questions similaires."
 
 #: ../coffee_machine.md:68
 msgid "There are typically three levels of abstraction in systems engineering and these are the three levels used in the SysML template:"
 msgstr ""
+"Il existe généralement trois niveaux d'abstraction dans l'ingénierie des "
+"systèmes et ce sont les trois niveaux utilisés dans le modèle SysML :"
 
 #: ../coffee_machine.md:71
 msgid "Concept Level: Sometimes also called Conceptual Level. Defines the problem being solved. This is the highest level of abstraction, where the system is described in terms of its overall purpose, goals, and functions. At this level, the focus is on understanding the system's requirements and how it will interact with other systems."
 msgstr ""
+"Niveau conceptuel : Parfois également appelé niveau de la réflexion. Définit "
+"le problème à résoudre. Il s'agit du niveau d'abstraction le plus élevé, où "
+"le système est décrit en termes d'objectif global, de buts et de fonctions. "
+"À ce niveau, l'accent est mis sur la compréhension des exigences du système "
+"et sur la manière dont il interagira avec d'autres systèmes."
 
 #: ../coffee_machine.md:76
 msgid "Logical Level: Defines a technology-agnostic solution. This is the middle level of abstraction, where the system is described in terms of its structure and behavior. At this level, the focus is on how the system components are organized and how they interact with each other."
 msgstr ""
+"Niveau logique : Définit une solution indépendante de la technologie. Il "
+"s'agit du niveau intermédiaire d'abstraction, où le système est décrit en "
+"termes de structure et de comportement. À ce niveau, l'accent est mis sur la "
+"manière dont les composants du système sont organisés et sur la manière dont "
+"ils interagissent les uns avec les autres."
 
 #: ../coffee_machine.md:80
 msgid "Technology Level: Sometimes also called Physical level. Defines the detailed technical solution. This is the lowest level of abstraction, where the system is described in terms of its components and their properties. At this level, the focus is on the details of the system's implementation."
 msgstr ""
+"Niveau technologique : Parfois également appelé niveau physique. Définit la "
+"solution technique détaillée. Il s'agit du niveau d'abstraction le plus bas, "
+"où le système est décrit en termes de ses composants et de leurs propriétés. "
+"À ce niveau, l'accent est mis sur les détails de la mise en œuvre du système."
 
 #: ../coffee_machine.md:85
 msgid "Each level of abstraction provides a different perspective on the system, and each level is important for different aspects of system design and analysis. For example, the conceptual level is important for understanding the overall goals and requirements of the system, while the physical level is important for understanding how the system will be built and how it will interact with the environment."
 msgstr ""
+"Chaque niveau d'abstraction offre une perspective différente sur le système, "
+"et chaque niveau est important pour différents aspects de la conception et "
+"de l'analyse du système. Par exemple, le niveau conceptuel est important "
+"pour comprendre les objectifs et les exigences globales du système, tandis "
+"que le niveau physique est important pour comprendre comment le système sera "
+"construit et comment il interagira avec l'environnement."
 
 #: ../coffee_machine.md:92
 msgid "There is a fourth abstraction level called the Implementation Level that isn't modeled, which is the concrete built system."
 msgstr ""
+"Il existe un quatrième niveau d'abstraction, appelé niveau de mise en œuvre, "
+"qui n'est pas modélisé et qui correspond au système concret construit."
 
 #: ../coffee_machine.md:95
 msgid "In the upper left hand corner of Gaphor, the Model Browser shows the three top level packages, dividing up the model in to these three abstraction levels."
 msgstr ""
+"Dans le coin supérieur gauche de Gaphor, le navigateur de modèle affiche les "
+"trois paquets de niveau supérieur, divisant le modèle en trois niveaux "
+"d'abstraction."
 
 #: ../coffee_machine.md:98
 msgid "![Top level packages of the SysML template](images/coffee-machine-top-level-packages.png)"
 msgstr ""
+"![Paquets de premier niveau du modèle SysML](images/coffee-machine-top-level-"
+"packages.png)"
 
 #: ../coffee_machine.md:98
 msgid "Top level packages of the SysMLtemplate"
-msgstr ""
+msgstr "Paquets de premier niveau du modèle SysML"
 
 #: ../coffee_machine.md:101
 msgid "Pillars"
-msgstr ""
+msgstr "Piliers"
 
 #: ../coffee_machine.md:103
 msgid "There are four pillars of SysML which help classify the types of diagrams based on what they represent:"
 msgstr ""
+"Le SysML repose sur quatre piliers qui permettent de classer les types de "
+"diagrammes en fonction de ce qu'ils représentent :"
 
 #: ../coffee_machine.md:106
 msgid "Behavior: The functionality of a system"
-msgstr ""
+msgstr "Comportement : La fonctionnalité d'un système"
 
 #: ../coffee_machine.md:107
 msgid "Structure: How a system is formed using parts and connections"
 msgstr ""
+"La structure : La façon dont un système est formé à l'aide de composants et "
+"de connexions"
 
 #: ../coffee_machine.md:108
 msgid "Requirements: Written statements that constrain the system"
-msgstr ""
+msgstr "Exigences : Déclarations écrites qui contraignent le système"
 
 #: ../coffee_machine.md:109
 msgid "Parametrics: Enforces mathematical rules across values in the system"
-msgstr ""
+msgstr "Paramétrage : Appliquer les règles mathématiques aux valeurs du système"
 
 #: ../coffee_machine.md:111
 msgid "If you want to learn more about these four pillars, there is a 30-minute video by Rick Steiner called [The Four Pillars of SysML](https://youtu.be/998UznK9ogY)."
 msgstr ""
+"Si vous souhaitez en savoir plus sur ces quatre piliers, Rick Steiner a "
+"réalisé une vidéo de 30 minutes intitulée [The Four Pillars of SysML] "
+"(https://youtu.be/998UznK9ogY)."
 
 #: ../coffee_machine.md:114
 msgid "Since Parametrics Diagrams are one of the least used diagram types in SysML, we are going to only focus on the first three. The power of SysML comes in being able to make relationships between these three pillars. For example, by allocating behavior like an activity to an element of the structure like a block."
 msgstr ""
+"Les diagrammes paramétriques étant l'un des types de diagrammes les moins "
+"utilisés en SysML, nous allons nous concentrer uniquement sur les trois "
+"premiers. La puissance de SysML réside dans la possibilité d'établir des "
+"relations entre ces trois piliers. Par exemple, en attribuant un "
+"comportement tel qu'une activité à un élément de la structure tel qu'un bloc."
 
 #: ../coffee_machine.md:119
 msgid "If you expand the top-level Abstraction Level packages in the Model Browser, each one contains three more packages, one for each pillar. It is in these packages that we will start to build up the design for the espresso machine."
 msgstr ""
+"Si vous développez les paquets de niveau d'abstraction supérieur dans le "
+"navigateur de modèles, chacun d'eux contient trois autres paquets, un pour "
+"chaque pilier. C'est dans ces paquets que nous commencerons à construire la "
+"conception de la machine à expresso."
 
 #: ../coffee_machine.md:123
 msgid "![Three pillar packages nested under each abstraction level package](images/coffee-machine-pillars.png)"
 msgstr ""
+"![Trois paquets piliers imbriqués sous chaque paquet de niveau "
+"d'abstraction](images/coffee-machine-pillars.png)"
 
 #: ../coffee_machine.md:123
 msgid "Three pillar packages nested under each abstraction levelpackage"
 msgstr ""
+"Trois paquets piliers imbriqués sous chaque paquet de niveau d'abstraction"
 
 #: ../coffee_machine.md:126
 msgid "Table of Contents"
-msgstr ""
+msgstr "Table des matières"
 
 #: ../coffee_machine_concept.md:5
 msgid "Coffee Machine: Concept Level"
-msgstr ""
+msgstr "Machine à café : Niveau conceptuel"
 
 #: ../coffee_machine_concept.md:9
 msgid "The concept level defines the problem we are trying to solve. For the espresso machine, we are going to use diagrams at this abstraction level to answer questions like:"
 msgstr ""
+"Le niveau conceptuel définit le problème que nous essayons de résoudre. Pour "
+"la machine à expresso, nous allons utiliser des diagrammes à ce niveau "
+"d'abstraction pour répondre à des questions telles que :"
 
 #: ../coffee_machine_concept.md:12
 msgid "Who will use the machine and what are their goals while using it?"
-msgstr ""
+msgstr "Qui utilisera la machine et quels sont ses objectifs ?"
 
 #: ../coffee_machine_concept.md:13
 msgid "What sequence of events will a person take while operating the machine?"
 msgstr ""
+"Quelle est la séquence d'événements qu'une personne doit suivre lors de "
+"l'utilisation de la machine ?"
 
 #: ../coffee_machine_concept.md:14
 msgid "What are the key features and capabilities required for the machine to perform its intended function?"
 msgstr ""
+"Quelles sont les principales caractéristiques et capacités requises pour que "
+"la machine remplisse la fonction pour laquelle elle a été conçue ?"
 
 #: ../coffee_machine_concept.md:15
 msgid "What are the design constraints and requirements that must be considered when designing the machine?"
 msgstr ""
+"Quelles sont les contraintes et les exigences à prendre en compte lors de la "
+"conception de la machine ?"
 
 #: ../coffee_machine_concept.md:16
 msgid "What are the key performance metrics that the machine must meet in order to be considered successful?"
 msgstr ""
+"Quels sont les principaux indicateurs de performance que la machine doit "
+"atteindre pour être considérée comme une réussite ?"
 
 #: ../coffee_machine_concept.md:17
 msgid "How will the machine fit into the larger context of the café, and how will it interact with other systems and components within the café?"
 msgstr ""
+"Comment la machine s'intégrera-t-elle dans le contexte plus large du café et "
+"comment interagira-t-elle avec les autres systèmes et composants du café ?"
 
 #: ../coffee_machine_concept.md:19
 msgid "What are the needs of others like those marketing, selling, manufacturing, or buying the machine?"
 msgstr ""
+"Quels sont les besoins d'autres personnes telles que celles qui "
+"commercialisent, vendent, fabriquent ou achètent la machine ?"
 
 #: ../coffee_machine_concept.md:21
 msgid "At this level, the focus is on understanding the big picture of the espresso machine and its role within the café system. The answers to these questions will help guide the design and development of the machine at the logical and technology levels of abstraction."
 msgstr ""
+"À ce niveau, l'accent est mis sur la compréhension de la vue d'ensemble de "
+"la machine à espresso et de son rôle dans le système du café. Les réponses à "
+"ces questions permettront d'orienter la conception et le développement de la "
+"machine aux niveaux d'abstraction logique et technologique."
 
 #: ../coffee_machine_concept.md:26
 msgid "Use Case Diagram"
-msgstr ""
+msgstr "Diagramme des cas d'utilisation"
 
 #: ../coffee_machine_concept.md:28
 msgid "First the ants work on the behavior of the system. Expand the Behavior package in the Model Browser and double-click on the diagram named Use Cases."
 msgstr ""
+"Les fourmis commencent par travailler sur le comportement du système. "
+"Développez le package Comportement dans le navigateur de modèle et double-"
+"cliquez sur le diagramme intitulé Cas d'utilisation."
 
 #: ../coffee_machine_concept.md:31
 msgid "A use case diagram is a type of visual representation used in systems engineering to describe the functional requirements of a system, such as an espresso machine. In the context of the espresso machine, a use case diagram would be used to identify and define the different ways in which the machine will be used by its users, such as the café staff and customers."
 msgstr ""
+"Un diagramme de cas d'utilisation est un type de représentation visuelle "
+"utilisé en ingénierie des systèmes pour décrire les exigences fonctionnelles "
+"d'un système, tel qu'une machine à expresso. Dans le contexte de la machine "
+"à espresso, un diagramme de cas d'utilisation serait utilisé pour identifier "
+"et définir les différentes façons dont la machine sera utilisée par ses "
+"utilisateurs, tels que le personnel du café et les clients."
 
 #: ../coffee_machine_concept.md:37
 msgid "The diagram would typically include different actors or users, such as the barista, the customer, and possibly a manager or maintenance technician. It would also include different \"use cases\" or scenarios, which describe the different actions that the users can take with the machine, such as placing an order, making an espresso, or cleaning the machine."
 msgstr ""
+"Le diagramme inclut généralement différents acteurs ou utilisateurs, tels "
+"que le serveur, le client, et éventuellement un directeur ou un technicien "
+"de maintenance. Il comprend également différents « cas d'utilisation » ou "
+"scénarios, qui décrivent les différentes actions que les utilisateurs "
+"peuvent effectuer avec la machine, comme passer une commande, préparer un "
+"espresso ou nettoyer la machine."
 
 #: ../coffee_machine_concept.md:43
 msgid "The use case diagram helps to ensure that all the necessary functional requirements of the espresso machine are identified and accounted for, and that the system is designed to meet the needs of its users. It can also be used as a communication tool between the different stakeholders involved in the development of the machine, such as the ants and Cappuccino the cat."
 msgstr ""
+"Le diagramme des cas d'utilisation permet de s'assurer que toutes les "
+"exigences fonctionnelles nécessaires à la machine à espresso sont "
+"identifiées et prises en compte, et que le système est conçu pour répondre "
+"aux besoins de ses utilisateurs. Il peut également servir d'outil de "
+"communication entre les différents acteurs impliqués dans le développement "
+"de la machine, tels que les fourmis et Cappuccino le chat."
 
 #: ../coffee_machine_concept.md:49
 msgid "The ants need your help updating the diagrams, so let's get started:"
 msgstr ""
+"Les fourmis ont besoin de votre aide pour mettre à jour les diagrammes, "
+"alors commençons :"
 
 #: ../coffee_machine_concept.md:51
 msgid "Double-click on the actor to pop up the rename dialog, and replace User with Barista."
 msgstr ""
+"Double-cliquez sur l'acteur pour faire apparaître la boîte de dialogue de "
+"renommage et remplacez Utilisateur par Serveur."
 
 #: ../coffee_machine_concept.md:53
 msgid "Update the name of the oval Use Case from Use Case #1 to Brew espresso."
 msgstr ""
+"Mise à jour : le nom du cas d'utilisation ovale passe du cas d'utilisation n°"
+"1 à la préparation d'un espresso."
 
 #: ../coffee_machine_concept.md:54
 msgid "Update the name of the rectangle Block from Feature to Espresso Machine"
 msgstr ""
+"Mise à jour : le nom du rectangle 'Bloc de fonctionnalité' à 'machine à café "
+"expresso'"
 
 #: ../coffee_machine_concept.md:56
 msgid "A barista interacts with the espresso machine. The barista is provided a simple interface with a few push buttons."
 msgstr ""
+"Un serveur interagit avec la machine à espresso. Le serveur dispose d'une "
+"interface simple avec quelques boutons poussoirs."
 
 #: ../coffee_machine_concept.md:59
 msgid "In this particular use case diagram, we have one actor named Barista and one use case called Brew espresso, which is allocated to a block called Espresso Machine. The actor, in this case, is a cat barista who interacts with the system (an espresso machine) to accomplish a particular task, which is brewing espresso."
 msgstr ""
+"Dans ce diagramme de cas d'utilisation particulier, nous avons un acteur "
+"nommé Serveur et un cas d'utilisation appelé Brew espresso, qui est attribué "
+"à un bloc appelé Espresso Machine. L'acteur, dans ce cas, est un serveur qui "
+"interagit avec le système (une machine à expresso) pour accomplir une tâche "
+"particulière, à savoir préparer un expresso."
 
 #: ../coffee_machine_concept.md:65
 msgid "Use case diagram showing an actor named Barista and a use case called Brew espresso"
 msgstr ""
+"Le diagramme de cas d'utilisation montre un acteur nommé Serveur et un cas "
+"d'utilisation appelé Préparer l'espresso"
 
 #: ../coffee_machine_concept.md:70
 msgid "The use case Brew espresso represents a specific functionality or action that the system (the Espresso Machine block) can perform. It describes the steps or interactions necessary to complete the task of brewing espresso, such as selecting the appropriate settings, starting the brewing process, and stopping the process once it's complete."
 msgstr ""
+"Le cas d'utilisation Préparer un espresso représente une fonctionnalité ou "
+"une action spécifique que le système (le bloc Machine à espresso) peut "
+"réaliser. Il décrit les étapes ou les interactions nécessaires pour "
+"accomplir la tâche de préparation d'un espresso, comme la sélection des "
+"paramètres appropriés, le démarrage du processus de préparation et l'arrêt "
+"du processus une fois qu'il est terminé."
 
 #: ../coffee_machine_concept.md:76
 msgid "The use case diagram shows the relationship between the actor and the use case. It is represented by an oval shape with the use case name inside and an association with the actor. The association represents the interaction from the actor to the use case."
 msgstr ""
+"Le diagramme de cas d'utilisation montre la relation entre l'acteur et le "
+"cas d'utilisation. Il est représenté par une forme ovale avec le nom du cas "
+"d'utilisation à l'intérieur et une association avec l'acteur. L'association "
+"représente l'interaction entre l'acteur et le cas d'utilisation."
 
 #: ../coffee_machine_concept.md:81
 msgid "Domain Diagram"
-msgstr ""
+msgstr "Diagramme de domaine"
 
 #: ../coffee_machine_concept.md:83
 msgid "A domain diagram is a graphical representation of the concepts, terms, and relationships within a specific domain. In the case of a coffee shop, a domain diagram could represent the key elements and relationships within the coffee shop domain."
 msgstr ""
+"Un diagramme de domaine est une représentation graphique des concepts, des "
+"termes et des relations au sein d'un domaine spécifique. Dans le cas d'un "
+"café, un diagramme de domaine pourrait représenter les éléments clés et les "
+"relations au sein du domaine du café."
 
 #: ../coffee_machine_concept.md:88
 msgid "The following is a domain diagram that builds upon the context diagram with additional blocks:"
 msgstr ""
+"Le schéma suivant est un diagramme de domaine qui s'appuie sur le diagramme "
+"de contexte en y ajoutant des blocs supplémentaires :"
 
 #: ../coffee_machine_concept.md:90
 msgid "Barista"
-msgstr ""
+msgstr "Serveur"
 
 #: ../coffee_machine_concept.md:91
 msgid "Coffee Machine"
-msgstr ""
+msgstr "Machine à café"
 
 #: ../coffee_machine_concept.md:92
 msgid "Roasted Coffee"
-msgstr ""
+msgstr "Café Torréfié"
 
 #: ../coffee_machine_concept.md:93
 msgid "Coffee Grinder"
-msgstr ""
+msgstr "Moulin à café"
 
 #: ../coffee_machine_concept.md:94
 msgid "Water Supply"
-msgstr ""
+msgstr "Approvisionnement en eau"
 
 #: ../coffee_machine_concept.md:95
 msgid "Customer"
-msgstr ""
+msgstr "Client"
 
 #: ../coffee_machine_concept.md:97
 msgid "Each block represents a key concept within the coffee shop domain, and the containment relationship is used between the domain and the blocks to show that they are part of the domain."
 msgstr ""
+"Chaque bloc représente un concept clé du domaine des cafés, et la relation "
+"de confinement est utilisée entre le domaine et les blocs pour montrer "
+"qu'ils font partie du domaine."
 
 #: ../coffee_machine_concept.md:101
 msgid "Block Definition Diagram showing hierarchy of blocks in the Coffee Shop domain"
 msgstr ""
+"Diagramme de définition des blocs montrant la hiérarchie des blocs dans le "
+"domaine des cafés"
 
 #: ../coffee_machine_concept.md:106
 msgid "The Barista block is responsible for preparing and serving the coffee to the customers. The Roasted Coffee block contains the types of coffee available for the barista to use. The Coffee Grinder block grinds the roasted coffee beans to the desired consistency before brewing. The Water Supply block contains the water source for the coffee machine, and finally the Customer block represents the person who orders and receives the coffee."
 msgstr ""
+"Le bloc 'Serveur' est chargé de préparer et de servir le café aux clients. "
+"Le bloc 'Café torréfié' contient les types de café disponibles pour le "
+"serveur. Le bloc 'Moulin à café' moud les grains de café torréfiés à la "
+"consistance souhaitée avant la préparation du café. Le bloc 'Alimentation en "
+"eau' contient la source d'eau pour la machine à café, et enfin le bloc "
+"'Client' représente la personne qui commande et reçoit le café."
 
 #: ../coffee_machine_concept.md:113
 msgid "The ants need more of your help to rename the Feature Domain diagram and update it so that it matches the one above."
 msgstr ""
+"Les fourmis ont besoin de votre aide pour renommer le diagramme 'Domaine de "
+"fonctionnalité' et le mettre à jour afin qu'il corresponde au diagramme ci-"
+"dessus."
 
 #: ../coffee_machine_concept.md:116
 msgid "The domain diagram provides a high-level view of the coffee shop domain and the key concepts and relationships involved in it. It can be a useful tool for understanding the relationships between different elements of the domain and for communicating these relationships to others."
 msgstr ""
+"Le diagramme de domaine fournit une vue de haut niveau du domaine des cafés "
+"et des concepts et relations clés qu'il implique. Il peut s'avérer utile "
+"pour comprendre les relations entre les différents éléments du domaine et "
+"pour communiquer ces relations aux autres."
 
 #: ../coffee_machine_concept.md:121
 msgid "Context Diagram"
-msgstr ""
+msgstr "Diagramme de contexte"
 
 #: ../coffee_machine_concept.md:123
 msgid "The context diagram is a high-level view of the system, and it shows its interaction with external entities. In the case of a coffee machine, a context diagram provides a clear and concise representation of the system and its interactions with the external environment."
 msgstr ""
+"Le diagramme de contexte est une vue de haut niveau du système et montre son "
+"interaction avec les entités externes. Dans le cas d'une machine à café, un "
+"diagramme de contexte fournit une représentation claire et concise du "
+"système et de ses interactions avec l'environnement externe."
 
 #: ../coffee_machine_concept.md:128
 msgid "The context diagram for a coffee machine shows the coffee machine as the system at the center, with all its external entities surrounding it. The external entities include the barista, the power source, the coffee grinder, and the water source."
 msgstr ""
+"Le diagramme de contexte d'une machine à café montre la machine à café comme "
+"le système au centre, avec toutes les entités externes qui l'entourent. Les "
+"entités externes comprennent le serveur, la source d'énergie, le moulin à "
+"café et la source d'eau."
 
 #: ../coffee_machine_concept.md:133
 msgid "Block definition diagram showing context of the coffee shop with external entities"
 msgstr ""
+"Diagramme de définition des blocs montrant le contexte du café avec les "
+"entités externes"
 
 #: ../coffee_machine_concept.md:138
 msgid "The ants need more of your help to rename the Feature Context diagram and update it so that it matches the one above."
 msgstr ""
+"Les fourmis ont besoin de votre aide pour renommer le diagramme 'Contexte de "
+"la fonctionnalité' et le mettre à jour afin qu'il corresponde au diagramme "
+"ci-dessus."
 
 #: ../coffee_machine_concept.md:141
 msgid "Overall, the context diagram for a coffee machine provides a high-level view of the system and its interactions with external entities. It is a useful tool for understanding the system and its role in the broader environment."
 msgstr ""
+"Dans l'ensemble, le diagramme de contexte d'une machine à café fournit une "
+"vue de haut niveau du système et de ses interactions avec des entités "
+"externes. Il s'agit d'un outil utile pour comprendre le système et son rôle "
+"dans un environnement plus large."
 
 #: ../coffee_machine_concept.md:145
 msgid "Concept Requirements"
-msgstr ""
+msgstr "Exigences conceptuelles"
 
 #: ../coffee_machine_concept.md:146
 msgid "Concept requirements are typically collected by analyzing the needs of the stakeholders involved in the development of the coffee machine. This involves identifying and gathering input from various stakeholders, such as the barista, the other engineers working on the product, manufacturing, and service."
 msgstr ""
+"Les exigences conceptuelles sont généralement recueillies en analysant les "
+"besoins des parties prenantes impliquées dans le développement de la machine "
+"à café. Il s'agit d'identifier et de recueillir les commentaires des "
+"différentes parties prenantes, telles que le serveur, les autres ingénieurs "
+"travaillant sur le produit, la fabrication et le service."
 
 #: ../coffee_machine_concept.md:151
 msgid "To collect concept requirements, stakeholders may be asked questions about what they want the coffee machine to do, what features it should have, and what problems it should solve. They may also be asked to provide feedback on existing coffee machines to identify areas where improvements could be made."
 msgstr ""
+"Pour recueillir les exigences conceptuelles, les parties prenantes peuvent "
+"être interrogées sur ce qu'elles attendent de la machine à café, sur les "
+"caractéristiques qu'elle doit avoir et sur les problèmes qu'elle doit "
+"résoudre. Elles peuvent également être invitées à donner leur avis sur les "
+"machines à café existantes afin d'identifier les domaines dans lesquels des "
+"améliorations pourraient être apportées."
 
 #: ../coffee_machine_concept.md:156
 msgid "Once the needs of the stakeholders have been gathered, they can be analyzed to identify common themes and requirements. This information can then be used to develop the concept requirements for the coffee machine, which serve as a starting point for the design process."
 msgstr ""
+"Une fois que les besoins des parties prenantes ont été recueillis, ils "
+"peuvent être analysés afin d'identifier les thèmes et les exigences communs. "
+"Ces informations peuvent ensuite être utilisées pour élaborer les exigences "
+"conceptuelles de la machine à café, qui serviront de point de départ au "
+"processus de conception."
 
 #: ../coffee_machine_concept.md:161
 msgid "The following are some concept requirements for a coffee machine that addresses a water tank, heat-up time, and HMI button:"
 msgstr ""
+"Voici quelques exigences conceptuelles pour une machine à café : réservoir "
+"d'eau, temps de chauffe et bouton de l'interface homme-machine (IHM) :"
 
 #: ../coffee_machine_concept.md:164
 msgid "Water Tank: The coffee machine should have a water tank of sufficient size to make multiple cups of coffee before needing a refill. The water tank should be easy to access and fill."
 msgstr ""
+"Réservoir d'eau : La machine à café doit être dotée d'un réservoir d'eau "
+"suffisamment grand pour permettre la préparation de plusieurs tasses de café "
+"avant qu'il ne soit nécessaire de le remplir à nouveau. Le réservoir d'eau "
+"doit être facile d'accès et de remplissage."
 
 #: ../coffee_machine_concept.md:168
 msgid "Heat-up Time: The coffee machine should have a heat-up time of no more than 10 minutes from the time the user turns on the machine until it's ready to brew coffee."
 msgstr ""
+"Temps de chauffe : la machine à café doit avoir un temps de chauffe ne "
+"dépassant pas 10 minutes entre le moment où l'utilisateur allume la machine "
+"et le moment où elle est prête à préparer le café."
 
 #: ../coffee_machine_concept.md:172
 msgid "HMI Button: The coffee machine should have an HMI with a 1 cup brew button to make it easy for the user to select the amount of coffee they want to brew. The HMI should be intuitive and easy to use."
 msgstr ""
+"Bouton IHM : La machine à café doit être dotée d'une 'Interface Homme "
+"Machine' avec un bouton d'infusion d'une tasse pour permettre à "
+"l'utilisateur de sélectionner facilement la quantité de café qu'il souhaite "
+"infuser. L'IHM doit être intuitive et facile à utiliser."
 
 #: ../coffee_machine_concept.md:176
 msgid "Concept requirements for water tank, heat-up time, and HMI button"
 msgstr ""
+"Exigences conceptuelles pour le réservoir d'eau, le temps de chauffe et le "
+"bouton de l'IHM"
 
 #: ../coffee_machine_concept.md:181
 msgid "Help the ants update the Concept Requirements diagram with these requirements."
 msgstr ""
+"Aidez les fourmis à mettre à jour le diagramme des exigences du concept avec "
+"ces exigences."
 
 #: ../coffee_machine_concept.md:184
 msgid "Throughout the design process, the concept requirements will be refined and expanded upon as more information becomes available and the needs of the stakeholders become clearer. This iterative process ensures that the final design of the coffee machine meets the needs of all stakeholders and delivers a high-quality product."
 msgstr ""
+"Tout au long du processus de conception, les exigences du concept seront "
+"affinées et développées au fur et à mesure que de nouvelles informations "
+"seront disponibles et que les besoins des parties prenantes deviendront plus "
+"clairs. Ce processus itératif garantit que la conception finale de la "
+"machine à café répond aux besoins de toutes les parties prenantes et fournit "
+"un produit de haute qualité."
 
 #: ../coffee_machine_logical.md:5
 msgid "Coffee Machine: Logical Level"
-msgstr ""
+msgstr "Machine à café : Niveau logique"
 
 #: ../coffee_machine_logical.md:9
 msgid "At the logical Level, we'll define a technology-agnostic solution. This is the middle level of abstraction, where the system is described in terms of its structure and behavior. At this level, the focus is on how the system components are organized and how they interact with each other."
 msgstr ""
+"Au niveau logique, nous définirons une solution indépendante sur le plan "
+"technologique. Il s'agit du niveau intermédiaire d'abstraction, où le "
+"système est décrit en termes de structure et de comportement. À ce niveau, "
+"l'accent est mis sur la façon dont les composants du système sont organisés "
+"et sur la façon dont ils interagissent les uns avec les autres."
 
 #: ../coffee_machine_logical.md:14
 msgid "Functional Boundary Behavior"
-msgstr ""
+msgstr "Comportement à la frontière fonctionnelle"
 
 #: ../coffee_machine_logical.md:16
 msgid "A Functional Boundary Behavior diagram is a type of SysML Activity diagram used to show the interactions between different logical blocks. The swim lanes divide the diagram into different areas, each representing a different functional block or component."
 msgstr ""
+"Un diagramme de 'comportement à la frontière fonctionnelle' est un type de "
+"diagramme d'activité SysML utilisé pour montrer les interactions entre "
+"différents blocs logiques. Les lignes d'eau divisent le diagramme en "
+"différentes zones, chacune représentant un bloc fonctionnel ou un composant "
+"différent."
 
 #: ../coffee_machine_logical.md:21
 msgid "In this case, the diagram includes swimlanes for the HMI, Controller, Water Pump, Water Heater, Grouphead, and Portafilter. The HMI receives the button press from the barista and then sends a command to the Controller. The Controller then commands the Water Pump and Water Heater to start, and once the water has reached the correct temperature, the Controller commands the Pump and Heater to start. The water would then be pumped through the Grouphead and into the Portafilter, brewing the coffee. The diagram shows the flow of information and actions between the different logical blocks, and help to ensure that the behavior that each block provides is properly connected and integrated into the system."
