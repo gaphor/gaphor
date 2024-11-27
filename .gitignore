@@ -1,8 +1,10 @@
 build
 dist
+docs/jupyter_execute
 gaphor/locale/*/LC_MESSAGES
 docs/locale/*/LC_MESSAGES/*.mo
 docs/locale/.doctrees
+docs/locale/gaphor
 html
 *.pyc
 *.pyo
