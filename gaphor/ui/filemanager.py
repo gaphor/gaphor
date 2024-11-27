@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import asyncio
 import logging
 import tempfile
 from collections.abc import Callable
@@ -13,7 +12,7 @@ from gi.repository import Adw, Gio, Gtk
 
 from gaphor import UML
 from gaphor.abc import ActionProvider, Service
-from gaphor.asyncio import TaskOwner, sleep
+from gaphor.asyncio import TaskOwner, response_from_adwaita_dialog, sleep
 from gaphor.babel import translate_model
 from gaphor.core import action, event_handler, gettext
 from gaphor.core.changeset.compare import compare
@@ -408,15 +407,7 @@ async def resolve_merge_conflict_dialog(window: Gtk.Window) -> str:
     dialog.add_response("incoming", gettext("Open Incoming"))
     dialog.set_close_response("cancel")
 
-    response = asyncio.get_running_loop().create_future()
-
-    def response_cb(_dialog, answer):
-        response.set_result(answer)
-
-    dialog.connect("response", response_cb)
-    dialog.present(window)
-
-    return await response  # type: ignore[no-any-return]
+    return await response_from_adwaita_dialog(dialog, window)
 
 
 async def save_changes_before_close_dialog(window: Gtk.Window) -> str:
@@ -433,12 +424,4 @@ async def save_changes_before_close_dialog(window: Gtk.Window) -> str:
     dialog.set_default_response("save")
     dialog.set_close_response("cancel")
 
-    response = asyncio.get_running_loop().create_future()
-
-    def response_cb(_dialog, answer):
-        response.set_result(answer)
-
-    dialog.connect("response", response_cb)
-    dialog.present(window)
-
-    return await response  # type: ignore[no-any-return]
+    return await response_from_adwaita_dialog(dialog, window)
