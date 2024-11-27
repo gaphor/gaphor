@@ -1,5 +1,4 @@
 name: gaphor
-version: 2.26.0
 summary: Gaphor is the simple modeling tool
 description: |
   Gaphor is the simple modeling tool
@@ -14,8 +13,6 @@ compression: lzo
 
 platforms:
   amd64:
-  arm64:
-  armhf:
 
 apps:
   gaphor:
@@ -43,5 +40,24 @@ parts:
   gaphor:
     plugin: python
     source: .
-    python-packages:
-      - gaphor==$SNAPCRAFT_PROJECT_VERSION
+    source-type: git
+    build-packages:
+      - gcc
+      - git
+      - graphviz
+      - pkg-config
+      - upx
+      - mutter
+      - dbus-x11
+      - python3-poetry
+    override-pull: |
+      craftctl default
+      craftctl set version=$(git describe --tags --abbrev=10)
+    override-build: |
+      poetry config virtualenvs.in-project true
+      poetry lock --no-update
+      poetry install --no-interaction
+      poetry run gaphor install-schemas
+      poetry run poe gettext-mo-release
+      poetry build
+      pip3 install dist/*.whl --prefix $SNAPCRAFT_PART_INSTALL
