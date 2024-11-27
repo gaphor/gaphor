@@ -421,18 +421,59 @@ jobs:
           event-type: version-update
           client-payload: '{ "version": "${{ needs.publish-to-pypi.outputs.version }}" }'
 
-  trigger-snapcraft-version-update:
-    name: Trigger version update on snapcrafters/gaphor
-    needs: [ publish-to-pypi ]
-    runs-on: ubuntu-22.04
+  get-architectures:
+    name: 🖥 Get snap architectures
+    runs-on: ubuntu-latest
+    outputs:
+      architectures: ${{ steps.get-architectures.outputs.architectures }}
+      architectures-list: ${{ steps.get-architectures.outputs.architectures-list }}
     steps:
-      - name: Wait for PyPI to sync after version update
-        run: sleep 30s
-      - name: 🔄 Sync version with upstream
-        uses: snapcrafters/ci/sync-version@main
+      - name: 🖥 Get snap architectures
+        id: get-architectures
+        uses: snapcrafters/ci/get-architectures@main
+
+  release:
+    name: 🚢 Release to latest/edge
+    needs: [ get-architectures, publish-to-pypi ]
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        architecture: ${{ fromJSON(needs.get-architectures.outputs.architectures-list) }}
+    steps:
+      - name: 🚢 Release to latest/edge
+        uses: snapcrafters/ci/release-to-candidate@main
         with:
-          branch: main
-          token: ${{ secrets.SNAPCRAFTERS_BOT_COMMIT }}
-          update-script: |
-            VERSION=${{ steps.install.outputs.version }}
-            sed -i 's/^\(version: \).*$/\1'"$VERSION"'/' snap/snapcraft.yaml
+          architecture: ${{ matrix.architecture }}
+          launchpad-token: ${{ secrets.LP_BUILD_SECRET }}
+          repo-token: ${{ secrets.SNAPCRAFTERS_BOT_COMMIT }}
+          store-token: ${{ secrets.SNAP_STORE }}
+          channel: latest/edge
+
+  call-for-testing:
+    name: 📣 Create call for testing
+    needs: [release, get-architectures]
+    runs-on: ubuntu-latest
+    outputs:
+      issue-number: ${{ steps.issue.outputs.issue-number }}
+    steps:
+      - name: 📣 Create call for testing
+        id: issue
+        uses: snapcrafters/ci/call-for-testing@main
+        with:
+          architectures: ${{ needs.get-architectures.outputs.architectures }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          channel: latest/edge
+
+  screenshots:
+    name: 📸 Gather screenshots
+    needs: call-for-testing
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📸 Gather screenshots
+        uses: snapcrafters/ci/get-screenshots@main
+        with:
+          issue-number: ${{ needs.call-for-testing.outputs.issue-number }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          screenshots-token: ${{ secrets.SNAPCRAFTERS_BOT_COMMIT }}
+          screenshots-repo: ${{ secrets.SCREENSHOTS_REPO }}
+          channel: latest/edge
