@@ -11,7 +11,6 @@ permissions:
 jobs:
   promote:
     name: ⬆️ Promote to stable
-    environment: "Edge Branch"
     runs-on: ubuntu-latest
     if: |
       ( !github.event.issue.pull_request )
