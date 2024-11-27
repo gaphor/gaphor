@@ -5,12 +5,12 @@ attached to a class method and will raise the error dialog when the
 method exits with an exception.
 """
 
-import asyncio
 import pdb
 import sys
 
 from gi.repository import Adw
 
+from gaphor.asyncio import response_from_adwaita_dialog
 from gaphor.i18n import gettext
 
 
@@ -33,15 +33,7 @@ async def error_dialog(message, secondary_message="", window=None):
         dialog.set_default_response("close")
     dialog.set_close_response("close")
 
-    response = asyncio.get_running_loop().create_future()
-
-    def response_cb(dialog, answer):
-        response.set_result(answer)
-
-    dialog.connect("response", response_cb)
-    dialog.present(window)
-
-    answer = await response
+    answer = await response_from_adwaita_dialog(dialog, window)
 
     if exc_traceback and answer in (100, "debug"):
         pdb.post_mortem(exc_traceback)
