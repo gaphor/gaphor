@@ -121,10 +121,15 @@ class Presentation(Matrices, Base, Generic[S]):
 
         if diagram := self._original_diagram:
             diagram.connections.remove_connections_to_item(self)
-            self._original_diagram = None
+
+            # First unlink subject, allowing sanitizer service can remove model elements.
+            # This will ensure that diagrams are always removed after presentations.
+            type(self).subject.unlink(self)  # type: ignore[attr-defined]
 
             for prop in self.__properties__:
                 prop.unlink(self)
+
+            self._original_diagram = None
 
             log.debug("unlinking %s", self)
             self.handle(UnlinkEvent(self, diagram=diagram))
