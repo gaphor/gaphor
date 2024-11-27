@@ -116,7 +116,7 @@ class ModelConsistency(RuleBasedStateMachine):
         return sampled_from(elements)
 
     def diagrams(self):
-        return self.select(lambda e: isinstance(e, Diagram))
+        return self.select(lambda e: isinstance(e, UML.Diagram))
 
     def relations(self, diagram):
         relations = [
