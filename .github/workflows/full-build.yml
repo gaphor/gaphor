@@ -157,6 +157,13 @@ jobs:
           cache-key: flatpak-builder-${{ github.sha }}
           upload-artifact: false
 
+  linux-snapcraft-devel:
+    name: Linux (Devel Snapcraft)
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🧪 Build snap on amd64
+        uses: snapcrafters/ci/test-snap-build@main
+
   macos:
     strategy:
       matrix:
