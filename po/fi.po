@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2024-02-27 10:00-0500\n"
-"PO-Revision-Date: 2024-10-13 15:15+0000\n"
+"PO-Revision-Date: 2024-11-26 07:05+0000\n"
 "Last-Translator: Jiri Grönroos <jiri.gronroos@iki.fi>\n"
 "Language-Team: Finnish <https://hosted.weblate.org/projects/gaphor/gaphor/fi/"
 ">\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.8-dev\n"
+"X-Generator: Weblate 5.9-dev\n"
 "Generated-By: Babel 2.14.0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:23 gaphor/C4Model/toolbox.py:67
@@ -702,9 +702,8 @@ msgid "New Device"
 msgstr "Uusi laite"
 
 #: gaphor/UML/toolbox.py:75
-#, fuzzy
 msgid "New Instance Specification"
-msgstr "Liitosspesifikaatio"
+msgstr "Uusi instanssispesifikaatio"
 
 #: gaphor/UML/toolbox.py:82
 msgid "New Interface"
