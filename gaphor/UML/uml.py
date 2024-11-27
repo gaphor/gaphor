@@ -23,20 +23,20 @@ from gaphor.core.modeling.base import Base
 class Element(Base):
     appliedStereotype: relation_many[InstanceSpecification]
     comment: relation_many[Comment]
-    name: _attribute[str] = _attribute("name", str)
     note: _attribute[str] = _attribute("note", str)
     ownedDiagram: relation_many[Diagram]
     ownedElement: relation_many[Element]
     owner: relation_one[Element]
-    qualifiedName: property
     relationship: relation_many[Relationship]
 
 
 class NamedElement(Element):
     clientDependency: relation_many[Dependency]
     memberNamespace: relation_one[Namespace]
+    name: _attribute[str] = _attribute("name", str)
     nameExpression: _attribute[str] = _attribute("nameExpression", str)
     namespace: relation_one[Namespace]
+    qualifiedName: property
     supplierDependency: relation_many[Dependency]
     visibility = _enumeration("visibility", ("public", "private", "package", "protected"), "public")
 
@@ -758,6 +758,7 @@ class ParameterSet(NamedElement):
 class Image(Element):
     content: _attribute[str] = _attribute("content", str)
     format: _attribute[str] = _attribute("format", str)
+    name: _attribute[str] = _attribute("name", str)
 
 
 class ComponentRealization(Realization):
@@ -817,9 +818,6 @@ class Diagram(NamedElement, _Diagram):
 Element.appliedStereotype = association("appliedStereotype", InstanceSpecification, composite=True, opposite="extended")
 Element.relationship = derivedunion("relationship", Relationship)
 Element.comment = association("comment", Comment, opposite="annotatedElement")
-# 18: override Element.qualifiedName: property
-# defined in umloverrides.py
-
 Element.owner = derivedunion("owner", Element, upper=1)
 Element.ownedElement = derivedunion("ownedElement", Element)
 Element.ownedDiagram = association("ownedDiagram", Diagram, composite=True, opposite="element")
@@ -828,6 +826,9 @@ NamedElement.clientDependency = association("clientDependency", Dependency, comp
 NamedElement.supplierDependency = association("supplierDependency", Dependency, opposite="supplier")
 NamedElement.memberNamespace = derivedunion("memberNamespace", Namespace, upper=1)
 NamedElement.namespace = derivedunion("namespace", Namespace, upper=1)
+# 18: override NamedElement.qualifiedName: property
+# defined in umloverrides.py
+
 NamedElement.memberNamespace.add(NamedElement.namespace)  # type: ignore[attr-defined]
 Element.owner.add(NamedElement.namespace)  # type: ignore[attr-defined]
 PackageableElement.owningPackage = association("owningPackage", Package, upper=1, opposite="packagedElement")

@@ -22,7 +22,7 @@ def named_element_qualified_name(self) -> list[str]:
     return qname
 
 
-uml.Element.qualifiedName = property(named_element_qualified_name)
+uml.NamedElement.qualifiedName = property(named_element_qualified_name)
 
 
 # See https://www.omg.org/spec/UML/2.5/PDF, section 12.4.1.5, page 271

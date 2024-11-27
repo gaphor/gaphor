@@ -7,8 +7,8 @@ from gaphor.i18n import gettext
 from gaphor.UML import uml as UML
 
 
-@format.register(UML.Element)
-def format_namedelement(el: UML.Element, **kwargs):
+@format.register(UML.NamedElement)
+def format_namedelement(el: UML.NamedElement, **kwargs):
     return el.name or ""
 
 
