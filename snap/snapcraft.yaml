@@ -62,4 +62,5 @@ parts:
       poetry run gaphor install-schemas
       poetry run poe gettext-mo-release
       poetry build
-      pip3 install dist/*.whl --prefix $SNAPCRAFT_PART_INSTALL
+      python3 -m pip install --target=$CRAFT_PART_INSTALL/usr dist/*.whl
+      craftctl default
