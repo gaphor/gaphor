@@ -197,7 +197,9 @@ gettext-pot = "pybabel extract -o po/gaphor.pot -F po/babel.ini -k i18nize gapho
 gettext-po = { "script" = "po.build-babel:update_po_files" }
 gettext-mo-all = { "script" = "po.build-babel:compile_mo_all" }
 gettext-mo-release = { "script" = "po.build-babel:compile_mo_release" }
-translations = ["gettext-pot", "gettext-po", "gettext-mo-all"]
+gettext-docs-pot = { "cwd" = "docs", "shell" = "sphinx-build -b gettext . locale" }
+gettext-docs-po = { "cwd" = "docs", "shell" = "sphinx-intl update -p locale" }
+translations = ["gettext-pot", "gettext-po", "gettext-mo-all", "gettext-docs-pot", "gettext-docs-po"]
 icons = { "shell" = "make -C gaphor/ui/icons" }
 
 [tool.pytest.ini_options]
