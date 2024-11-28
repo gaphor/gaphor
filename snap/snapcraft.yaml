@@ -54,7 +54,7 @@ parts:
       - python3-poetry
     override-pull: |
       craftctl default
-      craftctl set version=$(git describe --tags --abbrev=10)
+      craftctl set version=$(poetry version -s)
     override-build: |
       poetry config virtualenvs.in-project true
       poetry lock --no-update
