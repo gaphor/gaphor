@@ -203,7 +203,7 @@ jobs:
       - name: Run Gaphor Self-Test
         run: poetry run gaphor self-test || poetry run gaphor self-test
       - name: Run Gaphor Tests
-        run: poetry run pytest --cov
+        run: poetry run pytest
       - name: Create macOS Application
         id: create
         uses: ./.github/actions/macos_dmg
@@ -295,7 +295,7 @@ jobs:
         with:
           python-command: py -${{ env.python_version }}
       - name: Run Gaphor Tests
-        run: poetry run pytest --cov
+        run: poetry run pytest
       - name: Create Windows Executables
         uses: ./.github/actions/windows_executables
         with:

@@ -89,6 +89,7 @@ pyinstaller = "^6.0"
 pyinstaller-versionfile = "^2.0.0"
 semver = ">=2.13,<4.0"
 tomli = { version = ">=1.2,<3.0", python = "<3.11" }
+dmgbuild = {version = "^1.6.2", markers = "sys_platform == 'darwin'" }
 
 [tool.poetry.scripts]
 gaphor = "gaphor.main:main"
