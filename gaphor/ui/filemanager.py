@@ -12,7 +12,7 @@ from gi.repository import Adw, Gio, Gtk
 
 from gaphor import UML
 from gaphor.abc import ActionProvider, Service
-from gaphor.asyncio import TaskOwner, sleep
+from gaphor.asyncio import TaskOwner, response_from_adwaita_dialog, sleep
 from gaphor.babel import translate_model
 from gaphor.core import action, event_handler, gettext
 from gaphor.core.changeset.compare import compare
@@ -395,26 +395,19 @@ class FileManager(Service, ActionProvider, TaskOwner):
 
 
 async def resolve_merge_conflict_dialog(window: Gtk.Window) -> str:
-    dialog = Adw.MessageDialog.new(
-        window,
+    dialog = Adw.AlertDialog.new(
         gettext("Resolve Merge Conflict?"),
-    )
-    dialog.set_body(
         gettext(
             "The model you are opening contains a merge conflict. Do you want to open the current model or the incoming change to the model?"
-        )
+        ),
     )
     dialog.add_response("cancel", gettext("Cancel"))
     dialog.add_response("manual", gettext("Open Merge Editor"))
     dialog.add_response("current", gettext("Open Current"))
     dialog.add_response("incoming", gettext("Open Incoming"))
     dialog.set_close_response("cancel")
-    dialog.present()
 
-    answer: str = await dialog.choose()
-    dialog.set_transient_for(None)
-    dialog.destroy()
-    return answer
+    return await response_from_adwaita_dialog(dialog, window)
 
 
 async def save_changes_before_close_dialog(window: Gtk.Window) -> str:
@@ -422,11 +415,7 @@ async def save_changes_before_close_dialog(window: Gtk.Window) -> str:
     body = gettext(
         "The open model contains unsaved changes. Changes which are not saved will be permanently lost."
     )
-    dialog = Adw.MessageDialog.new(
-        window,
-        title,
-    )
-    dialog.set_body(body)
+    dialog = Adw.AlertDialog.new(title, body)
     dialog.add_response("cancel", gettext("Cancel"))
     dialog.add_response("discard", gettext("Discard"))
     dialog.add_response("save", gettext("Save"))
@@ -434,9 +423,5 @@ async def save_changes_before_close_dialog(window: Gtk.Window) -> str:
     dialog.set_response_appearance("save", Adw.ResponseAppearance.SUGGESTED)
     dialog.set_default_response("save")
     dialog.set_close_response("cancel")
-    dialog.present()
 
-    answer: str = await dialog.choose()
-    dialog.set_transient_for(None)
-    dialog.destroy()
-    return answer
+    return await response_from_adwaita_dialog(dialog, window)
