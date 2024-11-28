@@ -5,7 +5,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2024-11-27 15:43-0500\n"
 "PO-Revision-Date: 2024-11-28 22:17+0000\n"
-"Last-Translator: Stan SZLAPKA <stansz@free.fr>\n"
+"Last-Translator: Pierre Flanet <pierre.flanet@protonmail.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/gaphor/gaphor/fr/>"
 "\n"
 "Language: fr\n"
@@ -247,7 +247,7 @@ msgstr "Transfert Entrée"
 #: gaphor/RAAML/fta/ftatoolbox.py:114 gaphor/RAAML/fta/ftatoolbox.py:120
 #: gaphor/RAAML/fta/transferout.py:33
 msgid "Transfer Out"
-msgstr "Transfert Sortie"
+msgstr "Transfert sortant"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:149 gaphor/RAAML/fta/ftatoolbox.py:156
 #: gaphor/RAAML/fta/undevelopedevent.py:32
