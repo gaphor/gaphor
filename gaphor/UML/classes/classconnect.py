@@ -31,6 +31,11 @@ class DependencyConnect(DirectionalRelationshipConnect):
         )
         self.line.subject = relation
 
+        if not relation.owningPackage:
+            assert isinstance(self.diagram, UML.Diagram)
+
+            relation.owningPackage = owner_package(self.diagram.owner)
+
     def update_dependency_type(self, handle):
         line = self.line
 
@@ -46,6 +51,7 @@ class DependencyConnect(DirectionalRelationshipConnect):
                 client = self.element.subject
                 supplier = other.subject
             line.dependency_type = UML.recipes.dependency_type(client, supplier)
+
         return line.dependency_type
 
 
@@ -133,9 +139,11 @@ class AssociationConnect(RelationshipConnect):
             line.preferred_tail_navigability = "none"
 
         assert isinstance(relation, UML.Association)
-        assert isinstance(self.diagram, UML.Diagram)
 
-        relation.package = owner_package(self.diagram.owner)
+        if not relation.package:
+            assert isinstance(self.diagram, UML.Diagram)
+
+            relation.package = owner_package(self.diagram.owner)
 
         return relation
 
