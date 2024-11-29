@@ -1,7 +1,7 @@
 """The RAAML Modeling Language module is the entrypoint for RAAML related
 assets."""
 
-from typing import Iterable
+from collections.abc import Iterable
 
 from gaphor.abc import ModelingLanguage
 from gaphor.core import gettext
@@ -35,5 +35,6 @@ class RAAMLModelingLanguage(ModelingLanguage):
     def element_types(self) -> Iterable[ElementCreateInfo]:
         yield from raaml_element_types
 
-    def lookup_element(self, name):
+    def lookup_element(self, name, ns=None):
+        assert ns in ("RAAML", None)
         return getattr(raaml, name, None) or getattr(diagramitems, name, None)

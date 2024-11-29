@@ -20,6 +20,6 @@ class DirectedRelationshipPropertyPathItem(
         )
 
         self.draw_head = draw_arrow_head
-        self.watch("subject[NamedElement].name").watch(
-            "subject.appliedStereotype.classifier.name"
+        self.watch("subject[UML:NamedElement].name").watch(
+            "subject[UML:Element].appliedStereotype.classifier.name"
         )

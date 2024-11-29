@@ -107,11 +107,6 @@ class SelfTest(Service):
 
     @test
     def test_new_session(self, status):
-        with (importlib.resources.files("gaphor") / "templates" / "uml.gaphor").open(
-            encoding="utf-8"
-        ) as f:
-            session = self.application.new_session(template=f)
-
         def check_new_session(session):
             main_window = session.get_service("main_window")
 
@@ -120,6 +115,8 @@ class SelfTest(Service):
                 return GLib.SOURCE_REMOVE
             return GLib.SOURCE_CONTINUE
 
+        template = importlib.resources.files("gaphor") / "templates" / "uml.gaphor"
+        session = self.application.new_session(template=template)
         GLib.idle_add(check_new_session, session, priority=GLib.PRIORITY_LOW)
 
     @test
@@ -154,7 +151,7 @@ def system_information():
     return textwrap.dedent(
         f"""\
         Gaphor version:         {distribution().version}
-        Operating System:       {platform.system()} ({platform.release()})
+        Operating System:       {platform.system()} ({platform.release()}, {platform.machine()})
         Display:                {display_type()}
         Python version:         {platform.python_version()}
         GTK version:            {Gtk.get_major_version()}.{Gtk.get_minor_version()}.{Gtk.get_micro_version()}

@@ -10,8 +10,8 @@ from gaphas.constraint import constraint
 from gaphas.geometry import Rectangle, distance_rectangle_point
 from gaphas.solver.constraint import BaseConstraint
 
+from gaphor.core.modeling.base import Id
 from gaphor.core.modeling.diagram import Diagram, DrawContext
-from gaphor.core.modeling.element import Id
 from gaphor.core.modeling.event import AttributeUpdated, RevertibleEvent
 from gaphor.core.modeling.presentation import Presentation, S, literal_eval
 from gaphor.core.modeling.properties import attribute
@@ -23,7 +23,7 @@ DEFAULT_WIDTH = 100
 
 
 class Named:
-    """Marker for any NamedElement presentations."""
+    """Marker for any presentations with a name."""
 
 
 class Valued:
@@ -69,6 +69,7 @@ class HandlePositionEvent(RevertibleEvent):
         super().__init__(element)
         self.handle_index = element.handles().index(handle)
         self.old_value = old_value
+        self.new_value = handle.pos.tuple()
 
     def revert(self, target):
         target.handles()[self.handle_index].pos = self.old_value

@@ -9,7 +9,6 @@ This is a simple rip-off of the override script used in PyGTK.
 # ruff: noqa: T201
 
 import re
-from typing import List
 
 OVERRIDE_RE = re.compile(
     r"^override\s+(?P<name>[\w.]+)(?:\((?P<derived>[^)]+)\))?\s*(?::\s*(?P<type_hint>[\w\s\[\],\"| ]+))?$"
@@ -35,7 +34,7 @@ class Overrides:
         # bufs contains a list of (lines, line_number) pairs.
         bufs = []
         line_number = 1
-        lines: List[str] = []
+        lines: list[str] = []
         line = fp.readline()
         linenum = 1
         while line:

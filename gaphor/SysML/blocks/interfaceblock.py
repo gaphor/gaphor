@@ -28,9 +28,9 @@ class InterfaceBlockItem(Classified, ElementPresentation[InterfaceBlock]):
         ).watch("show_references", self.update_shapes).watch(
             "show_values", self.update_shapes
         ).watch("show_operations", self.update_shapes).watch(
-            "subject[NamedElement].name"
-        ).watch("subject[NamedElement].name").watch(
-            "subject[NamedElement].namespace.name"
+            "subject[UML:NamedElement].name"
+        ).watch("subject[UML:NamedElement].name").watch(
+            "subject[UML:NamedElement].namespace.name"
         ).watch("subject[Classifier].isAbstract", self.update_shapes).watch(
             "subject[Class].ownedAttribute.aggregation", self.update_shapes
         )

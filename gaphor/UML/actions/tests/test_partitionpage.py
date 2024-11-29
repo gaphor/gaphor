@@ -3,11 +3,11 @@ from gaphor.diagram.tests.fixtures import find
 from gaphor.UML.actions.partitionpage import PartitionPropertyPage
 
 
-def test_partition_page(diagram, element_factory):
+def test_partition_page(diagram, element_factory, event_manager):
     item = diagram.create(
         UML.actions.PartitionItem, subject=element_factory.create(UML.ActivityPartition)
     )
-    property_page = PartitionPropertyPage(item)
+    property_page = PartitionPropertyPage(item, event_manager)
 
     widget = property_page.construct()
 
@@ -17,11 +17,11 @@ def test_partition_page(diagram, element_factory):
     assert len(item.partition) == 4
 
 
-def test_partition_name(diagram, element_factory):
+def test_partition_name(diagram, element_factory, event_manager):
     item = diagram.create(
         UML.actions.PartitionItem, subject=element_factory.create(UML.ActivityPartition)
     )
-    property_page = PartitionPropertyPage(item)
+    property_page = PartitionPropertyPage(item, event_manager)
     property_page.construct()
     property_page.update_partitions(1)
 
@@ -33,13 +33,13 @@ def test_partition_name(diagram, element_factory):
     assert item.partition[0].name == "Name"
 
 
-def test_partition_type(diagram, element_factory):
+def test_partition_type(diagram, element_factory, event_manager):
     class_ = element_factory.create(UML.Class)
     class_.name = "Foobar"
     item = diagram.create(
         UML.actions.PartitionItem, subject=element_factory.create(UML.ActivityPartition)
     )
-    property_page = PartitionPropertyPage(item)
+    property_page = PartitionPropertyPage(item, event_manager)
     property_page.construct()
     property_page.update_partitions(1)
 

@@ -8,7 +8,11 @@ import subprocess
 from pathlib import Path
 
 version = subprocess.run(
-    ["poetry", "version", "-s"], encoding="utf-8", capture_output=True, text=True
+    ["poetry", "version", "-s"],
+    encoding="utf-8",
+    capture_output=True,
+    text=True,
+    check=True,
 ).stdout.rstrip()
 
 
@@ -37,6 +41,7 @@ def build_installer(
         encoding="utf-8",
         capture_output=True,
         text=True,
+        check=True,
     )
 
     shutil.move(str(files_to_package / "gaphor-LATEST.exe"), output_file)
@@ -79,7 +84,9 @@ def build_portable_installer(
     config_path.mkdir()
     shutil.copytree(files_to_package, portable_path / "data")
 
-    subprocess.run([str(seven_zip_path), "a", str(payload_path), str(portable_path)])
+    subprocess.run(
+        [str(seven_zip_path), "a", str(payload_path), str(portable_path)], check=True
+    )
     if payload_path.is_file():
         print(f"Payload 7z archive found at {payload_path}")
     else:

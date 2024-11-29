@@ -185,7 +185,7 @@ class LifelineItem(Named, ElementPresentation[UML.Lifeline]):
         )
 
         self.watch("subject[NamedElement].name", self.change_name)
-        self.watch("subject.appliedStereotype.classifier.name")
+        self.watch("subject[Element].appliedStereotype.classifier.name")
         self.watch("subject[Lifeline].represents.name")
         self.watch("subject[Lifeline].represents.type.name")
         self.watch("subject[Lifeline].represents.typeValue")

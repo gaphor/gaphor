@@ -1,7 +1,7 @@
 from __future__ import annotations
 
+from collections.abc import Iterable, Iterator
 from functools import singledispatch
-from typing import Iterable, Iterator
 
 import pydot
 from gaphas.connector import ConnectionSink, Connector
@@ -13,7 +13,7 @@ from gaphas.segment import Segment
 import gaphor.UML.interactions
 from gaphor.abc import ActionProvider, Service
 from gaphor.action import action
-from gaphor.core.modeling import Diagram, Element, Presentation
+from gaphor.core.modeling import Base, Diagram, Presentation
 from gaphor.diagram.connectors import ItemTemporaryDisconnected
 from gaphor.diagram.presentation import (
     AttachedPresentation,
@@ -23,8 +23,8 @@ from gaphor.diagram.presentation import (
 )
 from gaphor.i18n import gettext
 from gaphor.transaction import Transaction
-from gaphor.UML import NamedElement
 from gaphor.UML.actions.activitynodes import ForkNodeItem
+from gaphor.UML.classes.generalization import GeneralizationItem
 
 DOT = "dot"
 DPI = 72.0
@@ -169,7 +169,8 @@ class AutoLayout:
             if presentation := presentation_for_object(diagram, edge):
                 presentation.orthogonal = False
 
-                points = parse_edge_pos(edge.get_pos(), height)
+                reverse = isinstance(presentation, GeneralizationItem)
+                points = parse_edge_pos(edge.get_pos(), height, reverse)
                 segment = Segment(presentation, diagram)
                 while len(points) > len(presentation.handles()):
                     segment.split_segment(0)
@@ -179,7 +180,7 @@ class AutoLayout:
                 assert len(points) == len(presentation.handles())
 
                 matrix = presentation.matrix_i2c.inverse()
-                for handle, point in zip(presentation.handles(), points):
+                for handle, point in zip(presentation.handles(), points, strict=False):
                     handle.pos = matrix.transform_point(*point)
 
                 for handle in (presentation.head, presentation.tail):
@@ -222,7 +223,7 @@ def diagram_as_pydot(diagram: Diagram, splines: str) -> pydot.Dot:
 
 
 @singledispatch
-def as_pydot(element: Element) -> Iterator[pydot.Common]:
+def as_pydot(element: Base) -> Iterator[pydot.Common]:
     return iter(())
 
 
@@ -232,9 +233,7 @@ def _(presentation: ElementPresentation):
         graph = pydot.Cluster(
             presentation.id,
             id=presentation.id,
-            label=f"{presentation.subject.name}\n\n\n"
-            if isinstance(presentation.subject, NamedElement)
-            else "\n\n",
+            label=f"{presentation.subject.name}\n\n\n",
             margin=20,
         )
 
@@ -286,9 +285,16 @@ def _(presentation: LinePresentation):
         if as_cluster(tail_connection.connected):
             extra_args["ltail"] = f"cluster_{tail_connection.connected.id}"
 
+        if isinstance(presentation, GeneralizationItem):
+            head_id = tail_connection.connected.id
+            tail_id = head_connection.connected.id
+        else:
+            head_id = head_connection.connected.id
+            tail_id = tail_connection.connected.id
+
         yield pydot.Edge(
-            tail_connection.connected.id,
-            head_connection.connected.id,
+            head_id,
+            tail_id,
             id=presentation.id,
             minlen=3,
             arrowhead="none",
@@ -346,7 +352,7 @@ def add_to_graph(graph, edge_or_node) -> None:
         raise ValueError(f"Can't transform {edge_or_node} to something DOT'ish?")
 
 
-def parse_edge_pos(pos_str: str, height: float) -> list[Point]:
+def parse_edge_pos(pos_str: str, height: float, reverse: bool) -> list[Point]:
     raw_points = strip_quotes(pos_str).split(" ")
 
     points = [parse_point(raw_points.pop(0), height)]
@@ -356,7 +362,8 @@ def parse_edge_pos(pos_str: str, height: float) -> list[Point]:
         raw_points.pop(0)
         raw_points.pop(0)
         points.append(parse_point(raw_points.pop(0), height))
-    points.reverse()
+    if reverse:
+        points.reverse()
     return points
 
 
@@ -371,7 +378,11 @@ def parse_bb(bb, height: float | None = None) -> Rect:
 
 
 def strip_quotes(s):
-    return s.replace('"', "").replace("\\\n", "")
+    """Replace quotes and line continuations (backslash + newline).
+
+    Basically cleaning up some stuff that Pydot leaves in.
+    """
+    return s.replace('"', "").replace("\\\n", "").replace("\\\r\n", "")
 
 
 # Do not auto-layout sequence diagrams

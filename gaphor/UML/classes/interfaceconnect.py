@@ -5,7 +5,6 @@ possible to folded interface, see `gaphor.diagram.classes.interface`
 documentation for details.
 """
 
-
 from gaphor.diagram.connectors import Connector
 from gaphor.UML.classes.classconnect import DependencyConnect
 from gaphor.UML.classes.dependency import DependencyItem

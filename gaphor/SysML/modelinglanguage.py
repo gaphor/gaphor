@@ -1,7 +1,7 @@
 """The SysML Modeling Language module is the entrypoint for SysML related
 assets."""
 
-from typing import Iterable
+from collections.abc import Iterable
 
 from gaphor.abc import ModelingLanguage
 from gaphor.core import gettext
@@ -35,5 +35,6 @@ class SysMLModelingLanguage(ModelingLanguage):
     def element_types(self) -> Iterable[ElementCreateInfo]:
         yield from sysml_element_types
 
-    def lookup_element(self, name):
+    def lookup_element(self, name, ns=None):
+        assert ns in ("SysML", None)
         return getattr(sysml, name, None) or getattr(diagramitems, name, None)

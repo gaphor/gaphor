@@ -2,6 +2,7 @@ import pytest
 
 from gaphor import UML
 from gaphor.core.modeling import Diagram, ModelReady
+from gaphor.i18n import gettext
 from gaphor.ui.modelbrowser import (
     ElementDragData,
     ModelBrowser,
@@ -136,7 +137,7 @@ def test_element_name_changed(model_browser, element_factory):
 
 
 def test_element_weight_changed(model_browser, element_factory):
-    diagram = element_factory.create(Diagram)
+    diagram = element_factory.create(UML.Diagram)
     tree_item = model_browser.model.tree_item_for_element(diagram)
     weight, style = tree_item.attributes.get_attributes()
 
@@ -221,6 +222,39 @@ def test_delete_element(model_browser, element_factory):
     assert not element_factory.lselect()
 
 
+def test_association_end(model_browser: ModelBrowser, element_factory):
+    tree_model = model_browser.model
+    head_class = element_factory.create(UML.Class)
+    tail_class = element_factory.create(UML.Class)
+    association = recipes.create_association(head_class, tail_class)
+
+    recipes.set_navigability(association, association.memberEnd[0], True)
+    recipes.set_navigability(association, association.memberEnd[0], None)
+
+    association_item = tree_model.tree_item_for_element(association)
+    association_children = tree_model.child_model(association_item)
+
+    assert association.memberEnd[0] in (t.element for t in association_children)
+    assert association.memberEnd[1] in (t.element for t in association_children)
+
+
+def test_navigable_association_end(model_browser: ModelBrowser, element_factory):
+    tree_model = model_browser.model
+    head_class = element_factory.create(UML.Class)
+    tail_class = element_factory.create(UML.Class)
+    association = recipes.create_association(head_class, tail_class)
+
+    recipes.set_navigability(association, association.memberEnd[0], True)
+
+    association_item = tree_model.tree_item_for_element(association)
+    tail_class_item = tree_model.tree_item_for_element(tail_class)
+    association_children = tree_model.child_model(association_item)
+    tail_class_children = tree_model.child_model(tail_class_item)
+
+    assert association.memberEnd[0] not in (t.element for t in association_children)
+    assert association.memberEnd[0] in (t.element for t in tail_class_children)
+
+
 def test_search_next(model_browser, element_factory):
     class_a = element_factory.create(UML.Class)
     class_a.name = "a"
@@ -265,7 +299,7 @@ def test_generalization_text(model_browser, element_factory):
     branch = model.branches[tree_item]
     assert tree_item
     assert branch.relationships[0].element is generalization
-    assert branch.relationships[0].readonly_text == "general: General"
+    assert branch.relationships[0].readonly_text == gettext("general: General")
 
 
 def test_drop_multiple_elements(model_browser, element_factory, event_manager):
@@ -276,20 +310,17 @@ def test_drop_multiple_elements(model_browser, element_factory, event_manager):
     gen = element_factory.create(UML.Generalization)
     gen.general = class_a
     gen.specific = class_b
-    orig = element_factory.create(UML.Package)
-    class_a.package = orig
-    class_b.package = orig
     package = element_factory.create(UML.Package)
 
-    drag_data = ElementDragData(elements=[class_a, class_b])
-    model_browser.select_element(class_a)
-    list_item = MockRowItem(get_first_selected_item(model_browser.selection))
     model_browser.select_element(package)
-    target = MockDropTarget()
-    list_item_drop_drop(target, drag_data, 0, 0, list_item, event_manager)
+    list_item = MockRowItem(get_first_selected_item(model_browser.selection))
 
-    assert class_b not in model_browser.get_selected_elements()
-    assert class_a not in model_browser.get_selected_elements()
+    target = MockDropTarget()
+    drag_data = ElementDragData(elements=[class_a, class_b])
+    list_item_drop_drop(target, drag_data, 0, 10, list_item, event_manager)
+
+    assert class_b.owner is package
+    assert class_a.owner is package
 
 
 def test_unlink_element_should_not_collapse_branch(
@@ -314,6 +345,17 @@ def test_unlink_element_should_not_collapse_branch(
     assert model_browser.selection.get_item(1).get_item().element is class_b
 
 
+def test_multiplicity_element_should_not_end_up_in_root(model_browser, element_factory):
+    port = element_factory.create(UML.Port)
+    prop = element_factory.create(UML.Property)
+    connector = UML.recipes.create_connector(port, prop)
+
+    model_browser.on_model_ready()
+    model = model_browser.model
+
+    assert model.tree_item_for_element(connector.end[0]) is None
+
+
 def test_stereotype_base_class_should_not_end_up_in_root(
     model_browser, element_factory
 ):
@@ -333,6 +375,29 @@ def test_stereotype_base_class_should_not_end_up_in_root(
     assert row0.get_item().element is profile  # not property
 
 
+def test_drag_and_drop_parent_on_child(model_browser, element_factory, event_manager):
+    root = element_factory.create(UML.Package)
+    parent = element_factory.create(UML.Package)
+    parent.package = root
+    parent_diagram = element_factory.create(UML.Diagram)
+    parent_diagram.element = parent
+    child = element_factory.create(UML.Package)
+    child.package = parent
+    child_diagram = element_factory.create(UML.Diagram)
+    child_diagram.element = child
+
+    model_browser.select_element(parent)
+    list_item = MockRowItem(get_first_selected_item(model_browser.selection))
+
+    target = MockDropTarget()
+    drag_data = ElementDragData(elements=[parent])
+    list_item_drop_drop(target, drag_data, 0, 10, list_item, event_manager)
+
+    assert model_browser.select_element(child) is not None
+    assert child.owner is parent
+    assert parent.owner is root
+
+
 class MockRowItem:
     def __init__(self, list_item):
         self.list_item = list_item
@@ -344,11 +409,7 @@ class MockRowItem:
 class MockDropTarget:
     def get_widget(self):
         class Widget:
-            def get_style_context(self):
-                return StyleContext()
-
-        class StyleContext:
-            def remove_class(self, _):
+            def remove_css_class(self, _):
                 pass
 
         return Widget()

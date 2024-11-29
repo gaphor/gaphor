@@ -3,79 +3,79 @@
 from __future__ import annotations
 
 from pathlib import Path
+from typing import TYPE_CHECKING
 
 from gaphor.abc import Service
 
-
-class ServiceEvent:
-    """An event emitted by a service."""
-
-    def __init__(self, service: Service):
-        self.service = service
+if TYPE_CHECKING:
+    from gaphor.application import Application, Session
 
 
-class ServiceInitializedEvent(ServiceEvent):
+class ServiceInitializedEvent:
     """This event is emitted every time a new service has been initialized."""
 
     def __init__(self, name: str, service: Service):
-        super().__init__(service)
         self.name = name
+        self.service = service
 
 
-class ServiceShutdownEvent(ServiceEvent):
+class ServiceShutdownEvent:
     """This event is emitted every time a service has been shut down."""
 
     def __init__(self, name: str, service: Service):
-        super().__init__(service)
         self.name = name
+        self.service = service
 
 
-class ApplicationShutdown(ServiceEvent):
+class ApplicationShutdown:
     """This event is emitted from the application when it has been shut
     down."""
 
+    def __init__(self, application: Application):
+        self.application = application
 
-class SessionCreated(ServiceEvent):
+
+class SessionCreated:
     """The session is emitting this event when it's ready to shut down."""
 
     def __init__(
         self,
         application: Service,
-        session: Service,
-        filename: str | Path | None,
-        template: str | None = None,
+        session: Session,
+        filename: Path | None,
+        template: Path | None = None,
+        force: bool = False,
+        interactive: bool = False,
     ):
-        super().__init__(application)
         self.application = application
         self.session = session
         self.filename = Path(filename) if filename else None
         self.template = template
+        self.force = force
+        self.interactive = interactive
 
 
-class ActiveSessionChanged(ServiceEvent):
+class ActiveSessionChanged:
     """Event emitted when a session becomes the active session."""
 
+    def __init__(self, service: Service):
+        # NB. This is wrong: it should have the session as argument
+        self.service = service
 
-class SessionShutdownRequested(ServiceEvent):
+
+class SessionShutdownRequested:
     """When the application is asked to terminate, it will inform all sessions.
 
     The user can then save his/her work.
     """
 
 
-class SessionShutdown(ServiceEvent):
+class SessionShutdown:
     """The session is emitting this event when it's ready to shut down."""
 
 
 class ModelSaved:
-    def __init__(self, service, filename: Path | None = None):
-        self.service = service
-        self.filename = filename
-
-
-class ModelChangedOnDisk:
-    def __init__(self, service, filename: Path | None = None):
-        self.service = service
+    def __init__(self, filename: Path | None = None):
         self.filename = filename
 
 

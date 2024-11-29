@@ -548,6 +548,7 @@ Original copyright:
       <keyword>line-style</keyword>
       <keyword>line-width</keyword>
       <keyword>min-width</keyword>
+      <keyword>max-width</keyword>
       <keyword>min-height</keyword>
       <keyword>opacity</keyword>
       <keyword>text-decoration</keyword>

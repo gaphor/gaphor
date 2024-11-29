@@ -20,7 +20,7 @@ class ActivityItem(Classified, ElementPresentation):
         self.width = 100
 
         self.watch("subject[NamedElement].name", self.change_name).watch(
-            "subject.appliedStereotype.classifier.name"
+            "subject[Element].appliedStereotype.classifier.name"
         ).watch("subject[Classifier].isAbstract", self.update_shapes).watch(
             "subject[Activity].node[ActivityParameterNode].parameter.name",
             self.update_parameters,

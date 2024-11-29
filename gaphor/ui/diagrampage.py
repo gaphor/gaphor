@@ -1,7 +1,6 @@
 import functools
 import importlib
 import logging
-from typing import Optional
 
 from gaphas.guide import GuidePainter
 from gaphas.painter import FreeHandPainter, HandlePainter, PainterChain
@@ -18,14 +17,15 @@ from gaphor.core.modeling.event import AttributeUpdated, ElementDeleted
 from gaphor.core.modeling.presentation import Presentation
 from gaphor.diagram.diagramtoolbox import get_tool_def, tooliter
 from gaphor.diagram.painter import DiagramTypePainter, ItemPainter
-from gaphor.diagram.selection import Selection
 from gaphor.diagram.tools import (
     apply_default_tool_set,
     apply_magnet_tool_set,
     apply_placement_tool_set,
 )
 from gaphor.diagram.tools.magnet import MagnetPainter
+from gaphor.i18n import translated_ui_string
 from gaphor.transaction import Transaction
+from gaphor.ui.clipboard import Clipboard
 from gaphor.ui.event import DiagramClosed, ToolSelected
 
 log = logging.getLogger(__name__)
@@ -39,6 +39,12 @@ def placement_icon_base():
 
 if hasattr(GtkView, "set_css_name"):
     GtkView.set_css_name("diagramview")
+
+
+def new_builder():
+    builder = Gtk.Builder()
+    builder.add_from_string(translated_ui_string("gaphor.ui", "diagrampage.ui"))
+    return builder
 
 
 @functools.cache
@@ -74,15 +80,15 @@ def get_placement_cursor(display, icon_name):
 
 
 class DiagramPage:
-    def __init__(self, diagram, event_manager, modeling_language):
+    def __init__(self, diagram, event_manager, element_factory, modeling_language):
         self.event_manager = event_manager
         self.diagram = diagram
         self.modeling_language = modeling_language
+        self.clipboard = Clipboard(event_manager, element_factory)
         self.style_manager = Adw.StyleManager.get_default()
 
-        self.view: Optional[GtkView] = None
-        self.widget: Optional[Gtk.Widget] = None
-        self.diagram_css: Optional[Gtk.CssProvider] = None
+        self.view: GtkView | None = None
+        self.diagram_css: Gtk.CssProvider | None = None
 
         self.rubberband_state = RubberbandState()
         self.context_menu = Gtk.PopoverMenu.new_from_model(popup_model(diagram))
@@ -108,8 +114,14 @@ class DiagramPage:
         """
         assert self.diagram
 
-        view = GtkView(selection=Selection())
+        builder = new_builder()
+        view = builder.get_object("view")
         view.add_css_class(self._css_class())
+        view.connect("delete", delete_selected_items, self.event_manager)
+        view.connect("cut-clipboard", self.clipboard.cut)
+        view.connect("copy-clipboard", self.clipboard.copy)
+        view.connect("paste-clipboard", self.clipboard.paste_link)
+        view.connect("paste-full-clipboard", self.clipboard.paste_full)
 
         self.diagram_css = Gtk.CssProvider.new()
         Gtk.StyleContext.add_provider_for_display(
@@ -118,16 +130,9 @@ class DiagramPage:
             Gtk.STYLE_PROVIDER_PRIORITY_USER,
         )
 
-        scrolled_window = Gtk.ScrolledWindow()
-        scrolled_window.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
-        scrolled_window.set_child(view)
-        scrolled_window.add_css_class("view")
-        self.style_manager.connect_object(
-            "notify::dark", self._on_notify_dark, scrolled_window
-        )
+        self.style_manager.connect("notify::dark", self._on_notify_dark)
 
         self.view = view
-        self.widget = scrolled_window
         self.context_menu.set_parent(view)
 
         self.select_tool("toolbox-pointer")
@@ -137,7 +142,7 @@ class DiagramPage:
         # Set model only after the painters are set
         view.model = self.diagram
 
-        return self.widget
+        return builder.get_object("diagrampage")
 
     def apply_tool_set(self, tool_name):
         """Return a tool associated with an id (action name).
@@ -227,7 +232,7 @@ class DiagramPage:
 
         Do the same thing that would be done if Close was pressed.
         """
-        assert self.widget
+        assert self.view
 
         Gtk.StyleContext.remove_provider_for_display(
             Gdk.Display.get_default(),
@@ -260,7 +265,7 @@ class DiagramPage:
 
         bg = style.get("background-color", (0.0, 0.0, 0.0, 0.0))
         self.diagram_css.load_from_string(
-            f".{self._css_class()} {{ background-color: rgba({int(255*bg[0])}, {int(255*bg[1])}, {int(255*bg[2])}, {bg[3]}); }}",
+            f".{self._css_class()} {{ background-color: rgba({int(255 * bg[0])}, {int(255 * bg[1])}, {int(255 * bg[2])}, {bg[3]}); }}",
         )
 
         view = self.view
@@ -284,9 +289,19 @@ class DiagramPage:
         view.request_update(self.diagram.get_all_items())
 
 
+def delete_selected_items(view: GtkView, event_manager):
+    with Transaction(event_manager):
+        items = view.selection.selected_items
+        for i in list(items):
+            i.unlink()
+
+
 def context_menu_controller(context_menu, diagram):
     def on_show_popup(ctrl, n_press, x, y):
-        if Transaction.in_transaction():
+        if (
+            Transaction.in_transaction()
+            or not ctrl.get_last_event().triggers_context_menu()
+        ):
             return
 
         view = ctrl.get_widget()
@@ -306,7 +321,7 @@ def context_menu_controller(context_menu, diagram):
         context_menu.popup()
 
     ctrl = Gtk.GestureClick.new()
-    ctrl.set_button(Gdk.BUTTON_SECONDARY)
+    ctrl.set_button(0)
     ctrl.connect("pressed", on_show_popup)
     return ctrl
 

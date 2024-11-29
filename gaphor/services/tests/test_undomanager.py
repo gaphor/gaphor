@@ -3,7 +3,7 @@
 import pytest
 
 from gaphor.core import event_handler
-from gaphor.core.modeling import Element
+from gaphor.core.modeling import Base, swap_element_type
 from gaphor.core.modeling.event import AssociationUpdated
 from gaphor.core.modeling.properties import association, attribute, derivedunion
 from gaphor.services.undomanager import NotInTransactionException
@@ -78,7 +78,7 @@ def test_actions(event_manager, undo_manager):
 
 
 def test_undo_attribute(element_factory, undo_manager):
-    class A(Element):
+    class A(Base):
         attr = attribute("attr", bytes, default="default")
 
     undo_manager.begin_transaction()
@@ -102,10 +102,29 @@ def test_undo_attribute(element_factory, undo_manager):
     assert a.attr == "five"
 
 
+def test_change_element_type(event_manager, element_factory, undo_manager):
+    class A(Base):
+        pass
+
+    class B(Base):
+        pass
+
+    with Transaction(event_manager):
+        a = element_factory.create(A)
+
+    with Transaction(event_manager):
+        swap_element_type(a, B)
+        assert type(a) is B
+
+    undo_manager.undo_transaction()
+
+    assert type(a) is A
+
+
 def test_no_value_change_if_not_in_transaction(
     event_manager, element_factory, undo_manager
 ):
-    class A(Element):
+    class A(Base):
         attr = attribute("attr", bytes, default="default")
 
     with Transaction(event_manager):
@@ -118,10 +137,10 @@ def test_no_value_change_if_not_in_transaction(
 
 
 def test_undo_association_1_x(event_manager, element_factory, undo_manager):
-    class A(Element):
+    class A(Base):
         pass
 
-    class B(Element):
+    class B(Base):
         pass
 
     A.one = association("one", B, 0, 1, opposite="two")
@@ -165,10 +184,10 @@ def test_undo_association_1_x(event_manager, element_factory, undo_manager):
 
 
 def test_undo_association_1_n(event_manager, element_factory, undo_manager):
-    class A(Element):
+    class A(Base):
         pass
 
-    class B(Element):
+    class B(Base):
         pass
 
     A.one = association("one", B, upper=1, opposite="two")
@@ -219,10 +238,10 @@ def test_undo_association_1_n(event_manager, element_factory, undo_manager):
 def test_undo_association_undo_in_same_order(
     event_manager, element_factory, undo_manager
 ):
-    class A(Element):
+    class A(Base):
         pass
 
-    class B(Element):
+    class B(Base):
         pass
 
     A.one = association("one", B, upper=1, opposite="two")
@@ -247,7 +266,7 @@ def test_undo_association_undo_in_same_order(
 
 def test_element_factory_undo(element_factory, undo_manager):
     undo_manager.begin_transaction()
-    p = element_factory.create(Element)
+    p = element_factory.create(Base)
 
     assert undo_manager._current_transaction
     assert undo_manager._current_transaction._actions
@@ -271,7 +290,7 @@ def test_element_factory_undo(element_factory, undo_manager):
 
 def test_element_factory_rollback(element_factory, undo_manager):
     undo_manager.begin_transaction()
-    element_factory.create(Element)
+    element_factory.create(Base)
 
     assert undo_manager._current_transaction
     assert undo_manager._current_transaction._actions
@@ -283,12 +302,12 @@ def test_element_factory_rollback(element_factory, undo_manager):
 
 
 def test_uml_associations(event_manager, element_factory, undo_manager):
-    class A(Element):
+    class A(Base):
         is_unlinked = False
 
         def unlink(self):
             self.is_unlinked = True
-            Element.unlink(self)
+            Base.unlink(self)
 
     A.a1 = association("a1", A, upper=1)
     A.a2 = association("a2", A, upper=1)
@@ -327,7 +346,7 @@ def test_uml_associations(event_manager, element_factory, undo_manager):
 def test_set_association_outside_transaction(
     undo_manager, element_factory, event_manager
 ):
-    class A(Element):
+    class A(Base):
         pass
 
     A.a = association("a", A, upper=1, opposite="b")
@@ -347,7 +366,7 @@ def test_set_association_outside_transaction(
 def test_set_multi_association_outside_transaction(
     undo_manager, element_factory, event_manager
 ):
-    class A(Element):
+    class A(Base):
         pass
 
     A.a = association("a", A, upper=1, opposite="b")
@@ -367,7 +386,7 @@ def test_set_multi_association_outside_transaction(
 def test_update_association_outside_transaction(
     undo_manager, element_factory, event_manager
 ):
-    class A(Element):
+    class A(Base):
         pass
 
     A.a = association("a", A, upper=1, opposite="b")
@@ -389,7 +408,7 @@ def test_update_association_outside_transaction(
 def test_set_derived_union_outside_transaction(
     undo_manager, element_factory, event_manager
 ):
-    class A(Element):
+    class A(Base):
         pass
 
     A.a = association("a", A, upper=1, opposite="b")
@@ -414,7 +433,7 @@ def test_set_derived_union_outside_transaction(
 
 
 def test_rollback_transaction(undo_manager, element_factory, event_manager):
-    class A(Element):
+    class A(Base):
         pass
 
     with Transaction(event_manager) as tx:
@@ -427,7 +446,7 @@ def test_rollback_transaction(undo_manager, element_factory, event_manager):
 def test_redo_stack(event_manager, element_factory, undo_manager):
     undo_manager.begin_transaction()
 
-    p = element_factory.create(Element)
+    p = element_factory.create(Base)
 
     assert undo_manager._current_transaction
     assert undo_manager._current_transaction._actions
@@ -438,7 +457,7 @@ def test_redo_stack(event_manager, element_factory, undo_manager):
     assert element_factory.size() == 1, element_factory.size()
 
     with Transaction(event_manager):
-        element_factory.create(Element)
+        element_factory.create(Base)
 
     assert undo_manager.can_undo()
     assert not undo_manager.can_redo()

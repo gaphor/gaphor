@@ -27,17 +27,18 @@ import contextlib
 import logging
 import sys
 import textwrap
+from collections.abc import Iterable
 from pathlib import Path
-from typing import Iterable
 
 from gaphor import UML
 from gaphor.codegen.override import Overrides
-from gaphor.core.modeling import Element, ElementFactory
+from gaphor.core.modeling import Base, ElementFactory
 from gaphor.core.modeling.modelinglanguage import (
     CoreModelingLanguage,
     MockModelingLanguage,
     ModelingLanguage,
 )
+from gaphor.diagram.general.modelinglanguage import GeneralModelingLanguage
 from gaphor.entrypoint import initialize
 from gaphor.storage import storage
 from gaphor.SysML.modelinglanguage import SysMLModelingLanguage
@@ -87,7 +88,12 @@ def main(
     )
     modeling_language = MockModelingLanguage(
         *(
-            [CoreModelingLanguage(), UMLModelingLanguage(), SysMLModelingLanguage()]
+            [
+                CoreModelingLanguage(),
+                GeneralModelingLanguage(),
+                UMLModelingLanguage(),
+                SysMLModelingLanguage(),
+            ]
             + extra_langs
         )
     )
@@ -103,9 +109,11 @@ def main(
     )
     overrides = Overrides(overridesfile) if overridesfile else None
 
-    with open(outfile, "w", encoding="utf-8") if outfile else contextlib.nullcontext(
-        sys.stdout
-    ) as out:  # type: ignore[attr-defined]
+    with (
+        open(outfile, "w", encoding="utf-8")
+        if outfile
+        else contextlib.nullcontext(sys.stdout) as out
+    ):
         for line in coder(model, super_models, overrides):
             print(line, file=out)
 
@@ -154,12 +162,17 @@ def coder(
             yield overrides.get_override(c.name)
             continue
 
-        element_type, cls = in_super_model(c.name, super_models)
-        if element_type and cls:
-            line = f"from {element_type.__module__} import {element_type.__name__}"
-            yield line
-            already_imported.add(line)
-            continue
+        if not any(bases(c)):
+            element_type, cls = in_super_model(c.name, super_models)
+            if element_type and cls:
+                # always alias imported name
+                line = f"from {element_type.__module__} import {element_type.__name__}"
+                if len([t for t in classes if t.name == c.name]) > 1:
+                    line += f" as _{c.name}"
+                    c.name = f"_{c.name}"
+                yield line
+                already_imported.add(line)
+                continue
 
         yield class_declaration(c)
         if properties := list(variables(c, overrides)):
@@ -215,9 +228,9 @@ def variables(class_: UML.Class, overrides: Overrides | None = None):
                 comment = "  # type: ignore[assignment]" if is_reassignment(a) else ""
                 yield f"{a.name}: relation_{mult}[{a.type.name}]{comment}"
             else:
-                assert isinstance(a.owner, UML.NamedElement)
+                assert isinstance(a.owner, Base)
                 raise ValueError(
-                    f"{a.name}: {a.type} can not be written; owner={a.owner.name}"
+                    f"{a.name}: {a.type} can not be written; owner={a.owner.name}"  # type: ignore[attr-defined]
                 )
 
     if class_.ownedOperation:
@@ -278,8 +291,9 @@ def subsets(
             full_name = f"{c.name}.{a.name}"
             for value in slot.value.split(","):
                 element_type, d = attribute(c, value.strip(), super_models)
-                if d and d.isDerived:
+                if d:  # and d.isDerived:
                     if element_type:
+                        # TODO: Use aliasses
                         yield f"from {element_type.__module__} import {d.owner.name}"  # type: ignore[attr-defined]
                     yield f"{d.owner.name}.{d.name}.add({full_name})  # type: ignore[attr-defined]"  # type: ignore[attr-defined]
                 elif not d:
@@ -305,7 +319,12 @@ def default_value(a):
         if a.typeValue == "int":
             defaultValue = a.defaultValue.title()
         elif a.typeValue == "str":
-            defaultValue = f'"{a.defaultValue}"'
+            if (a.defaultValue[0] == a.defaultValue[-1]) and (
+                a.defaultValue[0] in ['"', "'"]
+            ):
+                defaultValue = a.defaultValue
+            else:
+                defaultValue = f'"{a.defaultValue}"'
         else:
             raise ValueError(
                 f"Unknown default value type: {a.owner.name}.{a.name}: {a.typeValue} = {a.defaultValue}"
@@ -404,6 +423,9 @@ def is_in_toplevel_package(c: UML.Class, package_name: str) -> bool:
 
 
 def redefines(a: UML.Property) -> str | None:
+    # TODO: look up element name and add underscore if needed.
+    # maybe resolve redefines before we start writing?
+    # Redefine is the only one where
     return next(
         (
             slot.value
@@ -416,7 +438,7 @@ def redefines(a: UML.Property) -> str | None:
 
 def attribute(
     c: UML.Class, name: str, super_models: list[tuple[ModelingLanguage, ElementFactory]]
-) -> tuple[type[Element] | None, UML.Property | None]:
+) -> tuple[type[Base] | None, UML.Property | None]:
     a: UML.Property | None
     for a in c.ownedAttribute:
         if a.name == name:
@@ -437,7 +459,7 @@ def attribute(
 
 def in_super_model(
     name: str, super_models: list[tuple[ModelingLanguage, ElementFactory]]
-) -> tuple[type[Element], UML.Class] | tuple[None, None]:
+) -> tuple[type[Base], UML.Class] | tuple[None, None]:
     for modeling_language, factory in super_models:
         cls: UML.Class
         for cls in factory.select(  # type: ignore[assignment]

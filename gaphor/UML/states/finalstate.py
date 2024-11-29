@@ -21,7 +21,7 @@ class FinalStateItem(ElementPresentation, Named):
         )
 
         self.watch("subject[NamedElement].name", self.change_name)
-        self.watch("subject.appliedStereotype.classifier.name")
+        self.watch("subject[Element].appliedStereotype.classifier.name")
 
 
 def draw_final_state(box, context, bounding_box):

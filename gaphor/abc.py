@@ -1,10 +1,11 @@
 from __future__ import annotations
 
 import abc
-from typing import TYPE_CHECKING, Iterable
+from collections.abc import Iterable
+from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from gaphor.core.modeling import Element
+    from gaphor.core.modeling import Base
     from gaphor.diagram.diagramtoolbox import (
         DiagramType,
         ElementCreateInfo,
@@ -20,13 +21,9 @@ class Service(abc.ABC):
         """Shutdown the services, free resources."""
 
 
-class ActionProvider(abc.ABC):
+class ActionProvider:
     """An action provider is a special service that provides actions via
     ``@action`` decorators on its methods (see gaphor/action.py)."""
-
-    @abc.abstractmethod
-    def __init__(self):
-        pass
 
 
 class ModelingLanguage(abc.ABC):
@@ -54,5 +51,9 @@ class ModelingLanguage(abc.ABC):
         """Iterate element types."""
 
     @abc.abstractmethod
-    def lookup_element(self, name: str) -> type[Element] | None:
-        """Look up a model element type by (class) name."""
+    def lookup_element(self, name: str, ns: str | None = None) -> type[Base] | None:
+        """Look up a model element type by (class) name.
+
+        A namespace may be provided. This will allow the model to be loaded from
+        that specific modeling language only.
+        """

@@ -1,4 +1,4 @@
-from gaphor.core.modeling.element import generate_id
+from gaphor.core.modeling.base import generate_id
 
 
 def upgrade_canvasitem(item, gaphor_version):

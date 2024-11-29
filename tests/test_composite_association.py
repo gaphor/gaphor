@@ -7,20 +7,19 @@ from gaphor.conftest import (
     event_manager,
     modeling_language,
 )
-from gaphor.core.modeling import Diagram
 from gaphor.diagram.tests.fixtures import connect
 from gaphor.UML.classes import AssociationItem, ClassItem
 from gaphor.UML.classes.associationpropertypages import AssociationPropertyPage
 from gaphor.UML.classes.classestoolbox import composite_association_config
 
 
-def test_connect_composite_association(create, diagram):
+def test_connect_composite_association(create, event_manager):
     c1 = create(ClassItem, UML.Class)
     c2 = create(ClassItem, UML.Class)
     a = create(AssociationItem)
     composite_association_config(a)
 
-    property_page = AssociationPropertyPage(a.subject)
+    property_page = AssociationPropertyPage(a.subject, event_manager)
     _widget = property_page.construct()
 
     connect(a, a.head, c1)

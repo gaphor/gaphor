@@ -4,11 +4,11 @@ import logging
 
 from gi.repository import Adw, Gdk, Gtk
 
+from gaphor import settings
 from gaphor.abc import ActionProvider
 from gaphor.action import action
 from gaphor.i18n import gettext
 from gaphor.plugins.console.console import GTKInterpreterConsole
-from gaphor.services.properties import get_config_dir
 from gaphor.ui.abc import UIComponent
 
 log = logging.getLogger(__name__)
@@ -27,7 +27,7 @@ class ConsoleWindow(UIComponent, ActionProvider):
         Saves some repetitive typing.
         """
 
-        console_py = get_config_dir() / "console.py"
+        console_py = settings.get_config_dir() / "console.py"
         try:
             with console_py.open(encoding="utf-8") as f:
                 for line in f:

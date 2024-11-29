@@ -2,7 +2,8 @@
 
 from __future__ import annotations
 
-from typing import Any, Callable, Iterator, get_type_hints
+from collections.abc import Callable, Iterator
+from typing import Any, get_type_hints
 
 
 class action:
@@ -37,6 +38,8 @@ class action:
         shortcut: str | tuple[str, ...] | None = None,
         state: bool | Callable[[Any], bool | str] | None = None,
     ):
+        self.scope: str
+        self.name: str
         self.scope, self.name = name.split(".", 2) if "." in name else ("win", name)
         self.label = label
         self.tooltip = tooltip

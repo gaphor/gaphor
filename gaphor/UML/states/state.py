@@ -5,7 +5,6 @@ from __future__ import annotations
 from gaphas.types import Pos
 
 from gaphor import UML
-from gaphor.core.modeling.element import Element
 from gaphor.core.modeling.properties import attribute
 from gaphor.diagram.presentation import ElementPresentation, Named, text_name
 from gaphor.diagram.shapes import Box, CssNode, Text, draw_top_separator, stroke
@@ -20,7 +19,7 @@ class StateItem(ElementPresentation[UML.State], Named):
         super().__init__(diagram, id, width=50, height=30)
         self._region_heights = []
         self.watch("subject[NamedElement].name", self.change_name)
-        self.watch("subject.appliedStereotype.classifier.name")
+        self.watch("subject[Element].appliedStereotype.classifier.name")
         self.watch("subject[State].entry.name", self.update_shapes)
         self.watch("subject[State].exit.name", self.update_shapes)
         self.watch("subject[State].doActivity.name", self.update_shapes)
@@ -85,10 +84,10 @@ class StateItem(ElementPresentation[UML.State], Named):
         super().update(context)
         self._region_heights = [h for _w, h in self._shape.children[-1].child.sizes]  # type: ignore[union-attr]
 
-    def region_at_point(self, pos: Pos) -> Element | None:
+    def region_at_point(self, pos: Pos) -> UML.Region | UML.State | None:
         region_offset = self.height - sum(self._region_heights)
         _x, y = pos
-        for region, h in zip(self.subject.region, self._region_heights):
+        for region, h in zip(self.subject.region, self._region_heights, strict=False):
             region_offset += h
             if y < region_offset:
                 return region

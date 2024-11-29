@@ -1,7 +1,7 @@
 """The UML Modeling Language module is the entrypoint for UML related
 assets."""
 
-from typing import Iterable
+from collections.abc import Iterable
 
 from gaphor.abc import ModelingLanguage
 from gaphor.core import gettext
@@ -32,5 +32,6 @@ class UMLModelingLanguage(ModelingLanguage):
     def element_types(self) -> Iterable[ElementCreateInfo]:
         yield from uml_element_types
 
-    def lookup_element(self, name):
+    def lookup_element(self, name, ns=None):
+        assert ns in ("UML", None)
         return getattr(uml, name, None) or getattr(diagramitems, name, None)

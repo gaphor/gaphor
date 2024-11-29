@@ -1,9 +1,9 @@
 from gaphor import UML
 from gaphor.core.modeling import Diagram, ElementFactory
 from gaphor.diagram.copypaste import copy_full, paste_full
-from gaphor.diagram.general import DiagramItem
 from gaphor.diagram.tests.test_copypaste_link import two_classes_and_a_generalization
 from gaphor.UML.classes import ClassItem, GeneralizationItem, PackageItem
+from gaphor.UML.general import DiagramItem
 
 
 def test_copied_item_references_new_model_element(diagram, element_factory):
@@ -64,7 +64,7 @@ def test_copy_element_factory(diagram, element_factory):
     buffer = copy_full(element_factory)
 
     new_element_factory = ElementFactory()
-    new_diagram = new_element_factory.create(Diagram)
+    new_diagram = new_element_factory.create(UML.Diagram)
     paste_full(buffer, new_diagram)
 
     assert len(new_element_factory.lselect(Diagram)) == 1
@@ -72,7 +72,7 @@ def test_copy_element_factory(diagram, element_factory):
 
 
 def test_copy_package_with_diagram(element_factory):
-    diagram: Diagram = element_factory.create(Diagram)
+    diagram: UML.Diagram = element_factory.create(UML.Diagram)
     package = element_factory.create(UML.Package)
     package.ownedDiagram = diagram
     package_item = diagram.create(PackageItem, subject=package)
@@ -87,7 +87,7 @@ def test_copy_package_with_diagram(element_factory):
 
 
 def test_shallow_copy_package_with_owned_package(element_factory):
-    diagram: Diagram = element_factory.create(Diagram)
+    diagram: UML.Diagram = element_factory.create(UML.Diagram)
     package = element_factory.create(UML.Package)
     subpackage = element_factory.create(UML.Package)
     subpackage.package = package
@@ -103,7 +103,7 @@ def test_shallow_copy_package_with_owned_package(element_factory):
 
 
 def test_full_copy_package_with_owned_package(element_factory):
-    diagram: Diagram = element_factory.create(Diagram)
+    diagram: UML.Diagram = element_factory.create(UML.Diagram)
     package = element_factory.create(UML.Package)
     subpackage = element_factory.create(UML.Package)
     subpackage.package = package
@@ -122,15 +122,15 @@ def test_full_copy_package_with_owned_package(element_factory):
 
 
 def test_copy_diagram_with_elements(diagram, element_factory):
-    other_diagram: Diagram = element_factory.create(Diagram)
+    other_diagram: UML.Diagram = element_factory.create(UML.Diagram)
     two_classes_and_a_generalization(other_diagram, element_factory)
 
     diagram_item = diagram.create(DiagramItem, subject=other_diagram)
 
     copy_buffer = copy_full([diagram_item], element_factory.lookup)
 
-    target_diagram: Diagram = element_factory.create(Diagram)
-    (new_diagram_item, *other) = paste_full(copy_buffer, target_diagram)
+    target_diagram: UML.Diagram = element_factory.create(UML.Diagram)
+    (new_diagram_item, *_other) = paste_full(copy_buffer, target_diagram)
 
     new_diagram = new_diagram_item.subject
 

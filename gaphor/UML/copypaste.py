@@ -1,21 +1,24 @@
 from __future__ import annotations
 
-from typing import Iterator, NamedTuple
+from collections.abc import Iterator
+from typing import NamedTuple
 
-from gaphor.core.modeling.element import Id
+from gaphor.core.modeling import Id
 from gaphor.diagram.copypaste import (
-    ElementCopy,
+    BaseCopy,
+    Opaque,
     copy,
+    copy_diagram,
     copy_element,
     paste,
     paste_element,
 )
 from gaphor.UML.recipes import owner_package
-from gaphor.UML.uml import NamedElement, Package, Relationship, Type
+from gaphor.UML.uml import Diagram, NamedElement, Package, Relationship, Type
 
 
 class NamedElementCopy(NamedTuple):
-    element_copy: ElementCopy
+    element_copy: BaseCopy
 
 
 def copy_named_element(
@@ -31,6 +34,11 @@ def _copy_named_element(element: NamedElement) -> Iterator[tuple[Id, NamedElemen
     yield element.id, copy_named_element(element)
 
 
+@copy.register
+def _copy_diagram(element: Diagram) -> Iterator[tuple[Id, Opaque]]:
+    yield from copy_diagram(element)
+
+
 def paste_named_element(copy_data: NamedElementCopy, diagram, lookup):
     paster = paste_element(
         copy_data.element_copy,
@@ -42,8 +50,8 @@ def paste_named_element(copy_data: NamedElementCopy, diagram, lookup):
     yield element
     next(paster, None)
     if (
-        not element.namespace
-        and isinstance(element, (Type, Package))
+        isinstance(element, Type | Package)
+        and (not element.namespace)
         and (package := owner_package(diagram.owner)) is not element
     ):
         element.package = package

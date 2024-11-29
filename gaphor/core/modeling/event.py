@@ -1,5 +1,6 @@
 """The core modeling events."""
-from gaphor.event import ServiceEvent
+
+from pathlib import Path
 
 
 class RevertibleEvent:
@@ -197,7 +198,21 @@ class RedefinedDeleted(AssociationDeleted):
         super().__init__(element, association, old_value, index)
 
 
-class ElementCreated(ServiceEvent):
+class ElementTypeUpdated(ElementUpdated):
+    def __init__(self, element, old_class):
+        super().__init__(element, None)
+        self.old_class = old_class
+        self.new_class = element.__class__
+
+
+class ModelChanged:
+    """Emitted when the model changes."""
+
+    def __init__(self, service):
+        self.service = service
+
+
+class ElementCreated(ModelChanged):
     """An element has been created."""
 
     def __init__(self, service, element, diagram=None):
@@ -212,7 +227,7 @@ class ElementCreated(ServiceEvent):
         self.diagram = diagram
 
 
-class ElementDeleted(ServiceEvent):
+class ElementDeleted(ModelChanged):
     """An element has been deleted."""
 
     def __init__(self, service, element, diagram=None):
@@ -227,19 +242,20 @@ class ElementDeleted(ServiceEvent):
         self.diagram = diagram
 
 
-class ModelReady(ServiceEvent):
+class ModelReady(ModelChanged):
     """A generic element factory event."""
 
-    def __init__(self, service, modified=False):
+    def __init__(self, service, filename: Path | None = None, modified=False):
         """Constructor.
 
         The service parameter is the service the emitted the event.
         """
         super().__init__(service)
+        self.filename = filename
         self.modified = modified
 
 
-class ModelFlushed(ServiceEvent):
+class ModelFlushed(ModelChanged):
     """The element factory has been flushed."""
 
     def __init__(self, service):

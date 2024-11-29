@@ -37,7 +37,7 @@ class PseudostateItem(ElementPresentation, Named):
             h.movable = False
 
         self.watch("subject[NamedElement].name", self.change_name)
-        self.watch("subject.appliedStereotype.classifier.name")
+        self.watch("subject[Element].appliedStereotype.classifier.name")
         self.watch("subject[Pseudostate].kind", self.update_shapes)
 
     def update_shapes(self, event=None):

@@ -43,12 +43,12 @@ pip install --target $HOME/.local/gaphor/plugins-2 git+https://github.com/gaphor
 ```
 
 Then start Gaphor as you normally would.
-A new Hello World entry has been added to the tools menu (![open menu](images/open-menu-symbolic.svg) → Tools → Hello World).
+A new Hello World entry has been added to the tools menu (![Menu icon](images/open-menu-symbolic.svg) → Tools → Hello World).
 
 ## Create your own plugin
 
 If you want to write a plugin yourself, you can familiarize yourself with Gaphor's
-[design principles](design_principles), [service oriented architecture](service_oriented) (includes a plugin example),
+[design principles](design_principles), [service oriented architecture](service_oriented),
 and [event driven framework](framework).
 
 ## Example plugin
@@ -104,3 +104,13 @@ class HelloWorldPlugin(Service, ActionProvider):     # 1.
     perform some cleanup when it's shut down.
 5.  The action that can be invoked. The action is defined and will be
     picked up by `add_actions()` method (see 3.)
+
+## Plugin Development FAQ
+
+### How do I acceess gaphor services in my plugin?
+
+Gaphor's services can be made accessible by listing the service names in the init function of your plugin class. This
+also requires including Service as a base class. In the HelloWorldPlugin example, the tools_menu service is included.
+
+A more complete description of this approach can be found in the [Service Oriented Architecture documentation
+page](service_oriented.md).

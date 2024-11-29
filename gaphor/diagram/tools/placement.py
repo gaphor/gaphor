@@ -1,7 +1,5 @@
 import logging
-from typing import Optional
 
-from gaphas.decorators import g_async
 from gaphas.handlemove import HandleMove
 from gaphas.move import MoveType
 from gi.repository import GLib, Gtk
@@ -23,7 +21,7 @@ class PlacementState:
         self.factory = factory
         self.event_manager = event_manager
         self.handle_index = handle_index
-        self.moving: Optional[MoveType] = None
+        self.moving: MoveType | None = None
 
 
 def placement_tool(factory: ItemFactory, event_manager, handle_index: int):
@@ -100,13 +98,20 @@ def on_drag_end(gesture, offset_x, offset_y, placement_state: PlacementState):
         item = placement_state.moving.item
         placement_state.moving.stop_move((x + offset_x, y + offset_y))
         connect_opposite_handle(view, item, x, y, placement_state.handle_index)
-        placement_state.event_manager.handle(DiagramItemPlaced(item))
         view.selection.dropzone_item = None
         view.model.update({item})
-        open_editor(item, view, placement_state.event_manager)
+        placement_state.event_manager.handle(DiagramItemPlaced(item))
+
+        if isinstance(item, ElementPresentation):
+            GLib.idle_add(
+                open_editor,
+                item,
+                view,
+                placement_state.event_manager,
+                priority=GLib.PRIORITY_LOW,
+            )
 
 
-@g_async(priority=GLib.PRIORITY_LOW)
 def open_editor(item, view, event_manager):
-    if isinstance(item, ElementPresentation):
-        instant_editor(item, view, event_manager)
+    instant_editor(item, view, event_manager)
+    return GLib.SOURCE_REMOVE

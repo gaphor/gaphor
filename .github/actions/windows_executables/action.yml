@@ -64,12 +64,12 @@ runs:
         }
       shell: PowerShell
     - name: Upload gaphor-${{ inputs.version }}-installer.exe
-      uses: actions/upload-artifact@c7d193f32edcb7bfad88892161225aeda64e9392 # v4.0.0
+      uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4.3.3
       with:
         name: gaphor-${{ inputs.version }}-installer.exe
         path: _packaging/dist/gaphor-${{ inputs.version }}-installer.exe
     - name: Upload gaphor-${{ inputs.version }}-portable.exe
-      uses: actions/upload-artifact@c7d193f32edcb7bfad88892161225aeda64e9392 # v4.0.0
+      uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4.3.3
       with:
         name: gaphor-${{ inputs.version }}-portable.exe
         path: _packaging/dist/gaphor-${{ inputs.version }}-portable.exe

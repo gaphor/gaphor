@@ -1,4 +1,5 @@
 """Test messages."""
+
 import pytest
 from gaphas.item import SE
 

@@ -16,23 +16,23 @@ def class_(element_factory):
     del class_
 
 
-def test_name_input_field_for_normal_class(class_):
+def test_name_input_field_for_normal_class(class_, event_manager):
     """Test Metaclass Property Page not create for normal Class."""
 
-    editor = MetaclassPropertyPage(class_)
+    editor = MetaclassPropertyPage(class_, event_manager)
     page = editor.construct()
 
     assert not page
 
 
-def test_name_selection_for_metaclass(element_factory, class_):
+def test_name_selection_for_metaclass(element_factory, class_, event_manager):
     """Test the creation of Metaclass Property Page."""
 
     stereotype = element_factory.create(UML.Stereotype)
     stereotype.name = "NewStereotype"
     UML.recipes.create_extension(class_, stereotype)
 
-    editor = MetaclassPropertyPage(class_)
+    editor = MetaclassPropertyPage(class_, event_manager)
     page = editor.construct()
 
     assert page

@@ -10,9 +10,9 @@ from gaphor.ui.diagrampage import DiagramPage
 from gaphor.UML.classes import ClassItem
 
 
-def test_style_editor_page(diagram):
+def test_style_editor_page(diagram, event_manager):
     item = diagram.create(Line)
-    property_page = StylePropertyPage(item)
+    property_page = StylePropertyPage(item, event_manager)
     widget = property_page.construct()
     assert widget
     style_editor = find(widget, "style-editor")
@@ -128,7 +128,7 @@ def test_export(create, diagram, element_factory, event_manager):
 def test_remove_item(
     create, diagram, element_factory, event_manager, modeling_language
 ):
-    page = DiagramPage(diagram, event_manager, modeling_language)
+    page = DiagramPage(diagram, event_manager, element_factory, modeling_language)
     page.construct()
     with Transaction(event_manager):
         stylesheet = element_factory.create(StyleSheet)

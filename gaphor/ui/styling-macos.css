@@ -1,0 +1,19 @@
+/*
+ * Styling workarounds for macOS.
+ *
+ * The issue: Libadwaita defines shadows, but on macOS we use the system
+ * shadow for toplevel windows.
+ *
+ * Remove shadow and border raduis, since those are imposed by macOS.
+ *
+ * See: https://gitlab.gnome.org/GNOME/gtk/-/issues/6255
+ */
+
+.csd {
+    box-shadow: none;
+    border-radius: 0;
+}
+
+.csd:backdrop {
+    box-shadow: none;
+}

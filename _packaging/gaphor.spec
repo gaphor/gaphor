@@ -137,7 +137,7 @@ app = BUNDLE(  # type: ignore
     info_plist={
         "CFBundleVersion": str(get_version()),
         "NSHumanReadableCopyright": COPYRIGHT,
-        "LSMinimumSystemVersion": "10.13",
+        "LSMinimumSystemVersion": "10.15",
         "NSHighResolutionCapable": True,
         "LSApplicationCategoryType": "public.app-category.developer-tools",
         "NSPrincipalClass": "NSApplication",
@@ -156,7 +156,7 @@ app = BUNDLE(  # type: ignore
         "UTExportedTypeDeclarations": [
             {
                 "UTTypeIdentifier": "org.gaphor.model",
-                "UTTypeConformsTo": ["gaphor.model"],
+                "UTTypeConformsTo": ["public.xml"],
                 "UTTypeDescription": "Gaphor Model",
                 "UTTypeIconFile": "gaphor.icns",
                 "UTTypeReferenceURL": "https://gaphor.org",

@@ -1,23 +1,26 @@
 """Stereotype property page."""
+
 from unicodedata import normalize
 
 from gi.repository import Gdk, Gio, GLib, GObject, Gtk
 
 from gaphor import UML
-from gaphor.core import transactional
-from gaphor.core.modeling import Element, Presentation
+from gaphor.core.eventmanager import EventManager
+from gaphor.core.modeling import Presentation
 from gaphor.diagram.propertypages import PropertyPageBase, PropertyPages
 from gaphor.i18n import gettext, translated_ui_string
+from gaphor.transaction import Transaction
 from gaphor.UML.profiles.metaclasspropertypage import new_builder
 from gaphor.UML.propertypages import text_field_handlers
 
 
-@PropertyPages.register(Element)
+@PropertyPages.register(UML.Element)
 class StereotypePage(PropertyPageBase):
     order = 40
 
-    def __init__(self, subject):
+    def __init__(self, subject, event_manager):
         self.subject = subject
+        self.event_manager = event_manager
 
     def construct(self):
         subject = self.subject
@@ -34,13 +37,12 @@ class StereotypePage(PropertyPageBase):
         builder = new_builder(
             "stereotypes-editor",
             signals={
-                "stereotype-activated": (stereotype_activated,),
                 "stereotype-key-pressed": (stereotype_key_handler,),
             },
         )
 
         stereotype_list = builder.get_object("stereotype-list")
-        model = stereotype_model(subject)
+        model = stereotype_model(subject, self.event_manager)
 
         stereotype_set_model_with_interaction(stereotype_list, model)
 
@@ -51,8 +53,9 @@ class StereotypePage(PropertyPageBase):
 class ShowStereotypePage(PropertyPageBase):
     order = 41
 
-    def __init__(self, item):
+    def __init__(self, item, event_manager):
         self.item = item
+        self.event_manager = event_manager
 
     def construct(self):
         subject = self.item.subject
@@ -75,9 +78,9 @@ class ShowStereotypePage(PropertyPageBase):
 
         return builder.get_object("show-stereotypes-editor")
 
-    @transactional
     def _on_show_stereotypes_change(self, button, gparam):
-        self.item.show_stereotypes = button.get_active()
+        with Transaction(self.event_manager):
+            self.item.show_stereotypes = button.get_active()
 
 
 def stereotype_set_model_with_interaction(stereotype_list, model):
@@ -96,9 +99,13 @@ def stereotype_set_model_with_interaction(stereotype_list, model):
                 },
             ),
             value_list_item_factory(
-                signal_handlers=text_field_handlers("slot_value"),
+                signal_handlers={
+                    "stereotype-click-pressed": stereotype_click_handler,
+                    **text_field_handlers("slot_value"),
+                },
             ),
         ],
+        strict=False,
     ):
         column.set_factory(factory)
 
@@ -109,14 +116,16 @@ def stereotype_set_model_with_interaction(stereotype_list, model):
 class StereotypeView(GObject.Object):
     def __init__(
         self,
-        target: Element,
+        target: UML.Element,
         stereotype: UML.Stereotype,
         attr: UML.Property | None,
+        event_manager: EventManager,
     ):
         super().__init__()
         self.stereotype = stereotype
         self.target = target
         self.attr = attr
+        self.event_manager = event_manager
 
     @property
     def instance(self):
@@ -146,13 +155,13 @@ class StereotypeView(GObject.Object):
         return bool(self.instance)
 
     @applied.setter  # type: ignore[no-redef]
-    @transactional
     def applied(self, value):
         instance = self.instance
-        if value and not instance:
-            UML.recipes.apply_stereotype(self.target, self.stereotype)
-        elif not value and instance:
-            UML.recipes.remove_stereotype(self.target, self.stereotype)
+        with Transaction(self.event_manager):
+            if value and not instance:
+                UML.recipes.apply_stereotype(self.target, self.stereotype)
+            elif not value and instance:
+                UML.recipes.remove_stereotype(self.target, self.stereotype)
 
     @GObject.Property(type=bool, default=False)
     def checkbox_visible(self):
@@ -180,31 +189,28 @@ class StereotypeView(GObject.Object):
         return slot.value if slot else ""
 
     @slot_value.setter  # type: ignore[no-redef]
-    @transactional
     def slot_value(self, value):
         slot = self.slot
-        if value:
-            if slot is None:
-                slot = UML.recipes.add_slot(self.instance, self.attr)
-            slot.value = value
-        elif slot:
-            del self.instance.slot[slot]
-
-    def start_editing(self):
-        self.editing = True
+        with Transaction(self.event_manager):
+            if value:
+                if slot is None:
+                    slot = UML.recipes.add_slot(self.instance, self.attr)
+                slot.value = value
+            elif slot:
+                del self.instance.slot[slot]
 
 
-def stereotype_model(subject: Element):
+def stereotype_model(subject: UML.Element, event_manager: EventManager):
     model = Gio.ListStore.new(StereotypeView.__gtype__)
     stereotypes = UML.recipes.get_stereotypes(subject)
 
     for st in sorted(
         stereotypes, key=lambda s: normalize("NFC", s.name or "").casefold()
     ):
-        model.append(StereotypeView(subject, st, None))
+        model.append(StereotypeView(subject, st, None, event_manager))
 
         for attr in all_attributes(st):
-            model.append(StereotypeView(subject, st, attr))
+            model.append(StereotypeView(subject, st, attr, event_manager))
 
     return model
 
@@ -253,25 +259,19 @@ def value_list_item_factory(signal_handlers=None):
     )
 
 
-@transactional
-def stereotype_activated(list_view, _row):
-    selection = list_view.get_model()
-    item = selection.get_selected_item()
-
-    if item.attr:
-        item.start_editing()
-    else:
-        item.applied = not item.applied
+def stereotype_click_handler(ctrl, n_press, x, y):
+    if n_press == 2:
+        cell = ctrl.get_widget()
+        cell.editing = True
 
 
-@transactional
 def stereotype_key_handler(ctrl, keyval, _keycode, state):
     list_view = ctrl.get_widget()
     selection = list_view.get_model()
     item = selection.get_selected_item()
 
     if keyval in (Gdk.KEY_F2,):
-        item.start_editing()
+        item.editing = True
         return True
 
     if keyval in (Gdk.KEY_Delete, Gdk.KEY_BackSpace) and not state & (

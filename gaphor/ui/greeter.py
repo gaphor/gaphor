@@ -7,7 +7,6 @@ from gi.repository import Adw, GLib, Gtk
 from gaphor.abc import ActionProvider, Service
 from gaphor.action import action
 from gaphor.application import distribution
-from gaphor.babel import translate_model
 from gaphor.core import event_handler
 from gaphor.event import SessionCreated
 from gaphor.i18n import gettext, translated_ui_string
@@ -83,6 +82,13 @@ EXAMPLES = [
         "RAAML",
         "raaml-example.gaphor",
     ),
+    ModelTemplate(
+        gettext("C4 Model Example"),
+        gettext("C4 Model example of a banking system"),
+        "C4Model",
+        "C4Model",
+        "c4model-example.gaphor",
+    ),
 ]
 
 
@@ -121,7 +127,7 @@ class Greeter(Service, ActionProvider):
         self.greeter = builder.get_object("greeter")
         self.greeter.set_application(self.gtk_app)
         if ".dev" in distribution().version:
-            self.greeter.get_style_context().add_class("devel")
+            self.greeter.add_css_class("devel")
 
         listbox = builder.get_object("recent-files")
         templates = builder.get_object("templates")
@@ -190,26 +196,17 @@ class Greeter(Service, ActionProvider):
         self.close()
 
     def _on_recent_file_activated(self, row):
-        def load():
-            self.application.new_session(filename=filename)
-            self.close()
-
         filename = row.filename
         self.greeter.set_sensitive(False)
-        GLib.idle_add(load, priority=GLib.PRIORITY_LOW)
+        self.application.new_session(filename=filename)
+        self.close()
 
     def _on_template_activated(self, child):
-        def load():
-            filename = (
-                importlib.resources.files("gaphor") / "templates" / child.filename
-            )
-            translated_model = translate_model(filename)
-            session = self.application.new_session(template=translated_model)
-            session.get_service("properties").set("modeling-language", child.lang)
-            self.close()
-
         self.greeter.set_sensitive(False)
-        GLib.idle_add(load, priority=GLib.PRIORITY_LOW)
+        filename = importlib.resources.files("gaphor") / "templates" / child.filename
+        session = self.application.new_session(template=filename)
+        session.get_service("properties").set("modeling-language", child.lang)
+        self.close()
 
     def _on_window_close_request(self, window, event=None):
         self.close()

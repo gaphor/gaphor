@@ -51,7 +51,7 @@ def component_registry(dummy_action_provider):
 
 
 def test_window_action_group(component_registry):
-    action_group, shortcuts = window_action_group(component_registry)
+    action_group, _shortcuts = window_action_group(component_registry)
 
     assert action_group.lookup_action("new")
     assert not action_group.lookup_action("quit")
@@ -76,7 +76,7 @@ def test_activate_application_action(component_registry, dummy_action_provider):
 
 
 def test_activate_toggle_action(component_registry, dummy_action_provider):
-    action_group, shortcuts = window_action_group(component_registry)
+    action_group, _shortcuts = window_action_group(component_registry)
     action_group.lookup_action("toggle").change_state(GLib.Variant.new_boolean(True))
 
     assert dummy_action_provider.toggle_state is True
@@ -120,7 +120,7 @@ def test_invalid_gvariant_to_python():
 
 
 def test_dynamic_state(component_registry):
-    action_group, shortcuts = window_action_group(component_registry)
+    action_group, _shortcuts = window_action_group(component_registry)
 
     assert action_group.lookup_action("my-action")
     assert (

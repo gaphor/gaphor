@@ -99,7 +99,7 @@ class MessageItem(Named, LinePresentation[UML.Message]):
         self._arrow_angle = 0
 
         self.watch("subject[NamedElement].name", self.change_name)
-        self.watch("subject.appliedStereotype.classifier.name")
+        self.watch("subject[Element].appliedStereotype.classifier.name")
         self.watch("subject[Message].messageEnd", self._update_message_end)
 
     def load(self, name, value):

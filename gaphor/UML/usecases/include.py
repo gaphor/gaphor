@@ -28,7 +28,7 @@ class IncludeItem(Named, LinePresentation):
         self._handles[0].pos = (30, 20)
         self._handles[1].pos = (0, 0)
 
-        self.watch("subject.appliedStereotype.classifier.name").watch(
+        self.watch("subject[Element].appliedStereotype.classifier.name").watch(
             "subject[NamedElement].name", self.change_name
         )
         self.draw_head = draw_arrow_head

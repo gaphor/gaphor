@@ -1,0 +1,92 @@
+name: Update Gvsbuild
+on:
+  workflow_dispatch:
+  schedule:
+    # min hour dom month dow
+    - cron:  '0 5 * * 3'
+env:
+  python_version: '3.13'
+  file: '.github/workflows/full-build.yml'
+  yaml_key: '.jobs.windows.env.gvsbuild_version'
+
+jobs:
+
+  check-version:
+    runs-on: ubuntu-24.04
+    outputs:
+      current_version: ${{ steps.current-version.outputs.current_version }}
+      latest_version: ${{ steps.latest-version.outputs.latest_version }}
+    steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f # v2.10.2
+        with:
+          disable-sudo: true
+          egress-policy: block
+          allowed-endpoints: >
+            files.pythonhosted.org:443
+            pypi.org:443
+            github.com:443
+            api.github.com:443
+            *.githubusercontent.com:443
+            ghcr.io
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          ref: main
+      - name: Set up Python
+        uses: actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b # v5.3.0
+        with:
+          python-version: ${{ env.python_version }}
+      - name: Get current version
+        id: current-version
+        run: echo "current_version=$(yq ${{ env.yaml_key }} ${{ env.file }})" >> "$GITHUB_OUTPUT"
+      - name: Get latest version
+        id: latest-version
+        run: |
+          pip install --constraint=.github/constraints.txt lastversion
+          echo "latest_version=$(python -m lastversion gvsbuild)" >> "$GITHUB_OUTPUT"
+
+  update-version:
+    runs-on: ubuntu-24.04
+    needs: [ check-version ]
+    if: ${{ needs.check-version.outputs.current_version != needs.check-version.outputs.latest_version }}
+    permissions:
+      pull-requests: write
+      contents: write
+    env:
+      CURRENT: ${{ needs.check-version.outputs.current_version }}
+      LATEST: ${{ needs.check-version.outputs.latest_version }}
+    steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f # v2.10.2
+        with:
+          disable-sudo: true
+          egress-policy: block
+          allowed-endpoints: >
+            api.github.com:443
+            github.com:443
+            *.githubusercontent.com:443
+            ghcr.io
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          ref: main
+      - name: Update version
+        run: sed -i "$(yq '${{ env.yaml_key }} | line' "${{ env.file }}")s/$CURRENT/$LATEST/" "${{ env.file }}"
+      - name: Create GitHub App Token
+        uses: actions/create-github-app-token@5d869da34e18e7287c1daad50e0b8ea0f506ce69 # v1.11.0
+        id: generate-token
+        with:
+          app-id: ${{ secrets.GAPHOR_UPDATER_APP_ID }}
+          private-key: ${{ secrets.GAPHOR_UPDATER_APP_PRIVATE_KEY }}
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@5e914681df9dc83aa4e4905692ca88beb2f9e91f # v7.0.5
+        with:
+          token: ${{ steps.generate-token.outputs.token }}
+          commit-message: Bump Gvsbuild to version ${{ env.LATEST }}
+          branch: gvsbuild-update
+          delete-branch: true
+          title: 'Bump Gvsbuild from ${{ env.CURRENT }} to ${{ env.LATEST }}'
+          body: |
+            This PR was automatically created to make the following update:
+            - Update to Gvsbuild version ${{ env.LATEST }}
+          labels: |
+            skip-changelog

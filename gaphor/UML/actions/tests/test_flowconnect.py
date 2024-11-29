@@ -1,6 +1,5 @@
 """Flow item connection adapters tests."""
 
-
 import pytest as pytest
 
 from gaphor import UML

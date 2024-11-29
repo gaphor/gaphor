@@ -7,7 +7,7 @@ from __future__ import annotations
 
 import contextlib
 import itertools
-from typing import Iterable
+from collections.abc import Iterable
 
 import hypothesis
 from hypothesis import settings
@@ -24,7 +24,7 @@ from gaphor.application import Session
 from gaphor.C4Model.toolbox import c4
 from gaphor.core import Transaction
 from gaphor.core.modeling import Diagram, ElementFactory, Presentation
-from gaphor.core.modeling.element import Element, generate_id, uuid_generator
+from gaphor.core.modeling.base import generate_id, uuid_generator
 from gaphor.diagram.group import can_group, change_owner
 from gaphor.diagram.presentation import LinePresentation
 from gaphor.diagram.tests.fixtures import allow, connect
@@ -32,7 +32,7 @@ from gaphor.plugins.autolayout import AutoLayout
 from gaphor.RAAML.toolbox import fta, stpa
 from gaphor.SysML.toolbox import blocks, internal_blocks, requirements
 from gaphor.ui.filemanager import load_default_model
-from gaphor.UML import diagramitems
+from gaphor.UML import Element, diagramitems
 from gaphor.UML.toolbox import (
     actions,
     classes,

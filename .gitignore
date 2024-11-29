@@ -1,8 +1,10 @@
 build
 dist
+docs/jupyter_execute
 gaphor/locale/*/LC_MESSAGES
 docs/locale/*/LC_MESSAGES/*.mo
 docs/locale/.doctrees
+docs/locale/gaphor
 html
 *.pyc
 *.pyo
@@ -15,6 +17,7 @@ html
 gaphor.prof
 .gpg
 pip-wheel-metadata
+gaphor-self-test.txt
 
 # Gaphor test models and notebooks in project root
 /*.gaphor
@@ -58,3 +61,4 @@ package/gaphor.iconset/
 
 # SonarCloud
 .scannerwork
+gaphor-self-test.txt

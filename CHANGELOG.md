@@ -1,5 +1,43 @@
-2.25.2
+2.27.1 - Unreleased
 ------
+
+
+2.27.0
+------
+- File changed notification only show when the file really changed.
+- Support macOS ARM (Apple Silicon) and improve macOS styling
+- Add option to export all diagrams from UI
+- Remove XMI export plugin
+- Show main window and progress indicator when loading model from command line
+- Model improvements: Move Types to Core model, InterfaceRealization.implementingClassifier
+- Add trigger and action for State Machine transitions
+- Add a special C4 Dependency with a technology field
+- Class attributes: add read-only attribute support, and allow spaces in values
+- Improved Picture selection and provide a default name based on the filename
+- Be more lenient with association end multiplicity
+- Model Browser: fix elements showing up in the root of the model
+- Fix long file names and loaded models showing as modified
+- Fix exception when dropping an association on a diagram
+- Update docs for plugin development, CSS examples, and C4 banking example
+- Update translations for Gaphor
+
+2.26.0
+------
+- After a crash, Gaphor can now restore your modeling sessions
+- Start migrating root model to KerML
+- Add ability to apply stereotypes to diagrams
+- Ensure the diagram always has default focus
+- Improve how Property Pages are created.
+- Improve checks to avoid cycles in element ownership
+- Change Gaphor logo to SysML/UML Modeling
+- Improve scripting docs
+- Adding instructions for anaconda install with Windows
+- Fix long Property Editor slot text doesn't wrap
+- Fix diagram renaming shortcut
+- Fix unexpected model changed popup
+- Fix deletion of attribute/operation in element editor
+- Fix select association AssertionError
+- Update Italian, Spanish, and Croatian translations
 
 2.25.1
 ------

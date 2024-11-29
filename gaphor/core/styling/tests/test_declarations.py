@@ -5,7 +5,7 @@ from gaphor.diagram.text import FontWeight
 
 
 def first_decl_block(css):
-    prop, value = next(compile_style_sheet(css))
+    _prop, value = next(compile_style_sheet(css))
     return value
 
 

@@ -9,7 +9,6 @@ Plan:
 
 from dataclasses import replace
 from math import pi
-from typing import Optional
 
 from gaphas.connector import Handle
 from gaphas.geometry import Rectangle, distance_rectangle_point
@@ -75,7 +74,7 @@ class AssociationItem(Named, LinePresentation[UML.Association]):
         # For the association ends:
         base = "subject[Association].memberEnd[Property]"
         self.watch("subject[NamedElement].name", self.change_name).watch(
-            "subject.appliedStereotype.classifier.name"
+            "subject[Element].appliedStereotype.classifier.name"
         ).watch(f"{base}.name").watch(
             f"{base}.appliedStereotype.slot.definingFeature.name",
         ).watch(f"{base}.appliedStereotype.slot.value").watch(
@@ -92,7 +91,9 @@ class AssociationItem(Named, LinePresentation[UML.Association]):
             f"{base}.aggregation", self.on_association_end_endings
         ).watch(
             "subject[Association].navigableOwnedEnd", self.on_association_end_endings
-        ).watch("subject[Association].ownedEnd", self.on_association_end_endings)
+        ).watch("subject[Association].ownedEnd", self.on_association_end_endings).watch(
+            "head_subject", self.on_association_end_endings
+        ).watch("tail_subject", self.on_association_end_endings)
 
         # For types, see the Association.navigability override
         for t in [UML.Class, UML.DataType, UML.Interface]:
@@ -326,7 +327,7 @@ class AssociationEnd:
     be recreated by the owning Association.
     """
 
-    def __init__(self, owner: AssociationItem, end: Optional[str] = None):
+    def __init__(self, owner: AssociationItem, end: str | None = None):
         self._canvas = None
         self._owner = owner
         self._end = end
@@ -356,7 +357,7 @@ class AssociationEnd:
         return self._owner.head if self is self._owner.head_end else self._owner.tail
 
     @property
-    def subject(self) -> Optional[UML.Property]:
+    def subject(self) -> UML.Property | None:
         return getattr(self.owner, f"{self._end}_subject")  # type:ignore[no-any-return]
 
     @property

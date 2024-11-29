@@ -54,7 +54,7 @@ def test_parse_property_simple(factory):
     assert a.defaultValue is None, a.defaultValue
 
 
-def test_parse_property_complex(factory):
+def test_parse_property_complex_1(factory):
     """Test complex property parsing."""
     a = factory.create(UML.Property)
 
@@ -66,6 +66,21 @@ def test_parse_property_complex(factory):
     assert "0" == a.lowerValue
     assert "*" == a.upperValue
     assert '"aap"' == a.defaultValue
+    assert "and a note" == a.note
+
+
+def test_parse_property_complex_2(factory):
+    """Test complex property parsing."""
+    a = factory.create(UML.Property)
+
+    parse(a, '+ / name : str[0..*] = "aap bbq" { static }# and a note')
+    assert "public" == a.visibility
+    assert a.isDerived
+    assert "name" == a.name
+    assert "str" == a.typeValue
+    assert "0" == a.lowerValue
+    assert "*" == a.upperValue
+    assert '"aap bbq"' == a.defaultValue
     assert "and a note" == a.note
 
 
@@ -171,6 +186,21 @@ def test_parse_association_end_multiplicity2(factory):
     assert not p.defaultValue
 
 
+@pytest.mark.parametrize("text", ["-0..2", "-[0..2]"])
+def test_parse_association_end_visibility_multiplicity_no_name(text, factory):
+    """Test parsing of multiplicity with multiline constraints."""
+    a = factory.create(UML.Association)
+    p = factory.create(UML.Property)
+    p.association = a
+    parse(p, text)
+    assert not p.name
+    assert not p.typeValue
+    assert p.visibility == "private"
+    assert "0" == p.lowerValue
+    assert "2" == p.upperValue
+    assert not p.defaultValue
+
+
 def test_parse_association_end_derived_end(factory):
     """Test parsing derived association end."""
     a = factory.create(UML.Association)
@@ -180,6 +210,21 @@ def test_parse_association_end_derived_end(factory):
     assert "private" == p.visibility
     assert p.isDerived
     assert "end name" == p.name
+    assert not p.typeValue
+    assert not p.lowerValue
+    assert "*" == p.upperValue
+    assert not p.defaultValue
+
+
+def test_parse_association_end_derived_end_without_name(factory):
+    """Test parsing derived association end without name."""
+    a = factory.create(UML.Association)
+    p = factory.create(UML.Property)
+    p.association = a
+    parse(p, "-/*")
+    assert "private" == p.visibility
+    assert p.isDerived
+    assert not p.name
     assert not p.typeValue
     assert not p.lowerValue
     assert "*" == p.upperValue

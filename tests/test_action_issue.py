@@ -31,7 +31,7 @@ def test_action_issue(element_factory, modeling_language, test_models):
 
     for e in actions + flows:
         assert 1 == len(e.presentation), e
-    for i in diagram.select(lambda e: isinstance(e, (ControlFlowItem, ActionItem))):
+    for i in diagram.select(lambda e: isinstance(e, ControlFlowItem | ActionItem)):
         assert i.subject, i
 
     # Loaded as:

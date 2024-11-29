@@ -1,38 +1,27 @@
 from __future__ import annotations
 
 import logging
-from typing import Callable
+from collections.abc import Callable
 
 from gaphas.geometry import Rectangle
 from gaphas.item import NW, SE
 from generic.multidispatch import FunctionDispatcher, multidispatch
 
-from gaphor.core.modeling import Diagram, Element, Presentation
-from gaphor.diagram.group import group, ungroup
-from gaphor.diagram.presentation import ElementPresentation
+from gaphor.core.modeling import Base, Diagram, Presentation
+from gaphor.diagram.group import change_owner, ungroup
+from gaphor.diagram.presentation import ElementPresentation, connect
 from gaphor.diagram.support import get_diagram_item
-from gaphor.UML.recipes import owner_package
 
 log = logging.getLogger(__name__)
 
 
-def drop_element(
-    element: Element, diagram: Diagram, x: float, y: float
-) -> Presentation | None:
-    if item_class := get_diagram_item(type(element)):
-        item = diagram.create(item_class)
-        assert item
-
-        item.matrix.translate(x, y)
-        item.subject = element
-
-        return item
+def no_drop(element: Base, diagram: Diagram, x: float, y: float):
     return None
 
 
-drop: FunctionDispatcher[Callable[[Element, Element], bool]] = multidispatch(
-    Element, Diagram
-)(drop_element)
+drop: FunctionDispatcher[Callable[[Base, Base], bool]] = multidispatch(Base, Diagram)(
+    no_drop
+)
 
 
 @drop.register(Presentation, Diagram)
@@ -65,12 +54,9 @@ def drop_on_presentation(
         item.change_parent(None)
         old_parent.request_update()
 
-    if new_parent and item.subject and group(new_parent.subject, item.subject):
+    if new_parent and item.subject and change_owner(new_parent.subject, item.subject):
         grow_parent(new_parent, item)
         item.change_parent(new_parent)
-    elif item.subject:
-        diagram_parent = owner_package(item.diagram)
-        group(diagram_parent, item.subject)
 
 
 def grow_parent(parent: Presentation, item: Presentation) -> None:
@@ -96,3 +82,35 @@ def _bounds(item: ElementPresentation) -> Rectangle:
     x0, y0 = transform(*item.handles()[NW].pos)
     x1, y1 = transform(*item.handles()[SE].pos)
     return Rectangle(x0, y0, x1=x1, y1=y1)
+
+
+def drop_relationship(element, head_element, tail_element, diagram, x, y):
+    item_class = get_diagram_item(type(element))
+    if not item_class:
+        return None
+
+    head_item = diagram_has_presentation(diagram, head_element)
+    tail_item = diagram_has_presentation(diagram, tail_element)
+    if (head_element and not head_item) or (tail_element and not tail_item):
+        return None
+
+    item = diagram.create(item_class)
+    assert item
+
+    item.matrix.translate(x, y)
+    item.subject = element
+
+    if head_item:
+        connect(item, item.head, head_item)
+    if tail_item:
+        connect(item, item.tail, tail_item)
+
+    return item
+
+
+def diagram_has_presentation(diagram, element):
+    return (
+        next((p for p in element.presentation if p.diagram is diagram), None)
+        if element
+        else None
+    )

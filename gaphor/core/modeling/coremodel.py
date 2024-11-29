@@ -16,24 +16,19 @@ from gaphor.core.modeling.properties import (
 )
 
 
-# 1: override Element
-from gaphor.core.modeling.element import Element
+# 1: override Base
+from gaphor.core.modeling.base import Base
 
-# 4: override Diagram
+# 7: override Diagram
 from gaphor.core.modeling.diagram import Diagram
 
-# 7: override Presentation
+# 10: override Presentation
 from gaphor.core.modeling.presentation import Presentation
 
-class Comment(Element):
-    annotatedElement: relation_many[Element]
-    body: _attribute[str] = _attribute("body", str)
-
-
-# 13: override StyleSheet
+# 16: override StyleSheet
 from gaphor.core.modeling.stylesheet import StyleSheet
 
-class PendingChange(Element):
+class PendingChange(Base):
     applied: _attribute[int] = _attribute("applied", int, default=0)
     element_id: _attribute[str] = _attribute("element_id", str)
     op = _enumeration("op", ("add", "remove", "update"), "add")
@@ -42,6 +37,7 @@ class PendingChange(Element):
 class ElementChange(PendingChange):
     diagram_id: _attribute[str] = _attribute("diagram_id", str)
     element_name: _attribute[str] = _attribute("element_name", str)
+    modeling_language: _attribute[str] = _attribute("modeling_language", str)
 
 
 class ValueChange(PendingChange):
@@ -54,27 +50,10 @@ class RefChange(PendingChange):
     property_ref: _attribute[str] = _attribute("property_ref", str)
 
 
-class Picture(Element):
-    content: _attribute[str] = _attribute("content", str)
 
-
-
-Element.comment = association("comment", Comment, opposite="annotatedElement")
-Element.ownedDiagram = association("ownedDiagram", Diagram, composite=True, opposite="element")
-Element.presentation = association("presentation", Presentation, composite=True, opposite="subject")
-Element.ownedElement = derivedunion("ownedElement", Element)
-Element.owner = derivedunion("owner", Element, upper=1)
-Element.ownedElement.add(Element.ownedDiagram)  # type: ignore[attr-defined]
-# 10: override Diagram.qualifiedName: property[list[str]]
-# defined in gaphor.core.modeling.diagram
-
-Diagram.element = association("element", Element, upper=1, opposite="ownedDiagram")
+Base.presentation = association("presentation", Presentation, composite=True, opposite="subject")
 Diagram.ownedPresentation = association("ownedPresentation", Presentation, composite=True, opposite="diagram")
-Element.owner.add(Diagram.element)  # type: ignore[attr-defined]
-Element.ownedElement.add(Diagram.ownedPresentation)  # type: ignore[attr-defined]
-Presentation.subject = association("subject", Element, upper=1, opposite="presentation")
 Presentation.parent = association("parent", Presentation, upper=1, opposite="children")
 Presentation.children = association("children", Presentation, composite=True, opposite="parent")
 Presentation.diagram = association("diagram", Diagram, upper=1, opposite="ownedPresentation")
-Element.owner.add(Presentation.diagram)  # type: ignore[attr-defined]
-Comment.annotatedElement = association("annotatedElement", Element, opposite="comment")
+Presentation.subject = association("subject", Base, upper=1, opposite="presentation")

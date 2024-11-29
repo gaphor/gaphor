@@ -5,9 +5,9 @@ file_format: mystnb
 # Example: Gaphor services
 
 In this example we're doing something a little less trivial. In Gaphor, services
-are defined as entry points. Each service is a class, and takes parameters with
-names that match other services. This allows services to depend on other
-services.
+are defined as [entry points](https://packaging.python.org/en/latest/specifications/entry-points/).
+Each service is a class, and takes parameters with names that match other services.
+This allows services to depend on other services.
 
 It looks something like this:
 

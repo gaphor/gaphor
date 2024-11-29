@@ -6,6 +6,7 @@ Install our schema:
     glib-compile-schemas ~/.local/share/glib-2.0/schemas/
 
 """
+
 import argparse
 import shutil
 import subprocess
@@ -44,4 +45,4 @@ def install_schemas_command(args):
     schemas_dir.mkdir(parents=True, exist_ok=True)
     schema_file = Path(__file__).parent / "org.gaphor.Gaphor.gschema.xml"
     shutil.copy(schema_file, schemas_dir)
-    subprocess.run([args.glib_compile_schemas, str(schemas_dir)])
+    subprocess.run([args.glib_compile_schemas, str(schemas_dir)], check=True)

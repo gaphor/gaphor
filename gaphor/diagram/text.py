@@ -1,4 +1,5 @@
 """Support classes for dealing with text."""
+
 from __future__ import annotations
 
 from gaphas.canvas import instant_cairo_context

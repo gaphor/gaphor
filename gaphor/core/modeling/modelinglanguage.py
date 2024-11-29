@@ -21,7 +21,8 @@ class CoreModelingLanguage(ModelingLanguage):
     def element_types(self):
         return ValueError("No element types for the core model")
 
-    def lookup_element(self, name):
+    def lookup_element(self, name, ns=None):
+        assert ns in ("Core", None)
         return getattr(coremodel, name, None)
 
 
@@ -47,7 +48,18 @@ class MockModelingLanguage(ModelingLanguage):
     def element_types(self):
         return ()
 
-    def lookup_element(self, name):
+    def lookup_element(self, name, ns=None):
+        if ns:
+            # This is sort of hackish.
+            # It's better to lookup modeling languages from entry points
+            for m in self._modeling_languages:
+                if m.__class__.__name__.lower().startswith(ns.lower()):
+                    return m.lookup_element(name, ns)
+
+            raise ValueError(
+                f"Invalid namespace '{ns}', should be one of {self._modeling_languages}"
+            )
+
         return next(
             filter(
                 None,

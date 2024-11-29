@@ -49,6 +49,10 @@
   padding: 4 0 4 4;
 }
 
+:root > pentagon > stereotypes {
+  padding: 4 0 4 4;
+}
+
 :root > pentagon > name {
   padding: 4;
 }
@@ -56,6 +60,7 @@
 /* Relationships */
 
 commentline,
+c4dependency,
 dependency,
 interfacerealization,
 include,
@@ -362,7 +367,11 @@ c4database {
   text-align: left;
 }
 
-:is(c4container, c4database, c4person) technology {
+c4dependency name {
+  max-width: 150;
+}
+
+:is(c4container, c4database, c4dependency, c4person) technology {
   font-size: x-small;
 }
 

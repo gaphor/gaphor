@@ -72,6 +72,20 @@
   <object class="GtkBox" id="transition-editor">
     <property name="orientation">vertical</property>
     <child>
+
+      <object class="GtkLabel">
+        <property name="label" translatable="yes">Trigger</property>
+        <property name="halign">start</property>
+        <style>
+          <class name="title"/>
+        </style>
+      </object>
+    </child>
+    <child>
+      <object class="GtkEntry" id="trigger"/>
+    </child>
+
+    <child>
       <object class="GtkLabel">
         <property name="label" translatable="yes">Guard</property>
         <property name="halign">start</property>
@@ -83,6 +97,20 @@
     <child>
       <object class="GtkEntry" id="guard"/>
     </child>
+
+    <child>
+      <object class="GtkLabel">
+        <property name="label" translatable="yes">Action</property>
+        <property name="halign">start</property>
+        <style>
+          <class name="title"/>
+        </style>
+      </object>
+    </child>
+    <child>
+      <object class="GtkEntry" id="action"/>
+    </child>
+
     <style>
       <class name="propertypage"/>
     </style>

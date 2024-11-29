@@ -1,7 +1,6 @@
 """Magnet tool pulls or pushes the right or bottom side depending on mouse
 movement."""
 
-
 import contextlib
 
 from gaphas.canvas import ancestors

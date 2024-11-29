@@ -23,15 +23,15 @@ def test_drop_dependency(diagram, element_factory):
 
     drop(client, diagram, 0, 0)
     drop(supplier, diagram, 0, 0)
-    dep_item = drop(dependency, diagram, 0, 0)
+    dep_items = drop(dependency, diagram, 0, 0)
 
-    assert dep_item
+    assert len(dep_items) == 1
     assert (
-        diagram.connections.get_connection(dep_item.head).connected
+        diagram.connections.get_connection(dep_items[0].head).connected
         is supplier.presentation[0]
     )
     assert (
-        diagram.connections.get_connection(dep_item.tail).connected
+        diagram.connections.get_connection(dep_items[0].tail).connected
         is client.presentation[0]
     )
 
@@ -115,3 +115,24 @@ def test_drop_message_received_connected(diagram, element_factory):
     assert item
     assert not diagram.connections.get_connection(item.head)
     assert diagram.connections.get_connection(item.tail).connected is b.presentation[0]
+
+
+def test_drop_pin(diagram, element_factory):
+    action = element_factory.create(UML.Action)
+    input_pin = element_factory.create(UML.InputPin)
+    input_pin.opaqueAction = action
+    output_pin = element_factory.create(UML.OutputPin)
+    output_pin.opaqueAction = action
+
+    drop(action, diagram, 0, 0)
+    input_item = drop(input_pin, diagram, 0, 0)
+
+    assert input_item
+    assert input_item.subject is input_pin
+    assert input_item.parent.subject is action
+
+    ouput_item = drop(output_pin, diagram, 0, 0)
+
+    assert ouput_item
+    assert ouput_item.subject is output_pin
+    assert ouput_item.parent.subject is action

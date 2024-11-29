@@ -5,18 +5,14 @@
 # full list see the documentation:
 # http://www.sphinx-doc.org/en/master/config
 
-# -- Path setup --------------------------------------------------------------
-
-# If extensions (or modules to document with autodoc) are in another directory,
-# add these directories to sys.path here. If the directory is relative to the
-# documentation root, use os.path.abspath to make it absolute, like shown here.
-from __future__ import annotations
-
 import os
 
 import gi
 
-from gaphor.application import distribution
+gi.require_version("Pango", "1.0")
+gi.require_version("PangoCairo", "1.0")
+
+from gaphor.application import distribution  # noqa: E402
 
 # -- Project information -----------------------------------------------------
 
@@ -52,6 +48,7 @@ autodoc_mock_imports = [
     "gi.repository.Gtk",
     "gi.repository.Adw",
     "gi.repository.GtkSource",
+    "gi.repository.Graphene",
 ]
 gi.require_version = lambda *_: ...
 
@@ -66,7 +63,7 @@ templates_path = ["_templates"]
 
 # The suffix(es) of source filenames.
 # You can specify multiple suffix as a list of string:
-source_suffix = [".rst", ".md"]
+source_suffix = {".rst": "restructuredtext", ".md": "restructuredtext"}
 
 # The master toctree document.
 master_doc = "index"
@@ -228,7 +225,10 @@ epub_exclude_files = ["search.html"]
 # Example configuration for intersphinx: refer to the Python standard library.
 intersphinx_mapping = {
     "gnome": ("https://amolenaar.pages.gitlab.gnome.org/pygobject-docs", None),
-    "pygobject": ("https://gnome.pages.gitlab.gnome.org/pygobject", None),
+    "pygobject": ("https://pygobject.gnome.org", None),
     "gaphas": ("https://gaphas.readthedocs.io/en/stable", None),
     "python": ("https://docs.python.org/3", None),
 }
+
+# Canonical URL required for custom domain with RTD Addons enabled
+html_baseurl = os.environ.get("READTHEDOCS_CANONICAL_URL", "")

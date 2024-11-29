@@ -1,6 +1,9 @@
 """A registry for components (e.g. services) and event handling."""
 
-from typing import Iterator, List, Tuple, Type, TypeVar
+import functools
+import inspect
+from collections.abc import Iterator
+from typing import TypeVar
 
 from gaphor.abc import Service
 
@@ -16,7 +19,7 @@ class ComponentRegistry(Service):
     components."""
 
     def __init__(self) -> None:
-        self._comp: List[Tuple[str, object]] = []
+        self._comp: list[tuple[str, object]] = []
 
     def shutdown(self) -> None:
         pass
@@ -34,7 +37,7 @@ class ComponentRegistry(Service):
     def unregister(self, component: object) -> None:
         self._comp = [(n, c) for n, c in self._comp if c is not component]
 
-    def get(self, base: Type[T], name: str) -> T:
+    def get(self, base: type[T], name: str) -> T:
         found = [(n, c) for n, c in self._comp if isinstance(c, base) and n == name]
         if len(found) > 1:
             raise ComponentLookupError(
@@ -46,5 +49,20 @@ class ComponentRegistry(Service):
             )
         return found[0][1]
 
-    def all(self, base: Type[T]) -> Iterator[Tuple[str, T]]:
+    def all(self, base: type[T]) -> Iterator[tuple[str, T]]:
         return ((n, c) for n, c in self._comp if isinstance(c, base))
+
+    def partial(self, func):
+        """Return a new function with partial application of services."""
+        kwargs = {}
+
+        for param_name, _param in inspect.signature(func).parameters.items():
+            found = [(n, c) for n, c in self._comp if n == param_name]
+            if len(found) > 1:
+                raise ComponentLookupError(
+                    f"More than one component matches {param_name}: {found}"
+                )
+            if found:
+                kwargs[param_name] = found[0][1]
+
+        return functools.partial(func, **kwargs)

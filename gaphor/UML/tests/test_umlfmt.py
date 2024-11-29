@@ -51,6 +51,14 @@ def test_attribute(factory, text, formatted_text):
     assert formatted_text == format(a, note=True)
 
 
+def test_read_only_attribute(factory):
+    a = factory.create(UML.Property)
+    a.name = "myattr"
+    a.isReadOnly = True
+
+    assert "+ myattr { readOnly }" == format(a, tags=True)
+
+
 def test_attribute_with_applied_stereotype(factory):
     a = factory.create(UML.Property)
     parse(a, "myattr: int")

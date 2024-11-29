@@ -14,7 +14,6 @@ import code
 import sys
 import textwrap
 import traceback
-from typing import Dict, List
 
 import jedi
 from gi.repository import Gdk, GLib, Gtk, Pango
@@ -152,7 +151,7 @@ class GTKInterpreterConsole(Gtk.ScrolledWindow):
 
     __gtype_name__ = "GTKInterpreterConsole"
 
-    def __init__(self, locals: Dict[str, object], banner=banner):
+    def __init__(self, locals: dict[str, object], banner=banner):
         Gtk.ScrolledWindow.__init__(self)
 
         self.set_vexpand(True)
@@ -165,8 +164,8 @@ class GTKInterpreterConsole(Gtk.ScrolledWindow):
         self.interpreter = code.InteractiveInterpreter(locals)
         self.locals = locals
 
-        self.buffer: List[str] = []
-        self.history: List[str] = []
+        self.buffer: list[str] = []
+        self.history: list[str] = []
         self.banner = banner
 
         self.text_controller = Gtk.EventControllerKey.new()
@@ -204,7 +203,7 @@ class GTKInterpreterConsole(Gtk.ScrolledWindow):
 
     def write(self, text, style=None):
         buffer = self.text.get_buffer()
-        start, end = buffer.get_bounds()
+        _start, end = buffer.get_bounds()
         if style:
             buffer.insert_with_tags(end, text, style)
         else:

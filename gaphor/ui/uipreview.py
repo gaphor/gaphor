@@ -3,6 +3,7 @@
 Usage:
   python -m  gaphor.ui.uipreview <ui file>
 """
+
 import os
 import sys
 

@@ -4,8 +4,6 @@ Implemented using interface item in assembly connector mode, see
 `gaphor.diagram.connector` module for details.
 """
 
-from typing import Union
-
 from gaphor import UML
 from gaphor.diagram.connectors import BaseConnector, Connector
 from gaphor.UML.classes.component import ComponentItem
@@ -22,7 +20,7 @@ class LegacyConnectorConnectBase(BaseConnector):
     palette.
     """
 
-    element: Union[ComponentItem, InterfaceItem]
+    element: ComponentItem | InterfaceItem
     line: ConnectorItem
 
     def get_connecting(self, iface, both=False):

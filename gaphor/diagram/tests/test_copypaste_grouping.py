@@ -33,8 +33,6 @@ def test_copy_paste_of_nested_item(diagram, node_with_artifact):
 
 
 def test_copy_paste_of_item_with_nested_item(diagram, node_with_artifact):
-    node_item, artifact_item = node_with_artifact
-
     buffer = copy_full(set(node_with_artifact))
 
     new_items = paste_link(buffer, diagram)

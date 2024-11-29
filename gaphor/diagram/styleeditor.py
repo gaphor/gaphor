@@ -1,20 +1,20 @@
 from gi.repository import Gdk, Gtk
 
-from gaphor.core import transactional
-from gaphor.core.modeling import Element
+from gaphor.core.modeling import Presentation
 from gaphor.diagram.propertypages import PropertyPageBase, PropertyPages, new_builder
 
 
-@PropertyPages.register(Element)
+@PropertyPages.register(Presentation)
 class StylePropertyPage(PropertyPageBase):
     """A button to open a easy-to-use CSS editor."""
 
     order = 300
     style_editor = None
 
-    def __init__(self, subject):
+    def __init__(self, subject, event_manager):
         super().__init__()
         self.subject = subject
+        self.event_manager = event_manager
         self.watcher = subject.watcher() if subject else None
         self.propertypages_builder = new_builder(
             "style-editor",
@@ -30,7 +30,6 @@ class StylePropertyPage(PropertyPageBase):
         assert self.watcher
         return self.propertypages_builder.get_object("style-editor")
 
-    @transactional
     def _on_open_style_editor(self, button):
         if not self.has_style_editor:
             if StylePropertyPage.style_editor:
@@ -100,7 +99,6 @@ class StyleEditor:
             self.window = None
         self.close_callback()
 
-    @transactional
     def on_color_set(self, widget):
         colors = widget.get_rgba()
         r = int(colors.red * 255)
@@ -111,13 +109,11 @@ class StyleEditor:
             "color", f"rgba({r}, {g}, {b}, {a})"
         )
 
-    @transactional
     def on_border_radius_set(self, widget):
         self.subject.presentation_style.change_style(
             "border-radius", widget.get_value()
         )
 
-    @transactional
     def on_background_color_set(self, widget):
         colors = widget.get_rgba()
         r = int(colors.red * 255)
@@ -128,7 +124,6 @@ class StyleEditor:
             "background-color", f"rgba({r}, {g}, {b}, {a})"
         )
 
-    @transactional
     def on_text_color_set(self, widget):
         colors = widget.get_rgba()
         r = int(colors.red * 255)
@@ -139,6 +134,5 @@ class StyleEditor:
             "text-color", f"rgba({r}, {g}, {b}, {a})"
         )
 
-    @transactional
     def on_export(self, widget):
         self.subject.presentation_style.translate_to_stylesheet()

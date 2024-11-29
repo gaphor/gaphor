@@ -55,7 +55,7 @@ class DependencyItem(Named, LinePresentation):
                     self,
                     lambda: [
                         diagram.gettext(s)
-                        for s in additional_stereotype.get(self._dependency_type, ())
+                        for s in additional_stereotype.get(type(self.subject), ())
                     ],
                 ),
                 text_name(self),
@@ -65,14 +65,15 @@ class DependencyItem(Named, LinePresentation):
         self._handles[0].pos = (30, 20)
         self._handles[1].pos = (0, 0)
 
+        self.watch("subject")
         self.watch("subject[NamedElement].name", self.change_name)
-        self.watch("subject.appliedStereotype.classifier.name")
+        self.watch("subject[Element].appliedStereotype.classifier.name")
 
     auto_dependency: attribute[int] = attribute("auto_dependency", int, default=True)
 
     def postload(self):
         if self.subject:
-            self._dependency_type = self.subject.__class__
+            self._dependency_type = type(self.subject)
         super().postload()
 
     @property
@@ -90,7 +91,7 @@ class DependencyItem(Named, LinePresentation):
 
     @property
     def dependency_type(self):
-        return self._dependency_type
+        return type(self.subject) if self.subject else self._dependency_type
 
     @dependency_type.setter
     def dependency_type(self, dependency_type):

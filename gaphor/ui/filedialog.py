@@ -6,9 +6,8 @@ from __future__ import annotations
 import os
 import sys
 from pathlib import Path
-from typing import Callable
 
-from gi.repository import Gio, Gtk
+from gi.repository import Gio, GLib, Gtk
 
 from gaphor.i18n import gettext
 
@@ -42,14 +41,14 @@ def new_filters(filters, images=False):
     return store
 
 
-def open_file_dialog(
+async def open_file_dialog(
     title,
-    handler,
     parent=None,
     dirname=None,
     filters=None,
     image_filter=False,
-) -> None:
+    multiple=True,
+) -> list[Path] | Path | None:
     dialog = Gtk.FileDialog.new()
     dialog.set_title(title)
 
@@ -58,40 +57,38 @@ def open_file_dialog(
 
     dialog.set_filters(new_filters(filters, image_filter))
 
-    def response(dialog, result):
-        if result.had_error():
-            # File dialog was cancelled
-            return
+    try:
+        if multiple:
+            files = await dialog.open_multiple(parent=parent)
+            return [Path(f.get_path()) for f in files] if files else None
+        else:
+            file = await dialog.open(parent=parent)
+            return Path(file.get_path()) if file else None
+    except GLib.Error as e:
+        if e.matches(Gtk.dialog_error_quark(), Gtk.DialogError.DISMISSED):
+            return None
+        raise
 
-        files = dialog.open_multiple_finish(result)
-        handler([Path(f.get_path()) for f in files])
 
-    dialog.open_multiple(parent=parent, cancellable=None, callback=response)
-
-
-def save_file_dialog(
+async def save_file_dialog(
     title: str,
     filename: Path,
-    handler: Callable[[Path], None],
     parent=None,
     filters=None,
-) -> Gtk.FileChooser:
+) -> Path | None:
     dialog = Gtk.FileDialog.new()
     dialog.set_title(title)
     dialog.set_initial_file(Gio.File.parse_name(str(filename.absolute())))
 
     dialog.set_filters(new_filters(filters))
 
-    def response(dialog, result):
-        if result.had_error():
-            # File dialog was cancelled
-            return
-
-        filename = Path(dialog.save_finish(result).get_path())
-        handler(filename)
-
-    dialog.save(parent=parent, cancellable=None, callback=response)
-    return dialog
+    try:
+        new_filename = await dialog.save(parent=parent)
+    except GLib.Error as e:
+        if e.matches(Gtk.dialog_error_quark(), Gtk.DialogError.DISMISSED):
+            return None
+        raise
+    return Path(new_filename.get_path())
 
 
 def pretty_path(path: Path) -> str:

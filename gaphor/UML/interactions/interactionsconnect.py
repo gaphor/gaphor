@@ -1,18 +1,16 @@
 """Message item connection adapters."""
 
-from typing import Optional
-
 from gaphor import UML
-from gaphor.core.modeling import Element, Presentation
+from gaphor.core.modeling import Presentation
 from gaphor.diagram.connectors import BaseConnector, Connector
-from gaphor.diagram.group import group
+from gaphor.diagram.group import change_owner
 from gaphor.UML.interactions.executionspecification import ExecutionSpecificationItem
 from gaphor.UML.interactions.interaction import InteractionItem
 from gaphor.UML.interactions.lifeline import LifelineItem
 from gaphor.UML.interactions.message import MessageItem
 
 
-def get_connected(item, handle) -> Optional[Presentation[Element]]:
+def get_connected(item, handle) -> Presentation[UML.Element] | None:
     """Get item connected to a handle."""
     if cinfo := item.diagram.connections.get_connection(handle):
         return cinfo.connected  # type: ignore[no-any-return] # noqa: F723
@@ -64,7 +62,7 @@ def owner_for_message(line, lifeline):
         return
     elif isinstance(maybe_interaction, InteractionItem):
         line.parent = maybe_interaction
-        group(maybe_interaction, line)
+        change_owner(maybe_interaction, line)
     elif lifeline.subject and lifeline.subject.interaction:
         line.subject.interaction = lifeline.subject.interaction
 
@@ -145,7 +143,7 @@ class MessageLifelineConnect(BaseConnector):
 
     def disconnect(self, handle):
         line = self.line
-        send: Optional[Presentation[Element]] = get_connected(line, line.head)
+        send: Presentation[UML.Element] | None = get_connected(line, line.head)
         received = self.get_connected(line.tail)
 
         # if a message is a deleted message, then the disconnection causes
@@ -248,7 +246,7 @@ class ExecutionSpecificationExecutionSpecificationConnect(BaseConnector):
             # Can connect child exec spec if parent is not connected
             return True
 
-        connected_item: Optional[Presentation[Element]]
+        connected_item: Presentation[UML.Element] | None
         connected_item = self.get_connected(self.element.handles()[0])
         assert connected_item
         Connector(connected_item, self.line).connect(handle, None)

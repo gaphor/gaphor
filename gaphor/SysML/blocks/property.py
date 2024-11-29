@@ -1,6 +1,5 @@
 """Property item."""
 
-
 from gaphor import UML
 from gaphor.core.modeling.properties import attribute
 from gaphor.diagram.presentation import ElementPresentation, Named

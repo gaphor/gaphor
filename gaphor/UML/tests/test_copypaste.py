@@ -1,5 +1,4 @@
 from gaphor import UML
-from gaphor.core.modeling import Diagram
 from gaphor.diagram.copypaste import copy_full, paste_full
 from gaphor.diagram.tests.test_copypaste_link import two_classes_and_a_generalization
 from gaphor.UML.classes import PackageItem
@@ -19,7 +18,7 @@ def test_copy_connected_item(diagram, element_factory):
 
 
 def test_full_copy_package_from_owned_diagram(element_factory):
-    diagram: Diagram = element_factory.create(Diagram)
+    diagram: UML.Diagram = element_factory.create(UML.Diagram)
     package_item = diagram.create(
         PackageItem, subject=element_factory.create(UML.Package)
     )
@@ -27,7 +26,7 @@ def test_full_copy_package_from_owned_diagram(element_factory):
 
     copy_buffer = copy_full([package_item], element_factory.lookup)
 
-    new_diagram: Diagram = element_factory.create(Diagram)
+    new_diagram: UML.Diagram = element_factory.create(UML.Diagram)
 
     (new_package_item,) = paste_full(copy_buffer, new_diagram)
 
@@ -36,7 +35,7 @@ def test_full_copy_package_from_owned_diagram(element_factory):
 
 
 def test_full_copy_package_from_owned_diagram_in_super_package(element_factory):
-    diagram: Diagram = element_factory.create(Diagram)
+    diagram: UML.Diagram = element_factory.create(UML.Diagram)
     package_item = diagram.create(
         PackageItem, subject=element_factory.create(UML.Package)
     )
@@ -44,7 +43,7 @@ def test_full_copy_package_from_owned_diagram_in_super_package(element_factory):
 
     copy_buffer = copy_full([package_item], element_factory.lookup)
 
-    new_diagram: Diagram = element_factory.create(Diagram)
+    new_diagram: UML.Diagram = element_factory.create(UML.Diagram)
     new_diagram.element = element_factory.create(UML.Package)
 
     (new_package_item,) = paste_full(copy_buffer, new_diagram)

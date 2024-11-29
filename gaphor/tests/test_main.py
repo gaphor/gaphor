@@ -14,7 +14,7 @@ APP_NAME = sys.argv[0]
 def mock_gaphor_ui_run(monkeypatch):
     _argv = []
 
-    def run(argv):
+    def run(argv, recover=False):
         _argv[:] = argv
         return 0
 

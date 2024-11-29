@@ -2,12 +2,12 @@ import contextlib
 
 import pytest
 
-import gaphor.C4Model.diagramitems as C4Model_diagramitems
-import gaphor.RAAML.diagramitems as RAAML_diagramitems
-import gaphor.SysML.diagramitems as SysML_diagramitems
-import gaphor.UML.diagramitems as UML_diagramitems
-from gaphor.core.modeling import Element
+import gaphor.C4Model.diagramitems
+import gaphor.RAAML.diagramitems
+import gaphor.SysML.diagramitems
+import gaphor.UML.diagramitems
 from gaphor.core.modeling.properties import umlproperty
+from gaphor.UML import Element
 
 
 def presentations(module):
@@ -27,10 +27,10 @@ def flatten(list):
     set(
         flatten(
             [
-                presentations(UML_diagramitems),
-                presentations(SysML_diagramitems),
-                presentations(C4Model_diagramitems),
-                presentations(RAAML_diagramitems),
+                presentations(gaphor.UML.diagramitems),
+                presentations(gaphor.SysML.diagramitems),
+                presentations(gaphor.C4Model.diagramitems),
+                presentations(gaphor.RAAML.diagramitems),
             ]
         )
     ),

@@ -12,7 +12,7 @@ from gaphor.UML.compartments import text_stereotypes
 @represents(
     UML.InterfaceRealization,
     head=UML.InterfaceRealization.contract,
-    tail=UML.InterfaceRealization.implementatingClassifier,
+    tail=UML.InterfaceRealization.implementingClassifier,
 )
 class InterfaceRealizationItem(Named, LinePresentation):
     def __init__(self, diagram, id=None):
@@ -26,7 +26,7 @@ class InterfaceRealizationItem(Named, LinePresentation):
         )
 
         self.watch("subject[NamedElement].name")
-        self.watch("subject.appliedStereotype.classifier.name")
+        self.watch("subject[Element].appliedStereotype.classifier.name")
         self._inline_style: Style = {}
 
     @property

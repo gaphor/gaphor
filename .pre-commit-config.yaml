@@ -1,25 +1,25 @@
 repos:
 - repo: https://github.com/pre-commit/mirrors-mypy
-  rev: v1.8.0
+  rev: f56614daa94d5cd733d3b7004c5df9caad267b4a  # frozen: v1.13.0
   hooks:
   - id: mypy
     additional_dependencies:
     - types-docutils
 - repo: https://github.com/pre-commit/pre-commit-hooks
-  rev: v4.5.0
+  rev: cef0300fd0fc4d2a87a85fa2093c6b283ea36f4b  # frozen: v5.0.0
   hooks:
   - id: check-yaml
     exclude: '.\.gaphor'
   - id: trailing-whitespace
 - repo: https://github.com/shellcheck-py/shellcheck-py
-  rev: v0.9.0.6
+  rev: a23f6b85d0fdd5bb9d564e2579e678033debbdff  # frozen: v0.10.0.1
   hooks:
   - id: shellcheck
     args: [--exclude, SC1017]
 - repo: https://github.com/astral-sh/ruff-pre-commit
-  rev: 'v0.1.14'
+  rev: '0710b94280408eef12748cde4782972942370ad2'  # frozen: v0.8.0
   hooks:
   - id: ruff
-    args: [--fix]
+    args: [--fix, --preview]
   - id: ruff-format
     types_or: [python, spec]

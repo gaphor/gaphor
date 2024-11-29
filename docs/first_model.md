@@ -12,8 +12,7 @@ Started](getting_started) page for more information.
 Once Gaphor is started, and you can start a new model with the _Generic_ template. The
 initial diagram is already open in the Diagram section.
 
-Select an element you want to place, in this case a Class (![new
-class](../gaphor/ui/icons/hicolor/scalable/actions/gaphor-class-symbolic.svg))
+Select an element you want to place, in this case a Class (![Icon for Class.](../gaphor/ui/icons/hicolor/scalable/actions/gaphor-class-symbolic.svg))
 by clicking on the icon in the Toolbox and click on the diagram. This will place
 a new Class item instance on the diagram and add a new Class to the model -- it
 shows up in the Model Browser. The selected tool will reset itself to the
@@ -23,7 +22,7 @@ The Property Editor on the right side will show you details about the newly adde
 class, such as its name (_New Class_), attributes and operations (methods).
 The Note field can contain any text you wish to associate with the element, (this will not show on a diagram).
 
-![image](images/first-model-class.png)
+![The Gaphor main window showing a single class added to the model.](images/first-model-class.png)
 
 It's simple to add elements to a diagram.
 
@@ -38,27 +37,26 @@ Add another Class. Change the names to `Shape` and `Circle`. Let's define that
 `Circle` is a sub-type of `Shape`. You can do this by selecting one and changing
 the name in the Property Editor, or by double-clicking the element.
 
-Select Generalization (![new
-generalization](../gaphor/ui/icons/hicolor/scalable/actions/gaphor-generalization-symbolic.svg)).
+Select Generalization (![Icon for generalization relationships.](../gaphor/ui/icons/hicolor/scalable/actions/gaphor-generalization-symbolic.svg)).
 
 Move the mouse cursor over `Shape`. Click, hold and drag the line end over
 `Circle`. Release the mouse button, and you should have your relationship between
 `Shape` and `Circle`. You can see both ends of the relation are red, indicating
 they are connected to their class.
 
-![image](images/first-model-generalization.png)
+![The Gaphor main window showing two classes connected by a generalization relationship.](images/first-model-generalization.png)
 
-Optionally you can run the auto-layout (![open
-menu](images/open-menu-symbolic.svg) → Tools → Auto Layout) to align the
+Optionally you can run the auto-layout (![Menu icon](images/open-menu-symbolic.svg)
+→ Tools → Auto Layout) to align the
 elements on the diagram.
 
 ## Creating New Diagrams
 
 To create a new diagram, use the Model Browser. Select the element that should
 contain the new diagram. For now, select _New Model_.
-Click the New Diagram menu (![new diagram](images/list-add-symbolic.svg)) in the header bar.
+Click the New Diagram menu (![Plus symbol of the New Diagram popup menu.](images/list-add-symbolic.svg)) in the header bar.
 
-![image](/images/first-model-new-diagram-popup.png)
+![The New Diagram popup window.](images/first-model-new-diagram-popup.png)
 
 Select _New Generic Diagram_ and a new diagram is created.
 

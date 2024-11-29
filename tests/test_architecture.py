@@ -6,12 +6,24 @@ from gaphor.entrypoint import load_entry_points
 GAPHOR_CORE = [
     "gaphor.core*",
     "gaphor.abc",
+    "gaphor.asyncio",
     "gaphor.action",
     "gaphor.entrypoint",
     "gaphor.i18n",
     "gaphor.transaction",
     "gaphor.event",
     "gaphor.settings",
+]
+
+GLIB = [
+    "gi.repository.GLib",
+    "gi.repository.Gio",
+]
+
+# Pango is used for text rendering in diagrams
+PANGO = [
+    "gi.repository.Pango",
+    "gi.repository.PangoCairo",
 ]
 
 UI_LIBRARIES = [
@@ -29,7 +41,7 @@ def test_core_packages():
         .exclude("*.tests.*")
         .may_import(*GAPHOR_CORE)
         .should_not_import("gaphor*")
-        .should_not_import(*UI_LIBRARIES)
+        .should_not_import("gi*")
         .check(gaphor, skip_type_checking=True)
     )
 
@@ -45,13 +57,14 @@ def test_diagram_package():
         .exclude("*.tests.*")
         .may_import(*GAPHOR_CORE)
         .may_import("gaphor.diagram*")
+        .may_import("gaphor.UML.compartments")
         .may_import("gaphor.UML.recipes")
         .may_import("gaphor.UML.uml")
         .may_import("gaphor.ui.filedialog")
         .may_import("gaphor.ui.errorhandler")
         .may_import("gaphor.ui.styleeditor")
         .should_not_import("gaphor*")
-        .check(gaphor)
+        .check(gaphor, skip_type_checking=True)
     )
 
     (
@@ -63,8 +76,9 @@ def test_diagram_package():
         .exclude("gaphor.diagram.*editors")
         .exclude("gaphor.diagram.*propertypages")
         .exclude("gaphor.diagram.styleeditor")
-        .should_not_import(*UI_LIBRARIES)
-        .check(gaphor)
+        .may_import(*PANGO)
+        .should_not_import("gi.repository*")
+        .check(gaphor, skip_type_checking=True)
     )
 
 
@@ -73,12 +87,12 @@ def test_services_package():
         archrule("Services only depend on core functionality")
         .match("gaphor.services*")
         .exclude("*.tests.*")
-        .may_import(*GAPHOR_CORE)
+        .may_import(*GAPHOR_CORE, *GLIB)
         .may_import("gaphor.diagram*")
         .may_import("gaphor.services*")
         .should_not_import("gaphor*")
-        .should_not_import(*UI_LIBRARIES)
-        .check(gaphor)
+        .should_not_import("gi*")
+        .check(gaphor, skip_type_checking=True)
     )
 
 
@@ -87,13 +101,13 @@ def test_storage_package():
         archrule("Storage only depends on core functionality")
         .match("gaphor.storage*")
         .exclude("*.tests.*")
-        .may_import(*GAPHOR_CORE)
+        .may_import(*GAPHOR_CORE, *GLIB, *PANGO)
         .may_import("gaphor.diagram*")
         .may_import("gaphor.storage*")
         .may_import("gaphor.application", "gaphor.services.componentregistry")
         .should_not_import("gaphor*")
-        .should_not_import(*UI_LIBRARIES)
-        .check(gaphor)
+        .should_not_import("gi*")
+        .check(gaphor, skip_type_checking=True)
     )
 
 
@@ -101,6 +115,8 @@ def test_modeling_languages_should_not_depend_on_ui_package():
     (
         archrule("Modeling languages should not depend on the UI package")
         .match("gaphor.C4Model*", "gaphor.RAAML*", "gaphor.SysML*", "gaphor.UML*")
+        .may_import("gaphor.ui.filedialog")
+        .may_import("gaphor.ui.errordialog")
         .should_not_import("gaphor.ui*")
         .check(gaphor)
     )
@@ -126,5 +142,17 @@ def test_uml_package_does_not_depend_on_other_modeling_languages():
         .match("gaphor.UML*")
         .exclude("*.tests.*")
         .should_not_import("gaphor.C4Model*", "gaphor.RAAML*", "gaphor.SysML*")
+        .check(gaphor, only_toplevel_imports=True)
+    )
+
+
+def test_allow_main_application_to_configure_i18n():
+    (
+        archrule(
+            "The main application should configure i18n, so it should not be imported anywhere yet"
+        )
+        .match("gaphor.__main__")
+        .match("gaphor.main")
+        .should_not_import("gaphor.i18n")
         .check(gaphor, only_toplevel_imports=True)
     )

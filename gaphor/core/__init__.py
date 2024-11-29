@@ -5,4 +5,4 @@
 from gaphor.action import action
 from gaphor.core.eventmanager import event_handler
 from gaphor.i18n import gettext
-from gaphor.transaction import Transaction, transactional
+from gaphor.transaction import Transaction

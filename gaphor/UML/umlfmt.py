@@ -1,20 +1,37 @@
 """Formatting of UML elements like attributes, operations, stereotypes, etc."""
 
 import re
-from typing import Tuple
 
 from gaphor.core.format import format
 from gaphor.i18n import gettext
 from gaphor.UML import uml as UML
+
+
+@format.register(UML.NamedElement)
+def format_namedelement(el: UML.NamedElement, **kwargs):
+    return el.name or ""
+
+
+@format.register(UML.Relationship)
+def format_relationship(el):
+    return el.__class__.__name__
+
+
+@format.register(UML.Dependency)
+def format_dependency(el):
+    return gettext("supplier: {name}").format(
+        name=len(el.supplier) > 0 and el.supplier[0].name or ""
+    )
+
 
 # Do not render if the name still contains a visibility element
 no_render_pat = re.compile(r"^\s*[+#-]", re.MULTILINE | re.DOTALL)
 vis_map = {"public": "+", "protected": "#", "package": "~", "private": "-"}
 
 
-@format.register(UML.Property)
+@format.register
 def format_property(
-    el,
+    el: UML.Property,
     visibility=False,
     is_derived=False,
     type=False,
@@ -63,10 +80,14 @@ def format_property(
     if default and el.defaultValue:
         s.append(f" = {el.defaultValue}")
 
-    if tags and (
-        slots := [format(slot) for slot in el.appliedStereotype[:].slot if slot]
-    ):
-        s.append(" { %s }" % ", ".join(slots))
+    if tags:
+        tag_vals = []
+        if el.isReadOnly:
+            tag_vals.append(gettext("readOnly"))
+        tag_vals.extend(format(slot) for slot in el.appliedStereotype[:].slot if slot)
+
+        if tag_vals:
+            s.append(f" {{ {', '.join(tag_vals)} }}")
 
     if note and el.note:
         s.append(f" # {el.note}")
@@ -74,7 +95,7 @@ def format_property(
     return "".join(s)
 
 
-def format_association_end(el) -> Tuple[str, str]:
+def format_association_end(el) -> tuple[str, str]:
     """Format association end."""
     name = ""
     if el.name:
@@ -87,7 +108,7 @@ def format_association_end(el) -> Tuple[str, str]:
 
     m = [format_multiplicity(el, bare=True)]
     if slots := [format(slot) for slot in el.appliedStereotype[:].slot if slot]:
-        m.append(" { %s }" % ",\n".join(slots))
+        m.append(" {{ {} }}".format(",\n".join(slots)))
     mult = "".join(m)
 
     return name, mult
@@ -182,11 +203,6 @@ def format_slot(el):
     return f'{el.definingFeature.name} = "{el.value}"'
 
 
-@format.register(UML.NamedElement)
-def format_namedelement(el, **kwargs):
-    return el.name or ""
-
-
 @format.register(UML.Pin)
 def format_pin(el, **kwargs):
     if not el:
@@ -211,21 +227,9 @@ def format_multiplicity(el, bare=False):
     return f"[{m}]" if m and not bare else m
 
 
-@format.register(UML.Relationship)
-def format_relationship(el):
-    return el.__class__.__name__
-
-
 @format.register(UML.Generalization)
 def format_generalization(el):
     return gettext("general: {name}").format(name=el.general and el.general.name or "")
-
-
-@format.register(UML.Dependency)
-def format_dependency(el):
-    return gettext("supplier: {name}").format(
-        name=el.supplier and el.supplier.name or ""
-    )
 
 
 @format.register(UML.Extend)

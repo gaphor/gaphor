@@ -260,7 +260,7 @@
       </object>
     </child>
     <child>
-      <object class="GtkButton">
+      <object class="GtkButton" id="select-picture-button">
         <property name="label" translatable="yes">Select picture...</property>
         <signal name="clicked" handler="select-picture" swapped="no"/>
       </object>

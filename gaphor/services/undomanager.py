@@ -10,14 +10,15 @@ If None is returned the undo action is considered to be the redo action as well.
 NOTE: it would be nice to use actions in conjunction with functools.partial.
 """
 
+from __future__ import annotations
+
 import logging
-from typing import Callable, List
+from collections.abc import Callable
 
 from gaphor.abc import ActionProvider, Service
 from gaphor.action import action
 from gaphor.core import event_handler
-from gaphor.core.modeling.diagram import Diagram
-from gaphor.core.modeling.element import Element, RepositoryProtocol
+from gaphor.core.modeling.base import Base, RepositoryProtocol, swap_element_type
 from gaphor.core.modeling.event import (
     AssociationAdded,
     AssociationDeleted,
@@ -25,6 +26,8 @@ from gaphor.core.modeling.event import (
     AttributeUpdated,
     ElementCreated,
     ElementDeleted,
+    ElementTypeUpdated,
+    ModelFlushed,
     ModelReady,
     RevertibleEvent,
 )
@@ -33,7 +36,6 @@ from gaphor.core.modeling.properties import association as association_property
 from gaphor.diagram.copypaste import deserialize, serialize
 from gaphor.event import (
     ActionEnabled,
-    ServiceEvent,
     TransactionBegin,
     TransactionCommit,
     TransactionRollback,
@@ -54,7 +56,7 @@ class ActionStack:
     """
 
     def __init__(self):
-        self._actions: List[Callable[[], None]] = []
+        self._actions: list[Callable[[], None]] = []
 
     def add(self, action):
         self._actions.append(action)
@@ -70,8 +72,11 @@ class ActionStack:
             act()
 
 
-class UndoManagerStateChanged(ServiceEvent):
+class UndoManagerStateChanged:
     """Event class used to send state changes on the Undo Manager."""
+
+    def __init__(self, undo_manager: UndoManager):
+        self.undo_manager = undo_manager
 
 
 class _UndoManagerTransactionCommitted:
@@ -115,11 +120,12 @@ class UndoManager(Service, ActionProvider):
     def __init__(self, event_manager, element_factory):
         self.event_manager = event_manager
         self.element_factory: RepositoryProtocol = element_factory
-        self._undo_stack: List[ActionStack] = []
-        self._redo_stack: List[ActionStack] = []
+        self._undo_stack: list[ActionStack] = []
+        self._redo_stack: list[ActionStack] = []
         self._stack_depth = 20
         self._current_transaction = None
 
+        event_manager.subscribe(self.ready)
         event_manager.subscribe(self.reset)
         event_manager.priority_subscribe(self.begin_transaction)
         event_manager.subscribe(self.commit_transaction)
@@ -134,9 +140,11 @@ class UndoManager(Service, ActionProvider):
         event_manager.priority_subscribe(self.undo_association_set_event)
         event_manager.priority_subscribe(self.undo_association_add_event)
         event_manager.priority_subscribe(self.undo_association_delete_event)
-        self._action_executed()
+        event_manager.priority_subscribe(self.undo_element_type_updated_event)
+        self._action_executed(state_changed=False)
 
     def shutdown(self):
+        self.event_manager.unsubscribe(self.ready)
         self.event_manager.unsubscribe(self.reset)
         self.event_manager.unsubscribe(self.begin_transaction)
         self.event_manager.unsubscribe(self.commit_transaction)
@@ -151,20 +159,25 @@ class UndoManager(Service, ActionProvider):
         self.event_manager.unsubscribe(self.undo_association_set_event)
         self.event_manager.unsubscribe(self.undo_association_add_event)
         self.event_manager.unsubscribe(self.undo_association_delete_event)
+        self.event_manager.unsubscribe(self.undo_element_type_updated_event)
 
     def clear_undo_stack(self):
-        self._undo_stack = []
-        self._current_transaction = None
+        del self._undo_stack[:]
 
     def clear_redo_stack(self):
         del self._redo_stack[:]
 
     @event_handler(ModelReady)
-    def reset(self, event=None):
+    def ready(self, _event=None):
+        self._action_executed(state_changed=False)
+
+    @event_handler(ModelFlushed)
+    def reset(self, _event=None):
+        assert not self._current_transaction
+
         self.clear_redo_stack()
         self.clear_undo_stack()
-        self.event_manager.handle(ActionEnabled("win.edit-undo", False))
-        self.event_manager.handle(ActionEnabled("win.edit-redo", False))
+        self._action_executed(state_changed=False)
 
     @event_handler(TransactionBegin)
     def begin_transaction(self, event=None):
@@ -196,19 +209,20 @@ class UndoManager(Service, ActionProvider):
         if event is None:
             event = _UndoManagerTransactionCommitted(None)
 
-        if event.context != "rollback" and self._current_transaction.can_execute():
+        current_transaction = self._current_transaction
+        self._current_transaction = None
+
+        if event.context != "rollback" and current_transaction.can_execute():
             if event.context == "undo":
-                self._redo_stack.append(self._current_transaction)
+                self._redo_stack.append(current_transaction)
             else:
                 if event.context != "redo":
                     self.clear_redo_stack()
-                self._undo_stack.append(self._current_transaction)
+                self._undo_stack.append(current_transaction)
                 while len(self._undo_stack) > self._stack_depth:
                     del self._undo_stack[0]
 
-        self._current_transaction = None
-
-        self._action_executed()
+            self._action_executed()
 
     @event_handler(TransactionRollback)
     def _on_transaction_rollback(self, event: TransactionRollback):
@@ -274,12 +288,13 @@ class UndoManager(Service, ActionProvider):
     def can_redo(self):
         return bool(self._redo_stack)
 
-    def _action_executed(self, event=None):
+    def _action_executed(self, state_changed=True):
         self.event_manager.handle(ActionEnabled("win.edit-undo", self.can_undo()))
         self.event_manager.handle(ActionEnabled("win.edit-redo", self.can_redo()))
-        self.event_manager.handle(UndoManagerStateChanged(self))
+        if state_changed:
+            self.event_manager.handle(UndoManagerStateChanged(self))
 
-    def lookup(self, id: str) -> Element:
+    def lookup(self, id: str) -> Base:
         if element := self.element_factory.lookup(id):
             return element
         else:
@@ -331,18 +346,12 @@ class UndoManager(Service, ActionProvider):
             event.element.save(save_func)
 
             def undo_delete_event():
-                # If diagram is not there, for some reason, recreate it.
-                # It's probably removed in the same transaction.
-                try:
-                    diagram: Diagram = self.lookup(diagram_id)  # type: ignore[assignment]
-                except ValueError:
-                    diagram = self.element_factory.create_as(Diagram, diagram_id)
+                diagram = self.lookup(diagram_id)
+                element = diagram.create_as(element_type, element_id)  # type: ignore[attr-defined]
 
-                element = diagram.create_as(element_type, element_id)
                 for name, ser in data.items():
                     for value in deserialize(ser, lambda ref: None):
                         element.load(name, value)
-
         else:
 
             def undo_delete_event():
@@ -430,3 +439,19 @@ class UndoManager(Service, ActionProvider):
         del event
 
         self.add_undo_action(undo_association_delete_event)
+
+    @event_handler(ElementTypeUpdated)
+    def undo_element_type_updated_event(self, event: ElementTypeUpdated):
+        element_id = event.element.id
+        old_class = event.old_class
+
+        def undo_element_type_updated_event():
+            element = self.lookup(element_id)
+            swap_element_type(element, old_class)
+
+        undo_element_type_updated_event.__doc__ = (
+            f"{event.element} class is {old_class}."
+        )
+        del event
+
+        self.add_undo_action(undo_element_type_updated_event)

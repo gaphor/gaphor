@@ -1,5 +1,3 @@
-from typing import Optional
-
 from gaphas.connector import Handle
 from gaphas.guide import GuidedItemHandleMoveMixin
 from gaphas.handlemove import ConnectionSinkType, HandleMove, ItemHandleMove
@@ -43,7 +41,7 @@ class GrayOutLineHandleMoveMixin:
 
     def glue(
         self, pos: Pos, distance: int = ItemHandleMove.GLUE_DISTANCE
-    ) -> Optional[ConnectionSinkType]:
+    ) -> ConnectionSinkType | None:
         sink = super().glue(pos, distance)  # type: ignore[misc]
         self.view.selection.dropzone_item = sink and sink.item
         return sink

@@ -1,19 +1,23 @@
 """The Sanitize module is dedicated to adapters (stuff) that keeps the model
 clean and in sync with diagrams."""
 
-
-from typing import Iterable
+from collections.abc import Iterable
 
 from gaphor import UML
 from gaphor.abc import Service
 from gaphor.core import event_handler
-from gaphor.core.modeling import Diagram, Element, Presentation
-from gaphor.core.modeling.event import AssociationDeleted, AssociationSet, DerivedSet
+from gaphor.core.modeling import Diagram, Presentation
+from gaphor.core.modeling.event import (
+    AssociationDeleted,
+    AssociationSet,
+    DerivedSet,
+    DiagramUpdateRequested,
+)
 from gaphor.diagram.deletable import deletable
-from gaphor.diagram.general import CommentLineItem
 from gaphor.event import Notification
 from gaphor.i18n import gettext
 from gaphor.transaction import TransactionBegin, TransactionCommit, TransactionRollback
+from gaphor.UML.general.comment import CommentLineItem
 
 
 def undo_guard(func):
@@ -38,9 +42,12 @@ class SanitizerService(Service):
         self.event_manager = event_manager
         self.properties = properties or {}
         self.in_undo_transaction = False
+        self._to_be_updated_diagrams = set()
 
         event_manager.subscribe(self._begin_transaction)
         event_manager.subscribe(self._end_transaction)
+        event_manager.subscribe(self._diagram_update_requested)
+        event_manager.subscribe(self._on_update_diagrams)
         event_manager.subscribe(self._unlink_on_subject_delete)
         event_manager.subscribe(self._update_annotated_element_link)
         event_manager.subscribe(self._unlink_on_extension_delete)
@@ -50,6 +57,8 @@ class SanitizerService(Service):
         event_manager = self.event_manager
         event_manager.unsubscribe(self._begin_transaction)
         event_manager.unsubscribe(self._end_transaction)
+        event_manager.unsubscribe(self._on_update_diagrams)
+        event_manager.unsubscribe(self._diagram_update_requested)
         event_manager.unsubscribe(self._unlink_on_subject_delete)
         event_manager.unsubscribe(self._update_annotated_element_link)
         event_manager.unsubscribe(self._unlink_on_extension_delete)
@@ -57,11 +66,21 @@ class SanitizerService(Service):
 
     @event_handler(TransactionBegin)
     def _begin_transaction(self, event):
-        self.in_undo_transaction = event.context in ("undo", "redo", "rollback")
+        self.in_undo_transaction = bool(event.context)
 
     @event_handler(TransactionCommit, TransactionRollback)
     def _end_transaction(self, _event):
         self.in_undo_transaction = False
+
+    @event_handler(DiagramUpdateRequested)
+    def _diagram_update_requested(self, event: DiagramUpdateRequested):
+        self._to_be_updated_diagrams.add(event.diagram)
+
+    @event_handler(TransactionCommit, TransactionRollback)
+    def _on_update_diagrams(self, event):
+        for diagram in self._to_be_updated_diagrams:
+            diagram.update()
+        self._to_be_updated_diagrams.clear()
 
     @event_handler(AssociationSet)
     @undo_guard
@@ -127,7 +146,7 @@ class SanitizerService(Service):
     @event_handler(DerivedSet)
     @undo_guard
     def _redraw_diagram_on_move(self, event):
-        if event.property is Element.owner and isinstance(event.element, Diagram):
+        if event.property is UML.Element.owner and isinstance(event.element, Diagram):
             diagram = event.element
             for item in diagram.get_all_items():
                 diagram.request_update(item)
@@ -142,7 +161,7 @@ def update_stereotype_application(stereotype: UML.Stereotype, seen=None):
 
     for instance_spec in list(stereotype.instanceSpecification):
         for e in list(instance_spec.extended):
-            names = {c.__name__ for c in type(e).__mro__ if issubclass(c, Element)}
+            names = {c.__name__ for c in type(e).__mro__ if issubclass(c, UML.Element)}
             if names.isdisjoint(metaclass_names):
                 del instance_spec.extended[e]
         if not instance_spec.extended:

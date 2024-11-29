@@ -1,15 +1,15 @@
 from __future__ import annotations
 
 import math
-from collections.abc import Iterable, Iterator, Sequence
+from collections.abc import Callable, Iterable, Iterator, Sequence
 from dataclasses import replace
 from enum import Enum
 from math import pi
-from typing import Callable, Protocol
+from typing import Protocol
 
 from gaphas.geometry import Rectangle
 
-from gaphor.core.modeling import DrawContext, Element, UpdateContext
+from gaphor.core.modeling import Base, DrawContext, UpdateContext
 from gaphor.core.modeling.diagram import lookup_attribute
 from gaphor.core.styling import (
     JustifyContent,
@@ -197,11 +197,9 @@ def rectangle_shrink(rect: Rectangle | None, padding: Padding) -> Rectangle:
 class Shape(Iterable, Protocol):
     def size(
         self, context: UpdateContext, bounding_box: Rectangle | None = None
-    ) -> tuple[Number, Number]:
-        ...
+    ) -> tuple[Number, Number]: ...
 
-    def draw(self, context: DrawContext, bounding_box: Rectangle) -> None:
-        ...
+    def draw(self, context: DrawContext, bounding_box: Rectangle) -> None: ...
 
 
 DEFAULT_PADDING = (0, 0, 0, 0)
@@ -249,7 +247,7 @@ class Box:
             self.sizes = sizes = [
                 c.size(child_context, new_bounds) for c in self.children
             ]
-            widths, heights = list(zip(*sizes))
+            widths, heights = list(zip(*sizes, strict=False))
             is_vertical = self._orientation == Orientation.VERTICAL
             padding_top, padding_right, padding_bottom, padding_left = padding
             return (
@@ -322,7 +320,7 @@ class Box:
             x = bounding_box.x + padding_left
             w = bounding_box.width - padding_right - padding_left
             last_child = self.children[-1]
-            for c, (_w, h) in zip(self.children, sizes):
+            for c, (_w, h) in zip(self.children, sizes, strict=False):
                 if c is last_child and justify_content is JustifyContent.START:
                     h = bounding_box.height - y
                 elif h < avg_height:
@@ -371,7 +369,7 @@ class Box:
             y = bounding_box.y + padding_top
             h = bounding_box.height - padding_bottom - padding_top
             last_child = self.children[-1]
-            for c, (w, _h) in zip(self.children, sizes):
+            for c, (w, _h) in zip(self.children, sizes, strict=False):
                 if c is last_child and justify_content is JustifyContent.START:
                     w = bounding_box.width - x
                 elif w < avg_width:
@@ -429,7 +427,7 @@ class IconBox:
         vertical_align = style.get("vertical-align", VerticalAlign.BOTTOM)
         vertical_spacing = style.get("vertical-spacing", 0)  # should be margin?
 
-        ws, hs = list(zip(*self.sizes))
+        ws, hs = list(zip(*self.sizes, strict=False))
         max_w = max(ws)
         total_h = sum(hs)
 
@@ -465,7 +463,7 @@ class IconBox:
             style={k: v for k, v in context.style.items() if k != "padding"},  # type: ignore[arg-type]
         )
         cx, cy, max_w, _total_h = self.child_pos(style, bounding_box)
-        for c, (cw, ch) in zip(self.children, self.sizes):
+        for c, (cw, ch) in zip(self.children, self.sizes, strict=False):
             c.draw(child_context, Rectangle(cx + (max_w - cw) / 2, cy, cw, ch))
             cy += ch
 
@@ -495,6 +493,7 @@ class Text:
     def size(self, context: UpdateContext, bounding_box: Rectangle | None = None):
         style = context.style
         min_w = style.get("min-width", 0)
+        max_w = style.get("max-width", 16384)
         min_h = style.get("min-height", 0)
         text_align = style.get("text-align", TextAlign.CENTER)
         white_space = style.get("white-space", WhiteSpace.NORMAL)
@@ -505,7 +504,7 @@ class Text:
             font=style,
             width=bounding_box.width
             if bounding_box and white_space == WhiteSpace.NORMAL
-            else -1,
+            else max_w,
             text_align=text_align,
         )
         width, height = layout.size()
@@ -513,7 +512,7 @@ class Text:
             "padding", DEFAULT_PADDING
         )
         return (
-            max(min_w, width + padding_right + padding_left),
+            min(max(min_w, width + padding_right + padding_left), max_w),
             max(min_h, height + padding_top + padding_bottom),
         )
 
@@ -544,7 +543,7 @@ class CssNode:
     def __init__(
         self,
         name: str,
-        element: Element | None,
+        element: Base | None,
         child: Shape,
     ):
         self.name = name

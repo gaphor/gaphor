@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from gaphor import UML
-from gaphor.core.modeling import Element, Presentation
+from gaphor.core.modeling import Presentation
 from gaphor.diagram.connectors import (
     Connector,
     DirectionalRelationshipConnect,
@@ -20,11 +20,6 @@ class DependencyConnect(DirectionalRelationshipConnect):
     """Connect two Named elements using a Dependency."""
 
     line: DependencyItem
-
-    def allow(self, handle, port):
-        return super().allow(handle, port) and isinstance(
-            self.element.subject, UML.NamedElement
-        )
 
     def connect_subject(self, handle):
         dependency_type = self.update_dependency_type(handle)
@@ -60,7 +55,9 @@ class AssociationConnect(RelationshipConnect):
 
     line: AssociationItem
 
-    def __init__(self, element: Presentation[Element], line: AssociationItem) -> None:
+    def __init__(
+        self, element: Presentation[UML.Element], line: AssociationItem
+    ) -> None:
         super().__init__(element, line)
         self._navigabilities = (
             list(line.subject.memberEnd[:].navigability) if line.subject else []
@@ -121,7 +118,7 @@ class AssociationConnect(RelationshipConnect):
         if relation:
             relation.memberEnd[0].type = head_subject
             relation.memberEnd[1].type = tail_subject
-            for end, nav in zip(relation.memberEnd, self._navigabilities):
+            for end, nav in zip(relation.memberEnd, self._navigabilities, strict=False):
                 UML.recipes.set_navigability(relation, end, nav)
         else:
             relation = self.new_relation(head_subject, tail_subject)
@@ -136,6 +133,7 @@ class AssociationConnect(RelationshipConnect):
             line.preferred_tail_navigability = "none"
 
         assert isinstance(relation, UML.Association)
+        assert isinstance(self.diagram, UML.Diagram)
 
         relation.package = owner_package(self.diagram.owner)
 

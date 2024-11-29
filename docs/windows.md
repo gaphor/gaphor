@@ -10,25 +10,13 @@ Older releases are available from [GitHub](https://github.com/gaphor/gaphor/rele
 
 ## Development Environment
 
-### Choco
+### WinGet
 
-We recommend using [Chocolately](https://chocolatey.org/) as a package manager
-in Windows.
+We recommend using [WinGet](https://learn.microsoft.com/en-us/windows/package-manager/winget) as a package manager in
+Windows. It is available on Windows 11 and modern versions of Windows 10 as a part of the App Installer.
 
-To install it, open PowerShell as an administrator, then execute:
-
-```PowerShell
-Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
-```
-
-To run local scripts in follow-on steps, also execute
-
-```PowerShell
-Set-ExecutionPolicy RemoteSigned
-```
-
-This allows for local PowerShell scripts
-to run without signing, but still requires signing for remote scripts.
+If you have a slightly older version of Windows, you can alternatively use [Chocolatey](https://chocolatey.org) as a
+package manager. After it is installed, execute `choco install` instead of the `winget install` commands below.
 
 ### Git
 
@@ -36,7 +24,7 @@ To set up a development environment in Windows first install
 [Git](https://gitforwindows.org) by executing as an administrator:
 
 ```PowerShell
-choco install git
+winget install git
 ```
 
 ### GTK and Python with Gvsbuild
@@ -66,17 +54,10 @@ The default installation options should be fine for use with Gaphor.
 
 Graphviz is used by Gaphor for automatic diagram formatting.
 
-1. Install from Chocolately with administrator PowerShell:
+1. Install from WinGet with administrator PowerShell:
 
    ```PowerShell
-   choco install graphviz
-   ```
-
-2. Restart your PowerShell terminal as a normal user and check that the dot
-   command is available:
-
-   ```PowerShell
-   dot -?
+   winget install graphviz
    ```
 
 #### Install pipx
@@ -98,6 +79,18 @@ Unzip the `GTK4_Gvsbuild_VERSION_x64.zip` file to `C:\gtk`. For example with 7Zi
 7z x GTK4_Gvsbuild_*.zip  -oC:\gtk -y
 ```
 
+The resulting directory structure should look like:
+
+```
+C:\gtk
+├── bin
+├── include
+├── lib
+├── python
+├── share
+└── wheels
+```
+
 ### Setup Gaphor
 
 In the same PowerShell terminal, clone the repository:
@@ -114,7 +107,7 @@ pipx install poetry
 
 Add GTK to your environmental variables:
 ```PowerShell
-$env:Path = $env:Path + ";C:\gtk\bin"
+$env:Path = $env:Path + ";C:\gtk\bin;C:\Program Files\Graphviz\bin"
 $env:LIB = "C:\gtk\lib"
 $env:INCLUDE = "C:\gtk\include;C:\gtk\include\cairo;C:\gtk\include\glib-2.0;C:\gtk\include\gobject-introspection-1.0;C:\gtk\lib\glib-2.0\include;"
 $env:XDG_DATA_HOME = "$HOME\.local\share"
@@ -128,9 +121,35 @@ Install Gaphor's dependencies
 poetry install
 ```
 
-Install the git hook scripts
-```Powershell
-poetry run pre-commit install
+Reinstall PyGObject and pycairo using gvsbuild wheels
+```PowerShell
+poetry run pip install --force-reinstall (Resolve-Path C:\gtk\wheels\PyGObject*.whl)
+poetry run pip install --force-reinstall (Resolve-Path C:\gtk\wheels\pycairo*.whl)
+```
+
+Launch Gaphor!
+```PowerShell
+poetry run gaphor
+```
+
+### Setting Up A Plugin Workspace for Gaphor
+
+When setting up a plugin workspace you need to perform the following steps:
+
+cd (your project's workspace)
+
+If your project does not already have a pyproject.toml file, create one. For details see the [Poetry
+documentation](https://python-poetry.org/docs/basic-usage/). If you already have a .toml file, make sure you have gaphor
+as a development dependency. For details see the [Gaphor Hello World Plugin](https://github.com/gaphor/gaphor_plugin_helloworld).
+
+```PowerShell
+poetry init
+```
+
+Install your project's dependencies. If you have made your project dependent upon Gaphor, this will pull in Gaphor.
+
+```PowerShell
+poetry install
 ```
 
 Reinstall PyGObject and pycairo using gvsbuild wheels
@@ -138,6 +157,9 @@ Reinstall PyGObject and pycairo using gvsbuild wheels
 poetry run pip install --force-reinstall (Resolve-Path C:\gtk\wheels\PyGObject*.whl)
 poetry run pip install --force-reinstall (Resolve-Path C:\gtk\wheels\pycairo*.whl)
 ```
+
+Note that if you have forgotten to reinstall PyGObject and pycairo, the first time you add an element to a diagram that
+has text, gaphor will crash!
 
 Launch Gaphor!
 ```PowerShell
@@ -170,6 +192,17 @@ To start the debugger, execute the following steps:
 
 Visual Studio Code will start the application in debug mode, and will stop at main.
 
+### Debugging Your Plugin Using Visual Studio Code
+
+cd (your project's workspace)
+
+Start gaphor:
+1. In the VSCode menu, select Run → Start debugging
+2. Choose Select module from the list
+3. Enter `gaphor` as module name
+
+Your plugin should appear under the Tools menu.
+
 ## Packaging for Windows
 
 In order to create an exe installation package for Windows, we utilize
@@ -181,7 +214,7 @@ script that creates a Windows installer using
 administrator, then execute:
 
 ```PowerShell
-choco install nsis 7zip
+winget install nsis 7zip
 ```
 
 Then build your installer using:
@@ -195,14 +228,14 @@ poetry run poe win-installer
 
 ## Limited Anaconda Install
 
-Sometimes, it may be helpful to call gaphor functionality from a python console on computers without the ability for a full development install (e.g., without administrative privileges). Because not all necessary gaphor build dependencies (specifically,  `gtksourceview5` and `libadwaita`) are not available as anaconda packages, you will not be able to build the program or instantiate/run application classes like `Application` and `Session`.
+Sometimes, it may be helpful to call Gaphor functionality from a python console on computers without the ability for a full development install (e.g., without administrative privileges). Because not all necessary Gaphor build dependencies (specifically,  `gtksourceview5` and `libadwaita`) are not available as anaconda packages, you will not be able to build the program or instantiate/run application classes like `Application` and `Session`.
 
-However, this setup can still be helpful if you want to use or call gaphor as a library in the context of a larger project. In these cases, gaphor can be installed as a package in an anaconda environment using the following process:
+However, this setup can still be helpful if you want to use or call Gaphor as a library in the context of a larger project. In these cases, Gaphor can be installed as a package in an anaconda environment using the following process:
 
 
 ### Create new anaconda environment
 
-If you use anaconda for other projects, it's a good idea to create a new environment for gaphor, so that its dependencies don't end up conflicting with your pre-existing development environment. To do this, run the following command from anaconda prompt:
+If you use anaconda for other projects, it's a good idea to create a new environment for Gaphor, so that its dependencies don't end up conflicting with your pre-existing development environment. To do this, run the following command from anaconda prompt:
 
 ```
 conda create -n "gaphor"
@@ -220,7 +253,7 @@ conda update --all
 
 ### Install dependencies
 
-The following gaphor dependencies are installable from anaconda:
+The following Gaphor dependencies are installable from anaconda:
 ```
 conda install graphviz
 conda install -c conda-forge gobject-introspection gtk4 pygobject pycairo hicolor-icon-theme adwaita-icon-theme
@@ -229,7 +262,7 @@ Unfortunately, the `gtksourceview5` and `libadwaita` dependencies are not availa
 
 ### Set up your development environment
 
-Now, to develop with gaphor, you will want to set it up with your development. If you want to work with `ipython`, install it below:
+Now, to develop with Gaphor, you will want to set it up with your development. If you want to work with `ipython`, install it below:
 ```
 conda install ipython ipykernel
 ```
@@ -245,9 +278,9 @@ conda install spyder-kernels=2.4
 ```
 Then, in spyder, set 'gaphor' as your python interpreter
 
-### Install gaphor
+### Install Gaphor
 
-From a python console running within your new anaconda environment, you may then install gaphor using pip:
+From a python console running within your new anaconda environment, you may then install Gaphor using pip:
 
 ```
 pip install gaphor

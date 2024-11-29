@@ -1,10 +1,10 @@
 from gaphor import UML
-from gaphor.core import transactional
 from gaphor.diagram.propertypages import (
     PropertyPageBase,
     PropertyPages,
     new_resource_builder,
 )
+from gaphor.transaction import Transaction
 from gaphor.UML.interactions.interactionsconnect import get_lifeline
 from gaphor.UML.interactions.message import MessageItem
 from gaphor.UML.propertypages import list_of_classifiers
@@ -16,9 +16,10 @@ new_builder = new_resource_builder("gaphor.UML.interactions")
 class LifelinePropertyPage(PropertyPageBase):
     order = 31
 
-    def __init__(self, subject: UML.Lifeline):
+    def __init__(self, subject: UML.Lifeline, event_manager):
         super().__init__()
         self.subject = subject
+        self.event_manager = event_manager
 
     def construct(self):
         if not self.subject:
@@ -45,15 +46,15 @@ class LifelinePropertyPage(PropertyPageBase):
 
         return builder.get_object("lifeline-editor")
 
-    @transactional
     def _on_property_type_changed(self, dropdown, _pspec):
         subject = self.subject
-        if id := dropdown.get_selected_item().value:
-            element = subject.model.lookup(id)
-            assert isinstance(element, UML.ConnectableElement)
-            subject.represents = element
-        else:
-            del subject.represents
+        with Transaction(self.event_manager):
+            if id := dropdown.get_selected_item().value:
+                element = subject.model.lookup(id)
+                assert isinstance(element, UML.ConnectableElement)
+                subject.represents = element
+            else:
+                del subject.represents
 
 
 @PropertyPages.register(MessageItem)
@@ -75,8 +76,9 @@ class MessagePropertyPage(PropertyPageBase):
         "deleteMessage",
     )
 
-    def __init__(self, item):
+    def __init__(self, item, event_manager):
         self.item = item
+        self.event_manager = event_manager
 
     def construct(self):
         item = self.item
@@ -106,7 +108,6 @@ class MessagePropertyPage(PropertyPageBase):
 
         return builder.get_object("message-editor")
 
-    @transactional
     def _on_message_sort_change(self, dropdown, _pspec):
         """Update message item's message sort information."""
 
@@ -116,14 +117,15 @@ class MessagePropertyPage(PropertyPageBase):
         subject = item.subject
         lifeline = get_lifeline(item, item.tail)
 
-        # allow only one delete message to connect to lifeline's lifetime
-        # destroyed status can be changed only by delete message itself
-        if lifeline and (
-            subject.messageSort == "deleteMessage" or not lifeline.is_destroyed
-        ):
-            is_destroyed = ms == "deleteMessage"
-            lifeline.is_destroyed = is_destroyed
-            lifeline.request_update()
+        with Transaction(self.event_manager):
+            # allow only one delete message to connect to lifeline's lifetime
+            # destroyed status can be changed only by delete message itself
+            if lifeline and (
+                subject.messageSort == "deleteMessage" or not lifeline.is_destroyed
+            ):
+                is_destroyed = ms == "deleteMessage"
+                lifeline.is_destroyed = is_destroyed
+                lifeline.request_update()
 
-        subject.messageSort = ms
-        item.request_update()
+            subject.messageSort = ms
+            item.request_update()

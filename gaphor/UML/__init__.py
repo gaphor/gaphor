@@ -10,3 +10,6 @@ import gaphor.UML.iconname
 import gaphor.UML.group
 import gaphor.UML.modelinglanguage
 import gaphor.UML.recipes
+
+
+__modeling_language__ = "UML"

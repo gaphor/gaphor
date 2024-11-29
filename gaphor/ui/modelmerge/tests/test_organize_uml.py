@@ -1,4 +1,4 @@
-from typing import Iterable
+from collections.abc import Iterable
 
 from gaphor import UML
 from gaphor.core.changeset.compare import compare

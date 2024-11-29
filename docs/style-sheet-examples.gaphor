@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="2.23.0">
+<gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="2.26.0">
 <Package id="9d588440-d7c2-11ea-b8c5-37ef9fca94cd">
 <name>
 <val>style-sheets</val>
@@ -15,6 +15,7 @@
 <ref refid="380f8d3c-fd67-11ec-9897-a87eeaeedf68"/>
 <ref refid="98156b60-78ce-11ed-825f-0456e5e540ed"/>
 <ref refid="3803e134-a98d-11ee-b5e8-be7f4daace3f"/>
+<ref refid="08aee2fa-5ba6-11ef-8b35-be7f4daace40"/>
 </reflist>
 </ownedDiagram>
 <ownedType>
@@ -31,6 +32,7 @@
 <ref refid="d419722e-d7c6-11ea-b8c5-37ef9fca94cd"/>
 <ref refid="a28fadf8-78ce-11ed-825f-0456e5e540ed"/>
 <ref refid="4accd6f4-a98d-11ee-b5e8-be7f4daace3f"/>
+<ref refid="10a0762c-5ba6-11ef-8b35-be7f4daace40"/>
 </reflist>
 </ownedType>
 </Package>
@@ -116,6 +118,9 @@ diagram[name=abstract] :is(name, operation)[isabstract]::after {
   content: " {abstract}"
 }
 
+diagram[name=wrap-text] class * {
+ white-space: normal;
+}
 </val>
 </styleSheet>
 </StyleSheet>
@@ -1253,4 +1258,66 @@ diagram[name=abstract] :is(name, operation)[isabstract]::after {
 <val>normalOperation</val>
 </name>
 </Operation>
+<Diagram id="08aee2fa-5ba6-11ef-8b35-be7f4daace40">
+<diagramType>
+<val></val>
+</diagramType>
+<element>
+<ref refid="9d588440-d7c2-11ea-b8c5-37ef9fca94cd"/>
+</element>
+<name>
+<val>wrap-text</val>
+</name>
+<ownedPresentation>
+<reflist>
+<ref refid="10a1374c-5ba6-11ef-8b35-be7f4daace40"/>
+</reflist>
+</ownedPresentation>
+</Diagram>
+<Class id="10a0762c-5ba6-11ef-8b35-be7f4daace40">
+<name>
+<val>MyClass</val>
+</name>
+<ownedAttribute>
+<reflist>
+<ref refid="1b94b174-5ba6-11ef-8b35-be7f4daace40"/>
+</reflist>
+</ownedAttribute>
+<package>
+<ref refid="9d588440-d7c2-11ea-b8c5-37ef9fca94cd"/>
+</package>
+<presentation>
+<reflist>
+<ref refid="10a1374c-5ba6-11ef-8b35-be7f4daace40"/>
+</reflist>
+</presentation>
+</Class>
+<ClassItem id="10a1374c-5ba6-11ef-8b35-be7f4daace40">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 177.5703125, 99.21875)</val>
+</matrix>
+<top-left>
+<val>(0.0, 0.0)</val>
+</top-left>
+<width>
+<val>186.76171875</val>
+</width>
+<height>
+<val>108.65625</val>
+</height>
+<diagram>
+<ref refid="08aee2fa-5ba6-11ef-8b35-be7f4daace40"/>
+</diagram>
+<subject>
+<ref refid="10a0762c-5ba6-11ef-8b35-be7f4daace40"/>
+</subject>
+</ClassItem>
+<Property id="1b94b174-5ba6-11ef-8b35-be7f4daace40">
+<class_>
+<ref refid="10a0762c-5ba6-11ef-8b35-be7f4daace40"/>
+</class_>
+<name>
+<val>attr = "value with a very long that that should be wrapped"</val>
+</name>
+</Property>
 </gaphor>

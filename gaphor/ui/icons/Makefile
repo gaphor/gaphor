@@ -129,7 +129,13 @@ ICONS=diagram \
 	unsafe-control-action \
 	relevant-to \
 	control-action \
-	control-structure
+	control-structure \
+	goal \
+	solution \
+	strategy \
+	context \
+	assumption \
+	justification
 
 
 ICON_THEME=hicolor/scalable/actions

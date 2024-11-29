@@ -19,8 +19,17 @@ diagramview {
   background: white;
 }
 
+.diagram-toolbar {
+  margin: 12px;
+  padding: 6px;
+  border-radius: 12px;
+  background-color: alpha(@window_bg_color, 0.95);
+  border: 1px solid @borders;
+  box-shadow: 0px 3px 6px @shade_color;
+}
+
 .status-window box {
-  padding: 12px;
+  padding: 24px;
 }
 
 .dropdown-small {
@@ -62,6 +71,10 @@ flowboxchild {
 }
 
 .propertypage .title {
+  margin-top: 6px;
+}
+
+.propertypage .plaintext {
   margin-top: 6px;
 }
 
@@ -137,12 +150,12 @@ tabbar > revealer > box,
   color: @sidebar_fg_color;
 }
 
-#element_editor .title {
-  font-weight: bold;
+#element_editor {
+  min-width: 320px;
 }
 
-#element_editor {
-  min-width: 270px;
+#element_editor .title {
+  font-weight: bold;
 }
 
 #toolbox > viewport > box {

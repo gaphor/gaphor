@@ -5,8 +5,9 @@ Ayoub.
 """
 
 import re
+from collections.abc import Callable, Iterator
 from functools import singledispatch
-from typing import Callable, Dict, Iterator, Literal, Tuple, Union
+from typing import Literal
 
 import tinycss2
 
@@ -17,10 +18,10 @@ from gaphor.core.styling.declarations import parse_declarations
 split_whitespace = re.compile("[^ \t\r\n\f]+").findall
 
 
-Rule = Union[
-    Tuple[Callable[[object], bool], Dict[str, object]],
-    Tuple[Literal["error"], Union[tinycss2.ast.ParseError, selectors.SelectorError]],
-]
+Rule = (
+    tuple[Callable[[object], bool], dict[str, object]]
+    | tuple[Literal["error"], tinycss2.ast.ParseError | selectors.SelectorError]
+)
 
 
 def compile_style_sheet(*css: str) -> Iterator[Rule]:

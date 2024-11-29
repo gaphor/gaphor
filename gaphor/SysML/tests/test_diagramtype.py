@@ -1,7 +1,7 @@
 import pytest
 
 from gaphor.SysML.diagramtype import DiagramDefault, SysMLDiagramType
-from gaphor.UML.uml import NamedElement
+from gaphor.UML import NamedElement
 
 
 class MockElementA(NamedElement):

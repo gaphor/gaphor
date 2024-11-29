@@ -1,11 +1,11 @@
 import pytest
 
 from gaphor.core.modeling import Presentation
-from gaphor.diagram.general import CommentLineItem
 from gaphor.diagram.presentation import Classified, Named
 from gaphor.diagram.support import get_model_element
 from gaphor.SysML import diagramitems
-from gaphor.UML import Classifier, NamedElement
+from gaphor.UML import Classifier, NamedElement, Relationship
+from gaphor.UML.general import CommentLineItem
 
 
 def _issubclass(child, parent):
@@ -49,7 +49,7 @@ def test_all_named_elements_have_named_items(item_class, element_class):
         assert issubclass(item_class, Named)
 
     if issubclass(item_class, Named):
-        assert issubclass(element_class, NamedElement)
+        assert issubclass(element_class, NamedElement | Relationship)
 
 
 CLASSIFIED_EXCLUSIONS = []

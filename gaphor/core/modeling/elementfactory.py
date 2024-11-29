@@ -3,14 +3,14 @@
 from __future__ import annotations
 
 from collections import OrderedDict
+from collections.abc import Callable, Iterator
 from contextlib import contextmanager
-from typing import Callable, Iterator, Protocol, TypeVar, overload
+from typing import Protocol, TypeVar, overload
 
 from gaphor.abc import Service
 from gaphor.core.eventmanager import EventManager, event_handler
-from gaphor.core.modeling.diagram import Diagram
-from gaphor.core.modeling.element import (
-    Element,
+from gaphor.core.modeling.base import (
+    Base,
     EventWatcherProtocol,
     Handler,
     Id,
@@ -18,6 +18,7 @@ from gaphor.core.modeling.element import (
     UnlinkEvent,
     generate_id,
 )
+from gaphor.core.modeling.diagram import Diagram
 from gaphor.core.modeling.elementdispatcher import ElementDispatcher, EventWatcher
 from gaphor.core.modeling.event import (
     ElementCreated,
@@ -26,13 +27,12 @@ from gaphor.core.modeling.event import (
 )
 from gaphor.core.modeling.presentation import Presentation
 
-T = TypeVar("T", bound=Element)
+T = TypeVar("T", bound=Base)
 P = TypeVar("P", bound=Presentation)
 
 
 class EventHandler(Protocol):
-    def handle(self, *events):
-        ...
+    def handle(self, *events): ...
 
 
 class RecordingEventManager:
@@ -49,15 +49,13 @@ class RecordingEventManager:
 
 
 class ElementFactory(Service):
-    """The ElementFactory is used to create elements and do lookups to
-    elements.
+    """The ``ElementFactory`` is used as a central repository for a model.
 
-    Notifications are sent as arguments (name, element, `*user_data`).
-    The following names are used:
-    create - a new model element is created (element is newly created element)
-    remove - a model element is removed (element is to be removed element)
-    model - a new model has been loaded (element is None) flush - model is
-      flushed: all element are removed from the factory (element is None)
+    New model elements should be created by
+    :obj:`~gaphor.core.modeling.ElementFactory.create`.
+
+    Methods like :obj:`~gaphor.core.modeling.ElementFactory.select` can
+    be used to find elements in the model.
     """
 
     def __init__(
@@ -67,7 +65,7 @@ class ElementFactory(Service):
     ):
         self.event_manager: EventHandler | None = event_manager
         self.element_dispatcher = element_dispatcher
-        self._elements: dict[Id, Element] = OrderedDict()
+        self._elements: dict[Id, Base] = OrderedDict()
         if event_manager:
             event_manager.subscribe(self._on_unlink_event)
 
@@ -77,7 +75,12 @@ class ElementFactory(Service):
             self.event_manager.unsubscribe(self._on_unlink_event)
 
     def create(self, type: type[T]) -> T:
-        """Create a new model element of type ``type``."""
+        """Create a new model element of type ``type``.
+
+        This method will only create model elements,
+        not :obj:`~gaphor.core.modeling.Presentation` elements: those
+        are created by :obj:`~gaphor.core.modeling.Diagram`.
+        """
         return self.create_as(type, generate_id())
 
     def create_as(self, type: type[T], id: Id, diagram: Diagram | None = None) -> T:
@@ -90,7 +93,7 @@ class ElementFactory(Service):
             element = self._elements[id]
             if not isinstance(element, type):
                 raise TypeError(
-                    "Element {element} already exists but has a different type  {type}"
+                    f"Element {element} already exists but has a different type {type}"
                 )
             return element
 
@@ -99,7 +102,7 @@ class ElementFactory(Service):
             if not diagram:
                 raise TypeError("Presentation types require a diagram")
             type_args = {"diagram": diagram}
-        elif issubclass(type, Element):
+        elif issubclass(type, Base):
             if diagram:
                 raise TypeError("Element types require no diagram")
             type_args = {"model": self}
@@ -119,34 +122,38 @@ class ElementFactory(Service):
         """Return the amount of elements currently in the factory."""
         return len(self._elements)
 
-    def lookup(self, id: Id) -> Element | None:
+    def lookup(self, id: Id) -> Base | None:
         """Find element with a specific id."""
         return self._elements.get(id)
 
-    def __getitem__(self, id: Id) -> Element:
+    def __getitem__(self, id: Id) -> Base:
         return self._elements[id]
 
     def __iter__(self):
         return iter(self._elements.values())
 
-    def __contains__(self, element: Element) -> bool:
+    def __contains__(self, element: Base) -> bool:
         assert isinstance(element.id, Id)
         return self.lookup(element.id) is element
 
     @overload
-    def select(self, expression: Callable[[Element], bool]) -> Iterator[Element]:
-        ...
+    def select(self, expression: Callable[[Base], bool]) -> Iterator[Base]: ...
 
     @overload
-    def select(self, expression: type[T]) -> Iterator[T]:
-        ...
+    def select(self, expression: type[T]) -> Iterator[T]: ...
 
     @overload
-    def select(self, expression: None) -> Iterator[Element]:
-        ...
+    def select(self, expression: None) -> Iterator[Base]: ...
 
     def select(self, expression=None):
-        """Iterate elements that comply with expression."""
+        """Iterate elements that comply with expression.
+
+        Expressions can be:
+
+        * :obj:`None`: return all elements.
+        * A type: return all elements of that type, or subtypes.
+        * An expression.
+        """
         if expression is None:
             yield from self._elements.values()
         elif isinstance(expression, type):
@@ -155,31 +162,27 @@ class ElementFactory(Service):
             yield from (e for e in self._elements.values() if expression(e))
 
     def lselect(
-        self, expression: Callable[[Element], bool] | type[T] | None = None
-    ) -> list[Element]:
-        """Get a list of elements that comply with expression.
-
-        The expression can be one of:
-        - None: return all elements
-        - class name: return all elements of type `class name`
-        - expression(e: Element) -> bool: return elements that comply with expression
+        self, expression: Callable[[Base], bool] | type[T] | None = None
+    ) -> list[Base]:
+        """Like :obj:`~gaphor.core.modeling.ElementFactory.select`, but
+        return a list, instead of an iterator.
         """
         return list(self.select(expression))
 
     def keys(self) -> Iterator[Id]:
-        """Return a list with all id's in the factory."""
+        """Iterate all id's in the factory."""
         return iter(self._elements.keys())
 
-    def values(self) -> Iterator[Element]:
-        """Return a list with all elements in the factory."""
+    def values(self) -> Iterator[Base]:
+        """Iterate all elements in the factory."""
         return iter(self._elements.values())
 
     def is_empty(self) -> bool:
-        """Returns True if the factory holds no elements."""
+        """Returns ``True`` if the factory holds no elements."""
         return bool(self._elements)
 
     def watcher(
-        self, element: Element, default_handler: Handler | None = None
+        self, element: Base, default_handler: Handler | None = None
     ) -> EventWatcherProtocol:
         element_dispatcher = self.element_dispatcher
         return EventWatcher(element, element_dispatcher, default_handler)

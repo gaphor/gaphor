@@ -3,6 +3,7 @@
 Everything is about services so the Case can define it's required
 services and start off.
 """
+
 # ruff: noqa: I001
 from __future__ import annotations
 
@@ -16,22 +17,23 @@ import gaphor.services.properties
 # Load gaphor.ui first, so GTK library versions are set corrently
 import gaphor.ui  # noqa: F401
 
-from gaphas.view import GtkView
 
 from gaphor.core import Transaction
 from gaphor.core.eventmanager import EventManager
-from gaphor.core.modeling import Diagram, ElementFactory
+from gaphor.core.modeling import ElementFactory
 from gaphor.core.modeling.elementdispatcher import ElementDispatcher
 from gaphor.core.modeling.modelinglanguage import (
     CoreModelingLanguage,
     MockModelingLanguage,
 )
+from gaphor.diagram.general.modelinglanguage import GeneralModelingLanguage
 from gaphor.diagram.painter import ItemPainter
-from gaphor.diagram.selection import Selection
 from gaphor.storage import storage
 from gaphor.SysML.modelinglanguage import SysMLModelingLanguage
 from gaphor.UML.modelinglanguage import UMLModelingLanguage
 from gaphor.UML.sanitizerservice import SanitizerService
+from gaphor.UML.uml import Diagram
+from gaphor.ui.diagramview import DiagramView
 
 
 @pytest.fixture(autouse=True)
@@ -56,7 +58,10 @@ def element_factory(event_manager, modeling_language):
 @pytest.fixture
 def modeling_language():
     return MockModelingLanguage(
-        CoreModelingLanguage(), UMLModelingLanguage(), SysMLModelingLanguage()
+        CoreModelingLanguage(),
+        GeneralModelingLanguage(),
+        UMLModelingLanguage(),
+        SysMLModelingLanguage(),
     )
 
 
@@ -132,7 +137,7 @@ def models():
 
 @pytest.fixture
 def view(diagram):
-    view = GtkView(model=diagram, selection=Selection())
+    view = DiagramView(model=diagram)
     item_painter = ItemPainter(view.selection)
     view.painter = item_painter
     view.bounding_box_painter = item_painter
@@ -141,5 +146,5 @@ def view(diagram):
 
 @pytest.fixture(autouse=True)
 def tmp_get_cache_config_dir(tmp_path, monkeypatch):
-    monkeypatch.setattr(gaphor.services.properties, "get_config_dir", lambda: tmp_path)
-    monkeypatch.setattr(gaphor.services.properties, "get_cache_dir", lambda: tmp_path)
+    monkeypatch.setattr(gaphor.settings, "get_config_dir", lambda: tmp_path)
+    monkeypatch.setattr(gaphor.settings, "get_cache_dir", lambda: tmp_path)

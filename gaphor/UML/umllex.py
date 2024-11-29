@@ -6,7 +6,6 @@ operations. The regular expressions are constructed based on a series of
 attribute/operation.
 """
 
-
 import contextlib
 
 __all__ = ["parse_property", "parse_operation"]
@@ -33,7 +32,9 @@ multa_subpat = r"\s*(\[?((?P<mult_l>[0-9]+)\s*\.\.)?\s*(?P<mult_u>([0-9]+|\*))\]
 type_subpat = r"\s*(:\s*(?P<type>[a-zA-Z_]\w*( +\w+| *\| *\w+| *<[\w\| ]*>)*))?"
 
 # default value (optional) ::= '=' default
-default_subpat = r"\s*(=\s*(?P<default>\S+))?"
+default_subpat = (
+    r"\s*(=\s*(?P<default>((?P<oq>[\"'])(?:(?=(?P<ec>\\?))(?P=ec).)*?(?P=oq))|(\S+)))?"
+)
 
 # tagged values (optional) ::= '{' tags '}'
 tags_subpat = r"\s*(\{\s*(?P<tags>.*?)\s*\})?"
@@ -91,7 +92,9 @@ association_end_name_pat = compile(
 
 # Association end multiplicity:
 #   [mult] [{ tagged values }]
-association_end_mult_pat = compile(f"^{multa_subpat}{tags_subpat}{garbage_subpat}")
+association_end_mult_pat = compile(
+    f"^{vis_subpat}{derived_subpat}{multa_subpat}{tags_subpat}{garbage_subpat}"
+)
 
 
 # Operation:
@@ -175,7 +178,7 @@ def parse_attribute(el: uml.Property, s: str) -> None:
     else:
         g = m.group
         _set_visibility(el, g("vis"))
-        el.isDerived = g("derived") and True or False
+        el.isDerived = bool(g("derived"))
         el.name = g("name")
         el.typeValue = g("type")
         el.lowerValue = g("mult_l")
@@ -205,6 +208,8 @@ def parse_association_end(el: uml.Property, s: str) -> None:
 
     if m and m.group("mult_u") or m.group("tags"):
         g = m.group
+        _set_visibility(el, g("vis"))
+        el.isDerived = bool(g("derived"))
         el.lowerValue = g("mult_l")
         el.upperValue = g("mult_u")
     else:
@@ -217,7 +222,7 @@ def parse_association_end(el: uml.Property, s: str) -> None:
             del el.note
         else:
             _set_visibility(el, g("vis"))
-            el.isDerived = g("derived") and True or False
+            el.isDerived = bool(g("derived"))
             el.name = g("name")
             el.note = g("note")
             # Optionally, the multiplicity and tagged values may be defined:
@@ -230,6 +235,12 @@ def parse_association_end(el: uml.Property, s: str) -> None:
                 el.upperValue = g("mult_u")
             elif g("has_mult") and not g("mult_u"):
                 el.upperValue = "*"
+
+
+@parse.register(uml.Element)
+def parse_namedelement(el: uml.Element, text: str) -> None:
+    """Parse element by simply assigning text to its name."""
+    el.name = text
 
 
 @parse.register(uml.Property)
@@ -348,9 +359,3 @@ def parse_lifeline(el: uml.Lifeline, s: str) -> None:
 
 def render_lifeline(el: uml.Lifeline) -> str:
     return el.name or ""
-
-
-@parse.register(uml.NamedElement)
-def parse_namedelement(el: uml.NamedElement, text: str) -> None:
-    """Parse named element by simply assigning text to its name."""
-    el.name = text

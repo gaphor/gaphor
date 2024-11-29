@@ -22,7 +22,7 @@ class PartitionItem(ElementPresentation[UML.ActivityPartition]):
         self.min_height = 300
         self._loading = False
         self.watch("subject[NamedElement].name", self.change_name)
-        self.watch("subject.appliedStereotype.classifier.name")
+        self.watch("subject[Element].appliedStereotype.classifier.name")
         self.watch("partition", self.update_shapes)
         self.watch("partition.name")
         self.watch("partition[ActivityPartition].represents[NamedElement].name")
@@ -85,7 +85,7 @@ class PartitionItem(ElementPresentation[UML.ActivityPartition]):
             partition_width = self.width / 2
 
         right = self.handles()[0].pos.x
-        x, y = pos
+        x, _y = pos
         for p in partitions:
             right += partition_width
             if x < right:

@@ -64,7 +64,7 @@ class ActorItem(Classified, ElementPresentation):
         add(self, constraint(vertical=(self._handles[SE].pos, self._sub_text_port.end)))
 
         self.watch("subject[NamedElement].name", self.change_name)
-        self.watch("subject.appliedStereotype.classifier.name")
+        self.watch("subject[Element].appliedStereotype.classifier.name")
         self.watch("subject[Classifier].isAbstract", self.update_shapes)
 
     def update_shapes(self, event=None):
@@ -78,7 +78,7 @@ class ActorItem(Classified, ElementPresentation):
 
     def update(self, context):
         super().update(context)
-        _xs, ys = list(zip(*self.shape.sizes))
+        _xs, ys = list(zip(*self.shape.sizes, strict=False))
         self.text_height = sum(ys)
 
     def point(self, x: float, y: float) -> float:

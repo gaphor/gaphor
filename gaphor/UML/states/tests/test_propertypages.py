@@ -8,7 +8,7 @@ from gaphor.UML.states.propertypages import (
 from gaphor.UML.states.state import StateItem
 
 
-def test_state_property_page_entry(element_factory):
+def test_state_property_page_entry(element_factory, event_manager):
     # Create some behavior elements
     opt1 = element_factory.create(UML.Activity)
     opt1.name = "option 1"
@@ -18,7 +18,7 @@ def test_state_property_page_entry(element_factory):
 
     # Create subject property page
     subject = element_factory.create(UML.State)
-    property_page = StatePropertyPage(subject)
+    property_page = StatePropertyPage(subject, event_manager)
 
     widget = property_page.construct()
     do_activity = find(widget, "entry")
@@ -44,7 +44,7 @@ def test_state_property_page_entry(element_factory):
     assert not subject.entry
 
 
-def test_state_property_page_exit(element_factory):
+def test_state_property_page_exit(element_factory, event_manager):
     # Create some behavior elements
     opt1 = element_factory.create(UML.Activity)
     opt1.name = "option 1"
@@ -54,7 +54,7 @@ def test_state_property_page_exit(element_factory):
 
     # Create subject property page
     subject = element_factory.create(UML.State)
-    property_page = StatePropertyPage(subject)
+    property_page = StatePropertyPage(subject, event_manager)
 
     widget = property_page.construct()
     do_activity = find(widget, "exit")
@@ -80,7 +80,7 @@ def test_state_property_page_exit(element_factory):
     assert not subject.exit
 
 
-def test_state_property_page_do_activity(element_factory):
+def test_state_property_page_do_activity(element_factory, event_manager):
     # Create some behavior elements
     opt1 = element_factory.create(UML.Activity)
     opt1.name = "option 1"
@@ -90,7 +90,7 @@ def test_state_property_page_do_activity(element_factory):
 
     # Create subject property page
     subject = element_factory.create(UML.State)
-    property_page = StatePropertyPage(subject)
+    property_page = StatePropertyPage(subject, event_manager)
 
     widget = property_page.construct()
     do_activity = find(widget, "do-activity")
@@ -116,9 +116,9 @@ def test_state_property_page_do_activity(element_factory):
     assert not subject.doActivity
 
 
-def test_transition_property_page(element_factory):
+def test_transition_property_page(element_factory, event_manager):
     subject = element_factory.create(UML.Transition)
-    property_page = TransitionPropertyPage(subject)
+    property_page = TransitionPropertyPage(subject, event_manager)
 
     widget = property_page.construct()
     guard = find(widget, "guard")
@@ -127,9 +127,9 @@ def test_transition_property_page(element_factory):
     assert subject.guard.specification == "test"
 
 
-def test_region_property_page(create):
+def test_region_property_page(create, event_manager):
     item = create(StateItem, UML.State)
-    property_page = RegionPropertyPage(item)
+    property_page = RegionPropertyPage(item, event_manager)
 
     widget = property_page.construct()
     num_regions = find(widget, "num-regions")

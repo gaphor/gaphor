@@ -140,27 +140,27 @@ def _resize_elements_max_size(elements: set[ElementPresentation]):
 
 
 def _left_edge(elements: set[ElementPresentation]):
-    return min({_pos_x(item) for item in elements})
+    return min(_pos_x(item) for item in elements)
 
 
 def _right_edge(elements: set[ElementPresentation]):
-    return max({_pos_x(item) + item.width for item in elements})
+    return max(_pos_x(item) + item.width for item in elements)
 
 
 def _top_edge(elements: set[ElementPresentation]):
-    return min({_pos_y(item) for item in elements})
+    return min(_pos_y(item) for item in elements)
 
 
 def _bottom_edge(elements: set[ElementPresentation]):
-    return max({_pos_y(item) + item.height for item in elements})
+    return max(_pos_y(item) + item.height for item in elements)
 
 
 def _max_width(elements: set[ElementPresentation]):
-    return max({item.width for item in elements})
+    return max(item.width for item in elements)
 
 
 def _max_height(elements: set[ElementPresentation]):
-    return max({item.height for item in elements})
+    return max(item.height for item in elements)
 
 
 def _pos_x(item: ElementPresentation):

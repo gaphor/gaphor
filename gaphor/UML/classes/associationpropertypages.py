@@ -1,3 +1,6 @@
+import contextlib
+import functools
+
 from gaphor import UML
 from gaphor.core.format import format, parse
 from gaphor.diagram.propertypages import (
@@ -6,7 +9,7 @@ from gaphor.diagram.propertypages import (
     help_link,
     unsubscribe_all_on_destroy,
 )
-from gaphor.transaction import transactional
+from gaphor.transaction import Transaction
 from gaphor.UML.classes.association import AssociationItem
 from gaphor.UML.classes.classespropertypages import new_builder
 from gaphor.UML.profiles.stereotypepropertypages import (
@@ -16,6 +19,25 @@ from gaphor.UML.profiles.stereotypepropertypages import (
 )
 
 
+def blockable(func):
+    blocked = 0
+
+    def _blockable(*args, **kwargs):
+        if not blocked:
+            return func(*args, **kwargs)
+
+    @contextlib.contextmanager
+    def block():
+        nonlocal blocked
+        blocked += 1
+        yield
+        blocked -= 1
+
+    wrapped = functools.update_wrapper(_blockable, func)
+    wrapped.block = block  # type: ignore[attr-defined]
+    return wrapped
+
+
 @PropertyPages.register(UML.Association)
 class AssociationPropertyPage(PropertyPageBase):
     NAVIGABILITY = (None, False, True)
@@ -23,10 +45,11 @@ class AssociationPropertyPage(PropertyPageBase):
 
     order = 20
 
-    def __init__(self, subject: UML.Association):
+    def __init__(self, subject: UML.Association, event_manager):
         self.subject = subject
+        self.event_manager = event_manager
         self.watcher = subject and subject.watcher()
-        self.semaphore = 0
+        self.end_name_change_semaphore = 0
 
     def construct_end(self, builder, end_name, subject):
         title = builder.get_object(f"{end_name}-title")
@@ -36,18 +59,21 @@ class AssociationPropertyPage(PropertyPageBase):
         self.update_end_name(builder, end_name, subject)
 
         navigation = builder.get_object(f"{end_name}-navigation")
-        navigation.set_selected(self.NAVIGABILITY.index(subject.navigability))
+        with self._on_end_navigability_change.block():
+            navigation.set_selected(self.NAVIGABILITY.index(subject.navigability))
 
         aggregation = builder.get_object(f"{end_name}-aggregation")
-        aggregation.set_selected(self.AGGREGATION.index(subject.aggregation))
+        with self._on_end_aggregation_change.block():
+            aggregation.set_selected(self.AGGREGATION.index(subject.aggregation))
 
-        if stereotypes_model := stereotype_model(subject):
+        if stereotypes_model := stereotype_model(subject, self.event_manager):
             stereotype_list = builder.get_object(f"{end_name}-stereotype-list")
             stereotype_set_model_with_interaction(stereotype_list, stereotypes_model)
         else:
             stereotype_frame = builder.get_object(f"{end_name}-stereotype-frame")
             stereotype_frame.set_visible(False)
 
+    @blockable
     def update_end_name(self, builder, end_name, subject):
         name = builder.get_object(f"{end_name}-name")
         new_name = (
@@ -59,10 +85,8 @@ class AssociationPropertyPage(PropertyPageBase):
             )
             or ""
         )
-        if not (name.is_focus() or self.semaphore):
-            self.semaphore += 1
+        with self._on_end_name_change.block():
             name.set_text(new_name)
-            self.semaphore -= 1
         return name
 
     def construct(self):
@@ -135,25 +159,28 @@ class AssociationPropertyPage(PropertyPageBase):
             builder.get_object("association-editor"), self.watcher
         )
 
-    @transactional
+    @blockable
     def _on_end_name_change(self, entry, subject):
-        if not self.semaphore:
-            self.semaphore += 1
-            parse(subject, entry.get_text())
-            self.semaphore -= 1
+        with self.update_end_name.block():
+            with Transaction(self.event_manager):
+                parse(subject, entry.get_text())
 
-    @transactional
+    @blockable
     def _on_end_navigability_change(self, dropdown, _pspec, subject):
         if subject and subject.opposite and subject.opposite.type:
-            UML.recipes.set_navigability(
-                subject.association,
-                subject,
-                self.NAVIGABILITY[dropdown.get_selected()],
-            )
+            with Transaction(self.event_manager):
+                UML.recipes.set_navigability(
+                    subject.association,
+                    subject,
+                    self.NAVIGABILITY[dropdown.get_selected()],
+                )
 
-    @transactional
-    def _on_end_aggregation_change(self, dropdown, _pspec, subject):
-        subject.aggregation = self.AGGREGATION[dropdown.get_selected()]
+    @blockable
+    def _on_end_aggregation_change(self, dropdown, _pspec, subject: UML.Property):
+        aggregation = self.AGGREGATION[dropdown.get_selected()]
+        if aggregation != subject.aggregation:
+            with Transaction(self.event_manager):
+                subject.aggregation = aggregation
 
     def _on_association_info_clicked(self, widget, event):
         self.info.set_relative_to(widget)
@@ -164,8 +191,9 @@ class AssociationPropertyPage(PropertyPageBase):
 class AssociationDirectionPropertyPage(PropertyPageBase):
     order = 20
 
-    def __init__(self, item: AssociationItem):
+    def __init__(self, item: AssociationItem, event_manager):
         self.item = item
+        self.event_manager = event_manager
 
     def construct(self):
         if not self.item.subject:
@@ -184,10 +212,10 @@ class AssociationDirectionPropertyPage(PropertyPageBase):
 
         return builder.get_object("association-direction-editor")
 
-    @transactional
     def _on_show_direction_change(self, button, gparam):
-        self.item.show_direction = button.get_active()
+        with Transaction(self.event_manager):
+            self.item.show_direction = button.get_active()
 
-    @transactional
     def on_invert_direction_change(self, button):
-        self.item.invert_direction()
+        with Transaction(self.event_manager):
+            self.item.invert_direction()

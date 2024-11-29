@@ -1,5 +1,5 @@
-from gaphor.core.modeling import Diagram
 from gaphor.extensions.ipython import draw
+from gaphor.UML import Diagram
 
 
 def test_draw(element_factory):

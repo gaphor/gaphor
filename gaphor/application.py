@@ -8,10 +8,11 @@ from __future__ import annotations
 
 import importlib.metadata
 import logging
+from collections.abc import Iterator
 from pathlib import Path
-from typing import Iterator, TypeVar, cast
+from typing import TypeVar, cast
+from uuid import uuid1
 
-from gaphor import transaction
 from gaphor.abc import ActionProvider, Service
 from gaphor.action import action
 from gaphor.core import event_handler
@@ -65,8 +66,6 @@ class Application(Service, ActionProvider):
             EventManager, self._services_by_name["event_manager"]
         )
 
-        transaction.subscribers.add(self._transaction_proxy)
-
     def get_service(self, name):
         if not self._services_by_name:
             raise NotInitializedError("Session is no longer alive")
@@ -90,9 +89,11 @@ class Application(Service, ActionProvider):
         return self._active_session
 
     def new_session(self, *, filename=None, template=None, services=None, force=False):
+        """Initialize an application session."""
+
         filename = Path(filename) if filename else None
         if filename is None is template:
-            return self._new_session(services=services)
+            return self._spawn_session(session=Session(services=services))
 
         if filename and not force:
             for session in self._sessions:
@@ -100,21 +101,30 @@ class Application(Service, ActionProvider):
                     session.foreground()
                     return
 
-        return self._new_session(
-            filename=filename, template=template, services=services
+        return self._spawn_session(
+            session=Session(services=services),
+            filename=filename,
+            template=template,
+            force=force,
         )
 
-    def _new_session(self, filename=None, template=None, services=None):
-        """Initialize an application session."""
-        session = Session(services=services)
+    def recover_session(self, *, session_id, filename=None, template=None) -> Session:
+        """Recover a (crashed) session."""
 
+        return self._spawn_session(
+            session=Session(session_id=session_id), filename=filename, template=template
+        )
+
+    def _spawn_session(
+        self, session: Session, filename=None, template=None, force=False
+    ) -> Session:
         @event_handler(ActiveSessionChanged)
-        def on_active_session_changed(event):
+        def on_active_session_changed(_event):
             logger.debug("Set active session to %s", session)
             self._active_session = session
 
         @event_handler(SessionShutdown)
-        def on_session_shutdown(event):
+        def on_session_shutdown(_event):
             self.shutdown_session(session)
             if not self._sessions and not (
                 self._gtk_app and self._gtk_app.get_windows()
@@ -127,21 +137,14 @@ class Application(Service, ActionProvider):
 
         self._sessions.add(session)
 
-        session_created = SessionCreated(self, session, filename, template)
+        session_created = SessionCreated(
+            self, session, filename, template, force, interactive=bool(self._gtk_app)
+        )
         event_manager.handle(session_created)
         self.event_manager.handle(session_created)
         session.foreground()
 
         return session
-
-    def has_sessions(self):
-        return bool(self._sessions)
-
-    def has_session(self, filename):
-        filename = Path(filename)
-        return any(
-            session for session in self._sessions if session.filename == filename
-        )
 
     def shutdown_session(self, session):
         assert session
@@ -155,8 +158,6 @@ class Application(Service, ActionProvider):
 
         This is mainly for testing purposes.
         """
-        transaction.subscribers.discard(self._transaction_proxy)
-
         while self._sessions:
             self.shutdown_session(self._sessions.pop())
 
@@ -173,7 +174,7 @@ class Application(Service, ActionProvider):
         for session in list(self._sessions):
             self._active_session = session
             event_manager = session.get_service("event_manager")
-            event_manager.handle(SessionShutdownRequested(self))
+            event_manager.handle(SessionShutdownRequested())
             if self._active_session == session:
                 logger.info("Window not closed, abort quit operation")
                 return False
@@ -185,17 +186,14 @@ class Application(Service, ActionProvider):
             (n, c) for n, c in self._services_by_name.items() if isinstance(c, base)
         )
 
-    def _transaction_proxy(self, event):
-        if self._active_session:
-            self._active_session.event_manager.handle(event)
-
 
 class Session(Service):
     """A user context is a set of services (including UI services) that define
     a window with loaded model."""
 
-    def __init__(self, services=None):
+    def __init__(self, session_id: str | None = None, *, services=None):
         """Initialize the application."""
+        self.session_id = session_id or str(uuid1())
         services_by_name: dict[str, Service] = initialize("gaphor.services", services)
         self._filename = None
 

@@ -199,6 +199,7 @@ to the items contained in the diagram.
 ``line-width``          Set the width for lines: ``line-width: 2``. *(inherited)*
 ``min-height``          Set minimal height for an item: ``min-height: 50``.
 ``min-width``           Set minimal width for an item: ``min-width: 100``.
+``max-width``           Set maximum width (text fields only): ``max-width: 100``.
 ``padding``             CSS style padding (top, right, bottom, left).
 
                         Example: ``padding: 3 4``.
@@ -339,7 +340,7 @@ Here are some ideas that go just beyond changing a color or a font. With the
 following examples we dig in to Gaphor's model structure to reveal more
 information to the users.
 
-To create your own expression you may want to use the Console (![open menu](images/open-menu-symbolic.svg) → Tools → Console). Drop us a line on
+To create your own expression you may want to use the Console (![Menu icon](images/open-menu-symbolic.svg) → Tools → Console). Drop us a line on
 [Gitter](https://gitter.im/gaphor/Lobby) and we would be happy to help you.
 
 ### The drafts package
@@ -359,6 +360,23 @@ diagram[owner.name=drafts] * {
 ```{diagram} draft
 :model: style-sheets
 :alt: draft style
+```
+
+### Wrap long attributes, operations, and stereotype values
+
+Sometimes attribute values get a bit lengthy. By default, Gaphor will not
+wrap text. If you want to, you can add this little snippet to wrap text for
+lengthy attributes on classes. You can also apply this to other types, of course.
+
+```css
+class * {
+ white-space: normal;
+}
+```
+
+```{diagram} wrap-text
+:model: style-sheets
+:alt: wrap long attribute
 ```
 
 ### Unconnected relationships

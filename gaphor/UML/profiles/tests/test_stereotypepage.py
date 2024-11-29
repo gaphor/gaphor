@@ -7,16 +7,16 @@ from gaphor.diagram.tests.fixtures import find
 from gaphor.UML.profiles.stereotypepropertypages import StereotypePage
 
 
-def test_stereotype_page_with_no_stereotype(element_factory):
+def test_stereotype_page_with_no_stereotype(element_factory, event_manager):
     subject = element_factory.create(UML.Class)
 
-    editor = StereotypePage(subject)
+    editor = StereotypePage(subject, event_manager)
     page = editor.construct()
 
     assert page is None
 
 
-def test_stereotype_page_with_stereotype(element_factory):
+def test_stereotype_page_with_stereotype(element_factory, event_manager):
     subject = element_factory.create(UML.Class)
 
     # Create a stereotype applicable to Class types:
@@ -28,7 +28,7 @@ def test_stereotype_page_with_stereotype(element_factory):
     attr = element_factory.create(UML.Property)
     attr.name = "Property"
 
-    editor = StereotypePage(subject)
+    editor = StereotypePage(subject, event_manager)
     page = editor.construct()
 
     stereotype_view = find(page, "stereotype-list")

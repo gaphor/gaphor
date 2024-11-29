@@ -32,10 +32,12 @@ Now, you can run gaphor as
 poetry run gaphor
 ```
 
-If PyGObject does not compile and complains about a missing `ffi.h` file, set the following
+If PyGObject does not compile and complains about a missing `ffi.h` file,
+you may want to install libffi from Homebrew, and set the following
 environment variable and run `poetry install` again:
 ```bash
-export PKG_CONFIG_PATH=/opt/homebrew/opt/libffi/lib/pkgconfig  # use /usr/local/ for older Homebrew installs
+brew install libffi
+export PKG_CONFIG_PATH=$(brew --prefix libffi)/lib/pkgconfig
 poetry install
 ```
 

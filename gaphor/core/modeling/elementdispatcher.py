@@ -6,7 +6,7 @@ import logging
 
 from gaphor.abc import Service
 from gaphor.core import event_handler
-from gaphor.core.modeling.element import Element, Handler
+from gaphor.core.modeling.base import Base, Handler
 from gaphor.core.modeling.event import (
     AssociationAdded,
     AssociationDeleted,
@@ -24,7 +24,7 @@ class EventWatcher:
 
     def __init__(
         self,
-        element: Element,
+        element: Base,
         element_dispatcher: ElementDispatcher | None,
         default_handler: Handler | None = None,
     ):
@@ -109,11 +109,11 @@ class ElementDispatcher(Service):
 
         # Table used to fire events:
         # (event.element, event.property): { handler: set(path, ..), ..}
-        self._handlers: dict[tuple[Element, umlproperty], dict[Handler, set]] = {}
+        self._handlers: dict[tuple[Base, umlproperty], dict[Handler, set]] = {}
 
         # Fast resolution when handlers are disconnected
         # handler: [(element, property), ..]
-        self._reverse: dict[Handler, list[tuple[Element, umlproperty]]] = {}
+        self._reverse: dict[Handler, list[tuple[Base, umlproperty]]] = {}
 
         self.event_manager.subscribe(self.on_model_loaded)
         self.event_manager.subscribe(self.on_element_change_event)
@@ -122,7 +122,7 @@ class ElementDispatcher(Service):
         self.event_manager.unsubscribe(self.on_element_change_event)
         self.event_manager.unsubscribe(self.on_model_loaded)
 
-    def subscribe(self, handler: Handler, element: Element, path: str) -> None:
+    def subscribe(self, handler: Handler, element: Base, path: str) -> None:
         props = self._path_to_properties(element, path)
         self._add_handlers(element, props, handler)
 
@@ -140,7 +140,7 @@ class ElementDispatcher(Service):
                     del self._handlers[key]
         del self._reverse[handler]
 
-    def _path_to_properties(self, element, path):
+    def _path_to_properties(self, element: Base, path: str) -> tuple[umlproperty]:
         """Given a start element and a path, return a tuple of properties
         (association, attribute, etc.) representing the path."""
         c = type(element)
@@ -154,15 +154,19 @@ class ElementDispatcher(Service):
             tpath.append(prop)
 
             if cname:
-                c = self.modeling_language.lookup_element(cname)
+                if ":" in cname:
+                    ns, cname = cname.split(":")
+                else:
+                    ns = c.__modeling_language__
+                c = self.modeling_language.lookup_element(cname, ns)
                 assert c and issubclass(
                     c, prop.type
-                ), f"{c} should be a subclass of {prop.type}"
+                ), f"{ns}:{cname} (== {c}) should be a subclass of {prop.type}"
             else:
                 c = prop.type
         return tuple(tpath)
 
-    def _add_handlers(self, element, props, handler):
+    def _add_handlers(self, element: Base, props: tuple[umlproperty], handler: Handler):
         """Provided an element and a path of properties (props), register the
         handler for each property."""
         property, remainder = props[0], props[1:]
@@ -202,7 +206,7 @@ class ElementDispatcher(Service):
                 if e and remainder:
                     self._add_handlers(e, remainder, handler)
 
-    def _remove_handlers(self, element, property, handler):
+    def _remove_handlers(self, element: Base, property, handler: Handler):
         """Remove the handler of the path of elements."""
         key = element, property
         handlers = self._handlers.get(key)
@@ -232,7 +236,7 @@ class ElementDispatcher(Service):
             del self._handlers[key]
 
     @event_handler(ElementUpdated)
-    def on_element_change_event(self, event):
+    def on_element_change_event(self, event: ElementUpdated):
         if not (handlers := self._handlers.get((event.element, event.property))):
             return
         try:
@@ -242,17 +246,14 @@ class ElementDispatcher(Service):
             # Handle add/removal of handlers based on the kind of event
             # Filter out handlers that have no remaining properties
             if (
-                isinstance(event, (AssociationSet, AssociationDeleted))
+                isinstance(event, AssociationSet | AssociationDeleted)
                 and event.old_value
             ):
                 for handler, remainders in handlers.items():
                     for remainder in remainders:
                         self._remove_handlers(event.old_value, remainder[0], handler)
 
-            if (
-                isinstance(event, (AssociationSet, AssociationAdded))
-                and event.new_value
-            ):
+            if isinstance(event, AssociationSet | AssociationAdded) and event.new_value:
                 for handler, remainders in handlers.items():
                     for remainder in remainders:
                         self._add_handlers(event.new_value, remainder, handler)

@@ -25,13 +25,13 @@ def two_sessions(application):
 
 
 def test_most_recently_created_session_is_active(application):
-    session1, session2 = two_sessions(application)
+    _session1, session2 = two_sessions(application)
 
     assert application.active_session is session2
 
 
 def test_active_window_changed(application):
-    session1, session2 = two_sessions(application)
+    session1, _session2 = two_sessions(application)
 
     session1.get_service("event_manager").handle(ActiveSessionChanged(None))
 
@@ -41,7 +41,7 @@ def test_active_window_changed(application):
 def test_session_shutdown(application):
     session1, session2 = two_sessions(application)
 
-    session2.get_service("event_manager").handle(SessionShutdown(None))
+    session2.get_service("event_manager").handle(SessionShutdown())
 
     assert len(application.sessions) == 1
     assert session1 in application.sessions
@@ -58,9 +58,8 @@ def test_all_sessions_shut_down(application):
 
     session1, session2 = two_sessions(application)
 
-    session1.get_service("event_manager").handle(SessionShutdown(None))
-    session2.get_service("event_manager").handle(SessionShutdown(None))
+    session1.get_service("event_manager").handle(SessionShutdown())
+    session2.get_service("event_manager").handle(SessionShutdown())
 
     assert len(application.sessions) == 0
     assert quit_events
-    assert quit_events[0].service is application

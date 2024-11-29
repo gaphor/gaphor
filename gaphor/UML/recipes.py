@@ -9,7 +9,8 @@ Functions collected in this module allow to
 from __future__ import annotations
 
 import itertools
-from typing import Iterable, Sequence, TypeVar
+from collections.abc import Iterable, Sequence
+from typing import TypeVar
 
 from gaphor.UML.uml import (
     Artifact,
@@ -138,18 +139,20 @@ def get_stereotypes(element: Element) -> list[Stereotype]:
 
     stereotypes = list({ext.ownedEnd.type for cls in classes for ext in cls.extension})
 
+    all_stereotypes = stereotypes
     for s in stereotypes:
         for sub in s.specialization[:].specific:
-            if isinstance(sub, Stereotype) and sub not in stereotypes:
-                stereotypes.append(sub)
+            if isinstance(sub, Stereotype) and sub not in all_stereotypes:
+                all_stereotypes.append(sub)
 
-    # Lambda key sort issue in mypy: https://github.com/python/mypy/issues/9656
-    return sorted(stereotypes, key=lambda st: st.name)
+    return sorted(all_stereotypes, key=lambda st: st.name)
 
 
 def get_applied_stereotypes(element: Element) -> Sequence[Stereotype]:
     """Get collection of applied stereotypes to an element."""
-    return element.appliedStereotype[:].classifier  # type: ignore[return-value]
+    return (
+        element.appliedStereotype[:].classifier if isinstance(element, Element) else []  # type: ignore[return-value]
+    )
 
 
 def create_extension(metaclass: Class, stereotype: Stereotype) -> Extension:
@@ -248,7 +251,9 @@ def create_association(type_a: Type, type_b: Type):
     return assoc
 
 
-def create_connector(type_a: ConnectableElement, type_b: ConnectableElement):
+def create_connector(
+    type_a: ConnectableElement, type_b: ConnectableElement
+) -> Connector:
     """Create a connector between two items.
 
     Depending on the ends, the connector kind may be "assembly" or
@@ -410,12 +415,3 @@ def owner_of_type(element: Element | None, owner_type: type[T]) -> T | None:
 
 def owner_package(element: Element | None) -> Package | None:
     return owner_of_type(element, Package)
-
-
-def swap_element(element, new_class):
-    """A "trick" to swap the element type.
-
-    Used in certain cases where the underlying element type may change.
-    """
-    if element.__class__ is not new_class:
-        element.__class__ = new_class

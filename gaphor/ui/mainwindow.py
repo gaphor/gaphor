@@ -3,8 +3,8 @@
 from __future__ import annotations
 
 import logging
+from collections.abc import Callable
 from pathlib import Path
-from typing import Callable
 
 from gi.repository import Gio, GLib, Gtk
 
@@ -109,11 +109,16 @@ class MainWindow(Service, ActionProvider):
         event_manager.subscribe(self._on_file_manager_state_changed)
         event_manager.subscribe(self._on_current_diagram_changed)
         event_manager.subscribe(self._on_model_ready)
+        event_manager.subscribe(self._on_undo_manager_state_changed)
+        event_manager.subscribe(self._on_action_enabled)
+        event_manager.subscribe(self._on_modeling_language_selection_changed)
+        event_manager.subscribe(self._on_notification)
 
     def shutdown(self):
         if self.window:
             self.window.destroy()
             self._builder = None
+            self.in_app_notifier = None
 
         em = self.event_manager
         em.unsubscribe(self._on_file_manager_state_changed)
@@ -122,9 +127,7 @@ class MainWindow(Service, ActionProvider):
         em.unsubscribe(self._on_undo_manager_state_changed)
         em.unsubscribe(self._on_action_enabled)
         em.unsubscribe(self._on_modeling_language_selection_changed)
-        if self.in_app_notifier:
-            em.unsubscribe(self.in_app_notifier.handle)
-            self.in_app_notifier = None
+        em.unsubscribe(self._on_notification)
 
     @property
     def window(self):
@@ -152,7 +155,7 @@ class MainWindow(Service, ActionProvider):
 
     @property
     def model_changed(self) -> bool:
-        return self.modified.get_visible() if self.modified else False  # type: ignore[no-any-return]
+        return self.modified.get_visible() if self.modified else False
 
     @model_changed.setter
     def model_changed(self, model_changed: bool):
@@ -167,7 +170,7 @@ class MainWindow(Service, ActionProvider):
         window = self.window
         window.set_application(gtk_app)
         if ".dev" in distribution().version:
-            window.get_style_context().add_class("devel")
+            window.add_css_class("devel")
 
         select_modeling_language = builder.get_object("select-modeling-language")
         select_modeling_language.set_menu_model(
@@ -210,11 +213,11 @@ class MainWindow(Service, ActionProvider):
 
         self.action_group, shortcuts = window_action_group(self.component_registry)
         window.insert_action_group("win", self.action_group)
+        window.add_controller(Gtk.ShortcutController.new_for_model(shortcuts))
 
         self._on_modeling_language_selection_changed()
         self.in_app_notifier = InAppNotifier(builder.get_object("main-overlay"))
 
-        window.add_controller(Gtk.ShortcutController.new_for_model(shortcuts))
         window.connect("close-request", self._on_window_close_request)
         window.connect("notify::default-height", self._on_window_size_changed)
         window.connect("notify::default-width", self._on_window_size_changed)
@@ -222,12 +225,6 @@ class MainWindow(Service, ActionProvider):
         window.connect("notify::fullscreened", self._on_window_mode_changed)
         window.connect("notify::is-active", self._on_window_active)
         window.present()
-
-        em = self.event_manager
-        em.subscribe(self._on_undo_manager_state_changed)
-        em.subscribe(self._on_action_enabled)
-        em.subscribe(self._on_modeling_language_selection_changed)
-        em.subscribe(self.in_app_notifier.handle)
 
         for handler in self._ui_updates:
             handler()
@@ -281,6 +278,8 @@ class MainWindow(Service, ActionProvider):
             else f"{gettext('New model')} - Gaphor"
         )
 
+        self.model_changed = False
+
         window.present()
 
     @event_handler(ModelReady)
@@ -289,22 +288,19 @@ class MainWindow(Service, ActionProvider):
 
     @event_handler(CurrentDiagramChanged)
     def _on_current_diagram_changed(self, event):
-        if not self.window:
-            self._ui_updates.append(lambda: self._on_current_diagram_changed(event))
-            return
-
         self.title.set_text(
             (event.diagram.name or gettext("<None>")) if event.diagram else "Gaphor"
         )
 
     @event_handler(UndoManagerStateChanged)
-    def _on_undo_manager_state_changed(self, event):
-        undo_manager = event.service
-        self.model_changed = undo_manager.can_undo()
+    def _on_undo_manager_state_changed(self, event: UndoManagerStateChanged):
+        self.model_changed = True
 
     @event_handler(ActionEnabled)
     def _on_action_enabled(self, event):
-        if self.action_group and event.scope == "win":
+        if not self.action_group:
+            self._ui_updates.append(lambda: self._on_action_enabled(event))
+        elif self.action_group and event.scope == "win":
             a = self.action_group.lookup_action(event.name)
             a.set_enabled(event.enabled)
 
@@ -319,11 +315,19 @@ class MainWindow(Service, ActionProvider):
                 create_diagram_types_model(self.modeling_language)
             )
 
+    @event_handler(Notification)
+    def _on_notification(self, event: Notification):
+        if not self.in_app_notifier:
+            self._ui_updates.append(lambda: self._on_notification(event))
+            return
+
+        self.in_app_notifier.handle(event)
+
     def _on_window_active(self, window, prop):
         self.event_manager.handle(ActiveSessionChanged(self))
 
     def _on_window_close_request(self, window, event=None):
-        self.event_manager.handle(SessionShutdownRequested(self))
+        self.event_manager.handle(SessionShutdownRequested())
         return True
 
     def _on_window_size_changed(self, window, _gspec):

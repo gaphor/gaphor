@@ -1,6 +1,5 @@
 """Test connector item connectors."""
 
-
 from gaphor import UML
 from gaphor.diagram.tests.fixtures import allow, connect, disconnect
 from gaphor.UML.classes.component import ComponentItem

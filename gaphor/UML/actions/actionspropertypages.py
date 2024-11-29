@@ -3,7 +3,6 @@ import math
 from gi.repository import Gio
 
 from gaphor import UML
-from gaphor.core import transactional
 from gaphor.diagram.propertypages import (
     LabelValue,
     PropertyPageBase,
@@ -12,6 +11,7 @@ from gaphor.diagram.propertypages import (
     new_resource_builder,
     unsubscribe_all_on_destroy,
 )
+from gaphor.transaction import Transaction
 from gaphor.UML.actions.activitynodes import DecisionNodeItem, ForkNodeItem
 from gaphor.UML.actions.objectnode import ObjectNodeItem
 
@@ -24,8 +24,9 @@ class ObjectNodePropertyPage(PropertyPageBase):
 
     ORDERING_VALUES = ["unordered", "ordered", "LIFO", "FIFO"]
 
-    def __init__(self, subject: UML.ObjectNode):
+    def __init__(self, subject: UML.ObjectNode, event_manager):
         self.subject = subject
+        self.event_manager = event_manager
 
     def construct(self):
         subject = self.subject
@@ -49,23 +50,24 @@ class ObjectNodePropertyPage(PropertyPageBase):
 
         return builder.get_object("object-node-editor")
 
-    @transactional
     def _on_upper_bound_change(self, entry):
         value = entry.get_text().strip()
-        self.subject.upperBound = value
+        with Transaction(self.event_manager):
+            self.subject.upperBound = value
 
-    @transactional
     def _on_ordering_change(self, dropdown, _pspec):
         value = self.ORDERING_VALUES[dropdown.get_selected()]
-        self.subject.ordering = value
+        with Transaction(self.event_manager):
+            self.subject.ordering = value
 
 
 @PropertyPages.register(ObjectNodeItem)
 class ShowObjectNodePropertyPage(PropertyPageBase):
     order = 16
 
-    def __init__(self, item: ObjectNodeItem):
+    def __init__(self, item: ObjectNodeItem, event_manager):
         self.item = item
+        self.event_manager = event_manager
 
     def construct(self):
         subject = self.item.subject
@@ -85,17 +87,18 @@ class ShowObjectNodePropertyPage(PropertyPageBase):
 
         return builder.get_object("show-object-node-editor")
 
-    @transactional
     def _on_ordering_show_change(self, button, gparam):
-        self.item.show_ordering = button.get_active()
+        with Transaction(self.event_manager):
+            self.item.show_ordering = button.get_active()
 
 
 @PropertyPages.register(UML.ValueSpecificationAction)
 class ValueSpecificationActionPropertyPage(PropertyPageBase):
     order = 15
 
-    def __init__(self, item):
+    def __init__(self, item, event_manager):
         self.subject = item
+        self.event_manager = event_manager
 
     def construct(self):
         builder = new_builder("value-specifiation-action-editor")
@@ -106,18 +109,19 @@ class ValueSpecificationActionPropertyPage(PropertyPageBase):
 
         return builder.get_object("value-specifiation-action-editor")
 
-    @transactional
     def _on_value_change(self, entry):
-        value = entry.get_text()
-        self.subject.value = value
+        with Transaction(self.event_manager):
+            value = entry.get_text()
+            self.subject.value = value
 
 
 @PropertyPages.register(UML.CallBehaviorAction)
 class CallBehaviorActionPropertyPage(PropertyPageBase):
     order = 15
 
-    def __init__(self, item):
+    def __init__(self, item, event_manager):
         self.subject = item
+        self.event_manager = event_manager
 
     def construct(self):
         builder = new_builder("call-action-editor")
@@ -151,22 +155,23 @@ class CallBehaviorActionPropertyPage(PropertyPageBase):
 
         return options
 
-    @transactional
     def _on_behavior_changed(self, dropdown, _pspec):
-        if id := dropdown.get_selected_item().value:
-            element = self.subject.model.lookup(id)
-            assert isinstance(element, UML.Behavior)
-            self.subject.behavior = element
-        else:
-            del self.subject.behavior
+        with Transaction(self.event_manager):
+            if id := dropdown.get_selected_item().value:
+                element = self.subject.model.lookup(id)
+                assert isinstance(element, UML.Behavior)
+                self.subject.behavior = element
+            else:
+                del self.subject.behavior
 
 
 @PropertyPages.register(DecisionNodeItem)
 class DecisionNodePropertyPage(PropertyPageBase):
     order = 20
 
-    def __init__(self, item):
+    def __init__(self, item, event_manager):
         self.item = item
+        self.event_manager = event_manager
 
     def construct(self):
         builder = new_builder(
@@ -179,17 +184,18 @@ class DecisionNodePropertyPage(PropertyPageBase):
 
         return builder.get_object("decision-node-editor")
 
-    @transactional
     def _on_show_type_change(self, button, gparam):
-        self.item.show_underlying_type = button.get_active()
+        with Transaction(self.event_manager):
+            self.item.show_underlying_type = button.get_active()
 
 
 @PropertyPages.register(ForkNodeItem)
 class ForkNodePropertyPage(PropertyPageBase):
     order = 20
 
-    def __init__(self, item):
+    def __init__(self, item, event_manager):
         self.item = item
+        self.event_manager = event_manager
 
     def construct(self):
         builder = new_builder(
@@ -205,15 +211,15 @@ class ForkNodePropertyPage(PropertyPageBase):
     def is_horizontal(self):
         return self.item.matrix[2] != 0
 
-    @transactional
     def _on_horizontal_change(self, button, gparam):
         active = button.get_active()
         horizontal = self.is_horizontal()
-        if active and not horizontal:
-            self.item.matrix.rotate(math.pi / 2)
-        elif not active and horizontal:
-            self.item.matrix.rotate(-math.pi / 2)
-        self.item.request_update()
+        with Transaction(self.event_manager):
+            if active and not horizontal:
+                self.item.matrix.rotate(math.pi / 2)
+            elif not active and horizontal:
+                self.item.matrix.rotate(-math.pi / 2)
+            self.item.request_update()
 
 
 @PropertyPages.register(UML.JoinNode)
@@ -222,8 +228,9 @@ class JoinNodePropertyPage(PropertyPageBase):
 
     subject: UML.JoinNode
 
-    def __init__(self, subject):
+    def __init__(self, subject, event_manager):
         self.subject = subject
+        self.event_manager = event_manager
 
     def construct(self):
         subject = self.subject
@@ -241,10 +248,10 @@ class JoinNodePropertyPage(PropertyPageBase):
 
         return builder.get_object("join-node-editor")
 
-    @transactional
     def _on_join_spec_change(self, entry):
         value = entry.get_text().strip()
-        self.subject.joinSpec = value
+        with Transaction(self.event_manager):
+            self.subject.joinSpec = value
 
 
 @PropertyPages.register(UML.ControlFlow)
@@ -256,8 +263,9 @@ class FlowPropertyPageAbstract(PropertyPageBase):
 
     subject: UML.ActivityEdge
 
-    def __init__(self, subject):
+    def __init__(self, subject, event_manager):
         self.subject = subject
+        self.event_manager = event_manager
         self.watcher = subject and subject.watcher()
 
     def construct(self):
@@ -285,10 +293,10 @@ class FlowPropertyPageAbstract(PropertyPageBase):
             builder.get_object("transition-editor"), self.watcher
         )
 
-    @transactional
     def _on_guard_change(self, entry):
         value = entry.get_text().strip()
-        self.subject.guard = value
+        with Transaction(self.event_manager):
+            self.subject.guard = value
 
 
 @PropertyPages.register(UML.Pin)
@@ -299,8 +307,9 @@ class PinPropertyPage(PropertyPageBase):
 
     subject: UML.Pin
 
-    def __init__(self, subject):
+    def __init__(self, subject, event_manager):
         self.subject = subject
+        self.event_manager = event_manager
         self.watcher = subject and subject.watcher()
 
     def construct(self):
@@ -348,22 +357,22 @@ class PinPropertyPage(PropertyPageBase):
 
         return options
 
-    @transactional
     def _on_type_changed(self, dropdown, _pspec):
         subject = self.subject
-        if id := dropdown.get_selected_item().value:
-            element = subject.model.lookup(id)
-            assert isinstance(element, UML.Type)
-            subject.type = element
-        else:
-            del subject.type
+        with Transaction(self.event_manager):
+            if id := dropdown.get_selected_item().value:
+                element = subject.model.lookup(id)
+                assert isinstance(element, UML.Type)
+                subject.type = element
+            else:
+                del subject.type
 
-    @transactional
     def _on_multiplicity_lower_change(self, entry):
         value = entry.get_text().strip()
-        self.subject.lowerValue = value
+        with Transaction(self.event_manager):
+            self.subject.lowerValue = value
 
-    @transactional
     def _on_multiplicity_upper_change(self, entry):
         value = entry.get_text().strip()
-        self.subject.upperValue = value
+        with Transaction(self.event_manager):
+            self.subject.upperValue = value

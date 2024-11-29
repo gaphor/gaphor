@@ -1,13 +1,13 @@
 from gi.repository import Gio
 
 from gaphor import UML
-from gaphor.core import transactional
 from gaphor.diagram.propertypages import (
     LabelValue,
     PropertyPageBase,
     PropertyPages,
     new_resource_builder,
 )
+from gaphor.transaction import Transaction
 from gaphor.UML.actions.partition import PartitionItem
 
 new_builder = new_resource_builder("gaphor.UML.actions")
@@ -19,9 +19,10 @@ class PartitionPropertyPage(PropertyPageBase):
 
     order = 15
 
-    def __init__(self, item: PartitionItem):
+    def __init__(self, item: PartitionItem, event_manager):
         super().__init__()
         self.item = item
+        self.event_manager = event_manager
         self.partitions = None
 
     def construct(self):
@@ -79,25 +80,25 @@ class PartitionPropertyPage(PropertyPageBase):
 
         return builder.get_object("partition")
 
-    @transactional
     def _on_num_partitions_changed(self, spin_button):
         """Event handler for partition number spin button."""
         num_partitions = spin_button.get_value_as_int()
-        self.update_partitions(num_partitions)
+        with Transaction(self.event_manager):
+            self.update_partitions(num_partitions)
 
-    @transactional
     def _on_partition_name_changed(self, entry, partition):
         """Event handler for editing partition names."""
-        partition.name = entry.get_text()
+        with Transaction(self.event_manager):
+            partition.name = entry.get_text()
 
-    @transactional
     def _on_partition_type_changed(self, combo, _pspec, partition):
         """Event handler for editing partition names."""
-        if id := combo.get_selected_item().value:
-            element = self.item.model.lookup(id)
-            partition.represents = element
-        else:
-            del partition.represents
+        with Transaction(self.event_manager):
+            if id := combo.get_selected_item().value:
+                element = self.item.model.lookup(id)
+                partition.represents = element
+            else:
+                del partition.represents
 
     def update_partitions(self, num_partitions) -> None:
         """Add and remove partitions.

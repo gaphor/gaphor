@@ -55,7 +55,7 @@ class InitialNodeItem(ActivityNodeItem, ElementPresentation):
         )
 
         self.watch("subject[NamedElement].name", self.change_name)
-        self.watch("subject.appliedStereotype.classifier.name")
+        self.watch("subject[Element].appliedStereotype.classifier.name")
 
 
 def draw_initial_node(_box, context, bounding_box):
@@ -88,7 +88,7 @@ class ActivityFinalNodeItem(ActivityNodeItem, ElementPresentation):
         )
 
         self.watch("subject[NamedElement].name", self.change_name)
-        self.watch("subject.appliedStereotype.classifier.name")
+        self.watch("subject[Element].appliedStereotype.classifier.name")
 
 
 def draw_activity_final_node(_box, context, _bounding_box):
@@ -132,7 +132,7 @@ class FlowFinalNodeItem(ActivityNodeItem, ElementPresentation):
         )
 
         self.watch("subject[NamedElement].name", self.change_name)
-        self.watch("subject.appliedStereotype.classifier.name")
+        self.watch("subject[Element].appliedStereotype.classifier.name")
 
 
 def draw_flow_final_node(_box, context, bounding_box):
@@ -168,7 +168,7 @@ class DecisionNodeItem(ActivityNodeItem, ElementPresentation):
 
         self.watch("show_underlying_type")
         self.watch("subject[NamedElement].name", self.change_name)
-        self.watch("subject.appliedStereotype.classifier.name")
+        self.watch("subject[Element].appliedStereotype.classifier.name")
 
     show_underlying_type: attribute[int] = attribute("show_underlying_type", int, 0)
     combined: relation_one[UML.ControlNode] = association(
@@ -202,6 +202,7 @@ def draw_decision_node(_box, context, _bounding_box):
 
 
 @represents(UML.ForkNode)
+@represents(UML.JoinNode)
 class ForkNodeItem(Named, Presentation[UML.ForkNode], HandlePositionUpdate):
     """Representation of fork and join node."""
 
@@ -231,7 +232,7 @@ class ForkNodeItem(Named, Presentation[UML.ForkNode], HandlePositionUpdate):
         )
 
         self.watch("subject[NamedElement].name", self.change_name)
-        self.watch("subject.appliedStereotype.classifier.name")
+        self.watch("subject[Element].appliedStereotype.classifier.name")
         self.watch("subject[JoinNode].joinSpec")
 
         diagram.connections.add_constraint(self, constraint(vertical=(h1.pos, h2.pos)))
@@ -284,6 +285,6 @@ class ForkNodeItem(Named, Presentation[UML.ForkNode], HandlePositionUpdate):
 
     def point(self, x, y):
         h1, h2 = self._handles
-        d, p = distance_line_point(h1.pos, h2.pos, (x, y))
+        d, _p = distance_line_point(h1.pos, h2.pos, (x, y))
         # Subtract line_width / 2
         return d - 3

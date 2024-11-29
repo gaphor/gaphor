@@ -8,21 +8,22 @@ from __future__ import annotations
 
 import functools
 import itertools
-from typing import Iterator, Protocol, TypeVar
+from collections.abc import Iterator
+from typing import Protocol, TypeVar
 
 from gaphas.connections import Connection
 from gaphas.connector import ConnectionSink, Handle, Port
 from gaphas.connector import Connector as ConnectorAspect
 from generic.multidispatch import FunctionDispatcher, multidispatch
 
-from gaphor.core.modeling import Diagram, Element, Presentation
+from gaphor.core.modeling import Base, Diagram, Presentation
 from gaphor.core.modeling.event import RevertibleEvent
 from gaphor.core.modeling.properties import association, redefine, relation
 from gaphor.diagram.copypaste import copy, paste
 from gaphor.diagram.presentation import ElementPresentation, LinePresentation
 from gaphor.diagram.support import get_diagram_item_metadata, get_model_element
 
-T = TypeVar("T", bound=Element)
+T = TypeVar("T", bound=Base)
 
 
 class ConnectorProtocol(Protocol):
@@ -30,17 +31,13 @@ class ConnectorProtocol(Protocol):
         self,
         element: Presentation,
         line: Presentation,
-    ) -> None:
-        ...
+    ) -> None: ...
 
-    def allow(self, handle: Handle, port: Port) -> bool:
-        ...
+    def allow(self, handle: Handle, port: Port) -> bool: ...
 
-    def connect(self, handle: Handle, port: Port) -> bool:
-        ...
+    def connect(self, handle: Handle, port: Port) -> bool: ...
 
-    def disconnect(self, handle: Handle) -> None:
-        ...
+    def disconnect(self, handle: Handle) -> None: ...
 
 
 class BaseConnector:
@@ -56,8 +53,8 @@ class BaseConnector:
 
     def __init__(
         self,
-        element: Presentation[Element],
-        line: Presentation[Element],
+        element: Presentation[Base],
+        line: Presentation[Base],
     ) -> None:
         self.element = element
         self.line = line
@@ -71,7 +68,7 @@ class BaseConnector:
         self.diagram: Diagram = element.diagram or line.diagram
         assert self.diagram
 
-    def get_connected(self, handle: Handle) -> Presentation[Element] | None:
+    def get_connected(self, handle: Handle) -> Presentation[Base] | None:
         """Get item connected to a handle."""
         if cinfo := self.diagram.connections.get_connection(handle):
             return cinfo.connected  # type: ignore[no-any-return] # noqa: F723
@@ -133,7 +130,7 @@ Connector: FunctionDispatcher[type[ConnectorProtocol]] = multidispatch(object, o
 )
 
 
-@functools.lru_cache()
+@functools.lru_cache
 def can_connect(parent, element_type) -> bool:
     parent_type = type(parent)
     get_registration = Connector.registry.get_registration
@@ -155,11 +152,9 @@ class RelationshipConnect(BaseConnector):
     """
 
     element: Presentation
-    line: LinePresentation[Element]
+    line: LinePresentation[Base]
 
-    def __init__(
-        self, element: Presentation[Element], line: Presentation[Element]
-    ) -> None:
+    def __init__(self, element: Presentation[Base], line: Presentation[Base]) -> None:
         super().__init__(element, line)
         self.copy_buffer = dict(copy(line.subject)) if line.subject else {}
 
@@ -174,8 +169,8 @@ class RelationshipConnect(BaseConnector):
         head - tuple (association name on the line, association name on the element)
         tail - tuple (association name on the line, association name on the element)
         """
-        assert isinstance(head, (association, redefine)), f"head is {head}"
-        assert isinstance(tail, (association, redefine)), f"tail is {tail}"
+        assert isinstance(head, association | redefine), f"head is {head}"
+        assert isinstance(tail, association | redefine), f"tail is {tail}"
 
         line = self.line
 
@@ -200,7 +195,7 @@ class RelationshipConnect(BaseConnector):
         if not (head_subject and tail.opposite):
             return None
 
-        gen: Element
+        gen: Base
         for gen in getattr(tail_subject, tail.opposite):
             if not isinstance(gen, required_type):
                 continue
@@ -256,6 +251,10 @@ class RelationshipConnect(BaseConnector):
         assert line_tail
         head.set(relation, line_head.subject)
         tail.set(relation, line_tail.subject)
+
+        # TODO uncomment the following after Dependency is made a subclass of PackageableElement
+        # owning_package = line_tail.subject.owningPackage
+        # relation.owningPackage = owning_package
 
         assert isinstance(relation, type)
         return relation
@@ -404,8 +403,8 @@ class MetadataRelationConnect(DirectionalRelationshipConnect):
         return True
 
 
-def paste_model(copy_data, diagram) -> Iterator[Element]:
-    new_elements: dict[str, Element] = {}
+def paste_model(copy_data, diagram) -> Iterator[Base]:
+    new_elements: dict[str, Base] = {}
 
     def create(ref: str):
         if ref in new_elements:
@@ -433,6 +432,7 @@ class ItemConnected(RevertibleEvent):
     def __init__(self, element, handle, connected, port):
         super().__init__(element)
         self.handle_index = element.handles().index(handle)
+        self.connected_id = connected.id
         self.port_index = connected.ports().index(port)
 
     def revert(self, target):
@@ -442,9 +442,7 @@ class ItemConnected(RevertibleEvent):
         handle = target.handles()[self.handle_index]
 
         connector = ConnectorAspect(target, handle, connections)
-        if cinfo := connections.get_connection(handle):
-            cinfo.callback.disable = True
-        connector.disconnect()
+        connector.disconnect_handle()
 
 
 class ItemDisconnected(RevertibleEvent):
@@ -457,15 +455,14 @@ class ItemDisconnected(RevertibleEvent):
     def revert(self, target):
         # Reverse only the diagram level connection.
         # Associations have their own handlers
+        handle = target.handles()[self.handle_index]
         connections = target.diagram.connections
         connected = target.diagram.lookup(self.connected_id)
+
         sink = ConnectionSink(connected)
         sink.port = connected.ports()[self.port_index]
-        handle = target.handles()[self.handle_index]
-
         connector = ConnectorAspect(target, handle, connections)
         connector.connect_handle(sink)
-        target.handle(ItemConnected(target, handle, sink.item, sink.port))
 
 
 class ItemTemporaryDisconnected(RevertibleEvent):
@@ -476,28 +473,28 @@ class ItemTemporaryDisconnected(RevertibleEvent):
         self.port_index = connected.ports().index(port)
 
     def revert(self, target):
+        handle = target.handles()[self.handle_index]
         connections = target.diagram.connections
         connected = target.diagram.lookup(self.connected_id)
+
         sink = ConnectionSink(connected)
         sink.port = connected.ports()[self.port_index]
-        handle = target.handles()[self.handle_index]
-
-        connections.reconnect_item(
-            target, handle, sink.port, sink.constraint(target, handle)
-        )
-        target.handle(ItemReconnected(target, handle))
+        connector = ConnectorAspect(target, handle, connections)
+        connector.reconnect_handle(sink)
 
 
 class ItemReconnected(RevertibleEvent):
-    def __init__(self, element, handle):
+    def __init__(self, element, handle, connected, port):
         super().__init__(element)
         self.handle_index = element.handles().index(handle)
+        self.connected_id = connected.id
+        self.port_index = connected.ports().index(port)
 
     def revert(self, target):
         connections = target.diagram.connections
         handle = target.handles()[self.handle_index]
-        cinfo = connections.get_connection(handle)
 
+        cinfo = connections.get_connection(handle)
         connections.solver.remove_constraint(cinfo.constraint)
         target.handle(
             ItemTemporaryDisconnected(target, handle, cinfo.connected, cinfo.port)
