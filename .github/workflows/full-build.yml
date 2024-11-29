@@ -159,7 +159,7 @@ jobs:
 
   linux-snapcraft-devel:
     name: Linux (Devel Snapcraft)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Harden Runner
         uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f # v2.10.2
@@ -428,7 +428,7 @@ jobs:
 
   get-architectures:
     name: 🖥 Get snap architectures
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     outputs:
       architectures: ${{ steps.get-architectures.outputs.architectures }}
       architectures-list: ${{ steps.get-architectures.outputs.architectures-list }}
@@ -445,7 +445,7 @@ jobs:
   release:
     name: 🚢 Release to latest/edge
     needs: [ get-architectures, publish-to-pypi ]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     strategy:
       matrix:
         architecture: ${{ fromJSON(needs.get-architectures.outputs.architectures-list) }}
@@ -462,7 +462,7 @@ jobs:
   call-for-testing:
     name: 📣 Create call for testing
     needs: [release, get-architectures]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     outputs:
       issue-number: ${{ steps.issue.outputs.issue-number }}
     steps:
@@ -482,7 +482,7 @@ jobs:
   screenshots:
     name: 📸 Gather screenshots
     needs: call-for-testing
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Harden Runner
         uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f # v2.10.2
