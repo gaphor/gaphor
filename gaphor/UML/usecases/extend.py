@@ -1,11 +1,9 @@
 """Use case extension relationship."""
 
 from gaphor import UML
-from gaphor.core.modeling.diagram import StyledItem
 from gaphor.diagram.presentation import (
     LinePresentation,
     Named,
-    PresentationStyle,
     text_name,
 )
 from gaphor.diagram.shapes import Box, draw_arrow_head
@@ -31,10 +29,6 @@ class ExtendItem(Named, LinePresentation):
         self._handles[1].pos = (0, 0)
 
         self.watch("subject.appliedStereotype.classifier.name").watch(
-            "subject[NamedElement].name"
+            "subject[NamedElement].name", self.change_name
         )
         self.draw_head = draw_arrow_head
-
-        self.presentation_style = PresentationStyle(
-            self.diagram.styleSheet, StyledItem(self).name()
-        )

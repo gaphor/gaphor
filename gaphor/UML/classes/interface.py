@@ -75,13 +75,11 @@ from gaphas.geometry import distance_line_point, distance_point_point
 from gaphas.item import NE, NW, SE, SW
 
 from gaphor import UML
-from gaphor.core.modeling.diagram import StyledItem
 from gaphor.core.modeling.presentation import literal_eval
 from gaphor.core.modeling.properties import attribute
 from gaphor.diagram.presentation import (
     Classified,
     ElementPresentation,
-    PresentationStyle,
     text_name,
 )
 from gaphor.diagram.shapes import Box, IconBox, draw_border, stroke
@@ -186,20 +184,14 @@ class InterfaceItem(Classified, ElementPresentation):
         self.watch("show_stereotypes", self.update_shapes).watch(
             "show_attributes", self.update_shapes
         ).watch("show_operations", self.update_shapes).watch(
-            "subject[NamedElement].name"
+            "subject[NamedElement].name", self.change_name
         ).watch("subject[NamedElement].namespace.name").watch(
             "subject[Interface].supplierDependency", self.update_shapes
         )
 
-        self.watch("subject[Interface].name", self.change_name)
-
         attribute_watches(self, "Interface")
         operation_watches(self, "Interface")
         stereotype_watches(self)
-
-        self.presentation_style = PresentationStyle(
-            self.diagram.styleSheet, StyledItem(self).name()
-        )
 
     show_stereotypes: attribute[int] = attribute("show_stereotypes", int)
 

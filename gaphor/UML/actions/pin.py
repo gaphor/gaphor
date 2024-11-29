@@ -1,6 +1,5 @@
 from gaphor import UML
-from gaphor.core.modeling.diagram import StyledItem
-from gaphor.diagram.presentation import AttachedPresentation, Named, PresentationStyle
+from gaphor.diagram.presentation import AttachedPresentation, Named
 from gaphor.diagram.shapes import (
     Box,
     CssNode,
@@ -27,14 +26,10 @@ def text_position(position):
 class PinItem(Named, AttachedPresentation[UML.Pin]):
     def __init__(self, diagram, id=None):
         super().__init__(diagram, id, width=16, height=16)
-        self.watch("subject[NamedElement].name")
+        self.watch("subject[NamedElement].name", self.change_name)
         self.watch("subject[TypedElement].type")
         self.watch("subject[MultiplicityElement].lowerValue")
         self.watch("subject[MultiplicityElement].upperValue")
-
-        self.presentation_style = PresentationStyle(
-            self.diagram.styleSheet, StyledItem(self).name()
-        )
 
     def pin_type(self):
         return ""

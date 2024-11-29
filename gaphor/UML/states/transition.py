@@ -1,11 +1,9 @@
 """State transition implementation."""
 
 from gaphor import UML
-from gaphor.core.modeling.diagram import StyledItem
 from gaphor.diagram.presentation import (
     LinePresentation,
     Named,
-    PresentationStyle,
     text_name,
 )
 from gaphor.diagram.shapes import Box, CssNode, Text, draw_arrow_tail
@@ -38,13 +36,9 @@ class TransitionItem(Named, LinePresentation[UML.Transition]):
             ),
         )
 
-        self.watch("subject[NamedElement].name")
+        self.watch("subject[NamedElement].name", self.change_name)
         self.watch("subject.appliedStereotype.classifier.name")
 
         self.watch("subject[Transition].guard[Constraint].specification")
 
         self.draw_tail = draw_arrow_tail
-
-        self.presentation_style = PresentationStyle(
-            self.diagram.styleSheet, StyledItem(self).name()
-        )

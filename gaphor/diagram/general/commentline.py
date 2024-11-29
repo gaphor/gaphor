@@ -3,18 +3,13 @@ CommentLine -- A line that connects a comment to another model element.
 
 """
 
-from gaphor.core.modeling.diagram import StyledItem
 from gaphor.diagram.connectors import Connector
-from gaphor.diagram.presentation import LinePresentation, PresentationStyle
+from gaphor.diagram.presentation import LinePresentation
 
 
 class CommentLineItem(LinePresentation):
     def __init__(self, diagram, id=None):
         super().__init__(diagram, id)
-
-        self.presentation_style = PresentationStyle(
-            self.diagram.styleSheet, StyledItem(self).name()
-        )
 
     def unlink(self):
         c1 = self._connections.get_connection(self.head)

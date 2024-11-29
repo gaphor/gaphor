@@ -220,7 +220,7 @@ class StyledItem:
         )
 
     def name(self) -> str:
-        return type(self.item).__name__.removesuffix("Item").lower()
+        return css_name(self.item)
 
     def parent(self) -> StyleNode | None:
         parent = self.item.parent
@@ -258,6 +258,60 @@ class StyledItem:
             and self.item == other.item
             and self.state() == other.state()
             and self.dark_mode == other.dark_mode
+        )
+
+
+def css_name(item) -> str:
+    return type(item).__name__.removesuffix("Item").lower()
+
+
+class PresentationStyle:
+    def __init__(self, styleSheet, name_type: str) -> None:
+        self.styleSheet = styleSheet
+        self.type = name_type
+        self.name: str | None = None
+
+    def name_change(self, new_name: str):
+        old_key: str = self.key()
+        self.name = new_name
+        self.styleSheet.change_name_style_element(old_key, self.key())
+
+    def delete_element(self):
+        if self.initialized():
+            self.styleSheet.delete_style_element(self.key())
+
+    def translate_to_stylesheet(self):
+        if (
+            self.initialized()
+            and len(self.styleSheet.style_elements.get(self.key())) > 0
+        ):
+            self.styleSheet.translate_to_stylesheet(self.key())
+
+    def change_style(self, style: str, value):
+        if not self.initialized():
+            self.new_style()
+        self.styleSheet.change_style_element(self.key(), style, str(value))
+
+    def new_style(self):
+        self.styleSheet.new_style_element(self.key())
+
+    def get_style(self, style: str):
+        if not self.initialized():
+            self.new_style()
+        return self.styleSheet.get_style(self.key(), style)
+
+    def key(self):
+        return (
+            f'{self.type}[name="{self.name}"]'
+            if self.name is not None
+            else f"{self.type}"
+        )
+
+    def initialized(self) -> bool:
+        return (
+            True
+            if self.styleSheet.style_elements.get(self.key()) is not None
+            else False
         )
 
 
@@ -378,6 +432,8 @@ class Diagram(Element):
             item.subject = subject
         if parent:
             item.parent = parent
+
+        item.presentation_style = PresentationStyle(self.styleSheet, css_name(item))
         self.update({item})
         return item
 

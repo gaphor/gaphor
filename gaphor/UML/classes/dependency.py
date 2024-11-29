@@ -15,12 +15,10 @@ the type of dependency in an automatic way.
 """
 
 from gaphor import UML
-from gaphor.core.modeling.diagram import StyledItem
 from gaphor.core.modeling.properties import attribute
 from gaphor.diagram.presentation import (
     LinePresentation,
     Named,
-    PresentationStyle,
     text_name,
 )
 from gaphor.diagram.shapes import Box, stroke
@@ -71,12 +69,8 @@ class DependencyItem(Named, LinePresentation):
         self._handles[0].pos = (30, 20)
         self._handles[1].pos = (0, 0)
 
-        self.watch("subject[NamedElement].name")
+        self.watch("subject[NamedElement].name", self.change_name)
         self.watch("subject.appliedStereotype.classifier.name")
-
-        self.presentation_style = PresentationStyle(
-            self.diagram.styleSheet, StyledItem(self).name()
-        )
 
     auto_dependency: attribute[int] = attribute("auto_dependency", int, default=True)
 

@@ -29,10 +29,8 @@ from gaphas.solver import STRONG
 
 from gaphor import UML
 from gaphor.core.modeling import Presentation
-from gaphor.core.modeling.diagram import StyledItem
 from gaphor.diagram.presentation import (
     HandlePositionUpdate,
-    PresentationStyle,
     literal_eval,
     postload_connect,
 )
@@ -84,10 +82,6 @@ class ExecutionSpecificationItem(
         self._ports = [BetweenPort(nw, sw), BetweenPort(ne, se)]
 
         self._shape = Box(draw=draw_border)
-
-        self.presentation_style = PresentationStyle(
-            self.diagram.styleSheet, StyledItem(self).name()
-        )
 
     def handles(self):
         return self._handles

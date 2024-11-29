@@ -1,12 +1,10 @@
 """Implementation of interface."""
 
 from gaphor import UML
-from gaphor.core.modeling.diagram import StyledItem
 from gaphor.core.styling import Style
 from gaphor.diagram.presentation import (
     LinePresentation,
     Named,
-    PresentationStyle,
     text_name,
 )
 from gaphor.diagram.shapes import Box, stroke
@@ -34,10 +32,6 @@ class InterfaceRealizationItem(Named, LinePresentation):
         self.watch("subject[NamedElement].name")
         self.watch("subject.appliedStereotype.classifier.name")
         self._inline_style: Style = {}
-
-        self.presentation_style = PresentationStyle(
-            self.diagram.styleSheet, StyledItem(self).name()
-        )
 
     @property
     def on_folded_interface(self):

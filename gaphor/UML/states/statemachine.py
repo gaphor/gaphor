@@ -3,13 +3,11 @@ from __future__ import annotations
 from gaphas.types import Pos
 
 from gaphor import UML
-from gaphor.core.modeling.diagram import StyledItem
 from gaphor.core.modeling.element import Element
 from gaphor.core.modeling.properties import attribute
 from gaphor.diagram.presentation import (
     Classified,
     ElementPresentation,
-    PresentationStyle,
     text_name,
 )
 from gaphor.diagram.shapes import Box, CssNode, draw_border
@@ -27,15 +25,10 @@ class StateMachineItem(Classified, ElementPresentation[UML.StateMachine]):
         self.watch("children", self.update_shapes)
         self.watch("show_stereotypes", self.update_shapes)
         self.watch("show_regions", self.update_shapes)
-        self.watch("subject[NamedElement].name")
+        self.watch("subject[NamedElement].name", self.change_name)
         self.watch("subject[StateMachine].region.name")
         self.watch("subject[StateMachine].region", self.update_shapes)
-        self.watch("subject[StateMachine].name", self.change_name)
         stereotype_watches(self)
-
-        self.presentation_style = PresentationStyle(
-            self.diagram.styleSheet, StyledItem(self).name()
-        )
 
     show_stereotypes: attribute[int] = attribute("show_stereotypes", int)
     show_regions: attribute[int] = attribute("show_regions", int, default=True)

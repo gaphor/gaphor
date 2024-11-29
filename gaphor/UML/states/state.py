@@ -5,13 +5,11 @@ from __future__ import annotations
 from gaphas.types import Pos
 
 from gaphor import UML
-from gaphor.core.modeling.diagram import StyledItem
 from gaphor.core.modeling.element import Element
 from gaphor.core.modeling.properties import attribute
 from gaphor.diagram.presentation import (
     ElementPresentation,
     Named,
-    PresentationStyle,
     text_name,
 )
 from gaphor.diagram.shapes import Box, CssNode, Text, draw_top_separator, stroke
@@ -25,7 +23,7 @@ class StateItem(ElementPresentation[UML.State], Named):
     def __init__(self, diagram, id=None):
         super().__init__(diagram, id, width=50, height=30)
         self._region_heights = []
-        self.watch("subject[NamedElement].name")
+        self.watch("subject[NamedElement].name", self.change_name)
         self.watch("subject.appliedStereotype.classifier.name")
         self.watch("subject[State].entry.name", self.update_shapes)
         self.watch("subject[State].exit.name", self.update_shapes)
@@ -33,11 +31,6 @@ class StateItem(ElementPresentation[UML.State], Named):
         self.watch("subject[State].region.name")
         self.watch("subject[State].region", self.update_shapes)
         self.watch("show_regions", self.update_shapes)
-        self.watch("subject[State].name", self.change_name)
-
-        self.presentation_style = PresentationStyle(
-            self.diagram.styleSheet, StyledItem(self).name()
-        )
 
     show_regions: attribute[int] = attribute("show_regions", int, default=True)
 

@@ -1,12 +1,10 @@
 import logging
 
 from gaphor import UML
-from gaphor.core.modeling.diagram import StyledItem
 from gaphor.core.modeling.properties import attribute
 from gaphor.diagram.presentation import (
     Classified,
     ElementPresentation,
-    PresentationStyle,
 )
 from gaphor.diagram.shapes import Box, draw_border
 from gaphor.diagram.support import represents
@@ -37,17 +35,12 @@ class DataTypeItem(Classified, ElementPresentation[UML.DataType]):
 
         self.watch("show_attributes", self.update_shapes).watch(
             "show_operations", self.update_shapes
-        ).watch("subject[NamedElement].name").watch(
+        ).watch("subject[NamedElement].name", self.change_name).watch(
             "subject[NamedElement].namespace.name"
         )
-        self.watch("subject[NamedElement].name", self.change_name)
         attribute_watches(self, "DataType")
         operation_watches(self, "DataType")
         stereotype_watches(self)
-
-        self.presentation_style = PresentationStyle(
-            self.diagram.styleSheet, StyledItem(self).name()
-        )
 
     show_stereotypes: attribute[int] = attribute("show_stereotypes", int)
 

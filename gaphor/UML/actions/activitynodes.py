@@ -9,13 +9,11 @@ from gaphas.matrix import Matrix
 
 from gaphor import UML
 from gaphor.core.modeling import Presentation
-from gaphor.core.modeling.diagram import StyledItem
 from gaphor.core.modeling.properties import association, attribute, relation_one
 from gaphor.diagram.presentation import (
     ElementPresentation,
     HandlePositionUpdate,
     Named,
-    PresentationStyle,
     literal_eval,
     text_name,
 )
@@ -56,13 +54,8 @@ class InitialNodeItem(ActivityNodeItem, ElementPresentation):
             text_name(self),
         )
 
-        self.watch("subject[NamedElement].name")
+        self.watch("subject[NamedElement].name", self.change_name)
         self.watch("subject.appliedStereotype.classifier.name")
-        self.watch("subject[InitialNode].name", self.change_name)
-
-        self.presentation_style = PresentationStyle(
-            self.diagram.styleSheet, StyledItem(self).name()
-        )
 
 
 def draw_initial_node(_box, context, bounding_box):
@@ -94,13 +87,8 @@ class ActivityFinalNodeItem(ActivityNodeItem, ElementPresentation):
             text_name(self),
         )
 
-        self.watch("subject[NamedElement].name")
+        self.watch("subject[NamedElement].name", self.change_name)
         self.watch("subject.appliedStereotype.classifier.name")
-        self.watch("subject[ActivityFinalNode].name", self.change_name)
-
-        self.presentation_style = PresentationStyle(
-            self.diagram.styleSheet, StyledItem(self).name()
-        )
 
 
 def draw_activity_final_node(_box, context, _bounding_box):
@@ -143,13 +131,8 @@ class FlowFinalNodeItem(ActivityNodeItem, ElementPresentation):
             text_name(self),
         )
 
-        self.watch("subject[NamedElement].name")
+        self.watch("subject[NamedElement].name", self.change_name)
         self.watch("subject.appliedStereotype.classifier.name")
-        self.watch("subject[FlowFinalNode].name", self.change_name)
-
-        self.presentation_style = PresentationStyle(
-            self.diagram.styleSheet, StyledItem(self).name()
-        )
 
 
 def draw_flow_final_node(_box, context, bounding_box):
@@ -184,13 +167,8 @@ class DecisionNodeItem(ActivityNodeItem, ElementPresentation):
         )
 
         self.watch("show_underlying_type")
-        self.watch("subject[NamedElement].name")
+        self.watch("subject[NamedElement].name", self.change_name)
         self.watch("subject.appliedStereotype.classifier.name")
-        self.watch("subject[DecisionNode].name", self.change_name)
-
-        self.presentation_style = PresentationStyle(
-            self.diagram.styleSheet, StyledItem(self).name()
-        )
 
     show_underlying_type: attribute[int] = attribute("show_underlying_type", int, 0)
     combined: relation_one[UML.ControlNode] = association(
@@ -252,18 +230,13 @@ class ForkNodeItem(Named, Presentation[UML.ForkNode], HandlePositionUpdate):
             ),
         )
 
-        self.watch("subject[NamedElement].name")
+        self.watch("subject[NamedElement].name", self.change_name)
         self.watch("subject.appliedStereotype.classifier.name")
         self.watch("subject[JoinNode].joinSpec")
-        self.watch("subject[ForkNode].name", self.change_name)
 
         diagram.connections.add_constraint(self, constraint(vertical=(h1.pos, h2.pos)))
         diagram.connections.add_constraint(
             self, constraint(above=(h1.pos, h2.pos), delta=30)
-        )
-
-        self.presentation_style = PresentationStyle(
-            self.diagram.styleSheet, StyledItem(self).name()
         )
 
     combined: relation_one[UML.ControlNode] = association(

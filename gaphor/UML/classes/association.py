@@ -16,12 +16,10 @@ from gaphas.geometry import Rectangle, distance_rectangle_point
 
 from gaphor import UML
 from gaphor.core.modeling import DrawContext, UpdateContext
-from gaphor.core.modeling.diagram import StyledItem
 from gaphor.core.modeling.properties import association, attribute, enumeration
 from gaphor.diagram.presentation import (
     LinePresentation,
     Named,
-    PresentationStyle,
     get_center_pos,
     text_name,
 )
@@ -76,7 +74,7 @@ class AssociationItem(Named, LinePresentation[UML.Association]):
 
         # For the association ends:
         base = "subject[Association].memberEnd[Property]"
-        self.watch("subject[NamedElement].name").watch(
+        self.watch("subject[NamedElement].name", self.change_name).watch(
             "subject.appliedStereotype.classifier.name"
         ).watch(f"{base}.name").watch(
             f"{base}.appliedStereotype.slot.definingFeature.name",
@@ -104,10 +102,6 @@ class AssociationItem(Named, LinePresentation[UML.Association]):
             )
 
         watch_information_flow(self, "Association", "abstraction")
-
-        self.presentation_style = PresentationStyle(
-            self.diagram.styleSheet, StyledItem(self).name()
-        )
 
     head_subject = association("head_subject", UML.Property, upper=1)
     tail_subject = association("tail_subject", UML.Property, upper=1)

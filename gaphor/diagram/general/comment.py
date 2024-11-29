@@ -1,8 +1,7 @@
 """CommentItem diagram item."""
 
 from gaphor.core.modeling import Comment
-from gaphor.core.modeling.diagram import StyledItem
-from gaphor.diagram.presentation import ElementPresentation, PresentationStyle
+from gaphor.diagram.presentation import ElementPresentation
 from gaphor.diagram.shapes import Box, CssNode, Text, stroke
 from gaphor.diagram.support import represents
 
@@ -25,10 +24,6 @@ class CommentItem(ElementPresentation):
             draw=draw_border,
         )
         self.watch("subject[Comment].body")
-
-        self.presentation_style = PresentationStyle(
-            self.diagram.styleSheet, StyledItem(self).name()
-        )
 
 
 def draw_border(box, context, bounding_box):

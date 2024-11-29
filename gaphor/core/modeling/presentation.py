@@ -60,6 +60,7 @@ class Presentation(Matrices, Element, Generic[S]):
             and self.presentation_style.styleSheet
         ):
             self.presentation_style.name_change(self.subject.name)
+        self.request_update()
 
     @property
     def presentation_style(self):

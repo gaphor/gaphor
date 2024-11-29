@@ -1,12 +1,10 @@
 """Artifact item."""
 
 from gaphor import UML
-from gaphor.core.modeling.diagram import StyledItem
 from gaphor.core.modeling.properties import attribute
 from gaphor.diagram.presentation import (
     Classified,
     ElementPresentation,
-    PresentationStyle,
 )
 from gaphor.diagram.shapes import Box, cairo_state, draw_border
 from gaphor.diagram.support import represents
@@ -20,15 +18,10 @@ class ArtifactItem(Classified, ElementPresentation):
         super().__init__(diagram, id)
 
         self.watch("show_stereotypes", self.update_shapes)
-        self.watch("subject[NamedElement].name")
+        self.watch("subject[NamedElement].name", self.change_name)
         self.watch("subject[NamedElement].namespace.name")
         self.watch("children", self.update_shapes)
-        self.watch("subject[Artifact].name", self.change_name)
         stereotype_watches(self)
-
-        self.presentation_style = PresentationStyle(
-            self.diagram.styleSheet, StyledItem(self).name()
-        )
 
     show_stereotypes: attribute[int] = attribute("show_stereotypes", int)
 

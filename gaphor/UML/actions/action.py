@@ -1,11 +1,9 @@
 """Action diagram item."""
 
 from gaphor import UML
-from gaphor.core.modeling.diagram import StyledItem
 from gaphor.diagram.presentation import (
     ElementPresentation,
     Named,
-    PresentationStyle,
     Valued,
     text_name,
 )
@@ -27,13 +25,8 @@ class ActionItem(Named, ElementPresentation):
             draw=draw_border,
         )
 
-        self.watch("subject[NamedElement].name")
+        self.watch("subject[NamedElement].name", self.change_name)
         self.watch("subject.appliedStereotype.classifier.name")
-        self.watch("subject[Action].name", self.change_name)
-
-        self.presentation_style = PresentationStyle(
-            self.diagram.styleSheet, StyledItem(self).name()
-        )
 
 
 @represents(UML.ValueSpecificationAction)
@@ -49,11 +42,7 @@ class ValueSpecificationActionItem(Valued, ElementPresentation):
         )
 
         self.watch("subject[ValueSpecificationAction].value")
-        self.watch("subject[ValueSpecificationAction].name", self.change_name)
-
-        self.presentation_style = PresentationStyle(
-            self.diagram.styleSheet, StyledItem(self).name()
-        )
+        self.watch("subject[NamedElement].name", self.change_name)
 
 
 @represents(UML.CallBehaviorAction)
@@ -115,13 +104,8 @@ class SendSignalActionItem(Named, ElementPresentation):
             draw=self.draw_border,
         )
 
-        self.watch("subject[NamedElement].name")
+        self.watch("subject[NamedElement].name", self.change_name)
         self.watch("subject.appliedStereotype.classifier.name")
-        self.watch("subject[SendSignalAction].name", self.change_name)
-
-        self.presentation_style = PresentationStyle(
-            self.diagram.styleSheet, StyledItem(self).name()
-        )
 
     def draw_border(self, box, context, bounding_box):
         cr = context.cairo
@@ -148,13 +132,8 @@ class AcceptEventActionItem(Named, ElementPresentation):
             draw=self.draw_border,
         )
 
-        self.watch("subject[NamedElement].name")
+        self.watch("subject[NamedElement].name", self.change_name)
         self.watch("subject.appliedStereotype.classifier.name")
-        self.watch("subject[AcceptEventAction].name", self.change_name)
-
-        self.presentation_style = PresentationStyle(
-            self.diagram.styleSheet, StyledItem(self).name()
-        )
 
     def draw_border(self, box, context, bounding_box):
         cr = context.cairo

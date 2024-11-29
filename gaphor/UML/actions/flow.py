@@ -5,11 +5,9 @@ connectors.
 """
 
 from gaphor import UML
-from gaphor.core.modeling.diagram import StyledItem
 from gaphor.diagram.presentation import (
     LinePresentation,
     Named,
-    PresentationStyle,
     text_name,
 )
 from gaphor.diagram.shapes import Box, CssNode, Text, draw_arrow_tail
@@ -42,16 +40,12 @@ class ControlFlowItem(Named, LinePresentation):
             shape_tail=Box(text_stereotypes(self), text_name(self)),
         )
 
-        self.watch("subject[NamedElement].name")
+        self.watch("subject[NamedElement].name", self.change_name)
         self.watch("subject.appliedStereotype.classifier.name")
 
         self.watch("subject[ControlFlow].guard")
 
         self.draw_tail = draw_arrow_tail
-
-        self.presentation_style = PresentationStyle(
-            self.diagram.styleSheet, StyledItem(self).name()
-        )
 
 
 @represents(UML.ObjectFlow, head=UML.ObjectFlow.source, tail=UML.ObjectFlow.target)
@@ -79,13 +73,9 @@ class ObjectFlowItem(Named, LinePresentation):
             shape_tail=Box(text_stereotypes(self), text_name(self)),
         )
 
-        self.watch("subject[NamedElement].name")
+        self.watch("subject[NamedElement].name", self.change_name)
         self.watch("subject.appliedStereotype.classifier.name")
 
         self.watch("subject[ObjectFlow].guard")
 
         self.draw_tail = draw_arrow_tail
-
-        self.presentation_style = PresentationStyle(
-            self.diagram.styleSheet, StyledItem(self).name()
-        )

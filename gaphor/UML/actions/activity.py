@@ -1,11 +1,9 @@
 from gaphor import UML
-from gaphor.core.modeling.diagram import StyledItem
 from gaphor.core.modeling.properties import attribute
 from gaphor.diagram.presentation import (
     AttachedPresentation,
     Classified,
     ElementPresentation,
-    PresentationStyle,
     connect,
     text_name,
 )
@@ -21,7 +19,7 @@ class ActivityItem(Classified, ElementPresentation):
 
         self.width = 100
 
-        self.watch("subject[NamedElement].name").watch(
+        self.watch("subject[NamedElement].name", self.change_name).watch(
             "subject.appliedStereotype.classifier.name"
         ).watch("subject[Classifier].isAbstract", self.update_shapes).watch(
             "subject[Activity].node[ActivityParameterNode].parameter.name",
@@ -32,12 +30,6 @@ class ActivityItem(Classified, ElementPresentation):
         ).watch(
             "subject[Activity].node[ActivityParameterNode].parameter.typeValue",
             self.update_parameters,
-        )
-
-        self.watch("subject[Activity].name", self.change_name)
-
-        self.presentation_style = PresentationStyle(
-            self.diagram.styleSheet, StyledItem(self).name()
         )
 
     def postload(self):
