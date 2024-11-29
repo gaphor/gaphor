@@ -36,9 +36,9 @@ class DependencyPropertyPage(PropertyPageBase):
         tail = self.builder.get_object("tail")
         source = self.subject.source[0]
         target = self.subject.target[0]
-        if source:
+        if source and isinstance(source, UML.NamedElement):
             head.set_text(".".join(source.qualifiedName))
-        if target:
+        if target and isinstance(target, UML.NamedElement):
             tail.set_text(".".join(target.qualifiedName))
 
         return unsubscribe_all_on_destroy(
