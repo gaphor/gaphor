@@ -112,7 +112,7 @@ class Presentation(Matrices, Base, Generic[S]):
         else:
             super().load(name, value)
 
-    def inner_unlink(self, _unlink_event: UnlinkEvent) -> None:
+    def unlink(self) -> None:
         self._watcher.unsubscribe_all()
         self.matrix.remove_handler(self._on_matrix_changed)
 
@@ -122,7 +122,12 @@ class Presentation(Matrices, Base, Generic[S]):
         if diagram := self._original_diagram:
             diagram.connections.remove_connections_to_item(self)
             self._original_diagram = None
-            super().inner_unlink(UnlinkEvent(self, diagram=diagram))
+
+            for prop in self.__properties__:
+                prop.unlink(self)
+
+            log.debug("unlinking %s", self)
+            self.handle(UnlinkEvent(self, diagram=diagram))
 
     def _on_diagram_changed(self, event):
         new_value = event.new_value

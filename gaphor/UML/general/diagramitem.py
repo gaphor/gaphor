@@ -2,10 +2,11 @@
 An item representing a diagram.
 """
 
-from gaphor.core.modeling.diagram import Diagram
 from gaphor.diagram.presentation import ElementPresentation, Named, text_name
 from gaphor.diagram.shapes import Box, CssNode, IconBox, Text, draw_border, stroke
 from gaphor.diagram.support import represents
+from gaphor.UML.compartments import text_stereotypes
+from gaphor.UML.uml import Diagram
 
 
 @represents(Diagram)
@@ -14,8 +15,6 @@ class DiagramItem(ElementPresentation, Named):
         super().__init__(diagram, id, width=30, height=30)
         for h in self.handles():
             h.movable = False
-
-        from gaphor.UML.compartments import text_stereotypes
 
         self.shape = IconBox(
             Box(

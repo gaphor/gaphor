@@ -6,13 +6,15 @@ from typing import NamedTuple
 from gaphor.core.modeling import Id
 from gaphor.diagram.copypaste import (
     BaseCopy,
+    Opaque,
     copy,
+    copy_diagram,
     copy_element,
     paste,
     paste_element,
 )
 from gaphor.UML.recipes import owner_package
-from gaphor.UML.uml import NamedElement, Package, Relationship, Type
+from gaphor.UML.uml import Diagram, NamedElement, Package, Relationship, Type
 
 
 class NamedElementCopy(NamedTuple):
@@ -30,6 +32,11 @@ def copy_named_element(
 @copy.register
 def _copy_named_element(element: NamedElement) -> Iterator[tuple[Id, NamedElementCopy]]:
     yield element.id, copy_named_element(element)
+
+
+@copy.register
+def _copy_diagram(element: Diagram) -> Iterator[tuple[Id, Opaque]]:
+    yield from copy_diagram(element)
 
 
 def paste_named_element(copy_data: NamedElementCopy, diagram, lookup):
