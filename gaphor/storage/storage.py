@@ -160,6 +160,8 @@ def load_elements_generator(
     yield from _load_attributes_and_references(elements, update_status_queue)
 
     upgrade_ensure_style_sheet_is_present(element_factory)
+    if version_lower_than(gaphor_version, (2, 28, 0)):
+        upgrade_dependency_owning_package(element_factory, modeling_language)
 
     for _id, elem in list(elements.items()):
         yield from update_status_queue()
@@ -482,3 +484,21 @@ def upgrade_modeling_language(elem: element) -> element:
         elem.ns = "UML"
         elem.type = "ImageItem"
     return elem
+
+
+# since 2.28.0
+def upgrade_dependency_owning_package(
+    element_factory: ElementFactory, modeling_language
+):
+    Dependency = modeling_language.lookup_element("Dependency", ns="UML")
+    Package = modeling_language.lookup_element("Package", ns="UML")
+    for dep in element_factory.select(Dependency):
+        if not dep.presentation:
+            continue
+
+        maybe_pkg = dep.presentation[0].diagram
+        while maybe_pkg:
+            if isinstance(maybe_pkg, Package):
+                dep.owningPackage = maybe_pkg
+                break
+            maybe_pkg = maybe_pkg.owner
