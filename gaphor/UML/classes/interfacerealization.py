@@ -2,11 +2,7 @@
 
 from gaphor import UML
 from gaphor.core.styling import Style
-from gaphor.diagram.presentation import (
-    LinePresentation,
-    Named,
-    text_name,
-)
+from gaphor.diagram.presentation import LinePresentation, Named, text_name
 from gaphor.diagram.shapes import Box, stroke
 from gaphor.diagram.support import represents
 from gaphor.UML.classes.interface import Folded, InterfacePort

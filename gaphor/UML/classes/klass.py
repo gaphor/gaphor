@@ -33,7 +33,6 @@ class ClassItem(Classified, ElementPresentation[UML.Class]):
         ).watch("subject[NamedElement].namespace.name").watch(
             "subject[Classifier].isAbstract", self.update_shapes
         )
-
         attribute_watches(self, "Class")
         operation_watches(self, "Class")
         stereotype_watches(self)

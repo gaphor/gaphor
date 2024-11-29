@@ -1,11 +1,7 @@
 """Use case diagram item."""
 
 from gaphor import UML
-from gaphor.diagram.presentation import (
-    Classified,
-    ElementPresentation,
-    text_name,
-)
+from gaphor.diagram.presentation import Classified, ElementPresentation, text_name
 from gaphor.diagram.shapes import Box, draw_ellipse
 from gaphor.diagram.support import represents
 from gaphor.UML.compartments import text_stereotypes
@@ -21,7 +17,6 @@ class UseCaseItem(Classified, ElementPresentation):
         self.watch("subject[NamedElement].name", self.change_name)
         self.watch("subject.appliedStereotype.classifier.name")
         self.watch("subject[Classifier].isAbstract", self.update_shapes)
-        self.watch("subject[UseCase].name", self.change_name)
 
     def update_shapes(self, event=None):
         self.shape = Box(

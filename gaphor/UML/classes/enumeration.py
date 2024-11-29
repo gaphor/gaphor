@@ -63,11 +63,9 @@ class EnumerationItem(Classified, ElementPresentation[UML.Enumeration]):
             name_compartment(
                 self,
                 lambda: [
-                    (
-                        self.diagram.gettext("valueType")
-                        if self.as_sysml_value_type
-                        else self.diagram.gettext("enumeration")
-                    )
+                    self.diagram.gettext("valueType")
+                    if self.as_sysml_value_type
+                    else self.diagram.gettext("enumeration")
                 ],
             ),
             *(

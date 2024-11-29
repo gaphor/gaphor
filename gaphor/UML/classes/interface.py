@@ -188,7 +188,6 @@ class InterfaceItem(Classified, ElementPresentation):
         ).watch("subject[NamedElement].namespace.name").watch(
             "subject[Interface].supplierDependency", self.update_shapes
         )
-
         attribute_watches(self, "Interface")
         operation_watches(self, "Interface")
         stereotype_watches(self)

@@ -1,11 +1,7 @@
 """Interaction diagram item."""
 
 from gaphor import UML
-from gaphor.diagram.presentation import (
-    ElementPresentation,
-    Named,
-    text_name,
-)
+from gaphor.diagram.presentation import ElementPresentation, Named, text_name
 from gaphor.diagram.shapes import Box, CssNode, stroke
 from gaphor.diagram.support import represents
 from gaphor.UML.compartments import text_stereotypes

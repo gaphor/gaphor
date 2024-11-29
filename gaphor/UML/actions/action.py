@@ -1,12 +1,7 @@
 """Action diagram item."""
 
 from gaphor import UML
-from gaphor.diagram.presentation import (
-    ElementPresentation,
-    Named,
-    Valued,
-    text_name,
-)
+from gaphor.diagram.presentation import ElementPresentation, Named, Valued, text_name
 from gaphor.diagram.shapes import Box, CssNode, Text, draw_border, stroke
 from gaphor.diagram.support import represents
 from gaphor.UML.compartments import text_stereotypes
@@ -60,8 +55,7 @@ class CallBehaviorActionItem(ActionItem):
             draw=self.draw_border_with_fork,
         )
 
-        self.watch("subject[CallBehaviorAction].behavior.name")
-        self.watch("subject[CallBehaviorAction].name", self.change_name)
+        self.watch("subject[CallBehaviorAction].behavior.name", self.change_name)
 
     def draw_border_with_fork(self, box, context, bounding_box):
         draw_border(box, context, bounding_box)

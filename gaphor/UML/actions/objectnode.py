@@ -2,11 +2,7 @@
 
 from gaphor import UML
 from gaphor.core.modeling.properties import attribute
-from gaphor.diagram.presentation import (
-    ElementPresentation,
-    Named,
-    text_name,
-)
+from gaphor.diagram.presentation import ElementPresentation, Named, text_name
 from gaphor.diagram.shapes import Box, CssNode, IconBox, Text, draw_border
 from gaphor.diagram.support import represents
 from gaphor.i18n import i18nize

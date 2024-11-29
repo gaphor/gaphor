@@ -1,9 +1,6 @@
 """Trivial drawing aids (box, line, ellipse)."""
 
-from gaphor.diagram.presentation import (
-    ElementPresentation,
-    LinePresentation,
-)
+from gaphor.diagram.presentation import ElementPresentation, LinePresentation
 from gaphor.diagram.shapes import Box as BoxShape
 from gaphor.diagram.shapes import draw_border, draw_ellipse
 

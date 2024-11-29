@@ -7,11 +7,7 @@ from gaphas.types import Pos
 from gaphor import UML
 from gaphor.core.modeling.element import Element
 from gaphor.core.modeling.properties import attribute
-from gaphor.diagram.presentation import (
-    ElementPresentation,
-    Named,
-    text_name,
-)
+from gaphor.diagram.presentation import ElementPresentation, Named, text_name
 from gaphor.diagram.shapes import Box, CssNode, Text, draw_top_separator, stroke
 from gaphor.diagram.support import represents
 from gaphor.UML.compartments import text_stereotypes
