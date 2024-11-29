@@ -161,8 +161,13 @@ jobs:
     name: Linux (Devel Snapcraft)
     runs-on: ubuntu-latest
     steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f # v2.10.2
+        with:
+          egress-policy: audit
+
       - name: 🧪 Build snap on amd64
-        uses: snapcrafters/ci/test-snap-build@main
+        uses: snapcrafters/ci/test-snap-build@5d324dfd09955a81a018be6d7544d07770552644 # main
 
   macos:
     strategy:
@@ -428,9 +433,14 @@ jobs:
       architectures: ${{ steps.get-architectures.outputs.architectures }}
       architectures-list: ${{ steps.get-architectures.outputs.architectures-list }}
     steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f # v2.10.2
+        with:
+          egress-policy: audit
+
       - name: 🖥 Get snap architectures
         id: get-architectures
-        uses: snapcrafters/ci/get-architectures@main
+        uses: snapcrafters/ci/get-architectures@5d324dfd09955a81a018be6d7544d07770552644 # main
 
   release:
     name: 🚢 Release to latest/edge
@@ -441,7 +451,7 @@ jobs:
         architecture: ${{ fromJSON(needs.get-architectures.outputs.architectures-list) }}
     steps:
       - name: 🚢 Release to latest/edge
-        uses: snapcrafters/ci/release-to-candidate@main
+        uses: snapcrafters/ci/release-to-candidate@5d324dfd09955a81a018be6d7544d07770552644 # main
         with:
           architecture: ${{ matrix.architecture }}
           launchpad-token: ${{ secrets.LP_BUILD_SECRET }}
@@ -456,9 +466,14 @@ jobs:
     outputs:
       issue-number: ${{ steps.issue.outputs.issue-number }}
     steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f # v2.10.2
+        with:
+          egress-policy: audit
+
       - name: 📣 Create call for testing
         id: issue
-        uses: snapcrafters/ci/call-for-testing@main
+        uses: snapcrafters/ci/call-for-testing@5d324dfd09955a81a018be6d7544d07770552644 # main
         with:
           architectures: ${{ needs.get-architectures.outputs.architectures }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -469,8 +484,13 @@ jobs:
     needs: call-for-testing
     runs-on: ubuntu-latest
     steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f # v2.10.2
+        with:
+          egress-policy: audit
+
       - name: 📸 Gather screenshots
-        uses: snapcrafters/ci/get-screenshots@main
+        uses: snapcrafters/ci/get-screenshots@5d324dfd09955a81a018be6d7544d07770552644 # main
         with:
           issue-number: ${{ needs.call-for-testing.outputs.issue-number }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
