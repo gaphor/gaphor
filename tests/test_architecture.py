@@ -1,4 +1,3 @@
-import pytest
 from pytest_archon import archrule
 
 import gaphor
@@ -79,7 +78,6 @@ def test_diagram_package():
     )
 
 
-@pytest.mark.xfail(reason="Undo manager imports gaphor.UML")
 def test_services_package():
     (
         archrule("Services only depend on core functionality")

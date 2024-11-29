@@ -41,7 +41,6 @@ from gaphor.event import (
     TransactionRollback,
 )
 from gaphor.transaction import Transaction
-from gaphor.UML.uml import Diagram
 
 logger = logging.getLogger(__name__)
 
@@ -347,18 +346,12 @@ class UndoManager(Service, ActionProvider):
             event.element.save(save_func)
 
             def undo_delete_event():
-                # If diagram is not there, for some reason, recreate it.
-                # It's probably removed in the same transaction.
-                try:
-                    diagram: Diagram = self.lookup(diagram_id)  # type: ignore[assignment]
-                except ValueError:
-                    diagram = self.element_factory.create_as(Diagram, diagram_id)
+                diagram = self.lookup(diagram_id)
+                element = diagram.create_as(element_type, element_id)  # type: ignore[attr-defined]
 
-                element = diagram.create_as(element_type, element_id)
                 for name, ser in data.items():
                     for value in deserialize(ser, lambda ref: None):
                         element.load(name, value)
-
         else:
 
             def undo_delete_event():

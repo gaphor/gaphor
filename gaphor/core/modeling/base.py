@@ -78,7 +78,6 @@ class Base:
         # The model this element belongs to.
         # NOTE: Will be unset by ElementFactory once it's `unlink()`ed.
         self._model = model
-        self._unlink_lock = 0
 
     @property
     def id(self) -> Id:
@@ -161,19 +160,11 @@ class Base:
         The unlink lock is acquired while unlinking this element's
         properties to avoid recursion problems.
         """
-        if self._unlink_lock:
-            return
+        for prop in self.__properties__:
+            prop.unlink(self)
 
-        self._unlink_lock += 1
-
-        try:
-            for prop in self.__properties__:
-                prop.unlink(self)
-
-            log.debug("unlinking %s", self)
-            self.handle(UnlinkEvent(self))
-        finally:
-            self._unlink_lock -= 1
+        log.debug("unlinking %s", self)
+        self.handle(UnlinkEvent(self))
 
     def handle(self, event) -> None:
         """Propagate incoming events.

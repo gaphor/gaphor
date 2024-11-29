@@ -1,7 +1,9 @@
 import gaphas
 import pytest
 
-from gaphor.core.modeling import Diagram, Presentation, StyleSheet
+from gaphor.core import event_handler
+from gaphor.core.modeling import Base, Diagram, ElementDeleted, Presentation, StyleSheet
+from gaphor.core.modeling.properties import association
 
 
 class Example(gaphas.Element, Presentation):
@@ -30,6 +32,10 @@ class ExampleLine(gaphas.Line, Presentation):
     def unlink(self):
         self._test_unlinked = True
         super().unlink()
+
+
+class ModelElement(Base):
+    diagram = association("association", Diagram, composite=True)
 
 
 @pytest.fixture
@@ -128,3 +134,40 @@ def test_order_grouped_presentations(diagram):
     example_1.parent = example_2
 
     assert list(diagram.get_all_items()) == [example_2, example_1]
+
+
+def test_unlink_presentations_before_diagram(diagram, event_manager):
+    events = []
+
+    @event_handler(ElementDeleted)
+    def listener(event):
+        events.append(event)
+
+    event_manager.subscribe(listener)
+
+    diagram.create(Example)
+    diagram.create(Example)
+
+    diagram.unlink()
+
+    assert events[-1].element is diagram
+
+
+def test_unlink_order_with_parent_element_in_diagram(
+    diagram, event_manager, element_factory, sanitizer_service
+):
+    events = []
+
+    @event_handler(ElementDeleted)
+    def listener(event):
+        events.append(event)
+
+    event_manager.subscribe(listener)
+
+    element = element_factory.create(ModelElement)
+    example = diagram.create(Example, subject=element)
+    element.diagram = diagram
+
+    example.unlink()
+
+    assert events[-1].element is not example
