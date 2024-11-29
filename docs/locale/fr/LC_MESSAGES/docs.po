@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: Gaphor 2.23.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-11-27 15:44-0500\n"
-"PO-Revision-Date: 2024-11-27 18:35+0000\n"
+"PO-Revision-Date: 2024-11-28 22:17+0000\n"
 "Last-Translator: Stan SZLAPKA <stansz@free.fr>\n"
+"Language-Team: French <https://hosted.weblate.org/projects/gaphor/"
+"docs-gaphor-org/fr/>\n"
 "Language: fr\n"
-"Language-Team: French <https://hosted.weblate.org/projects/gaphor/docs-"
-"gaphor-org/fr/>\n"
-"Plural-Forms: nplurals=2; plural=n > 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 5.9-dev\n"
 "Generated-By: Babel 2.16.0\n"
 
 #: ../changelog.rst:2
@@ -1345,6 +1346,11 @@ msgid ""
 "the desired outcomes and behavior of the system rather than the specific "
 "technical details."
 msgstr ""
+"Les exigences logiques font référence aux spécifications et fonctionnalités "
+"de haut niveau qui décrivent ce qu'un système ou un produit doit accomplir "
+"sans spécifier comment il sera mis en œuvre. Ces exigences se concentrent "
+"sur les résultats et le comportement souhaités du système plutôt que sur les "
+"détails techniques spécifiques."
 
 #: ../coffee_machine_logical.md:198 ../coffee_machine_logical.md:201
 msgid ""
@@ -1352,6 +1358,9 @@ msgid ""
 "machine at the logical level, so the main task now is to translate that "
 "information in to words as requirement statements."
 msgstr ""
+"Nous avons également déjà défini le comportement et la structure de la "
+"machine à espresso au niveau logique, et la tâche principale consiste "
+"maintenant à traduire ces informations en termes d'exigences."
 
 #: ../coffee_machine_logical.md:203 ../coffee_machine_logical.md:206
 msgid ""
@@ -1360,6 +1369,10 @@ msgid ""
 "GUIDENEEDSREQ) and the [Easy Approach to Requirements Syntax](https://"
 "alistairmavin.com/ears/) are recommended resources."
 msgstr ""
+"Si vous avez besoin d'aide pour rédiger de bonnes exigences, le [INCOSE "
+"Guide to Needs and Requirements] (https://portal.incose.org/commerce/"
+"store?productId=INCOSE-GUIDENEEDSREQ) et le [Easy Approach to Requirements "
+"Syntax] (https://alistairmavin.com/ears/) sont des ressources recommandées."
 
 #: ../coffee_machine_logical.md:209 ../coffee_machine_logical.md:212
 msgid ""
@@ -1369,10 +1382,15 @@ msgid ""
 "what you are used to where the higher level requirement points to the lower "
 "level requirement."
 msgstr ""
+"Nous utilisons la relation 'Exigence dérivée' de \"l'Exigence logique\" vers "
+"les 'Exigences conceptuelles' que nous avons créées précédemment. La "
+"direction de cette relation est celle de la dépendance, ce qui peut être "
+"contraire à ce que vous avez l'habitude de faire, à savoir que l'exigence de "
+"niveau supérieur pointe vers l'exigence de niveau inférieur."
 
 #: ../coffee_machine_logical.md:215 ../coffee_machine_logical.md:218
 msgid "Here we derive two requirements:"
-msgstr ""
+msgstr "Nous en déduisons deux exigences :"
 
 #: ../coffee_machine_logical.md:217
 msgid "Controller commands heat up"
@@ -2581,7 +2599,7 @@ msgstr ""
 
 #: ../getting_started.md:159
 msgid "Reset Tool Automatically"
-msgstr ""
+msgstr "Réinitialiser l’outil automatiquement"
 
 #: ../getting_started.md:161
 msgid ""
@@ -2604,7 +2622,7 @@ msgstr ""
 
 #: ../getting_started.md:167
 msgid "Diagram Language"
-msgstr ""
+msgstr "Langage de diagramme"
 
 #: ../getting_started.md:169
 msgid ""
@@ -2631,7 +2649,7 @@ msgstr ""
 
 #: ../getting_started.md:178
 msgid "Style Sheet"
-msgstr ""
+msgstr "Feuille de style"
 
 #: ../getting_started.md:180
 msgid ""
@@ -4390,7 +4408,7 @@ msgstr ""
 #: ../models/sysml/Blocks.rst:2 ../style_sheets.md:329 ../style_sheets.md:330
 #: ../style_sheets.md:326 ../style_sheets.md:327
 msgid "Blocks"
-msgstr ""
+msgstr "Blocs"
 
 #: ../models/sysml/Blocks.rst:8
 msgid "Adjunt and Classifier Behavior Properties"
@@ -6543,7 +6561,7 @@ msgstr ""
 
 #: ../style_sheets.md:326 ../style_sheets.md:323
 msgid "Component"
-msgstr ""
+msgstr "Composant"
 
 #: ../style_sheets.md:326 ../style_sheets.md:323
 msgid "``c4container[type=\"Component\"]``"
@@ -6593,7 +6611,7 @@ msgstr ""
 
 #: ../style_sheets.md:332 ../style_sheets.md:329
 msgid "RAAML"
-msgstr ""
+msgstr "RAAML"
 
 #: ../style_sheets.md:332 ../style_sheets.md:329
 msgid "FTA"
@@ -8502,7 +8520,7 @@ msgstr ""
 msgid "Resize of partition keeps actions in the same swimlane"
 msgstr ""
 "Le redimensionnement de la partition maintient les actions dans le même "
-"couloir"
+"couloir d'activité (swimlane)"
 
 #: ../../CHANGELOG.md:313
 msgid "Activities (behaviors) can be assigned to classifiers"
@@ -8808,7 +8826,9 @@ msgstr "Permettre la suppression d'éléments dans l'arborescence"
 
 #: ../../CHANGELOG.md:403
 msgid "Allocation of structural types to swimlane partitions"
-msgstr "Attribution des types de structures aux séparations des couloirs"
+msgstr ""
+"Attribution des types de structures aux séparations du couloir d'activité "
+"(swimlane)"
 
 #: ../../CHANGELOG.md:404
 msgid "User notification when model elements are automatically removed"
@@ -9192,7 +9212,7 @@ msgstr "Ajouter les instructions de débogage du VSCode pour Windows"
 
 #: ../../CHANGELOG.md:504
 msgid "Rename usage of Partitions to Swimlanes"
-msgstr "Renommer l'utilisation des partitions en Swimlanes"
+msgstr "Renommer l'utilisation des partitions en Couloir d'Activité (swimlane)"
 
 #: ../../CHANGELOG.md:505
 msgid "Update Dutch and Hungarian Translations"
@@ -9573,7 +9593,7 @@ msgstr "2.1.0"
 
 #: ../../CHANGELOG.md:621
 msgid "Improve swimlane behavior"
-msgstr "Améliorer le comportement de la ligne d'eau"
+msgstr "Améliorer le comportement du couloir d'activité (swimlane)"
 
 #: ../../CHANGELOG.md:622
 msgid "Add auto select in tree view"
@@ -9924,14 +9944,14 @@ msgid ""
 "and help to ensure that the behavior that each block provides is properly "
 "connected and integrated into the system."
 msgstr ""
-"Dans ce cas, le diagramme comprend des 'couloirs d'activités' pour l'IHM, le "
-"contrôleur, la pompe à eau, le chauffe-eau, la tête de groupe et le filtre à "
-"eau. L'IHM reçoit le bouton pressé par le serveur et envoie une commande au "
-"contrôleur. Ce dernier ordonne alors à la pompe à eau et au chauffe-eau de "
-"démarrer, et une fois que l'eau a atteint la bonne température, le "
-"contrôleur ordonne à la pompe et au chauffe-eau de se mettre en marche. "
-"L'eau est alors pompée à travers la tête de groupe et dans le porte-filtre, "
-"ce qui permet de préparer le café. Le diagramme montre le flux "
+"Dans ce cas, le diagramme comprend des couloirs d'activités (swimlanes) pour "
+"l'IHM, le contrôleur, la pompe à eau, le chauffe-eau, la tête de groupe et "
+"le filtre à eau. L'IHM reçoit le bouton pressé par le serveur et envoie une "
+"commande au contrôleur. Ce dernier ordonne alors à la pompe à eau et au "
+"chauffe-eau de démarrer, et une fois que l'eau a atteint la bonne "
+"température, le contrôleur ordonne à la pompe et au chauffe-eau de se mettre "
+"en marche. L'eau est alors pompée à travers la tête de groupe et dans le "
+"porte-filtre, ce qui permet de préparer le café. Le diagramme montre le flux "
 "d'informations et d'actions entre les différents blocs logiques et permet de "
 "s'assurer que le comportement fourni par chaque bloc est correctement "
 "connecté et intégré au système."
