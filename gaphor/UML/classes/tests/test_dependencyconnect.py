@@ -1,5 +1,4 @@
 from gaphor import UML
-from gaphor.core.modeling import Diagram
 from gaphor.diagram.tests.fixtures import allow, connect, disconnect, get_connected
 from gaphor.UML.classes.dependency import DependencyItem
 from gaphor.UML.classes.interface import InterfaceItem
@@ -149,7 +148,7 @@ def test_multiple_dependencies(create, element_factory):
 
     # Do the same thing, but now on a new diagram:
 
-    diagram2 = element_factory.create(Diagram)
+    diagram2 = element_factory.create(UML.Diagram)
     actoritem3 = diagram2.create(ActorItem, subject=actor1)
     actoritem4 = diagram2.create(ActorItem, subject=actor2)
     dep2 = diagram2.create(DependencyItem)
@@ -193,7 +192,7 @@ def test_dependency_reconnect_in_new_diagram(create, element_factory):
     connect(dep, dep.tail, c2)
 
     # Now do the same on a new diagram:
-    diagram2 = element_factory.create(Diagram)
+    diagram2 = element_factory.create(UML.Diagram)
     c3 = diagram2.create(ClassItem, subject=c1.subject)
     c4 = diagram2.create(ClassItem, subject=c2.subject)
     dep2 = diagram2.create(DependencyItem)
@@ -221,7 +220,7 @@ def test_dependency_reconnect_twice_in_new_diagram(create, element_factory):
     connect(dep, dep.tail, c2)
 
     # Now do the same on a new diagram:
-    diagram2 = element_factory.create(Diagram)
+    diagram2 = element_factory.create(UML.Diagram)
     c3 = diagram2.create(ClassItem, subject=c1.subject)
     c4 = diagram2.create(ClassItem, subject=c2.subject)
     dep2 = diagram2.create(DependencyItem)
