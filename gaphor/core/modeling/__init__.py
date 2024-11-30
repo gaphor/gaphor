@@ -11,6 +11,7 @@ from gaphor.core.modeling.diagram import (
     Diagram,
     DrawContext,
     UpdateContext,
+    css_name,
 )
 from gaphor.core.modeling.elementfactory import ElementFactory
 from gaphor.core.modeling.event import *

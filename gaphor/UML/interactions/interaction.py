@@ -24,7 +24,7 @@ class InteractionItem(Named, ElementPresentation):
             draw=draw_interaction,
         )
 
-        self.watch("subject[NamedElement].name", self.change_name)
+        self.watch("subject[NamedElement].name")
         self.watch("subject[Element].appliedStereotype.classifier.name")
 
 

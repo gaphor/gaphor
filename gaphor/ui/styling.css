@@ -173,3 +173,11 @@ flowboxchild:active {
 .mono {
   font-family: monospace;
 }
+
+.style-editor-content {
+  padding: 12px 24px 24px;
+}
+
+.style-editor-content > button {
+  margin-top: 12px;
+}

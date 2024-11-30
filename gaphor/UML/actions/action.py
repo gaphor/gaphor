@@ -20,7 +20,7 @@ class ActionItem(Named, ElementPresentation):
             draw=draw_border,
         )
 
-        self.watch("subject[NamedElement].name", self.change_name)
+        self.watch("subject[NamedElement].name")
         self.watch("subject[Element].appliedStereotype.classifier.name")
 
 
@@ -37,7 +37,7 @@ class ValueSpecificationActionItem(Valued, ElementPresentation):
         )
 
         self.watch("subject[ValueSpecificationAction].value")
-        self.watch("subject[NamedElement].name", self.change_name)
+        self.watch("subject[NamedElement].name")
 
 
 @represents(UML.CallBehaviorAction)
@@ -55,7 +55,7 @@ class CallBehaviorActionItem(ActionItem):
             draw=self.draw_border_with_fork,
         )
 
-        self.watch("subject[CallBehaviorAction].behavior.name", self.change_name)
+        self.watch("subject[CallBehaviorAction].behavior.name")
 
     def draw_border_with_fork(self, box, context, bounding_box):
         draw_border(box, context, bounding_box)
@@ -98,7 +98,7 @@ class SendSignalActionItem(Named, ElementPresentation):
             draw=self.draw_border,
         )
 
-        self.watch("subject[NamedElement].name", self.change_name)
+        self.watch("subject[NamedElement].name")
         self.watch("subject[Element].appliedStereotype.classifier.name")
 
     def draw_border(self, box, context, bounding_box):
@@ -126,7 +126,7 @@ class AcceptEventActionItem(Named, ElementPresentation):
             draw=self.draw_border,
         )
 
-        self.watch("subject[NamedElement].name", self.change_name)
+        self.watch("subject[NamedElement].name")
         self.watch("subject[Element].appliedStereotype.classifier.name")
 
     def draw_border(self, box, context, bounding_box):

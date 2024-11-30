@@ -66,7 +66,7 @@ class DependencyItem(Named, LinePresentation):
         self._handles[1].pos = (0, 0)
 
         self.watch("subject")
-        self.watch("subject[NamedElement].name", self.change_name)
+        self.watch("subject[NamedElement].name")
         self.watch("subject[Element].appliedStereotype.classifier.name")
 
     auto_dependency: attribute[int] = attribute("auto_dependency", int, default=True)

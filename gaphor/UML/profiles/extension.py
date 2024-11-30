@@ -27,7 +27,7 @@ class ExtensionItem(Named, LinePresentation):
             ),
         )
 
-        self.watch("subject[NamedElement].name", self.change_name)
+        self.watch("subject[NamedElement].name")
         self.watch("subject[Element].appliedStereotype.classifier.name")
 
     def draw_head(self, context):

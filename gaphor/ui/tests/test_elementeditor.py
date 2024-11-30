@@ -21,10 +21,18 @@ def diagrams():
     return DiagramsStub()
 
 
+class MockMainWindow:
+    @property
+    def window(self):
+        return None
+
+
 @pytest.fixture
-def component_registry(event_manager):
+def component_registry(event_manager, element_factory):
     reg = ComponentRegistry()
     reg.register("event_manager", event_manager)
+    reg.register("element_factory", element_factory)
+    reg.register("main_window", MockMainWindow())
     return reg
 
 

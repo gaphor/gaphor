@@ -25,6 +25,6 @@ class ExtendItem(Named, LinePresentation):
         self._handles[1].pos = (0, 0)
 
         self.watch("subject[Element].appliedStereotype.classifier.name").watch(
-            "subject[NamedElement].name", self.change_name
+            "subject[NamedElement].name"
         )
         self.draw_head = draw_arrow_head

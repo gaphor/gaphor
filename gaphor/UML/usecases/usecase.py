@@ -14,7 +14,7 @@ class UseCaseItem(Classified, ElementPresentation):
     def __init__(self, diagram, id=None):
         super().__init__(diagram, id, height=30)
 
-        self.watch("subject[NamedElement].name", self.change_name)
+        self.watch("subject[NamedElement].name")
         self.watch("subject[Element].appliedStereotype.classifier.name")
         self.watch("subject[Classifier].isAbstract", self.update_shapes)
 

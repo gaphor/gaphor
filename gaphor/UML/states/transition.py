@@ -26,7 +26,7 @@ class TransitionItem(Named, LinePresentation[UML.Transition]):
             ),
         )
 
-        self.watch("subject[NamedElement].name", self.change_name)
+        self.watch("subject[NamedElement].name")
         self.watch("subject[Element].appliedStereotype.classifier.name")
 
         self.watch("subject[Transition].trigger.name")

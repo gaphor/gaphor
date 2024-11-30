@@ -35,7 +35,7 @@ class DataTypeItem(Classified, ElementPresentation[UML.DataType]):
 
         self.watch("show_attributes", self.update_shapes).watch(
             "show_operations", self.update_shapes
-        ).watch("subject[NamedElement].name", self.change_name).watch(
+        ).watch("subject[NamedElement].name").watch(
             "subject[NamedElement].namespace.name"
         )
         attribute_watches(self, "DataType")
