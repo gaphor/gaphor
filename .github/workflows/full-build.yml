@@ -158,7 +158,7 @@ jobs:
           upload-artifact: false
 
   linux-snapcraft-devel:
-    name: Linux (Devel Snapcraft)
+    name: 📦 Linux (Devel Snapcraft)
     needs: lint
     runs-on: ubuntu-24.04
     steps:
