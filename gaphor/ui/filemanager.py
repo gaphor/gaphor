@@ -19,6 +19,7 @@ from gaphor.core.changeset.compare import compare
 from gaphor.core.modeling import ElementFactory, ModelReady, StyleSheet
 from gaphor.event import (
     ModelSaved,
+    Notification,
     SessionCreated,
     SessionShutdown,
     SessionShutdownRequested,
@@ -283,16 +284,21 @@ class FileManager(Service, ActionProvider, TaskOwner):
         if not filename or (filename.exists() and not filename.is_file()):
             return
 
-        status_window = StatusWindow(
-            gettext("Saving…"),
-            gettext("Saving model to {filename}").format(filename=filename),
-            parent=self.parent_window,
+        status_window = (
+            StatusWindow(
+                gettext("Saving…"),
+                gettext("Saving model to {filename}").format(filename=filename),
+                parent=self.parent_window,
+            )
+            if self.element_factory.size() > 100
+            else None
         )
 
         try:
             with filename.open("w", encoding="utf-8") as out:
                 for percentage in storage.save_generator(out, self.element_factory):
-                    status_window.progress(percentage)
+                    if status_window:
+                        status_window.progress(percentage)
                     await sleep(0)
             self.event_manager.handle(ModelSaved(filename))
         except Exception as e:
@@ -307,7 +313,9 @@ class FileManager(Service, ActionProvider, TaskOwner):
         else:
             self.filename = filename
         finally:
-            status_window.done()
+            if status_window:
+                status_window.done()
+            self.event_manager.handle(Notification(gettext("Model has been saved.")))
 
     @property
     def parent_window(self):

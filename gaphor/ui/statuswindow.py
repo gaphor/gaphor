@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from gi.repository import Adw, Gtk, Pango
+from gi.repository import Adw, GLib, Gtk, Pango
 
 
 class StatusWindow:
@@ -43,5 +43,11 @@ class StatusWindow:
     def done(self):
         """Close the status window."""
         if self.window:
-            self.window.close()
+            if GLib.main_depth() > 0:
+                # If we close the status window to quick it will stay around
+                # See https://gitlab.gnome.org/GNOME/libadwaita/-/issues/970
+                window = self.window
+                GLib.idle_add(window.close, priority=GLib.PRIORITY_LOW)
+            else:
+                self.window.close()
             self.window = None
