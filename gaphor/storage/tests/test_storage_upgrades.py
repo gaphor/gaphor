@@ -3,7 +3,7 @@ import pytest
 from gaphor.storage.parser import element
 from gaphor.storage.storage import load_elements
 from gaphor.storage.upgrade_canvasitem import upgrade_canvasitem
-from gaphor.UML import Diagram, Image, diagramitems
+from gaphor.UML import Dependency, Diagram, Image, Package, diagramitems
 
 
 @pytest.fixture
@@ -180,3 +180,25 @@ def test_upgrade_diagram_to_uml_diagram(loader, element_factory):
 
     assert isinstance(new_diagram, Diagram)
     assert isinstance(new_core_diagram, Diagram)
+
+
+def test_upgrade_dependency_owning_package(loader, element_factory):
+    pkg = element(id="2", type="Package")
+    pkg.references["ownedDiagram"] = ["1"]
+    cls_item1 = element(id="3", type="ClassItem")
+    cls1 = element(id="30", type="Class")
+    cls_item1.references["subject"] = cls1.id
+    cls_item2 = element(id="4", type="ClassItem")
+    cls2 = element(id="40", type="Class")
+    cls_item2.references["subject"] = cls2.id
+    dep_item = element(id="5", type="DependencyItem", ns="UML")
+    dep = element(id="50", type="Dependency", ns="UML")
+    dep_item.references["subject"] = dep.id
+    dep.references["supplier"] = [cls1.id]
+    dep.references["client"] = [cls2.id]
+
+    loader(cls_item1, cls_item2, dep_item, pkg, dep, cls1, cls2)
+    new_pkg = next(element_factory.select(Package))
+    new_dep = next(element_factory.select(Dependency))
+
+    assert new_dep.owner is new_pkg

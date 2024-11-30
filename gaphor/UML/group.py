@@ -60,6 +60,27 @@ def diagram_ungroup(element, diagram):
     return False
 
 
+@group.register(UML.Package, UML.PackageableElement)
+def packageable_element_group(
+    parent: UML.Package, element: UML.PackageableElement
+) -> bool:
+    if element.owner:
+        ungroup(element.owner, element)
+
+    element.owningPackage = parent
+    return True
+
+
+@ungroup.register(UML.Package, UML.PackageableElement)
+def packageable_element_ungroup(
+    parent: UML.Package, element: UML.PackageableElement
+) -> bool:
+    if element.owningPackage is parent:
+        del element.owningPackage
+        return True
+    return False
+
+
 @group.register(UML.Package, UML.Type)
 @group.register(UML.Package, UML.Package)
 def container_group(parent, element) -> bool:

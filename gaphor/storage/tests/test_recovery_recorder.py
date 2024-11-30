@@ -192,7 +192,7 @@ def test_record_connect_element(
 def test_record_connect_both_ends(
     recorder, event_manager, element_factory, modeling_language
 ):
-    diagram = element_factory.create(Diagram)
+    diagram = element_factory.create(UML.Diagram)
     class_item = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
     other_class_item = diagram.create(
         ClassItem, subject=element_factory.create(UML.Class)
@@ -223,7 +223,7 @@ def test_record_connect_both_ends(
 def test_record_disconnect_element(
     recorder, event_manager, element_factory, modeling_language
 ):
-    diagram = element_factory.create(Diagram)
+    diagram = element_factory.create(UML.Diagram)
     class_item = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
     other_class_item = diagram.create(
         ClassItem, subject=element_factory.create(UML.Class)
