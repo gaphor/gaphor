@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: Gaphor 2.23.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-11-27 15:44-0500\n"
-"PO-Revision-Date: 2024-11-29 02:21+0000\n"
-"Last-Translator: Dan Yeaw <dan@yeaw.me>\n"
+"PO-Revision-Date: 2024-11-30 09:00+0000\n"
+"Last-Translator: Stan SZLAPKA <stansz@free.fr>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/gaphor/"
 "docs-gaphor-org/fr/>\n"
 "Language: fr\n"
@@ -29,6 +29,8 @@ msgid ""
 "Our change log is with the project's source code on `GitHub <https://github."
 "com/gaphor/gaphor/blob/main/CHANGELOG.md>`_."
 msgstr ""
+"Notre journal des modifications se trouve avec le code source du projet sur `"
+"GitHub <https://github.com/gaphor/gaphor/blob/main/CHANGELOG.md>`_."
 
 #: ../changelog.rst:8
 msgid "The latest version may not have been released yet."
@@ -157,12 +159,16 @@ msgid ""
 "recreate their work as part of this tutorial. For this, open the SysML "
 "Example model shown at the bottom of the Greeter window"
 msgstr ""
+"recréer leur travail dans le cadre de ce tutoriel. Pour ce faire, ouvrez le "
+"modèle SysML Example figurant au bas de la fenêtre d'accueil (Greeter)"
 
 #: ../coffee_machine.md:48
 msgid ""
 "inspect the result of their work by opening the `coffee-machine` model "
 "located in the `examples` folder."
 msgstr ""
+"inspecter le résultat de leur travail en ouvrant le modèle `coffee-machine` "
+"situé dans le dossier `examples`."
 
 #: ../coffee_machine.md:51 ../coffee_machine.md:47
 msgid "Abstraction Levels"
@@ -512,11 +518,12 @@ msgid ""
 "an order, making an espresso, or cleaning the machine."
 msgstr ""
 "Le diagramme inclut généralement différents acteurs ou utilisateurs, tels "
-"que le serveur, le client, et éventuellement un directeur ou un technicien "
-"de maintenance. Il comprend également différents « cas d'utilisation » ou "
-"scénarios, qui décrivent les différentes actions que les utilisateurs "
-"peuvent effectuer avec la machine, comme passer une commande, préparer un "
-"espresso ou nettoyer la machine."
+"que le barman (barista), le client (customer), et éventuellement un "
+"directeur (manager) ou un technicien de maintenance (maintenance technician)"
+". Il comprend également différents « cas d'utilisation » ou scénarios, qui "
+"décrivent les différentes actions que les utilisateurs peuvent effectuer "
+"avec la machine, comme passer une commande, préparer un espresso ou nettoyer "
+"la machine."
 
 #: ../coffee_machine_concept.md:43
 msgid ""
@@ -564,8 +571,8 @@ msgid ""
 "A barista interacts with the espresso machine. The barista is provided a "
 "simple interface with a few push buttons."
 msgstr ""
-"Un serveur interagit avec la machine à espresso. Le serveur dispose d'une "
-"interface simple avec quelques boutons poussoirs."
+"Un barman (barista) interagit avec la machine à espresso. Le barman (barista)"
+" dispose d'une interface simple avec quelques boutons poussoirs."
 
 #: ../coffee_machine_concept.md:59
 msgid ""
@@ -576,18 +583,18 @@ msgid ""
 "brewing espresso."
 msgstr ""
 "Dans ce diagramme de cas d'utilisation particulier, nous avons un acteur "
-"nommé Serveur et un cas d'utilisation appelé Brew espresso, qui est attribué "
-"à un bloc appelé Espresso Machine. L'acteur, dans ce cas, est un serveur qui "
-"interagit avec le système (une machine à expresso) pour accomplir une tâche "
-"particulière, à savoir préparer un expresso."
+"nommé Barista (le barman) et un cas d'utilisation appelé Brew espresso, qui "
+"est attribué à un bloc appelé Espresso Machine. L'acteur, dans ce cas, est "
+"un chat barman qui interagit avec le système (une machine à expresso) pour "
+"accomplir une tâche particulière, à savoir préparer un expresso."
 
 #: ../coffee_machine_concept.md:65
 msgid ""
 "Use case diagram showing an actor named Barista and a use case called Brew "
 "espresso"
 msgstr ""
-"Le diagramme de cas d'utilisation montre un acteur nommé Serveur et un cas "
-"d'utilisation appelé Préparer l'espresso"
+"Le diagramme de cas d'utilisation montre un acteur nommé 'Barista' (le "
+"barman) et un cas d'utilisation appelé 'Brew espresso' (Préparer expresso)"
 
 #: ../coffee_machine_concept.md:70
 msgid ""
@@ -597,12 +604,12 @@ msgid ""
 "such as selecting the appropriate settings, starting the brewing process, "
 "and stopping the process once it's complete."
 msgstr ""
-"Le cas d'utilisation Préparer un espresso représente une fonctionnalité ou "
-"une action spécifique que le système (le bloc Machine à espresso) peut "
-"réaliser. Il décrit les étapes ou les interactions nécessaires pour "
-"accomplir la tâche de préparation d'un espresso, comme la sélection des "
-"paramètres appropriés, le démarrage du processus de préparation et l'arrêt "
-"du processus une fois qu'il est terminé."
+"Le cas d'utilisation 'Brew espresso' (Préparer espresso) représente une "
+"fonctionnalité ou une action spécifique que le système (le Espresso Machine "
+"block (bloc Machine à espresso)) peut réaliser. Il décrit les étapes ou les "
+"interactions nécessaires pour accomplir la tâche de préparation d'un "
+"espresso, comme la sélection des paramètres appropriés, le démarrage du "
+"processus de préparation et l'arrêt du processus une fois qu'il est terminé."
 
 #: ../coffee_machine_concept.md:76
 msgid ""
@@ -642,27 +649,27 @@ msgstr ""
 
 #: ../coffee_machine_concept.md:90
 msgid "Barista"
-msgstr "Serveur"
+msgstr "Barman"
 
 #: ../coffee_machine_concept.md:91
 msgid "Coffee Machine"
-msgstr "Machine à café"
+msgstr "Espresso Machine (Machine à café)"
 
 #: ../coffee_machine_concept.md:92
 msgid "Roasted Coffee"
-msgstr "Café Torréfié"
+msgstr "Roasted Coffee (Café Torréfié)"
 
 #: ../coffee_machine_concept.md:93
 msgid "Coffee Grinder"
-msgstr "Moulin à café"
+msgstr "Coffee Grinder (Moulin à café)"
 
 #: ../coffee_machine_concept.md:94
 msgid "Water Supply"
-msgstr "Approvisionnement en eau"
+msgstr "Water Supply (Approvisionnement en eau)"
 
 #: ../coffee_machine_concept.md:95
 msgid "Customer"
-msgstr "Client"
+msgstr "Customer (Client)"
 
 #: ../coffee_machine_concept.md:97
 #, fuzzy
@@ -681,7 +688,7 @@ msgid ""
 "domain"
 msgstr ""
 "Diagramme de définition des blocs montrant la hiérarchie des blocs dans le "
-"domaine des cafés"
+"domaine 'Coffee Shop'"
 
 #: ../coffee_machine_concept.md:106
 msgid ""
@@ -692,12 +699,13 @@ msgid ""
 "contains the water source for the coffee machine, and finally the Customer "
 "block represents the person who orders and receives the coffee."
 msgstr ""
-"Le bloc 'Serveur' est chargé de préparer et de servir le café aux clients. "
-"Le bloc 'Café torréfié' contient les types de café disponibles pour le "
-"serveur. Le bloc 'Moulin à café' moud les grains de café torréfiés à la "
-"consistance souhaitée avant la préparation du café. Le bloc 'Alimentation en "
-"eau' contient la source d'eau pour la machine à café, et enfin le bloc "
-"'Client' représente la personne qui commande et reçoit le café."
+"Le bloc Barista (Barman) est chargé de préparer et de servir le café aux "
+"clients. Le bloc Roasted Coffe (Café torréfié) contient les types de café "
+"disponibles pour le serveur. Le bloc Coffee Grinder (Moulin à café) moud les "
+"grains de café torréfiés à la consistance souhaitée avant la préparation du "
+"café. Le bloc Water Supply (Alimentation en eau) contient la source d'eau "
+"pour la machine à café, et enfin le bloc Customer (Client) représente la "
+"personne qui commande et reçoit le café."
 
 #: ../coffee_machine_concept.md:113
 msgid ""
@@ -710,6 +718,17 @@ msgid ""
 "menu. Also remember that you can use [auto-layout](first_model.md#adding-"
 "relations) to align and distribute all elements."
 msgstr ""
+"Les fourmis ont besoin de votre aide pour renommer le diagramme 'Feature "
+"Domain' (Domaine de fonctionnalité) et le mettre à jour afin qu'il "
+"corresponde au diagramme ci-dessus. Assurez-vous que l'option « Profile : "
+"SysML » est sélectionné dans le coin supérieur gauche de l'interface "
+"utilisateur Gaphor. Les noms des blocs peuvent être modifiés directement "
+"dans le diagramme, mais le nom de la bdd (base de donnée) ne peut être "
+"modifié que dans le navigateur de modèle. Dans le paquet 'Structur', cliquez "
+"avec le bouton droit de la souris sur les blocs portant le symbole B et "
+"renommez-les à partir du menu contextuel. Rappelez-vous également que vous "
+"pouvez utiliser [auto-layout](first_model.md#adding-relations) pour aligner "
+"et répartir tous les éléments."
 
 #: ../coffee_machine_concept.md:121 ../coffee_machine_concept.md:116
 msgid ""
@@ -748,7 +767,7 @@ msgid ""
 msgstr ""
 "Le diagramme de contexte d'une machine à café montre la machine à café comme "
 "le système au centre, avec toutes les entités externes qui l'entourent. Les "
-"entités externes comprennent le serveur, la source d'énergie, le moulin à "
+"entités externes comprennent le barman, la source d'énergie, le moulin à "
 "café et la source d'eau."
 
 #: ../coffee_machine_concept.md:138 ../coffee_machine_concept.md:133
@@ -766,6 +785,11 @@ msgid ""
 "shown, use an Association entity, then toggle Enable Item Flow to on for "
 "that association and fill in the Item Property field."
 msgstr ""
+"Les fourmis ont besoin de votre aide pour renommer le diagramme Feature "
+"Context (Contexte Fonctionnel) le mettre à jour afin qu'il corresponde au "
+"diagramme ci-dessus. Pour créer les flèches spécifiques illustrées, utilisez "
+"une entité Association, puis activez l'option Activer le flux d'éléments "
+"pour cette association et remplissez le champ Propriété de l'élément."
 
 #: ../coffee_machine_concept.md:148 ../coffee_machine_concept.md:141
 msgid ""
@@ -793,7 +817,7 @@ msgstr ""
 "Les exigences conceptuelles sont généralement recueillies en analysant les "
 "besoins des parties prenantes impliquées dans le développement de la machine "
 "à café. Il s'agit d'identifier et de recueillir les commentaires des "
-"différentes parties prenantes, telles que le serveur, les autres ingénieurs "
+"différentes parties prenantes, telles que le barman, les autres ingénieurs "
 "travaillant sur le produit, la fabrication et le service."
 
 #: ../coffee_machine_concept.md:158 ../coffee_machine_concept.md:151
@@ -897,7 +921,7 @@ msgstr ""
 
 #: ../coffee_machine_logical.md:5
 msgid "Coffee Machine: Logical Level"
-msgstr "Machine à café : Niveau logique"
+msgstr "Coffee Machine (Machine à café) : Niveau logique"
 
 #: ../coffee_machine_logical.md:9
 msgid ""
@@ -925,9 +949,9 @@ msgid ""
 msgstr ""
 "Un diagramme de 'comportement à la frontière fonctionnelle' est un type de "
 "diagramme d'activité SysML utilisé pour montrer les interactions entre "
-"différents blocs logiques. Les lignes d'eau divisent le diagramme en "
-"différentes zones, chacune représentant un bloc fonctionnel ou un composant "
-"différent."
+"différents blocs logiques. Les couloirs d'activité (swim lanes) divisent le "
+"diagramme en différentes zones, chacune représentant un bloc fonctionnel ou "
+"un composant différent."
 
 #: ../coffee_machine_logical.md:21
 msgid ""
@@ -942,6 +966,18 @@ msgid ""
 "the behavior that each block provides is properly connected and integrated "
 "into the system."
 msgstr ""
+"Dans ce cas, le diagramme comprend des couloirs d'activité (swimlanes) pour "
+"l'IHM (HMI), le contrôleur (Controller), la pompe à eau (Water Pomp), le "
+"chauffe-eau (Water Heater) , la tête de groupe (Group Head) et le filtre à "
+"eau (Portafilter). L'IHM reçoit l'information 'bouton pressé' par le barman ("
+" barista) et envoie une commande au contrôleur. Ce dernier ordonne alors au "
+"chauffe-eau de se mettre en marche et, une fois que l'eau a atteint la bonne "
+"température, il ordonne à la pompe de se mettre en marche. L'eau est alors "
+"pompée à travers la tête de groupe et dans le porte-filtre, ce qui permet de "
+"préparer le café. Le diagramme montre le flux d'informations et d'actions "
+"entre les différents blocs logiques et permet de s'assurer que le "
+"comportement fourni par chaque bloc est correctement connecté et intégré au "
+"système."
 
 #: ../coffee_machine_logical.md:36
 msgid ""
@@ -953,6 +989,16 @@ msgid ""
 "the Blocks can be changed in the Structure package, as was explained in the "
 "[Domain Diagram section](coffee_machine_concept.md#domain-diagram)."
 msgstr ""
+"Dans le paquet Logique, développez le paquet Comportement (Beahavior) dans "
+"le navigateur de modèle (Model Browser) et double-cliquez sur le diagramme "
+"nommé Comportement de frontière fonctionnelle (Functional Boundary Behavior)"
+". Des couloirs d'activités (swimlanes) supplémentaires peuvent être ajoutés "
+"en cliquant sur les couloirs d'activités et en ajoutant des partitions "
+"supplémentaires dans l'éditeur de propriétés. Le nom de la partition "
+"précédant les deux points peut également être modifié dans l'éditeur de "
+"propriétés. Les noms des blocs peuvent être modifiés dans le paquet "
+"Structure, comme expliqué dans la [section Diagramme de domaine] "
+"(coffee_machine_concept.md#diagramme-de-domaine)."
 
 #: ../coffee_machine_logical.md:43
 msgid ""
@@ -962,6 +1008,11 @@ msgid ""
 "created and renamed created by clicking on the Activity and modifying them "
 "in the Property Editor."
 msgstr ""
+"Des flux d'objets (Object Flows), des broches (attention aux entrées et aux "
+"sorties) et des actions supplémentaires peuvent être créés à l'aide de la "
+"boîte à outils (Toolbox). Les nœuds de paramètres attachés à l'activité à "
+"gauche et à droite du diagramme sont créés et renommés en cliquant sur "
+"l'activité et en les modifiant dans l'éditeur de propriétés."
 
 #: ../coffee_machine_logical.md:51
 msgid "Logical State Machine"
@@ -1013,6 +1064,12 @@ msgid ""
 "added by selecting the transition and adding the guard in the Property "
 "Editor."
 msgstr ""
+"Ouvrez le diagramme des Etats Logiques (Logical States) et ajoutez une "
+"région à l'état 'On' via l'éditeur de propriétés (Property Editor). Utilisez "
+"ensuite la boîte à outils (Toolbox) pour ajouter les sous-états et la "
+"transition supplémentaires. Les protections des transitions, indiquées entre "
+"parenthèses, sont ajoutées en sélectionnant la transition et la protection "
+"correspondante dans l'éditeur de propriétés."
 
 #: ../coffee_machine_logical.md:76
 msgid ""
@@ -1046,27 +1103,27 @@ msgstr "Les blocs logiques suivants font partie de la machine à expresso :"
 
 #: ../coffee_machine_logical.md:88
 msgid "Water tank"
-msgstr "Réservoir d'eau"
+msgstr "Water tank (Réservoir d'eau)"
 
 #: ../coffee_machine_logical.md:89
 msgid "Water pump"
-msgstr "Pompe"
+msgstr "Water pump (Pompe)"
 
 #: ../coffee_machine_logical.md:90
 msgid "Water heater"
-msgstr "Chauffe-eau"
+msgstr "Water heater (Chauffe-eau)"
 
 #: ../coffee_machine_logical.md:91
 msgid "Portafilter"
-msgstr "Porte-filtre"
+msgstr "Portafilter (Porte-filtre)"
 
 #: ../coffee_machine_logical.md:92
 msgid "Controller"
-msgstr "Contrôleur"
+msgstr "Controller (Contrôleur)"
 
 #: ../coffee_machine_logical.md:90
 msgid "Group head"
-msgstr ""
+msgstr "Group head (Tête de groupe)"
 
 #: ../coffee_machine_logical.md:94
 msgid "HMI"
@@ -1096,10 +1153,10 @@ msgid ""
 "easy filling and cleaning. The water tank supplies water to the water pump "
 "when needed."
 msgstr ""
-"Réservoir d'eau : Le réservoir d'eau est un récipient qui stocke l'eau "
-"utilisée dans la machine à espresso. Il a généralement une capacité "
-"spécifique et est conçu pour être facilement rempli et nettoyé. Le réservoir "
-"d'eau alimente la pompe à eau en cas de besoin."
+"Water tank : Le réservoir d'eau est un récipient qui stocke l'eau utilisée "
+"dans la machine à espresso. Il a généralement une capacité spécifique et est "
+"conçu pour être facilement rempli et nettoyé. Le réservoir d'eau alimente la "
+"pompe à eau en cas de besoin."
 
 #: ../coffee_machine_logical.md:110
 msgid ""
@@ -1108,10 +1165,10 @@ msgid ""
 "coffee grounds in the portafilter. It plays a crucial role in the espresso "
 "extraction process by ensuring a consistent flow of water."
 msgstr ""
-"Pompe : La pompe à eau est chargée de puiser l'eau dans le réservoir d'eau "
-"et de créer la pression nécessaire pour faire passer l'eau à travers le marc "
-"de café dans le filtre à café. Elle joue un rôle crucial dans le processus "
-"d'extraction de l'espresso en assurant un débit d'eau constant."
+"Water pump : La pompe à eau est chargée de puiser l'eau dans le réservoir "
+"d'eau et de créer la pression nécessaire pour faire passer l'eau à travers "
+"le marc de café dans le filtre à café. Elle joue un rôle crucial dans le "
+"processus d'extraction de l'espresso en assurant un débit d'eau constant."
 
 #: ../coffee_machine_logical.md:115
 msgid ""
@@ -1120,10 +1177,10 @@ msgid ""
 "espresso. It maintains the water at the desired temperature to ensure proper "
 "extraction and flavor."
 msgstr ""
-"Le chauffe-eau : Le chauffe-eau, également appelé boiler ou élément "
-"chauffant, est chargé de chauffer l'eau à la température optimale pour la "
-"préparation de l'espresso. Il maintient l'eau à la température souhaitée "
-"pour garantir une extraction et une saveur adéquates."
+"Water heater : Le chauffe-eau, également appelé boiler ou élément chauffant, "
+"est chargé de chauffer l'eau à la température optimale pour la préparation "
+"de l'espresso. Il maintient l'eau à la température souhaitée pour garantir "
+"une extraction et une saveur adéquates."
 
 #: ../coffee_machine_logical.md:120
 msgid ""
@@ -1132,10 +1189,10 @@ msgid ""
 "filter holder. The water from the pump is forced through the coffee grounds "
 "in the portafilter to extract the flavors and create the espresso."
 msgstr ""
-"Le porte-filtre : C'est un dispositif amovible en forme de poignée qui "
-"contient le marc de café. Il est fixé à la machine à espresso et sert de "
-"porte-filtre. L'eau de la pompe est forcée à travers le marc de café dans le "
-"porte-filtre pour extraire les arômes et créer l'espresso."
+"Portafilter : C'est un dispositif amovible en forme de poignée qui contient "
+"le marc de café. Il est fixé à la machine à espresso et sert de porte-"
+"filtre. L'eau de la pompe est forcée à travers le marc de café dans le porte-"
+"filtre pour extraire les arômes et créer l'espresso."
 
 #: ../coffee_machine_logical.md:125
 msgid ""
@@ -1146,7 +1203,7 @@ msgid ""
 "temperature, pressure, and other parameters to maintain consistency and "
 "deliver the desired results."
 msgstr ""
-"Le contrôleur : C'est très souvent un microcontrôleur ou un circuit imprimé "
+"Controller : C'est très souvent un microcontrôleur ou un circuit imprimé "
 "dédié, c'est le cerveau de la machine à espresso. Il gère et coordonne le "
 "fonctionnement de divers composants, tels que la pompe à eau, le chauffe-eau "
 "et l'IHM, afin de garantir un processus d'infusion correct. Il surveille et "
@@ -1161,6 +1218,11 @@ msgid ""
 "portafilter and into the cup. The group head also helps to maintain proper "
 "temperature and pressure during the brewing process."
 msgstr ""
+"Group head : La tête de groupe est une partie de la machine à espresso où se "
+"fixe le porte-filtre. Elle assure une liaison sûre entre le portafiltre et "
+"la machine, ce qui permet à l'espresso de s'écouler du portafiltre et de se "
+"déverser dans la tasse. La tête de groupe permet également de maintenir une "
+"température et une pression adéquates pendant le processus d'infusion."
 
 #: ../coffee_machine_logical.md:138
 msgid ""
@@ -1171,8 +1233,8 @@ msgid ""
 "of the machine. It provides feedback and displays information related to the "
 "brewing process, such as brewing time, temperature, and cup size selection."
 msgstr ""
-"IHM (Interface Homme-Machine) : C'est l'interface utilisateur de la machine "
-"à espresso. Elle permet à l'utilisateur d'interagir avec la machine, "
+"HMI  : L'Interface Homme-Machine (IHM) est interface utilisateur de la "
+"machine à espresso. Elle permet à l'utilisateur d'interagir avec la machine, "
 "généralement au moyen de boutons, d'interrupteurs ou d'un écran tactile. "
 "L'IHM permet à l'utilisateur de sélectionner différentes options d'infusion, "
 "d'ajuster les réglages et de contrôler l'état de la machine. Elle fournit "
@@ -1187,6 +1249,11 @@ msgid ""
 "group head. These details will be defined once we get to the Technology "
 "level."
 msgstr ""
+"Nous n'avons pas fait de choix techniques à ce stade, par exemple nous "
+"n'avons pas spécifié le type de contrôleur (controller), la capacité de la "
+"pompe (Water pump)ou le modèle de la tête de groupe (Group Head). Ces "
+"détails seront définis une fois que nous aurons atteint le niveau "
+"technologique."
 
 #: ../coffee_machine_logical.md:149
 msgid ""
@@ -1194,7 +1261,7 @@ msgid ""
 "that it matches the one above."
 msgstr ""
 "Les fourmis ont besoin de votre aide pour mettre à jour le diagramme de la "
-"structure logique afin qu'il corresponde au diagramme ci-dessus."
+"Structure Logique afin qu'il corresponde au diagramme ci-dessus."
 
 #: ../coffee_machine_logical.md:152
 msgid "Logical Boundary"
@@ -1210,14 +1277,14 @@ msgid ""
 "boundary. It uses part properties of the blocks that were in the Logical "
 "Structure diagram above."
 msgstr ""
-"La frontière logique est un type de diagramme de bloc interne qui représente "
+"La frontière logique est un type de Diagramme de Bloc Interne qui représente "
 "la structure interne d'un système, illustrant les relations entre ses "
 "composants ou blocs internes. Il aide à visualiser la manière dont ces blocs "
 "interagissent et échangent des informations au sein du système. Le terme "
 "frontière utilisé ici signifie une vue claire de la boîte à l'intérieur de "
 "la machine à espresso au niveau de la frontière logique. Elle utilise les "
-"propriétés partielles des blocs qui figuraient dans le diagramme de "
-"structure logique ci-dessus."
+"propriétés partielles des blocs qui figuraient dans le Diagramme de "
+"Structure Logique ci-dessus."
 
 #: ../coffee_machine_logical.md:161
 msgid ""
@@ -1233,13 +1300,13 @@ msgid ""
 msgstr ""
 "Les interactions entre les propriétés des composant à l'intérieur de la "
 "machine à expresso sont représentées sous forme de flux d'éléments "
-"(ItemFlows) sur les connecteurs."
+"(ItemFlows) sur les connecteurs 'Connectors)."
 
 #: ../coffee_machine_logical.md:169
 msgid ""
 "Water: Represents the flow of water from the water tank to the water pump."
 msgstr ""
-"L'eau : Représente le flux d'eau depuis le réservoir d'eau jusqu'à la pompe "
+"Water : Représente le flux d'eau depuis le réservoir d'eau jusqu'à la pompe "
 "à eau."
 
 #: ../coffee_machine_logical.md:170
@@ -1255,48 +1322,48 @@ msgid ""
 "Volume Adjustment: Represents the user-selected volume adjustment for the "
 "coffee output."
 msgstr ""
-"Ajustement du volume : Représente le réglage du volume sélectionné par "
-"l'utilisateur pour la sortie du café."
+"Volume Adjustment : (Ajustement du volume) Représente le réglage du volume "
+"sélectionné par l'utilisateur pour la sortie du café."
 
 #: ../coffee_machine_logical.md:172
 msgid ""
 "Pressurized Water: Represents the water flow under pressure for extracting "
 "coffee."
 msgstr ""
-"Eau sous pression : Représente le débit d'eau sous pression pour "
-"l'extraction du café."
+"Pressurized Water : (Eau sous pression) Représente le débit d'eau sous "
+"pression pour l'extraction du café."
 
 #: ../coffee_machine_logical.md:173
 msgid ""
 "Heat Command: Represents the command or signal to activate the water heater "
 "and initiate the heating process."
 msgstr ""
-"Commande de chauffage : Représente la commande ou le signal permettant "
-"d'activer le chauffe-eau et de lancer le processus de chauffage."
+"Heat Command :(Commande de chauffage) Représente la commande ou le signal "
+"permettant d'activer le chauffe-eau et de lancer le processus de chauffage."
 
 #: ../coffee_machine_logical.md:174
 msgid ""
 "Temperature: Represents the feedback signal indicating the current "
 "temperature of the water."
 msgstr ""
-"Température : Représente le signal de retour indiquant la température "
-"actuelle de l'eau."
+"Temperature : (Température) Représente le signal de retour indiquant la "
+"température actuelle de l'eau."
 
 #: ../coffee_machine_logical.md:175
 msgid ""
 "Hot Pressurized Water: Represents the pressurized hot water for brewing "
 "coffee."
 msgstr ""
-"Eau chaude sous pression : Représente l'eau chaude sous pression pour la "
-"préparation du café."
+"Hot Pressurized Water : (Eau chaude sous pression) Représente l'eau chaude "
+"sous pression pour la préparation du café."
 
 #: ../coffee_machine_logical.md:176
 msgid ""
 "Coffee Water Mixture: Represents the mixture of hot water and coffee grounds "
 "during the brewing process."
 msgstr ""
-"Mélange d'eau et de café : Représente le mélange d'eau chaude et de marc de "
-"café pendant le processus d'infusion."
+"Coffee Water Mixture : (Mélange d'eau et de café) Représente le mélange "
+"d'eau chaude et de marc de café pendant le processus d'infusion."
 
 #: ../coffee_machine_logical.md:180
 msgid ""
@@ -1332,7 +1399,7 @@ msgid ""
 "it matches the one above."
 msgstr ""
 "Une fois de plus, aidez les fourmis en mettant à jour le diagramme des "
-"limites logiques afin qu'il corresponde au diagramme ci-dessus."
+"Frontières Logiques afin qu'il corresponde au diagramme ci-dessus."
 
 #: ../coffee_machine_logical.md:195
 msgid "Logical Requirements"
@@ -1393,18 +1460,21 @@ msgid "Here we derive two requirements:"
 msgstr "Nous en déduisons deux exigences :"
 
 #: ../coffee_machine_logical.md:217
+#, fuzzy
 msgid "Controller commands heat up"
-msgstr ""
+msgstr "Les commandes du contrôleur chauffent"
 
 #: ../coffee_machine_logical.md:218 ../coffee_machine_logical.md:221
 msgid "900kPa of water pressure"
-msgstr ""
+msgstr "pression de l'eau 900kPa"
 
 #: ../coffee_machine_logical.md:220 ../coffee_machine_logical.md:223
 msgid ""
 "Logical requirements for the controller command and the water pressure "
 "derived from concept requirements"
 msgstr ""
+"Exigences logiques pour la commande du contrôleur et la pression de l'eau, "
+"dérivées des exigences du concept"
 
 #: ../coffee_machine_logical.md:225 ../coffee_machine_logical.md:228
 msgid ""
@@ -1412,10 +1482,14 @@ msgid ""
 "want, you can also develop additional requirements for all the logical "
 "behavior and structure that we specified in the other diagrams."
 msgstr ""
+"Mettez à jour le diagramme des Exigences Logiques (Logical Requirements) en "
+"y ajoutant ces exigences. Si vous le souhaitez, vous pouvez également "
+"développer des exigences supplémentaires pour tous les comportements et "
+"structures logiques que nous avons spécifiés dans les autres diagrammes."
 
 #: ../coffee_machine_wrapup.md:1
 msgid "Coffee Machine: Summary"
-msgstr ""
+msgstr "Machine à café : résumé"
 
 #: ../coffee_machine_wrapup.md:3
 msgid ""
@@ -1426,6 +1500,14 @@ msgid ""
 "we would be glad to have contributions of this design back in to this "
 "tutorial if you are interested in getting involved in Gaphor."
 msgstr ""
+"La conception au Niveau Technologique (Technology Level) utilise une "
+"approche très similaire à celle du Niveau Logique (Locical Level). "
+"Travaillez sur le comportement, la structure, puis les exigences. À ce "
+"niveau, vous allez maintenant spécifier tous les détails de la conception du "
+"fonctionnement de cette machine à espresso spécifique. Nous vous laissons le "
+"soin de faire cet exercice, et nous serions heureux de recevoir des "
+"contributions de cette conception dans ce tutoriel si vous souhaitez vous "
+"impliquer dans Gaphor."
 
 #: ../coffee_machine_wrapup.md:10
 msgid ""
@@ -1436,6 +1518,13 @@ msgid ""
 "they were able to overcome these challenges and design an exceptional "
 "espresso machine."
 msgstr ""
+"Au cours de leur travail, les fourmis ont dû relever de nombreux défis. "
+"Elles devaient s'assurer que la machine était sûre, efficace et facile à "
+"utiliser, tout en répondant aux besoins spécifiques de leur clientèle "
+"féline. Mais grâce à leur connaissance approfondie de l'ingénierie des "
+"systèmes et à leur engagement à respecter les principes et les concepts "
+"clés, elles ont pu surmonter ces difficultés et concevoir une machine à "
+"espresso d'exception."
 
 #: ../coffee_machine_wrapup.md:17
 msgid ""
@@ -1447,10 +1536,18 @@ msgid ""
 "engineering principles. They had proven that, with the right tools and "
 "approach, anything is possible."
 msgstr ""
+"Au final, Cappuccino a été ravi de la machine, qui a parfaitement fonctionné "
+"et a remporté un vif succès auprès de ses clients. Il a été tellement "
+"impressionné par leur travail qu'il leur a proposé un contrat à long terme "
+"pour concevoir l'ensemble des systèmes de son café. Les fourmis étaient "
+"fières de leur succès, car elles savent que tout cela est dû à leur "
+"expertise et à leur profonde compréhension des principes de l'ingénierie des "
+"systèmes. Elles avaient prouvé qu'avec les bons outils et la bonne approche, "
+"tout était possible."
 
 #: ../connect.md:1
 msgid "Connection Protocol"
-msgstr ""
+msgstr "Protocole de connexion"
 
 #: ../connect.md:3
 msgid ""
@@ -1459,6 +1556,11 @@ msgid ""
 "From a GUI point of view, a button release event is what kicks of the "
 "decision whether the connection is allowed."
 msgstr ""
+"Dans Gaphor, lorsqu'une connexion est établie entre un élément et une "
+"relation sur un diagramme, la connexion est également établie au niveau "
+"sémantique, c'est-à-dire dans le modèle. C'est l'événement de relâchement "
+"d'un bouton qui, du point de vue de l'interface graphique, déclenche la "
+"décision d'autoriser ou non la connexion."
 
 #: ../connect.md:12
 msgid ""
@@ -1466,37 +1568,45 @@ msgid ""
 "create a relation to/from the same element (like associations, but not "
 "generalizations)."
 msgstr ""
+"La vérification de l'autorisation d'une connexion devrait également porter "
+"sur la validité de la création d'une relation vers/à partir du même élément ("
+"comme les associations, mais pas les généralisations)."
 
 #: ../container.md:1
 msgid "Gaphor in a Container"
-msgstr ""
+msgstr "Gaphor dans un conteneur"
 
 #: ../container.md:3
 msgid ""
 "Instead of setting up a development environment locally, the easiest way to "
 "contribute to the project is using GitHub Codespaces."
 msgstr ""
+"Au lieu de mettre en place un environnement de développement local, la "
+"manière la plus simple de contribuer au projet est d'utiliser les Codespaces "
+"de GitHub."
 
 #: ../container.md:6
 msgid "GitHub Codespaces"
-msgstr ""
+msgstr "Espaces de code GitHub"
 
 #: ../container.md:8
 msgid "Follow these steps to open Gaphor in a Codespace:"
-msgstr ""
+msgstr "Procédez comme suit pour ouvrir Gaphor dans un espace de codage :"
 
 #: ../container.md:9
 msgid "Navigate to https://github.com/gaphor/gaphor"
-msgstr ""
+msgstr "Naviguez vers https://github.com/gaphor/gaphor"
 
 #: ../container.md:10
 msgid ""
 "Click the Code drop-down menu and select the **Open with Codespaces** option."
 msgstr ""
+"Cliquez sur le menu déroulant Code et sélectionnez l'option **Open with "
+"Codespaces**."
 
 #: ../container.md:11
 msgid "Select **+ New codespace** at the bottom on the pane."
-msgstr ""
+msgstr "Sélectionnez **+ New codespace** en bas du volet."
 
 #: ../container.md:13
 msgid ""
@@ -1504,16 +1614,21 @@ msgid ""
 "en/free-pro-team@latest/github/developing-online-with-codespaces/creating-a-"
 "codespace#creating-a-codespace)."
 msgstr ""
+"Pour plus d'informations, consultez la [documentation GitHub] (https://docs."
+"github.com/en/free-pro-team@latest/github/developing-online-with-codespaces/"
+"creating-a-codespace#creating-a-codespace)."
 
 #: ../container.md:15
 msgid "Remote access to Gaphor graphic window with Codespaces"
-msgstr ""
+msgstr "Accès à distance à la fenêtre graphique de Gaphor avec Codespaces"
 
 #: ../container.md:17
 msgid ""
 "When using Codespaces, chances are that you also want to interact with the "
 "graphical window of Gaphor."
 msgstr ""
+"Lorsque vous utilisez les Codespaces, il est probable que vous souhaitiez "
+"également interagir avec la fenêtre graphique de Gaphor."
 
 #: ../container.md:20
 msgid ""
@@ -1523,30 +1638,42 @@ msgid ""
 "(https://github.com/gaphor/gaphor/blob/main/.devcontainer/devcontainer.json) "
 "file."
 msgstr ""
+"Cette opération est facilitée dans Gaphor par l'utilisation d'un conteneur "
+"appelé [desktop-lite] (https://github.com/devcontainers/features/tree/main/"
+"src/desktop-lite). Cette fonctionnalité est activée par défaut dans le "
+"fichier [devcontainer.json] (https://github.com/gaphor/gaphor/blob/main/."
+"devcontainer/devcontainer.json) de Gaphor."
 
 #: ../container.md:22
 msgid ""
 "Notice the webPort/vncPort and password values. These are used in subsequent "
 "steps."
 msgstr ""
+"Notez les valeurs webPort/vncPort et mot de passe. Elles seront utilisées "
+"dans les étapes suivantes."
 
 #: ../container.md:33
 msgid "There are two options:"
-msgstr ""
+msgstr "Deux options sont possibles :"
 
 #: ../container.md:34
 msgid "Using a local VNC viewer"
-msgstr ""
+msgstr "Utilisation d'une visionneuse VNC locale"
 
 #: ../container.md:35
 msgid "Download and install VNC viewer of your choice (e.g. realvnc)"
 msgstr ""
+"Téléchargez et installez la visionneuse VNC de votre choix (par exemple, "
+"realvnc)"
 
 #: ../container.md:36
 msgid ""
 "Specify remote hostname as *localhost* and port as *5901* and connect VNC. "
 "The port number should be same as specified in attribute *vncPort*"
 msgstr ""
+"Spécifiez le nom de l'hôte distant comme *localhost* et le port comme *5901* "
+"et connectez-vous à VNC. Le numéro de port doit être le même que celui "
+"spécifié dans l'attribut *vncPort*"
 
 #: ../container.md:37
 msgid ""
@@ -1554,14 +1681,17 @@ msgid ""
 "devcontainer/devcontainer.json) Gaphor the familiar Graphic window should be "
 "displayed in VNC view"
 msgstr ""
+"Lors du [débogage/exécution](https://github.com/gaphor/gaphor/blob/main/."
+"devcontainer/devcontainer.json) Gaphor, la fenêtre graphique familière "
+"devrait s'afficher dans la vue VNC"
 
 #: ../container.md:39
 msgid "Using noVNC viewer on the Browser"
-msgstr ""
+msgstr "Utilisation de la visionneuse noVNC sur le navigateur"
 
 #: ../container.md:40
 msgid "This is based on [noVNC](https://novnc.com/info.html) application"
-msgstr ""
+msgstr "Ceci est basé sur l'application [noVNC](https://novnc.com/info.html)"
 
 #: ../container.md:41
 msgid ""
@@ -1569,12 +1699,18 @@ msgid ""
 "*http://127.0.0.1:6080/*. The port number should be same as specified in "
 "attribute *webPort*"
 msgstr ""
+"Ouvrez le navigateur sur votre machine locale et donnez l'adresse *http://127"
+".0.0.1:6080/*. Le numéro de port doit être le même que celui spécifié dans "
+"l'attribut *webPort*"
 
 #: ../container.md:42
 msgid ""
 "A noVNC window will open, click on Connect and provide password as *vscode*. "
 "The password should be same as specified in attribute *password*"
 msgstr ""
+"Une fenêtre noVNC s'ouvre, cliquez sur Connect et fournissez le mot de passe "
+"*vscode*. Le mot de passe doit être le même que celui spécifié dans "
+"l'attribut *password*"
 
 #: ../container.md:43
 msgid ""
@@ -1582,10 +1718,13 @@ msgid ""
 "devcontainer/devcontainer.json) Gaphor the familiar Graphic window should be "
 "displayed in noVNC view on Browser"
 msgstr ""
+"Lors du [débogage/exécution] (https://github.com/gaphor/gaphor/blob/main/."
+"devcontainer/devcontainer.json) Gaphor, la fenêtre graphique familière "
+"devrait être affichée dans la vue noVNC sur le navigateur"
 
 #: ../contribute.md:1
 msgid "Contribute to Gaphor"
-msgstr ""
+msgstr "Contribuer à Gaphor"
 
 #: ../contribute.md:3
 msgid ""
@@ -1594,6 +1733,10 @@ msgid ""
 "plenty of ways to contribute to Gaphor, no matter your level of experience "
 "or skill set."
 msgstr ""
+"Vous souhaitez contribuer au développement de Gaphor ? Si vous pensez que "
+"cela est réservé aux développeurs expérimentés, n'hésitez pas, il y a de "
+"nombreuses façons de contribuer à Gaphor, quel que soit votre niveau "
+"d'expérience ou de compétence."
 
 #: ../contribute.md:7
 msgid ""
@@ -1604,6 +1747,13 @@ msgid ""
 "your-work-with-pull-requests/about-pull-requests) for Gaphor with updated "
 "translations."
 msgstr ""
+"Vous pouvez aider à soutenir Gaphor dans votre langue. Vous pouvez le faire "
+"sur [Weblate](https://hosted.weblate.org/engage/gaphor/), directement depuis "
+"votre navigateur. Ce service créera périodiquement des [Pull "
+"Requests](https://docs.github.com/en/pull-requests/"
+"collaborating-with-pull-requests/"
+"proposing-changes-to-your-work-with-pull-requests/about-pull-requests) pour "
+"Gaphor avec des traductions mises à jour."
 
 #: ../contribute.md:13
 msgid ""
@@ -1612,6 +1762,11 @@ msgid ""
 "please drop us a line, so we can add it to the [Tutorials](https://gaphor."
 "org/tutorials) page on the website."
 msgstr ""
+"Il est également très intéressant que vous créiez votre propre contenu "
+"autour de Gaphor. Pensez à des articles de blog, des vidéos, et des "
+"conférences. Lorsque vous créez quelque chose, merci de nous en faire part, "
+"afin que nous puissions l'ajouter à la page [Tutoriels](https://gaphor.org/"
+"tutorials) du site web."
 
 #: ../contribute.md:17
 msgid ""
@@ -1619,12 +1774,18 @@ msgid ""
 "contains a lot of information on how Gaphor is build, especially in the "
 "*Concepts* section."
 msgstr ""
+"Si vous voulez contribuer au code, un bon point de départ est ce site. Il "
+"contient beaucoup d'informations sur la construction de Gaphor, en "
+"particulier dans la section *Concepts*."
 
 #: ../contribute.md:20
 msgid ""
 "Some issues are labeled with *first-timers-only*. Those issues are a good "
 "starting point to make yourself familiar with the code and code style."
 msgstr ""
+"Certaines questions sont étiquetées avec *first-timers-only*. Ces questions "
+"constituent un bon point de départ pour se familiariser avec le code et le "
+"style de code."
 
 #: ../contribute.md:23
 msgid ""
@@ -1634,6 +1795,11 @@ msgid ""
 "That way you can assure that your idea is implemented in a way consistent "
 "with the application, and it increases the chance your work will be accepted."
 msgstr ""
+"C'est toujours une bonne idée de créer un issue ou de commencer une "
+"discussion si vous souhaitez développer quelque chose qui n'existe pas "
+"encore. De cette façon, vous pouvez vous assurer que votre idée est mise en "
+"œuvre de manière cohérente avec l'application, et augmenter les chances que "
+"votre travail soit accepté."
 
 #: ../contribute.md:28
 msgid ""
@@ -1642,6 +1808,10 @@ msgid ""
 "[development environment](linux.md) ([macOS](macos.md), [Windows](windows."
 "md))."
 msgstr ""
+"Vous devrez [forker](https://docs.github.com/en/pull-requests/"
+"collaborating-with-pull-requests/working-with-forks/fork-a-repo) Gaphor et "
+"mettre en place un [environnement de développement](linux.md) ([macOS](macos."
+"md), [Windows](windows.md))."
 
 #: ../contribute.md:33
 msgid ""
@@ -1649,10 +1819,14 @@ msgid ""
 "you [install pre-commit](https://pre-commit.com/) and its git hook scripts, "
 "so your PR does build on our build environment."
 msgstr ""
+"Dans notre pipeline, nous effectuons quelques contrôles de qualité. Nous "
+"vous recommandons fortement d'[installer pre-commit](https://pre-commit.com/)"
+" et ses scripts git hook, afin que votre PR soit construit dans notre "
+"environnement de construction."
 
 #: ../design_principles.md:1
 msgid "Design Principles"
-msgstr ""
+msgstr "Principes de conception"
 
 #: ../design_principles.md:3
 msgid ""
@@ -1661,6 +1835,11 @@ msgid ""
 "easily accessible for novice users as well as a useful tool for more "
 "experienced users."
 msgstr ""
+"Gaphor existe depuis plusieurs années. Au cours de ces années, nous (les "
+"développeurs de Gaphor) avons appris plusieurs choses sur la façon de le "
+"construire. Gaphor vise à être facilement accessible aux utilisateurs "
+"novices tout en restant un outil utile pour les utilisateurs plus "
+"expérimentés."
 
 #: ../design_principles.md:7
 msgid ""
@@ -1668,6 +1847,9 @@ msgid ""
 "there is a language underpinning the models. Languages adhere to rules and "
 "Gaphor tries to follow those rules."
 msgstr ""
+"Gaphor n'est pas un éditeur ordinaire. C'est un environnement de "
+"modélisation. Cela implique qu'il y a un langage qui sous-tend les modèles. "
+"Les langages obéissent à des règles et Gaphor essaie de suivre ces règles."
 
 #: ../design_principles.md:11
 msgid ""
@@ -1675,18 +1857,23 @@ msgid ""
 "find your way around. Minimal knowledge of UML should at least allow you to "
 "create a class diagram."
 msgstr ""
+"La facilité d'utilisation est très importante. Lorsque vous découvrez "
+"Gaphor, il doit être facile de s'y retrouver. Une connaissance minimale de "
+"l'UML devrait au moins vous permettre de créer un diagramme de classes."
 
 #: ../design_principles.md:19
 msgid "Guidance"
-msgstr ""
+msgstr "Orientations"
 
 #: ../design_principles.md:21
 msgid "To help users, Gaphor should provide guidance where it can."
 msgstr ""
+"Pour aider les utilisateurs, Gaphor doit fournir des conseils dans la mesure "
+"du possible."
 
 #: ../design_principles.md:23
 msgid "Help with relationships"
-msgstr ""
+msgstr "Aide aux relations"
 
 #: ../design_principles.md:25
 msgid ""
@@ -1695,10 +1882,15 @@ msgid ""
 "You can still mix different elements, but we try to make it as simple as "
 "possible to make consistent models."
 msgstr ""
+"Le diagramme présente une caractéristique qui consiste à griser tous les "
+"éléments auxquels une relation ne peut pas être établie. Cela vous aide à "
+"décider où une relation peut être établie. Vous pouvez toujours mélanger "
+"différents éléments, mais nous essayons de simplifier autant que possible la "
+"création de modèles cohérents."
 
 #: ../design_principles.md:30
 msgid "Keep the model in sync"
-msgstr ""
+msgstr "Maintenir la synchronisation du modèle"
 
 #: ../design_principles.md:32
 msgid ""
@@ -1706,6 +1898,10 @@ msgid ""
 "able to explain those to others. As systems become more complicated, it's "
 "important to have the design (model) layed out in diagrams."
 msgstr ""
+"Une partie importante de la modélisation consiste à concevoir un système "
+"sous forme d'abstractions et à être capable de les expliquer à d'autres. Au "
+"fur et à mesure que les systèmes deviennent plus complexes, il est important "
+"de présenter la conception (le modèle) sous forme de diagrammes."
 
 #: ../design_principles.md:36
 msgid ""
@@ -1713,10 +1909,13 @@ msgid ""
 "diagrams. In doing so, unused elements can be automatically removed from the "
 "model if they're no longer shown in any diagram."
 msgstr ""
+"Gaphor veille à ce que le modèle soit en phase avec les diagrammes. Ainsi, "
+"les éléments inutilisés peuvent être automatiquement supprimés du modèle "
+"s'ils ne figurent plus dans aucun de ces derniers."
 
 #: ../design_principles.md:40
 msgid "Out of your way"
-msgstr ""
+msgstr "Hors de votre chemin"
 
 #: ../design_principles.md:42
 msgid ""
@@ -1725,26 +1924,34 @@ msgid ""
 "does not try to nag you with error messages, because the model is not "
 "\"correct\"."
 msgstr ""
+"Lors de la modélisation, vous devez vous concentrer sur votre problème ou "
+"votre solution, et non sur l'outil. Gaphor essaie de rester hors de votre "
+"chemin autant que possible. Il ne vous harcèle pas avec des messages "
+"d'erreur parce que le modèle n'est pas « correct »."
 
 #: ../design_principles.md:46
 msgid "Avoid dialogs"
-msgstr ""
+msgstr "Éviter les boîtes de dialogue"
 
 #: ../design_principles.md:48
 msgid ""
 "In doing the right thing, and staying out of the way of users, Gaphor avoids "
 "the use of dialogs as much as possible."
 msgstr ""
+"En prenant les mesures nécessaires et en évitant tout contact avec les "
+"utilisateurs, Gaphor parvient à limiter l'apparition de boîtes de dialogue."
 
 #: ../design_principles.md:51
 msgid ""
 "Gaphor should allow you to do the sensible thing (see above) and not get you "
 "out of your flow with all sorts of questions."
 msgstr ""
+"Gaphor doit vous permettre de faire ce qui est raisonnable (voir ci-dessus) "
+"et ne pas vous faire perdre le fil avec toutes sortes de questions."
 
 #: ../design_principles.md:54
 msgid "Notify on changes"
-msgstr ""
+msgstr "Notifier les changements"
 
 #: ../design_principles.md:56
 msgid ""
@@ -1753,10 +1960,15 @@ msgid ""
 "model. It will not interrupt you with dialogs, but only provide a small in-"
 "app notification. If the change is undesired, hit `undo`."
 msgstr ""
+"Lorsque Gaphor effectue une action qui n'est pas directement visible, vous "
+"verrez une notification. Cela peut par exemple concerner un élément retiré "
+"indirectement du modèle. Cela ne provoquera pas de dialogues, mais vous "
+"informera simplement de la situation par une notification dans "
+"l'application. Si vous ne souhaitez pas ce changement, cliquez sur « Undo »."
 
 #: ../design_principles.md:61
 msgid "Balanced"
-msgstr ""
+msgstr "Équilibré"
 
 #: ../design_principles.md:63
 msgid ""
@@ -1764,30 +1976,39 @@ msgid ""
 "complete. We try to find the right balance in features to suite both expert "
 "and novice modellers."
 msgstr ""
+"Bien que Gaphor implémente une bonne partie du modèle UML 2, il n'est pas "
+"complet. Notre objectif est de trouver le bon équilibre entre les "
+"fonctionnalités afin de satisfaire à la fois les modélisateurs experts et "
+"novices."
 
 #: ../design_principles.md:67
 msgid "Continuity"
-msgstr ""
+msgstr "Continuité"
 
 #: ../design_principles.md:69
 msgid ""
 "A model that is created should be usable in the future. Gaphor does "
 "acknowledge that. We care about compatibility."
 msgstr ""
+"Un modèle créé doit pouvoir être utilisé à l'avenir. Gaphor le reconnaît. "
+"Nous nous soucions de la compatibilité."
 
 #: ../design_principles.md:72
 msgid "Backwards compatibility"
-msgstr ""
+msgstr "Compatibilité ascendante"
 
 #: ../design_principles.md:74
 msgid ""
 "Gaphor is capable of loading models going back to Gaphor 1.0. It's important "
 "for a tool to always allow older models to be loaded."
 msgstr ""
+"Gaphor est capable de charger des modèles remontant à Gaphor 1.0. Il est "
+"important qu'un outil permette toujours le chargement de modèles plus "
+"anciens."
 
 #: ../design_principles.md:77
 msgid "Multi-platform"
-msgstr ""
+msgstr "Multiplateforme"
 
 #: ../design_principles.md:79
 msgid ""
@@ -1796,6 +2017,11 @@ msgid ""
 "the model needs to be shared. It would be awful if you need to run one "
 "specific operating system in order to open a model."
 msgstr ""
+"Nous avons déployé d'importants efforts pour garantir la prise en charge de "
+"Gaphor sur les principales plateformes : Windows, macOS et Linux. Si le "
+"modèle doit être partagé, il est essentiel que Gaphor soit disponible sur "
+"toutes les plateformes. Il serait terrible de devoir utiliser un système "
+"d'exploitation spécifique pour ouvrir un modèle."
 
 #: ../design_principles.md:84
 msgid ""
@@ -1803,10 +2029,13 @@ msgid ""
 "applications provide a better user experience (once installed). But this may "
 "change."
 msgstr ""
+"Jusqu'à présent, nous ne prenions pas en charge la quatrième plate-forme "
+"majeure (le Web). Les applications natives offrent une meilleure expérience "
+"utilisateur une fois installées. Mais cela pourrait changer."
 
 #: ../design_principles.md:87
 msgid "User interaction"
-msgstr ""
+msgstr "Interaction avec l'utilisateur"
 
 #: ../design_principles.md:89
 msgid ""
@@ -1817,6 +2046,13 @@ msgid ""
 "GNOME HIG, but try not to introduce concepts that are not available on "
 "Windows and macOS."
 msgstr ""
+"Gaphor a été écrit à l'origine sous Linux. Il utilise [GTK](https://gtk.org) "
+"comme boîte à outils pour l'interface utilisateur. Cela implique en quelque "
+"sorte que Gaphor suit les [GNOME Human Interface Guidelines "
+"(HIG)](https://developer.gnome.org/hig/). Gaphor est également une "
+"application multiplateforme. Nous essayons de rester proches des GNOME HIG, "
+"mais nous essayons de ne pas introduire des concepts qui ne sont pas "
+"disponibles sous Windows et macOS."
 
 #: ../design_principles.md:95
 msgid ""
@@ -1825,20 +2061,29 @@ msgid ""
 "We want users to use Gaphor on a regular basis, so we aim for it to be a "
 "tool that's pleasant to look at and easy to work with."
 msgstr ""
+"Les composants de l'interface utilisateur ne sont pas générés. Nous avons "
+"constaté que la génération d'interfaces utilisateur (comme le font de "
+"nombreux outils de modélisation d'entreprise) n'offre pas une expérience "
+"utilisateur optimale. Nous voulons que les utilisateurs se servent "
+"régulièrement de Gaphor, c'est pourquoi nous voulons que cet outil soit "
+"agréable à utiliser et facile à regarder."
 
 #: ../design_principles.md:101
 msgid "What else?"
-msgstr ""
+msgstr "Quoi d'autre ?"
 
 #: ../design_principles.md:103
 msgid "On a technical level, the following principles are also applicable:"
 msgstr ""
+"Sur le plan technique, les principes suivants sont également applicables :"
 
 #: ../design_principles.md:105 ../design_principles.md:103
 msgid ""
 "**Idempotency** Allow the same operation to be applied multiple times. This "
 "should not affect the result."
 msgstr ""
+"**Idempotence** Permet d'appliquer la même opération plusieurs fois. Cela ne "
+"devrait pas affecter le résultat."
 
 #: ../design_principles.md:107 ../design_principles.md:105
 msgid ""
@@ -1846,34 +2091,47 @@ msgid ""
 "application uses an internal event dispatches (event bus) to distribute "
 "events to interested parties. Everyone should be able to listen to events."
 msgstr ""
+"**Piloté par les événements.** Gaphor est une application destinée aux "
+"utilisateurs. Elle réagit aux actions de l'utilisateur. Elle utilise un "
+"système de distribution d'événements interne (ou « bus d'événements ») pour "
+"les acheminer aux parties intéressées. Tout le monde peut écouter les "
+"événements."
 
 #: ../event_system.md:1
 msgid "Event System"
-msgstr ""
+msgstr "Système d'événements"
 
 #: ../event_system.md:3
 msgid ""
 "The event system in Gaphor provides an API to *handle* events and to "
 "*subscribe* to events."
 msgstr ""
+"Le système d'événements de Gaphor fournit une API pour *gérer* les "
+"événements et pour *s'abonner* aux événements."
 
 #: ../event_system.md:6
 msgid ""
 "In Gaphor we manage event handler subscriptions through the `EventManager` "
 "service. Gaphor is highly event driven:"
 msgstr ""
+"Dans Gaphor, nous gérons les abonnements aux gestionnaires d'événements via "
+"le service EventManager. Gaphor est fortement axé sur les événements :"
 
 #: ../event_system.md:9
 msgid "Changes in the loaded model are emitted as events"
-msgstr ""
+msgstr "Les modifications du modèle chargé sont émises sous forme d'événements"
 
 #: ../event_system.md:10
 msgid "Changes on diagrams are emitted as events"
 msgstr ""
+"Les modifications apportées aux diagrammes sont émises sous forme "
+"d'événements"
 
 #: ../event_system.md:11
 msgid "Changes in the UI are emitted as events"
 msgstr ""
+"Les modifications de l'interface utilisateur sont émises sous forme "
+"d'événements"
 
 #: ../event_system.md:13
 msgid ""
@@ -1883,59 +2141,76 @@ msgid ""
 "are interested in all changes to elements, we can also register "
 "`ElementUpdated` and receive all `AttributeUpdated` events as well."
 msgstr ""
+"Bien que Gaphor dépende fortement de GTK pour son interface utilisateur, il "
+"utilise son propre système de distribution d'événements. Les événements "
+"peuvent être structurés en hiérarchies. Par exemple, un événement « "
+"AttributeUpdated » est un sous-type de « ElementUpdated ». Si nous sommes "
+"intéressés par toutes les modifications apportées aux éléments, nous pouvons "
+"également enregistrer l'événement `ElementUpdated` et recevoir tous les "
+"événements `AttributeUpdated`."
 
 #: gaphor.core.eventmanager.EventManager:1 of
 msgid "The Event Manager provides a flexible way to dispatch events."
 msgstr ""
+"Le gestionnaire d'événements offre un moyen souple de distribuer des "
+"événements."
 
 #: gaphor.core.eventmanager.EventManager:3 of
 msgid ""
 "Event dispatching is a central component in Gaphor. It allows components in "
 "Gaphor to react to changes in the application."
 msgstr ""
+"La gestion des événements est un élément central de Gaphor. Il permet aux "
+"composants de Gaphor de réagir aux changements dans l'application."
 
 #: gaphor.core.eventmanager.EventManager:6 of
 msgid "Events are dispatched by type."
-msgstr ""
+msgstr "Les événements sont distribués par type."
 
 #: gaphor.core.eventmanager.EventManager.subscribe:1 of
 #: ../../gaphor/core/eventmanager.py:docstring
 #: gaphor.core.eventmanager.EventManager.priority_subscribe:1
 msgid "Register a handler."
-msgstr ""
+msgstr "Enregistrer un gestionnaire."
 
 #: gaphor.core.eventmanager.EventManager.subscribe:3 of
 msgid ""
 "Handlers are triggered (executed) when events are emitted through the :obj:"
 "`~gaphor.core.eventmanager.EventManager.handle` method."
 msgstr ""
+"Les gestionnaires sont déclenchés (exécutés) lorsque des événements sont "
+"émis par la méthode :obj:`~gaphor.core.eventmanager.EventManager.handle`."
 
 #: gaphor.core.eventmanager.EventManager.unsubscribe:1 of
 #: ../../gaphor/core/eventmanager.py:docstring
 msgid "Unregister a previously registered handler."
-msgstr ""
+msgstr "Annuler l'enregistrement d'un gestionnaire précédemment enregistré."
 
 #: gaphor.core.eventmanager.EventManager.handle:1 of
 #: ../../gaphor/core/eventmanager.py:docstring
 msgid "Send event notifications to registered handlers."
-msgstr ""
+msgstr "Envoyer des notifications d'événements aux gestionnaires enregistrés."
 
 #: gaphor.core.eventmanager.event_handler:1 of
 msgid ""
 "Mark a function/method as an event handler for a particular type of event."
 msgstr ""
+"Marquer une fonction/méthode comme gestionnaire d'événement pour un type "
+"d'événement particulier."
 
 #: gaphor.core.eventmanager.event_handler:4 of
 msgid "Given a custom event type:"
-msgstr ""
+msgstr "Compte tenu du type d'événement personnalisé :"
 
 #: gaphor.core.eventmanager.event_handler:10 of
 msgid "You can apply this to a handler method or function:"
-msgstr ""
+msgstr "Vous pouvez l'appliquer à une méthode ou à une fonction de traitement :"
 
 #: gaphor.core.eventmanager.event_handler:16 of
 msgid "This will allow you to let the even be handled by an event manager:"
 msgstr ""
+"Cela vous permettra de laisser un gestionnaire d'événements s'occuper de "
+"l'événement :"
 
 #: ../event_system.md:31 ../event_system.md:24
 msgid ""
@@ -1943,22 +2218,30 @@ msgid ""
 "information about how the Generic library handles events see the [Generic "
 "documentation](https://generic.readthedocs.io)."
 msgstr ""
+"Sous le capot, les événements sont gérés par la bibliothèque Generics. Pour "
+"plus d'informations sur la façon dont la bibliothèque Generic gère les "
+"événements, voir la [documentation Generic] (https://generic.readthedocs.io)."
 
 #: ../first_model.md:1
 msgid "Your First Model"
-msgstr ""
+msgstr "Votre premier modèle"
 
 #: ../first_model.md:8
 msgid ""
 "Although the names should speak for themselves, you can check out the "
 "[Getting Started](getting_started) page for more information."
 msgstr ""
+"Bien que les noms parlent d'eux-mêmes, vous pouvez consulter la page ["
+"Getting Started](get_started) pour plus d'informations."
 
 #: ../first_model.md:12
 msgid ""
 "Once Gaphor is started, and you can start a new model with the _Generic_ "
 "template. The initial diagram is already open in the Diagram section."
 msgstr ""
+"Une fois Gaphor lancé, vous pouvez commencer un nouveau modèle avec le "
+"modèle Générique (the _Generic_ template). Le diagramme initial est déjà "
+"ouvert dans la section « Diagramme »."
 
 #: ../first_model.md:15
 msgid ""
@@ -1969,10 +2252,18 @@ msgid ""
 "model -- it shows up in the Model Browser. The selected tool will reset "
 "itself to the Pointer tool after the element is placed on the diagram."
 msgstr ""
+"Sélectionnez un élément que vous souhaitez placer, dans ce cas une classe ( "
+"![Icône de classe](/gaphor/ui/icons/hicolor/scalable/actions/gaphor-class-"
+"symbolic.svg)) en cliquant sur l'icône correspondante dans la boîte à "
+"outils, puis cliquez sur le diagramme. Cela placera une nouvelle instance de "
+"l'élément de classe sur le diagramme et ajoutera une nouvelle classe au "
+"modèle, qui apparaît alors dans le navigateur de modèle. Une fois l'élément "
+"placé sur le diagramme, l'outil sélectionné se réinitialise en outil "
+"Pointeur."
 
 #: ../first_model.md:15
 msgid "Icon for Class."
-msgstr ""
+msgstr "Icône pour la classe."
 
 #: ../first_model.md:21 ../first_model.md:22
 msgid ""
@@ -8621,7 +8912,7 @@ msgstr ""
 
 #: ../../CHANGELOG.md:338
 msgid "Hungarian translation updates"
-msgstr "Mise à jour de la traduction en hongrois"
+msgstr "Mise à jour de la traduction en Hongrois"
 
 #: ../../CHANGELOG.md:340
 msgid "2.10.0"
@@ -9843,7 +10134,8 @@ msgid ""
 "start a new model with the _SysML_ template."
 msgstr ""
 "La première chose que les fourmis ont faite a été d'ouvrir Gaphor dans la "
-"fenêtre du Greeter et de démarrer un nouveau modèle avec le modèle _SysML_."
+"fenêtre du Greeter (écran d'accueil) et de démarrer un nouveau modèle avec "
+"le modèle _SysML_."
 
 #: ../coffee_machine.md:98
 msgid ""
@@ -9905,10 +10197,10 @@ msgid ""
 "to make multiple cups of coffee before needing a refill. The water tank "
 "should be easy to access and fill."
 msgstr ""
-"Réservoir d'eau : La machine à café doit être dotée d'un réservoir d'eau "
-"suffisamment grand pour permettre la préparation de plusieurs tasses de café "
-"avant qu'il ne soit nécessaire de le remplir à nouveau. Le réservoir d'eau "
-"doit être facile d'accès et de remplissage."
+"Water Tank : (Réservoir d'eau) La machine à café doit être dotée d'un "
+"réservoir d'eau suffisamment grand pour permettre la préparation de "
+"plusieurs tasses de café avant qu'il ne soit nécessaire de le remplir à "
+"nouveau. Le réservoir d'eau doit être facile d'accès et de remplissage."
 
 #: ../coffee_machine_concept.md:168
 msgid ""
@@ -9916,9 +10208,9 @@ msgid ""
 "10 minutes from the time the user turns on the machine until it's ready to "
 "brew coffee."
 msgstr ""
-"Temps de chauffe : la machine à café doit avoir un temps de chauffe ne "
-"dépassant pas 10 minutes entre le moment où l'utilisateur allume la machine "
-"et le moment où elle est prête à préparer le café."
+"Heat-up Time : (Temps de chauffe) la machine à café doit avoir un temps de "
+"chauffe ne dépassant pas 10 minutes entre le moment où l'utilisateur allume "
+"la machine et le moment où elle est prête à préparer le café."
 
 #: ../coffee_machine_concept.md:172
 msgid ""
@@ -9926,8 +10218,8 @@ msgid ""
 "to make it easy for the user to select the amount of coffee they want to "
 "brew. The HMI should be intuitive and easy to use."
 msgstr ""
-"Bouton IHM : La machine à café doit être dotée d'une 'Interface Homme "
-"Machine' avec un bouton d'infusion d'une tasse pour permettre à "
+"HMI Button : (Bouton IHM) La machine à café doit être dotée d'une 'Interface "
+"Homme Machine' avec un bouton d'infusion d'une tasse pour permettre à "
 "l'utilisateur de sélectionner facilement la quantité de café qu'il souhaite "
 "infuser. L'IHM doit être intuitive et facile à utiliser."
 
@@ -9945,8 +10237,9 @@ msgid ""
 "connected and integrated into the system."
 msgstr ""
 "Dans ce cas, le diagramme comprend des couloirs d'activités (swimlanes) pour "
-"l'IHM, le contrôleur, la pompe à eau, le chauffe-eau, la tête de groupe et "
-"le filtre à eau. L'IHM reçoit le bouton pressé par le serveur et envoie une "
+"l'IHM (HMI), le contrôleur (Controller), la pompe à eau (Water Pump),le "
+"chauffe-eau (Water Heater), la tête de groupe (Grouphead) et le filtre à eau "
+"(Portafilter) . L'IHM reçoit le bouton pressé par le serveur et envoie une "
 "commande au contrôleur. Ce dernier ordonne alors à la pompe à eau et au "
 "chauffe-eau de démarrer, et une fois que l'eau a atteint la bonne "
 "température, le contrôleur ordonne à la pompe et au chauffe-eau de se mettre "
@@ -9965,9 +10258,9 @@ msgid ""
 msgstr ""
 "Dans le paquet Logique, développez le paquet Comportement dans le navigateur "
 "de modèle et double-cliquez sur le diagramme nommé Comportement de frontière "
-"fonctionnelle. Des plans de nage supplémentaires peuvent être ajoutés en "
-"cliquant sur les couloirs d'activités (swimlanes) et en ajoutant des "
-"partitions supplémentaires dans l'éditeur de propriétés."
+"fonctionnelle. Des couloçirsq d'activités (swimlanes) supplémentaires "
+"peuvent être ajoutés en cliquant sur les couloirs d'activités (swimlanes) et "
+"en ajoutant des partitions supplémentaires dans l'éditeur de propriétés."
 
 #: ../coffee_machine_logical.md:41
 msgid ""
@@ -9977,10 +10270,10 @@ msgid ""
 "also be changed in the Property Editor."
 msgstr ""
 "Dans le paquet Structure, cliquez avec le bouton droit de la souris sur les "
-"blocs portant le symbole B et renommez-les à partir du menu contextuel de "
-"manière à ce que les noms des blocs logiques de chaque couloir "
-"d'activités(swimlane) soient corrects. Le nom de la partition précédant les "
-"deux points peut également être modifié dans l'éditeur de propriétés."
+"blocs portant le symbole B, puis renommez-les à partir du menu contextuel de "
+"manière à ce que les noms des Blocs Logiques de chaque couloir d'activités "
+"(swimlanes) soient corrects. Vous pouvez également modifier le nom de la "
+"partition précédant les deux points dans l'éditeur de propriétés."
 
 #: ../coffee_machine_logical.md:46
 msgid ""
@@ -9992,7 +10285,7 @@ msgstr ""
 "Des flux d'objets, des broches et des actions supplémentaires peuvent être "
 "créés à l'aide de la boîte à outils. Les nœuds de paramètres attachés à "
 "l'activité à gauche et à droite du diagramme sont renommés et créés en "
-"cliquant sur l'activité et en les modifiant dans l'éditeur de propriétés."
+"cliquant sur l'activité et en les modifiant dans l'Éditeur de Propriétés."
 
 #: ../coffee_machine_logical.md:71
 msgid ""
@@ -10009,7 +10302,7 @@ msgstr ""
 
 #: ../coffee_machine_logical.md:93
 msgid "Grouphead"
-msgstr "Tête de groupe"
+msgstr "Grouphead (Tête de groupe)"
 
 #: ../coffee_machine_logical.md:132
 msgid ""
@@ -10019,11 +10312,11 @@ msgid ""
 "portafilter and into the cup. The grouphead also helps to maintain proper "
 "temperature and pressure during the brewing process."
 msgstr ""
-"Tête de groupe : La tête de groupe est une partie de la machine à espresso "
-"où se fixe le porte-filtre. Il assure une liaison sûre entre le porte-filtre "
-"et la machine, ce qui permet à l'espresso infusé de s'écouler du porte-"
-"filtre vers la tasse. La tête de groupe permet également de maintenir une "
-"température et une pression adéquates pendant le processus d'infusion."
+"Grouphead : La tête de groupe est une partie de la machine à espresso où se "
+"fixe le porte-filtre. Il assure une liaison sûre entre le porte-filtre et la "
+"machine, ce qui permet à l'espresso infusé de s'écouler du porte-filtre vers "
+"la tasse. La tête de groupe permet également de maintenir une température et "
+"une pression adéquates pendant le processus d'infusion."
 
 #: ../coffee_machine_logical.md:145
 msgid ""
