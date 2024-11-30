@@ -3,12 +3,13 @@ import itertools
 import pytest
 
 from gaphor.C4Model import diagramitems as c4_diagramitems
-from gaphor.core.modeling.element import Element
+from gaphor.diagram.general import diagramitems as general_diagramitems
 from gaphor.diagram.presentation import LinePresentation
 from gaphor.diagram.support import get_diagram_item_metadata, get_model_element
 from gaphor.RAAML import diagramitems as raaml_diagramitems
 from gaphor.SysML import diagramitems as sysml_diagramitems
 from gaphor.UML import diagramitems as uml_diagramitems
+from gaphor.UML.uml import Element
 
 diagramitems = [
     c
@@ -19,6 +20,7 @@ diagramitems = [
             sysml_diagramitems,
             raaml_diagramitems,
             c4_diagramitems,
+            general_diagramitems,
         )
     )
     if isinstance(c, type)
@@ -26,7 +28,7 @@ diagramitems = [
 
 blacklist = [
     # These lines have no subject of their own
-    uml_diagramitems.Line,
+    general_diagramitems.Line,
     uml_diagramitems.CommentLineItem,
     uml_diagramitems.ContainmentItem,
     # These lines have extra objects at the line ends
@@ -49,5 +51,5 @@ def test_line_presentations_have_metadata(diagram_item):
     assert "head" in metadata
     assert "tail" in metadata
     assert issubclass(element_class, Element)
-    assert metadata["head"] in element_class.umlproperties()
-    assert metadata["tail"] in element_class.umlproperties()
+    assert metadata["head"] in element_class.__properties__
+    assert metadata["tail"] in element_class.__properties__

@@ -78,7 +78,7 @@ def test_class_association_undo_redo(event_manager, element_factory, undo_manage
 
 def set_up_class_and_association(event_manager, element_factory):
     with Transaction(event_manager):
-        diagram = element_factory.create(Diagram)
+        diagram = element_factory.create(UML.Diagram)
 
     assert 0 == len(diagram.connections.solver.constraints)
 
@@ -256,7 +256,7 @@ def test_can_undo_connected_association(
 ):
     caplog.set_level(logging.INFO)
     with Transaction(event_manager):
-        diagram: Diagram = element_factory.create(Diagram)
+        diagram: UML.Diagram = element_factory.create(UML.Diagram)
         parent = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
         child = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
 
@@ -317,7 +317,7 @@ def test_delete_item_with_subject_owning_diagram(
     event_manager, element_factory, undo_manager
 ):
     with Transaction(event_manager):
-        diagram: Diagram = element_factory.create(Diagram)
+        diagram: UML.Diagram = element_factory.create(UML.Diagram)
         klass = element_factory.create(UML.Class)
         class_item = diagram.create(ClassItem, subject=klass)
         diagram.element = klass

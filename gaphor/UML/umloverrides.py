@@ -9,9 +9,20 @@ from __future__ import annotations
 
 import itertools
 
-from gaphor.core.modeling import Element
 from gaphor.core.modeling.properties import derived
+from gaphor.diagram.group import self_and_owners
 from gaphor.UML import uml, umllex
+
+
+def named_element_qualified_name(self) -> list[str]:
+    """Returns the qualified name of the element as a list."""
+
+    qname = [getattr(e, "name", "??") or "??" for e in self_and_owners(self)]
+    qname.reverse()
+    return qname
+
+
+uml.NamedElement.qualifiedName = property(named_element_qualified_name)
 
 
 # See https://www.omg.org/spec/UML/2.5/PDF, section 12.4.1.5, page 271
@@ -78,15 +89,15 @@ def property_navigability(self: uml.Property) -> list[bool | None]:
 uml.Property.navigability = derived("navigability", bool, 0, 1, property_navigability)
 
 
-def _pr_interface_deps(classifier: Element, dep_type):
+def _pr_interface_deps(classifier: uml.NamedElement, dep_type):
     """Return all interfaces, which are connected to a classifier with given
     dependency type."""
     return (
         dep.supplier
         for dep in classifier.clientDependency
         if dep.isKindOf(dep_type)
-        and dep.supplier
-        and dep.supplier.isKindOf(uml.Interface)
+        and len(dep.supplier) > 0
+        and dep.supplier[0].isKindOf(uml.Interface)
     )
 
 

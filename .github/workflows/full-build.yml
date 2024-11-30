@@ -26,13 +26,13 @@ env:
 
 jobs:
   lint:
-    name: Lint
-    runs-on: ubuntu-latest
+    name: 🕵️ Lint
+    runs-on: ubuntu-24.04
     timeout-minutes: 10
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@91182cccc01eb5e619899d80e4e971d6181294a7 # v2.10.1
+        uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f # v2.10.2
         with:
           disable-sudo: true
           disable-file-monitoring: true
@@ -42,13 +42,13 @@ jobs:
             pypi.org:443
             github.com:443
             api.github.com:443
-            objects.githubusercontent.com:443
-            raw.githubusercontent.com:443
-      - uses: actions/checkout@eef61447b9ff4aafe5dcd4e0bbf5d482be7e7871 # v4.2.1
+            *.githubusercontent.com:443
+            ghcr.io
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Set up Python
-        uses: actions/setup-python@f677139bbe7f9c59b41e40162b753c062f5d49a3 # v5.2.0
+        uses: actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b # v5.3.0
         with:
           python-version: ${{ env.python_version }}
       - name: Lint with Pre-commit
@@ -64,10 +64,10 @@ jobs:
           poetry check
 
   linux-wheel:
-    name: Linux (Wheel) with Python ${{ matrix.python_version }}
+    name:  🐧 Linux (Wheel) with Python ${{ matrix.python_version }}
     needs: lint
-    runs-on: ubuntu-22.04
-    container: fedora:39
+    runs-on: ubuntu-24.04
+    container: fedora:41
     timeout-minutes: 30
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     strategy:
@@ -84,13 +84,13 @@ jobs:
           mutter dbus-x11 gtk4 gobject-introspection-devel
           cairo-gobject-devel gtksourceview5-devel libadwaita-devel cairo-devel
           python${{ matrix.python_version }}-devel
-      - uses: actions/checkout@eef61447b9ff4aafe5dcd4e0bbf5d482be7e7871 # v4.2.1
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Set ownership of checkout directory
         run: chown -R $(id -u):$(id -g) $PWD
       - name: Use Python Dependency Cache
-        uses: actions/cache@3624ceb22c1c5a301c8db4169662070a689d9ea8 # v4.1.1
+        uses: actions/cache@6849a6489940f00c2f30c0fb92c6274307ccb58a # v4.1.2
         with:
           path: ~/.cache/pip
           key: ${{ runner.os }}-python${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}-39
@@ -129,27 +129,27 @@ jobs:
           path: dist/gaphor-${{ steps.install.outputs.version }}-py3-none-any.whl
 
   linux-flatpak-devel:
-    name: Linux (Devel Flatpak)
+    name: 📦 Linux (Devel Flatpak)
     needs: lint
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     container:
       image: bilelmoussaoui/flatpak-github-actions:gnome-45
       options: --privileged
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@91182cccc01eb5e619899d80e4e971d6181294a7 # v2.10.1
+        uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f # v2.10.2
         with:
           egress-policy: audit
 
-      - uses: actions/checkout@eef61447b9ff4aafe5dcd4e0bbf5d482be7e7871 # v4.2.1
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Use Python Dependency Cache
-        uses: actions/cache@3624ceb22c1c5a301c8db4169662070a689d9ea8 # v4.1.1
+        uses: actions/cache@6849a6489940f00c2f30c0fb92c6274307ccb58a # v4.1.2
         with:
           path: ~/.cache/pip
           key: ${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}-22.04
-      - uses: flatpak/flatpak-github-actions/flatpak-builder@dcbd3a30d991a38708c318d17f5352cc1268c215 # master
+      - uses: flatpak/flatpak-github-actions/flatpak-builder@acbc99edf9fca4bfcc47d9f57a5e105f9ec13e50 # master
         with:
           bundle: gaphor.flatpak
           manifest-path: org.gaphor.Gaphor.json
@@ -178,7 +178,7 @@ jobs:
             arch: intel
           - runner: macos-15
             arch: arm
-    name: macOS
+    name: 🍏 macOS
     needs: lint
     runs-on: ${{ matrix.target.runner }}
     permissions:
@@ -189,7 +189,7 @@ jobs:
       artifact-intel: ${{ steps.output.outputs.artifact-intel }}
       artifact-arm: ${{ steps.output.outputs.artifact-arm }}
     steps:
-      - uses: actions/checkout@eef61447b9ff4aafe5dcd4e0bbf5d482be7e7871 # v4.2.1
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Install macOS Dependencies
@@ -201,9 +201,10 @@ jobs:
           # Pre-installed Python conflicts with Homebrew Python
           # https://github.com/actions/runner-images/issues/9966
           brew install --overwrite python@${{ env.python_version }}
+          brew unlink pkg-config@0.29.2 || true
           brew install gtksourceview5 libadwaita adwaita-icon-theme gobject-introspection graphviz create-dmg
       - name: Set up Python
-        uses: actions/setup-python@f677139bbe7f9c59b41e40162b753c062f5d49a3 # v5.2.0
+        uses: actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b # v5.3.0
         with:
           python-version: ${{ env.python_version }}
           cache: pip
@@ -215,7 +216,7 @@ jobs:
       - name: Run Gaphor Self-Test
         run: poetry run gaphor self-test || poetry run gaphor self-test
       - name: Run Gaphor Tests
-        run: poetry run pytest --cov
+        run: poetry run pytest
       - name: Create macOS Application
         id: create
         uses: ./.github/actions/macos_dmg
@@ -233,7 +234,7 @@ jobs:
         run: echo "artifact-${{ matrix.target.arch }}=${{ steps.create.outputs.artifact }}" >> $GITHUB_OUTPUT
 
   check-macos-app:
-    name: Check macOS App
+    name: 🕵️ Check macOS App
     needs: macos
     strategy:
       matrix:
@@ -258,13 +259,13 @@ jobs:
           Gaphor.app/Contents/MacOS/gaphor self-test || Gaphor.app/Contents/MacOS/gaphor self-test
 
   windows:
-    name: Windows
+    name: 🪟 Windows
     needs: lint
     runs-on: windows-latest
     env:
       INCLUDE: C:\gtk\include;C:\gtk\include\cairo;C:\gtk\include\glib-2.0;C:\gtk\include\gobject-introspection-1.0;C:\gtk\lib\glib-2.0\include;
       LIB: C:\gtk\lib
-      gvsbuild_version: 2024.10.0
+      gvsbuild_version: 2024.11.1
     permissions:
       contents: write
     timeout-minutes: 45
@@ -273,7 +274,7 @@ jobs:
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     steps:
       - name: GTK binaries get from cache
-        uses: actions/cache@3624ceb22c1c5a301c8db4169662070a689d9ea8 # v4.1.1
+        uses: actions/cache@6849a6489940f00c2f30c0fb92c6274307ccb58a # v4.1.2
         id: cache
         with:
           path: C:\gtk\**
@@ -293,21 +294,21 @@ jobs:
           Write-Output "XDG_DATA_HOME=$HOME\.local\share" >> $env:GITHUB_ENV
           Write-Output "C:\gtk\bin" >> $env:GITHUB_PATH
           choco install graphviz -y
-      - uses: actions/checkout@eef61447b9ff4aafe5dcd4e0bbf5d482be7e7871 # v4.2.1
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Set up Python
-        uses: actions/setup-python@f677139bbe7f9c59b41e40162b753c062f5d49a3 # v5.2.0
+        uses: actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b # v5.3.0
         with:
-          python-version: 3.12
+          python-version: ${{ env.python_version }}
           cache: pip
       - name: Install Dependencies
         id: install
         uses: ./.github/actions/install
         with:
-          python-command: py -3.12
+          python-command: py -${{ env.python_version }}
       - name: Run Gaphor Tests
-        run: poetry run pytest --cov
+        run: poetry run pytest
       - name: Create Windows Executables
         uses: ./.github/actions/windows_executables
         with:
@@ -317,7 +318,7 @@ jobs:
           base64_encoded_pfx: ${{ secrets.BASE64_ENCODED_PFX }}
 
   check-windows-installer:
-    name: Check Windows Installer
+    name: 🕵️ Check Windows Installer
     needs: windows
     runs-on: windows-latest
     timeout-minutes: 15
@@ -340,7 +341,7 @@ jobs:
         shell: cmd
 
   scan-for-viruses:
-    name: Virus Check
+    name: 🦠 Virus Check
     needs: windows
     runs-on: windows-latest
     continue-on-error: true
@@ -353,7 +354,7 @@ jobs:
           name: ${{ needs.windows.outputs.installer }}
           path: .
       - name: VirusTotal Scan
-        uses: crazy-max/ghaction-virustotal@92a6081d9aab8f8ef3d9081e8bb264aaccc9e74d # v4.0.0
+        uses: crazy-max/ghaction-virustotal@93ce6fb8ca09fed3d3d2010a8be65552ae5d3854 # v4.1.0
         if: env.mainline_build == 'true'
         with:
           vt_api_key: ${{ secrets.VIRUSTOTAL_API_KEY }}
@@ -364,9 +365,9 @@ jobs:
             ${{ needs.windows.outputs.installer }}
 
   publish-to-pypi:
-    name: Publish to PyPI (release only)
+    name: 🧀 Publish to PyPI (release only)
     needs: [ linux-wheel, linux-flatpak-devel, linux-snapcraft-devel, check-macos-app, check-windows-installer ]
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     permissions:
       id-token: write
     if: github.event_name == 'release'
@@ -374,7 +375,7 @@ jobs:
       version: ${{ needs.linux-wheel.outputs.version }}
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@91182cccc01eb5e619899d80e4e971d6181294a7 # v2.10.1
+        uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f # v2.10.2
         with:
           egress-policy: audit
 
@@ -387,15 +388,15 @@ jobs:
           name: ${{ needs.linux-wheel.outputs.wheel }}
           path: dist
       - name: Publish package distributions to PyPI
-        uses: pypa/gh-action-pypi-publish@f7600683efdcb7656dec5b29656edb7bc586e597 # release/v1
+        uses: pypa/gh-action-pypi-publish@15c56dba361d8335944d31a2ecd17d700fc7bcbc # release/v1
 
   trigger-website-version-update:
-    name: Trigger version update on gaphor/gaphor.github.io
+    name: ⏩ gaphor.org version update
     needs: [ publish-to-pypi ]
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@91182cccc01eb5e619899d80e4e971d6181294a7 # v2.10.1
+        uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f # v2.10.2
         with:
           egress-policy: audit
 
@@ -408,12 +409,12 @@ jobs:
           client-payload: '{ "version": "${{ needs.publish-to-pypi.outputs.version }}" }'
 
   trigger-flatpak-version-update:
-    name: Trigger version update on flathub/org.gaphor.Gaphor
+    name: ⏩ Flathub version update
     needs: [ publish-to-pypi ]
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@91182cccc01eb5e619899d80e4e971d6181294a7 # v2.10.1
+        uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f # v2.10.2
         with:
           egress-policy: audit
 

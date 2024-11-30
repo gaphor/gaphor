@@ -38,6 +38,8 @@ class action:
         shortcut: str | tuple[str, ...] | None = None,
         state: bool | Callable[[Any], bool | str] | None = None,
     ):
+        self.scope: str
+        self.name: str
         self.scope, self.name = name.split(".", 2) if "." in name else ("win", name)
         self.label = label
         self.tooltip = tooltip

@@ -24,7 +24,7 @@ def _directed_relationship_property_path_target_source(type):
         if element.sourceContext is self and element.targetContext
     ]
 
-from gaphor.core.modeling.coremodel import NamedElement
+from gaphor.UML.uml import NamedElement
 class AbstractRequirement(NamedElement):
     derived: derived[AbstractRequirement]
     derivedFrom: derived[AbstractRequirement]
@@ -37,8 +37,8 @@ class AbstractRequirement(NamedElement):
     verifiedBy: derived[NamedElement]
 
 
-from gaphor.UML.uml import Class
-class Requirement(AbstractRequirement, Class):
+from gaphor.UML.uml import Class as _Class
+class Requirement(AbstractRequirement, _Class):
     pass
 
 
@@ -50,7 +50,7 @@ class DirectedRelationshipPropertyPath(DirectedRelationship):
     targetPropertyPath: relation_many[Property]
 
 
-from gaphor.core.modeling.coremodel import Dependency
+from gaphor.UML.uml import Dependency
 class Trace(Dependency, DirectedRelationshipPropertyPath):
     pass
 
@@ -76,7 +76,7 @@ class TestCase(Behavior):
     pass
 
 
-class Block(Class):
+class Block(_Class):
     isEncapsulated: _attribute[int] = _attribute("isEncapsulated", int, default=False)
 
 
@@ -100,7 +100,7 @@ class ValueType(DataType):
 
 
 from gaphor.UML.uml import InstanceSpecification
-from gaphor.core.modeling.element import Element
+from gaphor.UML.uml import Element
 class ElementPropertyPath(Element):
     propertyPath: relation_many[Property]
 
@@ -176,7 +176,7 @@ class AcceptChangeStructuralFeatureEventAction(AcceptEventAction):
     pass
 
 
-from gaphor.core.modeling.coremodel import Feature
+from gaphor.UML.uml import Feature
 class DirectedFeature(Feature):
     featureDirection = _enumeration("featureDirection", ("provided", "providedRequired", "required"), "provided")
 
@@ -186,12 +186,12 @@ class Conform(Generalization):
     pass
 
 
-class View(Class):
+class View(_Class):
     stakeholder: relation_many[Stakeholder]
     viewpoint: relation_one[Viewpoint]
 
 
-class Viewpoint(Class):
+class Viewpoint(_Class):
     concernList: relation_many[Comment]
     language: _attribute[str] = _attribute("language", str)
     method: relation_many[Behavior]
@@ -208,7 +208,7 @@ class Expose(Dependency):
     pass
 
 
-from gaphor.core.modeling.coremodel import Comment
+from gaphor.UML.uml import Comment
 class Rationale(Comment):
     pass
 
@@ -293,7 +293,7 @@ class ItemFlow(InformationFlow):
     itemProperty: relation_one[Property]
 
 
-from gaphor.core.modeling.diagram import Diagram
+from gaphor.UML.uml import Diagram
 from gaphor.UML.uml import Class
 class SysMLDiagram(Diagram):
     pass
@@ -342,7 +342,6 @@ DirectedRelationshipPropertyPath.sourcePropertyPath = association("sourcePropert
 DirectedRelationshipPropertyPath.targetPropertyPath = association("targetPropertyPath", Property)
 DirectedRelationshipPropertyPath.targetContext = association("targetContext", Classifier, upper=1, opposite="targetDirectedRelationshipPropertyPath_")
 DirectedRelationshipPropertyPath.sourceContext = association("sourceContext", Classifier, upper=1)
-from gaphor.UML.uml import Element
 Element.owner.add(DirectedRelationshipPropertyPath.targetContext)  # type: ignore[attr-defined]
 Property.itemFlow = association("itemFlow", ItemFlow, upper=1, opposite="itemProperty")
 Element.owner.add(Property.itemFlow)  # type: ignore[attr-defined]

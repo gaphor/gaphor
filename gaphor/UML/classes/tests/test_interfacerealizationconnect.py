@@ -48,10 +48,10 @@ def test_interface_realization_reconnect_in_new_diagram(create, element_factory)
     connect(rel2, rel2.head, c5)
 
     assert rel.subject is not rel2.subject
-    assert rel.subject.supplier is c1.subject
-    assert rel.subject.client is c2.subject
-    assert rel2.subject.supplier is c5.subject
-    assert rel2.subject.client is c4.subject
+    assert c1.subject in rel.subject.supplier
+    assert c2.subject in rel.subject.client
+    assert c5.subject in rel2.subject.supplier
+    assert c4.subject in rel2.subject.client
 
 
 def test_interface_realization_reconnect_twice_in_new_diagram(create, element_factory):
@@ -77,5 +77,5 @@ def test_interface_realization_reconnect_twice_in_new_diagram(create, element_fa
     connect(rel2, rel2.head, c3)
 
     assert rel.subject is rel2.subject
-    assert rel.subject.supplier is c1.subject
-    assert rel.subject.client is c2.subject
+    assert c1.subject in rel.subject.supplier
+    assert c2.subject in rel.subject.client

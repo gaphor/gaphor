@@ -137,7 +137,7 @@ app = BUNDLE(  # type: ignore
     info_plist={
         "CFBundleVersion": str(get_version()),
         "NSHumanReadableCopyright": COPYRIGHT,
-        "LSMinimumSystemVersion": "10.13",
+        "LSMinimumSystemVersion": "10.15",
         "NSHighResolutionCapable": True,
         "LSApplicationCategoryType": "public.app-category.developer-tools",
         "NSPrincipalClass": "NSApplication",

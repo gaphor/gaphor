@@ -35,7 +35,7 @@ association end.
 When a stereotype can be applied to a model element, a *Stereotype* section
 will appear in the editor.
 
-![Stereotype usage example](images/stereotype-usage.png)
+![The Gaphor main window showing a stereotype usage example.](images/stereotype-usage.png)
 
 ## Creating a profile
 

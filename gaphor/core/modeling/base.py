@@ -3,17 +3,20 @@
 
 from __future__ import annotations
 
+import importlib
 import logging
 from collections.abc import Callable, Iterator
+from functools import cache
 from typing import TYPE_CHECKING, Protocol, TypeVar, overload
 from uuid import uuid1
 
 from gaphor.core.modeling.collection import collection
 from gaphor.core.modeling.event import ElementTypeUpdated, ElementUpdated
-from gaphor.core.modeling.properties import umlproperty
+from gaphor.core.modeling.properties import relation_many, umlproperty
 
 if TYPE_CHECKING:
     from gaphor.core.modeling.diagram import Diagram
+    from gaphor.core.modeling.presentation import Presentation
 
 log = logging.getLogger(__name__)
 
@@ -48,28 +51,37 @@ def generate_id(generator=None):
     return next(_generator)
 
 
+class classproperty:
+    def __init__(self, func):
+        self.fget = func
+
+    def __get__(self, _instance, owner):
+        return self.fget(owner)
+
+
 class Base:
     """Base class for all model data classes."""
+
+    presentation: relation_many[Presentation]
 
     def __init__(self, id: Id | None = None, model: RepositoryProtocol | None = None):
         """Create an element. As optional parameters an id and model can be
         given.
 
-        Id is a serial number for the element. The default id is None and will
-        result in an automatic creation of an id. An existing id (such as an
-        int or string) can be provided as well.
+        Id is a serial number for the element. If no id is provided, one will automatically
+        be created. Id's should be unique within the model.
 
-        A model can be provided to refer to the model this element belongs to.
+        A model can be provided to refer to the model
+        (:class:~gaphor.core.modeling.ElementFactory) this element belongs to.
         """
         self._id: Id = id or generate_id()
         # The model this element belongs to.
         # NOTE: Will be unset by ElementFactory once it's `unlink()`ed.
         self._model = model
-        self._unlink_lock = 0
 
     @property
     def id(self) -> Id:
-        "An id (read-only), unique within the model."
+        """An id (read-only), unique within the model."""
         return self._id
 
     @property
@@ -81,9 +93,18 @@ class Base:
             )
         return self._model
 
-    @classmethod
-    def umlproperties(cls) -> Iterator[umlproperty]:
-        """Iterate over all properties."""
+    @classproperty
+    def __modeling_language__(cls):
+        """The modeling language this class belongs to."""
+        if ml := _resolve_modeling_language(cls.__module__):
+            return ml
+        raise AttributeError(
+            f"module '{cls.__module__}' or its parents have no attribute '__modeling_language__'"
+        )
+
+    @classproperty
+    def __properties__(cls) -> Iterator[umlproperty]:
+        """Iterate over all attributes, associations, etc."""
         umlprop = umlproperty
         for propname in dir(cls):
             if not propname.startswith("_"):
@@ -91,13 +112,26 @@ class Base:
                 if isinstance(prop, umlprop):
                     yield prop
 
+    def __str__(self):
+        return f"<{self.__class__.__module__}.{self.__class__.__name__} element {self._id}>"
+
+    __repr__ = __str__
+
+    def __setattr__(self, key, value):
+        if key.startswith("_") or hasattr(self.__class__, key):
+            super().__setattr__(key, value)
+        else:
+            raise AttributeError(
+                f"Property {self.__class__.__name__}.{key} does not exist"
+            )
+
     def save(
         self,
         save_func: Callable[[str, str | bool | int | Base | collection[Base]], None],
     ) -> None:
         """Save the state by calling ``save_func(name, value)``."""
-        for prop in self.umlproperties():
-            prop.save(self, save_func)  # type: ignore[arg-type]
+        for prop in self.__properties__:
+            prop.save(self, save_func)
 
     def load(
         self, name: str, value: str | bool | int | Base | collection[Base]
@@ -109,17 +143,12 @@ class Base:
         prop = getattr(type(self), name)
         prop.load(self, value)
 
-    def __str__(self):
-        return f"<{self.__class__.__module__}.{self.__class__.__name__} element {self._id}>"
-
-    __repr__ = __str__
-
     def postload(self) -> None:
         """Fix up the odds and ends.
 
         This is run after all elements are loaded.
         """
-        for prop in self.umlproperties():
+        for prop in self.__properties__:
             prop.postload(self)
 
     def unlink(self) -> None:
@@ -131,22 +160,11 @@ class Base:
         The unlink lock is acquired while unlinking this element's
         properties to avoid recursion problems.
         """
-        if self._unlink_lock:
-            return
-
-        self._unlink_lock += 1
-
-        try:
-            self.inner_unlink(UnlinkEvent(self))
-        finally:
-            self._unlink_lock -= 1
-
-    def inner_unlink(self, unlink_event: UnlinkEvent):
-        for prop in self.umlproperties():
+        for prop in self.__properties__:
             prop.unlink(self)
 
         log.debug("unlinking %s", self)
-        self.handle(unlink_event)
+        self.handle(UnlinkEvent(self))
 
     def handle(self, event) -> None:
         """Propagate incoming events.
@@ -181,14 +199,6 @@ class Base:
     def isTypeOf(self, other: Base) -> bool:
         """Returns :const:`True` if the object is of the same type as the ``other``."""
         return isinstance(self, type(other))
-
-    def __setattr__(self, key, value):
-        if key.startswith("_") or hasattr(self.__class__, key):
-            super().__setattr__(key, value)
-        else:
-            raise AttributeError(
-                f"Property {self.__class__.__name__}.{key} does not exist"
-            )
 
 
 class DummyEventWatcher:
@@ -244,3 +254,14 @@ def swap_element_type(element: Base, new_class: type[Base]) -> None:
         old_class = element.__class__
         element.__class__ = new_class
         element.handle(ElementTypeUpdated(element, old_class))
+
+
+@cache
+def _resolve_modeling_language(module_name: str) -> str | None:
+    mod = importlib.import_module(module_name)
+    if ml := getattr(mod, "__modeling_language__", None):
+        return str(ml)
+    parent_name = module_name.rsplit(".", 1)[0]
+    if parent_name == module_name:
+        return None
+    return _resolve_modeling_language(parent_name)

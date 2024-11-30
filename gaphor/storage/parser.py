@@ -63,9 +63,10 @@ class base:
 
 
 class element(base):
-    def __init__(self, id: str, type: str, canvas: canvas | None = None):
+    def __init__(self, id: str, type: str, ns: str = "", canvas: canvas | None = None):
         base.__init__(self)
         self.id = id
+        self.ns = ns
         self.type = type
         self.element: Base | None = None
 
@@ -74,7 +75,9 @@ class canvas(base):
     pass
 
 
-XMLNS = "http://gaphor.sourceforge.net/model"
+XMLNS_V3 = "http://gaphor.sourceforge.net/model"
+XMLNS_PREFIX = "https://gaphor.org/"
+XMLNS_ML_PREFIX = "https://gaphor.org/modelinglanguage"
 
 
 class ParserException(Exception):
@@ -88,7 +91,8 @@ class MergeConflictDetected(Exception):
 # Loader state:
 [
     ROOT,  # Expect 'gaphor' element
-    GAPHOR,  # Expect UML classes (tag name is the UML class name)
+    GAPHOR,  # Expect a model (and in the future libraries)
+    MODEL,  # This is where we store the model
     ELEMENT,  # Expect properties of UML object
     DIAGRAM,  # Expect properties of Diagram object + canvas
     CANVAS,  # Expect canvas properties + <item> (Gaphor < 2.5)
@@ -97,7 +101,7 @@ class MergeConflictDetected(Exception):
     VAL,  # Redaing contents of a <val> tag
     REFLIST,  # In a <reflist>
     REF,  # Reading contents of a <ref> tag
-] = range(10)
+] = range(11)
 
 State = int
 
@@ -147,6 +151,7 @@ class GaphorLoader(handler.ContentHandler):
         self.gaphor_version = ""
         self.elements: dict[str, element] = OrderedDict()
         self._stack: list[tuple[element | canvas, State]] = []
+        self._model_mapping: dict[str, str | None] = {}
         self.text = ""
         self._start_element_handlers = (
             self.start_element,
@@ -155,6 +160,7 @@ class GaphorLoader(handler.ContentHandler):
             self.start_attribute,
             self.start_reference,
             self.start_attribute_value,
+            self.start_model,
             self.start_root,
             self.invalid_tag,
         )
@@ -163,22 +169,42 @@ class GaphorLoader(handler.ContentHandler):
         if len(self._stack) != 0:
             raise ParserException("Invalid XML document.")
 
+    def startPrefixMapping(self, prefix: str | None, uri: str) -> None:
+        if uri.startswith(XMLNS_ML_PREFIX):
+            self._model_mapping[uri] = uri.rsplit("/", 1)[-1]
+
     def startElement(self, name, attrs):
+        # All Gaphor models use namespaces.
+        raise ParserException("Invalid XML document.")
+
+    def endElement(self, name):
+        # All Gaphor models use namespaces.
+        raise ParserException("Invalid XML document.")
+
+    def startElementNS(self, name, _qname, attrs):
+        if name[0] and name[0] != XMLNS_V3 and not name[0].startswith(XMLNS_PREFIX):
+            raise ParserException(f"Invalid XML document: invalid element {name}.")
+
         self.text = ""
 
         state = self.state()
 
         for h in self._start_element_handlers:
-            if h(state, name, attrs):
+            if h(
+                state,
+                self._model_mapping.get(name[0], None),
+                name[1],
+                {key[1]: val for key, val in list(attrs.items())},
+            ):
                 break
 
-    def start_element(self, state, name, attrs):
+    def start_element(self, state, ns, name, attrs):
         # Read an element class. The name of the tag is the class name:
-        if state == GAPHOR:
+        if state == MODEL:
             if "id" not in attrs:
-                log.exception(f"File corrupt: Element {name} has no id")
+                raise ParserException(f"File corrupt: Element {name} has no id")
             id = attrs["id"]
-            e = element(id, name)
+            e = element(id, name, ns=ns)
             if id in self.elements.keys():
                 log.exception(
                     f"File corrupt: duplicate element. Remove element {name} with id {id} and try again"
@@ -187,7 +213,7 @@ class GaphorLoader(handler.ContentHandler):
             self.push(e, name == "Diagram" and DIAGRAM or ELEMENT)
             return True
 
-    def start_canvas(self, state, name, attrs):
+    def start_canvas(self, state, ns, name, attrs):
         # NB. Only used for pre-2.5 models.
         # Special treatment for the <canvas> tag in a Diagram:
         if state == DIAGRAM and name == "canvas":
@@ -195,7 +221,7 @@ class GaphorLoader(handler.ContentHandler):
             self.push(c, CANVAS)
             return True
 
-    def start_canvas_item(self, state, name, attrs):
+    def start_canvas_item(self, state, ns, name, attrs):
         # NB. Only used for pre-2.5 models.
         # Items in a canvas are referenced by the <item> tag:
         if state in (CANVAS, ITEM) and name == "item":
@@ -212,7 +238,7 @@ class GaphorLoader(handler.ContentHandler):
             self.push(ci, ITEM)
             return True
 
-    def start_attribute(self, state, name, attrs):
+    def start_attribute(self, state, ns, name, attrs):
         # Store the attribute name on the stack, so we can use it later
         # to store the <ref>, <reflist> or <val> content:
         if state in (ELEMENT, DIAGRAM, CANVAS, ITEM):
@@ -220,7 +246,7 @@ class GaphorLoader(handler.ContentHandler):
             self.push(name, ATTR)
             return True
 
-    def start_reference(self, state, name, attrs):
+    def start_reference(self, state, ns, name, attrs):
         # Reference list:
         if state == ATTR and name == "reflist":
             self.push(self.peek(), REFLIST)
@@ -246,27 +272,43 @@ class GaphorLoader(handler.ContentHandler):
             self.push(None, REF)
             return True
 
-    def start_attribute_value(self, state, name, attrs):
+    def start_attribute_value(self, state, ns, name, attrs):
         # We need to get the text within the <val> tag:
         if state == ATTR and name == "val":
             self.push(None, VAL)
             return True
 
-    def start_root(self, state, name, attrs):
+    def start_model(self, state, ns, name, attrs):
+        # The <model> tag contains the actual model:
+        if state == GAPHOR and self.version == "4" and name == "model":
+            self.push(None, MODEL)
+            return True
+
+    def start_root(self, state, ns, name, attrs):
         # The <gaphor> tag is the toplevel tag:
         if state == ROOT and name == "gaphor":
-            assert attrs["version"] == "3.0"
+            assert attrs["version"] in ("3.0", "4")
             self.version = attrs["version"]
             self.gaphor_version = attrs.get("gaphor-version") or attrs.get(
                 "gaphor_version"
             )
-            self.push(None, GAPHOR)
+            # Handle backwards compatibility between version 3.0 and 4 models
+            self.push(None, MODEL if self.version == "3.0" else GAPHOR)
             return True
 
-    def invalid_tag(self, state, name, attrs):
-        raise ParserException(f"Invalid XML: tag <{name}> not known (state = {state})")
+    def invalid_tag(self, state, ns, name, attrs):
+        raise ParserException(
+            f"Invalid XML: tag <{name} {attrs}> not known (state = {state})"
+        )
 
-    def endElement(self, name):
+    def endElementNS(self, name, _qname):
+        if not name[0] or name[0] == XMLNS_V3:
+            pass
+        elif name[0].startswith(XMLNS_PREFIX):
+            pass
+        else:
+            raise ParserException("Invalid Gaphor XML")
+
         # Put the text on the value
         if self.state() == VAL:
             # Two levels up: the attribute name
@@ -280,15 +322,6 @@ class GaphorLoader(handler.ContentHandler):
                 self.elements[new_item.id] = new_item
             return
         self.pop()
-
-    def startElementNS(self, name, qname, attrs):
-        if not name[0] or name[0] == XMLNS:
-            a = {key[1]: val for key, val in list(attrs.items())}
-            self.startElement(name[1], a)
-
-    def endElementNS(self, name, qname):
-        if not name[0] or name[0] == XMLNS:
-            self.endElement(name[1])
 
     def characters(self, content):
         """Read characters."""

@@ -9,7 +9,7 @@ SysML, RAAML and the C4 model.
 
 A modeling language in Gaphor is defined by a class implementing the
 `gaphor.abc.ModelingLanguage` abstract base class. The modeling language should
-be registered as a `gaphor.modelinglanguage` entry point.
+be registered as a `gaphor.modelinglanguages` entry point.
 
 The `ModelingLanguage` interface is fairly minimal. It allows other services to
 look up elements and diagram items, as well as a toolbox, and diagram types.
@@ -52,6 +52,24 @@ the `gaphor.modules` entrypoint.
 ```{eval-rst}
 .. autoclass:: gaphor.abc.ModelingLanguage
    :members:
+```
+
+As a convention, the package containing the modeling language should have an attribute `__modeling_language__`
+that has the same value as the modeling language name in the entry point.
+
+To illustrate:
+
+The file `mytool/mylang/__init__.py` contains an entry:
+
+```python
+__modeling_language__ = "MyLang"
+```
+
+`pyproject.toml` contains an entry point:
+
+```toml
+[project.entry-points."gaphor.modelinglanguages"]
+"MyLang" = "mytool.mylang.modelinglanguage:MyLangModelingLanguage"
 ```
 
 ## Connectors
@@ -103,7 +121,7 @@ Sometimes items need more than one model element to work. For example an Associa
 In those specific cases you need to implement your own copy and paste functions. To create such a thing you'll need to create
 two functions: one for copying and one for pasting.
 
-```{function} gaphor.diagram.copypaste.copy(obj: ~gaphor.core.modeling.Element) -> ~typing.Iterator[tuple[Id, Opaque]]
+```{function} gaphor.diagram.copypaste.copy(obj: ~gaphor.core.modeling.Base | ~collections.abc.Iterable) -> ~collections.abc.Iterator[tuple[Id, Opaque]]
 
 Create a copy of an element (or list of elements).
 The returned type should be distinct, so the `paste()`
@@ -111,7 +129,7 @@ function can properly dispatch.
 A copy function normally copies only the element and mandatory related elements. E.g. an Association needs two association ends.
 ```
 
-```{function} gaphor.diagram.copypaste.paste(copy_data: Opaque, diagram: ~gaphor.core.modeling.Diagram, lookup: ~typing.Callable[[str], ~gaphor.core.modeling.Element | None]) -> ~typing.Iterator[~gaphor.core.modeling.Element]
+```{function} gaphor.diagram.copypaste.paste(copy_data: Opaque, diagram: ~gaphor.core.modeling.Diagram, lookup: ~typing.Callable[[str], ~gaphor.core.modeling.Base | None]) -> ~typing.Iterator[~gaphor.core.modeling.Base]
 
 Paste previously copied data. Based on the data type created in the
 ``copy()`` function, try to duplicate the copied elements.
@@ -120,7 +138,7 @@ Returns the newly created item or element.
 
 Gaphor provides some convenience functions:
 
-```{function} gaphor.diagram.copypaste.copy_full(items: ~typing.Collection[~gaphor.core.modeling.Element], lookup: ~typing.Callable[[Id], ~gaphor.core.modeling.Element | None] | None = None) -> CopyData:
+```{function} gaphor.diagram.copypaste.copy_full(items: ~collections.abc.Collection[~gaphor.core.modeling.Base], lookup: ~collections.abc.Callable[[Id], ~gaphor.core.modeling.Base | None] | None = None) -> CopyData:
 
 Copy ``items``. The ``lookup`` function is used to look up owned elements (shown as child nodes in the Model Browser).
 ```
@@ -140,19 +158,30 @@ Paste a copy of both Presentation and model element. A deep copy.
 
 Grouping is done by dragging one item on top of another, in a diagram or in the tree view.
 
-```{function} gaphor.diagram.group.group(parent: ~gaphor.core.modeling.Element, element: ~gaphor.core.modeling.Element) -> bool
+```{function} gaphor.diagram.group.owner(element: ~gaphor.core.modeling.Base) ->  ~gaphor.core.modeling.Base | RootType | None
+
+Return the owner for `element`. The owner may be `Root`, denoting the element should be
+placed in the root of the ownership hierarchy. If `None` is returned, there is no owner.
+```
+
+```{function} gaphor.diagram.group.owns(element: ~gaphor.core.modeling.Base) -> list[~gaphor.core.modeling.Base]
+
+Returns all elements owned by `element
+```
+
+```{function} gaphor.diagram.group.group(parent: ~gaphor.core.modeling.Base, element: ~gaphor.core.modeling.Base) -> bool
 
 Group an element in a parent element. The grouping can be based on ownership,
 but other types of grouping are also possible.
 ```
 
-```{function} gaphor.diagram.group.ungroup(parent: ~gaphor.core.modeling.Element, element: ~gaphor.core.modeling.Element) -> bool
+```{function} gaphor.diagram.group.ungroup(parent: ~gaphor.core.modeling.Base, element: ~gaphor.core.modeling.Base) -> bool
 
 Remove the grouping from an element.
 The function needs to check if the provided `parent` node is the right one.
 ```
 
-```{function} gaphor.diagram.group.can_group(parent_type: type[~gaphor.core.modeling.Element], element_or_type: type[~gaphor.core.modeling.Element] | ~gaphor.core.modeling.Element) -> bool
+```{function} gaphor.diagram.group.can_group(parent_type: type[~gaphor.core.modeling.Base], element_or_type: type[~gaphor.core.modeling.Base] | ~gaphor.core.modeling.Base) -> bool
 
 This function tries to determine if grouping is possible,
 without actually performing a group operation.
@@ -166,7 +195,7 @@ This is an easy way to extend a diagram with already existing model elements.
 
 Alternatively, a presentation item can be dropped on top of another element.
 
-```{function} gaphor.diagram.drop.drop(element: ~gaphor.core.modeling.Element | ~gaphor.core.modeling.Presentation, diagram: ~gaphor.core.modeling.Diagram | ~gaphor.core.modeling.Presentation, x: float, y: float) -> ~gaphor.core.modeling.Presentation | None
+```{function} gaphor.diagram.drop.drop(element: ~gaphor.core.modeling.Base | ~gaphor.core.modeling.Presentation, diagram: ~gaphor.core.modeling.Diagram | ~gaphor.core.modeling.Presentation, x: float, y: float) -> ~gaphor.core.modeling.Presentation | None
 
 The drop function creates a new presentation for an element on the diagram,
 if the element is not a presentation yet.
@@ -183,7 +212,7 @@ Gaphor wants to keep the model in sync with the diagrams.
 
 A little dispatch function is used to determine if a model element can be removed.
 
-```{function} gaphor.diagram.deletable.deletable(element: ~gaphor.core.modeling.Element) -> bool
+```{function} gaphor.diagram.deletable.deletable(element: ~gaphor.core.modeling.Base) -> bool
 
 Determine if a model element can safely be removed.
 ```

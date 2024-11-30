@@ -73,8 +73,8 @@ class AssociationItem(Named, LinePresentation[UML.Association]):
 
         # For the association ends:
         base = "subject[Association].memberEnd[Property]"
-        self.watch("subject.name").watch(
-            "subject.appliedStereotype.classifier.name"
+        self.watch("subject[NamedElement].name").watch(
+            "subject[Element].appliedStereotype.classifier.name"
         ).watch(f"{base}.name").watch(
             f"{base}.appliedStereotype.slot.definingFeature.name",
         ).watch(f"{base}.appliedStereotype.slot.value").watch(
@@ -201,12 +201,12 @@ class AssociationItem(Named, LinePresentation[UML.Association]):
     def draw(self, context):
         super().draw(context)
 
-        if self.subject and self.subject.abstraction:  # type: ignore[attr-defined]
+        if self.subject and self.subject.abstraction:
             draw_information_flow(
                 self,
                 context,
                 self.subject.memberEnd[0]
-                in self.subject.abstraction[:].informationTarget,  # type: ignore[attr-defined]
+                in self.subject.abstraction[:].informationTarget,
             )
 
         if self.show_direction:

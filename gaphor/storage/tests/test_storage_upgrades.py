@@ -3,7 +3,7 @@ import pytest
 from gaphor.storage.parser import element
 from gaphor.storage.storage import load_elements
 from gaphor.storage.upgrade_canvasitem import upgrade_canvasitem
-from gaphor.UML import diagramitems
+from gaphor.UML import Diagram, Image, diagramitems
 
 
 @pytest.fixture
@@ -142,7 +142,6 @@ def test_upgrade_note_on_model_element(loader, element_factory):
     loader(cls_item, cls)
     _, cls_item, cls, *_ = element_factory.lselect()
 
-    assert not cls_item.note
     assert cls.note == "my note"
 
 
@@ -158,6 +157,26 @@ def test_upgrade_append_notes_on_model_element(loader, element_factory):
     loader(cls_item1, cls_item2, cls)
     _, cls_item1, cls_item2, cls, *_ = element_factory.lselect()
 
-    assert not cls_item1.note
-    assert not cls_item2.note
     assert cls.note == "my note\n\nanother note"
+
+
+def test_upgrade_picture_to_image(loader, element_factory):
+    picture = element(id="2", type="Picture")
+    picture_item = element(id="3", type="PictureItem")
+
+    loader(picture, picture_item)
+    _, image, image_item, *_ = element_factory.lselect()
+
+    assert isinstance(image, Image)
+    assert isinstance(image_item, diagramitems.ImageItem)
+
+
+def test_upgrade_diagram_to_uml_diagram(loader, element_factory):
+    diagram = element(id="2", type="Diagram")
+    core_diagram = element(id="3", type="Diagram", ns="Core")
+
+    loader(diagram, core_diagram)
+    _, new_diagram, new_core_diagram, *_ = element_factory.lselect()
+
+    assert isinstance(new_diagram, Diagram)
+    assert isinstance(new_core_diagram, Diagram)

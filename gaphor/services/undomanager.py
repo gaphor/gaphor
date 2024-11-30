@@ -19,7 +19,6 @@ from gaphor.abc import ActionProvider, Service
 from gaphor.action import action
 from gaphor.core import event_handler
 from gaphor.core.modeling.base import Base, RepositoryProtocol, swap_element_type
-from gaphor.core.modeling.diagram import Diagram
 from gaphor.core.modeling.event import (
     AssociationAdded,
     AssociationDeleted,
@@ -347,18 +346,12 @@ class UndoManager(Service, ActionProvider):
             event.element.save(save_func)
 
             def undo_delete_event():
-                # If diagram is not there, for some reason, recreate it.
-                # It's probably removed in the same transaction.
-                try:
-                    diagram: Diagram = self.lookup(diagram_id)  # type: ignore[assignment]
-                except ValueError:
-                    diagram = self.element_factory.create_as(Diagram, diagram_id)
+                diagram = self.lookup(diagram_id)
+                element = diagram.create_as(element_type, element_id)  # type: ignore[attr-defined]
 
-                element = diagram.create_as(element_type, element_id)
                 for name, ser in data.items():
                     for value in deserialize(ser, lambda ref: None):
                         element.load(name, value)
-
         else:
 
             def undo_delete_event():

@@ -6,6 +6,7 @@ from gaphor.entrypoint import load_entry_points
 GAPHOR_CORE = [
     "gaphor.core*",
     "gaphor.abc",
+    "gaphor.asyncio",
     "gaphor.action",
     "gaphor.entrypoint",
     "gaphor.i18n",
@@ -59,8 +60,6 @@ def test_diagram_package():
         .may_import("gaphor.UML.compartments")
         .may_import("gaphor.UML.recipes")
         .may_import("gaphor.UML.uml")
-        .may_import("gaphor.ui.filedialog")
-        .may_import("gaphor.ui.errorhandler")
         .should_not_import("gaphor*")
         .check(gaphor, skip_type_checking=True)
     )
@@ -112,6 +111,8 @@ def test_modeling_languages_should_not_depend_on_ui_package():
     (
         archrule("Modeling languages should not depend on the UI package")
         .match("gaphor.C4Model*", "gaphor.RAAML*", "gaphor.SysML*", "gaphor.UML*")
+        .may_import("gaphor.ui.filedialog")
+        .may_import("gaphor.ui.errordialog")
         .should_not_import("gaphor.ui*")
         .check(gaphor)
     )

@@ -6,7 +6,7 @@ from gi.repository import Gdk, Gio, GLib, GObject, Gtk
 
 from gaphor import UML
 from gaphor.core.eventmanager import EventManager
-from gaphor.core.modeling import Element, Presentation
+from gaphor.core.modeling import Presentation
 from gaphor.diagram.propertypages import PropertyPageBase, PropertyPages
 from gaphor.i18n import gettext, translated_ui_string
 from gaphor.transaction import Transaction
@@ -14,7 +14,7 @@ from gaphor.UML.profiles.metaclasspropertypage import new_builder
 from gaphor.UML.propertypages import text_field_handlers
 
 
-@PropertyPages.register(Element)
+@PropertyPages.register(UML.Element)
 class StereotypePage(PropertyPageBase):
     order = 40
 
@@ -37,7 +37,6 @@ class StereotypePage(PropertyPageBase):
         builder = new_builder(
             "stereotypes-editor",
             signals={
-                "stereotype-activated": (stereotype_activated,),
                 "stereotype-key-pressed": (stereotype_key_handler,),
             },
         )
@@ -100,7 +99,10 @@ def stereotype_set_model_with_interaction(stereotype_list, model):
                 },
             ),
             value_list_item_factory(
-                signal_handlers=text_field_handlers("slot_value"),
+                signal_handlers={
+                    "stereotype-click-pressed": stereotype_click_handler,
+                    **text_field_handlers("slot_value"),
+                },
             ),
         ],
         strict=False,
@@ -114,7 +116,7 @@ def stereotype_set_model_with_interaction(stereotype_list, model):
 class StereotypeView(GObject.Object):
     def __init__(
         self,
-        target: Element,
+        target: UML.Element,
         stereotype: UML.Stereotype,
         attr: UML.Property | None,
         event_manager: EventManager,
@@ -198,7 +200,7 @@ class StereotypeView(GObject.Object):
                 del self.instance.slot[slot]
 
 
-def stereotype_model(subject: Element, event_manager: EventManager):
+def stereotype_model(subject: UML.Element, event_manager: EventManager):
     model = Gio.ListStore.new(StereotypeView.__gtype__)
     stereotypes = UML.recipes.get_stereotypes(subject)
 
@@ -257,14 +259,10 @@ def value_list_item_factory(signal_handlers=None):
     )
 
 
-def stereotype_activated(list_view, _row):
-    selection = list_view.get_model()
-    item = selection.get_selected_item()
-
-    if item.attr:
-        item.editing = True
-    else:
-        item.applied = not item.applied
+def stereotype_click_handler(ctrl, n_press, x, y):
+    if n_press == 2:
+        cell = ctrl.get_widget()
+        cell.editing = True
 
 
 def stereotype_key_handler(ctrl, keyval, _keycode, state):

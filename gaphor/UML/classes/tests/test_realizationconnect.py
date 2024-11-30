@@ -50,8 +50,8 @@ def test_connection(create):
     ct = get_connected(impl, impl.head)
     assert ct is iface
     assert impl.subject is not None
-    assert impl.subject.contract is iface.subject
-    assert impl.subject.implementingClassifier is clazz.subject
+    assert iface.subject in impl.subject.contract
+    assert clazz.subject in impl.subject.implementingClassifier
 
 
 def test_reconnection(create):
@@ -71,6 +71,6 @@ def test_reconnection(create):
     connect(impl, impl.tail, c2)
 
     assert s is not impl.subject
-    assert iface.subject is impl.subject.contract
-    assert c2.subject is impl.subject.implementingClassifier
-    assert c1.subject is not impl.subject.implementingClassifier
+    assert iface.subject in impl.subject.contract
+    assert c2.subject in impl.subject.implementingClassifier
+    assert c1.subject not in impl.subject.implementingClassifier

@@ -11,7 +11,6 @@ from gaphor.diagram.tools.dropzone import drop_zone_tool
 from gaphor.diagram.tools.itemtool import item_tool
 from gaphor.diagram.tools.magnet import magnet_tool
 from gaphor.diagram.tools.placement import placement_tool
-from gaphor.diagram.tools.shortcut import shortcut_tool
 from gaphor.diagram.tools.textedit import text_edit_tools
 from gaphor.diagram.tools.txtool import transactional_tool
 
@@ -59,5 +58,4 @@ def add_basic_tools(view, modeling_language, event_manager):
         view.add_controller(tool)
     view.add_controller(pan_tool())
     view.add_controller(view_focus_tool())
-    view.add_controller(shortcut_tool(event_manager))
     view.add_controller(drop_target_tool(modeling_language, event_manager))

@@ -325,6 +325,7 @@ class Recorder:
         self.events.append(
             (
                 "c",
+                type(event.element).__modeling_language__,
                 type(event.element).__name__,
                 event.element.id,
                 event.diagram and event.diagram.id,
@@ -457,13 +458,15 @@ def replay_events(events, element_factory, modeling_language):
     """Replay events previously recorded by EventLog."""
     for event in events:
         match event:
-            case ("c", type, element_id, None):
+            case ("c", ns, type, element_id, None):
                 element_factory.create_as(
-                    modeling_language.lookup_element(type), element_id
+                    modeling_language.lookup_element(type, ns), element_id
                 )
-            case ("c", type, element_id, diagram_id):
+            case ("c", ns, type, element_id, diagram_id):
                 diagram = element_factory.lookup(diagram_id)
-                diagram.create_as(modeling_language.lookup_element(type), element_id)
+                diagram.create_as(
+                    modeling_language.lookup_element(type, ns), element_id
+                )
             case ("u", element_id, _diagram_id):
                 element_factory.lookup(element_id).unlink()
             case ("a", element_id, prop, value):

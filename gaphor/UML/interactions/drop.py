@@ -1,5 +1,6 @@
 from gaphor.core.modeling import Diagram
-from gaphor.diagram.drop import drop, drop_element
+from gaphor.diagram.drop import drop
+from gaphor.UML.drop import drop_element
 from gaphor.UML.interactions.lifeline import LifelineItem
 from gaphor.UML.uml import ConnectableElement
 

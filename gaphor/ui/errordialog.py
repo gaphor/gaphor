@@ -10,36 +10,30 @@ import sys
 
 from gi.repository import Adw
 
+from gaphor.asyncio import response_from_adwaita_dialog
 from gaphor.i18n import gettext
 
 
-def error_handler(message, secondary_message="", window=None, close=None):
+async def error_dialog(message, secondary_message="", window=None):
     _exc_type, _exc_value, exc_traceback = sys.exc_info()
+    atty = __debug__ and exc_traceback and sys.stdin.isatty()
 
     debug_body = (f"{secondary_message}\n\n" if secondary_message else "") + gettext(
         "It looks like Gaphor is started from the command line. Do you want to open a debug session?"
     )
-    dialog = Adw.MessageDialog.new(
-        window,
+    dialog = Adw.AlertDialog.new(
         message,
+        debug_body if atty else secondary_message,
     )
-    if __debug__ and exc_traceback and sys.stdin.isatty():
-        dialog.set_body(debug_body)
-        dialog.add_response("close", gettext("Close"))
+    dialog.add_response("close", gettext("Close"))
+    if atty:
         dialog.add_response("debug", gettext("Start Debug Session"))
         dialog.set_default_response("debug")
     else:
-        dialog.set_body(secondary_message)
-        dialog.add_response("close", gettext("Close"))
         dialog.set_default_response("close")
     dialog.set_close_response("close")
 
-    def response(dialog, answer):
-        dialog.destroy()
-        if exc_traceback and answer in (100, "debug"):
-            pdb.post_mortem(exc_traceback)
-        elif close:
-            close()
+    answer = await response_from_adwaita_dialog(dialog, window)
 
-    dialog.connect("response", response)
-    dialog.present()
+    if exc_traceback and answer in (100, "debug"):
+        pdb.post_mortem(exc_traceback)

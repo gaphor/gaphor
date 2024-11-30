@@ -5,20 +5,15 @@ We bind the Toolbox to a diagram. When a diagram page (tab) is switched,
 the actions bound to the toolbuttons should change as well.
 """
 
-import getpass
-import time
 from collections.abc import Callable, Collection, Sequence
 from typing import (
     NamedTuple,
     TypeVar,
 )
 
-from gaphas.item import SE
-
-from gaphor.core import gettext
-from gaphor.core.modeling import Comment, Diagram, Element, Picture, Presentation
-from gaphor.diagram import general
+from gaphor.core.modeling import Base, Presentation
 from gaphor.diagram.group import group
+from gaphor.UML.uml import Diagram
 
 ItemFactory = Callable[[Diagram, Presentation | None], Presentation]
 P = TypeVar("P", bound=Presentation, covariant=True)
@@ -52,7 +47,7 @@ class DiagramType:
         self.name = name
         self.sections = sections
 
-    def allowed(self, element: type[Element]) -> bool:
+    def allowed(self, element: type[Base]) -> bool:
         return True
 
     def create(self, element_factory, element):
@@ -70,8 +65,8 @@ DiagramTypes = Sequence[DiagramType]
 class ElementCreateInfo(NamedTuple):
     id: str
     name: str
-    element_type: type[Element]
-    allowed_owning_elements: Collection[type[Element]]
+    element_type: type[Base]
+    allowed_owning_elements: Collection[type[Base]]
 
 
 def tooliter(toolbox_actions: Sequence[tuple[str, Sequence[ToolDef]]]):
@@ -88,7 +83,7 @@ def get_tool_def(modeling_language, tool_name):
 
 def new_item_factory(
     item_class: type[Presentation],
-    subject_class: type[Element] | None = None,
+    subject_class: type[Base] | None = None,
     config_func: ConfigFuncType | None = None,
 ):
     """``config_func`` may be a function accepting the newly created item."""
@@ -113,87 +108,3 @@ def new_item_factory(
     item_factory.item_class = item_class  # type: ignore[attr-defined]
     item_factory.subject_class = subject_class  # type: ignore[attr-defined]
     return item_factory
-
-
-def metadata_config(metadata_item: general.MetadataItem) -> None:
-    metadata_item.createdBy = getpass.getuser()
-    metadata_item.description = metadata_item.diagram.name
-    metadata_item.revision = "1.0"
-    metadata_item.createdOn = time.strftime("%Y-%m-%d")
-
-
-def picture_config(picture_item: general.PictureItem) -> None:
-    picture_item.subject.name = gettext("New Picture")
-
-
-general_tools = ToolSection(
-    gettext("General"),
-    (
-        ToolDef(
-            "toolbox-pointer",
-            gettext("Pointer"),
-            "gaphor-pointer-symbolic",
-            "Escape",
-            item_factory=None,
-        ),
-        ToolDef(
-            "toolbox-magnet",
-            gettext("Magnet"),
-            "gaphor-magnet-symbolic",
-            "F1",
-            item_factory=None,
-        ),
-        ToolDef(
-            "toolbox-line",
-            gettext("Line"),
-            "gaphor-line-symbolic",
-            "l",
-            new_item_factory(general.Line),
-        ),
-        ToolDef(
-            "toolbox-box",
-            gettext("Box"),
-            "gaphor-box-symbolic",
-            "b",
-            new_item_factory(general.Box),
-            SE,
-        ),
-        ToolDef(
-            "toolbox-ellipse",
-            gettext("Ellipse"),
-            "gaphor-ellipse-symbolic",
-            "e",
-            new_item_factory(general.Ellipse),
-            SE,
-        ),
-        ToolDef(
-            "toolbox-comment",
-            gettext("Comment"),
-            "gaphor-comment-symbolic",
-            "k",
-            new_item_factory(general.CommentItem, Comment),
-            handle_index=SE,
-        ),
-        ToolDef(
-            "toolbox-comment-line",
-            gettext("Comment line"),
-            "gaphor-comment-line-symbolic",
-            "<Shift>K",
-            new_item_factory(general.CommentLineItem),
-        ),
-        ToolDef(
-            "toolbox-metadata",
-            gettext("Diagram metadata"),
-            "gaphor-metadata-symbolic",
-            None,
-            new_item_factory(general.MetadataItem, config_func=metadata_config),
-        ),
-        ToolDef(
-            "toolbox-picture",
-            gettext("Picture"),
-            "gaphor-picture-symbolic",
-            None,
-            new_item_factory(general.PictureItem, Picture, config_func=picture_config),
-        ),
-    ),
-)

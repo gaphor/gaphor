@@ -1,21 +1,19 @@
 import pytest
 
 from gaphor import UML
-from gaphor.core.modeling import Comment
 from gaphor.diagram.tests.fixtures import connect
 from gaphor.plugins.autolayout.pydot import AutoLayout, parse_edge_pos, strip_quotes
 from gaphor.UML.diagramitems import (
     ActionItem,
     AssociationItem,
     ClassItem,
-    CommentItem,
-    CommentLineItem,
     ForkNodeItem,
     GeneralizationItem,
     InputPinItem,
     ObjectFlowItem,
     PackageItem,
 )
+from gaphor.UML.general import CommentItem, CommentLineItem
 
 
 def test_layout_diagram(diagram, create):
@@ -50,7 +48,7 @@ def test_layout_with_comment(diagram, create, event_manager):
     connect(a, a.head, c1)
     connect(a, a.tail, c2)
 
-    comment = create(CommentItem, Comment)
+    comment = create(CommentItem, UML.Comment)
     comment_line = create(CommentLineItem)
     connect(comment_line, comment_line.head, comment)
     connect(comment_line, comment_line.tail, a)

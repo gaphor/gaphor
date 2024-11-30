@@ -32,5 +32,6 @@ class UMLModelingLanguage(ModelingLanguage):
     def element_types(self) -> Iterable[ElementCreateInfo]:
         yield from uml_element_types
 
-    def lookup_element(self, name):
+    def lookup_element(self, name, ns=None):
+        assert ns in ("UML", None)
         return getattr(uml, name, None) or getattr(diagramitems, name, None)

@@ -6,6 +6,7 @@ from itertools import groupby
 from gi.repository import Gio, GObject
 
 from gaphor.core.changeset.apply import applicable
+from gaphor.core.format import format
 from gaphor.core.modeling import (
     Diagram,
     ElementChange,
@@ -22,7 +23,9 @@ class Node(GObject.Object):
         super().__init__()
         self.elements = elements
         self.label = label
-        self.children: Sequence[Node] = as_list_store(children) if children else None
+        self.children: Sequence[Node] | None = (
+            as_list_store(children) if children else None
+        )
         self.sync()
 
     label = GObject.Property(type=str, default="")
@@ -162,16 +165,23 @@ def organize_changes(element_factory, modeling_language):
                         element.id, element_factory, composite_and_not_presentation
                     )
                 ),
-                gettext("Update element “{name}”").format(
-                    name=element.name or gettext("<None>")
-                )
-                if element.name
-                else gettext("Update element of type “{type}”").format(
-                    type=type(element).__name__
-                ),
+                label(element),
             )
             seen_change_ids.update(_all_change_ids(node))
             yield node
+
+
+def label(element) -> str:
+    try:
+        if name := format(element):
+            return gettext("Update element “{name}”").format(name=name)
+    except TypeError:
+        # no such formatter
+        pass
+
+    return gettext("Update element of type “{type}”").format(
+        type=type(element).__name__
+    )
 
 
 def _all_change_ids(node: Node):

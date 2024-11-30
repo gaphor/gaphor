@@ -4,24 +4,23 @@ Modeling Language Core
 The Core modeling language is the the basis for any other language.
 
 The :obj:`~gaphor.core.modeling.Base` class acts as the root for all gaphor domain classes.
-All models derive from  :obj:`~gaphor.core.modeling.Element`, which supports ownership.
 :obj:`~gaphor.core.modeling.Diagram` and :obj:`~gaphor.core.modeling.Presentation` form the basis for everything you see
 in a diagram.
 
 All data models in Gaphor are generated from actual Gaphor model files.
 This allows us to provide you nice diagrams of Gaphor’s internal model.
 
-Relationships
--------------
-
-.. diagram:: Relationships
+.. diagram:: Presentations
    :model: core
+
 
 The ``Base`` Class
 ^^^^^^^^^^^^^^^^^^
 
-The :obj:`~gaphor.core.modeling.Base` base class provides event notification and integrates
+The :obj:`~gaphor.core.modeling.Base` class provides event notification and integrates
 with the model repository (internally known as :obj:`~gaphor.core.modeling.ElementFactory`).
+All classes in a model should derive from this class. If a model does not show a base class
+for an element, it will derive from :obj:`~gaphor.core.modeling.Base`.
 Bi-directional relationships are also possible, as well as derived
 relations.
 
@@ -65,39 +64,6 @@ The class ``Base`` is the core of Gaphor’s data model.
    .. automethod:: gaphor.core.modeling.Base.isKindOf
 
    .. automethod:: gaphor.core.modeling.Base.isTypeOf
-
-
-Dependencies
-------------
-
-.. diagram:: Dependencies
-   :model: core
-
-Annotations
------------
-
-.. diagram:: Annotations
-   :model: core
-
-Namespaces
-----------
-
-.. diagram:: Namespaces
-   :model: core
-
-Types
------
-
-.. diagram:: Types
-   :model: core
-
-Presentations
--------------
-
-Presentations are representations of model elements shown in a diagram.
-
-.. diagram:: Presentations
-   :model: core
 
 
 The ``Presentation`` class
@@ -175,3 +141,4 @@ Protocols
    :hidden:
 
    core_changeset
+   core_services

@@ -3,7 +3,7 @@ import pytest
 
 from gaphor import UML
 from gaphor.core.eventmanager import EventManager
-from gaphor.core.modeling import Element, ElementFactory
+from gaphor.core.modeling import Base, ElementFactory
 from gaphor.core.modeling.elementdispatcher import ElementDispatcher, EventWatcher
 from gaphor.core.modeling.properties import association
 from gaphor.UML.modelinglanguage import UMLModelingLanguage
@@ -17,7 +17,7 @@ class Event:
         self.events.append(event)
 
 
-class A(Element):
+class A(Base):
     one: association
     two: association
 

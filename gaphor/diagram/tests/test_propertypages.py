@@ -1,5 +1,5 @@
-from gaphor.core.modeling import Comment, Diagram
-from gaphor.diagram.general import CommentItem, Line
+from gaphor.core.modeling import Diagram
+from gaphor.diagram.general import Line
 from gaphor.diagram.propertypages import (
     InternalsPropertyPage,
     LineStylePage,
@@ -7,6 +7,8 @@ from gaphor.diagram.propertypages import (
     NotePropertyPage,
 )
 from gaphor.diagram.tests.fixtures import find
+from gaphor.UML import Comment
+from gaphor.UML.general import CommentItem
 
 
 def test_name_page(element_factory, event_manager):
@@ -79,4 +81,4 @@ def test_internals_page_for_presentation(create):
     text = internals.get_label()
 
     assert "CommentItem" in text
-    assert "gaphor.core.modeling.coremodel.Comment" in text
+    assert "gaphor.UML.Comment" in text

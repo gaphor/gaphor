@@ -39,7 +39,7 @@ friendly and sustainable. In this tutorial we follow the adventures of AntSource
 to create the perfect kittie espresso machine.
 
 ![Two shots of espresso being pulled from an espresso
-machine](images/coffee-machine-double-shot.jpg)
+machine.](images/coffee-machine-double-shot.jpg)
 
 The first thing the ants did was to open Gaphor to the Greeter window and start
 a new model with the _SysML_ template. You can now decide to either:
@@ -100,7 +100,7 @@ In the upper left hand corner of Gaphor, the Model Browser shows the three top
 level packages, dividing up the model in to these three abstraction levels.
 
 ![Top level packages of the SysML
-template](images/coffee-machine-top-level-packages.png)
+template.](images/coffee-machine-top-level-packages.png)
 
 ## Pillars
 
@@ -125,7 +125,7 @@ each one contains three more packages, one for each pillar. It is in these
 packages that we will start to build up the design for the espresso machine.
 
 ![Three pillar packages nested under each abstraction level
-package](images/coffee-machine-pillars.png)
+package.](images/coffee-machine-pillars.png)
 
 ## Table of Contents
 ```{toctree}

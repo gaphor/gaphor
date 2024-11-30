@@ -150,7 +150,9 @@ def get_stereotypes(element: Element) -> list[Stereotype]:
 
 def get_applied_stereotypes(element: Element) -> Sequence[Stereotype]:
     """Get collection of applied stereotypes to an element."""
-    return element.appliedStereotype[:].classifier  # type: ignore[return-value]
+    return (
+        element.appliedStereotype[:].classifier if isinstance(element, Element) else []  # type: ignore[return-value]
+    )
 
 
 def create_extension(metaclass: Class, stereotype: Stereotype) -> Extension:

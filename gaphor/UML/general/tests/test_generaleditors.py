@@ -1,7 +1,7 @@
 # ruff: noqa: F401,F811
-from gaphor.core.modeling import Comment
-from gaphor.diagram.general import CommentItem
-from gaphor.diagram.general.generaleditors import comment_item_editor
+from gaphor.UML import Comment
+from gaphor.UML.general import CommentItem
+from gaphor.UML.general.commenteditor import comment_item_editor
 
 
 def test_comment_item_editor(diagram, element_factory, view, event_manager):

@@ -24,7 +24,8 @@ up a Python development environment.
 
 ## Query a model
 
-The first step is to load a model. For this you’ll need an `ElementFactory`. The
+The first step is to load a model. For this you’ll need an
+{obj}`gaphor.core.modeling.ElementFactory`. The
 `ElementFactory` is responsible to creating and maintaining the model. It acts
 as a repository for the model while you’re working on it.
 
@@ -168,7 +169,7 @@ from gaphor.extensions.ipython import auto_layout
 
 temp_diagram = element_factory.create(Diagram)
 
-for name in ["Presentation", "Diagram", "Element"]:
+for name in ["Presentation", "Diagram", "Base"]:
     element = next(element_factory.select(
         lambda e: isinstance(e, UML.Class) and e.name == name
     ))
@@ -310,7 +311,7 @@ txts = ['req1', 'req2', 'bob the cat']
 outfile = "requirement_example.gaphor"
 with Transaction(event_manager) as ctx:
     my_diagram = element_factory.create(Diagram)
-    my_diagram.name=' my diagram'
+    my_diagram.name= 'my diagram'
     reqPackage = element_factory.create(UML.Package)
     reqPackage.name = "Requirements"
     drop(reqPackage, my_diagram, x=0, y=0)
@@ -323,8 +324,8 @@ with Transaction(event_manager) as ctx:
         my_class.externalId = f"{req_id}"
 
         drop(my_class, my_diagram, x=0, y=0)
-    with open(outfile, "w") as out:
-        storage.save(out, element_factory)
+
+    # Save the model or export diagrams.
 
 ```
 
@@ -336,7 +337,7 @@ interfaces = {'Interface1': ['signal1:type1', 'signal2:type1', 'signal3:type1'],
               'Interface2': ['signal4:type2', 'signal5:type2', 'signal6:type2']}
 outfile = 'interface_example.gaphor'
 with Transaction(event_manager) as ctx:
-    my_diagram = element_factory.create(Diagram)
+    my_diagram = element_factory.create(UML.Diagram)
     my_diagram.name=' my diagram'
     intPackage = element_factory.create(UML.Package)
     intPackage.name = "Interfaces"
@@ -356,9 +357,7 @@ with Transaction(event_manager) as ctx:
         drop(my_class, my_diagram, x=0, y=0)
 
 
-    with open(outfile, "w") as out:
-        storage.save(out, element_factory)
-
+    # Save the model or export diagrams.
 ```
 
 ### Basic Validation

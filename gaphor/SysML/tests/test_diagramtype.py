@@ -1,14 +1,14 @@
 import pytest
 
-from gaphor.core.modeling import Element
 from gaphor.SysML.diagramtype import DiagramDefault, SysMLDiagramType
+from gaphor.UML import NamedElement
 
 
-class MockElementA(Element):
+class MockElementA(NamedElement):
     pass
 
 
-class MockElementB(Element):
+class MockElementB(NamedElement):
     pass
 
 

@@ -45,7 +45,7 @@ def test_implementation_to_interface_realization(loader):
 
     interface_realization, clazz = loader(i, c)
     assert interface_realization in clazz.interfaceRealization
-    assert interface_realization.implementingClassifier is clazz
+    assert clazz in interface_realization.implementingClassifier
 
 
 def test_formal_parameter_to_owned_parameter(loader):

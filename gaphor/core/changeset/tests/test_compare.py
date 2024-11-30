@@ -2,14 +2,12 @@ import pytest
 
 from gaphor.core.changeset.compare import RefChange, UnmatchableModel, compare
 from gaphor.core.modeling import (
-    Diagram,
-    Element,
     ElementFactory,
     PendingChange,
     StyleSheet,
 )
 from gaphor.diagram.general.simpleitem import Box
-from gaphor.UML import Class, Property
+from gaphor.UML import Class, Diagram, Element, Property
 
 
 @pytest.fixture

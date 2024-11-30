@@ -9,8 +9,7 @@ from typing import TYPE_CHECKING, Generic, Self, TypeVar
 
 from gaphas.item import Matrices
 
-from gaphor.core.modeling.base import Handler, Id, UnlinkEvent
-from gaphor.core.modeling.element import Element
+from gaphor.core.modeling.base import Base, Handler, Id, UnlinkEvent
 from gaphor.core.modeling.event import RevertibleEvent
 from gaphor.core.modeling.properties import relation_many, relation_one
 
@@ -19,15 +18,17 @@ if TYPE_CHECKING:
 
 log = logging.getLogger(__name__)
 
-S = TypeVar("S", bound=Element)
+S = TypeVar("S", bound=Base)
 
 
 def literal_eval(value: str):
     return ast.literal_eval(re.sub("\r|\n", "", value))
 
 
-class Presentation(Matrices, Element, Generic[S]):
-    """A special type of :obj:`Element` that can be displayed on a :obj:`Diagram`.
+class Presentation(Matrices, Base, Generic[S]):
+    """A special type of :obj:`Base` that can be displayed on a :obj:`Diagram`.
+
+    Presentation instances can only be owned by diagrams.
 
     Subtypes of ``Presentation`` should implement the :obj:`gaphas.item.Item` protocol.
     """
@@ -111,7 +112,7 @@ class Presentation(Matrices, Element, Generic[S]):
         else:
             super().load(name, value)
 
-    def inner_unlink(self, _unlink_event: UnlinkEvent) -> None:
+    def unlink(self) -> None:
         self._watcher.unsubscribe_all()
         self.matrix.remove_handler(self._on_matrix_changed)
 
@@ -120,8 +121,18 @@ class Presentation(Matrices, Element, Generic[S]):
 
         if diagram := self._original_diagram:
             diagram.connections.remove_connections_to_item(self)
+
+            # First unlink subject, allowing sanitizer service can remove model elements.
+            # This will ensure that diagrams are always removed after presentations.
+            type(self).subject.unlink(self)  # type: ignore[attr-defined]
+
+            for prop in self.__properties__:
+                prop.unlink(self)
+
             self._original_diagram = None
-            super().inner_unlink(UnlinkEvent(self, diagram=diagram))
+
+            log.debug("unlinking %s", self)
+            self.handle(UnlinkEvent(self, diagram=diagram))
 
     def _on_diagram_changed(self, event):
         new_value = event.new_value

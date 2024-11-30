@@ -3,6 +3,7 @@ from gaphor.i18n import gettext
 from gaphor.ui.treemodel import (
     Branch,
     RelationshipItem,
+    Root,
     TreeItem,
     TreeModel,
     tree_item_sort,
@@ -123,7 +124,7 @@ def test_tree_model_remove_nested_element(element_factory):
     tree_model.remove_element(class_)
 
     assert len(tree_model.branches) == 1
-    assert None in tree_model.branches
+    assert Root in tree_model.branches
     assert tree_model.tree_item_for_element(package) is not None
     assert tree_model.tree_item_for_element(class_) is None
 
@@ -140,7 +141,7 @@ def test_tree_model_remove_package_with_nested_element(element_factory):
 
     assert tree_model.tree_item_for_element(package) is None
     assert len(tree_model.branches) == 1
-    assert None in tree_model.branches
+    assert Root in tree_model.branches
     assert tree_model.tree_item_for_element(package) is None
     assert tree_model.tree_item_for_element(class_) is None
 
@@ -153,7 +154,7 @@ def test_tree_model_remove_from_different_owner(element_factory):
     tree_model.add_element(package)
     tree_model.add_element(class_)
     class_.package = package
-    tree_model.remove_element(class_, former_owner=None)
+    tree_model.remove_element(class_)
 
     assert tree_model.tree_item_for_element(package) is not None
     assert len(tree_model.root) == 1
@@ -167,7 +168,7 @@ def test_tree_model_change_owner(element_factory):
     tree_model.add_element(package)
     tree_model.add_element(class_)
     class_.package = package
-    tree_model.remove_element(class_, former_owner=None)
+    tree_model.remove_element(class_)
     tree_model.add_element(class_)
     package_item = tree_model.tree_item_for_element(package)
     tree_model.child_model(package_item)

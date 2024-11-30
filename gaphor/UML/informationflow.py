@@ -53,10 +53,12 @@ def watch_information_flow(
 ) -> None:
     presentation.watch(f"subject[{cast}].{attribute}.informationSource")
     presentation.watch(f"subject[{cast}].{attribute}.conveyed.name")
-    presentation.watch(f"subject[{cast}].{attribute}[ItemFlow].itemProperty.name")
-    presentation.watch(f"subject[{cast}].{attribute}[ItemFlow].itemProperty.type.name")
+    presentation.watch(f"subject[{cast}].{attribute}[SysML:ItemFlow].itemProperty.name")
     presentation.watch(
-        f"subject[{cast}].{attribute}[ItemFlow].itemProperty.type.appliedStereotype.classifier.name"
+        f"subject[{cast}].{attribute}[SysML:ItemFlow].itemProperty.type.name"
+    )
+    presentation.watch(
+        f"subject[{cast}].{attribute}[SysML:ItemFlow].itemProperty.type.appliedStereotype.classifier.name"
     )
 
 

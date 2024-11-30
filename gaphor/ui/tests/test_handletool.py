@@ -7,14 +7,13 @@ from gaphas.handlemove import HandleMove
 from gi.repository import GLib, Gtk
 
 from gaphor import UML
-from gaphor.core.modeling import Comment, Diagram
+from gaphor.core.modeling import Diagram
 from gaphor.diagram._connector import PresentationConnector
 from gaphor.diagram.connectors import Connector
 from gaphor.diagram.event import DiagramOpened
-from gaphor.diagram.general.comment import CommentItem
-from gaphor.diagram.general.commentline import CommentLineItem
 from gaphor.ui.diagrams import Diagrams
 from gaphor.ui.toolbox import Toolbox
+from gaphor.UML.general import CommentItem, CommentLineItem
 from gaphor.UML.usecases.actor import ActorItem
 
 
@@ -40,7 +39,7 @@ def connections(diagram):
 
 @pytest.fixture
 def comment(element_factory, diagram):
-    return diagram.create(CommentItem, subject=element_factory.create(Comment))
+    return diagram.create(CommentItem, subject=element_factory.create(UML.Comment))
 
 
 @pytest.fixture
@@ -91,7 +90,7 @@ def test_iconnect(event_manager, element_factory, diagrams):
     items."""
     diagram = element_factory.create(Diagram)
     event_manager.handle(DiagramOpened(diagram))
-    comment = diagram.create(CommentItem, subject=element_factory.create(Comment))
+    comment = diagram.create(CommentItem, subject=element_factory.create(UML.Comment))
 
     line = diagram.create(CommentLineItem)
 
@@ -122,7 +121,7 @@ def test_connect_comment_and_actor(event_manager, element_factory, diagrams):
     """Test connect/disconnect on comment and actor using comment-line."""
     diagram = element_factory.create(Diagram)
     event_manager.handle(DiagramOpened(diagram))
-    comment = diagram.create(CommentItem, subject=element_factory.create(Comment))
+    comment = diagram.create(CommentItem, subject=element_factory.create(UML.Comment))
 
     line = diagram.create(CommentLineItem)
 

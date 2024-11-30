@@ -7,17 +7,16 @@ from gaphor.abc import ActionProvider
 from gaphor.action import action
 from gaphor.core import event_handler
 from gaphor.core.modeling import (
+    Base,
     DerivedAdded,
     DerivedDeleted,
     DerivedSet,
     Diagram,
-    Element,
     ElementCreated,
     ElementDeleted,
     ElementUpdated,
     ModelFlushed,
     ModelReady,
-    Relationship,
 )
 from gaphor.diagram.deletable import deletable
 from gaphor.diagram.diagramtoolbox import DiagramType
@@ -35,10 +34,12 @@ from gaphor.ui.event import (
 )
 from gaphor.ui.treemodel import (
     RelationshipItem,
+    Root,
+    RootType,
     TreeItem,
     TreeModel,
+    owner,
     tree_item_sort,
-    visible,
 )
 from gaphor.ui.treesearch import search, sorted_tree_walker
 
@@ -136,7 +137,7 @@ class ModelBrowser(UIComponent, ActionProvider):
         self.event_manager.unsubscribe(self.on_model_ready)
         self.event_manager.unsubscribe(self.on_diagram_selection_changed)
 
-    def select_element(self, element: Element) -> int | None:
+    def select_element(self, element: Base) -> int | None:
         return select_element(self.tree_view, element)
 
     def select_element_quietly(self, element):
@@ -147,11 +148,11 @@ class ModelBrowser(UIComponent, ActionProvider):
         finally:
             self.selection.handler_unblock(self._selection_changed_id)
 
-    def get_selected_elements(self) -> list[Element]:
+    def get_selected_elements(self) -> list[Base]:
         assert self.model
         return get_selected_elements(self.selection)
 
-    def get_selected_element(self) -> Element | None:
+    def get_selected_element(self) -> Base | None:
         assert self.model
         return next(iter(self.get_selected_elements()), None)
 
@@ -186,14 +187,18 @@ class ModelBrowser(UIComponent, ActionProvider):
 
     @action(name="win.create-diagram")
     def tree_view_create_diagram(self, diagram_kind: str):
-        element = self.get_selected_element()
+        element: Base | RootType | None = self.get_selected_element()
+        while isinstance(element, Base) and not isinstance(element, UML.NamedElement):
+            element = owner(element)
 
         with Transaction(self.event_manager):
             diagram_type = self._diagram_type_or(
                 diagram_kind, DiagramType(diagram_kind, "New Diagram", ())
             )
             try:
-                diagram = diagram_type.create(self.element_factory, element)
+                diagram = diagram_type.create(
+                    self.element_factory, None if element is Root else element
+                )
                 diagram.name = diagram.gettext("New Diagram")
             except TypeError as e:
                 self.event_manager.handle(Notification(str(e)))
@@ -211,14 +216,14 @@ class ModelBrowser(UIComponent, ActionProvider):
 
     @action(name="tree-view.create-element")
     def tree_view_create_element(self, id: str):
-        owner = self.get_selected_element()
+        own = self.get_selected_element()
         element_def = self.element_type(id)
 
         with Transaction(self.event_manager):
             element = self.element_factory.create(element_def.element_type)
             element.name = element_def.name
-            if owner:
-                change_owner(owner, element)
+            if own:
+                change_owner(own, element)
 
             self.select_element(element)
             self.tree_view_rename_selected()
@@ -264,7 +269,7 @@ class ModelBrowser(UIComponent, ActionProvider):
     @event_handler(DerivedAdded, DerivedDeleted)
     def on_owned_element_changed(self, event):
         """Ensure we update the node once owned elements change."""
-        if event.property in (Element.ownedElement, UML.Namespace.member):
+        if event.property in (UML.Element.ownedElement, UML.Namespace.member):
             self.model.notify_child_model(event.element)
 
     @event_handler(DerivedSet)
@@ -272,13 +277,12 @@ class ModelBrowser(UIComponent, ActionProvider):
         # Should check on ownedElement as well, since it may not have been updated
         # before this thing triggers
         if (
-            event.property not in (Element.owner, Element.memberNamespace)
-        ) or not visible(event.element):
-            return
-        element = event.element
-        self.model.remove_element(element, former_owner=event.old_value)
-        self.model.add_element(element)
-        self.select_element_quietly(element)
+            event.property in (UML.Element.owner, UML.NamedElement.memberNamespace)
+        ) and owner(event.element):
+            element = event.element
+            self.model.remove_element(element)
+            self.model.add_element(element)
+            self.select_element_quietly(element)
 
     @event_handler(ElementUpdated)
     def on_attribute_changed(self, event: ElementUpdated):
@@ -290,9 +294,7 @@ class ModelBrowser(UIComponent, ActionProvider):
         model = self.model
         model.clear()
 
-        for element in self.element_factory.select(
-            lambda e: isinstance(e, Element) and (e.owner is None) and visible(e)
-        ):
+        for element in self.element_factory.select(owner):
             model.add_element(element)
 
     @event_handler(DiagramSelectionChanged)
@@ -334,7 +336,7 @@ class SearchEngine:
             select_element(self.tree_view, next_item.element)
 
 
-def get_selected_elements(selection: Gtk.SelectionModel) -> list[Element]:
+def get_selected_elements(selection: Gtk.SelectionModel) -> list[Base]:
     bitset = selection.get_selection()
     return [
         e
@@ -350,14 +352,14 @@ def get_first_selected_item(selection):
 
 
 def select_element(
-    tree_view: Gtk.ListView, element: Element, unselect_rest=True
+    tree_view: Gtk.ListView, element: Base, unselect_rest=True
 ) -> int | None:
     def expand_up_to_element(element, expand=False) -> int | None:
-        if not element:
+        if element in (Root, None):
             return 0
-        if (n := expand_up_to_element(element.owner, expand=True)) is None:
+        if (n := expand_up_to_element(owner(element), expand=True)) is None:
             return None
-        is_relationship = isinstance(element, Relationship)
+        is_relationship = isinstance(element, UML.Relationship)
         while row := selection.get_item(n):
             if is_relationship and isinstance(row.get_item(), RelationshipItem):
                 row.set_expanded(True)
@@ -584,7 +586,9 @@ def list_item_drop_drop(
     tree_item = list_item.get_item().get_item()
     dest_element = tree_item.element
     if y < 4:
-        dest_element = dest_element.owner
+        dest_element = owner(dest_element)
+        if dest_element is Root:
+            dest_element = None
 
     with Transaction(event_manager) as tx:
         # This view is concerned with owner relationships.

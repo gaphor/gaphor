@@ -3,12 +3,12 @@ import pytest
 from gaphor.core.changeset.apply import applicable, apply_change
 from gaphor.core.modeling import (
     Diagram,
-    Element,
     ElementChange,
     RefChange,
     ValueChange,
 )
-from gaphor.UML import Class, Property
+from gaphor.UML import Class, Element, Property
+from gaphor.UML import Diagram as UMLDiagram
 
 
 def test_create_element(element_factory, modeling_language):
@@ -130,7 +130,7 @@ def test_update_enumeration_default_value(element_factory, modeling_language):
 
 def test_add_relation(element_factory, modeling_language):
     element = element_factory.create(Element)
-    diagram = element_factory.create(Diagram)
+    diagram = element_factory.create(UMLDiagram)
     change: RefChange = element_factory.create(RefChange)
     change.op = "add"
     change.element_id = diagram.id
@@ -145,7 +145,7 @@ def test_add_relation(element_factory, modeling_language):
 
 def test_remove_single_relation(element_factory, modeling_language):
     element = element_factory.create(Element)
-    diagram = element_factory.create(Diagram)
+    diagram = element_factory.create(UMLDiagram)
     diagram.element = element
 
     change: RefChange = element_factory.create(RefChange)
@@ -161,7 +161,7 @@ def test_remove_single_relation(element_factory, modeling_language):
 
 def test_remove_many_relation(element_factory, modeling_language):
     element = element_factory.create(Element)
-    diagram = element_factory.create(Diagram)
+    diagram = element_factory.create(UMLDiagram)
     diagram.element = element
 
     change: RefChange = element_factory.create(RefChange)
@@ -177,7 +177,7 @@ def test_remove_many_relation(element_factory, modeling_language):
 
 def test_apply_opposite_relation(element_factory, modeling_language):
     element = element_factory.create(Element)
-    diagram = element_factory.create(Diagram)
+    diagram = element_factory.create(UMLDiagram)
 
     change: RefChange = element_factory.create(RefChange)
     change.op = "add"

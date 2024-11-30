@@ -2,11 +2,11 @@
 An item representing a diagram.
 """
 
-from gaphor.core.modeling.diagram import Diagram
 from gaphor.diagram.presentation import ElementPresentation, Named, text_name
 from gaphor.diagram.shapes import Box, CssNode, IconBox, Text, draw_border, stroke
 from gaphor.diagram.support import represents
 from gaphor.UML.compartments import text_stereotypes
+from gaphor.UML.uml import Diagram
 
 
 @represents(Diagram)
@@ -32,9 +32,9 @@ class DiagramItem(ElementPresentation, Named):
             text_name(self),
         )
 
-        self.watch("subject[Diagram].name")
-        self.watch("subject[Diagram].diagramType")
-        self.watch("subject.appliedStereotype.classifier.name")
+        self.watch("subject[Core:Diagram].name")
+        self.watch("subject[Core:Diagram].diagramType")
+        self.watch("subject[UML:Element].appliedStereotype.classifier.name")
 
 
 def draw_diagram(box, context, bounding_box):

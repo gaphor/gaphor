@@ -43,7 +43,7 @@ pip install --target $HOME/.local/gaphor/plugins-2 git+https://github.com/gaphor
 ```
 
 Then start Gaphor as you normally would.
-A new Hello World entry has been added to the tools menu (![open menu](images/open-menu-symbolic.svg) → Tools → Hello World).
+A new Hello World entry has been added to the tools menu (![Menu icon](images/open-menu-symbolic.svg) → Tools → Hello World).
 
 ## Create your own plugin
 

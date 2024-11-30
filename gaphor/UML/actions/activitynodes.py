@@ -54,8 +54,8 @@ class InitialNodeItem(ActivityNodeItem, ElementPresentation):
             text_name(self),
         )
 
-        self.watch("subject.name")
-        self.watch("subject.appliedStereotype.classifier.name")
+        self.watch("subject[NamedElement].name")
+        self.watch("subject[Element].appliedStereotype.classifier.name")
 
 
 def draw_initial_node(_box, context, bounding_box):
@@ -87,8 +87,8 @@ class ActivityFinalNodeItem(ActivityNodeItem, ElementPresentation):
             text_name(self),
         )
 
-        self.watch("subject.name")
-        self.watch("subject.appliedStereotype.classifier.name")
+        self.watch("subject[NamedElement].name")
+        self.watch("subject[Element].appliedStereotype.classifier.name")
 
 
 def draw_activity_final_node(_box, context, _bounding_box):
@@ -131,8 +131,8 @@ class FlowFinalNodeItem(ActivityNodeItem, ElementPresentation):
             text_name(self),
         )
 
-        self.watch("subject.name")
-        self.watch("subject.appliedStereotype.classifier.name")
+        self.watch("subject[NamedElement].name")
+        self.watch("subject[Element].appliedStereotype.classifier.name")
 
 
 def draw_flow_final_node(_box, context, bounding_box):
@@ -167,8 +167,8 @@ class DecisionNodeItem(ActivityNodeItem, ElementPresentation):
         )
 
         self.watch("show_underlying_type")
-        self.watch("subject.name")
-        self.watch("subject.appliedStereotype.classifier.name")
+        self.watch("subject[NamedElement].name")
+        self.watch("subject[Element].appliedStereotype.classifier.name")
 
     show_underlying_type: attribute[int] = attribute("show_underlying_type", int, 0)
     combined: relation_one[UML.ControlNode] = association(
@@ -231,8 +231,8 @@ class ForkNodeItem(Named, Presentation[UML.ForkNode], HandlePositionUpdate):
             ),
         )
 
-        self.watch("subject.name")
-        self.watch("subject.appliedStereotype.classifier.name")
+        self.watch("subject[NamedElement].name")
+        self.watch("subject[Element].appliedStereotype.classifier.name")
         self.watch("subject[JoinNode].joinSpec")
 
         diagram.connections.add_constraint(self, constraint(vertical=(h1.pos, h2.pos)))
