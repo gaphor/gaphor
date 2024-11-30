@@ -159,6 +159,7 @@ jobs:
 
   linux-snapcraft-devel:
     name: Linux (Devel Snapcraft)
+    needs: lint
     runs-on: ubuntu-24.04
     steps:
       - name: Harden Runner
@@ -429,6 +430,7 @@ jobs:
   get-architectures:
     name: 🖥 Get snap architectures
     runs-on: ubuntu-24.04
+    needs: [ publish-to-pypi ]
     outputs:
       architectures: ${{ steps.get-architectures.outputs.architectures }}
       architectures-list: ${{ steps.get-architectures.outputs.architectures-list }}
@@ -444,7 +446,7 @@ jobs:
 
   release:
     name: 🚢 Release to latest/edge
-    needs: [ get-architectures, publish-to-pypi ]
+    needs: [ get-architectures]
     runs-on: ubuntu-24.04
     strategy:
       matrix:
