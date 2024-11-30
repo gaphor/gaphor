@@ -275,3 +275,8 @@ class DiagramUpdateRequested:
 
     def __init__(self, diagram):
         self.diagram = diagram
+
+
+class StyleSheetUpdated:
+    def __init__(self, style_sheet):
+        self.style_sheet = style_sheet

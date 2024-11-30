@@ -11,9 +11,12 @@ from gaphas.view import GtkView
 from gi.repository import Adw, Gdk, GdkPixbuf, Gio, GLib, Gtk
 
 from gaphor.core import event_handler, gettext
-from gaphor.core.modeling import StyleSheet
 from gaphor.core.modeling.diagram import Diagram, StyledDiagram
-from gaphor.core.modeling.event import AttributeUpdated, ElementDeleted
+from gaphor.core.modeling.event import (
+    AttributeUpdated,
+    ElementDeleted,
+    StyleSheetUpdated,
+)
 from gaphor.diagram.diagramtoolbox import get_tool_def, tooliter
 from gaphor.diagram.painter import DiagramTypePainter, ItemPainter
 from gaphor.diagram.tools import (
@@ -94,6 +97,7 @@ class DiagramPage:
 
         self.event_manager.subscribe(self._on_element_delete)
         self.event_manager.subscribe(self._on_attribute_updated)
+        self.event_manager.subscribe(self._on_style_sheet_updated)
         self.event_manager.subscribe(self._on_tool_selected)
 
     @property
@@ -208,15 +212,13 @@ class DiagramPage:
 
     @event_handler(AttributeUpdated)
     def _on_attribute_updated(self, event: AttributeUpdated):
-        if (
-            event.property is StyleSheet.styleSheet
-            or event.property is StyleSheet.naturalLanguage
-        ):
-            self.update_drawing_style()
-
-            self.diagram.update(self.diagram.ownedPresentation)
-        elif event.property is Diagram.name and self.view:
+        if event.property is Diagram.name and self.view:
             self.view.update_back_buffer()
+
+    @event_handler(StyleSheetUpdated)
+    def _on_style_sheet_updated(self, _event):
+        self.update_drawing_style()
+        self.diagram.update(self.diagram.ownedPresentation)
 
     def _on_notify_dark(self, style_manager, gparam):
         self.update_drawing_style()
@@ -235,6 +237,7 @@ class DiagramPage:
 
         self.event_manager.unsubscribe(self._on_element_delete)
         self.event_manager.unsubscribe(self._on_attribute_updated)
+        self.event_manager.unsubscribe(self._on_style_sheet_updated)
         self.event_manager.unsubscribe(self._on_tool_selected)
         self.view = None
 

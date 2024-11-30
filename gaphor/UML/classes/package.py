@@ -26,9 +26,11 @@ class PackageItem(Named, ElementPresentation):
         self.shape = Box(
             text_stereotypes(
                 self,
-                lambda: [self.diagram.gettext("profile")]
-                if isinstance(self.subject, UML.Profile)
-                else [],
+                lambda: (
+                    [self.diagram.gettext("profile")]
+                    if isinstance(self.subject, UML.Profile)
+                    else []
+                ),
             ),
             text_name(self),
             text_from_package(self),

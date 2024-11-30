@@ -71,7 +71,6 @@ class ObjectFlowItem(Named, LinePresentation):
 
         self.watch("subject[NamedElement].name")
         self.watch("subject[Element].appliedStereotype.classifier.name")
-
         self.watch("subject[ObjectFlow].guard")
 
         self.draw_tail = draw_arrow_tail

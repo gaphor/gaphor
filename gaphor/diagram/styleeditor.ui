@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <object class="GtkWindow" id="style-editor">
+    <property name="title" translatable="yes">Style Editor</property>
+    <property name="resizable">false</property>
+
+    <child type="titlebar">
+      <object class="GtkHeaderBar">
+        <property name="decoration-layout">:close</property>
+      </object>
+    </child>
+
+    <child>
+      <object class="GtkBox">
+        <style>
+          <class name="propertypage"/>
+          <class name="style-editor-content"/>
+        </style>
+        <property name="orientation">vertical</property>
+
+        <child>
+          <object class="GtkBox">
+            <property name="orientation">horizontal</property>
+            <child>
+              <object class="GtkLabel" id="label-border-radius">
+                <property name="label" translatable="yes">Border Radius</property>
+                <property name="xalign">0</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkSpinButton" id="border-radius">
+                <property name="valign">center</property>
+                <property name="adjustment">
+                  <object class="GtkAdjustment">
+                    <property name="lower">0</property>
+                    <property name="upper">100</property>
+                    <property name="step-increment">1</property>
+                  </object>
+                </property>
+              </object>
+            </child>
+          </object>
+        </child>
+
+        <child>
+          <object class="GtkBox">
+            <property name="orientation">horizontal</property>
+            <child>
+              <object class="GtkLabel" id="label-color">
+                <property name="label" translatable="yes">Color</property>
+                <property name="xalign">0</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkColorButton" id="color">
+              </object>
+            </child>
+          </object>
+        </child>
+
+        <child>
+          <object class="GtkBox">
+            <property name="orientation">horizontal</property>
+            <child>
+              <object class="GtkLabel" id="label-background-color">
+                <property name="label" translatable="yes">Background Color</property>
+                <property name="xalign">0</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkColorButton" id="background-color">
+              </object>
+            </child>
+          </object>
+        </child>
+
+        <child>
+          <object class="GtkBox">
+            <property name="orientation">horizontal</property>
+            <child>
+              <object class="GtkLabel" id="label-text-color">
+                <property name="label" translatable="yes">Text Color</property>
+                <property name="xalign">0</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkColorButton" id="text-color">
+              </object>
+            </child>
+          </object>
+        </child>
+
+        <child>
+          <object class="GtkButton" id="export">
+            <property name="label" translatable="yes">Add to Style Sheet</property>
+          </object>
+        </child>
+
+      </object>
+    </child>
+  </object>
+
+  <object class="GtkSizeGroup">
+    <property name="mode">horizontal</property>
+    <widgets>
+      <widget name="label-border-radius"/>
+      <widget name="label-color"/>
+      <widget name="label-background-color"/>
+      <widget name="label-text-color"/>
+    </widgets>
+  </object>
+</interface>

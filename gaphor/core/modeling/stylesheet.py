@@ -4,7 +4,7 @@ import importlib.resources
 import textwrap
 
 from gaphor.core.modeling.base import Base
-from gaphor.core.modeling.event import AttributeUpdated
+from gaphor.core.modeling.event import AttributeUpdated, StyleSheetUpdated
 from gaphor.core.modeling.properties import attribute
 from gaphor.core.styling import CompiledStyleSheet
 
@@ -26,11 +26,22 @@ class StyleSheet(Base):
 
     def __init__(self, id=None, model=None):
         super().__init__(id, model)
+        self._instant_style_declarations = ""
         self._system_font_family = "sans"
         self.compile_style_sheet()
 
     styleSheet: attribute[str] = attribute("styleSheet", str, DEFAULT_STYLE_SHEET)
     naturalLanguage: attribute[str] = attribute("naturalLanguage", str)
+
+    @property
+    def instant_style_declarations(self) -> str:
+        return self._instant_style_declarations
+
+    @instant_style_declarations.setter
+    def instant_style_declarations(self, declarations: str) -> None:
+        self._instant_style_declarations = declarations
+        self.compile_style_sheet()
+        super().handle(StyleSheetUpdated(self))
 
     @property
     def system_font_family(self) -> str:
@@ -46,6 +57,7 @@ class StyleSheet(Base):
             SYSTEM_STYLE_SHEET,
             f"diagram {{ font-family: {self._system_font_family} }}",
             self.styleSheet,
+            self._instant_style_declarations,
         )
 
     def new_compiled_style_sheet(self) -> CompiledStyleSheet:
@@ -57,10 +69,16 @@ class StyleSheet(Base):
 
     def handle(self, event):
         # Ensure compiled style sheet is always up-to-date:
-        if (
+        if is_style_sheet_update := (
             isinstance(event, AttributeUpdated)
             and event.property is StyleSheet.styleSheet
         ):
             self.compile_style_sheet()
 
         super().handle(event)
+
+        if is_style_sheet_update or (
+            isinstance(event, AttributeUpdated)
+            and event.property is StyleSheet.naturalLanguage
+        ):
+            super().handle(StyleSheetUpdated(self))

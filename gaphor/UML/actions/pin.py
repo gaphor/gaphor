@@ -17,9 +17,9 @@ from gaphor.UML.umlfmt import format_pin
 def text_position(position):
     return {
         "text-align": TextAlign.LEFT if position == "left" else TextAlign.RIGHT,
-        "vertical-align": VerticalAlign.BOTTOM
-        if position == "bottom"
-        else VerticalAlign.TOP,
+        "vertical-align": (
+            VerticalAlign.BOTTOM if position == "bottom" else VerticalAlign.TOP
+        ),
     }
 
 

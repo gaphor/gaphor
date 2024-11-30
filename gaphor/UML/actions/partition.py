@@ -121,9 +121,11 @@ class PartitionItem(ElementPresentation[UML.ActivityPartition]):
             cr.move_to(partition_width * num, 0)
             cr.line_to(partition_width * num, bounding_box.height)
             layout.set(
-                text=f"{partition.name}: {partition.represents.name}"
-                if isinstance(partition.represents, UML.NamedElement)
-                else partition.name
+                text=(
+                    f"{partition.name}: {partition.represents.name}"
+                    if isinstance(partition.represents, UML.NamedElement)
+                    else partition.name
+                )
             )
             cr.move_to(partition_width * num + padding_left, padding_top)
             layout.show_layout(cr)

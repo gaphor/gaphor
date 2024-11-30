@@ -207,7 +207,7 @@ class StyledItem:
         )
 
     def name(self) -> str:
-        return type(self.item).__name__.removesuffix("Item").lower()
+        return css_name(self.item)
 
     def parent(self) -> StyleNode | None:
         parent = self.item.parent
@@ -252,6 +252,10 @@ class StyledItem:
             and self.state() == other.state()
             and self.dark_mode == other.dark_mode
         )
+
+
+def css_name(item) -> str:
+    return type(item).__name__.removesuffix("Item").lower()
 
 
 P = TypeVar("P", bound=Presentation)
@@ -369,6 +373,7 @@ class Diagram(Base):
             item.subject = subject
         if parent:
             item.parent = parent
+
         self.update({item})
         return item
 

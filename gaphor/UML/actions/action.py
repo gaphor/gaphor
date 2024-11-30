@@ -37,6 +37,7 @@ class ValueSpecificationActionItem(Valued, ElementPresentation):
         )
 
         self.watch("subject[ValueSpecificationAction].value")
+        self.watch("subject[NamedElement].name")
 
 
 @represents(UML.CallBehaviorAction)

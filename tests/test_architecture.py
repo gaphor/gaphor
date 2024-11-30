@@ -72,6 +72,7 @@ def test_diagram_package():
         .exclude("gaphor.diagram.tools*")
         .exclude("gaphor.diagram.*editors")
         .exclude("gaphor.diagram.*propertypages")
+        .exclude("gaphor.diagram.styleeditor")
         .may_import(*PANGO)
         .should_not_import("gi.repository*")
         .check(gaphor, skip_type_checking=True)

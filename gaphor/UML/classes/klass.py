@@ -26,7 +26,6 @@ class ClassItem(Classified, ElementPresentation[UML.Class]):
 
     def __init__(self, diagram, id=None):
         super().__init__(diagram, id=id)
-
         self.watch("show_stereotypes", self.update_shapes).watch(
             "show_attributes", self.update_shapes
         ).watch("show_operations", self.update_shapes).watch(

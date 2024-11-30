@@ -43,9 +43,11 @@ class NodeItem(Classified, ElementPresentation):
         self.shape = Box(
             name_compartment(
                 self,
-                lambda: [self.diagram.gettext("device")]
-                if isinstance(self.subject, UML.Device)
-                else [],
+                lambda: (
+                    [self.diagram.gettext("device")]
+                    if isinstance(self.subject, UML.Device)
+                    else []
+                ),
             ),
             *(self.show_stereotypes and stereotype_compartments(self.subject) or []),
             draw=draw_node,
