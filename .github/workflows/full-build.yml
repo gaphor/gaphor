@@ -365,7 +365,7 @@ jobs:
 
   publish-to-pypi:
     name: Publish to PyPI (release only)
-    needs: [ linux-wheel, linux-flatpak-devel, check-macos-app, check-windows-installer ]
+    needs: [ linux-wheel, linux-flatpak-devel, linux-snapcraft-devel, check-macos-app, check-windows-installer ]
     runs-on: ubuntu-22.04
     permissions:
       id-token: write
