@@ -21,9 +21,9 @@ def fake_run(monkeypatch):
 
     def fake_run(self, args):
         run.extend(args)
-        idle = GLib.Idle(GLib.PRIORITY_LOW + GLib.PRIORITY_LOW)
-        idle.set_callback(lambda *a: self.quit())
-        idle.attach()
+        # NB. Priority used to be GLib.PRIORITY_LOW + GLib.PRIORITY_LOW,
+        # but that makes the tests hang. Is an idle loop blocking us?
+        GLib.idle_add(self.quit, priority=GLib.PRIORITY_LOW)
         app_run(self, args)
 
     app_run = Gtk.Application.run
