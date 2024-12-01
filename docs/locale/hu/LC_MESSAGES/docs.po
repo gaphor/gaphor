@@ -8,34 +8,37 @@ msgstr ""
 "Project-Id-Version: Gaphor 2.18.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-11-27 15:44-0500\n"
-"PO-Revision-Date: 2024-11-25 07:36+0000\n"
+"PO-Revision-Date: 2024-12-01 16:00+0000\n"
 "Last-Translator: ovari <ovari123@zoho.com>\n"
+"Language-Team: Hungarian <https://hosted.weblate.org/projects/gaphor/"
+"docs-gaphor-org/hu/>\n"
 "Language: hu\n"
-"Language-Team: Hungarian <https://hosted.weblate.org/projects/gaphor"
-"/docs-gaphor-org/hu/>\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.9-dev\n"
 "Generated-By: Babel 2.16.0\n"
 
 #: ../changelog.rst:2
 msgid "Change Log"
-msgstr ""
+msgstr "Változásnapló"
 
 #: ../changelog.rst:4
 msgid ""
 "Our change log is with the project's source code on `GitHub "
 "<https://github.com/gaphor/gaphor/blob/main/CHANGELOG.md>`_."
 msgstr ""
+"Változásnaplónk a projekt forráskódjával a `GitHub <https://github.com/"
+"gaphor/gaphor/blob/main/CHANGELOG.md>'_ oldalon található."
 
 #: ../changelog.rst:8
 msgid "The latest version may not have been released yet."
-msgstr ""
+msgstr "Lehet, hogy a legújabb verzió még nem jelent meg."
 
 #: ../coffee_machine.md:1
 msgid "Tutorial: Coffee Machine"
-msgstr ""
+msgstr "Oktatóanyag: Kávéfőző"
 
 #: ../coffee_machine.md:4 ../first_model.md:4
 msgid ""
@@ -60,9 +63,8 @@ msgstr ""
 
 #: ../coffee_machine.md:12 ../coffee_machine_concept.md:7
 #: ../coffee_machine_logical.md:7
-#, fuzzy
 msgid "Introduction"
-msgstr "Felhasználói tevékenység"
+msgstr "Bevezetés"
 
 #: ../coffee_machine.md:14
 msgid ""
@@ -72,6 +74,11 @@ msgid ""
 "to empower their employees and customers through open communication and "
 "participation in the systems engineering process."
 msgstr ""
+"Hangyafalu nyüzsgő városában egy hangyakolónia létrehozta a rendszermérnöki "
+"tanácsadó céget, Hangyaforrás néven. Nagyra értékelik az együttműködést, az "
+"átláthatóságot és a közösség által vezérelt tervezést, és arra törekszenek, "
+"hogy alkalmazottaik és ügyfeleik képességeit nyílt kommunikációval és a "
+"rendszertervezési folyamatban való részvétellel növeljék."
 
 #: ../coffee_machine.md:20
 msgid ""
@@ -80,6 +87,11 @@ msgid ""
 "Usa-ant, and Sust-ant. They were experts in designing and optimizing "
 "complex systems, and they took pride in their work."
 msgstr ""
+"A Hangyaforrás mérnökei mindannyian rendelkeznek olyan becenevekkel, amelyek "
+"tükrözik mesterségük alapelveit és koncepcióit: Minőség-hangya, Megbízható-"
+"hangya, Biztonság-hangya, Használhatóság-hangya és Fenntarthatóság-hangya. A "
+"komplex rendszerek tervezésének és optimalizálásának szakértői voltak, és "
+"büszkék voltak munkájukra."
 
 #: ../coffee_machine.md:25
 msgid ""
@@ -90,6 +102,11 @@ msgid ""
 "topped with the perfect foamy layer of crema. The ants were intrigued by "
 "the challenge and immediately set to work."
 msgstr ""
+"A Hangyaforrás mérnökei mindannyian rendelkeznek olyan becenevekkel, amelyek "
+"tükrözik mesterségük alapelveit és koncepcióit: Minőség-hangya, Megbízható-"
+"hangya, Biztonság-hangya, Használhatóság-hangya és Fenntarthatóság-hangya. A "
+"komplex rendszerek tervezésének és optimalizálásának szakértői voltak, és "
+"büszkék voltak munkájukra."
 
 #: ../coffee_machine.md:32
 msgid ""
@@ -103,16 +120,27 @@ msgid ""
 " follow the adventures of AntSource to create the perfect kittie espresso"
 " machine."
 msgstr ""
+"A Minőség-hangya felelt azért, hogy a gép minden minőségi előírásnak és "
+"előírásnak megfeleljen, a Megbízható-hangya pedig az volt, hogy a gép "
+"megbízható legyen, és minden használat során megfelelően működjön. A "
+"Biztonság-hangya a biztonságot szem előtt tartva tervezte a gépet, ügyelve "
+"arra, hogy ne okozzon kárt annak, aki használja. A Használhatóság-hangya úgy "
+"tervezte a gépet, hogy könnyen és intuitívan használható legyen, míg a "
+"Fenntarthatóság-hangya gondoskodott arról, hogy a gép környezetbarát és "
+"fenntartható legyen. Ebben az oktatóanyagban a Hangyaforrás kalandjait "
+"követjük nyomon, hogy megalkossuk a tökéletes cica presszógépet."
 
 #: ../coffee_machine.md:41
 msgid ""
 "![Two shots of espresso being pulled from an espresso machine.](images"
 "/coffee-machine-double-shot.jpg)"
 msgstr ""
+"![Két csésze eszpresszót húznak ki egy kávéfőzőből.](images/coffee-machine-"
+"double-shot.jpg)"
 
 #: ../coffee_machine.md:41
 msgid "Two shots of espresso being pulled from an espressomachine."
-msgstr ""
+msgstr "Két csésze eszpresszót húznak ki egy kávéfőzőből."
 
 #: ../coffee_machine.md:44
 msgid ""
@@ -120,22 +148,29 @@ msgid ""
 " start a new model with the _SysML_ template. You can now decide to "
 "either:"
 msgstr ""
+"Az első dolog, amit a hangyák tettek, az volt, hogy megnyitották a Gaphort "
+"az üdvözlőablakba, és elindítottak egy új modellt a _SysML_ sablonnal. Most "
+"dönthet a következők közül:"
 
 #: ../coffee_machine.md:46
 msgid ""
 "recreate their work as part of this tutorial. For this, open the SysML "
 "Example model shown at the bottom of the Greeter window"
 msgstr ""
+"készítsék újra munkájukat ennek az oktatóanyagnak a részeként. Ehhez nyissa "
+"meg az üdvözlőablak alján látható SysML példa modellt"
 
 #: ../coffee_machine.md:48
 msgid ""
 "inspect the result of their work by opening the `coffee-machine` model "
 "located in the `examples` folder."
 msgstr ""
+"a `examples` (példák) mappában található `coffee-machine` (kávégép) modell "
+"megnyitásával ellenőrizheti munkájuk eredményét."
 
 #: ../coffee_machine.md:51
 msgid "Abstraction Levels"
-msgstr ""
+msgstr "Absztrakciós szintek"
 
 #: ../coffee_machine.md:52
 msgid ""
@@ -145,6 +180,12 @@ msgid ""
 "key aspects of a system in order to focus on the problem to be solved. It"
 " is the key to rigorous analysis of a system."
 msgstr ""
+"Az absztrakció az összetett rendszerek egyszerűsítésének egyik módja "
+"azáltal, hogy csak a legfontosabb részletekre koncentrál, a többi figyelmen "
+"kívül hagyásával. Ez egy folyamat a bonyolultság csökkentésére a "
+"szükségtelen részletek eltávolításával és a rendszer kulcsfontosságú "
+"szempontjainak kiemelésével, hogy a megoldandó problémára összpontosítson. "
+"Ez a kulcs a rendszer szigorú elemzéséhez."
 
 #: ../coffee_machine.md:58
 msgid ""
@@ -157,6 +198,13 @@ msgid ""
 "breaking them down into their essential components and highlighting the "
 "most important aspects."
 msgstr ""
+"Az absztrakció megértéséhez gondoljon egy festményre. Amikor egy festményre "
+"nézel, valaminek a reprezentációját látod – talán egy személyt, egy tájat "
+"vagy egy tárgyat. A művész a valós világot olyan vonalakba, formákba és "
+"színekbe egyszerűsítette, amelyek a téma legfontosabb részleteit képviselik. "
+"Ugyanígy a rendszermérnökök, mint barátaink, a hangyák, az absztrakciót "
+"használják az összetett rendszerek ábrázolására, lényeges összetevőikre "
+"bontva és kiemelve a legfontosabb szempontokat."
 
 #: ../coffee_machine.md:66
 msgid ""
@@ -166,12 +214,19 @@ msgid ""
 "optimized. Said another way, abstraction levels group portions of a "
 "design where similar types of questions are answered."
 msgstr ""
+"Az absztrakciós szintek a részletezettség különböző szintjeit jelentik, "
+"amelyeken egy rendszer ábrázolható. Ezek a szintek az összetett rendszerek "
+"kisebb, jobban kezelhető részekre bontására szolgálnak, amelyek elemezhetők "
+"és optimalizálhatók. Másképpen mondva, az absztrakciós szintek egy terv "
+"részeit csoportosítják, ahol hasonló típusú kérdésekre kapnak választ."
 
 #: ../coffee_machine.md:72
 msgid ""
 "There are typically three levels of abstraction in systems engineering "
 "and these are the three levels used in the SysML template:"
 msgstr ""
+"Az absztrakciónak általában három szintje van a rendszertervezésben, és ez a "
+"három szint, amelyet a SysML-sablon használ:"
 
 #: ../coffee_machine.md:75
 msgid ""
@@ -181,6 +236,11 @@ msgid ""
 "functions. At this level, the focus is on understanding the system's "
 "requirements and how it will interact with other systems."
 msgstr ""
+"Koncepció szint: Néha fogalmi szintnek is nevezik. Meghatározza a megoldandó "
+"problémát. Ez az absztrakció legmagasabb szintje, ahol a rendszert általános "
+"célja, céljai és funkciói alapján írják le. Ezen a szinten a hangsúly a "
+"rendszer követelményeinek és más rendszerekkel való interakciójának "
+"megértésében van."
 
 #: ../coffee_machine.md:80
 msgid ""
@@ -189,6 +249,10 @@ msgid ""
 "structure and behavior. At this level, the focus is on how the system "
 "components are organized and how they interact with each other."
 msgstr ""
+"Logikai szint: Technológiai agnosztikus megoldást határoz meg. Ez az "
+"absztrakció középső szintje, ahol a rendszert szerkezete és viselkedése "
+"alapján írják le. Ezen a szinten a hangsúly azon van, hogy a rendszerelemek "
+"hogyan vannak elrendezve, és hogyan hatnak egymásra."
 
 #: ../coffee_machine.md:84
 msgid ""
@@ -198,6 +262,10 @@ msgid ""
 "properties. At this level, the focus is on the details of the system's "
 "implementation."
 msgstr ""
+"Technológiai szint: Néha fizikai szintnek is nevezik. Meghatározza a "
+"részletes műszaki megoldást. Ez az absztrakció legalacsonyabb szintje, ahol "
+"a rendszert összetevői és tulajdonságaik alapján írják le. Ezen a szinten a "
+"hangsúly a rendszer megvalósításának részletein van."
 
 #: ../coffee_machine.md:89
 msgid ""
@@ -208,12 +276,19 @@ msgid ""
 " physical level is important for understanding how the system will be "
 "built and how it will interact with the environment."
 msgstr ""
+"Az absztrakció minden szintje más-más perspektívát ad a rendszerről, és "
+"minden szint fontos a rendszertervezés és -elemzés különböző aspektusaihoz. "
+"Például a fogalmi szint fontos a rendszer általános céljainak és "
+"követelményeinek megértéséhez, míg a fizikai szint a rendszer felépítésének "
+"és a környezettel való interakciójának megértéséhez."
 
 #: ../coffee_machine.md:96
 msgid ""
 "There is a fourth abstraction level called the Implementation Level that "
 "isn't modeled, which is the concrete built system."
 msgstr ""
+"Létezik egy negyedik absztrakciós szint, a megvalósítási szint, amely nem "
+"modellezett, ez a konkrétan felépített rendszer."
 
 #: ../coffee_machine.md:99
 msgid ""
@@ -221,42 +296,51 @@ msgid ""
 "three top level packages, dividing up the model in to these three "
 "abstraction levels."
 msgstr ""
+"A Gaphor bal felső sarkában a modellböngésző a három legfelső szintű "
+"csomagot mutatja, felosztva a modellt erre a három absztrakciós szintre."
 
 #: ../coffee_machine.md:102
 msgid ""
 "![Top level packages of the SysML template.](images/coffee-machine-top-"
 "level-packages.png)"
 msgstr ""
+"![A SysML-sablon legfelső szintű csomagjai.](images/coffee-machine-top-level-"
+"packages.png)"
 
 #: ../coffee_machine.md:102
 msgid "Top level packages of the SysMLtemplate."
-msgstr ""
+msgstr "A SysML-sablon legfelső szintű csomagjai."
 
 #: ../coffee_machine.md:105
 msgid "Pillars"
-msgstr ""
+msgstr "Oszlopok"
 
 #: ../coffee_machine.md:107
 msgid ""
 "There are four pillars of SysML which help classify the types of diagrams"
 " based on what they represent:"
 msgstr ""
+"A SysML-nek négy oszlopa van, amelyek segítenek osztályozni az ábrák "
+"típusait az alapján, hogy mit ábrázolnak:"
 
 #: ../coffee_machine.md:110
 msgid "Behavior: The functionality of a system"
-msgstr ""
+msgstr "Viselkedés: Egy rendszer funkcionalitása"
 
 #: ../coffee_machine.md:111
 msgid "Structure: How a system is formed using parts and connections"
 msgstr ""
+"Felépítés: Hogyan jön létre a rendszer részek és kapcsolatok felhasználásával"
 
 #: ../coffee_machine.md:112
 msgid "Requirements: Written statements that constrain the system"
-msgstr ""
+msgstr "Követelmények: Írott utasítások, amelyek korlátozzák a rendszert"
 
 #: ../coffee_machine.md:113
 msgid "Parametric: Enforces mathematical rules across values in the system"
 msgstr ""
+"Parametrikus: A matematikai szabályokat kényszeríti ki a rendszer értékei "
+"között"
 
 #: ../coffee_machine.md:115
 msgid ""
@@ -264,6 +348,9 @@ msgid ""
 "video by Rick Steiner called [The Four Pillars of "
 "SysML](https://youtu.be/998UznK9ogY)."
 msgstr ""
+"Ha többet szeretne megtudni erről a négy oszlopról, itt található Steiner "
+"Rick 30 perces videója [The Four Pillars of SysML (A SysML négy oszlopa)] "
+"(https://youtu.be/998UznK9ogY)."
 
 #: ../coffee_machine.md:118
 msgid ""
@@ -273,6 +360,11 @@ msgid ""
 "For example, by allocating behavior like an activity to an element of the"
 " structure like a block."
 msgstr ""
+"Mivel a paraméteres ábrák az egyik legkevésbé használt diagramtípus a SysML-"
+"ben, csak az első háromra fogunk összpontosítani. A SysML ereje abban "
+"rejlik, hogy képes kapcsolatokat létrehozni e három oszlop között. Például "
+"úgy, hogy egy tevékenységhez hasonló viselkedést rendelünk hozzá a struktúra "
+"egy eleméhez, például egy tömbhöz."
 
 #: ../coffee_machine.md:123
 msgid ""
@@ -281,24 +373,30 @@ msgid ""
 "is in these packages that we will start to build up the design for the "
 "espresso machine."
 msgstr ""
+"Ha kibontja a legfelső szintű absztrakciós szint csomagokat a "
+"Modellböngészőben, mindegyik további három csomagot tartalmaz, minden "
+"oszlophoz egyet. Ezekben a csomagokban kezdjük el az eszpresszógép "
+"tervezését."
 
 #: ../coffee_machine.md:127
 msgid ""
 "![Three pillar packages nested under each abstraction level "
 "package.](images/coffee-machine-pillars.png)"
 msgstr ""
+"![Három oszlopcsomag van beágyazva minden absztrakciós szintű csomag alá.]("
+"images/coffee-machine-pillars.png)"
 
 #: ../coffee_machine.md:127
 msgid "Three pillar packages nested under each abstraction levelpackage."
-msgstr ""
+msgstr "Három oszlopcsomag van beágyazva minden absztrakciós szintű csomag alá."
 
 #: ../coffee_machine.md:130
 msgid "Table of Contents"
-msgstr ""
+msgstr "Tartalomjegyzék"
 
 #: ../coffee_machine_concept.md:5
 msgid "Coffee Machine: Concept Level"
-msgstr ""
+msgstr "Kávéfőző: koncepció szinten"
 
 #: ../coffee_machine_concept.md:9
 msgid ""
@@ -306,44 +404,58 @@ msgid ""
 "espresso machine, we are going to use diagrams at this abstraction level "
 "to answer questions like:"
 msgstr ""
+"A koncepció szintje határozza meg azt a problémát, amelyet megpróbálunk "
+"megoldani. Az eszpresszógép esetében az ábrákat fogjuk használni ezen az "
+"absztrakciós szinten, hogy megválaszoljuk a következő kérdéseket:"
 
 #: ../coffee_machine_concept.md:12
 msgid "Who will use the machine and what are their goals while using it?"
-msgstr ""
+msgstr "Ki fogja használni a gépet, és mi a célja a használat során?"
 
 #: ../coffee_machine_concept.md:13
 msgid "What sequence of events will a person take while operating the machine?"
 msgstr ""
+"Milyen eseménysorozatot fog végrehajtani egy személy a gép kezelése közben?"
 
 #: ../coffee_machine_concept.md:14
 msgid ""
 "What are the key features and capabilities required for the machine to "
 "perform its intended function?"
 msgstr ""
+"Melyek azok a kulcsfontosságú jellemzők és képességek, amelyek szükségesek "
+"ahhoz, hogy a gép teljesítse a rendeltetésszerű funkcióját?"
 
 #: ../coffee_machine_concept.md:15
 msgid ""
 "What are the design constraints and requirements that must be considered "
 "when designing the machine?"
 msgstr ""
+"Melyek azok a tervezési korlátok és követelmények, amelyeket figyelembe kell "
+"venni a gép tervezésekor?"
 
 #: ../coffee_machine_concept.md:16
 msgid ""
 "What are the key performance metrics that the machine must meet in order "
 "to be considered successful?"
 msgstr ""
+"Melyek azok a kulcsfontosságú teljesítménymutatók, amelyeknek a gépnek meg "
+"kell felelnie ahhoz, hogy sikeres legyen?"
 
 #: ../coffee_machine_concept.md:17
 msgid ""
 "How will the machine fit into the larger context of the café, and how "
 "will it interact with other systems and components within the café?"
 msgstr ""
+"Hogyan illeszkedik majd a gép a kávézó tágabb környezetébe, és hogyan fog "
+"kölcsönhatásba lépni a kávézón belüli más rendszerekkel és összetevőkkel?"
 
 #: ../coffee_machine_concept.md:19
 msgid ""
 "What are the needs of others like those marketing, selling, "
 "manufacturing, or buying the machine?"
 msgstr ""
+"Mire van szüksége másoknak, például a gépet forgalmazóknak, értékesítőknek, "
+"gyártóknak vagy a gépet vásárlóknak?"
 
 #: ../coffee_machine_concept.md:21
 msgid ""
@@ -352,11 +464,14 @@ msgid ""
 "these questions will help guide the design and development of the machine"
 " at the logical and technology levels of abstraction."
 msgstr ""
+"Ezen a szinten a hangsúly az eszpresszógép átfogó képének és a "
+"kávézórendszeren belüli szerepének megértésében van. Az ezekre a kérdésekre "
+"adott válaszok segítik a gép tervezését és fejlesztését az absztrakció "
+"logikai és technológiai szintjén."
 
 #: ../coffee_machine_concept.md:26
-#, fuzzy
 msgid "Use Case Diagram"
-msgstr "új ábra"
+msgstr "Használati eset ábra"
 
 #: ../coffee_machine_concept.md:28
 msgid ""
@@ -364,6 +479,9 @@ msgid ""
 "package in the Model Browser and double-click on the diagram named Use "
 "Cases."
 msgstr ""
+"Először a hangyák dolgoznak a rendszer viselkedésén. Bontsa ki a viselkedési "
+"csomagot a Modellböngészőben, és kattintson duplán a Használati esetek "
+"ábrára."
 
 #: ../coffee_machine_concept.md:31
 msgid ""
@@ -374,6 +492,12 @@ msgid ""
 "the machine will be used by its users, such as the café staff and "
 "customers."
 msgstr ""
+"A használati eset ábra a rendszertervezésben használt vizuális ábrázolás "
+"egyik típusa egy rendszer, például egy eszpresszógép funkcionális "
+"követelményeinek leírására. Az eszpresszógép kapcsán egy használati eset "
+"ábra segítségével azonosítható és meghatározható, hogy a gépet a "
+"felhasználók – például a kávézó személyzete és az ügyfelek – milyen módon "
+"fogják használni."
 
 #: ../coffee_machine_concept.md:37
 msgid ""
@@ -384,6 +508,12 @@ msgid ""
 "machine, such as placing an order, making an espresso, or cleaning the "
 "machine."
 msgstr ""
+"Az ábra jellemzően különböző szereplőket vagy felhasználókat tartalmaz, mint "
+"például a barista, az ügyfél és esetleg egy menedzser vagy karbantartó "
+"technikus. Különféle „használati eseteket” vagy forgatókönyveket is "
+"tartalmazna, amelyek leírják a felhasználók által a géppel végrehajtható "
+"különféle műveleteket, például rendelés leadását, eszpresszó elkészítését "
+"vagy a gép tisztítását."
 
 #: ../coffee_machine_concept.md:43
 msgid ""
@@ -394,16 +524,25 @@ msgid ""
 "involved in the development of the machine, such as the ants and "
 "Cappuccino the cat."
 msgstr ""
+"A használati eset ábra segít abban, hogy az eszpresszógép minden szükséges "
+"funkcionális követelményét azonosítsák és figyelembe vegyék, és a rendszert "
+"úgy alakítsák ki, hogy megfeleljen a felhasználók igényeinek. Kommunikációs "
+"eszközként is használható a gép fejlesztésében részt vevő különböző "
+"érdekeltek, például a hangyák és Cappuccino, a macska között."
 
 #: ../coffee_machine_concept.md:49
 msgid "The ants need your help updating the diagrams, so let's get started:"
 msgstr ""
+"A hangyáknak a segítségedre van szükségük az ábrák frissítéséhez, ezért "
+"kezdjük:"
 
 #: ../coffee_machine_concept.md:51
 msgid ""
 "Double-click on the actor to pop up the rename dialog, and replace User "
 "with Barista."
 msgstr ""
+"Kattintson duplán a szereplőre az átnevezési párbeszédpanel "
+"megjelenítéséhez, és cserélje ki a Felhasználót Baristára."
 
 #: ../coffee_machine_concept.md:53
 msgid "Update the name of the oval Use Case from Use Case #1 to Brew espresso."
@@ -7879,4 +8018,3 @@ msgstr ""
 
 #~ msgid "Grab a coffee, the build will take a few minutes to complete."
 #~ msgstr ""
-

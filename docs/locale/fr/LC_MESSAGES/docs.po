@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: Gaphor 2.23.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-11-27 15:44-0500\n"
-"PO-Revision-Date: 2024-11-30 09:00+0000\n"
-"Last-Translator: Stan SZLAPKA <stansz@free.fr>\n"
+"PO-Revision-Date: 2024-12-01 17:02+0000\n"
+"Last-Translator: Dan Yeaw <dan@yeaw.me>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/gaphor/"
 "docs-gaphor-org/fr/>\n"
 "Language: fr\n"
@@ -141,18 +141,16 @@ msgstr ""
 "machine-double-shot.jpg)"
 
 #: ../coffee_machine.md:41
-#, fuzzy
 msgid "Two shots of espresso being pulled from an espressomachine."
-msgstr "Deux doses d'espresso tirées d'une machine à espresso"
+msgstr "Deux doses d'espresso tirées d'une machine à espresso."
 
 #: ../coffee_machine.md:44
-#, fuzzy
 msgid ""
 "The first thing the ants did was to open Gaphor to the Greeter window and "
 "start a new model with the _SysML_ template. You can now decide to either:"
 msgstr ""
 "La première chose que les fourmis ont faite a été d'ouvrir Gaphor dans la "
-"fenêtre du Greeter et de démarrer un nouveau modèle avec le modèle _SysML_."
+"fenêtre du Greeter et de démarrer un nouveau modèle avec le modèle _SysML_:"
 
 #: ../coffee_machine.md:46
 msgid ""
@@ -305,18 +303,16 @@ msgstr ""
 "d'abstraction."
 
 #: ../coffee_machine.md:102
-#, fuzzy
 msgid ""
 "![Top level packages of the SysML template.](images/coffee-machine-top-level-"
 "packages.png)"
 msgstr ""
-"![Paquets de premier niveau du modèle SysML](images/coffee-machine-top-level-"
-"packages.png)"
+"![Paquets de premier niveau du modèle SysML.](images/coffee-machine-top-"
+"level-packages.png)"
 
 #: ../coffee_machine.md:102
-#, fuzzy
 msgid "Top level packages of the SysMLtemplate."
-msgstr "Paquets de premier niveau du modèle SysML"
+msgstr "Paquets de premier niveau du modèle SysML."
 
 #: ../coffee_machine.md:105 ../coffee_machine.md:101
 msgid "Pillars"
@@ -361,7 +357,6 @@ msgstr ""
 "(https://youtu.be/998UznK9ogY)."
 
 #: ../coffee_machine.md:118
-#, fuzzy
 msgid ""
 "Since Parametric Diagrams are one of the least used diagram types in SysML, "
 "we are going to only focus on the first three. The power of SysML comes in "
@@ -369,7 +364,7 @@ msgid ""
 "by allocating behavior like an activity to an element of the structure like "
 "a block."
 msgstr ""
-"Les diagrammes paramétriques étant l'un des types de diagrammes les moins "
+"Les Diagrammes Paramétriques étant l'un des types de diagrammes les moins "
 "utilisés en SysML, nous allons nous concentrer uniquement sur les trois "
 "premiers. La puissance de SysML réside dans la possibilité d'établir des "
 "relations entre ces trois piliers. Par exemple, en attribuant un "
@@ -387,19 +382,19 @@ msgstr ""
 "conception de la machine à expresso."
 
 #: ../coffee_machine.md:127
-#, fuzzy
 msgid ""
 "![Three pillar packages nested under each abstraction level package.](images/"
 "coffee-machine-pillars.png)"
 msgstr ""
-"![Trois paquets piliers imbriqués sous chaque paquet de niveau d'abstraction]"
-"(images/coffee-machine-pillars.png)"
+"![Trois paquets piliers imbriqués sous chaque paquet de niveau "
+"d'abstraction](images/coffee-machine-pillars.png)"
 
 #: ../coffee_machine.md:127
 #, fuzzy
 msgid "Three pillar packages nested under each abstraction levelpackage."
 msgstr ""
-"Trois paquets piliers imbriqués sous chaque paquet de niveau d'abstraction"
+"Des paquets de trois volets composent les paquets sous chaque niveau "
+"d'abstraction."
 
 #: ../coffee_machine.md:130 ../coffee_machine.md:126
 msgid "Table of Contents"
@@ -672,15 +667,15 @@ msgid "Customer"
 msgstr "Customer (Client)"
 
 #: ../coffee_machine_concept.md:97
-#, fuzzy
 msgid ""
 "Each block in the Block Definition Diagram (bdd) represents a key concept "
 "within the coffee shop domain, and the containment relationship is used "
 "between the domain and the blocks to show that they are part of the domain."
 msgstr ""
-"Chaque bloc représente un concept clé du domaine des cafés, et la relation "
-"de confinement est utilisée entre le domaine et les blocs pour montrer "
-"qu'ils font partie du domaine."
+"Chaque bloc du Diagramme de Définition des Blocs (bdd) représente un concept "
+"clé du domaine des boutiques de cafés, et la relation de confinement est "
+"utilisée entre le domaine et les blocs pour montrer qu'ils font partie du "
+"domaine."
 
 #: ../coffee_machine_concept.md:101
 msgid ""
@@ -856,39 +851,36 @@ msgstr ""
 "d'eau, temps de chauffe et bouton de l'interface homme-machine (IHM) :"
 
 #: ../coffee_machine_concept.md:171
-#, fuzzy
 msgid ""
 "Water Tank: The coffee machine shall have a water tank of sufficient size to "
 "make multiple cups of coffee before needing a refill. The water tank should "
 "be easy to access and fill."
 msgstr ""
-"Réservoir d'eau : La machine à café doit être dotée d'un réservoir d'eau "
-"suffisamment grand pour permettre la préparation de plusieurs tasses de café "
-"avant qu'il ne soit nécessaire de le remplir à nouveau. Le réservoir d'eau "
-"doit être facile d'accès et de remplissage."
+"Water Tank (Réservoir d'eau) : La machine à café doit être dotée d'un "
+"réservoir d'eau suffisamment grand pour permettre la préparation de "
+"plusieurs tasses de café avant qu'il ne soit nécessaire de le remplir à "
+"nouveau. Le réservoir d'eau doit être facile d'accès et de remplissage."
 
 #: ../coffee_machine_concept.md:175
-#, fuzzy
 msgid ""
 "Heat-up Time: The coffee machine shall have a heat-up time of no more than "
 "10 minutes from the time the user turns on the machine until it's ready to "
 "brew coffee."
 msgstr ""
-"Temps de chauffe : la machine à café doit avoir un temps de chauffe ne "
-"dépassant pas 10 minutes entre le moment où l'utilisateur allume la machine "
-"et le moment où elle est prête à préparer le café."
+"Heat-up Time (Temps de chauffe) : La machine à café doit avoir un temps de "
+"chauffe ne dépassant pas 10 minutes entre le moment où l'utilisateur allume "
+"la machine et le moment où elle est prête à préparer le café."
 
 #: ../coffee_machine_concept.md:179
-#, fuzzy
 msgid ""
 "1 Cup Button: The coffee machine shall have an HMI with a 1 cup brew button "
 "to make it easy for the user to select the amount of coffee they want to "
 "brew."
 msgstr ""
-"Bouton IHM : La machine à café doit être dotée d'une 'Interface Homme "
-"Machine' avec un bouton d'infusion d'une tasse pour permettre à "
-"l'utilisateur de sélectionner facilement la quantité de café qu'il souhaite "
-"infuser. L'IHM doit être intuitive et facile à utiliser."
+"1 Cup Button (Bouton 1 tasse) : La machine à café doit être dotée d'une "
+"'Interface Homme Machine' avec un bouton préparer une tasse pour permettre à "
+"l'utilisateur de sélectionner facilement la quantité de café qu'il souhaite. "
+"L'IHM doit être intuitive et facile à utiliser."
 
 #: ../coffee_machine_concept.md:182 ../coffee_machine_concept.md:176
 msgid "Concept requirements for water tank, heat-up time, and HMI button"
@@ -1460,9 +1452,8 @@ msgid "Here we derive two requirements:"
 msgstr "Nous en déduisons deux exigences :"
 
 #: ../coffee_machine_logical.md:217
-#, fuzzy
 msgid "Controller commands heat up"
-msgstr "Les commandes du contrôleur chauffent"
+msgstr "Le contrôleur commande la mise en température"
 
 #: ../coffee_machine_logical.md:218 ../coffee_machine_logical.md:221
 msgid "900kPa of water pressure"
@@ -2272,20 +2263,28 @@ msgid ""
 "(methods). The Note field can contain any text you wish to associate with "
 "the element, (this will not show on a diagram)."
 msgstr ""
+"L'éditeur de propriétés situé à droite vous indiquera des informations "
+"détaillées sur la classe nouvellement ajoutée, telles que son nom (_Nouvelle "
+"classe_), ses attributs et ses opérations (méthodes). Le champ Note peut "
+"contenir tout texte que vous souhaitez associer à l'élément (il n'apparaîtra "
+"pas sur un diagramme)."
 
 #: ../first_model.md:25
 msgid ""
 "![The Gaphor main window showing a single class added to the model.](images/"
 "first-model-class.png)"
 msgstr ""
+"![La fenêtre principale de Gaphor montrant une seule classe ajoutée au "
+"modèle](images/first-model-class.png)"
 
 #: ../first_model.md:25
 msgid "The Gaphor main window showing a single class added to the model."
 msgstr ""
+"La fenêtre principale de Gaphor montre une seule classe ajoutée au modèle."
 
 #: ../first_model.md:27 ../first_model.md:28
 msgid "It's simple to add elements to a diagram."
-msgstr ""
+msgstr "Il est facile d'ajouter des éléments à un diagramme."
 
 #: ../first_model.md:29 ../first_model.md:30
 msgid ""
@@ -2294,10 +2293,15 @@ msgid ""
 "diagrams, such as Class diagrams, Component diagrams, Action diagrams, "
 "Sequence diagrams. But Gaphor does not place any restrictions."
 msgstr ""
+"Gaphor ne fait aucune supposition quant aux éléments à placer sur un "
+"diagramme. Un diagramme est un diagramme. UML définit toutes sortes de "
+"diagrammes, tels que les diagrammes de classes, les diagrammes de "
+"composants, les diagrammes d'actions et les diagrammes de séquences. Mais "
+"Gaphor n'impose aucune restriction."
 
 #: ../first_model.md:34 ../first_model.md:35
 msgid "Adding Relations"
-msgstr ""
+msgstr "Ajout de relations"
 
 #: ../first_model.md:36 ../first_model.md:37
 msgid ""
@@ -2305,17 +2309,24 @@ msgid ""
 "that `Circle` is a sub-type of `Shape`. You can do this by selecting one and "
 "changing the name in the Property Editor, or by double-clicking the element."
 msgstr ""
+"Ajoutez une autre classe. Changez les noms en `Shape`(Forme) et "
+"`Circle`(Cercle). Définissons que `Circle` est un sous-type de `Shape`. Vous "
+"pouvez le faire en sélectionnant un élément et en changeant son nom dans "
+"l'éditeur de propriétés, ou en double-cliquant sur l'élément."
 
 #: ../first_model.md:40
 msgid ""
 "Select Generalization (![Icon for generalization relationships.](../gaphor/"
 "ui/icons/hicolor/scalable/actions/gaphor-generalization-symbolic.svg))."
 msgstr ""
+"Sélectionner la généralisation (![Icon for generalization relationships.](../"
+"gaphor/ui/icons/hicolor/scalable/actions/gaphor-generalization-symbolic."
+"svg))."
 
 #: ../first_model.md:40
 #, fuzzy
 msgid "Icon for generalization relationships."
-msgstr "Améliorer la reconnexion pour les relations"
+msgstr "Icône pour la généralisation des relations."
 
 #: ../first_model.md:42 ../first_model.md:44
 msgid ""
@@ -2324,32 +2335,44 @@ msgid ""
 "between `Shape` and `Circle`. You can see both ends of the relation are red, "
 "indicating they are connected to their class."
 msgstr ""
+"Déplacez le curseur de la souris sur `Shape`(Forme). Cliquez, maintenez et "
+"faites glisser l'extrémité de la ligne sur `Circle`(Cercle). Relâchez le "
+"bouton de la souris, et vous devriez avoir votre relation entre `Shape` et "
+"`Circle`. Vous pouvez voir que les deux extrémités de la relation sont "
+"rouges, ce qui indique qu'elles sont connectées à leur classe."
 
 #: ../first_model.md:47
 msgid ""
 "![The Gaphor main window showing two classes connected by a generalization "
 "relationship.](images/first-model-generalization.png)"
 msgstr ""
+"![La fenêtre principale de Gaphor montre deux classes connectées par une "
+"relation de généralisation.](images/first-model-generalization.png)"
 
 #: ../first_model.md:47
 msgid ""
 "The Gaphor main window showing two classes connected by a generalization "
 "relationship."
 msgstr ""
+"La fenêtre principale de Gaphor montre deux classes connectées par une "
+"relation de généralisation."
 
 #: ../first_model.md:49
 msgid ""
 "Optionally you can run the auto-layout (![Menu icon](images/open-menu-"
 "symbolic.svg) → Tools → Auto Layout) to align the elements on the diagram."
 msgstr ""
+"En option, vous pouvez lancer la mise en page automatique (![Menu icon]("
+"images/open-menu-symbolic.svg) → Tools (Outils) → Auto Layout(Mise en page "
+"automatique)) pour aligner les éléments sur le diagramme."
 
 #: ../first_model.md:49 ../plugins.md:45 ../style_sheets.md:343
 msgid "Menu icon"
-msgstr ""
+msgstr "Icône de menu"
 
 #: ../first_model.md:53 ../first_model.md:55
 msgid "Creating New Diagrams"
-msgstr ""
+msgstr "Création de nouveaux diagrammes"
 
 #: ../first_model.md:55
 msgid ""
@@ -2358,23 +2381,33 @@ msgid ""
 "Diagram menu (![Plus symbol of the New Diagram popup menu.](images/list-add-"
 "symbolic.svg)) in the header bar."
 msgstr ""
+"Pour créer un nouveau diagramme, utilisez le navigateur de modèles. "
+"Sélectionnez l'élément dans lequel le nouveau diagramme doit être intégré. "
+"Sélectionnez pour l'instant l'option _Nouveau modèle_(_New Model_). Dans la "
+"barre d'en-tête, cliquez sur le menu Nouveau diagramme (![Symbole plus du "
+"menu contextuel Nouveau diagramme.](images/list-add-symbolic.svg)) in the "
+"header bar."
 
 #: ../first_model.md:55
 msgid "Plus symbol of the New Diagram popup menu."
-msgstr ""
+msgstr "Symbole 'plus' du menu contextuel Nouveau diagramme."
 
 #: ../first_model.md:59
 msgid ""
 "![The New Diagram popup window.](images/first-model-new-diagram-popup.png)"
 msgstr ""
+"![La fenêtre contextuelle Nouveau diagramme.](images/first-model-new-diagram-"
+"popup.png)"
 
 #: ../first_model.md:59
 msgid "The New Diagram popup window."
-msgstr ""
+msgstr "La fenêtre contextuelle Nouveau diagramme."
 
 #: ../first_model.md:61 ../first_model.md:63
 msgid "Select _New Generic Diagram_ and a new diagram is created."
 msgstr ""
+"Sélectionnez _New Generic Diagram_ (_Nouveau diagramme générique_) et un "
+"nouveau diagramme est créé."
 
 #: ../first_model.md:63 ../first_model.md:65
 msgid ""
@@ -2382,32 +2415,43 @@ msgid ""
 "classes `Shape` and `Circle`. Add the generalization last. Drop it somewhere "
 "between the two classes. The relation will be created to the diagram."
 msgstr ""
+"Faites maintenant glisser les éléments du navigateur de modèle sur le "
+"nouveau diagramme. Commencez par ajouter les classes Shape (Forme) et Circle "
+"(Cercle). Ajoutez la généralisation en dernier. Déposez-la entre les deux "
+"classes. La relation sera créée automatiquement dans le diagramme."
 
 #: ../first_model.md:67 ../first_model.md:69
 msgid ""
 "Now change the name of class `Circle` to `Ellipse`. Check the other diagram. "
 "The name has been changed there as well."
 msgstr ""
+"Maintenant, changez le nom de la classe `Circle` (Cercle) en `Ellipse`. "
+"Vérifiez l'autre diagramme. Le nom a également été modifié."
 
 #: ../first_model.md:72 ../first_model.md:74
 msgid ""
 "Elements in a diagram are only a _representation_ of the elements in the "
 "underlying model. The model is what you see in the Model Browser."
 msgstr ""
+"Les éléments d'un diagramme ne sont qu'une _representation_ "
+"(_représentation_) des éléments du modèle sous-jacent. Le modèle est ce que "
+"vous voyez dans le navigateur de modèle(Model Browser)."
 
 #: ../first_model.md:75 ../first_model.md:77
 msgid ""
 "Elements in the model are automatically removed when there are no more "
 "representations in any of the diagrams."
 msgstr ""
+"Les éléments du modèle sont automatiquement supprimés lorsqu'il n'y a plus "
+"de représentations dans aucun des diagrammes."
 
 #: ../framework.md:1
 msgid "Framework"
-msgstr ""
+msgstr "Framework"
 
 #: ../framework.md:3
 msgid "Overview"
-msgstr ""
+msgstr "Vue d'ensemble"
 
 #: ../framework.md:5
 msgid ""
@@ -2417,10 +2461,17 @@ msgid ""
 "toml` file. To learn more about the architecture, please see the description "
 "about the [Service Oriented Architecture](service_oriented.md)."
 msgstr ""
+"Gaphor est conçu pour être léger et orienté vers les services. L'application "
+"est divisée en une série de services, tels que les gestionnaires de "
+"fichiers, d'événements et d'annulations. Ces services sont chargés en "
+"fonction des points d'entrée définis dans le fichier `pyproject.toml`. Pour "
+"en savoir plus sur l'architecture, veuillez consulter la description de "
+"l'architecture orientée services [Service Oriented "
+"Architecture](service_oriented.md)."
 
 #: ../framework.md:11
 msgid "Event driven"
-msgstr ""
+msgstr "Axé sur les événements"
 
 #: ../framework.md:13
 msgid ""
@@ -2435,10 +2486,22 @@ msgid ""
 "For more information see the full description of the [event system]"
 "(event_system.md)."
 msgstr ""
+"Les parties de Gaphor communiquent entre elles par le biais d'événements. "
+"Lorsque quelque chose d'important se produit, par exemple un changement "
+"d'attribut d'un élément de modèle, un événement est envoyé. Lorsque d'autres "
+"parties de l'application sont intéressées par un changement, elles "
+"enregistrent un gestionnaire d'événement pour ce type d'événement. Les "
+"événements sont émis par l'intermédiaire d'un courtier central, de sorte "
+"qu'il n'est pas nécessaire de s'enregistrer pour chaque élément individuel "
+"susceptible d'envoyer un événement qui les intéresse. Par exemple, un "
+"élément de diagramme peut enregistrer une règle d'événement et vérifier "
+"ensuite si l'élément qui a envoyé l'événement est réellement l'événement que "
+"l'élément représente. Pour plus d'informations, voir la description complète "
+"du [event system](event_system.md)."
 
 #: ../framework.md:23
 msgid "Transactional"
-msgstr ""
+msgstr "Transactionnel"
 
 #: ../framework.md:25
 msgid ""
@@ -2449,10 +2512,17 @@ msgid ""
 "previous transactions so that a transaction can be reversed if the undo "
 "button is pressed."
 msgstr ""
+"Gaphor est transactionnel, ce qui signifie qu'il conserve la trace des "
+"fonctions qu'il exécute sous la forme d'une série de transactions. Les "
+"transactions s'envoient un événement lorsqu'elles commencent, puis un autre "
+"lorsqu'elles se terminent. Cela permet notamment au gestionnaire "
+"d'annulation de conserver un journal des transactions précédentes, de sorte "
+"qu'il soit possible d'annuler une transaction en appuyant sur le bouton "
+"d'annulation."
 
 #: ../framework.md:32
 msgid "Main Components"
-msgstr ""
+msgstr "Composants principaux"
 
 #: ../framework.md:34
 msgid ""
@@ -2461,14 +2531,19 @@ msgid ""
 "`Session`. Only one Application instance is active. Each session will load "
 "its own services defined as [gaphor.services](service_oriented.md)."
 msgstr ""
+"La partie principale de Gaphor qui s'exécute en premier est appelée « "
+"application ». Gaphor peut avoir plusieurs modèles ouverts à tout moment. "
+"Chaque modèle est conservé dans une `Session`. Une seule instance de "
+"l'application est active. Chaque session chargera ses propres services "
+"définis comme [gaphor.services](service_oriented.md)."
 
 #: ../framework.md:40
 msgid "The most notable services are:"
-msgstr ""
+msgstr "Les services les plus importants sont les suivants :"
 
 #: ../framework.md:42
 msgid "event_manager"
-msgstr ""
+msgstr "event_manager (gestionnaire d'événements)"
 
 #: ../framework.md:44
 msgid ""
@@ -2476,10 +2551,13 @@ msgid ""
 "does something with events (both sending and receiving) depends on this "
 "component."
 msgstr ""
+"Il s'agit du composant central utilisé pour la distribution des événements. "
+"Tous les services qui utilisent des événements (à la fois pour l'envoi et la "
+"réception) dépendent de ce composant."
 
 #: ../framework.md:48 ../framework.md:52
 msgid "element_factory"
-msgstr ""
+msgstr "element_factory (fabrique d'éléments)"
 
 #: ../framework.md:50
 msgid ""
@@ -2488,16 +2566,22 @@ msgid ""
 "create model elements, as well as to lookup elements or query for a set of "
 "elements."
 msgstr ""
+"Le 'modèle de données' [data model](models/core) lui-même est maintenu dans "
+"la fabrique d'éléments ({obj}`~gaphor.core.modeling.ElementFactory`). Ce "
+"service est utilisé pour créer des éléments de modèle, ainsi que pour "
+"rechercher des éléments ou un ensemble d'éléments."
 
 #: ../framework.md:54 ../framework.md:58
 msgid "undo_manager"
-msgstr ""
+msgstr "(undo_manager) Gestionnaire d'annulation"
 
 #: ../framework.md:56 ../framework.md:60
 msgid ""
 "One of the most appreciated services. It allows users to make a mistake "
 "every now and then!"
 msgstr ""
+"Un des services les plus appréciés. Il permet aux utilisateurs de se tromper "
+"de temps en temps !"
 
 #: ../framework.md:59 ../framework.md:63
 msgid ""
@@ -2507,18 +2591,27 @@ msgid ""
 "case all changes are played back directly. For more information see the full "
 "description of the [undo manager](undo.md)."
 msgstr ""
+"Le gestionnaire d'annulation est transactionnel. Les actions effectuées par "
+"un utilisateur ne sont stockées que si une transaction est active. Si une "
+"transaction est terminée (validée), une nouvelle action d'annulation est "
+"stockée. Les transactions peuvent également être annulées, auquel cas toutes "
+"les modifications sont directement reproduites. Pour plus d'informations, "
+"voir la description complète du 'gestionnaire d'annulation' [undo "
+"manager](undo.md)."
 
 #: ../framework.md:65 ../framework.md:48
 msgid "file_manager"
-msgstr ""
+msgstr "file_manager (gestionnaire de fichier)"
 
 #: ../framework.md:67 ../framework.md:50
 msgid "Loading and saving a model is done through this service."
 msgstr ""
+"Le chargement et l'enregistrement d'un modèle s'effectuent par "
+"l'intermédiaire de ce service."
 
 #: ../gaphor-services.md:5
 msgid "Example: Gaphor services"
-msgstr ""
+msgstr "Exemple : Services Gaphor"
 
 #: ../gaphor-services.md:7
 msgid ""
@@ -2528,50 +2621,66 @@ msgid ""
 "parameters with names that match other services. This allows services to "
 "depend on other services."
 msgstr ""
+"Dans cet exemple, nous faisons quelque chose d'un peu moins trivial. Dans "
+"Gaphor, les services sont définis comme des points d'entrée [entry "
+"points](https://packaging.python.org/en/latest/specifications/entry-points/)"
+". Chaque service est une classe et prend des paramètres dont les noms "
+"correspondent à ceux d'autres services. Cela permet aux services de dépendre "
+"d'autres services."
 
 #: ../gaphor-services.md:12
 msgid "It looks something like this:"
-msgstr ""
+msgstr "Il se présente comme suit :"
 
 #: ../gaphor-services.md:51
 msgid "Let's first load the entry points."
-msgstr ""
+msgstr "Commençons par charger les points d'entrée."
 
 #: ../gaphor-services.md:61
 msgid "Now let's create a component in our model for every service."
-msgstr ""
+msgstr "Créons maintenant un composant dans notre modèle pour chaque service."
 
 #: ../gaphor-services.md:78
 msgid ""
 "With all components mapped, we can create dependencies between those "
 "components, based on the constructor parameter names."
 msgstr ""
+"Une fois tous les composants mappés, nous pouvons créer des dépendances "
+"entre ces composants, sur la base des noms des paramètres du constructeur."
 
 #: ../gaphor-services.md:94
 msgid ""
 "With all elements in the model, we can create a diagram. Let's drop the "
 "components and dependencies on the diagram and let auto-layout do its magic."
 msgstr ""
+"Avec tous les éléments du modèle, nous pouvons créer un diagramme. Déposons "
+"les composants et les dépendances sur le diagramme et laissons la mise en "
+"page automatique faire sa magie."
 
 #: ../gaphor-services.md:97
 msgid ""
 "To make the dependency look good, we have to add a style sheet. If you "
 "create a new diagram via the GUI, this element is automatically added."
 msgstr ""
+"Pour que la dépendance ait une bonne apparence, nous devons ajouter une "
+"feuille de style. Si vous créez un nouveau diagramme via l'interface "
+"graphique, cet élément est automatiquement ajouté."
 
 #: ../gaphor-services.md:111
 msgid "Last step is to layout and draw the diagram."
-msgstr ""
+msgstr "La dernière étape consiste à mettre en page et à dessiner le diagramme."
 
 #: ../gaphor-services.md:121
 msgid ""
 "That's all. As you can see from the diagram, a lot of services rely on "
 "`EventManager`."
 msgstr ""
+"C'est tout. Comme vous pouvez le voir sur le diagramme, beaucoup de services "
+"s'appuient sur `EventManager` (EventManager)."
 
 #: ../getting_started.md:1
 msgid "Get Started with Gaphor"
-msgstr ""
+msgstr "Démarrer avec Gaphor"
 
 #: ../getting_started.md:3
 msgid ""
@@ -2581,10 +2690,16 @@ msgid ""
 "elements you add to the model. In Gaphor you can create diagrams to track "
 "and visualize different aspects of the system you're developing."
 msgstr ""
+"Gaphor est plus qu'un éditeur de diagrammes : c'est un environnement de "
+"modélisation. Alors que les éditeurs de diagrammes simples tels que "
+"Microsoft Visio et [draw.io] (https://draw.io) vous permettent de créer des "
+"images, Gaphor garde en fait la trace des éléments que vous ajoutez au "
+"modèle. Dans Gaphor, vous pouvez créer des diagrammes pour suivre et "
+"visualiser les différents aspects du système que vous développez."
 
 #: ../getting_started.md:9
 msgid "Enough talk, let's get started."
-msgstr ""
+msgstr "Assez parlé, commençons."
 
 #: ../getting_started.md:11
 msgid ""
@@ -2592,94 +2707,120 @@ msgid ""
 "org/download). Gaphor can be installed on Linux (Flatpak), Windows, and "
 "macOS."
 msgstr ""
+"Vous pouvez trouver des installateurs pour Gaphor sur le site Web de Gaphor ["
+"Gaphor Website](https://gaphor.org/download). Gaphor peut être installé sur "
+"Linux (Flatpak), Windows et macOS."
 
 #: ../getting_started.md:14
 msgid ""
 "Once Gaphor is launched, it provides you a welcome screen. It shows you "
 "previously opened models and model templates."
 msgstr ""
+"Une fois lancé, Gaphor vous propose un écran de bienvenue. Il vous montre "
+"les modèles précédemment ouverts et les modèles de modèles."
 
 #: ../getting_started.md:17
 msgid ""
 "![Gaphor's welcome screen showing recently opened models and model "
 "templates.](images/getting-started-greeter.png)"
 msgstr ""
+"![Écran d'accueil de Gaphor montrant les modèles récemment ouverts et les "
+"modèles de modèles](images/getting-started-greeter.png)"
 
 #: ../getting_started.md:17
 msgid ""
 "Gaphor's welcome screen showing recently opened models and model templates."
 msgstr ""
+"Écran d'accueil de Gaphor montrant les modèles et les modèles de modèles "
+"récemment ouverts."
 
 #: ../getting_started.md:19
 msgid "You can select a template to get started."
-msgstr ""
+msgstr "Vous pouvez sélectionner un modèle pour commencer."
 
 #: ../getting_started.md:21
 msgid "**Generic:** a blank model to start with"
-msgstr ""
+msgstr "**Generic: (Générique :)** un modèle vierge pour commencer"
 
 #: ../getting_started.md:22
 msgid ""
 "**UML:** A template for the *Unified Modeling Language* for modeling a "
 "software system"
 msgstr ""
+"**UML:** Un modèle pour le *Unified Modeling Language* (langage de "
+"modélisation unifié) pour la modélisation d'un système logiciel"
 
 #: ../getting_started.md:23
 msgid ""
 "**SysML:** A template for the *Systems Modeling Language* for modeling a "
 "wide range of systems and systems-of-systems"
 msgstr ""
+"**SysML:** Un modèle pour le *Systems Modeling Language* pour la "
+"modélisation d'une large gamme de systèmes et de systèmes de systèmes"
 
 #: ../getting_started.md:24
 msgid ""
 "**RAAML:** A template for the *Risk Analysis and Assessment Modeling "
 "language* for safety and reliability analysis"
 msgstr ""
+"**RAAML:** Un modèle pour le *langage d'analyse des risques et de "
+"modélisation de leur évaluation* pour l'analyse de la sécurité et de la "
+"fiabilité"
 
 #: ../getting_started.md:25
 msgid ""
 "**C4 Model:** A template for *Context, Containers, Components, and Code* "
 "which is for lean modeling of software architecture"
 msgstr ""
+"**Modèle C4:** Un modèle pour *Contexte, Conteneurs, Composants et Code* qui "
+"permet une modélisation allégée de l'architecture logicielle"
 
 #: ../getting_started.md:27
 msgid "Once the model interface is loaded you'll see the modeling interface."
 msgstr ""
+"Une fois que l'interface du modèle est chargée, l'interface de modélisation "
+"s'affiche."
 
 #: ../getting_started.md:29
 msgid ""
 "![The Gaphor main window, with numbers refering to parts of the UI.](images/"
 "getting-started-new-model.png)"
 msgstr ""
+"![La fenêtre principale de Gaphor, avec des numéros se référant à des "
+"parties de l'interface utilisateur](images/getting-started-new-model.png)"
 
 #: ../getting_started.md:29
 msgid "The Gaphor main window, with numbers refering to parts of the UI."
 msgstr ""
+"La fenêtre principale de Gaphor, avec des numéros se référant à des parties "
+"de l'interface utilisateur."
 
 #: ../getting_started.md:31
 msgid ""
 "The layout of the Gaphor interface is divided into four sections, namely:"
 msgstr ""
+"La présentation de l'interface Gaphor est divisée en quatre sections, à "
+"savoir :"
 
 #: ../getting_started.md:34 ../getting_started.md:41
 msgid "Model Browser"
-msgstr ""
+msgstr "Modèle de navigateur"
 
 #: ../getting_started.md:35
 msgid "Diagram Element Toolbox"
-msgstr ""
+msgstr "Boîte à outils pour les éléments de diagramme"
 
 #: ../getting_started.md:36 ../getting_started.md:80
 msgid "Diagrams"
-msgstr ""
+msgstr "Diagrammes"
 
 #: ../getting_started.md:37 ../getting_started.md:143
 msgid "Property Editor"
-msgstr ""
+msgstr "Éditeur de propriétés"
 
 #: ../getting_started.md:39
 msgid "Each section has its own specific function."
-msgstr ""
+msgstr "Chaque section a une fonction spécifique."
 
 #: ../getting_started.md:43
 msgid ""
@@ -2690,6 +2831,13 @@ msgid ""
 "elements of your model from an elided perspective. That is, you can collapse "
 "those model elements that are irrelevant to the task at hand."
 msgstr ""
+"La section Navigateur de modèle de l'interface affiche une vue hiérarchique "
+"de votre modèle. Chaque élément de modèle que vous créez est inséré dans le "
+"navigateur. Cette vue agit comme un arbre dans lequel vous pouvez développer "
+"et réduire les différents éléments de votre modèle. Cela permet de "
+"visualiser facilement les éléments du modèle d'un point de vue simplifié. En "
+"d'autres termes, vous pouvez réduire les éléments du modèle qui ne sont pas "
+"pertinents pour la tâche à accomplir."
 
 #: ../getting_started.md:51
 msgid ""
@@ -2699,6 +2847,13 @@ msgid ""
 "element is expanded. You will also notice the two sub-elements are slightly "
 "indented in relation to _New Model_. The _main_ element is a diagram."
 msgstr ""
+"Dans la figure ci-dessus, vous verrez qu'il y a deux éléments dans le "
+"navigateur de modèle. L'élément racine, Nouveau modèle ( _New Model_), est "
+"un paquetage. Remarquez la petite flèche à côté de _Nouveau modèle_ qui "
+"pointe vers le bas. Elle indique que l'élément est développé. Vous "
+"remarquerez également que les deux sous-éléments sont légèrement en retrait "
+"par rapport à Nouveau modèle (_New Model_). L'élément principal (_principal_)"
+" est un diagramme."
 
 #: ../getting_started.md:58
 msgid ""
@@ -2707,6 +2862,11 @@ msgid ""
 "diagram model elements are shown, add new diagrams and packages, and delete "
 "an element."
 msgstr ""
+"Dans la vue Navigateur de modèle, vous pouvez également cliquer avec le "
+"bouton droit de la souris sur les éléments de modèle pour obtenir un menu "
+"contextuel. Ce menu contextuel vous permet de savoir dans quel diagramme les "
+"éléments de modèle sont affichés, d'ajouter de nouveaux diagrammes et "
+"packages, et de supprimer un élément."
 
 #: ../getting_started.md:63
 msgid ""
@@ -2714,10 +2874,13 @@ msgid ""
 "Elements such as classes and packages can be dragged from the tree view on "
 "the diagrams."
 msgstr ""
+"Un double-clic sur un élément de diagramme l'affiche dans la section "
+"Diagramme. Les éléments tels que les classes et les paquets peuvent être "
+"glissés de l'arborescence vers les diagrammes."
 
 #: ../getting_started.md:67
 msgid "Toolbox"
-msgstr ""
+msgstr "Boîte à outils"
 
 #: ../getting_started.md:69
 msgid ""
@@ -2726,6 +2889,10 @@ msgid ""
 "element is created. The arrow is selected again, so the element can be "
 "manipulated."
 msgstr ""
+"La boîte à outils permet d'ajouter de nouveaux éléments à un diagramme. "
+"Sélectionnez l'élément que vous souhaitez ajouter en cliquant dessus. "
+"Lorsque vous cliquez sur le diagramme, l'élément sélectionné est créé. La "
+"flèche est à nouveau sélectionnée, ce qui permet de manipuler l'élément."
 
 #: ../getting_started.md:73
 msgid ""
@@ -2737,6 +2904,14 @@ msgid ""
 "Finally, it is also possible to drag elements on the Diagram from the "
 "toolbox."
 msgstr ""
+"Les outils peuvent être sélectionnés en cliquant simplement avec le bouton "
+"gauche de la souris. Par défaut, l'outil pointeur est sélectionné après "
+"chaque placement d'élément. Ceci peut être modifié en désactivant l'option « "
+"Réinitialiser l'outil »(Reset tool) dans la fenêtre des préférences. Les "
+"outils peuvent également être sélectionnés par des raccourcis clavier. Le "
+"raccourci clavier peut être affiché sous forme d'infobulle en survolant le "
+"bouton de l'outil dans la boîte à outils. Enfin, il est également possible "
+"de faire glisser des éléments sur le diagramme à partir de la boîte à outils."
 
 #: ../getting_started.md:82
 msgid ""
@@ -2744,14 +2919,18 @@ msgid ""
 "space in the UI because it is where most of the modeling is done. Diagrams "
 "consist of items placed on the diagram. There are two main types of items:"
 msgstr ""
+"La section des diagrammes contient les diagrammes du modèle et occupe le "
+"plus d'espace dans l'interface utilisateur, car c'est là que se fait la "
+"majeure partie de la modélisation. Les diagrammes sont constitués d'éléments "
+"placés sur le diagramme. Il existe deux types principaux d'éléments :"
 
 #: ../getting_started.md:86 ../getting_started.md:93
 msgid "Elements"
-msgstr ""
+msgstr "Éléments"
 
 #: ../getting_started.md:87
 msgid "Relationships"
-msgstr ""
+msgstr "Les relations"
 
 #: ../getting_started.md:89
 msgid ""
@@ -2759,18 +2938,26 @@ msgid ""
 "closed by pressing <kbd>Ctrl</kbd>+<kbd>w</kbd> or left-clicking on the x in "
 "the diagram tab."
 msgstr ""
+"Plusieurs diagrammes peuvent être ouverts simultanément : ils sont affichés "
+"dans des onglets. Les onglets peuvent être fermés en appuyant sur "
+"<kbd>Ctrl</kbd>+<kbd>w</kbd> ouclic-gauche sur le x dans l'onglet diagramme."
 
 #: ../getting_started.md:95
 msgid ""
 "Elements are the shapes that you add to a diagram, and together with "
 "Relations, allow you to build up a model."
 msgstr ""
+"Les éléments sont les formes que vous ajoutez à un diagramme et qui, avec "
+"les relations, vous permettent de construire un modèle."
 
 #: ../getting_started.md:98
 msgid ""
 "To resize an element on the diagram, left-click on the element to select it "
 "and then drag the resize handles that appear at each corner."
 msgstr ""
+"Pour redimensionner un élément du diagramme, cliquez avec le bouton gauche "
+"de la souris sur l'élément pour le sélectionner, puis faites glisser les "
+"poignées de redimensionnement qui apparaissent à chaque coin."
 
 #: ../getting_started.md:101
 msgid ""
@@ -2778,30 +2965,40 @@ msgid ""
 "it by pressing and holding the left mouse button, and moving the mouse "
 "before releasing the button."
 msgstr ""
+"Pour déplacer un élément sur le diagramme, faites-le glisser jusqu'à "
+"l'endroit où vous voulez le placer, en appuyant sur le bouton gauche de la "
+"souris et en le maintenant enfoncé, puis en déplaçant la souris avant de "
+"relâcher le bouton."
 
 #: ../getting_started.md:105
 msgid "Relations"
-msgstr ""
+msgstr "Relations"
 
 #: ../getting_started.md:107
 msgid ""
 "Relations are line-like items that form relationships between elements in "
 "the diagram. Each end of a relation is in one of two states:"
 msgstr ""
+"Les relations sont des éléments en forme de ligne qui relient entre eux les "
+"éléments du diagramme. Chaque extrémité d'une relation se trouve dans l'un "
+"des deux états suivants :"
 
 #: ../getting_started.md:110
 msgid "Connected to an element and the handle turns red"
-msgstr ""
+msgstr "Connecté à un élément, la poignée devient rouge"
 
 #: ../getting_started.md:111
 msgid "Disconnected from an element and the handle turns green"
-msgstr ""
+msgstr "Déconnecté d'un élément et la poignée devient verte"
 
 #: ../getting_started.md:113
 msgid ""
 "If both ends of a relation are disconnected, the relation can be moved by "
 "left-clicking and dragging it."
 msgstr ""
+"Si les deux extrémités d'une relation sont déconnectées, il est possible de "
+"la déplacer en cliquant avec le bouton gauche de la souris et en la faisant "
+"glisser."
 
 #: ../getting_started.md:116
 msgid ""
@@ -2812,10 +3009,17 @@ msgid ""
 "have only one segment. If you drag the segment handle, then it will now have "
 "two segments with the knee of the two segments where the handle was."
 msgstr ""
+"Il est possible d'ajouter un nouveau segment à une relation en glissant la "
+"souris au-dessus puis en cliquant sur le bouton gauche de la souris. Une "
+"poignée verte apparaît alors entre les segments de ligne existants. Faites "
+"glisser la poignée pour ajouter un autre segment. Par exemple, lorsque vous "
+"créez une nouvelle relation, celle-ci ne comporte qu'un seul segment. Si "
+"vous faites glisser la poignée du segment, elle aura alors deux segments, le "
+"point de jonction des deux segments se situe à l'endroit de la poignée."
 
 #: ../getting_started.md:123
 msgid "Copy and Paste"
-msgstr ""
+msgstr "Copier et coller"
 
 #: ../getting_started.md:125
 msgid ""
@@ -2824,28 +3028,40 @@ msgid ""
 "browser. This means that you can show the same _model element_ in different "
 "diagrams."
 msgstr ""
+"Comme indiqué précédemment, Gaphor est un environnement de modélisation. "
+"Cela signifie que chaque _item_ (élément) d'un diagramme est soutenu par un "
+"_model element_ (élément de modèle) trouvé dans le navigateur de modèle. "
+"Cela signifie que vous pouvez afficher le même _model element_(élément de "
+"modèle) dans différents diagrammes."
 
 #: ../getting_started.md:129
 msgid ""
 "<kbd>Ctrl</kbd>+<kbd>v</kbd> is used to paste _only_ the presentation "
 "element."
 msgstr ""
+"<kbd>Ctrl</kbd>+<kbd>v</kbd> est utilisé pour coller _uniquement_ l'élément "
+"de présentation."
 
 #: ../getting_started.md:130
 msgid ""
 "<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>v</kbd> is used to paste a new "
 "presentation with a new model element."
 msgstr ""
+"<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>v</kbd> est utilisé pour coller une "
+"nouvelle présentation avec un nouvel élément de modèle."
 
 #: ../getting_started.md:133
 msgid ""
 "<kbd>Ctrl</kbd>+<kbd>v</kbd> does a \"shallow\" paste. <kbd>Ctrl</"
 "kbd>+<kbd>Shift</kbd>+<kbd>v</kbd> does a \"deep\" paste."
 msgstr ""
+"<kbd>Ctrl</kbd>+<kbd>v</kbd> effectue un collage « partiel ».. "
+"<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>v</kbd> effectue un collage « complet "
+"»."
 
 #: ../getting_started.md:136
 msgid "Undo and Redo"
-msgstr ""
+msgstr "Annuler et refaire"
 
 #: ../getting_started.md:138
 msgid ""
@@ -2854,6 +3070,11 @@ msgid ""
 "kbd>+<kbd>Shift</kbd>+<kbd>z</kbd> or press the forward arrow at the top of "
 "the Property Editor."
 msgstr ""
+"Annuler une modification appuyez sur <kbd>Ctrl</kbd>+<kbd>z</kbd> ou cliquer "
+"avec le bouton gauche de la souris sur la flèche arrière en haut de "
+"l'éditeur de propriétés. Pour rétablir une modification, appuyez sur "
+"<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>z</kbd> ou appuyez sur la flèche vers "
+"l'avant en haut de l'éditeur de propriétés."
 
 #: ../getting_started.md:145
 msgid ""
@@ -2864,18 +3085,25 @@ msgid ""
 "[Icon for showing and hiding the Property Editor.](images/sidebar-show-right-"
 "symbolic.svg) icon in the header bar."
 msgstr ""
+"L'éditeur de propriétés est présent sur le côté droit des diagrammes. "
+"Lorsqu'aucun élément n'est sélectionné dans le diagramme, il vous montre "
+"quelques trucs et astuces. Lorsqu'un élément est sélectionné sur le "
+"diagramme, il contient les détails de l'élément comme le nom, les attributs "
+"et les stéréotypes. Il peut être ouvert avec <kbd>F9</kbd> et l'icône !["
+"Icône pour afficher et masquer l'éditeur de propriétés.](images/sidebar-show-"
+"right-symbolic.svg) dans la barre d'en-tête."
 
 #: ../getting_started.md:145
 msgid "Icon for showing and hiding the Property Editor."
-msgstr ""
+msgstr "Icône pour afficher et masquer l'éditeur de propriétés."
 
 #: ../getting_started.md:152
 msgid "The properties that are shown depend on the item that is selected."
-msgstr ""
+msgstr "Les propriétés affichées dépendent de l’élément sélectionné."
 
 #: ../getting_started.md:154
 msgid "Model Preferences"
-msgstr ""
+msgstr "Préférences du modèle"
 
 #: ../getting_started.md:156
 msgid ""
@@ -2883,10 +3111,14 @@ msgid ""
 "with wrench icon for model specific configuration.](images/document-"
 "properties-symbolic.svg) button."
 msgstr ""
+"L'éditeur de propriétés contient également les préférences du modèle : "
+"cliquer sur le bouton ![Document avec l'icône de clé pour la configuration "
+"spécifique au modèle.](images/document-properties-symbolic.svg)."
 
 #: ../getting_started.md:156
 msgid "Document with wrench icon for model specific configuration."
 msgstr ""
+"Document avec icône de la clé pour la configuration spécifique au modèle."
 
 #: ../getting_started.md:159
 msgid "Reset Tool Automatically"
@@ -2899,10 +3131,14 @@ msgid ""
 "placed by clicking in the diagram until another element is selected in the "
 "toolbox."
 msgstr ""
+"Par défaut, l'outil pointeur est sélectionné après avoir placé un élément de "
+"la boîte à outils. Si cette option est désactivée, le même type d'élément "
+"sera placé en cliquant dans le diagramme jusqu'à ce qu'un autre élément soit "
+"sélectionné dans la boîte à outils."
 
 #: ../getting_started.md:163
 msgid "Remove Unused Elements"
-msgstr ""
+msgstr "Supprimer les éléments inutilisés"
 
 #: ../getting_started.md:165
 msgid ""
@@ -2910,67 +3146,84 @@ msgid ""
 "removed. If this option is turned off, elements remain in the model and may "
 "be found in the model browser."
 msgstr ""
+"Par défaut, les éléments qui ne font partie d'aucun diagramme du modèle sont "
+"supprimés. Si cette option est désactivée, les éléments restent dans le "
+"modèle et peuvent être retrouvés dans le navigateur de modèles."
 
 #: ../getting_started.md:167
 msgid "Diagram Language"
 msgstr "Langage de diagramme"
 
 #: ../getting_started.md:169
+#, fuzzy
 msgid ""
 "The diagram language modifier is only applicable to the loaded model and how "
 "it is shown in the diagram. The diagram language setting is saved as part of "
 "the model and defaults to English."
 msgstr ""
+"Le sélecteur de langue du diagramme s'applique uniquement au modèle chargé "
+"et à la manière dont il est affiché dans le diagramme. Le paramètre de "
+"langue du diagramme est enregistré dans le cadre du modèle et est défini par "
+"défaut sur l'anglais."
 
 #: ../getting_started.md:171
 msgid "The UI language of Gaphor is controlled by the operating system."
 msgstr ""
+"La langue de l'interface utilisateur de Gaphor est contrôlée par le système "
+"d'exploitation."
 
 #: ../getting_started.md:174
 msgid ""
 "Gaphor considers the ``LANG`` environment variable on Linux, Windows and "
 "macOS."
 msgstr ""
+"Gaphor utilise la variable d'environnement « LANG » sur Linux, Windows et "
+"macOS."
 
 #: ../getting_started.md:176
 msgid ""
 "On Windows and macOS it can be set independently of the operating system's "
 "language settings to a different language."
 msgstr ""
+"Sous Windows et macOS, elle peut être réglée sur une autre langue, "
+"indépendamment des paramètres linguistiques du système d'exploitation."
 
 #: ../getting_started.md:178
 msgid "Style Sheet"
 msgstr "Feuille de style"
 
 #: ../getting_started.md:180
+#, fuzzy
 msgid ""
 "The [style sheet](style_sheets) allows to change the visual appearance of "
 "diagrams and model elements."
 msgstr ""
+"La [style_sheet](feuille de style) permet de modifier l'apparence visuelle "
+"des diagrammes et des éléments de modèle."
 
 #: ../index.rst:29
 msgid "Getting Started"
-msgstr ""
+msgstr "Pour commencer"
 
 #: ../index.rst:38
 msgid "Features"
-msgstr ""
+msgstr "Caractéristiques"
 
 #: ../index.rst:49
 msgid "Development"
-msgstr ""
+msgstr "Développement"
 
 #: ../index.rst:59 ../index.rst:58
 msgid "Modeling languages"
-msgstr ""
+msgstr "Langages de modélisation"
 
 #: ../index.rst:69 ../index.rst:68
 msgid "Concepts"
-msgstr ""
+msgstr "Concepts"
 
 #: ../index.rst:79 ../index.rst:78
 msgid "Internals"
-msgstr ""
+msgstr "Fonctionnements internes"
 
 #: ../index.rst:2
 msgid "About Gaphor"
@@ -2978,7 +3231,7 @@ msgstr ""
 
 #: ../index.rst:6
 msgid "The documentation is up to date for Gaphor |version|"
-msgstr ""
+msgstr "La documentation est à jour pour Gaphor (anglaise) |version|"
 
 #: ../index.rst:8
 msgid ""
@@ -2987,12 +3240,18 @@ msgid ""
 "fully-compliant UML 2 data model, so it is much more than a picture drawing "
 "tool."
 msgstr ""
+"Gaphor est une application de modélisation UML et SysML écrite en Python. Il "
+"est conçu pour être facile à utiliser, tout en étant puissant. Gaphor met en "
+"œuvre un modèle de données UML 2 entièrement conforme, ce qui en fait bien "
+"plus qu'un outil de schématisation."
 
 #: ../index.rst:13
 msgid ""
 "You can use Gaphor to quickly visualize different aspects of a system as "
 "well as create complete, highly complex models."
 msgstr ""
+"Vous pouvez utiliser Gaphor pour visualiser rapidement différents aspects "
+"d'un système ainsi que pour créer des modèles complets et très complexes."
 
 #: ../index.rst:18
 msgid ""
@@ -3001,26 +3260,35 @@ msgid ""
 "code and issue tracker can be found on `GitHub <https://github.com/gaphor/"
 "gaphor>`_."
 msgstr ""
+"Gaphor est 100% Open source, disponible sous une licence conviviale `Apache "
+"2 <https://github.com/gaphor/gaphor/blob/main/LICENSES/Apache-2.0.txt>`_. Le "
+"code et le gestionnaire de problèmes peuvent être trouvés sur `GitHub "
+"<https://github.com/gaphor/gaphor>`_."
 
 #: ../index.rst:21
+#, fuzzy
 msgid "What are you waiting for? :doc:`Let's get started <getting_started>`!"
-msgstr ""
+msgstr "Qu'attendez-vous ? :doc:`Commençons <getting_started>` !"
 
 #: ../index.rst:23
 msgid ""
 "For download instructions, and the blog, please visit the `Gaphor Website "
 "<https://gaphor.org>`_."
 msgstr ""
+"Pour les instructions de téléchargement et le blog, veuillez visiter le site "
+"Web de Gaphor <https://gaphor.org>`_."
 
 #: ../index.rst:26
 msgid ""
 "Did you know Gaphor has excellent integration with :doc:`Sphinx <sphinx>` "
 "and :doc:`Jupyter notebooks <scripting>`?"
 msgstr ""
+"Saviez-vous que Gaphor a une excellente intégration avec :doc:`Sphinx "
+"<sphinx>` et :doc:`Jupyter notebooks <scripting>` ?"
 
 #: ../linux.md:1
 msgid "Gaphor on Linux"
-msgstr ""
+msgstr "Gaphor avec Linux"
 
 #: ../linux.md:3
 msgid ""
@@ -3028,38 +3296,49 @@ msgid ""
 "packages. Check out the [Gaphor download page](https://gaphor.org/download/"
 "#linux) for details."
 msgstr ""
+"Gaphor peut être installé sous forme de Flatpak sous Linux, certaines "
+"distributions fournissent des paquets. Consultez la [page de téléchargement "
+"de Gaphor] (https://gaphor.org/download/#linux) pour plus de détails."
 
 #: ../linux.md:7 ../macos.md:5 ../windows.md:7
 msgid ""
 "Older releases are available from [GitHub](https://github.com/gaphor/gaphor/"
 "releases)."
 msgstr ""
+"Les versions antérieures sont disponibles sur [GitHub] (https://github.com/"
+"gaphor/gaphor/releases)."
 
 #: ../linux.md:9 ../macos.md:7 ../windows.md:9
 msgid ""
 "[CI builds](https://github.com/gaphor/gaphor/actions/workflows/full-build."
 "yml) are also available."
 msgstr ""
+"[CI builds] (https://github.com/gaphor/gaphor/actions/workflows/full-build."
+"yml) sont également disponibles."
 
 #: ../linux.md:11 ../macos.md:10 ../windows.md:11
 msgid "Development Environment"
-msgstr ""
+msgstr "Environnement de développement"
 
 #: ../linux.md:13
 msgid "There are two ways to set up a development environment:"
 msgstr ""
+"Il existe deux façons de mettre en place un environnement de développement :"
 
 #: ../linux.md:15
+#, fuzzy
 msgid "[GNOME Builder](#gnome-builder), ideal for “drive by” contributions."
 msgstr ""
+"[GNOME Builder](#gnome-builder), idéal pour les contributions « ponctuelles "
+"»."
 
 #: ../linux.md:16
 msgid "[A local environment](#a-local-environment)."
-msgstr ""
+msgstr "[Un environnement local] (#a-local-environment)."
 
 #: ../linux.md:18
 msgid "GNOME Builder"
-msgstr ""
+msgstr "Constructeur GNOME"
 
 #: ../linux.md:20
 msgid ""
@@ -3069,10 +3348,16 @@ msgid ""
 "_Build Profile_ is set to `org.gaphor.Gaphor.json`. If so, hit the _Run_ "
 "button to start the application."
 msgstr ""
+"Ouvrez [GNOME Builder](https://flathub.org/apps/details/org.gnome.Builder) "
+"43 ou plus récent, [clonez le dépôt](https://help.github.com/en/github/"
+"creating-cloning-and-archiving-repositories/cloning-a-repository). Vérifiez "
+"que le _Build Profile_ (Profil de construction) est bien `org.gaphor.Gaphor."
+"json`. Si c'est le cas, cliquez sur le bouton _Run_ pour démarrer "
+"l'application."
 
 #: ../linux.md:25
 msgid "A Local Environment"
-msgstr ""
+msgstr "Un environnement local"
 
 #: ../linux.md:27
 msgid ""
@@ -3084,12 +3369,23 @@ msgid ""
 "stable version without interfering with your system-wide Python version, we "
 "recommend that you install [pyenv](https://github.com/pyenv/pyenv)."
 msgstr ""
+"Pour mettre en place un environnement de développement sous Linux, vous "
+"devez disposer d'une version assez récente de la distribution Linux. Par "
+"exemple, la dernière version LTS d'Ubuntu, une version plus récente d'Arch, "
+"de Debian Testing ou de SUSE Tumbleweed, ou une version similaire. Gaphor "
+"dépend de versions plus récentes de GTK, et nous ne testons pas la "
+"compatibilité ascendante. Vous aurez également besoin de la dernière version "
+"stable de Python. Afin d'obtenir la dernière version stable sans interférer "
+"avec la version de Python de votre système, nous vous recommandons "
+"d'installer [pyenv] (https://github.com/pyenv/pyenv)."
 
 #: ../linux.md:35
 msgid ""
 "Install the pyenv [prerequisites](https://github.com/pyenv/pyenv/wiki/Common-"
 "build-problems) first, and then install pyenv:"
 msgstr ""
+"Installez d'abord les [prérequis] de pyenv (https://github.com/pyenv/pyenv/"
+"wiki/Common-build-problems), puis installez pyenv :"
 
 #: ../linux.md:42
 msgid ""
@@ -3097,24 +3393,34 @@ msgid ""
 "to install the commands in your shell's rc file. Next install the latest "
 "version of Python by executing:"
 msgstr ""
+"Assurez-vous de suivre les instructions à la fin du script d'installation "
+"pour installer les commandes dans le fichier rc de votre shell. Installez "
+"ensuite la dernière version de Python en exécutant :"
 
 #: ../linux.md:50
 msgid ""
 "Where 3.x.x is replaced by the latest stable version of Python (pyenv should "
 "let you tab-complete available versions)."
 msgstr ""
+"Où 3.x.x est remplacé par la dernière version stable de Python (pyenv "
+"devrait vous permettre de sélectionner les versions disponibles à l'aide de "
+"tabulations)."
 
 #: ../linux.md:52
 msgid ""
 "Next install the Gaphor prerequisites by installing the gobject "
 "introspection and cairo build dependencies, for example, in Ubuntu execute:"
 msgstr ""
+"Installez ensuite les prérequis de Gaphor en installant les dépendances "
+"gobject introspection et cairo build, par exemple, dans Ubuntu execute :"
 
 #: ../linux.md:61 ../macos.md:18
 msgid ""
 "Install [Poetry](https://python-poetry.org) using [pipx](https://pypa.github."
 "io/pipx/):"
 msgstr ""
+"Installer [Poetry](https://python-poetry.org) en utilisant "
+"[pipx](https://pypa.github.io/pipx/) :"
 
 #: ../linux.md:66
 msgid ""
@@ -3122,21 +3428,26 @@ msgid ""
 "cloning-and-archiving-repositories/cloning-a-repository), after which you "
 "need to execute the following consecutive commands:"
 msgstr ""
+"Ensuite, [clonez le dépôt] (https://help.github.com/en/github/"
+"creating-cloning-and-archiving-repositories/cloning-a-repository), après "
+"quoi vous devez exécuter les commandes suivantes :"
 
 #: ../linux.md:77 ../macos.md:30
 msgid "Now, you can run gaphor as"
-msgstr ""
+msgstr "Maintenant, vous pouvez exécuter gaphor en tant que"
 
 #: ../linux.md:82 ../linux.md:79
 msgid ""
 "NOTE: Gaphor requires GTK 4. It works best with GTK >=4.8 and libadwaita "
 ">=1.2."
 msgstr ""
+"NOTE : Gaphor nécessite GTK 4. Il fonctionne mieux avec GTK >=4.8 et "
+"libadwaita >=1.2."
 
 #: ../linux.md:84 ../macos.md:44 ../windows.md:169 ../linux.md:81
 #: ../macos.md:39 ../windows.md:173
 msgid "Debugging using Visual Studio Code"
-msgstr ""
+msgstr "Débogage à l'aide de Visual Studio Code"
 
 #: ../linux.md:86 ../linux.md:83
 msgid ""
@@ -3144,20 +3455,25 @@ msgid ""
 "containing `pyproject.toml`). You'll need to have the Python extension "
 "installed."
 msgstr ""
+"Avant de commencer à déboguer, vous devez ouvrir Gaphor dans vscode (le "
+"dossier contenant `pyproject.toml`). Vous devez avoir installé l'extension "
+"Python."
 
 #: ../linux.md:89 ../macos.md:49 ../linux.md:86 ../macos.md:44
 msgid "Create a file `.vscode/launch.json` with the following content:"
-msgstr ""
+msgstr "Créez un fichier `.vscode/launch.json` avec le contenu suivant :"
 
 #: ../linux.md:109 ../linux.md:106
 msgid ""
 "`GDK_BACKEND` is added since VSCode by default uses XWayland (the X11 "
 "emulator)."
 msgstr ""
+"`GDK_BACKEND` est ajouté car VSCode utilise par défaut XWayland (l'émulateur "
+"X11)."
 
 #: ../linux.md:111 ../linux.md:108
 msgid "Create a Flatpak Package"
-msgstr ""
+msgstr "Créer un paquet Flatpak"
 
 #: ../linux.md:113
 msgid ""
@@ -3166,6 +3482,11 @@ msgid ""
 "and package management for Linux. It offers a sandbox environment in which "
 "users can run application software in isolation from the rest of the system."
 msgstr ""
+"La principale méthode de package de Gaphor pour Linux est un package "
+"Flatpak. [Flatpak](https://flatpak.org) est un utilitaire logiciel de "
+"déploiement de logiciels et de gestion de packages pour Linux. Il offre un "
+"environnement sandbox dans lequel les utilisateurs peuvent exécuter des "
+"logiciels d'application indépendamment du reste du système."
 
 #: ../linux.md:118 ../linux.md:115
 msgid ""
@@ -3173,64 +3494,75 @@ msgid ""
 "building of the image is done at the [Gaphor Flathub repository](https://"
 "github.com/flathub/org.gaphor.Gaphor)."
 msgstr ""
+"Nous distribuons le Flatpak officiel en utilisant [Flathub](https://flathub."
+"org), et la construction de l'image est effectuée dans le [dépôt Gaphor "
+"Flathub](https://github.com/flathub/org.gaphor.Gaphor)."
 
 #: ../linux.md:122 ../linux.md:119
 msgid "[Install Flatpak](https://flatpak.org/setup)"
-msgstr ""
+msgstr "[Installer Flatpak](https://flatpak.org/setup)"
 
 #: ../linux.md:124 ../linux.md:121
 msgid "Install flatpak-builder"
-msgstr ""
+msgstr "Installer flatpak-builder"
 
 #: ../linux.md:128 ../linux.md:125
 msgid "Install the GNOME SDK"
-msgstr ""
+msgstr "Installer le SDK GNOME"
 
 #: ../linux.md:132 ../linux.md:129
 msgid "Clone the Flathub repository and install the necessary SDK:"
-msgstr ""
+msgstr "Clonez le dépot Flathub et installez le SDK nécessaire :"
 
 #: ../linux.md:138 ../linux.md:135
 msgid "Build Gaphor Flatpak"
-msgstr ""
+msgstr "Construire Gaphor Flatpak"
 
 #: ../linux.md:142 ../linux.md:139
 msgid "Install the Flatpak"
-msgstr ""
+msgstr "Installer le Flatpak"
 
 #: ../linux.md:146 ../linux.md:143
 msgid "Linux Distribution Packages"
-msgstr ""
+msgstr "Paquets de distribution Linux"
 
 #: ../linux.md:148 ../linux.md:145
 msgid ""
 "Examples of Gaphor and Gaphas RPM spec files can be found in [PLD Linux]"
 "(https://www.pld-linux.org/) [repository](https://github.com/pld-linux/):"
 msgstr ""
+"Des exemples de fichiers de spécifications Gaphor et Gaphas RPM peuvent être "
+"trouvés dans [PLD Linux](https://www.pld-linux.org/) [dépôt](https://github."
+"com/pld-linux/) :"
 
 #: ../linux.md:152 ../linux.md:149
 msgid "https://github.com/pld-linux/python-gaphas"
-msgstr ""
+msgstr "https://github.com/pld-linux/python-gaphas"
 
 #: ../linux.md:153 ../linux.md:150
 msgid "https://github.com/pld-linux/gaphor"
-msgstr ""
+msgstr "https://github.com/pld-linux/gaphor"
 
 #: ../linux.md:155 ../linux.md:152
 msgid ""
 "There is also an [Arch User Repository (AUR) for Gaphor](https://aur."
 "archlinux.org/packages/python-gaphor) available for Arch users."
 msgstr ""
+"Il existe également un [Arch User Repository (AUR) for Gaphor] (https://aur."
+"archlinux.org/packages/python-gaphor) disponible pour les utilisateurs "
+"d'Arch."
 
 #: ../linux.md:159 ../linux.md:156
 msgid ""
 "Please, do not hesitate to contact us if you need help to create a Linux "
 "package for Gaphor or Gaphas."
 msgstr ""
+"N'hésitez pas à nous contacter si vous avez besoin d'aide pour créer un "
+"paquet Linux pour Gaphor ou Gaphas."
 
 #: ../macos.md:1
 msgid "Gaphor on macOS"
-msgstr ""
+msgstr "Gaphor sur macOS"
 
 #: ../macos.md:3
 msgid ""
@@ -3238,20 +3570,23 @@ msgid ""
 "page](https://gaphor.org/download#macos). Gaphor can also be installed as a "
 "[Homebrew cask](https://formulae.brew.sh/cask/gaphor)."
 msgstr ""
+"La dernière version de Gaphor peut être téléchargée à partir de la [page de "
+"téléchargement de Gaphor] (https://gaphor.org/download#macos). Gaphor peut "
+"également être installé en tant que [Homebrew cask] (https://formulae.brew."
+"sh/cask/gaphor)."
 
 #: ../macos.md:12
-#, fuzzy
 msgid "To set up a development environment with macOS:"
 msgstr ""
-"Mise à jour des instructions relatives à l'environnement de développement"
+"Mise à jour des instructions relatives à l'environnement de développement :"
 
 #: ../macos.md:13
 msgid "Install [Homebrew](https://brew.sh)"
-msgstr ""
+msgstr "Installer [Homebrew](https://brew.sh)"
 
 #: ../macos.md:14
 msgid "Open a terminal and execute:"
-msgstr ""
+msgstr "Ouvrez un terminal et exécutez :"
 
 #: ../macos.md:23
 msgid ""
@@ -3260,6 +3595,10 @@ msgid ""
 "can execute the following consecutive commands to install the poetry "
 "environment:"
 msgstr ""
+"Ensuite, [clonez le dépôt] (https://help.github.com/en/github/"
+"creating-cloning-and-archiving-repositories/cloning-a-repository), après "
+"quoi vous pouvez exécuter les commandes suivantes pour installer "
+"l'environnement de poésie :"
 
 #: ../macos.md:35
 msgid ""
@@ -3267,6 +3606,9 @@ msgid ""
 "you may want to install libffi from Homebrew, and set the following "
 "environment variable and run `poetry install` again:"
 msgstr ""
+"Si PyGObject ne compile pas et se plaint d'un fichier `ffi.h` manquant, vous "
+"pouvez installer la librairie libffi depuis Homebrew, définir la variable "
+"d'environnement suivante et relancer `poetry install` :"
 
 #: ../macos.md:46 ../macos.md:41
 msgid ""
@@ -3274,10 +3616,13 @@ msgid ""
 "containing `pyproject.toml`). You'll need to have the Python extension "
 "installed."
 msgstr ""
+"Avant de commencer à déboguer, vous devez ouvrir Gaphor dans VSCode (le "
+"dossier contenant `pyproject.toml`). Vous devez avoir installé l'extension "
+"Python."
 
 #: ../macos.md:66 ../macos.md:61
 msgid "Packaging for macOS"
-msgstr ""
+msgstr "Conditionnement pour macOS"
 
 #: ../macos.md:68 ../macos.md:63
 msgid ""
@@ -3285,19 +3630,26 @@ msgid ""
 "[PyInstaller](https://pyinstaller.org) which analyzes Gaphor to find all the "
 "dependencies and bundle them in to a single folder."
 msgstr ""
+"Afin de créer un paquet d'installation exe pour macOS, nous utilisons "
+"[PyInstaller] (https://pyinstaller.org) qui analyse Gaphor pour trouver "
+"toutes les dépendances et les regrouper dans un seul dossier."
 
 #: ../macos.md:72 ../macos.md:67
 msgid "Follow the instructions for settings up a development environment above"
 msgstr ""
+"Suivez les instructions relatives à la mise en place d'un environnement de "
+"développement ci-dessus"
 
 #: ../macos.md:73 ../macos.md:68
 msgid ""
 "Open a terminal and execute the following from the repository directory:"
 msgstr ""
+"Ouvrez un terminal et exécutez la commande suivante à partir du répertoire "
+"du référentiel :"
 
 #: ../merge_conflicts.md:1
 msgid "Resolve Merge Conflicts"
-msgstr ""
+msgstr "Résoudre les conflits de fusion"
 
 #: ../merge_conflicts.md:3
 msgid ""
@@ -3305,6 +3657,10 @@ msgid ""
 "else has also made changes, there’s a fair chance you'll end up with a merge "
 "conflict."
 msgstr ""
+"Supposons que vous travailliez sur un modèle. Si vous apportez une "
+"modification alors que quelqu'un d'autre a également apporté des "
+"changements, il y a de fortes chances que vous provoquez un conflit de "
+"fusion."
 
 #: ../merge_conflicts.md:6
 msgid ""
@@ -3313,6 +3669,10 @@ msgid ""
 "persisted graph of objects, merging changes is not as simple as opening a "
 "text editor."
 msgstr ""
+"Gaphor s'efforce de réduire au maximum les modifications apportées à un "
+"modèle : tous les éléments sont stockés dans le même ordre. Cependant, étant "
+"donné qu'un modèle Gaphor est un graphe persistant d'objets, la fusion des "
+"modifications n'est pas aussi simple qu'ouvrir un éditeur de texte."
 
 #: ../merge_conflicts.md:10
 msgid ""
@@ -3322,16 +3682,26 @@ msgid ""
 "will offer the option to open the current model, the incoming model or merge "
 "changes manually via the Merge Editor."
 msgstr ""
+"Depuis Gaphor 2.18, Gaphor est également capable de fusionner des modèles. "
+"Une fois qu'un conflit de fusion a été détecté (c'est-à-dire lorsque le "
+"fichier de modèle contient les marqueurs de résolution de conflit git "
+"`<<<<<<<`, `=======`, et `>>>>>>>`), Gaphor offrira l'option d'ouvrir le "
+"modèle actuel, le modèle entrant ou de fusionner les changements "
+"manuellement via l'éditeur de fusion."
 
 #: ../merge_conflicts.md:15
 msgid ""
 "![A dialog showing options on how to deal with a merge conflict.](images/"
 "merge-dialog.png)"
 msgstr ""
+"![Une boîte de dialogue montrant des options sur la façon de traiter un "
+"conflit de fusion](images/merge-dialog.png)"
 
 #: ../merge_conflicts.md:15
 msgid "A dialog showing options on how to deal with a merge conflict."
 msgstr ""
+"Une boîte de dialogue affiche des options sur la manière de traiter un "
+"conflit de fusion."
 
 #: ../merge_conflicts.md:17
 msgid ""
@@ -3340,28 +3710,38 @@ msgid ""
 "calculated. Those changes are stored as _pending change_ objects in the "
 "model."
 msgstr ""
+"Si vous choisissez *Ouvrir l'éditeur de fusion*, les deux modèles seront "
+"chargés. Le modèle actuel reste tel quel. En outre, les modifications "
+"apportées au modèle entrant sont calculées. Ces modifications sont stockées "
+"en tant qu'objets _pending change_ (changement en attente) dans le modèle."
 
 #: ../merge_conflicts.md:21
 msgid ""
 "Pending changes are part of the model, you can save the model with changes "
 "and resolve those at a later point."
 msgstr ""
+"Les modifications en attente font partie du modèle, vous pouvez enregistrer "
+"le modèle avec les modifications et les résoudre ultérieurement."
 
 #: ../merge_conflicts.md:24
 msgid ""
 "The Merge Editor is shown on the right side, replacing the (normal) Property "
 "Editor."
 msgstr ""
+"L'éditeur de fusion s'affiche à droite, remplaçant l'éditeur de propriétés "
+"(normal)."
 
 #: ../merge_conflicts.md:26
 msgid ""
 "![The Gaphor main window, showing the merge editor on the right.](images/"
 "merge-conflict-window.png)"
 msgstr ""
+"![La fenêtre principale de Gaphor, avec l'éditeur de fusion à droite](images/"
+"merge-conflict-window.png)"
 
 #: ../merge_conflicts.md:26
 msgid "The Gaphor main window, showing the merge editor on the right."
-msgstr ""
+msgstr "La fenêtre principale de Gaphor, avec l'éditeur de fusion à droite."
 
 #: ../merge_conflicts.md:28
 msgid ""
@@ -3369,28 +3749,39 @@ msgid ""
 "change, all changes listed as children are also applied. Once changes are "
 "applied, they can only be reverted by undoing the change (hit _Undo_)."
 msgstr ""
+"Les actions de fusion sont regroupées par diagramme, dans la mesure du "
+"possible. Lorsque vous appliquez une modification, toutes les modifications "
+"répertoriées comme enfants sont également appliquées. Une fois la "
+"modification appliquée, il n'est plus possible de l'annuler qu'en "
+"rétablissant la modification précédente (appuyez sur _Undo_)."
 
 #: ../merge_conflicts.md:33
 msgid ""
 "The Merge Editor replaces the Property Editor, as long as there are pending "
 "changes in the model."
 msgstr ""
+"L'éditeur de fusion remplace l'éditeur de propriétés tant que des "
+"modifications sont en cours dans le modèle."
 
 #: ../merge_conflicts.md:35
 msgid ""
 "It is concidered good practice to resolve the merge conflict before you "
 "continue modeling."
 msgstr ""
+"Une bonne pratique consiste à résoudre le conflit de fusion avant de "
+"poursuivre la modélisation."
 
 #: ../merge_conflicts.md:38
 msgid ""
 "When all conflicts have been resolved, press *Resolve* to finish merge "
 "conflict resolution."
 msgstr ""
+"Lorsque tous les conflits ont été résolus, appuyez sur *Resolve* pour "
+"terminer la résolution des conflits de fusion."
 
 #: ../modeling_language.md:1
 msgid "Modeling Languages"
-msgstr ""
+msgstr "Langages de modélisation"
 
 #: ../modeling_language.md:3
 msgid ""
@@ -3398,12 +3789,17 @@ msgid ""
 "allows for development of separate modeling languages separate from the "
 "Gaphor core application."
 msgstr ""
+"Depuis la version 2.0, Gaphor supporte le concept de langages de "
+"modélisation. Cela permet de développer des langages de modélisation "
+"distincts de l'application principale de Gaphor."
 
 #: ../modeling_language.md:7
 msgid ""
 "The main language was, and will be UML. Gaphor now also supports a subset of "
 "SysML, RAAML and the C4 model."
 msgstr ""
+"Le langage principal était et reste UML. Gaphor prend désormais également en "
+"charge un sous-ensemble de SysML, RAAML et le modèle C4."
 
 #: ../modeling_language.md:10
 msgid ""
@@ -3411,6 +3807,10 @@ msgid ""
 "abc.ModelingLanguage` abstract base class. The modeling language should be "
 "registered as a `gaphor.modelinglanguages` entry point."
 msgstr ""
+"Un langage de modélisation dans Gaphor est défini par une classe "
+"implémentant la classe de base abstraite `gaphor.abc.ModelingLanguage`. Le "
+"langage de modélisation doit être enregistré en tant que point d'entrée "
+"`gaphor.modelinglanguages`."
 
 #: ../modeling_language.md:14
 msgid ""
@@ -3420,56 +3820,76 @@ msgid ""
 "there. Parts of functionality will be implemented by registering handlers to "
 "a set of generic functions."
 msgstr ""
+"L'interface `ModelingLanguage` (Langage de modélisation) est assez minimale. "
+"Elle permet à d'autres services de rechercher des éléments et des éléments "
+"de diagramme, ainsi qu'une boîte à outils et des types de diagramme. "
+"Cependant, les responsabilités d'un langage de modélisation ne s'arrêtent "
+"pas là. Certaines fonctionnalités seront mises en œuvre en enregistrant des "
+"gestionnaires pour un ensemble de fonctions génériques."
 
 #: ../modeling_language.md:20
 msgid ""
 "But let's not get ahead of ourselves. What is the functionality a modeling "
 "language implementation can offer?"
 msgstr ""
+"Mais n'allons pas trop vite en besogne. Quelles fonctionnalités une "
+"implémentation de langage de modélisation peut-elle offrir ?"
 
 #: ../modeling_language.md:23
 msgid ""
 "Three functionalities are exposed by a [`ModelingLanguage` instance]"
 "(#modeling-language):"
 msgstr ""
+"Trois fonctionnalités sont exposées par une instance de [`ModelingLanguage`] "
+"(#modeling-language) :"
 
 #: ../modeling_language.md:25 ../modeling_language.md:23
 msgid "A data model (elements) and diagram items"
-msgstr ""
+msgstr "Un modèle de données (éléments) et des éléments de diagramme"
 
 #: ../modeling_language.md:26 ../modeling_language.md:24
 msgid "Diagram types"
-msgstr ""
+msgstr "Types de diagrammes"
 
 #: ../modeling_language.md:27 ../modeling_language.md:25
 msgid "A toolbox definition"
-msgstr ""
+msgstr "Une définition de la boîte à outils"
 
 #: ../modeling_language.md:29
 msgid ""
 "Other functionalities can be extended by adding handlers to the respective "
 "generic functions:"
 msgstr ""
+"D'autres fonctionnalités peuvent être étendues en ajoutant des gestionnaires "
+"aux fonctions génériques correspondantes :"
 
 #: ../modeling_language.md:32 ../modeling_language.md:26
 msgid "[Connectors](#connectors), allow diagram items to connect"
 msgstr ""
+"[Connecteurs](#connectors), permet de connecter des éléments de diagramme"
 
 #: ../modeling_language.md:33 ../modeling_language.md:27
 msgid ""
 "[Format/parse](#format-and-parse) model elements to and from a textual "
 "representation"
 msgstr ""
+"[Formater/analyser](#format-and-parse) modéliser des éléments vers et à "
+"partir d'une représentation textuelle"
 
 #: ../modeling_language.md:34 ../modeling_language.md:28
 msgid ""
 "[Copy/paste](#copy-and-paste) behavior when element copying is not trivial, "
 "for example with more than one element is involved"
 msgstr ""
+"Comportement de [copier/coller](#copy-and-paste) lorsque la copie d'un "
+"élément n'est pas triviale, par exemple lorsque plusieurs éléments sont "
+"impliqués"
 
 #: ../modeling_language.md:36 ../modeling_language.md:30
 msgid "[Grouping](#grouping), allow elements to be nested in one another"
 msgstr ""
+"[Regroupement](#grouping), permet d'imbriquer les éléments les uns dans les "
+"autres"
 
 #: ../modeling_language.md:37 ../modeling_language.md:31
 msgid ""
