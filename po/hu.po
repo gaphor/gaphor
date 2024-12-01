@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2024-11-27 15:43-0500\n"
-"PO-Revision-Date: 2024-09-07 17:09+0000\n"
+"PO-Revision-Date: 2024-12-02 01:00+0000\n"
 "Last-Translator: ovari <ovari123@zoho.com>\n"
+"Language-Team: Hungarian <https://hosted.weblate.org/projects/gaphor/gaphor/"
+"hu/>\n"
 "Language: hu\n"
-"Language-Team: Hungarian "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/hu/>\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.9-dev\n"
 "Generated-By: Babel 2.16.0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:23 gaphor/C4Model/toolbox.py:67
@@ -346,7 +347,7 @@ msgstr "Vonatkozó"
 
 #: gaphor/SysML/diagramtype.py:43
 msgid "Can’t create “{name}” nested under a “{elem}”"
-msgstr ""
+msgstr "A(z) „{elem}” alá ágyazott „{name}” nem hozható létre"
 
 #: gaphor/SysML/modelinglanguage.py:24 gaphor/ui/greeter.py:41
 msgid "SysML"
@@ -416,9 +417,8 @@ msgid "Text"
 msgstr "Szöveg"
 
 #: gaphor/SysML/propertypages.ui:258
-#, fuzzy
 msgid "Show text"
-msgstr "Típus megjelenítése"
+msgstr "Szöveg megjelenítése"
 
 #: gaphor/SysML/sysmlfmt.py:10
 msgid "sourceContext: {name}"
@@ -729,9 +729,8 @@ msgid "supplier: {name}"
 msgstr "szállító: {name}"
 
 #: gaphor/UML/umlfmt.py:86
-#, fuzzy
 msgid "readOnly"
-msgstr "Ismét"
+msgstr "csak olvasható"
 
 #: gaphor/UML/umlfmt.py:232
 msgid "general: {name}"
@@ -879,14 +878,12 @@ msgid "FIFO"
 msgstr "Érkezési sorrendben (First In First Out - FIFO)"
 
 #: gaphor/UML/actions/objectnode.py:45
-#, fuzzy
 msgid "upperBound"
-msgstr "Felső határérték"
+msgstr "felső határérték"
 
 #: gaphor/UML/actions/objectnode.py:55
-#, fuzzy
 msgid "ordering"
-msgstr "Sorrend megjelenítése"
+msgstr "sorrend"
 
 #: gaphor/UML/actions/partitionpage.py:115
 msgid "New Swimlane"
@@ -925,9 +922,8 @@ msgid "Upper Bound"
 msgstr "Felső határérték"
 
 #: gaphor/UML/actions/propertypages.ui:145
-#, fuzzy
 msgid "Ordering"
-msgstr "Sorrend megjelenítése"
+msgstr "Sorrend"
 
 #: gaphor/UML/actions/propertypages.ui:159
 msgid "Last In First Out (LIFO)"
@@ -1003,9 +999,8 @@ msgstr ""
 "A <b>-</b>/<b>=</b> gombbal mozgathatja az elemeket felfelé vagy lefelé."
 
 #: gaphor/UML/actions/propertypages.ui:390
-#, fuzzy
 msgid "Direction"
-msgstr "Irány megjelenítése"
+msgstr "Irány"
 
 #: gaphor/UML/actions/propertypages.ui:402
 msgid "In/Out"
@@ -1209,9 +1204,8 @@ msgstr ""
 "A <b>-</b>/<b>=</b> gombbal mozgathatja az elemeket felfelé vagy lefelé."
 
 #: gaphor/UML/classes/propertypages.ui:345
-#, fuzzy
 msgid "ReadOnly"
-msgstr "Ismét"
+msgstr "Csak olvasható"
 
 #: gaphor/UML/classes/propertypages.ui:350
 #: gaphor/UML/classes/propertypages.ui:631
@@ -1228,18 +1222,16 @@ msgid "Abstract"
 msgstr "Elvont"
 
 #: gaphor/UML/classes/propertypages.ui:415
-#, fuzzy
 msgid "Final specialization"
-msgstr "Elágazási meghatározás"
+msgstr "Végső szakosodás"
 
 #: gaphor/UML/classes/propertypages.ui:440
 msgid "Source:"
-msgstr ""
+msgstr "Forrás:"
 
 #: gaphor/UML/classes/propertypages.ui:464
-#, fuzzy
 msgid "Target:"
-msgstr "Mágnes"
+msgstr "Cél:"
 
 #: gaphor/UML/classes/propertypages.ui:492
 msgid "Dependency type"
@@ -1354,9 +1346,8 @@ msgstr "eszköz"
 
 #: gaphor/UML/general/generaltoolbox.py:21
 #: gaphor/UML/general/imagepropertypage.py:66
-#, fuzzy
 msgid "New Image"
-msgstr "Új sáv"
+msgstr "Új kép"
 
 #: gaphor/UML/general/generaltoolbox.py:25 gaphor/ui/help/shortcuts.ui:14
 msgid "General"
@@ -1524,9 +1515,8 @@ msgid "Do activity"
 msgstr "Tevékenység végrehajtása"
 
 #: gaphor/UML/states/propertypages.ui:77
-#, fuzzy
 msgid "Trigger"
-msgstr "Karakterlánc"
+msgstr "Eseményindító"
 
 #: gaphor/UML/states/propertypages.ui:129
 #: gaphor/UML/states/propertypages.ui:140
@@ -1633,29 +1623,24 @@ msgid "Extend"
 msgstr "Kiterjesztés"
 
 #: gaphor/diagram/propertypages.py:293
-#, fuzzy
 msgid "Presentation"
-msgstr "Megvalósítás"
+msgstr "Bemutató"
 
 #: gaphor/diagram/propertypages.py:294 gaphor/diagram/propertypages.py:307
-#, fuzzy
 msgid "class"
-msgstr "Osztály"
+msgstr "osztály"
 
 #: gaphor/diagram/propertypages.py:295 gaphor/diagram/propertypages.py:308
-#, fuzzy
 msgid "id"
-msgstr "Azonosító"
+msgstr "azonosító"
 
 #: gaphor/diagram/propertypages.py:305
-#, fuzzy
 msgid "Model Element"
-msgstr "Új _elem"
+msgstr "Modellelem"
 
 #: gaphor/diagram/propertypages.py:306
-#, fuzzy
 msgid "qname"
-msgstr "Név"
+msgstr "qnév"
 
 #: gaphor/diagram/propertypages.ui:66
 msgid "Style"
@@ -1706,9 +1691,8 @@ msgid "Set default size"
 msgstr "Alapértelmezett méret beállítása"
 
 #: gaphor/diagram/propertypages.ui:283
-#, fuzzy
 msgid "Internals of focused item"
-msgstr "A fókuszált tétel CSS-csomópontjai"
+msgstr "Fókuszált elem belső részei"
 
 #: gaphor/diagram/propertypages.ui:300 gaphor/ui/elementeditor.py:424
 #: gaphor/ui/elementeditor.ui:238
@@ -1833,48 +1817,43 @@ msgid "Export diagram as EPS"
 msgstr "Ábra exportálása EPS-fájlként"
 
 #: gaphor/plugins/diagramexport/export.py:120
-#, fuzzy
 msgid "Export all diagrams as SVG"
-msgstr "Ábra exportálása SVG-fájlként"
+msgstr "Összes ábra exportálása SVG-fájlként"
 
 #: gaphor/plugins/diagramexport/export.py:121
 msgid "Export all diagrams as SVG diagrams in a specifieddirectory"
-msgstr ""
+msgstr "Összes ábra exportálása SVG-fájlként egy megadott könyvtárba"
 
 #: gaphor/plugins/diagramexport/export.py:127
 #: gaphor/plugins/diagramexport/export.py:147
 #: gaphor/plugins/diagramexport/export.py:167
 #: gaphor/plugins/diagramexport/export.py:187
-#, fuzzy
 msgid "Export all diagrams"
-msgstr "Ábra exportálása SVG-fájlként"
+msgstr "Összes ábra exportálása"
 
 #: gaphor/plugins/diagramexport/export.py:140
-#, fuzzy
 msgid "Export all diagrams as PNG"
-msgstr "Ábra exportálása PNG-fájlként"
+msgstr "Összes ábra exportálása PNG-fájlként"
 
 #: gaphor/plugins/diagramexport/export.py:141
 msgid "Export all diagrams as PNG diagrams in a specifieddirectory"
-msgstr ""
+msgstr "Összes ábra exportálása PNG-fájlként egy megadott könyvtárba"
 
 #: gaphor/plugins/diagramexport/export.py:160
-#, fuzzy
 msgid "Export all diagrams as PDF"
-msgstr "Ábra exportálása PDF-fájlként"
+msgstr "Összes ábra exportálása PDF-fájlként"
 
 #: gaphor/plugins/diagramexport/export.py:161
 msgid "Export all diagrams as PDF diagrams in a specifieddirectory"
-msgstr ""
+msgstr "Összes ábra exportálása PDF-fájlként egy megadott könyvtárba"
 
 #: gaphor/plugins/diagramexport/export.py:180
-#, fuzzy
 msgid "Export all diagrams as EPS"
-msgstr "Ábra exportálása EPS-fájlként"
+msgstr "Összes ábra exportálása EPS-fájlként"
 
 #: gaphor/plugins/diagramexport/export.py:181
 msgid "Export all diagrams as EPS diagrams in a specifieddirectory"
-msgstr ""
+msgstr "Összes ábra exportálása EPS-fájlként egy megadott könyvtárba"
 
 #: gaphor/plugins/errorreports/errorreports.py:60
 #: gaphor/plugins/errorreports/errorreports.ui:6
@@ -1908,11 +1887,10 @@ msgstr ""
 " létre a GitHubon."
 
 #: gaphor/storage/recovery.py:154
-#, fuzzy
 msgid "This model contains unsaved changes. The changes have been restored."
 msgstr ""
-"A megnyitott modell nem mentett módosításokat tartalmaz. A nem mentett "
-"módosítások véglegesen elvesznek."
+"Ez a modell nem mentett módosításokat tartalmaz. A változásokat "
+"helyreállították."
 
 #: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:62
 #: gaphor/ui/mainwindow.py:273 gaphor/ui/mainwindow.py:278
@@ -1958,115 +1936,107 @@ msgstr "Kódábra"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Personal Banking Customer"
-msgstr ""
+msgstr "Személyes banki ügyfél"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Internet Banking System"
-msgstr ""
+msgstr "Internetes bankrendszer"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Mainframe Banking System"
-msgstr ""
+msgstr "Nagyszámítógépes bankrendszer"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "View account balances, and make payments using"
-msgstr ""
+msgstr "Számlaegyenlegek megtekintése és befizetések az alábbiakkal:"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Get account information from, and makes payments using"
-msgstr ""
+msgstr "Számlainformációk fogadása és fizetések a következőkkel:"
 
 #: gaphor/templates/c4model-example.gaphor
-#, fuzzy
 msgid "E-mail System"
-msgstr "Rendszer"
+msgstr "E-mail rendszere"
 
 #: gaphor/templates/c4model-example.gaphor
-#, fuzzy
 msgid "Sends e-mail to"
-msgstr "Jelküldési művelet"
+msgstr "E-mail küldése a következő címre:"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Sends e-mail using"
-msgstr ""
+msgstr "E-mail küldése a következővel:"
 
 #: gaphor/templates/c4model-example.gaphor
-#, fuzzy
 msgid "Web Application"
-msgstr "Alkalmazásmenü megnyitása"
+msgstr "Webalkalmazás"
 
 #: gaphor/templates/c4model-example.gaphor
-#, fuzzy
 msgid "API Application"
-msgstr "Alkalmazásmenü megnyitása"
+msgstr "API-alkalmazás"
 
 #: gaphor/templates/c4model-example.gaphor
-#, fuzzy
 msgid "Single-Page Application"
-msgstr "Alkalmazásmenü megnyitása"
+msgstr "Egyoldalas-alkalmazás"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Mobile App"
-msgstr ""
+msgstr "Mobilalkalmazás"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Visit bigbank.com/lb using"
-msgstr ""
+msgstr "NagyBank.hu/nb oldal látogatása az alábbi címen:"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "View account balances and make payments using"
-msgstr ""
+msgstr "Számlaegyenlegek megtekintése és befizetések az alábbiakkal:"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Makes API calls to"
-msgstr ""
+msgstr "API-hívásokat indít a következőkre:"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Reads from, writes to"
-msgstr ""
+msgstr "Olvasás innen, írás erre:"
 
 #: gaphor/templates/c4model-example.gaphor
-#, fuzzy
 msgid "Delivers"
-msgstr "származtatási követelmény"
+msgstr "Kézbesíti"
 
 #: gaphor/templates/c4model-example.gaphor
-#, fuzzy
 msgid "Sign In Controller"
-msgstr "vezérlő"
+msgstr "Bejelentkezési vezérlő"
 
 #: gaphor/templates/c4model-example.gaphor
-#, fuzzy
 msgid "Security Component"
-msgstr "Új összetevő"
+msgstr "Biztonsági összetevő"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Reset Password Controller"
-msgstr ""
+msgstr "Jelszóvezérlő visszaállítása"
 
 #: gaphor/templates/c4model-example.gaphor
-#, fuzzy
 msgid "E-mail Component"
-msgstr "Új összetevő"
+msgstr "E-mail összetevő"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Account Summary Controller"
-msgstr ""
+msgstr "Fiókösszesítő vezérlő"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Mainframe Banking System Facade"
-msgstr ""
+msgstr "Nagyszámítógépes bankrendszerének homlokzata"
 
 #: gaphor/templates/c4model-example.gaphor
-#, fuzzy
 msgid "Uses"
-msgstr "használat"
+msgstr "Használat"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid ""
 "Makes API calls to\n"
 "[JSON/HTTPS]"
 msgstr ""
+"API-hívásokat indít a következőnek\n"
+"[JSON/HTTPS]"
 
 #: gaphor/templates/raaml-example.gaphor gaphor/templates/raaml.gaphor
 #: gaphor/templates/uml-example.gaphor gaphor/templates/uml.gaphor
@@ -2822,7 +2792,7 @@ msgstr "Minden fájl"
 
 #: gaphor/ui/filedialog.py:100
 msgid "Flatpak Document Portal"
-msgstr ""
+msgstr "Flatpak dokumentumportál"
 
 #: gaphor/ui/filemanager.py:41
 msgid ""
@@ -3007,13 +2977,12 @@ msgstr ""
 "Kockázatelemzési és -értékelési modellezési nyelv)"
 
 #: gaphor/ui/greeter.py:86
-#, fuzzy
 msgid "C4 Model Example"
-msgstr "UML példa"
+msgstr "C4-modell példa"
 
 #: gaphor/ui/greeter.py:87
 msgid "C4 Model example of a banking system"
-msgstr ""
+msgstr "C4-modell példa egy bankrendszerre"
 
 #: gaphor/ui/greeter.ui:8 gaphor/ui/greeter.ui:53 gaphor/ui/mainwindow.py:47
 msgid "Open Model…"
@@ -3030,7 +2999,7 @@ msgstr "A Gaphor névjegye"
 
 #: gaphor/ui/greeter.ui:84
 msgid "Recently Opened"
-msgstr ""
+msgstr "Legutóbb megnyitott"
 
 #: gaphor/ui/greeter.ui:101
 msgid "Create New Model"
@@ -3069,13 +3038,12 @@ msgid "New diagram menu"
 msgstr "Új ábra menü"
 
 #: gaphor/ui/help/shortcuts.ui:62 gaphor/ui/mainwindow.ui:137
-#, fuzzy
 msgid "Toggle Model Preferences"
-msgstr "Beállítások"
+msgstr "Modellbeállítások kapcsoló"
 
 #: gaphor/ui/help/shortcuts.ui:55 gaphor/ui/mainwindow.ui:152
 msgid "Toggle Property Editor"
-msgstr "Tulajdonságszerkesztő átváltása"
+msgstr "Tulajdonságszerkesztő kapcsoló"
 
 #: gaphor/ui/modelbrowser.py:202
 msgid "New Diagram"
@@ -3209,9 +3177,8 @@ msgid "Quit Gaphor"
 msgstr "A Gaphor bezárása"
 
 #: gaphor/ui/help/shortcuts.ui:36
-#, fuzzy
 msgid "Model"
-msgstr "C4-modell"
+msgstr "Modell"
 
 #: gaphor/ui/help/shortcuts.ui:41
 msgid "Rename"
@@ -3354,9 +3321,8 @@ msgid "Update relation “{name}”"
 msgstr "„{name}”-kapcsolat frissítése"
 
 #: gaphor/ui/tests/test_modelbrowser.py:302
-#, fuzzy
 msgid "general: General"
-msgstr "általános: {name}"
+msgstr "általános: Általános"
 
 #~ msgid "A."
 #~ msgstr "A."
@@ -3392,4 +3358,3 @@ msgstr "általános: {name}"
 
 #~ msgid "All XMI Files"
 #~ msgstr "Minden XMI-fájl"
-
