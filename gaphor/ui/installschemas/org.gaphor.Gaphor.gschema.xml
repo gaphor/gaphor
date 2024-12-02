@@ -16,5 +16,15 @@
             <summary>Use English</summary>
             <description>Override language to English.</description>
         </key>
+        <key name="reset-tool-after-create" type="b">
+            <default>true</default>
+            <summary>Reset Tool Automatically</summary>
+            <description>After an element is created, switch back to the pointer tool.</description>
+        </key>
+        <key name="remove-unused-elements" type="b">
+            <default>true</default>
+            <summary>Remove Unused Elements</summary>
+            <description>Automatically remove elements no longer in use in any diagram.</description>
+        </key>
     </schema>
 </schemalist>

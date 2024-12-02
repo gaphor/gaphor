@@ -102,10 +102,33 @@ class Settings:
         )
 
     def bind_use_english(self, target, prop):
+        self._bind_propery("use-english", target, prop)
+
+    @property
+    def reset_tool_after_create(self):
+        return (
+            self._gio_settings.get_boolean("reset-tool-after-create")
+            if self._gio_settings
+            else True
+        )
+
+    def bind_reset_tool_after_create(self, target, prop):
+        self._bind_propery("reset-tool-after-create", target, prop)
+
+    @property
+    def remove_unused_elements(self):
+        return (
+            self._gio_settings.get_boolean("remove-unused-elements")
+            if self._gio_settings
+            else True
+        )
+
+    def bind_remove_unused_elements(self, target, prop):
+        self._bind_propery("remove-unused-elements", target, prop)
+
+    def _bind_propery(self, name, target, prop):
         if self._gio_settings:
-            self._gio_settings.bind(
-                "use-english", target, prop, Gio.SettingsBindFlags.DEFAULT
-            )
+            self._gio_settings.bind(name, target, prop, Gio.SettingsBindFlags.DEFAULT)
 
 
 settings = Settings()

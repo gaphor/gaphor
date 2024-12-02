@@ -143,20 +143,6 @@ class ElementEditor(UIComponent, ActionProvider):
         if not self.editor_stack.get_mapped():
             self.editor_stack.activate_action("win.show-editors", None)
 
-    @action(
-        name="reset-tool-after-create",
-        state=lambda self: self.properties.get("reset-tool-after-create", True),
-    )
-    def reset_tool_after_create(self, active):
-        self.properties.set("reset-tool-after-create", active)
-
-    @action(
-        name="remove-unused-elements",
-        state=lambda self: self.properties.get("remove-unused-elements", True),
-    )
-    def remove_unused_elements(self, active):
-        self.properties.set("remove-unused-elements", active)
-
 
 class EditorStack:
     def __init__(self, event_manager, component_registry, diagrams, properties):
