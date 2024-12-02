@@ -47,6 +47,8 @@ In versions before 2.13, an `EventManager` is required. In later versions, the
 
 
 ```{code-cell} ipython3
+:tags: [remove-stderr]
+
 from gaphor.core.eventmanager import EventManager
 from gaphor.services.modelinglanguage import ModelingLanguageService
 from gaphor.storage import storage
