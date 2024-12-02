@@ -50,13 +50,23 @@ class StyleVariant(Enum):
 class Settings:
     """Gaphor settings."""
 
+    _required_keys = [
+        "use-english",
+        "style-variant",
+        "reset-tool-after-create",
+        "remove-unused-elements",
+    ]
+
     def __init__(self):
-        schema_source = Gio.SettingsSchemaSource.get_default()
         self._gio_settings = (
             Gio.Settings.new(APPLICATION_ID)
-            if schema_source and schema_source.lookup(APPLICATION_ID, False)
+            if (schema_source := Gio.SettingsSchemaSource.get_default())
+            and (schema := schema_source.lookup(APPLICATION_ID, False))
+            and (schema_keys := schema.list_keys())
+            and all(key in schema_keys for key in self._required_keys)
             else None
         )
+
         if not self._gio_settings:
             # Workaround: do not show this message if we're installing schemas
             if "install-schemas" not in sys.argv:
