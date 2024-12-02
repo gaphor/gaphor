@@ -12,6 +12,11 @@ This allows services to depend on other services.
 It looks something like this:
 
 ```{code-cell} ipython3
+:tags: [remove-cell]
+%colors NoColor
+```
+
+```{code-cell} ipython3
 
 # entry point name: my_service
 class MyService:
@@ -98,11 +103,11 @@ To make the dependency look good, we have to add a style sheet. If you create a
 new diagram via the GUI, this element is automatically added.
 
 ```{code-cell} ipython3
-from gaphor.core.modeling import Diagram, StyleSheet
+from gaphor.core.modeling import StyleSheet
 from gaphor.diagram.drop import drop
 
 element_factory.create(StyleSheet)
-diagram = element_factory.create(Diagram)
+diagram = element_factory.create(UML.Diagram)
 
 for element in element_factory.lselect():
     drop(element, diagram, x=0, y=0)
