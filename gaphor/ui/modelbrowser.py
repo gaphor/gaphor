@@ -29,6 +29,7 @@ from gaphor.transaction import Transaction
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.actiongroup import create_action_group
 from gaphor.ui.event import (
+    ElementFocused,
     ElementOpened,
     ModelSelectionChanged,
 )
@@ -98,7 +99,7 @@ class ModelBrowser(UIComponent, ActionProvider):
 
         def list_view_activate(list_view, position):
             if element := self.selection.get_item(position).get_item().element:
-                self.open_element(element)
+                self.focus_element(element)
 
         self.tree_view.connect("activate", list_view_activate)
 
@@ -155,6 +156,13 @@ class ModelBrowser(UIComponent, ActionProvider):
     def get_selected_element(self) -> Base | None:
         assert self.model
         return next(iter(self.get_selected_elements()), None)
+
+    def focus_element(self, element):
+        assert element
+        if isinstance(element, Diagram):
+            self.event_manager.handle(DiagramOpened(element))
+        else:
+            self.event_manager.handle(ElementFocused(element))
 
     def open_element(self, element):
         assert element
