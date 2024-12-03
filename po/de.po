@@ -303,7 +303,7 @@ msgstr "Abstrakte Betriebssituation"
 #: gaphor/RAAML/stpa/stpatoolbox.py:35 gaphor/SysML/blocks/blockstoolbox.py:100
 #: gaphor/UML/classes/classestoolbox.py:127
 msgid "Generalization"
-msgstr "Verallgemeinerung"
+msgstr "Generalisierung"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:72
 msgid "Control Structure"
@@ -500,7 +500,7 @@ msgstr "Zuordnungen"
 
 #: gaphor/SysML/allocations/allocationstoolbox.py:10
 msgid "Allocate"
-msgstr "Zuordnen"
+msgstr "Allocate-Beziehung"
 
 #: gaphor/SysML/allocations/relationships.py:10
 msgid "allocate"
@@ -553,12 +553,12 @@ msgstr "Paket"
 #: gaphor/SysML/blocks/blockstoolbox.py:63
 #: gaphor/UML/classes/classestoolbox.py:82
 msgid "Composite Association"
-msgstr "Kompositionsassoziation"
+msgstr "Komposition"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:73
 #: gaphor/UML/classes/classestoolbox.py:92
 msgid "Shared Association"
-msgstr "Geteilte Assoziation"
+msgstr "Aggregation"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:83
 #: gaphor/UML/classes/classestoolbox.py:102
@@ -620,28 +620,28 @@ msgstr "Anforderungen"
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:29
 msgid "Satisfy"
-msgstr "Erfüllen"
+msgstr "Satisfy-Beziehung"
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:36
 msgid "Derive Requirement"
-msgstr "Ableiten der Anforderung"
+msgstr "Derive-Beziehung"
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:43
 msgid "Trace"
-msgstr "Verfolge"
+msgstr "Trace-Beziehung"
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:50
 msgid "Refine"
-msgstr "Verfeinere"
+msgstr "Refine-Beziehung"
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:57
 msgid "Verify"
-msgstr "Überprüfe"
+msgstr "Verify-Beziehung"
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:64
 #: gaphor/UML/classes/classestoolbox.py:75
 msgid "Containment"
-msgstr "Eindämmung"
+msgstr "Containment-Beziehung"
 
 #: gaphor/UML/compartments.py:63
 msgid "(from {namespace})"
@@ -715,7 +715,7 @@ msgstr "Stereotyp"
 #: gaphor/UML/interactions/interactionstoolbox.py:16
 #: gaphor/UML/states/statestoolbox.py:27 gaphor/UML/toolboxconfig.py:5
 msgid "New {name}"
-msgstr "Neu {name}"
+msgstr "Neue {name}"
 
 #: gaphor/UML/umlfmt.py:22
 msgid "supplier: {name}"
@@ -850,7 +850,7 @@ msgstr "Entscheidung"
 
 #: gaphor/UML/actions/activitypropertypage.py:147
 msgid "New Parameter…"
-msgstr "Neuer Parameter…"
+msgstr "Neue Parameter…"
 
 #: gaphor/UML/actions/objectnode.py:14 gaphor/UML/actions/propertypages.ui:157
 msgid "unordered"
@@ -1775,7 +1775,7 @@ msgstr "Alle {ext} Dateien"
 
 #: gaphor/plugins/diagramexport/export.py:68
 msgid "Export as SVG"
-msgstr "Exportieren als SVG"
+msgstr "Als SVG exportieren"
 
 #: gaphor/plugins/diagramexport/export.py:69
 #: gaphor/plugins/diagramexport/export.py:74
@@ -1813,9 +1813,8 @@ msgid "Export diagram as EPS"
 msgstr "Diagramm als EPS exportieren"
 
 #: gaphor/plugins/diagramexport/export.py:120
-#, fuzzy
 msgid "Export all diagrams as SVG"
-msgstr "Diagramm als SVG exportieren"
+msgstr "Alle Diagramme als SVG exportieren"
 
 #: gaphor/plugins/diagramexport/export.py:121
 msgid "Export all diagrams as SVG diagrams in a specifieddirectory"
@@ -1825,34 +1824,32 @@ msgstr ""
 #: gaphor/plugins/diagramexport/export.py:147
 #: gaphor/plugins/diagramexport/export.py:167
 #: gaphor/plugins/diagramexport/export.py:187
-#, fuzzy
 msgid "Export all diagrams"
-msgstr "Diagramm als SVG exportieren"
+msgstr "Alle Diagramme exportieren"
 
 #: gaphor/plugins/diagramexport/export.py:140
-#, fuzzy
 msgid "Export all diagrams as PNG"
-msgstr "Diagramm als PNG exportieren"
+msgstr "Alle Diagramme als PNG exportieren"
 
 #: gaphor/plugins/diagramexport/export.py:141
 msgid "Export all diagrams as PNG diagrams in a specifieddirectory"
-msgstr ""
+msgstr "Alle Diagramme als PNG exportieren"
 
 #: gaphor/plugins/diagramexport/export.py:160
 msgid "Export all diagrams as PDF"
-msgstr "Diagramm als PDF exportieren"
+msgstr "Alle Diagramme als PDF exportieren"
 
 #: gaphor/plugins/diagramexport/export.py:161
 msgid "Export all diagrams as PDF diagrams in a specifieddirectory"
-msgstr ""
+msgstr "Alle Diagramme als PDF exportieren"
 
 #: gaphor/plugins/diagramexport/export.py:180
 msgid "Export all diagrams as EPS"
-msgstr "Diagramm als EPS exportieren"
+msgstr "Alle Diagramme als EPS exportieren"
 
 #: gaphor/plugins/diagramexport/export.py:181
 msgid "Export all diagrams as EPS diagrams in a specifieddirectory"
-msgstr ""
+msgstr "Alle Diagramme als EPS exportieren"
 
 #: gaphor/plugins/errorreports/errorreports.py:60
 #: gaphor/plugins/errorreports/errorreports.ui:6
@@ -2627,7 +2624,7 @@ msgstr "<Keine>"
 
 #: gaphor/ui/diagrampage.py:331
 msgid "Show in Model Browser"
-msgstr "Im Modellbrowser anzeigen"
+msgstr "Ziege im Modell Browser"
 
 #: gaphor/ui/diagrampage.ui:29 gaphor/ui/help/shortcuts.ui:91
 msgid "Undo"
@@ -2690,11 +2687,11 @@ msgid ""
 "does not get selected, click on the diagram once (so it's focused) and "
 "then hit the shortcut key."
 msgstr ""
-"<b>Tipp:</b> Die meisten Elemente in der Toolbox haben ein Tastaturkürzel"
+"<b>Tipp:</b> Die meisten Elemente in der Toolbox haben ein Tastenkürzel"
 " (z.B. „c” für Klasse). Die Werkzeugauswahl funktioniert nur im Diagramm."
 " Wenn ein Werkzeug nicht ausgewählt wird, klicken Sie einmal auf das "
 "Diagramm (damit es fokussiert ist) und drücken Sie dann das "
-"Tastaturkürzel."
+"Tastenkürzel."
 
 #: gaphor/ui/elementeditor.ui:69
 msgid ""
@@ -3008,7 +3005,7 @@ msgstr "Modell öffnen…"
 
 #: gaphor/ui/greeter.ui:18 gaphor/ui/mainwindow.py:62
 msgid "Keyboard Shortcuts"
-msgstr "Tastatürkürzel"
+msgstr "Tastenkürzel"
 
 #: gaphor/ui/greeter.ui:22 gaphor/ui/help/about.ui:10
 #: gaphor/ui/mainwindow.py:63
@@ -3109,7 +3106,7 @@ msgstr "In \"{diagram}\" anzeigen"
 
 #: gaphor/ui/modelbrowser.py:676
 msgid "Generic Diagram"
-msgstr "Allgemeines Diagramm"
+msgstr "Generisches Diagramm"
 
 #: gaphor/ui/modelchanged.ui:6
 msgid "Model Changed on Disk"
