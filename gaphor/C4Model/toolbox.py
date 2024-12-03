@@ -156,24 +156,18 @@ c4model_diagram_types: DiagramTypes = (
 )
 
 c4model_element_types = (
-    ElementCreateInfo("activity", i18nize("New Activity"), Activity, (Package,)),
+    ElementCreateInfo("activity", i18nize("Activity"), Activity, (Package,)),
+    ElementCreateInfo("interaction", i18nize("Interaction"), Interaction, (Package,)),
     ElementCreateInfo(
-        "interaction", i18nize("New Interaction"), Interaction, (Package,)
+        "statemachine", i18nize("State Machine"), StateMachine, (Package,)
     ),
+    ElementCreateInfo("class", i18nize("Class"), Class, (Package,)),
+    ElementCreateInfo("component", i18nize("Component"), Component, (Package,)),
+    ElementCreateInfo("datatype", i18nize("Data Type"), DataType, (Package,)),
+    ElementCreateInfo("enumeration", i18nize("Enumeration"), Enumeration, (Package,)),
     ElementCreateInfo(
-        "statemachine", i18nize("New State Machine"), StateMachine, (Package,)
+        "primitive", i18nize("Primitive Type"), PrimitiveType, (Package,)
     ),
-    ElementCreateInfo("class", i18nize("New Class"), Class, (Package,)),
-    ElementCreateInfo("component", i18nize("New Component"), Component, (Package,)),
-    ElementCreateInfo("datatype", i18nize("New Data Type"), DataType, (Package,)),
-    ElementCreateInfo(
-        "enumeration", i18nize("New Enumeration"), Enumeration, (Package,)
-    ),
-    ElementCreateInfo(
-        "primitive", i18nize("New Primitive Type"), PrimitiveType, (Package,)
-    ),
-    ElementCreateInfo("person", i18nize("New Person"), c4model.Person, (Package,)),
-    ElementCreateInfo(
-        "database", i18nize("New Database"), c4model.Database, (Package,)
-    ),
+    ElementCreateInfo("person", i18nize("Person"), c4model.Person, (Package,)),
+    ElementCreateInfo("database", i18nize("Database"), c4model.Database, (Package,)),
 )

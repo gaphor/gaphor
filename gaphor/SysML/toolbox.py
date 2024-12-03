@@ -169,21 +169,17 @@ sysml_diagram_types: DiagramTypes = (
 )
 
 sysml_element_types = (
-    ElementCreateInfo("activity", i18nize("New Activity"), Activity, (Package,)),
-    ElementCreateInfo("actor", i18nize("New Actor"), Actor, (Package,)),
-    ElementCreateInfo("block", i18nize("New Block"), Block, (Package,)),
+    ElementCreateInfo("activity", i18nize("Activity"), Activity, (Package,)),
+    ElementCreateInfo("actor", i18nize("Actor"), Actor, (Package,)),
+    ElementCreateInfo("block", i18nize("Block"), Block, (Package,)),
+    ElementCreateInfo("enumeration", i18nize("Enumeration"), Enumeration, (Package,)),
+    ElementCreateInfo("interaction", i18nize("Interaction"), Interaction, (Package,)),
     ElementCreateInfo(
-        "enumeration", i18nize("New Enumeration"), Enumeration, (Package,)
-    ),
-    ElementCreateInfo(
-        "interaction", i18nize("New Interaction"), Interaction, (Package,)
-    ),
-    ElementCreateInfo(
-        "interfaceblock", i18nize("New Interface Block"), InterfaceBlock, (Package,)
+        "interfaceblock", i18nize("Interface Block"), InterfaceBlock, (Package,)
     ),
     ElementCreateInfo(
         "requirement",
-        i18nize("New Requirement"),
+        i18nize("Requirement"),
         Requirement,
         (
             Package,
@@ -191,8 +187,8 @@ sysml_element_types = (
         ),
     ),
     ElementCreateInfo(
-        "statemachine", i18nize("New State Machine"), StateMachine, (Package,)
+        "statemachine", i18nize("State Machine"), StateMachine, (Package,)
     ),
-    ElementCreateInfo("usecase", i18nize("New Use Case"), UseCase, (Package,)),
-    ElementCreateInfo("valuetype", i18nize("New Value Type"), ValueType, (Package,)),
+    ElementCreateInfo("usecase", i18nize("Use Case"), UseCase, (Package,)),
+    ElementCreateInfo("valuetype", i18nize("Value Type"), ValueType, (Package,)),
 )

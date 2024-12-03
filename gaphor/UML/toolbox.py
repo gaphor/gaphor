@@ -60,31 +60,27 @@ uml_diagram_types: DiagramTypes = (
 )
 
 uml_element_types = (
-    ElementCreateInfo("activity", i18nize("New Activity"), Activity, (Package,)),
-    ElementCreateInfo("actor", i18nize("New Actor"), Actor, (Package,)),
-    ElementCreateInfo("artifact", i18nize("New Artifact"), Artifact, (Package,)),
-    ElementCreateInfo("class", i18nize("New Class"), Class, (Package,)),
-    ElementCreateInfo("component", i18nize("New Component"), Component, (Package,)),
-    ElementCreateInfo("datatype", i18nize("New Data Type"), DataType, (Package,)),
-    ElementCreateInfo("device", i18nize("New Device"), Device, (Package,)),
-    ElementCreateInfo(
-        "enumeration", i18nize("New Enumeration"), Enumeration, (Package,)
-    ),
+    ElementCreateInfo("activity", i18nize("Activity"), Activity, (Package,)),
+    ElementCreateInfo("actor", i18nize("Actor"), Actor, (Package,)),
+    ElementCreateInfo("artifact", i18nize("Artifact"), Artifact, (Package,)),
+    ElementCreateInfo("class", i18nize("Class"), Class, (Package,)),
+    ElementCreateInfo("component", i18nize("Component"), Component, (Package,)),
+    ElementCreateInfo("datatype", i18nize("Data Type"), DataType, (Package,)),
+    ElementCreateInfo("device", i18nize("Device"), Device, (Package,)),
+    ElementCreateInfo("enumeration", i18nize("Enumeration"), Enumeration, (Package,)),
     ElementCreateInfo(
         "instancespecification",
-        i18nize("New Instance Specification"),
+        i18nize("Instance Specification"),
         InstanceSpecification,
         (Package,),
     ),
+    ElementCreateInfo("interaction", i18nize("Interaction"), Interaction, (Package,)),
+    ElementCreateInfo("interface", i18nize("Interface"), Interface, (Package,)),
+    ElementCreateInfo("node", i18nize("Node"), Node, (Package,)),
+    ElementCreateInfo("profile", i18nize("Profile"), Profile, (Package,)),
     ElementCreateInfo(
-        "interaction", i18nize("New Interaction"), Interaction, (Package,)
+        "statemachine", i18nize("State Machine"), StateMachine, (Package,)
     ),
-    ElementCreateInfo("interface", i18nize("New Interface"), Interface, (Package,)),
-    ElementCreateInfo("node", i18nize("New Node"), Node, (Package,)),
-    ElementCreateInfo("profile", i18nize("New Profile"), Profile, (Package,)),
-    ElementCreateInfo(
-        "statemachine", i18nize("New State Machine"), StateMachine, (Package,)
-    ),
-    ElementCreateInfo("stereotype", i18nize("New Stereotype"), Stereotype, (Package,)),
-    ElementCreateInfo("usecase", i18nize("New Use Case"), UseCase, (Package,)),
+    ElementCreateInfo("stereotype", i18nize("Stereotype"), Stereotype, (Package,)),
+    ElementCreateInfo("usecase", i18nize("Use Case"), UseCase, (Package,)),
 )
