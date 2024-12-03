@@ -17,7 +17,11 @@ from gaphor.services.modelinglanguage import ModelingLanguageChanged
 from gaphor.transaction import Transaction
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.actiongroup import create_action_group
-from gaphor.ui.event import ElementOpened, ModelSelectionChanged
+from gaphor.ui.event import (
+    ElementFocused,
+    ElementOpened,
+    ModelSelectionChanged,
+)
 from gaphor.ui.treesearch import search, sorted_tree_walker
 
 START_EDIT_DELAY = 100  # ms
@@ -86,7 +90,7 @@ class ModelBrowser(UIComponent, ActionProvider):
 
         def list_view_activate(list_view, position):
             if element := self.selection.get_item(position).get_item().element:  # type: ignore[union-attr]
-                self.open_element(element)
+                self.focus_element(element)
 
         self.tree_view.connect("activate", list_view_activate)
 
@@ -150,6 +154,13 @@ class ModelBrowser(UIComponent, ActionProvider):
     def get_selected_element(self) -> Base | None:
         assert self.model
         return next(iter(self.get_selected_elements()), None)
+
+    def focus_element(self, element):
+        assert element
+        if isinstance(element, Diagram):
+            self.event_manager.handle(DiagramOpened(element))
+        else:
+            self.event_manager.handle(ElementFocused(element))
 
     def open_element(self, element):
         assert element
