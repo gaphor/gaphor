@@ -47,16 +47,16 @@ uml_toolbox_actions: ToolboxDefinition = (
 )
 
 uml_diagram_types: DiagramTypes = (
-    DiagramType("cls", i18nize("New Class Diagram"), (classes,)),
-    DiagramType("pkg", i18nize("New Package Diagram"), (classes,)),
-    DiagramType("cmp", i18nize("New Component Diagram"), (classes,)),
-    DiagramType("dep", i18nize("New Deployment Diagram"), (deployments,)),
-    DiagramType("act", i18nize("New Activity Diagram"), (actions,)),
-    DiagramType("sd", i18nize("New Sequence Diagram"), (interactions,)),
-    DiagramType("com", i18nize("New Communication Diagram"), (interactions,)),
-    DiagramType("stm", i18nize("New State Machine Diagram"), (states,)),
-    DiagramType("uc", i18nize("New Use Case Diagram"), (use_cases,)),
-    DiagramType("prf", i18nize("New Profile Diagram"), (profiles,)),
+    DiagramType("cls", i18nize("Class Diagram"), (classes,)),
+    DiagramType("pkg", i18nize("Package Diagram"), (classes,)),
+    DiagramType("cmp", i18nize("Component Diagram"), (classes,)),
+    DiagramType("dep", i18nize("Deployment Diagram"), (deployments,)),
+    DiagramType("act", i18nize("Activity Diagram"), (actions,)),
+    DiagramType("sd", i18nize("Sequence Diagram"), (interactions,)),
+    DiagramType("com", i18nize("Communication Diagram"), (interactions,)),
+    DiagramType("stm", i18nize("State Machine Diagram"), (states,)),
+    DiagramType("uc", i18nize("Use Case Diagram"), (use_cases,)),
+    DiagramType("prf", i18nize("Profile Diagram"), (profiles,)),
 )
 
 uml_element_types = (

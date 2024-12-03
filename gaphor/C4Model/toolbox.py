@@ -148,11 +148,11 @@ c4model_toolbox_actions: ToolboxDefinition = (
 )
 
 c4model_diagram_types: DiagramTypes = (
-    DiagramType("c4", i18nize("New C4 Diagram"), (c4,)),
-    DiagramType("cls", i18nize("New Class Diagram"), (classes,)),
-    DiagramType("act", i18nize("New Activity Diagram"), (actions,)),
-    DiagramType("sd", i18nize("New Sequence Diagram"), (interactions,)),
-    DiagramType("stm", i18nize("New State Machine Diagram"), (states,)),
+    DiagramType("c4", i18nize("C4 Diagram"), (c4,)),
+    DiagramType("cls", i18nize("Class Diagram"), (classes,)),
+    DiagramType("act", i18nize("Activity Diagram"), (actions,)),
+    DiagramType("sd", i18nize("Sequence Diagram"), (interactions,)),
+    DiagramType("stm", i18nize("State Machine Diagram"), (states,)),
 )
 
 c4model_element_types = (

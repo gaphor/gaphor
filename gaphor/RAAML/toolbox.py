@@ -20,8 +20,8 @@ raaml_toolbox_actions: ToolboxDefinition = (
 )
 
 raaml_diagram_types: DiagramTypes = (
-    DiagramType("fta", i18nize("New FTA Diagram"), (fta,)),
-    DiagramType("stpa", i18nize("New STPA Diagram"), (stpa,)),
+    DiagramType("fta", i18nize("FTA Diagram"), (fta,)),
+    DiagramType("stpa", i18nize("STPA Diagram"), (stpa,)),
 )
 
 raaml_element_types = (

@@ -83,27 +83,27 @@ msgid "Dependency"
 msgstr "Abhängigkeit"
 
 #: gaphor/C4Model/toolbox.py:151
-msgid "New C4 Diagram"
-msgstr "Neues C4 Diagramm"
+msgid "C4 Diagram"
+msgstr "C4 Diagramm"
 
 #: gaphor/C4Model/toolbox.py:152 gaphor/UML/toolbox.py:50
-msgid "New Class Diagram"
-msgstr "Neues Klassendiagramm"
+msgid "Class Diagram"
+msgstr "Klassendiagramm"
 
 #: gaphor/C4Model/toolbox.py:153 gaphor/SysML/toolbox.py:129
 #: gaphor/UML/toolbox.py:54
-msgid "New Activity Diagram"
-msgstr "Neues Aktivitätsdiagramm"
+msgid "Activity Diagram"
+msgstr "Aktivitätsdiagramm"
 
 #: gaphor/C4Model/toolbox.py:154 gaphor/SysML/toolbox.py:139
 #: gaphor/UML/toolbox.py:55
-msgid "New Sequence Diagram"
-msgstr "Neues Sequenzdiagramm"
+msgid "Sequence Diagram"
+msgstr "Sequenzdiagramm"
 
 #: gaphor/C4Model/toolbox.py:155 gaphor/SysML/toolbox.py:149
 #: gaphor/UML/toolbox.py:57
-msgid "New State Machine Diagram"
-msgstr "Neues Zustandsdiagramm"
+msgid "State Machine Diagram"
+msgstr "Zustandsdiagramm"
 
 #: gaphor/C4Model/toolbox.py:159 gaphor/SysML/toolbox.py:133
 #: gaphor/SysML/toolbox.py:134 gaphor/SysML/toolbox.py:172
