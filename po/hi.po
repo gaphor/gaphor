@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-11-27 15:43-0500\n"
+"POT-Creation-Date: 2024-12-03 09:12+0100\n"
 "PO-Revision-Date: 2024-07-08 15:09+0000\n"
 "Last-Translator: Scrambled777 <weblate.scrambled777@simplelogin.com>\n"
 "Language: hi\n"
@@ -42,21 +42,21 @@ msgstr "नया सॉफ्टवेयर सिस्टम"
 msgid "New Container"
 msgstr "नया कंटेनर"
 
-#: gaphor/C4Model/toolbox.py:55 gaphor/templates/c4model-example.gaphor
+#: gaphor/C4Model/toolbox.py:55 gaphor/C4Model/toolbox.py:172
+#: gaphor/templates/c4model-example.gaphor
 msgid "Database"
 msgstr "डेटाबेस"
 
-#: gaphor/C4Model/toolbox.py:56 gaphor/C4Model/toolbox.py:177
+#: gaphor/C4Model/toolbox.py:56
 msgid "New Database"
 msgstr "नया डेटाबेस"
 
-#: gaphor/C4Model/toolbox.py:63 gaphor/C4Model/toolbox.py:167
-#: gaphor/UML/toolbox.py:67
+#: gaphor/C4Model/toolbox.py:63
 msgid "New Component"
 msgstr "नया घटक"
 
 #: gaphor/C4Model/diagramitems/person.py:24 gaphor/C4Model/toolbox.py:71
-#: gaphor/C4Model/toolbox.py:77
+#: gaphor/C4Model/toolbox.py:77 gaphor/C4Model/toolbox.py:171
 msgid "Person"
 msgstr "व्यक्ति"
 
@@ -72,7 +72,8 @@ msgstr "कंटेनर"
 msgid "Container: Database"
 msgstr "कंटेनर: डेटाबेस"
 
-#: gaphor/C4Model/toolbox.py:119 gaphor/UML/classes/classestoolbox.py:63
+#: gaphor/C4Model/toolbox.py:119 gaphor/C4Model/toolbox.py:165
+#: gaphor/UML/classes/classestoolbox.py:63 gaphor/UML/toolbox.py:67
 msgid "Component"
 msgstr "घटक"
 
@@ -83,94 +84,108 @@ msgid "Dependency"
 msgstr "निर्भरता"
 
 #: gaphor/C4Model/toolbox.py:151
-msgid "New C4 Diagram"
+#, fuzzy
+msgid "C4 Diagram"
 msgstr "नया C4 आरेख"
 
 #: gaphor/C4Model/toolbox.py:152 gaphor/UML/toolbox.py:50
-msgid "New Class Diagram"
+#, fuzzy
+msgid "Class Diagram"
 msgstr "नया क्लास आरेख"
 
 #: gaphor/C4Model/toolbox.py:153 gaphor/SysML/toolbox.py:129
 #: gaphor/UML/toolbox.py:54
-msgid "New Activity Diagram"
+#, fuzzy
+msgid "Activity Diagram"
 msgstr "नई गतिविधि आरेख"
 
 #: gaphor/C4Model/toolbox.py:154 gaphor/SysML/toolbox.py:139
 #: gaphor/UML/toolbox.py:55
-msgid "New Sequence Diagram"
+#, fuzzy
+msgid "Sequence Diagram"
 msgstr "नया अनुक्रम आरेख"
 
 #: gaphor/C4Model/toolbox.py:155 gaphor/SysML/toolbox.py:149
 #: gaphor/UML/toolbox.py:57
-msgid "New State Machine Diagram"
+#, fuzzy
+msgid "State Machine Diagram"
 msgstr "नई स्टेट मशीन आरेख"
 
-#: gaphor/C4Model/toolbox.py:159 gaphor/SysML/toolbox.py:133
-#: gaphor/SysML/toolbox.py:134 gaphor/SysML/toolbox.py:172
-#: gaphor/UML/toolbox.py:63
-msgid "New Activity"
-msgstr "नई गतिविधि"
+#: gaphor/C4Model/toolbox.py:159 gaphor/SysML/toolbox.py:172
+#: gaphor/UML/actions/actionstoolbox.py:41
+#: gaphor/UML/actions/actionstoolbox.py:68 gaphor/UML/toolbox.py:63
+#: gaphor/templates/sysml-example.gaphor gaphor/templates/uml-example.gaphor
+msgid "Activity"
+msgstr "गतिविधि"
 
-#: gaphor/C4Model/toolbox.py:161 gaphor/SysML/toolbox.py:143
-#: gaphor/SysML/toolbox.py:144 gaphor/SysML/toolbox.py:179
-#: gaphor/UML/toolbox.py:80
-msgid "New Interaction"
-msgstr "नया इंटरैक्शन"
+#: gaphor/C4Model/toolbox.py:160 gaphor/SysML/toolbox.py:176
+#: gaphor/UML/interactions/interactionstoolbox.py:36
+#: gaphor/UML/interactions/interactionstoolbox.py:57 gaphor/UML/toolbox.py:77
+#: gaphor/templates/sysml-example.gaphor gaphor/templates/uml-example.gaphor
+#: gaphor/templates/uml.gaphor
+msgid "Interaction"
+msgstr "इंटरैक्शन"
 
-#: gaphor/C4Model/toolbox.py:164 gaphor/SysML/toolbox.py:153
-#: gaphor/SysML/toolbox.py:154 gaphor/SysML/toolbox.py:194
-#: gaphor/UML/toolbox.py:86
-msgid "New State Machine"
-msgstr "नई स्टेट मशीन"
+#: gaphor/C4Model/toolbox.py:162 gaphor/SysML/toolbox.py:190
+#: gaphor/UML/states/statestoolbox.py:46 gaphor/UML/states/statestoolbox.py:63
+#: gaphor/UML/toolbox.py:82 gaphor/templates/sysml-example.gaphor
+msgid "State Machine"
+msgstr "मशीन अवस्था"
 
-#: gaphor/C4Model/toolbox.py:166 gaphor/UML/toolbox.py:66
-msgid "New Class"
-msgstr "नई क्लास"
+#: gaphor/C4Model/toolbox.py:164 gaphor/UML/classes/classestoolbox.py:29
+#: gaphor/UML/profiles/profilestoolbox.py:14 gaphor/UML/toolbox.py:66
+msgid "Class"
+msgstr "वर्ग"
 
-#: gaphor/C4Model/toolbox.py:168 gaphor/UML/toolbox.py:68
-msgid "New Data Type"
-msgstr "नया डेटा प्रकार"
+#: gaphor/C4Model/toolbox.py:166 gaphor/UML/toolbox.py:68
+#, fuzzy
+msgid "Data Type"
+msgstr "डेटाप्रकार"
 
-#: gaphor/C4Model/toolbox.py:170 gaphor/SysML/toolbox.py:176
-#: gaphor/UML/toolbox.py:71
-msgid "New Enumeration"
-msgstr "नई गणना"
+#: gaphor/C4Model/toolbox.py:167 gaphor/SysML/blocks/blockstoolbox.py:118
+#: gaphor/SysML/toolbox.py:175 gaphor/UML/classes/classestoolbox.py:154
+#: gaphor/UML/toolbox.py:70
+msgid "Enumeration"
+msgstr "गणना"
 
-#: gaphor/C4Model/toolbox.py:173
-msgid "New Primitive Type"
+#: gaphor/C4Model/toolbox.py:169
+#, fuzzy
+msgid "Primitive Type"
 msgstr "नया आदिम प्रकार"
-
-#: gaphor/C4Model/toolbox.py:175
-msgid "New Person"
-msgstr "नया व्यक्ति"
 
 #: gaphor/RAAML/modelinglanguage.py:24 gaphor/ui/greeter.py:48
 msgid "RAAML"
 msgstr "RAAML"
 
 #: gaphor/RAAML/toolbox.py:23
-msgid "New FTA Diagram"
+#, fuzzy
+msgid "FTA Diagram"
 msgstr "नया FTA आरेख"
 
 #: gaphor/RAAML/toolbox.py:24
-msgid "New STPA Diagram"
+#, fuzzy
+msgid "STPA Diagram"
 msgstr "नया STPA आरेख"
 
-#: gaphor/RAAML/toolbox.py:28
-msgid "New Top Event"
-msgstr "नया शीर्ष इवेंट"
+#: gaphor/RAAML/fta/ftatoolbox.py:195 gaphor/RAAML/fta/ftatoolbox.py:201
+#: gaphor/RAAML/fta/topevent.py:27 gaphor/RAAML/toolbox.py:28
+msgid "Top Event"
+msgstr "शीर्ष घटना"
 
-#: gaphor/RAAML/toolbox.py:29
-msgid "New Loss"
-msgstr "नई हानि"
+#: gaphor/RAAML/stpa/stpatoolbox.py:17 gaphor/RAAML/stpa/stpatoolbox.py:43
+#: gaphor/RAAML/toolbox.py:29 gaphor/templates/raaml-example.gaphor
+msgid "Loss"
+msgstr "हानि"
 
-#: gaphor/RAAML/toolbox.py:30
-msgid "New Hazard"
-msgstr "नया खतरा"
+#: gaphor/RAAML/stpa/stpatoolbox.py:22 gaphor/RAAML/stpa/stpatoolbox.py:52
+#: gaphor/RAAML/toolbox.py:30 gaphor/templates/raaml-example.gaphor
+msgid "Hazard"
+msgstr "खतरा"
 
-#: gaphor/RAAML/toolbox.py:31
-msgid "New Situation"
-msgstr "नई स्थिति"
+#: gaphor/RAAML/stpa/stpatoolbox.py:61 gaphor/RAAML/toolbox.py:31
+#: gaphor/SysML/blocks/block.py:57 gaphor/SysML/blocks/interfaceblock.py:56
+msgid "Situation"
+msgstr "परिस्थिति"
 
 #: gaphor/RAAML/fta/andgate.py:34 gaphor/RAAML/fta/ftatoolbox.py:24
 msgid "AND Gate"
@@ -267,11 +282,6 @@ msgstr "गृह घटना"
 msgid "Zero Event"
 msgstr "शून्य घटना"
 
-#: gaphor/RAAML/fta/ftatoolbox.py:195 gaphor/RAAML/fta/ftatoolbox.py:201
-#: gaphor/RAAML/fta/topevent.py:27
-msgid "Top Event"
-msgstr "शीर्ष घटना"
-
 #: gaphor/RAAML/fta/ftatoolbox.py:206 gaphor/RAAML/fta/ftatoolbox.py:213
 #: gaphor/RAAML/fta/intermediateevent.py:28
 msgid "Intermediate Event"
@@ -294,16 +304,6 @@ msgstr "नियंत्रण कार्रवाई"
 msgid "Operational Situation"
 msgstr "परिचालन स्थिति"
 
-#: gaphor/RAAML/stpa/stpatoolbox.py:17 gaphor/RAAML/stpa/stpatoolbox.py:43
-#: gaphor/templates/raaml-example.gaphor
-msgid "Loss"
-msgstr "हानि"
-
-#: gaphor/RAAML/stpa/stpatoolbox.py:22 gaphor/RAAML/stpa/stpatoolbox.py:52
-#: gaphor/templates/raaml-example.gaphor
-msgid "Hazard"
-msgstr "खतरा"
-
 #: gaphor/RAAML/stpa/stpatoolbox.py:27 gaphor/RAAML/stpa/stpatoolbox.py:116
 #: gaphor/templates/raaml-example.gaphor
 msgid "Abstract Operational Situation"
@@ -313,11 +313,6 @@ msgstr "सार परिचालन स्थिति"
 #: gaphor/UML/classes/classestoolbox.py:127
 msgid "Generalization"
 msgstr "सामान्यकरण"
-
-#: gaphor/RAAML/stpa/stpatoolbox.py:61 gaphor/SysML/blocks/block.py:57
-#: gaphor/SysML/blocks/interfaceblock.py:56
-msgid "Situation"
-msgstr "परिस्थिति"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:72
 msgid "Control Structure"
@@ -441,7 +436,8 @@ msgid "Proxy Port"
 msgstr "प्रॉक्सी पोर्ट"
 
 #: gaphor/SysML/toolbox.py:90
-msgid "New Block Definition Diagram"
+#, fuzzy
+msgid "Block Definition Diagram"
 msgstr "नया ब्लॉक परिभाषा आरेख"
 
 #: gaphor/SysML/toolbox.py:93 gaphor/SysML/toolbox.py:113
@@ -450,45 +446,69 @@ msgid "New Package"
 msgstr "नया पैकेज"
 
 #: gaphor/SysML/toolbox.py:97
-msgid "New Internal Block Diagram"
+#, fuzzy
+msgid "Internal Block Diagram"
 msgstr "नया आंतरिक ब्लॉक आरेख"
 
 #: gaphor/SysML/toolbox.py:104 gaphor/SysML/toolbox.py:105
-#: gaphor/SysML/toolbox.py:174
 msgid "New Block"
 msgstr "नया ब्लॉक"
 
 #: gaphor/SysML/toolbox.py:110 gaphor/UML/toolbox.py:51
-msgid "New Package Diagram"
+#, fuzzy
+msgid "Package Diagram"
 msgstr "नया पैकेज आरेख"
 
 #: gaphor/SysML/toolbox.py:117
-msgid "New Requirement Diagram"
+#, fuzzy
+msgid "Requirement Diagram"
 msgstr "नई आवश्यकता आरेख"
 
+#: gaphor/SysML/toolbox.py:133 gaphor/SysML/toolbox.py:134
+msgid "New Activity"
+msgstr "नई गतिविधि"
+
+#: gaphor/SysML/toolbox.py:143 gaphor/SysML/toolbox.py:144
+msgid "New Interaction"
+msgstr "नया इंटरैक्शन"
+
+#: gaphor/SysML/toolbox.py:153 gaphor/SysML/toolbox.py:154
+msgid "New State Machine"
+msgstr "नई स्टेट मशीन"
+
 #: gaphor/SysML/toolbox.py:159 gaphor/UML/toolbox.py:58
-msgid "New Use Case Diagram"
+#, fuzzy
+msgid "Use Case Diagram"
 msgstr "नया उपयोग केस आरेख"
 
 #: gaphor/SysML/toolbox.py:173 gaphor/UML/toolbox.py:64
-msgid "New Actor"
-msgstr "नया अभिनेता"
+#: gaphor/UML/usecases/usecasetoolbox.py:28 gaphor/templates/uml-example.gaphor
+msgid "Actor"
+msgstr "अभिनेता"
 
+#: gaphor/SysML/blocks/blockstoolbox.py:29 gaphor/SysML/toolbox.py:174
+msgid "Block"
+msgstr "ब्लॉक"
+
+#: gaphor/SysML/toolbox.py:178
+#, fuzzy
+msgid "Interface Block"
+msgstr "इंटरफ़ेसब्लॉक"
+
+#: gaphor/SysML/requirements/requirementstoolbox.py:17
 #: gaphor/SysML/toolbox.py:182
-msgid "New Interface Block"
-msgstr "नया इंटरफ़ेस ब्लॉक"
+msgid "Requirement"
+msgstr "आवश्यकता"
 
-#: gaphor/SysML/toolbox.py:186
-msgid "New Requirement"
-msgstr "नई आवश्यकता"
+#: gaphor/SysML/toolbox.py:192 gaphor/UML/toolbox.py:85
+#, fuzzy
+msgid "Use Case"
+msgstr "उदाहरण"
 
-#: gaphor/SysML/toolbox.py:196 gaphor/UML/toolbox.py:89
-msgid "New Use Case"
-msgstr "नया उपयोग मामला"
-
-#: gaphor/SysML/toolbox.py:197
-msgid "New Value Type"
-msgstr "नया मान प्रकार"
+#: gaphor/SysML/toolbox.py:193
+#, fuzzy
+msgid "Value Type"
+msgstr "मानप्रकार"
 
 #: gaphor/SysML/allocations/allocationstoolbox.py:6
 msgid "Allocations"
@@ -536,10 +556,6 @@ msgstr "अनाम"
 msgid "Blocks"
 msgstr "ब्लॉक"
 
-#: gaphor/SysML/blocks/blockstoolbox.py:29
-msgid "Block"
-msgstr "ब्लॉक"
-
 #: gaphor/SysML/blocks/blockstoolbox.py:39
 msgid "InterfaceBlock"
 msgstr "इंटरफ़ेसब्लॉक"
@@ -573,11 +589,6 @@ msgstr "प्रत्यक्ष संबंध"
 #: gaphor/SysML/blocks/blockstoolbox.py:107
 msgid "ValueType"
 msgstr "मान प्रकार"
-
-#: gaphor/SysML/blocks/blockstoolbox.py:118
-#: gaphor/UML/classes/classestoolbox.py:154
-msgid "Enumeration"
-msgstr "गणना"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:130
 #: gaphor/UML/classes/classestoolbox.py:166
@@ -619,10 +630,6 @@ msgstr "आवश्यकता"
 #: gaphor/SysML/requirements/requirementstoolbox.py:13
 #: gaphor/templates/sysml-example.gaphor gaphor/templates/sysml.gaphor
 msgid "Requirements"
-msgstr "आवश्यकता"
-
-#: gaphor/SysML/requirements/requirementstoolbox.py:17
-msgid "Requirement"
 msgstr "आवश्यकता"
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:29
@@ -675,48 +682,53 @@ msgstr ""
 "नहीं किया गया।"
 
 #: gaphor/UML/toolbox.py:52
-msgid "New Component Diagram"
-msgstr "नया घटक आरेख"
+#, fuzzy
+msgid "Component Diagram"
+msgstr "घटक आरेख"
 
 #: gaphor/UML/toolbox.py:53
-msgid "New Deployment Diagram"
+#, fuzzy
+msgid "Deployment Diagram"
 msgstr "नया परिनियोजन आरेख"
 
 #: gaphor/UML/toolbox.py:56
-msgid "New Communication Diagram"
+#, fuzzy
+msgid "Communication Diagram"
 msgstr "नया संचार आरेख"
 
 #: gaphor/UML/toolbox.py:59
-msgid "New Profile Diagram"
+#, fuzzy
+msgid "Profile Diagram"
 msgstr "नया प्रोफाइल आरेख"
 
-#: gaphor/UML/toolbox.py:65
-msgid "New Artifact"
-msgstr "नया विरूपण-साक्ष्य"
+#: gaphor/UML/deployments/deploymentstoolbox.py:16 gaphor/UML/toolbox.py:65
+msgid "Artifact"
+msgstr "विरूपण-साक्ष्य"
 
-#: gaphor/UML/toolbox.py:69
-msgid "New Device"
-msgstr "नया उपकरण"
+#: gaphor/UML/deployments/deploymentstoolbox.py:40 gaphor/UML/toolbox.py:69
+msgid "Device"
+msgstr "उपकरण"
 
-#: gaphor/UML/toolbox.py:75
-msgid "New Instance Specification"
+#: gaphor/UML/toolbox.py:73
+#, fuzzy
+msgid "Instance Specification"
 msgstr "नया इंस्टैंस विनिर्देश"
 
-#: gaphor/UML/toolbox.py:82
-msgid "New Interface"
-msgstr "नया इंटरफ़ेस"
+#: gaphor/UML/classes/classestoolbox.py:39 gaphor/UML/toolbox.py:78
+msgid "Interface"
+msgstr "इंटरफ़ेस"
 
-#: gaphor/UML/toolbox.py:83
-msgid "New Node"
-msgstr "नया नोड"
+#: gaphor/UML/deployments/deploymentstoolbox.py:28 gaphor/UML/toolbox.py:79
+msgid "Node"
+msgstr "नोड"
 
-#: gaphor/UML/toolbox.py:84
-msgid "New Profile"
-msgstr "नई प्रोफाइल"
+#: gaphor/UML/profiles/profilestoolbox.py:22 gaphor/UML/toolbox.py:80
+msgid "Profile"
+msgstr "प्रोफाइल"
 
-#: gaphor/UML/toolbox.py:88
-msgid "New Stereotype"
-msgstr "नई रूढ़ि"
+#: gaphor/UML/profiles/profilestoolbox.py:44 gaphor/UML/toolbox.py:84
+msgid "Stereotype"
+msgstr "टकसाली"
 
 #: gaphor/UML/actions/actionstoolbox.py:18
 #: gaphor/UML/interactions/interactionstoolbox.py:16
@@ -744,12 +756,6 @@ msgstr "विस्तार करें: {name}"
 #: gaphor/UML/umlfmt.py:244
 msgid "include: {name}"
 msgstr "शामिल करें: {name}"
-
-#: gaphor/UML/actions/actionstoolbox.py:41
-#: gaphor/UML/actions/actionstoolbox.py:68
-#: gaphor/templates/sysml-example.gaphor gaphor/templates/uml-example.gaphor
-msgid "Activity"
-msgstr "गतिविधि"
 
 #: gaphor/UML/actions/actionstoolbox.py:49
 msgid "Swimlane One"
@@ -1043,15 +1049,6 @@ msgstr "नया अभियान…"
 msgid "Classes"
 msgstr "वर्ग"
 
-#: gaphor/UML/classes/classestoolbox.py:29
-#: gaphor/UML/profiles/profilestoolbox.py:14
-msgid "Class"
-msgstr "वर्ग"
-
-#: gaphor/UML/classes/classestoolbox.py:39
-msgid "Interface"
-msgstr "इंटरफ़ेस"
-
 #: gaphor/UML/classes/classestoolbox.py:135
 msgid "Interface Realization"
 msgstr "इंटरफ़ेस कार्यान्वयन"
@@ -1096,15 +1093,15 @@ msgstr "नई गणना…"
 msgid "interface"
 msgstr "इंटरफ़ेस"
 
-#: gaphor/UML/classes/klass.py:49
+#: gaphor/UML/classes/klass.py:48
 msgid "stereotype"
 msgstr "टकसाली"
 
-#: gaphor/UML/classes/klass.py:51
+#: gaphor/UML/classes/klass.py:50
 msgid "metaclass"
 msgstr "मेटाक्लास"
 
-#: gaphor/UML/classes/package.py:29
+#: gaphor/UML/classes/package.py:30
 msgid "profile"
 msgstr "प्रोफाइल"
 
@@ -1327,19 +1324,7 @@ msgstr "अप्रत्यक्ष रूप से तात्कालि
 msgid "Deployments"
 msgstr "तैनाती"
 
-#: gaphor/UML/deployments/deploymentstoolbox.py:16
-msgid "Artifact"
-msgstr "विरूपण-साक्ष्य"
-
-#: gaphor/UML/deployments/deploymentstoolbox.py:28
-msgid "Node"
-msgstr "नोड"
-
-#: gaphor/UML/deployments/deploymentstoolbox.py:40
-msgid "Device"
-msgstr "उपकरण"
-
-#: gaphor/UML/deployments/node.py:46
+#: gaphor/UML/deployments/node.py:47
 msgid "device"
 msgstr "उपकरण"
 
@@ -1400,13 +1385,6 @@ msgstr "चित्र “{filename}” विश्लेषित करन�
 #: gaphor/UML/interactions/interactionsconnect.py:76
 msgid "call()"
 msgstr "call()"
-
-#: gaphor/UML/interactions/interactionstoolbox.py:36
-#: gaphor/UML/interactions/interactionstoolbox.py:57
-#: gaphor/templates/sysml-example.gaphor gaphor/templates/uml-example.gaphor
-#: gaphor/templates/uml.gaphor
-msgid "Interaction"
-msgstr "इंटरैक्शन"
 
 #: gaphor/UML/interactions/interactionstoolbox.py:53
 #: gaphor/templates/uml-example.gaphor gaphor/templates/uml.gaphor
@@ -1469,18 +1447,10 @@ msgstr "आयात करें"
 msgid "Profiles"
 msgstr "प्रोफाइल"
 
-#: gaphor/UML/profiles/profilestoolbox.py:22
-msgid "Profile"
-msgstr "प्रोफाइल"
-
 #: gaphor/UML/profiles/profilestoolbox.py:34
 #: gaphor/UML/profiles/propertypages.ui:11
 msgid "Metaclass"
 msgstr "मेटाक्लास"
-
-#: gaphor/UML/profiles/profilestoolbox.py:44
-msgid "Stereotype"
-msgstr "टकसाली"
 
 #: gaphor/UML/profiles/profilestoolbox.py:56
 msgid "Extension"
@@ -1535,11 +1505,6 @@ msgstr "मशीनअवस्था"
 #: gaphor/UML/states/statestoolbox.py:16 gaphor/UML/states/statestoolbox.py:75
 msgid "State"
 msgstr "अवस्था"
-
-#: gaphor/UML/states/statestoolbox.py:46 gaphor/UML/states/statestoolbox.py:63
-#: gaphor/templates/sysml-example.gaphor
-msgid "State Machine"
-msgstr "मशीन अवस्था"
 
 #: gaphor/UML/states/statestoolbox.py:59
 msgid "States"
@@ -1610,10 +1575,6 @@ msgstr "उदाहरण"
 #: gaphor/UML/usecases/usecasetoolbox.py:16
 msgid "Use case"
 msgstr "उदाहरण"
-
-#: gaphor/UML/usecases/usecasetoolbox.py:28 gaphor/templates/uml-example.gaphor
-msgid "Actor"
-msgstr "अभिनेता"
 
 #: gaphor/UML/usecases/usecasetoolbox.py:47
 msgid "Include"
@@ -1705,6 +1666,40 @@ msgstr "फ़ोकस किए गए आइटम के CSS नोड्स
 #: gaphor/ui/elementeditor.ui:238
 msgid "No focused item."
 msgstr "कोई केंद्रित आइटम नहीं।"
+
+#: gaphor/diagram/propertypages.ui:322 gaphor/diagram/styleeditor.ui:5
+#, fuzzy
+msgid "Style Editor"
+msgstr "स्टाइल शीट"
+
+#: gaphor/diagram/propertypages.ui:331
+#, fuzzy
+msgid "Open Style Editor"
+msgstr "मर्ज संपादक खोलें"
+
+#: gaphor/diagram/styleeditor.ui:27
+#, fuzzy
+msgid "Border Radius"
+msgstr "क्रमित"
+
+#: gaphor/diagram/styleeditor.ui:51
+#, fuzzy
+msgid "Color"
+msgstr "रंग"
+
+#: gaphor/diagram/styleeditor.ui:67
+msgid "Background Color"
+msgstr ""
+
+#: gaphor/diagram/styleeditor.ui:83
+#, fuzzy
+msgid "Text Color"
+msgstr "रंग"
+
+#: gaphor/diagram/styleeditor.ui:96
+#, fuzzy
+msgid "Add to Style Sheet"
+msgstr "स्टाइल शीट"
 
 #: gaphor/diagram/tools/dnd.py:50
 msgid "Element can’t be represented on a diagram."
@@ -1905,13 +1900,13 @@ msgstr ""
 "खुले मॉडल में बिना सहेजे गए परिवर्तन शामिल हैं। जो परिवर्तन सहेजे नहीं गए"
 " हैं, वे स्थायी रूप से खो जाएंगे।"
 
-#: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:62
+#: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:63
 #: gaphor/ui/mainwindow.py:273 gaphor/ui/mainwindow.py:278
 #: gaphor/ui/mainwindow.ui:124
 msgid "New model"
 msgstr "नए मॉडल"
 
-#: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:65
+#: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:66
 msgid "New diagram"
 msgstr "नया आरेख"
 
@@ -2629,13 +2624,12 @@ msgstr "पुनः खोलें"
 msgid "Switch"
 msgstr "बदले"
 
-#: gaphor/ui/diagrampage.py:103 gaphor/ui/mainwindow.py:292
-#: gaphor/ui/modelmerge/organize.py:138 gaphor/ui/modelmerge/organize.py:169
-#: gaphor/ui/treemodel.py:44
+#: gaphor/ui/diagrampage.py:105 gaphor/ui/mainwindow.py:292
+#: gaphor/ui/modelmerge/organize.py:138 gaphor/ui/treemodel.py:44
 msgid "<None>"
 msgstr "<None>"
 
-#: gaphor/ui/diagrampage.py:334
+#: gaphor/ui/diagrampage.py:331
 msgid "Show in Model Browser"
 msgstr "मॉडल ब्राउज़र में दिखाएं"
 
@@ -2779,11 +2773,7 @@ msgstr ""
 msgid "Resolve"
 msgstr "समाधान करें"
 
-#: gaphor/ui/errordialog.py:24
-msgid "Close"
-msgstr "बंद करें"
-
-#: gaphor/ui/errordialog.py:29
+#: gaphor/ui/errordialog.py:21
 msgid ""
 "It looks like Gaphor is started from the command line. Do you want to "
 "open a debug session?"
@@ -2791,7 +2781,11 @@ msgstr ""
 "ऐसा लगता है कि गैफोर को कमांड लाइन से शुरू किया गया है। क्या आप डिबग सत्र"
 " खोलना चाहते हैं?"
 
-#: gaphor/ui/errordialog.py:38
+#: gaphor/ui/errordialog.py:28
+msgid "Close"
+msgstr "बंद करें"
+
+#: gaphor/ui/errordialog.py:30
 msgid "Start Debug Session"
 msgstr "डीबग सत्र प्रारंभ करें"
 
@@ -2811,7 +2805,7 @@ msgstr "सभी फाइलें"
 msgid "Flatpak Document Portal"
 msgstr ""
 
-#: gaphor/ui/filemanager.py:41
+#: gaphor/ui/filemanager.py:42
 msgid ""
 "Gaphor was not able to store the model, probably due to an internal "
 "error:\n"
@@ -2823,7 +2817,7 @@ msgstr ""
 "{exc}\n"
 "यदि आपको लगता है कि यह एक बग है, तो कृपया डेवलपर्स से संपर्क करें।"
 
-#: gaphor/ui/filemanager.py:45
+#: gaphor/ui/filemanager.py:46
 msgid ""
 "You do not have the permissions necessary to save the model.\n"
 "Please check that you typed the location correctly and try again."
@@ -2831,7 +2825,7 @@ msgstr ""
 "आपके पास मॉडल को सहेजने के लिए आवश्यक अनुमतियां नहीं हैं।\n"
 "कृपया जाँच लें कि आपने स्थान सही ढंग से टाइप किया है और पुनः प्रयास करें।"
 
-#: gaphor/ui/filemanager.py:49
+#: gaphor/ui/filemanager.py:50
 msgid ""
 "You do not have enough free space on the device to save the model.\n"
 "Please free up some disk space and try again or save it in a different "
@@ -2841,7 +2835,7 @@ msgstr ""
 "कृपया कुछ डिस्क स्थान खाली करें और पुनः प्रयास करें या इसे किसी अन्य "
 "स्थान पर सहेजें।"
 
-#: gaphor/ui/filemanager.py:52
+#: gaphor/ui/filemanager.py:53
 msgid ""
 "The model cannot be stored at this location:\n"
 "{exc}\n"
@@ -2851,51 +2845,55 @@ msgstr ""
 "{exc}\n"
 "कृपया जाँच लें कि आपने स्थान सही टाइप किया है और पुनः प्रयास करें।"
 
-#: gaphor/ui/filemanager.py:128 gaphor/ui/filemanager.py:157
+#: gaphor/ui/filemanager.py:129 gaphor/ui/filemanager.py:158
 msgid "Loading…"
 msgstr "लोड हो रहा है…"
 
-#: gaphor/ui/filemanager.py:129
+#: gaphor/ui/filemanager.py:130
 msgid "Loading model from {filename}"
 msgstr "{filename} से मॉडल लोड हो रहा है"
 
-#: gaphor/ui/filemanager.py:158
+#: gaphor/ui/filemanager.py:159
 msgid "Loading current and incoming model"
 msgstr "वर्तमान और आने वाले मॉडल लोड हो रहे हैं"
 
-#: gaphor/ui/filemanager.py:220 gaphor/ui/filemanager.py:264
+#: gaphor/ui/filemanager.py:221 gaphor/ui/filemanager.py:265
 msgid "Unable to open model “{filename}”."
 msgstr "मॉडल “{filename}” खोलने में असमर्थ।"
 
-#: gaphor/ui/filemanager.py:223 gaphor/ui/filemanager.py:267
+#: gaphor/ui/filemanager.py:224 gaphor/ui/filemanager.py:268
 msgid "This file does not contain a valid Gaphor model."
 msgstr "इस फाइल में मान्य गैफ़ोर मॉडल नहीं है।"
 
-#: gaphor/ui/filemanager.py:287
+#: gaphor/ui/filemanager.py:289
 msgid "Saving…"
 msgstr "सहेजा जा रहा है…"
 
-#: gaphor/ui/filemanager.py:288
+#: gaphor/ui/filemanager.py:290
 msgid "Saving model to {filename}"
 msgstr "मॉडल को {filename} में सहेजा जा रहा है"
 
-#: gaphor/ui/filemanager.py:300
+#: gaphor/ui/filemanager.py:306
 msgid "Unable to save model “{filename}”."
 msgstr "मॉडल “{filename}” को सहेजने में असमर्थ।"
 
-#: gaphor/ui/filemanager.py:336 gaphor/ui/filemanager.py:379
+#: gaphor/ui/filemanager.py:318
+msgid "Model has been saved."
+msgstr ""
+
+#: gaphor/ui/filemanager.py:344 gaphor/ui/filemanager.py:387
 msgid "Save Gaphor Model As"
 msgstr "गैफोर मॉडल ऐसे सहेजें"
 
-#: gaphor/ui/filemanager.py:337 gaphor/ui/filemanager.py:381
+#: gaphor/ui/filemanager.py:345 gaphor/ui/filemanager.py:389
 msgid "New Model"
 msgstr "नए मॉडल"
 
-#: gaphor/ui/filemanager.py:400
+#: gaphor/ui/filemanager.py:407
 msgid "Resolve Merge Conflict?"
 msgstr "मर्ज विवाद का समाधान करें?"
 
-#: gaphor/ui/filemanager.py:403
+#: gaphor/ui/filemanager.py:408
 msgid ""
 "The model you are opening contains a merge conflict. Do you want to open "
 "the current model or the incoming change to the model?"
@@ -2903,27 +2901,27 @@ msgstr ""
 "आप जिस मॉडल को खोल रहे हैं, उसमें मर्ज विवाद है। क्या आप मौजूदा मॉडल या "
 "मॉडल में आने वाले बदलाव को खोलना चाहते हैं?"
 
-#: gaphor/ui/filemanager.py:407 gaphor/ui/filemanager.py:430
+#: gaphor/ui/filemanager.py:412 gaphor/ui/filemanager.py:427
 msgid "Cancel"
 msgstr "रद्द करें"
 
-#: gaphor/ui/filemanager.py:408
+#: gaphor/ui/filemanager.py:413
 msgid "Open Merge Editor"
 msgstr "मर्ज संपादक खोलें"
 
-#: gaphor/ui/filemanager.py:409
+#: gaphor/ui/filemanager.py:414
 msgid "Open Current"
 msgstr "वर्तमान खोलें"
 
-#: gaphor/ui/filemanager.py:410
+#: gaphor/ui/filemanager.py:415
 msgid "Open Incoming"
 msgstr "आवक खोलें"
 
-#: gaphor/ui/filemanager.py:421
+#: gaphor/ui/filemanager.py:422
 msgid "Save Changes?"
 msgstr "परिवर्तन सहेजें?"
 
-#: gaphor/ui/filemanager.py:422
+#: gaphor/ui/filemanager.py:423
 msgid ""
 "The open model contains unsaved changes. Changes which are not saved will"
 " be permanently lost."
@@ -2931,11 +2929,11 @@ msgstr ""
 "खुले मॉडल में बिना सहेजे गए परिवर्तन शामिल हैं। जो परिवर्तन सहेजे नहीं गए"
 " हैं, वे स्थायी रूप से खो जाएंगे।"
 
-#: gaphor/ui/filemanager.py:431
+#: gaphor/ui/filemanager.py:428
 msgid "Discard"
 msgstr "त्यागें"
 
-#: gaphor/ui/filemanager.py:432 gaphor/ui/help/shortcuts.ui:213
+#: gaphor/ui/filemanager.py:429 gaphor/ui/help/shortcuts.ui:213
 #: gaphor/ui/mainwindow.py:51
 msgid "Save"
 msgstr "सहेजें"
@@ -3104,7 +3102,8 @@ msgid "Show in “{diagram}”"
 msgstr "“{diagram}” में दिखाएं"
 
 #: gaphor/ui/modelbrowser.py:676
-msgid "New Generic Diagram"
+#, fuzzy
+msgid "Generic Diagram"
 msgstr "नया जेनेरिक आरेख"
 
 #: gaphor/ui/modelchanged.ui:6
@@ -3263,75 +3262,75 @@ msgstr "एक मॉडल खोलें…"
 msgid "Update diagram “{name}”"
 msgstr "आरेख “{name}” अपडेट करें"
 
-#: gaphor/ui/modelmerge/organize.py:168 gaphor/ui/modelmerge/organize.py:310
+#: gaphor/ui/modelmerge/organize.py:177 gaphor/ui/modelmerge/organize.py:317
 msgid "Update element “{name}”"
 msgstr "तत्व “{name}” अपडेट करें"
 
-#: gaphor/ui/modelmerge/organize.py:172
+#: gaphor/ui/modelmerge/organize.py:182
 msgid "Update element of type “{type}”"
 msgstr "“{type}” प्रकार का तत्व अपडेट करें"
 
-#: gaphor/ui/modelmerge/organize.py:248
+#: gaphor/ui/modelmerge/organize.py:255
 msgid "Update presentation “{type}”"
 msgstr "प्रस्तुतिकरण “{type}” अपडेट करें"
 
-#: gaphor/ui/modelmerge/organize.py:274
+#: gaphor/ui/modelmerge/organize.py:281
 msgid "Add presentation of type {type}"
 msgstr "{type} प्रकार की प्रस्तुति जोड़ें"
 
-#: gaphor/ui/modelmerge/organize.py:278
+#: gaphor/ui/modelmerge/organize.py:285
 msgid "Remove presentation of type {type}"
 msgstr "{type} प्रकार की प्रस्तुति हटाएं"
 
-#: gaphor/ui/modelmerge/organize.py:283
+#: gaphor/ui/modelmerge/organize.py:290
 msgid "Update presentation “{name}”"
 msgstr "प्रस्तुतिकरण “{name}” अपडेट करें"
 
-#: gaphor/ui/modelmerge/organize.py:285
+#: gaphor/ui/modelmerge/organize.py:292
 msgid "Update presentation of type {type}"
 msgstr "{type} प्रकार की प्रस्तुति अपडेट करें"
 
-#: gaphor/ui/modelmerge/organize.py:292
+#: gaphor/ui/modelmerge/organize.py:299
 msgid "Add {type} “{name}”"
 msgstr "{type} “{name}” जोड़ें"
 
-#: gaphor/ui/modelmerge/organize.py:296
+#: gaphor/ui/modelmerge/organize.py:303
 msgid "Add element of type {type}"
 msgstr "{type} प्रकार का तत्व जोड़ें"
 
-#: gaphor/ui/modelmerge/organize.py:302
+#: gaphor/ui/modelmerge/organize.py:309
 msgid "Remove element “{name}”"
 msgstr "तत्व “{name}” निकालें"
 
-#: gaphor/ui/modelmerge/organize.py:304
+#: gaphor/ui/modelmerge/organize.py:311
 msgid "Remove element of type {type}"
 msgstr "{type} प्रकार का तत्व हटाएं"
 
-#: gaphor/ui/modelmerge/organize.py:312
+#: gaphor/ui/modelmerge/organize.py:319
 msgid "Update element of type {type}"
 msgstr "{type} प्रकार का तत्व अपडेट करें"
 
-#: gaphor/ui/modelmerge/organize.py:319
+#: gaphor/ui/modelmerge/organize.py:326
 msgid "Add relation “{name}” to “{ref_name}”"
 msgstr "संबंध “{name}” को “{ref_name}” में जोड़ें"
 
-#: gaphor/ui/modelmerge/organize.py:321
+#: gaphor/ui/modelmerge/organize.py:328
 msgid "Remove relation “{name}” to “{ref_name}”"
 msgstr "“{name}” से “{ref_name}” का संबंध हटाएं"
 
-#: gaphor/ui/modelmerge/organize.py:323
+#: gaphor/ui/modelmerge/organize.py:330
 msgid "Update relation “{name}” to “{ref_name}”"
 msgstr "संबंध “{name}” को “{ref_name}” में अपडेट करें"
 
-#: gaphor/ui/modelmerge/organize.py:330
+#: gaphor/ui/modelmerge/organize.py:337
 msgid "Add relation “{name}”"
 msgstr "संबंध “{name}” जोड़ें"
 
-#: gaphor/ui/modelmerge/organize.py:332
+#: gaphor/ui/modelmerge/organize.py:339
 msgid "Remove relation “{name}”"
 msgstr "संबंध “{name}” हटाएं"
 
-#: gaphor/ui/modelmerge/organize.py:334
+#: gaphor/ui/modelmerge/organize.py:341
 msgid "Update relation “{name}”"
 msgstr "संबंध “{name}” अपडेट करें"
 
@@ -3351,4 +3350,64 @@ msgstr "सामान्य: {name}"
 
 #~ msgid "All XMI Files"
 #~ msgstr "सभी XMI फाइलें"
+
+#~ msgid "New Class"
+#~ msgstr "नई क्लास"
+
+#~ msgid "New Data Type"
+#~ msgstr "नया डेटा प्रकार"
+
+#~ msgid "New Enumeration"
+#~ msgstr "नई गणना"
+
+#~ msgid "New Person"
+#~ msgstr "नया व्यक्ति"
+
+#~ msgid "New Top Event"
+#~ msgstr "नया शीर्ष इवेंट"
+
+#~ msgid "New Loss"
+#~ msgstr "नई हानि"
+
+#~ msgid "New Hazard"
+#~ msgstr "नया खतरा"
+
+#~ msgid "New Situation"
+#~ msgstr "नई स्थिति"
+
+#~ msgid "New Actor"
+#~ msgstr "नया अभिनेता"
+
+#~ msgid "New Interface Block"
+#~ msgstr "नया इंटरफ़ेस ब्लॉक"
+
+#~ msgid "New Requirement"
+#~ msgstr "नई आवश्यकता"
+
+#~ msgid "New Use Case"
+#~ msgstr "नया उपयोग मामला"
+
+#~ msgid "New Value Type"
+#~ msgstr "नया मान प्रकार"
+
+#~ msgid "New Component Diagram"
+#~ msgstr "नया घटक आरेख"
+
+#~ msgid "New Artifact"
+#~ msgstr "नया विरूपण-साक्ष्य"
+
+#~ msgid "New Device"
+#~ msgstr "नया उपकरण"
+
+#~ msgid "New Interface"
+#~ msgstr "नया इंटरफ़ेस"
+
+#~ msgid "New Node"
+#~ msgstr "नया नोड"
+
+#~ msgid "New Profile"
+#~ msgstr "नई प्रोफाइल"
+
+#~ msgid "New Stereotype"
+#~ msgstr "नई रूढ़ि"
 

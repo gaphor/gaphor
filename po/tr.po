@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-11-27 15:43-0500\n"
+"POT-Creation-Date: 2024-12-03 09:12+0100\n"
 "PO-Revision-Date: 2024-03-15 21:07+0000\n"
 "Last-Translator: Semih <semihbrn10@gmail.com>\n"
 "Language: tr\n"
@@ -42,21 +42,21 @@ msgstr "Yeni Yazılım Sistemi"
 msgid "New Container"
 msgstr "Yeni Taşıyıcı"
 
-#: gaphor/C4Model/toolbox.py:55 gaphor/templates/c4model-example.gaphor
+#: gaphor/C4Model/toolbox.py:55 gaphor/C4Model/toolbox.py:172
+#: gaphor/templates/c4model-example.gaphor
 msgid "Database"
 msgstr "Veri Tabanı"
 
-#: gaphor/C4Model/toolbox.py:56 gaphor/C4Model/toolbox.py:177
+#: gaphor/C4Model/toolbox.py:56
 msgid "New Database"
 msgstr "Yeni Veri Tabanı"
 
-#: gaphor/C4Model/toolbox.py:63 gaphor/C4Model/toolbox.py:167
-#: gaphor/UML/toolbox.py:67
+#: gaphor/C4Model/toolbox.py:63
 msgid "New Component"
 msgstr "Yeni Bileşen"
 
 #: gaphor/C4Model/diagramitems/person.py:24 gaphor/C4Model/toolbox.py:71
-#: gaphor/C4Model/toolbox.py:77
+#: gaphor/C4Model/toolbox.py:77 gaphor/C4Model/toolbox.py:171
 msgid "Person"
 msgstr "Kişi"
 
@@ -72,7 +72,8 @@ msgstr "Taşıyıcı"
 msgid "Container: Database"
 msgstr "Taşıyıcı: Veri tabanı"
 
-#: gaphor/C4Model/toolbox.py:119 gaphor/UML/classes/classestoolbox.py:63
+#: gaphor/C4Model/toolbox.py:119 gaphor/C4Model/toolbox.py:165
+#: gaphor/UML/classes/classestoolbox.py:63 gaphor/UML/toolbox.py:67
 msgid "Component"
 msgstr "Bileşen"
 
@@ -83,94 +84,108 @@ msgid "Dependency"
 msgstr "Bağımlılık"
 
 #: gaphor/C4Model/toolbox.py:151
-msgid "New C4 Diagram"
+#, fuzzy
+msgid "C4 Diagram"
 msgstr "Yeni C4 Diyagramı"
 
 #: gaphor/C4Model/toolbox.py:152 gaphor/UML/toolbox.py:50
-msgid "New Class Diagram"
+#, fuzzy
+msgid "Class Diagram"
 msgstr "Yeni Sınıf Diyagramı"
 
 #: gaphor/C4Model/toolbox.py:153 gaphor/SysML/toolbox.py:129
 #: gaphor/UML/toolbox.py:54
-msgid "New Activity Diagram"
+#, fuzzy
+msgid "Activity Diagram"
 msgstr "Yeni Etkinlik Diyagramı"
 
 #: gaphor/C4Model/toolbox.py:154 gaphor/SysML/toolbox.py:139
 #: gaphor/UML/toolbox.py:55
-msgid "New Sequence Diagram"
+#, fuzzy
+msgid "Sequence Diagram"
 msgstr "Yeni Sıra Diyagramı"
 
 #: gaphor/C4Model/toolbox.py:155 gaphor/SysML/toolbox.py:149
 #: gaphor/UML/toolbox.py:57
-msgid "New State Machine Diagram"
+#, fuzzy
+msgid "State Machine Diagram"
 msgstr "Yeni Durum Makinesi Diyagramı"
 
-#: gaphor/C4Model/toolbox.py:159 gaphor/SysML/toolbox.py:133
-#: gaphor/SysML/toolbox.py:134 gaphor/SysML/toolbox.py:172
-#: gaphor/UML/toolbox.py:63
-msgid "New Activity"
-msgstr "Yeni Etkinlik"
+#: gaphor/C4Model/toolbox.py:159 gaphor/SysML/toolbox.py:172
+#: gaphor/UML/actions/actionstoolbox.py:41
+#: gaphor/UML/actions/actionstoolbox.py:68 gaphor/UML/toolbox.py:63
+#: gaphor/templates/sysml-example.gaphor gaphor/templates/uml-example.gaphor
+msgid "Activity"
+msgstr "Etkinlik"
 
-#: gaphor/C4Model/toolbox.py:161 gaphor/SysML/toolbox.py:143
-#: gaphor/SysML/toolbox.py:144 gaphor/SysML/toolbox.py:179
-#: gaphor/UML/toolbox.py:80
-msgid "New Interaction"
-msgstr "Yeni Etkileşim"
+#: gaphor/C4Model/toolbox.py:160 gaphor/SysML/toolbox.py:176
+#: gaphor/UML/interactions/interactionstoolbox.py:36
+#: gaphor/UML/interactions/interactionstoolbox.py:57 gaphor/UML/toolbox.py:77
+#: gaphor/templates/sysml-example.gaphor gaphor/templates/uml-example.gaphor
+#: gaphor/templates/uml.gaphor
+msgid "Interaction"
+msgstr "Etkileşim"
 
-#: gaphor/C4Model/toolbox.py:164 gaphor/SysML/toolbox.py:153
-#: gaphor/SysML/toolbox.py:154 gaphor/SysML/toolbox.py:194
-#: gaphor/UML/toolbox.py:86
-msgid "New State Machine"
-msgstr "Yeni Durum Makinesi"
+#: gaphor/C4Model/toolbox.py:162 gaphor/SysML/toolbox.py:190
+#: gaphor/UML/states/statestoolbox.py:46 gaphor/UML/states/statestoolbox.py:63
+#: gaphor/UML/toolbox.py:82 gaphor/templates/sysml-example.gaphor
+msgid "State Machine"
+msgstr "Durum makinesi"
 
-#: gaphor/C4Model/toolbox.py:166 gaphor/UML/toolbox.py:66
-msgid "New Class"
-msgstr "Yeni Sınıf"
+#: gaphor/C4Model/toolbox.py:164 gaphor/UML/classes/classestoolbox.py:29
+#: gaphor/UML/profiles/profilestoolbox.py:14 gaphor/UML/toolbox.py:66
+msgid "Class"
+msgstr "Sınıf"
 
-#: gaphor/C4Model/toolbox.py:168 gaphor/UML/toolbox.py:68
-msgid "New Data Type"
-msgstr "Yeni Veri Türü"
+#: gaphor/C4Model/toolbox.py:166 gaphor/UML/toolbox.py:68
+#, fuzzy
+msgid "Data Type"
+msgstr "veriTürü"
 
-#: gaphor/C4Model/toolbox.py:170 gaphor/SysML/toolbox.py:176
-#: gaphor/UML/toolbox.py:71
-msgid "New Enumeration"
-msgstr "Yeni Numaralandırma"
+#: gaphor/C4Model/toolbox.py:167 gaphor/SysML/blocks/blockstoolbox.py:118
+#: gaphor/SysML/toolbox.py:175 gaphor/UML/classes/classestoolbox.py:154
+#: gaphor/UML/toolbox.py:70
+msgid "Enumeration"
+msgstr "Numaralandırma"
 
-#: gaphor/C4Model/toolbox.py:173
-msgid "New Primitive Type"
+#: gaphor/C4Model/toolbox.py:169
+#, fuzzy
+msgid "Primitive Type"
 msgstr "Yeni ilkel Tür"
-
-#: gaphor/C4Model/toolbox.py:175
-msgid "New Person"
-msgstr "Yeni Kişi"
 
 #: gaphor/RAAML/modelinglanguage.py:24 gaphor/ui/greeter.py:48
 msgid "RAAML"
 msgstr "RAAML"
 
 #: gaphor/RAAML/toolbox.py:23
-msgid "New FTA Diagram"
+#, fuzzy
+msgid "FTA Diagram"
 msgstr "Yeni FTA Diyagramı"
 
 #: gaphor/RAAML/toolbox.py:24
-msgid "New STPA Diagram"
+#, fuzzy
+msgid "STPA Diagram"
 msgstr "Yeni STPA Diyagramı"
 
-#: gaphor/RAAML/toolbox.py:28
-msgid "New Top Event"
-msgstr "Yeni En Üst Olay"
+#: gaphor/RAAML/fta/ftatoolbox.py:195 gaphor/RAAML/fta/ftatoolbox.py:201
+#: gaphor/RAAML/fta/topevent.py:27 gaphor/RAAML/toolbox.py:28
+msgid "Top Event"
+msgstr "En Üst Olay"
 
-#: gaphor/RAAML/toolbox.py:29
-msgid "New Loss"
-msgstr "Yeni Kayıp"
+#: gaphor/RAAML/stpa/stpatoolbox.py:17 gaphor/RAAML/stpa/stpatoolbox.py:43
+#: gaphor/RAAML/toolbox.py:29 gaphor/templates/raaml-example.gaphor
+msgid "Loss"
+msgstr "Kayıp"
 
-#: gaphor/RAAML/toolbox.py:30
-msgid "New Hazard"
-msgstr "Yeni Tehlike"
+#: gaphor/RAAML/stpa/stpatoolbox.py:22 gaphor/RAAML/stpa/stpatoolbox.py:52
+#: gaphor/RAAML/toolbox.py:30 gaphor/templates/raaml-example.gaphor
+msgid "Hazard"
+msgstr "Tehlike"
 
-#: gaphor/RAAML/toolbox.py:31
-msgid "New Situation"
-msgstr "Yeni Durum"
+#: gaphor/RAAML/stpa/stpatoolbox.py:61 gaphor/RAAML/toolbox.py:31
+#: gaphor/SysML/blocks/block.py:57 gaphor/SysML/blocks/interfaceblock.py:56
+msgid "Situation"
+msgstr "Durum"
 
 #: gaphor/RAAML/fta/andgate.py:34 gaphor/RAAML/fta/ftatoolbox.py:24
 msgid "AND Gate"
@@ -267,11 +282,6 @@ msgstr "Ev Olayı"
 msgid "Zero Event"
 msgstr "Sıfır Olay"
 
-#: gaphor/RAAML/fta/ftatoolbox.py:195 gaphor/RAAML/fta/ftatoolbox.py:201
-#: gaphor/RAAML/fta/topevent.py:27
-msgid "Top Event"
-msgstr "En Üst Olay"
-
 #: gaphor/RAAML/fta/ftatoolbox.py:206 gaphor/RAAML/fta/ftatoolbox.py:213
 #: gaphor/RAAML/fta/intermediateevent.py:28
 msgid "Intermediate Event"
@@ -294,16 +304,6 @@ msgstr "Denetim Eylemi"
 msgid "Operational Situation"
 msgstr "İşletim Durumu"
 
-#: gaphor/RAAML/stpa/stpatoolbox.py:17 gaphor/RAAML/stpa/stpatoolbox.py:43
-#: gaphor/templates/raaml-example.gaphor
-msgid "Loss"
-msgstr "Kayıp"
-
-#: gaphor/RAAML/stpa/stpatoolbox.py:22 gaphor/RAAML/stpa/stpatoolbox.py:52
-#: gaphor/templates/raaml-example.gaphor
-msgid "Hazard"
-msgstr "Tehlike"
-
 #: gaphor/RAAML/stpa/stpatoolbox.py:27 gaphor/RAAML/stpa/stpatoolbox.py:116
 #: gaphor/templates/raaml-example.gaphor
 msgid "Abstract Operational Situation"
@@ -313,11 +313,6 @@ msgstr "Soyut İşletim Durumu"
 #: gaphor/UML/classes/classestoolbox.py:127
 msgid "Generalization"
 msgstr "Genelleme"
-
-#: gaphor/RAAML/stpa/stpatoolbox.py:61 gaphor/SysML/blocks/block.py:57
-#: gaphor/SysML/blocks/interfaceblock.py:56
-msgid "Situation"
-msgstr "Durum"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:72
 msgid "Control Structure"
@@ -441,7 +436,8 @@ msgid "Proxy Port"
 msgstr "Vekil Sunucu Bağlantı Noktası"
 
 #: gaphor/SysML/toolbox.py:90
-msgid "New Block Definition Diagram"
+#, fuzzy
+msgid "Block Definition Diagram"
 msgstr "Yeni Blok Tanım Diyagramı"
 
 #: gaphor/SysML/toolbox.py:93 gaphor/SysML/toolbox.py:113
@@ -450,45 +446,69 @@ msgid "New Package"
 msgstr "Yeni Paket"
 
 #: gaphor/SysML/toolbox.py:97
-msgid "New Internal Block Diagram"
+#, fuzzy
+msgid "Internal Block Diagram"
 msgstr "Yeni Dahili Blok Diyagramı"
 
 #: gaphor/SysML/toolbox.py:104 gaphor/SysML/toolbox.py:105
-#: gaphor/SysML/toolbox.py:174
 msgid "New Block"
 msgstr "Yeni Blok"
 
 #: gaphor/SysML/toolbox.py:110 gaphor/UML/toolbox.py:51
-msgid "New Package Diagram"
+#, fuzzy
+msgid "Package Diagram"
 msgstr "Yeni Paket Diyagramı"
 
 #: gaphor/SysML/toolbox.py:117
-msgid "New Requirement Diagram"
+#, fuzzy
+msgid "Requirement Diagram"
 msgstr "Yeni Gereksinim Diyagramı"
 
+#: gaphor/SysML/toolbox.py:133 gaphor/SysML/toolbox.py:134
+msgid "New Activity"
+msgstr "Yeni Etkinlik"
+
+#: gaphor/SysML/toolbox.py:143 gaphor/SysML/toolbox.py:144
+msgid "New Interaction"
+msgstr "Yeni Etkileşim"
+
+#: gaphor/SysML/toolbox.py:153 gaphor/SysML/toolbox.py:154
+msgid "New State Machine"
+msgstr "Yeni Durum Makinesi"
+
 #: gaphor/SysML/toolbox.py:159 gaphor/UML/toolbox.py:58
-msgid "New Use Case Diagram"
+#, fuzzy
+msgid "Use Case Diagram"
 msgstr "Yeni Kullanım Örneği Diyagramı"
 
 #: gaphor/SysML/toolbox.py:173 gaphor/UML/toolbox.py:64
-msgid "New Actor"
-msgstr "Yeni Eylemci"
+#: gaphor/UML/usecases/usecasetoolbox.py:28 gaphor/templates/uml-example.gaphor
+msgid "Actor"
+msgstr "Eylemci"
 
+#: gaphor/SysML/blocks/blockstoolbox.py:29 gaphor/SysML/toolbox.py:174
+msgid "Block"
+msgstr "Blok"
+
+#: gaphor/SysML/toolbox.py:178
+#, fuzzy
+msgid "Interface Block"
+msgstr "arayüzbloğu"
+
+#: gaphor/SysML/requirements/requirementstoolbox.py:17
 #: gaphor/SysML/toolbox.py:182
-msgid "New Interface Block"
-msgstr "Yeni Arayüz Bloğu"
+msgid "Requirement"
+msgstr "Gereksinim"
 
-#: gaphor/SysML/toolbox.py:186
-msgid "New Requirement"
-msgstr "Yeni Gereksinim"
+#: gaphor/SysML/toolbox.py:192 gaphor/UML/toolbox.py:85
+#, fuzzy
+msgid "Use Case"
+msgstr "Kullanım örneği"
 
-#: gaphor/SysML/toolbox.py:196 gaphor/UML/toolbox.py:89
-msgid "New Use Case"
-msgstr "Yeni Kullanım Örneği"
-
-#: gaphor/SysML/toolbox.py:197
-msgid "New Value Type"
-msgstr "Yeni Değer Türü"
+#: gaphor/SysML/toolbox.py:193
+#, fuzzy
+msgid "Value Type"
+msgstr "değerTürü"
 
 #: gaphor/SysML/allocations/allocationstoolbox.py:6
 msgid "Allocations"
@@ -536,10 +556,6 @@ msgstr "adsız"
 msgid "Blocks"
 msgstr "Bloklar"
 
-#: gaphor/SysML/blocks/blockstoolbox.py:29
-msgid "Block"
-msgstr "Blok"
-
 #: gaphor/SysML/blocks/blockstoolbox.py:39
 msgid "InterfaceBlock"
 msgstr "ArayüzBloğu"
@@ -573,11 +589,6 @@ msgstr "Doğrudan İlişkilendirme"
 #: gaphor/SysML/blocks/blockstoolbox.py:107
 msgid "ValueType"
 msgstr "DeğerTürü"
-
-#: gaphor/SysML/blocks/blockstoolbox.py:118
-#: gaphor/UML/classes/classestoolbox.py:154
-msgid "Enumeration"
-msgstr "Numaralandırma"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:130
 #: gaphor/UML/classes/classestoolbox.py:166
@@ -620,10 +631,6 @@ msgstr "gereksinim"
 #: gaphor/templates/sysml-example.gaphor gaphor/templates/sysml.gaphor
 msgid "Requirements"
 msgstr "Gereksinimler"
-
-#: gaphor/SysML/requirements/requirementstoolbox.py:17
-msgid "Requirement"
-msgstr "Gereksinim"
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:29
 msgid "Satisfy"
@@ -675,48 +682,53 @@ msgstr ""
 "kullanılmazlar."
 
 #: gaphor/UML/toolbox.py:52
-msgid "New Component Diagram"
-msgstr "Yeni Bileşen Diyagramı"
+#, fuzzy
+msgid "Component Diagram"
+msgstr "Bileşen diyagramı"
 
 #: gaphor/UML/toolbox.py:53
-msgid "New Deployment Diagram"
+#, fuzzy
+msgid "Deployment Diagram"
 msgstr "Yeni Dağıtım Diyagramı"
 
 #: gaphor/UML/toolbox.py:56
-msgid "New Communication Diagram"
+#, fuzzy
+msgid "Communication Diagram"
 msgstr "Yeni İletişim Diyagramı"
 
 #: gaphor/UML/toolbox.py:59
-msgid "New Profile Diagram"
+#, fuzzy
+msgid "Profile Diagram"
 msgstr "Yeni Profil Diyagramı"
 
-#: gaphor/UML/toolbox.py:65
-msgid "New Artifact"
-msgstr "Yeni Yapıt"
+#: gaphor/UML/deployments/deploymentstoolbox.py:16 gaphor/UML/toolbox.py:65
+msgid "Artifact"
+msgstr "Yapıt"
 
-#: gaphor/UML/toolbox.py:69
-msgid "New Device"
-msgstr "Yeni Aygıt"
+#: gaphor/UML/deployments/deploymentstoolbox.py:40 gaphor/UML/toolbox.py:69
+msgid "Device"
+msgstr "Aygıt"
 
-#: gaphor/UML/toolbox.py:75
-msgid "New Instance Specification"
+#: gaphor/UML/toolbox.py:73
+#, fuzzy
+msgid "Instance Specification"
 msgstr "Yeni Örnek Özelliği"
 
-#: gaphor/UML/toolbox.py:82
-msgid "New Interface"
-msgstr "Yeni Arayüz"
+#: gaphor/UML/classes/classestoolbox.py:39 gaphor/UML/toolbox.py:78
+msgid "Interface"
+msgstr "Arayüz"
 
-#: gaphor/UML/toolbox.py:83
-msgid "New Node"
-msgstr "Yeni Düğüm"
+#: gaphor/UML/deployments/deploymentstoolbox.py:28 gaphor/UML/toolbox.py:79
+msgid "Node"
+msgstr "Düğüm"
 
-#: gaphor/UML/toolbox.py:84
-msgid "New Profile"
-msgstr "Yeni Profil"
+#: gaphor/UML/profiles/profilestoolbox.py:22 gaphor/UML/toolbox.py:80
+msgid "Profile"
+msgstr "Profil"
 
-#: gaphor/UML/toolbox.py:88
-msgid "New Stereotype"
-msgstr "Yeni Stereotip"
+#: gaphor/UML/profiles/profilestoolbox.py:44 gaphor/UML/toolbox.py:84
+msgid "Stereotype"
+msgstr "Stereotip"
 
 #: gaphor/UML/actions/actionstoolbox.py:18
 #: gaphor/UML/interactions/interactionstoolbox.py:16
@@ -744,12 +756,6 @@ msgstr "genişlet: {name}"
 #: gaphor/UML/umlfmt.py:244
 msgid "include: {name}"
 msgstr "ekle: {name}"
-
-#: gaphor/UML/actions/actionstoolbox.py:41
-#: gaphor/UML/actions/actionstoolbox.py:68
-#: gaphor/templates/sysml-example.gaphor gaphor/templates/uml-example.gaphor
-msgid "Activity"
-msgstr "Etkinlik"
 
 #: gaphor/UML/actions/actionstoolbox.py:49
 msgid "Swimlane One"
@@ -1042,15 +1048,6 @@ msgstr "Yeni İşlem…"
 msgid "Classes"
 msgstr "Sınıflar"
 
-#: gaphor/UML/classes/classestoolbox.py:29
-#: gaphor/UML/profiles/profilestoolbox.py:14
-msgid "Class"
-msgstr "Sınıf"
-
-#: gaphor/UML/classes/classestoolbox.py:39
-msgid "Interface"
-msgstr "Arayüz"
-
 #: gaphor/UML/classes/classestoolbox.py:135
 msgid "Interface Realization"
 msgstr "Arayüz Gerçekleştirme"
@@ -1095,15 +1092,15 @@ msgstr "Yeni Numaralandırma…"
 msgid "interface"
 msgstr "arayüz"
 
-#: gaphor/UML/classes/klass.py:49
+#: gaphor/UML/classes/klass.py:48
 msgid "stereotype"
 msgstr "stereotip"
 
-#: gaphor/UML/classes/klass.py:51
+#: gaphor/UML/classes/klass.py:50
 msgid "metaclass"
 msgstr "üstsınıf"
 
-#: gaphor/UML/classes/package.py:29
+#: gaphor/UML/classes/package.py:30
 msgid "profile"
 msgstr "profil"
 
@@ -1325,19 +1322,7 @@ msgstr "Dolaylı Örneklenen"
 msgid "Deployments"
 msgstr "Dağıtım"
 
-#: gaphor/UML/deployments/deploymentstoolbox.py:16
-msgid "Artifact"
-msgstr "Yapıt"
-
-#: gaphor/UML/deployments/deploymentstoolbox.py:28
-msgid "Node"
-msgstr "Düğüm"
-
-#: gaphor/UML/deployments/deploymentstoolbox.py:40
-msgid "Device"
-msgstr "Aygıt"
-
-#: gaphor/UML/deployments/node.py:46
+#: gaphor/UML/deployments/node.py:47
 msgid "device"
 msgstr "aygıt"
 
@@ -1398,13 +1383,6 @@ msgstr "“{filename}” resmi ayrıştırılamadı."
 #: gaphor/UML/interactions/interactionsconnect.py:76
 msgid "call()"
 msgstr "call()"
-
-#: gaphor/UML/interactions/interactionstoolbox.py:36
-#: gaphor/UML/interactions/interactionstoolbox.py:57
-#: gaphor/templates/sysml-example.gaphor gaphor/templates/uml-example.gaphor
-#: gaphor/templates/uml.gaphor
-msgid "Interaction"
-msgstr "Etkileşim"
 
 #: gaphor/UML/interactions/interactionstoolbox.py:53
 #: gaphor/templates/uml-example.gaphor gaphor/templates/uml.gaphor
@@ -1467,18 +1445,10 @@ msgstr "içe aktar"
 msgid "Profiles"
 msgstr "Profiller"
 
-#: gaphor/UML/profiles/profilestoolbox.py:22
-msgid "Profile"
-msgstr "Profil"
-
 #: gaphor/UML/profiles/profilestoolbox.py:34
 #: gaphor/UML/profiles/propertypages.ui:11
 msgid "Metaclass"
 msgstr "Üstsınıf"
-
-#: gaphor/UML/profiles/profilestoolbox.py:44
-msgid "Stereotype"
-msgstr "Stereotip"
 
 #: gaphor/UML/profiles/profilestoolbox.py:56
 msgid "Extension"
@@ -1533,11 +1503,6 @@ msgstr "durummakinesi"
 #: gaphor/UML/states/statestoolbox.py:16 gaphor/UML/states/statestoolbox.py:75
 msgid "State"
 msgstr "Durum"
-
-#: gaphor/UML/states/statestoolbox.py:46 gaphor/UML/states/statestoolbox.py:63
-#: gaphor/templates/sysml-example.gaphor
-msgid "State Machine"
-msgstr "Durum makinesi"
 
 #: gaphor/UML/states/statestoolbox.py:59
 msgid "States"
@@ -1608,10 +1573,6 @@ msgstr "Kullanım Örnekleri"
 #: gaphor/UML/usecases/usecasetoolbox.py:16
 msgid "Use case"
 msgstr "Kullanım örneği"
-
-#: gaphor/UML/usecases/usecasetoolbox.py:28 gaphor/templates/uml-example.gaphor
-msgid "Actor"
-msgstr "Eylemci"
 
 #: gaphor/UML/usecases/usecasetoolbox.py:47
 msgid "Include"
@@ -1703,6 +1664,40 @@ msgstr "Odaklanılan ögenin CSS düğümleri"
 #: gaphor/ui/elementeditor.ui:238
 msgid "No focused item."
 msgstr "Odaklanılan öge yok."
+
+#: gaphor/diagram/propertypages.ui:322 gaphor/diagram/styleeditor.ui:5
+#, fuzzy
+msgid "Style Editor"
+msgstr "Biçim Dosyası"
+
+#: gaphor/diagram/propertypages.ui:331
+#, fuzzy
+msgid "Open Style Editor"
+msgstr "Birleştirme Düzenleyicisini Aç"
+
+#: gaphor/diagram/styleeditor.ui:27
+#, fuzzy
+msgid "Border Radius"
+msgstr "sıralı"
+
+#: gaphor/diagram/styleeditor.ui:51
+#, fuzzy
+msgid "Color"
+msgstr "Renkler"
+
+#: gaphor/diagram/styleeditor.ui:67
+msgid "Background Color"
+msgstr ""
+
+#: gaphor/diagram/styleeditor.ui:83
+#, fuzzy
+msgid "Text Color"
+msgstr "Renkler"
+
+#: gaphor/diagram/styleeditor.ui:96
+#, fuzzy
+msgid "Add to Style Sheet"
+msgstr "Biçim Dosyası"
 
 #: gaphor/diagram/tools/dnd.py:50
 msgid "Element can’t be represented on a diagram."
@@ -1903,13 +1898,13 @@ msgstr ""
 "Açık model kaydedilmemiş değişiklikler içeriyor. Kaydedilmeyen "
 "değişiklikler kalıcı olarak yitirilecek."
 
-#: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:62
+#: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:63
 #: gaphor/ui/mainwindow.py:273 gaphor/ui/mainwindow.py:278
 #: gaphor/ui/mainwindow.ui:124
 msgid "New model"
 msgstr "Yeni model"
 
-#: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:65
+#: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:66
 msgid "New diagram"
 msgstr "Yeni diyagram"
 
@@ -2626,13 +2621,12 @@ msgstr "Tekrar Aç"
 msgid "Switch"
 msgstr "Geç"
 
-#: gaphor/ui/diagrampage.py:103 gaphor/ui/mainwindow.py:292
-#: gaphor/ui/modelmerge/organize.py:138 gaphor/ui/modelmerge/organize.py:169
-#: gaphor/ui/treemodel.py:44
+#: gaphor/ui/diagrampage.py:105 gaphor/ui/mainwindow.py:292
+#: gaphor/ui/modelmerge/organize.py:138 gaphor/ui/treemodel.py:44
 msgid "<None>"
 msgstr "<Yok>"
 
-#: gaphor/ui/diagrampage.py:334
+#: gaphor/ui/diagrampage.py:331
 msgid "Show in Model Browser"
 msgstr "Model Browser'da Göster"
 
@@ -2777,11 +2771,7 @@ msgstr ""
 msgid "Resolve"
 msgstr "Çöz"
 
-#: gaphor/ui/errordialog.py:24
-msgid "Close"
-msgstr "Kapat"
-
-#: gaphor/ui/errordialog.py:29
+#: gaphor/ui/errordialog.py:21
 msgid ""
 "It looks like Gaphor is started from the command line. Do you want to "
 "open a debug session?"
@@ -2789,7 +2779,11 @@ msgstr ""
 "Gaphor komut satırından başlatılmış. Bir hata ayıklama oturumu açmak "
 "ister misiniz?"
 
-#: gaphor/ui/errordialog.py:38
+#: gaphor/ui/errordialog.py:28
+msgid "Close"
+msgstr "Kapat"
+
+#: gaphor/ui/errordialog.py:30
 msgid "Start Debug Session"
 msgstr "Hata Ayıklama Oturumunu Başlat"
 
@@ -2809,7 +2803,7 @@ msgstr "Tüm Dosyalar"
 msgid "Flatpak Document Portal"
 msgstr ""
 
-#: gaphor/ui/filemanager.py:41
+#: gaphor/ui/filemanager.py:42
 msgid ""
 "Gaphor was not able to store the model, probably due to an internal "
 "error:\n"
@@ -2821,7 +2815,7 @@ msgstr ""
 "Bunun bir hata olduğunu düşünüyorsanız, lütfen geliştiricilerle iletişime"
 " geçin."
 
-#: gaphor/ui/filemanager.py:45
+#: gaphor/ui/filemanager.py:46
 msgid ""
 "You do not have the permissions necessary to save the model.\n"
 "Please check that you typed the location correctly and try again."
@@ -2829,7 +2823,7 @@ msgstr ""
 "Modeli kaydetmek için gerekli izinleriniz yok.\n"
 "Konumu doğru yazdığınızdan emin olun ve tekrar deneyin."
 
-#: gaphor/ui/filemanager.py:49
+#: gaphor/ui/filemanager.py:50
 msgid ""
 "You do not have enough free space on the device to save the model.\n"
 "Please free up some disk space and try again or save it in a different "
@@ -2839,7 +2833,7 @@ msgstr ""
 "Lütfen biraz disk alanı boşaltıp tekrar deneyin veya farklı bir konuma "
 "kaydedin."
 
-#: gaphor/ui/filemanager.py:52
+#: gaphor/ui/filemanager.py:53
 msgid ""
 "The model cannot be stored at this location:\n"
 "{exc}\n"
@@ -2849,51 +2843,55 @@ msgstr ""
 "{exc}\n"
 "Konumu doğru yazdığınızdan emin olun ve tekrar deneyin."
 
-#: gaphor/ui/filemanager.py:128 gaphor/ui/filemanager.py:157
+#: gaphor/ui/filemanager.py:129 gaphor/ui/filemanager.py:158
 msgid "Loading…"
 msgstr "Yükleniyor…"
 
-#: gaphor/ui/filemanager.py:129
+#: gaphor/ui/filemanager.py:130
 msgid "Loading model from {filename}"
 msgstr "{filename} dosyasından model yükleniyor"
 
-#: gaphor/ui/filemanager.py:158
+#: gaphor/ui/filemanager.py:159
 msgid "Loading current and incoming model"
 msgstr "Geçerli ve gelen modelin yüklenmesi"
 
-#: gaphor/ui/filemanager.py:220 gaphor/ui/filemanager.py:264
+#: gaphor/ui/filemanager.py:221 gaphor/ui/filemanager.py:265
 msgid "Unable to open model “{filename}”."
 msgstr "“{filename}” modeli açılamadı."
 
-#: gaphor/ui/filemanager.py:223 gaphor/ui/filemanager.py:267
+#: gaphor/ui/filemanager.py:224 gaphor/ui/filemanager.py:268
 msgid "This file does not contain a valid Gaphor model."
 msgstr "Bu dosya geçerli bir Gaphor modeli içermiyor."
 
-#: gaphor/ui/filemanager.py:287
+#: gaphor/ui/filemanager.py:289
 msgid "Saving…"
 msgstr "Kaydediliyor…"
 
-#: gaphor/ui/filemanager.py:288
+#: gaphor/ui/filemanager.py:290
 msgid "Saving model to {filename}"
 msgstr "Model {filename} dosyasına kaydediliyor"
 
-#: gaphor/ui/filemanager.py:300
+#: gaphor/ui/filemanager.py:306
 msgid "Unable to save model “{filename}”."
 msgstr "“{filename}” modeli kaydedilemedi."
 
-#: gaphor/ui/filemanager.py:336 gaphor/ui/filemanager.py:379
+#: gaphor/ui/filemanager.py:318
+msgid "Model has been saved."
+msgstr ""
+
+#: gaphor/ui/filemanager.py:344 gaphor/ui/filemanager.py:387
 msgid "Save Gaphor Model As"
 msgstr "Gaphor Modelini Farklı Kaydet"
 
-#: gaphor/ui/filemanager.py:337 gaphor/ui/filemanager.py:381
+#: gaphor/ui/filemanager.py:345 gaphor/ui/filemanager.py:389
 msgid "New Model"
 msgstr "Yeni Model"
 
-#: gaphor/ui/filemanager.py:400
+#: gaphor/ui/filemanager.py:407
 msgid "Resolve Merge Conflict?"
 msgstr "Birleştirme Çakışması Çözülsün Mü?"
 
-#: gaphor/ui/filemanager.py:403
+#: gaphor/ui/filemanager.py:408
 msgid ""
 "The model you are opening contains a merge conflict. Do you want to open "
 "the current model or the incoming change to the model?"
@@ -2901,27 +2899,27 @@ msgstr ""
 "Açmakta olduğunuz model birleştirme çakışması içeriyor. Geçerli modeli mi"
 " yoksa modele gelen değişikliği mi açmak istiyorsunuz?"
 
-#: gaphor/ui/filemanager.py:407 gaphor/ui/filemanager.py:430
+#: gaphor/ui/filemanager.py:412 gaphor/ui/filemanager.py:427
 msgid "Cancel"
 msgstr "İptal"
 
-#: gaphor/ui/filemanager.py:408
+#: gaphor/ui/filemanager.py:413
 msgid "Open Merge Editor"
 msgstr "Birleştirme Düzenleyicisini Aç"
 
-#: gaphor/ui/filemanager.py:409
+#: gaphor/ui/filemanager.py:414
 msgid "Open Current"
 msgstr "Geçerliyi Aç"
 
-#: gaphor/ui/filemanager.py:410
+#: gaphor/ui/filemanager.py:415
 msgid "Open Incoming"
 msgstr "Geleni Aç"
 
-#: gaphor/ui/filemanager.py:421
+#: gaphor/ui/filemanager.py:422
 msgid "Save Changes?"
 msgstr "Değişiklikler Kaydedilsin Mi?"
 
-#: gaphor/ui/filemanager.py:422
+#: gaphor/ui/filemanager.py:423
 msgid ""
 "The open model contains unsaved changes. Changes which are not saved will"
 " be permanently lost."
@@ -2929,11 +2927,11 @@ msgstr ""
 "Açık model kaydedilmemiş değişiklikler içeriyor. Kaydedilmeyen "
 "değişiklikler kalıcı olarak yitirilecek."
 
-#: gaphor/ui/filemanager.py:431
+#: gaphor/ui/filemanager.py:428
 msgid "Discard"
 msgstr "Gözden Çıkar"
 
-#: gaphor/ui/filemanager.py:432 gaphor/ui/help/shortcuts.ui:213
+#: gaphor/ui/filemanager.py:429 gaphor/ui/help/shortcuts.ui:213
 #: gaphor/ui/mainwindow.py:51
 msgid "Save"
 msgstr "Kaydet"
@@ -3102,7 +3100,8 @@ msgid "Show in “{diagram}”"
 msgstr "“{diagram}” diyagramında göster"
 
 #: gaphor/ui/modelbrowser.py:676
-msgid "New Generic Diagram"
+#, fuzzy
+msgid "Generic Diagram"
 msgstr "Yeni Genel Diyagram"
 
 #: gaphor/ui/modelchanged.ui:6
@@ -3262,75 +3261,75 @@ msgstr "Model Aç…"
 msgid "Update diagram “{name}”"
 msgstr "“{name}” diyagramını güncelle"
 
-#: gaphor/ui/modelmerge/organize.py:168 gaphor/ui/modelmerge/organize.py:310
+#: gaphor/ui/modelmerge/organize.py:177 gaphor/ui/modelmerge/organize.py:317
 msgid "Update element “{name}”"
 msgstr "“{name}” ögesini güncelle"
 
-#: gaphor/ui/modelmerge/organize.py:172
+#: gaphor/ui/modelmerge/organize.py:182
 msgid "Update element of type “{type}”"
 msgstr "“{type}” türündeki ögeyi güncelle"
 
-#: gaphor/ui/modelmerge/organize.py:248
+#: gaphor/ui/modelmerge/organize.py:255
 msgid "Update presentation “{type}”"
 msgstr "“{type}” sunumunu güncelle"
 
-#: gaphor/ui/modelmerge/organize.py:274
+#: gaphor/ui/modelmerge/organize.py:281
 msgid "Add presentation of type {type}"
 msgstr "{type} türünde sunum ekle"
 
-#: gaphor/ui/modelmerge/organize.py:278
+#: gaphor/ui/modelmerge/organize.py:285
 msgid "Remove presentation of type {type}"
 msgstr "{type} türünün sunumunu kaldır"
 
-#: gaphor/ui/modelmerge/organize.py:283
+#: gaphor/ui/modelmerge/organize.py:290
 msgid "Update presentation “{name}”"
 msgstr "“{name}” sunumunu güncelle"
 
-#: gaphor/ui/modelmerge/organize.py:285
+#: gaphor/ui/modelmerge/organize.py:292
 msgid "Update presentation of type {type}"
 msgstr "{type} türünün sunumunu güncelle"
 
-#: gaphor/ui/modelmerge/organize.py:292
+#: gaphor/ui/modelmerge/organize.py:299
 msgid "Add {type} “{name}”"
 msgstr "{type} “{name}” ekle"
 
-#: gaphor/ui/modelmerge/organize.py:296
+#: gaphor/ui/modelmerge/organize.py:303
 msgid "Add element of type {type}"
 msgstr "{type} türünde öge ekle"
 
-#: gaphor/ui/modelmerge/organize.py:302
+#: gaphor/ui/modelmerge/organize.py:309
 msgid "Remove element “{name}”"
 msgstr "“{name}” ögesini kaldır"
 
-#: gaphor/ui/modelmerge/organize.py:304
+#: gaphor/ui/modelmerge/organize.py:311
 msgid "Remove element of type {type}"
 msgstr "{type} türündeki öğeyi kaldır"
 
-#: gaphor/ui/modelmerge/organize.py:312
+#: gaphor/ui/modelmerge/organize.py:319
 msgid "Update element of type {type}"
 msgstr "{type} türündeki ögeyi güncelle"
 
-#: gaphor/ui/modelmerge/organize.py:319
+#: gaphor/ui/modelmerge/organize.py:326
 msgid "Add relation “{name}” to “{ref_name}”"
 msgstr "“{name}” ögesine “{ref_name}” ilişkisi ekle"
 
-#: gaphor/ui/modelmerge/organize.py:321
+#: gaphor/ui/modelmerge/organize.py:328
 msgid "Remove relation “{name}” to “{ref_name}”"
 msgstr "“{name}” ile “{ref_name}” arasındaki ilişkiyi kaldır"
 
-#: gaphor/ui/modelmerge/organize.py:323
+#: gaphor/ui/modelmerge/organize.py:330
 msgid "Update relation “{name}” to “{ref_name}”"
 msgstr "“{name}” ilişkisini “{ref_name}” olarak güncelle"
 
-#: gaphor/ui/modelmerge/organize.py:330
+#: gaphor/ui/modelmerge/organize.py:337
 msgid "Add relation “{name}”"
 msgstr "“{name}” ilişkisi ekle"
 
-#: gaphor/ui/modelmerge/organize.py:332
+#: gaphor/ui/modelmerge/organize.py:339
 msgid "Remove relation “{name}”"
 msgstr "“{name}” ilişkisini kaldır"
 
-#: gaphor/ui/modelmerge/organize.py:334
+#: gaphor/ui/modelmerge/organize.py:341
 msgid "Update relation “{name}”"
 msgstr "“{name}” ilişkisini güncelle"
 
@@ -3371,4 +3370,64 @@ msgstr "genel: {name}"
 
 #~ msgid "All XMI Files"
 #~ msgstr "Tüm XMI Dosyaları"
+
+#~ msgid "New Class"
+#~ msgstr "Yeni Sınıf"
+
+#~ msgid "New Data Type"
+#~ msgstr "Yeni Veri Türü"
+
+#~ msgid "New Enumeration"
+#~ msgstr "Yeni Numaralandırma"
+
+#~ msgid "New Person"
+#~ msgstr "Yeni Kişi"
+
+#~ msgid "New Top Event"
+#~ msgstr "Yeni En Üst Olay"
+
+#~ msgid "New Loss"
+#~ msgstr "Yeni Kayıp"
+
+#~ msgid "New Hazard"
+#~ msgstr "Yeni Tehlike"
+
+#~ msgid "New Situation"
+#~ msgstr "Yeni Durum"
+
+#~ msgid "New Actor"
+#~ msgstr "Yeni Eylemci"
+
+#~ msgid "New Interface Block"
+#~ msgstr "Yeni Arayüz Bloğu"
+
+#~ msgid "New Requirement"
+#~ msgstr "Yeni Gereksinim"
+
+#~ msgid "New Use Case"
+#~ msgstr "Yeni Kullanım Örneği"
+
+#~ msgid "New Value Type"
+#~ msgstr "Yeni Değer Türü"
+
+#~ msgid "New Component Diagram"
+#~ msgstr "Yeni Bileşen Diyagramı"
+
+#~ msgid "New Artifact"
+#~ msgstr "Yeni Yapıt"
+
+#~ msgid "New Device"
+#~ msgstr "Yeni Aygıt"
+
+#~ msgid "New Interface"
+#~ msgstr "Yeni Arayüz"
+
+#~ msgid "New Node"
+#~ msgstr "Yeni Düğüm"
+
+#~ msgid "New Profile"
+#~ msgstr "Yeni Profil"
+
+#~ msgid "New Stereotype"
+#~ msgstr "Yeni Stereotip"
 
