@@ -56,6 +56,8 @@ warnings.simplefilter("ignore")
 Let's first load the entry points.
 
 ```{code-cell} ipython3
+:tags: [remove-stderr]
+
 from gaphor.entrypoint import load_entry_points
 
 entry_points = load_entry_points("gaphor.services")
