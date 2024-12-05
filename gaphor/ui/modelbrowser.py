@@ -21,7 +21,7 @@ from gaphor.core.modeling import (
 from gaphor.diagram.deletable import deletable
 from gaphor.diagram.diagramtoolbox import DiagramType
 from gaphor.diagram.event import DiagramOpened, DiagramSelectionChanged
-from gaphor.diagram.group import change_owner
+from gaphor.diagram.group import Root, RootType, change_owner, owner
 from gaphor.diagram.tools.dnd import ElementDragData
 from gaphor.event import Notification
 from gaphor.i18n import gettext
@@ -35,12 +35,7 @@ from gaphor.ui.event import (
 from gaphor.ui.treesearch import search, sorted_tree_walker
 from gaphor.UML.treemodel import (
     RelationshipItem,
-    Root,
-    RootType,
-    TreeItem,
     TreeModel,
-    owner,
-    tree_item_sort,
 )
 
 START_EDIT_DELAY = 100  # ms
@@ -71,6 +66,9 @@ class ModelBrowser(UIComponent, ActionProvider):
             create_func=self.model.child_model,
             user_data=None,
         )
+
+        def tree_item_sort(a, b, *user_data):
+            return self.model.tree_item_sort(a, b)
 
         self.sorter = Gtk.CustomSorter.new(tree_item_sort)
         tree_sorter = Gtk.TreeListRowSorter.new(self.sorter)
@@ -177,7 +175,7 @@ class ModelBrowser(UIComponent, ActionProvider):
     @action(name="tree-view.rename", shortcut="F2")
     def tree_view_rename_selected(self):
         if row_item := get_first_selected_item(self.selection):
-            tree_item: TreeItem = row_item.get_item()
+            tree_item = row_item.get_item()
             GLib.timeout_add(START_EDIT_DELAY, tree_item.start_editing)
 
     def _diagram_type_or(self, id: str, default_diagram: DiagramType) -> DiagramType:
@@ -360,9 +358,10 @@ def select_element(
             return 0
         if (n := expand_up_to_element(owner(element), expand=True)) is None:
             return None
-        is_relationship = isinstance(element, UML.Relationship)
         while row := selection.get_item(n):
-            if is_relationship and isinstance(row.get_item(), RelationshipItem):
+            if isinstance(element, UML.Relationship) and isinstance(
+                row.get_item(), RelationshipItem
+            ):
                 row.set_expanded(True)
             elif row.get_item().element is element:
                 if expand:

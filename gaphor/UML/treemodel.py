@@ -128,7 +128,7 @@ class Branch:
         yield from self.relationships
 
 
-def tree_item_sort(a, b, _user_data=None):
+def tree_item_sort(a, b):
     if isinstance(a, RelationshipItem):
         return -1
     if isinstance(b, RelationshipItem):
@@ -173,6 +173,9 @@ class TreeModel:
                 new_branch.append(e)
             return new_branch.elements
         return None
+
+    def tree_item_sort(self, a, b):
+        return tree_item_sort(a, b)
 
     def owner_branch_for_element(self, element: Base) -> Branch | None:
         if (own := owner(element)) is Root:
