@@ -24,7 +24,7 @@ from gaphor.diagram.event import DiagramOpened, DiagramSelectionChanged
 from gaphor.diagram.group import change_owner
 from gaphor.diagram.tools.dnd import ElementDragData
 from gaphor.event import Notification
-from gaphor.i18n import gettext, translated_ui_string
+from gaphor.i18n import gettext
 from gaphor.transaction import Transaction
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.actiongroup import create_action_group
@@ -32,7 +32,8 @@ from gaphor.ui.event import (
     ElementOpened,
     ModelSelectionChanged,
 )
-from gaphor.ui.treemodel import (
+from gaphor.ui.treesearch import search, sorted_tree_walker
+from gaphor.UML.treemodel import (
     RelationshipItem,
     Root,
     RootType,
@@ -41,7 +42,6 @@ from gaphor.ui.treemodel import (
     owner,
     tree_item_sort,
 )
-from gaphor.ui.treesearch import search, sorted_tree_walker
 
 START_EDIT_DELAY = 100  # ms
 
@@ -84,6 +84,7 @@ class ModelBrowser(UIComponent, ActionProvider):
             self.selection,
             self.event_manager,
             self.modeling_language,
+            self.model.template,
         )
         self.tree_view = Gtk.ListView.new(self.selection, factory)
         self.tree_view.set_vexpand(True)
@@ -445,14 +446,14 @@ def toplevel_popup_model(modeling_language) -> Gio.Menu:
 
 
 def list_item_factory_setup(
-    _factory, list_item, selection, event_manager, modeling_language
+    _factory, list_item, selection, event_manager, modeling_language, template
 ):
     builder = Gtk.Builder()
     builder.set_current_object(list_item)
     builder.extend_with_template(
         list_item,
         type(list_item).__gtype__,
-        translated_ui_string("gaphor.ui", "treeitem.ui"),
+        template,
         -1,
     )
     row = builder.get_object("row")

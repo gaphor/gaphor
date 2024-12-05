@@ -1,8 +1,8 @@
 import pytest
 
 from gaphor import UML
-from gaphor.ui.treemodel import TreeModel
 from gaphor.ui.treesearch import search, sorted_tree_walker
+from gaphor.UML.treemodel import TreeModel
 
 
 @pytest.fixture

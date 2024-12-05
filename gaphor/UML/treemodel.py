@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import importlib.resources
 from unicodedata import normalize
 
 from gi.repository import Gio, GObject, Pango
@@ -141,6 +142,12 @@ class TreeModel:
     def __init__(self):
         super().__init__()
         self.branches: dict[TreeItem | RootType, Branch] = {Root: Branch()}
+
+    @property
+    def template(self) -> str:
+        return (importlib.resources.files("gaphor.UML") / "treeitem.ui").read_text(
+            encoding="utf-8"
+        )
 
     @property
     def root(self) -> Gio.ListStore:

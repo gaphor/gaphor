@@ -2,7 +2,7 @@ import functools
 from collections.abc import Iterable
 from unicodedata import normalize
 
-from gaphor.ui.treemodel import TreeItem, tree_item_sort
+from gaphor.UML.treemodel import TreeItem, tree_item_sort
 
 """
 Inputs:

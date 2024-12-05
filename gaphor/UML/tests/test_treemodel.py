@@ -1,6 +1,6 @@
 from gaphor import UML
 from gaphor.i18n import gettext
-from gaphor.ui.treemodel import (
+from gaphor.UML.treemodel import (
     Branch,
     RelationshipItem,
     Root,
@@ -23,7 +23,7 @@ class ItemChangedHandler:
 
 
 def test_tree_item_gtype():
-    assert TreeItem.__gtype__.name == "gaphor+ui+treemodel+TreeItem"
+    assert TreeItem.__gtype__.name == "gaphor+UML+treemodel+TreeItem"
 
 
 def test_branch_add_element(element_factory):
