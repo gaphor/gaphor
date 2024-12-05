@@ -569,9 +569,10 @@ def popup_model(element, modeling_language):
     model.append_section(None, part)
 
     part = Gio.Menu.new()
-    part.append_submenu(
-        gettext("New _Diagram"), create_diagram_types_model(modeling_language, element)
-    )
+    diagram_submenu = create_diagram_types_model(modeling_language, element)
+    if diagram_submenu.get_n_items():
+        part.append_submenu(gettext("New _Diagram"), diagram_submenu)
+
     if any(
         isinstance(element, element_type.allowed_owning_elements)
         for element_type in modeling_language.element_types
@@ -624,13 +625,17 @@ def create_diagram_types_model(modeling_language, element=None):
             )
             part.append_item(menu_item)
 
-    model.append_section(None, part)
+    if part.get_n_items():
+        model.append_section(None, part)
 
-    part = Gio.Menu.new()
-    menu_item = Gio.MenuItem.new(gettext("New Generic Diagram"), "win.create-diagram")
-    menu_item.set_attribute_value("target", GLib.Variant.new_string(""))
-    part.append_item(menu_item)
-    model.append_section(None, part)
+    if not isinstance(element, Diagram):
+        part = Gio.Menu.new()
+        menu_item = Gio.MenuItem.new(
+            gettext("New Generic Diagram"), "win.create-diagram"
+        )
+        menu_item.set_attribute_value("target", GLib.Variant.new_string(""))
+        part.append_item(menu_item)
+        model.append_section(None, part)
 
     return model
 
