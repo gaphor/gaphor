@@ -350,7 +350,6 @@ def test_multiplicity_element_should_not_end_up_in_root(model_browser, element_f
     prop = element_factory.create(UML.Property)
     connector = UML.recipes.create_connector(port, prop)
 
-    model_browser.on_model_ready()
     model = model_browser.model
 
     assert model.tree_item_for_element(connector.end[0]) is None

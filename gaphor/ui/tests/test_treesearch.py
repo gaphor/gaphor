@@ -6,8 +6,8 @@ from gaphor.UML.treemodel import TreeModel
 
 
 @pytest.fixture
-def tree_model():
-    return TreeModel()
+def tree_model(event_manager, element_factory):
+    return TreeModel(event_manager, element_factory)
 
 
 @pytest.fixture

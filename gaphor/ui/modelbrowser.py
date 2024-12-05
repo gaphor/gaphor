@@ -8,15 +8,7 @@ from gaphor.action import action
 from gaphor.core import event_handler
 from gaphor.core.modeling import (
     Base,
-    DerivedAdded,
-    DerivedDeleted,
-    DerivedSet,
     Diagram,
-    ElementCreated,
-    ElementDeleted,
-    ElementUpdated,
-    ModelFlushed,
-    ModelReady,
 )
 from gaphor.diagram.deletable import deletable
 from gaphor.diagram.diagramtoolbox import DiagramType
@@ -46,17 +38,15 @@ class ModelBrowser(UIComponent, ActionProvider):
         self.event_manager = event_manager
         self.element_factory = element_factory
         self.modeling_language = modeling_language
-        self.model = TreeModel()
+        self.model = TreeModel(
+            event_manager, element_factory, self._on_select, self._on_sync
+        )
         self.search_bar = None
         self._selection_changed_id = 0
+        self.sorter = None
+        self.selection = None
 
     def open(self):
-        self.event_manager.subscribe(self.on_element_created)
-        self.event_manager.subscribe(self.on_element_deleted)
-        self.event_manager.subscribe(self.on_owner_changed)
-        self.event_manager.subscribe(self.on_owned_element_changed)
-        self.event_manager.subscribe(self.on_attribute_changed)
-        self.event_manager.subscribe(self.on_model_ready)
         self.event_manager.subscribe(self.on_diagram_selection_changed)
 
         tree_model = Gtk.TreeListModel.new(
@@ -96,7 +86,7 @@ class ModelBrowser(UIComponent, ActionProvider):
         )
 
         def list_view_activate(list_view, position):
-            if element := self.selection.get_item(position).get_item().element:
+            if element := self.selection.get_item(position).get_item().element:  # type: ignore[union-attr]
                 self.open_element(element)
 
         self.tree_view.connect("activate", list_view_activate)
@@ -123,24 +113,20 @@ class ModelBrowser(UIComponent, ActionProvider):
         box.append(self.search_bar)
         box.append(scrolled_window)
 
-        self.on_model_ready()
-
         return box
 
     def close(self):
-        self.event_manager.unsubscribe(self.on_element_created)
-        self.event_manager.unsubscribe(self.on_element_deleted)
-        self.event_manager.unsubscribe(self.on_owner_changed)
-        self.event_manager.unsubscribe(self.on_owned_element_changed)
-        self.event_manager.unsubscribe(self.on_attribute_changed)
-        self.event_manager.unsubscribe(self.on_model_ready)
         self.event_manager.unsubscribe(self.on_diagram_selection_changed)
+        self.model.shutdown()
 
     def select_element(self, element: Base) -> int | None:
         return select_element(self.tree_view, element)
 
     def select_element_quietly(self, element):
         """Select element, but do not trigger a ModelSelectionChanged event."""
+        if not self.selection:
+            return
+
         self.selection.handler_block(self._selection_changed_id)
         try:
             self.select_element(element)
@@ -161,6 +147,13 @@ class ModelBrowser(UIComponent, ActionProvider):
             self.event_manager.handle(DiagramOpened(element))
         else:
             self.event_manager.handle(ElementOpened(element))
+
+    def _on_select(self, element):
+        self.select_element_quietly(element)
+
+    def _on_sync(self):
+        if self.sorter:
+            self.sorter.changed(Gtk.SorterChange.DIFFERENT)
 
     @action(name="tree-view.open")
     def tree_view_open_selected(self):
@@ -256,45 +249,6 @@ class ModelBrowser(UIComponent, ActionProvider):
     def show_in_model_browser(self, id: str):
         if element := self.element_factory.lookup(id):
             self.select_element(element)
-
-    @event_handler(ElementCreated)
-    def on_element_created(self, event: ElementCreated):
-        self.model.add_element(event.element)
-
-    @event_handler(ElementDeleted)
-    def on_element_deleted(self, event: ElementDeleted):
-        self.model.remove_element(event.element)
-
-    @event_handler(DerivedAdded, DerivedDeleted)
-    def on_owned_element_changed(self, event):
-        """Ensure we update the node once owned elements change."""
-        if event.property in (UML.Element.ownedElement, UML.Namespace.member):
-            self.model.notify_child_model(event.element)
-
-    @event_handler(DerivedSet)
-    def on_owner_changed(self, event: DerivedSet):
-        # Should check on ownedElement as well, since it may not have been updated
-        # before this thing triggers
-        if (
-            event.property in (UML.Element.owner, UML.NamedElement.memberNamespace)
-        ) and owner(event.element):
-            element = event.element
-            self.model.remove_element(element)
-            self.model.add_element(element)
-            self.select_element_quietly(element)
-
-    @event_handler(ElementUpdated)
-    def on_attribute_changed(self, event: ElementUpdated):
-        self.model.sync(event.element)
-        self.sorter.changed(Gtk.SorterChange.DIFFERENT)
-
-    @event_handler(ModelReady, ModelFlushed)
-    def on_model_ready(self, _event=None):
-        model = self.model
-        model.clear()
-
-        for element in self.element_factory.select(owner):
-            model.add_element(element)
 
     @event_handler(DiagramSelectionChanged)
     def on_diagram_selection_changed(self, event):

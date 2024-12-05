@@ -1,3 +1,5 @@
+import pytest
+
 from gaphor import UML
 from gaphor.i18n import gettext
 from gaphor.UML.treemodel import (
@@ -8,6 +10,11 @@ from gaphor.UML.treemodel import (
     TreeModel,
     tree_item_sort,
 )
+
+
+@pytest.fixture
+def tree_model(event_manager, element_factory):
+    return TreeModel(event_manager, element_factory)
 
 
 class ItemChangedHandler:
@@ -57,8 +64,7 @@ def test_branch_add_relationship(element_factory):
     assert branch.relationships[0].element is element
 
 
-def test_tree_model_add_element(element_factory):
-    tree_model = TreeModel()
+def test_tree_model_add_element(tree_model, element_factory):
     element = element_factory.create(UML.Class)
 
     tree_model.add_element(element)
@@ -67,8 +73,7 @@ def test_tree_model_add_element(element_factory):
     assert tree_item.element is element
 
 
-def test_tree_model_add_nested_element(element_factory):
-    tree_model = TreeModel()
+def test_tree_model_add_nested_element(tree_model, element_factory):
     class_ = element_factory.create(UML.Class)
     package = element_factory.create(UML.Package)
 
@@ -84,8 +89,7 @@ def test_tree_model_add_nested_element(element_factory):
     assert tree_model.branches.get(class_item) is None
 
 
-def test_tree_model_add_nested_element_in_reverse_order(element_factory):
-    tree_model = TreeModel()
+def test_tree_model_add_nested_element_in_reverse_order(tree_model, element_factory):
     class_ = element_factory.create(UML.Class)
     package = element_factory.create(UML.Package)
 
@@ -101,8 +105,7 @@ def test_tree_model_add_nested_element_in_reverse_order(element_factory):
     assert tree_model.branches.get(class_item) is None
 
 
-def test_tree_model_remove_element(element_factory):
-    tree_model = TreeModel()
+def test_tree_model_remove_element(tree_model, element_factory):
     element = element_factory.create(UML.Class)
     tree_model.add_element(element)
 
@@ -112,8 +115,7 @@ def test_tree_model_remove_element(element_factory):
     assert tree_item is None
 
 
-def test_tree_model_remove_nested_element(element_factory):
-    tree_model = TreeModel()
+def test_tree_model_remove_nested_element(tree_model, element_factory):
     class_ = element_factory.create(UML.Class)
     package = element_factory.create(UML.Package)
 
@@ -129,8 +131,7 @@ def test_tree_model_remove_nested_element(element_factory):
     assert tree_model.tree_item_for_element(class_) is None
 
 
-def test_tree_model_remove_package_with_nested_element(element_factory):
-    tree_model = TreeModel()
+def test_tree_model_remove_package_with_nested_element(tree_model, element_factory):
     class_ = element_factory.create(UML.Class)
     package = element_factory.create(UML.Package)
 
@@ -146,8 +147,7 @@ def test_tree_model_remove_package_with_nested_element(element_factory):
     assert tree_model.tree_item_for_element(class_) is None
 
 
-def test_tree_model_remove_from_different_owner(element_factory):
-    tree_model = TreeModel()
+def test_tree_model_remove_from_different_owner(tree_model, element_factory):
     class_ = element_factory.create(UML.Class)
     package = element_factory.create(UML.Package)
 
@@ -160,8 +160,7 @@ def test_tree_model_remove_from_different_owner(element_factory):
     assert len(tree_model.root) == 1
 
 
-def test_tree_model_change_owner(element_factory):
-    tree_model = TreeModel()
+def test_tree_model_change_owner(tree_model, element_factory):
     class_ = element_factory.create(UML.Class)
     package = element_factory.create(UML.Package)
 
@@ -180,8 +179,7 @@ def test_tree_model_change_owner(element_factory):
     assert class_item in package_model
 
 
-def test_tree_model_relationship_subtree(element_factory):
-    tree_model = TreeModel()
+def test_tree_model_relationship_subtree(tree_model, element_factory):
     package = element_factory.create(UML.Package)
     association = element_factory.create(UML.Association)
     association.package = package
@@ -202,8 +200,7 @@ def test_tree_model_relationship_subtree(element_factory):
     assert association_item is relationship_model.get_item(0)
 
 
-def test_tree_model_second_relationship(element_factory):
-    tree_model = TreeModel()
+def test_tree_model_second_relationship(tree_model, element_factory):
     package = element_factory.create(UML.Package)
     association = element_factory.create(UML.Association)
     association.package = package
@@ -228,8 +225,7 @@ def test_tree_model_second_relationship(element_factory):
     assert new_association_item is relationship_model[1]
 
 
-def test_tree_model_remove_relationship(element_factory):
-    tree_model = TreeModel()
+def test_tree_model_remove_relationship(tree_model, element_factory):
     package = element_factory.create(UML.Package)
     association = element_factory.create(UML.Association)
     association.package = package
@@ -244,7 +240,7 @@ def test_tree_model_remove_relationship(element_factory):
     assert not package_model
 
 
-def test_tree_model_sort_relationship_item_first(element_factory):
+def test_tree_model_sort_relationship_item_first():
     a = TreeItem(UML.Package())
     a.readonly_text = "a"
     b = TreeItem(UML.Package())
@@ -257,8 +253,7 @@ def test_tree_model_sort_relationship_item_first(element_factory):
     assert tree_item_sort(b, a) == 1
 
 
-def test_element_with_member_and_no_owner(element_factory):
-    tree_model = TreeModel()
+def test_element_with_member_and_no_owner(tree_model, element_factory):
     property = element_factory.create(UML.Property)
     association = element_factory.create(UML.Association)
     association.memberEnd = property
