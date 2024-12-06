@@ -1,8 +1,12 @@
+from __future__ import annotations
+
 import functools
 from collections.abc import Iterable
+from typing import TYPE_CHECKING
 from unicodedata import normalize
 
-from gaphor.UML.treemodel import TreeItem, tree_item_sort
+if TYPE_CHECKING:
+    from gaphor.UML.treemodel import TreeItem
 
 """
 Inputs:
@@ -36,7 +40,7 @@ def sorted_tree_walker(
     """The tree model as one stream, sorted."""
 
     def _flatten(list_store):
-        for tree_item in sorted_tree_items(list_store):
+        for tree_item in sorted_tree_items(model, list_store):
             yield tree_item
             if children := model.child_model(tree_item):
                 yield from _flatten(children)
@@ -60,8 +64,8 @@ def sorted_tree_walker(
                 break
 
 
-def sorted_tree_items(branch):
+def sorted_tree_items(model, branch):
     return sorted(
         branch,
-        key=functools.cmp_to_key(tree_item_sort),
+        key=functools.cmp_to_key(model.tree_item_sort),
     )
