@@ -19,7 +19,11 @@ class CoreModelingLanguage(ModelingLanguage):
 
     @property
     def element_types(self):
-        return ValueError("No element types for the core model")
+        raise ValueError("No element types for the core model")
+
+    @property
+    def model_browser_model(self):
+        raise ValueError("No model browser model for the core model")
 
     def lookup_element(self, name, ns=None):
         assert ns in ("Core", None)
@@ -47,6 +51,14 @@ class MockModelingLanguage(ModelingLanguage):
     @property
     def element_types(self):
         return ()
+
+    @property
+    def model_browser_model(self):
+        for lang in self._modeling_languages:
+            try:
+                return lang.model_browser_model
+            except ValueError:
+                continue
 
     def lookup_element(self, name, ns=None):
         if ns:

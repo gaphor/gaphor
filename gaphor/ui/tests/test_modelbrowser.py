@@ -3,6 +3,7 @@ import pytest
 from gaphor import UML
 from gaphor.core.modeling import Diagram, ModelReady
 from gaphor.i18n import gettext
+from gaphor.services.componentregistry import ComponentRegistry
 from gaphor.ui.modelbrowser import (
     ElementDragData,
     ModelBrowser,
@@ -14,8 +15,21 @@ from gaphor.UML import recipes
 
 
 @pytest.fixture
-def model_browser(event_manager, element_factory, modeling_language):
-    model_browser = ModelBrowser(event_manager, element_factory, modeling_language)
+def component_registry(event_manager, element_factory):
+    component_registry = ComponentRegistry()
+    component_registry.register("event_manager", event_manager)
+    component_registry.register("element_factory", element_factory)
+    yield component_registry
+    component_registry.shutdown()
+
+
+@pytest.fixture
+def model_browser(
+    event_manager, component_registry, element_factory, modeling_language
+):
+    model_browser = ModelBrowser(
+        event_manager, component_registry, element_factory, modeling_language
+    )
     model_browser.open()
     yield model_browser
     model_browser.close()
@@ -156,11 +170,15 @@ def test_element_style_changed(model_browser, element_factory):
     assert style.as_int().value == 2
 
 
-def test_model_browser_model_ready(event_manager, element_factory, modeling_language):
+def test_model_browser_model_ready(
+    event_manager, component_registry, element_factory, modeling_language
+):
     class_ = element_factory.create(UML.Class)
     package = element_factory.create(UML.Package)
     class_.package = package
-    model_browser = ModelBrowser(event_manager, element_factory, modeling_language)
+    model_browser = ModelBrowser(
+        event_manager, component_registry, element_factory, modeling_language
+    )
     model_browser.open()
     tree_model = model_browser.model
 

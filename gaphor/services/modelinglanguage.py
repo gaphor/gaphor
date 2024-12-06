@@ -71,6 +71,10 @@ class ModelingLanguageService(Service, ActionProvider, ModelingLanguage):
     def element_types(self):
         return self._modeling_language().element_types
 
+    @property
+    def model_browser_model(self):
+        return self._modeling_language().model_browser_model
+
     def lookup_element(self, name, ns=None):
         if ns:
             if ns not in self._modeling_languages:

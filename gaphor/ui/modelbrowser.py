@@ -1,16 +1,11 @@
 from __future__ import annotations
 
-from typing import Protocol, TypeVar
-
 from gi.repository import Gdk, Gio, GLib, GObject, Gtk
 
-from gaphor.abc import ActionProvider
+from gaphor.abc import ActionProvider, TreeItem, TreeModel
 from gaphor.action import action
 from gaphor.core import event_handler
-from gaphor.core.modeling import (
-    Base,
-    Diagram,
-)
+from gaphor.core.modeling import Base, Diagram
 from gaphor.diagram.deletable import deletable
 from gaphor.diagram.diagramtoolbox import DiagramType
 from gaphor.diagram.event import DiagramOpened, DiagramSelectionChanged
@@ -21,68 +16,45 @@ from gaphor.i18n import gettext
 from gaphor.transaction import Transaction
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.actiongroup import create_action_group
-from gaphor.ui.event import (
-    ElementOpened,
-    ModelSelectionChanged,
-)
+from gaphor.ui.event import ElementOpened, ModelSelectionChanged
 from gaphor.ui.treesearch import search, sorted_tree_walker
-from gaphor.UML.treemodel import TreeModel as UMLTreeModel
 
 START_EDIT_DELAY = 100  # ms
 
 
-class TreeItem(Protocol):
-    @property
-    def element(self) -> Base: ...
-
-    @property
-    def readonly_text(self) -> str: ...
-
-
-T = TypeVar("T", bound=TreeItem, contravariant=True)
-
-
-class TreeModel(Protocol[T]):
-    @property
-    def root(self) -> Gio.ListStore: ...
-
-    def child_model(self, item: T) -> Gio.ListStore | None: ...
-
-    @property
-    def template(self) -> str: ...
-
-    def tree_item_sort(self, a, b) -> int: ...
-
-    def should_expand(self, item: T, element: Base) -> bool: ...
-
-    def shutdown(self) -> None: ...
-
-
 class ModelBrowser(UIComponent, ActionProvider):
-    def __init__(self, event_manager, element_factory, modeling_language):
+    def __init__(
+        self, event_manager, component_registry, element_factory, modeling_language
+    ):
         self.event_manager = event_manager
+        self.component_registry = component_registry
         self.element_factory = element_factory
         self.modeling_language = modeling_language
-        self.model: TreeModel = UMLTreeModel(
-            event_manager, element_factory, self._on_select, self._on_sync
-        )
+        self.model: TreeModel | None = None
         self.search_bar = None
         self._selection_changed_id = 0
         self.sorter = None
         self.selection = None
+        self.tree_view = None
 
     def open(self):
         self.event_manager.subscribe(self.on_diagram_selection_changed)
 
+        model_type = self.modeling_language.model_browser_model
+        model = self.component_registry.partial(model_type)(
+            on_select=self._on_select, on_sync=self._on_sync
+        )
+        self.model = model
+
         tree_model = Gtk.TreeListModel.new(
-            self.model.root,
+            model.root,
             passthrough=False,
             autoexpand=False,
-            create_func=self.model.child_model,
+            create_func=model.child_model,
         )
 
         def tree_item_sort(a, b, *user_data):
-            return self.model.tree_item_sort(a, b)
+            return model.tree_item_sort(a, b)
 
         self.sorter = Gtk.CustomSorter.new(tree_item_sort)
         tree_sorter = Gtk.TreeListRowSorter.new(self.sorter)
@@ -96,7 +68,7 @@ class ModelBrowser(UIComponent, ActionProvider):
             self.selection,
             self.event_manager,
             self.modeling_language,
-            self.model.template,
+            model.template,
         )
         self.tree_view = Gtk.ListView.new(self.selection, factory)
         self.tree_view.set_vexpand(True)
@@ -141,9 +113,11 @@ class ModelBrowser(UIComponent, ActionProvider):
 
     def close(self):
         self.event_manager.unsubscribe(self.on_diagram_selection_changed)
-        self.model.shutdown()
+        if self.model:
+            self.model.shutdown()
 
     def select_element(self, element: Base) -> int | None:
+        assert self.model
         return select_element(self.model, self.tree_view, element)
 
     def select_element_quietly(self, element):

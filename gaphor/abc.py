@@ -2,9 +2,11 @@ from __future__ import annotations
 
 import abc
 from collections.abc import Iterable
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Protocol, TypeVar
 
 if TYPE_CHECKING:
+    from gi.repository import Gio
+
     from gaphor.core.modeling import Base
     from gaphor.diagram.diagramtoolbox import (
         DiagramType,
@@ -50,6 +52,11 @@ class ModelingLanguage(abc.ABC):
     def element_types(self) -> Iterable[ElementCreateInfo]:
         """Iterate element types."""
 
+    @property
+    @abc.abstractmethod
+    def model_browser_model(self) -> type[TreeModel]:
+        """A model for use in the Model Browser."""
+
     @abc.abstractmethod
     def lookup_element(self, name: str, ns: str | None = None) -> type[Base] | None:
         """Look up a model element type by (class) name.
@@ -57,3 +64,30 @@ class ModelingLanguage(abc.ABC):
         A namespace may be provided. This will allow the model to be loaded from
         that specific modeling language only.
         """
+
+
+class TreeItem(Protocol):
+    @property
+    def element(self) -> Base: ...
+
+    @property
+    def readonly_text(self) -> str: ...
+
+
+T = TypeVar("T", bound=TreeItem, contravariant=True)
+
+
+class TreeModel(Protocol[T]):
+    @property
+    def root(self) -> Gio.ListStore: ...
+
+    def child_model(self, item: T) -> Gio.ListStore | None: ...
+
+    @property
+    def template(self) -> str: ...
+
+    def tree_item_sort(self, a, b) -> int: ...
+
+    def should_expand(self, item: T, element: Base) -> bool: ...
+
+    def shutdown(self) -> None: ...
