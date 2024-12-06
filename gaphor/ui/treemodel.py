@@ -150,7 +150,7 @@ class TreeModel:
         if owner(element) and (tree_item := self.tree_item_for_element(element)):
             tree_item.sync()
 
-    def child_model(self, item: TreeItem, _user_data=None) -> Gio.ListStore:
+    def child_model(self, item: TreeItem, _user_data=None) -> Gio.ListStore | None:
         """This method will create branches on demand (lazy)."""
         branches = self.branches
         if item in branches:
@@ -203,10 +203,9 @@ class TreeModel:
         for child in owns(element):
             self.remove_element(child)
 
-        if owner_branch := next(
-            (b for b in self.branches.values() if element in (i.element for i in b)),
-            None,
-        ):
+        for owner_branch in [
+            b for b in self.branches.values() if element in (i.element for i in b)
+        ]:
             owner_branch.remove(element)
 
             if not len(owner_branch):
