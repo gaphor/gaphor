@@ -139,7 +139,7 @@ class Branch:
         yield from self.relationships
 
 
-def tree_item_sort(a, b):
+def tree_item_sort(a: TreeItem, b: TreeItem) -> int:
     if isinstance(a, RelationshipItem):
         return -1
     if isinstance(b, RelationshipItem):
@@ -167,7 +167,7 @@ class TreeModel:
 
         self.on_model_ready()
 
-    def shutdown(self):
+    def shutdown(self) -> None:
         self.event_manager.unsubscribe(self.on_element_created)
         self.event_manager.unsubscribe(self.on_element_deleted)
         self.event_manager.unsubscribe(self.on_owner_changed)
@@ -191,7 +191,7 @@ class TreeModel:
             if self._on_sync:
                 self._on_sync()
 
-    def child_model(self, item: TreeItem, _user_data=None) -> Gio.ListStore | None:
+    def child_model(self, item: TreeItem) -> Gio.ListStore | None:
         """This method will create branches on demand (lazy)."""
         branches = self.branches
         if item in branches:
@@ -208,12 +208,12 @@ class TreeModel:
             return new_branch.elements
         return None
 
-    def tree_item_sort(self, a, b):
+    def tree_item_sort(self, a, b) -> int:
         return tree_item_sort(a, b)
 
-    def should_expand(self, tree_item: TreeItem, element: Base):
+    def should_expand(self, item: TreeItem, element: Base) -> bool:
         return isinstance(element, UML.Relationship) and isinstance(
-            tree_item, RelationshipItem
+            item, RelationshipItem
         )
 
     def owner_branch_for_element(self, element: Base) -> Branch | None:

@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING
 from unicodedata import normalize
 
 if TYPE_CHECKING:
-    from gaphor.UML.treemodel import TreeItem
+    from gaphor.ui.modelbrowser import TreeItem
 
 """
 Inputs:

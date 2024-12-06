@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from typing import Protocol, TypeVar
+
 from gi.repository import Gdk, Gio, GLib, GObject, Gtk
 
 from gaphor.abc import ActionProvider
@@ -24,11 +26,36 @@ from gaphor.ui.event import (
     ModelSelectionChanged,
 )
 from gaphor.ui.treesearch import search, sorted_tree_walker
-from gaphor.UML.treemodel import (
-    TreeModel,
-)
+from gaphor.UML.treemodel import TreeModel as UMLTreeModel
 
 START_EDIT_DELAY = 100  # ms
+
+
+class TreeItem(Protocol):
+    @property
+    def element(self) -> Base: ...
+
+    @property
+    def readonly_text(self) -> str: ...
+
+
+T = TypeVar("T", bound=TreeItem, contravariant=True)
+
+
+class TreeModel(Protocol[T]):
+    @property
+    def root(self) -> Gio.ListStore: ...
+
+    def child_model(self, item: T) -> Gio.ListStore | None: ...
+
+    @property
+    def template(self) -> str: ...
+
+    def tree_item_sort(self, a, b) -> int: ...
+
+    def should_expand(self, item: T, element: Base) -> bool: ...
+
+    def shutdown(self) -> None: ...
 
 
 class ModelBrowser(UIComponent, ActionProvider):
@@ -36,7 +63,7 @@ class ModelBrowser(UIComponent, ActionProvider):
         self.event_manager = event_manager
         self.element_factory = element_factory
         self.modeling_language = modeling_language
-        self.model = TreeModel(
+        self.model: TreeModel = UMLTreeModel(
             event_manager, element_factory, self._on_select, self._on_sync
         )
         self.search_bar = None
@@ -52,7 +79,6 @@ class ModelBrowser(UIComponent, ActionProvider):
             passthrough=False,
             autoexpand=False,
             create_func=self.model.child_model,
-            user_data=None,
         )
 
         def tree_item_sort(a, b, *user_data):
@@ -296,9 +322,10 @@ def select_element(
         if (n := expand_up_to_element(owner(element), expand=True)) is None:
             return None
         while row := selection.get_item(n):
-            if model.should_expand(row.get_item(), element):
+            item: TreeItem = row.get_item()
+            if model.should_expand(item, element):
                 row.set_expanded(True)
-            elif row.get_item().element is element:
+            elif item.element is element:
                 if expand:
                     row.set_expanded(True)
                 return n
