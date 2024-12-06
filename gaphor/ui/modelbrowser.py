@@ -180,8 +180,6 @@ class ModelBrowser(UIComponent, ActionProvider):
     @action(name="win.create-diagram")
     def tree_view_create_diagram(self, diagram_kind: str):
         element: Base | RootType | None = self.get_selected_element()
-        while isinstance(element, Base) and not isinstance(element, UML.NamedElement):
-            element = owner(element)
 
         with Transaction(self.event_manager):
             diagram_type = self._diagram_type_or(
@@ -219,19 +217,6 @@ class ModelBrowser(UIComponent, ActionProvider):
 
             self.select_element(element)
             self.tree_view_rename_selected()
-
-    @action(name="tree-view.create-package")
-    def tree_view_create_package(self):
-        element = self.get_selected_element()
-        with Transaction(self.event_manager):
-            package = self.element_factory.create(UML.Package)
-            if isinstance(element, UML.Package):
-                package.package = element
-                package.name = gettext("{name} package").format(name=element.name)
-            else:
-                package.name = gettext("New package")
-        self.select_element(package)
-        self.tree_view_rename_selected()
 
     @action(name="tree-view.delete", shortcut="Delete")
     def tree_view_delete(self):
@@ -581,8 +566,6 @@ def popup_model(element, modeling_language):
             gettext("New _Element"),
             create_element_types_model(modeling_language, element),
         )
-    if isinstance(element, UML.Package):
-        part.append(gettext("New _Package"), "tree-view.create-package")
     model.append_section(None, part)
 
     part = Gio.Menu.new()

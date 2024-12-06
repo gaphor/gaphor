@@ -60,6 +60,7 @@ uml_diagram_types: DiagramTypes = (
 )
 
 uml_element_types = (
+    ElementCreateInfo("package", i18nize("New Package"), Package, (Package,)),
     ElementCreateInfo("activity", i18nize("New Activity"), Activity, (Package,)),
     ElementCreateInfo("actor", i18nize("New Actor"), Actor, (Package,)),
     ElementCreateInfo("artifact", i18nize("New Artifact"), Artifact, (Package,)),

@@ -29,8 +29,7 @@ class TreeItem(GObject.Object):
     def __init__(self, element: Base | None):
         super().__init__()
         self.element = element
-        if element:
-            self.sync()
+        self.sync()
 
     icon = GObject.Property(type=str)
     icon_visible = GObject.Property(type=bool, default=False)
