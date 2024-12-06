@@ -211,6 +211,11 @@ class TreeModel:
     def tree_item_sort(self, a, b):
         return tree_item_sort(a, b)
 
+    def should_expand(self, tree_item: TreeItem, element: Base):
+        return isinstance(element, UML.Relationship) and isinstance(
+            tree_item, RelationshipItem
+        )
+
     def owner_branch_for_element(self, element: Base) -> Branch | None:
         if (own := owner(element)) is Root:
             return self.branches[Root]

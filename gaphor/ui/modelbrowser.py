@@ -2,7 +2,6 @@ from __future__ import annotations
 
 from gi.repository import Gdk, Gio, GLib, GObject, Gtk
 
-from gaphor import UML
 from gaphor.abc import ActionProvider
 from gaphor.action import action
 from gaphor.core import event_handler
@@ -26,7 +25,6 @@ from gaphor.ui.event import (
 )
 from gaphor.ui.treesearch import search, sorted_tree_walker
 from gaphor.UML.treemodel import (
-    RelationshipItem,
     TreeModel,
 )
 
@@ -120,7 +118,7 @@ class ModelBrowser(UIComponent, ActionProvider):
         self.model.shutdown()
 
     def select_element(self, element: Base) -> int | None:
-        return select_element(self.tree_view, element)
+        return select_element(self.model, self.tree_view, element)
 
     def select_element_quietly(self, element):
         """Select element, but do not trigger a ModelSelectionChanged event."""
@@ -259,7 +257,7 @@ class SearchEngine:
                 from_current=True,
             ),
         ):
-            select_element(self.tree_view, next_item.element)
+            select_element(self.model, self.tree_view, next_item.element)
 
     def search_next(self, search_text):
         selected_item = get_first_selected_item(self.selection)
@@ -271,7 +269,7 @@ class SearchEngine:
                 from_current=False,
             ),
         ):
-            select_element(self.tree_view, next_item.element)
+            select_element(self.model, self.tree_view, next_item.element)
 
 
 def get_selected_elements(selection: Gtk.SelectionModel) -> list[Base]:
@@ -290,7 +288,7 @@ def get_first_selected_item(selection):
 
 
 def select_element(
-    tree_view: Gtk.ListView, element: Base, unselect_rest=True
+    model: TreeModel, tree_view: Gtk.ListView, element: Base, unselect_rest=True
 ) -> int | None:
     def expand_up_to_element(element, expand=False) -> int | None:
         if element in (Root, None):
@@ -298,9 +296,7 @@ def select_element(
         if (n := expand_up_to_element(owner(element), expand=True)) is None:
             return None
         while row := selection.get_item(n):
-            if isinstance(element, UML.Relationship) and isinstance(
-                row.get_item(), RelationshipItem
-            ):
+            if model.should_expand(row.get_item(), element):
                 row.set_expanded(True)
             elif row.get_item().element is element:
                 if expand:

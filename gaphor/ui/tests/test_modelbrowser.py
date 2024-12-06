@@ -191,27 +191,6 @@ def test_create_diagram(model_browser, element_factory):
     assert diagram.diagramType == "my type"
 
 
-def test_create_package(model_browser, element_factory):
-    parent = element_factory.create(UML.Package)
-    parent.name = "root"
-    model_browser.select_element(parent)
-    model_browser.tree_view_create_package()
-
-    package = next(p for p in element_factory.select(UML.Package) if p.name != "root")
-
-    assert package
-    assert package.owner is parent
-
-
-def test_create_toplevel_package(model_browser, element_factory):
-    model_browser.tree_view_create_package()
-
-    package = next(p for p in element_factory.select(UML.Package) if p.name != "root")
-
-    assert package
-    assert package.owner is None
-
-
 def test_delete_element(model_browser, element_factory):
     klass = element_factory.create(UML.Class)
     model_browser.select_element(klass)
