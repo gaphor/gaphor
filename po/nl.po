@@ -3,18 +3,19 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version:  0.6.0\n"
+"Project-Id-Version: 0.6.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2024-11-27 15:43-0500\n"
-"PO-Revision-Date: 2024-10-26 11:15+0000\n"
+"PO-Revision-Date: 2024-12-06 15:00+0000\n"
 "Last-Translator: Arjan Molenaar <gaphor@gmail.com>\n"
+"Language-Team: Dutch <https://hosted.weblate.org/projects/gaphor/gaphor/nl/>"
+"\n"
 "Language: nl\n"
-"Language-Team: Dutch "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/nl/>\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Weblate 5.9-dev\n"
 "Generated-By: Babel 2.16.0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:23 gaphor/C4Model/toolbox.py:67
@@ -414,9 +415,8 @@ msgid "Text"
 msgstr "Tekst"
 
 #: gaphor/SysML/propertypages.ui:258
-#, fuzzy
 msgid "Show text"
-msgstr "Type tonen"
+msgstr "Toon tekst"
 
 #: gaphor/SysML/sysmlfmt.py:10
 msgid "sourceContext: {name}"
@@ -3378,4 +3378,3 @@ msgstr "algemeen: {name}"
 
 #~ msgid "All XMI Files"
 #~ msgstr "Alle XMI-bestanden"
-
