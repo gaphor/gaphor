@@ -46,19 +46,15 @@ class MockModelingLanguage(ModelingLanguage):
 
     @property
     def diagram_types(self):
-        return ()
+        raise ValueError("No diagram types for the mock model")
 
     @property
     def element_types(self):
-        return ()
+        raise ValueError("No element types for the mock model")
 
     @property
     def model_browser_model(self):
-        for lang in self._modeling_languages:
-            try:
-                return lang.model_browser_model
-            except ValueError:
-                continue
+        raise ValueError("No model browser model for the mock model")
 
     def lookup_element(self, name, ns=None):
         if ns:

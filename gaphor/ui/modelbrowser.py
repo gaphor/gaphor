@@ -13,6 +13,7 @@ from gaphor.diagram.group import Root, RootType, change_owner, owner
 from gaphor.diagram.tools.dnd import ElementDragData
 from gaphor.event import Notification
 from gaphor.i18n import gettext
+from gaphor.services.modelinglanguage import ModelingLanguageChanged
 from gaphor.transaction import Transaction
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.actiongroup import create_action_group
@@ -36,9 +37,11 @@ class ModelBrowser(UIComponent, ActionProvider):
         self.sorter = None
         self.selection = None
         self.tree_view = None
+        self.top_level = None
 
     def open(self):
         self.event_manager.subscribe(self.on_diagram_selection_changed)
+        self.event_manager.subscribe(self.on_modeling_language_changed)
 
         model_type = self.modeling_language.model_browser_model
         model = self.component_registry.partial(model_type)(
@@ -108,13 +111,22 @@ class ModelBrowser(UIComponent, ActionProvider):
         box = Gtk.Box.new(Gtk.Orientation.VERTICAL, 0)
         box.append(self.search_bar)
         box.append(scrolled_window)
+        self.top_level = box
 
         return box
 
     def close(self):
         self.event_manager.unsubscribe(self.on_diagram_selection_changed)
+        self.event_manager.unsubscribe(self.on_modeling_language_changed)
         if self.model:
             self.model.shutdown()
+        self.model = None
+        self.search_bar = None
+        self._selection_changed_id = 0
+        self.sorter = None
+        self.selection = None
+        self.tree_view = None
+        self.top_level = None
 
     def select_element(self, element: Base) -> int | None:
         assert self.model
@@ -239,6 +251,20 @@ class ModelBrowser(UIComponent, ActionProvider):
             return
         if element := event.focused_item.subject:
             self.select_element_quietly(element)
+
+    @event_handler(ModelingLanguageChanged)
+    def on_modeling_language_changed(self, event: ModelingLanguageChanged) -> None:
+        """Reconfigures the model browser based on the modeling language selected."""
+        if (not self.top_level) or type(
+            self.model
+        ) is self.modeling_language.model_browser_model:
+            return
+
+        bin = self.top_level.get_parent()
+        self.close()
+        widget = self.open()
+        if bin:
+            bin.set_child(widget)
 
 
 class SearchEngine:

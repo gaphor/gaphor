@@ -1,9 +1,14 @@
+from __future__ import annotations
+
 import pytest
+from gi.repository import Gio, GObject
 
 from gaphor import UML
-from gaphor.core.modeling import Diagram, ModelReady
+from gaphor.abc import ModelingLanguage
+from gaphor.core.modeling import Base, Diagram, ModelReady
 from gaphor.i18n import gettext
 from gaphor.services.componentregistry import ComponentRegistry
+from gaphor.services.modelinglanguage import ModelingLanguageService
 from gaphor.ui.modelbrowser import (
     ElementDragData,
     ModelBrowser,
@@ -12,6 +17,7 @@ from gaphor.ui.modelbrowser import (
     list_item_drop_drop,
 )
 from gaphor.UML import recipes
+from gaphor.UML.treemodel import TreeModel as UMLTreeModel
 
 
 @pytest.fixture
@@ -21,6 +27,11 @@ def component_registry(event_manager, element_factory):
     component_registry.register("element_factory", element_factory)
     yield component_registry
     component_registry.shutdown()
+
+
+@pytest.fixture
+def modeling_language(event_manager, properties):
+    return TestModelingLanguageService(event_manager, properties)
 
 
 @pytest.fixture
@@ -188,6 +199,26 @@ def test_model_browser_model_ready(
     assert tree_model.tree_item_for_element(class_) is None
 
     model_browser.close()
+
+
+def test_default_model_browser_model_is_UML(model_browser):
+    assert type(model_browser.model) is UMLTreeModel
+
+
+def test_model_browser_language_changed(model_browser, modeling_language):
+    modeling_language.select_modeling_language("Test")
+
+    assert type(model_browser.model) is TestTreeModel
+
+
+def test_model_browser_should_not_change_for_similar_model_types(
+    model_browser, modeling_language
+):
+    current_model = model_browser.model
+
+    modeling_language.select_modeling_language("SysML")
+
+    assert model_browser.model is current_model
 
 
 def test_tree_model_expand_to_relationship(model_browser, element_factory):
@@ -409,3 +440,66 @@ class MockDropTarget:
                 pass
 
         return Widget()
+
+
+class TestModelingLanguageService(ModelingLanguageService):
+    def __init__(self, event_manager=None, properties=None):
+        super().__init__(event_manager, properties)
+        self._modeling_languages["Test"] = TestModelingLanguage()
+
+
+class TestModelingLanguage(ModelingLanguage):
+    @property
+    def name(self) -> str:
+        """Human-readable name of the modeling language."""
+        return "Test"
+
+    @property
+    def toolbox_definition(self):
+        raise ValueError("toolbox_definition not implemented")
+
+    @property
+    def diagram_types(self):
+        return ()
+
+    @property
+    def element_types(self):
+        return ()
+
+    @property
+    def model_browser_model(self):
+        return TestTreeModel
+
+    def lookup_element(self, name: str, ns: str | None = None):
+        raise ValueError("toolbox_definition not implemented")
+
+
+class TestTreeModel:
+    def __init__(self, on_select=None, on_sync=None):
+        self._root = Gio.ListStore.new(TestTreeItem.__gtype__)
+
+    @property
+    def root(self) -> Gio.ListStore:
+        return self._root
+
+    def child_model(self, item: TestTreeItem) -> Gio.ListStore | None:
+        return None
+
+    @property
+    def template(self) -> str:
+        return ""
+
+    def tree_item_sort(self, a, b) -> int:
+        return 0
+
+    def should_expand(self, item: TestTreeItem, element: Base) -> bool:
+        return True
+
+    def shutdown(self) -> None:
+        pass
+
+
+class TestTreeItem(GObject.Object):
+    def __init__(self, element: Base | None):
+        super().__init__()
+        self.element = element

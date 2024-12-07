@@ -78,6 +78,8 @@ T = TypeVar("T", bound=TreeItem, contravariant=True)
 
 
 class TreeModel(Protocol[T]):
+    def __init__(self, *args, on_select=None, on_sync=None): ...
+
     @property
     def root(self) -> Gio.ListStore: ...
 
