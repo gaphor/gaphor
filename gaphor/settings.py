@@ -50,13 +50,23 @@ class StyleVariant(Enum):
 class Settings:
     """Gaphor settings."""
 
+    _required_keys = [
+        "use-english",
+        "style-variant",
+        "reset-tool-after-create",
+        "remove-unused-elements",
+    ]
+
     def __init__(self):
-        schema_source = Gio.SettingsSchemaSource.get_default()
         self._gio_settings = (
             Gio.Settings.new(APPLICATION_ID)
-            if schema_source and schema_source.lookup(APPLICATION_ID, False)
+            if (schema_source := Gio.SettingsSchemaSource.get_default())
+            and (schema := schema_source.lookup(APPLICATION_ID, False))
+            and (schema_keys := schema.list_keys())
+            and all(key in schema_keys for key in self._required_keys)
             else None
         )
+
         if not self._gio_settings:
             # Workaround: do not show this message if we're installing schemas
             if "install-schemas" not in sys.argv:
@@ -102,10 +112,33 @@ class Settings:
         )
 
     def bind_use_english(self, target, prop):
+        self._bind_propery("use-english", target, prop)
+
+    @property
+    def reset_tool_after_create(self):
+        return (
+            self._gio_settings.get_boolean("reset-tool-after-create")
+            if self._gio_settings
+            else True
+        )
+
+    def bind_reset_tool_after_create(self, target, prop):
+        self._bind_propery("reset-tool-after-create", target, prop)
+
+    @property
+    def remove_unused_elements(self):
+        return (
+            self._gio_settings.get_boolean("remove-unused-elements")
+            if self._gio_settings
+            else True
+        )
+
+    def bind_remove_unused_elements(self, target, prop):
+        self._bind_propery("remove-unused-elements", target, prop)
+
+    def _bind_propery(self, name, target, prop):
         if self._gio_settings:
-            self._gio_settings.bind(
-                "use-english", target, prop, Gio.SettingsBindFlags.DEFAULT
-            )
+            self._gio_settings.bind(name, target, prop, Gio.SettingsBindFlags.DEFAULT)
 
 
 settings = Settings()

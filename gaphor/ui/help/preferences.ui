@@ -37,6 +37,23 @@
                         </child>
                     </object>
                 </child>
+                <child>
+                    <object class="AdwPreferencesGroup">
+                        <property name="title" translatable="yes">Editing</property>
+                        <child>
+                            <object class="AdwSwitchRow" id="reset_tool_after_create">
+                                <property name="title" translatable="yes">Reset Tool Automatically</property>
+                                <property name="subtitle" translatable="yes">After an element is created, switch back to the pointer tool.</property>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="AdwSwitchRow" id="remove_unused_elements">
+                                <property name="title" translatable="yes">Remove Unused Elements</property>
+                                <property name="subtitle" translatable="yes">Automatically remove elements no longer in use in any diagram.</property>
+                            </object>
+                        </child>
+                    </object>
+                </child>
             </object>
         </child>
     </object>
