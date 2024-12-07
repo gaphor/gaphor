@@ -23,7 +23,7 @@ from hypothesis.strategies import data, integers, sampled_from
 from gaphor.application import Session
 from gaphor.C4Model.toolbox import c4
 from gaphor.core import Transaction
-from gaphor.core.modeling import Diagram, ElementFactory, Presentation
+from gaphor.core.modeling import ElementFactory, Presentation
 from gaphor.core.modeling.base import generate_id, uuid_generator
 from gaphor.diagram.group import can_group, change_owner
 from gaphor.diagram.presentation import LinePresentation
@@ -31,8 +31,7 @@ from gaphor.diagram.tests.fixtures import allow, connect
 from gaphor.plugins.autolayout import AutoLayout
 from gaphor.RAAML.toolbox import fta, stpa
 from gaphor.SysML.toolbox import blocks, internal_blocks, requirements
-from gaphor.ui.filemanager import load_default_model
-from gaphor.UML import Element, diagramitems
+from gaphor.UML import Diagram, Element, Package, diagramitems
 from gaphor.UML.toolbox import (
     actions,
     classes,
@@ -68,6 +67,16 @@ def tooldef():
             )
         )
     )
+
+
+def load_default_model(element_factory):
+    element_factory.flush()
+    with element_factory.block_events():
+        model = element_factory.create(Package)
+        model.name = "New model"
+        diagram = element_factory.create(Diagram)
+        diagram.element = model
+        diagram.name = "New diagram"
 
 
 def ordered(elements: Iterable[Element]) -> list[Element]:

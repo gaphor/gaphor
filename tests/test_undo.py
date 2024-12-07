@@ -97,7 +97,7 @@ def set_up_class_and_association(event_manager, element_factory):
         connect(a, a.tail, ci2)
 
     # Diagram, Association, 2x Class, Property, LiteralSpecification
-    assert 12 == len(element_factory.lselect())
+    assert 9 == len(element_factory.lselect())
     assert 18 == len(diagram.connections.solver.constraints)
 
     return diagram, ci1, ci2, a
@@ -354,9 +354,8 @@ def test_reconnect_on_same_element(event_manager, element_factory, undo_manager)
 
 
 def test_exception_raised_during_undo(event_manager, element_factory, undo_manager):
-    package: UML.Package = next(element_factory.select(UML.Package))
-
     with Transaction(event_manager):
+        package = element_factory.create(UML.Package)
         klass = element_factory.create(UML.Class)
         klass.package = package
 
@@ -380,9 +379,8 @@ def test_exception_raised_during_undo_from_event_handler(
     class UndoRequested:
         pass
 
-    package: UML.Package = next(element_factory.select(UML.Package))
-
     with Transaction(event_manager):
+        package = element_factory.create(UML.Package)
         klass = element_factory.create(UML.Class)
         klass.package = package
 

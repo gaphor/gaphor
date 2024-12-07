@@ -10,13 +10,12 @@ from pathlib import Path
 
 from gi.repository import Adw, Gio, Gtk
 
-from gaphor import UML
 from gaphor.abc import ActionProvider, Service
 from gaphor.asyncio import TaskOwner, response_from_adwaita_dialog, sleep
 from gaphor.babel import translate_model
 from gaphor.core import action, event_handler, gettext
 from gaphor.core.changeset.compare import compare
-from gaphor.core.modeling import ElementFactory, ModelReady, StyleSheet
+from gaphor.core.modeling import ElementFactory, ModelReady
 from gaphor.event import (
     ModelSaved,
     Notification,
@@ -53,17 +52,6 @@ def error_message(e):
     return gettext(
         "The model cannot be stored at this location:\n{exc}\nPlease check that you typed the location correctly and try again."
     ).format(exc=str(e))
-
-
-def load_default_model(element_factory):
-    element_factory.flush()
-    with element_factory.block_events():
-        element_factory.create(StyleSheet)
-        model = element_factory.create(UML.Package)
-        model.name = gettext("New model")
-        diagram = element_factory.create(UML.Diagram)
-        diagram.element = model
-        diagram.name = gettext("New diagram")
 
 
 class FileManager(Service, ActionProvider, TaskOwner):
@@ -362,7 +350,6 @@ class FileManager(Service, ActionProvider, TaskOwner):
         elif event.template:
             self.load_template(event.template)
         else:
-            load_default_model(self.element_factory)
             self.event_manager.handle(ModelReady(self, filename=event.filename))
 
     @event_handler(SessionShutdownRequested)

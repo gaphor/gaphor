@@ -62,7 +62,6 @@ from gaphor.diagram.tests.fixtures import allow, connect, disconnect
 from gaphor.RAAML.toolbox import fta, stpa
 from gaphor.storage import storage
 from gaphor.SysML.toolbox import blocks, internal_blocks, requirements
-from gaphor.ui.filemanager import load_default_model
 from gaphor.UML import diagramitems
 from gaphor.UML.toolbox import (
     actions,
@@ -73,6 +72,17 @@ from gaphor.UML.toolbox import (
     states,
     use_cases,
 )
+
+
+def load_default_model(element_factory):
+    element_factory.flush()
+    with element_factory.block_events():
+        element_factory.create(StyleSheet)
+        model = element_factory.create(UML.Package)
+        model.name = "New model"
+        diagram = element_factory.create(UML.Diagram)
+        diagram.element = model
+        diagram.name = "New diagram"
 
 
 def tooldef():

@@ -11,15 +11,12 @@ from gaphor.diagram.tools.placement import (
     placement_tool,
 )
 from gaphor.ui.diagrampage import DiagramPage
-from gaphor.ui.filemanager import load_default_model
 from gaphor.UML.general import CommentLineItem
 
 
 @pytest.fixture
 def session():
     session = Session()
-    element_factory = session.get_service("element_factory")
-    load_default_model(element_factory)
     yield session
     session.shutdown()
 
