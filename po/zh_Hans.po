@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-11-27 15:43-0500\n"
+"POT-Creation-Date: 2024-12-03 09:12+0100\n"
 "PO-Revision-Date: 2024-04-18 03:03+0000\n"
 "Last-Translator: zhangxinqiang <1933581361@qq.com>\n"
 "Language: zh_Hans\n"
@@ -42,21 +42,21 @@ msgstr "新建软件系统"
 msgid "New Container"
 msgstr "新建容器"
 
-#: gaphor/C4Model/toolbox.py:55 gaphor/templates/c4model-example.gaphor
+#: gaphor/C4Model/toolbox.py:55 gaphor/C4Model/toolbox.py:172
+#: gaphor/templates/c4model-example.gaphor
 msgid "Database"
 msgstr "数据库"
 
-#: gaphor/C4Model/toolbox.py:56 gaphor/C4Model/toolbox.py:177
+#: gaphor/C4Model/toolbox.py:56
 msgid "New Database"
 msgstr "创建新数据库"
 
-#: gaphor/C4Model/toolbox.py:63 gaphor/C4Model/toolbox.py:167
-#: gaphor/UML/toolbox.py:67
+#: gaphor/C4Model/toolbox.py:63
 msgid "New Component"
 msgstr "新建组件"
 
 #: gaphor/C4Model/diagramitems/person.py:24 gaphor/C4Model/toolbox.py:71
-#: gaphor/C4Model/toolbox.py:77
+#: gaphor/C4Model/toolbox.py:77 gaphor/C4Model/toolbox.py:171
 msgid "Person"
 msgstr "参与人"
 
@@ -72,7 +72,8 @@ msgstr "容器"
 msgid "Container: Database"
 msgstr "容器: 数据库"
 
-#: gaphor/C4Model/toolbox.py:119 gaphor/UML/classes/classestoolbox.py:63
+#: gaphor/C4Model/toolbox.py:119 gaphor/C4Model/toolbox.py:165
+#: gaphor/UML/classes/classestoolbox.py:63 gaphor/UML/toolbox.py:67
 msgid "Component"
 msgstr "组件"
 
@@ -83,94 +84,108 @@ msgid "Dependency"
 msgstr "依赖"
 
 #: gaphor/C4Model/toolbox.py:151
-msgid "New C4 Diagram"
+#, fuzzy
+msgid "C4 Diagram"
 msgstr "新建 C4 模型图"
 
 #: gaphor/C4Model/toolbox.py:152 gaphor/UML/toolbox.py:50
-msgid "New Class Diagram"
+#, fuzzy
+msgid "Class Diagram"
 msgstr "新建类图"
 
 #: gaphor/C4Model/toolbox.py:153 gaphor/SysML/toolbox.py:129
 #: gaphor/UML/toolbox.py:54
-msgid "New Activity Diagram"
+#, fuzzy
+msgid "Activity Diagram"
 msgstr "新建活动图"
 
 #: gaphor/C4Model/toolbox.py:154 gaphor/SysML/toolbox.py:139
 #: gaphor/UML/toolbox.py:55
-msgid "New Sequence Diagram"
+#, fuzzy
+msgid "Sequence Diagram"
 msgstr "新建序列图"
 
 #: gaphor/C4Model/toolbox.py:155 gaphor/SysML/toolbox.py:149
 #: gaphor/UML/toolbox.py:57
-msgid "New State Machine Diagram"
+#, fuzzy
+msgid "State Machine Diagram"
 msgstr "新建状态图"
 
-#: gaphor/C4Model/toolbox.py:159 gaphor/SysML/toolbox.py:133
-#: gaphor/SysML/toolbox.py:134 gaphor/SysML/toolbox.py:172
-#: gaphor/UML/toolbox.py:63
-msgid "New Activity"
-msgstr "新活动"
+#: gaphor/C4Model/toolbox.py:159 gaphor/SysML/toolbox.py:172
+#: gaphor/UML/actions/actionstoolbox.py:41
+#: gaphor/UML/actions/actionstoolbox.py:68 gaphor/UML/toolbox.py:63
+#: gaphor/templates/sysml-example.gaphor gaphor/templates/uml-example.gaphor
+msgid "Activity"
+msgstr "活动"
 
-#: gaphor/C4Model/toolbox.py:161 gaphor/SysML/toolbox.py:143
-#: gaphor/SysML/toolbox.py:144 gaphor/SysML/toolbox.py:179
-#: gaphor/UML/toolbox.py:80
-msgid "New Interaction"
-msgstr "新建交互"
+#: gaphor/C4Model/toolbox.py:160 gaphor/SysML/toolbox.py:176
+#: gaphor/UML/interactions/interactionstoolbox.py:36
+#: gaphor/UML/interactions/interactionstoolbox.py:57 gaphor/UML/toolbox.py:77
+#: gaphor/templates/sysml-example.gaphor gaphor/templates/uml-example.gaphor
+#: gaphor/templates/uml.gaphor
+msgid "Interaction"
+msgstr "交互"
 
-#: gaphor/C4Model/toolbox.py:164 gaphor/SysML/toolbox.py:153
-#: gaphor/SysML/toolbox.py:154 gaphor/SysML/toolbox.py:194
-#: gaphor/UML/toolbox.py:86
-msgid "New State Machine"
-msgstr "新建状态机"
+#: gaphor/C4Model/toolbox.py:162 gaphor/SysML/toolbox.py:190
+#: gaphor/UML/states/statestoolbox.py:46 gaphor/UML/states/statestoolbox.py:63
+#: gaphor/UML/toolbox.py:82 gaphor/templates/sysml-example.gaphor
+msgid "State Machine"
+msgstr "状态机"
 
-#: gaphor/C4Model/toolbox.py:166 gaphor/UML/toolbox.py:66
-msgid "New Class"
-msgstr "新建类"
+#: gaphor/C4Model/toolbox.py:164 gaphor/UML/classes/classestoolbox.py:29
+#: gaphor/UML/profiles/profilestoolbox.py:14 gaphor/UML/toolbox.py:66
+msgid "Class"
+msgstr "类"
 
-#: gaphor/C4Model/toolbox.py:168 gaphor/UML/toolbox.py:68
-msgid "New Data Type"
-msgstr "新建数据类型"
+#: gaphor/C4Model/toolbox.py:166 gaphor/UML/toolbox.py:68
+#, fuzzy
+msgid "Data Type"
+msgstr "数据类型"
 
-#: gaphor/C4Model/toolbox.py:170 gaphor/SysML/toolbox.py:176
-#: gaphor/UML/toolbox.py:71
-msgid "New Enumeration"
-msgstr "新建枚举"
+#: gaphor/C4Model/toolbox.py:167 gaphor/SysML/blocks/blockstoolbox.py:118
+#: gaphor/SysML/toolbox.py:175 gaphor/UML/classes/classestoolbox.py:154
+#: gaphor/UML/toolbox.py:70
+msgid "Enumeration"
+msgstr "枚举"
 
-#: gaphor/C4Model/toolbox.py:173
-msgid "New Primitive Type"
+#: gaphor/C4Model/toolbox.py:169
+#, fuzzy
+msgid "Primitive Type"
 msgstr "新建原始类型"
-
-#: gaphor/C4Model/toolbox.py:175
-msgid "New Person"
-msgstr "新建参与人"
 
 #: gaphor/RAAML/modelinglanguage.py:24 gaphor/ui/greeter.py:48
 msgid "RAAML"
 msgstr "RAAML"
 
 #: gaphor/RAAML/toolbox.py:23
-msgid "New FTA Diagram"
+#, fuzzy
+msgid "FTA Diagram"
 msgstr "新建 FTA 图"
 
 #: gaphor/RAAML/toolbox.py:24
-msgid "New STPA Diagram"
+#, fuzzy
+msgid "STPA Diagram"
 msgstr "新建 STPA 图"
 
-#: gaphor/RAAML/toolbox.py:28
-msgid "New Top Event"
-msgstr "新建顶部事件"
+#: gaphor/RAAML/fta/ftatoolbox.py:195 gaphor/RAAML/fta/ftatoolbox.py:201
+#: gaphor/RAAML/fta/topevent.py:27 gaphor/RAAML/toolbox.py:28
+msgid "Top Event"
+msgstr "顶事件"
 
-#: gaphor/RAAML/toolbox.py:29
-msgid "New Loss"
-msgstr "新建Loss"
+#: gaphor/RAAML/stpa/stpatoolbox.py:17 gaphor/RAAML/stpa/stpatoolbox.py:43
+#: gaphor/RAAML/toolbox.py:29 gaphor/templates/raaml-example.gaphor
+msgid "Loss"
+msgstr "丧失"
 
-#: gaphor/RAAML/toolbox.py:30
-msgid "New Hazard"
-msgstr "新建Hazard"
+#: gaphor/RAAML/stpa/stpatoolbox.py:22 gaphor/RAAML/stpa/stpatoolbox.py:52
+#: gaphor/RAAML/toolbox.py:30 gaphor/templates/raaml-example.gaphor
+msgid "Hazard"
+msgstr "危害"
 
-#: gaphor/RAAML/toolbox.py:31
-msgid "New Situation"
-msgstr "新建场景"
+#: gaphor/RAAML/stpa/stpatoolbox.py:61 gaphor/RAAML/toolbox.py:31
+#: gaphor/SysML/blocks/block.py:57 gaphor/SysML/blocks/interfaceblock.py:56
+msgid "Situation"
+msgstr "情况"
 
 #: gaphor/RAAML/fta/andgate.py:34 gaphor/RAAML/fta/ftatoolbox.py:24
 msgid "AND Gate"
@@ -267,11 +282,6 @@ msgstr "房形事件"
 msgid "Zero Event"
 msgstr "零事件"
 
-#: gaphor/RAAML/fta/ftatoolbox.py:195 gaphor/RAAML/fta/ftatoolbox.py:201
-#: gaphor/RAAML/fta/topevent.py:27
-msgid "Top Event"
-msgstr "顶事件"
-
 #: gaphor/RAAML/fta/ftatoolbox.py:206 gaphor/RAAML/fta/ftatoolbox.py:213
 #: gaphor/RAAML/fta/intermediateevent.py:28
 msgid "Intermediate Event"
@@ -294,16 +304,6 @@ msgstr "控制行为"
 msgid "Operational Situation"
 msgstr "场景态势"
 
-#: gaphor/RAAML/stpa/stpatoolbox.py:17 gaphor/RAAML/stpa/stpatoolbox.py:43
-#: gaphor/templates/raaml-example.gaphor
-msgid "Loss"
-msgstr "丧失"
-
-#: gaphor/RAAML/stpa/stpatoolbox.py:22 gaphor/RAAML/stpa/stpatoolbox.py:52
-#: gaphor/templates/raaml-example.gaphor
-msgid "Hazard"
-msgstr "危害"
-
 #: gaphor/RAAML/stpa/stpatoolbox.py:27 gaphor/RAAML/stpa/stpatoolbox.py:116
 #: gaphor/templates/raaml-example.gaphor
 msgid "Abstract Operational Situation"
@@ -313,11 +313,6 @@ msgstr "抽象场景态势"
 #: gaphor/UML/classes/classestoolbox.py:127
 msgid "Generalization"
 msgstr "泛化"
-
-#: gaphor/RAAML/stpa/stpatoolbox.py:61 gaphor/SysML/blocks/block.py:57
-#: gaphor/SysML/blocks/interfaceblock.py:56
-msgid "Situation"
-msgstr "情况"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:72
 msgid "Control Structure"
@@ -441,7 +436,8 @@ msgid "Proxy Port"
 msgstr "代理端口"
 
 #: gaphor/SysML/toolbox.py:90
-msgid "New Block Definition Diagram"
+#, fuzzy
+msgid "Block Definition Diagram"
 msgstr "新建块定义图"
 
 #: gaphor/SysML/toolbox.py:93 gaphor/SysML/toolbox.py:113
@@ -450,45 +446,69 @@ msgid "New Package"
 msgstr "新建包"
 
 #: gaphor/SysML/toolbox.py:97
-msgid "New Internal Block Diagram"
+#, fuzzy
+msgid "Internal Block Diagram"
 msgstr "新建内部框图"
 
 #: gaphor/SysML/toolbox.py:104 gaphor/SysML/toolbox.py:105
-#: gaphor/SysML/toolbox.py:174
 msgid "New Block"
 msgstr "新建块"
 
 #: gaphor/SysML/toolbox.py:110 gaphor/UML/toolbox.py:51
-msgid "New Package Diagram"
+#, fuzzy
+msgid "Package Diagram"
 msgstr "新建包图"
 
 #: gaphor/SysML/toolbox.py:117
-msgid "New Requirement Diagram"
+#, fuzzy
+msgid "Requirement Diagram"
 msgstr "新建需求图"
 
+#: gaphor/SysML/toolbox.py:133 gaphor/SysML/toolbox.py:134
+msgid "New Activity"
+msgstr "新活动"
+
+#: gaphor/SysML/toolbox.py:143 gaphor/SysML/toolbox.py:144
+msgid "New Interaction"
+msgstr "新建交互"
+
+#: gaphor/SysML/toolbox.py:153 gaphor/SysML/toolbox.py:154
+msgid "New State Machine"
+msgstr "新建状态机"
+
 #: gaphor/SysML/toolbox.py:159 gaphor/UML/toolbox.py:58
-msgid "New Use Case Diagram"
+#, fuzzy
+msgid "Use Case Diagram"
 msgstr "新建用例图"
 
 #: gaphor/SysML/toolbox.py:173 gaphor/UML/toolbox.py:64
-msgid "New Actor"
-msgstr "新建角色"
+#: gaphor/UML/usecases/usecasetoolbox.py:28 gaphor/templates/uml-example.gaphor
+msgid "Actor"
+msgstr "角色"
 
+#: gaphor/SysML/blocks/blockstoolbox.py:29 gaphor/SysML/toolbox.py:174
+msgid "Block"
+msgstr "块"
+
+#: gaphor/SysML/toolbox.py:178
+#, fuzzy
+msgid "Interface Block"
+msgstr "接口块"
+
+#: gaphor/SysML/requirements/requirementstoolbox.py:17
 #: gaphor/SysML/toolbox.py:182
-msgid "New Interface Block"
-msgstr "新建接口框图"
+msgid "Requirement"
+msgstr "需求"
 
-#: gaphor/SysML/toolbox.py:186
-msgid "New Requirement"
-msgstr "新建Requirement"
+#: gaphor/SysML/toolbox.py:192 gaphor/UML/toolbox.py:85
+#, fuzzy
+msgid "Use Case"
+msgstr "用例"
 
-#: gaphor/SysML/toolbox.py:196 gaphor/UML/toolbox.py:89
-msgid "New Use Case"
-msgstr "新建用例"
-
-#: gaphor/SysML/toolbox.py:197
-msgid "New Value Type"
-msgstr "新建值类型"
+#: gaphor/SysML/toolbox.py:193
+#, fuzzy
+msgid "Value Type"
+msgstr "值类型"
 
 #: gaphor/SysML/allocations/allocationstoolbox.py:6
 msgid "Allocations"
@@ -536,10 +556,6 @@ msgstr "未命名"
 msgid "Blocks"
 msgstr "块"
 
-#: gaphor/SysML/blocks/blockstoolbox.py:29
-msgid "Block"
-msgstr "块"
-
 #: gaphor/SysML/blocks/blockstoolbox.py:39
 msgid "InterfaceBlock"
 msgstr "接口块"
@@ -573,11 +589,6 @@ msgstr "直接关联"
 #: gaphor/SysML/blocks/blockstoolbox.py:107
 msgid "ValueType"
 msgstr "值类型"
-
-#: gaphor/SysML/blocks/blockstoolbox.py:118
-#: gaphor/UML/classes/classestoolbox.py:154
-msgid "Enumeration"
-msgstr "枚举"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:130
 #: gaphor/UML/classes/classestoolbox.py:166
@@ -619,10 +630,6 @@ msgstr "需求"
 #: gaphor/SysML/requirements/requirementstoolbox.py:13
 #: gaphor/templates/sysml-example.gaphor gaphor/templates/sysml.gaphor
 msgid "Requirements"
-msgstr "需求"
-
-#: gaphor/SysML/requirements/requirementstoolbox.py:17
-msgid "Requirement"
 msgstr "需求"
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:29
@@ -673,48 +680,53 @@ msgid ""
 msgstr "从模型中删除了未使用的元素：它们不会在任何其他图表中使用。"
 
 #: gaphor/UML/toolbox.py:52
-msgid "New Component Diagram"
-msgstr "新建组件图"
+#, fuzzy
+msgid "Component Diagram"
+msgstr "组件图"
 
 #: gaphor/UML/toolbox.py:53
-msgid "New Deployment Diagram"
+#, fuzzy
+msgid "Deployment Diagram"
 msgstr "新建部署图"
 
 #: gaphor/UML/toolbox.py:56
-msgid "New Communication Diagram"
+#, fuzzy
+msgid "Communication Diagram"
 msgstr "新建通讯图"
 
 #: gaphor/UML/toolbox.py:59
-msgid "New Profile Diagram"
+#, fuzzy
+msgid "Profile Diagram"
 msgstr "新建配置图"
 
-#: gaphor/UML/toolbox.py:65
-msgid "New Artifact"
-msgstr "新建 Artifact"
+#: gaphor/UML/deployments/deploymentstoolbox.py:16 gaphor/UML/toolbox.py:65
+msgid "Artifact"
+msgstr "工件"
 
-#: gaphor/UML/toolbox.py:69
-msgid "New Device"
-msgstr "新建设备"
+#: gaphor/UML/deployments/deploymentstoolbox.py:40 gaphor/UML/toolbox.py:69
+msgid "Device"
+msgstr "设备"
 
-#: gaphor/UML/toolbox.py:75
-msgid "New Instance Specification"
+#: gaphor/UML/toolbox.py:73
+#, fuzzy
+msgid "Instance Specification"
 msgstr "新建实例规范"
 
-#: gaphor/UML/toolbox.py:82
-msgid "New Interface"
-msgstr "新建接口"
+#: gaphor/UML/classes/classestoolbox.py:39 gaphor/UML/toolbox.py:78
+msgid "Interface"
+msgstr "接口"
 
-#: gaphor/UML/toolbox.py:83
-msgid "New Node"
-msgstr "新建节点"
+#: gaphor/UML/deployments/deploymentstoolbox.py:28 gaphor/UML/toolbox.py:79
+msgid "Node"
+msgstr "节点"
 
-#: gaphor/UML/toolbox.py:84
-msgid "New Profile"
-msgstr "新建配置"
+#: gaphor/UML/profiles/profilestoolbox.py:22 gaphor/UML/toolbox.py:80
+msgid "Profile"
+msgstr "配置"
 
-#: gaphor/UML/toolbox.py:88
-msgid "New Stereotype"
-msgstr "新建 Stereotype"
+#: gaphor/UML/profiles/profilestoolbox.py:44 gaphor/UML/toolbox.py:84
+msgid "Stereotype"
+msgstr "立体型"
 
 #: gaphor/UML/actions/actionstoolbox.py:18
 #: gaphor/UML/interactions/interactionstoolbox.py:16
@@ -742,12 +754,6 @@ msgstr "扩展: {name}"
 #: gaphor/UML/umlfmt.py:244
 msgid "include: {name}"
 msgstr "包含: {name}"
-
-#: gaphor/UML/actions/actionstoolbox.py:41
-#: gaphor/UML/actions/actionstoolbox.py:68
-#: gaphor/templates/sysml-example.gaphor gaphor/templates/uml-example.gaphor
-msgid "Activity"
-msgstr "活动"
 
 #: gaphor/UML/actions/actionstoolbox.py:49
 msgid "Swimlane One"
@@ -1039,15 +1045,6 @@ msgstr "新建操作…"
 msgid "Classes"
 msgstr "类"
 
-#: gaphor/UML/classes/classestoolbox.py:29
-#: gaphor/UML/profiles/profilestoolbox.py:14
-msgid "Class"
-msgstr "类"
-
-#: gaphor/UML/classes/classestoolbox.py:39
-msgid "Interface"
-msgstr "接口"
-
 #: gaphor/UML/classes/classestoolbox.py:135
 msgid "Interface Realization"
 msgstr "接口实现"
@@ -1092,15 +1089,15 @@ msgstr "新建枚举…"
 msgid "interface"
 msgstr "接口"
 
-#: gaphor/UML/classes/klass.py:49
+#: gaphor/UML/classes/klass.py:48
 msgid "stereotype"
 msgstr "立体型"
 
-#: gaphor/UML/classes/klass.py:51
+#: gaphor/UML/classes/klass.py:50
 msgid "metaclass"
 msgstr "元类"
 
-#: gaphor/UML/classes/package.py:29
+#: gaphor/UML/classes/package.py:30
 msgid "profile"
 msgstr "配置"
 
@@ -1317,19 +1314,7 @@ msgstr "间接实例化"
 msgid "Deployments"
 msgstr "部署"
 
-#: gaphor/UML/deployments/deploymentstoolbox.py:16
-msgid "Artifact"
-msgstr "工件"
-
-#: gaphor/UML/deployments/deploymentstoolbox.py:28
-msgid "Node"
-msgstr "节点"
-
-#: gaphor/UML/deployments/deploymentstoolbox.py:40
-msgid "Device"
-msgstr "设备"
-
-#: gaphor/UML/deployments/node.py:46
+#: gaphor/UML/deployments/node.py:47
 msgid "device"
 msgstr "设备"
 
@@ -1390,13 +1375,6 @@ msgstr "无法解析图片“{filename}”。"
 #: gaphor/UML/interactions/interactionsconnect.py:76
 msgid "call()"
 msgstr "调用（）"
-
-#: gaphor/UML/interactions/interactionstoolbox.py:36
-#: gaphor/UML/interactions/interactionstoolbox.py:57
-#: gaphor/templates/sysml-example.gaphor gaphor/templates/uml-example.gaphor
-#: gaphor/templates/uml.gaphor
-msgid "Interaction"
-msgstr "交互"
 
 #: gaphor/UML/interactions/interactionstoolbox.py:53
 #: gaphor/templates/uml-example.gaphor gaphor/templates/uml.gaphor
@@ -1459,18 +1437,10 @@ msgstr "导入"
 msgid "Profiles"
 msgstr "配置"
 
-#: gaphor/UML/profiles/profilestoolbox.py:22
-msgid "Profile"
-msgstr "配置"
-
 #: gaphor/UML/profiles/profilestoolbox.py:34
 #: gaphor/UML/profiles/propertypages.ui:11
 msgid "Metaclass"
 msgstr "元数"
-
-#: gaphor/UML/profiles/profilestoolbox.py:44
-msgid "Stereotype"
-msgstr "立体型"
 
 #: gaphor/UML/profiles/profilestoolbox.py:56
 msgid "Extension"
@@ -1525,11 +1495,6 @@ msgstr "状态机"
 #: gaphor/UML/states/statestoolbox.py:16 gaphor/UML/states/statestoolbox.py:75
 msgid "State"
 msgstr "状态"
-
-#: gaphor/UML/states/statestoolbox.py:46 gaphor/UML/states/statestoolbox.py:63
-#: gaphor/templates/sysml-example.gaphor
-msgid "State Machine"
-msgstr "状态机"
 
 #: gaphor/UML/states/statestoolbox.py:59
 msgid "States"
@@ -1600,10 +1565,6 @@ msgstr "用例"
 #: gaphor/UML/usecases/usecasetoolbox.py:16
 msgid "Use case"
 msgstr "用例"
-
-#: gaphor/UML/usecases/usecasetoolbox.py:28 gaphor/templates/uml-example.gaphor
-msgid "Actor"
-msgstr "角色"
 
 #: gaphor/UML/usecases/usecasetoolbox.py:47
 msgid "Include"
@@ -1695,6 +1656,40 @@ msgstr "聚焦的item的CSS节点"
 #: gaphor/ui/elementeditor.ui:238
 msgid "No focused item."
 msgstr "没有聚焦的节点."
+
+#: gaphor/diagram/propertypages.ui:322 gaphor/diagram/styleeditor.ui:5
+#, fuzzy
+msgid "Style Editor"
+msgstr "格式表"
+
+#: gaphor/diagram/propertypages.ui:331
+#, fuzzy
+msgid "Open Style Editor"
+msgstr "打开合并编辑器"
+
+#: gaphor/diagram/styleeditor.ui:27
+#, fuzzy
+msgid "Border Radius"
+msgstr "有序"
+
+#: gaphor/diagram/styleeditor.ui:51
+#, fuzzy
+msgid "Color"
+msgstr "颜色"
+
+#: gaphor/diagram/styleeditor.ui:67
+msgid "Background Color"
+msgstr ""
+
+#: gaphor/diagram/styleeditor.ui:83
+#, fuzzy
+msgid "Text Color"
+msgstr "颜色"
+
+#: gaphor/diagram/styleeditor.ui:96
+#, fuzzy
+msgid "Add to Style Sheet"
+msgstr "格式表"
 
 #: gaphor/diagram/tools/dnd.py:50
 msgid "Element can’t be represented on a diagram."
@@ -1890,13 +1885,13 @@ msgstr "此处显示任何未处理的错误。当你在GitHub上创建问题时
 msgid "This model contains unsaved changes. The changes have been restored."
 msgstr "打开的模型包含未保存的更改。未保存的更改将永久丢失。"
 
-#: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:62
+#: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:63
 #: gaphor/ui/mainwindow.py:273 gaphor/ui/mainwindow.py:278
 #: gaphor/ui/mainwindow.ui:124
 msgid "New model"
 msgstr "新建模型"
 
-#: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:65
+#: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:66
 msgid "New diagram"
 msgstr "新建图表"
 
@@ -2593,13 +2588,12 @@ msgstr "重打开"
 msgid "Switch"
 msgstr "切换"
 
-#: gaphor/ui/diagrampage.py:103 gaphor/ui/mainwindow.py:292
-#: gaphor/ui/modelmerge/organize.py:138 gaphor/ui/modelmerge/organize.py:169
-#: gaphor/ui/treemodel.py:44
+#: gaphor/ui/diagrampage.py:105 gaphor/ui/mainwindow.py:292
+#: gaphor/ui/modelmerge/organize.py:138 gaphor/ui/treemodel.py:44
 msgid "<None>"
 msgstr "<无>"
 
-#: gaphor/ui/diagrampage.py:334
+#: gaphor/ui/diagrampage.py:331
 msgid "Show in Model Browser"
 msgstr "在模型浏览器中显示"
 
@@ -2732,17 +2726,17 @@ msgstr "应用来自冲突模型的传入更改。使用“撤消”可恢复更
 msgid "Resolve"
 msgstr "解决"
 
-#: gaphor/ui/errordialog.py:24
-msgid "Close"
-msgstr "关闭"
-
-#: gaphor/ui/errordialog.py:29
+#: gaphor/ui/errordialog.py:21
 msgid ""
 "It looks like Gaphor is started from the command line. Do you want to "
 "open a debug session?"
 msgstr "好像Gaphor是从命令行启动的。是否要打开调试会话？"
 
-#: gaphor/ui/errordialog.py:38
+#: gaphor/ui/errordialog.py:28
+msgid "Close"
+msgstr "关闭"
+
+#: gaphor/ui/errordialog.py:30
 msgid "Start Debug Session"
 msgstr "启动调试会话"
 
@@ -2762,7 +2756,7 @@ msgstr "所有文件"
 msgid "Flatpak Document Portal"
 msgstr ""
 
-#: gaphor/ui/filemanager.py:41
+#: gaphor/ui/filemanager.py:42
 msgid ""
 "Gaphor was not able to store the model, probably due to an internal "
 "error:\n"
@@ -2773,7 +2767,7 @@ msgstr ""
 "{exc}\n"
 "如果您认为这是一个bug，请联系开发人员。"
 
-#: gaphor/ui/filemanager.py:45
+#: gaphor/ui/filemanager.py:46
 msgid ""
 "You do not have the permissions necessary to save the model.\n"
 "Please check that you typed the location correctly and try again."
@@ -2781,7 +2775,7 @@ msgstr ""
 "您没有保存模型所需的权限。\n"
 "请检查您键入的位置是否正确，然后重试。"
 
-#: gaphor/ui/filemanager.py:49
+#: gaphor/ui/filemanager.py:50
 msgid ""
 "You do not have enough free space on the device to save the model.\n"
 "Please free up some disk space and try again or save it in a different "
@@ -2790,7 +2784,7 @@ msgstr ""
 "设备上没有足够的可用空间来保存模型。\n"
 "请释放一些磁盘空间，然后重试，或者将其保存到其他位置。"
 
-#: gaphor/ui/filemanager.py:52
+#: gaphor/ui/filemanager.py:53
 msgid ""
 "The model cannot be stored at this location:\n"
 "{exc}\n"
@@ -2800,87 +2794,91 @@ msgstr ""
 "{exc}\n"
 "请检查您键入的位置是否正确，然后重试。"
 
-#: gaphor/ui/filemanager.py:128 gaphor/ui/filemanager.py:157
+#: gaphor/ui/filemanager.py:129 gaphor/ui/filemanager.py:158
 msgid "Loading…"
 msgstr "加载中…"
 
-#: gaphor/ui/filemanager.py:129
+#: gaphor/ui/filemanager.py:130
 msgid "Loading model from {filename}"
 msgstr "正在从{filename}加载模型"
 
-#: gaphor/ui/filemanager.py:158
+#: gaphor/ui/filemanager.py:159
 msgid "Loading current and incoming model"
 msgstr "加载当前和传入的模型"
 
-#: gaphor/ui/filemanager.py:220 gaphor/ui/filemanager.py:264
+#: gaphor/ui/filemanager.py:221 gaphor/ui/filemanager.py:265
 msgid "Unable to open model “{filename}”."
 msgstr "无法打开模型“{filename}”。"
 
-#: gaphor/ui/filemanager.py:223 gaphor/ui/filemanager.py:267
+#: gaphor/ui/filemanager.py:224 gaphor/ui/filemanager.py:268
 msgid "This file does not contain a valid Gaphor model."
 msgstr "此文件不包含有效的Gaphor模型。"
 
-#: gaphor/ui/filemanager.py:287
+#: gaphor/ui/filemanager.py:289
 msgid "Saving…"
 msgstr "保存中…"
 
-#: gaphor/ui/filemanager.py:288
+#: gaphor/ui/filemanager.py:290
 msgid "Saving model to {filename}"
 msgstr "正在将模型保存到{filename}"
 
-#: gaphor/ui/filemanager.py:300
+#: gaphor/ui/filemanager.py:306
 msgid "Unable to save model “{filename}”."
 msgstr "无法保存模型“{filename}”。"
 
-#: gaphor/ui/filemanager.py:336 gaphor/ui/filemanager.py:379
+#: gaphor/ui/filemanager.py:318
+msgid "Model has been saved."
+msgstr ""
+
+#: gaphor/ui/filemanager.py:344 gaphor/ui/filemanager.py:387
 msgid "Save Gaphor Model As"
 msgstr "将 Gaphor 模型另存为"
 
-#: gaphor/ui/filemanager.py:337 gaphor/ui/filemanager.py:381
+#: gaphor/ui/filemanager.py:345 gaphor/ui/filemanager.py:389
 msgid "New Model"
 msgstr "新建模型"
 
-#: gaphor/ui/filemanager.py:400
+#: gaphor/ui/filemanager.py:407
 msgid "Resolve Merge Conflict?"
 msgstr "解决合并冲突？"
 
-#: gaphor/ui/filemanager.py:403
+#: gaphor/ui/filemanager.py:408
 msgid ""
 "The model you are opening contains a merge conflict. Do you want to open "
 "the current model or the incoming change to the model?"
 msgstr "您正在打开的模型包含合并冲突。您想打开当前模型还是打开对模型的传入更改？"
 
-#: gaphor/ui/filemanager.py:407 gaphor/ui/filemanager.py:430
+#: gaphor/ui/filemanager.py:412 gaphor/ui/filemanager.py:427
 msgid "Cancel"
 msgstr "取消"
 
-#: gaphor/ui/filemanager.py:408
+#: gaphor/ui/filemanager.py:413
 msgid "Open Merge Editor"
 msgstr "打开合并编辑器"
 
-#: gaphor/ui/filemanager.py:409
+#: gaphor/ui/filemanager.py:414
 msgid "Open Current"
 msgstr "打开当前"
 
-#: gaphor/ui/filemanager.py:410
+#: gaphor/ui/filemanager.py:415
 msgid "Open Incoming"
 msgstr "打开传入"
 
-#: gaphor/ui/filemanager.py:421
+#: gaphor/ui/filemanager.py:422
 msgid "Save Changes?"
 msgstr "保存更改？"
 
-#: gaphor/ui/filemanager.py:422
+#: gaphor/ui/filemanager.py:423
 msgid ""
 "The open model contains unsaved changes. Changes which are not saved will"
 " be permanently lost."
 msgstr "打开的模型包含未保存的更改。未保存的更改将永久丢失。"
 
-#: gaphor/ui/filemanager.py:431
+#: gaphor/ui/filemanager.py:428
 msgid "Discard"
 msgstr "放弃"
 
-#: gaphor/ui/filemanager.py:432 gaphor/ui/help/shortcuts.ui:213
+#: gaphor/ui/filemanager.py:429 gaphor/ui/help/shortcuts.ui:213
 #: gaphor/ui/mainwindow.py:51
 msgid "Save"
 msgstr "保存"
@@ -3049,7 +3047,8 @@ msgid "Show in “{diagram}”"
 msgstr "显示在“{diagram}”中"
 
 #: gaphor/ui/modelbrowser.py:676
-msgid "New Generic Diagram"
+#, fuzzy
+msgid "Generic Diagram"
 msgstr "新建通用图形"
 
 #: gaphor/ui/modelchanged.ui:6
@@ -3201,75 +3200,75 @@ msgstr "打开模型 …"
 msgid "Update diagram “{name}”"
 msgstr "更新图表“{name}”"
 
-#: gaphor/ui/modelmerge/organize.py:168 gaphor/ui/modelmerge/organize.py:310
+#: gaphor/ui/modelmerge/organize.py:177 gaphor/ui/modelmerge/organize.py:317
 msgid "Update element “{name}”"
 msgstr "更新元素“{name}”"
 
-#: gaphor/ui/modelmerge/organize.py:172
+#: gaphor/ui/modelmerge/organize.py:182
 msgid "Update element of type “{type}”"
 msgstr "更新类型为“{type}”的元素"
 
-#: gaphor/ui/modelmerge/organize.py:248
+#: gaphor/ui/modelmerge/organize.py:255
 msgid "Update presentation “{type}”"
 msgstr "更新演示文稿“{type}”"
 
-#: gaphor/ui/modelmerge/organize.py:274
+#: gaphor/ui/modelmerge/organize.py:281
 msgid "Add presentation of type {type}"
 msgstr "添加类型为{type}的演示文稿"
 
-#: gaphor/ui/modelmerge/organize.py:278
+#: gaphor/ui/modelmerge/organize.py:285
 msgid "Remove presentation of type {type}"
 msgstr "删除类型为{type}的演示文稿"
 
-#: gaphor/ui/modelmerge/organize.py:283
+#: gaphor/ui/modelmerge/organize.py:290
 msgid "Update presentation “{name}”"
 msgstr "更新演示文稿“{name}”"
 
-#: gaphor/ui/modelmerge/organize.py:285
+#: gaphor/ui/modelmerge/organize.py:292
 msgid "Update presentation of type {type}"
 msgstr "更新类型为{type}的演示文稿"
 
-#: gaphor/ui/modelmerge/organize.py:292
+#: gaphor/ui/modelmerge/organize.py:299
 msgid "Add {type} “{name}”"
 msgstr "添加{type}“{name}”"
 
-#: gaphor/ui/modelmerge/organize.py:296
+#: gaphor/ui/modelmerge/organize.py:303
 msgid "Add element of type {type}"
 msgstr "添加类型为{type}的元素"
 
-#: gaphor/ui/modelmerge/organize.py:302
+#: gaphor/ui/modelmerge/organize.py:309
 msgid "Remove element “{name}”"
 msgstr "删除元素“{name}”"
 
-#: gaphor/ui/modelmerge/organize.py:304
+#: gaphor/ui/modelmerge/organize.py:311
 msgid "Remove element of type {type}"
 msgstr "移除类型为{type}的元素"
 
-#: gaphor/ui/modelmerge/organize.py:312
+#: gaphor/ui/modelmerge/organize.py:319
 msgid "Update element of type {type}"
 msgstr "更新类型为{type}的元素"
 
-#: gaphor/ui/modelmerge/organize.py:319
+#: gaphor/ui/modelmerge/organize.py:326
 msgid "Add relation “{name}” to “{ref_name}”"
 msgstr "将关系“{name}”添加到“{ref_name}”"
 
-#: gaphor/ui/modelmerge/organize.py:321
+#: gaphor/ui/modelmerge/organize.py:328
 msgid "Remove relation “{name}” to “{ref_name}”"
 msgstr "删除“{name}”与“{ref_name}”的关系"
 
-#: gaphor/ui/modelmerge/organize.py:323
+#: gaphor/ui/modelmerge/organize.py:330
 msgid "Update relation “{name}” to “{ref_name}”"
 msgstr "更新 “{name}”与 “{ref_name}”的关系"
 
-#: gaphor/ui/modelmerge/organize.py:330
+#: gaphor/ui/modelmerge/organize.py:337
 msgid "Add relation “{name}”"
 msgstr "添加关系“{name}”"
 
-#: gaphor/ui/modelmerge/organize.py:332
+#: gaphor/ui/modelmerge/organize.py:339
 msgid "Remove relation “{name}”"
 msgstr "删除关系“{name}”"
 
-#: gaphor/ui/modelmerge/organize.py:334
+#: gaphor/ui/modelmerge/organize.py:341
 msgid "Update relation “{name}”"
 msgstr "更新关系“{name}”"
 
@@ -3310,4 +3309,64 @@ msgstr "通用: {name}"
 
 #~ msgid "All XMI Files"
 #~ msgstr "所有 XMI 文件"
+
+#~ msgid "New Class"
+#~ msgstr "新建类"
+
+#~ msgid "New Data Type"
+#~ msgstr "新建数据类型"
+
+#~ msgid "New Enumeration"
+#~ msgstr "新建枚举"
+
+#~ msgid "New Person"
+#~ msgstr "新建参与人"
+
+#~ msgid "New Top Event"
+#~ msgstr "新建顶部事件"
+
+#~ msgid "New Loss"
+#~ msgstr "新建Loss"
+
+#~ msgid "New Hazard"
+#~ msgstr "新建Hazard"
+
+#~ msgid "New Situation"
+#~ msgstr "新建场景"
+
+#~ msgid "New Actor"
+#~ msgstr "新建角色"
+
+#~ msgid "New Interface Block"
+#~ msgstr "新建接口框图"
+
+#~ msgid "New Requirement"
+#~ msgstr "新建Requirement"
+
+#~ msgid "New Use Case"
+#~ msgstr "新建用例"
+
+#~ msgid "New Value Type"
+#~ msgstr "新建值类型"
+
+#~ msgid "New Component Diagram"
+#~ msgstr "新建组件图"
+
+#~ msgid "New Artifact"
+#~ msgstr "新建 Artifact"
+
+#~ msgid "New Device"
+#~ msgstr "新建设备"
+
+#~ msgid "New Interface"
+#~ msgstr "新建接口"
+
+#~ msgid "New Node"
+#~ msgstr "新建节点"
+
+#~ msgid "New Profile"
+#~ msgstr "新建配置"
+
+#~ msgid "New Stereotype"
+#~ msgstr "新建 Stereotype"
 
