@@ -156,6 +156,7 @@ c4model_diagram_types: DiagramTypes = (
 )
 
 c4model_element_types = (
+    ElementCreateInfo("package", i18nize("New Package"), Package, (Package,)),
     ElementCreateInfo("activity", i18nize("New Activity"), Activity, (Package,)),
     ElementCreateInfo(
         "interaction", i18nize("New Interaction"), Interaction, (Package,)

@@ -17,6 +17,7 @@ GAPHOR_CORE = [
 
 GLIB = [
     "gi.repository.GLib",
+    "gi.repository.GObject",
     "gi.repository.Gio",
 ]
 
@@ -30,7 +31,6 @@ UI_LIBRARIES = [
     "gi.repository.Adw",
     "gi.repository.Gdk",
     "gi.repository.Gtk",
-    "gi.repository.GObject",
 ]
 
 

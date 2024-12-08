@@ -17,12 +17,12 @@
             <child>
               <object class="GtkImage">
                 <binding name="icon-name">
-                  <lookup name="icon" type="gaphor+ui+treemodel+TreeItem">
+                  <lookup name="icon" type="gaphor+UML+treemodel+TreeItem">
                     <lookup name="item">expander</lookup>
                   </lookup>
                 </binding>
                 <binding name="visible">
-                  <lookup name="icon_visible" type="gaphor+ui+treemodel+TreeItem">
+                  <lookup name="icon_visible" type="gaphor+UML+treemodel+TreeItem">
                     <lookup name="item">expander</lookup>
                   </lookup>
                 </binding>
@@ -31,27 +31,27 @@
             <child>
               <object class="TextField" id="text">
                 <binding name="readonly-text">
-                  <lookup name="readonly-text" type="gaphor+ui+treemodel+TreeItem">
+                  <lookup name="readonly-text" type="gaphor+UML+treemodel+TreeItem">
                     <lookup name="item">expander</lookup>
                   </lookup>
                 </binding>
                 <binding name="editable-text">
-                  <lookup name="editable-text" type="gaphor+ui+treemodel+TreeItem">
+                  <lookup name="editable-text" type="gaphor+UML+treemodel+TreeItem">
                     <lookup name="item">expander</lookup>
                   </lookup>
                 </binding>
                 <binding name="attributes">
-                  <lookup name="attributes" type="gaphor+ui+treemodel+TreeItem">
+                  <lookup name="attributes" type="gaphor+UML+treemodel+TreeItem">
                     <lookup name="item">expander</lookup>
                   </lookup>
                 </binding>
                 <binding name="editing">
-                  <lookup name="editing" type="gaphor+ui+treemodel+TreeItem">
+                  <lookup name="editing" type="gaphor+UML+treemodel+TreeItem">
                     <lookup name="item">expander</lookup>
                   </lookup>
                 </binding>
                 <binding name="can-edit">
-                  <lookup name="can-edit" type="gaphor+ui+treemodel+TreeItem">
+                  <lookup name="can-edit" type="gaphor+UML+treemodel+TreeItem">
                     <lookup name="item">expander</lookup>
                   </lookup>
                 </binding>

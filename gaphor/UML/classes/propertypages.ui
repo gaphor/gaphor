@@ -64,6 +64,7 @@
             <property name="halign">end</property>
             <property name="valign">end</property>
             <property name="label" translatable="yes">ⓘ Help</property>
+            <property name="accessible-role">button</property>
             <child>
               <object class="GtkPopover" id="head-info">
                 <property name="visible">0</property>
@@ -175,6 +176,7 @@ Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</propert
             <property name="halign">end</property>
             <property name="valign">end</property>
             <property name="label" translatable="yes">ⓘ Help</property>
+            <property name="accessible-role">button</property>
             <child>
               <object class="GtkPopover" id="tail-info">
                 <property name="visible">0</property>
@@ -293,7 +295,7 @@ Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</propert
             <property name="halign">end</property>
             <property name="valign">end</property>
             <property name="label" translatable="yes">ⓘ Help</property>
-
+            <property name="accessible-role">button</property>
             <child>
               <object class="GtkPopover" id="attributes-info">
                 <property name="visible">0</property>
@@ -577,6 +579,7 @@ Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</propert
             <property name="halign">end</property>
             <property name="valign">end</property>
             <property name="label" translatable="yes">ⓘ Help</property>
+            <property name="accessible-role">button</property>
             <child>
               <object class="GtkPopover" id="operations-info">
                 <property name="visible">0</property>
@@ -689,7 +692,7 @@ Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</propert
             <property name="halign">end</property>
             <property name="valign">end</property>
             <property name="label" translatable="yes">ⓘ Help</property>
-
+            <property name="accessible-role">button</property>
             <child>
               <object class="GtkPopover" id="enumerations-info">
                 <property name="position">top</property>

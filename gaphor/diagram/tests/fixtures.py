@@ -1,5 +1,3 @@
-from gi.repository import Gtk
-
 from gaphor.diagram.connectors import Connector
 from gaphor.diagram.copypaste import copy_full, paste_link
 from gaphor.diagram.presentation import connect as _connect
@@ -70,9 +68,6 @@ def copy_clear_and_paste_link(items, diagram, element_factory, retain=None):
 def find(widget, name):
     if widget.get_buildable_id() == name:
         return widget
-    if isinstance(widget, Gtk.Expander):
-        # Iterating children will only iterate the label section
-        return find(widget.get_child(), name)
     if sibling := widget.get_next_sibling():
         if found := find(sibling, name):
             return found

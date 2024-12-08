@@ -19,7 +19,11 @@ class GeneralModelingLanguage(ModelingLanguage):
 
     @property
     def element_types(self):
-        return ValueError("No element types for the core model")
+        raise ValueError("No element types for the core model")
+
+    @property
+    def model_browser_model(self):
+        raise ValueError("No model browser model for the core model")
 
     def lookup_element(self, name, ns=None):
         assert ns in ("general", None)
