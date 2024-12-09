@@ -16,6 +16,7 @@ from gaphor.RAAML.toolbox import (
     raaml_element_types,
     raaml_toolbox_actions,
 )
+from gaphor.UML.treemodel import TreeModel
 
 
 class RAAMLModelingLanguage(ModelingLanguage):
@@ -34,6 +35,10 @@ class RAAMLModelingLanguage(ModelingLanguage):
     @property
     def element_types(self) -> Iterable[ElementCreateInfo]:
         yield from raaml_element_types
+
+    @property
+    def model_browser_model(self) -> type[TreeModel]:
+        return TreeModel
 
     def lookup_element(self, name, ns=None):
         assert ns in ("RAAML", None)

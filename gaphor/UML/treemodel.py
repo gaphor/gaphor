@@ -1,12 +1,25 @@
 from __future__ import annotations
 
+import importlib.resources
 from unicodedata import normalize
 
 from gi.repository import Gio, GObject, Pango
 
 import gaphor.UML.uml as UML
+from gaphor.core import event_handler
 from gaphor.core.format import format
-from gaphor.core.modeling import Base, Diagram
+from gaphor.core.modeling import (
+    Base,
+    DerivedAdded,
+    DerivedDeleted,
+    DerivedSet,
+    Diagram,
+    ElementCreated,
+    ElementDeleted,
+    ElementUpdated,
+    ModelFlushed,
+    ModelReady,
+)
 from gaphor.diagram.group import Root, RootType, owner, owns
 from gaphor.diagram.iconname import icon_name
 from gaphor.i18n import gettext
@@ -16,8 +29,7 @@ class TreeItem(GObject.Object):
     def __init__(self, element: Base | None):
         super().__init__()
         self.element = element
-        if element:
-            self.sync()
+        self.sync()
 
     icon = GObject.Property(type=str)
     icon_visible = GObject.Property(type=bool, default=False)
@@ -127,7 +139,7 @@ class Branch:
         yield from self.relationships
 
 
-def tree_item_sort(a, b, _user_data=None):
+def tree_item_sort(a: TreeItem, b: TreeItem) -> int:
     if isinstance(a, RelationshipItem):
         return -1
     if isinstance(b, RelationshipItem):
@@ -138,9 +150,36 @@ def tree_item_sort(a, b, _user_data=None):
 
 
 class TreeModel:
-    def __init__(self):
+    def __init__(self, event_manager, element_factory, on_select=None, on_sync=None):
         super().__init__()
         self.branches: dict[TreeItem | RootType, Branch] = {Root: Branch()}
+        self._on_select = on_select
+        self._on_sync = on_sync
+        self.event_manager = event_manager
+        self.element_factory = element_factory
+
+        event_manager.subscribe(self.on_element_created)
+        event_manager.subscribe(self.on_element_deleted)
+        event_manager.subscribe(self.on_owner_changed)
+        event_manager.subscribe(self.on_owned_element_changed)
+        event_manager.subscribe(self.on_attribute_changed)
+        event_manager.subscribe(self.on_model_ready)
+
+        self.on_model_ready()
+
+    def shutdown(self) -> None:
+        self.event_manager.unsubscribe(self.on_element_created)
+        self.event_manager.unsubscribe(self.on_element_deleted)
+        self.event_manager.unsubscribe(self.on_owner_changed)
+        self.event_manager.unsubscribe(self.on_owned_element_changed)
+        self.event_manager.unsubscribe(self.on_attribute_changed)
+        self.event_manager.unsubscribe(self.on_model_ready)
+
+    @property
+    def template(self) -> str:
+        return (importlib.resources.files("gaphor.UML") / "treeitem.ui").read_text(
+            encoding="utf-8"
+        )
 
     @property
     def root(self) -> Gio.ListStore:
@@ -149,8 +188,10 @@ class TreeModel:
     def sync(self, element):
         if owner(element) and (tree_item := self.tree_item_for_element(element)):
             tree_item.sync()
+            if self._on_sync:
+                self._on_sync()
 
-    def child_model(self, item: TreeItem, _user_data=None) -> Gio.ListStore | None:
+    def child_model(self, item: TreeItem) -> Gio.ListStore | None:
         """This method will create branches on demand (lazy)."""
         branches = self.branches
         if item in branches:
@@ -166,6 +207,14 @@ class TreeModel:
                 new_branch.append(e)
             return new_branch.elements
         return None
+
+    def tree_item_sort(self, a, b) -> int:
+        return tree_item_sort(a, b)
+
+    def should_expand(self, item: TreeItem, element: Base) -> bool:
+        return isinstance(element, UML.Relationship) and isinstance(
+            item, RelationshipItem
+        )
 
     def owner_branch_for_element(self, element: Base) -> Branch | None:
         if (own := owner(element)) is Root:
@@ -236,6 +285,44 @@ class TreeModel:
         root.remove_all()
         self.branches.clear()
         self.branches[Root] = root
+
+    @event_handler(ElementCreated)
+    def on_element_created(self, event: ElementCreated):
+        self.add_element(event.element)
+
+    @event_handler(ElementDeleted)
+    def on_element_deleted(self, event: ElementDeleted):
+        self.remove_element(event.element)
+
+    @event_handler(DerivedAdded, DerivedDeleted)
+    def on_owned_element_changed(self, event):
+        """Ensure we update the node once owned elements change."""
+        if event.property in (UML.Element.ownedElement, UML.Namespace.member):
+            self.notify_child_model(event.element)
+
+    @event_handler(DerivedSet)
+    def on_owner_changed(self, event: DerivedSet):
+        # Should check on ownedElement as well, since it may not have been updated
+        # before this thing triggers
+        if (
+            event.property in (UML.Element.owner, UML.NamedElement.memberNamespace)
+        ) and owner(event.element):
+            element = event.element
+            self.remove_element(element)
+            self.add_element(element)
+            if self._on_select:
+                self._on_select(element)
+
+    @event_handler(ElementUpdated)
+    def on_attribute_changed(self, event: ElementUpdated):
+        self.sync(event.element)
+
+    @event_handler(ModelReady, ModelFlushed)
+    def on_model_ready(self, _event=None):
+        self.clear()
+
+        for element in self.element_factory.select(owner):
+            self.add_element(element)
 
 
 def pango_attributes(element):

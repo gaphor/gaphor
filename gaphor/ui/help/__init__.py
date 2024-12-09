@@ -92,12 +92,21 @@ class HelpService(Service, ActionProvider):
 
         style_variant: Adw.ComboRow = builder.get_object("style_variant")
         use_english: Adw.SwitchRow = builder.get_object("use_english")
+        reset_tool_after_create: Adw.SwitchRow = builder.get_object(
+            "reset_tool_after_create"
+        )
+        remove_unused_elements: Adw.SwitchRow = builder.get_object(
+            "remove_unused_elements"
+        )
 
         settings.bind_use_english(use_english, "active")
         use_english.connect("notify::active", self._on_use_english_selected)
 
         settings.bind_style_variant(style_variant, "selected")
         style_variant.connect("notify::selected-item", self._on_style_variant_selected)
+
+        settings.bind_reset_tool_after_create(reset_tool_after_create, "active")
+        settings.bind_remove_unused_elements(remove_unused_elements, "active")
 
         self.preferences_window.set_visible(True)
         return self.preferences_window

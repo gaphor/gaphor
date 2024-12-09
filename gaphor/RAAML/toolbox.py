@@ -25,6 +25,7 @@ raaml_diagram_types: DiagramTypes = (
 )
 
 raaml_element_types = (
+    ElementCreateInfo("package", i18nize("Package"), Package, (Package,)),
     ElementCreateInfo("topevent", i18nize("Top Event"), TopEvent, (Package,)),
     ElementCreateInfo("loss", i18nize("Loss"), Loss, (Package,)),
     ElementCreateInfo("hazard", i18nize("Hazard"), Hazard, (Package,)),

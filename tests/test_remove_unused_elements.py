@@ -1,5 +1,6 @@
 import pytest
 
+import gaphor.UML.sanitizerservice
 from gaphor import UML
 from gaphor.application import Session
 from gaphor.core import Transaction
@@ -53,6 +54,15 @@ def classes_and_association(diagram, event_manager, element_factory):
     return c1.subject, c2.subject, a.subject
 
 
+class MockSettings:
+    def __init__(self, value):
+        self._value = value
+
+    @property
+    def remove_unused_elements(self):
+        return self._value
+
+
 @pytest.mark.parametrize(
     ["remove_unused_elements", "comparator"],
     [
@@ -65,11 +75,13 @@ def test_delete_diagram(
     diagram,
     event_manager,
     element_factory,
-    properties,
+    monkeypatch,
     remove_unused_elements,
     comparator,
 ):
-    properties.set("remove-unused-elements", remove_unused_elements)
+    monkeypatch.setattr(
+        gaphor.UML.sanitizerservice, "settings", MockSettings(remove_unused_elements)
+    )
 
     c1, c2, a = classes_and_association
 

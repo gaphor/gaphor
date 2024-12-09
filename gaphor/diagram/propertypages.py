@@ -98,7 +98,6 @@ def help_link(builder, help_widget, popover):
         builder.get_object(popover).set_visible(True)
 
     help = builder.get_object(help_widget)
-    help.set_accessible_role(Gtk.AccessibleRole.BUTTON)
     click_handler = Gtk.GestureClick.new()
     click_handler.connect("released", on_activate)
     help.add_controller(click_handler)

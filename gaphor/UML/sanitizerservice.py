@@ -16,6 +16,7 @@ from gaphor.core.modeling.event import (
 from gaphor.diagram.deletable import deletable
 from gaphor.event import Notification
 from gaphor.i18n import gettext
+from gaphor.settings import settings
 from gaphor.transaction import TransactionBegin, TransactionCommit, TransactionRollback
 from gaphor.UML.general.comment import CommentLineItem
 
@@ -89,7 +90,7 @@ class SanitizerService(Service):
         `item`'s subject or the deleted item was the only item currently
         linked."""
         if (
-            not self.properties.get("remove-unused-elements", True)
+            not settings.remove_unused_elements
             or event.property is not Presentation.subject  # type: ignore[misc]
         ):
             return

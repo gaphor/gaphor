@@ -2,75 +2,62 @@ from __future__ import annotations
 
 from gi.repository import Gdk, Gio, GLib, GObject, Gtk
 
-from gaphor import UML
-from gaphor.abc import ActionProvider
+from gaphor.abc import ActionProvider, TreeItem, TreeModel
 from gaphor.action import action
 from gaphor.core import event_handler
-from gaphor.core.modeling import (
-    Base,
-    DerivedAdded,
-    DerivedDeleted,
-    DerivedSet,
-    Diagram,
-    ElementCreated,
-    ElementDeleted,
-    ElementUpdated,
-    ModelFlushed,
-    ModelReady,
-)
+from gaphor.core.modeling import Base, Diagram
 from gaphor.diagram.deletable import deletable
 from gaphor.diagram.diagramtoolbox import DiagramType
 from gaphor.diagram.event import DiagramOpened, DiagramSelectionChanged
-from gaphor.diagram.group import change_owner
+from gaphor.diagram.group import Root, RootType, change_owner, owner
 from gaphor.diagram.tools.dnd import ElementDragData
 from gaphor.event import Notification
-from gaphor.i18n import gettext, translated_ui_string
+from gaphor.i18n import gettext
+from gaphor.services.modelinglanguage import ModelingLanguageChanged
 from gaphor.transaction import Transaction
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.actiongroup import create_action_group
-from gaphor.ui.event import (
-    ElementOpened,
-    ModelSelectionChanged,
-)
-from gaphor.ui.treemodel import (
-    RelationshipItem,
-    Root,
-    RootType,
-    TreeItem,
-    TreeModel,
-    owner,
-    tree_item_sort,
-)
+from gaphor.ui.event import ElementOpened, ModelSelectionChanged
 from gaphor.ui.treesearch import search, sorted_tree_walker
 
 START_EDIT_DELAY = 100  # ms
 
 
 class ModelBrowser(UIComponent, ActionProvider):
-    def __init__(self, event_manager, element_factory, modeling_language):
+    def __init__(
+        self, event_manager, component_registry, element_factory, modeling_language
+    ):
         self.event_manager = event_manager
+        self.component_registry = component_registry
         self.element_factory = element_factory
         self.modeling_language = modeling_language
-        self.model = TreeModel()
+        self.model: TreeModel | None = None
         self.search_bar = None
         self._selection_changed_id = 0
+        self.sorter = None
+        self.selection = None
+        self.tree_view = None
+        self.top_level = None
 
     def open(self):
-        self.event_manager.subscribe(self.on_element_created)
-        self.event_manager.subscribe(self.on_element_deleted)
-        self.event_manager.subscribe(self.on_owner_changed)
-        self.event_manager.subscribe(self.on_owned_element_changed)
-        self.event_manager.subscribe(self.on_attribute_changed)
-        self.event_manager.subscribe(self.on_model_ready)
         self.event_manager.subscribe(self.on_diagram_selection_changed)
+        self.event_manager.subscribe(self.on_modeling_language_changed)
+
+        model_type = self.modeling_language.model_browser_model
+        model = self.component_registry.partial(model_type)(
+            on_select=self._on_select, on_sync=self._on_sync
+        )
+        self.model = model
 
         tree_model = Gtk.TreeListModel.new(
-            self.model.root,
+            model.root,
             passthrough=False,
             autoexpand=False,
-            create_func=self.model.child_model,
-            user_data=None,
+            create_func=model.child_model,
         )
+
+        def tree_item_sort(a, b, *user_data):
+            return model.tree_item_sort(a, b)
 
         self.sorter = Gtk.CustomSorter.new(tree_item_sort)
         tree_sorter = Gtk.TreeListRowSorter.new(self.sorter)
@@ -84,6 +71,7 @@ class ModelBrowser(UIComponent, ActionProvider):
             self.selection,
             self.event_manager,
             self.modeling_language,
+            model.template,
         )
         self.tree_view = Gtk.ListView.new(self.selection, factory)
         self.tree_view.set_vexpand(True)
@@ -97,7 +85,7 @@ class ModelBrowser(UIComponent, ActionProvider):
         )
 
         def list_view_activate(list_view, position):
-            if element := self.selection.get_item(position).get_item().element:
+            if element := self.selection.get_item(position).get_item().element:  # type: ignore[union-attr]
                 self.open_element(element)
 
         self.tree_view.connect("activate", list_view_activate)
@@ -123,25 +111,32 @@ class ModelBrowser(UIComponent, ActionProvider):
         box = Gtk.Box.new(Gtk.Orientation.VERTICAL, 0)
         box.append(self.search_bar)
         box.append(scrolled_window)
-
-        self.on_model_ready()
+        self.top_level = box
 
         return box
 
     def close(self):
-        self.event_manager.unsubscribe(self.on_element_created)
-        self.event_manager.unsubscribe(self.on_element_deleted)
-        self.event_manager.unsubscribe(self.on_owner_changed)
-        self.event_manager.unsubscribe(self.on_owned_element_changed)
-        self.event_manager.unsubscribe(self.on_attribute_changed)
-        self.event_manager.unsubscribe(self.on_model_ready)
         self.event_manager.unsubscribe(self.on_diagram_selection_changed)
+        self.event_manager.unsubscribe(self.on_modeling_language_changed)
+        if self.model:
+            self.model.shutdown()
+        self.model = None
+        self.search_bar = None
+        self._selection_changed_id = 0
+        self.sorter = None
+        self.selection = None
+        self.tree_view = None
+        self.top_level = None
 
     def select_element(self, element: Base) -> int | None:
-        return select_element(self.tree_view, element)
+        assert self.model
+        return select_element(self.model, self.tree_view, element)
 
     def select_element_quietly(self, element):
         """Select element, but do not trigger a ModelSelectionChanged event."""
+        if not self.selection:
+            return
+
         self.selection.handler_block(self._selection_changed_id)
         try:
             self.select_element(element)
@@ -163,6 +158,13 @@ class ModelBrowser(UIComponent, ActionProvider):
         else:
             self.event_manager.handle(ElementOpened(element))
 
+    def _on_select(self, element):
+        self.select_element_quietly(element)
+
+    def _on_sync(self):
+        if self.sorter:
+            self.sorter.changed(Gtk.SorterChange.DIFFERENT)
+
     @action(name="tree-view.open")
     def tree_view_open_selected(self):
         element = self.get_selected_element()
@@ -176,7 +178,7 @@ class ModelBrowser(UIComponent, ActionProvider):
     @action(name="tree-view.rename", shortcut="F2")
     def tree_view_rename_selected(self):
         if row_item := get_first_selected_item(self.selection):
-            tree_item: TreeItem = row_item.get_item()
+            tree_item = row_item.get_item()
             GLib.timeout_add(START_EDIT_DELAY, tree_item.start_editing)
 
     def _diagram_type_or(self, id: str, default_diagram: DiagramType) -> DiagramType:
@@ -188,8 +190,6 @@ class ModelBrowser(UIComponent, ActionProvider):
     @action(name="win.create-diagram")
     def tree_view_create_diagram(self, diagram_kind: str):
         element: Base | RootType | None = self.get_selected_element()
-        while isinstance(element, Base) and not isinstance(element, UML.NamedElement):
-            element = owner(element)
 
         with Transaction(self.event_manager):
             diagram_type = self._diagram_type_or(
@@ -228,19 +228,6 @@ class ModelBrowser(UIComponent, ActionProvider):
             self.select_element(element)
             self.tree_view_rename_selected()
 
-    @action(name="tree-view.create-package")
-    def tree_view_create_package(self):
-        element = self.get_selected_element()
-        with Transaction(self.event_manager):
-            package = self.element_factory.create(UML.Package)
-            if isinstance(element, UML.Package):
-                package.package = element
-                package.name = gettext("{name} package").format(name=element.name)
-            else:
-                package.name = gettext("New package")
-        self.select_element(package)
-        self.tree_view_rename_selected()
-
     @action(name="tree-view.delete", shortcut="Delete")
     def tree_view_delete(self):
         with Transaction(self.event_manager):
@@ -258,51 +245,26 @@ class ModelBrowser(UIComponent, ActionProvider):
         if element := self.element_factory.lookup(id):
             self.select_element(element)
 
-    @event_handler(ElementCreated)
-    def on_element_created(self, event: ElementCreated):
-        self.model.add_element(event.element)
-
-    @event_handler(ElementDeleted)
-    def on_element_deleted(self, event: ElementDeleted):
-        self.model.remove_element(event.element)
-
-    @event_handler(DerivedAdded, DerivedDeleted)
-    def on_owned_element_changed(self, event):
-        """Ensure we update the node once owned elements change."""
-        if event.property in (UML.Element.ownedElement, UML.Namespace.member):
-            self.model.notify_child_model(event.element)
-
-    @event_handler(DerivedSet)
-    def on_owner_changed(self, event: DerivedSet):
-        # Should check on ownedElement as well, since it may not have been updated
-        # before this thing triggers
-        if (
-            event.property in (UML.Element.owner, UML.NamedElement.memberNamespace)
-        ) and owner(event.element):
-            element = event.element
-            self.model.remove_element(element)
-            self.model.add_element(element)
-            self.select_element_quietly(element)
-
-    @event_handler(ElementUpdated)
-    def on_attribute_changed(self, event: ElementUpdated):
-        self.model.sync(event.element)
-        self.sorter.changed(Gtk.SorterChange.DIFFERENT)
-
-    @event_handler(ModelReady, ModelFlushed)
-    def on_model_ready(self, _event=None):
-        model = self.model
-        model.clear()
-
-        for element in self.element_factory.select(owner):
-            model.add_element(element)
-
     @event_handler(DiagramSelectionChanged)
     def on_diagram_selection_changed(self, event):
         if not event.focused_item:
             return
         if element := event.focused_item.subject:
             self.select_element_quietly(element)
+
+    @event_handler(ModelingLanguageChanged)
+    def on_modeling_language_changed(self, event: ModelingLanguageChanged) -> None:
+        """Reconfigures the model browser based on the modeling language selected."""
+        if (not self.top_level) or type(
+            self.model
+        ) is self.modeling_language.model_browser_model:
+            return
+
+        bin = self.top_level.get_parent()
+        self.close()
+        widget = self.open()
+        if bin:
+            bin.set_child(widget)
 
 
 class SearchEngine:
@@ -321,7 +283,7 @@ class SearchEngine:
                 from_current=True,
             ),
         ):
-            select_element(self.tree_view, next_item.element)
+            select_element(self.model, self.tree_view, next_item.element)
 
     def search_next(self, search_text):
         selected_item = get_first_selected_item(self.selection)
@@ -333,7 +295,7 @@ class SearchEngine:
                 from_current=False,
             ),
         ):
-            select_element(self.tree_view, next_item.element)
+            select_element(self.model, self.tree_view, next_item.element)
 
 
 def get_selected_elements(selection: Gtk.SelectionModel) -> list[Base]:
@@ -352,18 +314,18 @@ def get_first_selected_item(selection):
 
 
 def select_element(
-    tree_view: Gtk.ListView, element: Base, unselect_rest=True
+    model: TreeModel, tree_view: Gtk.ListView, element: Base, unselect_rest=True
 ) -> int | None:
     def expand_up_to_element(element, expand=False) -> int | None:
         if element in (Root, None):
             return 0
         if (n := expand_up_to_element(owner(element), expand=True)) is None:
             return None
-        is_relationship = isinstance(element, UML.Relationship)
         while row := selection.get_item(n):
-            if is_relationship and isinstance(row.get_item(), RelationshipItem):
+            item: TreeItem = row.get_item()
+            if model.should_expand(item, element):
                 row.set_expanded(True)
-            elif row.get_item().element is element:
+            elif item.element is element:
                 if expand:
                     row.set_expanded(True)
                 return n
@@ -445,14 +407,14 @@ def toplevel_popup_model(modeling_language) -> Gio.Menu:
 
 
 def list_item_factory_setup(
-    _factory, list_item, selection, event_manager, modeling_language
+    _factory, list_item, selection, event_manager, modeling_language, template
 ):
     builder = Gtk.Builder()
     builder.set_current_object(list_item)
     builder.extend_with_template(
         list_item,
         type(list_item).__gtype__,
-        translated_ui_string("gaphor.ui", "treeitem.ui"),
+        template,
         -1,
     )
     row = builder.get_object("row")
@@ -615,9 +577,10 @@ def popup_model(element, modeling_language):
     model.append_section(None, part)
 
     part = Gio.Menu.new()
-    part.append_submenu(
-        gettext("New _Diagram"), create_diagram_types_model(modeling_language, element)
-    )
+    diagram_submenu = create_diagram_types_model(modeling_language, element)
+    if diagram_submenu.get_n_items():
+        part.append_submenu(gettext("New _Diagram"), diagram_submenu)
+
     if any(
         isinstance(element, element_type.allowed_owning_elements)
         for element_type in modeling_language.element_types
@@ -626,8 +589,6 @@ def popup_model(element, modeling_language):
             gettext("New _Element"),
             create_element_types_model(modeling_language, element),
         )
-    if isinstance(element, UML.Package):
-        part.append(gettext("New _Package"), "tree-view.create-package")
     model.append_section(None, part)
 
     part = Gio.Menu.new()
@@ -670,13 +631,15 @@ def create_diagram_types_model(modeling_language, element=None):
             )
             part.append_item(menu_item)
 
-    model.append_section(None, part)
+    if part.get_n_items():
+        model.append_section(None, part)
 
-    part = Gio.Menu.new()
-    menu_item = Gio.MenuItem.new(gettext("Generic Diagram"), "win.create-diagram")
-    menu_item.set_attribute_value("target", GLib.Variant.new_string(""))
-    part.append_item(menu_item)
-    model.append_section(None, part)
+    if not isinstance(element, Diagram):
+        part = Gio.Menu.new()
+        menu_item = Gio.MenuItem.new(gettext("Generic Diagram"), "win.create-diagram")
+        menu_item.set_attribute_value("target", GLib.Variant.new_string(""))
+        part.append_item(menu_item)
+        model.append_section(None, part)
 
     return model
 
