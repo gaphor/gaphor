@@ -87,14 +87,14 @@ root = type(None)
 sysml_diagram_types: DiagramTypes = (
     SysMLDiagramType(
         "bdd",
-        i18nize("New Block Definition Diagram"),
+        i18nize("Block Definition Diagram"),
         (blocks,),
         (Block, Package, ConstraintBlock, Activity),
         (DiagramDefault(root, Package, i18nize("New Package")),),
     ),
     SysMLDiagramType(
         "ibd",
-        i18nize("New Internal Block Diagram"),
+        i18nize("Internal Block Diagram"),
         (internal_blocks,),
         (
             Block,
@@ -107,14 +107,14 @@ sysml_diagram_types: DiagramTypes = (
     ),
     SysMLDiagramType(
         "pkg",
-        i18nize("New Package Diagram"),
+        i18nize("Package Diagram"),
         (blocks,),
         (Package,),  # model, modelLibrary, profile
         (DiagramDefault(root, Package, i18nize("New Package")),),
     ),
     SysMLDiagramType(
         "req",
-        i18nize("New Requirement Diagram"),
+        i18nize("Requirement Diagram"),
         (requirements,),
         (
             Package,
@@ -126,7 +126,7 @@ sysml_diagram_types: DiagramTypes = (
     ),
     SysMLDiagramType(
         "act",
-        i18nize("New Activity Diagram"),
+        i18nize("Activity Diagram"),
         (actions,),
         (Activity,),
         (
@@ -136,7 +136,7 @@ sysml_diagram_types: DiagramTypes = (
     ),
     SysMLDiagramType(
         "sd",
-        i18nize("New Sequence Diagram"),
+        i18nize("Sequence Diagram"),
         (interactions,),
         (Interaction,),
         (
@@ -146,7 +146,7 @@ sysml_diagram_types: DiagramTypes = (
     ),
     SysMLDiagramType(
         "stm",
-        i18nize("New State Machine Diagram"),
+        i18nize("State Machine Diagram"),
         (states,),
         (StateMachine,),
         (
@@ -156,7 +156,7 @@ sysml_diagram_types: DiagramTypes = (
     ),
     SysMLDiagramType(
         "uc",
-        i18nize("New Use Case Diagram"),
+        i18nize("Use Case Diagram"),
         (use_cases,),
         (
             Package,
@@ -169,22 +169,18 @@ sysml_diagram_types: DiagramTypes = (
 )
 
 sysml_element_types = (
-    ElementCreateInfo("package", i18nize("New Package"), Package, (Package,)),
-    ElementCreateInfo("activity", i18nize("New Activity"), Activity, (Package,)),
-    ElementCreateInfo("actor", i18nize("New Actor"), Actor, (Package,)),
-    ElementCreateInfo("block", i18nize("New Block"), Block, (Package,)),
+    ElementCreateInfo("package", i18nize("Package"), Package, (Package,)),
+    ElementCreateInfo("activity", i18nize("Activity"), Activity, (Package,)),
+    ElementCreateInfo("actor", i18nize("Actor"), Actor, (Package,)),
+    ElementCreateInfo("block", i18nize("Block"), Block, (Package,)),
+    ElementCreateInfo("enumeration", i18nize("Enumeration"), Enumeration, (Package,)),
+    ElementCreateInfo("interaction", i18nize("Interaction"), Interaction, (Package,)),
     ElementCreateInfo(
-        "enumeration", i18nize("New Enumeration"), Enumeration, (Package,)
-    ),
-    ElementCreateInfo(
-        "interaction", i18nize("New Interaction"), Interaction, (Package,)
-    ),
-    ElementCreateInfo(
-        "interfaceblock", i18nize("New Interface Block"), InterfaceBlock, (Package,)
+        "interfaceblock", i18nize("Interface Block"), InterfaceBlock, (Package,)
     ),
     ElementCreateInfo(
         "requirement",
-        i18nize("New Requirement"),
+        i18nize("Requirement"),
         Requirement,
         (
             Package,
@@ -192,8 +188,8 @@ sysml_element_types = (
         ),
     ),
     ElementCreateInfo(
-        "statemachine", i18nize("New State Machine"), StateMachine, (Package,)
+        "statemachine", i18nize("State Machine"), StateMachine, (Package,)
     ),
-    ElementCreateInfo("usecase", i18nize("New Use Case"), UseCase, (Package,)),
-    ElementCreateInfo("valuetype", i18nize("New Value Type"), ValueType, (Package,)),
+    ElementCreateInfo("usecase", i18nize("Use Case"), UseCase, (Package,)),
+    ElementCreateInfo("valuetype", i18nize("Value Type"), ValueType, (Package,)),
 )

@@ -20,14 +20,14 @@ raaml_toolbox_actions: ToolboxDefinition = (
 )
 
 raaml_diagram_types: DiagramTypes = (
-    DiagramType("fta", i18nize("New FTA Diagram"), (fta,)),
-    DiagramType("stpa", i18nize("New STPA Diagram"), (stpa,)),
+    DiagramType("fta", i18nize("FTA Diagram"), (fta,)),
+    DiagramType("stpa", i18nize("STPA Diagram"), (stpa,)),
 )
 
 raaml_element_types = (
-    ElementCreateInfo("package", i18nize("New Package"), Package, (Package,)),
-    ElementCreateInfo("topevent", i18nize("New Top Event"), TopEvent, (Package,)),
-    ElementCreateInfo("loss", i18nize("New Loss"), Loss, (Package,)),
-    ElementCreateInfo("hazard", i18nize("New Hazard"), Hazard, (Package,)),
-    ElementCreateInfo("situation", i18nize("New Situation"), Situation, (Package,)),
+    ElementCreateInfo("package", i18nize("Package"), Package, (Package,)),
+    ElementCreateInfo("topevent", i18nize("Top Event"), TopEvent, (Package,)),
+    ElementCreateInfo("loss", i18nize("Loss"), Loss, (Package,)),
+    ElementCreateInfo("hazard", i18nize("Hazard"), Hazard, (Package,)),
+    ElementCreateInfo("situation", i18nize("Situation"), Situation, (Package,)),
 )

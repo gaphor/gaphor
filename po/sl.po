@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-11-27 15:43-0500\n"
+"POT-Creation-Date: 2024-12-03 09:12+0100\n"
 "PO-Revision-Date: 2022-10-17 00:00+0000\n"
 "Last-Translator: perovsek <jaka@kompot.si>\n"
 "Language: sl\n"
@@ -43,21 +43,21 @@ msgstr "Nov programski sistem"
 msgid "New Container"
 msgstr "Nova posoda"
 
-#: gaphor/C4Model/toolbox.py:55 gaphor/templates/c4model-example.gaphor
+#: gaphor/C4Model/toolbox.py:55 gaphor/C4Model/toolbox.py:172
+#: gaphor/templates/c4model-example.gaphor
 msgid "Database"
 msgstr "Podatkovna baza"
 
-#: gaphor/C4Model/toolbox.py:56 gaphor/C4Model/toolbox.py:177
+#: gaphor/C4Model/toolbox.py:56
 msgid "New Database"
 msgstr "Nova podatkovna baza"
 
-#: gaphor/C4Model/toolbox.py:63 gaphor/C4Model/toolbox.py:167
-#: gaphor/UML/toolbox.py:67
+#: gaphor/C4Model/toolbox.py:63
 msgid "New Component"
 msgstr "Nova komponenta"
 
 #: gaphor/C4Model/diagramitems/person.py:24 gaphor/C4Model/toolbox.py:71
-#: gaphor/C4Model/toolbox.py:77
+#: gaphor/C4Model/toolbox.py:77 gaphor/C4Model/toolbox.py:171
 msgid "Person"
 msgstr "Oseba"
 
@@ -73,7 +73,8 @@ msgstr ""
 msgid "Container: Database"
 msgstr ""
 
-#: gaphor/C4Model/toolbox.py:119 gaphor/UML/classes/classestoolbox.py:63
+#: gaphor/C4Model/toolbox.py:119 gaphor/C4Model/toolbox.py:165
+#: gaphor/UML/classes/classestoolbox.py:63 gaphor/UML/toolbox.py:67
 msgid "Component"
 msgstr "Komponenta"
 
@@ -84,102 +85,106 @@ msgid "Dependency"
 msgstr "Odvisnost"
 
 #: gaphor/C4Model/toolbox.py:151
-msgid "New C4 Diagram"
+#, fuzzy
+msgid "C4 Diagram"
 msgstr "Nov C4 diagram"
 
 #: gaphor/C4Model/toolbox.py:152 gaphor/UML/toolbox.py:50
-msgid "New Class Diagram"
-msgstr ""
+#, fuzzy
+msgid "Class Diagram"
+msgstr "Nov C4 diagram"
 
 #: gaphor/C4Model/toolbox.py:153 gaphor/SysML/toolbox.py:129
 #: gaphor/UML/toolbox.py:54
-msgid "New Activity Diagram"
-msgstr ""
+#, fuzzy
+msgid "Activity Diagram"
+msgstr "Nov C4 diagram"
 
 #: gaphor/C4Model/toolbox.py:154 gaphor/SysML/toolbox.py:139
 #: gaphor/UML/toolbox.py:55
-msgid "New Sequence Diagram"
-msgstr ""
+#, fuzzy
+msgid "Sequence Diagram"
+msgstr "Nov C4 diagram"
 
 #: gaphor/C4Model/toolbox.py:155 gaphor/SysML/toolbox.py:149
 #: gaphor/UML/toolbox.py:57
-msgid "New State Machine Diagram"
-msgstr ""
-
-#: gaphor/C4Model/toolbox.py:159 gaphor/SysML/toolbox.py:133
-#: gaphor/SysML/toolbox.py:134 gaphor/SysML/toolbox.py:172
-#: gaphor/UML/toolbox.py:63
-msgid "New Activity"
-msgstr ""
-
-#: gaphor/C4Model/toolbox.py:161 gaphor/SysML/toolbox.py:143
-#: gaphor/SysML/toolbox.py:144 gaphor/SysML/toolbox.py:179
-#: gaphor/UML/toolbox.py:80
 #, fuzzy
-msgid "New Interaction"
-msgstr "Nevarno vodeno delovanje"
-
-#: gaphor/C4Model/toolbox.py:164 gaphor/SysML/toolbox.py:153
-#: gaphor/SysML/toolbox.py:154 gaphor/SysML/toolbox.py:194
-#: gaphor/UML/toolbox.py:86
-#, fuzzy
-msgid "New State Machine"
+msgid "State Machine Diagram"
 msgstr "Nova posoda"
 
-#: gaphor/C4Model/toolbox.py:166 gaphor/UML/toolbox.py:66
-msgid "New Class"
+#: gaphor/C4Model/toolbox.py:159 gaphor/SysML/toolbox.py:172
+#: gaphor/UML/actions/actionstoolbox.py:41
+#: gaphor/UML/actions/actionstoolbox.py:68 gaphor/UML/toolbox.py:63
+#: gaphor/templates/sysml-example.gaphor gaphor/templates/uml-example.gaphor
+msgid "Activity"
 msgstr ""
 
-#: gaphor/C4Model/toolbox.py:168 gaphor/UML/toolbox.py:68
+#: gaphor/C4Model/toolbox.py:160 gaphor/SysML/toolbox.py:176
+#: gaphor/UML/interactions/interactionstoolbox.py:36
+#: gaphor/UML/interactions/interactionstoolbox.py:57 gaphor/UML/toolbox.py:77
+#: gaphor/templates/sysml-example.gaphor gaphor/templates/uml-example.gaphor
+#: gaphor/templates/uml.gaphor
+msgid "Interaction"
+msgstr ""
+
+#: gaphor/C4Model/toolbox.py:162 gaphor/SysML/toolbox.py:190
+#: gaphor/UML/states/statestoolbox.py:46 gaphor/UML/states/statestoolbox.py:63
+#: gaphor/UML/toolbox.py:82 gaphor/templates/sysml-example.gaphor
+msgid "State Machine"
+msgstr ""
+
+#: gaphor/C4Model/toolbox.py:164 gaphor/UML/classes/classestoolbox.py:29
+#: gaphor/UML/profiles/profilestoolbox.py:14 gaphor/UML/toolbox.py:66
+msgid "Class"
+msgstr ""
+
+#: gaphor/C4Model/toolbox.py:166 gaphor/UML/toolbox.py:68
 #, fuzzy
-msgid "New Data Type"
+msgid "Data Type"
 msgstr "Nova podatkovna baza"
 
-#: gaphor/C4Model/toolbox.py:170 gaphor/SysML/toolbox.py:176
-#: gaphor/UML/toolbox.py:71
-#, fuzzy
-msgid "New Enumeration"
-msgstr "Posplošitev"
-
-#: gaphor/C4Model/toolbox.py:173
-msgid "New Primitive Type"
+#: gaphor/C4Model/toolbox.py:167 gaphor/SysML/blocks/blockstoolbox.py:118
+#: gaphor/SysML/toolbox.py:175 gaphor/UML/classes/classestoolbox.py:154
+#: gaphor/UML/toolbox.py:70
+msgid "Enumeration"
 msgstr ""
 
-#: gaphor/C4Model/toolbox.py:175
-#, fuzzy
-msgid "New Person"
-msgstr "Oseba"
+#: gaphor/C4Model/toolbox.py:169
+msgid "Primitive Type"
+msgstr ""
 
 #: gaphor/RAAML/modelinglanguage.py:24 gaphor/ui/greeter.py:48
 msgid "RAAML"
 msgstr "RAAML"
 
 #: gaphor/RAAML/toolbox.py:23
-msgid "New FTA Diagram"
+#, fuzzy
+msgid "FTA Diagram"
 msgstr "Nov FTA diagram"
 
 #: gaphor/RAAML/toolbox.py:24
-msgid "New STPA Diagram"
+#, fuzzy
+msgid "STPA Diagram"
 msgstr "Nov STPA diagram"
 
-#: gaphor/RAAML/toolbox.py:28
-#, fuzzy
-msgid "New Top Event"
-msgstr "Nova komponenta"
+#: gaphor/RAAML/fta/ftatoolbox.py:195 gaphor/RAAML/fta/ftatoolbox.py:201
+#: gaphor/RAAML/fta/topevent.py:27 gaphor/RAAML/toolbox.py:28
+msgid "Top Event"
+msgstr ""
 
-#: gaphor/RAAML/toolbox.py:29
-#, fuzzy
-msgid "New Loss"
+#: gaphor/RAAML/stpa/stpatoolbox.py:17 gaphor/RAAML/stpa/stpatoolbox.py:43
+#: gaphor/RAAML/toolbox.py:29 gaphor/templates/raaml-example.gaphor
+msgid "Loss"
 msgstr "Izguba"
 
-#: gaphor/RAAML/toolbox.py:30
-#, fuzzy
-msgid "New Hazard"
+#: gaphor/RAAML/stpa/stpatoolbox.py:22 gaphor/RAAML/stpa/stpatoolbox.py:52
+#: gaphor/RAAML/toolbox.py:30 gaphor/templates/raaml-example.gaphor
+msgid "Hazard"
 msgstr "Nevarnost"
 
-#: gaphor/RAAML/toolbox.py:31
-#, fuzzy
-msgid "New Situation"
+#: gaphor/RAAML/stpa/stpatoolbox.py:61 gaphor/RAAML/toolbox.py:31
+#: gaphor/SysML/blocks/block.py:57 gaphor/SysML/blocks/interfaceblock.py:56
+msgid "Situation"
 msgstr "Situacija"
 
 #: gaphor/RAAML/fta/andgate.py:34 gaphor/RAAML/fta/ftatoolbox.py:24
@@ -277,11 +282,6 @@ msgstr ""
 msgid "Zero Event"
 msgstr ""
 
-#: gaphor/RAAML/fta/ftatoolbox.py:195 gaphor/RAAML/fta/ftatoolbox.py:201
-#: gaphor/RAAML/fta/topevent.py:27
-msgid "Top Event"
-msgstr ""
-
 #: gaphor/RAAML/fta/ftatoolbox.py:206 gaphor/RAAML/fta/ftatoolbox.py:213
 #: gaphor/RAAML/fta/intermediateevent.py:28
 msgid "Intermediate Event"
@@ -304,16 +304,6 @@ msgstr ""
 msgid "Operational Situation"
 msgstr ""
 
-#: gaphor/RAAML/stpa/stpatoolbox.py:17 gaphor/RAAML/stpa/stpatoolbox.py:43
-#: gaphor/templates/raaml-example.gaphor
-msgid "Loss"
-msgstr "Izguba"
-
-#: gaphor/RAAML/stpa/stpatoolbox.py:22 gaphor/RAAML/stpa/stpatoolbox.py:52
-#: gaphor/templates/raaml-example.gaphor
-msgid "Hazard"
-msgstr "Nevarnost"
-
 #: gaphor/RAAML/stpa/stpatoolbox.py:27 gaphor/RAAML/stpa/stpatoolbox.py:116
 #: gaphor/templates/raaml-example.gaphor
 msgid "Abstract Operational Situation"
@@ -323,11 +313,6 @@ msgstr ""
 #: gaphor/UML/classes/classestoolbox.py:127
 msgid "Generalization"
 msgstr "Posplošitev"
-
-#: gaphor/RAAML/stpa/stpatoolbox.py:61 gaphor/SysML/blocks/block.py:57
-#: gaphor/SysML/blocks/interfaceblock.py:56
-msgid "Situation"
-msgstr "Situacija"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:72
 msgid "Control Structure"
@@ -451,7 +436,7 @@ msgid "Proxy Port"
 msgstr ""
 
 #: gaphor/SysML/toolbox.py:90
-msgid "New Block Definition Diagram"
+msgid "Block Definition Diagram"
 msgstr ""
 
 #: gaphor/SysML/toolbox.py:93 gaphor/SysML/toolbox.py:113
@@ -461,47 +446,71 @@ msgid "New Package"
 msgstr "Nova podatkovna baza"
 
 #: gaphor/SysML/toolbox.py:97
-msgid "New Internal Block Diagram"
-msgstr ""
+#, fuzzy
+msgid "Internal Block Diagram"
+msgstr "Nov C4 diagram"
 
 #: gaphor/SysML/toolbox.py:104 gaphor/SysML/toolbox.py:105
-#: gaphor/SysML/toolbox.py:174
 msgid "New Block"
 msgstr ""
 
 #: gaphor/SysML/toolbox.py:110 gaphor/UML/toolbox.py:51
-msgid "New Package Diagram"
-msgstr ""
+#, fuzzy
+msgid "Package Diagram"
+msgstr "Nov C4 diagram"
 
 #: gaphor/SysML/toolbox.py:117
-msgid "New Requirement Diagram"
-msgstr ""
-
-#: gaphor/SysML/toolbox.py:159 gaphor/UML/toolbox.py:58
-msgid "New Use Case Diagram"
-msgstr ""
-
-#: gaphor/SysML/toolbox.py:173 gaphor/UML/toolbox.py:64
 #, fuzzy
-msgid "New Actor"
-msgstr "Nova posoda"
-
-#: gaphor/SysML/toolbox.py:182
-msgid "New Interface Block"
-msgstr ""
-
-#: gaphor/SysML/toolbox.py:186
-#, fuzzy
-msgid "New Requirement"
+msgid "Requirement Diagram"
 msgstr "Sistemske zahteve"
 
-#: gaphor/SysML/toolbox.py:196 gaphor/UML/toolbox.py:89
-msgid "New Use Case"
+#: gaphor/SysML/toolbox.py:133 gaphor/SysML/toolbox.py:134
+msgid "New Activity"
 msgstr ""
 
-#: gaphor/SysML/toolbox.py:197
-msgid "New Value Type"
+#: gaphor/SysML/toolbox.py:143 gaphor/SysML/toolbox.py:144
+#, fuzzy
+msgid "New Interaction"
+msgstr "Nevarno vodeno delovanje"
+
+#: gaphor/SysML/toolbox.py:153 gaphor/SysML/toolbox.py:154
+#, fuzzy
+msgid "New State Machine"
+msgstr "Nova posoda"
+
+#: gaphor/SysML/toolbox.py:159 gaphor/UML/toolbox.py:58
+#, fuzzy
+msgid "Use Case Diagram"
+msgstr "Nov C4 diagram"
+
+#: gaphor/SysML/toolbox.py:173 gaphor/UML/toolbox.py:64
+#: gaphor/UML/usecases/usecasetoolbox.py:28 gaphor/templates/uml-example.gaphor
+msgid "Actor"
 msgstr ""
+
+#: gaphor/SysML/blocks/blockstoolbox.py:29 gaphor/SysML/toolbox.py:174
+msgid "Block"
+msgstr ""
+
+#: gaphor/SysML/toolbox.py:178
+#, fuzzy
+msgid "Interface Block"
+msgstr "Nova posoda"
+
+#: gaphor/SysML/requirements/requirementstoolbox.py:17
+#: gaphor/SysML/toolbox.py:182
+msgid "Requirement"
+msgstr ""
+
+#: gaphor/SysML/toolbox.py:192 gaphor/UML/toolbox.py:85
+#, fuzzy
+msgid "Use Case"
+msgstr "Pokaži vrednosti"
+
+#: gaphor/SysML/toolbox.py:193
+#, fuzzy
+msgid "Value Type"
+msgstr "Pokaži vrednosti"
 
 #: gaphor/SysML/allocations/allocationstoolbox.py:6
 #, fuzzy
@@ -551,10 +560,6 @@ msgstr ""
 msgid "Blocks"
 msgstr ""
 
-#: gaphor/SysML/blocks/blockstoolbox.py:29
-msgid "Block"
-msgstr ""
-
 #: gaphor/SysML/blocks/blockstoolbox.py:39
 msgid "InterfaceBlock"
 msgstr ""
@@ -588,11 +593,6 @@ msgstr "Situacija"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:107
 msgid "ValueType"
-msgstr ""
-
-#: gaphor/SysML/blocks/blockstoolbox.py:118
-#: gaphor/UML/classes/classestoolbox.py:154
-msgid "Enumeration"
 msgstr ""
 
 #: gaphor/SysML/blocks/blockstoolbox.py:130
@@ -635,10 +635,6 @@ msgstr ""
 #: gaphor/SysML/requirements/requirementstoolbox.py:13
 #: gaphor/templates/sysml-example.gaphor gaphor/templates/sysml.gaphor
 msgid "Requirements"
-msgstr ""
-
-#: gaphor/SysML/requirements/requirementstoolbox.py:17
-msgid "Requirement"
 msgstr ""
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:29
@@ -690,52 +686,52 @@ msgid ""
 msgstr ""
 
 #: gaphor/UML/toolbox.py:52
-msgid "New Component Diagram"
-msgstr ""
+#, fuzzy
+msgid "Component Diagram"
+msgstr "Nov C4 diagram"
 
 #: gaphor/UML/toolbox.py:53
-msgid "New Deployment Diagram"
-msgstr ""
+#, fuzzy
+msgid "Deployment Diagram"
+msgstr "Nov C4 diagram"
 
 #: gaphor/UML/toolbox.py:56
-msgid "New Communication Diagram"
-msgstr ""
+#, fuzzy
+msgid "Communication Diagram"
+msgstr "Nov C4 diagram"
 
 #: gaphor/UML/toolbox.py:59
-msgid "New Profile Diagram"
+#, fuzzy
+msgid "Profile Diagram"
+msgstr "Nov C4 diagram"
+
+#: gaphor/UML/deployments/deploymentstoolbox.py:16 gaphor/UML/toolbox.py:65
+msgid "Artifact"
 msgstr ""
 
-#: gaphor/UML/toolbox.py:65
-msgid "New Artifact"
+#: gaphor/UML/deployments/deploymentstoolbox.py:40 gaphor/UML/toolbox.py:69
+msgid "Device"
 msgstr ""
 
-#: gaphor/UML/toolbox.py:69
-#, fuzzy
-msgid "New Device"
-msgstr "Nov model…"
-
-#: gaphor/UML/toolbox.py:75
-msgid "New Instance Specification"
+#: gaphor/UML/toolbox.py:73
+msgid "Instance Specification"
 msgstr ""
 
-#: gaphor/UML/toolbox.py:82
-#, fuzzy
-msgid "New Interface"
-msgstr "Nova posoda"
-
-#: gaphor/UML/toolbox.py:83
-#, fuzzy
-msgid "New Node"
-msgstr "Nov model…"
-
-#: gaphor/UML/toolbox.py:84
-msgid "New Profile"
+#: gaphor/UML/classes/classestoolbox.py:39 gaphor/UML/toolbox.py:78
+msgid "Interface"
 msgstr ""
 
-#: gaphor/UML/toolbox.py:88
-#, fuzzy
-msgid "New Stereotype"
-msgstr "Nov programski sistem"
+#: gaphor/UML/deployments/deploymentstoolbox.py:28 gaphor/UML/toolbox.py:79
+msgid "Node"
+msgstr ""
+
+#: gaphor/UML/profiles/profilestoolbox.py:22 gaphor/UML/toolbox.py:80
+msgid "Profile"
+msgstr ""
+
+#: gaphor/UML/profiles/profilestoolbox.py:44 gaphor/UML/toolbox.py:84
+msgid "Stereotype"
+msgstr ""
 
 #: gaphor/UML/actions/actionstoolbox.py:18
 #: gaphor/UML/interactions/interactionstoolbox.py:16
@@ -762,12 +758,6 @@ msgstr ""
 
 #: gaphor/UML/umlfmt.py:244
 msgid "include: {name}"
-msgstr ""
-
-#: gaphor/UML/actions/actionstoolbox.py:41
-#: gaphor/UML/actions/actionstoolbox.py:68
-#: gaphor/templates/sysml-example.gaphor gaphor/templates/uml-example.gaphor
-msgid "Activity"
 msgstr ""
 
 #: gaphor/UML/actions/actionstoolbox.py:49
@@ -1053,15 +1043,6 @@ msgstr "Oseba"
 msgid "Classes"
 msgstr ""
 
-#: gaphor/UML/classes/classestoolbox.py:29
-#: gaphor/UML/profiles/profilestoolbox.py:14
-msgid "Class"
-msgstr ""
-
-#: gaphor/UML/classes/classestoolbox.py:39
-msgid "Interface"
-msgstr ""
-
 #: gaphor/UML/classes/classestoolbox.py:135
 msgid "Interface Realization"
 msgstr ""
@@ -1107,15 +1088,15 @@ msgstr "Posplošitev"
 msgid "interface"
 msgstr ""
 
-#: gaphor/UML/classes/klass.py:49
+#: gaphor/UML/classes/klass.py:48
 msgid "stereotype"
 msgstr ""
 
-#: gaphor/UML/classes/klass.py:51
+#: gaphor/UML/classes/klass.py:50
 msgid "metaclass"
 msgstr ""
 
-#: gaphor/UML/classes/package.py:29
+#: gaphor/UML/classes/package.py:30
 msgid "profile"
 msgstr ""
 
@@ -1297,19 +1278,7 @@ msgstr ""
 msgid "Deployments"
 msgstr ""
 
-#: gaphor/UML/deployments/deploymentstoolbox.py:16
-msgid "Artifact"
-msgstr ""
-
-#: gaphor/UML/deployments/deploymentstoolbox.py:28
-msgid "Node"
-msgstr ""
-
-#: gaphor/UML/deployments/deploymentstoolbox.py:40
-msgid "Device"
-msgstr ""
-
-#: gaphor/UML/deployments/node.py:46
+#: gaphor/UML/deployments/node.py:47
 msgid "device"
 msgstr ""
 
@@ -1371,13 +1340,6 @@ msgstr "Modela ni možno shraniti v „{filename}“."
 
 #: gaphor/UML/interactions/interactionsconnect.py:76
 msgid "call()"
-msgstr ""
-
-#: gaphor/UML/interactions/interactionstoolbox.py:36
-#: gaphor/UML/interactions/interactionstoolbox.py:57
-#: gaphor/templates/sysml-example.gaphor gaphor/templates/uml-example.gaphor
-#: gaphor/templates/uml.gaphor
-msgid "Interaction"
 msgstr ""
 
 #: gaphor/UML/interactions/interactionstoolbox.py:53
@@ -1444,17 +1406,9 @@ msgstr ""
 msgid "Profiles"
 msgstr ""
 
-#: gaphor/UML/profiles/profilestoolbox.py:22
-msgid "Profile"
-msgstr ""
-
 #: gaphor/UML/profiles/profilestoolbox.py:34
 #: gaphor/UML/profiles/propertypages.ui:11
 msgid "Metaclass"
-msgstr ""
-
-#: gaphor/UML/profiles/profilestoolbox.py:44
-msgid "Stereotype"
 msgstr ""
 
 #: gaphor/UML/profiles/profilestoolbox.py:56
@@ -1509,11 +1463,6 @@ msgstr ""
 
 #: gaphor/UML/states/statestoolbox.py:16 gaphor/UML/states/statestoolbox.py:75
 msgid "State"
-msgstr ""
-
-#: gaphor/UML/states/statestoolbox.py:46 gaphor/UML/states/statestoolbox.py:63
-#: gaphor/templates/sysml-example.gaphor
-msgid "State Machine"
 msgstr ""
 
 #: gaphor/UML/states/statestoolbox.py:59
@@ -1584,10 +1533,6 @@ msgstr ""
 
 #: gaphor/UML/usecases/usecasetoolbox.py:16
 msgid "Use case"
-msgstr ""
-
-#: gaphor/UML/usecases/usecasetoolbox.py:28 gaphor/templates/uml-example.gaphor
-msgid "Actor"
 msgstr ""
 
 #: gaphor/UML/usecases/usecasetoolbox.py:47
@@ -1679,6 +1624,36 @@ msgstr ""
 #: gaphor/diagram/propertypages.ui:300 gaphor/ui/elementeditor.py:424
 #: gaphor/ui/elementeditor.ui:238
 msgid "No focused item."
+msgstr ""
+
+#: gaphor/diagram/propertypages.ui:322 gaphor/diagram/styleeditor.ui:5
+msgid "Style Editor"
+msgstr ""
+
+#: gaphor/diagram/propertypages.ui:331
+msgid "Open Style Editor"
+msgstr ""
+
+#: gaphor/diagram/styleeditor.ui:27
+msgid "Border Radius"
+msgstr ""
+
+#: gaphor/diagram/styleeditor.ui:51
+#, fuzzy
+msgid "Color"
+msgstr "Izguba"
+
+#: gaphor/diagram/styleeditor.ui:67
+msgid "Background Color"
+msgstr ""
+
+#: gaphor/diagram/styleeditor.ui:83
+#, fuzzy
+msgid "Text Color"
+msgstr "Izguba"
+
+#: gaphor/diagram/styleeditor.ui:96
+msgid "Add to Style Sheet"
 msgstr ""
 
 #: gaphor/diagram/tools/dnd.py:50
@@ -1865,13 +1840,13 @@ msgstr ""
 msgid "This model contains unsaved changes. The changes have been restored."
 msgstr ""
 
-#: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:62
+#: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:63
 #: gaphor/ui/mainwindow.py:273 gaphor/ui/mainwindow.py:278
 #: gaphor/ui/mainwindow.ui:124
 msgid "New model"
 msgstr ""
 
-#: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:65
+#: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:66
 msgid "New diagram"
 msgstr ""
 
@@ -2565,13 +2540,12 @@ msgstr ""
 msgid "Switch"
 msgstr ""
 
-#: gaphor/ui/diagrampage.py:103 gaphor/ui/mainwindow.py:292
-#: gaphor/ui/modelmerge/organize.py:138 gaphor/ui/modelmerge/organize.py:169
-#: gaphor/ui/treemodel.py:44
+#: gaphor/ui/diagrampage.py:105 gaphor/ui/mainwindow.py:292
+#: gaphor/ui/modelmerge/organize.py:138 gaphor/ui/treemodel.py:44
 msgid "<None>"
 msgstr ""
 
-#: gaphor/ui/diagrampage.py:334
+#: gaphor/ui/diagrampage.py:331
 msgid "Show in Model Browser"
 msgstr ""
 
@@ -2703,17 +2677,17 @@ msgstr ""
 msgid "Resolve"
 msgstr ""
 
-#: gaphor/ui/errordialog.py:24
-msgid "Close"
-msgstr ""
-
-#: gaphor/ui/errordialog.py:29
+#: gaphor/ui/errordialog.py:21
 msgid ""
 "It looks like Gaphor is started from the command line. Do you want to "
 "open a debug session?"
 msgstr ""
 
-#: gaphor/ui/errordialog.py:38
+#: gaphor/ui/errordialog.py:28
+msgid "Close"
+msgstr ""
+
+#: gaphor/ui/errordialog.py:30
 msgid "Start Debug Session"
 msgstr ""
 
@@ -2733,7 +2707,7 @@ msgstr ""
 msgid "Flatpak Document Portal"
 msgstr ""
 
-#: gaphor/ui/filemanager.py:41
+#: gaphor/ui/filemanager.py:42
 msgid ""
 "Gaphor was not able to store the model, probably due to an internal "
 "error:\n"
@@ -2741,108 +2715,112 @@ msgid ""
 "If you think this is a bug, please contact the developers."
 msgstr ""
 
-#: gaphor/ui/filemanager.py:45
+#: gaphor/ui/filemanager.py:46
 msgid ""
 "You do not have the permissions necessary to save the model.\n"
 "Please check that you typed the location correctly and try again."
 msgstr ""
 
-#: gaphor/ui/filemanager.py:49
+#: gaphor/ui/filemanager.py:50
 msgid ""
 "You do not have enough free space on the device to save the model.\n"
 "Please free up some disk space and try again or save it in a different "
 "location."
 msgstr ""
 
-#: gaphor/ui/filemanager.py:52
+#: gaphor/ui/filemanager.py:53
 msgid ""
 "The model cannot be stored at this location:\n"
 "{exc}\n"
 "Please check that you typed the location correctly and try again."
 msgstr ""
 
-#: gaphor/ui/filemanager.py:128 gaphor/ui/filemanager.py:157
+#: gaphor/ui/filemanager.py:129 gaphor/ui/filemanager.py:158
 msgid "Loading…"
 msgstr ""
 
-#: gaphor/ui/filemanager.py:129
+#: gaphor/ui/filemanager.py:130
 msgid "Loading model from {filename}"
 msgstr ""
 
-#: gaphor/ui/filemanager.py:158
+#: gaphor/ui/filemanager.py:159
 msgid "Loading current and incoming model"
 msgstr ""
 
-#: gaphor/ui/filemanager.py:220 gaphor/ui/filemanager.py:264
+#: gaphor/ui/filemanager.py:221 gaphor/ui/filemanager.py:265
 msgid "Unable to open model “{filename}”."
 msgstr ""
 
-#: gaphor/ui/filemanager.py:223 gaphor/ui/filemanager.py:267
+#: gaphor/ui/filemanager.py:224 gaphor/ui/filemanager.py:268
 msgid "This file does not contain a valid Gaphor model."
 msgstr ""
 
-#: gaphor/ui/filemanager.py:287
+#: gaphor/ui/filemanager.py:289
 msgid "Saving…"
 msgstr "Shranjevanje…"
 
-#: gaphor/ui/filemanager.py:288
+#: gaphor/ui/filemanager.py:290
 msgid "Saving model to {filename}"
 msgstr "Shranjevanje modela v {filename}"
 
-#: gaphor/ui/filemanager.py:300
+#: gaphor/ui/filemanager.py:306
 msgid "Unable to save model “{filename}”."
 msgstr "Modela ni možno shraniti v „{filename}“."
 
-#: gaphor/ui/filemanager.py:336 gaphor/ui/filemanager.py:379
+#: gaphor/ui/filemanager.py:318
+msgid "Model has been saved."
+msgstr ""
+
+#: gaphor/ui/filemanager.py:344 gaphor/ui/filemanager.py:387
 msgid "Save Gaphor Model As"
 msgstr "Shrani Gaphor model kot"
 
-#: gaphor/ui/filemanager.py:337 gaphor/ui/filemanager.py:381
+#: gaphor/ui/filemanager.py:345 gaphor/ui/filemanager.py:389
 #, fuzzy
 msgid "New Model"
 msgstr "Nov model…"
 
-#: gaphor/ui/filemanager.py:400
+#: gaphor/ui/filemanager.py:407
 msgid "Resolve Merge Conflict?"
 msgstr ""
 
-#: gaphor/ui/filemanager.py:403
+#: gaphor/ui/filemanager.py:408
 msgid ""
 "The model you are opening contains a merge conflict. Do you want to open "
 "the current model or the incoming change to the model?"
 msgstr ""
 
-#: gaphor/ui/filemanager.py:407 gaphor/ui/filemanager.py:430
+#: gaphor/ui/filemanager.py:412 gaphor/ui/filemanager.py:427
 msgid "Cancel"
 msgstr "Prekliči"
 
-#: gaphor/ui/filemanager.py:408
+#: gaphor/ui/filemanager.py:413
 msgid "Open Merge Editor"
 msgstr ""
 
-#: gaphor/ui/filemanager.py:409
+#: gaphor/ui/filemanager.py:414
 msgid "Open Current"
 msgstr ""
 
-#: gaphor/ui/filemanager.py:410
+#: gaphor/ui/filemanager.py:415
 msgid "Open Incoming"
 msgstr ""
 
-#: gaphor/ui/filemanager.py:421
+#: gaphor/ui/filemanager.py:422
 msgid "Save Changes?"
 msgstr ""
 
-#: gaphor/ui/filemanager.py:422
+#: gaphor/ui/filemanager.py:423
 msgid ""
 "The open model contains unsaved changes. Changes which are not saved will"
 " be permanently lost."
 msgstr ""
 
-#: gaphor/ui/filemanager.py:431
+#: gaphor/ui/filemanager.py:428
 msgid "Discard"
 msgstr ""
 
-#: gaphor/ui/filemanager.py:432 gaphor/ui/help/shortcuts.ui:213
+#: gaphor/ui/filemanager.py:429 gaphor/ui/help/shortcuts.ui:213
 #: gaphor/ui/mainwindow.py:51
 msgid "Save"
 msgstr ""
@@ -3016,8 +2994,9 @@ msgid "Show in “{diagram}”"
 msgstr ""
 
 #: gaphor/ui/modelbrowser.py:676
-msgid "New Generic Diagram"
-msgstr ""
+#, fuzzy
+msgid "Generic Diagram"
+msgstr "Nov C4 diagram"
 
 #: gaphor/ui/modelchanged.ui:6
 msgid "Model Changed on Disk"
@@ -3163,75 +3142,75 @@ msgstr "Odpri model…"
 msgid "Update diagram “{name}”"
 msgstr "Nov C4 diagram"
 
-#: gaphor/ui/modelmerge/organize.py:168 gaphor/ui/modelmerge/organize.py:310
+#: gaphor/ui/modelmerge/organize.py:177 gaphor/ui/modelmerge/organize.py:317
 msgid "Update element “{name}”"
 msgstr ""
 
-#: gaphor/ui/modelmerge/organize.py:172
+#: gaphor/ui/modelmerge/organize.py:182
 msgid "Update element of type “{type}”"
 msgstr ""
 
-#: gaphor/ui/modelmerge/organize.py:248
+#: gaphor/ui/modelmerge/organize.py:255
 msgid "Update presentation “{type}”"
 msgstr ""
 
-#: gaphor/ui/modelmerge/organize.py:274
+#: gaphor/ui/modelmerge/organize.py:281
 msgid "Add presentation of type {type}"
 msgstr ""
 
-#: gaphor/ui/modelmerge/organize.py:278
+#: gaphor/ui/modelmerge/organize.py:285
 msgid "Remove presentation of type {type}"
 msgstr ""
 
-#: gaphor/ui/modelmerge/organize.py:283
+#: gaphor/ui/modelmerge/organize.py:290
 msgid "Update presentation “{name}”"
 msgstr ""
 
-#: gaphor/ui/modelmerge/organize.py:285
+#: gaphor/ui/modelmerge/organize.py:292
 msgid "Update presentation of type {type}"
 msgstr ""
 
-#: gaphor/ui/modelmerge/organize.py:292
+#: gaphor/ui/modelmerge/organize.py:299
 msgid "Add {type} “{name}”"
 msgstr ""
 
-#: gaphor/ui/modelmerge/organize.py:296
+#: gaphor/ui/modelmerge/organize.py:303
 msgid "Add element of type {type}"
 msgstr ""
 
-#: gaphor/ui/modelmerge/organize.py:302
+#: gaphor/ui/modelmerge/organize.py:309
 msgid "Remove element “{name}”"
 msgstr ""
 
-#: gaphor/ui/modelmerge/organize.py:304
+#: gaphor/ui/modelmerge/organize.py:311
 msgid "Remove element of type {type}"
 msgstr ""
 
-#: gaphor/ui/modelmerge/organize.py:312
+#: gaphor/ui/modelmerge/organize.py:319
 msgid "Update element of type {type}"
 msgstr ""
 
-#: gaphor/ui/modelmerge/organize.py:319
+#: gaphor/ui/modelmerge/organize.py:326
 msgid "Add relation “{name}” to “{ref_name}”"
 msgstr ""
 
-#: gaphor/ui/modelmerge/organize.py:321
+#: gaphor/ui/modelmerge/organize.py:328
 msgid "Remove relation “{name}” to “{ref_name}”"
 msgstr ""
 
-#: gaphor/ui/modelmerge/organize.py:323
+#: gaphor/ui/modelmerge/organize.py:330
 msgid "Update relation “{name}” to “{ref_name}”"
 msgstr ""
 
-#: gaphor/ui/modelmerge/organize.py:330
+#: gaphor/ui/modelmerge/organize.py:337
 msgid "Add relation “{name}”"
 msgstr ""
 
-#: gaphor/ui/modelmerge/organize.py:332
+#: gaphor/ui/modelmerge/organize.py:339
 msgid "Remove relation “{name}”"
 msgstr ""
 
-#: gaphor/ui/modelmerge/organize.py:334
+#: gaphor/ui/modelmerge/organize.py:341
 msgid "Update relation “{name}”"
 msgstr ""
 
@@ -3285,5 +3264,101 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "All XMI Files"
+#~ msgstr ""
+
+#~ msgid "New Class Diagram"
+#~ msgstr ""
+
+#~ msgid "New Activity Diagram"
+#~ msgstr ""
+
+#~ msgid "New Sequence Diagram"
+#~ msgstr ""
+
+#~ msgid "New State Machine Diagram"
+#~ msgstr ""
+
+#~ msgid "New Class"
+#~ msgstr ""
+
+#~ msgid "New Enumeration"
+#~ msgstr "Posplošitev"
+
+#~ msgid "New Primitive Type"
+#~ msgstr ""
+
+#~ msgid "New Person"
+#~ msgstr "Oseba"
+
+#~ msgid "New Top Event"
+#~ msgstr "Nova komponenta"
+
+#~ msgid "New Loss"
+#~ msgstr "Izguba"
+
+#~ msgid "New Hazard"
+#~ msgstr "Nevarnost"
+
+#~ msgid "New Situation"
+#~ msgstr "Situacija"
+
+#~ msgid "New Block Definition Diagram"
+#~ msgstr ""
+
+#~ msgid "New Internal Block Diagram"
+#~ msgstr ""
+
+#~ msgid "New Package Diagram"
+#~ msgstr ""
+
+#~ msgid "New Requirement Diagram"
+#~ msgstr ""
+
+#~ msgid "New Use Case Diagram"
+#~ msgstr ""
+
+#~ msgid "New Actor"
+#~ msgstr "Nova posoda"
+
+#~ msgid "New Interface Block"
+#~ msgstr ""
+
+#~ msgid "New Use Case"
+#~ msgstr ""
+
+#~ msgid "New Value Type"
+#~ msgstr ""
+
+#~ msgid "New Component Diagram"
+#~ msgstr ""
+
+#~ msgid "New Deployment Diagram"
+#~ msgstr ""
+
+#~ msgid "New Communication Diagram"
+#~ msgstr ""
+
+#~ msgid "New Profile Diagram"
+#~ msgstr ""
+
+#~ msgid "New Artifact"
+#~ msgstr ""
+
+#~ msgid "New Device"
+#~ msgstr "Nov model…"
+
+#~ msgid "New Instance Specification"
+#~ msgstr ""
+
+#~ msgid "New Node"
+#~ msgstr "Nov model…"
+
+#~ msgid "New Profile"
+#~ msgstr ""
+
+#~ msgid "New Stereotype"
+#~ msgstr "Nov programski sistem"
+
+#~ msgid "New Generic Diagram"
 #~ msgstr ""
 
