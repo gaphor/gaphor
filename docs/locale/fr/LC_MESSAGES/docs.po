@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gaphor 2.23.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-11-27 15:44-0500\n"
-"PO-Revision-Date: 2024-12-09 06:31+0000\n"
+"PO-Revision-Date: 2024-12-09 18:59+0000\n"
 "Last-Translator: Stan SZLAPKA <stansz@free.fr>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/gaphor/"
 "docs-gaphor-org/fr/>\n"
@@ -4248,38 +4248,49 @@ msgstr ""
 #: ../modeling_language.md:154 ../modeling_language.md:131
 msgid "Paste a copy of both Presentation and model element. A deep copy."
 msgstr ""
+"Coller une copie de la présentation et de l'élément de modèle. Une copie "
+"approfondie."
 
 #: ../modeling_language.md:157 ../modeling_language.md:134
 msgid "Grouping"
-msgstr ""
+msgstr "Regroupement"
 
 #: ../modeling_language.md:159 ../modeling_language.md:136
 msgid ""
 "Grouping is done by dragging one item on top of another, in a diagram or in "
 "the tree view."
 msgstr ""
+"Le regroupement s'effectue en faisant glisser un élément sur un autre, dans "
+"un diagramme ou dans l'arborescence."
 
 #: ../modeling_language.md:163 ../modeling_language.md:140
 msgid ""
 "Group an element in a parent element. The grouping can be based on "
 "ownership, but other types of grouping are also possible."
 msgstr ""
+"Un élément peut être regroupé dans un élément parent. Ce regroupement peut "
+"être basé sur la propriété, mais d'autres types de regroupement sont "
+"également possibles."
 
 #: ../modeling_language.md:169 ../modeling_language.md:146
 msgid ""
 "Remove the grouping from an element. The function needs to check if the "
 "provided `parent` node is the right one."
 msgstr ""
+"Supprime le regroupement d'un élément. La fonction doit vérifier si le nœud "
+"`parent` fourni est le bon."
 
 #: ../modeling_language.md:175 ../modeling_language.md:152
 msgid ""
 "This function tries to determine if grouping is possible, without actually "
 "performing a group operation. This is not 100% accurate."
 msgstr ""
+"Cette fonction tente de déterminer si le regroupement est possible sans pour "
+"autant effectuer l'opération en question. Elle n'est pas précise à 100 %."
 
 #: ../modeling_language.md:180 ../modeling_language.md:157
 msgid "Dropping"
-msgstr ""
+msgstr "Dropping"
 
 #: ../modeling_language.md:182 ../modeling_language.md:159
 msgid ""
@@ -4287,11 +4298,16 @@ msgid ""
 "on a diagram. This is an easy way to extend a diagram with already existing "
 "model elements."
 msgstr ""
+"Le dépôt s'effectue en faisant glisser un élément de l'arborescence et en le "
+"déposant sur un diagramme. Il s'agit d'un moyen facile d'ajouter des "
+"éléments de modèle déjà existants à un diagramme."
 
 #: ../modeling_language.md:185
 msgid ""
 "Alternatively, a presentation item can be dropped on top of another element."
 msgstr ""
+"Il est également possible de déposer un élément de présentation au-dessus "
+"d'un autre élément."
 
 #: ../modeling_language.md:189
 msgid ""
@@ -4299,109 +4315,132 @@ msgid ""
 "if the element is not a presentation yet. For relationships, a drop only "
 "works if both connected elements are present in the same diagram."
 msgstr ""
+"La fonction « drop » crée une nouvelle présentation pour un élément du "
+"diagramme qui n'en est pas encore une. Pour les relations, un dépôt ne "
+"fonctionne que si les deux éléments connectés sont présents dans le même "
+"diagramme."
 
 #: ../modeling_language.md:194
 msgid ""
 "While grouping deals with connecting model elements, dropping deals with "
 "creating and placing presentation elements on the right item in a diagram."
 msgstr ""
+"Alors que le regroupement permet d'articuler les éléments du modèle, le "
+"dépôt permet de créer et de placer les éléments de présentation au bon "
+"endroit dans un diagramme."
 
 #: ../modeling_language.md:198 ../modeling_language.md:173
 msgid "Automated model cleanup"
-msgstr ""
+msgstr "Nettoyage automatisé des modèles"
 
 #: ../modeling_language.md:200 ../modeling_language.md:175
 msgid "Gaphor wants to keep the model in sync with the diagrams."
-msgstr ""
+msgstr "Gaphor souhaite maintenir le modèle synchronisé avec les diagrammes."
 
 #: ../modeling_language.md:202 ../modeling_language.md:177
 msgid ""
 "A little dispatch function is used to determine if a model element can be "
 "removed."
 msgstr ""
+"Une petite fonction d'envoi permet de déterminer si un élément du modèle "
+"peut être retiré."
 
 #: ../modeling_language.md:206 ../modeling_language.md:181
 msgid "Determine if a model element can safely be removed."
-msgstr ""
+msgstr "Détermine si un élément du modèle peut être retiré en toute sécurité."
 
 #: ../modeling_language.md:209
 msgid "Property Editor pages"
-msgstr ""
+msgstr "Pages de l'éditeur de propriétés"
 
 #: ../modeling_language.md:211 ../modeling_language.md:186
 msgid ""
 "The editor page is constructed from snippets. For example: almost each "
 "element has a name, so there is a UI snippet that allows you to edit a name."
 msgstr ""
+"La page de l'éditeur est composée d'extraits. Par exemple, presque chaque "
+"élément a un nom, et un élément d'interface utilisateur vous permet donc "
+"d'éditer un nom."
 
 #: ../modeling_language.md:214 ../modeling_language.md:189
 msgid "Each property page (snippet) should inherit from `PropertyPageBase`."
-msgstr ""
+msgstr "Chaque page de propriété (snippet) doit hériter de `PropertyPageBase`."
 
 #: gaphor.diagram.propertypages.PropertyPageBase:1 of
 #: ../../gaphor/diagram/propertypages.py:docstring
 msgid "A property page which can display itself in a notebook."
-msgstr ""
+msgstr "Une page de propriété qui peut s'afficher dans un bloc-notes."
 
 #: gaphor.diagram.propertypages.PropertyPageBase.construct:1 of
 #: ../../gaphor/diagram/propertypages.py:docstring
 msgid "Create the page (Gtk.Widget) that belongs to the Property page."
-msgstr ""
+msgstr "Créer la page (Gtk.Widget) qui appartient à la page de propriété."
 
 #: gaphor.diagram.propertypages.PropertyPageBase.construct:3 of
 #: ../../gaphor/diagram/propertypages.py:docstring
 msgid "Returns the page's toplevel widget (Gtk.Widget)."
-msgstr ""
+msgstr "Renvoie le widget de premier niveau de la page (Gtk.Widget)."
 
 #: ../modeling_language.md:221 ../modeling_language.md:196
 msgid "Instant (diagram) editor popups"
-msgstr ""
+msgstr "Fenêtres contextuelles instantanées de l'éditeur (de diagrammes)"
 
 #: ../modeling_language.md:223 ../modeling_language.md:198
 msgid ""
 "When you double-click on an item in a diagram, a popup can show up, so you "
 "can easily change the name."
 msgstr ""
+"Lorsque vous double-cliquez sur un élément d'un diagramme, une fenêtre "
+"contextuelle peut s'afficher, ce qui vous permet de modifier facilement le "
+"nom."
 
 #: ../modeling_language.md:225 ../modeling_language.md:200
 msgid ""
 "By default, this works for any named element. You can register your own "
 "inline editor function if you need to."
 msgstr ""
+"Par défaut, cela fonctionne pour tout élément nommé. Vous pouvez enregistrer "
+"votre propre fonction d'édition en ligne si nécessaire."
 
 #: ../modeling_language.md:229 ../modeling_language.md:204
 msgid ""
 "Show a small editor popup in the diagram. Makes for easy editing without "
 "resorting to the Element editor."
 msgstr ""
+"Affiche une petite fenêtre d'édition dans le diagramme. Permet de faciliter "
+"l'édition sans avoir recours à l'éditeur d'éléments."
 
 #: ../modeling_language.md:232 ../modeling_language.md:207
 msgid ""
 "In case of a mouse press event, the mouse position (relative to the element) "
 "are also provided."
 msgstr ""
+"Dans le cas d'un clic de la souris, la position de la souris (par rapport à "
+"l'élément) est également fournie."
 
 #: ../models/c4model.md:1
 msgid "The C4 Model"
-msgstr ""
+msgstr "Le Modèle C4"
 
 #: ../models/c4model.md:3
 msgid ""
 "The [C4 model](https://c4model.com/) is a simple visual language to describe "
 "the static structure of a software system."
 msgstr ""
+"Le [modèle C4] (https://c4model.com/) est un langage visuel simple "
+"permettant de décrire la structure statique d'un système logiciel."
 
 #: ../models/c4model.md:5
 msgid "It’s based on the [UML](uml.md) language."
-msgstr ""
+msgstr "Il est basé sur le langage [UML](uml.md)."
 
 #: ../models/core.rst:2 ../models/core.md:1
 msgid "Modeling Language Core"
-msgstr ""
+msgstr "Noyau du langage de modélisation"
 
 #: ../models/core.rst:4 ../models/core.md:3
 msgid "The Core modeling language is the the basis for any other language."
-msgstr ""
+msgstr "Le noyau du langage de modélisation est la base de tout autre langage."
 
 #: ../models/core.rst:6
 msgid ""
@@ -4409,16 +4448,23 @@ msgid ""
 "domain classes. :obj:`~gaphor.core.modeling.Diagram` and :obj:`~gaphor.core."
 "modeling.Presentation` form the basis for everything you see in a diagram."
 msgstr ""
+"La classe :obj:`~gaphor.core.modeling.Base` est la racine de toutes les "
+"classes du domaine gaphor. :obj:`~gaphor.core.modeling.Diagram` et "
+":obj:`~gaphor.core.modeling.Presentation` forment la base de tout ce que "
+"vous voyez dans un diagramme."
 
 #: ../models/core.rst:10 ../models/core.md:9
 msgid ""
 "All data models in Gaphor are generated from actual Gaphor model files. This "
 "allows us to provide you nice diagrams of Gaphor’s internal model."
 msgstr ""
+"Tous les modèles de données de Gaphor sont générés à partir des fichiers de "
+"modèles réels de ce dernier. Cela nous permet de vous fournir de beaux "
+"diagrammes du modèle interne de Gaphor."
 
 #: ../models/core.rst:18
 msgid "The ``Base`` Class"
-msgstr ""
+msgstr "La classe ``Base``"
 
 #: ../models/core.rst:20
 msgid ""
@@ -4429,6 +4475,13 @@ msgid ""
 "from :obj:`~gaphor.core.modeling.Base`. Bi-directional relationships are "
 "also possible, as well as derived relations."
 msgstr ""
+"La classe :obj:`~gaphor.core.modeling.Base` fournit des notifications "
+"d'événements et s'intègre au référentiel de modèles (connu en interne sous "
+"le nom de :obj:`~gaphor.core.modeling.ElementFactory`). Toutes les classes "
+"d'un modèle doivent dériver de cette classe. Si un modèle n'indique pas de "
+"classe de base pour un élément, il dérivera de :obj:`~gaphor.core.modeling."
+"Base`. Les relations bidirectionnelles sont également possibles, de même que "
+"les relations dérivées."
 
 #: ../models/core.rst:27
 msgid ""
@@ -4436,34 +4489,40 @@ msgid ""
 "core.modeling.base.EventWatcherProtocol` protocols are important to connect "
 "the model to the repository and event handling mechanisms."
 msgstr ""
+"Les protocoles :obj:`~gaphor.core.modeling.base.RepositoryProtocol`, et "
+":obj:`~gaphor.core.modeling.base.EventWatcherProtocol` sont importants pour "
+"connecter le modèle au référentiel et aux mécanismes de gestion des "
+"événements."
 
 #: ../models/core.rst:32
 msgid "The class ``Base`` is the core of Gaphor’s data model."
-msgstr ""
+msgstr "La classe ``Base`` est le cœur du modèle de données de Gaphor."
 
 #: gaphor.core.modeling.base.Base:1 of
 #: ../../gaphor/core/modeling/element.py:docstring
 #: gaphor.core.modeling.element.Element:1
 msgid "Base class for all model data classes."
-msgstr ""
+msgstr "Classe de base pour toutes les classes de données de modèle."
 
 #: gaphor.core.modeling.Base.id:1 of
 #: ../../gaphor/core/modeling/element.py:docstring
 #: gaphor.core.modeling.Element.id:1
 msgid "An id (read-only), unique within the model."
-msgstr ""
+msgstr "Un identifiant (en lecture seule), unique dans le modèle."
 
 #: gaphor.core.modeling.Base.model:1 of
 #: ../../gaphor/core/modeling/element.py:docstring
 #: gaphor.core.modeling.Element.model:1
 msgid "The owning model, raises :class:`TypeError` when model is not set."
 msgstr ""
+"Le modèle propriétaire, génère :class:`TypeError` si le modèle n'est pas "
+"défini."
 
 #: gaphor.core.modeling.base.Base.unlink:1 of
 #: ../../gaphor/core/modeling/element.py:docstring
 #: gaphor.core.modeling.element.Element.unlink:1
 msgid "Unlink the element."
-msgstr ""
+msgstr "Dissocier l'élément."
 
 #: gaphor.core.modeling.base.Base.unlink:3 of
 #: ../../gaphor/core/modeling/element.py:docstring
@@ -4472,6 +4531,8 @@ msgid ""
 "All the elements references are destroyed. For composite associations, the "
 "associated elements are also unlinked."
 msgstr ""
+"Toutes les références des éléments sont alors supprimées. Les éléments "
+"associés des associations composites sont également dissociés."
 
 #: gaphor.core.modeling.base.Base.unlink:6 of
 #: ../../gaphor/core/modeling/element.py:docstring
@@ -4480,16 +4541,18 @@ msgid ""
 "The unlink lock is acquired while unlinking this element's properties to "
 "avoid recursion problems."
 msgstr ""
+"Le verrou de déconnexion est activé lors de la séparation des propriétés de "
+"l'élément afin d'éviter les problèmes de récursivité."
 
 #: ../models/core.rst:44 ../models/core_element.rst:16
 msgid "Event handling"
-msgstr ""
+msgstr "Gestion des événements"
 
 #: gaphor.core.modeling.base.Base.handle:1 of
 #: ../../gaphor/core/modeling/element.py:docstring
 #: gaphor.core.modeling.element.Element.handle:1
 msgid "Propagate incoming events."
-msgstr ""
+msgstr "Propager les événements entrants."
 
 #: gaphor.core.modeling.base.Base.handle:3 of
 #: ../../gaphor/core/modeling/element.py:docstring
@@ -4498,12 +4561,14 @@ msgid ""
 "This only works if the element has been created by an :class:`~gaphor.core."
 "modeling.ElementFactory`"
 msgstr ""
+"Cela ne fonctionne que si l'élément a été créé par une :class:`~gaphor.core."
+"modeling.ElementFactory`"
 
 #: gaphor.core.modeling.base.Base.watcher:1 of
 #: ../../gaphor/core/modeling/element.py:docstring
 #: gaphor.core.modeling.element.Element.watcher:1
 msgid "Create a new watcher for this element."
-msgstr ""
+msgstr "Créer un nouvel observateur pour cet élément."
 
 #: gaphor.core.modeling.base.Base.watcher:3 of
 #: ../../gaphor/core/modeling/element.py:docstring
@@ -4512,6 +4577,8 @@ msgid ""
 "Watchers provide a convenient way to get signalled when a property relative "
 "to ``self`` has been changed."
 msgstr ""
+"Les observateurs fournissent un moyen pratique de recevoir un signal "
+"lorsqu'une propriété relative à ``self`` a été modifiée."
 
 #: gaphor.core.modeling.base.Base.watcher:6 of
 #: ../../gaphor/core/modeling/element.py:docstring
@@ -4520,22 +4587,24 @@ msgid ""
 "To use a watcher, the element should be created by a properly wired up :"
 "class:`~gaphor.core.modeling.ElementFactory``."
 msgstr ""
+"Pour utiliser un observateur, l'élément doit être créé par une "
+":class:`~gaphor.core.modeling.ElementFactory`` correctement câblée."
 
 #: gaphor.core.modeling.base.Base.watcher:8 of
 #: ../../gaphor/core/modeling/element.py:docstring
 #: gaphor.core.modeling.element.Element.watcher:8
 msgid "This example is purely illustrative:"
-msgstr ""
+msgstr "Cet exemple est purement illustratif :"
 
 #: ../models/core.rst:52 ../models/core_element.rst:24
 msgid "Loading and saving"
-msgstr ""
+msgstr "Chargement et enregistrement"
 
 #: gaphor.core.modeling.base.Base.load:1 of
 #: ../../gaphor/core/modeling/element.py:docstring
 #: gaphor.core.modeling.element.Element.load:1
 msgid "Loads value in name."
-msgstr ""
+msgstr "Charge la valeur dans le nom."
 
 #: gaphor.core.modeling.base.Base.load:3 of
 #: ../../gaphor/core/modeling/element.py:docstring
@@ -4543,107 +4612,122 @@ msgstr ""
 msgid ""
 "Make sure that after all elements are loaded, postload() should be called."
 msgstr ""
+"Assurez-vous que la fonction postload() est appelée après le chargement de "
+"tous les éléments."
 
 #: gaphor.core.modeling.base.Base.postload:1 of
 #: ../../gaphor/core/modeling/element.py:docstring
 #: gaphor.core.modeling.element.Element.postload:1
 msgid "Fix up the odds and ends."
-msgstr ""
+msgstr "Réparer diverses petites choses."
 
 #: gaphor.core.modeling.base.Base.postload:3 of
 #: ../../gaphor/core/modeling/element.py:docstring
 #: gaphor.core.modeling.element.Element.postload:3
 msgid "This is run after all elements are loaded."
-msgstr ""
+msgstr "Cette opération est exécutée après le chargement de tous les éléments."
 
 #: gaphor.core.modeling.base.Base.save:1 of
 #: ../../gaphor/core/modeling/element.py:docstring
 #: gaphor.core.modeling.element.Element.save:1
 msgid "Save the state by calling ``save_func(name, value)``."
-msgstr ""
+msgstr "Sauvegarder l'état en appelant ``save_func(name, value)``."
 
 #: ../models/core.rst:62 ../models/core_element.rst:34
 msgid "OCL-style methods"
-msgstr ""
+msgstr "Méthodes de type OCL"
 
 #: gaphor.core.modeling.base.Base.isKindOf:1 of
 #: ../../gaphor/core/modeling/element.py:docstring
 #: gaphor.core.modeling.element.Element.isKindOf:1
 msgid "Returns :const:`True` if the object is an instance of ``class_``."
-msgstr ""
+msgstr "Retourne :const:`True` si l'objet est une instance de ``class_``."
 
 #: gaphor.core.modeling.base.Base.isTypeOf:1 of
 #: ../../gaphor/core/modeling/element.py:docstring
 #: gaphor.core.modeling.element.Element.isTypeOf:1
 msgid ""
 "Returns :const:`True` if the object is of the same type as the ``other``."
-msgstr ""
+msgstr "Retourne :const:`True` si l'objet est du même type que ``other``."
 
 #: ../models/core.rst:70
 msgid "The ``Presentation`` class"
-msgstr ""
+msgstr "La classe ``Presentation``"
 
 #: gaphor.core.modeling.presentation.Presentation:1 of
 msgid ""
 "A special type of :obj:`Base` that can be displayed on a :obj:`Diagram`."
 msgstr ""
+"Un type spécial de :obj:`Base` qui peut être affiché sur un :obj:`Diagram`."
 
 #: gaphor.core.modeling.presentation.Presentation:3 of
 msgid "Presentation instances can only be owned by diagrams."
 msgstr ""
+"Les instances de présentation ne peuvent appartenir qu'à des diagrammes."
 
 #: gaphor.core.modeling.presentation.Presentation:5 of
 msgid ""
 "Subtypes of ``Presentation`` should implement the :obj:`gaphas.item.Item` "
 "protocol."
 msgstr ""
+"Les sous-types de ``Presentation`` doivent implémenter le protocole "
+":obj:`gaphas.item.Item`."
 
 #: gaphor.core.modeling.presentation.Presentation.request_update:1 of
 msgid "Mark this presentation object for update."
-msgstr ""
+msgstr "Marquer cet objet de présentation pour mise à jour."
 
 #: gaphor.core.modeling.presentation.Presentation.request_update:3 of
 msgid "Updates are orchestrated by diagrams."
-msgstr ""
+msgstr "Les mises à jour sont orchestrées par des diagrammes."
 
 #: gaphor.core.modeling.presentation.Presentation.watch:1 of
 msgid "Watch a certain path of elements starting with ``self``."
-msgstr ""
+msgstr "Observez un certain chemin d'éléments commençant par ``self``."
 
 #: gaphor.core.modeling.presentation.Presentation.watch:3 of
 msgid ""
 "The handler is optional and will default to a simple :obj:`request_update`."
 msgstr ""
+"Le traitement est optionnel et sera par défaut un simple "
+":obj:`request_update`."
 
 #: gaphor.core.modeling.presentation.Presentation.watch:5 of
 msgid ""
 "Watches should be set in the constructor, so they can be registered and "
 "unregistered in one shot."
 msgstr ""
+"Les surveillants doivent être définis dans le constructeur, de sorte qu'ils "
+"puissent être enregistrés et désenregistrés en une seule opération."
 
 #: gaphor.core.modeling.presentation.Presentation.watch:12 of
 msgid "This interface is fluent: returns ``self``."
-msgstr ""
+msgstr "Cette interface est fluide : elle renvoie ``self``."
 
 #: gaphor.core.modeling.presentation.Presentation.change_parent:1 of
 msgid ""
 "Change the parent and update the item's matrix so the item visually remains "
 "in the same place."
 msgstr ""
+"Modifier le parent et mettre à jour la matrice de l'élément afin que "
+"l'élément reste visuellement au même endroit."
 
 #: ../models/core.rst:83
 msgid "The ``Diagram`` class"
-msgstr ""
+msgstr "La classe ``Diagram``"
 
 #: gaphor.core.modeling.diagram.Diagram:1 of
 msgid "Diagrams may contain :obj:`Presentation` elements."
-msgstr ""
+msgstr "Les diagrammes peuvent contenir des éléments :obj:`Presentation`."
 
 #: gaphor.core.modeling.diagram.Diagram:3 of
 msgid ""
 "If diagrams need to be owned, the modeling language (e.g. UML) should "
 "subclass ``Diagram`` and add ownership relationships and rules."
 msgstr ""
+"Si les diagrammes doivent être propriétaires, le langage de modélisation ("
+"par exemple UML) doit subdiviser ``Diagram`` et ajouter des relations et des "
+"règles de propriété."
 
 #: gaphor.core.modeling.diagram.Diagram.create:1 of
 #, fuzzy
@@ -4656,32 +4740,39 @@ msgid ""
 "item.  The type parameter is the element class to create.  The new element "
 "also has an optional parent and subject."
 msgstr ""
+"Il est créé avec un identifiant unique et est attaché à l'élément racine du "
+"diagramme. item. Le paramètre de type est la classe d'élément à créer.  Le "
+"nouvel élément peut également avoir un parent et un sujet facultatifs."
 
 #: gaphor.core.modeling.diagram.Diagram.lookup:1 of
 msgid "Find a presentation item by id."
-msgstr ""
+msgstr "Recherche d'un élément de présentation par son identifiant."
 
 #: gaphor.core.modeling.diagram.Diagram.lookup:3 of
 msgid "Returns a presentation in this diagram or return ``None``."
-msgstr ""
+msgstr "Retourne une présentation dans ce diagramme ou retourne ``None``."
 
 #: gaphor.core.modeling.diagram.Diagram.select:1 of
 msgid "Return an iterator of all canvas items that match expression."
 msgstr ""
+"Renvoie un itérateur de tous les éléments de la toile qui correspondent à "
+"l'expression."
 
 #: gaphor.core.modeling.diagram.Diagram.request_update:1 of
 msgid "Schedule an item for updating."
-msgstr ""
+msgstr "Planifier la mise à jour d'un élément."
 
 #: gaphor.core.modeling.diagram.Diagram.request_update:3 of
 msgid ""
 "No update is done at this point, it's only added to the set of to-be updated "
 "items."
 msgstr ""
+"Aucune mise à jour n'est effectuée à ce stade, l'élément est seulement "
+"ajouté à l'ensemble des éléments à mettre à jour."
 
 #: gaphor.core.modeling.diagram.Diagram.request_update:6 of
 msgid "This method is part of the :obj:`gaphas.model.Model` protocol."
-msgstr ""
+msgstr "Cette méthode fait partie du protocole :obj:`gaphas.model.Model`."
 
 #: gaphor.core.modeling.diagram.Diagram.update:1 of
 #, fuzzy
@@ -4694,54 +4785,65 @@ msgid ""
 "updates. If an item has an ``update(context: UpdateContext)`` method, it's "
 "invoked. Constraints are solved."
 msgstr ""
+"Tous les éléments ayant demandé une mise à jour via la méthode "
+"`request_update` sont désormais considérés comme des mises à jour. Si un "
+"élément possède une méthode « update(context : UpdateContext) », elle est "
+"invoquée. Les contraintes sont résolues."
 
 #: ../models/core.rst:98 ../models/core_element.rst:42
 msgid "Protocols"
-msgstr ""
+msgstr "Protocoles"
 
 #: ../models/core.rst:104 ../models/core_element.rst:48
 msgid "Create a new element in the repository."
-msgstr ""
+msgstr "Créer un nouvel élément dans le référentiel."
 
 #: ../models/core.rst:108 ../models/core_element.rst:52
 msgid "Select elements from the repository that fulfill ``expression``."
 msgstr ""
+"Sélectionner dans le dépôt les éléments qui répondent à l'« expression »."
 
 #: ../models/core.rst:113 ../models/core_element.rst:57
 msgid "Select all elements from the repository of type ``type_``."
-msgstr ""
+msgstr "Sélectionner tous les éléments du dépôt de type ``type_``."
 
 #: ../models/core.rst:118 ../models/core_element.rst:62
 msgid "Select all elements from the repository."
-msgstr ""
+msgstr "Sélectionner tous les éléments du dépôt."
 
 #: ../models/core.rst:122 ../models/core_element.rst:66
 msgid "Get an element by id from the repository."
-msgstr ""
+msgstr "Récupérer un élément par son identifiant dans le dépôt."
 
 #: ../models/core.rst:124 ../models/core_element.rst:68
 msgid "Returns :const:`None` if no such element exists."
-msgstr ""
+msgstr "Renvoie :const:`None` si aucun élément de ce type n'existe."
 
 #: ../models/core.rst:130 ../models/core_element.rst:74
 msgid ""
 "Add a watch for a specific path. The path is relative to the element that "
 "created the watcher object."
 msgstr ""
+"Ajouter une veille pour un chemin spécifique. Le chemin est relatif à "
+"l'élément qui a créé l'objet de surveillance."
 
 #: ../models/core.rst:133 ../models/core_element.rst:77
 msgid "Returns ``self``, so watch operations can be chained."
 msgstr ""
+"Renvoie ``self``, afin que les opérations de surveillance puissent être "
+"enchaînées."
 
 #: ../models/core.rst:137 ../models/core_element.rst:81
 msgid ""
 "Should be called before the watcher is disposed, to release all watched "
 "paths."
 msgstr ""
+"Doit être appelé avant que l'observateur ne soit éliminé, pour libérer tous "
+"les chemins observés."
 
 #: ../models/core_changeset.md:1 ../models/core.md:21
 msgid "Change Sets"
-msgstr ""
+msgstr "Modifier les ensembles"
 
 #: ../models/core_changeset.md:3
 msgid ""
@@ -4749,86 +4851,99 @@ msgid ""
 "changes. Normally you end up with a change set when you [resolve a merge "
 "conflict](../merge_conflicts) in your model."
 msgstr ""
+"Le modèle de base prend en charge les ensembles de modifications, qui sont "
+"des ensembles de modifications en attente. Normalement, vous vous retrouvez "
+"avec un ensemble de modifications lorsque vous [résolvez un conflit de "
+"fusion](../merge_conflicts) dans votre modèle."
 
 #: ../models/core_services.rst:2
 msgid "Core Services"
-msgstr ""
+msgstr "Services de base"
 
 #: ../models/core_services.rst:4
 msgid ""
 "here you can find the API for services that are related to model creation "
 "and model manipulation."
 msgstr ""
+"vous trouverez ici l'API pour les services liés à la création et à la "
+"manipulation de modèles."
 
 #: ../models/core_services.rst:9
 msgid "Element Repository (/Factory)"
-msgstr ""
+msgstr "Répertoire d'éléments (/Factory)"
 
 #: gaphor.core.modeling.elementfactory.ElementFactory:1 of
 msgid "The ``ElementFactory`` is used as a central repository for a model."
 msgstr ""
+"La ``ElementFactory`` est utilisée comme un dépôt central pour un modèle."
 
 #: gaphor.core.modeling.elementfactory.ElementFactory:3 of
 msgid ""
 "New model elements should be created by :obj:`~gaphor.core.modeling."
 "ElementFactory.create`."
 msgstr ""
+"Les nouveaux éléments de modèle doivent être créés par :obj:`~gaphor.core."
+"modeling.ElementFactory.create`."
 
 #: gaphor.core.modeling.elementfactory.ElementFactory:6 of
 msgid ""
 "Methods like :obj:`~gaphor.core.modeling.ElementFactory.select` can be used "
 "to find elements in the model."
 msgstr ""
+"Des méthodes comme :obj:`~gaphor.core.modeling.ElementFactory.select` "
+"peuvent être utilisées pour trouver des éléments dans le modèle."
 
 #: gaphor.core.modeling.elementfactory.ElementFactory.select:1 of
 msgid "Iterate elements that comply with expression."
-msgstr ""
+msgstr "Interroger les éléments conformes à l'expression."
 
 #: gaphor.core.modeling.elementfactory.ElementFactory.select:3 of
 msgid "Expressions can be:"
-msgstr ""
+msgstr "Les expressions peuvent être :"
 
 #: gaphor.core.modeling.elementfactory.ElementFactory.select:5 of
 msgid ":obj:`None`: return all elements."
-msgstr ""
+msgstr ":obj:`None`: renvoie tous les éléments."
 
 #: gaphor.core.modeling.elementfactory.ElementFactory.select:6 of
 msgid "A type: return all elements of that type, or subtypes."
-msgstr ""
+msgstr "Un type : renvoie tous les éléments de ce type ou de ses sous-types."
 
 #: gaphor.core.modeling.elementfactory.ElementFactory.select:7 of
 msgid "An expression."
-msgstr ""
+msgstr "Une expression."
 
 #: gaphor.core.modeling.elementfactory.ElementFactory.lselect:1 of
 msgid ""
 "Like :obj:`~gaphor.core.modeling.ElementFactory.select`, but return a list, "
 "instead of an iterator."
 msgstr ""
+"Comme :obj:`~gaphor.core.modeling.ElementFactory.select`, mais renvoie une "
+"liste au lieu d'un itérateur."
 
 #: gaphor.core.modeling.elementfactory.ElementFactory.lookup:1 of
 msgid "Find element with a specific id."
-msgstr ""
+msgstr "Recherche d'un élément avec un identifiant spécifique."
 
 #: gaphor.core.modeling.elementfactory.ElementFactory.keys:1 of
 msgid "Iterate all id's in the factory."
-msgstr ""
+msgstr "Itère tous les identifiants de la structure."
 
 #: gaphor.core.modeling.elementfactory.ElementFactory.values:1 of
 msgid "Iterate all elements in the factory."
-msgstr ""
+msgstr "Interroger tous les éléments de la structure."
 
 #: gaphor.core.modeling.elementfactory.ElementFactory.size:1 of
 msgid "Return the amount of elements currently in the factory."
-msgstr ""
+msgstr "Renvoie la quantité d'éléments actuellement présents dans la structure."
 
 #: gaphor.core.modeling.elementfactory.ElementFactory.is_empty:1 of
 msgid "Returns ``True`` if the factory holds no elements."
-msgstr ""
+msgstr "Retourne ``True`` si la structure ne contient aucun élément."
 
 #: gaphor.core.modeling.elementfactory.ElementFactory.create:1 of
 msgid "Create a new model element of type ``type``."
-msgstr ""
+msgstr "Créer un nouvel élément de modèle de type ``type``."
 
 #: gaphor.core.modeling.elementfactory.ElementFactory.create:3 of
 msgid ""
@@ -4836,15 +4951,20 @@ msgid ""
 "Presentation` elements: those are created by :obj:`~gaphor.core.modeling."
 "Diagram`."
 msgstr ""
+"Cette méthode ne crée que des éléments de modèle, et non des éléments "
+":obj:`~gaphor.core.modeling.Presentation` : ceux-ci sont créés par "
+":obj:`~gaphor.core.modeling.Diagram`."
 
 #: gaphor.core.modeling.elementfactory.ElementFactory.flush:1 of
 msgid "Flush all elements (remove them from the factory)."
-msgstr ""
+msgstr "Purger tous les éléments (les retirer de la structure)."
 
 #: gaphor.core.modeling.elementfactory.ElementFactory.flush:3 of
 msgid ""
 "Diagram elements are flushed first. The remaining elements are flushed next."
 msgstr ""
+"Les éléments du diagramme sont purgés en premier. Puis les autres éléments "
+"sont nettoyés par la suite."
 
 #: ../models/core_services.rst:33
 #, fuzzy
@@ -4856,81 +4976,87 @@ msgid ""
 "Information on how modeling languages are managed can be found :doc:`../"
 "modeling_language`."
 msgstr ""
+"Des informations sur la gestion des langages de modélisation sont "
+"disponibles :doc:`../modeling_language`."
 
 #: ../models/core_services.rst:39
 msgid "Event Manager"
-msgstr ""
+msgstr "Gestionnaire d'événements"
 
 #: ../models/core_services.rst:41
 msgid ""
 "The :doc:`../event_system` takes care of dispatches events throughout Gaphor."
 msgstr ""
+"Le :doc:`../event_system` s'occupe de distribuer les événements à travers "
+"Gaphor."
 
 #: ../models/raaml.md:10 ../models/sysml.md:9 ../models/uml.md:15
 msgid "Packages"
-msgstr ""
+msgstr "Paquets"
 
 #: ../models/raaml.md:1
 msgid "Risk Analysis and Assessment Modeling Language"
-msgstr ""
+msgstr "Langage de modélisation pour l'analyse et l'évaluation des risques"
 
 #: ../models/raaml.md:3
 msgid ""
 "Gaphor implements parts of the [RAAML 1.0 specification](https://www.omg.org/"
 "spec/RAAML)."
 msgstr ""
+"Gaphor met en œuvre certaines parties de la [spécification RAAML 1.0] "
+"(https://www.omg.org/spec/RAAML)."
 
 #: ../models/raaml/Core.rst:2
 msgid "Core"
-msgstr ""
+msgstr "Le noyau"
 
 #: ../models/raaml/Core.rst:5
 msgid "Core Library/Any Situation"
-msgstr ""
+msgstr "Bibliothèque centrale/toutes les situations"
 
 #: ../models/raaml/Core.rst:11
 msgid "Core Profile/Controlling Measure"
-msgstr ""
+msgstr "Profil de base/Mesure de contrôle"
 
 #: ../models/raaml/Core.rst:17
 msgid "Core Profile/Relevant To"
-msgstr ""
+msgstr "Profil de base/pertinent pour"
 
 #: ../models/raaml/Core.rst:23
 msgid "Core Profile/Situation"
-msgstr ""
+msgstr "Profil de base/Situation"
 
 #: ../models/raaml/Core.rst:29
 msgid "Core Profile/Violates"
-msgstr ""
+msgstr "Profil de base/Violation"
 
 #: ../models/raaml/General.rst:2
 msgid "General"
-msgstr ""
+msgstr "Général"
 
 #: ../models/raaml/General.rst:5
 msgid "Basic Event"
-msgstr ""
+msgstr "Évènement basique"
 
 #: ../models/raaml/General.rst:11
 msgid "General Concepts Library/Abstract Cause"
-msgstr ""
+msgstr "Bibliothèque de Concepts Généraux/Cause abstraite"
 
 #: ../models/raaml/General.rst:17
 msgid "General Concepts Library/Abstract Effect"
-msgstr ""
+msgstr "Bibliothèque de Concepts Généraux /Effet Abstrait"
 
 #: ../models/raaml/General.rst:23
 msgid "General Concepts Library/Abstract Event"
-msgstr ""
+msgstr "Bibliothèque de Concepts Généraux/Événement abstrait"
 
 #: ../models/raaml/General.rst:29
 msgid "General Concepts Library/Abstract Failure Mode"
-msgstr ""
+msgstr "Bibliothèque Concepts Généraux/Mode de défaillance Abstrait"
 
 #: ../models/raaml/General.rst:35
 msgid "General Concepts Library/Abstract Risk"
-msgstr ""
+msgstr "Bibliothèque de Concepts Généraux /Risque Abstrait"
 
 #: ../models/raaml/General.rst:41
 msgid "General Concepts Library/Activation"
