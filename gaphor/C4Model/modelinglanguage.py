@@ -15,6 +15,7 @@ from gaphor.diagram.diagramtoolbox import (
     ElementCreateInfo,
     ToolboxDefinition,
 )
+from gaphor.UML.treemodel import TreeModel
 
 
 class C4ModelLanguage(ModelingLanguage):
@@ -33,6 +34,10 @@ class C4ModelLanguage(ModelingLanguage):
     @property
     def element_types(self) -> Iterable[ElementCreateInfo]:
         yield from c4model_element_types
+
+    @property
+    def model_browser_model(self) -> type[TreeModel]:
+        return TreeModel
 
     def lookup_element(self, name, ns=None):
         assert ns in ("C4Model", None)

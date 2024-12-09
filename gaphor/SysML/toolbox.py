@@ -169,6 +169,7 @@ sysml_diagram_types: DiagramTypes = (
 )
 
 sysml_element_types = (
+    ElementCreateInfo("package", i18nize("New Package"), Package, (Package,)),
     ElementCreateInfo("activity", i18nize("New Activity"), Activity, (Package,)),
     ElementCreateInfo("actor", i18nize("New Actor"), Actor, (Package,)),
     ElementCreateInfo("block", i18nize("New Block"), Block, (Package,)),

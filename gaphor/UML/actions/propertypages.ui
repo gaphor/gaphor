@@ -322,6 +322,7 @@
             <property name="halign">end</property>
             <property name="valign">end</property>
             <property name="label" translatable="yes">ⓘ Help</property>
+            <property name="accessible-role">button</property>
             <child>
               <object class="GtkPopover" id="parameters-info">
                 <property name="visible">0</property>
