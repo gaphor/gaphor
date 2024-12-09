@@ -1,6 +1,11 @@
 """UI related events."""
 
 
+class ElementFocused:
+    def __init__(self, element):
+        self.element = element
+
+
 class ElementOpened:
     def __init__(self, element):
         self.element = element

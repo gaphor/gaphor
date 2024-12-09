@@ -16,14 +16,15 @@ from gaphor.core.modeling import (
 )
 from gaphor.diagram.drop import drop
 from gaphor.diagram.event import DiagramOpened, DiagramSelectionChanged
-from gaphor.event import ActionEnabled
-from gaphor.i18n import translated_ui_string
+from gaphor.event import ActionEnabled, Notification
+from gaphor.i18n import gettext, translated_ui_string
 from gaphor.transaction import Transaction
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.diagrampage import DiagramPage, GtkView
 from gaphor.ui.event import (
     CurrentDiagramChanged,
     DiagramClosed,
+    ElementFocused,
     ElementOpened,
 )
 
@@ -70,7 +71,8 @@ class Diagrams(UIComponent, ActionProvider):
         ]
 
         self.event_manager.subscribe(self._on_show_diagram)
-        self.event_manager.subscribe(self._on_show_element)
+        self.event_manager.subscribe(self._on_element_focused)
+        self.event_manager.subscribe(self._on_element_opened)
         self.event_manager.subscribe(self._on_close_diagram)
         self.event_manager.subscribe(self._on_name_change)
         self.event_manager.subscribe(self._on_flush_model)
@@ -85,7 +87,8 @@ class Diagrams(UIComponent, ActionProvider):
         self.event_manager.unsubscribe(self._on_flush_model)
         self.event_manager.unsubscribe(self._on_name_change)
         self.event_manager.unsubscribe(self._on_close_diagram)
-        self.event_manager.unsubscribe(self._on_show_element)
+        self.event_manager.unsubscribe(self._on_element_focused)
+        self.event_manager.unsubscribe(self._on_element_opened)
         self.event_manager.unsubscribe(self._on_show_diagram)
         if self._notebook:
             if parent := self._notebook.get_parent():
@@ -301,12 +304,32 @@ class Diagrams(UIComponent, ActionProvider):
                 )
             )
 
-    @event_handler(ElementOpened)
-    def _on_show_element(self, event: ElementOpened):
+    @event_handler(ElementFocused)
+    def _on_element_focused(self, event: ElementFocused):
         view = self.get_current_view()
         diagram = self.get_current_diagram()
         if not (view and diagram):
             return
+
+        if item := next(
+            (p for p in diagram.ownedPresentation if p.subject is event.element), None
+        ):
+            view.selection.unselect_all()
+            view.selection.focused_item = item
+        else:
+            self.event_manager.handle(
+                Notification(
+                    gettext("Selected element is not in present in this diagram.")
+                )
+            )
+
+    @event_handler(ElementOpened)
+    def _on_element_opened(self, event: ElementOpened):
+        view = self.get_current_view()
+        diagram = self.get_current_diagram()
+        if not (view and diagram):
+            return
+
         x, y = view.matrix.inverse().transform_point(100, 100)
         with Transaction(self.event_manager):
             if item := drop(event.element, diagram, x, y):
