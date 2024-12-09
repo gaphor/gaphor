@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: Gaphor 2.23.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-11-27 15:44-0500\n"
-"PO-Revision-Date: 2024-12-01 17:02+0000\n"
-"Last-Translator: Dan Yeaw <dan@yeaw.me>\n"
+"PO-Revision-Date: 2024-12-09 06:31+0000\n"
+"Last-Translator: Stan SZLAPKA <stansz@free.fr>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/gaphor/"
 "docs-gaphor-org/fr/>\n"
 "Language: fr\n"
@@ -3227,7 +3227,7 @@ msgstr "Fonctionnements internes"
 
 #: ../index.rst:2
 msgid "About Gaphor"
-msgstr ""
+msgstr "À propos de Gaphor"
 
 #: ../index.rst:6
 msgid "The documentation is up to date for Gaphor |version|"
@@ -3896,12 +3896,16 @@ msgid ""
 "[Dropping](#dropping), allow elements to be dragged from the tree view onto "
 "a diagram"
 msgstr ""
+"[Dropping](#dropping), permet de faire glisser des éléments de "
+"l'arborescence sur un diagramme"
 
 #: ../modeling_language.md:38 ../modeling_language.md:32
 msgid ""
 "[Automatic cleanup rules](#automated-model-cleanup) to keep the model "
 "consistent"
 msgstr ""
+"[Règles de nettoyage automatique](#automated-model-cleanup) pour maintenir "
+"la cohérence du modèle"
 
 #: ../modeling_language.md:41 ../modeling_language.md:38
 msgid ""
@@ -3909,20 +3913,28 @@ msgid ""
 "not loaded directly when you import a modeling language package. Instead, "
 "they should be imported via the `gaphor.modules` entrypoint."
 msgstr ""
+"Les langages de modélisation peuvent également fournir de nouveaux "
+"composants d'interface utilisateur. Ces composants ne sont pas chargés "
+"directement lors de l'importation d'un paquetage de langage de modélisation. "
+"Ils doivent être importés via le point d'entrée `gaphor.modules`."
 
 #: ../modeling_language.md:45
 msgid ""
 "[Editor pages](#property-editor-pages), shown in the collapsible pane on the "
 "right side"
 msgstr ""
+"[Pages de l'éditeur](#property-editor-pages), affichées dans le volet "
+"rétractable de droite"
 
 #: ../modeling_language.md:46 ../modeling_language.md:43
 msgid "[Instant (diagram) editor popups](#instant-diagram-editor-popups)"
 msgstr ""
+"[Fenêtres contextuelles instantanées de l'éditeur (de diagrammes)](#instant-"
+"diagram-editor-popups)"
 
 #: ../modeling_language.md:47 ../modeling_language.md:44
 msgid "Special diagram interactions"
-msgstr ""
+msgstr "Interactions avec les diagrammes spéciaux"
 
 #: ../modeling_language.md:50
 #, fuzzy
@@ -3934,94 +3946,106 @@ msgid ""
 "A model provider is a special service that provides an entrypoint to a model "
 "implementation, such as UML, SysML, RAAML."
 msgstr ""
+"Un fournisseur de modèle est un service spécialisé qui fournit un point "
+"d'entrée pour l'implémentation d'un modèle, comme UML, SysML ou RAAML."
 
 #: gaphor.abc.ModelingLanguage.diagram_types:1 of ../../gaphor/abc.py:docstring
 msgid "Iterate diagram types."
-msgstr ""
+msgstr "Diagrammes types."
 
 #: gaphor.abc.ModelingLanguage.element_types:1 of ../../gaphor/abc.py:docstring
 msgid "Iterate element types."
-msgstr ""
+msgstr "Itérer les types d'éléments."
 
 #: gaphor.abc.ModelingLanguage.lookup_element:1 of
 #: ../../gaphor/abc.py:docstring
 msgid "Look up a model element type by (class) name."
-msgstr ""
+msgstr "Rechercher un élément de modèle par son nom de classe."
 
 #: gaphor.abc.ModelingLanguage.lookup_element:3 of
 msgid ""
 "A namespace may be provided. This will allow the model to be loaded from "
 "that specific modeling language only."
 msgstr ""
+"Un nom de domaine peut être fourni. Cela permettra au modèle d'être chargé "
+"uniquement à partir de ce langage de modélisation spécifique."
 
 #: gaphor.abc.ModelingLanguage.name:1 of ../../gaphor/abc.py:docstring
 msgid "Human-readable name of the modeling language."
-msgstr ""
+msgstr "Nom du langage de modélisation lisible par l'homme."
 
 #: gaphor.abc.ModelingLanguage.toolbox_definition:1 of
 #: ../../gaphor/abc.py:docstring
 msgid "Get structure for the toolbox."
-msgstr ""
+msgstr "Structurer la boîte à outils."
 
 #: ../modeling_language.md:57
+#, fuzzy
 msgid ""
 "As a convention, the package containing the modeling language should have an "
 "attribute `__modeling_language__` that has the same value as the modeling "
 "language name in the entry point."
 msgstr ""
+"Par convention, le paquet contenant le langage de modélisation doit avoir un "
+"attribut `__modeling_language__` dont la valeur est identique à celle du nom "
+"du langage de modélisation dans le point d'entrée."
 
 #: ../modeling_language.md:60
 msgid "To illustrate:"
-msgstr ""
+msgstr "En guise d'illustration :"
 
 #: ../modeling_language.md:62
 msgid "The file `mytool/mylang/__init__.py` contains an entry:"
-msgstr ""
+msgstr "Le fichier `mytool/mylang/__init__.py` contient une entrée :"
 
 #: ../modeling_language.md:68
 msgid "`pyproject.toml` contains an entry point:"
-msgstr ""
+msgstr "`pyproject.toml` contient un point d'entrée :"
 
 #: ../modeling_language.md:75 ../modeling_language.md:52
 msgid "Connectors"
-msgstr ""
+msgstr "Connecteurs"
 
 #: ../modeling_language.md:77 ../modeling_language.md:54
 msgid "Connectors are used to connect one element to another."
-msgstr ""
+msgstr "Les connecteurs sont utilisés pour relier un élément à un autre."
 
 #: ../modeling_language.md:79 ../modeling_language.md:56
 msgid ""
 "Connectors should adhere to the `ConnectorProtocol`. Normally you would "
 "inherit from `BaseConnector`."
 msgstr ""
+"Les connecteurs doivent respecter le protocole `ConnectorProtocol`. "
+"Normalement, vous héritez de `BaseConnector`."
 
 #: gaphor.diagram.connectors.BaseConnector:1 of
 #: ../../gaphor/diagram/connectors.py:docstring
 msgid "Connection adapter for Gaphor diagram items."
-msgstr ""
+msgstr "Adaptateur de connexion pour les éléments du diagramme Gaphor."
 
 #: gaphor.diagram.connectors.BaseConnector:3 of
 #: ../../gaphor/diagram/connectors.py:docstring
 msgid ""
 "Line item ``line`` connects with a handle to a connectable item ``element``."
 msgstr ""
+"L'élément ligne ``line`` se connecte avec une poignée à un élément "
+"connectable ``element``."
 
 #: ../modeling_language.md ../../gaphor/diagram/connectors.py:docstring of
 #: gaphor.diagram.connectors.BaseConnector:0
 msgid "Parameters"
-msgstr ""
+msgstr "Paramètres"
 
 #: gaphor.diagram.connectors.BaseConnector:5 of
 #: ../../gaphor/diagram/connectors.py:docstring
 msgid "connecting item"
-msgstr ""
+msgstr "élément de connexion"
 
 #: gaphor.diagram.connectors.BaseConnector:6 of
 #: ../../gaphor/diagram/connectors.py:docstring
 #: gaphor.diagram.connectors.BaseConnector:7
 msgid "connectable item"
-msgstr ""
+msgstr "élément connectable"
 
 #: gaphor.diagram.connectors.BaseConnector:8 of
 #: ../../gaphor/diagram/connectors.py:docstring
@@ -4030,63 +4054,73 @@ msgid ""
 "By convention the adapters are registered by (element, line) -- in that "
 "order."
 msgstr ""
+"Par convention, les adaptateurs sont enregistrés par (élément, ligne) -- "
+"dans cet ordre."
 
 #: gaphor.diagram.connectors.BaseConnector.allow:1 of
 #: ../../gaphor/diagram/connectors.py:docstring
 msgid "Determine if items can be connected."
-msgstr ""
+msgstr "Détermine si les éléments peuvent être connectés."
 
 #: gaphor.diagram.connectors.BaseConnector.allow:3 of
 msgid "Is the connection allowed at all (during mouse movement for example)?"
 msgstr ""
+"La connexion est-elle toujours autorisée, par exemple lorsque la souris se "
+"déplace ?"
 
 #: gaphor.diagram.connectors.BaseConnector.allow:5 of
 #: ../../gaphor/diagram/connectors.py:docstring
 #: gaphor.diagram.connectors.BaseConnector.allow:3
 msgid "Returns `True` if connection is allowed."
-msgstr ""
+msgstr "Retourne `True` si la connexion est autorisée."
 
 #: gaphor.diagram.connectors.BaseConnector.connect:1 of
 msgid "Connect to an element."
-msgstr ""
+msgstr "Se connecter à un élément."
 
 #: gaphor.diagram.connectors.BaseConnector.connect:3 of
 msgid ""
 "Establish a connection between element and line. Also takes care of "
 "disconnects, if required (e.g. 1:1 relationships)."
 msgstr ""
+"Établir une connexion entre l'élément et la ligne. Prend également en charge "
+"les déconnexions, si nécessaire (par exemple, pour les relations 1:1)."
 
 #: gaphor.diagram.connectors.BaseConnector.connect:6 of
 msgid ""
 "Note that at this point the line may be connected to some other, or the same "
 "element. The connection at model level also still exists."
 msgstr ""
+"Notez qu'à ce stade, la ligne peut être connectée à un autre élément ou au "
+"même élément. La connexion au niveau du modèle reste valide."
 
 #: gaphor.diagram.connectors.BaseConnector.connect:10 of
 #: ../../gaphor/diagram/connectors.py:docstring
 #: gaphor.diagram.connectors.BaseConnector.connect:5
 msgid "Returns `True` if a connection is established."
-msgstr ""
+msgstr "Retourne `True` si une connexion est établie."
 
 #: gaphor.diagram.connectors.BaseConnector.disconnect:1 of
 #: ../../gaphor/diagram/connectors.py:docstring
 msgid "Disconnect model level connections."
-msgstr ""
+msgstr "Déconnecter les connexions au niveau du modèle."
 
 #: gaphor.diagram.connectors.BaseConnector.disconnect:3 of
 msgid ""
 "Break connection, called when dropping a handle on a point where it can not "
 "connect."
 msgstr ""
+"Rupture de connexion, appelée lorsqu'on dépose une poignée sur un point où "
+"elle ne peut pas se connecter."
 
 #: gaphor.diagram.connectors.BaseConnector.get_connected:1 of
 #: ../../gaphor/diagram/connectors.py:docstring
 msgid "Get item connected to a handle."
-msgstr ""
+msgstr "Obtenir un élément connecté à une poignée."
 
 #: ../modeling_language.md:87 ../modeling_language.md:64
 msgid "Format and parse"
-msgstr ""
+msgstr "Formater et analyser"
 
 #: ../modeling_language.md:89 ../modeling_language.md:66
 msgid ""
@@ -4094,17 +4128,25 @@ msgid ""
 "example, This is used in the Model Browser. It isn't a full serialization of "
 "the model element."
 msgstr ""
+"Les éléments de modèle peuvent être représentés sous forme textuelle. Par "
+"exemple, le navigateur de modèles utilise cette fonctionnalité. Il ne s'agit "
+"toutefois pas d'une conversion complète de l'élément de modèle."
 
 #: ../modeling_language.md:92 ../modeling_language.md:69
 msgid ""
 "In some cases it's useful to parse a text back into an object. This is done "
 "when you edit attributes and operations on a class."
 msgstr ""
+"Dans certains cas, il peut être utile d'analyser le texte afin de le "
+"réintégrer dans un objet. C'est notamment le cas lorsque l'on modifie les "
+"attributs et les opérations d'une classe."
 
 #: ../modeling_language.md:95 ../modeling_language.md:72
 msgid ""
 "Not every ``format()`` needs to have an equivalent ``parse()`` function."
 msgstr ""
+"Chaque ``format()`` n'a pas besoin d'avoir une fonction ``parse()`` "
+"équivalente."
 
 #: ../modeling_language.md:100 ../modeling_language.md:77
 msgid ""
@@ -4112,6 +4154,9 @@ msgid ""
 "this is just the name, however, properties (attributes) and operations are "
 "formatted more extensively:"
 msgstr ""
+"Il renvoie une représentation lisible de l'élément de modèle. Dans la "
+"plupart des cas, il s'agit simplement du nom, mais les propriétés (attributs)"
+" et les opérations sont présentées de manière plus détaillée :"
 
 #: ../modeling_language.md:110 ../modeling_language.md:87
 msgid ""
@@ -4119,10 +4164,13 @@ msgid ""
 "elements from the text. This may mean that new model elements are created as "
 "part of the parse process."
 msgstr ""
+"Analyse ``text`` et remplit ``element``. L'élément est alors rempli avec les "
+"éléments du texte. Cela peut signifier que de nouveaux éléments du modèle "
+"sont créés dans le cadre du processus d'analyse."
 
 #: ../modeling_language.md:114 ../modeling_language.md:91
 msgid "Copy and paste"
-msgstr ""
+msgstr "Copier et coller"
 
 #: ../modeling_language.md:116 ../modeling_language.md:93
 msgid ""
@@ -4130,12 +4178,18 @@ msgid ""
 "one model element (the `subject`). It leverages the `load()` and `save()` "
 "methods of the elements to ensure all relevant data is copied."
 msgstr ""
+"Le copier-coller fonctionne immédiatement pour des éléments simples, comme "
+"un élément de diagramme avec un élément de modèle (le `subject`). Il "
+"s'appuie sur les méthodes `load()` et `save()` des éléments pour s'assurer "
+"que toutes les données pertinentes sont copiées."
 
 #: ../modeling_language.md:119 ../modeling_language.md:96
 msgid ""
 "Sometimes items need more than one model element to work. For example an "
 "Association: it has two association ends."
 msgstr ""
+"Parfois, certains éléments ont besoin de plus d'un élément du modèle pour "
+"fonctionner. Une association, par exemple, a deux extrémités."
 
 #: ../modeling_language.md:121 ../modeling_language.md:98
 msgid ""
@@ -4143,6 +4197,9 @@ msgid ""
 "functions. To create such a thing you'll need to create two functions: one "
 "for copying and one for pasting."
 msgstr ""
+"Dans ces cas spécifiques, vous devez implémenter vos propres fonctions de "
+"copier-coller. Pour ce faire, vous devez créer deux fonctions : l'une pour "
+"copier et l'autre pour coller."
 
 #: ../modeling_language.md:126 ../modeling_language.md:103
 msgid ""
@@ -4151,6 +4208,11 @@ msgid ""
 "function normally copies only the element and mandatory related elements. E."
 "g. an Association needs two association ends."
 msgstr ""
+"Créer une copie d'un élément (ou d'une liste d'éléments). Le type de retour "
+"doit être distinct afin que la fonction `paste()`puisse être correctement "
+"distribuée. Une fonction de copie ne copie normalement que l'élément et les "
+"éléments connexes obligatoires. Par exemple, une association a besoin de "
+"deux extrémités."
 
 #: ../modeling_language.md:134 ../modeling_language.md:111
 msgid ""
@@ -4158,22 +4220,30 @@ msgid ""
 "``copy()`` function, try to duplicate the copied elements. Returns the newly "
 "created item or element."
 msgstr ""
+"Collez les données précédemment recopiées. Dupliquez les éléments copiés en "
+"fonction du type de données créé dans la fonction ``copy()``. Renvoie "
+"l'élément nouvellement créé."
 
 #: ../modeling_language.md:139 ../modeling_language.md:116
 msgid "Gaphor provides some convenience functions:"
-msgstr ""
+msgstr "Gaphor fournit quelques fonctions de confort :"
 
 #: ../modeling_language.md:143 ../modeling_language.md:120
 msgid ""
 "Copy ``items``. The ``lookup`` function is used to look up owned elements "
 "(shown as child nodes in the Model Browser)."
 msgstr ""
+"Copier ``items``. La fonction ``lookup`` est utilisée pour rechercher les "
+"éléments possédés (affichés comme des noeuds enfants dans le navigateur de "
+"modèle)."
 
 #: ../modeling_language.md:148 ../modeling_language.md:125
 msgid ""
 "Paste a copy of the Presentation element to the diagram, but try to link the "
 "underlying model element. A shallow copy."
 msgstr ""
+"Collez une copie de l'élément Présentation dans le diagramme, mais essayez "
+"de lier l'élément de modèle sous-jacent. Une copie succinte."
 
 #: ../modeling_language.md:154 ../modeling_language.md:131
 msgid "Paste a copy of both Presentation and model element. A deep copy."
