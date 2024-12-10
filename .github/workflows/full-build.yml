@@ -460,7 +460,6 @@ jobs:
           launchpad-token: ${{ secrets.LP_BUILD_SECRET }}
           repo-token: ${{ secrets.SNAPCRAFTERS_BOT_COMMIT }}
           store-token: ${{ secrets.SNAP_STORE }}
-          channel: latest/edge
 
   call-for-testing:
     name: 📣 Create call for testing
@@ -480,7 +479,6 @@ jobs:
         with:
           architectures: ${{ needs.get-architectures.outputs.architectures }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          channel: latest/edge
 
   screenshots:
     name: 📸 Gather screenshots
@@ -499,4 +497,3 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           screenshots-token: ${{ secrets.SNAPCRAFTERS_BOT_COMMIT }}
           screenshots-repo: ${{ secrets.SCREENSHOTS_REPO }}
-          channel: latest/edge
