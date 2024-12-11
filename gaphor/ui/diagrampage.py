@@ -11,7 +11,7 @@ from gaphas.view import GtkView
 from gi.repository import Adw, Gdk, GdkPixbuf, Gio, GLib, Gtk
 
 from gaphor.core import event_handler, gettext
-from gaphor.core.modeling.diagram import Diagram, StyledDiagram
+from gaphor.core.modeling.diagram import StyledDiagram
 from gaphor.core.modeling.event import (
     AttributeUpdated,
     ElementDeleted,
@@ -212,7 +212,7 @@ class DiagramPage:
 
     @event_handler(AttributeUpdated)
     def _on_attribute_updated(self, event: AttributeUpdated):
-        if event.property is Diagram.name and self.view:
+        if event.property.name == "name" and self.view:
             self.view.update_back_buffer()
 
     @event_handler(StyleSheetUpdated)
