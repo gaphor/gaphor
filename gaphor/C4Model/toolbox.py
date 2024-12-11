@@ -148,7 +148,7 @@ c4model_toolbox_actions: ToolboxDefinition = (
 )
 
 c4model_diagram_types: DiagramTypes = (
-    DiagramType("c4", i18nize("C4 Diagram"), (c4,)),
+    DiagramType(c4model.C4Diagram, i18nize("C4 Diagram"), (c4,)),
     DiagramType("cls", i18nize("Class Diagram"), (classes,)),
     DiagramType("act", i18nize("Activity Diagram"), (actions,)),
     DiagramType("sd", i18nize("Sequence Diagram"), (interactions,)),

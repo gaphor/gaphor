@@ -41,6 +41,11 @@ class Dependency(_Dependency):
     technology: _attribute[str] = _attribute("technology", str)
 
 
+from gaphor.UML.uml import Diagram
+class C4Diagram(Diagram):
+    diagramType: _attribute[str] = _attribute("diagramType", str, default="c4")
+
+
 
 Container.ownerContainer = association("ownerContainer", Container, upper=1, opposite="owningContainer")
 Container.owningContainer = association("owningContainer", Container, composite=True, opposite="ownerContainer")
