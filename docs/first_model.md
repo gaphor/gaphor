@@ -75,3 +75,7 @@ underlying model. The model is what you see in the Model Browser.
 Elements in the model are automatically removed when there are no more
 representations in any of the diagrams.
 ```
+## Examples of Gaphor models
+
+### SysML Models
+To see how a larger model comes together in Gaphor check out [Gaphor Distilled](https://github.com/mikekidner/gaphor_distilled) which implements the DELL-SAT-77 model used as the basis for [SysML Distilled](https://delligattiassociates.com/publications/?_gl=1*1tu6ekh*_ga*MTMwMTU4NjMyNC4xNzMyNTYyOTUw*_up*MQ..) one of the standard references for the SysML language.
