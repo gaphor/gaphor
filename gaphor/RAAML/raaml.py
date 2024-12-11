@@ -440,6 +440,15 @@ class Inverted(AnyMalfunction):
     pass
 
 
+from gaphor.UML.uml import Diagram
+class FTADiagram(Diagram):
+    pass
+
+
+class STPADiagram(Diagram):
+    pass
+
+
 
 ControllingMeasure.affects = association("affects", _Property, composite=True)
 AnySituation.to = association("to", AnySituation, opposite="from_")

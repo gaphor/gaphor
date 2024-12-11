@@ -40,11 +40,13 @@ ToolboxDefinition = Sequence[ToolSection]
 class DiagramType:
     id: str
     name: str
+    diagram_type: type[Diagram] | None
     sections: Collection[ToolSection]
 
-    def __init__(self, id, name, sections):
+    def __init__(self, id, name, sections, diagram_type: type[Diagram] | None = None):
         self.id = id
         self.name = name
+        self.diagram_type = diagram_type
         self.sections = sections
 
     def allowed(self, element: type[Base]) -> bool:

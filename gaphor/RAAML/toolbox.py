@@ -8,7 +8,14 @@ from gaphor.diagram.diagramtoolbox import (
 )
 from gaphor.i18n import i18nize
 from gaphor.RAAML.fta.ftatoolbox import fta
-from gaphor.RAAML.raaml import Hazard, Loss, Situation, TopEvent
+from gaphor.RAAML.raaml import (
+    FTADiagram,
+    Hazard,
+    Loss,
+    Situation,
+    STPADiagram,
+    TopEvent,
+)
 from gaphor.RAAML.stpa.stpatoolbox import stpa
 from gaphor.UML.general.generaltoolbox import general_tools
 from gaphor.UML.uml import Package
@@ -20,8 +27,8 @@ raaml_toolbox_actions: ToolboxDefinition = (
 )
 
 raaml_diagram_types: DiagramTypes = (
-    DiagramType("fta", i18nize("FTA Diagram"), (fta,)),
-    DiagramType("stpa", i18nize("STPA Diagram"), (stpa,)),
+    DiagramType("fta", i18nize("FTA Diagram"), (fta,), FTADiagram),
+    DiagramType("stpa", i18nize("STPA Diagram"), (stpa,), STPADiagram),
 )
 
 raaml_element_types = (
