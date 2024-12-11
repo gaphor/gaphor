@@ -808,6 +808,58 @@ class Diagram(NamedElement, _Diagram):
     element: relation_one[Element]
 
 
+class StructureDiagram(Diagram):
+    pass
+
+
+class BehaviorDiagram(Diagram):
+    pass
+
+
+class ClassDiagram(StructureDiagram):
+    diagramType: _attribute[str] = _attribute("diagramType", str, default="cls")
+
+
+class PackageDiagram(StructureDiagram):
+    diagramType: _attribute[str] = _attribute("diagramType", str, default="pkg")
+
+
+class ComponentDiagram(StructureDiagram):
+    diagramType: _attribute[str] = _attribute("diagramType", str, default="cmp")
+
+
+class DeploymentDiagram(StructureDiagram):
+    diagramType: _attribute[str] = _attribute("diagramType", str, default="dep")
+
+
+class ProfileDiagram(StructureDiagram):
+    diagramType: _attribute[str] = _attribute("diagramType", str, default="prf")
+
+
+class ActivityDiagram(BehaviorDiagram):
+    diagramType: _attribute[str] = _attribute("diagramType", str, default="act")
+
+
+class InteractionDiagram(BehaviorDiagram):
+    pass
+
+
+class SequenceDiagram(InteractionDiagram):
+    diagramType: _attribute[str] = _attribute("diagramType", str, default="sd")
+
+
+class CommunicationDiagram(InteractionDiagram):
+    diagramType: _attribute[str] = _attribute("diagramType", str, default="com")
+
+
+class StateMachineDiagram(BehaviorDiagram):
+    diagramType: _attribute[str] = _attribute("diagramType", str, default="stm")
+
+
+class UseCaseDiagram(BehaviorDiagram):
+    diagramType: _attribute[str] = _attribute("diagramType", str, default="uc")
+
+
 # 77: override Lifeline.parse: Callable[[Lifeline, str], None]
 # defined in umloverrides.py
 
