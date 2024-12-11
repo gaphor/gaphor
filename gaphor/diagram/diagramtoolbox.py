@@ -66,7 +66,7 @@ class ElementCreateInfo(NamedTuple):
     id: str
     name: str
     element_type: type[Base]
-    allowed_owning_elements: Collection[type[Base]]
+    allowed_owning_elements: tuple[type[Base], ...]
 
 
 def tooliter(toolbox_actions: Sequence[tuple[str, Sequence[ToolDef]]]):
