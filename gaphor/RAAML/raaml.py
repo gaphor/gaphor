@@ -442,11 +442,11 @@ class Inverted(AnyMalfunction):
 
 from gaphor.UML.uml import Diagram
 class FTADiagram(Diagram):
-    pass
+    diagramType: _attribute[str] = _attribute("diagramType", str, default="fta")
 
 
 class STPADiagram(Diagram):
-    pass
+    diagramType: _attribute[str] = _attribute("diagramType", str, default="stpa")
 
 
 

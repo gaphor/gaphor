@@ -43,16 +43,29 @@ class DiagramType:
     diagram_type: type[Diagram] | None
     sections: Collection[ToolSection]
 
-    def __init__(self, id, name, sections, diagram_type: type[Diagram] | None = None):
-        self.id = id
+    def __init__(
+        self,
+        id_or_type: str | type[Diagram],
+        name: str,
+        sections: tuple[ToolSection, ...],
+    ):
+        if isinstance(id_or_type, str):
+            # The old way:
+            self.id = id_or_type
+            self.diagram_type = None
+        else:
+            assert issubclass(id_or_type, Diagram)
+            self.id = id_or_type.diagramType.default
+            self.diagram_type = id_or_type
         self.name = name
-        self.diagram_type = diagram_type
         self.sections = sections
 
     def allowed(self, element: type[Base]) -> bool:
         return True
 
     def create(self, element_factory, element):
+        # Deprecated!
+        assert self.diagram_type is None
         diagram = element_factory.create(Diagram)
         diagram.element = element
         diagram.name = diagram.gettext(self.name)

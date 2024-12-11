@@ -26766,7 +26766,7 @@ Figure 9.138</val>
 </UML:Diagram>
 <UML:ClassItem id="e0c436f8-b7af-11ef-b58f-be7f4daace40">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 195.0, 112.328125)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 206.0, 112.328125)</val>
 </matrix>
 <top-left>
 <val>(0.0, 0.0)</val>
@@ -26799,6 +26799,11 @@ Figure 9.138</val>
 <name>
 <val>FTADiagram</val>
 </name>
+<ownedAttribute>
+<reflist>
+<ref refid="b65366cc-b7bf-11ef-91cc-be7f4daace40"/>
+</reflist>
+</ownedAttribute>
 <owningPackage>
 <ref refid="9458d918-b7af-11ef-a190-be7f4daace40"/>
 </owningPackage>
@@ -26813,20 +26818,23 @@ Figure 9.138</val>
 </UML:Class>
 <UML:ClassItem id="e5922186-b7af-11ef-b58f-be7f4daace40">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 107.0, 298.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 49.0, 298.0)</val>
 </matrix>
 <top-left>
 <val>(0.0, 0.0)</val>
 </top-left>
 <width>
-<val>100.0</val>
+<val>190.0</val>
 </width>
 <height>
-<val>55.0</val>
+<val>70.0</val>
 </height>
 <diagram>
 <ref refid="dc1aaf92-b7af-11ef-b58f-be7f4daace40"/>
 </diagram>
+<show_operations>
+<val>0</val>
+</show_operations>
 <subject>
 <ref refid="e591db9a-b7af-11ef-b58f-be7f4daace40"/>
 </subject>
@@ -26840,6 +26848,11 @@ Figure 9.138</val>
 <name>
 <val>STPADiagram</val>
 </name>
+<ownedAttribute>
+<reflist>
+<ref refid="c1c2ee24-b7bf-11ef-91cc-be7f4daace40"/>
+</reflist>
+</ownedAttribute>
 <owningPackage>
 <ref refid="9458d918-b7af-11ef-a190-be7f4daace40"/>
 </owningPackage>
@@ -26854,20 +26867,23 @@ Figure 9.138</val>
 </UML:Class>
 <UML:ClassItem id="f2bd45a2-b7af-11ef-b58f-be7f4daace40">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 286.0, 298.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 271.0, 298.0)</val>
 </matrix>
 <top-left>
 <val>(0.0, 0.0)</val>
 </top-left>
 <width>
-<val>101.0</val>
+<val>201.0</val>
 </width>
 <height>
-<val>55.0</val>
+<val>70.0</val>
 </height>
 <diagram>
 <ref refid="dc1aaf92-b7af-11ef-b58f-be7f4daace40"/>
 </diagram>
+<show_operations>
+<val>0</val>
+</show_operations>
 <subject>
 <ref refid="f2bd02fe-b7af-11ef-b58f-be7f4daace40"/>
 </subject>
@@ -26889,7 +26905,7 @@ Figure 9.138</val>
 <val>(1.0, 0.0, 0.0, 1.0, 208.0, 181.0)</val>
 </matrix>
 <points>
-<val>[(-51.0, 117.0), (-51.0, 59.0), (37.0, 59.0), (37.0, -1.671875)]</val>
+<val>[(-64.0, 117.0), (-64.0, 59.0), (48.0, 59.0), (48.0, -1.671875)]</val>
 </points>
 <head-connection>
 <ref refid="e5922186-b7af-11ef-b58f-be7f4daace40"/>
@@ -26928,7 +26944,7 @@ Figure 9.138</val>
 <val>(1.0, 0.0, 0.0, 1.0, 249.0, 181.0)</val>
 </matrix>
 <points>
-<val>[(87.5, 117.0), (87.5, 59.0), (-4.0, 59.0), (-4.0, -1.671875)]</val>
+<val>[(122.5, 117.0), (122.5, 59.0), (7.0, 59.0), (7.0, -1.671875)]</val>
 </points>
 <head-connection>
 <ref refid="f2bd45a2-b7af-11ef-b58f-be7f4daace40"/>
@@ -26950,5 +26966,33 @@ Figure 9.138</val>
 <ref refid="f2bd02fe-b7af-11ef-b58f-be7f4daace40"/>
 </specific>
 </UML:Generalization>
+<UML:Property id="b65366cc-b7bf-11ef-91cc-be7f4daace40">
+<class_>
+<ref refid="e591db9a-b7af-11ef-b58f-be7f4daace40"/>
+</class_>
+<defaultValue>
+<val>"fta"</val>
+</defaultValue>
+<name>
+<val>diagramType</val>
+</name>
+<typeValue>
+<val>String</val>
+</typeValue>
+</UML:Property>
+<UML:Property id="c1c2ee24-b7bf-11ef-91cc-be7f4daace40">
+<class_>
+<ref refid="f2bd02fe-b7af-11ef-b58f-be7f4daace40"/>
+</class_>
+<defaultValue>
+<val>"stpa"</val>
+</defaultValue>
+<name>
+<val>diagramType</val>
+</name>
+<typeValue>
+<val>String</val>
+</typeValue>
+</UML:Property>
 </model>
 </gaphor>
