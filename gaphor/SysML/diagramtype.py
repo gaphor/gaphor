@@ -16,8 +16,8 @@ class DiagramDefault:
 
 
 class SysMLDiagramType(DiagramType):
-    def __init__(self, id, name, sections, allowed_types=(), defaults=()):
-        super().__init__(id, name, sections)
+    def __init__(self, diagram_type, name, sections, allowed_types=(), defaults=()):
+        super().__init__(diagram_type, name, sections)
         self._allowed_types = allowed_types
         assert all(d.to_type in allowed_types for d in defaults)
         self._defaults = defaults
