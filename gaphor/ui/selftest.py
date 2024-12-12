@@ -23,8 +23,8 @@ class Status:
         self.name = name
         self.status = "in progress"
 
-    def complete(self):
-        self.status = "completed"
+    def passed(self):
+        self.status = "passed"
 
     def skip(self):
         self.status = "skipped"
@@ -35,7 +35,7 @@ class Status:
 
     @property
     def completed(self):
-        return self.status in ("completed", "skipped")
+        return self.status in ("passed", "skipped")
 
     def __repr__(self):
         return f"{self.name}: {self.status}"
@@ -91,7 +91,7 @@ class SelfTest(Service):
                 gtk_app.exit_code = 1
 
             for status in self.statuses:
-                log.info(status)
+                log.log(logging.INFO if status.completed else logging.ERROR, status)
 
             gtk_app.quit()
             return GLib.SOURCE_REMOVE
@@ -103,7 +103,7 @@ class SelfTest(Service):
         log.info(
             "System information:\n\n%s", textwrap.indent(system_information(), "\t")
         )
-        status.complete()
+        status.passed()
 
     @test
     def test_new_session(self, status):
@@ -111,7 +111,7 @@ class SelfTest(Service):
             main_window = session.get_service("main_window")
 
             if main_window.window and main_window.window.get_visible():
-                status.complete()
+                status.passed()
                 return GLib.SOURCE_REMOVE
             return GLib.SOURCE_CONTINUE
 
@@ -131,7 +131,7 @@ class SelfTest(Service):
                 raise RuntimeError(
                     f"Could not find schema {schema} in data dirs: {':'.join(data_dirs)}"
                 )
-        status.complete()
+        status.passed()
 
     @test
     def test_auto_layout(self, status):
@@ -144,7 +144,7 @@ class SelfTest(Service):
             diagram = element_factory.create(Diagram)
 
         auto_layout.layout(diagram)
-        status.complete()
+        status.passed()
 
 
 def system_information():
