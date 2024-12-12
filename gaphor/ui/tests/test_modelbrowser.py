@@ -31,7 +31,7 @@ def component_registry(event_manager, element_factory):
 
 @pytest.fixture
 def modeling_language(event_manager, properties):
-    return TestModelingLanguageService(event_manager, properties)
+    return DummyModelingLanguageService(event_manager, properties)
 
 
 @pytest.fixture
@@ -206,9 +206,9 @@ def test_default_model_browser_model_is_UML(model_browser):
 
 
 def test_model_browser_language_changed(model_browser, modeling_language):
-    modeling_language.select_modeling_language("Test")
+    modeling_language.select_modeling_language("Dummy")
 
-    assert type(model_browser.model) is TestTreeModel
+    assert type(model_browser.model) is DummyTreeModel
 
 
 def test_model_browser_should_not_change_for_similar_model_types(
@@ -442,17 +442,17 @@ class MockDropTarget:
         return Widget()
 
 
-class TestModelingLanguageService(ModelingLanguageService):
+class DummyModelingLanguageService(ModelingLanguageService):
     def __init__(self, event_manager=None, properties=None):
         super().__init__(event_manager, properties)
-        self._modeling_languages["Test"] = TestModelingLanguage()
+        self._modeling_languages["Dummy"] = DummyModelingLanguage()
 
 
-class TestModelingLanguage(ModelingLanguage):
+class DummyModelingLanguage(ModelingLanguage):
     @property
     def name(self) -> str:
         """Human-readable name of the modeling language."""
-        return "Test"
+        return "Dummy"
 
     @property
     def toolbox_definition(self):
@@ -468,21 +468,21 @@ class TestModelingLanguage(ModelingLanguage):
 
     @property
     def model_browser_model(self):
-        return TestTreeModel
+        return DummyTreeModel
 
     def lookup_element(self, name: str, ns: str | None = None):
         raise ValueError("toolbox_definition not implemented")
 
 
-class TestTreeModel:
+class DummyTreeModel:
     def __init__(self, on_select=None, on_sync=None):
-        self._root = Gio.ListStore.new(TestTreeItem.__gtype__)
+        self._root = Gio.ListStore.new(DummyTreeItem.__gtype__)
 
     @property
     def root(self) -> Gio.ListStore:
         return self._root
 
-    def child_model(self, item: TestTreeItem) -> Gio.ListStore | None:
+    def child_model(self, item: DummyTreeItem) -> Gio.ListStore | None:
         return None
 
     @property
@@ -492,14 +492,14 @@ class TestTreeModel:
     def tree_item_sort(self, a, b) -> int:
         return 0
 
-    def should_expand(self, item: TestTreeItem, element: Base) -> bool:
+    def should_expand(self, item: DummyTreeItem, element: Base) -> bool:
         return True
 
     def shutdown(self) -> None:
         pass
 
 
-class TestTreeItem(GObject.Object):
+class DummyTreeItem(GObject.Object):
     def __init__(self, element: Base | None):
         super().__init__()
         self.element = element
