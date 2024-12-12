@@ -2,6 +2,7 @@
 
 from gaphor import UML
 from gaphor.diagram.diagramtoolbox import (
+    DiagramType,
     DiagramTypes,
     ElementCreateInfo,
     ToolboxDefinition,
@@ -174,6 +175,7 @@ sysml_diagram_types: DiagramTypes = (
         ),
         (DiagramDefault(root, Package, i18nize("New Package")),),
     ),
+    DiagramType(UML.Diagram, i18nize("Generic Diagram"), ()),
 )
 
 sysml_element_types = (

@@ -41,6 +41,7 @@ uml_diagram_types: DiagramTypes = (
     DiagramType(UML.StateMachineDiagram, i18nize("State Machine Diagram"), (states,)),
     DiagramType(UML.UseCaseDiagram, i18nize("Use Case Diagram"), (use_cases,)),
     DiagramType(UML.ProfileDiagram, i18nize("Profile Diagram"), (profiles,)),
+    DiagramType(UML.Diagram, i18nize("Generic Diagram"), ()),
 )
 
 uml_element_types = (

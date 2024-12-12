@@ -143,6 +143,7 @@ c4model_diagram_types: DiagramTypes = (
     DiagramType(UML.ActivityDiagram, i18nize("Activity Diagram"), (actions,)),
     DiagramType(UML.SequenceDiagram, i18nize("Sequence Diagram"), (interactions,)),
     DiagramType(UML.StateMachineDiagram, i18nize("State Machine Diagram"), (states,)),
+    DiagramType(UML.Diagram, i18nize("Generic Diagram"), ()),
 )
 
 c4model_element_types = (

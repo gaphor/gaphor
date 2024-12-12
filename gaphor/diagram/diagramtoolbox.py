@@ -45,7 +45,7 @@ class DiagramType:
 
     def __init__(
         self,
-        id_or_type: str | type[Diagram],
+        diagram_type: type[Diagram],
         name: str,
         sections: tuple[ToolSection, ...],
         allowed_owner_types: tuple[type[None | Base], ...] = (
@@ -53,14 +53,8 @@ class DiagramType:
             Base,
         ),
     ):
-        if isinstance(id_or_type, str):
-            # The old way:
-            self.id = id_or_type
-            self.diagram_type = None
-        else:
-            assert issubclass(id_or_type, Diagram)
-            self.id = id_or_type.diagramType.default
-            self.diagram_type = id_or_type
+        self.id = diagram_type.diagramType.default or ""
+        self.diagram_type = diagram_type
         self.name = name
         self.sections = sections
         self.allowed_owner_types = allowed_owner_types

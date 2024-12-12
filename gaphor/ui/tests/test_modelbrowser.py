@@ -233,11 +233,11 @@ def test_tree_model_expand_to_relationship(model_browser, element_factory):
 
 
 def test_create_diagram(model_browser, element_factory):
-    model_browser.tree_view_create_diagram("my type")
+    model_browser.tree_view_create_diagram("cls")
 
     diagram = next(element_factory.select(Diagram))
 
-    assert diagram.diagramType == "my type"
+    assert diagram.diagramType == "cls"
 
 
 def test_delete_element(model_browser, element_factory):

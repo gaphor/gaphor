@@ -18,7 +18,7 @@ from gaphor.RAAML.raaml import (
 )
 from gaphor.RAAML.stpa.stpatoolbox import stpa
 from gaphor.UML.general.generaltoolbox import general_tools
-from gaphor.UML.uml import Package
+from gaphor.UML.uml import Diagram, Package
 
 raaml_toolbox_actions: ToolboxDefinition = (
     general_tools,
@@ -29,6 +29,7 @@ raaml_toolbox_actions: ToolboxDefinition = (
 raaml_diagram_types: DiagramTypes = (
     DiagramType(FTADiagram, i18nize("FTA Diagram"), (fta,)),
     DiagramType(STPADiagram, i18nize("STPA Diagram"), (stpa,)),
+    DiagramType(Diagram, i18nize("Generic Diagram"), ()),
 )
 
 raaml_element_types = (

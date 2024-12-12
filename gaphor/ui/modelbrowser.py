@@ -7,7 +7,6 @@ from gaphor.action import action
 from gaphor.core import event_handler
 from gaphor.core.modeling import Base, Diagram
 from gaphor.diagram.deletable import deletable
-from gaphor.diagram.diagramtoolbox import DiagramType
 from gaphor.diagram.event import DiagramOpened, DiagramSelectionChanged
 from gaphor.diagram.group import Root, RootType, change_owner, owner
 from gaphor.diagram.tools.dnd import ElementDragData
@@ -193,19 +192,15 @@ class ModelBrowser(UIComponent, ActionProvider):
             tree_item = row_item.get_item()
             GLib.timeout_add(START_EDIT_DELAY, tree_item.start_editing)
 
-    def _diagram_type_or(self, id: str, default_diagram: DiagramType) -> DiagramType:
-        return next(
-            (dt for dt in self.modeling_language.diagram_types if dt.id == id),
-            default_diagram,
-        )
-
     @action(name="win.create-diagram")
     def tree_view_create_diagram(self, diagram_kind: str):
         element: Base | RootType | None = self.get_selected_element()
 
         with Transaction(self.event_manager):
-            diagram_type = self._diagram_type_or(
-                diagram_kind, DiagramType(diagram_kind, "New Diagram", ())
+            diagram_type = next(
+                dt
+                for dt in self.modeling_language.diagram_types
+                if dt.id == diagram_kind
             )
             try:
                 if diagram_type.diagram_type:
@@ -653,13 +648,6 @@ def create_diagram_types_model(modeling_language, element=None):
             part.append_item(menu_item)
 
     if part.get_n_items():
-        model.append_section(None, part)
-
-    if not isinstance(element, Diagram):
-        part = Gio.Menu.new()
-        menu_item = Gio.MenuItem.new(gettext("Generic Diagram"), "win.create-diagram")
-        menu_item.set_attribute_value("target", GLib.Variant.new_string(""))
-        part.append_item(menu_item)
         model.append_section(None, part)
 
     return model
