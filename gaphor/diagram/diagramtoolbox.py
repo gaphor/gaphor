@@ -48,6 +48,10 @@ class DiagramType:
         id_or_type: str | type[Diagram],
         name: str,
         sections: tuple[ToolSection, ...],
+        allowed_owner_types: tuple[type[None | Base], ...] = (
+            type(None),
+            Base,
+        ),
     ):
         if isinstance(id_or_type, str):
             # The old way:
@@ -59,9 +63,10 @@ class DiagramType:
             self.diagram_type = id_or_type
         self.name = name
         self.sections = sections
+        self.allowed_owner_types = allowed_owner_types
 
-    def allowed(self, element: type[Base]) -> bool:
-        return True
+    def allowed(self, element: Base | None) -> bool:
+        return isinstance(element, self.allowed_owner_types)
 
     def create(self, element_factory, element):
         # Deprecated!
