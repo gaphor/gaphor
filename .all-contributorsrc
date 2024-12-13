@@ -1561,6 +1561,15 @@
       "contributions": [
         "translation"
       ]
+    },
+    {
+      "login": "jhenriquelc",
+      "name": "João Henrique",
+      "avatar_url": "https://avatars.githubusercontent.com/u/67766856?v=4",
+      "profile": "https://github.com/jhenriquelc",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,
