@@ -39,7 +39,7 @@ jobs:
           python-version: ${{ env.python_version }}
       - name: Get current version
         id: current-version
-        run: echo "current_version=$(yq ${{ env.yaml_key }} ${{ env.file }})" >> "$GITHUB_OUTPUT"
+        run: echo "current_version=$(yq ${yaml_key} ${file})" >> "$GITHUB_OUTPUT"
       - name: Get latest version
         id: latest-version
         run: |
@@ -72,7 +72,7 @@ jobs:
           ref: main
           persist-credentials: false
       - name: Update version
-        run: sed -i "$(yq '${{ env.yaml_key }} | line' "${{ env.file }}")s/$CURRENT/$LATEST/" "${{ env.file }}"
+        run: sed -i "$(yq '${yaml_key} | line' "${file}")s/$CURRENT/$LATEST/" "${file}"
       - name: Create GitHub App Token
         uses: actions/create-github-app-token@5d869da34e18e7287c1daad50e0b8ea0f506ce69 # v1.11.0
         id: generate-token
