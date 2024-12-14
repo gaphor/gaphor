@@ -33,21 +33,24 @@ Diagrams can be referenced by their name, or by their fully qualified name.
 
    .. diagram:: New model.main
 
-`Image properties`_ can also be applied:
+`Figure`_, and `Image properties`_ can also be applied:
 
 .. code:: rst
 
    .. diagram:: main
-      :width: 50%
-      :align: right
+      :figwidth: image
+      :align: center
       :alt: A description suitable for an example
+
+      You can also add a caption, if you want.
 
 .. diagram:: main
    :model: example
-   :width: 50%
+   :figwidth: image
    :align: center
    :alt: A description suitable for an example
 
+   You can also add a caption, if you want.
 
 Configuration
 -------------
@@ -120,6 +123,7 @@ An error will appear in the documentation. Something like this:
 .. _Sphinx: https://www.sphinx-doc.org
 .. _reStructured Text: https://www.sphinx-doc.org/en/master/usage/restructuredtext/index.html
 .. _Markdown: https://myst-parser.readthedocs.io
+.. _Figure: https://docutils.sourceforge.io/docs/ref/rst/directives.html#figure
 .. _Image properties: https://docutils.sourceforge.io/docs/ref/rst/directives.html#image
 .. _Read the Docs: https://readthedocs.org
 .. _.readthedocs.yaml: https://docs.readthedocs.io/en/stable/config-file/v2.html
