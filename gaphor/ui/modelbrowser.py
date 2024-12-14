@@ -203,19 +203,10 @@ class ModelBrowser(UIComponent, ActionProvider):
                 if dt.id == diagram_kind
             )
             try:
-                if diagram_type.diagram_type:
-                    diagram: Diagram = self.element_factory.create(
-                        diagram_type.diagram_type
-                    )
-                    diagram.element = element
-                    diagram.name = diagram.gettext(diagram_type.name)
-                    diagram.diagramType = diagram_type.id
-                else:
-                    # Old, deprecated way:
-                    diagram = diagram_type.create(
-                        self.element_factory, None if element is Root else element
-                    )
-                    diagram.name = diagram.gettext("New Diagram")
+                diagram = diagram_type.create(
+                    self.element_factory, None if element is Root else element
+                )
+                diagram.name = diagram.gettext("New Diagram")
             except TypeError as e:
                 self.event_manager.handle(Notification(str(e)))
                 return

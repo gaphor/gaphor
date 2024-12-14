@@ -43,7 +43,7 @@ class SysMLDiagramType(DiagramType):
                     )
                 ) from si
 
-        diagram = element_factory.create(SysMLDiagram)
+        diagram = element_factory.create(self.diagram_type)
         diagram.name = diagram.gettext(self.name)
         diagram.diagramType = self.id
         if element:

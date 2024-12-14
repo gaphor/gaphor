@@ -11,9 +11,8 @@ from typing import (
     TypeVar,
 )
 
-from gaphor.core.modeling import Base, Presentation
+from gaphor.core.modeling import Base, Diagram, Presentation
 from gaphor.diagram.group import group
-from gaphor.UML.uml import Diagram
 
 ItemFactory = Callable[[Diagram, Presentation | None], Presentation]
 P = TypeVar("P", bound=Presentation, covariant=True)
@@ -63,9 +62,7 @@ class DiagramType:
         return isinstance(element, self.allowed_owner_types)
 
     def create(self, element_factory, element):
-        # Deprecated!
-        assert self.diagram_type is None
-        diagram = element_factory.create(Diagram)
+        diagram = element_factory.create(self.diagram_type)
         diagram.element = element
         diagram.name = diagram.gettext(self.name)
         diagram.diagramType = self.id
