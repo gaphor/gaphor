@@ -39,16 +39,17 @@ class TreeItem(GObject.Object):
     editing = GObject.Property(type=bool, default=False)
     can_edit = GObject.Property(type=bool, default=True)
 
-    def read_only(self):
-        return not self.element
-
     @GObject.Property(type=str)
     def editable_text(self):
-        return "" if self.read_only() else (self.element.name or "")
+        return (
+            (self.element.name or "")
+            if isinstance(self.element, UML.NamedElement)
+            else ""
+        )
 
     @editable_text.setter  # type: ignore[no-redef]
     def editable_text(self, text):
-        if not self.read_only():
+        if isinstance(self.element, UML.NamedElement):
             self.element.name = text or ""
 
     def sync(self) -> None:
