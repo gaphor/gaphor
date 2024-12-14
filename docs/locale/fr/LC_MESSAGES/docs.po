@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gaphor 2.23.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-11-27 15:44-0500\n"
-"PO-Revision-Date: 2024-12-13 03:00+0000\n"
+"PO-Revision-Date: 2024-12-15 04:00+0000\n"
 "Last-Translator: Stan SZLAPKA <stansz@free.fr>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/gaphor/"
 "docs-gaphor-org/fr/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.9-dev\n"
+"X-Generator: Weblate 5.9-rc\n"
 "Generated-By: Babel 2.16.0\n"
 
 #: ../changelog.rst:2
@@ -7317,58 +7317,64 @@ msgid ""
 "diagram. When you set a `color`` or a `font-family` on `diagram`, it will "
 "propagate down to the items contained in the diagram."
 msgstr ""
+"Certaines propriétés sont héritées du style parent. Le parent est souvent un "
+"diagramme. Lorsque vous définissez une `couleur` ou une `famille de "
+"caractères` sur `diagramme`, cela se propagera aux éléments contenus dans le "
+"diagramme."
 
 #: ../style_sheets.md:140
 msgid "Colors"
-msgstr ""
+msgstr "Couleurs"
 
 #: ../style_sheets.md:144
 msgid "``background-color``"
-msgstr ""
+msgstr "``couleur d'arrière-plan``"
 
 #: ../style_sheets.md:144
 msgid "Examples:"
-msgstr ""
+msgstr "Exemples :"
 
 #: ../style_sheets.md:146
 msgid "``background-color: azure;``"
-msgstr ""
+msgstr "``couleur d'arrière-plan : azur ;``"
 
 #: ../style_sheets.md:148
 msgid "``background-color: rgb(255, 255, 255);``"
-msgstr ""
+msgstr "``couleur d'arrière-plan : rgb(255, 255, 255) ;``"
 
 #: ../style_sheets.md:150
 msgid "``background-color: hsl(130, 95%, 10%);``"
-msgstr ""
+msgstr "``couleur d'arrière-plan : hsl(130, 95%, 10%) ;``"
 
 #: ../style_sheets.md:151
 msgid "``color``"
-msgstr ""
+msgstr "``couleur``"
 
 #: ../style_sheets.md:151
 msgid "Color used for lines. *(inherited)*"
-msgstr ""
+msgstr "Couleur utilisée pour les lignes. *(hérité)*"
 
 #: ../style_sheets.md:152
 msgid "``text-color``"
-msgstr ""
+msgstr "``couleur-texte``"
 
 #: ../style_sheets.md:152
 msgid "Color for text. *(inherited)*"
-msgstr ""
+msgstr "Couleur du texte. *(hérité)*"
 
 #: ../style_sheets.md:154
 msgid "Use color if possible."
-msgstr ""
+msgstr "Utilisez la couleur si possible."
 
 #: ../style_sheets.md:155
 msgid "``opacity``"
-msgstr ""
+msgstr "``opacité``"
 
 #: ../style_sheets.md:155
 msgid "Color opacity factor (``0.0`` - ``1.0``), applied to all colors."
 msgstr ""
+"Facteur d'opacité de la couleur (``0.0`` - ``1.0``), appliqué à toutes les "
+"couleurs."
 
 #: ../style_sheets.md:160
 msgid ""
@@ -7377,99 +7383,111 @@ msgid ""
 "all color notations: `rgb()`, `rgba()`, `hsl()`, `hsla()`, Hex code "
 "(`#ffffff`) and color names."
 msgstr ""
+"Une couleur peut être n'importe quel [code couleur CSS3] (https://www.w3.org/"
+"TR/2018/REC-css-color-3-20180619/), comme décrit dans la documentation CSS. "
+"Gaphor supporte toutes les notations de couleur : `rgb()`, `rgba()`, `hsl()`"
+", `hsla()`, le code hexagonal (`#ffffff`) et les noms de couleurs."
 
 #: ../style_sheets.md:164
 msgid "Text and fonts"
-msgstr ""
+msgstr "Texte et polices"
 
 #: ../style_sheets.md:168
 msgid "``font-family``"
-msgstr ""
+msgstr "``font-family``"
 
 #: ../style_sheets.md:168
 msgid ""
 "A single font name (e.g. ``sans``, ``serif``, ``courier``). *(inherited)*"
 msgstr ""
+"Un nom de police unique (par exemple ``sans``, ``serif``, ``courier``). "
+"*(hérité)*"
 
 #: ../style_sheets.md:169
 msgid "``font-size``"
-msgstr ""
+msgstr "``font-size``"
 
 #: ../style_sheets.md:169
 msgid ""
 "An absolute size (e.g. ``14``) or a size value (e.g. ``small``). "
 "*(inherited)*"
 msgstr ""
+"Une taille absolue (par exemple ``14``) ou une valeur de taille (par exemple "
+"``small``). *(hérité)*"
 
 #: ../style_sheets.md:170
 msgid "``font-style``"
-msgstr ""
+msgstr "``font-style``"
 
 #: ../style_sheets.md:170
 msgid "Either ``normal`` or ``italic``. *(inherited)*"
-msgstr ""
+msgstr "Soit ``normal`` ou ``italique``. *(hérité)*"
 
 #: ../style_sheets.md:171
 msgid "``font-weight``"
-msgstr ""
+msgstr "``font-weight``"
 
 #: ../style_sheets.md:171
 msgid "Either ``normal`` or ``bold``. *(inherited)*"
-msgstr ""
+msgstr "Soit ``normal`` ou ``gras``. *(hérité)*"
 
 #: ../style_sheets.md:172
 msgid "``text-align``"
-msgstr ""
+msgstr "``text-align``"
 
 #: ../style_sheets.md:172
 msgid "Either ``left``, ``center``, ``right``. *(inherited)*"
-msgstr ""
+msgstr "Soit ``gauche``, ``centre``, ``droite``. *(hérité)*"
 
 #: ../style_sheets.md:173
 msgid "``text-decoration``"
-msgstr ""
+msgstr "``text-decoration``"
 
 #: ../style_sheets.md:173
 msgid "Either ``none`` or ``underline``."
-msgstr ""
+msgstr "Soit ``non`` ou ``souligné``."
 
 #: ../style_sheets.md:174
 msgid "``vertical-align``"
-msgstr ""
+msgstr "``vertical-align``"
 
 #: ../style_sheets.md:174
 msgid "Vertical alignment for text."
-msgstr ""
+msgstr "Alignement vertical du texte."
 
 #: ../style_sheets.md:176
 msgid "Either ``top``, ``middle`` or ``bottom``."
-msgstr ""
+msgstr "Soit ``haut``, ``milieu`` ou ``bas``."
 
 #: ../style_sheets.md:177
 msgid "``vertical-spacing``"
-msgstr ""
+msgstr "``vertical-spacing``"
 
 #: ../style_sheets.md:177
 msgid "Set vertical spacing for icon-like items (actors, start state)."
 msgstr ""
+"Définir l'espacement vertical pour les éléments de type icône (acteurs, état "
+"de départ)."
 
 #: ../style_sheets.md:179
 msgid "Example: ``vertical-spacing: 4``."
-msgstr ""
+msgstr "Exemple : ``vertical-spacing : 4``."
 
 #: ../style_sheets.md:180
 msgid "``white-space``"
-msgstr ""
+msgstr "``white-space``"
 
 #: ../style_sheets.md:180
 msgid "Change the line wrapping behavior for text. *(inherited)*"
-msgstr ""
+msgstr "Modifie le comportement de retour à la ligne du texte. *(hérité)*"
 
 #: ../style_sheets.md:184
 msgid ""
 "`font-family` can be only one font name, not a list of (fallback) names, as "
 "is used for HTML."
 msgstr ""
+"`font-family` ne peut être qu'un seul nom de police, et non une liste de "
+"noms (de repli), comme c'est le cas pour HTML."
 
 #: ../style_sheets.md:186
 msgid ""
@@ -7477,38 +7495,41 @@ msgid ""
 "csswg.org/css-fonts-3/#font-size-prop). Only the values `x-small`, `small`, "
 "`medium`, `large` and `x-large` are supported."
 msgstr ""
+"`font-size` peut être un nombre ou [CSS absolute-size values] (https://drafts"
+".csswg.org/css-fonts-3/#font-size-prop). Seules les valeurs `x-small`, "
+"`small`, `medium`, `large` et `x-large` sont supportées."
 
 #: ../style_sheets.md:189
 msgid "Drawing and spacing"
-msgstr ""
+msgstr "Dessin et espacement"
 
 #: ../style_sheets.md:193
 msgid "``border-radius``"
-msgstr ""
+msgstr "``border-radius``"
 
 #: ../style_sheets.md:193
 msgid "Radius for rectangles: ``border-radius: 4``."
-msgstr ""
+msgstr "Rayon pour les rectangles : ``border-radius : 4``."
 
 #: ../style_sheets.md:194
 msgid "``dash-style``"
-msgstr ""
+msgstr "``dash-style``"
 
 #: ../style_sheets.md:194
 msgid "Style for dashed lines: ``dash-style: 7 5``."
-msgstr ""
+msgstr "Style pour les lignes en pointillés : ``dash-style : 7 5``."
 
 #: ../style_sheets.md:195
 msgid "``justify-content``"
-msgstr ""
+msgstr "``justify-content``"
 
 #: ../style_sheets.md:195
 msgid "Content alignment for boxes."
-msgstr ""
+msgstr "Alignement du contenu des boîtes."
 
 #: ../style_sheets.md:197
 msgid "Either ``start``, ``end``, ``center`` or ``stretch``."
-msgstr ""
+msgstr "Soit ``début``, ``fin``, ``center`` ou ``étirer``."
 
 #: ../style_sheets.md:198
 msgid "``line-style``"
@@ -7516,125 +7537,140 @@ msgstr ""
 
 #: ../style_sheets.md:198
 msgid "Either ``normal`` or ``sloppy [factor]``."
-msgstr ""
+msgstr "Soit ``normal``, soit ``molle [facteur]``."
 
 #: ../style_sheets.md:199
 msgid "``line-width``"
-msgstr ""
+msgstr "``line-width``"
 
 #: ../style_sheets.md:199
 msgid "Set the width for lines: ``line-width: 2``. *(inherited)*"
-msgstr ""
+msgstr "Définir la largeur des lignes : ``line-width : 2``. *(hérité)*"
 
 #: ../style_sheets.md:200
 msgid "``min-height``"
-msgstr ""
+msgstr "``min-height``"
 
 #: ../style_sheets.md:200
 msgid "Set minimal height for an item: ``min-height: 50``."
-msgstr ""
+msgstr "Fixe la hauteur minimale d'un élément : ``min-height : 50``."
 
 #: ../style_sheets.md:201
 msgid "``min-width``"
-msgstr ""
+msgstr "``min-width``"
 
 #: ../style_sheets.md:201
 msgid "Set minimal width for an item: ``min-width: 100``."
-msgstr ""
+msgstr "Fixe la largeur minimale d'un élément : ``min-width : 100``."
 
 #: ../style_sheets.md:202
 msgid "``max-width``"
-msgstr ""
+msgstr "``max-width``"
 
 #: ../style_sheets.md:202
 msgid "Set maximum width (text fields only): ``max-width: 100``."
 msgstr ""
+"Définir la largeur maximale (champs de texte uniquement) : ``max-width : "
+"100``."
 
 #: ../style_sheets.md:203 ../style_sheets.md:202
 msgid "``padding``"
-msgstr ""
+msgstr "``padding``"
 
 #: ../style_sheets.md:203 ../style_sheets.md:202
 msgid "CSS style padding (top, right, bottom, left)."
-msgstr ""
+msgstr "Style CSS d'espacement de chaque coté (haut, droite, bas, gauche)."
 
 #: ../style_sheets.md:205 ../style_sheets.md:204
 msgid "Example: ``padding: 3 4``."
-msgstr ""
+msgstr "Exemple: ``padding : 3 4``."
 
 #: ../style_sheets.md:209 ../style_sheets.md:208
 msgid ""
 "`padding` is defined by integers in the range of 1 to 4. No unit (px, pt, "
 "em) needs to be used. All values are in pixel distance."
 msgstr ""
+"Le 'padding' (espacement de chaque coté) est défini par des nombres entiers "
+"compris entre 1 et 4. Aucune unité (px, pt, em) n'a besoin d'être utilisée. "
+"Toutes les valeurs sont exprimées en distance en pixels."
 
 #: ../style_sheets.md:211 ../style_sheets.md:210
 msgid "`dash-style` is a list of numbers (line, gap, line, gap, …)"
 msgstr ""
+"`dash-style` est une liste de nombres (ligne, espace, ligne, espace, ...)"
 
 #: ../style_sheets.md:212 ../style_sheets.md:211
 msgid ""
 "`line-style` only has an effect when defined on a `diagram`. A sloppiness "
 "factor can be provided in the range of -2 to 2."
 msgstr ""
+"`line-style` n'a d'effet que lorsqu'il est défini sur un `diagramme`. Un "
+"facteur de négligence peut être fourni entre -2 et 2."
 
 #: ../style_sheets.md:215 ../style_sheets.md:214
 msgid "Pseudo elements"
-msgstr ""
+msgstr "Pseudo-éléments"
 
 #: ../style_sheets.md:217 ../style_sheets.md:216
 msgid "Currently, only the `::after` pseudo element is supported."
-msgstr ""
+msgstr "Actuellement, seul le pseudo-élément `::after` est pris en charge."
 
 #: ../style_sheets.md:221 ../style_sheets.md:220
 msgid "``content``"
-msgstr ""
+msgstr "``content``"
 
 #: ../style_sheets.md:221 ../style_sheets.md:220
 msgid "Extra content to be shown after a text."
-msgstr ""
+msgstr "Contenu supplémentaire à afficher après un texte."
 
 #: ../style_sheets.md:225 ../style_sheets.md:261
 msgid "Variables"
-msgstr ""
+msgstr "Variables"
 
 #: ../style_sheets.md:227 ../style_sheets.md:263
 msgid ""
 "Since Gaphor 2.16.0 you can use [CSS variables](https://developer.mozilla."
 "org/en-US/docs/Web/CSS/Using_CSS_custom_properties) in your style sheets."
 msgstr ""
+"Depuis Gaphor 2.16.0, vous pouvez utiliser des [variables CSS] "
+"(https://developer.mozilla.org/en-US/docs/Web/CSS/"
+"Using_CSS_custom_properties) dans vos feuilles de style."
 
 #: ../style_sheets.md:229 ../style_sheets.md:265
 msgid ""
 "This allows you to define often used values in a more generic way. Think of "
 "things like line dash style and colors."
 msgstr ""
+"Cela vous permet de définir des valeurs souvent utilisées de manière plus "
+"générique. Pensez à des choses comme le style des tirets et les couleurs."
 
 #: ../style_sheets.md:232 ../style_sheets.md:268
 msgid "The `var()` function has some limitations:"
-msgstr ""
+msgstr "La fonction `var()` a quelques limitations :"
 
 #: ../style_sheets.md:234 ../style_sheets.md:270
 msgid "Values can’t have a default value."
-msgstr ""
+msgstr "Les valeurs ne peuvent pas avoir de valeur par défaut."
 
 #: ../style_sheets.md:235 ../style_sheets.md:271
 msgid "Variables can’t have a variable as their value."
-msgstr ""
+msgstr "Les variables ne peuvent pas avoir une variable comme valeur."
 
 #: ../style_sheets.md:237 ../style_sheets.md:273
 msgid "Example:"
-msgstr ""
+msgstr "Exemples :"
 
 #: ../style_sheets.md:250 ../style_sheets.md:286
 msgid ""
 "All diagrams have a white background. Sequence diagrams get a blue-ish "
 "background."
 msgstr ""
+"Tous les diagrammes ont un fond blanc. Les diagrammes de séquence ont un "
+"fond bleu."
 
 #: ../style_sheets.md:252
 msgid "Media queries"
-msgstr ""
+msgstr "Questions sur les médias"
 
 #: ../style_sheets.md:254 ../style_sheets.md:235
 msgid ""
@@ -7644,10 +7680,16 @@ msgid ""
 "`@media` queries. The official `prefers-color-scheme = dark` query is "
 "supported, as well as a more convenient `dark-mode`."
 msgstr ""
+"Depuis la version 2.16.0, Gaphor prend en charge les modes sombre et clair. "
+"Les couleurs foncées et claires sont exclusivement utilisées pour l'édition "
+"à l'écran. Lors de l'exportation d'images, la palette de couleurs par défaut "
+"est appliquée. Les jeux de couleurs peuvent être définis à l'aide des "
+"requêtes `@media`. La requête officielle `prefers-color-scheme = dark` est "
+"prise en charge, ainsi qu'un mode sombre plus pratique."
 
 #: ../style_sheets.md:280 ../style_sheets.md:224
 msgid "Diagram styles"
-msgstr ""
+msgstr "Styles de diagramme"
 
 #: ../style_sheets.md:282 ../style_sheets.md:226
 msgid ""
@@ -7660,6 +7702,16 @@ msgid ""
 "a straight line. The value should be between -2.0 and 2.0. Values between "
 "0.0 and 0.5 make for a subtle effect."
 msgstr ""
+"Seules quelques propriétés peuvent être définies pour un diagramme, à savoir "
+"`background-color` et `line-style`. Le style du diagramme est défini "
+"séparément de celui des éléments du diagramme. Il est ainsi possible de "
+"définir la couleur d'arrière-plan pour les diagrammes de manière spécifique. "
+"Le style de ligne peut être la ligne droite normale, ou un style plus "
+"ludique « sloppy ». Pour le style négligé, il est possible de fournir un "
+"facteur optionnel d'ondulation permettant de définir le niveau d'ondulation "
+"de la ligne. La valeur par défaut est 0,5, correspondant à une ligne droite. "
+"La valeur doit être comprise entre -2,0 et 2,0. Les valeurs comprises entre "
+"0,0 et 0,5 produisent un effet subtil."
 
 #: ../style_sheets.md:291
 #, fuzzy
@@ -7671,6 +7723,8 @@ msgid ""
 "Gaphor has many model elements. How can you find out which item should be "
 "styled?"
 msgstr ""
+"Gaphor possède de nombreux éléments de modèle. Comment savoir quel élément "
+"doit être stylisé ?"
 
 #: ../style_sheets.md:295 ../style_sheets.md:292
 msgid ""
