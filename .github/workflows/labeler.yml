@@ -1,5 +1,6 @@
 name: "Pull Request Labeler"
 on:
+  # pull_request_target is not considered safe, but only updates PRs in our case.
 - pull_request_target
 
 permissions:

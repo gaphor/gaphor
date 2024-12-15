@@ -1,0 +1,7 @@
+rules:
+  excessive-permissions:
+    ignore:
+      - scorecard.yml:12
+  dangerous-triggers:
+    ignore:
+      - labeler.yml:2

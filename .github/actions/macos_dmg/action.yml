@@ -68,48 +68,55 @@ runs:
       shell: bash
     - name: Store notary credentials
       if: inputs.sign_app == 'true'
+      env:
+        NOTARY_USERNAME: ${{ inputs.notary_username }}
+        NOTARY_TEAM_ID: ${{ inputs.notary_team_id }}
+        NOTARY_PASSWORD: ${{ inputs.notary_password }}
       run: >
         xcrun notarytool store-credentials "notarytool-profile"
-        --apple-id "${{ inputs.notary_username }}"
-        --team-id "${{ inputs.notary_team_id }}"
-        --password "${{ inputs.notary_password }}"
+        --apple-id "${NOTARY_USERNAME}"
+        --team-id "${NOTARY_TEAM_ID}"
+        --password "${NOTARY_PASSWORD}"
       shell: bash
     - name: Notarize app
       if: inputs.sign_app == 'true'
       env:
         PRODUCT_PATH: "_packaging/dist/Gaphor.app"
       run: |
-        ditto -c -k --keepParent "${{ env.PRODUCT_PATH }}" "notarization.zip"
+        ditto -c -k --keepParent "${PRODUCT_PATH}" "notarization.zip"
         xcrun notarytool submit "notarization.zip" --keychain-profile "notarytool-profile" --wait
       shell: bash
     - name: Staple app
       if: inputs.sign_app == 'true'
       env:
         PRODUCT_PATH: "_packaging/dist/Gaphor.app"
-      run: xcrun stapler staple ${{ env.PRODUCT_PATH }}
+      run: xcrun stapler staple ${PRODUCT_PATH}
       shell: bash
     - name: Create dmg
       id: dmg
+      env:
+        VERSION: ${{ inputs.version }}
+        ARCH: ${{ inputs.arch }}
       run: |
         cd _packaging
         poetry run dmgbuild --settings dmgbuild-settings.py --detach-retries 30 \
-          "Gaphor ${{ inputs.version }}-${{ inputs.arch }}" \
-          "dist/Gaphor-${{ inputs.version }}-${{ inputs.arch }}.dmg"
-        echo "artifact=Gaphor-${{ inputs.version }}-${{ inputs.arch }}.dmg" >> $GITHUB_OUTPUT
+          "Gaphor ${VERSION}-${ARCH}" \
+          "dist/Gaphor-${VERSION}-${ARCH}.dmg"
+        echo "artifact=Gaphor-${VERSION}-${ARCH}.dmg" >> $GITHUB_OUTPUT
       shell: bash
     - name: Notarize dmg
       if: inputs.sign_app == 'true'
       env:
         PRODUCT_PATH: "_packaging/dist/Gaphor-${{ inputs.version }}-${{ inputs.arch }}.dmg"
       run: |
-        ditto -c -k --keepParent "${{ env.PRODUCT_PATH }}" "notarization.zip"
+        ditto -c -k --keepParent "${.PRODUCT_PATH}" "notarization.zip"
         xcrun notarytool submit "notarization.zip" --keychain-profile "notarytool-profile" --wait
       shell: bash
     - name: Staple .dmg
       if: inputs.sign_app == 'true'
       env:
         PRODUCT_PATH: "_packaging/dist/Gaphor-${{ inputs.version }}-${{ inputs.arch }}.dmg"
-      run: xcrun stapler staple ${{ env.PRODUCT_PATH }}
+      run: xcrun stapler staple ${PRODUCT_PATH}
       shell: bash
     - name: Delete temporary keychain
       if: inputs.sign_app == 'true'
@@ -124,5 +131,7 @@ runs:
       if: github.event_name == 'release'
       env:
         GH_TOKEN: ${{ github.token }}
-      run: gh release upload ${{ inputs.version }} "_packaging/dist/Gaphor-${{ inputs.version }}-${{ inputs.arch }}.dmg"
+        VERSION: ${{ inputs.version }}
+        ARCH: ${{ inputs.arch }}
+      run: gh release upload ${VERSION} "_packaging/dist/Gaphor-${VERSION}-${ARCH}.dmg"
       shell: bash

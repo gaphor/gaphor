@@ -47,10 +47,13 @@ jobs:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
       - name: Set up Python
         uses: actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b # v5.3.0
         with:
           python-version: ${{ env.python_version }}
+      - name: Check Github Actions workflows
+        run: pipx install zizmor && zizmor --config .github/zizmor.yml .github/workflows/
       - name: Lint with Pre-commit
         uses: pre-commit/action@2c7b3805fd2a0fd8c1884dcaebf91fc102a13ecd # v3.0.1
       - name: Check REUSE compliance
@@ -59,7 +62,7 @@ jobs:
         run: pip install --constraint=.github/constraints.txt babel && python po/check-babel.py
       - name: Check Poetry lock file integrity
         run: |
-          python${{ env.python_version }} -m pip install --constraint=.github/constraints.txt poetry
+          python${python_version} -m pip install --constraint=.github/constraints.txt poetry
           poetry config virtualenvs.in-project true
           poetry check
 
@@ -87,6 +90,7 @@ jobs:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
       - name: Set ownership of checkout directory
         run: chown -R $(id -u):$(id -g) $PWD
       - name: Use Python Dependency Cache
@@ -144,6 +148,7 @@ jobs:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
       - name: Use Python Dependency Cache
         uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
         with:
@@ -179,6 +184,7 @@ jobs:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
       - name: Install macOS Dependencies
         env:
           HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK: 1
@@ -187,7 +193,7 @@ jobs:
           brew update
           # Pre-installed Python conflicts with Homebrew Python
           # https://github.com/actions/runner-images/issues/9966
-          brew install --overwrite python@${{ env.python_version }}
+          brew install --overwrite python@${python_version}
           brew unlink pkg-config@0.29.2 || true
           brew install gtksourceview5 libadwaita adwaita-icon-theme gobject-introspection graphviz create-dmg
       - name: Set up Python
@@ -218,7 +224,10 @@ jobs:
           notary_team_id: ${{ secrets.APPLE_TEAM_ID }}
       - name: Output
         id: output
-        run: echo "artifact-${{ matrix.target.arch }}=${{ steps.create.outputs.artifact }}" >> $GITHUB_OUTPUT
+        env:
+          TARGET_ARCH: ${{ matrix.target.arch }}
+          ARTIFACT: ${{ steps.create.outputs.artifact }}
+        run: echo "artifact-${TARGET_ARCH}=${ARTIFACT}" >> $GITHUB_OUTPUT
 
   check-macos-app:
     name: 🕵️ Check macOS App
@@ -239,8 +248,10 @@ jobs:
           name: ${{ matrix.target.artifact }}
           path: .
       - name: Perform self-test (dmg)
+        env:
+          TARGET_ARTIFACT: ${{ matrix.target.artifact }}
         run: |
-          hdiutil attach ${{ matrix.target.artifact }}
+          hdiutil attach ${TARGET_ARTIFACT}
           cd /Volumes/Gaphor*
           # Retry if first test fails
           Gaphor.app/Contents/MacOS/gaphor self-test || Gaphor.app/Contents/MacOS/gaphor self-test
@@ -272,9 +283,9 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           HASH: c5cd0079f47124190d9c66d3661da018eccc1dfc3dd31b5c01531df7f88006e5
         run: |
-          gh release download --repo wingtk/gvsbuild ${{ env.gvsbuild_version }} -p 'GTK4_Gvsbuild_${{ env.gvsbuild_version }}_x64.zip'
-          (Get-FileHash GTK4_Gvsbuild_${{ env.gvsbuild_version }}_x64.zip).Hash -eq $HASH
-          7z x GTK4_Gvsbuild_${{ env.gvsbuild_version }}_x64.zip -oC:\gtk -y
+          gh release download --repo wingtk/gvsbuild ${env:gvsbuild_version} -p 'GTK4_Gvsbuild_${env:gvsbuild_version}_x64.zip'
+          (Get-FileHash GTK4_Gvsbuild_${env:gvsbuild_version}_x64.zip).Hash -eq $HASH
+          7z x GTK4_Gvsbuild_${env:gvsbuild_version}_x64.zip -oC:\gtk -y
       - name: Set up env
         run: |
           Write-Output "PKG_CONFIG=C:\gtk\bin\pkgconf.exe" >> $env:GITHUB_ENV
@@ -284,6 +295,7 @@ jobs:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
       - name: Set up Python
         uses: actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b # v5.3.0
         with:
@@ -316,7 +328,9 @@ jobs:
           path: .
       - name: Install Gaphor
         timeout-minutes: 5
-        run: start "" /WAIT "${{ needs.windows.outputs.installer }}" /S
+        env:
+          INSTALLER: ${{ needs.windows.outputs.installer }}
+        run: start "" /WAIT "%INSTALLER%" /S
         shell: cmd
       - name: Perform self-test
         timeout-minutes: 5

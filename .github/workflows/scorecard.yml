@@ -8,6 +8,7 @@ on:
     branches: [ "main" ]
 
 # Declare default permissions as read only.
+# Referenced example: https://github.com/ossf/scorecard/blob/main/.github/workflows/scorecard-analysis.yml
 permissions: read-all
 
 jobs:
