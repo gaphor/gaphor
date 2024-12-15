@@ -202,6 +202,7 @@ def _load_elements_and_canvasitems(
             elem = upgrade_note_on_model_element_only(elem, elements)
         if version_lower_than(gaphor_version, (2, 28, 0)):
             elem = upgrade_modeling_language(elem)
+            elem = upgrade_diagram_type_to_class(elem)
 
         if not (cls := modeling_language.lookup_element(elem.type, elem.ns)):
             raise UnknownModelElementError(
@@ -502,3 +503,46 @@ def upgrade_dependency_owning_package(
                 dep.owningPackage = maybe_pkg
                 break
             maybe_pkg = maybe_pkg.owner
+
+
+# since 2.28.0
+def upgrade_diagram_type_to_class(elem: element) -> element:
+    if elem.type == "Diagram":
+        if diagram_type := elem.values.get("diagramType"):
+            elem.ns, elem.type = uml_diagram_type_to_class[diagram_type]
+    elif elem.type == "SysMLDiagram":
+        if diagram_type := elem.values.get("diagramType"):
+            elem.ns, elem.type = sysml_diagram_type_to_class[diagram_type]
+    return elem
+
+
+uml_diagram_type_to_class = {
+    "cls": ("UML", "ClassDiagram"),
+    "pkg": ("UML", "PackageDiagram"),
+    "cmp": ("UML", "ComponentDiagram"),
+    "dep": ("UML", "DeploymentDiagram"),
+    "act": ("UML", "ActivityDiagram"),
+    "sd": ("UML", "SequenceDiagram"),
+    "com": ("UML", "CommunicationDiagram"),
+    "stm": ("UML", "StateMachineDiagram"),
+    "uc": ("UML", "UseCaseDiagram"),
+    "prf": ("UML", "ProfileDiagram"),
+    "fta": ("RAAML", "FTADiagram"),
+    "stpa": ("RAAML", "STPADiagram"),
+    "c4": ("C4Model", "C4Diagram"),
+    "bdd": ("SysML", "BlockDefinitionDiagram"),
+    "ibd": ("SysML", "InternalBlockDiagram"),
+    "req": ("SysML", "RequirementDiagram"),
+}
+
+sysml_diagram_type_to_class = {
+    "act": ("SysML", "ActivityDiagram"),
+    "bdd": ("SysML", "BlockDefinitionDiagram"),
+    "ibd": ("SysML", "InternalBlockDiagram"),
+    "pkg": ("SysML", "PackageDiagram"),
+    "req": ("SysML", "RequirementDiagram"),
+    "sd": ("SysML", "SequenceDiagram"),
+    "stm": ("SysML", "StateMachineDiagram"),
+    "uc": ("SysML", "UseCaseDiagram"),
+    "par": ("SysML", "ParametricDiagram"),
+}
