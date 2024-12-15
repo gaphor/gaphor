@@ -88,6 +88,10 @@ comment {
   padding: 4 16 4 4;
 }
 
+comment stereotypes {
+  text-align: center;
+}
+
 comment body {
   padding: 0;
 }
