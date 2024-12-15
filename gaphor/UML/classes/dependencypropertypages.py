@@ -29,6 +29,7 @@ class DependencyPropertyPage(PropertyPageBase):
         self.watcher = subject.watcher()
         self.builder = new_builder(
             "dependency-editor",
+            "dependency-size-group",
         )
 
     def construct(self):
