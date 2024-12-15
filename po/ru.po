@@ -4,16 +4,17 @@ msgstr ""
 "Project-Id-Version: Gaphor 0.13.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2024-12-03 09:12+0100\n"
-"PO-Revision-Date: 2024-07-19 22:09+0000\n"
-"Last-Translator: Petr <pasabanov@murena.io>\n"
+"PO-Revision-Date: 2024-12-15 11:00+0000\n"
+"Last-Translator: Сергей <asvmail.as@gmail.com>\n"
+"Language-Team: Russian <https://hosted.weblate.org/projects/gaphor/gaphor/ru/"
+">\n"
 "Language: ru\n"
-"Language-Team: Russian "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/ru/>\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Weblate 5.9-rc\n"
 "Generated-By: Babel 2.16.0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:23 gaphor/C4Model/toolbox.py:67
@@ -81,32 +82,27 @@ msgid "Dependency"
 msgstr "Зависимость"
 
 #: gaphor/C4Model/toolbox.py:151
-#, fuzzy
 msgid "C4 Diagram"
-msgstr "Новая Диаграмма C4"
+msgstr "Диаграмма C4"
 
 #: gaphor/C4Model/toolbox.py:152 gaphor/UML/toolbox.py:50
-#, fuzzy
 msgid "Class Diagram"
-msgstr "Новая Диаграмма Классов"
+msgstr "Диаграмма Классов"
 
 #: gaphor/C4Model/toolbox.py:153 gaphor/SysML/toolbox.py:129
 #: gaphor/UML/toolbox.py:54
-#, fuzzy
 msgid "Activity Diagram"
-msgstr "Новая Диаграмма Деятельности"
+msgstr "Диаграмма Деятельности"
 
 #: gaphor/C4Model/toolbox.py:154 gaphor/SysML/toolbox.py:139
 #: gaphor/UML/toolbox.py:55
-#, fuzzy
 msgid "Sequence Diagram"
-msgstr "Новая Диаграмма Последовательности"
+msgstr "Диаграмма Последовательности"
 
 #: gaphor/C4Model/toolbox.py:155 gaphor/SysML/toolbox.py:149
 #: gaphor/UML/toolbox.py:57
-#, fuzzy
 msgid "State Machine Diagram"
-msgstr "Новая диаграмма Конечного Автомата"
+msgstr "Диаграмма Конечного Автомата"
 
 #: gaphor/C4Model/toolbox.py:159 gaphor/SysML/toolbox.py:172
 #: gaphor/UML/actions/actionstoolbox.py:41
@@ -135,9 +131,8 @@ msgid "Class"
 msgstr "Класс"
 
 #: gaphor/C4Model/toolbox.py:166 gaphor/UML/toolbox.py:68
-#, fuzzy
 msgid "Data Type"
-msgstr "типДанных"
+msgstr "Тип Данных"
 
 #: gaphor/C4Model/toolbox.py:167 gaphor/SysML/blocks/blockstoolbox.py:118
 #: gaphor/SysML/toolbox.py:175 gaphor/UML/classes/classestoolbox.py:154
@@ -146,23 +141,20 @@ msgid "Enumeration"
 msgstr "Перечисление"
 
 #: gaphor/C4Model/toolbox.py:169
-#, fuzzy
 msgid "Primitive Type"
-msgstr "Новый Примитивный тип"
+msgstr "Примитивный тип"
 
 #: gaphor/RAAML/modelinglanguage.py:24 gaphor/ui/greeter.py:48
 msgid "RAAML"
 msgstr "RAAML"
 
 #: gaphor/RAAML/toolbox.py:23
-#, fuzzy
 msgid "FTA Diagram"
-msgstr "Новая Диаграмма FTA"
+msgstr "Диаграмма FTA"
 
 #: gaphor/RAAML/toolbox.py:24
-#, fuzzy
 msgid "STPA Diagram"
-msgstr "Новая Диаграмма STPA"
+msgstr "Диаграмма STPA"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:195 gaphor/RAAML/fta/ftatoolbox.py:201
 #: gaphor/RAAML/fta/topevent.py:27 gaphor/RAAML/toolbox.py:28
@@ -338,7 +330,7 @@ msgstr "Относится К"
 
 #: gaphor/SysML/diagramtype.py:43
 msgid "Can’t create “{name}” nested under a “{elem}”"
-msgstr ""
+msgstr "Невозможно создать элемент «{name}», вложенный в «{elem}»"
 
 #: gaphor/SysML/modelinglanguage.py:24 gaphor/ui/greeter.py:41
 msgid "SysML"
@@ -408,9 +400,8 @@ msgid "Text"
 msgstr "Текст"
 
 #: gaphor/SysML/propertypages.ui:258
-#, fuzzy
 msgid "Show text"
-msgstr "Показывать тип"
+msgstr "Показывать текст"
 
 #: gaphor/SysML/sysmlfmt.py:10
 msgid "sourceContext: {name}"
@@ -433,9 +424,8 @@ msgid "Proxy Port"
 msgstr "Порт Прокси"
 
 #: gaphor/SysML/toolbox.py:90
-#, fuzzy
 msgid "Block Definition Diagram"
-msgstr "Новая Диаграмма Определения Блоков"
+msgstr "Диаграмма Определения Блоков"
 
 #: gaphor/SysML/toolbox.py:93 gaphor/SysML/toolbox.py:113
 #: gaphor/SysML/toolbox.py:125 gaphor/SysML/toolbox.py:167
@@ -443,23 +433,20 @@ msgid "New Package"
 msgstr "Новый пакет"
 
 #: gaphor/SysML/toolbox.py:97
-#, fuzzy
 msgid "Internal Block Diagram"
-msgstr "Новая Внутренняя Блок-схема"
+msgstr "Внутренняя Блок-схема"
 
 #: gaphor/SysML/toolbox.py:104 gaphor/SysML/toolbox.py:105
 msgid "New Block"
 msgstr "Новый Блок"
 
 #: gaphor/SysML/toolbox.py:110 gaphor/UML/toolbox.py:51
-#, fuzzy
 msgid "Package Diagram"
-msgstr "Новая Диаграмма Пакетов"
+msgstr "Диаграмма Пакетов"
 
 #: gaphor/SysML/toolbox.py:117
-#, fuzzy
 msgid "Requirement Diagram"
-msgstr "Новая Диаграмма Требований"
+msgstr "Диаграмма Требований"
 
 #: gaphor/SysML/toolbox.py:133 gaphor/SysML/toolbox.py:134
 msgid "New Activity"
@@ -2987,13 +2974,12 @@ msgid "Risk Analysis and Assessment Modeling Language example model"
 msgstr "Пример модели языка Моделирования Анализа и Оценки Рисков"
 
 #: gaphor/ui/greeter.py:86
-#, fuzzy
 msgid "C4 Model Example"
-msgstr "Пример UML"
+msgstr "Пример Модели С4"
 
 #: gaphor/ui/greeter.py:87
 msgid "C4 Model example of a banking system"
-msgstr ""
+msgstr "Пример Модели С4 банковской системы"
 
 #: gaphor/ui/greeter.ui:8 gaphor/ui/greeter.ui:53 gaphor/ui/mainwindow.py:47
 msgid "Open Model…"
@@ -3102,9 +3088,8 @@ msgid "Show in “{diagram}”"
 msgstr "Показать в «{diagram}»"
 
 #: gaphor/ui/modelbrowser.py:676
-#, fuzzy
 msgid "Generic Diagram"
-msgstr "Новая Общая Диаграмма"
+msgstr "Общая Диаграмма"
 
 #: gaphor/ui/modelchanged.ui:6
 msgid "Model Changed on Disk"
@@ -3191,9 +3176,8 @@ msgid "Quit Gaphor"
 msgstr "Выйти из Gaphor"
 
 #: gaphor/ui/help/shortcuts.ui:36
-#, fuzzy
 msgid "Model"
-msgstr "Модель C4"
+msgstr "Модель"
 
 #: gaphor/ui/help/shortcuts.ui:41
 msgid "Rename"
@@ -3435,4 +3419,3 @@ msgstr "общее: {name}"
 
 #~ msgid "New Stereotype"
 #~ msgstr "Новый Стереотип"
-
