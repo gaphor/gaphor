@@ -14,7 +14,7 @@ from gaphor.UML.classes.dependency import DependencyItem
 class DependencyPropertyPage(PropertyPageBase):
     """Dependency editor."""
 
-    order = 15
+    order = 5
 
     DEPENDENCIES = (
         UML.Dependency,
