@@ -78,8 +78,10 @@ def drop_pin_on_diagram(element, owner, diagram, x, y):
     return item
 
 
-@drop.register(UML.Relationship, Diagram)
-def drop_relationship_on_diagram(element: UML.Relationship, diagram: Diagram, x, y):
+@drop.register(UML.DirectedRelationship, Diagram)
+def drop_relationship_on_diagram(
+    element: UML.DirectedRelationship, diagram: Diagram, x, y
+):
     item_class = get_diagram_item(type(element))
     if not item_class:
         return None
@@ -87,10 +89,17 @@ def drop_relationship_on_diagram(element: UML.Relationship, diagram: Diagram, x,
     metadata = get_diagram_item_metadata(item_class)
     added_items = []
     if metadata:
-        # Relationships are many-to-many, so we need to create multiple items
-        for head in metadata["head"].get(element):
-            for tail in metadata["tail"].get(element):
-                new_item = drop_relationship(element, head, tail, diagram, x, y)
-                if new_item:
-                    added_items.append(new_item)
+        # DirectedRelationships can be many-to-many, so we may need to create multiple items
+        if metadata["head"].upper == 1 and metadata["tail"].upper == 1:
+            head = metadata["head"].get(element)
+            tail = metadata["tail"].get(element)
+            new_item = drop_relationship(element, head, tail, diagram, x, y)
+            if new_item:
+                added_items.append(new_item)
+        else:
+            for head in metadata["head"].get(element):
+                for tail in metadata["tail"].get(element):
+                    new_item = drop_relationship(element, head, tail, diagram, x, y)
+                    if new_item:
+                        added_items.append(new_item)
         return added_items
