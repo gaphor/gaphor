@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: Gaphor 2.23.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-11-27 15:44-0500\n"
-"PO-Revision-Date: 2024-03-15 02:07+0000\n"
-"Last-Translator: Rafael Fontenelle <rafaelff@gnome.org>\n"
+"PO-Revision-Date: 2024-12-13 03:00+0000\n"
+"Last-Translator: João Henrique <jhenriquelc@gmail.com>\n"
+"Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/"
+"gaphor/docs-gaphor-org/pt_BR/>\n"
 "Language: pt_BR\n"
-"Language-Team: Portuguese (Brazil) "
-"<https://hosted.weblate.org/projects/gaphor/docs-gaphor-org/pt_BR/>\n"
-"Plural-Forms: nplurals=2; plural=n > 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 5.9-dev\n"
 "Generated-By: Babel 2.16.0\n"
 
 #: ../changelog.rst:2
@@ -28,6 +29,8 @@ msgid ""
 "Our change log is with the project's source code on `GitHub "
 "<https://github.com/gaphor/gaphor/blob/main/CHANGELOG.md>`_."
 msgstr ""
+"Nosso registro de alterações está com o código fonte do projeto em `GitHub "
+"<https://github.com/gaphor/gaphor/blob/main/CHANGELOG.md>`_."
 
 #: ../changelog.rst:8
 msgid "The latest version may not have been released yet."
@@ -131,20 +134,17 @@ msgstr ""
 "AntSource para criar a máquina de café expresso perfeita para gatinhos."
 
 #: ../coffee_machine.md:41
-#, fuzzy
 msgid ""
 "![Two shots of espresso being pulled from an espresso machine.](images"
 "/coffee-machine-double-shot.jpg)"
 msgstr ""
-"![Duas doses de café expresso sendo retiradas de uma máquina de café "
+"![Duas doses de café expresso sendo extraídas em uma máquina de café "
 "expresso](images/coffee-machine-double-shot.jpg)"
 
 #: ../coffee_machine.md:41
-#, fuzzy
 msgid "Two shots of espresso being pulled from an espressomachine."
 msgstr ""
-"Duas doses de café expresso sendo retiradas de uma máquina de café "
-"expresso"
+"Duas doses de café expresso sendo extraídas em uma máquina de café expresso."
 
 #: ../coffee_machine.md:44
 #, fuzzy
@@ -154,19 +154,26 @@ msgid ""
 "either:"
 msgstr ""
 "A primeira coisa que as formigas fizeram foi abrir o Gaphor na janela "
-"Greeter e iniciar um novo modelo com o modelo _SysML_."
+"Greeter e iniciar um novo modelo com o modelo _SysML_. Agora você pode "
+"escolher entre:"
 
 #: ../coffee_machine.md:46
+#, fuzzy
 msgid ""
 "recreate their work as part of this tutorial. For this, open the SysML "
 "Example model shown at the bottom of the Greeter window"
 msgstr ""
+"recriar seu trabalho como parte deste tutorial. Para isso, abra o modelo "
+"Exemplo SysML abaixo exibido embaixo da janela Greeter"
 
 #: ../coffee_machine.md:48
+#, fuzzy
 msgid ""
 "inspect the result of their work by opening the `coffee-machine` model "
 "located in the `examples` folder."
 msgstr ""
+"inspecionar o resultado do seu trabalho abrindo o modelo `coffee-machine` "
+"localizado na pasta `exemplos`."
 
 #: ../coffee_machine.md:51
 msgid "Abstraction Levels"
@@ -314,7 +321,7 @@ msgstr ""
 #: ../coffee_machine.md:102
 #, fuzzy
 msgid "Top level packages of the SysMLtemplate."
-msgstr "Pacotes de nível superior do SysMLtemplate"
+msgstr "Pacotes de nível superior do template SysML."
 
 #: ../coffee_machine.md:105
 msgid "Pillars"
@@ -9810,4 +9817,3 @@ msgstr ""
 
 #~ msgid "Grab a coffee, the build will take a few minutes to complete."
 #~ msgstr ""
-

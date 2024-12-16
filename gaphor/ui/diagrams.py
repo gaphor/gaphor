@@ -409,7 +409,7 @@ class Diagrams(UIComponent, ActionProvider):
 
     @event_handler(AttributeUpdated)
     def _on_name_change(self, event):
-        if event.property is not Diagram.name:
+        if event.property.name != "name":
             return
         for page in range(self._notebook.get_n_pages()):
             widget = self._notebook.get_nth_page(page)

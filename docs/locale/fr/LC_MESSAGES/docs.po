@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gaphor 2.23.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-11-27 15:44-0500\n"
-"PO-Revision-Date: 2024-12-09 18:59+0000\n"
+"PO-Revision-Date: 2024-12-13 03:00+0000\n"
 "Last-Translator: Stan SZLAPKA <stansz@free.fr>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/gaphor/"
 "docs-gaphor-org/fr/>\n"
@@ -5060,257 +5060,259 @@ msgstr "Bibliothèque de Concepts Généraux /Risque Abstrait"
 
 #: ../models/raaml/General.rst:41
 msgid "General Concepts Library/Activation"
-msgstr ""
+msgstr "Bibliothèque de Concepts Généraux/Activation"
 
 #: ../models/raaml/General.rst:47
 msgid "General Concepts Library/Cause"
-msgstr ""
+msgstr "Bibliothèque de Concepts Généraux/Cause"
 
 #: ../models/raaml/General.rst:53
 msgid "General Concepts Library/Dysfunctional Event"
-msgstr ""
+msgstr "Bibliothèque des Concepts Généraux/Événement dysfonctionnel"
 
 #: ../models/raaml/General.rst:59
 msgid "General Concepts Library/Effect"
-msgstr ""
+msgstr "Bibliothèque des Concepts Généraux/Éffet"
 
 #: ../models/raaml/General.rst:65
 msgid "General Concepts Library/Error Propagation"
-msgstr ""
+msgstr "Bibliothèque des Concepts Généraux/Propagation des Érreurs"
 
 #: ../models/raaml/General.rst:71
 msgid "General Concepts Library/Error Realization"
-msgstr ""
+msgstr "Bibliothèque des Concepts Généraux/Réalisation de l'Érreur"
 
 #: ../models/raaml/General.rst:77
 msgid "General Concepts Library/Harm Potential"
-msgstr ""
+msgstr "Bibliothèque des Concepts Généraux/Potentiel de Nuisance"
 
 #: ../models/raaml/General.rst:83
 msgid "General Concepts Library/Hazard"
-msgstr ""
+msgstr "Bibliothèque des Concepts Généraux/Risques"
 
 #: ../models/raaml/General.rst:89
 msgid "General Concepts Library/Scenario"
-msgstr ""
+msgstr "Bibliothèque des Concepts Généraux/Risques"
 
 #: ../models/raaml/General.rst:95
 msgid "General Concepts Library/Undesired State"
-msgstr ""
+msgstr "Bibliothèque des Concepts Généraux/État Non Désiré"
 
 #: ../models/raaml/General.rst:101
 msgid "General Concepts Profile/Detection"
-msgstr ""
+msgstr "Bibliothèque des Concepts Généraux/Détection"
 
 #: ../models/raaml/General.rst:107
 msgid "General Concepts Profile/Failure State"
-msgstr ""
+msgstr "Profile des Concepts Généraux/État de défaillance"
 
 #: ../models/raaml/General.rst:113
 msgid "General Concepts Profile/Mitigation"
-msgstr ""
+msgstr "Profile des Concepts Généraux/Atténuation"
 
 #: ../models/raaml/General.rst:119
 msgid "General Concepts Profile/Prevention"
-msgstr ""
+msgstr "Profile des Concepts Généraux/Prévention"
 
 #: ../models/raaml/General.rst:125
 msgid "General Concepts Profile/Recommendation"
-msgstr ""
+msgstr "Profile des Concepts Généraux/Recommendation"
 
 #: ../models/raaml/General.rst:131
 msgid "General Concepts Profile/Undeveloped"
-msgstr ""
+msgstr "Profile des Concepts Généraux/Non développé"
 
 #: ../models/raaml/Methods.rst:2
 msgid "Methods"
-msgstr ""
+msgstr "Méthodes"
 
 #: ../models/raaml/Methods.rst:5
 msgid "FTA/FTA Library/Events/Basic Event"
-msgstr ""
+msgstr "FTA/Bibliothèque FTA/Événements/Événement de Base"
 
 #: ../models/raaml/Methods.rst:11
 msgid "FTA/FTA Library/Events/Conditional Event"
-msgstr ""
+msgstr "FTA/Bibliothèque FTA/Événements/Événement conditionnel"
 
 #: ../models/raaml/Methods.rst:17
 msgid "FTA/FTA Library/Events/Dormant Event"
-msgstr ""
+msgstr "FTA/FTA Bibliothèque/Événements/Événement inactif"
 
 #: ../models/raaml/Methods.rst:23
 msgid "FTA/FTA Library/Events/Events"
-msgstr ""
+msgstr "FTA/FTA Bibliothèque/Événements/Événements"
 
 #: ../models/raaml/Methods.rst:29
 msgid "FTA/FTA Library/Events/Event"
-msgstr ""
+msgstr "FTA/FTA Bibliothèque/Événements/Événement"
 
 #: ../models/raaml/Methods.rst:35
 msgid "FTA/FTA Library/Events/House Event"
-msgstr ""
+msgstr "FTA/FTA Bibliothèque/Événements/Événement spécifique"
 
 #: ../models/raaml/Methods.rst:41
 msgid "FTA/FTA Library/Events/Intermediate Event"
-msgstr ""
+msgstr "FTA/FTA Bibliothèque/Événements/Événement intermédiaire"
 
 #: ../models/raaml/Methods.rst:47
 msgid "FTA/FTA Library/Events/Top Event"
-msgstr ""
+msgstr "FTA/FTA Bibliothèque/Événements/Événement majeur"
 
 #: ../models/raaml/Methods.rst:53
 msgid "FTA/FTA Library/Events/Undeveloped Event"
-msgstr ""
+msgstr "FTA/FTA Bibliothèque/Événements/Événement non développé"
 
 #: ../models/raaml/Methods.rst:59
 msgid "FTA/FTA Library/Events/Zero Event"
-msgstr ""
+msgstr "FTA/FTA Bibliothèque/Événements/Événement zéro"
 
 #: ../models/raaml/Methods.rst:65
 msgid "FTA/FTA Library/FTA Element"
-msgstr ""
+msgstr "FTA/FTA Bibliothèque/Élément FTA"
 
 #: ../models/raaml/Methods.rst:71
 msgid "FTA/FTA Library/FTA Library"
-msgstr ""
+msgstr "FTA/Bibliothèque FTA/Bibliothèque FTA"
 
 #: ../models/raaml/Methods.rst:77
 msgid "FTA/FTA Library/FTA Tree"
-msgstr ""
+msgstr "FTA/Bibliothèque FTA/Arbre FTA"
 
 #: ../models/raaml/Methods.rst:83
 msgid "FTA/FTA Library/Gates/AND"
-msgstr ""
+msgstr "FTA/Bibliothèque FTA/Portes/AND"
 
 #: ../models/raaml/Methods.rst:89
 msgid "FTA/FTA Library/Gates/Gate"
-msgstr ""
+msgstr "FTA/Bibliothèque FTA/Portes/Porte"
 
 #: ../models/raaml/Methods.rst:95
 msgid "FTA/FTA Library/Gates/INHIBIT"
-msgstr ""
+msgstr "FTA/Bibliothèque FTA/Portes/INHIBITION"
 
 #: ../models/raaml/Methods.rst:101
 msgid "FTA/FTA Library/Gates/MAJORITY_VOTE"
-msgstr ""
+msgstr "FTA/Bibliothèque FTA/Portes/VOTE_MAJORITAIRE"
 
 #: ../models/raaml/Methods.rst:107
 msgid "FTA/FTA Library/Gates/NOT"
-msgstr ""
+msgstr "FTA/Bibliothèque FTA/Portes/NON"
 
 #: ../models/raaml/Methods.rst:113
 msgid "FTA/FTA Library/Gates/OR"
-msgstr ""
+msgstr "FTA/Bibliothèque FTA/Portes/OU"
 
 #: ../models/raaml/Methods.rst:119
 msgid "FTA/FTA Library/Gates/SEQ"
-msgstr ""
+msgstr "FTA/Bibliothèque FTA/Portes/SEQ"
 
 #: ../models/raaml/Methods.rst:125
 msgid "FTA/FTA Library/Gates/XOR"
-msgstr ""
+msgstr "FTA/Bibliothèque FTA/Portes/OU EXCLUSIF"
 
 #: ../models/raaml/Methods.rst:131
 msgid "FTA/FTA Profile/AND"
-msgstr ""
+msgstr "FTA/Profile FTA/ET"
 
 #: ../models/raaml/Methods.rst:137
 msgid "FTA/FTA Profile/Conditional Event"
-msgstr ""
+msgstr "FTA/Profile FTA/Événement conditionnel"
 
 #: ../models/raaml/Methods.rst:143
 msgid "FTA/FTA Profile/Dormant Event"
-msgstr ""
+msgstr "FTA/Profile FTA/Événement inactif"
 
 #: ../models/raaml/Methods.rst:149
 msgid "FTA/FTA Profile/Event"
-msgstr ""
+msgstr "FTA/Profile FTA/Événement"
 
 #: ../models/raaml/Methods.rst:155
 msgid "FTA/FTA Profile/Gate"
-msgstr ""
+msgstr "FTA/Profile FTA/Porte"
 
 #: ../models/raaml/Methods.rst:161
 msgid "FTA/FTA Profile/House Event"
-msgstr ""
+msgstr "FTA/Profile FTA/Événement spécifique"
 
 #: ../models/raaml/Methods.rst:167
 msgid "FTA/FTA Profile/INHIBIT"
-msgstr ""
+msgstr "FTA/Profile FTA/INHIBITION"
 
 #: ../models/raaml/Methods.rst:173
 msgid "FTA/FTA Profile/Intermediate Event"
-msgstr ""
+msgstr "FTA/Profile FTA/Événement intermédiaire"
 
 #: ../models/raaml/Methods.rst:179
 msgid "FTA/FTA Profile/MAJORITY_VOTE"
-msgstr ""
+msgstr "FTA/Profile FTA/VOTE_MAJORITAIRE"
 
 #: ../models/raaml/Methods.rst:185
 msgid "FTA/FTA Profile/NOT"
-msgstr ""
+msgstr "FTA/Profile FTA/NON"
 
 #: ../models/raaml/Methods.rst:191
 msgid "FTA/FTA Profile/OR"
-msgstr ""
+msgstr "FTA/Profile FTA/OU"
 
 #: ../models/raaml/Methods.rst:197
 msgid "FTA/FTA Profile/SEQ"
-msgstr ""
+msgstr "FTA/Profile FTA/SEQ"
 
 #: ../models/raaml/Methods.rst:203
 msgid "FTA/FTA Profile/Top Event"
-msgstr ""
+msgstr "FTA/Profile FTA/Événement Majeur"
 
 #: ../models/raaml/Methods.rst:209
 msgid "FTA/FTA Profile/Transfer In"
-msgstr ""
+msgstr "FTA/Profil FTA/Transfert In"
 
 #: ../models/raaml/Methods.rst:215
 msgid "FTA/FTA Profile/Transfer Out"
-msgstr ""
+msgstr "FTA/Profil FTA/Transfert Out"
 
 #: ../models/raaml/Methods.rst:221
 msgid "FTA/FTA Profile/Tree"
-msgstr ""
+msgstr "FTA/Profil FTA/Arbre"
 
 #: ../models/raaml/Methods.rst:227
 msgid "FTA/FTA Profile/XOR"
-msgstr ""
+msgstr "FTA/Profile FTA/OU EXCLUSIF"
 
 #: ../models/raaml/Methods.rst:233
 msgid "FTA/FTA Profile/Zero Event"
-msgstr ""
+msgstr "FTA/Profile FTA/Événement Zéro"
 
 #: ../models/raaml/Methods.rst:239
 msgid "FTA/FTA"
-msgstr ""
+msgstr "FTA/FTA"
 
 #: ../models/sysml.md:1
 msgid "Systems Modeling Language"
-msgstr ""
+msgstr "Langage de Modélisation des Systèmes"
 
 #: ../models/sysml.md:3
 msgid ""
 "Gaphor implements part of the [SysML 1.6](https://www.omg.org/spec/SysML) "
 "specification."
 msgstr ""
+"Gaphor met en œuvre une partie de la spécification [SysML 1.6](https://www."
+"omg.org/spec/SysML)."
 
 #: ../models/sysml/Activities.rst:2
 msgid "Activities"
-msgstr ""
+msgstr "Activités"
 
 #: ../models/sysml/Allocations.rst:2
 msgid "Allocations"
-msgstr ""
+msgstr "Allocations"
 
 #: ../models/sysml/Allocations.rst:5
 msgid "AllocatedActivityPartition"
-msgstr ""
+msgstr "RépartitionActivitésAllouées"
 
 #: ../models/sysml/Allocations.rst:11
 msgid "Allocation"
-msgstr ""
+msgstr "Allocation"
 
 #: ../models/sysml/Blocks.rst:2 ../style_sheets.md:329 ../style_sheets.md:330
 #: ../style_sheets.md:326 ../style_sheets.md:327
@@ -5319,329 +5321,338 @@ msgstr "Blocs"
 
 #: ../models/sysml/Blocks.rst:8
 msgid "Adjunt and Classifier Behavior Properties"
-msgstr ""
+msgstr "Adjoindre et classifier propriétés du comportement"
 
 #: ../models/sysml/Blocks.rst:14
 msgid "Bound References"
-msgstr ""
+msgstr "Références liées"
 
 #: ../models/sysml/Blocks.rst:20
 msgid "Connector Ends"
-msgstr ""
+msgstr "Extrémités du connecteur"
 
 #: ../models/sysml/Blocks.rst:26
 msgid "Properties"
-msgstr ""
+msgstr "Propriétés"
 
 #: ../models/sysml/Blocks.rst:32
 msgid "Property Paths"
-msgstr ""
+msgstr "Chemins des propriétés"
 
 #: ../models/sysml/Blocks.rst:38
 msgid "Property-Specific Types"
-msgstr ""
+msgstr "Types de Propriétés-Spécifiques"
 
 #: ../models/sysml/Blocks.rst:44
 msgid "Property Strings"
-msgstr ""
+msgstr "Chaînes de propriété"
 
 #: ../models/sysml/Blocks.rst:50
 msgid "Value Types"
-msgstr ""
+msgstr "Types de valeurs"
 
 #: ../models/sysml/ConstraintBlocks.rst:2
 msgid "ConstraintBlocks"
-msgstr ""
+msgstr "BlocsContraintes"
 
 #: ../models/sysml/Libraries.rst:2
 msgid "Libraries"
-msgstr ""
+msgstr "Bibliothèques"
 
 #: ../models/sysml/ModelElements.rst:2
 msgid "ModelElements"
-msgstr ""
+msgstr "ÉlémentsModèle"
 
 #: ../models/sysml/PortsAndFlows.rst:2
 msgid "PortsAndFlows"
-msgstr ""
+msgstr "PortsEtFlux"
 
 #: ../models/sysml/PortsAndFlows.rst:5
 msgid "Actions on Nested Ports"
-msgstr ""
+msgstr "Actions sur les Ports Imbriqués"
 
 #: ../models/sysml/PortsAndFlows.rst:11
 msgid "Port Stereotypes"
-msgstr ""
+msgstr "Stéréotypes du Port"
 
 #: ../models/sysml/PortsAndFlows.rst:17
 msgid "Property Value Change Events"
-msgstr ""
+msgstr "Événements de Changement de la Valeur des Propriétés"
 
 #: ../models/sysml/PortsAndFlows.rst:23
 msgid "Provided and Required Features"
-msgstr ""
+msgstr "Caractéristiques Fournies et Requises"
 
 #: ../models/sysml/PortsAndFlows.rst:29
 msgid "Item Flow"
-msgstr ""
+msgstr "Flux de l'article"
 
 #: ../models/sysml/Requirements.rst:2 ../style_sheets.md:331
 #: ../style_sheets.md:328
 msgid "Requirements"
-msgstr ""
+msgstr "Exigences"
 
 #: ../models/uml.md:1
 msgid "Unified Modeling Language"
-msgstr ""
+msgstr "Langage de Modélisation Unifié"
 
 #: ../models/uml.md:3
 msgid ""
 "The UML model is the most extensive model in Gaphor. It is used as a base "
 "language for [SysML](sysml.md), [RAAML](raaml.md), and [C4](c4model.md)."
 msgstr ""
+"Le modèle UML est le modèle le plus complet de Gaphor. Il est utilisé comme "
+"langage de base pour [SysML](sysml.md), [RAAML](raaml.md) et [C4](c4model."
+"md)."
 
 #: ../models/uml.md:7
+#, fuzzy
 msgid ""
 "Gaphor follows the [official UML 2.5.1 data model](https://www.omg.org/spec/"
 "UML/). Where changes have been made a comment has been added to the model. "
 "In particular where _m:n_ relationships subset _1:n_ relationships."
 msgstr ""
+"Gaphor suit le [modèle de données officiel UML 2.5.1](https://www.omg.org/"
+"spec/UML/). Lorsque des modifications ont été apportées, un commentaire a "
+"été ajouté au modèle. En particulier, lorsque les relations _m:n_ sous-"
+"tendent les relations _1:n_."
 
 #: ../models/uml/01._Common_Structure.rst:2
 msgid "01. Common Structure"
-msgstr ""
+msgstr "01. Structure commune"
 
 #: ../models/uml/01._Common_Structure.rst:5
 msgid "1. Root"
-msgstr ""
+msgstr "1. Racine"
 
 #: ../models/uml/01._Common_Structure.rst:11
 msgid "2. Templates"
-msgstr ""
+msgstr "2. Modèles"
 
 #: ../models/uml/01._Common_Structure.rst:13
 msgid "Not implemented."
-msgstr ""
+msgstr "Pas implémenté."
 
 #: ../models/uml/01._Common_Structure.rst:16
 msgid "3. Namespaces"
-msgstr ""
+msgstr "3. Espaces de noms"
 
 #: ../models/uml/01._Common_Structure.rst:22
 msgid "4. Types and Multiplicity"
-msgstr ""
+msgstr "4. Types et Multiplicité"
 
 #: ../models/uml/01._Common_Structure.rst:28
 msgid "5. Constraints"
-msgstr ""
+msgstr "5. Contraintes"
 
 #: ../models/uml/01._Common_Structure.rst:34
 msgid "6. Dependencies"
-msgstr ""
+msgstr "6. Dépendances"
 
 #: ../models/uml/02._Values.rst:2
 msgid "02. Values"
-msgstr ""
+msgstr "02. Valeurs"
 
 #: ../models/uml/02._Values.rst:5
 msgid "1. Literals"
-msgstr ""
+msgstr "1. Valeurs constantes"
 
 #: ../models/uml/02._Values.rst:11
 msgid "2. Expressions"
-msgstr ""
+msgstr "2. Expressions"
 
 #: ../models/uml/03._Classification.rst:2
 msgid "03. Classification"
-msgstr ""
+msgstr "03. Classification"
 
 #: ../models/uml/03._Classification.rst:5
 msgid "1. Classifiers"
-msgstr ""
+msgstr "Les classificateurs"
 
 #: ../models/uml/03._Classification.rst:11
 msgid "3. Features"
-msgstr ""
+msgstr "3. Caractéristiques"
 
 #: ../models/uml/03._Classification.rst:17
 msgid "4. Properties"
-msgstr ""
+msgstr "4. Propriétés"
 
 #: ../models/uml/03._Classification.rst:23
 msgid "5. Operations"
-msgstr ""
+msgstr "5. Opérations"
 
 #: ../models/uml/03._Classification.rst:29
 msgid "7. Instances"
-msgstr ""
+msgstr "7. Instances"
 
 #: ../models/uml/04._Simple_Classifiers.rst:2
 msgid "04. Simple Classifiers"
-msgstr ""
+msgstr "04. Classificateurs simples (Simple Classifiers)"
 
 #: ../models/uml/04._Simple_Classifiers.rst:5
 msgid "1. Data Types"
-msgstr ""
+msgstr "1. Types de Données (Data Types)"
 
 #: ../models/uml/04._Simple_Classifiers.rst:11
 msgid "3. Interfaces"
-msgstr ""
+msgstr "3. Interfaces"
 
 #: ../models/uml/05._Structured_Classifiers.rst:2
 msgid "05. Structured Classifiers"
-msgstr ""
+msgstr "05. Classificateurs structurés (Structured Classifiers)"
 
 #: ../models/uml/05._Structured_Classifiers.rst:5
 msgid "1. Structured Classifiers"
-msgstr ""
+msgstr "1. Classificateurs structurés (Structured Classifiers)"
 
 #: ../models/uml/05._Structured_Classifiers.rst:11
 msgid "2. Encapsulated Classifiers"
-msgstr ""
+msgstr "2. Classificateurs encapsulés (Encapsulated Classifiers)"
 
 #: ../models/uml/05._Structured_Classifiers.rst:17
 msgid "3. Classes"
-msgstr ""
+msgstr "3. Classes"
 
 #: ../models/uml/05._Structured_Classifiers.rst:23
 msgid "4. Associations"
-msgstr ""
+msgstr "4. Associations"
 
 #: ../models/uml/05._Structured_Classifiers.rst:29
 msgid "5. Components"
-msgstr ""
+msgstr "5. Composants (Components)"
 
 #: ../models/uml/05._Structured_Classifiers.rst:35
 msgid "6. Collaborations"
-msgstr ""
+msgstr "6. Collaborations"
 
 #: ../models/uml/06._Packaging.rst:2
 msgid "06. Packaging"
-msgstr ""
+msgstr "06. Packaging"
 
 #: ../models/uml/06._Packaging.rst:5
 msgid "1. Packages"
-msgstr ""
+msgstr "1. Paquets (Packages)"
 
 #: ../models/uml/06._Packaging.rst:11
 msgid "2. Profiles"
-msgstr ""
+msgstr "2. Profiles"
 
 #: ../models/uml/07._Common_Behaviors.rst:2
 msgid "07. Common Behaviors"
-msgstr ""
+msgstr "07. Comportements commun (Common Behaviors)"
 
 #: ../models/uml/07._Common_Behaviors.rst:5
 msgid "1. Behaviors"
-msgstr ""
+msgstr "1. Comportements"
 
 #: ../models/uml/07._Common_Behaviors.rst:11
 msgid "2. Events"
-msgstr ""
+msgstr "2. Evénements"
 
 #: ../models/uml/08._State_Machines.rst:2
 msgid "08. State Machines"
-msgstr ""
+msgstr "08. Machines d'État (State Machines)"
 
 #: ../models/uml/08._State_Machines.rst:5
 msgid "1. Behavior State Machines"
-msgstr ""
+msgstr "1. Comportement Machine d'État (Behavior State Machines)"
 
 #: ../models/uml/09._Activities.rst:2
 msgid "09. Activities"
-msgstr ""
+msgstr "09. Activités"
 
 #: ../models/uml/09._Activities.rst:5
 msgid "1. Activities"
-msgstr ""
+msgstr "1. Activités"
 
 #: ../models/uml/09._Activities.rst:11
 msgid "2. Control Nodes"
-msgstr ""
+msgstr "2. Nœuds de contrôle (Control Nodes)"
 
 #: ../models/uml/09._Activities.rst:17
 msgid "3. Object Nodes"
-msgstr ""
+msgstr "3. Nœuds d'objets (Object Nodes)"
 
 #: ../models/uml/09._Activities.rst:23
 msgid "4. Executable Nodes"
-msgstr ""
+msgstr "4. Nœuds exécutables"
 
 #: ../models/uml/09._Activities.rst:29
 msgid "5. Activity Groups"
-msgstr ""
+msgstr "5. Groupes d'activités (Activity Groups)"
 
 #: ../models/uml/10._Actions.rst:2
 msgid "10. Actions"
-msgstr ""
+msgstr "10. Actions"
 
 #: ../models/uml/10._Actions.rst:5
 msgid "1. Actions"
-msgstr ""
+msgstr "1. Actions"
 
 #: ../models/uml/10._Actions.rst:11
 msgid "2. Invocation Actions"
-msgstr ""
+msgstr "2. Invocation Actions"
 
 #: ../models/uml/10._Actions.rst:17
 msgid "7. Structural Feature Actions"
 msgstr ""
+"7. Caractéristiques Struturelles des Actions (Structural Feature Action)"
 
 #: ../models/uml/10._Actions.rst:23
 msgid "9. Accept Event Actions"
-msgstr ""
+msgstr "9. Accepter Actions sur les Événements (Accept Event Actions)"
 
 #: ../models/uml/11._Interactions.rst:2
 msgid "11. Interactions"
-msgstr ""
+msgstr "11. Interactions"
 
 #: ../models/uml/11._Interactions.rst:5
 msgid "1. Interactions"
-msgstr ""
+msgstr "1. Interactions"
 
 #: ../models/uml/11._Interactions.rst:11
 msgid "2. Lifelines"
-msgstr ""
+msgstr "2. Lignes de vie (Lifelines)"
 
 #: ../models/uml/11._Interactions.rst:17
 msgid "3. Messages"
-msgstr ""
+msgstr "3. Messages"
 
 #: ../models/uml/11._Interactions.rst:23
 msgid "4. Occurrences"
-msgstr ""
+msgstr "4. Occurrences"
 
 #: ../models/uml/12._Use_Cases.rst:2
 msgid "12. Use Cases"
-msgstr ""
+msgstr "12. Cas d'utilisation (Use Cases)"
 
 #: ../models/uml/12._Use_Cases.rst:5
 msgid "UseCases"
-msgstr ""
+msgstr "Cas d'utilisation (UseCases)"
 
 #: ../models/uml/13._Deployments.rst:2
 msgid "13. Deployments"
-msgstr ""
+msgstr "13. Déploiements (Deployments)"
 
 #: ../models/uml/13._Deployments.rst:5
 msgid "1. Deployments"
-msgstr ""
+msgstr "1. Deployments (Deployments)"
 
 #: ../models/uml/13._Deployments.rst:11
 msgid "2. Artifacts"
-msgstr ""
+msgstr "2. Artefacts (Artifacts)"
 
 #: ../models/uml/13._Deployments.rst:17
 msgid "3. Nodes"
-msgstr ""
+msgstr "3. Nœuds (Nodes)"
 
 #: ../models/uml/14._Information_Flows.rst:2
 msgid "14. Information Flows"
-msgstr ""
+msgstr "14. Flux d'informations ( Information Flows)"
 
 #: ../models/uml/A._Gaphor_Specific_Constructs.rst:2
 msgid "A. Gaphor Specific Constructs"
-msgstr ""
+msgstr "A. Constructions spécifiques à Gaphor"
 
 #: ../models/uml/A._Gaphor_Specific_Constructs.rst:5
 #, fuzzy
@@ -5650,29 +5661,33 @@ msgstr "Diagramme de domaine"
 
 #: ../models/uml/A._Gaphor_Specific_Constructs.rst:11
 msgid "2. Stereotype Applications"
-msgstr ""
+msgstr "2. Applications des Stéréotypes"
 
 #: ../models/uml/B._Gaphor_Profile.rst:2
 msgid "B. Gaphor Profile"
-msgstr ""
+msgstr "B. Profil de Gaphor"
 
 #: ../models/uml/B._Gaphor_Profile.rst:4
 msgid ""
 "In order to provide extra information to the diagram elements (mainly "
 "association ends), the Gaphor model has been extended with stereotypes."
 msgstr ""
+"Afin de fournir des informations supplémentaires aux éléments du diagramme ("
+"principalement les extrémités d'association), le modèle Gaphor a été étendu "
+"avec des stéréotypes."
 
 #: ../plugins.md:1
 msgid "Plugins"
-msgstr ""
+msgstr "Plugins"
 
 #: ../plugins.md:4
 msgid "Plugins is an experimental feature! The API may change."
-msgstr ""
+msgstr "Plugins est une fonctionnalité expérimentale ! L'API peut changer."
 
 #: ../plugins.md:6
 msgid "We welcome you to try and provide your feedback."
 msgstr ""
+"Nous vous invitons à l'essayer et à nous faire part de vos commentaires."
 
 #: ../plugins.md:9
 msgid ""
@@ -5681,30 +5696,40 @@ msgid ""
 "helpful if you install the binary distributions available on the [download "
 "page](https://gaphor.org/download/)."
 msgstr ""
+"Les plugins vous permettent d'étendre les fonctionnalités de Gaphor au-delà "
+"des fonctionnalités fournies dans les distributions standard. En "
+"particulier, les plugins peuvent être utiles si vous installez les "
+"distributions binaires disponibles sur la [page de téléchargement] "
+"(https://gaphor.org/download/)."
 
 #: ../plugins.md:12
 msgid "Gaphor can be extended via entry points in several ways:"
-msgstr ""
+msgstr "Gaphor peut être étendu par des points d'entrée de plusieurs manières :"
 
 #: ../plugins.md:14
 msgid "Application (global) services (`gaphor.appservices`)"
-msgstr ""
+msgstr "Services d'application (globaux) (`gaphor.appservices`)"
 
 #: ../plugins.md:15
+#, fuzzy
 msgid "Session specific services (`gaphor.services`)"
-msgstr ""
+msgstr "Services spécifiques à la session (`gaphor.services`)"
 
 #: ../plugins.md:16
 msgid "[Modeling languages](modeling_language) (`gaphor.modelinglanguages`)"
 msgstr ""
+"[Langues de modélisation](langue_de_modélisation) (`gaphor."
+"modelinglanguages`)"
 
 #: ../plugins.md:17
 msgid "(Sub)command line parsers (`gaphor.argparsers`)"
-msgstr ""
+msgstr "Analyseurs de ligne de (sous-)commande (`gaphor.argparsers`)"
 
 #: ../plugins.md:18
 msgid "Indirectly loaded modules (`gaphor.modules`), mainly for UI components"
 msgstr ""
+"Modules chargés indirectement (`gaphor.modules`), principalement pour les "
+"composants de l'interface utilisateur"
 
 #: ../plugins.md:21
 msgid ""
@@ -5712,10 +5737,14 @@ msgid ""
 "local/gaphor/plugins-2` on Windows). This location can be changed by setting "
 "the environment variable `GAPHOR_PLUGIN_PATH` and point to a directory."
 msgstr ""
+"L'emplacement par défaut des plugins est `$HOME/.local/gaphor/plugins-2` (`$"
+"USER/.local/gaphor/plugins-2` sous Windows). Cet emplacement peut être "
+"modifié en définissant la variable d'environnement `GAPHOR_PLUGIN_PATH` et "
+"en pointant vers un répertoire."
 
 #: ../plugins.md:25
 msgid "Install a plugin"
-msgstr ""
+msgstr "Installer un plugin"
 
 #: ../plugins.md:27
 msgid ""
@@ -5725,12 +5754,20 @@ msgid ""
 "may need to install Python separately from [python.org](https://python.org) "
 "or the Windows Store."
 msgstr ""
+"Pour l'instant, Gaphor ne dispose pas de fonctionnalité intégrée pour "
+"installer et maintenir les plugins. Pour installer un plugin, utilisez pip "
+"depuis une installation de Python sur votre ordinateur. Sur macOS et Linux, "
+"cela devrait être facile, mais sur Windows, vous devrez peut-être installer "
+"Python séparément depuis le site python.org ou le Windows Store."
 
 #: ../plugins.md:32
 msgid ""
 "Since plugins are installed with your system Python version, it's important "
 "that plugins are pure Python and do not contain compiled C code."
 msgstr ""
+"Comme les plugins sont installés avec la version Python de votre système, il "
+"est important qu'ils soient purement Python et ne contiennent pas de code C "
+"compilé."
 
 #: ../plugins.md:34
 msgid ""
@@ -5739,12 +5776,19 @@ msgid ""
 "folder. You can use [FlatSeal](https://flathub.org/apps/com.github.tchx84."
 "Flatseal) to change permissions of Flatpaks."
 msgstr ""
+"Si vous utilisez Gaphor installé en tant que Flatpak, vous devez accorder à "
+"Gaphor l'accès aux fichiers de l'utilisateur (option `filesystem=home`), "
+"afin que Gaphor puisse trouver les fichiers dans votre dossier `.local`. "
+"Pour changer les permissions des Flatpaks, vous pouvez utiliser FlatSeal "
+"(https://flathub.org/apps/com.github.tchx84.Flatseal)."
 
 #: ../plugins.md:39 ../plugins.md:36
 msgid ""
 "For example: to install the [Hello World plugin](https://github.com/gaphor/"
 "gaphor_plugin_helloworld) on Linux and macOS, enter:"
 msgstr ""
+"Par exemple : pour installer le [plugin Hello World] (https://github.com/"
+"gaphor/gaphor_plugin_helloworld) sur Linux et macOS, entrez :"
 
 #: ../plugins.md:45
 msgid ""
@@ -5752,10 +5796,13 @@ msgid ""
 "added to the tools menu (![Menu icon](images/open-menu-symbolic.svg) → Tools "
 "→ Hello World)."
 msgstr ""
+"Ensuite, démarrez Gaphor comme vous le feriez normalement. Une nouvelle "
+"entrée Hello World a été ajoutée au menu des outils ( ![Icône de menu]("
+"images/open-menu-symbolic.svg) → Outils → Hello World)."
 
 #: ../plugins.md:48 ../plugins.md:45
 msgid "Create your own plugin"
-msgstr ""
+msgstr "Créez votre propre plugin"
 
 #: ../plugins.md:50
 msgid ""
@@ -5763,10 +5810,15 @@ msgid ""
 "Gaphor's [design principles](design_principles), [service oriented "
 "architecture](service_oriented), and [event driven framework](framework)."
 msgstr ""
+"Si vous souhaitez écrire votre propre plugin, vous pouvez vous familiariser "
+"avec les principes de conception, l'architecture orientée services et le "
+"cadre orienté événements de Gaphor [design principles](design_principles), ["
+"service oriented architecture](service_oriented), and [event driven "
+"framework](framework)."
 
 #: ../plugins.md:54 ../service_oriented.md:116
 msgid "Example plugin"
-msgstr ""
+msgstr "Exemple de plugin"
 
 #: ../plugins.md:56
 msgid ""
@@ -5774,12 +5826,17 @@ msgid ""
 "gaphor_plugin_helloworld) available on GitHub for an example of how to "
 "create your own plugin."
 msgstr ""
+"Vous pouvez consulter le [Hello World plugin](https://github.com/gaphor/"
+"gaphor_plugin_helloworld) disponible sur GitHub pour un exemple de création "
+"de votre propre plugin."
 
 #: ../plugins.md:58 ../service_oriented.md:122
 msgid ""
 "The [pyproject.toml](https://github.com/gaphor/gaphor_plugin_helloworld/blob/"
 "main/pyproject.toml) file contains a plugin:"
 msgstr ""
+"Le fichier [pyproject.toml](https://github.com/gaphor/"
+"gaphor_plugin_helloworld/blob/main/pyproject.toml) contient un plugin :"
 
 #: ../plugins.md:67 ../service_oriented.md:129
 msgid ""
@@ -5787,10 +5844,13 @@ msgid ""
 "[gaphor_plugins_helloworld](https://github.com/gaphor/"
 "gaphor_plugin_helloworld/blob/main/gaphor_helloworld_plugin/__init__.py)."
 msgstr ""
+"Ceci fait référence à la classe `HelloWorldPlugin` dans le paquet/module "
+"[gaphor_plugins_helloworld] (https://github.com/gaphor/"
+"gaphor_plugin_helloworld/blob/main/gaphor_helloworld_plugin/__init__.py)."
 
 #: ../plugins.md:70 ../service_oriented.md:132
 msgid "Here is a stripped version of the hello world plugin:"
-msgstr ""
+msgstr "Voici une version dépouillée du plugin hello world :"
 
 #: ../plugins.md:95 ../service_oriented.md:157
 msgid ""
@@ -5798,6 +5858,9 @@ msgid ""
 "implements `ActionProvider`, saying it has some actions to be performed by "
 "the user."
 msgstr ""
+"Comme indiqué précédemment, un plugin doit implémenter l'interface `Service`"
+". Il implémente également l'interface `ActionProvider`, ce qui signifie "
+"qu'il a des actions à effectuer par l'utilisateur."
 
 #: ../plugins.md:98 ../service_oriented.md:160
 msgid ""
@@ -5806,30 +5869,39 @@ msgid ""
 "dependencies. Services can get references to other services by defining them "
 "as arguments of the constructor."
 msgstr ""
+"L'entrée de menu fera partie du menu d'extension \"Outils\". Ce point "
+"d'extension est créé en tant que service. D'autres services peuvent "
+"également être transmis en tant que dépendances. Les services peuvent "
+"obtenir des références à d'autres services en les définissant comme "
+"arguments du constructeur."
 
 #: ../plugins.md:102 ../service_oriented.md:164
 msgid "All action defined in this service are registered."
-msgstr ""
+msgstr "Toutes les actions définies dans ce service sont enregistrées."
 
 #: ../plugins.md:103 ../service_oriented.md:165
 msgid ""
 "Each service has a `shutdown()` method. This allows the service to perform "
 "some cleanup when it's shut down."
 msgstr ""
+"Chaque service a une méthode `shutdown()`. Cela permet au service "
+"d'effectuer un certain nettoyage lorsqu'il est arrêté."
 
 #: ../plugins.md:105 ../service_oriented.md:167
 msgid ""
 "The action that can be invoked. The action is defined and will be picked up "
 "by `add_actions()` method (see 3.)"
 msgstr ""
+"L'action qui peut être invoquée. L'action est définie et sera récupérée par "
+"la méthode `add_actions()` (voir 3.)"
 
 #: ../plugins.md:108
 msgid "Plugin Development FAQ"
-msgstr ""
+msgstr "FAQ sur le développement de plugins"
 
 #: ../plugins.md:110
 msgid "How do I acceess gaphor services in my plugin?"
-msgstr ""
+msgstr "Comment accéder aux services gaphor dans mon plugin ?"
 
 #: ../plugins.md:112
 msgid ""
@@ -5838,16 +5910,22 @@ msgid ""
 "a base class. In the HelloWorldPlugin example, the tools_menu service is "
 "included."
 msgstr ""
+"Les services de Gaphor peuvent être rendus accessibles en listant les noms "
+"des services dans la fonction init de votre classe de plugin. Cela nécessite "
+"également d'inclure Service en tant que classe de base. Dans l'exemple de "
+"HelloWorldPlugin, le service tools_menu est inclus."
 
 #: ../plugins.md:115
 msgid ""
 "A more complete description of this approach can be found in the [Service "
 "Oriented Architecture documentation page](service_oriented.md)."
 msgstr ""
+"Une description plus complète de cette approche est disponible sur la [page "
+"de documentation de l'architecture orientée services] (service_oriented.md)."
 
 #: ../scripting.md:5
 msgid "Jupyter and Scripting"
-msgstr ""
+msgstr "Jupyter et les scripts"
 
 #: ../scripting.md:7
 msgid ""
@@ -5855,30 +5933,37 @@ msgid ""
 "interested in getting more out of your models by interacting with them "
 "through Python scripts and [Jupyter notebooks](https://jupyter.org/)."
 msgstr ""
+"L'une des façons de travailler avec les modèles est d'utiliser l'interface "
+"graphique. Cependant, vous pouvez également être intéressé par une meilleure "
+"exploitation de vos modèles en interagissant avec eux par le biais de "
+"scripts Python et de [carnets Jupyter] (https://jupyter.org/)."
 
 #: ../scripting.md:11
 msgid "You can use scripts to:"
-msgstr ""
+msgstr "Vous pouvez utiliser des scripts pour :"
 
 #: ../scripting.md:13
 msgid "Explore the model, check for (in)valid conditions."
-msgstr ""
+msgstr "Explorer le modèle, vérifier les conditions (in)valides."
 
 #: ../scripting.md:14
 msgid "Generate code, as is done for Gaphor’s data model."
-msgstr ""
+msgstr "Générer du code, comme pour le modèle de données de Gaphor."
 
 #: ../scripting.md:15
 msgid "Update a model from another source, like a CSV file."
 msgstr ""
+"Mettre à jour un modèle à partir d'une autre source, comme un fichier CSV."
 
 #: ../scripting.md:17
 msgid "Since Gaphor is written in Python, it also functions as a library."
 msgstr ""
+"Comme Gaphor est écrit en Python, il fonctionne également comme une "
+"bibliothèque."
 
 #: ../scripting.md:19
 msgid "Getting started"
-msgstr ""
+msgstr "Pour commencer"
 
 #: ../scripting.md:21
 msgid ""
@@ -5886,10 +5971,13 @@ msgid ""
 "console in Gaphor, use a Jupyter notebook, although that will require "
 "setting up a Python development environment."
 msgstr ""
+"Pour commencer, vous aurez besoin d'une console Python. Vous pouvez utiliser "
+"la console interactive de Gaphor ou un bloc-notes Jupyter, bien que cela "
+"nécessite la mise en place d'un environnement de développement Python."
 
 #: ../scripting.md:25
 msgid "Query a model"
-msgstr ""
+msgstr "Interroger un modèle"
 
 #: ../scripting.md:27
 msgid ""
@@ -5898,6 +5986,10 @@ msgid ""
 "and maintaining the model. It acts as a repository for the model while "
 "you’re working on it."
 msgstr ""
+"La première étape consiste à charger un modèle. Pour cela, vous aurez besoin "
+"d'un {obj}`gaphor.core.modeling.ElementFactory`. La `ElementFactory` est "
+"responsable de la création et de la maintenance du modèle. Elle agit comme "
+"un référentiel pour le modèle pendant que vous travaillez dessus."
 
 #: ../scripting.md:38 ../scripting.md:37
 msgid ""
@@ -5906,18 +5998,28 @@ msgid ""
 "`ModelingLanguageService` consolidates those languages and makes it easy for "
 "the loader logic to find the appropriate classes."
 msgstr ""
+"Le module `gaphor.storage` contient tout ce qu'il faut pour charger et "
+"sauvegarder les modèles. Gaphor supporte plusieurs [langages de modélisation]"
+" (modeling_language). Le `ModelingLanguageService` consolide ces langages et "
+"permet à la logique de chargement de trouver facilement les classes "
+"appropriées."
 
 #: ../scripting.md:44 ../scripting.md:43
 msgid ""
 "In versions before 2.13, an `EventManager` is required. In later versions, "
 "the `ModelingLanguageService` can be initialized without event manager."
 msgstr ""
+"Dans les versions antérieures à 2.13, un `EventManager` est nécessaire. Dans "
+"les versions ultérieures, le `ModelingLanguageService` peut être initialisé "
+"sans gestionnaire d'événements."
 
 #: ../scripting.md:66 ../scripting.md:65
 msgid ""
 "At this point the model is loaded in the `element_factory` and can be "
 "queried."
 msgstr ""
+"A ce stade, le modèle est chargé dans la `element_factory` et peut être "
+"interrogé."
 
 #: ../scripting.md:69 ../scripting.md:68
 msgid ""
@@ -5926,6 +6028,11 @@ msgid ""
 "manupilations, GTK (the GUI toolkit we use) is not required, but you may run "
 "into situations where Gaphor tries to load the GTK library."
 msgstr ""
+"Un langage de modélisation se compose d'éléments de modèle et d'éléments de "
+"diagramme. Les composants graphiques sont chargés séparément. Pour les "
+"manipulations les plus basiques, GTK (la boîte à outils GUI que nous "
+"utilisons) n'est pas nécessaire, mais il peut arriver que Gaphor tente de "
+"charger la bibliothèque GTK."
 
 #: ../scripting.md:74 ../scripting.md:73
 msgid ""
@@ -5933,6 +6040,10 @@ msgid ""
 "autodoc’s mock function to mock out the GTK and GDK libraries. However, "
 "Pango needs to be installed for text rendering."
 msgstr ""
+"Une astuce pour éviter cela (du moins lors de la génération de documents "
+"Sphinx) consiste à utiliser la fonction mock d'autodoc pour simuler les "
+"bibliothèques GTK et GDK. Cependant, Pango doit être installé pour le rendu "
+"du texte."
 
 #: ../scripting.md:79 ../scripting.md:78
 msgid ""
@@ -5941,16 +6052,25 @@ msgid ""
 "obtain a list directly. For those cases you can use `ElementFatory."
 "lselect()`. Here we select the last five elements:"
 msgstr ""
+"Une requête simple vous indique seulement quels éléments se trouvent dans le "
+"modèle. La méthode `ElementFactory.select()` renvoie un itérateur. Il est "
+"parfois plus facile d'obtenir une liste directement. Dans ce cas, vous "
+"pouvez utiliser la méthode `ElementFatory.lselect()`. Ici, nous "
+"sélectionnons les cinq derniers éléments :"
 
 #: ../scripting.md:89 ../scripting.md:88
 msgid "Elements can also be queried by type and with a predicate function:"
 msgstr ""
+"Les éléments peuvent également être interrogés par type et à l'aide d'une "
+"fonction de prédiction :"
 
 #: ../scripting.md:104 ../scripting.md:103
 msgid ""
 "Now, let’s say we want to do some simple (pseudo-)code generation. We can "
 "iterate class attributes and write some output."
 msgstr ""
+"Supposons maintenant que nous souhaitions générer du (pseudo-)code simple. "
+"Nous pouvons itérer les attributs de la classe et écrire une sortie."
 
 #: ../scripting.md:125 ../scripting.md:124
 msgid ""
@@ -5958,10 +6078,14 @@ msgid ""
 "language](modeling_language) documentation. Gaphor’s data models have been "
 "built using the [UML](models/uml) language."
 msgstr ""
+"Pour savoir quelles relations peuvent être interrogées, consultez la "
+"documentation du [langage de modélisation](modeling_language). Les modèles "
+"de données de Gaphor ont été construits en utilisant le langage [UML](models/"
+"uml)."
 
 #: ../scripting.md:129 ../scripting.md:128
 msgid "You can find out more about a model property by printing it."
-msgstr ""
+msgstr "Vous pouvez en savoir plus sur une propriété de modèle en l'imprimant."
 
 #: ../scripting.md:135 ../scripting.md:134
 msgid ""
@@ -5969,24 +6093,31 @@ msgid ""
 "Property`. `UML.Property.class_` is set to the owner class when "
 "`ownedAttribute` is set. It is a bidirectional relation."
 msgstr ""
+"Dans ce cas, cela nous indique que le type de `UML.Class.ownedAttribute` est "
+"`UML.Property`. `UML.Property.class_` est défini à la classe propriétaire "
+"lorsque `ownedAttribute` est défini. Il s'agit d'une relation "
+"bidirectionnelle."
 
 #: ../scripting.md:139 ../scripting.md:138
 msgid "Draw a diagram"
-msgstr ""
+msgstr "Dessiner un diagramme"
 
 #: ../scripting.md:141 ../scripting.md:140
 msgid ""
 "Another nice feature is drawing the diagrams. At this moment this requires a "
 "function. This behavior is similar to the [`diagram` directive](sphinx)."
 msgstr ""
+"Une autre fonction intéressante consiste à dessiner les diagrammes. Pour "
+"l'instant, cela nécessite une fonction. Ce comportement est similaire à la "
+"directive [`diagram`](sphinx)."
 
 #: ../scripting.md:152 ../scripting.md:151
 msgid "Create a diagram"
-msgstr ""
+msgstr "Créer un diagramme"
 
 #: ../scripting.md:154 ../scripting.md:153
 msgid "(Requires Gaphor 2.13)"
-msgstr ""
+msgstr "(Nécessite Gaphor 2.13)"
 
 #: ../scripting.md:156 ../scripting.md:155
 msgid ""
@@ -5995,6 +6126,11 @@ msgid ""
 "diagram. With a little help of the auto-layout service, we can make it a "
 "readable diagram."
 msgstr ""
+"Faisons maintenant quelque chose d'un peu plus fantaisiste. Nous avons "
+"toujours le modèle de base chargé dans la fabrique d'éléments. A partir de "
+"ce modèle, nous pouvons créer un diagramme personnalisé. Avec un peu d'aide "
+"du service de mise en page automatique, nous pouvons en faire un diagramme "
+"lisible."
 
 #: ../scripting.md:161 ../scripting.md:160
 msgid ""
@@ -6003,42 +6139,51 @@ msgid ""
 "also drop all associations on the model. Only if both ends can connect, the "
 "association will be added."
 msgstr ""
+"Pour créer le diagramme, nous [`déposons (drop)` "
+"elements](modeling_language:dropping) sur le diagramme. Les éléments d'un "
+"diagramme représentent un élément du modèle. Nous allons également déposer "
+"toutes les associations sur le modèle. L'association ne sera ajoutée que si "
+"les deux extrémités peuvent se connecter."
 
 #: ../scripting.md:187 ../scripting.md:186
 msgid "The diagram is not perfect, but you get the picture."
-msgstr ""
+msgstr "Le schéma n'est pas parfait, mais vous avez compris."
 
 #: ../scripting.md:189 ../scripting.md:188
 msgid "Update a model"
-msgstr ""
+msgstr "Mise à jour d'un modèle"
 
 #: ../scripting.md:191 ../scripting.md:190
 msgid ""
 "Updating a model always starts with the element factory: that’s where "
 "elements are created."
 msgstr ""
+"La mise à jour d'un modèle commence toujours par la fabrique d'éléments ("
+"element factory) : c'est là que les éléments sont créés."
 
 #: ../scripting.md:194 ../scripting.md:193
 msgid "To create a UML Class instance, you can:"
-msgstr ""
+msgstr "Pour créer une instance de classe UML, vous pouvez :"
 
 #: ../scripting.md:201 ../scripting.md:200
 msgid ""
 "To give it an attribute, create an attribute type (`UML.Property`) and then "
 "assign the attribute values."
 msgstr ""
+"Pour lui donner un attribut, créez un type d'attribut (`UML.Property`) et "
+"attribuez-lui des valeurs."
 
 #: ../scripting.md:211 ../scripting.md:210
 msgid "Adding it to the diagram looks like this:"
-msgstr ""
+msgstr "En l'ajoutant au diagramme, on obtient le résultat suivant :"
 
 #: ../scripting.md:219 ../scripting.md:218
 msgid "If you save the model, your changes are persisted:"
-msgstr ""
+msgstr "Si vous enregistrez le modèle, vos modifications sont conservées :"
 
 #: ../scripting.md:227
 msgid "Updating elements"
-msgstr ""
+msgstr "Mise à jour des éléments"
 
 #: ../scripting.md:229
 msgid ""
@@ -6046,14 +6191,18 @@ msgid ""
 "of the element ID. Each element in the model has a unique internal id. Once "
 "again we need some imports from Gaphor:"
 msgstr ""
+"Si vous devez mettre à jour des éléments existants, vous pouvez le faire en "
+"gardant une trace de l'identifiant de l'élément. Chaque élément du modèle "
+"possède un identifiant interne unique. Une fois de plus, nous avons besoin "
+"d'importations de Gaphor :"
 
 #: ../scripting.md:242
 msgid "Then start up the services we will use:"
-msgstr ""
+msgstr "Ensuite, nous lancerons les services que nous utiliserons :"
 
 #: ../scripting.md:261
 msgid "and load in the model to the session"
-msgstr ""
+msgstr "et charger le modèle dans la session"
 
 #: ../scripting.md:278
 msgid ""
@@ -6061,32 +6210,43 @@ msgid ""
 "the element with the same id, and then update the content. We then save the "
 "altered model to a file."
 msgstr ""
+"Il est important de noter que les changements sont effectués dans le cadre "
+"d'une `Transaction`. Ici, nous trouvons l'élément avec le même identifiant, "
+"puis nous mettons à jour le contenu. Nous sauvegardons ensuite le modèle "
+"modifié dans un fichier."
 
 #: ../scripting.md:293 ../scripting.md:225
 msgid "What else"
-msgstr ""
+msgstr "Quoi d'autre"
 
 #: ../scripting.md:295 ../scripting.md:227
 msgid "What else is there to know…"
-msgstr ""
+msgstr "Qu'y a-t-il d'autre à savoir …"
 
 #: ../scripting.md:297 ../scripting.md:229
 msgid ""
 "Gaphor supports derived associations. For example, `element.owner` points to "
 "the owner element. For an attribute that would be its containing class."
 msgstr ""
+"Gaphor supporte les associations dérivées. Par exemple, `element.owner` "
+"pointe vers l'élément propriétaire. Pour un attribut, il s'agirait de la "
+"classe qui le contient."
 
 #: ../scripting.md:298 ../scripting.md:230
 msgid ""
 "All data models are described in the `Modeling Languages` section of the "
 "docs."
 msgstr ""
+"Tous les modèles de données sont décrits dans la section « Langages de "
+"modélisation » (`Modeling Languages`) de la documentation."
 
 #: ../scripting.md:299 ../scripting.md:231
 msgid ""
 "If you use Gaphor’s Console, you’ll need to apply all changes in a "
 "transaction, or they will result in an error."
 msgstr ""
+"Si vous utilisez la console de Gaphor, vous devrez appliquer toutes les "
+"modifications dans une transaction, sinon une erreur se produira."
 
 #: ../scripting.md:300 ../scripting.md:232
 msgid ""
@@ -6095,48 +6255,58 @@ msgid ""
 "codegen/coder.py). This module is used to generate the code for the data "
 "models used by Gaphor."
 msgstr ""
+"Si vous voulez un exemple complet de générateur de code, jetez un coup d'œil "
+"au [module `coder` de Gaphor] (https://github.com/gaphor/gaphor/blob/main/"
+"gaphor/codegen/coder.py). Ce module est utilisé pour générer le code des "
+"modèles de données utilisés par Gaphor."
 
 #: ../scripting.md:301 ../scripting.md:233
 msgid ""
 "This page is rendered with [MyST-NB](https://myst-nb.readthedocs.io/). It’s "
 "actually a Jupyter Notebook!"
 msgstr ""
+"Cette page est réalisée avec [MyST-NB](https://myst-nb.readthedocs.io/). Il "
+"s'agit en fait d'un carnet de notes Jupyter !"
 
 #: ../scripting.md:303 ../scripting.md:235
 msgid "Examples"
-msgstr ""
+msgstr "Exemples"
 
 #: ../scripting.md:305 ../scripting.md:237
 msgid ""
 "Expanding on the information above the following snippetts show how to "
 "create requirements and interfaces."
 msgstr ""
+"En développant les informations ci-dessus, les extraits suivants montrent "
+"comment créer des exigences et des interfaces."
 
 #: ../scripting.md:307 ../scripting.md:239
 msgid "Requirements from text fields"
-msgstr ""
+msgstr "Exigences des champs de texte"
 
 #: ../scripting.md:332 ../scripting.md:261
 msgid "Interfaces from dictionaries"
-msgstr ""
+msgstr "Interfaces à partir de dictionnaires"
 
 #: ../scripting.md:363
 msgid "Basic Validation"
-msgstr ""
+msgstr "Validation de base"
 
 #: ../scripting.md:364
 msgid ""
 "Some simple validation checks can be run using a couple of small functions "
 "to select and evaluate elements."
 msgstr ""
+"Des contrôles de validation simples peuvent être effectués à l'aide de "
+"quelques petites fonctions pour sélectionner et évaluer les éléments."
 
 #: ../scripting.md:388 ../scripting.md:295
 msgid "Here is another example:"
-msgstr ""
+msgstr "Voici un autre exemple :"
 
 #: ../service_oriented.md:1
 msgid "Service Oriented Architecture"
-msgstr ""
+msgstr "Architecture Orientée Service"
 
 #: ../service_oriented.md:3
 msgid ""
@@ -6145,6 +6315,11 @@ msgid ""
 "specific piece of functionality. For example, we use separate services to "
 "load/save models, provide the menu structure, and to handle the undo system."
 msgstr ""
+"Gaphor a une architecture orientée services. Qu'est-ce que cela signifie ? "
+"Gaphor est construit comme un ensemble de petites îles (services). Chaque "
+"îlot fournit une fonctionnalité spécifique. Par exemple, nous utilisons des "
+"services distincts pour charger/sauvegarder les modèles, pour fournir la "
+"structure du menu, et pour gérer le système d'annulation."
 
 #: ../service_oriented.md:8
 msgid ""
@@ -6154,10 +6329,16 @@ msgid ""
 "console_scripts entry point group to start an application from the command "
 "line."
 msgstr ""
+"Nous définissons les services comme des points d'entrée dans le fichier "
+"`pyproject.toml`. Grâce à ces points d'entrée, les applications peuvent "
+"enregistrer des fonctionnalités à des fins spécifiques. Nous les regroupons "
+"également en groupes de points d'entrée. Par exemple, nous utilisons le "
+"groupe e points d'entrée 'console_scripts 'pour démarrer une application à "
+"partir de la ligne de commande."
 
 #: ../service_oriented.md:15
 msgid "Services"
-msgstr ""
+msgstr "Services"
 
 #: ../service_oriented.md:17
 msgid ""
@@ -6165,27 +6346,36 @@ msgid ""
 "registered with the application and then it can be used by other services or "
 "other objects living within the application."
 msgstr ""
+"Gaphor est modélisé autour du concept de services. Chaque service peut être "
+"enregistré auprès de l'application et peut ensuite être utilisé par d'autres "
+"services ou d'autres objets présents dans l'application."
 
 #: ../service_oriented.md:21
 msgid ""
 "Each service should implement the Service interface. This interface defines "
 "one method:"
 msgstr ""
+"Chaque service doit implémenter l'interface Service. Cette interface définit "
+"une méthode :"
 
 #: ../service_oriented.md:28 ../service_oriented.md:26
 msgid "Which is called when a service needs to be cleaned up."
-msgstr ""
+msgstr "C'est ce qu'on appelle lorsqu'un service doit être nettoyé."
 
 #: ../service_oriented.md:30 ../service_oriented.md:28
 msgid ""
 "We allow each service to define its own methods, as long as the service is "
 "implemented too."
 msgstr ""
+"Nous permettons à chaque service de définir ses propres méthodes, à "
+"condition que le service soit également implémenté."
 
 #: ../service_oriented.md:33 ../service_oriented.md:31
 msgid ""
 "Services should be defined as entry points in the `pyproject.toml` file."
 msgstr ""
+"Les services doivent être définis comme des points d'entrée dans le fichier "
+"`pyproject.toml`."
 
 #: ../service_oriented.md:35 ../service_oriented.md:33
 msgid ""
@@ -6193,6 +6383,10 @@ msgid ""
 "expose actions that can be invoked by users. For example, the _Ctrl-z_ key "
 "combo (undo) is implemented by the UndoManager service."
 msgstr ""
+"En général, un service effectue un travail en arrière-plan. Les services "
+"peuvent également exposer des actions qui peuvent être invoquées par les "
+"utilisateurs. Par exemple, la combinaison de touches _Ctrl-z_ (annuler) est "
+"implémentée par le service UndoManager."
 
 #: ../service_oriented.md:39 ../service_oriented.md:37
 msgid ""
@@ -6200,6 +6394,10 @@ msgid ""
 "resolves these dependencies. To define a service dependency, just add it to "
 "the constructor by its name defined in the entry point:"
 msgstr ""
+"Un service peut également dépendre d'autres services. L'initialisation du "
+"service résout ces dépendances. Pour définir une dépendance de service, il "
+"suffit de l'ajouter au constructeur par son nom défini dans le point "
+"d'entrée :"
 
 #: ../service_oriented.md:58 ../service_oriented.md:54
 msgid ""
@@ -6207,16 +6405,22 @@ msgid ""
 "interface. This interface does not require any additional methods to be "
 "implemented. Action methods should be annotated with an `@action` annotation."
 msgstr ""
+"Les services qui proposent des actions doivent également hériter de "
+"l'interface ActionProvider. Cette interface ne nécessite pas "
+"l'implémentation de méthodes supplémentaires. Les méthodes d'action doivent "
+"être annotées avec l'annotation `@action`."
 
 #: ../service_oriented.md:62 ../service_oriented.md:58
 msgid "Example: ElementFactory"
-msgstr ""
+msgstr "Exemple : ElementFactory"
 
 #: ../service_oriented.md:64
 msgid ""
 "A nice example of a service in use is the {obj}`~gaphor.core.modeling."
 "ElementFactory`. It is one of the core services."
 msgstr ""
+"Un bon exemple de service utilisé est le {obj}`~gaphor.core.modeling."
+"ElementFactory`. C'est l'un des services de base."
 
 #: ../service_oriented.md:67
 msgid ""
@@ -6227,16 +6431,25 @@ msgid ""
 "Those classes, or more specifically, the properties, send notifications "
 "every time their state changes."
 msgstr ""
+"Lorsqu'un événement important se produit, comme la création ou la "
+"destruction d'un élément, l'événement correspondant est émis. Nous utilisons "
+"alors un gestionnaire d'événement pour la classe `ElementFactory` qui stocke "
+"les signaux d'ajout/suppression dans le système d'annulation. Un autre "
+"exemple d'événements émis concerne les objets `~gaphor.core.modeling.Element`"
+". Ces classes, ou plus précisément leurs propriétés, envoient des "
+"notifications à chaque fois que leur état change."
 
 #: ../service_oriented.md:74 ../service_oriented.md:69
 msgid "Entry Points"
-msgstr ""
+msgstr "Points d'entrée (Entry Points)"
 
 #: ../service_oriented.md:76
 msgid ""
 "Gaphor uses a main :ref`entry point <https://packaging.python.org/en/latest/"
 "specifications/entry-points/>` group called `gaphor.services`."
 msgstr ""
+"Gaphor utilise un groupe principal :ref`entry point <https://packaging.python"
+".org/en/latest/specifications/entry-points/>` appelé `gaphor.services`."
 
 #: ../service_oriented.md:78 ../service_oriented.md:73
 msgid ""
@@ -6244,6 +6457,10 @@ msgid ""
 "breaking the functions in to individual components. For example, the element "
 "factory and undo manager are both services."
 msgstr ""
+"Les services sont utilisés pour réaliser la fonctionnalité de base de "
+"l'application tout en décomposant les fonctions en composants individuels. "
+"Par exemple, la fabrique d'éléments et le gestionnaire d'annulation sont "
+"tous deux des services."
 
 #: ../service_oriented.md:82 ../service_oriented.md:77
 msgid ""
@@ -6252,26 +6469,33 @@ msgid ""
 "to other applications. Plugins are also defined as services. For example a "
 "new XMI export plugin would be defined as follows in the `pyproject.toml`:"
 msgstr ""
+"Des plugins peuvent également être créés pour étendre Gaphor au-delà de ses "
+"fonctionnalités de base. Par exemple, un plugin peut être créé pour "
+"connecter les données du modèle à d'autres applications. Les plugins sont "
+"également définis comme des services. Par exemple, un nouveau plugin "
+"d'exportation XMI serait défini comme suit dans le fichier `pyproject.toml` :"
 
 #: ../service_oriented.md:92 ../service_oriented.md:87
 msgid "Interfaces"
-msgstr ""
+msgstr "Interfaces"
 
 #: ../service_oriented.md:94 ../service_oriented.md:89
 msgid ""
 "Each service (and plugin) should implement the `gaphor.abc.Service` "
 "interface:"
 msgstr ""
+"Chaque service (et plugin) doit implémenter l'interface `gaphor.abc.Service` "
+":"
 
 #: gaphor.abc.Service:1 of ../../gaphor/abc.py:docstring
 msgid "Base interface for all services in Gaphor."
-msgstr ""
+msgstr "Interface de base pour tous les services de Gaphor."
 
 #: gaphor.abc.Service.shutdown:1 of ../../gaphor/abc.py:docstring
 #: ../../gaphor/core/eventmanager.py:docstring
 #: gaphor.core.eventmanager.EventManager.shutdown:1
 msgid "Shutdown the services, free resources."
-msgstr ""
+msgstr "Fermez les services, libérez les ressources."
 
 #: ../service_oriented.md:101 ../service_oriented.md:96
 msgid ""
@@ -6280,30 +6504,37 @@ msgid ""
 "used to define windows and user interface functionality. A UI component "
 "should implement the `gaphor.ui.abc.UIComponent` interface:"
 msgstr ""
+"Un autre service plus spécialisé, qui hérite également de `gaphor.abc."
+"Service`, est le service UI Component. Les services qui utilisent cette "
+"interface servent à définir les fenêtres et les fonctionnalités de "
+"l'interface utilisateur. Un composant d'interface utilisateur doit "
+"implémenter l'interface `gaphor.ui.abc.UIComponent` :"
 
 #: gaphor.ui.abc.UIComponent:1 of ../../gaphor/ui/abc.py:docstring
 msgid "A user interface component."
-msgstr ""
+msgstr "Un composant de l'interface utilisateur."
 
 #: gaphor.ui.abc.UIComponent.close:1 of ../../gaphor/ui/abc.py:docstring
 msgid "Close the UI component."
-msgstr ""
+msgstr "Fermez le composant de l'interface utilisateur."
 
 #: gaphor.ui.abc.UIComponent.close:3 of ../../gaphor/ui/abc.py:docstring
 msgid "The component can decide to hide or destroy the UI components."
 msgstr ""
+"Le composant peut décider de cacher ou de détruire les composants de "
+"l'interface utilisateur."
 
 #: gaphor.ui.abc.UIComponent.open:1 of ../../gaphor/ui/abc.py:docstring
 msgid "Create and display the UI components (windows)."
-msgstr ""
+msgstr "Créer et afficher les composants de l'interface utilisateur (fenêtres)."
 
 #: gaphor.ui.abc.UIComponent.shutdown:1 of ../../gaphor/ui/abc.py:docstring
 msgid "Shut down this component."
-msgstr ""
+msgstr "Arrêter ce composant."
 
 #: gaphor.ui.abc.UIComponent.shutdown:3 of ../../gaphor/ui/abc.py:docstring
 msgid "It's not supposed to be opened again."
-msgstr ""
+msgstr "Il n'est pas censé être rouvert."
 
 #: ../service_oriented.md:111 ../service_oriented.md:106
 msgid ""
@@ -6311,16 +6542,22 @@ msgid ""
 "the user, by means of menu entries. Every service and UI component can "
 "advertise actions by implementing the `gaphor.abc.ActionProvider` interface:"
 msgstr ""
+"Typiquement, un service et un composant d'interface utilisateur (UI) "
+"souhaitent proposer certaines actions à l'utilisateur à l'aide d'entrées de "
+"menu. Chaque service et composant peut annoncer des actions en implémentant "
+"l'interface `gaphor.abc.ActionProvider` :"
 
 #: gaphor.abc.ActionProvider:1 of ../../gaphor/abc.py:docstring
 msgid ""
 "An action provider is a special service that provides actions via "
 "``@action`` decorators on its methods (see gaphor/action.py)."
 msgstr ""
+"Un fournisseur d'actions est un service spécial qui fournit des actions via "
+"des décorateurs ``@action`` sur ses méthodes (voir gaphor/action.py)."
 
 #: ../sphinx.rst:2
 msgid "Sphinx Extension"
-msgstr ""
+msgstr "Extension Sphinx"
 
 #: ../sphinx.rst:4
 msgid ""
@@ -6328,6 +6565,9 @@ msgid ""
 "documentation. Whether you write your docs in `reStructured Text`_ or "
 "`Markdown`_, we've got you covered."
 msgstr ""
+"Quoi de plus génial que d'utiliser les diagrammes Gaphor directement dans "
+"votre documentation `Sphinx`_. Que vous écriviez vos documents en `"
+"reStructured Text`_ ou en `Markdown`_, nous avons tout prévu."
 
 #: ../sphinx.rst:9
 msgid ""
@@ -6336,12 +6576,19 @@ msgid ""
 "io/>`_, as it `supports Sphinx directives <https://myst-parser.readthedocs."
 "io/en/latest/syntax/roles-and-directives.html>`_."
 msgstr ""
+"Nous couvrons ici la syntaxe du texte «reStructured Text». Si vous préférez "
+"le markdown, nous vous suggérons de jeter un coup d'œil à MyST-parser <https"
+"://myst-parser.readthedocs.io/>, car il prend en charge les directives "
+"Sphinx <https://myst-parser.readthedocs.io/en/latest/syntax/roles-and-"
+"directives.html>."
 
 #: ../sphinx.rst:13
 msgid ""
 "It requires `minimal effort to set up <#configuration>`_. Adding a diagram "
 "is as simple as:"
 msgstr ""
+"Il nécessite `un effort minimal pour mettre en place <#configuration>`_. "
+"L'ajout d'un diagramme est aussi simple que :"
 
 #: ../sphinx.rst:22
 msgid ""
@@ -6349,53 +6596,59 @@ msgid ""
 "`` attribute and add the model names to the Sphinx configuration file "
 "(``conf.py``)."
 msgstr ""
+"Dans le cas où vous utilisez plusieurs fichiers sources Gaphor, vous devez "
+"définir un attribut ``:model:`` et ajouter les noms des modèles au fichier "
+"de configuration de Sphinx (``conf.py``)."
 
 #: ../sphinx.rst:30
 msgid ""
 "Diagrams can be referenced by their name, or by their fully qualified name."
 msgstr ""
+"Les diagrammes peuvent être référencés par leur nom ou par leur nom complet."
 
 #: ../sphinx.rst:36
 msgid "`Image properties`_ can also be applied:"
-msgstr ""
+msgstr "Les propriétés de l'image peuvent également être appliquées :"
 
 #: ../sphinx.rst:-1
 msgid "A description suitable for an example"
-msgstr ""
+msgstr "Une description adaptée à un exemple"
 
 #: ../sphinx.rst:53
 msgid "Configuration"
-msgstr ""
+msgstr "Configuration"
 
 #: ../sphinx.rst:55
 msgid ""
 "To add Gaphor diagram support to Sphinx, make sure Gaphor is listed as a "
 "dependency."
 msgstr ""
+"Pour ajouter le support des diagrammes Gaphor à Sphinx, assurez-vous que "
+"Gaphor est listé comme une dépendance."
 
 #: ../sphinx.rst:59
 msgid "Gaphor requires at least Python 3.9."
-msgstr ""
+msgstr "Gaphor nécessite au moins Python 3.9."
 
 #: ../sphinx.rst:61
 msgid "Secondly, add the following to your ``conf.py`` file:"
-msgstr ""
+msgstr "Deuxièmement, ajoutez ce qui suit à votre fichier ``conf.py`` :"
 
 #: ../sphinx.rst:63
 msgid "Step 1: Add gaphor as extension."
-msgstr ""
+msgstr "Étape 1 : Ajouter gaphor comme extension."
 
 #: ../sphinx.rst:71
 msgid "Step 2: Add references to models"
-msgstr ""
+msgstr "Étape 2 : Ajouter des références aux modèles"
 
 #: ../sphinx.rst:84
 msgid "Now include ``diagram`` directives in your documents."
-msgstr ""
+msgstr "Incluez maintenant les directives ``diagramme`` dans vos documents."
 
 #: ../sphinx.rst:88
 msgid "Read the Docs"
-msgstr ""
+msgstr "Lire les documents"
 
 #: ../sphinx.rst:90
 msgid ""
@@ -6403,18 +6656,22 @@ msgid ""
 "render, it's best to use a `.readthedocs.yaml`_ file in your project. Make "
 "sure to include the extra ``apt_packages`` as shown below."
 msgstr ""
+"La directive diagramme est compatible avec le module « Lire la doc » (`Read "
+"the docs`_). Pour rendre les diagrammes, il est préférable d'utiliser un "
+"fichier `.readthedocs.yaml` dans votre projet. Assurez-vous d'inclure "
+"l'élément supplémentaire ``apt_packages`, comme indiqué ci-dessous."
 
 #: ../sphinx.rst:94
 msgid "This is the ``.readthedocs.yaml`` file we use for Gaphor:"
-msgstr ""
+msgstr "C'est le fichier ``.readthedocs.yaml'' que nous utilisons pour Gaphor :"
 
 #: ../sphinx.rst:99
 msgid "``libgirepository1.0-dev`` is required to build PyGObject."
-msgstr ""
+msgstr "``libgirepository1.0-dev`` est nécessaire pour construire PyGObject."
 
 #: ../sphinx.rst:100
 msgid "``gir1.2-pango-1.0`` is required for text rendering."
-msgstr ""
+msgstr "``gir1.2-pango-1.0`` est nécessaire pour le rendu du texte."
 
 #: ../sphinx.rst:104
 msgid ""
@@ -6422,42 +6679,55 @@ msgid ""
 "``apt_packages``, although we do not use the GUI. From Gaphor 2.7.1 onwards "
 "all you need is GI-repository and Pango."
 msgstr ""
+"Pour Gaphor 2.7.0, ``gir1.2-gtk-3.0`` et ``gir1.2-gtksource-4`` sont "
+"nécessaires ``apt_packages``, bien que nous n'utilisions pas l'interface "
+"graphique. À partir de Gaphor 2.7.1, tout ce dont vous avez besoin est GI-"
+"repository et Pango."
 
 #: ../sphinx.rst:109
 msgid "Errors"
-msgstr ""
+msgstr "Errors"
 
 #: ../sphinx.rst:111
 msgid ""
 "Errors are shown on the console when the documentation is built and in the "
 "document."
 msgstr ""
+"Les erreurs sont affichées sur la console lors de la création de la "
+"documentation et dans le document."
 
 #: ../sphinx.rst:113
 msgid "An error will appear in the documentation. Something like this:"
-msgstr ""
+msgstr "Une erreur apparaîtra dans la documentation. Quelque chose comme ceci :"
 
 #: ../sphinx.rst:117
 msgid ""
 "No diagram ‘Wrong name’ in model ‘example’ (../examples/sequence-diagram."
 "gaphor)."
 msgstr ""
+"Pas de diagramme 'Mauvais nom' dans le modèle 'exemple' (../examples/"
+"sequence-diagram.gaphor)."
 
 #: ../stereotypes.md:1
 msgid "Stereotypes"
-msgstr ""
+msgstr "Stéréotypes"
 
 #: ../stereotypes.md:3
 msgid ""
 "In UML, stereotypes are way to extend the application of the UML language to "
 "new domains. For example: SysML started as a profile for UML."
 msgstr ""
+"En UML, les stéréotypes sont un moyen d'étendre l'application du langage UML "
+"à de nouveaux domaines. Par exemple : SysML a commencé comme un profil pour "
+"UML."
 
 #: ../stereotypes.md:6
 msgid ""
 "Gaphor supports stereotypes too. They're *the* way for you to adapt your "
 "models to your specific needs."
 msgstr ""
+"Gaphor prend également en charge les stéréotypes. Ils vous permettent "
+"d'adapter vos modèles à vos besoins spécifiques."
 
 #: ../stereotypes.md:9
 msgid ""
@@ -6465,6 +6735,10 @@ msgid ""
 "generated from Gaphor model files – make use of stereotypes to provide "
 "specific information used when generating the data model code."
 msgstr ""
+"Les modèles UML, SysML, RAAML et autres utilisés dans Gaphor (le code est "
+"généré à partir des fichiers de modèle Gaphor) utilisent des stéréotypes "
+"pour fournir des informations spécifiques utilisées lors de la génération du "
+"code du modèle de données."
 
 #: ../stereotypes.md:13
 msgid ""
@@ -6474,6 +6748,11 @@ msgid ""
 "`«metaclass»` stereotype will only show once the *Extension* is connected "
 "both class and stereotype."
 msgstr ""
+"Pour créer un stéréotype, assurez-vous que le profil UML est actif, puis "
+"ouvrez la section « Profil » de la boîte à outils. Ajoutez d'abord une "
+"«métaclasse» à votre diagramme. Ensuite, ajoutez un «stéréotype» et reliez "
+"les deux avec une extension. Le stéréotype « metaclass » n'apparaîtra que "
+"lorsque l'extension sera connectée à la fois à la classe et au stéréotype."
 
 #: ../stereotypes.md:20
 msgid ""
@@ -6481,10 +6760,13 @@ msgid ""
 "such as `Class`, `Interface`, `Property`, `Association`. Or even `Element` "
 "if you want to use the stereotype on all elements."
 msgstr ""
+"Les noms de classe dans la métaclasse doivent être des noms de classe du "
+"modèle UML, tels que `Classe`, `Interface`, `Propriété`, `Association`. Ou "
+"même `Element` si vous voulez utiliser le stéréotype sur tous les éléments."
 
 #: ../stereotypes.md:25
 msgid "Your stereotype declaration may look something like this:"
-msgstr ""
+msgstr "Votre déclaration de stéréotype peut ressembler à ceci :"
 
 #: ../stereotypes.md:31
 msgid ""
@@ -6492,26 +6774,36 @@ msgid ""
 "be proved a value once the stereotype is applied to a *Property*, such as an "
 "association end."
 msgstr ""
+"Le stéréotype `Asynchronous`(Asynchrone) possède une propriété `priority` "
+"(priorité). Cette propriété peut se voir attribuer une valeur une fois que "
+"le stéréotype est appliqué à une *propriété* (Property), telle qu'une fin "
+"d'association."
 
 #: ../stereotypes.md:35
 msgid ""
 "When a stereotype can be applied to a model element, a *Stereotype* section "
 "will appear in the editor."
 msgstr ""
+"Lorsqu'un stéréotype peut être appliqué à un élément de modèle, une section "
+"*Stereotype* (Stéréotype) apparaît dans l'éditeur."
 
 #: ../stereotypes.md:38
 msgid ""
 "![The Gaphor main window showing a stereotype usage example.](images/"
 "stereotype-usage.png)"
 msgstr ""
+"![La fenêtre principale de Gaphor illustre l'utilisation d'un stéréotype] ("
+"images/stereotype-usage.png)"
 
 #: ../stereotypes.md:38
 msgid "The Gaphor main window showing a stereotype usage example."
 msgstr ""
+"La fenêtre principale de Gaphor montre un exemple d'utilisation d'un "
+"stéréotype."
 
 #: ../stereotypes.md:40
 msgid "Creating a profile"
-msgstr ""
+msgstr "Création d'un profil"
 
 #: ../stereotypes.md:42
 msgid ""
@@ -6519,38 +6811,46 @@ msgid ""
 "the model to your needs. For example, creating Customer vs System "
 "requirements."
 msgstr ""
+"En SysML, il est souvent nécessaire d'étendre le profil à l'aide de "
+"stéréotypes pour adapter le modèle à vos besoins. Cela peut par exemple "
+"permettre de représenter les exigences du client par rapport à celles du "
+"système."
 
 #: ../stereotypes.md:45
 msgid "To add a profile to your model:"
-msgstr ""
+msgstr "Pour ajouter un profil à votre modèle :"
 
 #: ../stereotypes.md:47
 msgid ""
 "Create a package called `profile` this can be done by right clicking in the "
 "left hand column."
 msgstr ""
+"Créez un paquet appelé `profile` en faisant un clic droit dans la colonne de "
+"gauche."
 
 #: ../stereotypes.md:48
 msgid ""
 "Switch modelling language to the UML profile (top of left hand menu drop "
 "down)"
 msgstr ""
+"Changer le langage de modélisation pour le profil UML (en haut du menu "
+"déroulant de gauche)"
 
 #: ../stereotypes.md:49
 msgid "Within the package create a profile diagram (prf)"
-msgstr ""
+msgstr "Dans le paquet, créer un diagramme de profil (prf)"
 
 #: ../stereotypes.md:50
 msgid "Add a profile element to the diagram"
-msgstr ""
+msgstr "Ajouter un élément de profil au diagramme"
 
 #: ../stereotypes.md:51
 msgid "Add a meta-class element to the diagram, within the profile."
-msgstr ""
+msgstr "Ajouter un élément de méta-classe au diagramme, dans le profil."
 
 #: ../stereotypes.md:52
 msgid "Add a stereotype element to the diagram, within the profile."
-msgstr ""
+msgstr "Ajouter un élément de stéréotype au diagramme, dans le profil."
 
 #: ../stereotypes.md:53
 msgid ""
@@ -6558,16 +6858,21 @@ msgid ""
 "should be attached to the class. As soon as the Extension is connected, the "
 "class will get a stereotype _metaclass_ assigned."
 msgstr ""
+"Relier la méta-classe et le stéréotype à l'aide d'une relation d'extension. "
+"La tête doit être attachée à la classe. Dès que l'extension est connectée, "
+"un stéréotype _metaclass_ est attribué à la classe."
 
 #: ../stereotypes.md:55
 msgid "With the meta-class and stereotype placed on the diagram, either:"
-msgstr ""
+msgstr "Avec la méta-classe et le stéréotype placés sur le diagramme, soit :"
 
 #: ../stereotypes.md:57
 msgid ""
 "Double-click the meta-class and name it after the base element you want to "
 "create your stereotype from."
 msgstr ""
+"Double-cliquez sur la méta-classe et donnez-lui le nom de l'élément de base "
+"à partir duquel vous souhaitez créer votre stéréotype."
 
 #: ../stereotypes.md:58
 msgid ""
@@ -6575,24 +6880,32 @@ msgid ""
 "the right hand side. In this case only UML elements can be used as base "
 "elements."
 msgstr ""
+"Sélectionnez l'élément de base dans le menu déroulant de l'éditeur de "
+"propriétés situé à droite. Dans ce cas, seuls les éléments UML peuvent être "
+"utilisés."
 
 #: ../stereotypes.md:60
 msgid "Styling Stereotypes"
-msgstr ""
+msgstr "Stéréotypes stylistiques"
 
 #: ../stereotypes.md:62
 msgid ""
 "You can apply styling to stereotypes. For example here the base element "
 "`requirement` has a stereotype `system requirement`"
 msgstr ""
+"Vous pouvez appliquer un style aux stéréotypes. Par exemple ici, l'élément "
+"de base `requirement` (exigence) a un stéréotype `system requirement` ("
+"exigence sutème)"
 
 #: ../stereotypes.md:77
 msgid "[Style Sheets](style_sheets) has more detail on how CSS works in Gaphor"
 msgstr ""
+"[Feuilles de style](style_sheets) contient plus de détails sur le "
+"fonctionnement des feuilles de style CSS dans Gaphor"
 
 #: ../storage.md:1
 msgid "File Format"
-msgstr ""
+msgstr "Format de fichier"
 
 #: ../storage.md:3
 msgid ""
@@ -6600,6 +6913,9 @@ msgid ""
 "are contained in this. The Gaphor element delimits the beginning and the end "
 "of an Gaphor model."
 msgstr ""
+"L'élément racine des modèles Gaphor est la balise `Gaphor`, qui contient "
+"tous les autres éléments. L'élément Gaphor délimite le début et la fin d'un "
+"modèle Gaphor."
 
 #: ../storage.md:7
 msgid ""
@@ -6609,6 +6925,12 @@ msgid ""
 "are used to point to other UML elements. Values have a value inside (an "
 "integer or a string)."
 msgstr ""
+"L'idée est de garder le format de fichier aussi simple et extensible que "
+"possible : Les éléments UML (y compris le diagramme) sont au niveau "
+"supérieur, sans imbrication. Un élément UML peut avoir deux balises : "
+"références (`ref`) et valeurs (`val`). Les références sont utilisées pour "
+"pointer vers d'autres éléments UML. Les valeurs ont une valeur à l'intérieur "
+"(un entier ou une chaîne)."
 
 #: ../storage.md:11
 msgid ""
@@ -6616,10 +6938,13 @@ msgid ""
 "the file (e.g. `Package.ownedType` - `Actor.package`, and `Diagram."
 "ownedPresentation` and `UseCaseItem.diagram`)."
 msgstr ""
+"Comme de nombreuses références sont bidirectionnelles, vous trouverez les "
+"deux extrémités définies dans le fichier (par exemple, `Package.ownedType` - "
+"`Actor.package`, et `Diagram.ownedPresentation` et `UseCaseItem.diagram`)."
 
 #: ../style_sheets.md:1
 msgid "Style Sheets"
-msgstr ""
+msgstr "Feuilles de style"
 
 #: ../style_sheets.md:3
 msgid ""
@@ -6628,18 +6953,28 @@ msgid ""
 "used to describe the presentation of a document written in a markup "
 "language, and is most commonly used with HTML for web pages."
 msgstr ""
+"Depuis Gaphor 2.0, il est possible d'obtenir une apparence différente des "
+"diagrammes grâce aux feuilles de style. Ces feuilles de style utilisent la "
+"syntaxe des feuilles de style en cascade (CSS). CSS est utilisé pour décrire "
+"la présentation d'un document écrit dans un langage de balisage, et est le "
+"plus souvent utilisé avec HTML pour les pages web."
 
 #: ../style_sheets.md:8
 msgid ""
 "On the [W3C CSS home page](https://www.w3.org/Style/CSS/Overview.en.html), "
 "CSS is described as:"
 msgstr ""
+"Sur la [page d'accueil CSS du W3C] (https://www.w3.org/Style/CSS/Overview.en."
+"html), CSS est décrit comme suit :"
 
 #: ../style_sheets.md:11
 msgid ""
 "Cascading Style Sheets (CSS) is a simple mechanism for adding style (e.g., "
 "fonts, colors, spacing) to Web documents."
 msgstr ""
+"Les feuilles de style en cascade (CSS) sont un mécanisme simple permettant "
+"d'ajouter du style (par exemple, des polices, des couleurs, des espaces) aux "
+"documents Web."
 
 #: ../style_sheets.md:14
 msgid ""
@@ -6648,12 +6983,19 @@ msgid ""
 "to change the visual appearance of our diagrams. Color and line styles can "
 "be changed to make it easier to read the diagrams."
 msgstr ""
+"Son application va cependant bien au-delà des documents web. Gaphor utilise "
+"en effet le CSS pour fournir des éléments de style aux éléments des "
+"diagrammes. Les CSS nous permettent de modifier l'aspect visuel de nos "
+"diagrammes. Il est par exemple possible de modifier les couleurs et les "
+"styles de ligne pour faciliter la lecture des diagrammes."
 
 #: ../style_sheets.md:19
 msgid ""
 "Since we're dealing with a diagram, and not a HTML document, some CSS "
 "features have been left out."
 msgstr ""
+"Comme il s'agit d'un diagramme et non d'un document HTML, certaines "
+"fonctions CSS ont été laissées de côté."
 
 #: ../style_sheets.md:22
 msgid ""
@@ -6661,41 +7003,50 @@ msgid ""
 "same style. To edit the style press the tools page button at the top right "
 "corner in gaphor:"
 msgstr ""
+"Le style fait partie du modèle, donc toutes les personnes travaillant sur un "
+"modèle auront le même style. Pour modifier le style, appuyez sur le bouton "
+"de la page d'outils dans le coin supérieur droit de gaphor :"
 
 #: ../style_sheets.md:26
 msgid "![Button to access style code](images/css-button.png)"
-msgstr ""
+msgstr "![Bouton pour accéder au code du style](images/css-button.png)"
 
 #: ../style_sheets.md:26
 msgid "Button to access style code"
-msgstr ""
+msgstr "Bouton d'accès au code de style"
 
 #: ../style_sheets.md:28
 msgid ""
 "Here is a simple example of how to change the background color of a class:"
 msgstr ""
+"Voici un exemple simple de modification de la couleur d'arrière-plan d'une "
+"classe :"
 
 #: ../style_sheets.md:36
 msgid "background beige"
-msgstr ""
+msgstr "fond beige"
 
 #: ../style_sheets.md:41
 msgid "Or change the color of a component, only when it's nested in a node:"
 msgstr ""
+"Ou changer la couleur d'un composant, uniquement lorsqu'il est imbriqué dans "
+"un nœud :"
 
 #: ../style_sheets.md:49
 msgid "nested component"
-msgstr ""
+msgstr "composant imbriqué"
 
 #: ../style_sheets.md:54
 msgid ""
 "The diagram itself is also expressed as a CSS node. It's pretty easy to "
 "define a \"dark\" style:"
 msgstr ""
+"Le diagramme lui-même est également exprimé sous la forme d'un nœud CSS. Il "
+"est assez facile de définir un style « sombre » :"
 
 #: ../style_sheets.md:68
 msgid "dark-style"
-msgstr ""
+msgstr "style sombre"
 
 #: ../style_sheets.md:75
 msgid ""
@@ -6703,10 +7054,14 @@ msgid ""
 "allows you to control the color of the text drawn in an item. `color` is "
 "used for the lines (strokes) that make the layout of a diagram item."
 msgstr ""
+"Ici, vous voyez déjà le premier attribut personnalisé : `text-color`. Cette "
+"propriété vous permet de contrôler la couleur du texte dessiné dans un "
+"élément. `color` est utilisé pour les lignes (strokes) qui constituent la "
+"mise en page d'un élément de diagramme."
 
 #: ../style_sheets.md:79
 msgid "Supported selectors"
-msgstr ""
+msgstr "Sélecteurs pris en charge"
 
 #: ../style_sheets.md:81
 msgid ""
@@ -6714,196 +7069,217 @@ msgid ""
 "features of CSS. Below you'll find a summary of all CSS features supported "
 "by Gaphor."
 msgstr ""
+"Étant donné qu'il s'agit de diagrammes et de modèles, nous n'avons pas "
+"besoin de toutes les fonctions CSS. Vous trouverez ci-dessous un résumé de "
+"toutes les fonctionnalités CSS prises en charge par Gaphor."
 
 #: ../style_sheets.md:86
 msgid "``*``"
-msgstr ""
+msgstr "``*``"
 
 #: ../style_sheets.md:86
 msgid "All items on the diagram, including the diagram itself."
-msgstr ""
+msgstr "Tous les éléments du diagramme, y compris le diagramme lui-même."
 
 #: ../style_sheets.md:87
 msgid "``node component``"
-msgstr ""
+msgstr "``composant node (nœud)``"
 
 #: ../style_sheets.md:87
 msgid "Any component item which is a descendant of a node."
-msgstr ""
+msgstr "Tout élément de composant descendant d'un nœud."
 
 #: ../style_sheets.md:88
 msgid "``node > component``"
-msgstr ""
+msgstr "``node(nœud) > component (composant)``"
 
 #: ../style_sheets.md:88
 msgid "A component item which is a child of a node."
-msgstr ""
+msgstr "Un élément de composant qui est un enfant d'un nœud."
 
 #: ../style_sheets.md:89
 msgid "``generalization[subject]``"
-msgstr ""
+msgstr "``généralisation[sujet]``"
 
 #: ../style_sheets.md:89
 msgid "A generalization item with a subject present."
-msgstr ""
+msgstr "Un élément de généralisation avec un sujet présent."
 
 #: ../style_sheets.md:90
 msgid "``class[name=Foo]``"
-msgstr ""
+msgstr "``class[name=Foo]``"
 
 #: ../style_sheets.md:90
 msgid "A class with name \"Foo\"."
-msgstr ""
+msgstr "Une classe portant le nom \"Foo\"."
 
 #: ../style_sheets.md:91
 msgid "``diagram[name^=draft]``"
-msgstr ""
+msgstr "``diagram[name^=draft]``"
 
 #: ../style_sheets.md:91
 msgid "A diagram with a name starting with \"draft\"."
-msgstr ""
+msgstr "Un diagramme dont le nom commence par \"draft\"."
 
 #: ../style_sheets.md:92
 msgid "``diagram[name$=draft]``"
-msgstr ""
+msgstr "``diagram[name$=draft]``"
 
 #: ../style_sheets.md:92
 msgid "A diagram with a name ends with \"draft\"."
-msgstr ""
+msgstr "Un diagramme avec un nom se termine par \"draft\"."
 
 #: ../style_sheets.md:93
 msgid "``diagram[name*=draft]``"
-msgstr ""
+msgstr "``diagram[name*=draft]``"
 
 #: ../style_sheets.md:93
 msgid "A diagram with a name containing the text \"draft\"."
-msgstr ""
+msgstr "Un diagramme dont le nom contient le texte « draft »."
 
 #: ../style_sheets.md:94
 msgid "``diagram[name~=draft item]``"
-msgstr ""
+msgstr "``diagram[name~=draft item]``"
 
 #: ../style_sheets.md:94
 msgid "A diagram with a name of \"draft\" or \"item\"."
 msgstr ""
+"Un diagramme dont le nom est \"draft\" (brouillon) ou \"item\" (élément)."
 
 #: ../style_sheets.md:95
 msgid "``diagram[name|=draft]``"
-msgstr ""
+msgstr "``diagram[name|=draft]``"
 
 #: ../style_sheets.md:95
 msgid "A diagram with a name is \"draft\" or starts with \"draft-\"."
 msgstr ""
+"Un diagramme dont le nom est \"draft\" (brouillon) ou commence par \"draft-\""
+"."
 
 #: ../style_sheets.md:96
 msgid "``:focus``"
-msgstr ""
+msgstr "``:focus``"
 
 #: ../style_sheets.md:96
 msgid "The focused item. Other pseudo classes are:"
-msgstr ""
+msgstr "L'élément focalisé. D'autres pseudo classes sont :"
 
 #: ../style_sheets.md:98
 msgid "``:active`` selected items"
-msgstr ""
+msgstr "``:active`` éléments sélectionnés"
 
 #: ../style_sheets.md:99
 msgid "``:hover`` for the item under the mouse"
-msgstr ""
+msgstr "``:hover`` (survol) pour l'élément sous la souris"
 
 #: ../style_sheets.md:100
 msgid "``:drop`` if an item is dragged and can be dropped on this item"
 msgstr ""
+"``:drop`` (déposé) si un élément est déplacé et peut être déposé sur cet "
+"élément"
 
 #: ../style_sheets.md:101
 msgid "``:disabled`` if an element is grayed out during handle movement"
 msgstr ""
+"``:disabled`` (désactivé) si un élément est grisé lors du déplacement de la "
+"poignée"
 
 #: ../style_sheets.md:102
 msgid "``:empty``"
-msgstr ""
+msgstr "``:empty`` (vide)"
 
 #: ../style_sheets.md:102
 msgid "A node containing no child nodes in the diagram."
-msgstr ""
+msgstr "Un nœud ne contenant aucun nœud enfant dans le diagramme."
 
 #: ../style_sheets.md:103
 msgid "``:root``"
-msgstr ""
+msgstr "``:root`` (racine)"
 
 #: ../style_sheets.md:103
 msgid "Refers to the diagram itself."
-msgstr ""
+msgstr "Se réfère au diagramme lui-même."
 
 #: ../style_sheets.md:105
 msgid "This is only applicable for the diagram"
-msgstr ""
+msgstr "Ceci ne s'applique qu'au diagramme"
 
 #: ../style_sheets.md:106
 msgid "``:first-child``"
-msgstr ""
+msgstr "``:first-child`` (premier enfant)"
 
 #: ../style_sheets.md:106
 msgid "A node is the first element among a group of sibling."
-msgstr ""
+msgstr "Un nœud est le premier élément d'un groupe de frères et sœurs."
 
 #: ../style_sheets.md:107
 msgid "``:has()``"
-msgstr ""
+msgstr "``:has()`` (a())"
 
 #: ../style_sheets.md:107
 msgid "The item contains any of the provided selectors."
-msgstr ""
+msgstr "L'élément contient l'un des sélecteurs fournis."
 
 #: ../style_sheets.md:109
 msgid "E.g. ``node:has(component)``: a node containing a component item."
 msgstr ""
+"Par exemple, ``node:has(component)`` : un noeud contenant un élément de "
+"composant."
 
 #: ../style_sheets.md:110
 msgid "``:is()``"
-msgstr ""
+msgstr "``:is()`` (est())"
 
 #: ../style_sheets.md:110
 msgid "Match any of the provided selectors."
-msgstr ""
+msgstr "Correspond à l'un des sélecteurs fournis."
 
 #: ../style_sheets.md:112
 msgid "E.g. ``:is(node, subsystem) > component``: a node or subsystem."
 msgstr ""
+"Par exemple, ``:is(node, subsystem) > component`` : un nœud ou un sous-"
+"système."
 
 #: ../style_sheets.md:113
 msgid "``:not()``"
-msgstr ""
+msgstr "``:not()`` (non())"
 
 #: ../style_sheets.md:113
 msgid "Negate the selector."
-msgstr ""
+msgstr "Négation du sélecteur."
 
 #: ../style_sheets.md:115
 msgid "E.g. ``:not([subject])``: Any item that has no \"subject\"."
 msgstr ""
+"Par exemple, ``:not([subject])`` : Tout élément qui n'a pas de \"sujet \"."
 
 #: ../style_sheets.md:116
 msgid "``::after``"
-msgstr ""
+msgstr "``::after`` (après)"
 
 #: ../style_sheets.md:116
 msgid ""
 "Provide extra content after a text. Only the ``content`` property is "
 "supported."
 msgstr ""
+"Fournit un contenu supplémentaire après un texte. Seule la propriété "
+"``content`` est supportée."
 
 #: ../style_sheets.md:121
 msgid ""
 "The official specification of [CSS3 attribute selectors](https://www.w3.org/"
 "TR/2018/REC-selectors-3-20181106/#attribute-selectors)."
 msgstr ""
+"La spécification officielle des [sélecteurs d'attributs CSS3] (https://www.w3"
+".org/TR/2018/REC-selectors-3-20181106/#attribute-selectors)."
 
 #: ../style_sheets.md:122
 msgid ""
 "Gaphor provides the `|=` attribute selector for the sake of completeness. "
 "It's probably not very useful in this context, though."
 msgstr ""
+"Gaphor fournit le sélecteur d'attribut `|=` par souci d'exhaustivité. Il "
+"n'est probablement pas très utile dans ce contexte."
 
 #: ../style_sheets.md:124
 msgid ""
@@ -6911,10 +7287,14 @@ msgid ""
 "CSS syntax for IDs (`#some-id`) is not used. Also, class syntax (`.some-"
 "class`) is not supported currently."
 msgstr ""
+"Veuillez noter que Gaphor CSS ne prend pas en charge les identifiants pour "
+"les éléments de diagramme, de sorte que la syntaxe CSS pour les identifiants "
+"(`#some-id`) n'est pas utilisée. De même, la syntaxe de classe (`.some-"
+"class`) n'est actuellement pas prise en charge."
 
 #: ../style_sheets.md:128
 msgid "Style properties"
-msgstr ""
+msgstr "Propriétés de style"
 
 #: ../style_sheets.md:130
 msgid ""
@@ -6924,6 +7304,12 @@ msgid ""
 "style declarations, like the `font` property in HTML/CSS which can contain "
 "font family, size, weight."
 msgstr ""
+"Gaphor prend en charge un sous-ensemble de propriétés CSS ainsi que quelques "
+"propriétés spécifiques à l'outil. L'interpréteur de feuilles de style est "
+"relativement simple. Toutes les largeurs, hauteurs et tailles sont exprimées "
+"en pixels. Il n'est pas possible d'utiliser des déclarations de style "
+"complexes, comme la propriété « font » en HTML/CSS qui peut contenir la "
+"famille, la taille et le poids de la police."
 
 #: ../style_sheets.md:136
 msgid ""
