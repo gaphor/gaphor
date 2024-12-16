@@ -8,16 +8,17 @@ msgstr ""
 "Project-Id-Version: Gaphor 2.18.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-11-27 15:44-0500\n"
-"PO-Revision-Date: 2024-06-22 17:09+0000\n"
+"PO-Revision-Date: 2024-12-17 01:13+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
+"Language-Team: Croatian <https://hosted.weblate.org/projects/gaphor/"
+"docs-gaphor-org/hr/>\n"
 "Language: hr\n"
-"Language-Team: Croatian <https://hosted.weblate.org/projects/gaphor/docs-"
-"gaphor-org/hr/>\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Weblate 5.9\n"
 "Generated-By: Babel 2.16.0\n"
 
 #: ../changelog.rst:2
@@ -581,9 +582,8 @@ msgid ""
 msgstr ""
 
 #: ../coffee_machine_concept.md:152
-#, fuzzy
 msgid "Concept Requirements"
-msgstr "Uvjeti"
+msgstr "Koncepcijski uvjeti"
 
 #: ../coffee_machine_concept.md:153
 msgid ""
@@ -672,7 +672,7 @@ msgstr ""
 
 #: ../coffee_machine_logical.md:14
 msgid "Functional Boundary Behavior"
-msgstr ""
+msgstr "Funkcionalno ponašanje granica"
 
 #: ../coffee_machine_logical.md:16
 msgid ""
@@ -766,7 +766,7 @@ msgstr ""
 
 #: ../coffee_machine_logical.md:78
 msgid "Logical Structure"
-msgstr ""
+msgstr "Logička struktura"
 
 #: ../coffee_machine_logical.md:80
 msgid ""
@@ -1033,9 +1033,8 @@ msgid ""
 msgstr ""
 
 #: ../coffee_machine_logical.md:215
-#, fuzzy
 msgid "Here we derive two requirements:"
-msgstr "Izvedeni uvjet"
+msgstr "Ovdje izvodimo dva uvjeta:"
 
 #: ../coffee_machine_logical.md:217
 msgid "Controller commands heat up"
@@ -1742,9 +1741,8 @@ msgstr ""
 "generalization-symbolic.svg))."
 
 #: ../first_model.md:40
-#, fuzzy
 msgid "Icon for generalization relationships."
-msgstr "Nepovezani odnosi"
+msgstr "Ikona za generalizaciju odnosa."
 
 #: ../first_model.md:42
 msgid ""
@@ -2390,7 +2388,7 @@ msgstr ""
 
 #: ../getting_started.md:159
 msgid "Reset Tool Automatically"
-msgstr ""
+msgstr "Automatski resetiraj alat"
 
 #: ../getting_started.md:161
 msgid ""
@@ -2412,9 +2410,8 @@ msgid ""
 msgstr ""
 
 #: ../getting_started.md:167
-#, fuzzy
 msgid "Diagram Language"
-msgstr "Vrste dijagrma"
+msgstr "Jezik dijagrama"
 
 #: ../getting_started.md:169
 msgid ""
@@ -2441,7 +2438,7 @@ msgstr ""
 
 #: ../getting_started.md:178
 msgid "Style Sheet"
-msgstr ""
+msgstr "Stilski predložak"
 
 #: ../getting_started.md:180
 msgid ""
@@ -3126,9 +3123,8 @@ msgid "Returns `True` if connection is allowed."
 msgstr ""
 
 #: gaphor.diagram.connectors.BaseConnector.connect:1 of
-#, fuzzy
 msgid "Connect to an element."
-msgstr "Krajevi spojnica"
+msgstr "Poveži s elementom."
 
 #: gaphor.diagram.connectors.BaseConnector.connect:3 of
 msgid ""
@@ -3656,9 +3652,8 @@ msgid "This method is part of the :obj:`gaphas.model.Model` protocol."
 msgstr ""
 
 #: gaphor.core.modeling.diagram.Diagram.update:1 of
-#, fuzzy
 msgid "Update the diagram."
-msgstr "novi dijagram"
+msgstr "Aktualiziraj dijagram."
 
 #: gaphor.core.modeling.diagram.Diagram.update:3 of
 msgid ""
@@ -3759,9 +3754,8 @@ msgid "Iterate elements that comply with expression."
 msgstr ""
 
 #: gaphor.core.modeling.elementfactory.ElementFactory.select:3 of
-#, fuzzy
 msgid "Expressions can be:"
-msgstr "2. Izrazi"
+msgstr "Izrazi mogu biti:"
 
 #: gaphor.core.modeling.elementfactory.ElementFactory.select:5 of
 msgid ":obj:`None`: return all elements."
@@ -3772,9 +3766,8 @@ msgid "A type: return all elements of that type, or subtypes."
 msgstr ""
 
 #: gaphor.core.modeling.elementfactory.ElementFactory.select:7 of
-#, fuzzy
 msgid "An expression."
-msgstr "2. Izrazi"
+msgstr "Izraz."
 
 #: gaphor.core.modeling.elementfactory.ElementFactory.lselect:1 of
 msgid ""
@@ -5859,22 +5852,20 @@ msgid "``color``"
 msgstr "``color``"
 
 #: ../style_sheets.md:151
-#, fuzzy
 msgid "Color used for lines. *(inherited)*"
-msgstr "Boja linija."
+msgstr "Boja za linije. *(naslijeđeno)*"
 
 #: ../style_sheets.md:152
 msgid "``text-color``"
 msgstr "``text-color``"
 
 #: ../style_sheets.md:152
-#, fuzzy
 msgid "Color for text. *(inherited)*"
-msgstr "Boja teksta."
+msgstr "Boja za tekst. *(naslijeđeno)*"
 
 #: ../style_sheets.md:154
 msgid "Use color if possible."
-msgstr ""
+msgstr "Koristi boju ako je moguće."
 
 #: ../style_sheets.md:155
 msgid "``opacity``"
@@ -5907,47 +5898,44 @@ msgid "``font-family``"
 msgstr "``font-family``"
 
 #: ../style_sheets.md:168
-#, fuzzy
 msgid "A single font name (e.g. ``sans``, ``serif``, ``courier``). *(inherited)*"
-msgstr "Ime fonta (npr. ``sans``, ``serif``, ``courier``)."
+msgstr "Ime fonta (npr. ``sans``, ``serif``, ``courier``). *(naslijeđeno)*"
 
 #: ../style_sheets.md:169
 msgid "``font-size``"
 msgstr "``font-size``"
 
 #: ../style_sheets.md:169
-#, fuzzy
 msgid ""
 "An absolute size (e.g. ``14``) or a size value (e.g. ``small``). "
 "*(inherited)*"
-msgstr "Veličina fonta (npr. ``14``) ili vrijednost (npr. ``small``)."
+msgstr ""
+"Apsolutna veličina (npr. ``14``) ili vrijednost (npr. ``small``). "
+"*(naslijeđeno)*"
 
 #: ../style_sheets.md:170
 msgid "``font-style``"
 msgstr "``font-style``"
 
 #: ../style_sheets.md:170
-#, fuzzy
 msgid "Either ``normal`` or ``italic``. *(inherited)*"
-msgstr "``normal`` ili ``italic``."
+msgstr "``normal`` ili ``italic``. *(naslijeđeno)*"
 
 #: ../style_sheets.md:171
 msgid "``font-weight``"
 msgstr "``font-weight``"
 
 #: ../style_sheets.md:171
-#, fuzzy
 msgid "Either ``normal`` or ``bold``. *(inherited)*"
-msgstr "``normal`` ili ``bold``."
+msgstr "``normal`` ili ``bold``. *(naslijeđeno)*"
 
 #: ../style_sheets.md:172
 msgid "``text-align``"
 msgstr "``text-align``"
 
 #: ../style_sheets.md:172
-#, fuzzy
 msgid "Either ``left``, ``center``, ``right``. *(inherited)*"
-msgstr "``left``, ``center``, ``right``."
+msgstr "``left``, ``center``ili ``right``. *(naslijeđeno)*"
 
 #: ../style_sheets.md:173
 msgid "``text-decoration``"
@@ -6053,9 +6041,8 @@ msgid "``line-width``"
 msgstr "``line-width``"
 
 #: ../style_sheets.md:199
-#, fuzzy
 msgid "Set the width for lines: ``line-width: 2``. *(inherited)*"
-msgstr "Postavi debljinu linija: ``line-width: 2``."
+msgstr "Postavi debljinu linija: ``line-width: 2``. *(naslijeđeno)*"
 
 #: ../style_sheets.md:200
 msgid "``min-height``"
@@ -6683,9 +6670,8 @@ msgid "You only require transactions if the undo manager is active."
 msgstr ""
 
 #: gaphor.transaction.Transaction:1 of
-#, fuzzy
 msgid "The transaction."
-msgstr "Neuspjela transakcija"
+msgstr "Transakcija."
 
 #: gaphor.transaction.Transaction:3 of
 msgid ""
@@ -6713,9 +6699,8 @@ msgid "Events can be handled programmatically, although this is discouraged:"
 msgstr ""
 
 #: gaphor.transaction.Transaction.commit:1 of
-#, fuzzy
 msgid "Commit the transaction."
-msgstr "Neuspjela transakcija"
+msgstr "Promijeni transakciju."
 
 #: gaphor.transaction.Transaction.commit:3 of
 msgid ""
@@ -6739,9 +6724,8 @@ msgid ""
 msgstr ""
 
 #: gaphor.transaction.Transaction.rollback:1 of
-#, fuzzy
 msgid "Roll-back the transaction."
-msgstr "Neuspjela transakcija"
+msgstr "Vrati transakciju."
 
 #: gaphor.transaction.Transaction.rollback:3 of
 msgid ""
@@ -7055,9 +7039,8 @@ msgid "Debugging Your Plugin Using Visual Studio Code"
 msgstr ""
 
 #: ../windows.md:199
-#, fuzzy
 msgid "Start gaphor:"
-msgstr "Postavi Gaphor"
+msgstr "Pokreni Gaphor:"
 
 #: ../windows.md:200
 msgid "In the VSCode menu, select Run → Start debugging"
@@ -7888,4 +7871,3 @@ msgstr ""
 
 #~ msgid "Grab a coffee, the build will take a few minutes to complete."
 #~ msgstr "Popij kavu, izgradnja će trajati nekoliko minuta."
-
