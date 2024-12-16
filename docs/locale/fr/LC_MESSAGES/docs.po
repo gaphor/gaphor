@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gaphor 2.23.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-11-27 15:44-0500\n"
-"PO-Revision-Date: 2024-12-15 12:21+0000\n"
+"PO-Revision-Date: 2024-12-17 01:13+0000\n"
 "Last-Translator: Stan SZLAPKA <stansz@free.fr>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/gaphor/"
 "docs-gaphor-org/fr/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.9-rc\n"
+"X-Generator: Weblate 5.9\n"
 "Generated-By: Babel 2.16.0\n"
 
 #: ../changelog.rst:2
@@ -132,12 +132,11 @@ msgstr ""
 "pour les chatons."
 
 #: ../coffee_machine.md:41
-#, fuzzy
 msgid ""
 "![Two shots of espresso being pulled from an espresso machine.](images/"
 "coffee-machine-double-shot.jpg)"
 msgstr ""
-"![Deux photos d'un expresso tiré d'une machine à expresso] (images/coffee-"
+"![Deux doses d'expresso tiré d'une machine à expresso] (images/coffee-"
 "machine-double-shot.jpg)"
 
 #: ../coffee_machine.md:41
@@ -341,10 +340,8 @@ msgid "Requirements: Written statements that constrain the system"
 msgstr "Exigences : Déclarations écrites qui contraignent le système"
 
 #: ../coffee_machine.md:113
-#, fuzzy
 msgid "Parametric: Enforces mathematical rules across values in the system"
-msgstr ""
-"Paramétrage : Appliquer les règles mathématiques aux valeurs du système"
+msgstr "Paramétrage : Appliquer les règles mathématiques aux valeurs du système"
 
 #: ../coffee_machine.md:115 ../coffee_machine.md:111
 msgid ""
@@ -390,10 +387,9 @@ msgstr ""
 "d'abstraction](images/coffee-machine-pillars.png)"
 
 #: ../coffee_machine.md:127
-#, fuzzy
 msgid "Three pillar packages nested under each abstraction levelpackage."
 msgstr ""
-"Des paquets de trois volets composent les paquets sous chaque niveau "
+"Des paquets de trois pilliers composent les paquets sous chaque niveau "
 "d'abstraction."
 
 #: ../coffee_machine.md:130 ../coffee_machine.md:126
@@ -2324,9 +2320,8 @@ msgstr ""
 "svg))."
 
 #: ../first_model.md:40
-#, fuzzy
 msgid "Icon for generalization relationships."
-msgstr "Icône pour la généralisation des relations."
+msgstr "Icône pour la diffusion des relations."
 
 #: ../first_model.md:42 ../first_model.md:44
 msgid ""
@@ -3155,7 +3150,6 @@ msgid "Diagram Language"
 msgstr "Langage de diagramme"
 
 #: ../getting_started.md:169
-#, fuzzy
 msgid ""
 "The diagram language modifier is only applicable to the loaded model and how "
 "it is shown in the diagram. The diagram language setting is saved as part of "
@@ -3193,12 +3187,11 @@ msgid "Style Sheet"
 msgstr "Feuille de style"
 
 #: ../getting_started.md:180
-#, fuzzy
 msgid ""
 "The [style sheet](style_sheets) allows to change the visual appearance of "
 "diagrams and model elements."
 msgstr ""
-"La [style_sheet](feuille de style) permet de modifier l'apparence visuelle "
+"La [feuille de style](style sheet) permet de modifier l'apparence visuelle "
 "des diagrammes et des éléments de modèle."
 
 #: ../index.rst:29
@@ -3266,7 +3259,6 @@ msgstr ""
 "<https://github.com/gaphor/gaphor>`_."
 
 #: ../index.rst:21
-#, fuzzy
 msgid "What are you waiting for? :doc:`Let's get started <getting_started>`!"
 msgstr "Qu'attendez-vous ? :doc:`Commençons <getting_started>` !"
 
@@ -3326,11 +3318,9 @@ msgstr ""
 "Il existe deux façons de mettre en place un environnement de développement :"
 
 #: ../linux.md:15
-#, fuzzy
 msgid "[GNOME Builder](#gnome-builder), ideal for “drive by” contributions."
 msgstr ""
-"[GNOME Builder](#gnome-builder), idéal pour les contributions « ponctuelles "
-"»."
+"[GNOME Builder](#gnome-builder), idéal pour «engager des» contributions."
 
 #: ../linux.md:16
 msgid "[A local environment](#a-local-environment)."
@@ -3937,9 +3927,8 @@ msgid "Special diagram interactions"
 msgstr "Interactions avec les diagrammes spéciaux"
 
 #: ../modeling_language.md:50
-#, fuzzy
 msgid "Modeling language"
-msgstr "Ajouter un nouveau service de langue de modélisation"
+msgstr "Langue de modélisation"
 
 #: gaphor.abc.ModelingLanguage:1 of ../../gaphor/abc.py:docstring
 msgid ""
@@ -3980,7 +3969,6 @@ msgid "Get structure for the toolbox."
 msgstr "Structurer la boîte à outils."
 
 #: ../modeling_language.md:57
-#, fuzzy
 msgid ""
 "As a convention, the package containing the modeling language should have an "
 "attribute `__modeling_language__` that has the same value as the modeling "
@@ -4730,9 +4718,8 @@ msgstr ""
 "règles de propriété."
 
 #: gaphor.core.modeling.diagram.Diagram.create:1 of
-#, fuzzy
 msgid "Create a new diagram item on the diagram."
-msgstr "Ajouter des diagrammes dans les diagrammes"
+msgstr "Créez un nouvel élément de diagramme sur le diagramme."
 
 #: gaphor.core.modeling.diagram.Diagram.create:3 of
 msgid ""
@@ -4775,9 +4762,8 @@ msgid "This method is part of the :obj:`gaphas.model.Model` protocol."
 msgstr "Cette méthode fait partie du protocole :obj:`gaphas.model.Model`."
 
 #: gaphor.core.modeling.diagram.Diagram.update:1 of
-#, fuzzy
 msgid "Update the diagram."
-msgstr "Diagramme des cas d'utilisation"
+msgstr "Mettre à jour le diagramme."
 
 #: gaphor.core.modeling.diagram.Diagram.update:3 of
 msgid ""
@@ -4967,9 +4953,8 @@ msgstr ""
 "sont nettoyés par la suite."
 
 #: ../models/core_services.rst:33
-#, fuzzy
 msgid "Modeling Language"
-msgstr "Ajouter un nouveau service de langue de modélisation"
+msgstr "Langue de Modélisation"
 
 #: ../models/core_services.rst:35
 msgid ""
@@ -5406,7 +5391,6 @@ msgstr ""
 "md)."
 
 #: ../models/uml.md:7
-#, fuzzy
 msgid ""
 "Gaphor follows the [official UML 2.5.1 data model](https://www.omg.org/spec/"
 "UML/). Where changes have been made a comment has been added to the model. "
@@ -5655,9 +5639,8 @@ msgid "A. Gaphor Specific Constructs"
 msgstr "A. Constructions spécifiques à Gaphor"
 
 #: ../models/uml/A._Gaphor_Specific_Constructs.rst:5
-#, fuzzy
 msgid "1. Diagrams"
-msgstr "Diagramme de domaine"
+msgstr "1. Diagrammes"
 
 #: ../models/uml/A._Gaphor_Specific_Constructs.rst:11
 msgid "2. Stereotype Applications"
@@ -5711,7 +5694,6 @@ msgid "Application (global) services (`gaphor.appservices`)"
 msgstr "Services d'application (globaux) (`gaphor.appservices`)"
 
 #: ../plugins.md:15
-#, fuzzy
 msgid "Session specific services (`gaphor.services`)"
 msgstr "Services spécifiques à la session (`gaphor.services`)"
 
@@ -7714,9 +7696,8 @@ msgstr ""
 "0,0 et 0,5 produisent un effet subtil."
 
 #: ../style_sheets.md:291
-#, fuzzy
 msgid "CSS model elements"
-msgstr "Copier/coller complet des éléments du modèle"
+msgstr "Éléments du modèle CSS"
 
 #: ../style_sheets.md:293 ../style_sheets.md:290
 msgid ""
@@ -7844,7 +7825,6 @@ msgid "Fork/Join Node"
 msgstr "Fork/Joindre Nœud"
 
 #: ../style_sheets.md:318 ../style_sheets.md:315
-#, fuzzy
 msgid "``forknode``"
 msgstr "``forknode``"
 
@@ -8270,9 +8250,8 @@ msgstr ""
 "enregistrées, mais ne les stocke pas."
 
 #: ../undo.md:44
-#, fuzzy
 msgid "Transaction API"
-msgstr "Correction : prise en charge des traductions"
+msgstr "API de transaction"
 
 #: ../undo.md:47
 msgid "You only require transactions if the undo manager is active."
@@ -8281,9 +8260,8 @@ msgstr ""
 "actif."
 
 #: gaphor.transaction.Transaction:1 of
-#, fuzzy
 msgid "The transaction."
-msgstr "Mises à jour des traductions"
+msgstr "La transaction."
 
 #: gaphor.transaction.Transaction:3 of
 msgid ""
@@ -8320,9 +8298,8 @@ msgstr ""
 "déconseillé :"
 
 #: gaphor.transaction.Transaction.commit:1 of
-#, fuzzy
 msgid "Commit the transaction."
-msgstr "Mises à jour des traductions"
+msgstr "Mises à jour des traductions."
 
 #: gaphor.transaction.Transaction.commit:3 of
 msgid ""
@@ -8351,9 +8328,8 @@ msgstr ""
 "permettra de revenir élégamment sur les modifications."
 
 #: gaphor.transaction.Transaction.rollback:1 of
-#, fuzzy
 msgid "Roll-back the transaction."
-msgstr "Ajouter la traduction en Croate"
+msgstr "Reprendre la transaction."
 
 #: gaphor.transaction.Transaction.rollback:3 of
 msgid ""
@@ -8832,10 +8808,8 @@ msgstr ""
 "environnement."
 
 #: ../windows.md:263
-#, fuzzy
 msgid "Set up your development environment"
-msgstr ""
-"Mise à jour des instructions relatives à l'environnement de développement"
+msgstr "Mise en place de l'environnement de développement"
 
 #: ../windows.md:265
 msgid ""
@@ -12130,15 +12104,15 @@ msgstr ""
 
 #: ../stereotypes.md:38
 msgid "![Stereotype usage example](images/stereotype-usage.png)"
-msgstr ""
+msgstr "![Exemple d'utilisation d'un stéréotype](images/stereotype-usage.png)"
 
 #: ../stereotypes.md:38
 msgid "Stereotype usage example"
-msgstr ""
+msgstr "Exemple d'utilisation d'un stéréotype"
 
 #: ../style_sheets.md:288
 msgid "Working with model elements"
-msgstr ""
+msgstr "Travailler avec des éléments de modèle"
 
 #: ../style_sheets.md:340
 msgid ""
@@ -12146,14 +12120,19 @@ msgid ""
 "(images/open-menu-symbolic.svg) → Tools → Console). Drop us a line on "
 "[Gitter](https://gitter.im/gaphor/Lobby) and we would be happy to help you."
 msgstr ""
+"Pour créer votre propre expression, vous pouvez utiliser la console ( ![open "
+"menu](images/open-menu-symbolic.svg) → Tools → Console). Envoyez-nous un "
+"message sur [Gitter](https://gitter.im/gaphor/Lobby) et nous serons heureux "
+"de vous aider."
 
 #: ../transaction.md:1
 msgid "Transaction support"
-msgstr ""
+msgstr "Soutien aux transactions"
 
 #: ../transaction.md:3
 msgid "Transaction support is located in module `gaphor.transaction`:"
 msgstr ""
+"Le support des transactions est situé dans le module `gaphor.transaction` :"
 
 #: ../transaction.md:10
 msgid ""
@@ -12161,6 +12140,10 @@ msgid ""
 "transaction decorator does not know about the active user session (window), "
 "it emits it's events via a global list of subscribers:"
 msgstr ""
+"Effectuer une initialisation de base, afin que l'émission d'événements "
+"fonctionne. Comme le décorateur de transaction ne connaît pas la session "
+"utilisateur active (fenêtre), il émet ses événements par l'intermédiaire "
+"d'une liste globale d'abonnés :"
 
 #: ../transaction.md:18
 msgid ""
@@ -12168,47 +12151,60 @@ msgid ""
 "transaction. This is done by the TransactionBegin, TransactionCommit and "
 "TransactionRollback events:"
 msgstr ""
+"La classe Transaction est principalement utilisée pour signaler le début et "
+"la fin d'une transaction. Pour ce faire, elle utilise les événements "
+"TransactionBegin, TransactionCommit et TransactionRollback :"
 
 #: ../transaction.md:26
 msgid "Same goes for commit and rollback events:"
 msgstr ""
+"Il en va de même pour les événements « commit » (modification) et « rollback "
+"» (retour arrière) :"
 
 #: ../transaction.md:37
 msgid "A Transaction is started by initiating a Transaction instance:"
-msgstr ""
+msgstr "Une transaction est lancée en initiant une instance de transaction :"
 
 #: ../transaction.md:42
 msgid "On success, a transaction can be committed:"
-msgstr ""
+msgstr "En cas de succès, une transaction peut être engagée :"
 
 #: ../transaction.md:47
 msgid ""
 "After a commit, a rollback is no longer allowed (the transaction is closed):"
 msgstr ""
+"Après un commit, un rollback (retour arrière) n'est plus autorisé (la "
+"transaction est fermée) :"
 
 #: ../transaction.md:55
 msgid "Transactions may be nested:"
-msgstr ""
+msgstr "Les transactions peuvent être imbriquées :"
 
 #: ../transaction.md:64
 msgid ""
 "Transactions should be closed in the right order (subtransactions first):"
 msgstr ""
+"Les transactions doivent être clôturées dans le bon ordre (les sous-"
+"transactions en premier) :"
 
 #: ../transaction.md:79
 msgid ""
 "The transactional decorator can be used to mark functions as transactional:"
 msgstr ""
+"Le décorateur transactionnel peut être utilisé pour marquer les fonctions "
+"comme transactionnelles :"
 
 #: ../transaction.md:89
 msgid ""
 "If an exception is raised from within the decorated function a rollback is "
 "performed:"
 msgstr ""
+"Si une exception est soulevée à l'intérieur de la fonction décorée, un "
+"retour en arrière est effectué :"
 
 #: ../transaction.md:103
 msgid "Cleanup:"
-msgstr ""
+msgstr "Nettoyage :"
 
 #: ../undo.md:9
 msgid ""
@@ -12218,6 +12214,11 @@ msgid ""
 "rolled back. In Gaphor this is achieved by the `transaction` module, which "
 "provides a context manager `Transaction`."
 msgstr ""
+"L'enregistrement et la lecture des modifications dans Gaphor sont gérés par "
+"ce dernier. Celui-ci fonctionne de manière transactionnelle. Une transaction "
+"doit réussir ou échouer dans son ensemble. Si elle échoue en cours de route, "
+"elle est annulée. Dans Gaphor, cette fonction est assurée par le module "
+"transaction, qui fournit un gestionnaire de contexte Transaction."
 
 #: ../undo.md:16
 msgid ""
@@ -12227,56 +12228,77 @@ msgid ""
 "of the transaction if it is successful or the rollback of the transaction if "
 "it fails."
 msgstr ""
+"Lorsque des transactions ont lieu, elles émettent des notifications "
+"d'événements sur les étapes clés de la transaction afin que d'autres "
+"services puissent utiliser ces événements. Les notifications d'événements "
+"concernent le début de la transaction, la validation de la transaction en "
+"cas de succès ou le retour en arrière de la transaction en cas d'échec."
 
 #: ../windows.md:13
 msgid "Choco"
-msgstr ""
+msgstr "Choco"
 
 #: ../windows.md:15
 msgid ""
 "We recommend using [Chocolately](https://chocolatey.org/) as a package "
 "manager in Windows."
 msgstr ""
+"Nous recommandons d'utiliser [Chocolately](https://chocolatey.org/) comme "
+"gestionnaire de paquets sous Windows."
 
 #: ../windows.md:18
 msgid "To install it, open PowerShell as an administrator, then execute:"
 msgstr ""
+"Pour l'installer, ouvrez PowerShell en tant qu'administrateur, puis exécutez "
+":"
 
 #: ../windows.md:24
 msgid "To run local scripts in follow-on steps, also execute"
 msgstr ""
+"Pour exécuter des scripts locaux dans les étapes suivantes, exécutez "
+"également"
 
 #: ../windows.md:30
 msgid ""
 "This allows for local PowerShell scripts to run without signing, but still "
 "requires signing for remote scripts."
 msgstr ""
+"Les scripts PowerShell locaux peuvent ainsi être exécutés sans signature, "
+"mais les scripts distants doivent toujours être signés."
 
 #: ../windows.md:35
 msgid ""
 "To setup a development environment in Windows first install [Git](https://"
 "gitforwindows.org) by executing as an administrator:"
 msgstr ""
+"Pour mettre en place un environnement de développement sous Windows, "
+"installez d'abord [Git] (https://gitforwindows.org) en vous exécutant en "
+"tant qu'administrateur :"
 
 #: ../windows.md:42
 msgid "MSYS2"
-msgstr ""
+msgstr "MSYS2"
 
 #: ../windows.md:44
 msgid ""
 "The development environment in the next step needs MSYS2 installed to "
 "provide some Linux command line tools in Windows."
 msgstr ""
+"L'environnement de développement de l'étape suivante nécessite "
+"l'installation de MSYS2 pour fournir certains outils de ligne de commande "
+"Linux sous Windows."
 
 #: ../windows.md:47
 msgid ""
 "Keep PowerShell open as administrator and install [MSYS2](http://www.msys2."
 "org/):"
 msgstr ""
+"Gardez PowerShell ouvert en tant qu'administrateur et installez "
+"[MSYS2](http://www.msys2.org/) :"
 
 #: ../windows.md:53
 msgid "GTK and Python with gvsbuild"
-msgstr ""
+msgstr "GTK et Python avec gvsbuild"
 
 #: ../windows.md:55
 msgid ""
@@ -12284,52 +12306,60 @@ msgid ""
 "Windows using Visual Studio. By compiling GTK with Visual Studio, we can "
 "then use a standard Python development environment in Windows."
 msgstr ""
+"gvsbuild est un script Python qui vous aide à compiler la pile de "
+"bibliothèques GTK pour Windows à l'aide de Visual Studio. En compilant GTK "
+"avec Visual Studio, nous pouvons ensuite utiliser un environnement de "
+"développement Python standard sous Windows."
 
 #: ../windows.md:59
 msgid "First we will install the gvsbuild dependencies:"
-msgstr ""
+msgstr "Tout d'abord, nous allons installer les dépendances de gvsbuild :"
 
 #: ../windows.md:60
 msgid "Visual C++ build tools workload for Visual Studio 2022 Build Tools"
 msgstr ""
+"Charge de travail des outils de construction Visual C++ pour Visual Studio "
+"2022 Build Tools"
 
 #: ../windows.md:61
 msgid "Python"
-msgstr ""
+msgstr "Python"
 
 #: ../windows.md:63
 msgid "Install Visual Studio 2022"
-msgstr ""
+msgstr "Installer Visual Studio 2022"
 
 #: ../windows.md:65
 msgid "With your admin PowerShell terminal:"
-msgstr ""
+msgstr "Avec votre terminal PowerShell administrateur :"
 
 #: ../windows.md:93
 msgid "Install from Chocolately with administrator PowerShell:"
-msgstr ""
+msgstr "Installer à partir de Chocolately avec un PowerShell administrateur :"
 
 #: ../windows.md:99
 msgid ""
 "Restart your PowerShell terminal as a normal user and check that the dot "
 "command is available:"
 msgstr ""
+"Redémarrez votre terminal PowerShell en tant qu'utilisateur normal et "
+"vérifiez que la commande dot est disponible :"
 
 #: ../windows.md:114
 msgid "Install gvsbuild"
-msgstr ""
+msgstr "Installer gvsbuild"
 
 #: ../windows.md:122
 msgid "Build GTK"
-msgstr ""
+msgstr "Construire GTK"
 
 #: ../windows.md:124
 msgid "In the same PowerShell terminal, execute:"
-msgstr ""
+msgstr "Dans le même terminal PowerShell, exécutez :"
 
 #: ../windows.md:129
 msgid "Grab a coffee, the build will take a few minutes to complete."
-msgstr ""
+msgstr "Prenez un café, la construction prendra quelques minutes."
 
 #~ msgid "Fix models failing to load for collection not hashable TypeError"
 #~ msgstr ""
