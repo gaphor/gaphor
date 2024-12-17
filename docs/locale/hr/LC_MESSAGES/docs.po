@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gaphor 2.18.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-11-27 15:44-0500\n"
-"PO-Revision-Date: 2024-12-17 01:13+0000\n"
+"PO-Revision-Date: 2024-12-17 13:50+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language-Team: Croatian <https://hosted.weblate.org/projects/gaphor/"
 "docs-gaphor-org/hr/>\n"
@@ -1910,11 +1910,11 @@ msgid ""
 "Each session will load its own services defined as "
 "[gaphor.services](service_oriented.md)."
 msgstr ""
-"Glavni dio Gaphora koji se najprije izvršava zove se `Application`. "
-"Gaphor može imati više otvorenih modela u bilo kojem trenutku. Svaki "
-"model se čuva u `Sesiji`. Aktivna je samo jedna instanca aplikacije. "
-"Svaka će sesija učitati vlastite usluge definirane kao "
-"[gaphor.services](service_oriented.md)."
+"Glavni dio Gaphora koji se najprije izvršava zove se `Aplikacija`. Gaphor "
+"može imati više otvorenih modela u bilo kojem trenutku. Svaki model se čuva "
+"u `Sesiji`. Aktivna je samo jedna instanca aplikacije. Svaka će sesija "
+"učitati vlastite usluge definirane kao [gaphor.services](service_oriented."
+"md)."
 
 #: ../framework.md:40
 msgid "The most notable services are:"
@@ -4422,7 +4422,7 @@ msgstr ""
 
 #: ../models/uml/09._Activities.rst:29
 msgid "5. Activity Groups"
-msgstr ""
+msgstr "5. Grupe aktivnosti"
 
 #: ../models/uml/10._Actions.rst:2
 msgid "10. Actions"
@@ -4442,7 +4442,7 @@ msgstr ""
 
 #: ../models/uml/10._Actions.rst:23
 msgid "9. Accept Event Actions"
-msgstr ""
+msgstr "9. Radnje prihvaćanja događaja"
 
 #: ../models/uml/11._Interactions.rst:2
 msgid "11. Interactions"
@@ -4482,7 +4482,7 @@ msgstr ""
 
 #: ../models/uml/13._Deployments.rst:11
 msgid "2. Artifacts"
-msgstr ""
+msgstr "2. Artefakti"
 
 #: ../models/uml/13._Deployments.rst:17
 msgid "3. Nodes"
@@ -4490,21 +4490,19 @@ msgstr "3. Čvorovi"
 
 #: ../models/uml/14._Information_Flows.rst:2
 msgid "14. Information Flows"
-msgstr ""
+msgstr "14. Tokovi informacija"
 
 #: ../models/uml/A._Gaphor_Specific_Constructs.rst:2
 msgid "A. Gaphor Specific Constructs"
-msgstr ""
+msgstr "A. Gaphor specifične konstrukcije"
 
 #: ../models/uml/A._Gaphor_Specific_Constructs.rst:5
-#, fuzzy
 msgid "1. Diagrams"
-msgstr "Dijagrami"
+msgstr "1. Dijagrami"
 
 #: ../models/uml/A._Gaphor_Specific_Constructs.rst:11
-#, fuzzy
 msgid "2. Stereotype Applications"
-msgstr "1. Aplikacije stereotipa"
+msgstr ""
 
 #: ../models/uml/B._Gaphor_Profile.rst:2
 msgid "B. Gaphor Profile"
