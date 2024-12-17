@@ -19,9 +19,9 @@ def no_drop(element: Base, diagram: Diagram, x: float, y: float):
     return None
 
 
-drop: FunctionDispatcher[Callable[[Base, Base], bool]] = multidispatch(Base, Diagram)(
-    no_drop
-)
+drop: FunctionDispatcher[Callable[[Base, Base], Presentation | None]] = multidispatch(
+    Base, Diagram
+)(no_drop)
 
 
 @drop.register(Presentation, Diagram)
@@ -84,7 +84,14 @@ def _bounds(item: ElementPresentation) -> Rectangle:
     return Rectangle(x0, y0, x1=x1, y1=y1)
 
 
-def drop_relationship(element, head_element, tail_element, diagram, x, y):
+def drop_relationship(
+    element: Base,
+    head_element: Base | None,
+    tail_element: Base | None,
+    diagram: Diagram,
+    x: float,
+    y: float,
+) -> Presentation | None:
     item_class = get_diagram_item(type(element))
     if not item_class:
         return None
@@ -108,7 +115,7 @@ def drop_relationship(element, head_element, tail_element, diagram, x, y):
     return item
 
 
-def diagram_has_presentation(diagram, element):
+def diagram_has_presentation(diagram: Diagram, element: Base | None):
     return (
         next((p for p in element.presentation if p.diagram is diagram), None)
         if element
