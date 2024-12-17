@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: Gaphor 0.13.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2024-12-03 09:12+0100\n"
-"PO-Revision-Date: 2024-12-15 11:00+0000\n"
+"PO-Revision-Date: 2024-12-17 03:51+0000\n"
 "Last-Translator: Stan SZLAPKA <stansz@free.fr>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/gaphor/gaphor/fr/>"
 "\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.9-rc\n"
+"X-Generator: Weblate 5.9\n"
 "Generated-By: Babel 2.16.0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:23 gaphor/C4Model/toolbox.py:67
@@ -81,32 +81,27 @@ msgid "Dependency"
 msgstr "Dépendance"
 
 #: gaphor/C4Model/toolbox.py:151
-#, fuzzy
 msgid "C4 Diagram"
-msgstr "Nouveau diagramme C4"
+msgstr "Diagramme C4"
 
 #: gaphor/C4Model/toolbox.py:152 gaphor/UML/toolbox.py:50
-#, fuzzy
 msgid "Class Diagram"
-msgstr "Nouveau diagramme de classes"
+msgstr "Classe Diagramme"
 
 #: gaphor/C4Model/toolbox.py:153 gaphor/SysML/toolbox.py:129
 #: gaphor/UML/toolbox.py:54
-#, fuzzy
 msgid "Activity Diagram"
-msgstr "Nouveau diagramme d’activité"
+msgstr "Diagramme d’Activité"
 
 #: gaphor/C4Model/toolbox.py:154 gaphor/SysML/toolbox.py:139
 #: gaphor/UML/toolbox.py:55
-#, fuzzy
 msgid "Sequence Diagram"
-msgstr "Nouveau diagramme de séquence"
+msgstr "Diagramme de Séquence"
 
 #: gaphor/C4Model/toolbox.py:155 gaphor/SysML/toolbox.py:149
 #: gaphor/UML/toolbox.py:57
-#, fuzzy
 msgid "State Machine Diagram"
-msgstr "Nouveau Diagramme d'état"
+msgstr "Diagramme d'État"
 
 #: gaphor/C4Model/toolbox.py:159 gaphor/SysML/toolbox.py:172
 #: gaphor/UML/actions/actionstoolbox.py:41
@@ -135,9 +130,8 @@ msgid "Class"
 msgstr "Classe"
 
 #: gaphor/C4Model/toolbox.py:166 gaphor/UML/toolbox.py:68
-#, fuzzy
 msgid "Data Type"
-msgstr "donnéeType"
+msgstr "Type de données"
 
 #: gaphor/C4Model/toolbox.py:167 gaphor/SysML/blocks/blockstoolbox.py:118
 #: gaphor/SysML/toolbox.py:175 gaphor/UML/classes/classestoolbox.py:154
@@ -146,23 +140,20 @@ msgid "Enumeration"
 msgstr "Énumération"
 
 #: gaphor/C4Model/toolbox.py:169
-#, fuzzy
 msgid "Primitive Type"
-msgstr "Ajouter une type primitif"
+msgstr "Type Primitive"
 
 #: gaphor/RAAML/modelinglanguage.py:24 gaphor/ui/greeter.py:48
 msgid "RAAML"
 msgstr "RAAML"
 
 #: gaphor/RAAML/toolbox.py:23
-#, fuzzy
 msgid "FTA Diagram"
-msgstr "Ajouter un diagramme FTA"
+msgstr "Diagramme FTA"
 
 #: gaphor/RAAML/toolbox.py:24
-#, fuzzy
 msgid "STPA Diagram"
-msgstr "Ajouter un diagramme STPA"
+msgstr "Diagramme STPA"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:195 gaphor/RAAML/fta/ftatoolbox.py:201
 #: gaphor/RAAML/fta/topevent.py:27 gaphor/RAAML/toolbox.py:28
@@ -432,9 +423,8 @@ msgid "Proxy Port"
 msgstr "Port Proxy"
 
 #: gaphor/SysML/toolbox.py:90
-#, fuzzy
 msgid "Block Definition Diagram"
-msgstr "Nouveau Diagramme de Définition de Bloc"
+msgstr "Diagramme de Définition de Bloc"
 
 #: gaphor/SysML/toolbox.py:93 gaphor/SysML/toolbox.py:113
 #: gaphor/SysML/toolbox.py:125 gaphor/SysML/toolbox.py:167
@@ -442,23 +432,20 @@ msgid "New Package"
 msgstr "Nouveau Paquet"
 
 #: gaphor/SysML/toolbox.py:97
-#, fuzzy
 msgid "Internal Block Diagram"
-msgstr "Nouveau Diagramme de Bloc Interne"
+msgstr "Diagramme de Bloc Interne"
 
 #: gaphor/SysML/toolbox.py:104 gaphor/SysML/toolbox.py:105
 msgid "New Block"
 msgstr "Nouveau Bloc"
 
 #: gaphor/SysML/toolbox.py:110 gaphor/UML/toolbox.py:51
-#, fuzzy
 msgid "Package Diagram"
-msgstr "Nouveau Diagramme de Paquet"
+msgstr "Diagramme de Paquet"
 
 #: gaphor/SysML/toolbox.py:117
-#, fuzzy
 msgid "Requirement Diagram"
-msgstr "Nouveau Diagramme d'Exigence"
+msgstr "Diagramme d'Exigence"
 
 #: gaphor/SysML/toolbox.py:133 gaphor/SysML/toolbox.py:134
 msgid "New Activity"
@@ -473,9 +460,8 @@ msgid "New State Machine"
 msgstr "Ajouter une machine à états"
 
 #: gaphor/SysML/toolbox.py:159 gaphor/UML/toolbox.py:58
-#, fuzzy
 msgid "Use Case Diagram"
-msgstr "Nouveau Diagramme d'Usage"
+msgstr "Diagramme des Cas d'Utilisation"
 
 #: gaphor/SysML/toolbox.py:173 gaphor/UML/toolbox.py:64
 #: gaphor/UML/usecases/usecasetoolbox.py:28 gaphor/templates/uml-example.gaphor
@@ -487,9 +473,8 @@ msgid "Block"
 msgstr "Bloc"
 
 #: gaphor/SysML/toolbox.py:178
-#, fuzzy
 msgid "Interface Block"
-msgstr "bloc interface"
+msgstr "Bloc d'Interface"
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:17
 #: gaphor/SysML/toolbox.py:182
@@ -497,14 +482,12 @@ msgid "Requirement"
 msgstr "Exigence"
 
 #: gaphor/SysML/toolbox.py:192 gaphor/UML/toolbox.py:85
-#, fuzzy
 msgid "Use Case"
-msgstr "Cas d'utilisation"
+msgstr "Cas d'Utilisation"
 
 #: gaphor/SysML/toolbox.py:193
-#, fuzzy
 msgid "Value Type"
-msgstr "typeValeur"
+msgstr "Type de valeur"
 
 #: gaphor/SysML/allocations/allocationstoolbox.py:6
 msgid "Allocations"
@@ -678,24 +661,20 @@ msgstr ""
 " aucun autre diagramme."
 
 #: gaphor/UML/toolbox.py:52
-#, fuzzy
 msgid "Component Diagram"
-msgstr "Diagramme de composant"
+msgstr "Diagramme de Composant"
 
 #: gaphor/UML/toolbox.py:53
-#, fuzzy
 msgid "Deployment Diagram"
-msgstr "Nouveau Diagramme de Déploiement"
+msgstr "Diagramme de Déploiement"
 
 #: gaphor/UML/toolbox.py:56
-#, fuzzy
 msgid "Communication Diagram"
-msgstr "Nouveau Diagramme de Communication"
+msgstr "Diagramme de Communication"
 
 #: gaphor/UML/toolbox.py:59
-#, fuzzy
 msgid "Profile Diagram"
-msgstr "Nouveau Diagramme de Profile"
+msgstr "Diagramme de Profile"
 
 #: gaphor/UML/deployments/deploymentstoolbox.py:16 gaphor/UML/toolbox.py:65
 msgid "Artifact"
@@ -706,9 +685,8 @@ msgid "Device"
 msgstr "Dispositif"
 
 #: gaphor/UML/toolbox.py:73
-#, fuzzy
 msgid "Instance Specification"
-msgstr "Spécification d'une Nouvelle Instance"
+msgstr "Spécification d'une Instance"
 
 #: gaphor/UML/classes/classestoolbox.py:39 gaphor/UML/toolbox.py:78
 msgid "Interface"
@@ -1653,38 +1631,32 @@ msgid "No focused item."
 msgstr "Pas de point focalisé."
 
 #: gaphor/diagram/propertypages.ui:322 gaphor/diagram/styleeditor.ui:5
-#, fuzzy
 msgid "Style Editor"
-msgstr "Feuille de style"
+msgstr "Éditeur de Style"
 
 #: gaphor/diagram/propertypages.ui:331
-#, fuzzy
 msgid "Open Style Editor"
-msgstr "Ouvrir l'éditeur de fusion"
+msgstr "Ouvrir l'Éditeur de Style"
 
 #: gaphor/diagram/styleeditor.ui:27
-#, fuzzy
 msgid "Border Radius"
-msgstr "ordonné"
+msgstr "Rayon de la Bordure"
 
 #: gaphor/diagram/styleeditor.ui:51
-#, fuzzy
 msgid "Color"
-msgstr "Couleurs"
+msgstr "Couleur"
 
 #: gaphor/diagram/styleeditor.ui:67
 msgid "Background Color"
 msgstr "Couleur d'Arrière-plan"
 
 #: gaphor/diagram/styleeditor.ui:83
-#, fuzzy
 msgid "Text Color"
-msgstr "Couleurs"
+msgstr "Couleur du texte"
 
 #: gaphor/diagram/styleeditor.ui:96
-#, fuzzy
 msgid "Add to Style Sheet"
-msgstr "Feuille de style"
+msgstr "Ajouter à la Feuille de style"
 
 #: gaphor/diagram/tools/dnd.py:50
 msgid "Element can’t be represented on a diagram."
@@ -3088,9 +3060,8 @@ msgid "Show in “{diagram}”"
 msgstr "Montrer dans \"{diagram}\""
 
 #: gaphor/ui/modelbrowser.py:676
-#, fuzzy
 msgid "Generic Diagram"
-msgstr "Nouveau diagramme générique"
+msgstr "Diagramme Générique"
 
 #: gaphor/ui/modelchanged.ui:6
 msgid "Model Changed on Disk"
