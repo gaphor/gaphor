@@ -27,15 +27,14 @@ def test_drop_dependency(diagram, element_factory):
 
     drop(client, diagram, 0, 0)
     drop(supplier, diagram, 0, 0)
-    dep_items = drop(dependency, diagram, 0, 0)
+    item = drop(dependency, diagram, 0, 0)
 
-    assert len(dep_items) == 1
     assert (
-        diagram.connections.get_connection(dep_items[0].head).connected
+        diagram.connections.get_connection(item.head).connected
         is supplier.presentation[0]
     )
     assert (
-        diagram.connections.get_connection(dep_items[0].tail).connected
+        diagram.connections.get_connection(item.tail).connected
         is client.presentation[0]
     )
 
@@ -64,12 +63,8 @@ def test_drop_generalization(diagram, element_factory):
     item = drop(generalization, diagram, 0, 0)
 
     assert item
-    assert (
-        diagram.connections.get_connection(item[0].head).connected is b.presentation[0]
-    )
-    assert (
-        diagram.connections.get_connection(item[0].tail).connected is a.presentation[0]
-    )
+    assert diagram.connections.get_connection(item.head).connected is b.presentation[0]
+    assert diagram.connections.get_connection(item.tail).connected is a.presentation[0]
 
 
 def test_drop_extension(diagram, element_factory):

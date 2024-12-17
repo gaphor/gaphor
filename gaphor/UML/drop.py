@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from gaphor import UML
-from gaphor.core.modeling import Diagram
+from gaphor.core.modeling import Base, Diagram
 from gaphor.diagram.drop import diagram_has_presentation, drop, drop_relationship
 from gaphor.diagram.presentation import Presentation, connect
 from gaphor.diagram.support import get_diagram_item, get_diagram_item_metadata
@@ -57,7 +57,9 @@ def drop_pin(element: UML.Pin, diagram: Diagram, x, y):
     return drop_pin_on_diagram(element, element.owner, diagram, x, y)
 
 
-def drop_pin_on_diagram(element, owner, diagram, x, y):
+def drop_pin_on_diagram(
+    element: Base, owner: Base | None, diagram: Diagram, x, y
+) -> Presentation | None:
     item_class = get_diagram_item(type(element))
     if not item_class:
         return None
@@ -80,14 +82,13 @@ def drop_pin_on_diagram(element, owner, diagram, x, y):
 
 @drop.register(UML.DirectedRelationship, Diagram)
 def drop_relationship_on_diagram(
-    element: UML.DirectedRelationship, diagram: Diagram, x, y
-):
+    element: UML.DirectedRelationship, diagram: Diagram, x: float, y: float
+) -> Presentation | None:
     item_class = get_diagram_item(type(element))
     if not item_class:
         return None
 
     metadata = get_diagram_item_metadata(item_class)
-    added_items = []
     if metadata:
         # DirectedRelationships can be many-to-many, so we may need to create multiple items
         if metadata["head"].upper == 1 and metadata["tail"].upper == 1:
@@ -95,11 +96,11 @@ def drop_relationship_on_diagram(
             tail = metadata["tail"].get(element)
             new_item = drop_relationship(element, head, tail, diagram, x, y)
             if new_item:
-                added_items.append(new_item)
+                return new_item
         else:
             for head in metadata["head"].get(element):
                 for tail in metadata["tail"].get(element):
                     new_item = drop_relationship(element, head, tail, diagram, x, y)
                     if new_item:
-                        added_items.append(new_item)
-        return added_items
+                        return new_item
+    return None
