@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gaphor 2.23.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-11-27 15:44-0500\n"
-"PO-Revision-Date: 2024-12-17 01:13+0000\n"
+"PO-Revision-Date: 2024-12-18 08:46+0000\n"
 "Last-Translator: Stan SZLAPKA <stansz@free.fr>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/gaphor/"
 "docs-gaphor-org/fr/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.9\n"
+"X-Generator: Weblate 5.9.2-dev\n"
 "Generated-By: Babel 2.16.0\n"
 
 #: ../changelog.rst:2
@@ -48,8 +48,8 @@ msgid ""
 "editor>`."
 msgstr ""
 "Dans ce tutoriel, nous nous référons aux différentes parties de l'interface "
-"gaphor : {ref}`Navigateur de modèle <getting_started:model browser>`, [Boîte "
-"à outils](getting_started:toolbox), {ref}`Éditeur de propriétés "
+"gaphor : {ref}`Navigateur de modèle <getting_started:model browser>`, "
+"[Toolbox](getting_started:toolbox), {ref}`Éditeur de propriétés "
 "<getting_started:property editor>`."
 
 #: ../coffee_machine.md:8
@@ -543,7 +543,7 @@ msgid ""
 "Barista."
 msgstr ""
 "Double-cliquez sur l'acteur pour faire apparaître la boîte de dialogue de "
-"renommage et remplacez Utilisateur par Serveur."
+"renommage et remplacez Utilisateur par Barman."
 
 #: ../coffee_machine_concept.md:53
 msgid "Update the name of the oval Use Case from Use Case #1 to Brew espresso."
@@ -692,7 +692,7 @@ msgid ""
 msgstr ""
 "Le bloc Barista (Barman) est chargé de préparer et de servir le café aux "
 "clients. Le bloc Roasted Coffe (Café torréfié) contient les types de café "
-"disponibles pour le serveur. Le bloc Coffee Grinder (Moulin à café) moud les "
+"disponibles pour le barman. Le bloc Coffee Grinder (Moulin à café) moud les "
 "grains de café torréfiés à la consistance souhaitée avant la préparation du "
 "café. Le bloc Water Supply (Alimentation en eau) contient la source d'eau "
 "pour la machine à café, et enfin le bloc Customer (Client) représente la "
@@ -735,7 +735,7 @@ msgstr ""
 
 #: ../coffee_machine_concept.md:126 ../coffee_machine_concept.md:121
 msgid "Context Diagram"
-msgstr "Diagramme de contexte"
+msgstr "Diagramme de Contexte"
 
 #: ../coffee_machine_concept.md:128 ../coffee_machine_concept.md:123
 msgid ""
@@ -1951,7 +1951,7 @@ msgstr ""
 "verrez une notification. Cela peut par exemple concerner un élément retiré "
 "indirectement du modèle. Cela ne provoquera pas de dialogues, mais vous "
 "informera simplement de la situation par une notification dans "
-"l'application. Si vous ne souhaitez pas ce changement, cliquez sur « Undo »."
+"l'application. Si vous ne souhaitez pas ce changement, cliquez sur `undo`."
 
 #: ../design_principles.md:61
 msgid "Balanced"
@@ -2102,7 +2102,7 @@ msgid ""
 "service. Gaphor is highly event driven:"
 msgstr ""
 "Dans Gaphor, nous gérons les abonnements aux gestionnaires d'événements via "
-"le service EventManager. Gaphor est fortement axé sur les événements :"
+"le service `EventManager`. Gaphor est fortement axé sur les événements :"
 
 #: ../event_system.md:9
 msgid "Changes in the loaded model are emitted as events"
@@ -2130,8 +2130,8 @@ msgid ""
 msgstr ""
 "Bien que Gaphor dépende fortement de GTK pour son interface utilisateur, il "
 "utilise son propre système de distribution d'événements. Les événements "
-"peuvent être structurés en hiérarchies. Par exemple, un événement « "
-"AttributeUpdated » est un sous-type de « ElementUpdated ». Si nous sommes "
+"peuvent être structurés en hiérarchies. Par exemple, un événement "
+"`AttributeUpdated` est un sous-type de `ElementUpdated`. Si nous sommes "
 "intéressés par toutes les modifications apportées aux éléments, nous pouvons "
 "également enregistrer l'événement `ElementUpdated` et recevoir tous les "
 "événements `AttributeUpdated`."
@@ -2411,9 +2411,9 @@ msgid ""
 "between the two classes. The relation will be created to the diagram."
 msgstr ""
 "Faites maintenant glisser les éléments du navigateur de modèle sur le "
-"nouveau diagramme. Commencez par ajouter les classes Shape (Forme) et Circle "
-"(Cercle). Ajoutez la généralisation en dernier. Déposez-la entre les deux "
-"classes. La relation sera créée automatiquement dans le diagramme."
+"nouveau diagramme. Commencez par ajouter les classes `Shape` (Forme) et "
+"`Circle` (Cercle). Ajoutez la généralisation en dernier. Déposez-la entre "
+"les deux classes. La relation sera créée automatiquement dans le diagramme."
 
 #: ../first_model.md:67 ../first_model.md:69
 msgid ""
@@ -2526,8 +2526,8 @@ msgid ""
 "`Session`. Only one Application instance is active. Each session will load "
 "its own services defined as [gaphor.services](service_oriented.md)."
 msgstr ""
-"La partie principale de Gaphor qui s'exécute en premier est appelée « "
-"application ». Gaphor peut avoir plusieurs modèles ouverts à tout moment. "
+"La partie principale de Gaphor qui s'exécute en premier est appelée "
+"`Application`. Gaphor peut avoir plusieurs modèles ouverts à tout moment. "
 "Chaque modèle est conservé dans une `Session`. Une seule instance de "
 "l'application est active. Chaque session chargera ses propres services "
 "définis comme [gaphor.services](service_oriented.md)."
@@ -2671,7 +2671,7 @@ msgid ""
 "`EventManager`."
 msgstr ""
 "C'est tout. Comme vous pouvez le voir sur le diagramme, beaucoup de services "
-"s'appuient sur `EventManager` (EventManager)."
+"s'appuient sur `EventManager`."
 
 #: ../getting_started.md:1
 msgid "Get Started with Gaphor"
@@ -3171,7 +3171,7 @@ msgid ""
 "Gaphor considers the ``LANG`` environment variable on Linux, Windows and "
 "macOS."
 msgstr ""
-"Gaphor utilise la variable d'environnement « LANG » sur Linux, Windows et "
+"Gaphor utilise la variable d'environnement ``LANG`` sur Linux, Windows et "
 "macOS."
 
 #: ../getting_started.md:176
@@ -3267,8 +3267,8 @@ msgid ""
 "For download instructions, and the blog, please visit the `Gaphor Website "
 "<https://gaphor.org>`_."
 msgstr ""
-"Pour les instructions de téléchargement et le blog, veuillez visiter le site "
-"Web de Gaphor <https://gaphor.org>`_."
+"Pour les instructions de téléchargement et le blog, veuillez visiter le `"
+"Gaphor Website <https://gaphor.org>`_."
 
 #: ../index.rst:26
 msgid ""
@@ -4773,7 +4773,7 @@ msgid ""
 msgstr ""
 "Tous les éléments ayant demandé une mise à jour via la méthode "
 "`request_update` sont désormais considérés comme des mises à jour. Si un "
-"élément possède une méthode « update(context : UpdateContext) », elle est "
+"élément possède une méthode ``update(context: UpdateContext)``, elle est "
 "invoquée. Les contraintes sont résolues."
 
 #: ../models/core.rst:98 ../models/core_element.rst:42
@@ -4787,7 +4787,7 @@ msgstr "Créer un nouvel élément dans le référentiel."
 #: ../models/core.rst:108 ../models/core_element.rst:52
 msgid "Select elements from the repository that fulfill ``expression``."
 msgstr ""
-"Sélectionner dans le dépôt les éléments qui répondent à l'« expression »."
+"Sélectionner dans le dépôt les éléments qui répondent à l'``expression``."
 
 #: ../models/core.rst:113 ../models/core_element.rst:57
 msgid "Select all elements from the repository of type ``type_``."
@@ -5737,7 +5737,7 @@ msgid ""
 "or the Windows Store."
 msgstr ""
 "Pour l'instant, Gaphor ne dispose pas de fonctionnalité intégrée pour "
-"installer et maintenir les plugins. Pour installer un plugin, utilisez pip "
+"installer et maintenir les plugins. Pour installer un plugin, utilisez `pip` "
 "depuis une installation de Python sur votre ordinateur. Sur macOS et Linux, "
 "cela devrait être facile, mais sur Windows, vous devrez peut-être installer "
 "Python séparément depuis le site python.org ou le Windows Store."
@@ -5759,10 +5759,10 @@ msgid ""
 "Flatseal) to change permissions of Flatpaks."
 msgstr ""
 "Si vous utilisez Gaphor installé en tant que Flatpak, vous devez accorder à "
-"Gaphor l'accès aux fichiers de l'utilisateur (option `filesystem=home`), "
-"afin que Gaphor puisse trouver les fichiers dans votre dossier `.local`. "
-"Pour changer les permissions des Flatpaks, vous pouvez utiliser FlatSeal "
-"(https://flathub.org/apps/com.github.tchx84.Flatseal)."
+"Gaphor l'accès aux fichiers de l'utilisateur (`filesystem=home`), afin que "
+"Gaphor puisse trouver les fichiers dans votre dossier `.local`. Pour changer "
+"les permissions des Flatpaks, vous pouvez utiliser FlatSeal (https://"
+"flathub.org/apps/com.github.tchx84.Flatseal)."
 
 #: ../plugins.md:39 ../plugins.md:36
 msgid ""
@@ -6090,8 +6090,8 @@ msgid ""
 "function. This behavior is similar to the [`diagram` directive](sphinx)."
 msgstr ""
 "Une autre fonction intéressante consiste à dessiner les diagrammes. Pour "
-"l'instant, cela nécessite une fonction. Ce comportement est similaire à la "
-"directive [`diagram`](sphinx)."
+"l'instant, cela nécessite une fonction. Ce comportement est similaire à "
+"[`diagram` directive](sphinx)."
 
 #: ../scripting.md:152 ../scripting.md:151
 msgid "Create a diagram"
@@ -6121,11 +6121,11 @@ msgid ""
 "also drop all associations on the model. Only if both ends can connect, the "
 "association will be added."
 msgstr ""
-"Pour créer le diagramme, nous [`déposons (drop)` "
-"elements](modeling_language:dropping) sur le diagramme. Les éléments d'un "
-"diagramme représentent un élément du modèle. Nous allons également déposer "
-"toutes les associations sur le modèle. L'association ne sera ajoutée que si "
-"les deux extrémités peuvent se connecter."
+"Pour créer le diagramme, nous déposons [`drop` elements]"
+"(modeling_language:dropping) sur le diagramme. Les éléments d'un diagramme "
+"représentent un élément du modèle. Nous allons également déposer toutes les "
+"associations sur le modèle. L'association ne sera ajoutée que si les deux "
+"extrémités peuvent se connecter."
 
 #: ../scripting.md:187 ../scripting.md:186
 msgid "The diagram is not perfect, but you get the picture."
@@ -6219,8 +6219,8 @@ msgid ""
 "All data models are described in the `Modeling Languages` section of the "
 "docs."
 msgstr ""
-"Tous les modèles de données sont décrits dans la section « Langages de "
-"modélisation » (`Modeling Languages`) de la documentation."
+"Tous les modèles de données sont décrits dans la section `Modeling Languages`"
+" (Langages de modélisation) de la documentation."
 
 #: ../scripting.md:299 ../scripting.md:231
 msgid ""
@@ -6559,10 +6559,10 @@ msgid ""
 "io/en/latest/syntax/roles-and-directives.html>`_."
 msgstr ""
 "Nous couvrons ici la syntaxe du texte «reStructured Text». Si vous préférez "
-"le markdown, nous vous suggérons de jeter un coup d'œil à MyST-parser <https"
-"://myst-parser.readthedocs.io/>, car il prend en charge les directives "
+"le markdown, nous vous suggérons de jeter un coup d'œil à `MyST-parser <https"
+"://myst-parser.readthedocs.io/>`, car il prend en `charge les directives "
 "Sphinx <https://myst-parser.readthedocs.io/en/latest/syntax/roles-and-"
-"directives.html>."
+"directives.html>`."
 
 #: ../sphinx.rst:13
 msgid ""
@@ -6590,7 +6590,9 @@ msgstr ""
 
 #: ../sphinx.rst:36
 msgid "`Image properties`_ can also be applied:"
-msgstr "Les propriétés de l'image peuvent également être appliquées :"
+msgstr ""
+"Les `Image properties`_ (propriétés de l'image) peuvent également être "
+"appliquées :"
 
 #: ../sphinx.rst:-1
 msgid "A description suitable for an example"
@@ -6626,7 +6628,7 @@ msgstr "Étape 2 : Ajouter des références aux modèles"
 
 #: ../sphinx.rst:84
 msgid "Now include ``diagram`` directives in your documents."
-msgstr "Incluez maintenant les directives ``diagramme`` dans vos documents."
+msgstr "Incluez maintenant les directives ``diagram`` dans vos documents."
 
 #: ../sphinx.rst:88
 msgid "Read the Docs"
@@ -6638,10 +6640,10 @@ msgid ""
 "render, it's best to use a `.readthedocs.yaml`_ file in your project. Make "
 "sure to include the extra ``apt_packages`` as shown below."
 msgstr ""
-"La directive diagramme est compatible avec le module « Lire la doc » (`Read "
-"the docs`_). Pour rendre les diagrammes, il est préférable d'utiliser un "
-"fichier `.readthedocs.yaml` dans votre projet. Assurez-vous d'inclure "
-"l'élément supplémentaire ``apt_packages`, comme indiqué ci-dessous."
+"La directive diagramme est compatible avec le module `Read the docs`_ (Lire "
+"la doc). Pour rendre les diagrammes, il est préférable d'utiliser un fichier "
+"`.readthedocs.yaml` dans votre projet. Assurez-vous d'inclure l'élément "
+"supplémentaire ``apt_packages`, comme indiqué ci-dessous."
 
 #: ../sphinx.rst:94
 msgid "This is the ``.readthedocs.yaml`` file we use for Gaphor:"
@@ -6731,9 +6733,9 @@ msgid ""
 "both class and stereotype."
 msgstr ""
 "Pour créer un stéréotype, assurez-vous que le profil UML est actif, puis "
-"ouvrez la section « Profil » de la boîte à outils. Ajoutez d'abord une "
-"«métaclasse» à votre diagramme. Ensuite, ajoutez un «stéréotype» et reliez "
-"les deux avec une extension. Le stéréotype « metaclass » n'apparaîtra que "
+"ouvrez la section *Profil* de la boîte à outils. Ajoutez d'abord une "
+"*Métaclass* à votre diagramme. Ensuite, ajoutez un *Stéréotype* et reliez "
+"les deux avec une *Extension*. Le stéréotype `«metaclass»` n'apparaîtra que "
 "lorsque l'extension sera connectée à la fois à la classe et au stéréotype."
 
 #: ../stereotypes.md:20
@@ -6743,7 +6745,7 @@ msgid ""
 "if you want to use the stereotype on all elements."
 msgstr ""
 "Les noms de classe dans la métaclasse doivent être des noms de classe du "
-"modèle UML, tels que `Classe`, `Interface`, `Propriété`, `Association`. Ou "
+"modèle UML, tels que `Classe`, `Interface`, `Property`, `Association`. Ou "
 "même `Element` si vous voulez utiliser le stéréotype sur tous les éléments."
 
 #: ../stereotypes.md:25
@@ -6877,7 +6879,7 @@ msgid ""
 msgstr ""
 "Vous pouvez appliquer un style aux stéréotypes. Par exemple ici, l'élément "
 "de base `requirement` (exigence) a un stéréotype `system requirement` ("
-"exigence sutème)"
+"exigence sytème)"
 
 #: ../stereotypes.md:77
 msgid "[Style Sheets](style_sheets) has more detail on how CSS works in Gaphor"
@@ -6955,8 +6957,7 @@ msgid ""
 "fonts, colors, spacing) to Web documents."
 msgstr ""
 "Les feuilles de style en cascade (CSS) sont un mécanisme simple permettant "
-"d'ajouter du style (par exemple, des polices, des couleurs, des espaces) aux "
-"documents Web."
+"d'ajouter du style (par exemple, fonts, colors, spacing) aux documents Web."
 
 #: ../style_sheets.md:14
 msgid ""
@@ -7065,7 +7066,7 @@ msgstr "Tous les éléments du diagramme, y compris le diagramme lui-même."
 
 #: ../style_sheets.md:87
 msgid "``node component``"
-msgstr "``composant node (nœud)``"
+msgstr "``node component``"
 
 #: ../style_sheets.md:87
 msgid "Any component item which is a descendant of a node."
@@ -7073,7 +7074,7 @@ msgstr "Tout élément de composant descendant d'un nœud."
 
 #: ../style_sheets.md:88
 msgid "``node > component``"
-msgstr "``node(nœud) > component (composant)``"
+msgstr "``node > component``"
 
 #: ../style_sheets.md:88
 msgid "A component item which is a child of a node."
@@ -7081,7 +7082,7 @@ msgstr "Un élément de composant qui est un enfant d'un nœud."
 
 #: ../style_sheets.md:89
 msgid "``generalization[subject]``"
-msgstr "``généralisation[sujet]``"
+msgstr "``generalization[subject]``"
 
 #: ../style_sheets.md:89
 msgid "A generalization item with a subject present."
@@ -7196,7 +7197,7 @@ msgstr "Un nœud est le premier élément d'un groupe de frères et sœurs."
 
 #: ../style_sheets.md:107
 msgid "``:has()``"
-msgstr "``:has()`` (a())"
+msgstr "``:has()``"
 
 #: ../style_sheets.md:107
 msgid "The item contains any of the provided selectors."
@@ -7210,7 +7211,7 @@ msgstr ""
 
 #: ../style_sheets.md:110
 msgid "``:is()``"
-msgstr "``:is()`` (est())"
+msgstr "``:is()``"
 
 #: ../style_sheets.md:110
 msgid "Match any of the provided selectors."
@@ -7224,7 +7225,7 @@ msgstr ""
 
 #: ../style_sheets.md:113
 msgid "``:not()``"
-msgstr "``:not()`` (non())"
+msgstr "``:not()``"
 
 #: ../style_sheets.md:113
 msgid "Negate the selector."
@@ -7237,7 +7238,7 @@ msgstr ""
 
 #: ../style_sheets.md:116
 msgid "``::after``"
-msgstr "``::after`` (après)"
+msgstr "``::after``"
 
 #: ../style_sheets.md:116
 msgid ""
@@ -7290,7 +7291,7 @@ msgstr ""
 "propriétés spécifiques à l'outil. L'interpréteur de feuilles de style est "
 "relativement simple. Toutes les largeurs, hauteurs et tailles sont exprimées "
 "en pixels. Il n'est pas possible d'utiliser des déclarations de style "
-"complexes, comme la propriété « font » en HTML/CSS qui peut contenir la "
+"complexes, comme la propriété `font` en HTML/CSS qui peut contenir la "
 "famille, la taille et le poids de la police."
 
 #: ../style_sheets.md:136
@@ -7300,9 +7301,8 @@ msgid ""
 "propagate down to the items contained in the diagram."
 msgstr ""
 "Certaines propriétés sont héritées du style parent. Le parent est souvent un "
-"diagramme. Lorsque vous définissez une `couleur` ou une `famille de "
-"caractères` sur `diagramme`, cela se propagera aux éléments contenus dans le "
-"diagramme."
+"diagramme. Lorsque vous définissez une `color`` ou une ``font-family` sur "
+"`diagram`, cela se propagera aux éléments contenus dans le diagramme."
 
 #: ../style_sheets.md:140
 msgid "Colors"
@@ -7310,7 +7310,7 @@ msgstr "Couleurs"
 
 #: ../style_sheets.md:144
 msgid "``background-color``"
-msgstr "``couleur d'arrière-plan``"
+msgstr "``background-color``"
 
 #: ../style_sheets.md:144
 msgid "Examples:"
@@ -7318,19 +7318,19 @@ msgstr "Exemples :"
 
 #: ../style_sheets.md:146
 msgid "``background-color: azure;``"
-msgstr "``couleur d'arrière-plan : azur ;``"
+msgstr "``background-color: azure;``"
 
 #: ../style_sheets.md:148
 msgid "``background-color: rgb(255, 255, 255);``"
-msgstr "``couleur d'arrière-plan : rgb(255, 255, 255) ;``"
+msgstr "``background-color: rgb(255, 255, 255) ;``"
 
 #: ../style_sheets.md:150
 msgid "``background-color: hsl(130, 95%, 10%);``"
-msgstr "``couleur d'arrière-plan : hsl(130, 95%, 10%) ;``"
+msgstr "``background-color: hsl(130, 95%, 10%) ;``"
 
 #: ../style_sheets.md:151
 msgid "``color``"
-msgstr "``couleur``"
+msgstr "``color``"
 
 #: ../style_sheets.md:151
 msgid "Color used for lines. *(inherited)*"
@@ -7338,7 +7338,7 @@ msgstr "Couleur utilisée pour les lignes. *(hérité)*"
 
 #: ../style_sheets.md:152
 msgid "``text-color``"
-msgstr "``couleur-texte``"
+msgstr "``text-color``"
 
 #: ../style_sheets.md:152
 msgid "Color for text. *(inherited)*"
@@ -7350,7 +7350,7 @@ msgstr "Utilisez la couleur si possible."
 
 #: ../style_sheets.md:155
 msgid "``opacity``"
-msgstr "``opacité``"
+msgstr "``opacity``"
 
 #: ../style_sheets.md:155
 msgid "Color opacity factor (``0.0`` - ``1.0``), applied to all colors."
@@ -7383,7 +7383,7 @@ msgid ""
 "A single font name (e.g. ``sans``, ``serif``, ``courier``). *(inherited)*"
 msgstr ""
 "Un nom de police unique (par exemple ``sans``, ``serif``, ``courier``). "
-"*(hérité)*"
+"*(inherited)*"
 
 #: ../style_sheets.md:169
 msgid "``font-size``"
@@ -7395,7 +7395,7 @@ msgid ""
 "*(inherited)*"
 msgstr ""
 "Une taille absolue (par exemple ``14``) ou une valeur de taille (par exemple "
-"``small``). *(hérité)*"
+"``small``). *(inherited)*"
 
 #: ../style_sheets.md:170
 msgid "``font-style``"
@@ -7403,7 +7403,7 @@ msgstr "``font-style``"
 
 #: ../style_sheets.md:170
 msgid "Either ``normal`` or ``italic``. *(inherited)*"
-msgstr "Soit ``normal`` ou ``italique``. *(hérité)*"
+msgstr "Soit ``normal`` ou ``italic``. *(inherited)*"
 
 #: ../style_sheets.md:171
 msgid "``font-weight``"
@@ -7411,7 +7411,7 @@ msgstr "``font-weight``"
 
 #: ../style_sheets.md:171
 msgid "Either ``normal`` or ``bold``. *(inherited)*"
-msgstr "Soit ``normal`` ou ``gras``. *(hérité)*"
+msgstr "Soit ``normal`` ou ``bold``. *(inherited)*"
 
 #: ../style_sheets.md:172
 msgid "``text-align``"
@@ -7419,7 +7419,7 @@ msgstr "``text-align``"
 
 #: ../style_sheets.md:172
 msgid "Either ``left``, ``center``, ``right``. *(inherited)*"
-msgstr "Soit ``gauche``, ``centre``, ``droite``. *(hérité)*"
+msgstr "Soit ``left``, ``center``, ``right``. *(inherited)*"
 
 #: ../style_sheets.md:173
 msgid "``text-decoration``"
@@ -7427,7 +7427,7 @@ msgstr "``text-decoration``"
 
 #: ../style_sheets.md:173
 msgid "Either ``none`` or ``underline``."
-msgstr "Soit ``non`` ou ``souligné``."
+msgstr "Soit ``none`` ou ``underline``."
 
 #: ../style_sheets.md:174
 msgid "``vertical-align``"
@@ -7439,7 +7439,7 @@ msgstr "Alignement vertical du texte."
 
 #: ../style_sheets.md:176
 msgid "Either ``top``, ``middle`` or ``bottom``."
-msgstr "Soit ``haut``, ``milieu`` ou ``bas``."
+msgstr "Soit ``top``, ``middle`` ou ``bottom``."
 
 #: ../style_sheets.md:177
 msgid "``vertical-spacing``"
@@ -7511,7 +7511,7 @@ msgstr "Alignement du contenu des boîtes."
 
 #: ../style_sheets.md:197
 msgid "Either ``start``, ``end``, ``center`` or ``stretch``."
-msgstr "Soit ``début``, ``fin``, ``center`` ou ``étirer``."
+msgstr "Soit ``start``, ``end``, ``center`` ou ``stretch``."
 
 #: ../style_sheets.md:198
 msgid "``line-style``"
@@ -7519,7 +7519,7 @@ msgstr "``line-style``"
 
 #: ../style_sheets.md:198
 msgid "Either ``normal`` or ``sloppy [factor]``."
-msgstr "Soit ``normal``, soit ``molle [facteur]``."
+msgstr "Soit ``normal``, soit ``sloppy [factor]``."
 
 #: ../style_sheets.md:199
 msgid "``line-width``"
@@ -7527,7 +7527,7 @@ msgstr "``line-width``"
 
 #: ../style_sheets.md:199
 msgid "Set the width for lines: ``line-width: 2``. *(inherited)*"
-msgstr "Définir la largeur des lignes : ``line-width : 2``. *(hérité)*"
+msgstr "Définir la largeur des lignes : ``line-width : 2``. *(inherited)*"
 
 #: ../style_sheets.md:200
 msgid "``min-height``"
@@ -7561,7 +7561,7 @@ msgstr "``padding``"
 
 #: ../style_sheets.md:203 ../style_sheets.md:202
 msgid "CSS style padding (top, right, bottom, left)."
-msgstr "Style CSS d'espacement de chaque coté (haut, droite, bas, gauche)."
+msgstr "Style CSS d'espacement de chaque coté (top, right, bottom, left)."
 
 #: ../style_sheets.md:205 ../style_sheets.md:204
 msgid "Example: ``padding: 3 4``."
@@ -7715,9 +7715,9 @@ msgid ""
 "`Component`."
 msgstr ""
 "Gaphor ne stylise que les éléments présents dans le modèle, vous devez donc "
-"être explicite sur leurs noms. Par exemple, le composant hérite de la classe "
+"être explicite sur leurs noms. Par exemple, `Component`hérite de la `Class` "
 "dans le modèle UML, mais changer la couleur d'une classe ne la change pas "
-"pour un composant."
+"pour un `Component`."
 
 #: ../style_sheets.md:299 ../style_sheets.md:296
 msgid ""
@@ -7732,9 +7732,9 @@ msgstr ""
 "gauche), une fenêtre contextuelle apparaîtra avec le nom de l'élément et un "
 "raccourci. En règle générale, vous pouvez utiliser le nom du composant, qui "
 "doit être collé ensemble, comme le nom dans la feuille de style. Vous pouvez "
-"adresser un « Composant » comme «`component`ou un « Cas d'utilisation » "
-"comme `usecase`. La correspondance des noms est insensible à la casse. Les "
-"noms CSS sont écrits en minuscules par défaut."
+"adresser un *Composant* comme `component`ou un*Cas d'utilisation* comme "
+"`usecase`. La correspondance des noms est insensible à la casse. Les noms "
+"CSS sont écrits en minuscules par défaut."
 
 #: ../style_sheets.md:306 ../style_sheets.md:303
 msgid ""
@@ -7805,7 +7805,7 @@ msgstr "Dispositif/Nœud"
 
 #: ../style_sheets.md:316 ../style_sheets.md:313
 msgid "``node``"
-msgstr "``nœud``"
+msgstr "``node``"
 
 #: ../style_sheets.md:317 ../style_sheets.md:318 ../style_sheets.md:319
 #: ../style_sheets.md:314 ../style_sheets.md:315 ../style_sheets.md:316
@@ -7818,7 +7818,7 @@ msgstr "Décision/Fusion de Nœud"
 
 #: ../style_sheets.md:317 ../style_sheets.md:314
 msgid "``decisionnode``"
-msgstr "``decisionnode`` (``nœud de décision``)"
+msgstr "``decisionnode``"
 
 #: ../style_sheets.md:318 ../style_sheets.md:315
 msgid "Fork/Join Node"
@@ -7898,7 +7898,7 @@ msgstr "Système logiciel"
 
 #: ../style_sheets.md:325 ../style_sheets.md:322
 msgid "``c4container[type=\"Software System\"]``"
-msgstr "``c4container[type=« Système logiciel »]``"
+msgstr "``c4container[type=\"Software System\"]``"
 
 #: ../style_sheets.md:326 ../style_sheets.md:323
 msgid "Component"
@@ -7906,7 +7906,7 @@ msgstr "Composant"
 
 #: ../style_sheets.md:326 ../style_sheets.md:323
 msgid "``c4container[type=\"Component\"]``"
-msgstr "``c4container[type=« Composant »]``"
+msgstr "``c4container[type=\"Component\"]``"
 
 #: ../style_sheets.md:327 ../style_sheets.md:324
 msgid "Container"
@@ -7914,7 +7914,7 @@ msgstr "Conteneur"
 
 #: ../style_sheets.md:327 ../style_sheets.md:324
 msgid "``c4container[type=\"Container\"]``"
-msgstr "``c4container[type=\"Conteneur\"]``"
+msgstr "``c4container[type=\"Container\"]``"
 
 #: ../style_sheets.md:328 ../style_sheets.md:325
 msgid "Container: Database"
@@ -7964,7 +7964,7 @@ msgstr "Porte...toute/ET/OU"
 
 #: ../style_sheets.md:332 ../style_sheets.md:329
 msgid "``and``, ``or``, etc."
-msgstr "``et``, ``ou``, etc."
+msgstr "``and``, ``or``, etc."
 
 #: ../style_sheets.md:337 ../style_sheets.md:334
 msgid "Ideas"
@@ -8165,9 +8165,9 @@ msgstr ""
 "L'enregistrement et la lecture des modifications dans Gaphor sont gérés par "
 "ce dernier. Celui-ci fonctionne de manière transactionnelle. Une transaction "
 "doit réussir ou échouer dans son ensemble. Si elle échoue en cours de route, "
-"elle est annulée. Dans Gaphor, ceci est réalisé par le module mod`~gaphor."
-"transaction`, qui fournit un gestionnaire de contexte obj`~gaphor.transaction"
-".Transaction`."
+"elle est annulée. Dans Gaphor, ceci est réalisé par le module "
+"{mod}`~gaphor.transaction`, qui fournit un gestionnaire de contexte "
+"{obj}`~gaphor.transaction.Transaction`."
 
 #: ../undo.md:16
 msgid ""
@@ -8225,12 +8225,12 @@ msgstr "Transaction réussie"
 #: ../undo.md:35 ../undo.md:33
 msgid "A `TransactionCommit` event is emitted"
 msgstr ""
-"Un événement Enregistrement de la transaction (`TransactionCommit`) est émis"
+"Un événement `TransactionCommit`( Enregistrement de la transaction) est émis"
 
 #: ../undo.md:36 ../undo.md:34
 msgid "The `UndoManager` closes and stores the transaction."
 msgstr ""
-"Le Gestionnaire d'annulation (`UndoManager`) ferme et enregistre la "
+"Le `UndoManager` (Gestionnaire d'annulation) ferme et enregistre la "
 "transaction."
 
 #: ../undo.md:38 ../undo.md:36
@@ -8240,13 +8240,13 @@ msgstr "Échec de la transaction"
 #: ../undo.md:40 ../undo.md:38
 msgid "A `TransactionRollback` event is emitted."
 msgstr ""
-"Un événement Annulation de la transaction (`TransactionRollback`) est émis."
+"Un `TransactionRollback` événement (Annulation de la transaction) est émis."
 
 #: ../undo.md:41 ../undo.md:39
 msgid ""
 "The `UndoManager` plays back all the recorded actions, but does not store it."
 msgstr ""
-"Le Gestionnaire d'annulation (`UndoManager`) lit toutes les actions "
+"Le `UndoManager` ( Gestionnaire d'annulation) lit toutes les actions "
 "enregistrées, mais ne les stocke pas."
 
 #: ../undo.md:44
@@ -8740,10 +8740,10 @@ msgstr ""
 "une console Python sur des ordinateurs qui n'ont pas la possibilité "
 "d'effectuer une installation de développement complète (par exemple, sans "
 "privilèges d'administration). Parce que toutes les dépendances nécessaires à "
-"la construction de Gaphor (en particulier, gtksourceview5 et libadwaita) ne "
-"sont pas disponibles en tant que paquets Anaconda, vous ne pourrez pas "
+"la construction de Gaphor (en particulier, gtksourceview5` et `libadwaita`) "
+"ne sont pas disponibles en tant que paquets Anaconda, vous ne pourrez pas "
 "construire le programme ni instancier ou exécuter des classes d'application "
-"comme Application et Session."
+"comme `Application` and `Session`."
 
 #: ../windows.md:233
 msgid ""
@@ -8925,7 +8925,7 @@ msgstr ""
 
 #: ../../CHANGELOG.md:16
 msgid "Add CSS for \"from: \", stereotypes, and compartments"
-msgstr "Ajouter CSS pour \"des : \", stéréotypes, et compartiments"
+msgstr "Ajouter CSS pour \"from: \", stéréotypes, et compartiments"
 
 #: ../../CHANGELOG.md:17
 msgid "Update Hungarian translations"
@@ -11474,7 +11474,7 @@ msgstr ""
 "Dans ce cas, le diagramme comprend des couloirs d'activités (swimlanes) pour "
 "l'IHM (HMI), le contrôleur (Controller), la pompe à eau (Water Pump),le "
 "chauffe-eau (Water Heater), la tête de groupe (Grouphead) et le filtre à eau "
-"(Portafilter) . L'IHM reçoit le bouton pressé par le serveur et envoie une "
+"(Portafilter) . L'IHM reçoit le bouton pressé par le barman et envoie une "
 "commande au contrôleur. Ce dernier ordonne alors à la pompe à eau et au "
 "chauffe-eau de démarrer, et une fois que l'eau a atteint la bonne "
 "température, le contrôleur ordonne à la pompe et au chauffe-eau de se mettre "
@@ -12218,7 +12218,7 @@ msgstr ""
 "ce dernier. Celui-ci fonctionne de manière transactionnelle. Une transaction "
 "doit réussir ou échouer dans son ensemble. Si elle échoue en cours de route, "
 "elle est annulée. Dans Gaphor, cette fonction est assurée par le module "
-"transaction, qui fournit un gestionnaire de contexte Transaction."
+"`transaction`, qui fournit un gestionnaire de contexte `Transaction`."
 
 #: ../undo.md:16
 msgid ""
