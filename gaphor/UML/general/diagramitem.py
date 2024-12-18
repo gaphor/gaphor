@@ -2,14 +2,14 @@
 An item representing a diagram.
 """
 
+import gaphor.UML.uml as UML
 from gaphor.diagram.presentation import ElementPresentation, Named, text_name
 from gaphor.diagram.shapes import Box, CssNode, IconBox, Text, draw_border, stroke
 from gaphor.diagram.support import represents
 from gaphor.UML.compartments import text_stereotypes
-from gaphor.UML.uml import Diagram
 
 
-@represents(Diagram)
+@represents(UML.Diagram)
 class DiagramItem(ElementPresentation, Named):
     def __init__(self, diagram, id=None):
         super().__init__(diagram, id, width=30, height=30)
@@ -46,3 +46,18 @@ def draw_diagram(box, context, bounding_box):
     cr.line_to(8, 9)
     cr.line_to(8, 12)
     stroke(context, fill=True)
+
+
+for _type in (
+    UML.ClassDiagram,
+    UML.PackageDiagram,
+    UML.ComponentDiagram,
+    UML.DeploymentDiagram,
+    UML.ActivityDiagram,
+    UML.SequenceDiagram,
+    UML.CommunicationDiagram,
+    UML.StateMachineDiagram,
+    UML.UseCaseDiagram,
+    UML.ProfileDiagram,
+):
+    represents(_type)(DiagramItem)

@@ -11,9 +11,8 @@ from typing import (
     TypeVar,
 )
 
-from gaphor.core.modeling import Base, Presentation
+from gaphor.core.modeling import Base, Diagram, Presentation
 from gaphor.diagram.group import group
-from gaphor.UML.uml import Diagram
 
 ItemFactory = Callable[[Diagram, Presentation | None], Presentation]
 P = TypeVar("P", bound=Presentation, covariant=True)
@@ -40,18 +39,30 @@ ToolboxDefinition = Sequence[ToolSection]
 class DiagramType:
     id: str
     name: str
+    diagram_type: type[Diagram] | None
     sections: Collection[ToolSection]
 
-    def __init__(self, id, name, sections):
-        self.id = id
+    def __init__(
+        self,
+        diagram_type: type[Diagram],
+        name: str,
+        sections: tuple[ToolSection, ...],
+        allowed_owner_types: tuple[type[None | Base], ...] = (
+            type(None),
+            Base,
+        ),
+    ):
+        self.id = diagram_type.diagramType.default or ""
+        self.diagram_type = diagram_type
         self.name = name
         self.sections = sections
+        self.allowed_owner_types = allowed_owner_types
 
-    def allowed(self, element: type[Base]) -> bool:
-        return True
+    def allowed(self, element: Base | None) -> bool:
+        return isinstance(element, self.allowed_owner_types)
 
     def create(self, element_factory, element):
-        diagram = element_factory.create(Diagram)
+        diagram = element_factory.create(self.diagram_type)
         diagram.element = element
         diagram.name = diagram.gettext(self.name)
         diagram.diagramType = self.id
@@ -66,7 +77,7 @@ class ElementCreateInfo(NamedTuple):
     id: str
     name: str
     element_type: type[Base]
-    allowed_owning_elements: Collection[type[Base]]
+    allowed_owning_elements: tuple[type[Base], ...]
 
 
 def tooliter(toolbox_actions: Sequence[tuple[str, Sequence[ToolDef]]]):

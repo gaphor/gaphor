@@ -2,6 +2,7 @@
 
 from gaphor import UML
 from gaphor.diagram.diagramtoolbox import (
+    DiagramType,
     DiagramTypes,
     ElementCreateInfo,
     ToolboxDefinition,
@@ -16,10 +17,18 @@ from gaphor.SysML.blocks.blockstoolbox import blocks
 from gaphor.SysML.diagramtype import DiagramDefault, SysMLDiagramType
 from gaphor.SysML.requirements.requirementstoolbox import requirements
 from gaphor.SysML.sysml import (
+    ActivityDiagram,
     Block,
+    BlockDefinitionDiagram,
     ConstraintBlock,
     InterfaceBlock,
+    InternalBlockDiagram,
+    PackageDiagram,
     Requirement,
+    RequirementDiagram,
+    SequenceDiagram,
+    StateMachineDiagram,
+    UseCaseDiagram,
     ValueType,
 )
 from gaphor.UML import diagramitems as uml_items
@@ -86,14 +95,14 @@ root = type(None)
 # Not implemented: Parameter Diagram
 sysml_diagram_types: DiagramTypes = (
     SysMLDiagramType(
-        "bdd",
+        BlockDefinitionDiagram,
         i18nize("Block Definition Diagram"),
         (blocks,),
         (Block, Package, ConstraintBlock, Activity),
         (DiagramDefault(root, Package, i18nize("New Package")),),
     ),
     SysMLDiagramType(
-        "ibd",
+        InternalBlockDiagram,
         i18nize("Internal Block Diagram"),
         (internal_blocks,),
         (
@@ -106,14 +115,14 @@ sysml_diagram_types: DiagramTypes = (
         ),
     ),
     SysMLDiagramType(
-        "pkg",
+        PackageDiagram,
         i18nize("Package Diagram"),
         (blocks,),
         (Package,),  # model, modelLibrary, profile
         (DiagramDefault(root, Package, i18nize("New Package")),),
     ),
     SysMLDiagramType(
-        "req",
+        RequirementDiagram,
         i18nize("Requirement Diagram"),
         (requirements,),
         (
@@ -125,7 +134,7 @@ sysml_diagram_types: DiagramTypes = (
         (DiagramDefault(root, Package, i18nize("New Package")),),
     ),
     SysMLDiagramType(
-        "act",
+        ActivityDiagram,
         i18nize("Activity Diagram"),
         (actions,),
         (Activity,),
@@ -135,7 +144,7 @@ sysml_diagram_types: DiagramTypes = (
         ),
     ),
     SysMLDiagramType(
-        "sd",
+        SequenceDiagram,
         i18nize("Sequence Diagram"),
         (interactions,),
         (Interaction,),
@@ -145,7 +154,7 @@ sysml_diagram_types: DiagramTypes = (
         ),
     ),
     SysMLDiagramType(
-        "stm",
+        StateMachineDiagram,
         i18nize("State Machine Diagram"),
         (states,),
         (StateMachine,),
@@ -155,7 +164,7 @@ sysml_diagram_types: DiagramTypes = (
         ),
     ),
     SysMLDiagramType(
-        "uc",
+        UseCaseDiagram,
         i18nize("Use Case Diagram"),
         (use_cases,),
         (
@@ -166,6 +175,7 @@ sysml_diagram_types: DiagramTypes = (
         ),
         (DiagramDefault(root, Package, i18nize("New Package")),),
     ),
+    DiagramType(UML.Diagram, i18nize("Generic Diagram"), ()),
 )
 
 sysml_element_types = (

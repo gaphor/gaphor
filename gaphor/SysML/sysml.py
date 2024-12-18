@@ -299,6 +299,50 @@ class SysMLDiagram(Diagram):
     pass
 
 
+class StructureDiagram(SysMLDiagram):
+    pass
+
+
+class BehaviorDiagram(SysMLDiagram):
+    pass
+
+
+class BlockDefinitionDiagram(StructureDiagram):
+    diagramType: _attribute[str] = _attribute("diagramType", str, default="bdd")
+
+
+class InternalBlockDiagram(StructureDiagram):
+    diagramType: _attribute[str] = _attribute("diagramType", str, default="ibd")
+
+
+class ParametricDiagram(InternalBlockDiagram):
+    diagramType: _attribute[str] = _attribute("diagramType", str, default="par")
+
+
+class PackageDiagram(StructureDiagram):
+    diagramType: _attribute[str] = _attribute("diagramType", str, default="pkg")
+
+
+class RequirementDiagram(SysMLDiagram):
+    diagramType: _attribute[str] = _attribute("diagramType", str, default="req")
+
+
+class ActivityDiagram(BehaviorDiagram):
+    diagramType: _attribute[str] = _attribute("diagramType", str, default="act")
+
+
+class SequenceDiagram(BehaviorDiagram):
+    diagramType: _attribute[str] = _attribute("diagramType", str, default="sd")
+
+
+class StateMachineDiagram(BehaviorDiagram):
+    diagramType: _attribute[str] = _attribute("diagramType", str, default="stm")
+
+
+class UseCaseDiagram(BehaviorDiagram):
+    diagramType: _attribute[str] = _attribute("diagramType", str, default="uc")
+
+
 
 # 23: override AbstractRequirement.derived: derived[AbstractRequirement]
 

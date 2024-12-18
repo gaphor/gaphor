@@ -1,9 +1,8 @@
 # ruff: noqa: F401
 
-import gaphor.SysML.diagramlabel
 import gaphor.SysML.drop
-import gaphor.SysML.iconname
 import gaphor.SysML.modelinglanguage
+import gaphor.SysML.painter
 import gaphor.SysML.sysmlfmt
 
 __modeling_language__ = "SysML"
