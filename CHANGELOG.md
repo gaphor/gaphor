@@ -1,6 +1,27 @@
-2.27.1 - Unreleased
-------
+3.0.0 - Unreleased
+-----
 
+- Improved UI, based on user feedback from the University of Mannheim and Mainz.
+- Double click on a model element in the Model Browser now selects
+  the element on the open diagram.
+- Edit settings have moved to global preferences.
+- Added a small, neat style editor to get you started customizing the diagram style.
+- UML Dependencies now show as relationships on package level.
+
+Internal changes:
+
+- Data model changes: UML is now a completely separate model.
+  This gives us the ability to implement models not based on UML,
+  such as SysML v2.
+- Models are now saved with their language/domain namespace.
+  This allows for elements in different models to have the same name.
+- Associations can now also contain subsets. This allows for
+  relations in UML that were previously not possible.
+
+Bug fixes:
+
+- Fixed file changed notification after save
+- Fixed issues in Undo behavior
 
 2.27.0
 ------
