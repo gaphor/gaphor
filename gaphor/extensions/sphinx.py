@@ -3,12 +3,14 @@ from __future__ import annotations
 import functools
 import os
 from pathlib import Path
+from typing import ClassVar
 
 import sphinx.util.docutils
 from docutils import nodes
 from docutils.parsers.rst import directives
 from docutils.parsers.rst.directives import images
 from sphinx.util import logging
+from sphinx.util.typing import OptionSpec
 
 from gaphor.core.modeling import Diagram, ElementFactory
 from gaphor.diagram.export import save_pdf, save_svg
@@ -46,17 +48,17 @@ class DiagramDirective(sphinx.util.docutils.SphinxDirective):
     Usage: "``.. diagram:: diagram-name``".
     """
 
-    has_content = False
+    has_content = True
     required_arguments = 1
     final_argument_whitespace = True
-    option_spec = {
+    option_spec: ClassVar[OptionSpec] = {
         "model": directives.unchanged,
-        **images.Image.option_spec,
+        **images.Figure.option_spec,
     }
 
     def run(self) -> list[nodes.Node]:
         name = self.arguments[0]
-        model_name = self.options.get("model", "default")
+        model_name = self.options.pop("model", "default")
         model_file = self.config.gaphor_models.get(model_name)
 
         if not model_file:
@@ -74,7 +76,9 @@ class DiagramDirective(sphinx.util.docutils.SphinxDirective):
 
         diagram = next(
             model.select(
-                lambda e: isinstance(e, Diagram) and ".".join(e.qualifiedName) == name  # type: ignore[attr-defined]
+                lambda e: isinstance(e, Diagram)
+                and hasattr(e, "qualifiedName")
+                and ".".join(e.qualifiedName) == name
             ),
             None,
         )
@@ -104,10 +108,17 @@ class DiagramDirective(sphinx.util.docutils.SphinxDirective):
         for _ in Path(self.env.docname).parts[:-1]:
             outfile = Path("..") / outfile
 
-        nodes.header()
-        return [
-            nodes.image(rawsource=self.block_text, uri=f"{outfile}.*", **self.options)
-        ]
+        return images.Figure(  # type: ignore[no-any-return]
+            name="diagram/figure",
+            arguments=[f"{outfile}.*"],
+            options=self.options,
+            content=self.content,
+            lineno=self.lineno,
+            content_offset=self.content_offset,
+            block_text=self.block_text,
+            state=self.state,
+            state_machine=self.state_machine,
+        ).run()
 
     def logging_error_node(self, text: str) -> list[nodes.Node]:
         location = self.state_machine.get_source_and_line(self.lineno)

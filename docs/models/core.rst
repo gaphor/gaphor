@@ -13,6 +13,7 @@ This allows us to provide you nice diagrams of Gaphor’s internal model.
 .. diagram:: Presentations
    :model: core
 
+   The core model with presentation classes
 
 The ``Base`` Class
 ^^^^^^^^^^^^^^^^^^
