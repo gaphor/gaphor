@@ -105,7 +105,83 @@
             </style>
           </object>
         </child>
+
+        <child>
+          <object class="GtkSeparator">
+          </object>
+        </child>
+
+        <child>
+          <object class="GtkMenuButton">
+            <property name="icon-name">format-justify-center-symbolic</property>
+            <property name="tooltip-text" translatable="yes">Align selected elements</property>
+            <property name="popover">alignment</property>
+            <style>
+              <class name="flat"/>
+            </style>
+          </object>
+        </child>
+
       </object>
     </child>
   </object>
+
+  <menu id='alignment-menu'>
+    <section>
+      <item>
+        <attribute name='label' translatable='yes'>Align Left</attribute>
+        <attribute name='action'>diagram.align</attribute>
+        <attribute name="target">left</attribute>
+      </item>
+      <item>
+        <attribute name='label' translatable='yes'>Align Right</attribute>
+        <attribute name='action'>diagram.align</attribute>
+        <attribute name="target">right</attribute>
+      </item>
+      <item>
+        <attribute name='label' translatable='yes'>Align Horizontal Center</attribute>
+        <attribute name='action'>diagram.align</attribute>
+        <attribute name="target">vertical-center</attribute>
+      </item>
+    </section>
+    <section>
+      <item>
+        <attribute name='label' translatable='yes'>Align Top</attribute>
+        <attribute name='action'>diagram.align</attribute>
+        <attribute name="target">top</attribute>
+      </item>
+      <item>
+        <attribute name='label' translatable='yes'>Align Bottom</attribute>
+        <attribute name='action'>diagram.align</attribute>
+        <attribute name="target">bottom</attribute>
+      </item>
+      <item>
+        <attribute name='label' translatable='yes'>Align Horizontal Center</attribute>
+        <attribute name='action'>diagram.align</attribute>
+        <attribute name="target">horizontal-center</attribute>
+      </item>
+    </section>
+    <section>
+      <item>
+        <attribute name='label' translatable='yes'>Max Width</attribute>
+        <attribute name='action'>diagram.align</attribute>
+        <attribute name="target">max-width</attribute>
+      </item>
+      <item>
+        <attribute name='label' translatable='yes'>Max Height</attribute>
+        <attribute name='action'>diagram.align</attribute>
+        <attribute name="target">max-height</attribute>
+      </item>
+      <item>
+        <attribute name='label' translatable='yes'>Max Size</attribute>
+        <attribute name='action'>diagram.align</attribute>
+        <attribute name="target">max-size</attribute>
+      </item>
+    </section>
+  </menu>
+
+  <object class="GtkPopoverMenu" id="alignment">
+    <property name="menu-model">alignment-menu</property>
+  </object>
+
 </interface>
