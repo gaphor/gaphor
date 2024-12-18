@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gaphor 2.18.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-11-27 15:44-0500\n"
-"PO-Revision-Date: 2024-12-17 13:50+0000\n"
+"PO-Revision-Date: 2024-12-18 08:46+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language-Team: Croatian <https://hosted.weblate.org/projects/gaphor/"
 "docs-gaphor-org/hr/>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Weblate 5.9\n"
+"X-Generator: Weblate 5.9.2-dev\n"
 "Generated-By: Babel 2.16.0\n"
 
 #: ../changelog.rst:2
@@ -351,9 +351,8 @@ msgid ""
 msgstr ""
 
 #: ../coffee_machine_concept.md:26
-#, fuzzy
 msgid "Use Case Diagram"
-msgstr "novi dijagram"
+msgstr "Dijagram slučaja primjene"
 
 #: ../coffee_machine_concept.md:28
 msgid ""
@@ -490,7 +489,7 @@ msgstr ""
 
 #: ../coffee_machine_concept.md:95
 msgid "Customer"
-msgstr ""
+msgstr "Mušterija"
 
 #: ../coffee_machine_concept.md:97
 msgid ""
@@ -4466,7 +4465,7 @@ msgstr "4. Pojavljivanja"
 
 #: ../models/uml/12._Use_Cases.rst:2
 msgid "12. Use Cases"
-msgstr ""
+msgstr "12. Slučajevi primjene"
 
 #: ../models/uml/12._Use_Cases.rst:5
 msgid "UseCases"
