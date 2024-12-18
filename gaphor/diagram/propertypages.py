@@ -127,6 +127,28 @@ def unsubscribe_all_on_destroy(widget, watcher):
     return widget
 
 
+@PropertyPages.register(Base)
+class TypeLabelPropertyPage(PropertyPageBase):
+    order = 0
+
+    def __init__(self, subject):
+        super().__init__()
+        self.subject = subject.subject if isinstance(subject, Presentation) else subject
+
+    def construct(self):
+        if not self.subject:
+            return
+
+        builder = new_builder(
+            "type-label-editor",
+        )
+
+        type = builder.get_object("type-label")
+        type.set_text(gettext(self.subject.__class__.__name__))
+
+        return builder.get_object("type-label-editor")
+
+
 @PropertyPages.register(Diagram)
 class NamePropertyPage(PropertyPageBase):
     """An adapter which works for any named item view.
@@ -155,9 +177,6 @@ class NamePropertyPage(PropertyPageBase):
 
         entry = builder.get_object("name-entry")
         entry.set_text(subject and subject.name or "")
-
-        type = builder.get_object("type-label")
-        type.set_text(subject.__class__.__name__)
 
         @handler_blocking(entry, "changed", self._on_name_changed)
         def handler(event):

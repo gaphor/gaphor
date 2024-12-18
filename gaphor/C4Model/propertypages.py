@@ -1,7 +1,6 @@
 from gaphor.C4Model import c4model
 from gaphor.core import Transaction
 from gaphor.diagram.propertypages import (
-    NamePropertyPage,
     PropertyPageBase,
     PropertyPages,
     handler_blocking,
@@ -10,9 +9,6 @@ from gaphor.diagram.propertypages import (
 )
 
 new_builder = new_resource_builder("gaphor.C4Model")
-
-
-PropertyPages.register(c4model.Dependency, NamePropertyPage)
 
 
 @PropertyPages.register(c4model.Container)

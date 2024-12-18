@@ -438,7 +438,7 @@ Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</propert
       <object class="GtkBox">
         <property name="orientation">horizontal</property>
           <child>
-            <object class="GtkLabel">
+            <object class="GtkLabel" id="head-label">
               <property name="label" translatable="yes">Source:</property>
               <property name="xalign">0</property>
               <property name="hexpand">0</property>
@@ -462,7 +462,7 @@ Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</propert
       <object class="GtkBox">
         <property name="orientation">horizontal</property>
           <child>
-            <object class="GtkLabel">
+            <object class="GtkLabel" id="tail-label">
               <property name="label" translatable="yes">Target:</property>
               <property name="xalign">0</property>
               <property name="hexpand">0</property>
@@ -485,6 +485,14 @@ Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</propert
     <style>
       <class name="propertypage"/>
     </style>
+  </object>
+
+  <object class="GtkSizeGroup" id="dependency-size-group">
+    <property name="mode">horizontal</property>
+    <widgets>
+      <widget name="head-label"/>
+      <widget name="tail-label"/>
+    </widgets>
   </object>
 
   <object class="GtkBox" id="dependency-item-editor">

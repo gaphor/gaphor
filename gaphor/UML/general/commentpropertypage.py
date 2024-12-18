@@ -15,6 +15,8 @@ from gaphor.UML import Comment
 class CommentPropertyPage(PropertyPageBase):
     """Property page for Comments."""
 
+    order = 10
+
     def __init__(self, subject, event_manager):
         self.subject = subject
         self.event_manager = event_manager

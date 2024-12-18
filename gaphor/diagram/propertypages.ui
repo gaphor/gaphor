@@ -28,7 +28,7 @@
     </style>
   </object>
 
-  <object class="GtkBox" id="name-editor">
+  <object class="GtkBox" id="type-label-editor">
     <property name="orientation">vertical</property>
     <property name="baseline-position">top</property>
     <child>
@@ -40,6 +40,14 @@
         </style>
       </object>
     </child>
+    <style>
+      <class name="propertypage"/>
+    </style>
+  </object>
+
+  <object class="GtkBox" id="name-editor">
+    <property name="orientation">vertical</property>
+    <property name="baseline-position">top</property>
     <child>
       <object class="GtkLabel" id="label1">
         <property name="label" translatable="yes">Name</property>
