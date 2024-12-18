@@ -1714,11 +1714,11 @@ msgid "No diagram '{name}' in model '{model_name}' ({model_file})."
 msgstr "मॉडल '{model_name}' ({model_file}) में कोई आरेख '{name}' नहीं है।"
 
 #: gaphor/plugins/align/align.py:20
-msgid "Align left"
+msgid "Align Left"
 msgstr "बाएं संरेखित करें"
 
 #: gaphor/plugins/align/align.py:24
-msgid "Align right"
+msgid "Align Right"
 msgstr "दाएं संरेखित करें"
 
 #: gaphor/plugins/align/align.py:28
@@ -1726,27 +1726,27 @@ msgid "Align vertical center"
 msgstr "लंबवत केंद्र संरेखित करें"
 
 #: gaphor/plugins/align/align.py:32
-msgid "Align top"
+msgid "Align Top"
 msgstr "ऊपर संरेखित करें"
 
 #: gaphor/plugins/align/align.py:36
-msgid "Align bottom"
+msgid "Align Bottom"
 msgstr "नीचे संरेखित करें"
 
 #: gaphor/plugins/align/align.py:40
-msgid "Align horizontal center"
+msgid "Align Horizontal Center"
 msgstr "क्षैतिज केंद्र संरेखित करें"
 
 #: gaphor/plugins/align/align.py:44
-msgid "Max width"
+msgid "Max Width"
 msgstr "अधि चौड़ाई"
 
 #: gaphor/plugins/align/align.py:48
-msgid "Max height"
+msgid "Max Height"
 msgstr "अधि ऊंचाई"
 
 #: gaphor/plugins/align/align.py:52
-msgid "Max size"
+msgid "Max Size"
 msgstr "अधि आकार"
 
 #: gaphor/plugins/autolayout/pydot.py:45

@@ -1702,11 +1702,11 @@ msgid "No diagram '{name}' in model '{model_name}' ({model_file})."
 msgstr "Нет диаграммы '{name}' в модели '{model_name}' ({model_file})."
 
 #: gaphor/plugins/align/align.py:20
-msgid "Align left"
+msgid "Align Left"
 msgstr "Выровнять по левому краю"
 
 #: gaphor/plugins/align/align.py:24
-msgid "Align right"
+msgid "Align Right"
 msgstr "Выровнять по правому краю"
 
 #: gaphor/plugins/align/align.py:28
@@ -1714,27 +1714,27 @@ msgid "Align vertical center"
 msgstr "Выровнять вертикально по центру"
 
 #: gaphor/plugins/align/align.py:32
-msgid "Align top"
+msgid "Align Top"
 msgstr "Выровнять по верхнему краю"
 
 #: gaphor/plugins/align/align.py:36
-msgid "Align bottom"
+msgid "Align Bottom"
 msgstr "Выровнять по нижнему краю"
 
 #: gaphor/plugins/align/align.py:40
-msgid "Align horizontal center"
+msgid "Align Horizontal Center"
 msgstr "Выровнять горизонтально по центру"
 
 #: gaphor/plugins/align/align.py:44
-msgid "Max width"
+msgid "Max Width"
 msgstr "Максимальная ширина"
 
 #: gaphor/plugins/align/align.py:48
-msgid "Max height"
+msgid "Max Height"
 msgstr "Максимальная высота"
 
 #: gaphor/plugins/align/align.py:52
-msgid "Max size"
+msgid "Max Size"
 msgstr "Максимальный размер"
 
 #: gaphor/plugins/autolayout/pydot.py:45

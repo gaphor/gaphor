@@ -135,7 +135,6 @@ gaphor = "gaphor.main:main"
 "console_window" = "gaphor.plugins.console.consolewindow:ConsoleWindow"
 "diagram_export" = "gaphor.plugins.diagramexport.export:DiagramExport"
 "auto_layout" = "gaphor.plugins.autolayout:AutoLayoutService"
-"align" = "gaphor.plugins.align:AlignService"
 
 [tool.poetry.plugins."gaphor.modelinglanguages"]
 "Core" = "gaphor.core.modeling.modelinglanguage:CoreModelingLanguage"
