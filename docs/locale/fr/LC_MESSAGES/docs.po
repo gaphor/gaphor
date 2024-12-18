@@ -7310,7 +7310,7 @@ msgstr "Couleurs"
 
 #: ../style_sheets.md:144
 msgid "``background-color``"
-msgstr "``couleur d'arrière-plan``"
+msgstr "``background-color``"
 
 #: ../style_sheets.md:144
 msgid "Examples:"
@@ -7318,19 +7318,19 @@ msgstr "Exemples :"
 
 #: ../style_sheets.md:146
 msgid "``background-color: azure;``"
-msgstr "``couleur d'arrière-plan : azur ;``"
+msgstr "``background-color: azure;``"
 
 #: ../style_sheets.md:148
 msgid "``background-color: rgb(255, 255, 255);``"
-msgstr "``couleur d'arrière-plan : rgb(255, 255, 255) ;``"
+msgstr "``background-color: rgb(255, 255, 255);``"
 
 #: ../style_sheets.md:150
 msgid "``background-color: hsl(130, 95%, 10%);``"
-msgstr "``couleur d'arrière-plan : hsl(130, 95%, 10%) ;``"
+msgstr "``background-color: hsl(130, 95%, 10%);``"
 
 #: ../style_sheets.md:151
 msgid "``color``"
-msgstr "``couleur``"
+msgstr "``color``"
 
 #: ../style_sheets.md:151
 msgid "Color used for lines. *(inherited)*"
@@ -7338,7 +7338,7 @@ msgstr "Couleur utilisée pour les lignes. *(hérité)*"
 
 #: ../style_sheets.md:152
 msgid "``text-color``"
-msgstr "``couleur-texte``"
+msgstr "``text-color``"
 
 #: ../style_sheets.md:152
 msgid "Color for text. *(inherited)*"
@@ -7350,7 +7350,7 @@ msgstr "Utilisez la couleur si possible."
 
 #: ../style_sheets.md:155
 msgid "``opacity``"
-msgstr "``opacité``"
+msgstr "``opacity``"
 
 #: ../style_sheets.md:155
 msgid "Color opacity factor (``0.0`` - ``1.0``), applied to all colors."
@@ -7403,7 +7403,7 @@ msgstr "``font-style``"
 
 #: ../style_sheets.md:170
 msgid "Either ``normal`` or ``italic``. *(inherited)*"
-msgstr "Soit ``normal`` ou ``italique``. *(hérité)*"
+msgstr "Soit ``normal`` ou ``italic`` (italique). *(hérité)*"
 
 #: ../style_sheets.md:171
 msgid "``font-weight``"
@@ -7411,7 +7411,7 @@ msgstr "``font-weight``"
 
 #: ../style_sheets.md:171
 msgid "Either ``normal`` or ``bold``. *(inherited)*"
-msgstr "Soit ``normal`` ou ``gras``. *(hérité)*"
+msgstr "Soit ``normal`` ou ``bold`` (gras). *(hérité)*"
 
 #: ../style_sheets.md:172
 msgid "``text-align``"
@@ -7419,7 +7419,7 @@ msgstr "``text-align``"
 
 #: ../style_sheets.md:172
 msgid "Either ``left``, ``center``, ``right``. *(inherited)*"
-msgstr "Soit ``gauche``, ``centre``, ``droite``. *(hérité)*"
+msgstr "Soit ``left`` (gauche), ``center`` (centre), ``right`` (droite). *(hérité)*"
 
 #: ../style_sheets.md:173
 msgid "``text-decoration``"
@@ -7427,7 +7427,7 @@ msgstr "``text-decoration``"
 
 #: ../style_sheets.md:173
 msgid "Either ``none`` or ``underline``."
-msgstr "Soit ``non`` ou ``souligné``."
+msgstr "Soit ``none`` (rien) ou ``underline`` (souligné)."
 
 #: ../style_sheets.md:174
 msgid "``vertical-align``"
@@ -7439,7 +7439,7 @@ msgstr "Alignement vertical du texte."
 
 #: ../style_sheets.md:176
 msgid "Either ``top``, ``middle`` or ``bottom``."
-msgstr "Soit ``haut``, ``milieu`` ou ``bas``."
+msgstr "Soit ``top`` (haut), ``middle`` (milieu) or ``bottom`` (bas)."
 
 #: ../style_sheets.md:177
 msgid "``vertical-spacing``"
