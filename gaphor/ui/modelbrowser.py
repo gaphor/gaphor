@@ -15,7 +15,7 @@ from gaphor.i18n import gettext
 from gaphor.services.modelinglanguage import ModelingLanguageChanged
 from gaphor.transaction import Transaction
 from gaphor.ui.abc import UIComponent
-from gaphor.ui.actiongroup import create_action_group
+from gaphor.ui.actiongroup import apply_action_group
 from gaphor.ui.event import (
     ElementFocused,
     ElementOpened,
@@ -97,9 +97,7 @@ class ModelBrowser(UIComponent, ActionProvider):
         scrolled_window.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
         scrolled_window.set_child(self.tree_view)
 
-        action_group, shortcuts = create_action_group(self, "tree-view")
-        scrolled_window.insert_action_group("tree-view", action_group)
-        self.tree_view.add_controller(create_shortcut_controller(shortcuts))
+        apply_action_group(self, "tree-view", self.tree_view)
 
         self.tree_view.add_controller(
             create_popup_controller(
@@ -364,12 +362,6 @@ def create_search_bar(search_engine: SearchEngine):
     search_bar.set_show_close_button(True)
 
     return search_bar
-
-
-def create_shortcut_controller(shortcuts):
-    ctrl = Gtk.ShortcutController.new_for_model(shortcuts)
-    ctrl.set_scope(Gtk.ShortcutScope.LOCAL)
-    return ctrl
 
 
 def create_popup_controller(tree_view, selection, modeling_language):
