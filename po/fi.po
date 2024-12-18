@@ -1698,11 +1698,11 @@ msgid "No diagram '{name}' in model '{model_name}' ({model_file})."
 msgstr "Kaaviota '{name}' ei ole mallissa '{model_name}' ({model_file})."
 
 #: gaphor/plugins/align/align.py:20
-msgid "Align left"
+msgid "Align Left"
 msgstr "Tasaa vasemmalle"
 
 #: gaphor/plugins/align/align.py:24
-msgid "Align right"
+msgid "Align Right"
 msgstr "Tasaa oikealle"
 
 #: gaphor/plugins/align/align.py:28
@@ -1710,27 +1710,27 @@ msgid "Align vertical center"
 msgstr "Tasaa pystysuunnassa keskelle"
 
 #: gaphor/plugins/align/align.py:32
-msgid "Align top"
+msgid "Align Top"
 msgstr "Tasaa ylös"
 
 #: gaphor/plugins/align/align.py:36
-msgid "Align bottom"
+msgid "Align Bottom"
 msgstr "Tasaa alas"
 
 #: gaphor/plugins/align/align.py:40
-msgid "Align horizontal center"
+msgid "Align Horizontal Center"
 msgstr "Tasaa vaakasuunnassa keskelle"
 
 #: gaphor/plugins/align/align.py:44
-msgid "Max width"
+msgid "Max Width"
 msgstr "Enimmäisleveys"
 
 #: gaphor/plugins/align/align.py:48
-msgid "Max height"
+msgid "Max Height"
 msgstr "Enimmäiskorkeus"
 
 #: gaphor/plugins/align/align.py:52
-msgid "Max size"
+msgid "Max Size"
 msgstr "Enimmäiskoko"
 
 #: gaphor/plugins/autolayout/pydot.py:45

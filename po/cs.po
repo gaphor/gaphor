@@ -1732,11 +1732,11 @@ msgstr "V modelu '{model_name}' ({model_file}) není žádný diagram '{name}'."
 
 #: gaphor/plugins/align/align.py:20
 #, fuzzy
-msgid "Align left"
+msgid "Align Left"
 msgstr "Magnet"
 
 #: gaphor/plugins/align/align.py:24
-msgid "Align right"
+msgid "Align Right"
 msgstr ""
 
 #: gaphor/plugins/align/align.py:28
@@ -1745,28 +1745,28 @@ msgstr ""
 
 #: gaphor/plugins/align/align.py:32
 #, fuzzy
-msgid "Align top"
+msgid "Align Top"
 msgstr "Hlavní herec"
 
 #: gaphor/plugins/align/align.py:36
-msgid "Align bottom"
+msgid "Align Bottom"
 msgstr ""
 
 #: gaphor/plugins/align/align.py:40
 #, fuzzy
-msgid "Align horizontal center"
+msgid "Align Horizontal Center"
 msgstr "Horizontální"
 
 #: gaphor/plugins/align/align.py:44
-msgid "Max width"
+msgid "Max Width"
 msgstr ""
 
 #: gaphor/plugins/align/align.py:48
-msgid "Max height"
+msgid "Max Height"
 msgstr ""
 
 #: gaphor/plugins/align/align.py:52
-msgid "Max size"
+msgid "Max Size"
 msgstr ""
 
 #: gaphor/plugins/autolayout/pydot.py:45
