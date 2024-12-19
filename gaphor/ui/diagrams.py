@@ -425,7 +425,7 @@ def apply_tool_select_controller(widget, toolbox):
     widget.add_controller(ctrl)
 
     def on_shortcut(_ctrl, keyval, _keycode, state):
-        toolbox.activate_shortcut(keyval, state)
+        return toolbox.activate_shortcut(keyval, state)
 
     ctrl.connect("key-pressed", on_shortcut)
 
