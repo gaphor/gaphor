@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gaphor\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2024-12-03 09:12+0100\n"
-"PO-Revision-Date: 2024-12-18 10:01+0000\n"
+"PO-Revision-Date: 2024-12-19 12:00+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language-Team: Croatian <https://hosted.weblate.org/projects/gaphor/gaphor/"
 "hr/>\n"
@@ -745,7 +745,7 @@ msgstr "Traka dva"
 #: gaphor/UML/actions/actionstoolbox.py:59
 #, fuzzy
 msgid "ValueSpecificationAction"
-msgstr "Specifikacija spajanja"
+msgstr "ValueSpecificationAction"
 
 #: gaphor/UML/actions/actionstoolbox.py:64
 msgid "Actions"
@@ -764,7 +764,7 @@ msgstr "Radnja pozivanja ponašanja"
 #: gaphor/UML/actions/actionstoolbox.py:99
 #, fuzzy
 msgid "CallBehaviorAction"
-msgstr "Ponašanje"
+msgstr "CallBehaviorAction"
 
 #: gaphor/UML/actions/actionstoolbox.py:106
 msgid "Value specification action"
@@ -1899,7 +1899,7 @@ msgstr "Sustav internetskog bankarstva"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Mainframe Banking System"
-msgstr ""
+msgstr "Sustav bankarstva na centralnom računalu"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "View account balances, and make payments using"
@@ -1907,7 +1907,7 @@ msgstr "Pogledaj stanja računa i izvrši plaćanja pomoću"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Get account information from, and makes payments using"
-msgstr ""
+msgstr "Primi podatke o računu i izvrši plaćanja pomoću"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "E-mail System"
@@ -1947,7 +1947,7 @@ msgstr "Pogledaj stanje računa i izvrši plaćanja pomoću"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Makes API calls to"
-msgstr ""
+msgstr "Upućuje API pozive na"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Reads from, writes to"
@@ -1979,7 +1979,7 @@ msgstr "Kontroler sažetka računa"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Mainframe Banking System Facade"
-msgstr ""
+msgstr "Fasada sustava bankarstva na centralnom računalu"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Uses"
@@ -1990,6 +1990,8 @@ msgid ""
 "Makes API calls to\n"
 "[JSON/HTTPS]"
 msgstr ""
+"Upućuje API pozive na\n"
+"[JSON/HTTPS]"
 
 #: gaphor/templates/raaml-example.gaphor gaphor/templates/raaml.gaphor
 #: gaphor/templates/uml-example.gaphor gaphor/templates/uml.gaphor
