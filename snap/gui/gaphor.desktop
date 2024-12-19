@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Terminal=false
+Exec=gaphor
+Icon=${SNAP}/meta/gui/gaphor.svg
+Categories=Science;
+Name=Gaphor
+Comment=Gaphor ${SNAPCRAFT_PROJECT_VERSION}
