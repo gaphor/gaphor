@@ -1704,11 +1704,11 @@ msgid "No diagram '{name}' in model '{model_name}' ({model_file})."
 msgstr "模型 '{model_name}' ({model_file}) 中没有关系图 '{name}'。"
 
 #: gaphor/plugins/align/align.py:20
-msgid "Align left"
+msgid "Align Left"
 msgstr "左对齐"
 
 #: gaphor/plugins/align/align.py:24
-msgid "Align right"
+msgid "Align Right"
 msgstr "右对齐"
 
 #: gaphor/plugins/align/align.py:28
@@ -1716,27 +1716,27 @@ msgid "Align vertical center"
 msgstr "垂直居中对齐"
 
 #: gaphor/plugins/align/align.py:32
-msgid "Align top"
+msgid "Align Top"
 msgstr "顶部对齐"
 
 #: gaphor/plugins/align/align.py:36
-msgid "Align bottom"
+msgid "Align Bottom"
 msgstr "底部对齐"
 
 #: gaphor/plugins/align/align.py:40
-msgid "Align horizontal center"
+msgid "Align Horizontal Center"
 msgstr "水平居中对齐"
 
 #: gaphor/plugins/align/align.py:44
-msgid "Max width"
+msgid "Max Width"
 msgstr "最大宽度"
 
 #: gaphor/plugins/align/align.py:48
-msgid "Max height"
+msgid "Max Height"
 msgstr "最大高度"
 
 #: gaphor/plugins/align/align.py:52
-msgid "Max size"
+msgid "Max Size"
 msgstr "最大尺寸"
 
 #: gaphor/plugins/autolayout/pydot.py:45

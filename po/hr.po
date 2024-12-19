@@ -1669,11 +1669,11 @@ msgid "No diagram '{name}' in model '{model_name}' ({model_file})."
 msgstr "Nema dijagrama '{name}' u modelu '{model_name}' ({model_file})."
 
 #: gaphor/plugins/align/align.py:20
-msgid "Align left"
+msgid "Align Left"
 msgstr "Poravnaj lijevo"
 
 #: gaphor/plugins/align/align.py:24
-msgid "Align right"
+msgid "Align Right"
 msgstr "Poravnaj desno"
 
 #: gaphor/plugins/align/align.py:28
@@ -1681,27 +1681,27 @@ msgid "Align vertical center"
 msgstr "Poravnaj centrirano okomito"
 
 #: gaphor/plugins/align/align.py:32
-msgid "Align top"
+msgid "Align Top"
 msgstr "Poravnaj gore"
 
 #: gaphor/plugins/align/align.py:36
-msgid "Align bottom"
+msgid "Align Bottom"
 msgstr "Poravnaj dolje"
 
 #: gaphor/plugins/align/align.py:40
-msgid "Align horizontal center"
+msgid "Align Horizontal Center"
 msgstr "Poravnaj centrirano vodoravno"
 
 #: gaphor/plugins/align/align.py:44
-msgid "Max width"
+msgid "Max Width"
 msgstr "Maks. širina"
 
 #: gaphor/plugins/align/align.py:48
-msgid "Max height"
+msgid "Max Height"
 msgstr "Maks. visina"
 
 #: gaphor/plugins/align/align.py:52
-msgid "Max size"
+msgid "Max Size"
 msgstr "Maks. veličina"
 
 #: gaphor/plugins/autolayout/pydot.py:45
