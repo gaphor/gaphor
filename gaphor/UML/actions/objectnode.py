@@ -2,7 +2,7 @@
 
 from gaphor import UML
 from gaphor.core.modeling.properties import attribute
-from gaphor.diagram.presentation import ElementPresentation, Named, text_name
+from gaphor.diagram.presentation import ElementPresentation, Named
 from gaphor.diagram.shapes import Box, CssNode, IconBox, Text, draw_border
 from gaphor.diagram.support import represents
 from gaphor.i18n import i18nize
@@ -33,7 +33,7 @@ class ObjectNodeItem(Named, ElementPresentation):
             shape=IconBox(
                 Box(
                     text_stereotypes(self),
-                    text_name(self),
+                    CssNode("name", self.subject, Text(text=self._format_name)),
                     draw=draw_border,
                 ),
                 CssNode(
@@ -63,6 +63,7 @@ class ObjectNodeItem(Named, ElementPresentation):
 
         self.watch("subject[NamedElement].name")
         self.watch("subject[Element].appliedStereotype.classifier.name")
+        self.watch("subject[TypedElement].type.name")
         self.watch("subject[ObjectNode].upperBound")
         self.watch("subject[ObjectNode].ordering")
         self.watch("show_ordering")
@@ -73,3 +74,11 @@ class ObjectNodeItem(Named, ElementPresentation):
         if name == "show-ordering":
             name = "show_ordering"
         super().load(name, value)
+
+    def _format_name(self):
+        if subject := self.subject:
+            if subject.type:
+                return f"{subject.name or ''}: {subject.type.name or ''}"
+            return subject.name or ""
+
+        return ""

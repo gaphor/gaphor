@@ -219,6 +219,9 @@ class ActivityParameterNodeNamePropertyPage(PropertyPageBase):
                 self.subject.parameter.name = entry.get_text()
 
 
+PropertyPages.register(UML.ObjectNode)(TypedElementPropertyPage)
+
+
 @PropertyPages.register(UML.ActivityParameterNode)
 class ActivityParameterNodeTypePropertyPage(TypedElementPropertyPage):
     @property
