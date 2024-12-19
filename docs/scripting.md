@@ -297,8 +297,8 @@ with open(model_filename, "w") as out:
 What else is there to know…
 
 * Gaphor supports derived associations. For example, `element.owner` points to the owner element. For an attribute that would be its containing class.
-* The module `gaphor.UML.recipes` contains several helper functions for manipulating elements and their associations.
-* The tests for a given modelling language are a good place to find reference examples of element creation and modification.  
+* The module `gaphor.UML.recipes` contains several functions for manipulating elements and their associations.
+* The tests for a given modelling language are a good place to find reference examples of element creation and modification.
 * All data models are described in the `Modeling Languages` section of the docs.
 * If you use Gaphor’s Console, you’ll need to apply all changes in a transaction, or they will result in an error.
 * If you want a comprehensive example of a code generator, have a look at [Gaphor’s `coder` module](https://github.com/gaphor/gaphor/blob/main/gaphor/codegen/coder.py). This module is used to generate the code for the data models used by Gaphor.
