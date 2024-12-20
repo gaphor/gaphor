@@ -2,6 +2,7 @@ import pytest
 
 import gaphor.UML.uml as UML
 from gaphor.diagram.group import can_group, group, owner, ungroup
+from gaphor.UML.recipes import create_association, set_navigability
 
 
 def test_can_group_package_and_class(element_factory):
@@ -122,6 +123,18 @@ def test_group_classifier_and_feature(classifier_type, feature_type, element_fac
     assert group(classifier2, feature)
 
     assert feature.owner is classifier2
+
+
+def test_should_not_group_association_end(element_factory):
+    head_class = element_factory.create(UML.Class)
+    tail_class = element_factory.create(UML.Class)
+    association = create_association(head_class, tail_class)
+    set_navigability(association, association.memberEnd[0], True)
+    other_class = element_factory.create(UML.Class)
+    end = association.memberEnd[0]
+
+    assert not group(other_class, end)
+    assert not ungroup(end.owner, end)
 
 
 @pytest.mark.parametrize(

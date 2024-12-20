@@ -146,6 +146,9 @@ def property_group(
     parent: UML.Artifact | UML.Class | UML.DataType | UML.Interface,
     element: UML.Property,
 ) -> bool:
+    if element.association:
+        return False
+
     if element.owner:
         ungroup(element.owner, element)
 
@@ -161,7 +164,7 @@ def property_ungroup(
     parent: UML.Artifact | UML.Class | UML.DataType | UML.Interface,
     element: UML.Property,
 ) -> bool:
-    if element in parent.ownedAttribute:
+    if not element.association and element in parent.ownedAttribute:
         del parent.ownedAttribute[element]
         return True
     return False
