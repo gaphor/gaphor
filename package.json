@@ -1,0 +1,17 @@
+{
+  "name": "gaphor",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tompkins-ct/gaphor.git"
+  },
+  "private": true,
+  "dependencies": {
+    "elkjs": "^0.9.3"
+  }
+}

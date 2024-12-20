@@ -96,6 +96,7 @@ documentation = "https://docs.gaphor.org/"
 "console_window" = "gaphor.plugins.console.consolewindow:ConsoleWindow"
 "diagram_export" = "gaphor.plugins.diagramexport.export:DiagramExport"
 "auto_layout" = "gaphor.plugins.autolayout:AutoLayoutService"
+"auto_layout_elk" = "gaphor.plugins.autolayoutELK:AutoLayoutELKService"
 
 [project.entry-points."gaphor.modelinglanguages"]
 "Core" = "gaphor.core.modeling.modelinglanguage:CoreModelingLanguage"
