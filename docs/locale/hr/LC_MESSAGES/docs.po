@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gaphor 2.18.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-11-27 15:44-0500\n"
-"PO-Revision-Date: 2024-12-18 08:46+0000\n"
+"PO-Revision-Date: 2024-12-21 08:12+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language-Team: Croatian <https://hosted.weblate.org/projects/gaphor/"
 "docs-gaphor-org/hr/>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Weblate 5.9.2-dev\n"
+"X-Generator: Weblate 5.10-dev\n"
 "Generated-By: Babel 2.16.0\n"
 
 #: ../changelog.rst:2
@@ -56,9 +56,8 @@ msgstr ""
 
 #: ../coffee_machine.md:12 ../coffee_machine_concept.md:7
 #: ../coffee_machine_logical.md:7
-#, fuzzy
 msgid "Introduction"
-msgstr "Interakcije"
+msgstr "Uvod"
 
 #: ../coffee_machine.md:14
 msgid ""
@@ -130,9 +129,8 @@ msgid ""
 msgstr ""
 
 #: ../coffee_machine.md:51
-#, fuzzy
 msgid "Abstraction Levels"
-msgstr "Interakcije"
+msgstr "Razine apstrakcije"
 
 #: ../coffee_machine.md:52
 msgid ""
@@ -448,9 +446,8 @@ msgid ""
 msgstr ""
 
 #: ../coffee_machine_concept.md:81
-#, fuzzy
 msgid "Domain Diagram"
-msgstr "novi dijagram"
+msgstr "Dijagram domena"
 
 #: ../coffee_machine_concept.md:83
 msgid ""
@@ -459,33 +456,37 @@ msgid ""
 " a domain diagram could represent the key elements and relationships "
 "within the coffee shop domain."
 msgstr ""
+"Dijagram domena je grafičko predstavljanje koncepata, pojmova i odnosa "
+"unutar određene domene. U slučaju prodavaonica kave, dijagram domena mogao "
+"bi predstavljati ključne elemente i odnose unutar domena prodavaonica kave."
 
 #: ../coffee_machine_concept.md:88
 msgid ""
 "The following is a domain diagram that builds upon the context diagram "
 "with additional blocks:"
 msgstr ""
+"Sljedeće je dijagram domena koji se nadovezuje na kontekstni dijagram s "
+"dodatnim blokovima:"
 
 #: ../coffee_machine_concept.md:90
-#, fuzzy
 msgid "Barista"
-msgstr "Biblioteke"
+msgstr "Barista"
 
 #: ../coffee_machine_concept.md:91
 msgid "Coffee Machine"
-msgstr ""
+msgstr "Aparat za kavu"
 
 #: ../coffee_machine_concept.md:92
 msgid "Roasted Coffee"
-msgstr ""
+msgstr "Kava u zrnu"
 
 #: ../coffee_machine_concept.md:93
 msgid "Coffee Grinder"
-msgstr ""
+msgstr "Mlinac za kavu"
 
 #: ../coffee_machine_concept.md:94
 msgid "Water Supply"
-msgstr ""
+msgstr "Opskrba vodom"
 
 #: ../coffee_machine_concept.md:95
 msgid "Customer"
@@ -498,12 +499,17 @@ msgid ""
 "between the domain and the blocks to show that they are part of the "
 "domain."
 msgstr ""
+"Svaki blok u dijagramu definicija blokova predstavlja ključni koncept unutar "
+"domene prodavaonice kave, a odnos se koristi između domene i blokova kako bi "
+"se pokazalo da su dio domene."
 
 #: ../coffee_machine_concept.md:101
 msgid ""
 "Block Definition Diagram showing hierarchy of blocks in the Coffee Shop "
 "domain"
 msgstr ""
+"Dijagram definicije blokova koji prikazuje hijerarhiju blokova u domeni "
+"prodavaonice kave"
 
 #: ../coffee_machine_concept.md:106
 msgid ""
@@ -538,9 +544,8 @@ msgid ""
 msgstr ""
 
 #: ../coffee_machine_concept.md:126
-#, fuzzy
 msgid "Context Diagram"
-msgstr "novi dijagram"
+msgstr "Dijagram konteksta"
 
 #: ../coffee_machine_concept.md:128
 msgid ""
@@ -718,7 +723,7 @@ msgstr ""
 
 #: ../coffee_machine_logical.md:48
 msgid "Logical State Machine"
-msgstr ""
+msgstr "Logički automat konačnih stanja"
 
 #: ../coffee_machine_logical.md:50
 msgid ""
@@ -780,25 +785,23 @@ msgstr ""
 
 #: ../coffee_machine_logical.md:85
 msgid "Water tank"
-msgstr ""
+msgstr "Rezervoar za vodu"
 
 #: ../coffee_machine_logical.md:86
 msgid "Water pump"
-msgstr ""
+msgstr "Pumpa za vodu"
 
 #: ../coffee_machine_logical.md:87
 msgid "Water heater"
-msgstr ""
+msgstr "Grijač za vodu"
 
 #: ../coffee_machine_logical.md:88
-#, fuzzy
 msgid "Portafilter"
-msgstr "Profil"
+msgstr "Portafilter"
 
 #: ../coffee_machine_logical.md:89
-#, fuzzy
 msgid "Controller"
-msgstr "Kontejner"
+msgstr "Kontroler"
 
 #: ../coffee_machine_logical.md:90
 #, fuzzy
@@ -899,7 +902,7 @@ msgstr ""
 
 #: ../coffee_machine_logical.md:149
 msgid "Logical Boundary"
-msgstr ""
+msgstr "Logička granica"
 
 #: ../coffee_machine_logical.md:151
 msgid ""
@@ -994,9 +997,8 @@ msgid ""
 msgstr ""
 
 #: ../coffee_machine_logical.md:192
-#, fuzzy
 msgid "Logical Requirements"
-msgstr "Uvjeti"
+msgstr "Logički uvjeti"
 
 #: ../coffee_machine_logical.md:193
 msgid ""
@@ -1245,9 +1247,8 @@ msgid ""
 msgstr ""
 
 #: ../contribute.md:1
-#, fuzzy
 msgid "Contribute to Gaphor"
-msgstr "O programu Gaphor"
+msgstr "Doprinesi Gaphoru"
 
 #: ../contribute.md:3
 msgid ""
