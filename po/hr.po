@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gaphor\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2024-12-03 09:12+0100\n"
-"PO-Revision-Date: 2024-12-19 12:00+0000\n"
+"PO-Revision-Date: 2024-12-21 08:12+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language-Team: Croatian <https://hosted.weblate.org/projects/gaphor/gaphor/"
 "hr/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Weblate 5.9.2-dev\n"
+"X-Generator: Weblate 5.10-dev\n"
 "Generated-By: Babel 2.16.0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:23 gaphor/C4Model/toolbox.py:67
@@ -1859,7 +1859,7 @@ msgstr "Novi dijagram"
 
 #: gaphor/templates/c4model-example.gaphor gaphor/templates/c4model.gaphor
 msgid "1. Context diagrams"
-msgstr "1. Dijagrami sadržaja"
+msgstr "1. Dijagrami konteksta"
 
 #: gaphor/templates/c4model-example.gaphor gaphor/templates/c4model.gaphor
 msgid "2. Container diagrams"
@@ -1875,7 +1875,7 @@ msgstr "3. Dijagrami komponenti"
 
 #: gaphor/templates/c4model-example.gaphor gaphor/templates/c4model.gaphor
 msgid "Context diagram"
-msgstr "Dijagram sadržaja"
+msgstr "Dijagram konteksta"
 
 #: gaphor/templates/c4model-example.gaphor gaphor/templates/c4model.gaphor
 msgid "Container diagram"
@@ -2060,11 +2060,11 @@ msgstr "Operacijska situacija 1"
 
 #: gaphor/templates/raaml-example.gaphor gaphor/templates/raaml.gaphor
 msgid "Context of UCAs"
-msgstr "Sadržaj UCA-ova"
+msgstr "Kontekst ravnomjerno raspodijeljenih elemenata na kružnici (UCA)"
 
 #: gaphor/templates/raaml-example.gaphor gaphor/templates/raaml.gaphor
 msgid "Situational Context"
-msgstr "Situacijski sadržaj"
+msgstr "Situacijski kontekst"
 
 #: gaphor/templates/raaml-example.gaphor gaphor/templates/raaml.gaphor
 msgid "Situation Hierarchy"
@@ -2118,7 +2118,7 @@ msgstr "Vanjski element"
 
 #: gaphor/templates/sysml-example.gaphor gaphor/templates/sysml.gaphor
 msgid "Concept Requirements"
-msgstr "Konceptualni uvjeti"
+msgstr "Koncepcijski uvjeti"
 
 #: gaphor/templates/sysml-example.gaphor
 msgid "Feature User Need"
