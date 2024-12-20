@@ -12,7 +12,11 @@ def _(element: UML.Element):
 
 @owner.register
 def _(element: UML.NamedElement):
-    return element.owner or element.memberNamespace or Root
+    return (
+        element.owner
+        or element.memberNamespace
+        or (None if isinstance(element, UML.MultiplicityElement) else Root)
+    )
 
 
 @owner.register
@@ -27,6 +31,7 @@ def _(element: UML.StructuralFeature):
 def _(
     _element: UML.Slot
     | UML.Comment
+    | UML.Image
     | UML.InstanceSpecification
     | UML.OccurrenceSpecification,
 ):
