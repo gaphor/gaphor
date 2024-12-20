@@ -1,40 +1,16 @@
 from gaphor.diagram.painter import DiagramTypePainter
-from gaphor.SysML.sysml import Block, ConstraintBlock, Requirement, SysMLDiagram
+from gaphor.SysML.diagramframe import DiagramFrameItem, diagram_label
+from gaphor.SysML.sysml import SysMLDiagram
 from gaphor.UML.painter import UMLDiagramTypePainter
-from gaphor.UML.uml import (
-    Activity,
-    Interaction,
-    NamedElement,
-    Package,
-    Profile,
-    StateMachine,
-)
 
 
 @DiagramTypePainter.register(SysMLDiagram)  # type: ignore[attr-defined]
 class SysMLDiagramTypePainter(UMLDiagramTypePainter):
     def label(self):
-        if (el := self.diagram.element) and isinstance(el, NamedElement):
-            return f"[{_element_type(el)}] {el.name} [{self.diagram.name}]"
+        return diagram_label(self.diagram)
 
-        # TODO: SysML specification does not allow parentless elements,
-        #       but since it is not constrained (yet), it may happen.
-        return super().label()
+    def paint(self, items, cr):
+        if any(isinstance(p, DiagramFrameItem) for p in self.diagram.ownedPresentation):
+            return
 
-
-def _element_type(el) -> str:
-    if isinstance(el, Activity):
-        return "activity"
-    if isinstance(el, ConstraintBlock):
-        return "constraint block"
-    if isinstance(el, Block):
-        return "block"
-    if isinstance(el, Interaction):
-        return "interaction"
-    if isinstance(el, Profile):
-        return "profile"
-    if isinstance(el, Package):
-        return "package"
-    if isinstance(el, Requirement):
-        return "requirement"
-    return "state machine" if isinstance(el, StateMachine) else ""
+        super().paint(items, cr)
