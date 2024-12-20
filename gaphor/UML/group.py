@@ -136,3 +136,61 @@ def behavior_ungroup(parent, element) -> bool:
         del element.behavioredClassifier
         return True
     return False
+
+
+@group.register(UML.Artifact, UML.Property)
+@group.register(UML.Class, UML.Property)
+@group.register(UML.DataType, UML.Property)
+@group.register(UML.Interface, UML.Property)
+def property_group(
+    parent: UML.Artifact | UML.Class | UML.DataType | UML.Interface,
+    element: UML.Property,
+) -> bool:
+    if element.owner:
+        ungroup(element.owner, element)
+
+    parent.ownedAttribute = element
+    return True
+
+
+@ungroup.register(UML.Artifact, UML.Property)
+@ungroup.register(UML.Class, UML.Property)
+@ungroup.register(UML.DataType, UML.Property)
+@ungroup.register(UML.Interface, UML.Property)
+def property_ungroup(
+    parent: UML.Artifact | UML.Class | UML.DataType | UML.Interface,
+    element: UML.Property,
+) -> bool:
+    if element in parent.ownedAttribute:
+        del parent.ownedAttribute[element]
+        return True
+    return False
+
+
+@group.register(UML.Artifact, UML.Operation)
+@group.register(UML.Class, UML.Operation)
+@group.register(UML.DataType, UML.Operation)
+@group.register(UML.Interface, UML.Operation)
+def operation_group(
+    parent: UML.Artifact | UML.Class | UML.DataType | UML.Interface,
+    element: UML.Operation,
+) -> bool:
+    if element.owner:
+        ungroup(element.owner, element)
+
+    parent.ownedOperation = element
+    return True
+
+
+@ungroup.register(UML.Artifact, UML.Operation)
+@ungroup.register(UML.Class, UML.Operation)
+@ungroup.register(UML.DataType, UML.Operation)
+@ungroup.register(UML.Interface, UML.Operation)
+def operation_ungroup(
+    parent: UML.Artifact | UML.Class | UML.DataType | UML.Interface,
+    element: UML.Operation,
+) -> bool:
+    if element in parent.ownedOperation:
+        del parent.ownedOperation[element]
+        return True
+    return False

@@ -101,6 +101,30 @@ def test_ungroup_class_and_activity(element_factory):
 
 
 @pytest.mark.parametrize(
+    "classifier_type,feature_type",
+    [
+        (UML.Artifact, UML.Operation),
+        (UML.Class, UML.Operation),
+        (UML.DataType, UML.Operation),
+        (UML.Interface, UML.Operation),
+        (UML.Artifact, UML.Property),
+        (UML.Class, UML.Property),
+        (UML.DataType, UML.Property),
+        (UML.Interface, UML.Property),
+    ],
+)
+def test_group_classifier_and_feature(classifier_type, feature_type, element_factory):
+    classifier = element_factory.create(classifier_type)
+    feature = element_factory.create(feature_type)
+    classifier2 = element_factory.create(classifier_type)
+
+    assert group(classifier, feature)
+    assert group(classifier2, feature)
+
+    assert feature.owner is classifier2
+
+
+@pytest.mark.parametrize(
     "element_type",
     [
         UML.Slot,
@@ -112,6 +136,7 @@ def test_ungroup_class_and_activity(element_factory):
         UML.ConnectorEnd,
         UML.Parameter,
         UML.Pin,
+        UML.Property,
         UML.StructuralFeature,
     ],
 )
