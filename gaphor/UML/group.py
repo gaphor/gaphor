@@ -27,6 +27,7 @@ def _(element: UML.StructuralFeature):
 def _(
     _element: UML.Slot
     | UML.Comment
+    | UML.Image
     | UML.InstanceSpecification
     | UML.OccurrenceSpecification,
 ):
