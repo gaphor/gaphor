@@ -53,7 +53,8 @@
               </object>
             </child>
             <child>
-              <object class="GtkColorButton" id="color">
+              <object class="GtkColorDialogButton" id="color">
+                <property name="dialog">color-dialog</property>
               </object>
             </child>
           </object>
@@ -69,7 +70,8 @@
               </object>
             </child>
             <child>
-              <object class="GtkColorButton" id="background-color">
+              <object class="GtkColorDialogButton" id="background-color">
+                <property name="dialog">color-dialog</property>
               </object>
             </child>
           </object>
@@ -85,7 +87,8 @@
               </object>
             </child>
             <child>
-              <object class="GtkColorButton" id="text-color">
+              <object class="GtkColorDialogButton" id="text-color">
+                <property name="dialog">color-dialog</property>
               </object>
             </child>
           </object>
@@ -99,6 +102,10 @@
 
       </object>
     </child>
+  </object>
+
+  <object class="GtkColorDialog" id="color-dialog">
+    <property name="modal">1</property>
   </object>
 
   <object class="GtkSizeGroup">
