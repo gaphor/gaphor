@@ -58,11 +58,14 @@ class _PropertyPages:
 
     def __init__(self) -> None:
         self.pages: list[tuple[type[Base], type[PropertyPageBase]]] = []
+        self.replaced: set[tuple[type[Base], type[PropertyPageBase]]] = set()
 
     def register(
         self, subject_type: type[Base], page: type[PropertyPageBase] | None = None
     ):
         def reg(page):
+            if page.__base__ is not PropertyPageBase:
+                self.replaced.add((subject_type, page.__base__))
             self.pages.append((subject_type, page))
             return page
 
@@ -70,7 +73,10 @@ class _PropertyPages:
 
     def find(self, subject: Base) -> Iterator[type[PropertyPageBase]]:
         for subject_type, page in self.pages:
-            if isinstance(subject, subject_type):
+            if (
+                isinstance(subject, subject_type)
+                and (type(subject), page) not in self.replaced
+            ):
                 yield page
 
 
