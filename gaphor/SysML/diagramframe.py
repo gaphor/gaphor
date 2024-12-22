@@ -1,7 +1,6 @@
 from gaphor.diagram.presentation import (
     Classified,
     ElementPresentation,
-    connect,
 )
 from gaphor.diagram.shapes import (
     DEFAULT_PADDING,
@@ -15,9 +14,9 @@ from gaphor.diagram.shapes import (
 )
 from gaphor.SysML.sysml import Block, ConstraintBlock, Requirement
 from gaphor.UML import Interaction, Package, Profile, StateMachine
-from gaphor.UML.actions.activity import ActivityParameterNodeItem
+from gaphor.UML.actions.activity import update_parameter_nodes
 from gaphor.UML.recipes import stereotypes_str
-from gaphor.UML.uml import Activity, ActivityParameterNode, Diagram, NamedElement
+from gaphor.UML.uml import Activity, Diagram, NamedElement
 
 
 class DiagramFrameItem(Classified, ElementPresentation):
@@ -70,31 +69,7 @@ class DiagramFrameItem(Classified, ElementPresentation):
         if not isinstance(self.subject, Activity):
             return
 
-        diagram = self.diagram
-        subject = self.subject
-
-        parameter_nodes = (
-            [p for p in subject.node if isinstance(p, ActivityParameterNode)]
-            if subject
-            else []
-        )
-        parameter_items = {
-            i.subject: i
-            for i in self.children
-            if isinstance(i, ActivityParameterNodeItem)
-        }
-
-        for node in parameter_nodes:
-            if node not in parameter_items:
-                item = diagram.create(
-                    ActivityParameterNodeItem, parent=self, subject=node
-                )
-                item.matrix.translate(0, 10)
-                connect(item, item.handles()[0], self)
-
-        for node in parameter_items:
-            if node not in parameter_nodes:
-                del self.children[parameter_items[node]]
+        update_parameter_nodes(self)
 
 
 def draw_pentagon(box, context, _bounding_box):
