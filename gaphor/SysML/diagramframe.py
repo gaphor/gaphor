@@ -51,45 +51,27 @@ class DiagramFrameItem(Classified, ElementPresentation):
             ),
         )
 
-        self.watch("subject", self.update_element).watch(
-            "diagram[UML:Diagram].name", self.update_shapes
-        ).watch(
-            "diagram[UML:Diagram].element[UML:NamedElement].name", self.update_shapes
-        ).watch("subject[UML:Activity].node", self.update_frame_attachments)
+        self.watch("subject[UML:NamedElement].name").watch(
+            "diagram[UML:Diagram].name"
+        ).watch("diagram[UML:Diagram].element[UML:NamedElement].name").watch(
+            "subject[UML:Activity].node", self.update_activity_parameters
+        )
 
     def label(self):
         assert isinstance(self.diagram, Diagram)
         return diagram_label(self.diagram)
 
-    def update_element(self, event=None):
-        assert isinstance(self.diagram, Diagram)
-        if not self.diagram or not self.diagram.element:
-            return
-
-        self.subject = self.diagram.element
-        self.update_shapes()
-        self.update_frame_attachments()
-
     def postload(self):
         super().postload()
-        self.update_frame_attachments()
-
-    def update_frame_attachments(self, event=None):
-        if not self.subject:
-            return
-
         if isinstance(self.subject, Activity):
             self.update_activity_parameters()
 
-    def update_activity_parameters(self):
-        assert isinstance(self.diagram, Diagram)
-        assert self.diagram.element == self.subject
-        assert isinstance(self.subject, Activity)
+    def update_activity_parameters(self, event=None):
+        if not isinstance(self.subject, Activity):
+            return
 
         diagram = self.diagram
         subject = self.subject
-
-        assert isinstance(subject, Activity)
 
         parameter_nodes = (
             [p for p in subject.node if isinstance(p, ActivityParameterNode)]
