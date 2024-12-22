@@ -22,13 +22,7 @@ class ActivityItem(Classified, ElementPresentation):
         self.watch("subject[NamedElement].name").watch(
             "subject[Element].appliedStereotype.classifier.name"
         ).watch("subject[Classifier].isAbstract", self.update_shapes).watch(
-            "subject[Activity].node[ActivityParameterNode].parameter.name",
-            self.update_parameters,
-        ).watch(
-            "subject[Activity].node[ActivityParameterNode].parameter.type.name",
-            self.update_parameters,
-        ).watch(
-            "subject[Activity].node[ActivityParameterNode].parameter.typeValue",
+            "subject[Activity].node[ActivityParameterNode].parameter",
             self.update_parameters,
         )
 

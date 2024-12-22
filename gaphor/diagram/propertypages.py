@@ -59,14 +59,16 @@ class _PropertyPages:
     def __init__(self) -> None:
         self.pages: list[tuple[type[Base], type[PropertyPageBase]]] = []
 
-    def register(self, subject_type, func=None):
-        def reg(func):
-            self.pages.append((subject_type, func))
-            return func
+    def register(
+        self, subject_type: type[Base], page: type[PropertyPageBase] | None = None
+    ):
+        def reg(page):
+            self.pages.append((subject_type, page))
+            return page
 
-        return reg(func) if func else reg
+        return reg(page) if page else reg
 
-    def find(self, subject) -> Iterator[type[PropertyPageBase]]:
+    def find(self, subject: Base) -> Iterator[type[PropertyPageBase]]:
         for subject_type, page in self.pages:
             if isinstance(subject, subject_type):
                 yield page
