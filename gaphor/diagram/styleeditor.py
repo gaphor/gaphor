@@ -98,10 +98,10 @@ class StyleEditor:
 
             self.fields()
 
-            self.color.connect("color-set", self.on_color_set)
+            self.color.connect("notify::rgba", self.on_color_set)
             self.border_radius.connect("value-changed", self.on_border_radius_set)
-            self.background_color.connect("color-set", self.on_background_color_set)
-            self.text_color.connect("color-set", self.on_text_color_set)
+            self.background_color.connect("notify::rgba", self.on_background_color_set)
+            self.text_color.connect("notify::rgba", self.on_text_color_set)
             self.window_builder.get_object("export").connect("clicked", self.on_export)
 
         self.window.present()
@@ -110,6 +110,7 @@ class StyleEditor:
         style = self.subject.diagram.style(StyledItem(self.subject))
         if style.get("color"):
             self.color.set_rgba(to_gdk_rgba(style["color"]))
+            self.text_color.set_rgba(to_gdk_rgba(style["color"]))
 
         if style.get("border-radius"):
             self.border_radius.set_value(int(style["border-radius"]))
@@ -132,18 +133,18 @@ class StyleEditor:
         self.presentation_style[prop] = value  # type: ignore[literal-required]
         self.style_sheet.instant_style_declarations = self.render_css()
 
-    def on_color_set(self, widget):
+    def on_color_set(self, widget, _paramspec=None):
         color = widget.get_rgba()
         self.change_style("color", from_gdk_rgba(color))
 
     def on_border_radius_set(self, widget):
         self.change_style("border-radius", widget.get_value())
 
-    def on_background_color_set(self, widget):
+    def on_background_color_set(self, widget, _paramspec=None):
         color = widget.get_rgba()
         self.change_style("background-color", from_gdk_rgba(color))
 
-    def on_text_color_set(self, widget):
+    def on_text_color_set(self, widget, _paramspec=None):
         color = widget.get_rgba()
         self.change_style("text-color", from_gdk_rgba(color))
 

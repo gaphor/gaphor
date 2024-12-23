@@ -66,8 +66,10 @@ class ObjectNodeItem(Named, ElementPresentation):
         self.watch("subject[TypedElement].type.name")
         self.watch("subject[ObjectNode].upperBound")
         self.watch("subject[ObjectNode].ordering")
+        self.watch("show_type")
         self.watch("show_ordering")
 
+    show_type: attribute[int] = attribute("show_type", int, default=False)
     show_ordering: attribute[int] = attribute("show_ordering", int, default=False)
 
     def load(self, name, value):
@@ -77,7 +79,7 @@ class ObjectNodeItem(Named, ElementPresentation):
 
     def _format_name(self):
         if subject := self.subject:
-            if subject.type:
+            if self.show_type and subject.type:
                 return f"{subject.name or ''}: {subject.type.name or ''}"
             return subject.name or ""
 

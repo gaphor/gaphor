@@ -6,10 +6,6 @@
   </object>
   <object class="GtkPopoverMenu" id="recent-files">
   </object>
-  <object class="GtkPopoverMenu" id="select-modeling-language">
-  </object>
-  <object class="GtkPopoverMenu" id="diagram-types">
-  </object>
   <object class="AdwApplicationWindow" id="main-window">
     <property name="default-width">1024</property>
     <property name="default-height">640</property>
@@ -30,9 +26,14 @@
                     <property name="show-title">0</property>
                     <property name="decoration-layout">:</property>
                     <child>
-                      <object class="GtkMenuButton" id="modeling-language-name">
+                      <object class="GtkMenuButton" id="select-modeling-language">
                         <property name="focus-on-click">0</property>
-                        <property name="popover">select-modeling-language</property>
+                        <property name="always-show-arrow">1</property>
+                        <child>
+                          <object class="GtkLabel" id="modeling-language-name">
+                            <property name="ellipsize">start</property>
+                          </object>
+                        </child>
                       </object>
                     </child>
                     <child type="end">
@@ -44,9 +45,8 @@
                       </object>
                     </child>
                     <child type="end">
-                      <object class="GtkMenuButton">
+                      <object class="GtkMenuButton" id="diagram-types">
                         <property name="icon_name">list-add-symbolic</property>
-                        <property name="popover">diagram-types</property>
                         <property name="tooltip-text" translatable="yes">New diagram menu</property>
                         <property name="always-show-arrow">1</property>
                       </object>

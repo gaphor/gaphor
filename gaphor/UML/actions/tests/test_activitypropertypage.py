@@ -1,6 +1,7 @@
 from gi.repository import Gdk
 
 from gaphor import UML
+from gaphor.diagram.propertypages import PropertyPages
 from gaphor.diagram.tests.fixtures import find
 from gaphor.UML.actions.activitypropertypage import (
     ActivityPage,
@@ -10,6 +11,7 @@ from gaphor.UML.actions.activitypropertypage import (
     activity_parameter_node_model,
     list_view_key_handler,
 )
+from gaphor.UML.propertypages import TypedElementPropertyPage
 
 
 def activity_parameter_node(element_factory, name=None):
@@ -241,6 +243,16 @@ def test_construct_activity_parameter_node_direction_changed(
     direction.set_selected(3)
 
     assert subject.parameter.direction == "return"
+
+
+def test_one_typed_element_property_page_for_activity_parameter_node(element_factory):
+    subject = element_factory.create(UML.ActivityParameterNode)
+    subject.parameter = element_factory.create(UML.Parameter)
+
+    property_pages = list(PropertyPages.find(subject))
+
+    assert TypedElementPropertyPage not in property_pages
+    assert ActivityParameterNodeTypePropertyPage in property_pages
 
 
 class ControllerStub:
