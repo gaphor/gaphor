@@ -39,21 +39,26 @@
   padding: 0;
 }
 
-:root > pentagon {
+diagramframe {
+  text-align: left;
+  justify-content: start;
+}
+
+:is(:root, diagramframe) > pentagon {
   line-width: 1;
   background-color: var(--opaque-background-color);
 }
 
-:root > pentagon > diagramtype {
+:is(:root, diagramframe) > pentagon > diagramtype {
   font-weight: bold;
   padding: 4 0 4 4;
 }
 
-:root > pentagon > stereotypes {
+:is(:root, diagramframe) > pentagon > stereotypes {
   padding: 4 0 4 4;
 }
 
-:root > pentagon > name {
+:is(:root, diagramframe) > pentagon > name {
   padding: 4;
 }
 
