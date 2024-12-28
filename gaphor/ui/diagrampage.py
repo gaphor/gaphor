@@ -16,7 +16,6 @@ from gaphor.core import event_handler, gettext
 from gaphor.core.modeling.diagram import StyledDiagram
 from gaphor.core.modeling.event import (
     AttributeUpdated,
-    ElementDeleted,
     StyleSheetUpdated,
 )
 from gaphor.diagram.diagramtoolbox import get_tool_def, tooliter
@@ -32,7 +31,7 @@ from gaphor.i18n import translated_ui_string
 from gaphor.transaction import Transaction
 from gaphor.ui.actiongroup import apply_action_group
 from gaphor.ui.clipboard import Clipboard
-from gaphor.ui.event import DiagramClosed, ToolSelected
+from gaphor.ui.event import ToolSelected
 
 log = logging.getLogger(__name__)
 
@@ -112,7 +111,6 @@ class DiagramPage:
         self.rubberband_state = RubberbandState()
         self.context_menu = Gtk.PopoverMenu.new_from_model(popup_model(diagram))
 
-        self.event_manager.subscribe(self._on_element_delete)
         self.event_manager.subscribe(self._on_attribute_updated)
         self.event_manager.subscribe(self._on_style_sheet_updated)
         self.event_manager.subscribe(self._on_tool_selected)
@@ -168,7 +166,7 @@ class DiagramPage:
         return diagrampage
 
     @action(name="diagram.align")
-    def toggle_editor_preferences(self, target: str):
+    def align_elements(self, target: str):
         if self.view and (
             len(
                 elements := {
@@ -241,11 +239,6 @@ class DiagramPage:
     def _on_tool_selected(self, event: ToolSelected):
         self.select_tool(event.tool_name)
 
-    @event_handler(ElementDeleted)
-    def _on_element_delete(self, event: ElementDeleted):
-        if event.element is self.diagram:
-            self.event_manager.handle(DiagramClosed(self.diagram))
-
     @event_handler(AttributeUpdated)
     def _on_attribute_updated(self, event: AttributeUpdated):
         if event.property.name == "name" and self.view:
@@ -271,7 +264,6 @@ class DiagramPage:
             self.diagram_css,
         )
 
-        self.event_manager.unsubscribe(self._on_element_delete)
         self.event_manager.unsubscribe(self._on_attribute_updated)
         self.event_manager.unsubscribe(self._on_style_sheet_updated)
         self.event_manager.unsubscribe(self._on_tool_selected)
