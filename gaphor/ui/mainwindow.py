@@ -157,10 +157,10 @@ class MainWindow(Service, ActionProvider):
             create_diagram_types_model(self.modeling_language)
         )
 
-        builder.get_object("hamburger-export").append_submenu(
+        builder.get_object("export-menu").append_submenu(
             gettext("Export"), self.export_menu.menu
         )
-        builder.get_object("hamburger-tools").append_submenu(
+        builder.get_object("tools-menu").append_submenu(
             gettext("Tools"), self.tools_menu.menu
         )
 
@@ -309,7 +309,10 @@ class MainWindow(Service, ActionProvider):
 
         self.in_app_notifier.handle(event)
 
-    def _on_window_active(self, _window, _prop):
+    def _on_window_active(self, window, _prop):
+        app = window.get_application()
+        app.update_menu("export", self.export_menu.menu)
+        app.update_menu("tools", self.tools_menu.menu)
         self.event_manager.handle(ActiveSessionChanged(self))
 
     def _on_window_focus_widget(self, _window, _prop):

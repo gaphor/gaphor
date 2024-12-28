@@ -5,6 +5,7 @@ and diagram windows."""
 
 from __future__ import annotations
 
+import logging
 import sys
 
 import gi
@@ -22,7 +23,7 @@ import gaphor.ui.textfield  # noqa: F401
 from gaphor.application import Application, Session
 from gaphor.core import event_handler
 from gaphor.event import ActiveSessionChanged, ApplicationShutdown, SessionCreated
-from gaphor.i18n import translated_ui_string
+from gaphor.i18n import gettext, translated_ui_string
 from gaphor.settings import APPLICATION_ID, StyleVariant, settings
 from gaphor.storage.recovery import all_sessions
 from gaphor.ui.actiongroup import (
@@ -32,6 +33,8 @@ from gaphor.ui.actiongroup import (
 
 Adw.init()
 GtkSource.init()
+
+log = logging.getLogger(__name__)
 
 
 def run(argv: list[str], *, launch_service="greeter", recover=False) -> int:
@@ -57,10 +60,6 @@ def run(argv: list[str], *, launch_service="greeter", recover=False) -> int:
         @event_handler(ApplicationShutdown)
         def on_quit(_event: ApplicationShutdown):
             gtk_app.quit()
-
-        builder = Gtk.Builder()
-        builder.add_from_string(translated_ui_string("gaphor.ui", "menubar.ui"))
-        gtk_app.set_menubar(builder.get_object("menu"))
 
         apply_shortcuts_from_entry_point("gaphor.appservices", "app", gtk_app)
         apply_shortcuts_from_entry_point("gaphor.services", "win", gtk_app)
@@ -102,12 +101,7 @@ def run(argv: list[str], *, launch_service="greeter", recover=False) -> int:
             }.get(style_variant, Adw.ColorScheme.DEFAULT)
         )
 
-    # Register session on Darwin, so the NSApplicationDelegate is registered for opening files
-    gtk_app = Adw.Application(
-        application_id=APPLICATION_ID,
-        flags=Gio.ApplicationFlags.HANDLES_OPEN,
-        register_session=(sys.platform == "darwin"),
-    )
+    gtk_app = UIApplication()
 
     settings.style_variant_changed(update_color_scheme)
     gtk_app.exit_code = 0
@@ -129,6 +123,35 @@ def recover_sessions(application):
             application.recover_session(
                 session_id=session_id, filename=filename, template=template
             )
+
+
+class UIApplication(Adw.Application):
+    def __init__(self):
+        # Register session on Darwin, so the NSApplicationDelegate is registered for opening files
+        super().__init__(
+            application_id=APPLICATION_ID,
+            flags=Gio.ApplicationFlags.HANDLES_OPEN,
+            register_session=(sys.platform == "darwin"),
+        )
+        self._menus = {}
+
+    def do_startup(self):
+        Adw.Application.do_startup(self)
+
+        builder = Gtk.Builder()
+        builder.add_from_string(translated_ui_string("gaphor.ui", "menubar.ui"))
+        self.set_menubar(builder.get_object("menu"))
+        self._menus["export"] = (gettext("Export"), builder.get_object("export-menu"))
+        self._menus["tools"] = (gettext("Tools"), builder.get_object("tools-menu"))
+
+    def update_menu(self, name, submenu):
+        hook = self._menus.get(name)
+        if hook:
+            title, menu = hook
+            menu.remove_all()
+            menu.append_submenu(title, submenu)
+        else:
+            log.warning("No submenu with name %s", name)
 
 
 if __name__ == "__main__":
