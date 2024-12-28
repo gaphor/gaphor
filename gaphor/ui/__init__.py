@@ -25,7 +25,10 @@ from gaphor.event import ActiveSessionChanged, ApplicationShutdown, SessionCreat
 from gaphor.i18n import translated_ui_string
 from gaphor.settings import APPLICATION_ID, StyleVariant, settings
 from gaphor.storage.recovery import all_sessions
-from gaphor.ui.actiongroup import apply_application_actions
+from gaphor.ui.actiongroup import (
+    apply_application_actions,
+    apply_shortcuts_from_entry_point,
+)
 
 Adw.init()
 GtkSource.init()
@@ -59,9 +62,13 @@ def run(argv: list[str], *, launch_service="greeter", recover=False) -> int:
         builder.add_from_string(translated_ui_string("gaphor.ui", "menubar.ui"))
         gtk_app.set_menubar(builder.get_object("menu"))
 
+        apply_shortcuts_from_entry_point("gaphor.appservices", "app", gtk_app)
+        apply_shortcuts_from_entry_point("gaphor.services", "win", gtk_app)
+
         try:
             application = Application(gtk_app=gtk_app)
             apply_application_actions(application, gtk_app)
+
             event_manager = application.get_service("event_manager")
             event_manager.subscribe(on_session_created)
             event_manager.subscribe(on_quit)
