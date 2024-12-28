@@ -140,7 +140,8 @@ class UIApplication(Adw.Application):
 
         builder = Gtk.Builder()
         builder.add_from_string(translated_ui_string("gaphor.ui", "menubar.ui"))
-        self.set_menubar(builder.get_object("menu"))
+        if settings.menubar:
+            self.set_menubar(builder.get_object("menu"))
         self._menus["export"] = (gettext("Export"), builder.get_object("export-menu"))
         self._menus["tools"] = (gettext("Tools"), builder.get_object("tools-menu"))
 
