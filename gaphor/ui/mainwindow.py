@@ -24,6 +24,7 @@ from gaphor.event import (
 from gaphor.i18n import translated_ui_string
 from gaphor.services.modelinglanguage import ModelingLanguageChanged
 from gaphor.services.undomanager import UndoManagerStateChanged
+from gaphor.settings import settings
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.actiongroup import window_action_group
 from gaphor.ui.event import CurrentDiagramChanged
@@ -157,12 +158,15 @@ class MainWindow(Service, ActionProvider):
             create_diagram_types_model(self.modeling_language)
         )
 
-        builder.get_object("export-menu").append_submenu(
-            gettext("Export"), self.export_menu.menu
-        )
-        builder.get_object("tools-menu").append_submenu(
-            gettext("Tools"), self.tools_menu.menu
-        )
+        if settings.menubar:
+            builder.get_object("hamburger-menu-button").unparent()
+        else:
+            builder.get_object("export-menu").append_submenu(
+                gettext("Export"), self.export_menu.menu
+            )
+            builder.get_object("tools-menu").append_submenu(
+                gettext("Tools"), self.tools_menu.menu
+            )
 
         window.set_default_size(*(self.properties.get("ui.window-size", (1024, 640))))
         if self.properties.get("ui.window-mode", "") == "maximized":
