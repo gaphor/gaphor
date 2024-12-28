@@ -18,7 +18,7 @@ def apply_application_actions(component_registry, gtk_app):
             if act.shortcut:
                 gtk_app.set_accels_for_action(
                     f"{scope}.{act.name}",
-                    [_platform_specific(s) for s in act.shortcuts],
+                    [_platform_modifier(s) for s in act.shortcuts],
                 )
     return gtk_app
 
@@ -37,9 +37,7 @@ def window_action_group(component_registry) -> ActionGroup:
             a = create_gio_action(act, provider, attrname)
             action_group.add_action(a)
             for shortcut in act.shortcuts:
-                store.append(
-                    _new_shortcut(_platform_specific(shortcut), act.detailed_name)
-                )
+                store.append(named_shortcut(shortcut, act.detailed_name))
     return ActionGroup(actions=action_group, shortcuts=store)
 
 
@@ -56,7 +54,7 @@ def create_action_group(provider, scope) -> ActionGroup:
         a = create_gio_action(act, provider, attrname)
         action_group.add_action(a)
         for shortcut in act.shortcuts:
-            store.append(_new_shortcut(_platform_specific(shortcut), act.detailed_name))
+            store.append(named_shortcut(shortcut, act.detailed_name))
     return ActionGroup(actions=action_group, shortcuts=store)
 
 
@@ -66,16 +64,16 @@ def create_shortcut_controller(shortcuts):
     return ctrl
 
 
-def _platform_specific(shortcut):
-    return shortcut.replace(
-        "<Primary>", "<Meta>" if sys.platform == "darwin" else "<Control>"
+def named_shortcut(shortcut, detailed_name):
+    return Gtk.Shortcut.new(
+        trigger=Gtk.ShortcutTrigger.parse_string(_platform_modifier(shortcut)),
+        action=Gtk.NamedAction.new(detailed_name),
     )
 
 
-def _new_shortcut(shortcut, detailed_name):
-    return Gtk.Shortcut.new(
-        trigger=Gtk.ShortcutTrigger.parse_string(shortcut),
-        action=Gtk.NamedAction.new(detailed_name),
+def _platform_modifier(shortcut):
+    return shortcut.replace(
+        "<Primary>", "<Meta>" if sys.platform == "darwin" else "<Control>"
     )
 
 
