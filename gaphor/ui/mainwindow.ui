@@ -3,6 +3,7 @@
   <requires lib="gtk" version="4.0"/>
   <requires lib="adw" version="1.0"/>
   <object class="GtkPopoverMenu" id="hamburger">
+    <property name="menu-model">hamburger-menu</property>
   </object>
   <object class="GtkPopoverMenu" id="recent-files">
   </object>
@@ -221,4 +222,49 @@
       </object>
     </property>
   </object>
+
+  <menu id="hamburger-menu">
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">New Model…</attribute>
+        <attribute name="action">app.new-model</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">Open Model…</attribute>
+        <attribute name="action">app.file-open</attribute>
+      </item>
+    </section>
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">Save</attribute>
+        <attribute name="action">win.file-save</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">Save As…</attribute>
+        <attribute name="action">win.file-save-as</attribute>
+      </item>
+      <item>
+        <link name="section" id="hamburger-export"/>
+      </item>
+    </section>
+    <section>
+      <item>
+        <link name="section" id="hamburger-tools"/>
+      </item>
+    </section>
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">Preferences…</attribute>
+        <attribute name="action">app.preferences</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">Keyboard Shortcuts</attribute>
+        <attribute name="action">app.shortcuts</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">About Gaphor</attribute>
+        <attribute name="action">app.about</attribute>
+      </item>
+    </section>
+  </menu>
 </interface>
