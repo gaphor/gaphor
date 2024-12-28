@@ -244,12 +244,12 @@
         <attribute name="action">win.file-save-as</attribute>
       </item>
       <item>
-        <link name="section" id="hamburger-export"/>
+        <link name="section" id="export-menu"/>
       </item>
     </section>
     <section>
       <item>
-        <link name="section" id="hamburger-tools"/>
+        <link name="section" id="tools-menu"/>
       </item>
     </section>
     <section>

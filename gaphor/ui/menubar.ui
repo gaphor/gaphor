@@ -22,10 +22,9 @@
           <attribute name="label" translatable="yes">Save As…</attribute>
           <attribute name="action">win.file-save-as</attribute>
         </item>
-        <item>
-          <attribute name="label" translatable="yes">Export</attribute>
-          <!-- <link name="section" id="menubar-export"/> -->
-        </item>
+      </section>
+      <section>
+        <link name="section" id="export-menu"/>
       </section>
     </submenu>
     <submenu>
@@ -87,8 +86,7 @@
       </section>
     </submenu>
     <submenu>
-      <attribute name="label" translatable="yes">_Tools</attribute>
-      <!-- <link name="section" id="menubar-tools"/> -->
+      <link name="section" id="tools-menu"/>
     </submenu>
     <submenu>
       <attribute name="label" translatable="yes">_Window</attribute>
