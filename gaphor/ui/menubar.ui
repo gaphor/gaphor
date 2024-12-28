@@ -6,7 +6,7 @@
       <section>
         <item>
           <attribute name="label" translatable="yes">New Model…</attribute>
-          <attribute name="action">app.new-model</attribute>
+          <attribute name="action">app.new-window</attribute>
         </item>
         <item>
           <attribute name="label" translatable="yes">Open Model…</attribute>
