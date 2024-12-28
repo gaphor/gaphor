@@ -218,6 +218,16 @@ class MainWindow(Service, ActionProvider):
             overlay.set_show_sidebar(active)
         self.properties.set("show-editors", active)
 
+    @action("maximize", state=lambda self: self.window.is_maximized())
+    def toggle_maximized(self, active):
+        if not self.window:
+            return
+
+        if active:
+            self.window.maximize()
+        else:
+            self.window.unmaximize()
+
     @action(
         "fullscreen", shortcut="F11", state=lambda self: self.window.is_fullscreen()
     )

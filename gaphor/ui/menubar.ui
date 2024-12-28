@@ -22,6 +22,10 @@
           <attribute name="label" translatable="yes">Save As…</attribute>
           <attribute name="action">win.file-save-as</attribute>
         </item>
+        <item>
+          <attribute name="label" translatable="yes">Export</attribute>
+          <!-- <link name="section" id="menubar-export"/> -->
+        </item>
       </section>
     </submenu>
     <submenu>
@@ -60,8 +64,52 @@
       </section>
     </submenu>
     <submenu>
+      <attribute name="label" translatable="yes">_View</attribute>
+      <section>
+        <item>
+          <attribute name="label" translatable="yes">Zoom In</attribute>
+          <attribute name="action">win.zoom-in</attribute>
+        </item>
+        <item>
+          <attribute name="label" translatable="yes">Zoom Out</attribute>
+          <attribute name="action">win.zoom-out</attribute>
+        </item>
+        <item>
+          <attribute name="label" translatable="yes">Actual Size</attribute>
+          <attribute name="action">win.zoom-100</attribute>
+        </item>
+      </section>
+      <section>
+        <item>
+          <attribute name="label" translatable="yes">Close</attribute>
+          <attribute name="action">win.close-current-tab</attribute>
+        </item>
+      </section>
+    </submenu>
+    <submenu>
+      <attribute name="label" translatable="yes">_Tools</attribute>
+      <!-- <link name="section" id="menubar-tools"/> -->
+    </submenu>
+    <submenu>
+      <attribute name="label" translatable="yes">_Window</attribute>
+      <section>
+        <item>
+          <attribute name="label" translatable="yes">Maximize</attribute>
+          <attribute name="action">win.maximize</attribute>
+        </item>
+        <item>
+          <attribute name="label" translatable="yes">Full screen</attribute>
+          <attribute name="action">win.fullscreen</attribute>
+        </item>
+      </section>
+    </submenu>
+    <submenu>
       <attribute name="label" translatable="yes">_Help</attribute>
       <section>
+        <item>
+          <attribute name="label" translatable="yes">Online Documentation</attribute>
+          <attribute name="action">app.documentation</attribute>
+        </item>
         <item>
           <attribute name="label" translatable="yes">Keyboard Shortcuts</attribute>
           <attribute name="action">app.shortcuts</attribute>
