@@ -40,33 +40,6 @@ def new_builder():
     return builder
 
 
-def create_hamburger_model(export_menu, tools_menu):
-    model = Gio.Menu.new()
-
-    part = Gio.Menu.new()
-    part.append(gettext("New Model…"), "app.new-model")
-    part.append(gettext("Open Model…"), "app.file-open")
-    model.append_section(None, part)
-
-    part = Gio.Menu.new()
-    part.append(gettext("Save"), "win.file-save")
-    part.append(gettext("Save As…"), "win.file-save-as")
-    part.append_submenu(gettext("Export"), export_menu)
-    model.append_section(None, part)
-
-    part = Gio.Menu.new()
-    part.append_submenu(gettext("Tools"), tools_menu)
-    model.append_section(None, part)
-
-    part = Gio.Menu.new()
-    part.append(gettext("Preferences"), "app.preferences")
-    part.append(gettext("Keyboard Shortcuts"), "app.shortcuts")
-    part.append(gettext("About Gaphor"), "app.about")
-    model.append_section(None, part)
-
-    return model
-
-
 def create_modeling_language_model(modeling_language):
     model = Gio.Menu.new()
     for id, name in modeling_language.modeling_languages:
@@ -184,9 +157,11 @@ class MainWindow(Service, ActionProvider):
             create_diagram_types_model(self.modeling_language)
         )
 
-        hamburger = builder.get_object("hamburger")
-        hamburger.set_menu_model(
-            create_hamburger_model(self.export_menu.menu, self.tools_menu.menu),
+        builder.get_object("hamburger-export").append_submenu(
+            gettext("Export"), self.export_menu.menu
+        )
+        builder.get_object("hamburger-tools").append_submenu(
+            gettext("Tools"), self.tools_menu.menu
         )
 
         window.set_default_size(*(self.properties.get("ui.window-size", (1024, 640))))
