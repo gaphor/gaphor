@@ -7,20 +7,27 @@ from gi.repository import Gio, GLib, Gtk
 
 from gaphor.abc import ActionProvider
 from gaphor.action import action
+from gaphor.entrypoint import load_entry_points
 
 
-def apply_application_actions(component_registry, gtk_app):
+def apply_application_actions(component_registry, gtk_app) -> None:
     scope = "app"
     for _name, provider in component_registry.all(ActionProvider):
-        for attrname, act in iter_actions(provider, scope):
+        for attrname, act in iter_actions(type(provider), scope):
             a = create_gio_action(act, provider, attrname)
             gtk_app.add_action(a)
+
+
+def apply_shortcuts_from_entry_point(entry_point, scope, gtk_app) -> None:
+    for provider_class in load_entry_points(entry_point).values():
+        if not issubclass(provider_class, ActionProvider):
+            continue
+        for _attrname, act in iter_actions(provider_class, scope):
             if act.shortcut:
                 gtk_app.set_accels_for_action(
                     f"{scope}.{act.name}",
                     [_platform_modifier(s) for s in act.shortcuts],
                 )
-    return gtk_app
 
 
 class ActionGroup(NamedTuple):
@@ -28,17 +35,14 @@ class ActionGroup(NamedTuple):
     shortcuts: Gio.ListModel
 
 
-def window_action_group(component_registry) -> ActionGroup:
+def window_action_group(component_registry) -> Gio.SimpleActionGroup:
     action_group = Gio.SimpleActionGroup.new()
-    store = Gio.ListStore.new(Gtk.Shortcut)
     scope = "win"
     for _name, provider in component_registry.all(ActionProvider):
-        for attrname, act in iter_actions(provider, scope):
+        for attrname, act in iter_actions(type(provider), scope):
             a = create_gio_action(act, provider, attrname)
             action_group.add_action(a)
-            for shortcut in act.shortcuts:
-                store.append(named_shortcut(shortcut, act.detailed_name))
-    return ActionGroup(actions=action_group, shortcuts=store)
+    return action_group
 
 
 def apply_action_group(provider, scope, target_widget):
@@ -50,7 +54,7 @@ def apply_action_group(provider, scope, target_widget):
 def create_action_group(provider, scope) -> ActionGroup:
     action_group = Gio.SimpleActionGroup.new()
     store = Gio.ListStore.new(Gtk.Shortcut)
-    for attrname, act in iter_actions(provider, scope):
+    for attrname, act in iter_actions(type(provider), scope):
         a = create_gio_action(act, provider, attrname)
         action_group.add_action(a)
         for shortcut in act.shortcuts:
@@ -90,13 +94,13 @@ def create_gio_action(act, provider, attrname):
     return a
 
 
-def iter_actions(provider, scope):
-    provider_class = type(provider)
+def iter_actions(provider_class, scope):
     for attrname in dir(provider_class):
-        method = getattr(provider_class, attrname)
-        act: action | None = getattr(method, "__action__", None)
-        if act and act.scope == scope:
-            yield (attrname, act)
+        func = getattr(provider_class, attrname)
+        if callable(func):
+            act: action | None = getattr(func, "__action__", None)
+            if act and act.scope == scope:
+                yield (attrname, act)
 
 
 _GVARIANT_TYPE_STR = GLib.VariantType.new("s")

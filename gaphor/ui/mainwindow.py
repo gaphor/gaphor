@@ -212,9 +212,8 @@ class MainWindow(Service, ActionProvider):
                 widget.set_name(name)
                 bin.set_child(widget)
 
-        self.action_group, shortcuts = window_action_group(self.component_registry)
+        self.action_group = window_action_group(self.component_registry)
         window.insert_action_group("win", self.action_group)
-        window.add_controller(Gtk.ShortcutController.new_for_model(shortcuts))
 
         self._on_modeling_language_selection_changed()
         self.in_app_notifier = InAppNotifier(builder.get_object("main-overlay"))
