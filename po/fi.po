@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2024-12-03 09:12+0100\n"
-"PO-Revision-Date: 2024-11-26 07:05+0000\n"
+"PO-Revision-Date: 2024-12-29 08:01+0000\n"
 "Last-Translator: Jiri Grönroos <jiri.gronroos@iki.fi>\n"
+"Language-Team: Finnish <https://hosted.weblate.org/projects/gaphor/gaphor/fi/"
+">\n"
 "Language: fi\n"
-"Language-Team: Finnish "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/fi/>\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.10-dev\n"
 "Generated-By: Babel 2.16.0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:23 gaphor/C4Model/toolbox.py:67
@@ -84,32 +85,27 @@ msgid "Dependency"
 msgstr "Riippuvuus"
 
 #: gaphor/C4Model/toolbox.py:151
-#, fuzzy
 msgid "C4 Diagram"
-msgstr "Uusi C4-kaavio"
+msgstr "C4-kaavio"
 
 #: gaphor/C4Model/toolbox.py:152 gaphor/UML/toolbox.py:50
-#, fuzzy
 msgid "Class Diagram"
-msgstr "Uusi luokkakaavio"
+msgstr "Luokkakaavio"
 
 #: gaphor/C4Model/toolbox.py:153 gaphor/SysML/toolbox.py:129
 #: gaphor/UML/toolbox.py:54
-#, fuzzy
 msgid "Activity Diagram"
-msgstr "Uusi aktiviteettikaavio"
+msgstr "Aktiviteettikaavio"
 
 #: gaphor/C4Model/toolbox.py:154 gaphor/SysML/toolbox.py:139
 #: gaphor/UML/toolbox.py:55
-#, fuzzy
 msgid "Sequence Diagram"
-msgstr "Uusi sekvenssikaavio"
+msgstr "Sekvenssikaavio"
 
 #: gaphor/C4Model/toolbox.py:155 gaphor/SysML/toolbox.py:149
 #: gaphor/UML/toolbox.py:57
-#, fuzzy
 msgid "State Machine Diagram"
-msgstr "Uusi tilakaavio"
+msgstr "Tilakaavio"
 
 #: gaphor/C4Model/toolbox.py:159 gaphor/SysML/toolbox.py:172
 #: gaphor/UML/actions/actionstoolbox.py:41
@@ -138,9 +134,8 @@ msgid "Class"
 msgstr "Luokka"
 
 #: gaphor/C4Model/toolbox.py:166 gaphor/UML/toolbox.py:68
-#, fuzzy
 msgid "Data Type"
-msgstr "dataTyyppi"
+msgstr "Datatyyppi"
 
 #: gaphor/C4Model/toolbox.py:167 gaphor/SysML/blocks/blockstoolbox.py:118
 #: gaphor/SysML/toolbox.py:175 gaphor/UML/classes/classestoolbox.py:154
@@ -149,23 +144,20 @@ msgid "Enumeration"
 msgstr "Enumeraatio"
 
 #: gaphor/C4Model/toolbox.py:169
-#, fuzzy
 msgid "Primitive Type"
-msgstr "Uusi primitiivityyppi"
+msgstr "Primitiivityyppi"
 
 #: gaphor/RAAML/modelinglanguage.py:24 gaphor/ui/greeter.py:48
 msgid "RAAML"
 msgstr "RAAML"
 
 #: gaphor/RAAML/toolbox.py:23
-#, fuzzy
 msgid "FTA Diagram"
-msgstr "Uusi FTA-kaavio"
+msgstr "FTA-kaavio"
 
 #: gaphor/RAAML/toolbox.py:24
-#, fuzzy
 msgid "STPA Diagram"
-msgstr "Uusi STPA-kaavio"
+msgstr "STPA-kaavio"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:195 gaphor/RAAML/fta/ftatoolbox.py:201
 #: gaphor/RAAML/fta/topevent.py:27 gaphor/RAAML/toolbox.py:28
@@ -415,9 +407,8 @@ msgid "Text"
 msgstr "Teksti"
 
 #: gaphor/SysML/propertypages.ui:258
-#, fuzzy
 msgid "Show text"
-msgstr "Näytä tyyppi"
+msgstr "Näytä teksti"
 
 #: gaphor/SysML/sysmlfmt.py:10
 #, fuzzy
@@ -441,9 +432,8 @@ msgid "Proxy Port"
 msgstr "Proxyn portti"
 
 #: gaphor/SysML/toolbox.py:90
-#, fuzzy
 msgid "Block Definition Diagram"
-msgstr "Uusi lohkomäärityskaavio"
+msgstr "Lohkomäärityskaavio"
 
 #: gaphor/SysML/toolbox.py:93 gaphor/SysML/toolbox.py:113
 #: gaphor/SysML/toolbox.py:125 gaphor/SysML/toolbox.py:167
@@ -451,23 +441,20 @@ msgid "New Package"
 msgstr "Uusi pakkaus"
 
 #: gaphor/SysML/toolbox.py:97
-#, fuzzy
 msgid "Internal Block Diagram"
-msgstr "Uusi sisäisen lohkon kaavio"
+msgstr "Sisäisen lohkon kaavio"
 
 #: gaphor/SysML/toolbox.py:104 gaphor/SysML/toolbox.py:105
 msgid "New Block"
 msgstr "Uusi lohko"
 
 #: gaphor/SysML/toolbox.py:110 gaphor/UML/toolbox.py:51
-#, fuzzy
 msgid "Package Diagram"
-msgstr "Uusi pakkauskaavio"
+msgstr "Pakkauskaavio"
 
 #: gaphor/SysML/toolbox.py:117
-#, fuzzy
 msgid "Requirement Diagram"
-msgstr "Uusi vaatimuskaavio"
+msgstr "Vaatimuskaavio"
 
 #: gaphor/SysML/toolbox.py:133 gaphor/SysML/toolbox.py:134
 msgid "New Activity"
@@ -482,9 +469,8 @@ msgid "New State Machine"
 msgstr "Uusi tilakone"
 
 #: gaphor/SysML/toolbox.py:159 gaphor/UML/toolbox.py:58
-#, fuzzy
 msgid "Use Case Diagram"
-msgstr "Uusi käyttötapauskaavio"
+msgstr "Käyttötapauskaavio"
 
 #: gaphor/SysML/toolbox.py:173 gaphor/UML/toolbox.py:64
 #: gaphor/UML/usecases/usecasetoolbox.py:28 gaphor/templates/uml-example.gaphor
@@ -506,14 +492,12 @@ msgid "Requirement"
 msgstr "Vaatimus"
 
 #: gaphor/SysML/toolbox.py:192 gaphor/UML/toolbox.py:85
-#, fuzzy
 msgid "Use Case"
 msgstr "Käyttötapaus"
 
 #: gaphor/SysML/toolbox.py:193
-#, fuzzy
 msgid "Value Type"
-msgstr "arvoTyyppi"
+msgstr "Arvotyyppi"
 
 #: gaphor/SysML/allocations/allocationstoolbox.py:6
 #, fuzzy
@@ -694,24 +678,20 @@ msgstr ""
 "yhdessäkään kaaviossa."
 
 #: gaphor/UML/toolbox.py:52
-#, fuzzy
 msgid "Component Diagram"
 msgstr "Komponenttikaavio"
 
 #: gaphor/UML/toolbox.py:53
-#, fuzzy
 msgid "Deployment Diagram"
-msgstr "Uusi käyttöönottokaavio"
+msgstr "Käyttöönottokaavio"
 
 #: gaphor/UML/toolbox.py:56
-#, fuzzy
 msgid "Communication Diagram"
-msgstr "Uusi kommunikaatiokaavio"
+msgstr "Kommunikaatiokaavio"
 
 #: gaphor/UML/toolbox.py:59
-#, fuzzy
 msgid "Profile Diagram"
-msgstr "Uusi profiilikaavio"
+msgstr "Profiilikaavio"
 
 #: gaphor/UML/deployments/deploymentstoolbox.py:16 gaphor/UML/toolbox.py:65
 msgid "Artifact"
@@ -722,9 +702,8 @@ msgid "Device"
 msgstr "Laite"
 
 #: gaphor/UML/toolbox.py:73
-#, fuzzy
 msgid "Instance Specification"
-msgstr "Uusi instanssispesifikaatio"
+msgstr "Instanssispesifikaatio"
 
 #: gaphor/UML/classes/classestoolbox.py:39 gaphor/UML/toolbox.py:78
 msgid "Interface"
@@ -1012,24 +991,20 @@ msgid ""
 msgstr ""
 
 #: gaphor/UML/actions/propertypages.ui:390
-#, fuzzy
 msgid "Direction"
-msgstr "Näytä suunta"
+msgstr "Suunta"
 
 #: gaphor/UML/actions/propertypages.ui:402
-#, fuzzy
 msgid "In/Out"
-msgstr "EI"
+msgstr "Sisään/ulos"
 
 #: gaphor/UML/actions/propertypages.ui:403
-#, fuzzy
 msgid "In"
-msgstr "Viiva"
+msgstr "Sisään"
 
 #: gaphor/UML/actions/propertypages.ui:404
-#, fuzzy
 msgid "Out"
-msgstr "EI"
+msgstr "Ulos"
 
 #: gaphor/UML/actions/propertypages.ui:405
 #, fuzzy
@@ -1211,12 +1186,11 @@ msgstr "Liitosspesifikaatio"
 
 #: gaphor/UML/classes/propertypages.ui:440
 msgid "Source:"
-msgstr ""
+msgstr "Lähde:"
 
 #: gaphor/UML/classes/propertypages.ui:464
-#, fuzzy
 msgid "Target:"
-msgstr "Magneetti"
+msgstr "Kohde:"
 
 #: gaphor/UML/classes/propertypages.ui:492
 msgid "Dependency type"
@@ -1298,9 +1272,8 @@ msgstr "laite"
 
 #: gaphor/UML/general/generaltoolbox.py:21
 #: gaphor/UML/general/imagepropertypage.py:66
-#, fuzzy
 msgid "New Image"
-msgstr "Uusi uimarata"
+msgstr "Uusi kuva"
 
 #: gaphor/UML/general/generaltoolbox.py:25 gaphor/ui/help/shortcuts.ui:14
 msgid "General"
@@ -1652,38 +1625,32 @@ msgid "No focused item."
 msgstr "Ei kohdistettua tietuetta."
 
 #: gaphor/diagram/propertypages.ui:322 gaphor/diagram/styleeditor.ui:5
-#, fuzzy
 msgid "Style Editor"
-msgstr "Tyylisivu"
+msgstr "Tyylimuokkain"
 
 #: gaphor/diagram/propertypages.ui:331
-#, fuzzy
 msgid "Open Style Editor"
-msgstr "Avaa yhdistämismuokkain"
+msgstr "Avaa tyylimuokkain"
 
 #: gaphor/diagram/styleeditor.ui:27
-#, fuzzy
 msgid "Border Radius"
-msgstr "järjestetty"
+msgstr "Reunan säde"
 
 #: gaphor/diagram/styleeditor.ui:51
-#, fuzzy
 msgid "Color"
-msgstr "Värit"
+msgstr "Väri"
 
 #: gaphor/diagram/styleeditor.ui:67
 msgid "Background Color"
-msgstr ""
+msgstr "Taustaväri"
 
 #: gaphor/diagram/styleeditor.ui:83
-#, fuzzy
 msgid "Text Color"
-msgstr "Värit"
+msgstr "Tekstin väri"
 
 #: gaphor/diagram/styleeditor.ui:96
-#, fuzzy
 msgid "Add to Style Sheet"
-msgstr "Tyylisivu"
+msgstr "Lisää tyylisivuun"
 
 #: gaphor/diagram/tools/dnd.py:50
 msgid "Element can’t be represented on a diagram."
@@ -1803,9 +1770,8 @@ msgid "Export diagram as EPS"
 msgstr "Vie kaavio EPS-muotoon"
 
 #: gaphor/plugins/diagramexport/export.py:120
-#, fuzzy
 msgid "Export all diagrams as SVG"
-msgstr "Vie kaavio SVG-muotoon"
+msgstr "Vie kaikki kaaviot SVG-muotoon"
 
 #: gaphor/plugins/diagramexport/export.py:121
 msgid "Export all diagrams as SVG diagrams in a specifieddirectory"
@@ -1815,32 +1781,28 @@ msgstr ""
 #: gaphor/plugins/diagramexport/export.py:147
 #: gaphor/plugins/diagramexport/export.py:167
 #: gaphor/plugins/diagramexport/export.py:187
-#, fuzzy
 msgid "Export all diagrams"
-msgstr "Vie kaavio SVG-muotoon"
+msgstr "Vie kaikki kaaviot"
 
 #: gaphor/plugins/diagramexport/export.py:140
-#, fuzzy
 msgid "Export all diagrams as PNG"
-msgstr "Vie kaavio PNG-muotoon"
+msgstr "Vie kaikki kaaviot PNG-muotoon"
 
 #: gaphor/plugins/diagramexport/export.py:141
 msgid "Export all diagrams as PNG diagrams in a specifieddirectory"
 msgstr ""
 
 #: gaphor/plugins/diagramexport/export.py:160
-#, fuzzy
 msgid "Export all diagrams as PDF"
-msgstr "Vie kaavio PDF-muotoon"
+msgstr "Vie kaikki kaaviot PDF-muotoon"
 
 #: gaphor/plugins/diagramexport/export.py:161
 msgid "Export all diagrams as PDF diagrams in a specifieddirectory"
 msgstr ""
 
 #: gaphor/plugins/diagramexport/export.py:180
-#, fuzzy
 msgid "Export all diagrams as EPS"
-msgstr "Vie kaavio EPS-muotoon"
+msgstr "Vie kaikki kaaviot EPS-muotoon"
 
 #: gaphor/plugins/diagramexport/export.py:181
 msgid "Export all diagrams as EPS diagrams in a specifieddirectory"
@@ -1878,11 +1840,9 @@ msgstr ""
 "lisätietojen antamiseen, kun luot ongelmaraportin GitHubiin."
 
 #: gaphor/storage/recovery.py:154
-#, fuzzy
 msgid "This model contains unsaved changes. The changes have been restored."
 msgstr ""
-"Avoinna oleva malli sisältää tallentamattomia muutoksia. Tallentamattomat"
-" muutokset katoavat pysyvästi."
+"Tämä malli sisältää tallentamattomia muutoksia. Muutokset on palautettu."
 
 #: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:63
 #: gaphor/ui/mainwindow.py:273 gaphor/ui/mainwindow.py:278
@@ -1947,37 +1907,32 @@ msgid "Get account information from, and makes payments using"
 msgstr ""
 
 #: gaphor/templates/c4model-example.gaphor
-#, fuzzy
 msgid "E-mail System"
-msgstr "Järjestelmä"
+msgstr "Sähköpostijärjestelmä"
 
 #: gaphor/templates/c4model-example.gaphor
-#, fuzzy
 msgid "Sends e-mail to"
-msgstr "Lähetä signaali -toiminto"
+msgstr "Lähetä sähköposti vastaanottajalle"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Sends e-mail using"
-msgstr ""
+msgstr "Lähettää sähköpostia käyttäen"
 
 #: gaphor/templates/c4model-example.gaphor
-#, fuzzy
 msgid "Web Application"
-msgstr "Avaa sovellusvalikko"
+msgstr "Verkkosovellus"
 
 #: gaphor/templates/c4model-example.gaphor
-#, fuzzy
 msgid "API Application"
-msgstr "Avaa sovellusvalikko"
+msgstr "Rajapintasovellus"
 
 #: gaphor/templates/c4model-example.gaphor
-#, fuzzy
 msgid "Single-Page Application"
-msgstr "Avaa sovellusvalikko"
+msgstr "Yhden sivun sovellus (SPA)"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Mobile App"
-msgstr ""
+msgstr "Mobiilisovellus"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Visit bigbank.com/lb using"
@@ -2005,18 +1960,16 @@ msgid "Sign In Controller"
 msgstr "kontrolleri"
 
 #: gaphor/templates/c4model-example.gaphor
-#, fuzzy
 msgid "Security Component"
-msgstr "Uusi komponentti"
+msgstr "Tietoturvakomponentti"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Reset Password Controller"
 msgstr ""
 
 #: gaphor/templates/c4model-example.gaphor
-#, fuzzy
 msgid "E-mail Component"
-msgstr "Uusi komponentti"
+msgstr "Sähköpostikomponentti"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Account Summary Controller"
@@ -2871,7 +2824,7 @@ msgstr "Ei voi tallentaa mallia “{filename}”."
 
 #: gaphor/ui/filemanager.py:318
 msgid "Model has been saved."
-msgstr ""
+msgstr "Malli on tallennettu."
 
 #: gaphor/ui/filemanager.py:344 gaphor/ui/filemanager.py:387
 msgid "Save Gaphor Model As"
@@ -2979,13 +2932,12 @@ msgid "Risk Analysis and Assessment Modeling Language example model"
 msgstr "Risk Analysis and Assessment Modeling Language -mallipohja"
 
 #: gaphor/ui/greeter.py:86
-#, fuzzy
 msgid "C4 Model Example"
-msgstr "UML-esimerkki"
+msgstr "C4-esimerkki"
 
 #: gaphor/ui/greeter.py:87
 msgid "C4 Model example of a banking system"
-msgstr ""
+msgstr "C4-mallin esimerkki pankkijärjestelmästä"
 
 #: gaphor/ui/greeter.ui:8 gaphor/ui/greeter.ui:53 gaphor/ui/mainwindow.py:47
 msgid "Open Model…"
@@ -3002,7 +2954,7 @@ msgstr "Tietoja - Gaphor"
 
 #: gaphor/ui/greeter.ui:84
 msgid "Recently Opened"
-msgstr ""
+msgstr "Viimeksi avattu"
 
 #: gaphor/ui/greeter.ui:101
 msgid "Create New Model"
@@ -3041,9 +2993,8 @@ msgid "New diagram menu"
 msgstr "Uusi kaavio -valikko"
 
 #: gaphor/ui/help/shortcuts.ui:62 gaphor/ui/mainwindow.ui:137
-#, fuzzy
 msgid "Toggle Model Preferences"
-msgstr "Asetukset"
+msgstr "Näytä/piilota mallin ominaisuudet"
 
 #: gaphor/ui/help/shortcuts.ui:55 gaphor/ui/mainwindow.ui:152
 msgid "Toggle Property Editor"
@@ -3094,9 +3045,8 @@ msgid "Show in “{diagram}”"
 msgstr "Näytä kaaviossa \"{diagram}\""
 
 #: gaphor/ui/modelbrowser.py:676
-#, fuzzy
 msgid "Generic Diagram"
-msgstr "Uusi yleinen kaavio"
+msgstr "Yleinen kaavio"
 
 #: gaphor/ui/modelchanged.ui:6
 msgid "Model Changed on Disk"
@@ -3167,9 +3117,8 @@ msgid "Quit Gaphor"
 msgstr "Lopeta Gaphor"
 
 #: gaphor/ui/help/shortcuts.ui:36
-#, fuzzy
 msgid "Model"
-msgstr "C4-malli"
+msgstr "Malli"
 
 #: gaphor/ui/help/shortcuts.ui:41
 msgid "Rename"
@@ -3417,4 +3366,3 @@ msgstr "yleiset: {name}"
 
 #~ msgid "New Stereotype"
 #~ msgstr "Uusi stereotyyppi"
-
