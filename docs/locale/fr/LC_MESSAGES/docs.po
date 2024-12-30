@@ -38,7 +38,7 @@ msgstr "Il se peut que la dernière version n'ait pas encore été publiée."
 
 #: ../coffee_machine.md:1
 msgid "Tutorial: Coffee Machine"
-msgstr "Tutoriel : Machine à café"
+msgstr "Tutoriel : Machine à café"
 
 #: ../coffee_machine.md:4 ../first_model.md:4
 msgid ""
@@ -48,7 +48,7 @@ msgid ""
 "editor>`."
 msgstr ""
 "Dans ce tutoriel, nous nous référons aux différentes parties de l'interface "
-"gaphor : {ref}`Navigateur de modèle <getting_started:model browser>`, "
+"gaphor : {ref}`Navigateur de modèle <getting_started:model browser>`, "
 "[Toolbox](getting_started:toolbox), {ref}`Éditeur de propriétés "
 "<getting_started:property editor>`."
 
@@ -88,7 +88,7 @@ msgid ""
 "systems, and they took pride in their work."
 msgstr ""
 "Les ingénieurs d'AntSource ont tous des surnoms qui reflètent les principes "
-"et concepts clés de leur métier : Qual-ant, Reli-ant, Safe-ant, Usa-ant et "
+"et concepts clés de leur métier : Qual-ant, Reli-ant, Safe-ant, Usa-ant et "
 "Sust-ant. Ils étaient experts dans la conception et l'optimisation de "
 "systèmes complexes, et ils étaient fiers de leur travail."
 
@@ -226,7 +226,7 @@ msgid ""
 "these are the three levels used in the SysML template:"
 msgstr ""
 "Il existe généralement trois niveaux d'abstraction dans l'ingénierie des "
-"systèmes et ce sont les trois niveaux utilisés dans le modèle SysML :"
+"systèmes et ce sont les trois niveaux utilisés dans le modèle SysML :"
 
 #: ../coffee_machine.md:75 ../coffee_machine.md:71
 msgid ""
@@ -236,7 +236,7 @@ msgid ""
 "level, the focus is on understanding the system's requirements and how it "
 "will interact with other systems."
 msgstr ""
-"Niveau conceptuel : Parfois également appelé niveau de la réflexion. Définit "
+"Niveau conceptuel : Parfois également appelé niveau de la réflexion. Définit "
 "le problème à résoudre. Il s'agit du niveau d'abstraction le plus élevé, où "
 "le système est décrit en termes d'objectif global, de buts et de fonctions. "
 "À ce niveau, l'accent est mis sur la compréhension des exigences du système "
@@ -249,7 +249,7 @@ msgid ""
 "structure and behavior. At this level, the focus is on how the system "
 "components are organized and how they interact with each other."
 msgstr ""
-"Niveau logique : Définit une solution indépendante de la technologie. Il "
+"Niveau logique : Définit une solution indépendante de la technologie. Il "
 "s'agit du niveau intermédiaire d'abstraction, où le système est décrit en "
 "termes de structure et de comportement. À ce niveau, l'accent est mis sur la "
 "manière dont les composants du système sont organisés et sur la manière dont "
@@ -262,7 +262,7 @@ msgid ""
 "system is described in terms of its components and their properties. At this "
 "level, the focus is on the details of the system's implementation."
 msgstr ""
-"Niveau technologique : Parfois également appelé niveau physique. Définit la "
+"Niveau technologique : Parfois également appelé niveau physique. Définit la "
 "solution technique détaillée. Il s'agit du niveau d'abstraction le plus bas, "
 "où le système est décrit en termes de ses composants et de leurs propriétés. "
 "À ce niveau, l'accent est mis sur les détails de la mise en œuvre du système."
@@ -323,25 +323,25 @@ msgid ""
 "based on what they represent:"
 msgstr ""
 "Le SysML repose sur quatre piliers qui permettent de classer les types de "
-"diagrammes en fonction de ce qu'ils représentent :"
+"diagrammes en fonction de ce qu'ils représentent :"
 
 #: ../coffee_machine.md:110 ../coffee_machine.md:106
 msgid "Behavior: The functionality of a system"
-msgstr "Comportement : La fonctionnalité d'un système"
+msgstr "Comportement : La fonctionnalité d'un système"
 
 #: ../coffee_machine.md:111 ../coffee_machine.md:107
 msgid "Structure: How a system is formed using parts and connections"
 msgstr ""
-"La structure : La façon dont un système est formé à l'aide de composants et "
+"La structure : La façon dont un système est formé à l'aide de composants et "
 "de connexions"
 
 #: ../coffee_machine.md:112 ../coffee_machine.md:108
 msgid "Requirements: Written statements that constrain the system"
-msgstr "Exigences : Déclarations écrites qui contraignent le système"
+msgstr "Exigences : Déclarations écrites qui contraignent le système"
 
 #: ../coffee_machine.md:113
 msgid "Parametric: Enforces mathematical rules across values in the system"
-msgstr "Paramétrage : Appliquer les règles mathématiques aux valeurs du système"
+msgstr "Paramétrage : Appliquer les règles mathématiques aux valeurs du système"
 
 #: ../coffee_machine.md:115 ../coffee_machine.md:111
 msgid ""
@@ -398,7 +398,7 @@ msgstr "Table des matières"
 
 #: ../coffee_machine_concept.md:5
 msgid "Coffee Machine: Concept Level"
-msgstr "Machine à café : Niveau conceptuel"
+msgstr "Machine à café: Niveau conceptuel"
 
 #: ../coffee_machine_concept.md:9
 msgid ""
@@ -408,17 +408,17 @@ msgid ""
 msgstr ""
 "Le niveau conceptuel définit le problème que nous essayons de résoudre. Pour "
 "la machine à expresso, nous allons utiliser des diagrammes à ce niveau "
-"d'abstraction pour répondre à des questions telles que :"
+"d'abstraction pour répondre à des questions telles que :"
 
 #: ../coffee_machine_concept.md:12
 msgid "Who will use the machine and what are their goals while using it?"
-msgstr "Qui utilisera la machine et quels sont ses objectifs ?"
+msgstr "Qui utilisera la machine et quels sont ses objectifs ?"
 
 #: ../coffee_machine_concept.md:13
 msgid "What sequence of events will a person take while operating the machine?"
 msgstr ""
 "Quelle est la séquence d'événements qu'une personne doit suivre lors de "
-"l'utilisation de la machine ?"
+"l'utilisation de la machine ?"
 
 #: ../coffee_machine_concept.md:14
 msgid ""
@@ -426,7 +426,7 @@ msgid ""
 "perform its intended function?"
 msgstr ""
 "Quelles sont les principales caractéristiques et capacités requises pour que "
-"la machine remplisse la fonction pour laquelle elle a été conçue ?"
+"la machine remplisse la fonction pour laquelle elle a été conçue ?"
 
 #: ../coffee_machine_concept.md:15
 msgid ""
@@ -434,7 +434,7 @@ msgid ""
 "when designing the machine?"
 msgstr ""
 "Quelles sont les contraintes et les exigences à prendre en compte lors de la "
-"conception de la machine ?"
+"conception de la machine ?"
 
 #: ../coffee_machine_concept.md:16
 msgid ""
@@ -442,7 +442,7 @@ msgid ""
 "be considered successful?"
 msgstr ""
 "Quels sont les principaux indicateurs de performance que la machine doit "
-"atteindre pour être considérée comme une réussite ?"
+"atteindre pour être considérée comme une réussite ?"
 
 #: ../coffee_machine_concept.md:17
 msgid ""
@@ -450,7 +450,7 @@ msgid ""
 "it interact with other systems and components within the café?"
 msgstr ""
 "Comment la machine s'intégrera-t-elle dans le contexte plus large du café et "
-"comment interagira-t-elle avec les autres systèmes et composants du café ?"
+"comment interagira-t-elle avec les autres systèmes et composants du café ?"
 
 #: ../coffee_machine_concept.md:19
 msgid ""
@@ -458,7 +458,7 @@ msgid ""
 "or buying the machine?"
 msgstr ""
 "Quels sont les besoins d'autres personnes telles que celles qui "
-"commercialisent, vendent, fabriquent ou achètent la machine ?"
+"commercialisent, vendent, fabriquent ou achètent la machine ?"
 
 #: ../coffee_machine_concept.md:21
 msgid ""
@@ -535,7 +535,7 @@ msgstr ""
 msgid "The ants need your help updating the diagrams, so let's get started:"
 msgstr ""
 "Les fourmis ont besoin de votre aide pour mettre à jour les diagrammes, "
-"alors commençons :"
+"alors commençons :"
 
 #: ../coffee_machine_concept.md:51
 msgid ""
@@ -548,13 +548,13 @@ msgstr ""
 #: ../coffee_machine_concept.md:53
 msgid "Update the name of the oval Use Case from Use Case #1 to Brew espresso."
 msgstr ""
-"Mise à jour : le nom du cas d'utilisation ovale passe du cas d'utilisation "
+"Mise à jour : le nom du cas d'utilisation ovale passe du cas d'utilisation "
 "n°1 à la préparation d'un espresso."
 
 #: ../coffee_machine_concept.md:54
 msgid "Update the name of the rectangle Block from Feature to Espresso Machine"
 msgstr ""
-"Mise à jour : le nom du rectangle 'Bloc de fonctionnalité' à 'machine à café "
+"Mise à jour : le nom du rectangle 'Bloc de fonctionnalité' à 'machine à café "
 "expresso'"
 
 #: ../coffee_machine_concept.md:56
@@ -636,7 +636,7 @@ msgid ""
 "additional blocks:"
 msgstr ""
 "Le schéma suivant est un diagramme de domaine qui s'appuie sur le diagramme "
-"de contexte en y ajoutant des blocs supplémentaires :"
+"de contexte en y ajoutant des blocs supplémentaires :"
 
 #: ../coffee_machine_concept.md:90
 msgid "Barista"
@@ -711,7 +711,7 @@ msgid ""
 msgstr ""
 "Les fourmis ont besoin de votre aide pour renommer le diagramme 'Feature "
 "Domain' (Domaine de fonctionnalité) et le mettre à jour afin qu'il "
-"corresponde au diagramme ci-dessus. Assurez-vous que l'option « Profile : "
+"corresponde au diagramme ci-dessus. Assurez-vous que l'option « Profile : "
 "SysML » est sélectionné dans le coin supérieur gauche de l'interface "
 "utilisateur Gaphor. Les noms des blocs peuvent être modifiés directement "
 "dans le diagramme, mais le nom de la bdd (base de donnée) ne peut être "
@@ -843,8 +843,8 @@ msgid ""
 "The following are some concept requirements for a coffee machine that "
 "addresses a water tank, heat-up time, and HMI button:"
 msgstr ""
-"Voici quelques exigences conceptuelles pour une machine à café : réservoir "
-"d'eau, temps de chauffe et bouton de l'interface homme-machine (IHM) :"
+"Voici quelques exigences conceptuelles pour une machine à café : réservoir "
+"d'eau, temps de chauffe et bouton de l'interface homme-machine (IHM) :"
 
 #: ../coffee_machine_concept.md:171
 msgid ""
@@ -852,7 +852,7 @@ msgid ""
 "make multiple cups of coffee before needing a refill. The water tank should "
 "be easy to access and fill."
 msgstr ""
-"Water Tank (Réservoir d'eau) : La machine à café doit être dotée d'un "
+"Water Tank (Réservoir d'eau) : La machine à café doit être dotée d'un "
 "réservoir d'eau suffisamment grand pour permettre la préparation de "
 "plusieurs tasses de café avant qu'il ne soit nécessaire de le remplir à "
 "nouveau. Le réservoir d'eau doit être facile d'accès et de remplissage."
@@ -863,7 +863,7 @@ msgid ""
 "10 minutes from the time the user turns on the machine until it's ready to "
 "brew coffee."
 msgstr ""
-"Heat-up Time (Temps de chauffe) : La machine à café doit avoir un temps de "
+"Heat-up Time (Temps de chauffe) : La machine à café doit avoir un temps de "
 "chauffe ne dépassant pas 10 minutes entre le moment où l'utilisateur allume "
 "la machine et le moment où elle est prête à préparer le café."
 
@@ -873,7 +873,7 @@ msgid ""
 "to make it easy for the user to select the amount of coffee they want to "
 "brew."
 msgstr ""
-"1 Cup Button (Bouton 1 tasse) : La machine à café doit être dotée d'une "
+"1 Cup Button (Bouton 1 tasse) : La machine à café doit être dotée d'une "
 "'Interface Homme Machine' avec un bouton préparer une tasse pour permettre à "
 "l'utilisateur de sélectionner facilement la quantité de café qu'il souhaite. "
 "L'IHM doit être intuitive et facile à utiliser."
@@ -909,7 +909,7 @@ msgstr ""
 
 #: ../coffee_machine_logical.md:5
 msgid "Coffee Machine: Logical Level"
-msgstr "Coffee Machine (Machine à café) : Niveau logique"
+msgstr "Coffee Machine (Machine à café): Niveau logique"
 
 #: ../coffee_machine_logical.md:9
 msgid ""
@@ -985,8 +985,8 @@ msgstr ""
 "supplémentaires dans l'éditeur de propriétés. Le nom de la partition "
 "précédant les deux points peut également être modifié dans l'éditeur de "
 "propriétés. Les noms des blocs peuvent être modifiés dans le paquet "
-"Structure, comme expliqué dans la [section Diagramme de domaine] "
-"(coffee_machine_concept.md#diagramme-de-domaine)."
+"Structure, comme expliqué dans la "
+"[section Diagramme de domaine](coffee_machine_concept.md#domain-diagram)."
 
 #: ../coffee_machine_logical.md:43
 msgid ""
@@ -1014,7 +1014,7 @@ msgid ""
 msgstr ""
 "L' état logique de la machine à café est un diagramme qui montre les "
 "différents états et transitions par lesquels la machine passe pour faire du "
-"café. Dans ce cas, il y a deux états principaux : On et Off."
+"café. Dans ce cas, il y a deux états principaux: On et Off."
 
 #: ../coffee_machine_logical.md:57
 msgid ""
@@ -1087,7 +1087,7 @@ msgstr ""
 
 #: ../coffee_machine_logical.md:87
 msgid "The following logical blocks are part of the espresso machine:"
-msgstr "Les blocs logiques suivants font partie de la machine à expresso :"
+msgstr "Les blocs logiques suivants font partie de la machine à expresso:"
 
 #: ../coffee_machine_logical.md:88
 msgid "Water tank"
@@ -1141,7 +1141,7 @@ msgid ""
 "easy filling and cleaning. The water tank supplies water to the water pump "
 "when needed."
 msgstr ""
-"Water tank : Le réservoir d'eau est un récipient qui stocke l'eau utilisée "
+"Water tank: Le réservoir d'eau est un récipient qui stocke l'eau utilisée "
 "dans la machine à espresso. Il a généralement une capacité spécifique et est "
 "conçu pour être facilement rempli et nettoyé. Le réservoir d'eau alimente la "
 "pompe à eau en cas de besoin."
@@ -1153,7 +1153,7 @@ msgid ""
 "coffee grounds in the portafilter. It plays a crucial role in the espresso "
 "extraction process by ensuring a consistent flow of water."
 msgstr ""
-"Water pump : La pompe à eau est chargée de puiser l'eau dans le réservoir "
+"Water pump: La pompe à eau est chargée de puiser l'eau dans le réservoir "
 "d'eau et de créer la pression nécessaire pour faire passer l'eau à travers "
 "le marc de café dans le filtre à café. Elle joue un rôle crucial dans le "
 "processus d'extraction de l'espresso en assurant un débit d'eau constant."
@@ -1165,7 +1165,7 @@ msgid ""
 "espresso. It maintains the water at the desired temperature to ensure proper "
 "extraction and flavor."
 msgstr ""
-"Water heater : Le chauffe-eau, également appelé boiler ou élément chauffant, "
+"Water heater: Le chauffe-eau, également appelé boiler ou élément chauffant, "
 "est chargé de chauffer l'eau à la température optimale pour la préparation "
 "de l'espresso. Il maintient l'eau à la température souhaitée pour garantir "
 "une extraction et une saveur adéquates."
@@ -1177,7 +1177,7 @@ msgid ""
 "filter holder. The water from the pump is forced through the coffee grounds "
 "in the portafilter to extract the flavors and create the espresso."
 msgstr ""
-"Portafilter : C'est un dispositif amovible en forme de poignée qui contient "
+"Portafilter: C'est un dispositif amovible en forme de poignée qui contient "
 "le marc de café. Il est fixé à la machine à espresso et sert de porte-"
 "filtre. L'eau de la pompe est forcée à travers le marc de café dans le porte-"
 "filtre pour extraire les arômes et créer l'espresso."
@@ -1191,7 +1191,7 @@ msgid ""
 "temperature, pressure, and other parameters to maintain consistency and "
 "deliver the desired results."
 msgstr ""
-"Controller : C'est très souvent un microcontrôleur ou un circuit imprimé "
+"Controller: C'est très souvent un microcontrôleur ou un circuit imprimé "
 "dédié, c'est le cerveau de la machine à espresso. Il gère et coordonne le "
 "fonctionnement de divers composants, tels que la pompe à eau, le chauffe-eau "
 "et l'IHM, afin de garantir un processus d'infusion correct. Il surveille et "
@@ -1206,7 +1206,7 @@ msgid ""
 "portafilter and into the cup. The group head also helps to maintain proper "
 "temperature and pressure during the brewing process."
 msgstr ""
-"Group head : La tête de groupe est une partie de la machine à espresso où se "
+"Group head: La tête de groupe est une partie de la machine à espresso où se "
 "fixe le porte-filtre. Elle assure une liaison sûre entre le portafiltre et "
 "la machine, ce qui permet à l'espresso de s'écouler du portafiltre et de se "
 "déverser dans la tasse. La tête de groupe permet également de maintenir une "
@@ -1221,7 +1221,7 @@ msgid ""
 "of the machine. It provides feedback and displays information related to the "
 "brewing process, such as brewing time, temperature, and cup size selection."
 msgstr ""
-"HMI  : L'Interface Homme-Machine (IHM) est interface utilisateur de la "
+"HMI  : L'Interface Homme-Machine (IHM) est interface utilisateur de la "
 "machine à espresso. Elle permet à l'utilisateur d'interagir avec la machine, "
 "généralement au moyen de boutons, d'interrupteurs ou d'un écran tactile. "
 "L'IHM permet à l'utilisateur de sélectionner différentes options d'infusion, "
@@ -1294,7 +1294,7 @@ msgstr ""
 msgid ""
 "Water: Represents the flow of water from the water tank to the water pump."
 msgstr ""
-"Water : Représente le flux d'eau depuis le réservoir d'eau jusqu'à la pompe "
+"Water: Représente le flux d'eau depuis le réservoir d'eau jusqu'à la pompe "
 "à eau."
 
 #: ../coffee_machine_logical.md:170
@@ -1302,7 +1302,7 @@ msgid ""
 "On/Off: Represents the command or signal to turn the espresso machine on or "
 "off."
 msgstr ""
-"On/Off : Représente la commande ou le signal de mise en marche ou d'arrêt de "
+"On/Off: Représente la commande ou le signal de mise en marche ou d'arrêt de "
 "la machine à espresso."
 
 #: ../coffee_machine_logical.md:171
@@ -1310,7 +1310,7 @@ msgid ""
 "Volume Adjustment: Represents the user-selected volume adjustment for the "
 "coffee output."
 msgstr ""
-"Volume Adjustment : (Ajustement du volume) Représente le réglage du volume "
+"Volume Adjustment: (Ajustement du volume) Représente le réglage du volume "
 "sélectionné par l'utilisateur pour la sortie du café."
 
 #: ../coffee_machine_logical.md:172
@@ -1318,7 +1318,7 @@ msgid ""
 "Pressurized Water: Represents the water flow under pressure for extracting "
 "coffee."
 msgstr ""
-"Pressurized Water : (Eau sous pression) Représente le débit d'eau sous "
+"Pressurized Water: (Eau sous pression) Représente le débit d'eau sous "
 "pression pour l'extraction du café."
 
 #: ../coffee_machine_logical.md:173
@@ -1326,7 +1326,7 @@ msgid ""
 "Heat Command: Represents the command or signal to activate the water heater "
 "and initiate the heating process."
 msgstr ""
-"Heat Command :(Commande de chauffage) Représente la commande ou le signal "
+"Heat Command:(Commande de chauffage) Représente la commande ou le signal "
 "permettant d'activer le chauffe-eau et de lancer le processus de chauffage."
 
 #: ../coffee_machine_logical.md:174
@@ -1334,7 +1334,7 @@ msgid ""
 "Temperature: Represents the feedback signal indicating the current "
 "temperature of the water."
 msgstr ""
-"Temperature : (Température) Représente le signal de retour indiquant la "
+"Temperature : (Température) Représente le signal de retour indiquant la "
 "température actuelle de l'eau."
 
 #: ../coffee_machine_logical.md:175
@@ -1342,7 +1342,7 @@ msgid ""
 "Hot Pressurized Water: Represents the pressurized hot water for brewing "
 "coffee."
 msgstr ""
-"Hot Pressurized Water : (Eau chaude sous pression) Représente l'eau chaude "
+"Hot Pressurized Water : (Eau chaude sous pression) Représente l'eau chaude "
 "sous pression pour la préparation du café."
 
 #: ../coffee_machine_logical.md:176
@@ -1350,7 +1350,7 @@ msgid ""
 "Coffee Water Mixture: Represents the mixture of hot water and coffee grounds "
 "during the brewing process."
 msgstr ""
-"Coffee Water Mixture : (Mélange d'eau et de café) Représente le mélange "
+"Coffee Water Mixture : (Mélange d'eau et de café) Représente le mélange "
 "d'eau chaude et de marc de café pendant le processus d'infusion."
 
 #: ../coffee_machine_logical.md:180
@@ -1364,7 +1364,7 @@ msgstr ""
 "Remarquez que nous ne montrons rien qui entre ou qui sort du périmètre de la "
 "machine à expresso, comme les entrées du barman ou le café qui en résulte. "
 "Gaphor ne permet pas actuellement d'ajouter des ports à la frontière d'un "
-"schéma fonctionnel interne, mais nous espérons pouvoir le faire bientôt !"
+"schéma fonctionnel interne, mais nous espérons pouvoir le faire bientôt !"
 
 #: ../coffee_machine_logical.md:186
 msgid ""
@@ -1445,7 +1445,7 @@ msgstr ""
 
 #: ../coffee_machine_logical.md:215 ../coffee_machine_logical.md:218
 msgid "Here we derive two requirements:"
-msgstr "Nous en déduisons deux exigences :"
+msgstr "Nous en déduisons deux exigences :"
 
 #: ../coffee_machine_logical.md:217
 msgid "Controller commands heat up"
@@ -1476,7 +1476,7 @@ msgstr ""
 
 #: ../coffee_machine_wrapup.md:1
 msgid "Coffee Machine: Summary"
-msgstr "Machine à café : résumé"
+msgstr "Machine à café : résumé"
 
 #: ../coffee_machine_wrapup.md:3
 msgid ""
@@ -1578,7 +1578,7 @@ msgstr "Espaces de code GitHub"
 
 #: ../container.md:8
 msgid "Follow these steps to open Gaphor in a Codespace:"
-msgstr "Procédez comme suit pour ouvrir Gaphor dans un espace de codage :"
+msgstr "Procédez comme suit pour ouvrir Gaphor dans un espace de codage :"
 
 #: ../container.md:9
 msgid "Navigate to https://github.com/gaphor/gaphor"
@@ -1641,7 +1641,7 @@ msgstr ""
 
 #: ../container.md:33
 msgid "There are two options:"
-msgstr "Deux options sont possibles :"
+msgstr "Deux options sont possibles :"
 
 #: ../container.md:34
 msgid "Using a local VNC viewer"
@@ -1720,7 +1720,7 @@ msgid ""
 "plenty of ways to contribute to Gaphor, no matter your level of experience "
 "or skill set."
 msgstr ""
-"Vous souhaitez contribuer au développement de Gaphor ? Si vous pensez que "
+"Vous souhaitez contribuer au développement de Gaphor ? Si vous pensez que "
 "cela est réservé aux développeurs expérimentés, n'hésitez pas, il y a de "
 "nombreuses façons de contribuer à Gaphor, quel que soit votre niveau "
 "d'expérience ou de compétence."
@@ -2005,7 +2005,7 @@ msgid ""
 "specific operating system in order to open a model."
 msgstr ""
 "Nous avons déployé d'importants efforts pour garantir la prise en charge de "
-"Gaphor sur les principales plateformes : Windows, macOS et Linux. Si le "
+"Gaphor sur les principales plateformes : Windows, macOS et Linux. Si le "
 "modèle doit être partagé, il est essentiel que Gaphor soit disponible sur "
 "toutes les plateformes. Il serait terrible de devoir utiliser un système "
 "d'exploitation spécifique pour ouvrir un modèle."
@@ -2057,12 +2057,12 @@ msgstr ""
 
 #: ../design_principles.md:101
 msgid "What else?"
-msgstr "Quoi d'autre ?"
+msgstr "Quoi d'autre ?"
 
 #: ../design_principles.md:103
 msgid "On a technical level, the following principles are also applicable:"
 msgstr ""
-"Sur le plan technique, les principes suivants sont également applicables :"
+"Sur le plan technique, les principes suivants sont également applicables :"
 
 #: ../design_principles.md:105 ../design_principles.md:103
 msgid ""
@@ -2102,7 +2102,7 @@ msgid ""
 "service. Gaphor is highly event driven:"
 msgstr ""
 "Dans Gaphor, nous gérons les abonnements aux gestionnaires d'événements via "
-"le service `EventManager`. Gaphor est fortement axé sur les événements :"
+"le service `EventManager`. Gaphor est fortement axé sur les événements :"
 
 #: ../event_system.md:9
 msgid "Changes in the loaded model are emitted as events"
@@ -2162,11 +2162,11 @@ msgstr "Enregistrer un gestionnaire."
 
 #: gaphor.core.eventmanager.EventManager.subscribe:3 of
 msgid ""
-"Handlers are triggered (executed) when events are emitted through the :obj:"
-"`~gaphor.core.eventmanager.EventManager.handle` method."
+"Handlers are triggered (executed) when events are emitted through the"
+":obj:`~gaphor.core.eventmanager.EventManager.handle` method."
 msgstr ""
 "Les gestionnaires sont déclenchés (exécutés) lorsque des événements sont "
-"émis par la méthode :obj:`~gaphor.core.eventmanager.EventManager.handle`."
+"émis par la méthode :obj:`~gaphor.core.eventmanager.EventManager.handle`."
 
 #: gaphor.core.eventmanager.EventManager.unsubscribe:1 of
 #: ../../gaphor/core/eventmanager.py:docstring
@@ -2187,17 +2187,17 @@ msgstr ""
 
 #: gaphor.core.eventmanager.event_handler:4 of
 msgid "Given a custom event type:"
-msgstr "Compte tenu du type d'événement personnalisé :"
+msgstr "Compte tenu du type d'événement personnalisé :"
 
 #: gaphor.core.eventmanager.event_handler:10 of
 msgid "You can apply this to a handler method or function:"
-msgstr "Vous pouvez l'appliquer à une méthode ou à une fonction de traitement :"
+msgstr "Vous pouvez l'appliquer à une méthode ou à une fonction de traitement :"
 
 #: gaphor.core.eventmanager.event_handler:16 of
 msgid "This will allow you to let the even be handled by an event manager:"
 msgstr ""
 "Cela vous permettra de laisser un gestionnaire d'événements s'occuper de "
-"l'événement :"
+"l'événement :"
 
 #: ../event_system.md:31 ../event_system.md:24
 msgid ""
@@ -2239,8 +2239,8 @@ msgid ""
 "model -- it shows up in the Model Browser. The selected tool will reset "
 "itself to the Pointer tool after the element is placed on the diagram."
 msgstr ""
-"Sélectionnez un élément que vous souhaitez placer, dans ce cas une classe ( "
-"![Icône de classe](/gaphor/ui/icons/hicolor/scalable/actions/gaphor-class-"
+"Sélectionnez un élément que vous souhaitez placer, dans ce cas une classe ("
+"![Icône de classe](../gaphor/ui/icons/hicolor/scalable/actions/gaphor-class-"
 "symbolic.svg)) en cliquant sur l'icône correspondante dans la boîte à "
 "outils, puis cliquez sur le diagramme. Cela placera une nouvelle instance de "
 "l'élément de classe sur le diagramme et ajoutera une nouvelle classe au "
@@ -2534,7 +2534,7 @@ msgstr ""
 
 #: ../framework.md:40
 msgid "The most notable services are:"
-msgstr "Les services les plus importants sont les suivants :"
+msgstr "Les services les plus importants sont les suivants :"
 
 #: ../framework.md:42
 msgid "event_manager"
@@ -2576,7 +2576,7 @@ msgid ""
 "every now and then!"
 msgstr ""
 "Un des services les plus appréciés. Il permet aux utilisateurs de se tromper "
-"de temps en temps !"
+"de temps en temps !"
 
 #: ../framework.md:59 ../framework.md:63
 msgid ""
@@ -2606,7 +2606,7 @@ msgstr ""
 
 #: ../gaphor-services.md:5
 msgid "Example: Gaphor services"
-msgstr "Exemple : Services Gaphor"
+msgstr "Exemple : Services Gaphor"
 
 #: ../gaphor-services.md:7
 msgid ""
@@ -2625,7 +2625,7 @@ msgstr ""
 
 #: ../gaphor-services.md:12
 msgid "It looks something like this:"
-msgstr "Il se présente comme suit :"
+msgstr "Il se présente comme suit :"
 
 #: ../gaphor-services.md:51
 msgid "Let's first load the entry points."
@@ -2685,7 +2685,7 @@ msgid ""
 "elements you add to the model. In Gaphor you can create diagrams to track "
 "and visualize different aspects of the system you're developing."
 msgstr ""
-"Gaphor est plus qu'un éditeur de diagrammes : c'est un environnement de "
+"Gaphor est plus qu'un éditeur de diagrammes : c'est un environnement de "
 "modélisation. Alors que les éditeurs de diagrammes simples tels que "
 "Microsoft Visio et [draw.io] (https://draw.io) vous permettent de créer des "
 "images, Gaphor garde en fait la trace des éléments que vous ajoutez au "
@@ -2735,7 +2735,7 @@ msgstr "Vous pouvez sélectionner un modèle pour commencer."
 
 #: ../getting_started.md:21
 msgid "**Generic:** a blank model to start with"
-msgstr "**Generic: (Générique :)** un modèle vierge pour commencer"
+msgstr "**Generic: (Générique :)** un modèle vierge pour commencer"
 
 #: ../getting_started.md:22
 msgid ""
@@ -2795,7 +2795,7 @@ msgid ""
 "The layout of the Gaphor interface is divided into four sections, namely:"
 msgstr ""
 "La présentation de l'interface Gaphor est divisée en quatre sections, à "
-"savoir :"
+"savoir :"
 
 #: ../getting_started.md:34 ../getting_started.md:41
 msgid "Model Browser"
@@ -2917,7 +2917,7 @@ msgstr ""
 "La section des diagrammes contient les diagrammes du modèle et occupe le "
 "plus d'espace dans l'interface utilisateur, car c'est là que se fait la "
 "majeure partie de la modélisation. Les diagrammes sont constitués d'éléments "
-"placés sur le diagramme. Il existe deux types principaux d'éléments :"
+"placés sur le diagramme. Il existe deux types principaux d'éléments :"
 
 #: ../getting_started.md:86 ../getting_started.md:93
 msgid "Elements"
@@ -2933,7 +2933,7 @@ msgid ""
 "closed by pressing <kbd>Ctrl</kbd>+<kbd>w</kbd> or left-clicking on the x in "
 "the diagram tab."
 msgstr ""
-"Plusieurs diagrammes peuvent être ouverts simultanément : ils sont affichés "
+"Plusieurs diagrammes peuvent être ouverts simultanément : ils sont affichés "
 "dans des onglets. Les onglets peuvent être fermés en appuyant sur "
 "<kbd>Ctrl</kbd>+<kbd>w</kbd> ouclic-gauche sur le x dans l'onglet diagramme."
 
@@ -2976,7 +2976,7 @@ msgid ""
 msgstr ""
 "Les relations sont des éléments en forme de ligne qui relient entre eux les "
 "éléments du diagramme. Chaque extrémité d'une relation se trouve dans l'un "
-"des deux états suivants :"
+"des deux états suivants :"
 
 #: ../getting_started.md:110
 msgid "Connected to an element and the handle turns red"
@@ -3084,7 +3084,7 @@ msgstr ""
 "Lorsqu'aucun élément n'est sélectionné dans le diagramme, il vous montre "
 "quelques trucs et astuces. Lorsqu'un élément est sélectionné sur le "
 "diagramme, il contient les détails de l'élément comme le nom, les attributs "
-"et les stéréotypes. Il peut être ouvert avec <kbd>F9</kbd> et l'icône !["
+"et les stéréotypes. Il peut être ouvert avec <kbd>F9</kbd> et l'icône !["
 "Icône pour afficher et masquer l'éditeur de propriétés.](images/sidebar-show-"
 "right-symbolic.svg) dans la barre d'en-tête."
 
@@ -3106,8 +3106,8 @@ msgid ""
 "with wrench icon for model specific configuration.](images/document-"
 "properties-symbolic.svg) button."
 msgstr ""
-"L'éditeur de propriétés contient également les préférences du modèle : "
-"cliquer sur le bouton ![Document avec l'icône de clé pour la configuration "
+"L'éditeur de propriétés contient également les préférences du modèle : "
+"cliquer sur le bouton ![Document avec l'icône de clé pour la configuration "
 "spécifique au modèle.](images/document-properties-symbolic.svg)."
 
 #: ../getting_started.md:156
@@ -3191,7 +3191,7 @@ msgid ""
 "The [style sheet](style_sheets) allows to change the visual appearance of "
 "diagrams and model elements."
 msgstr ""
-"La [feuille de style](style sheet) permet de modifier l'apparence visuelle "
+"La [feuille de style](style_sheets) permet de modifier l'apparence visuelle "
 "des diagrammes et des éléments de modèle."
 
 #: ../index.rst:29
@@ -3260,7 +3260,7 @@ msgstr ""
 
 #: ../index.rst:21
 msgid "What are you waiting for? :doc:`Let's get started <getting_started>`!"
-msgstr "Qu'attendez-vous ? :doc:`Commençons <getting_started>` !"
+msgstr "Qu'attendez-vous ? :doc:`Commençons <getting_started>` !"
 
 #: ../index.rst:23
 msgid ""
@@ -3275,8 +3275,8 @@ msgid ""
 "Did you know Gaphor has excellent integration with :doc:`Sphinx <sphinx>` "
 "and :doc:`Jupyter notebooks <scripting>`?"
 msgstr ""
-"Saviez-vous que Gaphor a une excellente intégration avec :doc:`Sphinx "
-"<sphinx>` et :doc:`Jupyter notebooks <scripting>` ?"
+"Saviez-vous que Gaphor a une excellente intégration avec :doc:`Sphinx "
+"<sphinx>` et :doc:`Jupyter notebooks <scripting>` ?"
 
 #: ../linux.md:1
 msgid "Gaphor on Linux"
@@ -3315,7 +3315,7 @@ msgstr "Environnement de développement"
 #: ../linux.md:13
 msgid "There are two ways to set up a development environment:"
 msgstr ""
-"Il existe deux façons de mettre en place un environnement de développement :"
+"Il existe deux façons de mettre en place un environnement de développement :"
 
 #: ../linux.md:15
 msgid "[GNOME Builder](#gnome-builder), ideal for “drive by” contributions."
@@ -3375,7 +3375,7 @@ msgid ""
 "build-problems) first, and then install pyenv:"
 msgstr ""
 "Installez d'abord les [prérequis] de pyenv (https://github.com/pyenv/pyenv/"
-"wiki/Common-build-problems), puis installez pyenv :"
+"wiki/Common-build-problems), puis installez pyenv :"
 
 #: ../linux.md:42
 msgid ""
@@ -3385,7 +3385,7 @@ msgid ""
 msgstr ""
 "Assurez-vous de suivre les instructions à la fin du script d'installation "
 "pour installer les commandes dans le fichier rc de votre shell. Installez "
-"ensuite la dernière version de Python en exécutant :"
+"ensuite la dernière version de Python en exécutant :"
 
 #: ../linux.md:50
 msgid ""
@@ -3402,7 +3402,7 @@ msgid ""
 "introspection and cairo build dependencies, for example, in Ubuntu execute:"
 msgstr ""
 "Installez ensuite les prérequis de Gaphor en installant les dépendances "
-"gobject introspection et cairo build, par exemple, dans Ubuntu execute :"
+"gobject introspection et cairo build, par exemple, dans Ubuntu execute :"
 
 #: ../linux.md:61 ../macos.md:18
 msgid ""
@@ -3410,7 +3410,7 @@ msgid ""
 "io/pipx/):"
 msgstr ""
 "Installer [Poetry](https://python-poetry.org) en utilisant "
-"[pipx](https://pypa.github.io/pipx/) :"
+"[pipx](https://pypa.github.io/pipx/) :"
 
 #: ../linux.md:66
 msgid ""
@@ -3420,7 +3420,7 @@ msgid ""
 msgstr ""
 "Ensuite, [clonez le dépôt] (https://help.github.com/en/github/"
 "creating-cloning-and-archiving-repositories/cloning-a-repository), après "
-"quoi vous devez exécuter les commandes suivantes :"
+"quoi vous devez exécuter les commandes suivantes :"
 
 #: ../linux.md:77 ../macos.md:30
 msgid "Now, you can run gaphor as"
@@ -3431,7 +3431,7 @@ msgid ""
 "NOTE: Gaphor requires GTK 4. It works best with GTK >=4.8 and libadwaita "
 ">=1.2."
 msgstr ""
-"NOTE : Gaphor nécessite GTK 4. Il fonctionne mieux avec GTK >=4.8 et "
+"NOTE : Gaphor nécessite GTK 4. Il fonctionne mieux avec GTK >=4.8 et "
 "libadwaita >=1.2."
 
 #: ../linux.md:84 ../macos.md:44 ../windows.md:169 ../linux.md:81
@@ -3451,7 +3451,7 @@ msgstr ""
 
 #: ../linux.md:89 ../macos.md:49 ../linux.md:86 ../macos.md:44
 msgid "Create a file `.vscode/launch.json` with the following content:"
-msgstr "Créez un fichier `.vscode/launch.json` avec le contenu suivant :"
+msgstr "Créez un fichier `.vscode/launch.json` avec le contenu suivant :"
 
 #: ../linux.md:109 ../linux.md:106
 msgid ""
@@ -3502,7 +3502,7 @@ msgstr "Installer le SDK GNOME"
 
 #: ../linux.md:132 ../linux.md:129
 msgid "Clone the Flathub repository and install the necessary SDK:"
-msgstr "Clonez le dépot Flathub et installez le SDK nécessaire :"
+msgstr "Clonez le dépot Flathub et installez le SDK nécessaire :"
 
 #: ../linux.md:138 ../linux.md:135
 msgid "Build Gaphor Flatpak"
@@ -3523,7 +3523,7 @@ msgid ""
 msgstr ""
 "Des exemples de fichiers de spécifications Gaphor et Gaphas RPM peuvent être "
 "trouvés dans [PLD Linux](https://www.pld-linux.org/) [dépôt](https://github."
-"com/pld-linux/) :"
+"com/pld-linux/) :"
 
 #: ../linux.md:152 ../linux.md:149
 msgid "https://github.com/pld-linux/python-gaphas"
@@ -3568,7 +3568,7 @@ msgstr ""
 #: ../macos.md:12
 msgid "To set up a development environment with macOS:"
 msgstr ""
-"Mise à jour des instructions relatives à l'environnement de développement :"
+"Mise à jour des instructions relatives à l'environnement de développement :"
 
 #: ../macos.md:13
 msgid "Install [Homebrew](https://brew.sh)"
@@ -3576,7 +3576,7 @@ msgstr "Installer [Homebrew](https://brew.sh)"
 
 #: ../macos.md:14
 msgid "Open a terminal and execute:"
-msgstr "Ouvrez un terminal et exécutez :"
+msgstr "Ouvrez un terminal et exécutez :"
 
 #: ../macos.md:23
 msgid ""
@@ -3588,7 +3588,7 @@ msgstr ""
 "Ensuite, [clonez le dépôt] (https://help.github.com/en/github/"
 "creating-cloning-and-archiving-repositories/cloning-a-repository), après "
 "quoi vous pouvez exécuter les commandes suivantes pour installer "
-"l'environnement de poésie :"
+"l'environnement de poésie :"
 
 #: ../macos.md:35
 msgid ""
@@ -3598,7 +3598,7 @@ msgid ""
 msgstr ""
 "Si PyGObject ne compile pas et se plaint d'un fichier `ffi.h` manquant, vous "
 "pouvez installer la librairie libffi depuis Homebrew, définir la variable "
-"d'environnement suivante et relancer `poetry install` :"
+"d'environnement suivante et relancer `poetry install` :"
 
 #: ../macos.md:46 ../macos.md:41
 msgid ""
@@ -3635,7 +3635,7 @@ msgid ""
 "Open a terminal and execute the following from the repository directory:"
 msgstr ""
 "Ouvrez un terminal et exécutez la commande suivante à partir du répertoire "
-"du référentiel :"
+"du référentiel :"
 
 #: ../merge_conflicts.md:1
 msgid "Resolve Merge Conflicts"
@@ -3660,7 +3660,7 @@ msgid ""
 "text editor."
 msgstr ""
 "Gaphor s'efforce de réduire au maximum les modifications apportées à un "
-"modèle : tous les éléments sont stockés dans le même ordre. Cependant, étant "
+"modèle : tous les éléments sont stockés dans le même ordre. Cependant, étant "
 "donné qu'un modèle Gaphor est un graphe persistant d'objets, la fusion des "
 "modifications n'est pas aussi simple qu'ouvrir un éditeur de texte."
 
@@ -3823,7 +3823,7 @@ msgid ""
 "language implementation can offer?"
 msgstr ""
 "Mais n'allons pas trop vite en besogne. Quelles fonctionnalités une "
-"implémentation de langage de modélisation peut-elle offrir ?"
+"implémentation de langage de modélisation peut-elle offrir ?"
 
 #: ../modeling_language.md:23
 msgid ""
@@ -3831,7 +3831,7 @@ msgid ""
 "(#modeling-language):"
 msgstr ""
 "Trois fonctionnalités sont exposées par une instance de [`ModelingLanguage`] "
-"(#modeling-language) :"
+"(#modeling-language) :"
 
 #: ../modeling_language.md:25 ../modeling_language.md:23
 msgid "A data model (elements) and diagram items"
@@ -3851,7 +3851,7 @@ msgid ""
 "generic functions:"
 msgstr ""
 "D'autres fonctionnalités peuvent être étendues en ajoutant des gestionnaires "
-"aux fonctions génériques correspondantes :"
+"aux fonctions génériques correspondantes :"
 
 #: ../modeling_language.md:32 ../modeling_language.md:26
 msgid "[Connectors](#connectors), allow diagram items to connect"
@@ -3980,15 +3980,15 @@ msgstr ""
 
 #: ../modeling_language.md:60
 msgid "To illustrate:"
-msgstr "En guise d'illustration :"
+msgstr "En guise d'illustration :"
 
 #: ../modeling_language.md:62
 msgid "The file `mytool/mylang/__init__.py` contains an entry:"
-msgstr "Le fichier `mytool/mylang/__init__.py` contient une entrée :"
+msgstr "Le fichier `mytool/mylang/__init__.py` contient une entrée :"
 
 #: ../modeling_language.md:68
 msgid "`pyproject.toml` contains an entry point:"
-msgstr "`pyproject.toml` contient un point d'entrée :"
+msgstr "`pyproject.toml` contient un point d'entrée :"
 
 #: ../modeling_language.md:75 ../modeling_language.md:52
 msgid "Connectors"
@@ -4054,7 +4054,7 @@ msgstr "Détermine si les éléments peuvent être connectés."
 msgid "Is the connection allowed at all (during mouse movement for example)?"
 msgstr ""
 "La connexion est-elle toujours autorisée, par exemple lorsque la souris se "
-"déplace ?"
+"déplace ?"
 
 #: gaphor.diagram.connectors.BaseConnector.allow:5 of
 #: ../../gaphor/diagram/connectors.py:docstring
@@ -4144,7 +4144,7 @@ msgid ""
 msgstr ""
 "Il renvoie une représentation lisible de l'élément de modèle. Dans la "
 "plupart des cas, il s'agit simplement du nom, mais les propriétés (attributs)"
-" et les opérations sont présentées de manière plus détaillée :"
+" et les opérations sont présentées de manière plus détaillée :"
 
 #: ../modeling_language.md:110 ../modeling_language.md:87
 msgid ""
@@ -4186,7 +4186,7 @@ msgid ""
 "for copying and one for pasting."
 msgstr ""
 "Dans ces cas spécifiques, vous devez implémenter vos propres fonctions de "
-"copier-coller. Pour ce faire, vous devez créer deux fonctions : l'une pour "
+"copier-coller. Pour ce faire, vous devez créer deux fonctions : l'une pour "
 "copier et l'autre pour coller."
 
 #: ../modeling_language.md:126 ../modeling_language.md:103
@@ -4214,7 +4214,7 @@ msgstr ""
 
 #: ../modeling_language.md:139 ../modeling_language.md:116
 msgid "Gaphor provides some convenience functions:"
-msgstr "Gaphor fournit quelques fonctions de confort :"
+msgstr "Gaphor fournit quelques fonctions de confort :"
 
 #: ../modeling_language.md:143 ../modeling_language.md:120
 msgid ""
@@ -4436,8 +4436,8 @@ msgid ""
 "domain classes. :obj:`~gaphor.core.modeling.Diagram` and :obj:`~gaphor.core."
 "modeling.Presentation` form the basis for everything you see in a diagram."
 msgstr ""
-"La classe :obj:`~gaphor.core.modeling.Base` est la racine de toutes les "
-"classes du domaine gaphor. :obj:`~gaphor.core.modeling.Diagram` et "
+"La classe :obj:`~gaphor.core.modeling.Base` est la racine de toutes les "
+"classes du domaine gaphor. :obj:`~gaphor.core.modeling.Diagram` et "
 ":obj:`~gaphor.core.modeling.Presentation` forment la base de tout ce que "
 "vous voyez dans un diagramme."
 
@@ -4463,11 +4463,11 @@ msgid ""
 "from :obj:`~gaphor.core.modeling.Base`. Bi-directional relationships are "
 "also possible, as well as derived relations."
 msgstr ""
-"La classe :obj:`~gaphor.core.modeling.Base` fournit des notifications "
+"La classe :obj:`~gaphor.core.modeling.Base` fournit des notifications "
 "d'événements et s'intègre au référentiel de modèles (connu en interne sous "
-"le nom de :obj:`~gaphor.core.modeling.ElementFactory`). Toutes les classes "
+"le nom de :obj:`~gaphor.core.modeling.ElementFactory`). Toutes les classes "
 "d'un modèle doivent dériver de cette classe. Si un modèle n'indique pas de "
-"classe de base pour un élément, il dérivera de :obj:`~gaphor.core.modeling."
+"classe de base pour un élément, il dérivera de :obj:`~gaphor.core.modeling."
 "Base`. Les relations bidirectionnelles sont également possibles, de même que "
 "les relations dérivées."
 
@@ -4477,7 +4477,7 @@ msgid ""
 "core.modeling.base.EventWatcherProtocol` protocols are important to connect "
 "the model to the repository and event handling mechanisms."
 msgstr ""
-"Les protocoles :obj:`~gaphor.core.modeling.base.RepositoryProtocol`, et "
+"Les protocoles :obj:`~gaphor.core.modeling.base.RepositoryProtocol`, et "
 ":obj:`~gaphor.core.modeling.base.EventWatcherProtocol` sont importants pour "
 "connecter le modèle au référentiel et aux mécanismes de gestion des "
 "événements."
@@ -4503,7 +4503,7 @@ msgstr "Un identifiant (en lecture seule), unique dans le modèle."
 #: gaphor.core.modeling.Element.model:1
 msgid "The owning model, raises :class:`TypeError` when model is not set."
 msgstr ""
-"Le modèle propriétaire, génère :class:`TypeError` si le modèle n'est pas "
+"Le modèle propriétaire, génère :class:`TypeError` si le modèle n'est pas "
 "défini."
 
 #: gaphor.core.modeling.base.Base.unlink:1 of
@@ -4549,7 +4549,7 @@ msgid ""
 "This only works if the element has been created by an :class:`~gaphor.core."
 "modeling.ElementFactory`"
 msgstr ""
-"Cela ne fonctionne que si l'élément a été créé par une :class:`~gaphor.core."
+"Cela ne fonctionne que si l'élément a été créé par une :class:`~gaphor.core."
 "modeling.ElementFactory`"
 
 #: gaphor.core.modeling.base.Base.watcher:1 of
@@ -4575,14 +4575,14 @@ msgid ""
 "To use a watcher, the element should be created by a properly wired up :"
 "class:`~gaphor.core.modeling.ElementFactory``."
 msgstr ""
-"Pour utiliser un observateur, l'élément doit être créé par une "
+"Pour utiliser un observateur, l'élément doit être créé par une "
 ":class:`~gaphor.core.modeling.ElementFactory`` correctement câblée."
 
 #: gaphor.core.modeling.base.Base.watcher:8 of
 #: ../../gaphor/core/modeling/element.py:docstring
 #: gaphor.core.modeling.element.Element.watcher:8
 msgid "This example is purely illustrative:"
-msgstr "Cet exemple est purement illustratif :"
+msgstr "Cet exemple est purement illustratif :"
 
 #: ../models/core.rst:52 ../models/core_element.rst:24
 msgid "Loading and saving"
@@ -4629,14 +4629,14 @@ msgstr "Méthodes de type OCL"
 #: ../../gaphor/core/modeling/element.py:docstring
 #: gaphor.core.modeling.element.Element.isKindOf:1
 msgid "Returns :const:`True` if the object is an instance of ``class_``."
-msgstr "Retourne :const:`True` si l'objet est une instance de ``class_``."
+msgstr "Retourne :const:`True` si l'objet est une instance de ``class_``."
 
 #: gaphor.core.modeling.base.Base.isTypeOf:1 of
 #: ../../gaphor/core/modeling/element.py:docstring
 #: gaphor.core.modeling.element.Element.isTypeOf:1
 msgid ""
 "Returns :const:`True` if the object is of the same type as the ``other``."
-msgstr "Retourne :const:`True` si l'objet est du même type que ``other``."
+msgstr "Retourne :const:`True` si l'objet est du même type que ``other``."
 
 #: ../models/core.rst:70
 msgid "The ``Presentation`` class"
@@ -4646,7 +4646,7 @@ msgstr "La classe ``Presentation``"
 msgid ""
 "A special type of :obj:`Base` that can be displayed on a :obj:`Diagram`."
 msgstr ""
-"Un type spécial de :obj:`Base` qui peut être affiché sur un :obj:`Diagram`."
+"Un type spécial de :obj:`Base` qui peut être affiché sur un :obj:`Diagram`."
 
 #: gaphor.core.modeling.presentation.Presentation:3 of
 msgid "Presentation instances can only be owned by diagrams."
@@ -4658,7 +4658,7 @@ msgid ""
 "Subtypes of ``Presentation`` should implement the :obj:`gaphas.item.Item` "
 "protocol."
 msgstr ""
-"Les sous-types de ``Presentation`` doivent implémenter le protocole "
+"Les sous-types de ``Presentation`` doivent implémenter le protocole "
 ":obj:`gaphas.item.Item`."
 
 #: gaphor.core.modeling.presentation.Presentation.request_update:1 of
@@ -4677,7 +4677,7 @@ msgstr "Observez un certain chemin d'éléments commençant par ``self``."
 msgid ""
 "The handler is optional and will default to a simple :obj:`request_update`."
 msgstr ""
-"Le traitement est optionnel et sera par défaut un simple "
+"Le traitement est optionnel et sera par défaut un simple "
 ":obj:`request_update`."
 
 #: gaphor.core.modeling.presentation.Presentation.watch:5 of
@@ -4690,7 +4690,7 @@ msgstr ""
 
 #: gaphor.core.modeling.presentation.Presentation.watch:12 of
 msgid "This interface is fluent: returns ``self``."
-msgstr "Cette interface est fluide : elle renvoie ``self``."
+msgstr "Cette interface est fluide : elle renvoie ``self``."
 
 #: gaphor.core.modeling.presentation.Presentation.change_parent:1 of
 msgid ""
@@ -4706,7 +4706,7 @@ msgstr "La classe ``Diagram``"
 
 #: gaphor.core.modeling.diagram.Diagram:1 of
 msgid "Diagrams may contain :obj:`Presentation` elements."
-msgstr "Les diagrammes peuvent contenir des éléments :obj:`Presentation`."
+msgstr "Les diagrammes peuvent contenir des éléments :obj:`Presentation`."
 
 #: gaphor.core.modeling.diagram.Diagram:3 of
 msgid ""
@@ -4759,7 +4759,7 @@ msgstr ""
 
 #: gaphor.core.modeling.diagram.Diagram.request_update:6 of
 msgid "This method is part of the :obj:`gaphas.model.Model` protocol."
-msgstr "Cette méthode fait partie du protocole :obj:`gaphas.model.Model`."
+msgstr "Cette méthode fait partie du protocole :obj:`gaphas.model.Model`."
 
 #: gaphor.core.modeling.diagram.Diagram.update:1 of
 msgid "Update the diagram."
@@ -4771,8 +4771,8 @@ msgid ""
 "updates. If an item has an ``update(context: UpdateContext)`` method, it's "
 "invoked. Constraints are solved."
 msgstr ""
-"Tous les éléments ayant demandé une mise à jour via la méthode "
-"`request_update` sont désormais considérés comme des mises à jour. Si un "
+"Tous les éléments ayant demandé une mise à jour via :meth:`request_update` "
+"sont désormais considérés comme des mises à jour. Si un "
 "élément possède une méthode ``update(context: UpdateContext)``, elle est "
 "invoquée. Les contraintes sont résolues."
 
@@ -4803,7 +4803,7 @@ msgstr "Récupérer un élément par son identifiant dans le dépôt."
 
 #: ../models/core.rst:124 ../models/core_element.rst:68
 msgid "Returns :const:`None` if no such element exists."
-msgstr "Renvoie :const:`None` si aucun élément de ce type n'existe."
+msgstr "Renvoie :const:`None` si aucun élément de ce type n'existe."
 
 #: ../models/core.rst:130 ../models/core_element.rst:74
 msgid ""
@@ -4868,7 +4868,7 @@ msgid ""
 "New model elements should be created by :obj:`~gaphor.core.modeling."
 "ElementFactory.create`."
 msgstr ""
-"Les nouveaux éléments de modèle doivent être créés par :obj:`~gaphor.core."
+"Les nouveaux éléments de modèle doivent être créés par :obj:`~gaphor.core."
 "modeling.ElementFactory.create`."
 
 #: gaphor.core.modeling.elementfactory.ElementFactory:6 of
@@ -4876,7 +4876,7 @@ msgid ""
 "Methods like :obj:`~gaphor.core.modeling.ElementFactory.select` can be used "
 "to find elements in the model."
 msgstr ""
-"Des méthodes comme :obj:`~gaphor.core.modeling.ElementFactory.select` "
+"Des méthodes comme :obj:`~gaphor.core.modeling.ElementFactory.select` "
 "peuvent être utilisées pour trouver des éléments dans le modèle."
 
 #: gaphor.core.modeling.elementfactory.ElementFactory.select:1 of
@@ -4885,7 +4885,7 @@ msgstr "Interroger les éléments conformes à l'expression."
 
 #: gaphor.core.modeling.elementfactory.ElementFactory.select:3 of
 msgid "Expressions can be:"
-msgstr "Les expressions peuvent être :"
+msgstr "Les expressions peuvent être :"
 
 #: gaphor.core.modeling.elementfactory.ElementFactory.select:5 of
 msgid ":obj:`None`: return all elements."
@@ -4893,7 +4893,7 @@ msgstr ":obj:`None`: renvoie tous les éléments."
 
 #: gaphor.core.modeling.elementfactory.ElementFactory.select:6 of
 msgid "A type: return all elements of that type, or subtypes."
-msgstr "Un type : renvoie tous les éléments de ce type ou de ses sous-types."
+msgstr "Un type : renvoie tous les éléments de ce type ou de ses sous-types."
 
 #: gaphor.core.modeling.elementfactory.ElementFactory.select:7 of
 msgid "An expression."
@@ -4904,7 +4904,7 @@ msgid ""
 "Like :obj:`~gaphor.core.modeling.ElementFactory.select`, but return a list, "
 "instead of an iterator."
 msgstr ""
-"Comme :obj:`~gaphor.core.modeling.ElementFactory.select`, mais renvoie une "
+"Comme :obj:`~gaphor.core.modeling.ElementFactory.select`, mais renvoie une "
 "liste au lieu d'un itérateur."
 
 #: gaphor.core.modeling.elementfactory.ElementFactory.lookup:1 of
@@ -4937,8 +4937,8 @@ msgid ""
 "Presentation` elements: those are created by :obj:`~gaphor.core.modeling."
 "Diagram`."
 msgstr ""
-"Cette méthode ne crée que des éléments de modèle, et non des éléments "
-":obj:`~gaphor.core.modeling.Presentation` : ceux-ci sont créés par "
+"Cette méthode ne crée que des éléments de modèle, et non des éléments "
+":obj:`~gaphor.core.modeling.Presentation` : ceux-ci sont créés par "
 ":obj:`~gaphor.core.modeling.Diagram`."
 
 #: gaphor.core.modeling.elementfactory.ElementFactory.flush:1 of
@@ -4962,7 +4962,7 @@ msgid ""
 "modeling_language`."
 msgstr ""
 "Des informations sur la gestion des langages de modélisation sont "
-"disponibles :doc:`../modeling_language`."
+"disponibles :doc:`../modeling_language`."
 
 #: ../models/core_services.rst:39
 msgid "Event Manager"
@@ -4972,7 +4972,7 @@ msgstr "Gestionnaire d'événements"
 msgid ""
 "The :doc:`../event_system` takes care of dispatches events throughout Gaphor."
 msgstr ""
-"Le :doc:`../event_system` s'occupe de distribuer les événements à travers "
+"Le :doc:`../event_system` s'occupe de distribuer les événements à travers "
 "Gaphor."
 
 #: ../models/raaml.md:10 ../models/sysml.md:9 ../models/uml.md:15
@@ -5665,7 +5665,7 @@ msgstr "Plugins"
 
 #: ../plugins.md:4
 msgid "Plugins is an experimental feature! The API may change."
-msgstr "Plugins est une fonctionnalité expérimentale ! L'API peut changer."
+msgstr "Plugins est une fonctionnalité expérimentale ! L'API peut changer."
 
 #: ../plugins.md:6
 msgid "We welcome you to try and provide your feedback."
@@ -5687,7 +5687,7 @@ msgstr ""
 
 #: ../plugins.md:12
 msgid "Gaphor can be extended via entry points in several ways:"
-msgstr "Gaphor peut être étendu par des points d'entrée de plusieurs manières :"
+msgstr "Gaphor peut être étendu par des points d'entrée de plusieurs manières :"
 
 #: ../plugins.md:14
 msgid "Application (global) services (`gaphor.appservices`)"
@@ -5769,8 +5769,8 @@ msgid ""
 "For example: to install the [Hello World plugin](https://github.com/gaphor/"
 "gaphor_plugin_helloworld) on Linux and macOS, enter:"
 msgstr ""
-"Par exemple : pour installer le [plugin Hello World] (https://github.com/"
-"gaphor/gaphor_plugin_helloworld) sur Linux et macOS, entrez :"
+"Par exemple : pour installer le [plugin Hello World] (https://github.com/"
+"gaphor/gaphor_plugin_helloworld) sur Linux et macOS, entrez :"
 
 #: ../plugins.md:45
 msgid ""
@@ -5779,7 +5779,7 @@ msgid ""
 "→ Hello World)."
 msgstr ""
 "Ensuite, démarrez Gaphor comme vous le feriez normalement. Une nouvelle "
-"entrée Hello World a été ajoutée au menu des outils ( ![Icône de menu]("
+"entrée Hello World a été ajoutée au menu des outils ( ![Icône de menu]("
 "images/open-menu-symbolic.svg) → Outils → Hello World)."
 
 #: ../plugins.md:48 ../plugins.md:45
@@ -5818,7 +5818,7 @@ msgid ""
 "main/pyproject.toml) file contains a plugin:"
 msgstr ""
 "Le fichier [pyproject.toml](https://github.com/gaphor/"
-"gaphor_plugin_helloworld/blob/main/pyproject.toml) contient un plugin :"
+"gaphor_plugin_helloworld/blob/main/pyproject.toml) contient un plugin :"
 
 #: ../plugins.md:67 ../service_oriented.md:129
 msgid ""
@@ -5832,7 +5832,7 @@ msgstr ""
 
 #: ../plugins.md:70 ../service_oriented.md:132
 msgid "Here is a stripped version of the hello world plugin:"
-msgstr "Voici une version dépouillée du plugin hello world :"
+msgstr "Voici une version dépouillée du plugin hello world :"
 
 #: ../plugins.md:95 ../service_oriented.md:157
 msgid ""
@@ -5883,7 +5883,7 @@ msgstr "FAQ sur le développement de plugins"
 
 #: ../plugins.md:110
 msgid "How do I acceess gaphor services in my plugin?"
-msgstr "Comment accéder aux services gaphor dans mon plugin ?"
+msgstr "Comment accéder aux services gaphor dans mon plugin ?"
 
 #: ../plugins.md:112
 msgid ""
@@ -5903,7 +5903,7 @@ msgid ""
 "Oriented Architecture documentation page](service_oriented.md)."
 msgstr ""
 "Une description plus complète de cette approche est disponible sur la [page "
-"de documentation de l'architecture orientée services] (service_oriented.md)."
+"de documentation de l'architecture orientée services](service_oriented.md)."
 
 #: ../scripting.md:5
 msgid "Jupyter and Scripting"
@@ -5922,7 +5922,7 @@ msgstr ""
 
 #: ../scripting.md:11
 msgid "You can use scripts to:"
-msgstr "Vous pouvez utiliser des scripts pour :"
+msgstr "Vous pouvez utiliser des scripts pour :"
 
 #: ../scripting.md:13
 msgid "Explore the model, check for (in)valid conditions."
@@ -5982,7 +5982,7 @@ msgid ""
 msgstr ""
 "Le module `gaphor.storage` contient tout ce qu'il faut pour charger et "
 "sauvegarder les modèles. Gaphor supporte plusieurs [langages de modélisation]"
-" (modeling_language). Le `ModelingLanguageService` consolide ces langages et "
+"(modeling_language). Le `ModelingLanguageService` consolide ces langages et "
 "permet à la logique de chargement de trouver facilement les classes "
 "appropriées."
 
@@ -6038,13 +6038,13 @@ msgstr ""
 "modèle. La méthode `ElementFactory.select()` renvoie un itérateur. Il est "
 "parfois plus facile d'obtenir une liste directement. Dans ce cas, vous "
 "pouvez utiliser la méthode `ElementFatory.lselect()`. Ici, nous "
-"sélectionnons les cinq derniers éléments :"
+"sélectionnons les cinq derniers éléments :"
 
 #: ../scripting.md:89 ../scripting.md:88
 msgid "Elements can also be queried by type and with a predicate function:"
 msgstr ""
 "Les éléments peuvent également être interrogés par type et à l'aide d'une "
-"fonction de prédiction :"
+"fonction de prédiction :"
 
 #: ../scripting.md:104 ../scripting.md:103
 msgid ""
@@ -6141,11 +6141,11 @@ msgid ""
 "elements are created."
 msgstr ""
 "La mise à jour d'un modèle commence toujours par la fabrique d'éléments ("
-"element factory) : c'est là que les éléments sont créés."
+"element factory) : c'est là que les éléments sont créés."
 
 #: ../scripting.md:194 ../scripting.md:193
 msgid "To create a UML Class instance, you can:"
-msgstr "Pour créer une instance de classe UML, vous pouvez :"
+msgstr "Pour créer une instance de classe UML, vous pouvez :"
 
 #: ../scripting.md:201 ../scripting.md:200
 msgid ""
@@ -6157,11 +6157,11 @@ msgstr ""
 
 #: ../scripting.md:211 ../scripting.md:210
 msgid "Adding it to the diagram looks like this:"
-msgstr "En l'ajoutant au diagramme, on obtient le résultat suivant :"
+msgstr "En l'ajoutant au diagramme, on obtient le résultat suivant :"
 
 #: ../scripting.md:219 ../scripting.md:218
 msgid "If you save the model, your changes are persisted:"
-msgstr "Si vous enregistrez le modèle, vos modifications sont conservées :"
+msgstr "Si vous enregistrez le modèle, vos modifications sont conservées :"
 
 #: ../scripting.md:227
 msgid "Updating elements"
@@ -6176,11 +6176,11 @@ msgstr ""
 "Si vous devez mettre à jour des éléments existants, vous pouvez le faire en "
 "gardant une trace de l'identifiant de l'élément. Chaque élément du modèle "
 "possède un identifiant interne unique. Une fois de plus, nous avons besoin "
-"d'importations de Gaphor :"
+"d'importations de Gaphor :"
 
 #: ../scripting.md:242
 msgid "Then start up the services we will use:"
-msgstr "Ensuite, nous lancerons les services que nous utiliserons :"
+msgstr "Ensuite, nous lancerons les services que nous utiliserons :"
 
 #: ../scripting.md:261
 msgid "and load in the model to the session"
@@ -6248,7 +6248,7 @@ msgid ""
 "actually a Jupyter Notebook!"
 msgstr ""
 "Cette page est réalisée avec [MyST-NB](https://myst-nb.readthedocs.io/). Il "
-"s'agit en fait d'un carnet de notes Jupyter !"
+"s'agit en fait d'un carnet de notes Jupyter !"
 
 #: ../scripting.md:303 ../scripting.md:235
 msgid "Examples"
@@ -6284,7 +6284,7 @@ msgstr ""
 
 #: ../scripting.md:388 ../scripting.md:295
 msgid "Here is another example:"
-msgstr "Voici un autre exemple :"
+msgstr "Voici un autre exemple :"
 
 #: ../service_oriented.md:1
 msgid "Service Oriented Architecture"
@@ -6297,7 +6297,7 @@ msgid ""
 "specific piece of functionality. For example, we use separate services to "
 "load/save models, provide the menu structure, and to handle the undo system."
 msgstr ""
-"Gaphor a une architecture orientée services. Qu'est-ce que cela signifie ? "
+"Gaphor a une architecture orientée services. Qu'est-ce que cela signifie ? "
 "Gaphor est construit comme un ensemble de petites îles (services). Chaque "
 "îlot fournit une fonctionnalité spécifique. Par exemple, nous utilisons des "
 "services distincts pour charger/sauvegarder les modèles, pour fournir la "
@@ -6338,7 +6338,7 @@ msgid ""
 "one method:"
 msgstr ""
 "Chaque service doit implémenter l'interface Service. Cette interface définit "
-"une méthode :"
+"une méthode :"
 
 #: ../service_oriented.md:28 ../service_oriented.md:26
 msgid "Which is called when a service needs to be cleaned up."
@@ -6379,7 +6379,7 @@ msgstr ""
 "Un service peut également dépendre d'autres services. L'initialisation du "
 "service résout ces dépendances. Pour définir une dépendance de service, il "
 "suffit de l'ajouter au constructeur par son nom défini dans le point "
-"d'entrée :"
+"d'entrée :"
 
 #: ../service_oriented.md:58 ../service_oriented.md:54
 msgid ""
@@ -6394,7 +6394,7 @@ msgstr ""
 
 #: ../service_oriented.md:62 ../service_oriented.md:58
 msgid "Example: ElementFactory"
-msgstr "Exemple : ElementFactory"
+msgstr "Exemple : ElementFactory"
 
 #: ../service_oriented.md:64
 msgid ""
@@ -6417,7 +6417,7 @@ msgstr ""
 "destruction d'un élément, l'événement correspondant est émis. Nous utilisons "
 "alors un gestionnaire d'événement pour la classe `ElementFactory` qui stocke "
 "les signaux d'ajout/suppression dans le système d'annulation. Un autre "
-"exemple d'événements émis concerne les objets `~gaphor.core.modeling.Element`"
+"exemple d'événements émis concerne les {obj}`~gaphor.core.modeling.Element`"
 ". Ces classes, ou plus précisément leurs propriétés, envoient des "
 "notifications à chaque fois que leur état change."
 
@@ -6430,7 +6430,7 @@ msgid ""
 "Gaphor uses a main :ref`entry point <https://packaging.python.org/en/latest/"
 "specifications/entry-points/>` group called `gaphor.services`."
 msgstr ""
-"Gaphor utilise un groupe principal :ref`entry point <https://packaging.python"
+"Gaphor utilise un groupe principal :ref`entry point <https://packaging.python"
 ".org/en/latest/specifications/entry-points/>` appelé `gaphor.services`."
 
 #: ../service_oriented.md:78 ../service_oriented.md:73
@@ -6455,7 +6455,7 @@ msgstr ""
 "fonctionnalités de base. Par exemple, un plugin peut être créé pour "
 "connecter les données du modèle à d'autres applications. Les plugins sont "
 "également définis comme des services. Par exemple, un nouveau plugin "
-"d'exportation XMI serait défini comme suit dans le fichier `pyproject.toml` :"
+"d'exportation XMI serait défini comme suit dans le fichier `pyproject.toml` :"
 
 #: ../service_oriented.md:92 ../service_oriented.md:87
 msgid "Interfaces"
@@ -6466,7 +6466,7 @@ msgid ""
 "Each service (and plugin) should implement the `gaphor.abc.Service` "
 "interface:"
 msgstr ""
-"Chaque service (et plugin) doit implémenter l'interface `gaphor.abc.Service` "
+"Chaque service (et plugin) doit implémenter l'interface `gaphor.abc.Service` "
 ":"
 
 #: gaphor.abc.Service:1 of ../../gaphor/abc.py:docstring
@@ -6490,7 +6490,7 @@ msgstr ""
 "Service`, est le service UI Component. Les services qui utilisent cette "
 "interface servent à définir les fenêtres et les fonctionnalités de "
 "l'interface utilisateur. Un composant d'interface utilisateur doit "
-"implémenter l'interface `gaphor.ui.abc.UIComponent` :"
+"implémenter l'interface `gaphor.ui.abc.UIComponent` :"
 
 #: gaphor.ui.abc.UIComponent:1 of ../../gaphor/ui/abc.py:docstring
 msgid "A user interface component."
@@ -6527,7 +6527,7 @@ msgstr ""
 "Typiquement, un service et un composant d'interface utilisateur (UI) "
 "souhaitent proposer certaines actions à l'utilisateur à l'aide d'entrées de "
 "menu. Chaque service et composant peut annoncer des actions en implémentant "
-"l'interface `gaphor.abc.ActionProvider` :"
+"l'interface `gaphor.abc.ActionProvider` :"
 
 #: gaphor.abc.ActionProvider:1 of ../../gaphor/abc.py:docstring
 msgid ""
@@ -6570,7 +6570,7 @@ msgid ""
 "is as simple as:"
 msgstr ""
 "Il nécessite `un effort minimal pour mettre en place <#configuration>`_. "
-"L'ajout d'un diagramme est aussi simple que :"
+"L'ajout d'un diagramme est aussi simple que :"
 
 #: ../sphinx.rst:22
 msgid ""
@@ -6592,7 +6592,7 @@ msgstr ""
 msgid "`Image properties`_ can also be applied:"
 msgstr ""
 "Les `Image properties`_ (propriétés de l'image) peuvent également être "
-"appliquées :"
+"appliquées :"
 
 #: ../sphinx.rst:-1
 msgid "A description suitable for an example"
@@ -6616,15 +6616,15 @@ msgstr "Gaphor nécessite au moins Python 3.9."
 
 #: ../sphinx.rst:61
 msgid "Secondly, add the following to your ``conf.py`` file:"
-msgstr "Deuxièmement, ajoutez ce qui suit à votre fichier ``conf.py`` :"
+msgstr "Deuxièmement, ajoutez ce qui suit à votre fichier ``conf.py`` :"
 
 #: ../sphinx.rst:63
 msgid "Step 1: Add gaphor as extension."
-msgstr "Étape 1 : Ajouter gaphor comme extension."
+msgstr "Étape 1 : Ajouter gaphor comme extension."
 
 #: ../sphinx.rst:71
 msgid "Step 2: Add references to models"
-msgstr "Étape 2 : Ajouter des références aux modèles"
+msgstr "Étape 2 : Ajouter des références aux modèles"
 
 #: ../sphinx.rst:84
 msgid "Now include ``diagram`` directives in your documents."
@@ -6647,7 +6647,7 @@ msgstr ""
 
 #: ../sphinx.rst:94
 msgid "This is the ``.readthedocs.yaml`` file we use for Gaphor:"
-msgstr "C'est le fichier ``.readthedocs.yaml'' que nous utilisons pour Gaphor :"
+msgstr "C'est le fichier ``.readthedocs.yaml'' que nous utilisons pour Gaphor :"
 
 #: ../sphinx.rst:99
 msgid "``libgirepository1.0-dev`` is required to build PyGObject."
@@ -6682,7 +6682,7 @@ msgstr ""
 
 #: ../sphinx.rst:113
 msgid "An error will appear in the documentation. Something like this:"
-msgstr "Une erreur apparaîtra dans la documentation. Quelque chose comme ceci :"
+msgstr "Une erreur apparaîtra dans la documentation. Quelque chose comme ceci :"
 
 #: ../sphinx.rst:117
 msgid ""
@@ -6702,7 +6702,7 @@ msgid ""
 "new domains. For example: SysML started as a profile for UML."
 msgstr ""
 "En UML, les stéréotypes sont un moyen d'étendre l'application du langage UML "
-"à de nouveaux domaines. Par exemple : SysML a commencé comme un profil pour "
+"à de nouveaux domaines. Par exemple : SysML a commencé comme un profil pour "
 "UML."
 
 #: ../stereotypes.md:6
@@ -6750,7 +6750,7 @@ msgstr ""
 
 #: ../stereotypes.md:25
 msgid "Your stereotype declaration may look something like this:"
-msgstr "Votre déclaration de stéréotype peut ressembler à ceci :"
+msgstr "Votre déclaration de stéréotype peut ressembler à ceci :"
 
 #: ../stereotypes.md:31
 msgid ""
@@ -6802,7 +6802,7 @@ msgstr ""
 
 #: ../stereotypes.md:45
 msgid "To add a profile to your model:"
-msgstr "Pour ajouter un profil à votre modèle :"
+msgstr "Pour ajouter un profil à votre modèle :"
 
 #: ../stereotypes.md:47
 msgid ""
@@ -6848,7 +6848,7 @@ msgstr ""
 
 #: ../stereotypes.md:55
 msgid "With the meta-class and stereotype placed on the diagram, either:"
-msgstr "Avec la méta-classe et le stéréotype placés sur le diagramme, soit :"
+msgstr "Avec la méta-classe et le stéréotype placés sur le diagramme, soit :"
 
 #: ../stereotypes.md:57
 msgid ""
@@ -6910,8 +6910,8 @@ msgid ""
 "integer or a string)."
 msgstr ""
 "L'idée est de garder le format de fichier aussi simple et extensible que "
-"possible : Les éléments UML (y compris le diagramme) sont au niveau "
-"supérieur, sans imbrication. Un élément UML peut avoir deux balises : "
+"possible : Les éléments UML (y compris le diagramme) sont au niveau "
+"supérieur, sans imbrication. Un élément UML peut avoir deux balises : "
 "références (`ref`) et valeurs (`val`). Les références sont utilisées pour "
 "pointer vers d'autres éléments UML. Les valeurs ont une valeur à l'intérieur "
 "(un entier ou une chaîne)."
@@ -6949,7 +6949,7 @@ msgid ""
 "CSS is described as:"
 msgstr ""
 "Sur la [page d'accueil CSS du W3C] (https://www.w3.org/Style/CSS/Overview.en."
-"html), CSS est décrit comme suit :"
+"html), CSS est décrit comme suit :"
 
 #: ../style_sheets.md:11
 msgid ""
@@ -6988,7 +6988,7 @@ msgid ""
 msgstr ""
 "Le style fait partie du modèle, donc toutes les personnes travaillant sur un "
 "modèle auront le même style. Pour modifier le style, appuyez sur le bouton "
-"de la page d'outils dans le coin supérieur droit de gaphor :"
+"de la page d'outils dans le coin supérieur droit de gaphor :"
 
 #: ../style_sheets.md:26
 msgid "![Button to access style code](images/css-button.png)"
@@ -7003,7 +7003,7 @@ msgid ""
 "Here is a simple example of how to change the background color of a class:"
 msgstr ""
 "Voici un exemple simple de modification de la couleur d'arrière-plan d'une "
-"classe :"
+"classe :"
 
 #: ../style_sheets.md:36
 msgid "background beige"
@@ -7013,7 +7013,7 @@ msgstr "fond beige"
 msgid "Or change the color of a component, only when it's nested in a node:"
 msgstr ""
 "Ou changer la couleur d'un composant, uniquement lorsqu'il est imbriqué dans "
-"un nœud :"
+"un nœud :"
 
 #: ../style_sheets.md:49
 msgid "nested component"
@@ -7025,7 +7025,7 @@ msgid ""
 "define a \"dark\" style:"
 msgstr ""
 "Le diagramme lui-même est également exprimé sous la forme d'un nœud CSS. Il "
-"est assez facile de définir un style « sombre » :"
+"est assez facile de définir un style « sombre » :"
 
 #: ../style_sheets.md:68
 msgid "dark-style"
@@ -7037,7 +7037,7 @@ msgid ""
 "allows you to control the color of the text drawn in an item. `color` is "
 "used for the lines (strokes) that make the layout of a diagram item."
 msgstr ""
-"Ici, vous voyez déjà le premier attribut personnalisé : `text-color`. Cette "
+"Ici, vous voyez déjà le premier attribut personnalisé : `text-color`. Cette "
 "propriété vous permet de contrôler la couleur du texte dessiné dans un "
 "élément. `color` est utilisé pour les lignes (strokes) qui constituent la "
 "mise en page d'un élément de diagramme."
@@ -7145,7 +7145,7 @@ msgstr "``:focus``"
 
 #: ../style_sheets.md:96
 msgid "The focused item. Other pseudo classes are:"
-msgstr "L'élément focalisé. D'autres pseudo classes sont :"
+msgstr "L'élément focalisé. D'autres pseudo classes sont :"
 
 #: ../style_sheets.md:98
 msgid "``:active`` selected items"
@@ -7206,7 +7206,7 @@ msgstr "L'élément contient l'un des sélecteurs fournis."
 #: ../style_sheets.md:109
 msgid "E.g. ``node:has(component)``: a node containing a component item."
 msgstr ""
-"Par exemple, ``node:has(component)`` : un noeud contenant un élément de "
+"Par exemple, ``node:has(component)`` : un noeud contenant un élément de "
 "composant."
 
 #: ../style_sheets.md:110
@@ -7220,7 +7220,7 @@ msgstr "Correspond à l'un des sélecteurs fournis."
 #: ../style_sheets.md:112
 msgid "E.g. ``:is(node, subsystem) > component``: a node or subsystem."
 msgstr ""
-"Par exemple, ``:is(node, subsystem) > component`` : un nœud ou un sous-"
+"Par exemple, ``:is(node, subsystem) > component`` : un nœud ou un sous-"
 "système."
 
 #: ../style_sheets.md:113
@@ -7234,7 +7234,7 @@ msgstr "Négation du sélecteur."
 #: ../style_sheets.md:115
 msgid "E.g. ``:not([subject])``: Any item that has no \"subject\"."
 msgstr ""
-"Par exemple, ``:not([subject])`` : Tout élément qui n'a pas de \"sujet \"."
+"Par exemple, ``:not([subject])`` : Tout élément qui n'a pas de \"sujet \"."
 
 #: ../style_sheets.md:116
 msgid "``::after``"
@@ -7314,7 +7314,7 @@ msgstr "``background-color``"
 
 #: ../style_sheets.md:144
 msgid "Examples:"
-msgstr "Exemples :"
+msgstr "Exemples :"
 
 #: ../style_sheets.md:146
 msgid "``background-color: azure;``"
@@ -7322,11 +7322,11 @@ msgstr "``background-color: azure;``"
 
 #: ../style_sheets.md:148
 msgid "``background-color: rgb(255, 255, 255);``"
-msgstr "``background-color: rgb(255, 255, 255) ;``"
+msgstr "``background-color: rgb(255, 255, 255) ;``"
 
 #: ../style_sheets.md:150
 msgid "``background-color: hsl(130, 95%, 10%);``"
-msgstr "``background-color: hsl(130, 95%, 10%) ;``"
+msgstr "``background-color: hsl(130, 95%, 10%) ;``"
 
 #: ../style_sheets.md:151
 msgid "``color``"
@@ -7367,7 +7367,7 @@ msgid ""
 msgstr ""
 "Une couleur peut être n'importe quel [code couleur CSS3] (https://www.w3.org/"
 "TR/2018/REC-css-color-3-20180619/), comme décrit dans la documentation CSS. "
-"Gaphor supporte toutes les notations de couleur : `rgb()`, `rgba()`, `hsl()`"
+"Gaphor supporte toutes les notations de couleur : `rgb()`, `rgba()`, `hsl()`"
 ", `hsla()`, le code hexagonal (`#ffffff`) et les noms de couleurs."
 
 #: ../style_sheets.md:164
@@ -7453,7 +7453,7 @@ msgstr ""
 
 #: ../style_sheets.md:179
 msgid "Example: ``vertical-spacing: 4``."
-msgstr "Exemple : ``vertical-spacing : 4``."
+msgstr "Exemple : ``vertical-spacing : 4``."
 
 #: ../style_sheets.md:180
 msgid "``white-space``"
@@ -7491,7 +7491,7 @@ msgstr "``border-radius``"
 
 #: ../style_sheets.md:193
 msgid "Radius for rectangles: ``border-radius: 4``."
-msgstr "Rayon pour les rectangles : ``border-radius : 4``."
+msgstr "Rayon pour les rectangles : ``border-radius : 4``."
 
 #: ../style_sheets.md:194
 msgid "``dash-style``"
@@ -7499,7 +7499,7 @@ msgstr "``dash-style``"
 
 #: ../style_sheets.md:194
 msgid "Style for dashed lines: ``dash-style: 7 5``."
-msgstr "Style pour les lignes en pointillés : ``dash-style : 7 5``."
+msgstr "Style pour les lignes en pointillés : ``dash-style : 7 5``."
 
 #: ../style_sheets.md:195
 msgid "``justify-content``"
@@ -7527,7 +7527,7 @@ msgstr "``line-width``"
 
 #: ../style_sheets.md:199
 msgid "Set the width for lines: ``line-width: 2``. *(inherited)*"
-msgstr "Définir la largeur des lignes : ``line-width : 2``. *(inherited)*"
+msgstr "Définir la largeur des lignes : ``line-width : 2``. *(inherited)*"
 
 #: ../style_sheets.md:200
 msgid "``min-height``"
@@ -7535,7 +7535,7 @@ msgstr "``min-height``"
 
 #: ../style_sheets.md:200
 msgid "Set minimal height for an item: ``min-height: 50``."
-msgstr "Fixe la hauteur minimale d'un élément : ``min-height : 50``."
+msgstr "Fixe la hauteur minimale d'un élément : ``min-height : 50``."
 
 #: ../style_sheets.md:201
 msgid "``min-width``"
@@ -7543,7 +7543,7 @@ msgstr "``min-width``"
 
 #: ../style_sheets.md:201
 msgid "Set minimal width for an item: ``min-width: 100``."
-msgstr "Fixe la largeur minimale d'un élément : ``min-width : 100``."
+msgstr "Fixe la largeur minimale d'un élément : ``min-width : 100``."
 
 #: ../style_sheets.md:202
 msgid "``max-width``"
@@ -7552,7 +7552,7 @@ msgstr "``max-width``"
 #: ../style_sheets.md:202
 msgid "Set maximum width (text fields only): ``max-width: 100``."
 msgstr ""
-"Définir la largeur maximale (champs de texte uniquement) : ``max-width : "
+"Définir la largeur maximale (champs de texte uniquement) : ``max-width : "
 "100``."
 
 #: ../style_sheets.md:203 ../style_sheets.md:202
@@ -7565,7 +7565,7 @@ msgstr "Style CSS d'espacement de chaque coté (top, right, bottom, left)."
 
 #: ../style_sheets.md:205 ../style_sheets.md:204
 msgid "Example: ``padding: 3 4``."
-msgstr "Exemple: ``padding : 3 4``."
+msgstr "Exemple: ``padding : 3 4``."
 
 #: ../style_sheets.md:209 ../style_sheets.md:208
 msgid ""
@@ -7628,7 +7628,7 @@ msgstr ""
 
 #: ../style_sheets.md:232 ../style_sheets.md:268
 msgid "The `var()` function has some limitations:"
-msgstr "La fonction `var()` a quelques limitations :"
+msgstr "La fonction `var()` a quelques limitations :"
 
 #: ../style_sheets.md:234 ../style_sheets.md:270
 msgid "Values can’t have a default value."
@@ -7640,7 +7640,7 @@ msgstr "Les variables ne peuvent pas avoir une variable comme valeur."
 
 #: ../style_sheets.md:237 ../style_sheets.md:273
 msgid "Example:"
-msgstr "Exemples :"
+msgstr "Exemples :"
 
 #: ../style_sheets.md:250 ../style_sheets.md:286
 msgid ""
@@ -7705,7 +7705,7 @@ msgid ""
 "styled?"
 msgstr ""
 "Gaphor possède de nombreux éléments de modèle. Comment savoir quel élément "
-"doit être stylisé ?"
+"doit être stylisé ?"
 
 #: ../style_sheets.md:295 ../style_sheets.md:292
 msgid ""
@@ -7918,7 +7918,7 @@ msgstr "``c4container[type=\"Container\"]``"
 
 #: ../style_sheets.md:328 ../style_sheets.md:325
 msgid "Container: Database"
-msgstr "Conteneur : Base de données"
+msgstr "Conteneur : Base de données"
 
 #: ../style_sheets.md:328 ../style_sheets.md:325
 msgid "``c4database``"
@@ -7986,7 +7986,7 @@ msgid ""
 "(images/open-menu-symbolic.svg) → Tools → Console). Drop us a line on "
 "[Gitter](https://gitter.im/gaphor/Lobby) and we would be happy to help you."
 msgstr ""
-"Pour créer votre propre expression, vous pouvez utiliser la console ( ![Menu "
+"Pour créer votre propre expression, vous pouvez utiliser la console ( ![Menu "
 "icon](images/open-menu-symbolic.svg) → Tools → Console). Envoyez-nous un "
 "message sur [Gitter](https://gitter.im/gaphor/Lobby) et nous serons heureux "
 "de vous aider."
@@ -8000,7 +8000,7 @@ msgid ""
 "All diagrams in the package \"Drafts\" should be drawn using sloppy lines:"
 msgstr ""
 "Tous les diagrammes du paquet « Drafts » doivent être dessinés en utilisant "
-"des lignes négligées :"
+"des lignes négligées :"
 
 #: ../style_sheets.md:360 ../style_sheets.md:357
 msgid "draft style"
@@ -8085,7 +8085,7 @@ msgid ""
 "or need to strictly follow the official UML specifications, you can simply "
 "make those solid lines."
 msgstr ""
-"Dans Gaphor, les lignes de Flux de Contrôle suivent le style SysML : en "
+"Dans Gaphor, les lignes de Flux de Contrôle suivent le style SysML : en "
 "pointillés. Si vous voulez ou devez suivre strictement les spécifications "
 "officielles d'UML, vous pouvez simplement créer des lignes pleines."
 
@@ -8125,7 +8125,7 @@ msgstr ""
 "Il se peut que la police italique utilisée ne permette pas de distinguer les "
 "classes ou les opérations concrètes des opérations abstraites. Pour ce "
 "faire, nous vérifions si l'attribut `isAbstract` est défini sur l'élément en "
-"question :"
+"question :"
 
 #: ../style_sheets.md:467 ../style_sheets.md:447
 msgid "emphasize abstract elements"
@@ -8289,13 +8289,13 @@ msgstr ""
 msgid "It's most convenient to use ``Transaction`` as a context manager:"
 msgstr ""
 "Il est plus pratique d'utiliser ``Transaction`` comme gestionnaire de "
-"contexte :"
+"contexte :"
 
 #: gaphor.transaction.Transaction:22 of
 msgid "Events can be handled programmatically, although this is discouraged:"
 msgstr ""
 "Les événements peuvent être gérés par programme, bien que cela soit "
-"déconseillé :"
+"déconseillé :"
 
 #: gaphor.transaction.Transaction.commit:1 of
 msgid "Commit the transaction."
@@ -8307,13 +8307,13 @@ msgid ""
 "emitted. If the transaction needs to be rolled back, a :obj:`~gaphor.event."
 "TransactionRollback` event is emitted instead."
 msgstr ""
-"La transaction est clôturée. Un événement :obj:`~gaphor.event."
-"TransactionCommit` est émis. Si la transaction doit être annulée, un "
-"événement :obj:`~gaphor.event.TransactionRollback` est émis à la place."
+"La transaction est clôturée. Un événement :obj:`~gaphor.event.TransactionCommit`"
+"est émis. Si la transaction doit être annulée, un "
+"événement :obj:`~gaphor.event.TransactionRollback` est émis à la place."
 
 #: gaphor.transaction.Transaction.in_transaction:1 of
 msgid "Are you running inside a transaction?"
-msgstr "Êtes-vous en train d'effectuer une transaction ?"
+msgstr "Êtes-vous en train d'effectuer une transaction ?"
 
 #: gaphor.transaction.Transaction.mark_rollback:1 of
 msgid "Mark the transaction for rollback."
@@ -8336,7 +8336,7 @@ msgid ""
 "First, the transaction is closed. A :obj:`~gaphor.event.TransactionRollback` "
 "event is emitted."
 msgstr ""
-"Tout d'abord, la transaction est fermée. Un événement :obj:`~gaphor.event."
+"Tout d'abord, la transaction est fermée. Un événement :obj:`~gaphor.event."
 "TransactionRollback` est émis."
 
 #: gaphor.event.TransactionBegin:1 of
@@ -8384,7 +8384,7 @@ msgid ""
 "[Undoing Actions in Collaborative Work: Framework and Experience](https://"
 "www.eecs.umich.edu/techreports/cse/94/CSE-TR-196-94.pdf)"
 msgstr ""
-"[Défaire les actions dans le Travail Collaboratif : «Framework » et "
+"[Défaire les actions dans le Travail Collaboratif : «Framework » et "
 "Expérience] (https://www.eecs.umich.edu/techreports/cse/94/CSE-TR-196-94.pdf)"
 
 #: ../undo.md:67 ../undo.md:48
@@ -8446,7 +8446,7 @@ msgid ""
 msgstr ""
 "Pour mettre en place un environnement de développement sous Windows, "
 "installez d'abord [Git] (https://gitforwindows.org) en vous exécutant en "
-"tant qu'administrateur :"
+"tant qu'administrateur :"
 
 #: ../windows.md:30
 msgid "GTK and Python with Gvsbuild"
@@ -8498,7 +8498,7 @@ msgid ""
 "Open a PowerShell terminal as a normal user and check the python version:"
 msgstr ""
 "Ouvrez un terminal PowerShell en tant qu'utilisateur normal et vérifiez la "
-"version de python :"
+"version de python :"
 
 #: ../windows.md:53 ../windows.md:89
 msgid "Install Graphviz"
@@ -8511,7 +8511,7 @@ msgstr ""
 
 #: ../windows.md:57
 msgid "Install from WinGet with administrator PowerShell:"
-msgstr "Installer à partir de WinGet avec l'administrateur PowerShell :"
+msgstr "Installer à partir de WinGet avec l'administrateur PowerShell :"
 
 #: ../windows.md:63 ../windows.md:106
 msgid "Install pipx"
@@ -8519,7 +8519,7 @@ msgstr "Installer pipx"
 
 #: ../windows.md:65 ../windows.md:108 ../windows.md:116
 msgid "From the regular user PowerShell terminal execute:"
-msgstr "À partir du terminal PowerShell de l'utilisateur normal, exécutez :"
+msgstr "À partir du terminal PowerShell de l'utilisateur normal, exécutez :"
 
 #: ../windows.md:71
 msgid "Download GTK"
@@ -8541,12 +8541,12 @@ msgid ""
 "with 7Zip:"
 msgstr ""
 "Décompressez le fichier `GTK4_Gvsbuild_VERSION_x64.zip` dans `C:\\gtk`. Par "
-"exemple avec 7Zip :"
+"exemple avec 7Zip :"
 
 #: ../windows.md:82
 msgid "The resulting directory structure should look like:"
 msgstr ""
-"La structure de répertoire résultante devrait ressembler à ce qui suit :"
+"La structure de répertoire résultante devrait ressembler à ce qui suit :"
 
 #: ../windows.md:94 ../windows.md:131
 msgid "Setup Gaphor"
@@ -8554,7 +8554,7 @@ msgstr "Mise en place Gaphor"
 
 #: ../windows.md:96 ../windows.md:133
 msgid "In the same PowerShell terminal, clone the repository:"
-msgstr "Dans le même terminal PowerShell, clonez le dépôt :"
+msgstr "Dans le même terminal PowerShell, clonez le dépôt :"
 
 #: ../windows.md:103 ../windows.md:140
 msgid "Install Poetry"
@@ -8562,7 +8562,7 @@ msgstr "Installer Poetry"
 
 #: ../windows.md:108 ../windows.md:146
 msgid "Add GTK to your environmental variables:"
-msgstr "Ajoutez GTK à vos variables d'environnement :"
+msgstr "Ajoutez GTK à vos variables d'environnement :"
 
 #: ../windows.md:116 ../windows.md:154
 msgid ""
@@ -8582,7 +8582,7 @@ msgstr "Réinstaller PyGObject et pycairo en utilisant gvsbuild wheels"
 
 #: ../windows.md:130 ../windows.md:164 ../windows.md:168
 msgid "Launch Gaphor!"
-msgstr "Lancer Gaphor !"
+msgstr "Lancer Gaphor !"
 
 #: ../windows.md:135
 msgid "Setting Up A Plugin Workspace for Gaphor"
@@ -8593,7 +8593,7 @@ msgid ""
 "When setting up a plugin workspace you need to perform the following steps:"
 msgstr ""
 "Lors de la mise en place d'un espace de travail pour un plugin, vous devez "
-"effectuer les étapes suivantes :"
+"effectuer les étapes suivantes :"
 
 #: ../windows.md:139 ../windows.md:197
 msgid "cd (your project's workspace)"
@@ -8629,7 +8629,7 @@ msgid ""
 msgstr ""
 "Notez que si vous avez oublié de réinstaller PyGObject et pycairo, gaphor "
 "plantera la première fois que vous ajoutez un élément à un diagramme qui "
-"contient du texte !"
+"contient du texte !"
 
 #: ../windows.md:171 ../windows.md:175
 msgid ""
@@ -8637,19 +8637,19 @@ msgid ""
 "folder:"
 msgstr ""
 "Démarrez un nouveau terminal PowerShell et définissez le répertoire courant "
-"comme étant le dossier du projet :"
+"comme étant le dossier du projet :"
 
 #: ../windows.md:176 ../windows.md:180
 msgid "Ensure that path environment variable is set:"
-msgstr "Assurez-vous que la variable d'environnement path est définie :"
+msgstr "Assurez-vous que la variable d'environnement path est définie :"
 
 #: ../windows.md:181 ../windows.md:185
 msgid "Start Visual Studio Code:"
-msgstr "Démarrez Visual Studio Code :"
+msgstr "Démarrez Visual Studio Code :"
 
 #: ../windows.md:186 ../windows.md:190
 msgid "To start the debugger, execute the following steps:"
-msgstr "Pour lancer le débogueur, procédez comme suit :"
+msgstr "Pour lancer le débogueur, procédez comme suit :"
 
 #: ../windows.md:187 ../windows.md:191
 msgid "Open `__main__.py` file from `gaphor` folder"
@@ -8685,7 +8685,7 @@ msgstr "Débogage de votre plugin à l'aide de Visual Studio Code"
 
 #: ../windows.md:199
 msgid "Start gaphor:"
-msgstr "Démarrer gaphor :"
+msgstr "Démarrer gaphor :"
 
 #: ../windows.md:200
 msgid "In the VSCode menu, select Run → Start debugging"
@@ -8716,11 +8716,11 @@ msgstr ""
 "NSIS (https://nsis.sourceforge.io/Main_Page) et un programme d'installation "
 "portable à l'aide de 7-Zip (https://www.7-zip.org). Pour les installer, "
 "ouvrez PowerShell en tant qu'administrateur, puis exécutez la commande "
-"suivante :"
+"suivante :"
 
 #: ../windows.md:220 ../windows.md:213
 msgid "Then build your installer using:"
-msgstr "Puis construisez votre programme d'installation en utilisant :"
+msgstr "Puis construisez votre programme d'installation en utilisant :"
 
 #: ../windows.md:229
 msgid "Limited Anaconda Install"
@@ -8755,7 +8755,7 @@ msgstr ""
 "Cependant, cette configuration peut être utile si vous souhaitez utiliser "
 "Gaphor en tant que bibliothèque dans le cadre d'un projet plus important. "
 "Dans ce cas, Gaphor peut être installé comme un paquet dans un environnement "
-"Anaconda en suivant le processus suivant :"
+"Anaconda en suivant le processus suivant :"
 
 #: ../windows.md:236
 msgid "Create new anaconda environment"
@@ -8771,7 +8771,7 @@ msgstr ""
 "Si vous utilisez Anaconda pour d'autres projets, il est conseillé de créer "
 "un nouvel environnement pour Gaphor, afin d'éviter tout conflit avec votre "
 "environnement de développement préexistant. Pour ce faire, lancez la "
-"commande suivante depuis l'invite de Anaconda :"
+"commande suivante depuis l'invite de Anaconda :"
 
 #: ../windows.md:244
 msgid "where ``gaphor'' can be any name desired for the environment."
@@ -8784,7 +8784,7 @@ msgstr "Mettre à jour les paquets dans le nouvel environnement"
 
 #: ../windows.md:248
 msgid "Get the most recent packages using:"
-msgstr "Obtenez les paquets les plus récents en utilisant :"
+msgstr "Obtenez les paquets les plus récents en utilisant :"
 
 #: ../windows.md:254
 msgid "Install dependencies"
@@ -8793,7 +8793,7 @@ msgstr "Installer les dépendances"
 #: ../windows.md:256
 msgid "The following Gaphor dependencies are installable from anaconda:"
 msgstr ""
-"Les dépendances Gaphor suivantes peuvent être installées à partir d'Anaconda "
+"Les dépendances Gaphor suivantes peuvent être installées à partir d'Anaconda "
 ":"
 
 #: ../windows.md:261
@@ -8818,7 +8818,7 @@ msgid ""
 msgstr ""
 "Maintenant, pour développer avec Gaphor, vous allez devoir le configurer "
 "avec votre développement. Si vous voulez travailler avec `ipython`, "
-"installez-le ci-dessous :"
+"installez-le ci-dessous :"
 
 #: ../windows.md:269
 msgid "VSCode Tips"
@@ -8849,7 +8849,7 @@ msgid ""
 "you can instead use the following workaround:"
 msgstr ""
 "Si cela ne fonctionne pas (c'est-à-dire si `conda install spyder` révèle des "
-"conflits), vous pouvez utiliser la solution suivante :"
+"conflits), vous pouvez utiliser la solution suivante :"
 
 #: ../windows.md:279
 msgid "Then, in spyder, set 'gaphor' as your python interpreter"
@@ -8866,7 +8866,7 @@ msgid ""
 "then install Gaphor using pip:"
 msgstr ""
 "Depuis une console python fonctionnant dans votre nouvel environnement "
-"anaconda, vous pouvez alors installer Gaphor à l'aide de pip :"
+"anaconda, vous pouvez alors installer Gaphor à l'aide de pip :"
 
 #: ../changelog.rst:4
 msgid "This is a curated list of the changes per version."
@@ -8891,14 +8891,14 @@ msgstr ""
 
 #: ../../CHANGELOG.md:6
 msgid "Fix header bars for various windows"
-msgstr "Correction : barres d'en-tête pour diverses fenêtres"
+msgstr "Correction : barres d'en-tête pour diverses fenêtres"
 
 #: ../../CHANGELOG.md:7
 msgid ""
 "Various smaller UX improvements: greeter, diagram background, empty "
 "parameters"
 msgstr ""
-"Diverses améliorations mineures de l'interface utilisateur : greeter, "
+"Diverses améliorations mineures de l'interface utilisateur : greeter, "
 "arrière-plan du diagramme, paramètres vides"
 
 #: ../../CHANGELOG.md:8
@@ -8911,7 +8911,7 @@ msgstr "Atténuation des fausses alertes de virus sous Windows"
 
 #: ../../CHANGELOG.md:10
 msgid "Fix issue when undoing fails"
-msgstr "Correction : problème lorsque l'annulation échoue"
+msgstr "Correction : problème lorsque l'annulation échoue"
 
 #: ../../CHANGELOG.md:12
 msgid "2.23.2"
@@ -8920,7 +8920,7 @@ msgstr "2.23.2"
 #: ../../CHANGELOG.md:15
 msgid "Fix file filters for export image dialog"
 msgstr ""
-"Correction : filtres de fichiers pour la boîte de dialogue d'exportation "
+"Correction : filtres de fichiers pour la boîte de dialogue d'exportation "
 "d'images"
 
 #: ../../CHANGELOG.md:16
@@ -8937,11 +8937,11 @@ msgstr "2.23.1"
 
 #: ../../CHANGELOG.md:21
 msgid "Fix Activity Swimlanes aren't visible"
-msgstr "Correction : couloirs d'activité qui ne sont pas visibles"
+msgstr "Correction : couloirs d'activité qui ne sont pas visibles"
 
 #: ../../CHANGELOG.md:22
 msgid "Fix CSS attribute rules"
-msgstr "Correction : règles d'attributs CSS"
+msgstr "Correction : règles d'attributs CSS"
 
 #: ../../CHANGELOG.md:23
 msgid "Remove duplicate stereotypes at root of model browser"
@@ -8969,7 +8969,7 @@ msgid ""
 "Fine grained CSS: elements in a presentation item can be changed from CSS "
 "(experimental)"
 msgstr ""
-"CSS à granularité fine : les éléments d'une présentation peuvent être "
+"CSS à granularité fine : les éléments d'une présentation peuvent être "
 "modifiés à partir de CSS (expérimental)"
 
 #: ../../CHANGELOG.md:31
@@ -8992,43 +8992,43 @@ msgstr "Remplacer le Gtk.FileChooser obsolète par FileDialog"
 
 #: ../../CHANGELOG.md:36
 msgid "macOS: Update app icon"
-msgstr "macOS : Mise à jour de l'icône de l'application"
+msgstr "macOS : Mise à jour de l'icône de l'application"
 
 #: ../../CHANGELOG.md:37
 msgid "macOS: Fix ⓘ icon in Property Editor isn't displayed"
 msgstr ""
-"macOS : Fixé l'icône ⓘ dans l'éditeur de propriétés qui ne s'affiche pas"
+"macOS : Fixé l'icône ⓘ dans l'éditeur de propriétés qui ne s'affiche pas"
 
 #: ../../CHANGELOG.md:38
 msgid "macOS and Windows: Apply custom window shadow"
-msgstr "macOS et Windows : Appliquer une ombre de fenêtre personnalisée"
+msgstr "macOS et Windows : Appliquer une ombre de fenêtre personnalisée"
 
 #: ../../CHANGELOG.md:39
 msgid "Fix Gaphor should work if GSettings schema is not available"
 msgstr ""
-"Correction : Gaphor devrait fonctionner si le schéma GSettings n'est pas "
+"Correction : Gaphor devrait fonctionner si le schéma GSettings n'est pas "
 "disponible"
 
 #: ../../CHANGELOG.md:40
 msgid "Fix values showing under part compartment in SysML Block elements"
 msgstr ""
-"Correction : valeurs affichées sous le compartiment de la pièce dans les "
+"Correction : valeurs affichées sous le compartiment de la pièce dans les "
 "éléments SysML Block"
 
 #: ../../CHANGELOG.md:41
 msgid "Fix merge-node icon"
-msgstr "Correction : icône du nœud de fusion"
+msgstr "Correction : icône du nœud de fusion"
 
 #: ../../CHANGELOG.md:42
 msgid "Fix connecting lines when model is loaded and documentation updates"
 msgstr ""
-"Correction : lignes de connexion lors du chargement du modèle et des mises à "
+"Correction : lignes de connexion lors du chargement du modèle et des mises à "
 "jour de la documentation"
 
 #: ../../CHANGELOG.md:43
 msgid "Fix macOS build and documentation generation"
 msgstr ""
-"Correction : génération de la documentation et de la compilation pour macOS"
+"Correction : génération de la documentation et de la compilation pour macOS"
 
 #: ../../CHANGELOG.md:44
 msgid ""
@@ -9044,18 +9044,18 @@ msgstr "2.22.1"
 #: ../../CHANGELOG.md:48
 msgid "Flatpak: Fix app preferences aren't saved"
 msgstr ""
-"Flatpak : Correction des préférences de l'application qui ne sont pas "
+"Flatpak : Correction des préférences de l'application qui ne sont pas "
 "sauvegardées"
 
 #: ../../CHANGELOG.md:49
 msgid "Fix TypeError when changing to dark mode and refactor settings"
 msgstr ""
-"Correction : erreur de type (TypeError) lors du passage en mode sombre et de "
+"Correction : erreur de type (TypeError) lors du passage en mode sombre et de "
 "la refonte des paramètres"
 
 #: ../../CHANGELOG.md:50
 msgid "Fix grouping: allow to group to \"root\""
-msgstr "Correction : regroupement : autoriser le regroupement vers \"root\""
+msgstr "Correction : regroupement : autoriser le regroupement vers \"root\""
 
 #: ../../CHANGELOG.md:52
 msgid "Catch errors when a clipboard is empty"
@@ -9063,11 +9063,11 @@ msgstr "Signal des erreurs lorsque le presse-papiers est vide"
 
 #: ../../CHANGELOG.md:53
 msgid "Fix DnD file opening on macOS"
-msgstr "Correction : l'ouverture des fichiers DnD sur macOS"
+msgstr "Correction : l'ouverture des fichiers DnD sur macOS"
 
 #: ../../CHANGELOG.md:54
 msgid "Fix libadwaita 1.4.0 missing for hypothesis tests"
-msgstr "Correction : absence de libadwaita 1.4.0 pour les tests d'hypothèse"
+msgstr "Correction : absence de libadwaita 1.4.0 pour les tests d'hypothèse"
 
 #: ../../CHANGELOG.md:55
 msgid "Make ActivityParameterNode droppable"
@@ -9114,11 +9114,11 @@ msgstr "Remplacer Black, vérifier toml, isort, et réparer avec Ruff"
 
 #: ../../CHANGELOG.md:67
 msgid "macOS: fix About dialog links"
-msgstr "macOS : correction des liens de la boîte de dialogue « À propos de »"
+msgstr "macOS : correction des liens de la boîte de dialogue « À propos de »"
 
 #: ../../CHANGELOG.md:68
 msgid "macOS: upgrade notarization from altool to notarytool"
-msgstr "macOS : mise à jour de la procédure de l'altool vers le notarytool"
+msgstr "macOS : mise à jour de la procédure de l'altool vers le notarytool"
 
 #: ../../CHANGELOG.md:69
 msgid "Upgrade to libadwaita 1.4.0"
@@ -9188,12 +9188,12 @@ msgstr "Réactiver les raccourcis clavier de macOS"
 #: ../../CHANGELOG.md:86
 msgid "Fix missing derive relationship icon in the model browser"
 msgstr ""
-"Correction : absence de l'icône de la relation dérivée dans le navigateur de "
+"Correction : absence de l'icône de la relation dérivée dans le navigateur de "
 "modèle"
 
 #: ../../CHANGELOG.md:87
 msgid "Fix block not showing parts and references"
-msgstr "Correction : bloc n'affichant pas les parties et les références"
+msgstr "Correction : bloc n'affichant pas les parties et les références"
 
 #: ../../CHANGELOG.md:88
 msgid "Fixed Profile is created instead of Stereotype in model browser"
@@ -9213,7 +9213,7 @@ msgstr "Ajout de tests et correction de `Component.required`"
 
 #: ../../CHANGELOG.md:92
 msgid "Fix derive-reqt model browser icon"
-msgstr "Correction : icône du navigateur du modèle 'derive-reqt'"
+msgstr "Correction : icône du navigateur du modèle 'derive-reqt'"
 
 #: ../../CHANGELOG.md:93
 msgid "Improve coverage reporting"
@@ -9290,13 +9290,13 @@ msgstr "Ne pas retirer les emballages non utilisés en présence d'enfants"
 #: ../../CHANGELOG.md:113
 msgid "Fix: tree view should not collapse when an element is deleted"
 msgstr ""
-"Correction : l'arborescence ne doit pas se réduire lorsqu'un élément est "
+"Correction : l'arborescence ne doit pas se réduire lorsqu'un élément est "
 "supprimé"
 
 #: ../../CHANGELOG.md:114
 msgid "Fix: only open model browser elements with a model element"
 msgstr ""
-"Correction : n'ouvrir les éléments du navigateur de modèle qu'avec un "
+"Correction : n'ouvrir les éléments du navigateur de modèle qu'avec un "
 "élément de modèle"
 
 #: ../../CHANGELOG.md:115
@@ -9310,40 +9310,40 @@ msgstr "Update Gvsbuild to 2023.7.1"
 #: ../../CHANGELOG.md:117
 msgid "Fix: ensure a newly placed item is no longer a dropzone item"
 msgstr ""
-"Correction : s'assurer qu'un objet nouvellement placé n'est plus un objet de "
+"Correction : s'assurer qu'un objet nouvellement placé n'est plus un objet de "
 "la zone de saut"
 
 #: ../../CHANGELOG.md:118
 msgid "Fix: incorrect filling between shapes"
-msgstr "Correction : remplissage incorrect entre les formes"
+msgstr "Correction : remplissage incorrect entre les formes"
 
 #: ../../CHANGELOG.md:119
 msgid "Fix: weird pin rendering"
-msgstr "Correction : rendu bizarre de la broche"
+msgstr "Correction : rendu bizarre de la broche"
 
 #: ../../CHANGELOG.md:120
 msgid "Fix: diagram background shouldn't be shared between open models"
 msgstr ""
-"Correction : l'arrière-plan du diagramme ne doit pas être partagé entre les "
+"Correction : l'arrière-plan du diagramme ne doit pas être partagé entre les "
 "modèles ouverts"
 
 #: ../../CHANGELOG.md:121
 msgid ""
 "Fix: activity parameter node is always stuck to the activity when moving"
 msgstr ""
-"Correction : le nœud des paramètres de l'activité est toujours collé à "
+"Correction : le nœud des paramètres de l'activité est toujours collé à "
 "l'activité lorsqu'il est déplacé"
 
 #: ../../CHANGELOG.md:122
 msgid ""
 "Fix: notes should be applied to model elements and will be named \"Note\""
 msgstr ""
-"Correction : les notes doivent être appliquées aux éléments du modèle et "
+"Correction : les notes doivent être appliquées aux éléments du modèle et "
 "seront nommées \"Note\""
 
 #: ../../CHANGELOG.md:123
 msgid "Fix: error when inverting association"
-msgstr "Correction : erreur lors de l'inversion de l'association"
+msgstr "Correction : erreur lors de l'inversion de l'association"
 
 #: ../../CHANGELOG.md:126
 msgid "2.19.3"
@@ -9351,16 +9351,16 @@ msgstr "2.19.3"
 
 #: ../../CHANGELOG.md:128
 msgid "Windows: Fix missing toolbar icons"
-msgstr "Windows : Correction des icônes manquantes dans la barre d'outils"
+msgstr "Windows : Correction des icônes manquantes dans la barre d'outils"
 
 #: ../../CHANGELOG.md:129
 msgid "Fix loading of ProxyPorts with informationFlow attached"
-msgstr "Correction : chargement des ProxyPorts avec informationFlow attaché"
+msgstr "Correction : chargement des ProxyPorts avec informationFlow attaché"
 
 #: ../../CHANGELOG.md:130
 msgid "Fix to resolve CSS style variables before using the values"
 msgstr ""
-"Correction : résolution des variables de style CSS avant d'utiliser les "
+"Correction : résolution des variables de style CSS avant d'utiliser les "
 "valeurs"
 
 #: ../../CHANGELOG.md:132
@@ -9370,7 +9370,7 @@ msgstr "2.19.2"
 #: ../../CHANGELOG.md:135
 msgid "Fix Parameter Node and Execution Specification with Dark mode"
 msgstr ""
-"Correction : nœud de paramètres et de la spécification d'exécution en mode "
+"Correction : nœud de paramètres et de la spécification d'exécution en mode "
 "sombre"
 
 #: ../../CHANGELOG.md:136
@@ -9382,16 +9382,16 @@ msgstr ""
 #: ../../CHANGELOG.md:138
 msgid "Fix segfault by reverting Gtk.ListVew for Parameters"
 msgstr ""
-"Correction : erreur de segmentation en inversant les paramètres de Gtk."
+"Correction : erreur de segmentation en inversant les paramètres de Gtk."
 "ListVew"
 
 #: ../../CHANGELOG.md:139
 msgid "Fix connect interaction fragments"
-msgstr "Correction : fragments d'interaction de connexion"
+msgstr "Correction : fragments d'interaction de connexion"
 
 #: ../../CHANGELOG.md:140
 msgid "chore: clean up deprecated properties from UIComponent"
-msgstr "contrainte : nettoyage des propriétés obsolètes de UIComponent"
+msgstr "contrainte : nettoyage des propriétés obsolètes de UIComponent"
 
 #: ../../CHANGELOG.md:141
 msgid "Add Python 3.12 Support, Update Poetry to version 1.5.1"
@@ -9417,7 +9417,7 @@ msgstr "Mise à jour des traductions en espagnol, hongrois et finnois"
 
 #: ../../CHANGELOG.md:146
 msgid "Fix scaling of Activity Parameter nodes"
-msgstr "Correction : échelle des nœuds des paramètres d'activité"
+msgstr "Correction : échelle des nœuds des paramètres d'activité"
 
 #: ../../CHANGELOG.md:148
 msgid "2.19.1"
@@ -9426,22 +9426,22 @@ msgstr "2.19.1"
 #: ../../CHANGELOG.md:150
 msgid "Fix: order is preserved when undoing a change"
 msgstr ""
-"Correction : l'ordre est préservé lors de l'annulation d'une modification"
+"Correction : l'ordre est préservé lors de l'annulation d'une modification"
 
 #: ../../CHANGELOG.md:151
 msgid ""
 "Actions: ObjectNode now also connects to decision/merge and join/fork nodes."
 msgstr ""
-"Actions : ObjectNode se connecte désormais également aux nœuds de décision/"
+"Actions : ObjectNode se connecte désormais également aux nœuds de décision/"
 "fusion et de jointure/fonctionnement."
 
 #: ../../CHANGELOG.md:152
 msgid "Fix: ports should be nested under properties"
-msgstr "Correction : les ports devraient être regroupés sous les propriétés"
+msgstr "Correction : les ports devraient être regroupés sous les propriétés"
 
 #: ../../CHANGELOG.md:153
 msgid "Experimental: support for plugins"
-msgstr "Expérimental : prise en charge des plugins"
+msgstr "Expérimental : prise en charge des plugins"
 
 #: ../../CHANGELOG.md:154
 msgid "Add fullscreen mode with F11"
@@ -9466,7 +9466,7 @@ msgstr ""
 
 #: ../../CHANGELOG.md:161
 msgid "Interactions: fixed DnD for partially connected messages"
-msgstr "Interactions : corrigé DnD pour les messages partiellement connectés"
+msgstr "Interactions : corrigé DnD pour les messages partiellement connectés"
 
 #: ../../CHANGELOG.md:162
 msgid "Restore CSS auto-complete"
@@ -9474,7 +9474,7 @@ msgstr "Restaurer l'auto-complétion CSS"
 
 #: ../../CHANGELOG.md:163
 msgid "Docs: A coffee machine tutorial has been added"
-msgstr "Docs : Un tutoriel sur la machine à café a été ajouté"
+msgstr "Docs : Un tutoriel sur la machine à café a été ajouté"
 
 #: ../../CHANGELOG.md:164
 msgid "Make model loading more lenient to model corruption"
@@ -9484,7 +9484,7 @@ msgstr ""
 
 #: ../../CHANGELOG.md:165
 msgid "CLI: export diagrams and run scripts within Gaphor"
-msgstr "CLI : exporter des diagrammes et exécuter des scripts dans Gaphor"
+msgstr "CLI : exporter des diagrammes et exécuter des scripts dans Gaphor"
 
 #: ../../CHANGELOG.md:166
 msgid "Enable PyPI Trusted Publisher"
@@ -9493,7 +9493,7 @@ msgstr "Activer PyPI Trusted Publisher"
 #: ../../CHANGELOG.md:167
 msgid "Replace deprecated Gtk.TreeView with ListView: Activity Parameter Nodes"
 msgstr ""
-"Remplacer le Gtk.TreeView obsolète par le ListView : Nœuds de paramètres "
+"Remplacer le Gtk.TreeView obsolète par le ListView : Nœuds de paramètres "
 "d'activité"
 
 #: ../../CHANGELOG.md:168
@@ -9523,12 +9523,12 @@ msgstr ""
 
 #: ../../CHANGELOG.md:176
 msgid "Fix doc translation catalogs not found"
-msgstr "Correction : catalogues de traduction de documents non trouvés"
+msgstr "Correction : catalogues de traduction de documents non trouvés"
 
 #: ../../CHANGELOG.md:177
 msgid "Fix encoding warnings for no encoding argument"
 msgstr ""
-"Correction : avertissements relatifs à l'encodage en l'absence d'argument"
+"Correction : avertissements relatifs à l'encodage en l'absence d'argument"
 
 #: ../../CHANGELOG.md:178
 msgid "Update AppImage build with GTK 4.10"
@@ -9584,7 +9584,7 @@ msgstr "Editeur Css mode sombre"
 
 #: ../../CHANGELOG.md:193
 msgid "macOS: update notarize, staple, and cert actions"
-msgstr "macOS : mise à jour des actions notarize, staple et cert"
+msgstr "macOS : mise à jour des actions notarize, staple et cert"
 
 #: ../../CHANGELOG.md:194
 msgid "Just load modules for gaphor.modules entry points"
@@ -9605,11 +9605,11 @@ msgstr ""
 
 #: ../../CHANGELOG.md:197
 msgid "Fix drag from model browser"
-msgstr "Correction : glisser-déposer à partir du navigateur de modèles"
+msgstr "Correction : glisser-déposer à partir du navigateur de modèles"
 
 #: ../../CHANGELOG.md:198
 msgid "Fix orthogonal lines during copy/paste"
-msgstr "Correction : lignes orthogonales lors du copier/coller"
+msgstr "Correction : lignes orthogonales lors du copier/coller"
 
 #: ../../CHANGELOG.md:199
 msgid "Update diagram directly when partitions change"
@@ -9631,7 +9631,7 @@ msgstr "Ajout de la prise en charge des métadonnées de diagramme"
 
 #: ../../CHANGELOG.md:205
 msgid "macOS: Fix freeze creating new diagram"
-msgstr "macOS : Correction du figeage à la création d'un nouveau diagramme"
+msgstr "macOS : Correction du figeage à la création d'un nouveau diagramme"
 
 #: ../../CHANGELOG.md:206
 msgid "Properly unsubscribe when property page is removed"
@@ -9657,7 +9657,7 @@ msgstr "Mise à jour de gvsbuild vers la version 2023.2.0"
 
 #: ../../CHANGELOG.md:212
 msgid "meta: Add .doap-file"
-msgstr "méta : Ajout d'un fichier .doap"
+msgstr "méta : Ajout d'un fichier .doap"
 
 #: ../../CHANGELOG.md:213
 msgid "Update \"Keep model in sync\" design principle"
@@ -9719,7 +9719,7 @@ msgstr "Afficher quelque chose lorsqu'aucun diagramme n'est ouvert"
 
 #: ../../CHANGELOG.md:228
 msgid "Fix the packaged data dirs"
-msgstr "Correction : répertoires de données packagés"
+msgstr "Correction : répertoires de données packagés"
 
 #: ../../CHANGELOG.md:229
 msgid "Stabilize macOS/GTK tests"
@@ -9736,13 +9736,13 @@ msgstr "Diviser les conseils en plusieurs étiquettes"
 #: ../../CHANGELOG.md:232
 msgid "Win and macOS: Fix wrong language selected when region not default"
 msgstr ""
-"Win et macOS : Correction de la mauvaise langue sélectionnée lorsque la "
+"Win et macOS : Correction de la mauvaise langue sélectionnée lorsque la "
 "région n'est pas celle par défaut"
 
 #: ../../CHANGELOG.md:233
 msgid "Fix translation warning never logged with missing mo files"
 msgstr ""
-"Correction : avertissement de traduction qui n'est jamais enregistré en cas "
+"Correction : avertissement de traduction qui n'est jamais enregistré en cas "
 "de fichiers mo manquants"
 
 #: ../../CHANGELOG.md:234
@@ -9776,13 +9776,13 @@ msgstr "Utiliser le sélecteur de fichiers natif dans Windows"
 #: ../../CHANGELOG.md:242
 msgid "Fix translations not loading in Windows, macOS, and AppImage"
 msgstr ""
-"Correction : traductions qui ne se chargent pas dans Windows, macOS et "
+"Correction : traductions qui ne se chargent pas dans Windows, macOS et "
 "AppImage"
 
 #: ../../CHANGELOG.md:243
 msgid "Fix PyInstaller versionfile parse error with pre-release versions"
 msgstr ""
-"Corriection : erreur d'analyse du fichier de version de PyInstaller avec les "
+"Corriection : erreur d'analyse du fichier de version de PyInstaller avec les "
 "versions antérieures"
 
 #: ../../CHANGELOG.md:244
@@ -9797,12 +9797,12 @@ msgstr "Remplacer pytest-mock par monkeypatch pour les tests"
 
 #: ../../CHANGELOG.md:246
 msgid "Fix PEP597 encoding warnings"
-msgstr "Correction : avertissements de PEP597 concernant l'encodage"
+msgstr "Correction : avertissements de PEP597 concernant l'encodage"
 
 #: ../../CHANGELOG.md:247
 msgid "Fix regression that caused line handles to not snap to elements"
 msgstr ""
-"Correction : régression qui faisait que les poignées de ligne ne "
+"Correction : régression qui faisait que les poignées de ligne ne "
 "s'accrochaient pas aux éléments"
 
 #: ../../CHANGELOG.md:248
@@ -9820,7 +9820,7 @@ msgstr "2.14.2"
 
 #: ../../CHANGELOG.md:253
 msgid "Fix macOS release failed"
-msgstr "Correction : échec de la version de macOS"
+msgstr "Correction : échec de la version de macOS"
 
 #: ../../CHANGELOG.md:255
 msgid "2.14.1"
@@ -9832,7 +9832,7 @@ msgstr "Ajout d'une autocomplétion pour les propriétés CSS"
 
 #: ../../CHANGELOG.md:258
 msgid "Fix coredumps on Flatpak"
-msgstr "Correction : ' cores dumps' sur Flatpak"
+msgstr "Correction : ' cores dumps' sur Flatpak"
 
 #: ../../CHANGELOG.md:259
 msgid "Hide New Package menu unless package selected"
@@ -9877,7 +9877,7 @@ msgstr "Rendre les raccourcis clavier plus standard, en particulier sur macOS"
 
 #: ../../CHANGELOG.md:271
 msgid "macOS: cursor shortcuts for text entry widgets"
-msgstr "macOS : raccourcis curseur pour les éléments de saisie de texte"
+msgstr "macOS : raccourcis curseur pour les éléments de saisie de texte"
 
 #: ../../CHANGELOG.md:272
 msgid "Load template as part of CI self-test"
@@ -9971,7 +9971,7 @@ msgstr "Mise à jour du packaging pour utiliser Python 3.11"
 #: ../../CHANGELOG.md:294
 msgid "Many GTK4 improvements: About window, diagram tabs, message dialogs"
 msgstr ""
-"Nombreuses améliorations de GTK4 : Fenêtre « À propos », onglets de "
+"Nombreuses améliorations de GTK4 : Fenêtre « À propos », onglets de "
 "diagramme, boîtes de dialogue de messages"
 
 #: ../../CHANGELOG.md:295
@@ -9997,7 +9997,7 @@ msgstr "Fixer/déplacer la poignée connectée"
 #: ../../CHANGELOG.md:302
 msgid "Fix error when disconnecting line with multiple segments"
 msgstr ""
-"Correction : erreur lors de la déconnexion d'une ligne comportant plusieurs "
+"Correction : erreur lors de la déconnexion d'une ligne comportant plusieurs "
 "segments"
 
 #: ../../CHANGELOG.md:303
@@ -10008,7 +10008,7 @@ msgstr ""
 
 #: ../../CHANGELOG.md:304
 msgid "namespace.py: Actually set properties for rectangle"
-msgstr "namespace.py : Définir les propriétés du rectangle"
+msgstr "namespace.py : Définir les propriétés du rectangle"
 
 #: ../../CHANGELOG.md:305
 msgid "Update Shortcuts window"
@@ -10023,7 +10023,7 @@ msgid ""
 "GTK4 is now the default for Flatpak; Windows, macOS, and AppImage still use "
 "GTK3"
 msgstr ""
-"GTK4 est maintenant la valeur par défaut pour Flatpak ; Windows, macOS et "
+"GTK4 est maintenant la valeur par défaut pour Flatpak ; Windows, macOS et "
 "AppImage utilisent toujours GTK3"
 
 #: ../../CHANGELOG.md:310
@@ -10057,7 +10057,7 @@ msgstr "Les stéréotypes peuvent être hérités d'autres stéréotypes"
 #: ../../CHANGELOG.md:315
 msgid "Many GTK4 fixes: rename, search, instant editors"
 msgstr ""
-"Nombreux correctifs pour GTK4 : renommer, rechercher, éditeurs instantanés"
+"Nombreux correctifs pour GTK4 : renommer, rechercher, éditeurs instantanés"
 
 #: ../../CHANGELOG.md:316
 msgid "Many translation updates"
@@ -10077,7 +10077,7 @@ msgstr "Faire fonctionner les dialogues avec GTK4"
 
 #: ../../CHANGELOG.md:322
 msgid "Fix instant editors for GTK4"
-msgstr "Correction : éditeurs instantanés pour GTK4"
+msgstr "Correction : éditeurs instantanés pour GTK4"
 
 #: ../../CHANGELOG.md:323
 msgid "Update list view for GTK4"
@@ -10110,23 +10110,23 @@ msgstr "S'assurer que tous les modèles sont sauvegardés avec le codage UTF-8"
 
 #: ../../CHANGELOG.md:330
 msgid "Fix states can't transition to themselves"
-msgstr "Correction : les états ne peuvent pas se transformer en eux-mêmes"
+msgstr "Correction : les états ne peuvent pas se transformer en eux-mêmes"
 
 #: ../../CHANGELOG.md:331
 msgid "Fix unlinking elements from the model"
-msgstr "Correction : délier les éléments du modèle"
+msgstr "Correction : délier les éléments du modèle"
 
 #: ../../CHANGELOG.md:332
 msgid "Fix issue with fully pasting a diagram"
-msgstr "Correction : problème lié au collage complet d'un diagramme"
+msgstr "Correction : problème lié au collage complet d'un diagramme"
 
 #: ../../CHANGELOG.md:333
 msgid "Fix scroll speed for touch screens"
-msgstr "Correction : la vitesse de défilement pour les écrans tactiles"
+msgstr "Correction : la vitesse de défilement pour les écrans tactiles"
 
 #: ../../CHANGELOG.md:334
 msgid "Fix codeql warnings and error"
-msgstr "Correction : avertissements et les erreurs de codeql"
+msgstr "Correction : avertissements et les erreurs de codeql"
 
 #: ../../CHANGELOG.md:335
 msgid "Improve text placement for Associations"
@@ -10170,7 +10170,7 @@ msgstr "Codegen utilise tous les langages de modélisation définis"
 
 #: ../../CHANGELOG.md:346
 msgid "Fix diagram dependency cycle"
-msgstr "Correction : cycle de dépendance du diagramme"
+msgstr "Correction : cycle de dépendance du diagramme"
 
 #: ../../CHANGELOG.md:347
 msgid "Add Skip Duplicate Action and Release-Drafter Permissions"
@@ -10186,7 +10186,7 @@ msgstr "Inclure tous les éléments du diagramme dans le modèle de test"
 
 #: ../../CHANGELOG.md:350
 msgid "Fix GTK4 property page layouts"
-msgstr "Correction : présentation des pages de propriétés de GTK4"
+msgstr "Correction : présentation des pages de propriétés de GTK4"
 
 #: ../../CHANGELOG.md:351
 msgid "Use official RAAML logo in greeter"
@@ -10214,7 +10214,7 @@ msgstr "2.9.2"
 
 #: ../../CHANGELOG.md:359
 msgid "Fix Windows build"
-msgstr "Correction : version de Windows"
+msgstr "Correction : version de Windows"
 
 #: ../../CHANGELOG.md:361
 msgid "2.9.1"
@@ -10222,7 +10222,7 @@ msgstr "2.9.1"
 
 #: ../../CHANGELOG.md:363
 msgid "Fix bad release of version 2.9.0"
-msgstr "Correction : mauvaise version de la version 2.9.0"
+msgstr "Correction : mauvaise version de la version 2.9.0"
 
 #: ../../CHANGELOG.md:364
 msgid "Cleanup try except blocks and add more f-strings"
@@ -10257,11 +10257,11 @@ msgstr ""
 
 #: ../../CHANGELOG.md:373
 msgid "Proxyport: update ports when proxyport is moved"
-msgstr "Proxyport : mise à jour des ports lorsque le proxyport est déplacé"
+msgstr "Proxyport : mise à jour des ports lorsque le proxyport est déplacé"
 
 #: ../../CHANGELOG.md:374
 msgid "Fix AppImage Crashes on Save Command"
-msgstr "Correction : plantage de l'AppImage lors de la commande Save"
+msgstr "Correction : plantage de l'AppImage lors de la commande Save"
 
 #: ../../CHANGELOG.md:376
 msgid "Update connection behavior for Association"
@@ -10285,7 +10285,7 @@ msgstr "2.8.2"
 
 #: ../../CHANGELOG.md:383
 msgid "Fix splitting of lines"
-msgstr "Correction : fractionnement des lignes"
+msgstr "Correction : fractionnement des lignes"
 
 #: ../../CHANGELOG.md:384
 msgid "Update README to reflect new functionality"
@@ -10305,7 +10305,7 @@ msgstr "2.8.1"
 
 #: ../../CHANGELOG.md:390
 msgid "Fix Gaphor fails to load when launched in German"
-msgstr "Correction : Gaphor ne se charge pas lorsqu'il est lancé en allemand"
+msgstr "Correction : Gaphor ne se charge pas lorsqu'il est lancé en allemand"
 
 #: ../../CHANGELOG.md:391
 msgid "Simplify the greeter dialogs"
@@ -10387,13 +10387,13 @@ msgstr "Nouveau générateur de code"
 #: ../../CHANGELOG.md:410
 msgid "Fix AppImage GLIBC Error on Older Distro Versions"
 msgstr ""
-"Correction : erreur GLIBC d'AppImage sur les versions des distributions plus "
+"Correction : erreur GLIBC d'AppImage sur les versions des distributions plus "
 "anciennes"
 
 #: ../../CHANGELOG.md:411
 msgid "Fix Sequence diagram loading when message is close to lifeline body"
 msgstr ""
-"Correction : chargement du diagramme de séquence lorsque le message est "
+"Correction : chargement du diagramme de séquence lorsque le message est "
 "proche du corps de la ligne de vie"
 
 #: ../../CHANGELOG.md:412
@@ -10404,11 +10404,11 @@ msgstr ""
 
 #: ../../CHANGELOG.md:413
 msgid "Fix positions of nested items during undo"
-msgstr "Correction : position des éléments imbriqués lors de l'annulation"
+msgstr "Correction : position des éléments imbriqués lors de l'annulation"
 
 #: ../../CHANGELOG.md:414
 msgid "Fix ownership of Connector, ProxyPort, and ItemFlow"
-msgstr "Correction : propriété des Connecteurs, ProxyPort et ItemFlow"
+msgstr "Correction : propriété des Connecteurs, ProxyPort et ItemFlow"
 
 #: ../../CHANGELOG.md:415
 msgid "Improve GTK4 compatibility"
@@ -10458,7 +10458,7 @@ msgstr "2.7.1"
 
 #: ../../CHANGELOG.md:428
 msgid "Fix lines don't disconnect when moved"
-msgstr "Correction : lignes ne se déconnectent pas lorsqu'elles sont déplacées"
+msgstr "Correction : lignes ne se déconnectent pas lorsqu'elles sont déplacées"
 
 #: ../../CHANGELOG.md:429
 msgid "No GTK required anymore for generating docs"
@@ -10516,7 +10516,7 @@ msgstr ""
 #: ../../CHANGELOG.md:443
 msgid "Fix lifeline ordering when not all items are linked in a diagram"
 msgstr ""
-"Correction : ordre des lignes de vie lorsque tous les éléments ne sont pas "
+"Correction : ordre des lignes de vie lorsque tous les éléments ne sont pas "
 "liés dans un diagramme"
 
 #: ../../CHANGELOG.md:444
@@ -10533,7 +10533,7 @@ msgstr ""
 
 #: ../../CHANGELOG.md:446
 msgid "Fix Windows build by updating to Python 3.9.9"
-msgstr "Correction : version Windows en mettant à jour Python 3.9.9"
+msgstr "Correction : version Windows en mettant à jour Python 3.9.9"
 
 #: ../../CHANGELOG.md:448
 msgid "Show underlying DecisionNode type"
@@ -10569,12 +10569,12 @@ msgstr "Ajouter gtksourceview à la documentation Windows"
 
 #: ../../CHANGELOG.md:456
 msgid "Fix Python 3.10 warnings"
-msgstr "Correction : avertissements de Python 3.10"
+msgstr "Correction : avertissements de Python 3.10"
 
 #: ../../CHANGELOG.md:457
 msgid "Fix indentation in Style Sheet docs"
 msgstr ""
-"Correction : indentation dans la documentation sur les feuilles de style"
+"Correction : indentation dans la documentation sur les feuilles de style"
 
 #: ../../CHANGELOG.md:458
 msgid "Expand the number of strings translated"
@@ -10609,7 +10609,7 @@ msgstr "Veiller à ce que toutes les relations soient optimisées"
 #: ../../CHANGELOG.md:466
 msgid "Fix errors in Italian translation which prevented model saving"
 msgstr ""
-"Correction : erreurs dans la traduction italienne qui empêchaient la "
+"Correction : erreurs dans la traduction italienne qui empêchaient la "
 "sauvegarde du modèle"
 
 #: ../../CHANGELOG.md:467
@@ -10637,7 +10637,7 @@ msgstr "2.6.4"
 #: ../../CHANGELOG.md:474
 msgid "Fix Flatpak build failure by reverting to previous dependencies"
 msgstr ""
-"Correction : échec de la construction de Flatpak en revenant aux dépendances "
+"Correction : échec de la construction de Flatpak en revenant aux dépendances "
 "précédentes"
 
 #: ../../CHANGELOG.md:476
@@ -10646,7 +10646,7 @@ msgstr "2.6.3"
 
 #: ../../CHANGELOG.md:478
 msgid "Fix about dialog logo"
-msgstr "Correction : logo de la boîte de dialogue"
+msgstr "Correction : logo de la boîte de dialogue"
 
 #: ../../CHANGELOG.md:479
 msgid "Add translation of more elements"
@@ -10671,11 +10671,11 @@ msgstr "2.6.2"
 
 #: ../../CHANGELOG.md:487
 msgid "Fix localization of UI files"
-msgstr "Correction : localisation des fichiers de l'interface utilisateur"
+msgstr "Correction : localisation des fichiers de l'interface utilisateur"
 
 #: ../../CHANGELOG.md:488
 msgid "Fix icons in dark mode"
-msgstr "Correction : icônes en mode sombre"
+msgstr "Correction : icônes en mode sombre"
 
 #: ../../CHANGELOG.md:489
 msgid "Update Spanish, Finnish, Hugarian, and Portuguese (Br) translations"
@@ -10697,26 +10697,26 @@ msgstr "Utiliser des boutons plats dans la barre d'en-tête"
 #: ../../CHANGELOG.md:496
 msgid "Fix drag and drop of elements does not work on diagrams"
 msgstr ""
-"Correction : glisser-déposer d'éléments ne fonctionne pas sur les diagrammes"
+"Correction : glisser-déposer d'éléments ne fonctionne pas sur les diagrammes"
 
 #: ../../CHANGELOG.md:497
 msgid "Fix parameter is incorrect error with \";;\" in path"
-msgstr "Correction : erreur de paramètre avec « ; ; » dans le chemin d'accès"
+msgstr "Correction : erreur de paramètre avec « ; ; » dans le chemin d'accès"
 
 #: ../../CHANGELOG.md:498
 msgid "Fix fork/join node incorrectly rotates"
-msgstr "Correction : rotation incorrecte du nœud fork/join"
+msgstr "Correction : rotation incorrecte du nœud fork/join"
 
 #: ../../CHANGELOG.md:499
 msgid "Fix close button on about dialog doesn't work in Windows"
 msgstr ""
-"Correction : bouton de fermeture de la boîte de dialogue « à propos » ne "
+"Correction : bouton de fermeture de la boîte de dialogue « à propos » ne "
 "fonctionne pas sous Windows"
 
 #: ../../CHANGELOG.md:500
 msgid "Fix wrong label is displayed when object node ordering is enabled"
 msgstr ""
-"Correction : étiquette erronée est affichée lorsque l'ordre des nœuds "
+"Correction : étiquette erronée est affichée lorsque l'ordre des nœuds "
 "d'objets est activé"
 
 #: ../../CHANGELOG.md:501
@@ -10727,7 +10727,7 @@ msgstr ""
 
 #: ../../CHANGELOG.md:502
 msgid "Fixed closing of about dialog"
-msgstr "Correction : fermeture du dialogue « à propos de »"
+msgstr "Correction : fermeture du dialogue « à propos de »"
 
 #: ../../CHANGELOG.md:503
 msgid "Add VSCode debug instructions for Windows"
@@ -10747,7 +10747,7 @@ msgstr "Mise à jour de la traduction en Croate"
 
 #: ../../CHANGELOG.md:507
 msgid "Simplify attribute and enumeration lookup"
-msgstr "Simplifiée : recherche d'attributs et d'énumérations"
+msgstr "Simplifiée : recherche d'attributs et d'énumérations"
 
 #: ../../CHANGELOG.md:509
 msgid "2.6.0"
@@ -10755,7 +10755,7 @@ msgstr "2.6.0"
 
 #: ../../CHANGELOG.md:511
 msgid "Improve zoom and pan for mouse"
-msgstr "Amélioration : zoom et panoramique pour la souris"
+msgstr "Amélioration : zoom et panoramique pour la souris"
 
 #: ../../CHANGELOG.md:512
 msgid ""
@@ -10766,7 +10766,7 @@ msgstr ""
 
 #: ../../CHANGELOG.md:513
 msgid "Fix disappearing elements from tree view on Windows"
-msgstr "Correction : disparition d'éléments dans l'arborescence sous Windows"
+msgstr "Correction : disparition d'éléments dans l'arborescence sous Windows"
 
 #: ../../CHANGELOG.md:514
 msgid "Convert CI from mingw to gvsbuild"
@@ -10774,7 +10774,7 @@ msgstr "Convertir l'IC de mingw à gvsbuild"
 
 #: ../../CHANGELOG.md:515
 msgid "Upgrade Windows Build Script from Bash to Python"
-msgstr "Mise à jour : Script de construction de Windows de Bash à Python"
+msgstr "Mise à jour : Script de construction de Windows de Bash à Python"
 
 #: ../../CHANGELOG.md:516
 msgid "Refactor GitHub Actions to use composite actions"
@@ -10782,20 +10782,20 @@ msgstr "Refactoriser les actions GitHub pour utiliser des actions composites"
 
 #: ../../CHANGELOG.md:517
 msgid "Add translations for UI files"
-msgstr "Ajouté : traductions pour les fichiers de l'interface utilisateur"
+msgstr "Ajouté : traductions pour les fichiers de l'interface utilisateur"
 
 #: ../../CHANGELOG.md:518
 msgid "Add information flows to UML model"
-msgstr "Ajouté : les flux d'information au modèle UML"
+msgstr "Ajouté : les flux d'information au modèle UML"
 
 #: ../../CHANGELOG.md:519
 msgid "Add extra rules to avoid cyclic references"
 msgstr ""
-"Ajouté : des règles supplémentaires pour éviter les références cycliques"
+"Ajouté : des règles supplémentaires pour éviter les références cycliques"
 
 #: ../../CHANGELOG.md:520
 msgid "Fix typo in UML.gaphor"
-msgstr "Correction : typo dans UML.gaphor"
+msgstr "Correction : typo dans UML.gaphor"
 
 #: ../../CHANGELOG.md:521
 msgid "Refactor class property pages in to multiple modules"
@@ -10804,7 +10804,7 @@ msgstr "Refonte des pages de propriétés de classes en plusieurs modules"
 #: ../../CHANGELOG.md:522
 msgid "Fix Windows and other developer documentation updates"
 msgstr ""
-"Correction : Mise à jour de la documentation pour Windows et pour les "
+"Correction : Mise à jour de la documentation pour Windows et pour les "
 "développeurs"
 
 #: ../../CHANGELOG.md:523
@@ -10818,7 +10818,7 @@ msgstr "Mise à jour du README pour la traduction des chaînes de Flatpak"
 #: ../../CHANGELOG.md:525
 msgid "Fix documentation build errors, update dependencies"
 msgstr ""
-"Correction : erreurs de compilation de la documentation, mise à jour des "
+"Correction : erreurs de compilation de la documentation, mise à jour des "
 "dépendances"
 
 #: ../../CHANGELOG.md:527
@@ -10828,7 +10828,7 @@ msgstr "2.5.1"
 #: ../../CHANGELOG.md:529
 msgid "Fix app release signing in Windows and macOS"
 msgstr ""
-"Correction : signature de la version de l'application dans Windows et macOS"
+"Correction : signature de la version de l'application dans Windows et macOS"
 
 #: ../../CHANGELOG.md:531
 msgid "2.5.0"
@@ -10850,11 +10850,11 @@ msgstr "Permettre aux diagrammes d'être imbriqués sous tous les éléments"
 
 #: ../../CHANGELOG.md:536
 msgid "Fix delete and undo of a diagram"
-msgstr "Correction : suppression et annulation d'un diagramme"
+msgstr "Correction : suppression et annulation d'un diagramme"
 
 #: ../../CHANGELOG.md:537
 msgid "Rename C4ContainerDatabaseItem to C4DatabaseItem"
-msgstr "Renommé : C4ContainerDatabaseItem en C4DatabaseItem"
+msgstr "Renommé : C4ContainerDatabaseItem en C4DatabaseItem"
 
 #: ../../CHANGELOG.md:538
 msgid "Cleanup model loading"
@@ -10872,7 +10872,7 @@ msgstr "Organiser et simplifier les événements liés aux éléments"
 
 #: ../../CHANGELOG.md:541
 msgid "Cleanup toolbox and diagram action code"
-msgstr "Nettoyé : la boîte à outils et le code d'action du diagramme"
+msgstr "Nettoyé : la boîte à outils et le code d'action du diagramme"
 
 #: ../../CHANGELOG.md:543
 msgid "2.4.2"
@@ -10881,15 +10881,15 @@ msgstr "2.4.2"
 #: ../../CHANGELOG.md:545
 msgid "Fix AttributeError when creating composite associations"
 msgstr ""
-"Correction : Erreur d'attribut lors de la création d'associations composites"
+"Correction : Erreur d'attribut lors de la création d'associations composites"
 
 #: ../../CHANGELOG.md:546
 msgid "Add tooltips for A and S in attribute editor"
-msgstr "Ajout : infobulles pour A et S dans l'éditeur d'attributs"
+msgstr "Ajout : infobulles pour A et S dans l'éditeur d'attributs"
 
 #: ../../CHANGELOG.md:547
 msgid "Improve drag and drop for TreeView"
-msgstr "Amélioration : glisser/déposer pour TreeView"
+msgstr "Amélioration : glisser/déposer pour TreeView"
 
 #: ../../CHANGELOG.md:548
 msgid "Started to add support for GTK4"
@@ -10910,7 +10910,7 @@ msgstr "2.4.1"
 #: ../../CHANGELOG.md:554
 msgid "Fix reordering attributes and operations with drag and drop"
 msgstr ""
-"Correction : réorganisation des attributs et des opérations par glisser-"
+"Correction : réorganisation des attributs et des opérations par glisser-"
 "déposer"
 
 #: ../../CHANGELOG.md:556
@@ -10925,7 +10925,7 @@ msgstr ""
 #: ../../CHANGELOG.md:559
 msgid "Model state is stored per model, restores where you left off"
 msgstr ""
-"L'état du modèle est stocké par modèle ; il est rétabli là où vous l'avez "
+"L'état du modèle est stocké par modèle ; il est rétabli là où vous l'avez "
 "laissé"
 
 #: ../../CHANGELOG.md:560
@@ -10939,7 +10939,7 @@ msgstr ""
 
 #: ../../CHANGELOG.md:562
 msgid "Remove the New From Template option"
-msgstr "Supprimée : l'option Nouveau à partir d'un modèle"
+msgstr "Supprimée : l'option Nouveau à partir d'un modèle"
 
 #: ../../CHANGELOG.md:563
 msgid "Upgrade toolbox to be compatible with GTK 4"
@@ -10952,13 +10952,13 @@ msgstr "Ajouter des tests de régression"
 #: ../../CHANGELOG.md:565
 msgid "Fix build fails when GitHub Actions secrets are not available"
 msgstr ""
-"Correction : la compilation échoue lorsque les détails de l'action GitHub ne "
+"Correction : la compilation échoue lorsque les détails de l'action GitHub ne "
 "sont pas disponibles"
 
 #: ../../CHANGELOG.md:566
 msgid "Fix association direction arrow is not updated"
 msgstr ""
-"Correction : la flèche de direction de l'association n'est pas mise à jour"
+"Correction : la flèche de direction de l'association n'est pas mise à jour"
 
 #: ../../CHANGELOG.md:568
 msgid "2.3.2"
@@ -10968,7 +10968,7 @@ msgstr "2.3.2"
 msgid ""
 "Fix issue where ornaments were not show on associations after loading a model"
 msgstr ""
-"Correction : problème où les ornements n'apparaissaient pas dans les "
+"Correction : problème où les ornements n'apparaissaient pas dans les "
 "associations après le chargement d'un modèle"
 
 #: ../../CHANGELOG.md:573
@@ -10977,7 +10977,7 @@ msgstr "2.3.1"
 
 #: ../../CHANGELOG.md:575
 msgid "Fix scrollbars cause the diagram to disappear"
-msgstr "Correction : les barres de défilement font disparaître le diagramme"
+msgstr "Correction : les barres de défilement font disparaître le diagramme"
 
 #: ../../CHANGELOG.md:576 ../../CHANGELOG.md:626
 msgid "Update Italian translation"
@@ -10993,7 +10993,7 @@ msgstr "2.3.0"
 
 #: ../../CHANGELOG.md:581
 msgid "Add support for C4 model"
-msgstr "Ajoutée : la prise en charge du modèle C4"
+msgstr "Ajoutée : la prise en charge du modèle C4"
 
 #: ../../CHANGELOG.md:582
 msgid "Add support for Fault Tree Analysis with RAAML"
@@ -11009,7 +11009,7 @@ msgstr ""
 #: ../../CHANGELOG.md:584
 msgid "Enable arrow keys to expand and collapse namespace tree"
 msgstr ""
-"Activées : les touches fléchées pour développer et réduire l'arborescence de "
+"Activées : les touches fléchées pour développer et réduire l'arborescence de "
 "l'espace de noms"
 
 #: ../../CHANGELOG.md:585
@@ -11022,7 +11022,7 @@ msgstr "Amélioration de la vitesse de dessin et de défilement des diagrammes"
 
 #: ../../CHANGELOG.md:588
 msgid "Remove gray borders around editable text"
-msgstr "Supprimer : les bordures grises autour du texte éditable"
+msgstr "Supprimer : les bordures grises autour du texte éditable"
 
 #: ../../CHANGELOG.md:589
 msgid "Complete converting all tests to pytest"
@@ -11031,19 +11031,19 @@ msgstr "Terminer la conversion de tous les tests en pytest"
 #: ../../CHANGELOG.md:590
 msgid "Fix guides are misaligned when top-left handle is moved"
 msgstr ""
-"Correction : les guides sont mal alignés lorsque la poignée supérieure "
+"Correction : les guides sont mal alignés lorsque la poignée supérieure "
 "gauche est déplacée"
 
 #: ../../CHANGELOG.md:592
 msgid "Fix undo and redo does not set attributes"
 msgstr ""
-"Correction : l'annulation et le rétablissement ne définissent pas les "
+"Correction : l'annulation et le rétablissement ne définissent pas les "
 "attributs"
 
 #: ../../CHANGELOG.md:593
 msgid "Fix selection lasso is in the wrong place after scrolling"
 msgstr ""
-"Correction : le lasso de sélection se trouve au mauvais endroit après le "
+"Correction : le lasso de sélection se trouve au mauvais endroit après le "
 "défilement"
 
 #: ../../CHANGELOG.md:595
@@ -11052,15 +11052,15 @@ msgstr "2.2.2"
 
 #: ../../CHANGELOG.md:597
 msgid "Fix undo of deleted elements"
-msgstr "Correction : annulation des éléments supprimés"
+msgstr "Correction : annulation des éléments supprimés"
 
 #: ../../CHANGELOG.md:598
 msgid "Fix requirements are missing ID and text"
-msgstr "Correction : il manque l'ID et le texte des exigences"
+msgstr "Correction : il manque l'ID et le texte des exigences"
 
 #: ../../CHANGELOG.md:599
 msgid "Add CSS styling to dropzone and grayed out elements"
-msgstr "Ajout : un style CSS à la zone de dépôt et aux éléments grisés"
+msgstr "Ajout : un style CSS à la zone de dépôt et aux éléments grisés"
 
 #: ../../CHANGELOG.md:600
 msgid "Start to remove use of inline styles"
@@ -11072,7 +11072,7 @@ msgstr "2.2.1"
 
 #: ../../CHANGELOG.md:604
 msgid "Fix drawing of composite association"
-msgstr "Correction : dessin de l'association composite"
+msgstr "Correction : dessin de l'association composite"
 
 #: ../../CHANGELOG.md:606
 msgid "2.2.0"
@@ -11096,7 +11096,7 @@ msgstr "Amélioration du copier-coller et de la robustesse de l'annulation"
 
 #: ../../CHANGELOG.md:612
 msgid "Fix RuntimeError caused by style sheet creation"
-msgstr "Correction : RuntimeError causé par la création d'une feuille de style"
+msgstr "Correction : RuntimeError causé par la création d'une feuille de style"
 
 #: ../../CHANGELOG.md:613
 msgid "Use EventControllers from GTK 3.24"
@@ -11108,7 +11108,7 @@ msgstr "2.1.1"
 
 #: ../../CHANGELOG.md:617
 msgid "Fix copy and paste in Linux with Wayland"
-msgstr "Correction : copier-coller sous Linux avec Wayland"
+msgstr "Correction : copier-coller sous Linux avec Wayland"
 
 #: ../../CHANGELOG.md:619
 msgid "2.1.0"
@@ -11148,7 +11148,7 @@ msgstr "2.0.1"
 
 #: ../../CHANGELOG.md:631
 msgid "Fix Gaphor fails to launch in macOS"
-msgstr "Correction : Gaphor ne se lance pas dans macOS"
+msgstr "Correction : Gaphor ne se lance pas dans macOS"
 
 #: ../../CHANGELOG.md:632
 msgid "Use certificate to sign Windows binaries"
@@ -11157,7 +11157,7 @@ msgstr "Utiliser un certificat pour signer les binaires Windows"
 #: ../../CHANGELOG.md:633
 msgid "Fix copy/paste issue that causes association ends to be removed"
 msgstr ""
-"Correction : problème de copier/coller entraînant la suppression des fins "
+"Correction : problème de copier/coller entraînant la suppression des fins "
 "d'association"
 
 #: ../../CHANGELOG.md:634
@@ -11166,11 +11166,11 @@ msgstr "Amélioration de l'édition pour les éditeurs en ligne (popovers)"
 
 #: ../../CHANGELOG.md:635
 msgid "Fix undo on diagram items corrupts the model"
-msgstr "Correction : l'annulation d'éléments de diagramme corrompt le modèle"
+msgstr "Correction : l'annulation d'éléments de diagramme corrompt le modèle"
 
 #: ../../CHANGELOG.md:636
 msgid "Fix UML composite and shared association tools"
-msgstr "Correction : Outils UML pour les associations composites et partagées"
+msgstr "Correction : Outils UML pour les associations composites et partagées"
 
 #: ../../CHANGELOG.md:638
 msgid "2.0.0"
@@ -11226,12 +11226,12 @@ msgstr "Mise à jour du gif d'animation dans le README"
 #: ../../CHANGELOG.md:652
 msgid "Fix Windows Build Errors caused by Missing ZST Archives"
 msgstr ""
-"Correction : Erreurs de construction de Windows causées par des archives ZST "
+"Correction : Erreurs de construction de Windows causées par des archives ZST "
 "manquantes"
 
 #: ../../CHANGELOG.md:653
 msgid "Fix installation on Windows"
-msgstr "Correction : installation sur Windows"
+msgstr "Correction : installation sur Windows"
 
 #: ../../CHANGELOG.md:654
 msgid "Add extra diagram item tests"
@@ -11239,7 +11239,7 @@ msgstr "Ajouter des tests d'éléments de diagramme supplémentaires"
 
 #: ../../CHANGELOG.md:655
 msgid "Fix macOS Python version problem"
-msgstr "Correction : problème de version Python de macOS"
+msgstr "Correction : problème de version Python de macOS"
 
 #: ../../CHANGELOG.md:656
 msgid "Place UML model and diagram items closer together"
@@ -11252,7 +11252,7 @@ msgstr "Refonte du générateur de code en nouveau module et ajout d'un CLI"
 #: ../../CHANGELOG.md:658
 msgid "Fix MSYS2 package names and disable system update"
 msgstr ""
-"Correction : noms des paquets MSYS2 et désactivation de la mise à jour du "
+"Correction : noms des paquets MSYS2 et désactivation de la mise à jour du "
 "système"
 
 #: ../../CHANGELOG.md:659
@@ -11275,7 +11275,7 @@ msgstr "Accélérer le rendu du texte"
 #: ../../CHANGELOG.md:663
 msgid "Fix tree view text to allow names with angle brackets"
 msgstr ""
-"Correction : le texte de l'arborescence pour permettre les noms avec des "
+"Correction : le texte de l'arborescence pour permettre les noms avec des "
 "crochets d'angle"
 
 #: ../../CHANGELOG.md:664
@@ -11285,7 +11285,7 @@ msgstr ""
 
 #: ../../CHANGELOG.md:665
 msgid "Fix name change for activity partitions"
-msgstr "Correction : changement de nom pour les partitions d'activité"
+msgstr "Correction : changement de nom pour les partitions d'activité"
 
 #: ../coffee_machine_concept.md:113
 msgid ""
@@ -11336,7 +11336,7 @@ msgstr ""
 
 #: ../../CHANGELOG.md:495
 msgid "Fix translation support"
-msgstr "Correction : prise en charge des traductions"
+msgstr "Correction : prise en charge des traductions"
 
 #: ../../CHANGELOG.md:587
 msgid "Add Croatian translation"
@@ -11387,7 +11387,7 @@ msgstr "Paquets de premier niveau du modèle SysML"
 #: ../coffee_machine.md:109
 msgid "Parametrics: Enforces mathematical rules across values in the system"
 msgstr ""
-"Paramétrage : Appliquer les règles mathématiques aux valeurs du système"
+"Paramétrage : Appliquer les règles mathématiques aux valeurs du système"
 
 #: ../coffee_machine.md:114
 msgid ""
@@ -11432,7 +11432,7 @@ msgid ""
 "to make multiple cups of coffee before needing a refill. The water tank "
 "should be easy to access and fill."
 msgstr ""
-"Water Tank : (Réservoir d'eau) La machine à café doit être dotée d'un "
+"Water Tank : (Réservoir d'eau) La machine à café doit être dotée d'un "
 "réservoir d'eau suffisamment grand pour permettre la préparation de "
 "plusieurs tasses de café avant qu'il ne soit nécessaire de le remplir à "
 "nouveau. Le réservoir d'eau doit être facile d'accès et de remplissage."
@@ -11443,7 +11443,7 @@ msgid ""
 "10 minutes from the time the user turns on the machine until it's ready to "
 "brew coffee."
 msgstr ""
-"Heat-up Time : (Temps de chauffe) la machine à café doit avoir un temps de "
+"Heat-up Time : (Temps de chauffe) la machine à café doit avoir un temps de "
 "chauffe ne dépassant pas 10 minutes entre le moment où l'utilisateur allume "
 "la machine et le moment où elle est prête à préparer le café."
 
@@ -11453,7 +11453,7 @@ msgid ""
 "to make it easy for the user to select the amount of coffee they want to "
 "brew. The HMI should be intuitive and easy to use."
 msgstr ""
-"HMI Button : (Bouton IHM) La machine à café doit être dotée d'une 'Interface "
+"HMI Button : (Bouton IHM) La machine à café doit être dotée d'une 'Interface "
 "Homme Machine' avec un bouton d'infusion d'une tasse pour permettre à "
 "l'utilisateur de sélectionner facilement la quantité de café qu'il souhaite "
 "infuser. L'IHM doit être intuitive et facile à utiliser."
@@ -11547,7 +11547,7 @@ msgid ""
 "portafilter and into the cup. The grouphead also helps to maintain proper "
 "temperature and pressure during the brewing process."
 msgstr ""
-"Grouphead : La tête de groupe est une partie de la machine à espresso où se "
+"Grouphead : La tête de groupe est une partie de la machine à espresso où se "
 "fixe le porte-filtre. Il assure une liaison sûre entre le porte-filtre et la "
 "machine, ce qui permet à l'espresso infusé de s'écouler du porte-filtre vers "
 "la tasse. La tête de groupe permet également de maintenir une température et "
@@ -11610,7 +11610,7 @@ msgid ""
 "itself to the Pointer tool after the element is placed on the diagram."
 msgstr ""
 "Sélectionnez un élément que vous souhaitez placer, dans ce cas une «Classe» ("
-" ![new class](../gaphor/ui/icons/hicolor/scalable/actions/gaphor-class-"
+" ![new class](../gaphor/ui/icons/hicolor/scalable/actions/gaphor-class-"
 "symbolic.svg)) en cliquant sur l'icône correspondante dans la boîte à "
 "outils, puis sur le diagramme. Cela placera une nouvelle instance de la "
 "classe sélectionnée sur le diagramme et ajoutera une nouvelle classe au "
@@ -11635,7 +11635,7 @@ msgid ""
 "Select Generalization (![new generalization](../gaphor/ui/icons/hicolor/"
 "scalable/actions/gaphor-generalization-symbolic.svg))."
 msgstr ""
-"Sélectionnez la généralisation Generalization( ![new generalization](../"
+"Sélectionnez la généralisation Generalization( ![new generalization](../"
 "gaphor/ui/icons/hicolor/scalable/actions/gaphor-generalization-symbolic."
 "svg))."
 
@@ -11652,7 +11652,7 @@ msgid ""
 "Optionally you can run the auto-layout (![open menu](images/open-menu-"
 "symbolic.svg) → Tools → Auto Layout) to align the elements on the diagram."
 msgstr ""
-"En option, vous pouvez lancer la mise en page automatique ( ![open menu]("
+"En option, vous pouvez lancer la mise en page automatique ( ![open menu]("
 "images/open-menu-symbolic.svg) → Tools → Auto Layout) pour aligner les "
 "éléments sur le diagramme."
 
@@ -11670,7 +11670,7 @@ msgstr ""
 "Pour créer un nouveau diagramme, utilisez le navigateur de modèle. "
 "Sélectionnez l'élément qui doit contenir le nouveau diagramme. Pour "
 "l'instant, sélectionnez _Nouveau modèle_. Cliquez sur le menu Nouveau "
-"diagramme ( ![nouveau diagramme](images/list-add-symbolic.svg)) dans la "
+"diagramme ( ![nouveau diagramme](images/list-add-symbolic.svg)) dans la "
 "barre d'en-tête."
 
 #: ../first_model.md:57
@@ -11762,7 +11762,7 @@ msgstr ""
 "Lorsqu'aucun élément n'est sélectionné dans le diagramme, il vous montre "
 "quelques trucs et astuces. Lorsqu'un élément est sélectionné sur le "
 "diagramme, il contient les détails de l'élément comme le nom, les attributs "
-"et les stéréotypes. Il peut être ouvert avec <kbd>F9</kbd> et l'icône "
+"et les stéréotypes. Il peut être ouvert avec <kbd>F9</kbd> et l'icône "
 "![sidebar-show-right-symbolic](images/sidebar-show-right-symbolic.svg) dans "
 "la barre d'en-tête."
 
@@ -11776,8 +11776,8 @@ msgid ""
 "The Property Editor also contains model preferences: Click the ![document-"
 "properties-symbolic](images/document-properties-symbolic.svg) button."
 msgstr ""
-"L'éditeur de propriétés contient également les préférences du modèle : "
-"Cliquez sur le bouton ![document-properties-symbolic](images/document-"
+"L'éditeur de propriétés contient également les préférences du modèle : "
+"Cliquez sur le bouton ![document-properties-symbolic](images/document-"
 "properties-symbolic.svg)."
 
 #: ../getting_started.md:156
@@ -11834,7 +11834,7 @@ msgstr ""
 
 #: ../macos.md:12
 msgid "To setup a development environment with macOS:"
-msgstr "Pour mettre en place un environnement de développement avec macOS :"
+msgstr "Pour mettre en place un environnement de développement avec macOS :"
 
 #: ../macos.md:32
 msgid ""
@@ -11842,7 +11842,7 @@ msgid ""
 "set the following environment variable and run `poetry install` again:"
 msgstr ""
 "Si PyGObject ne compile pas et se plaint de l'absence du fichier `ffi.h`, "
-"définissez la variable d'environnement suivante et relancez `poetry install` "
+"définissez la variable d'environnement suivante et relancez `poetry install` "
 ":"
 
 #: ../merge_conflicts.md:15
@@ -11893,7 +11893,7 @@ msgstr ""
 #: ../../gaphor/diagram/connectors.py:docstring of
 #: gaphor.diagram.connectors.BaseConnector:10
 msgid "The following methods are required to make this work:"
-msgstr "Les méthodes suivantes sont nécessaires pour que cela fonctionne :"
+msgstr "Les méthodes suivantes sont nécessaires pour que cela fonctionne :"
 
 #: ../../gaphor/diagram/connectors.py:docstring of
 #: gaphor.diagram.connectors.BaseConnector:12
@@ -11901,7 +11901,7 @@ msgid ""
 "``allow()``: is the connection allowed at all (during mouse movement for "
 "example)."
 msgstr ""
-"``allow()`` : la connexion est-elle autorisée (pendant le mouvement de la "
+"``allow()`` : la connexion est-elle autorisée (pendant le mouvement de la "
 "souris par exemple)."
 
 #: ../../gaphor/diagram/connectors.py:docstring of
@@ -11910,7 +11910,7 @@ msgid ""
 "``connect()``: Establish a connection between element and line. Also takes "
 "care of disconnects, if required (e.g. 1:1 relationships)"
 msgstr ""
-"``connect()`` : Etablit une connexion entre l'élément et la ligne. Prend "
+"``connect()`` : Etablit une connexion entre l'élément et la ligne. Prend "
 "également en charge les déconnexions, si nécessaire (par exemple, les "
 "relations 1:1)"
 
@@ -11920,7 +11920,7 @@ msgid ""
 "``disconnect()``: Break connection, called when dropping a handle on a point "
 "where it can not connect."
 msgstr ""
-"``disconnect()`` : Interrompt la connexion, appelé lorsqu'on dépose un "
+"``disconnect()`` : Interrompt la connexion, appelé lorsqu'on dépose un "
 "identifiant sur un point où il ne peut pas se connecter."
 
 #: ../../gaphor/diagram/connectors.py:docstring of
@@ -11953,7 +11953,7 @@ msgid ""
 msgstr ""
 "La grande différence avec le déplacement d'un élément depuis la boîte à "
 "outils est que celui-ci placera un nouvel élément ``Presentation`` sur le "
-"diagramme. ``drop`` (déposer) fonctionne dans l'autre sens : il part d'un "
+"diagramme. ``drop`` (déposer) fonctionne dans l'autre sens : il part d'un "
 "élément de modèle et crée une ``Presentation`` qui l'accompagne."
 
 #: ../modeling_language.md:184
@@ -12024,7 +12024,7 @@ msgid ""
 "→ Hello World)."
 msgstr ""
 "Ensuite, démarrez Gaphor comme vous le feriez normalement. Une nouvelle "
-"entrée Hello World a été ajoutée au menu des outils ( ![menu ouvrir](images/"
+"entrée Hello World a été ajoutée au menu des outils ( ![menu ouvrir](images/"
 "open-menu-symbolic.svg) → Tools → Hello World)."
 
 #: ../plugins.md:42 ../style_sheets.md:340
@@ -12120,7 +12120,7 @@ msgid ""
 "(images/open-menu-symbolic.svg) → Tools → Console). Drop us a line on "
 "[Gitter](https://gitter.im/gaphor/Lobby) and we would be happy to help you."
 msgstr ""
-"Pour créer votre propre expression, vous pouvez utiliser la console ( ![open "
+"Pour créer votre propre expression, vous pouvez utiliser la console ( ![open "
 "menu](images/open-menu-symbolic.svg) → Tools → Console). Envoyez-nous un "
 "message sur [Gitter](https://gitter.im/gaphor/Lobby) et nous serons heureux "
 "de vous aider."
@@ -12132,7 +12132,7 @@ msgstr "Soutien aux transactions"
 #: ../transaction.md:3
 msgid "Transaction support is located in module `gaphor.transaction`:"
 msgstr ""
-"Le support des transactions est situé dans le module `gaphor.transaction` :"
+"Le support des transactions est situé dans le module `gaphor.transaction` :"
 
 #: ../transaction.md:10
 msgid ""
@@ -12143,7 +12143,7 @@ msgstr ""
 "Effectuer une initialisation de base, afin que l'émission d'événements "
 "fonctionne. Comme le décorateur de transaction ne connaît pas la session "
 "utilisateur active (fenêtre), il émet ses événements par l'intermédiaire "
-"d'une liste globale d'abonnés :"
+"d'une liste globale d'abonnés :"
 
 #: ../transaction.md:18
 msgid ""
@@ -12153,46 +12153,46 @@ msgid ""
 msgstr ""
 "La classe Transaction est principalement utilisée pour signaler le début et "
 "la fin d'une transaction. Pour ce faire, elle utilise les événements "
-"TransactionBegin, TransactionCommit et TransactionRollback :"
+"TransactionBegin, TransactionCommit et TransactionRollback :"
 
 #: ../transaction.md:26
 msgid "Same goes for commit and rollback events:"
 msgstr ""
 "Il en va de même pour les événements « commit » (modification) et « rollback "
-"» (retour arrière) :"
+"» (retour arrière) :"
 
 #: ../transaction.md:37
 msgid "A Transaction is started by initiating a Transaction instance:"
-msgstr "Une transaction est lancée en initiant une instance de transaction :"
+msgstr "Une transaction est lancée en initiant une instance de transaction :"
 
 #: ../transaction.md:42
 msgid "On success, a transaction can be committed:"
-msgstr "En cas de succès, une transaction peut être engagée :"
+msgstr "En cas de succès, une transaction peut être engagée :"
 
 #: ../transaction.md:47
 msgid ""
 "After a commit, a rollback is no longer allowed (the transaction is closed):"
 msgstr ""
 "Après un commit, un rollback (retour arrière) n'est plus autorisé (la "
-"transaction est fermée) :"
+"transaction est fermée) :"
 
 #: ../transaction.md:55
 msgid "Transactions may be nested:"
-msgstr "Les transactions peuvent être imbriquées :"
+msgstr "Les transactions peuvent être imbriquées :"
 
 #: ../transaction.md:64
 msgid ""
 "Transactions should be closed in the right order (subtransactions first):"
 msgstr ""
 "Les transactions doivent être clôturées dans le bon ordre (les sous-"
-"transactions en premier) :"
+"transactions en premier) :"
 
 #: ../transaction.md:79
 msgid ""
 "The transactional decorator can be used to mark functions as transactional:"
 msgstr ""
 "Le décorateur transactionnel peut être utilisé pour marquer les fonctions "
-"comme transactionnelles :"
+"comme transactionnelles :"
 
 #: ../transaction.md:89
 msgid ""
@@ -12200,11 +12200,11 @@ msgid ""
 "performed:"
 msgstr ""
 "Si une exception est soulevée à l'intérieur de la fonction décorée, un "
-"retour en arrière est effectué :"
+"retour en arrière est effectué :"
 
 #: ../transaction.md:103
 msgid "Cleanup:"
-msgstr "Nettoyage :"
+msgstr "Nettoyage :"
 
 #: ../undo.md:9
 msgid ""
@@ -12249,7 +12249,7 @@ msgstr ""
 #: ../windows.md:18
 msgid "To install it, open PowerShell as an administrator, then execute:"
 msgstr ""
-"Pour l'installer, ouvrez PowerShell en tant qu'administrateur, puis exécutez "
+"Pour l'installer, ouvrez PowerShell en tant qu'administrateur, puis exécutez "
 ":"
 
 #: ../windows.md:24
@@ -12273,7 +12273,7 @@ msgid ""
 msgstr ""
 "Pour mettre en place un environnement de développement sous Windows, "
 "installez d'abord [Git] (https://gitforwindows.org) en vous exécutant en "
-"tant qu'administrateur :"
+"tant qu'administrateur :"
 
 #: ../windows.md:42
 msgid "MSYS2"
@@ -12294,7 +12294,7 @@ msgid ""
 "org/):"
 msgstr ""
 "Gardez PowerShell ouvert en tant qu'administrateur et installez "
-"[MSYS2](http://www.msys2.org/) :"
+"[MSYS2](http://www.msys2.org/) :"
 
 #: ../windows.md:53
 msgid "GTK and Python with gvsbuild"
@@ -12313,7 +12313,7 @@ msgstr ""
 
 #: ../windows.md:59
 msgid "First we will install the gvsbuild dependencies:"
-msgstr "Tout d'abord, nous allons installer les dépendances de gvsbuild :"
+msgstr "Tout d'abord, nous allons installer les dépendances de gvsbuild :"
 
 #: ../windows.md:60
 msgid "Visual C++ build tools workload for Visual Studio 2022 Build Tools"
@@ -12331,11 +12331,11 @@ msgstr "Installer Visual Studio 2022"
 
 #: ../windows.md:65
 msgid "With your admin PowerShell terminal:"
-msgstr "Avec votre terminal PowerShell administrateur :"
+msgstr "Avec votre terminal PowerShell administrateur :"
 
 #: ../windows.md:93
 msgid "Install from Chocolately with administrator PowerShell:"
-msgstr "Installer à partir de Chocolately avec un PowerShell administrateur :"
+msgstr "Installer à partir de Chocolately avec un PowerShell administrateur :"
 
 #: ../windows.md:99
 msgid ""
@@ -12343,7 +12343,7 @@ msgid ""
 "command is available:"
 msgstr ""
 "Redémarrez votre terminal PowerShell en tant qu'utilisateur normal et "
-"vérifiez que la commande dot est disponible :"
+"vérifiez que la commande dot est disponible :"
 
 #: ../windows.md:114
 msgid "Install gvsbuild"
@@ -12355,7 +12355,7 @@ msgstr "Construire GTK"
 
 #: ../windows.md:124
 msgid "In the same PowerShell terminal, execute:"
-msgstr "Dans le même terminal PowerShell, exécutez :"
+msgstr "Dans le même terminal PowerShell, exécutez :"
 
 #: ../windows.md:129
 msgid "Grab a coffee, the build will take a few minutes to complete."
