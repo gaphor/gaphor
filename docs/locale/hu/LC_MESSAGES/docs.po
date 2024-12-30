@@ -29,7 +29,7 @@ msgid ""
 "<https://github.com/gaphor/gaphor/blob/main/CHANGELOG.md>`_."
 msgstr ""
 "Változásnaplónk a projekt forráskódjával a `GitHub "
-"<https://github.com/gaphor/gaphor/blob/main/CHANGELOG.md>'_ oldalon "
+"<https://github.com/gaphor/gaphor/blob/main/CHANGELOG.md>`_ oldalon "
 "található."
 
 #: ../changelog.rst:8
