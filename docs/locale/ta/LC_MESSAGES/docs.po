@@ -6639,9 +6639,10 @@ msgid ""
 "render, it's best to use a `.readthedocs.yaml`_ file in your project. "
 "Make sure to include the extra ``apt_packages`` as shown below."
 msgstr ""
-"வரைபட கட்டளை `டாக்சைப் படியுங்கள் `_ உடன் நன்றாக விளையாடுகிறது. வரைபடங்களை வழங்குவதற்கு"
-", உங்கள் திட்டத்தில் `.readthedocs.yaml`_ கோப்பைப் பயன்படுத்துவது நல்லது. கீழே "
-"காட்டப்பட்டுள்ளபடி கூடுதல் `` apt_packages`` ஐச் சேர்ப்பதை உறுதிசெய்க."
+"வரைபட கட்டளை `Read the docs`_ உடன் நன்றாக விளையாடுகிறது. "
+"வரைபடங்களை வழங்குவதற்கு, உங்கள் திட்டத்தில் `.readthedocs.yaml`_ கோப்பைப்"
+" பயன்படுத்துவது நல்லது. கீழே காட்டப்பட்டுள்ளபடி கூடுதல் ``apt_packages``"
+" ஐச் சேர்ப்பதை உறுதிசெய்க."
 
 #: ../sphinx.rst:97
 msgid "This is the ``.readthedocs.yaml`` file we use for Gaphor:"
