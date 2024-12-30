@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gaphor 2.27.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-11-27 15:44-0500\n"
-"PO-Revision-Date: 2024-12-29 08:01+0000\n"
+"PO-Revision-Date: 2024-12-31 07:00+0000\n"
 "Last-Translator: தமிழ்நேரம் <anishprabu.t@gmail.com>\n"
 "Language-Team: Tamil <https://hosted.weblate.org/projects/gaphor/"
 "docs-gaphor-org/ta/>\n"
@@ -99,7 +99,9 @@ msgstr ""
 
 #: ../coffee_machine.md:41
 msgid "![Two shots of espresso being pulled from an espresso machine.](images/coffee-machine-double-shot.jpg)"
-msgstr "!"
+msgstr ""
+"![எச்பிரெசோ இயந்திரத்திலிருந்து எடுக்கப்பட்ட எச்பிரெசோவின் இரண்டு மூடிகள்.](images/"
+"coffee-machine-double-shot.jpg)"
 
 #: ../coffee_machine.md:41
 msgid "Two shots of espresso being pulled from an espressomachine."
@@ -211,7 +213,9 @@ msgstr ""
 
 #: ../coffee_machine.md:102
 msgid "![Top level packages of the SysML template.](images/coffee-machine-top-level-packages.png)"
-msgstr "!"
+msgstr ""
+"![SysML வார்ப்புருவின் உயர் நிலை தொகுப்புகள்.](images/coffee-machine-top-level-"
+"packages.png)"
 
 #: ../coffee_machine.md:102
 msgid "Top level packages of the SysMLtemplate."
@@ -268,7 +272,9 @@ msgstr ""
 
 #: ../coffee_machine.md:127
 msgid "![Three pillar packages nested under each abstraction level package.](images/coffee-machine-pillars.png)"
-msgstr "!"
+msgstr ""
+"![ஒவ்வொரு சுருக்க நிலை தொகுப்பின் கீழும் மூன்று தூண் தொகுப்புகள் உள்ளமைக்கப்பட்டுள்ளன.]("
+"images/coffee-machine-pillars.png)"
 
 #: ../coffee_machine.md:127
 msgid "Three pillar packages nested under each abstraction levelpackage."
@@ -1090,9 +1096,9 @@ msgstr "பலகத்தில் கீழே **+ புதிய கோட�
 #: ../container.md:13
 msgid "For more info, check out the [GitHub documentation](https://docs.github.com/en/free-pro-team@latest/github/developing-online-with-codespaces/creating-a-codespace#creating-a-codespace)."
 msgstr ""
-"மேலும் தகவலுக்கு, [github ஆவணம்] (https://docs.github.com/en/free-pro-team@"
-"latest/github/github/github/github-online-with-codespaces/"
-"creating-a-d-codespace#creating- ஐப் பாருங்கள் a-codespace)."
+"மேலும் தகவலுக்கு, [அறிவிலிமையம் ஆவணம்] (https://docs.github.com/en/free-pro-team@"
+"latest/github/developing-online-with-codespaces/"
+"creating-a-codespace#creating-a-codespace) ஐப் பாருங்கள்."
 
 #: ../container.md:15
 msgid "Remote access to Gaphor graphic window with Codespaces"
@@ -1167,7 +1173,10 @@ msgstr ""
 
 #: ../container.md:43
 msgid "Upon [debugging/running](https://github.com/gaphor/gaphor/blob/main/.devcontainer/devcontainer.json) Gaphor the familiar Graphic window should be displayed in noVNC view on Browser"
-msgstr "[பிழைத்திருத்தம்/இயங்கும்]"
+msgstr ""
+"[பிழைத்திருத்ததின்/இயங்கத்தின்](https://github.com/gaphor/gaphor/blob/main/"
+".devcontainer/devcontainer.json)போது காஃபோர் எனப்படும் பழக்கமான கிராஃபிக் சாளரம் "
+"உலாவியில் noVNC காட்சியில் காட்டப்பட வேண்டும்"
 
 #: ../contribute.md:1
 msgid "Contribute to Gaphor"
@@ -1563,7 +1572,9 @@ msgstr ""
 
 #: ../first_model.md:25
 msgid "![The Gaphor main window showing a single class added to the model.](images/first-model-class.png)"
-msgstr "!"
+msgstr ""
+"![மாதிரியில் சேர்க்கப்பட்ட ஒற்றை வகுப்பைக் காட்டும் காஃபோர் முதன்மை சாளரம்.](images/first-"
+"model-class.png)"
 
 #: ../first_model.md:25
 msgid "The Gaphor main window showing a single class added to the model."
@@ -1613,7 +1624,9 @@ msgstr ""
 
 #: ../first_model.md:47
 msgid "![The Gaphor main window showing two classes connected by a generalization relationship.](images/first-model-generalization.png)"
-msgstr "!"
+msgstr ""
+"![பொதுமைப்படுத்தல் உறவால் இணைக்கப்பட்ட இரண்டு வகுப்புகளைக் காட்டும் காஃபோர் முதன்மை "
+"சாளரம்.](images/first-model-generalization.png)"
 
 #: ../first_model.md:47
 msgid "The Gaphor main window showing two classes connected by a generalization relationship."
@@ -1650,7 +1663,8 @@ msgstr "புதிய வரைபட பாப்அப் மெனுவி
 
 #: ../first_model.md:59
 msgid "![The New Diagram popup window.](images/first-model-new-diagram-popup.png)"
-msgstr "!"
+msgstr ""
+"![புதிய வரைபடம் மேல்தோன்றும் சாளரம்.](images/first-model-new-diagram-popup.png)"
 
 #: ../first_model.md:59
 msgid "The New Diagram popup window."
@@ -1933,7 +1947,9 @@ msgstr ""
 
 #: ../getting_started.md:29
 msgid "![The Gaphor main window, with numbers refering to parts of the UI.](images/getting-started-new-model.png)"
-msgstr "!"
+msgstr ""
+"![UI இன் பகுதிகளைக் குறிக்கும் எண்களைக் கொண்ட காஃபோர் முதன்மை சாளரம்.](images/getting-"
+"started-new-model.png)"
 
 #: ../getting_started.md:29
 msgid "The Gaphor main window, with numbers refering to parts of the UI."
@@ -2127,9 +2143,8 @@ msgstr ""
 #: ../getting_started.md:133
 msgid "<kbd>Ctrl</kbd>+<kbd>v</kbd> does a \"shallow\" paste. <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>v</kbd> does a \"deep\" paste."
 msgstr ""
-"<kbd> கட்டுப்பாடு </kbd>+<kbd> வி </ kbd> \"ஆழமற்ற\" பேச்டுக்கு செய்கிறது. <kbd> "
-"கட்டுப்பாடு </kbd>+<kbd> சிப்ட் </ kbd>+<kbd> வி </ kd> \"ஆழமான\" பேச்ட்டுக்கு "
-"செய்கிறது."
+"<kbd> கட்டுப்பாடு </kbd>+<kbd> வி </kbd> \"ஆழமற்ற\" ஒட்டு செய்கிறது. <kbd> "
+"கட்டுப்பாடு </kbd>+<kbd> உயர்த்து </kbd>+<kbd> வி </kbd> \"ஆழமான\" ஒட்டு செய்கிறது."
 
 #: ../getting_started.md:136
 msgid "Undo and Redo"
@@ -2355,11 +2370,11 @@ msgstr "க்னோம் பில்டர்"
 #: ../linux.md:20
 msgid "Open [GNOME Builder](https://flathub.org/apps/details/org.gnome.Builder) 43 or newer, [clone the repository](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository). Check if the _Build Profile_ is set to `org.gaphor.Gaphor.json`. If so, hit the _Run_ button to start the application."
 msgstr ""
-"[க்னோம் பில்டர்] (https://flathub.org/apps/details/org.gnome.builder) 43 அல்லது "
-"புதியது, புதியது, [களஞ்சியத்தை குளோன்] (https://help.github.com/en/github/"
-"creating- குளோனிங்-அண்ட்-கார்னிங்-ரோபோசிட்டரிகள்/குளோனிங்-ஒரு-ரோபோசிட்டரி). கட்டு (_B) "
-"சுயவிவரம்_ `org.gaphor.gaphor.json` என அமைக்கப்பட்டுள்ளதா என்று சரிபார்க்கவும். "
-"அப்படியானால், பயன்பாட்டைத் தொடங்க _RUN_ பொத்தானை அழுத்தவும்."
+"[க்னோம் பில்டர்] (https://flathub.org/apps/details/org.gnome.builder) 43 திற "
+"அல்லது புதியது, [களஞ்சியத்தை நகலி](https://help.github.com/en/github/"
+"creating-cloning-and-archiving-repositories/cloning-a-repository). _Build "
+"Profile_, `org.gaphor.gaphor.json` என அமைக்கப்பட்டுள்ளதா என்று சரிபார்க்கவும். "
+"அப்படியானால், பயன்பாட்டைத் தொடங்க _Run_ பொத்தானை அழுத்தவும்."
 
 #: ../linux.md:25
 msgid "A Local Environment"
@@ -2470,7 +2485,7 @@ msgstr ""
 
 #: ../linux.md:122
 msgid "[Install Flatpak](https://flatpak.org/setup)"
-msgstr "[Install Flatpak](https://flatpak.org/setup)"
+msgstr "[பிளாட்பேக்கை நிறுவவும்](https://flatpak.org/setup)"
 
 #: ../linux.md:124
 msgid "Install flatpak-builder"
@@ -2563,9 +2578,8 @@ msgstr ""
 #: ../macos.md:46
 msgid "Before you start debugging you'll need to open Gaphor in VSCode (the folder containing `pyproject.toml`). You'll need to have the Python extension installed."
 msgstr ""
-"நீங்கள் பிழைத்திருத்தத்தைத் தொடங்குவதற்கு முன், நீங்கள் VSCODE (`pyproject.toml` கொண்ட "
-"கோப்புறை) VSCODE இல் Kaphor ஐத் திறக்க வேண்டும். பைதான் நீட்டிப்பு நிறுவப்பட்டிருக்க "
-"வேண்டும்."
+"நீங்கள் பிழைத்திருத்தத்தைத் தொடங்குவதற்கு முன், நீங்கள் காஃபோரை (`pyproject.toml` கொண்ட "
+"கோப்புறை) VSCode இல் திறக்க வேண்டும். பைதான் நீட்டிப்பு நிறுவப்பட்டிருக்க வேண்டும்."
 
 #: ../macos.md:66
 msgid "Packaging for macOS"
@@ -2615,7 +2629,9 @@ msgstr ""
 
 #: ../merge_conflicts.md:15
 msgid "![A dialog showing options on how to deal with a merge conflict.](images/merge-dialog.png)"
-msgstr "!"
+msgstr ""
+"![இணைப்பு மோதலை எவ்வாறு கையாள்வது என்பது குறித்த விருப்பங்களைக் காட்டும் உரையாடல்.]("
+"images/merge-dialog.png)"
 
 #: ../merge_conflicts.md:15
 msgid "A dialog showing options on how to deal with a merge conflict."
@@ -2644,7 +2660,9 @@ msgstr ""
 
 #: ../merge_conflicts.md:26
 msgid "![The Gaphor main window, showing the merge editor on the right.](images/merge-conflict-window.png)"
-msgstr "!"
+msgstr ""
+"![வலது புறத்தில் இணைப்பு திருத்தியைக் காட்டும் காஃபோர் முதன்மை சாளரம்.](images/merge-"
+"conflict-window.png)"
 
 #: ../merge_conflicts.md:26
 msgid "The Gaphor main window, showing the merge editor on the right."
@@ -3159,7 +3177,7 @@ msgstr ""
 
 #: ../models/c4model.md:1
 msgid "The C4 Model"
-msgstr "சி 4 மாதிரி"
+msgstr "சி4 மாதிரி"
 
 #: ../models/c4model.md:3
 msgid "The [C4 model](https://c4model.com/) is a simple visual language to describe the static structure of a software system."
@@ -3588,7 +3606,7 @@ msgstr ""
 
 #: ../models/core_services.rst:33
 msgid "Modeling Language"
-msgstr "மாடலிங் மொழி"
+msgstr "மாதிரியமைத்தல் மொழி"
 
 #: ../models/core_services.rst:35
 msgid "Information on how modeling languages are managed can be found :doc:`../modeling_language`."
@@ -3610,7 +3628,7 @@ msgstr ""
 #: ../models/sysml.md:9
 #: ../models/uml.md:15
 msgid "Packages"
-msgstr "தொகுப்பு"
+msgstr "தொகுப்புகள்"
 
 #: ../models/raaml.md:1
 msgid "Risk Analysis and Assessment Modeling Language"
@@ -3884,7 +3902,7 @@ msgstr "FTA/FTA சுயவிவரம்/பரிமாற்றம்"
 
 #: ../models/raaml/Methods.rst:215
 msgid "FTA/FTA Profile/Transfer Out"
-msgstr "FTA/FTA சுயவிவரம்/பரிமாற்றம்"
+msgstr "FTA/FTA தன்வயவிவரம்/பரிமாற்றம்"
 
 #: ../models/raaml/Methods.rst:221
 msgid "FTA/FTA Profile/Tree"
@@ -4235,7 +4253,7 @@ msgstr "12. வழக்குகளைப் பயன்படுத்து�
 
 #: ../models/uml/12._Use_Cases.rst:5
 msgid "UseCases"
-msgstr "வழக்குகளைப் பயன்படுத்துங்கள்"
+msgstr "பயன்படுத்தும்வழக்குகள்"
 
 #: ../models/uml/13._Deployments.rst:2
 msgid "13. Deployments"
@@ -4313,7 +4331,8 @@ msgstr "அமர்வு குறிப்பிட்ட சேவைகள�
 
 #: ../plugins.md:16
 msgid "[Modeling languages](modeling_language) (`gaphor.modelinglanguages`)"
-msgstr "[Modeling languages](modeling_language) (`gaphor.modelinglanguages`)"
+msgstr ""
+"[மாதிரியமைத்தல் மொழிகள்](modeling_language) (`gaphor.modelinglanguages`)"
 
 #: ../plugins.md:17
 msgid "(Sub)command line parsers (`gaphor.argparsers`)"
@@ -4766,11 +4785,11 @@ msgstr ""
 #: ../service_oriented.md:8
 msgid "We define services as entry points in the `pyproject.toml`. With entry points, applications can register functionality for specific purposes. We also group entry points in to *entry point groups*. For example, we use the console_scripts entry point group to start an application from the command line."
 msgstr ""
-"`Pyproject.toml` இல் உள்ள நுழைவு புள்ளிகளாக சேவைகளை வரையறுக்கிறோம். நுழைவு "
-"புள்ளிகளுடன், பயன்பாடுகள் குறிப்பிட்ட நோக்கங்களுக்காக செயல்பாட்டை பதிவு செய்யலாம். நுழைவு "
-"புள்ளி குழுக்களுக்கும் *நுழைவு புள்ளிகளையும் குழு குழு செய்கிறது. எடுத்துக்காட்டாக, "
-"கட்டளை வரியிலிருந்து ஒரு பயன்பாட்டைத் தொடங்க கன்சோல்_ச்கிரிப்ட்ச் நுழைவு புள்ளி குழுவைப் "
-"பயன்படுத்துகிறோம்."
+"`Pyproject.toml` இல் உள்ள நுழைவு புள்ளிகளாகச் சேவைகளை வரையறுக்கிறோம். நுழைவு "
+"புள்ளிகளுடன், பயன்பாடுகள் குறிப்பிட்ட நோக்கங்களுக்காகச் செயல்பாட்டைப் பதிவு செய்யலாம். "
+"நுழைவு புள்ளி குழுக்களுக்கும் *நுழைவு புள்ளிகளையும் குழுக் குழு செய்கிறது. "
+"எடுத்துக்காட்டாக, கட்டளை வரியிலிருந்து ஒரு பயன்பாட்டைத் தொடங்க கன்சோல்_ச்கிரிப்ட்ச் நுழைவு "
+"புள்ளி குழுவைப் பயன்படுத்துகிறோம்."
 
 #: ../service_oriented.md:15
 msgid "Services"
@@ -5021,7 +5040,7 @@ msgstr ""
 
 #: ../sphinx.rst:94
 msgid "This is the ``.readthedocs.yaml`` file we use for Gaphor:"
-msgstr "இது `` .readthedocs.yaml`` கோப்பு."
+msgstr "இது ``.readthedocs.yaml`` கோப்பு, இதை காஃபோர்க்கு பயன்படுத்துகிறோம்:"
 
 #: ../sphinx.rst:99
 msgid "``libgirepository1.0-dev`` is required to build PyGObject."
@@ -5116,8 +5135,8 @@ msgstr ""
 #: ../stereotypes.md:38
 msgid "![The Gaphor main window showing a stereotype usage example.](images/stereotype-usage.png)"
 msgstr ""
-"! [ஒரு ச்டீரியோடைப் பயன்பாட்டு உதாரணத்தைக் காட்டும் காஃபர் முதன்மையான சாளரம்.] "
-"(படங்கள்/ச்டீரியோடைப்-பயன்பாடு."
+"! [ஒரு ச்டீரியோடைப் பயன்பாட்டு உதாரணத்தைக் காட்டும் காஃபர் முதன்மையான சாளரம்.] (images/"
+"stereotype-usage.png)"
 
 #: ../stereotypes.md:38
 msgid "The Gaphor main window showing a stereotype usage example."
@@ -5835,8 +5854,8 @@ msgstr "மாறிகள்"
 #: ../style_sheets.md:227
 msgid "Since Gaphor 2.16.0 you can use [CSS variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties) in your style sheets."
 msgstr ""
-"உங்கள் பாணியிலான தாள்களில் நீங்கள் [CSS மாறிகள்] (https://developer.mozilla.org/"
-"en-us/docs/docs/web/css/using_css_custom_properties) ஐப் பயன்படுத்தலாம்."
+"உங்கள் பாணியிலான தாள்களில் நீங்கள் [CSS மாறிகள்](https://developer.mozilla.org/en-us/"
+"docs/docs/web/css/using_css_custom_properties) ஐப் பயன்படுத்தலாம்."
 
 #: ../style_sheets.md:229
 msgid "This allows you to define often used values in a more generic way. Think of things like line dash style and colors."
@@ -5918,9 +5937,9 @@ msgid "If you hover over a button the toolbox (bottom-left section), a popup wil
 msgstr ""
 "கருவிப்பெட்டி (கீழ்-இடது பிரிவு) நீங்கள் ஒரு பொத்தானை நோக்கிச் சென்றால், உருப்படியின் பெயர் "
 "மற்றும் குறுக்குவழியுடன் ஒரு பாப்அப் தோன்றும். ஒரு பொதுவான விதியாக, நீங்கள் கூறுகளின் "
-"பெயரை பயன்படுத்தலாம், இது ச்டைல்சீட்டில் பெயராக ஒன்றாக ஒட்டப்படுகிறது. A * கூறு * `கூறு`"
-", * வழக்கை *` usecase` எனக் குறிப்பிடலாம். பெயர் பொருத்தம் என்பது வழக்கு உணர்வற்றது. "
-"சிஎச்எச் பெயர்கள் இயல்புநிலையாக சிறிய விசயத்தில் எழுதப்பட்டுள்ளன."
+"பெயரைப் பயன்படுத்தலாம், இது ச்டைல்சீட்டில் பெயராக ஒன்றாக ஒட்டப்படுகிறது. A * கூறு * "
+"`கூறு`, * வழக்கை *` usecase` எனக் குறிப்பிடலாம். பெயர் பொருத்தம் என்பது வழக்கு "
+"உணர்வற்றது. சிஎச்எச் பெயர்கள் இயல்புநிலையாகச் சிறிய விசயத்தில் எழுதப்பட்டுள்ளன."
 
 #: ../style_sheets.md:306
 msgid "However, since the CSS element names are derived from names used within Gaphor, there are a few exceptions."
@@ -6062,7 +6081,7 @@ msgstr ""
 
 #: ../style_sheets.md:323
 msgid "Metaclass"
-msgstr ""
+msgstr "உருவகவகுப்பு"
 
 #: ../style_sheets.md:323
 msgid "``class``"
@@ -6137,7 +6156,7 @@ msgstr ""
 
 #: ../style_sheets.md:331
 msgid "Derive Requirement"
-msgstr ""
+msgstr "பெறப்பட்ட தேவை"
 
 #: ../style_sheets.md:331
 msgid "``derivedreq``"
@@ -6508,7 +6527,7 @@ msgstr ""
 
 #: ../windows.md:13
 msgid "WinGet"
-msgstr "விங்கெட்"
+msgstr "சாளரபெறு"
 
 #: ../windows.md:15
 msgid "We recommend using [WinGet](https://learn.microsoft.com/en-us/windows/package-manager/winget) as a package manager in Windows. It is available on Windows 11 and modern versions of Windows 10 as a part of the App Installer."
