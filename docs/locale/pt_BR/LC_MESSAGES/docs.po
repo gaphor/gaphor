@@ -7178,7 +7178,7 @@ msgid ""
 msgstr ""
 
 #: ../windows.md:244
-msgid "where ``gaphor'' can be any name desired for the environment."
+msgid "where  ``gaphor`` can be any name desired for the environment."
 msgstr ""
 
 #: ../windows.md:246

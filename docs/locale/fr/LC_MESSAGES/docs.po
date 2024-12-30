@@ -8950,8 +8950,8 @@ msgstr ""
 "lancez la commande suivante depuis l'invite de Anaconda :"
 
 #: ../windows.md:244
-msgid "where ``gaphor'' can be any name desired for the environment."
-msgstr "où ``gaphor'' peut être n'importe quel nom souhaité pour l'environnement."
+msgid "where  ``gaphor`` can be any name desired for the environment."
+msgstr "où  ``gaphor`` peut être n'importe quel nom souhaité pour l'environnement."
 
 #: ../windows.md:246
 msgid "Update packages in the new environment"
