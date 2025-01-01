@@ -7586,7 +7586,7 @@ msgid ""
 "US/docs/Web/CSS/Using_CSS_custom_properties) in your style sheets."
 msgstr ""
 "உங்கள் பாணியிலான தாள்களில் நீங்கள் [CSS மாறிகள்](https://developer.mozilla.org/en-us/"
-"docs/docs/web/css/using_css_custom_properties) ஐப் பயன்படுத்தலாம்."
+"docs/docs/Web/CSS/Using_CSS_custom_properties) ஐப் பயன்படுத்தலாம்."
 
 #: ../style_sheets.md:229
 msgid ""
