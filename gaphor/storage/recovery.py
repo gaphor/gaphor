@@ -280,7 +280,7 @@ def _move_aside(path: Path):
 
 def sha256sum(filename: Path):
     with open(filename, "rb", buffering=0) as f:
-        return hashlib.file_digest(f, "sha256").hexdigest()  # type: ignore[arg-type]
+        return hashlib.file_digest(f, "sha256").hexdigest()
 
 
 class Recorder:
