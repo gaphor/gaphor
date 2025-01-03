@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gaphor 2.23.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-12-30 14:25-0500\n"
-"PO-Revision-Date: 2025-01-03 10:00+0000\n"
+"PO-Revision-Date: 2025-01-04 20:01+0000\n"
 "Last-Translator: Stan SZLAPKA <stansz@free.fr>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/gaphor/"
 "docs-gaphor-org/fr/>\n"
@@ -4969,7 +4969,7 @@ msgstr "Les expressions peuvent être :"
 
 #: gaphor.core.modeling.elementfactory.ElementFactory.select:5 of
 msgid ":obj:`None`: return all elements."
-msgstr ":obj:`None : renvoie tous les éléments."
+msgstr ":obj:`None`: renvoie tous les éléments."
 
 #: gaphor.core.modeling.elementfactory.ElementFactory.select:6 of
 msgid "A type: return all elements of that type, or subtypes."
@@ -6804,9 +6804,9 @@ msgid ""
 "render, it's best to use a `.readthedocs.yaml`_ file in your project. "
 "Make sure to include the extra ``apt_packages`` as shown below."
 msgstr ""
-"La directive diagramme est compatible avec le module `Read the docs`_ (Lire "
-"la doc). Pour rendre les diagrammes, il est préférable d'utiliser un fichier "
-"`.readthedocs.yaml` dans votre projet. Assurez-vous d'inclure l'élément "
+"La directive diagramme est compatible avec le module `Read the docs`_. Pour "
+"rendre les diagrammes, il est préférable d'utiliser un fichier "
+"`.readthedocs.yaml`_ dans votre projet. Assurez-vous d'inclure l'élément "
 "supplémentaire ``apt_packages`, comme indiqué ci-dessous."
 
 #: ../sphinx.rst:97
