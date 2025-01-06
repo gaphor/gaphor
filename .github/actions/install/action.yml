@@ -27,7 +27,7 @@ runs:
       shell: bash
     - name: Install Python Dependencies
       run: |
-        poetry lock --no-update
+        poetry lock
         poetry install --no-interaction
       shell: bash
     - name: Windows specific overrides

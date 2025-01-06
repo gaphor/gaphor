@@ -1,17 +1,13 @@
-[tool.poetry]
+[project]
 name = "gaphor"
 version = "3.0.0"
 description = "Gaphor is the simple modeling tool written in Python."
 authors = [
-    "Arjan Molenaar <gaphor@gmail.com>",
-    "Dan Yeaw <dan@yeaw.me>"
+    { name = "Arjan Molenaar", email = "gaphor@gmail.com" },
+    { name = "Dan Yeaw", email = "dan@yeaw.me" },
 ]
 
 readme = "README.md"
-
-homepage = "https://gaphor.org/"
-repository = "https://github.com/gaphor/gaphor"
-documentation = "https://docs.gaphor.org/"
 
 keywords = ["GTK", "diagram", "UML", "MBSE", "modeling"]
 
@@ -34,24 +30,95 @@ classifiers = [
     "Topic :: Software Development :: Documentation",
 ]
 
+requires-python = ">=3.11,<3.14"
+
+dependencies = [
+    "pycairo>=1.22.0",
+    "PyGObject>=3.50",
+    "gaphas (>=4.0,<5.0)",
+    "generic>=1.0.0",
+    "tinycss2>=1.0.2",
+    "babel>=2.10.3",
+    "jedi (>=0.18.1,<0.20.0)",
+    "better-exceptions>=0.3.3",
+    "pydot (>=1.4.2,<4.0.0)",
+    "pillow>=10.0.0",
+    "defusedxml>=0.7.1",
+    "pyobjc-framework-cocoa (>=9.0.1,<11.0.0) ; sys_platform == 'darwin'",
+    "dulwich (>=0.21.7,<0.23.0)",
+]
+
+[project.scripts]
+gaphor = "gaphor.main:main"
+
+[project.urls]
+homepage = "https://gaphor.org/"
+repository = "https://github.com/gaphor/gaphor"
+documentation = "https://docs.gaphor.org/"
+
+[project.entry-points."gaphor.appservices"]
+"event_manager" = "gaphor.core.eventmanager:EventManager"
+"module_loader" = "gaphor.services.moduleloader:ModuleLoader"
+"app_file_manager" = "gaphor.ui.appfilemanager:AppFileManager"
+"styling" = "gaphor.ui.styling:Styling"
+"greeter" = "gaphor.ui.greeter:Greeter"
+"help" = "gaphor.ui.help:HelpService"
+"self_test" = "gaphor.ui.selftest:SelfTest"
+"error_reports" = "gaphor.plugins.errorreports:ErrorReports"
+
+[project.entry-points."gaphor.modules"]
+"general_ui_components" = "gaphor.diagram.general.uicomponents"
+"style_editor" = "gaphor.diagram.styleeditor"
+"uml_ui_components" = "gaphor.UML.uicomponents"
+"sysml_property_pages" = "gaphor.SysML.uicomponents"
+"c4model_property_pages" = "gaphor.C4Model.propertypages"
+
+[project.entry-points."gaphor.services"]
+"component_registry" = "gaphor.services.componentregistry:ComponentRegistry"
+"event_manager" = "gaphor.core.eventmanager:EventManager"
+"properties" = "gaphor.services.properties:Properties"
+"undo_manager" = "gaphor.services.undomanager:UndoManager"
+"element_factory" = "gaphor.core.modeling:ElementFactory"
+"element_dispatcher" = "gaphor.core.modeling.elementdispatcher:ElementDispatcher"
+"modeling_language" = "gaphor.services.modelinglanguage:ModelingLanguageService"
+"file_manager" = "gaphor.ui.filemanager:FileManager"
+"recent_files" = "gaphor.ui.recentfiles:RecentFiles"
+"main_window" = "gaphor.ui.mainwindow:MainWindow"
+"export_menu" = "gaphor.ui.menufragment:MenuFragment"
+"tools_menu" = "gaphor.ui.menufragment:MenuFragment"
+"sanitizer" = "gaphor.UML.sanitizerservice:SanitizerService"
+"recovery" = "gaphor.storage.recovery:Recovery"
+"model_browser" = "gaphor.ui.modelbrowser:ModelBrowser"
+"toolbox" = "gaphor.ui.toolbox:Toolbox"
+"diagrams" = "gaphor.ui.diagrams:Diagrams"
+"element_editor" = "gaphor.ui.elementeditor:ElementEditor"
+"model_changed" = "gaphor.ui.modelchanged:ModelChanged"
+"console_window" = "gaphor.plugins.console.consolewindow:ConsoleWindow"
+"diagram_export" = "gaphor.plugins.diagramexport.export:DiagramExport"
+"auto_layout" = "gaphor.plugins.autolayout:AutoLayoutService"
+
+[project.entry-points."gaphor.modelinglanguages"]
+"Core" = "gaphor.core.modeling.modelinglanguage:CoreModelingLanguage"
+"UML" = "gaphor.UML.modelinglanguage:UMLModelingLanguage"
+"SysML" = "gaphor.SysML.modelinglanguage:SysMLModelingLanguage"
+"C4Model" = "gaphor.C4Model.modelinglanguage:C4ModelLanguage"
+"RAAML" = "gaphor.RAAML.modelinglanguage:RAAMLModelingLanguage"
+"general" = "gaphor.diagram.general.modelinglanguage:GeneralModelingLanguage"
+
+[project.entry-points."gaphor.argparsers"]
+gui = "gaphor.main:gui_parser"
+self-test = "gaphor.main:self_test_parser"
+exec = "gaphor.main:exec_parser"
+export = "gaphor.plugins.diagramexport.exportcli:export_parser"
+install-schemas = "gaphor.ui.installschemas:install_schemas_parser"
+
+[project.entry-points."babel.extractors"]
+"gaphor" = "gaphor.babel:extract_gaphor"
+
+[tool.poetry]
+requires-poetry = ">=2.0"
 include = ["gaphor/locale/*/LC_MESSAGES/*"]
 exclude = ["**/tests", "gaphor/conftest.py" ]
-
-[tool.poetry.dependencies]
-python = ">=3.11,<3.14"
-pycairo = "^1.22.0"
-PyGObject = "^3.50"
-gaphas = ">=4.0,<5.0"
-generic = "^1.0.0"
-tinycss2 = "^1.0.2"
-babel = "^2.10.3"
-jedi = ">=0.18.1,<0.20.0"
-better-exceptions = "^0.3.3"
-pydot = ">=1.4.2,<4.0.0"
-pillow = ">=10.0.0"
-defusedxml = "^0.7.1"
-pyobjc-framework-cocoa = { version = ">=9.0.1,<11.0.0", markers = "sys_platform == 'darwin'" }
-dulwich = ">=0.21.7,<0.23.0"
 
 [tool.poetry.group.dev.dependencies]
 pytest = ">=7.1,<8.4"
@@ -91,68 +158,6 @@ pyinstaller-versionfile = "^2.0.0"
 semver = ">=2.13,<4.0"
 tomli = { version = ">=1.2,<3.0", python = "<3.11" }
 dmgbuild = {version = "^1.6.2", markers = "sys_platform == 'darwin'" }
-
-[tool.poetry.scripts]
-gaphor = "gaphor.main:main"
-
-[tool.poetry.plugins."gaphor.appservices"]
-"event_manager" = "gaphor.core.eventmanager:EventManager"
-"module_loader" = "gaphor.services.moduleloader:ModuleLoader"
-"app_file_manager" = "gaphor.ui.appfilemanager:AppFileManager"
-"styling" = "gaphor.ui.styling:Styling"
-"greeter" = "gaphor.ui.greeter:Greeter"
-"help" = "gaphor.ui.help:HelpService"
-"self_test" = "gaphor.ui.selftest:SelfTest"
-"error_reports" = "gaphor.plugins.errorreports:ErrorReports"
-
-[tool.poetry.plugins."gaphor.modules"]
-"general_ui_components" = "gaphor.diagram.general.uicomponents"
-"style_editor" = "gaphor.diagram.styleeditor"
-"uml_ui_components" = "gaphor.UML.uicomponents"
-"sysml_property_pages" = "gaphor.SysML.uicomponents"
-"c4model_property_pages" = "gaphor.C4Model.propertypages"
-
-[tool.poetry.plugins."gaphor.services"]
-"component_registry" = "gaphor.services.componentregistry:ComponentRegistry"
-"event_manager" = "gaphor.core.eventmanager:EventManager"
-"properties" = "gaphor.services.properties:Properties"
-"undo_manager" = "gaphor.services.undomanager:UndoManager"
-"element_factory" = "gaphor.core.modeling:ElementFactory"
-"element_dispatcher" = "gaphor.core.modeling.elementdispatcher:ElementDispatcher"
-"modeling_language" = "gaphor.services.modelinglanguage:ModelingLanguageService"
-"file_manager" = "gaphor.ui.filemanager:FileManager"
-"recent_files" = "gaphor.ui.recentfiles:RecentFiles"
-"main_window" = "gaphor.ui.mainwindow:MainWindow"
-"export_menu" = "gaphor.ui.menufragment:MenuFragment"
-"tools_menu" = "gaphor.ui.menufragment:MenuFragment"
-"sanitizer" = "gaphor.UML.sanitizerservice:SanitizerService"
-"recovery" = "gaphor.storage.recovery:Recovery"
-"model_browser" = "gaphor.ui.modelbrowser:ModelBrowser"
-"toolbox" = "gaphor.ui.toolbox:Toolbox"
-"diagrams" = "gaphor.ui.diagrams:Diagrams"
-"element_editor" = "gaphor.ui.elementeditor:ElementEditor"
-"model_changed" = "gaphor.ui.modelchanged:ModelChanged"
-"console_window" = "gaphor.plugins.console.consolewindow:ConsoleWindow"
-"diagram_export" = "gaphor.plugins.diagramexport.export:DiagramExport"
-"auto_layout" = "gaphor.plugins.autolayout:AutoLayoutService"
-
-[tool.poetry.plugins."gaphor.modelinglanguages"]
-"Core" = "gaphor.core.modeling.modelinglanguage:CoreModelingLanguage"
-"UML" = "gaphor.UML.modelinglanguage:UMLModelingLanguage"
-"SysML" = "gaphor.SysML.modelinglanguage:SysMLModelingLanguage"
-"C4Model" = "gaphor.C4Model.modelinglanguage:C4ModelLanguage"
-"RAAML" = "gaphor.RAAML.modelinglanguage:RAAMLModelingLanguage"
-"general" = "gaphor.diagram.general.modelinglanguage:GeneralModelingLanguage"
-
-[tool.poetry.plugins."gaphor.argparsers"]
-gui = "gaphor.main:gui_parser"
-self-test = "gaphor.main:self_test_parser"
-exec = "gaphor.main:exec_parser"
-export = "gaphor.plugins.diagramexport.exportcli:export_parser"
-install-schemas = "gaphor.ui.installschemas:install_schemas_parser"
-
-[tool.poetry.plugins."babel.extractors"]
-"gaphor" = "gaphor.babel:extract_gaphor"
 
 [tool.poe.tasks]
 coremodel.script = """gaphor.codegen.coder:main(
@@ -276,5 +281,5 @@ extend-select = ["I"]
 max-complexity = 18
 
 [build-system]
-requires = ["poetry-core>=1.0.0"]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
