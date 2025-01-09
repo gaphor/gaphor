@@ -1,9 +1,9 @@
 version: 2
 formats: all
 build:
-  os: ubuntu-22.04
+  os: ubuntu-24.04
   tools:
-    python: "3.12"
+    python: "3.13"
   apt_packages:
   - libgirepository1.0-dev
   - gir1.2-pango-1.0
@@ -13,7 +13,7 @@ build:
     - pip install --constraint=.github/constraints.txt poetry
     - poetry config virtualenvs.create false
     post_install:
-    - VIRTUAL_ENV=$READTHEDOCS_VIRTUALENV_PATH poetry install --with docs
+    - VIRTUAL_ENV=$READTHEDOCS_VIRTUALENV_PATH poetry install --with docs --no-interaction
 sphinx:
   configuration: docs/conf.py
   fail_on_warning: true

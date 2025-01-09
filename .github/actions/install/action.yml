@@ -15,8 +15,8 @@ runs:
       env:
         PYTHON: ${{ inputs.python-command }}
       run: |
-        ${PYTHON} -m ensurepip
-        ${PYTHON} -m pip install --constraint=.github/constraints.txt poetry
+        $PYTHON -m ensurepip
+        $PYTHON -m pip install --constraint=.github/constraints.txt poetry
       shell: bash
     - name: Configure Poetry
       run: poetry config virtualenvs.in-project true
@@ -27,7 +27,7 @@ runs:
       shell: bash
     - name: Install Python Dependencies
       run: |
-        poetry lock --no-update
+        poetry lock
         poetry install --no-interaction
       shell: bash
     - name: Windows specific overrides
