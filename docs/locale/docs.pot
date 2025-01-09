@@ -1154,7 +1154,7 @@ msgid "Event driven"
 msgstr ""
 
 #: ../framework.md:13
-msgid "Parts of Gaphor communicate with each other through events. Whenever something important happens, for example, an attribute of a model element changes, an event is sent. When other parts of the application are interested in a change, they register an event handler for that event type. Events are emitted though a central broker so you do not have to register on every individual element that can send an event they are interested in. For example, a diagram item could register an event rule and then check if the element that sent the event is actually the event the item is representing. For more information see the full description of the [event system](event_system.md)."
+msgid "Parts of Gaphor communicate with each other through events. Whenever something important happens, for example, an attribute of a model element changes, an event is sent. When other parts of the application are interested in a change, they register an event handler for that event type. Events are emitted though a central broker so you do not have to register on every individual element that can send an event they are interested in. For example, a diagram item could register an event rule and then check if the element that sent the event is actually the event the item is representing. For more information see the full description of the [event system](event_system)."
 msgstr ""
 
 #: ../framework.md:23
@@ -1202,7 +1202,7 @@ msgid "One of the most appreciated services. It allows users to make a mistake e
 msgstr ""
 
 #: ../framework.md:59
-msgid "The undo manager is transactional. Actions performed by a user are only stored if a transaction is active. If a transaction is completed (committed) a new undo action is stored. Transactions can also be rolled back, in which case all changes are played back directly. For more information see the full description of the [undo manager](undo.md)."
+msgid "The undo manager is transactional. Actions performed by a user are only stored if a transaction is active. If a transaction is completed (committed) a new undo action is stored. Transactions can also be rolled back, in which case all changes are played back directly. For more information see the full description of the [undo manager](undo)."
 msgstr ""
 
 #: ../framework.md:65
@@ -4963,7 +4963,7 @@ msgid "Overview of Transactions"
 msgstr ""
 
 #: ../undo.md:9
-msgid "The recording and playback of changes in Gaphor is handled by the the Undo Manager. The Undo Manager works transactionally. A transaction must succeed or fail as a complete unit. If the transaction fails in the middle, it is rolled back. In Gaphor this is achieved by the {mod}`~gaphor.transaction` module, which provides a context manager {obj}`~gaphor.transaction.Transaction`."
+msgid "The recording and playback of changes in Gaphor is handled by the the Undo Manager. The Undo Manager works transactionally. A transaction must succeed or fail as a complete unit. If the transaction fails in the middle, it is rolled back. In Gaphor this is achieved by the :mod:`~gaphor.transaction` module, which provides a context manager :obj:`~gaphor.transaction.Transaction`."
 msgstr ""
 
 #: ../undo.md:16
@@ -5103,15 +5103,15 @@ msgid "References"
 msgstr ""
 
 #: ../undo.md:63
-msgid "[A Framework for Undoing Actions in Collaborative Systems](http://web.eecs.umich.edu/~aprakash/papers/undo-tochi94.pdf)"
+msgid "`A Framework for Undoing Actions in Collaborative Systems <http://web.eecs.umich.edu/~aprakash/papers/undo-tochi94.pdf>`_"
 msgstr ""
 
 #: ../undo.md:65
-msgid "[Undoing Actions in Collaborative Work: Framework and Experience](https://www.eecs.umich.edu/techreports/cse/94/CSE-TR-196-94.pdf)"
+msgid "`Undoing Actions in Collaborative Work: Framework and Experience <https://www.eecs.umich.edu/techreports/cse/94/CSE-TR-196-94.pdf>`_"
 msgstr ""
 
 #: ../undo.md:67
-msgid "[Implementing a Selective Undo Framework in Python](https://legacy.python.org/workshops/1997-10/proceedings/zukowski.html)"
+msgid "`Implementing a Selective Undo Framework in Python <https://legacy.python.org/workshops/1997-10/proceedings/zukowski.html>`_"
 msgstr ""
 
 #: ../windows.md:1

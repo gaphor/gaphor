@@ -1648,8 +1648,8 @@ msgstr ""
 #: ../event_system.md:31
 msgid ""
 "Under the hood events are handled by the Generics library. For more "
-"information about how the Generic library handles events see the [Generic"
-" documentation](https://generic.readthedocs.io)."
+"information about how the Generic library handles events see the `Generic"
+" documentation` <https://generic.readthedocs.io>`_."
 msgstr ""
 
 #: ../first_model.md:1
@@ -1892,7 +1892,7 @@ msgid ""
 "interested in. For example, a diagram item could register an event rule "
 "and then check if the element that sent the event is actually the event "
 "the item is representing. For more information see the full description "
-"of the [event system](event_system.md)."
+"of the [event system](event_system)."
 msgstr ""
 
 #: ../framework.md:23
@@ -1987,13 +1987,13 @@ msgid ""
 "stored if a transaction is active. If a transaction is completed "
 "(committed) a new undo action is stored. Transactions can also be rolled "
 "back, in which case all changes are played back directly. For more "
-"information see the full description of the [undo manager](undo.md)."
+"information see the full description of the [undo manager](undo)."
 msgstr ""
 "Upravljač poništavanja je transakcijski. Korisničke radnje se spremaju "
 "samo ako je transakcija aktivna. Ako je transakcija dovršena (poslana), "
 "sprema se nova radnja poništavanja. Transakcije se također mogu vratiti. "
 "U tom slučaju se sve promjene reproduciraju izravno. Za više informacija "
-"pogledaj opis [undo manager](undo.md)."
+"pogledaj opis [undo manager](undo)."
 
 #: ../framework.md:65
 msgid "file_manager"

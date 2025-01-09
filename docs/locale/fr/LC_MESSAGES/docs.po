@@ -2251,13 +2251,13 @@ msgstr ""
 #: ../event_system.md:31
 msgid ""
 "Under the hood events are handled by the Generics library. For more "
-"information about how the Generic library handles events see the [Generic"
-" documentation](https://generic.readthedocs.io)."
+"information about how the Generic library handles events see the `Generic"
+" documentation` <https://generic.readthedocs.io>`_."
 msgstr ""
 "Sous le capot, les événements sont gérés par la bibliothèque Generics. "
 "Pour plus d'informations sur la façon dont la bibliothèque Generic gère "
-"les événements, voir la [documentation Generic] "
-"(https://generic.readthedocs.io)."
+"les événements, voir la `documentation Generic "
+"<https://generic.readthedocs.io>`_."
 
 #: ../first_model.md:1
 msgid "Your First Model"
@@ -2558,7 +2558,7 @@ msgid ""
 "interested in. For example, a diagram item could register an event rule "
 "and then check if the element that sent the event is actually the event "
 "the item is representing. For more information see the full description "
-"of the [event system](event_system.md)."
+"of the [event system](event_system)."
 msgstr ""
 "Les parties de Gaphor communiquent entre elles par le biais d'événements."
 " Lorsque quelque chose d'important se produit, par exemple un changement "
@@ -2571,7 +2571,7 @@ msgstr ""
 "exemple, un élément de diagramme peut enregistrer une règle d'événement "
 "et vérifier ensuite si l'élément qui a envoyé l'événement est réellement "
 "l'événement que l'élément représente. Pour plus d'informations, voir la "
-"description complète du [event system](event_system.md)."
+"description complète du [event system](event_system)."
 
 #: ../framework.md:23
 msgid "Transactional"
@@ -2665,7 +2665,7 @@ msgid ""
 "stored if a transaction is active. If a transaction is completed "
 "(committed) a new undo action is stored. Transactions can also be rolled "
 "back, in which case all changes are played back directly. For more "
-"information see the full description of the [undo manager](undo.md)."
+"information see the full description of the [undo manager](undo)."
 msgstr ""
 "Le gestionnaire d'annulation est transactionnel. Les actions effectuées "
 "par un utilisateur ne sont stockées que si une transaction est active. Si"
@@ -2673,7 +2673,7 @@ msgstr ""
 " est stockée. Les transactions peuvent également être annulées, auquel "
 "cas toutes les modifications sont directement reproduites. Pour plus "
 "d'informations, voir la description complète du 'gestionnaire "
-"d'annulation' [undo manager](undo.md)."
+"d'annulation' [undo manager](undo)."
 
 #: ../framework.md:65
 msgid "file_manager"
@@ -8332,15 +8332,15 @@ msgid ""
 "Undo Manager. The Undo Manager works transactionally. A transaction must "
 "succeed or fail as a complete unit. If the transaction fails in the "
 "middle, it is rolled back. In Gaphor this is achieved by the "
-"{mod}`~gaphor.transaction` module, which provides a context manager "
-"{obj}`~gaphor.transaction.Transaction`."
+":mod:`~gaphor.transaction` module, which provides a context manager "
+":obj:`~gaphor.transaction.Transaction`."
 msgstr ""
 "L'enregistrement et la lecture des modifications dans Gaphor sont gérés "
 "par ce dernier. Celui-ci fonctionne de manière transactionnelle. Une "
 "transaction doit réussir ou échouer dans son ensemble. Si elle échoue en "
 "cours de route, elle est annulée. Dans Gaphor, ceci est réalisé par le "
-"module {mod}`~gaphor.transaction`, qui fournit un gestionnaire de "
-"contexte {obj}`~gaphor.transaction.Transaction`."
+"module :mod:`~gaphor.transaction`, qui fournit un gestionnaire de "
+"contexte :obj:`~gaphor.transaction.Transaction`."
 
 #: ../undo.md:16
 msgid ""
@@ -8368,19 +8368,19 @@ msgid "Start of a Transaction"
 msgstr "Début d'une transaction"
 
 #: ../undo.md:25
-msgid "A `Transaction` object is created."
-msgstr "Un objet `Transaction` est créé."
+msgid "A ``Transaction`` object is created."
+msgstr "Un objet ``Transaction`` est créé."
 
 #: ../undo.md:26
-msgid "`TransactionBegin` event is emitted."
-msgstr "L'événement `TransactionBegin` est émis."
+msgid "``TransactionBegin`` event is emitted."
+msgstr "L'événement ``TransactionBegin`` est émis."
 
 #: ../undo.md:27
 msgid ""
-"The `UndoManager` instantiates a new `ActionStack` which is the "
+"The ``UndoManager`` instantiates a new ``ActionStack`` which is the "
 "transaction object, and adds the undo action to the stack."
 msgstr ""
-"Le `UndoManager` instancie une nouvelle `ActionStack` qui est l'objet de "
+"Le ``UndoManager`` instancie une nouvelle ``ActionStack`` qui est l'objet de "
 "la transaction, et ajoute l'action d'annulation à la pile."
 
 #: ../undo.md:30
@@ -8396,15 +8396,15 @@ msgid "Successful Transaction"
 msgstr "Transaction réussie"
 
 #: ../undo.md:35
-msgid "A `TransactionCommit` event is emitted"
+msgid "A ``TransactionCommit`` event is emitted"
 msgstr ""
-"Un événement `TransactionCommit` (Enregistrement de la transaction) est "
+"Un événement ``TransactionCommit`` (Enregistrement de la transaction) est "
 "émis"
 
 #: ../undo.md:36
-msgid "The `UndoManager` closes and stores the transaction."
+msgid "The ``UndoManager`` closes and stores the transaction."
 msgstr ""
-"Le `UndoManager` (Gestionnaire d'annulation) ferme et enregistre la "
+"Le ``UndoManager`` (Gestionnaire d'annulation) ferme et enregistre la "
 "transaction."
 
 #: ../undo.md:38
@@ -8412,17 +8412,17 @@ msgid "Failed Transaction"
 msgstr "Échec de la transaction"
 
 #: ../undo.md:40
-msgid "A `TransactionRollback` event is emitted."
+msgid "A ``TransactionRollback`` event is emitted."
 msgstr ""
-"Un `TransactionRollback` événement (Annulation de la transaction) est "
+"Un ``TransactionRollback`` événement (Annulation de la transaction) est "
 "émis."
 
 #: ../undo.md:41
 msgid ""
-"The `UndoManager` plays back all the recorded actions, but does not store"
+"The ``UndoManager`` plays back all the recorded actions, but does not store"
 " it."
 msgstr ""
-"Le `UndoManager` ( Gestionnaire d'annulation) lit toutes les actions "
+"Le ``UndoManager`` ( Gestionnaire d'annulation) lit toutes les actions "
 "enregistrées, mais ne les stocke pas."
 
 #: ../undo.md:44
@@ -8550,30 +8550,30 @@ msgstr "Références"
 
 #: ../undo.md:63
 msgid ""
-"[A Framework for Undoing Actions in Collaborative "
-"Systems](http://web.eecs.umich.edu/~aprakash/papers/undo-tochi94.pdf)"
+"`A Framework for Undoing Actions in Collaborative "
+"Systems <http://web.eecs.umich.edu/~aprakash/papers/undo-tochi94.pdf>`_"
 msgstr ""
-"[Un «Framework» pour l'annulation d'actions dans les Systèmes "
-"Collaboratifs] (http://web.eecs.umich.edu/~aprakash/papers/undo-"
-"tochi94.pdf)"
+"`Un «Framework» pour l'annulation d'actions dans les Systèmes "
+"Collaboratifs <http://web.eecs.umich.edu/~aprakash/papers/undo-"
+"tochi94.pdf>`_"
 
 #: ../undo.md:65
 msgid ""
-"[Undoing Actions in Collaborative Work: Framework and "
-"Experience](https://www.eecs.umich.edu/techreports/cse/94/CSE-"
-"TR-196-94.pdf)"
+"`Undoing Actions in Collaborative Work: Framework and "
+"Experience <https://www.eecs.umich.edu/techreports/cse/94/CSE-"
+"TR-196-94.pdf>`_"
 msgstr ""
-"[Défaire les actions dans le Travail Collaboratif : «Framework » et "
-"Expérience] (https://www.eecs.umich.edu/techreports/cse/94/CSE-"
-"TR-196-94.pdf)"
+"`Défaire les actions dans le Travail Collaboratif : «Framework » et "
+"Expérience <https://www.eecs.umich.edu/techreports/cse/94/CSE-"
+"TR-196-94.pdf>`_"
 
 #: ../undo.md:67
 msgid ""
-"[Implementing a Selective Undo Framework in "
-"Python](https://legacy.python.org/workshops/1997-10/proceedings/zukowski.html)"
+"`Implementing a Selective Undo Framework in "
+"Python <https://legacy.python.org/workshops/1997-10/proceedings/zukowski.html>`_"
 msgstr ""
-"[Implémentation d'un «Framework » d'Annulation Sélective en Python] "
-"(https://legacy.python.org/workshops/1997-10/proceedings/zukowski.html)"
+"`Implémentation d'un «Framework » d'Annulation Sélective en Python "
+"<https://legacy.python.org/workshops/1997-10/proceedings/zukowski.html>`_"
 
 #: ../windows.md:1
 msgid "Gaphor on Windows"
