@@ -18,7 +18,7 @@ central broker so you do not have to register on every individual element that
 can send an event they are interested in. For example, a diagram item could
 register an event rule and then check if the element that sent the event is
 actually the event the item is representing. For more information see the full
-description of the [event system](event_system.md).
+description of the [event system](event_system).
 
 ## Transactional
 
@@ -60,7 +60,7 @@ The undo manager is transactional. Actions performed by a user are only stored
 if a transaction is active. If a transaction is completed (committed) a new
 undo action is stored. Transactions can also be rolled back, in which case all
 changes are played back directly. For more information see the full description
-of the [undo manager](undo.md).
+of the [undo manager](undo).
 
 ### file_manager
 

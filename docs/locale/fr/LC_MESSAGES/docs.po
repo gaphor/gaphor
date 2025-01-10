@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: Gaphor 2.23.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-12-30 14:25-0500\n"
-"PO-Revision-Date: 2024-12-18 08:46+0000\n"
-"Last-Translator: Stan SZLAPKA <stansz@free.fr>\n"
+"PO-Revision-Date: 2025-01-04 23:10+0000\n"
+"Last-Translator: Dan Yeaw <dan@yeaw.me>\n"
+"Language-Team: French <https://hosted.weblate.org/projects/gaphor/"
+"docs-gaphor-org/fr/>\n"
 "Language: fr\n"
-"Language-Team: French <https://hosted.weblate.org/projects/gaphor/docs-"
-"gaphor-org/fr/>\n"
-"Plural-Forms: nplurals=2; plural=n > 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 5.10-dev\n"
 "Generated-By: Babel 2.16.0\n"
 
 #: ../changelog.rst:2
@@ -152,9 +153,8 @@ msgid ""
 " start a new model with the _SysML_ template. You can now decide to "
 "either:"
 msgstr ""
-"La première chose que les fourmis ont faite a été d'ouvrir Gaphor dans la"
-" fenêtre du Greeter et de démarrer un nouveau modèle avec le modèle "
-"_SysML_:"
+"La première chose que les fourmis ont faite a été d'ouvrir Gaphor dans la "
+"fenêtre du Greeter et de démarrer un nouveau modèle avec le modèle _SysML_ :"
 
 #: ../coffee_machine.md:46
 msgid ""
@@ -412,7 +412,7 @@ msgstr "Table des matières"
 
 #: ../coffee_machine_concept.md:5
 msgid "Coffee Machine: Concept Level"
-msgstr "Machine à café: Niveau conceptuel"
+msgstr "Machine à café : Niveau conceptuel"
 
 #: ../coffee_machine_concept.md:9
 msgid ""
@@ -941,7 +941,7 @@ msgstr ""
 
 #: ../coffee_machine_logical.md:5
 msgid "Coffee Machine: Logical Level"
-msgstr "Coffee Machine (Machine à café): Niveau logique"
+msgstr "Coffee Machine (Machine à café) : Niveau logique"
 
 #: ../coffee_machine_logical.md:9
 msgid ""
@@ -1048,8 +1048,8 @@ msgid ""
 "make coffee. In this case, there are two main states: On and Off."
 msgstr ""
 "L' état logique de la machine à café est un diagramme qui montre les "
-"différents états et transitions par lesquels la machine passe pour faire "
-"du café. Dans ce cas, il y a deux états principaux: On et Off."
+"différents états et transitions par lesquels la machine passe pour faire du "
+"café. Dans ce cas, il y a deux états principaux : On et Off."
 
 #: ../coffee_machine_logical.md:54
 msgid ""
@@ -1122,7 +1122,7 @@ msgstr ""
 
 #: ../coffee_machine_logical.md:84
 msgid "The following logical blocks are part of the espresso machine:"
-msgstr "Les blocs logiques suivants font partie de la machine à expresso:"
+msgstr "Les blocs logiques suivants font partie de la machine à expresso :"
 
 #: ../coffee_machine_logical.md:85
 msgid "Water tank"
@@ -1175,10 +1175,10 @@ msgid ""
 "designed for easy filling and cleaning. The water tank supplies water to "
 "the water pump when needed."
 msgstr ""
-"Water tank: Le réservoir d'eau est un récipient qui stocke l'eau utilisée"
-" dans la machine à espresso. Il a généralement une capacité spécifique et"
-" est conçu pour être facilement rempli et nettoyé. Le réservoir d'eau "
-"alimente la pompe à eau en cas de besoin."
+"Water tank : Le réservoir d'eau est un récipient qui stocke l'eau utilisée "
+"dans la machine à espresso. Il a généralement une capacité spécifique et est "
+"conçu pour être facilement rempli et nettoyé. Le réservoir d'eau alimente la "
+"pompe à eau en cas de besoin."
 
 #: ../coffee_machine_logical.md:107
 msgid ""
@@ -1187,11 +1187,10 @@ msgid ""
 " the coffee grounds in the portafilter. It plays a crucial role in the "
 "espresso extraction process by ensuring a consistent flow of water."
 msgstr ""
-"Water pump: La pompe à eau est chargée de puiser l'eau dans le réservoir "
-"d'eau et de créer la pression nécessaire pour faire passer l'eau à "
-"travers le marc de café dans le filtre à café. Elle joue un rôle crucial "
-"dans le processus d'extraction de l'espresso en assurant un débit d'eau "
-"constant."
+"Water pump : La pompe à eau est chargée de puiser l'eau dans le réservoir "
+"d'eau et de créer la pression nécessaire pour faire passer l'eau à travers "
+"le marc de café dans le filtre à café. Elle joue un rôle crucial dans le "
+"processus d'extraction de l'espresso en assurant un débit d'eau constant."
 
 #: ../coffee_machine_logical.md:112
 msgid ""
@@ -1200,10 +1199,10 @@ msgid ""
 "for brewing espresso. It maintains the water at the desired temperature "
 "to ensure proper extraction and flavor."
 msgstr ""
-"Water heater: Le chauffe-eau, également appelé boiler ou élément "
-"chauffant, est chargé de chauffer l'eau à la température optimale pour la"
-" préparation de l'espresso. Il maintient l'eau à la température souhaitée"
-" pour garantir une extraction et une saveur adéquates."
+"Water heater : Le chauffe-eau, également appelé boiler ou élément chauffant, "
+"est chargé de chauffer l'eau à la température optimale pour la préparation "
+"de l'espresso. Il maintient l'eau à la température souhaitée pour garantir "
+"une extraction et une saveur adéquates."
 
 #: ../coffee_machine_logical.md:117
 msgid ""
@@ -1213,10 +1212,10 @@ msgid ""
 " grounds in the portafilter to extract the flavors and create the "
 "espresso."
 msgstr ""
-"Portafilter: C'est un dispositif amovible en forme de poignée qui "
-"contient le marc de café. Il est fixé à la machine à espresso et sert de "
-"porte-filtre. L'eau de la pompe est forcée à travers le marc de café dans"
-" le porte-filtre pour extraire les arômes et créer l'espresso."
+"Portafilter : C'est un dispositif amovible en forme de poignée qui contient "
+"le marc de café. Il est fixé à la machine à espresso et sert de porte-"
+"filtre. L'eau de la pompe est forcée à travers le marc de café dans le porte-"
+"filtre pour extraire les arômes et créer l'espresso."
 
 #: ../coffee_machine_logical.md:122
 msgid ""
@@ -1227,13 +1226,12 @@ msgid ""
 " and controls temperature, pressure, and other parameters to maintain "
 "consistency and deliver the desired results."
 msgstr ""
-"Controller: C'est très souvent un microcontrôleur ou un circuit imprimé "
-"dédié, c'est le cerveau de la machine à espresso. Il gère et coordonne le"
-" fonctionnement de divers composants, tels que la pompe à eau, le "
-"chauffe-eau et l'IHM, afin de garantir un processus d'infusion correct. "
-"Il surveille et contrôle la température, la pression et d'autres "
-"paramètres afin de maintenir la cohérence et d'obtenir les résultats "
-"souhaités."
+"Controller : C'est très souvent un microcontrôleur ou un circuit imprimé "
+"dédié, c'est le cerveau de la machine à espresso. Il gère et coordonne le "
+"fonctionnement de divers composants, tels que la pompe à eau, le chauffe-eau "
+"et l'IHM, afin de garantir un processus d'infusion correct. Il surveille et "
+"contrôle la température, la pression et d'autres paramètres afin de "
+"maintenir la cohérence et d'obtenir les résultats souhaités."
 
 #: ../coffee_machine_logical.md:129
 msgid ""
@@ -1243,12 +1241,11 @@ msgid ""
 "the portafilter and into the cup. The group head also helps to maintain "
 "proper temperature and pressure during the brewing process."
 msgstr ""
-"Group head: La tête de groupe est une partie de la machine à espresso où "
-"se fixe le porte-filtre. Elle assure une liaison sûre entre le "
-"portafiltre et la machine, ce qui permet à l'espresso de s'écouler du "
-"portafiltre et de se déverser dans la tasse. La tête de groupe permet "
-"également de maintenir une température et une pression adéquates pendant "
-"le processus d'infusion."
+"Group head : La tête de groupe est une partie de la machine à espresso où se "
+"fixe le porte-filtre. Elle assure une liaison sûre entre le portafiltre et "
+"la machine, ce qui permet à l'espresso de s'écouler du portafiltre et de se "
+"déverser dans la tasse. La tête de groupe permet également de maintenir une "
+"température et une pression adéquates pendant le processus d'infusion."
 
 #: ../coffee_machine_logical.md:135
 msgid ""
@@ -1260,14 +1257,14 @@ msgid ""
 "information related to the brewing process, such as brewing time, "
 "temperature, and cup size selection."
 msgstr ""
-"HMI  : L'Interface Homme-Machine (IHM) est interface utilisateur de la "
-"machine à espresso. Elle permet à l'utilisateur d'interagir avec la "
-"machine, généralement au moyen de boutons, d'interrupteurs ou d'un écran "
-"tactile. L'IHM permet à l'utilisateur de sélectionner différentes options"
-" d'infusion, d'ajuster les réglages et de contrôler l'état de la machine."
-" Elle fournit des informations en retour et affiche des informations "
-"relatives au processus de préparation, telles que le temps de "
-"préparation, la température et la sélection de la taille de la tasse."
+"HMI : L'Interface Homme-Machine (IHM) est interface utilisateur de la "
+"machine à espresso. Elle permet à l'utilisateur d'interagir avec la machine, "
+"généralement au moyen de boutons, d'interrupteurs ou d'un écran tactile. "
+"L'IHM permet à l'utilisateur de sélectionner différentes options d'infusion, "
+"d'ajuster les réglages et de contrôler l'état de la machine. Elle fournit "
+"des informations en retour et affiche des informations relatives au "
+"processus de préparation, telles que le temps de préparation, la température "
+"et la sélection de la taille de la tasse."
 
 #: ../coffee_machine_logical.md:142
 msgid ""
@@ -1331,31 +1328,31 @@ msgstr ""
 #: ../coffee_machine_logical.md:166
 msgid "Water: Represents the flow of water from the water tank to the water pump."
 msgstr ""
-"Water: Représente le flux d'eau depuis le réservoir d'eau jusqu'à la "
-"pompe à eau."
+"Water : Représente le flux d'eau depuis le réservoir d'eau jusqu'à la pompe "
+"à eau."
 
 #: ../coffee_machine_logical.md:167
 msgid ""
 "On/Off: Represents the command or signal to turn the espresso machine on "
 "or off."
 msgstr ""
-"On/Off: Représente la commande ou le signal de mise en marche ou d'arrêt "
-"de la machine à espresso."
+"On/Off : Représente la commande ou le signal de mise en marche ou d'arrêt de "
+"la machine à espresso."
 
 #: ../coffee_machine_logical.md:168
 msgid ""
 "Volume Adjustment: Represents the user-selected volume adjustment for the"
 " coffee output."
 msgstr ""
-"Volume Adjustment: (Ajustement du volume) Représente le réglage du volume"
-" sélectionné par l'utilisateur pour la sortie du café."
+"Volume Adjustment : (Ajustement du volume) Représente le réglage du volume "
+"sélectionné par l'utilisateur pour la sortie du café."
 
 #: ../coffee_machine_logical.md:169
 msgid ""
 "Pressurized Water: Represents the water flow under pressure for "
 "extracting coffee."
 msgstr ""
-"Pressurized Water: (Eau sous pression) Représente le débit d'eau sous "
+"Pressurized Water : (Eau sous pression) Représente le débit d'eau sous "
 "pression pour l'extraction du café."
 
 #: ../coffee_machine_logical.md:170
@@ -1363,9 +1360,8 @@ msgid ""
 "Heat Command: Represents the command or signal to activate the water "
 "heater and initiate the heating process."
 msgstr ""
-"Heat Command:(Commande de chauffage) Représente la commande ou le signal "
-"permettant d'activer le chauffe-eau et de lancer le processus de "
-"chauffage."
+"Heat Command :(Commande de chauffage) Représente la commande ou le signal "
+"permettant d'activer le chauffe-eau et de lancer le processus de chauffage."
 
 #: ../coffee_machine_logical.md:171
 msgid ""
@@ -2217,13 +2213,12 @@ msgid "Register a handler."
 msgstr "Enregistrer un gestionnaire."
 
 #: gaphor.core.eventmanager.EventManager.subscribe:3 of
-#, fuzzy
 msgid ""
 "Handlers are triggered (executed) when events are emitted through the "
 ":obj:`~gaphor.core.eventmanager.EventManager.handle` method."
 msgstr ""
 "Les gestionnaires sont déclenchés (exécutés) lorsque des événements sont "
-"émis par la méthode :obj:`~gaphor.core.eventmanager.EventManager.handle`."
+"émis par la méthode :obj:`~gaphor.core.eventmanager.EventManager.handle`."
 
 #: gaphor.core.eventmanager.EventManager.unsubscribe:1 of
 msgid "Unregister a previously registered handler."
@@ -2256,13 +2251,13 @@ msgstr ""
 #: ../event_system.md:31
 msgid ""
 "Under the hood events are handled by the Generics library. For more "
-"information about how the Generic library handles events see the [Generic"
-" documentation](https://generic.readthedocs.io)."
+"information about how the Generic library handles events see the `Generic"
+" documentation` <https://generic.readthedocs.io>`_."
 msgstr ""
 "Sous le capot, les événements sont gérés par la bibliothèque Generics. "
 "Pour plus d'informations sur la façon dont la bibliothèque Generic gère "
-"les événements, voir la [documentation Generic] "
-"(https://generic.readthedocs.io)."
+"les événements, voir la `documentation Generic "
+"<https://generic.readthedocs.io>`_."
 
 #: ../first_model.md:1
 msgid "Your First Model"
@@ -2501,14 +2496,12 @@ msgstr ""
 "plus de représentations dans aucun des diagrammes."
 
 #: ../first_model.md:78
-#, fuzzy
 msgid "Examples of Gaphor models"
-msgstr "Exemple : Services Gaphor"
+msgstr "Exemples de modèles Gaphor"
 
 #: ../first_model.md:80
-#, fuzzy
 msgid "SysML Models"
-msgstr "Éléments du modèle CSS"
+msgstr "Modèles SysML"
 
 #: ../first_model.md:81
 msgid ""
@@ -2518,6 +2511,12 @@ msgid ""
 "Distilled](https://delligattiassociates.com/publications/?_gl=1*1tu6ekh*_ga*MTMwMTU4NjMyNC4xNzMyNTYyOTUw*_up*MQ..)"
 " one of the standard references for the SysML language."
 msgstr ""
+"Pour voir comment un modèle plus large est assemblé dans Gaphor, consultez "
+"[Gaphor Distilled](https://github.com/mikekidner/gaphor_distilled) qui met "
+"en œuvre le modèle DELL-SAT-77 utilisé comme base pour [SysML Distilled]"
+"(https://delligattiassociates.com/publications/"
+"?_gl=1*1tu6ekh*_ga*MTMwMTU4NjMyNC4xNzMyNTYyOTUw*_up*MQ..) l'une des "
+"références standard pour le langage SysML."
 
 #: ../framework.md:1
 msgid "Framework"
@@ -2559,7 +2558,7 @@ msgid ""
 "interested in. For example, a diagram item could register an event rule "
 "and then check if the element that sent the event is actually the event "
 "the item is representing. For more information see the full description "
-"of the [event system](event_system.md)."
+"of the [event system](event_system)."
 msgstr ""
 "Les parties de Gaphor communiquent entre elles par le biais d'événements."
 " Lorsque quelque chose d'important se produit, par exemple un changement "
@@ -2572,7 +2571,7 @@ msgstr ""
 "exemple, un élément de diagramme peut enregistrer une règle d'événement "
 "et vérifier ensuite si l'élément qui a envoyé l'événement est réellement "
 "l'événement que l'élément représente. Pour plus d'informations, voir la "
-"description complète du [event system](event_system.md)."
+"description complète du [event system](event_system)."
 
 #: ../framework.md:23
 msgid "Transactional"
@@ -2666,7 +2665,7 @@ msgid ""
 "stored if a transaction is active. If a transaction is completed "
 "(committed) a new undo action is stored. Transactions can also be rolled "
 "back, in which case all changes are played back directly. For more "
-"information see the full description of the [undo manager](undo.md)."
+"information see the full description of the [undo manager](undo)."
 msgstr ""
 "Le gestionnaire d'annulation est transactionnel. Les actions effectuées "
 "par un utilisateur ne sont stockées que si une transaction est active. Si"
@@ -2674,7 +2673,7 @@ msgstr ""
 " est stockée. Les transactions peuvent également être annulées, auquel "
 "cas toutes les modifications sont directement reproduites. Pour plus "
 "d'informations, voir la description complète du 'gestionnaire "
-"d'annulation' [undo manager](undo.md)."
+"d'annulation' [undo manager](undo)."
 
 #: ../framework.md:65
 msgid "file_manager"
@@ -2788,8 +2787,8 @@ msgid ""
 "(Flatpak), Windows, and macOS."
 msgstr ""
 "Vous pouvez trouver des installateurs pour Gaphor sur le site Web de "
-"Gaphor [Gaphor Website](https://gaphor.org/download). Gaphor peut être "
-"installé sur Linux (Flatpak), Windows et macOS."
+"[Gaphor Website](https://gaphor.org/download). Gaphor peut être installé sur "
+"Linux (Flatpak), Windows et macOS."
 
 #: ../getting_started.md:14
 msgid ""
@@ -2821,7 +2820,7 @@ msgstr "Vous pouvez sélectionner un modèle pour commencer."
 
 #: ../getting_started.md:21
 msgid "**Generic:** a blank model to start with"
-msgstr "**Generic: (Générique :)** un modèle vierge pour commencer"
+msgstr "**Generic : (Générique :)** un modèle vierge pour commencer"
 
 #: ../getting_started.md:22
 msgid ""
@@ -3506,7 +3505,7 @@ msgstr ""
 
 #: ../linux.md:61
 msgid "For Redhat/RPM/Fedora based systems:"
-msgstr ""
+msgstr "Pour les systèmes basés sur Redhat/RPM/Fedora :"
 
 #: ../linux.md:67 ../macos.md:18
 msgid ""
@@ -4069,9 +4068,8 @@ msgstr ""
 "chargé uniquement à partir de ce langage de modélisation spécifique."
 
 #: gaphor.abc.ModelingLanguage.model_browser_model:1 of
-#, fuzzy
 msgid "A model for use in the Model Browser."
-msgstr "Ajouter des membres dans le navigateur de modèle"
+msgstr "Un modèle à utiliser dans le navigateur de modèles."
 
 #: gaphor.abc.ModelingLanguage.name:1 of
 msgid "Human-readable name of the modeling language."
@@ -4356,10 +4354,13 @@ msgid ""
 "element should be placed in the root of the ownership hierarchy. If "
 "`None` is returned, there is no owner."
 msgstr ""
+"Retourne le propriétaire de l'élément. Il peut s'agir de `Root`, indiquant "
+"que l'élément doit être placé à la racine de la hiérarchie de propriété. Si "
+"None est retourné, il n'y a pas de propriétaire."
 
 #: ../modeling_language.md:169
 msgid "Returns all elements owned by `element"
-msgstr ""
+msgstr "Retourne tous les éléments appartenant à `element"
 
 #: ../modeling_language.md:174
 msgid ""
@@ -4389,7 +4390,7 @@ msgstr ""
 
 #: ../modeling_language.md:191
 msgid "Dropping"
-msgstr "Dropping"
+msgstr "Dépose"
 
 #: ../modeling_language.md:193
 msgid ""
@@ -4564,9 +4565,8 @@ msgstr ""
 " diagrammes du modèle interne de Gaphor."
 
 #: ../models/core.rst:16
-#, fuzzy
 msgid "The core model with presentation classes"
-msgstr "La classe ``Presentation``"
+msgstr "Le modèle de base avec les classes de présentation"
 
 #: ../models/core.rst:19
 msgid "The ``Base`` Class"
@@ -5656,7 +5656,7 @@ msgstr "1. Actions"
 
 #: ../models/uml/10._Actions.rst:11
 msgid "2. Invocation Actions"
-msgstr "2. Invocation Actions"
+msgstr "2. Actions d'invocation"
 
 #: ../models/uml/10._Actions.rst:17
 msgid "7. Structural Feature Actions"
@@ -5994,17 +5994,15 @@ msgstr ""
 
 #: ../plugins.md:118
 msgid "Community Developed Plugins"
-msgstr ""
+msgstr "Plugins développés par la communauté"
 
 #: ../plugins.md:120
-#, fuzzy
 msgid "Gaphor_Tools"
-msgstr "Protocoles"
+msgstr "Gaphor_Tools"
 
 #: ../plugins.md:121
-#, fuzzy
 msgid "What does it do?"
-msgstr "Quoi d'autre ?"
+msgstr "Que fait-il ?"
 
 #: ../plugins.md:122
 msgid ""
@@ -6014,16 +6012,23 @@ msgid ""
 "imported bringing in all the changes to the model, similarly for element "
 "notes."
 msgstr ""
+"Il permet l'importation et l'exportation d'exigences et de notes SysML vers "
+"Excel et Confluence. Il en est actuellement au stade de la preuve de "
+"concept, mais il permet d'exporter un tableau d'exigences, puis de l'éditer "
+"et de l'importer en apportant toutes les modifications au modèle, de la même "
+"manière pour les notes sur les éléments."
 
 #: ../plugins.md:123
 msgid "Where can I get it?"
-msgstr ""
+msgstr "Où puis-je l'obtenir ?"
 
 #: ../plugins.md:124
 msgid ""
 "From this [BitBucket "
 "Repo](https://bitbucket.org/resonatesystems/gaphor_tools/src/main/)"
 msgstr ""
+"De ce [BitBucket Repo] (https://bitbucket.org/resonatesystems/gaphor_tools/"
+"src/main/)"
 
 #: ../scripting.md:5
 msgid "Jupyter and Scripting"
@@ -6345,12 +6350,16 @@ msgid ""
 "The module `gaphor.UML.recipes` contains several functions for "
 "manipulating elements and their associations."
 msgstr ""
+"Le module `gaphor.UML.recipes` contient plusieurs fonctions pour manipuler "
+"les éléments et leurs associations."
 
 #: ../scripting.md:301
 msgid ""
 "The tests for a given modelling language are a good place to find "
 "reference examples of element creation and modification."
 msgstr ""
+"Les tests d'un langage de modélisation donné sont un bon moyen de trouver "
+"des exemples de référence pour la création et la modification d'éléments."
 
 #: ../scripting.md:302
 msgid ""
@@ -6740,11 +6749,10 @@ msgstr ""
 "complet."
 
 #: ../sphinx.rst:36
-#, fuzzy
 msgid "`Figure`_, and `Image properties`_ can also be applied:"
 msgstr ""
-"Les `Image properties`_ (propriétés de l'image) peuvent également être "
-"appliquées :"
+"`Figure`_, et `Image properties`_ (propriétés de l'image) peuvent également "
+"être appliquées :"
 
 #: ../sphinx.rst:47
 msgid "A description suitable for an example"
@@ -6752,7 +6760,7 @@ msgstr "Une description adaptée à un exemple"
 
 #: ../sphinx.rst:53
 msgid "You can also add a caption, if you want."
-msgstr ""
+msgstr "Vous pouvez également ajouter une légende, si vous le souhaitez."
 
 #: ../sphinx.rst:56
 msgid "Configuration"
@@ -6796,6 +6804,10 @@ msgid ""
 "render, it's best to use a `.readthedocs.yaml`_ file in your project. "
 "Make sure to include the extra ``apt_packages`` as shown below."
 msgstr ""
+"La directive diagramme est compatible avec le module `Read the docs`_. Pour "
+"rendre les diagrammes, il est préférable d'utiliser un fichier "
+"`.readthedocs.yaml`_ dans votre projet. Assurez-vous d'inclure l'élément "
+"supplémentaire ``apt_packages``, comme indiqué ci-dessous."
 
 #: ../sphinx.rst:97
 msgid "This is the ``.readthedocs.yaml`` file we use for Gaphor:"
@@ -7725,7 +7737,7 @@ msgstr "Style CSS d'espacement de chaque coté (top, right, bottom, left)."
 
 #: ../style_sheets.md:205
 msgid "Example: ``padding: 3 4``."
-msgstr "Exemple: ``padding : 3 4``."
+msgstr "Exemple: ``padding: 3 4``."
 
 #: ../style_sheets.md:209
 msgid ""
@@ -8320,15 +8332,15 @@ msgid ""
 "Undo Manager. The Undo Manager works transactionally. A transaction must "
 "succeed or fail as a complete unit. If the transaction fails in the "
 "middle, it is rolled back. In Gaphor this is achieved by the "
-"{mod}`~gaphor.transaction` module, which provides a context manager "
-"{obj}`~gaphor.transaction.Transaction`."
+":mod:`~gaphor.transaction` module, which provides a context manager "
+":obj:`~gaphor.transaction.Transaction`."
 msgstr ""
 "L'enregistrement et la lecture des modifications dans Gaphor sont gérés "
 "par ce dernier. Celui-ci fonctionne de manière transactionnelle. Une "
 "transaction doit réussir ou échouer dans son ensemble. Si elle échoue en "
 "cours de route, elle est annulée. Dans Gaphor, ceci est réalisé par le "
-"module {mod}`~gaphor.transaction`, qui fournit un gestionnaire de "
-"contexte {obj}`~gaphor.transaction.Transaction`."
+"module :mod:`~gaphor.transaction`, qui fournit un gestionnaire de "
+"contexte :obj:`~gaphor.transaction.Transaction`."
 
 #: ../undo.md:16
 msgid ""
@@ -8356,19 +8368,19 @@ msgid "Start of a Transaction"
 msgstr "Début d'une transaction"
 
 #: ../undo.md:25
-msgid "A `Transaction` object is created."
-msgstr "Un objet `Transaction` est créé."
+msgid "A ``Transaction`` object is created."
+msgstr "Un objet ``Transaction`` est créé."
 
 #: ../undo.md:26
-msgid "`TransactionBegin` event is emitted."
-msgstr "L'événement `TransactionBegin` est émis."
+msgid "``TransactionBegin`` event is emitted."
+msgstr "L'événement ``TransactionBegin`` est émis."
 
 #: ../undo.md:27
 msgid ""
-"The `UndoManager` instantiates a new `ActionStack` which is the "
+"The ``UndoManager`` instantiates a new ``ActionStack`` which is the "
 "transaction object, and adds the undo action to the stack."
 msgstr ""
-"Le `UndoManager` instancie une nouvelle `ActionStack` qui est l'objet de "
+"Le ``UndoManager`` instancie une nouvelle ``ActionStack`` qui est l'objet de "
 "la transaction, et ajoute l'action d'annulation à la pile."
 
 #: ../undo.md:30
@@ -8384,15 +8396,15 @@ msgid "Successful Transaction"
 msgstr "Transaction réussie"
 
 #: ../undo.md:35
-msgid "A `TransactionCommit` event is emitted"
+msgid "A ``TransactionCommit`` event is emitted"
 msgstr ""
-"Un événement `TransactionCommit` (Enregistrement de la transaction) est "
+"Un événement ``TransactionCommit`` (Enregistrement de la transaction) est "
 "émis"
 
 #: ../undo.md:36
-msgid "The `UndoManager` closes and stores the transaction."
+msgid "The ``UndoManager`` closes and stores the transaction."
 msgstr ""
-"Le `UndoManager` (Gestionnaire d'annulation) ferme et enregistre la "
+"Le ``UndoManager`` (Gestionnaire d'annulation) ferme et enregistre la "
 "transaction."
 
 #: ../undo.md:38
@@ -8400,17 +8412,17 @@ msgid "Failed Transaction"
 msgstr "Échec de la transaction"
 
 #: ../undo.md:40
-msgid "A `TransactionRollback` event is emitted."
+msgid "A ``TransactionRollback`` event is emitted."
 msgstr ""
-"Un `TransactionRollback` événement (Annulation de la transaction) est "
+"Un ``TransactionRollback`` événement (Annulation de la transaction) est "
 "émis."
 
 #: ../undo.md:41
 msgid ""
-"The `UndoManager` plays back all the recorded actions, but does not store"
+"The ``UndoManager`` plays back all the recorded actions, but does not store"
 " it."
 msgstr ""
-"Le `UndoManager` ( Gestionnaire d'annulation) lit toutes les actions "
+"Le ``UndoManager`` ( Gestionnaire d'annulation) lit toutes les actions "
 "enregistrées, mais ne les stocke pas."
 
 #: ../undo.md:44
@@ -8471,6 +8483,10 @@ msgid ""
 " is emitted. If the transaction needs to be rolled back, a "
 ":obj:`~gaphor.event.TransactionRollback` event is emitted instead."
 msgstr ""
+"La transaction est clôturée. Un événement "
+":obj:`~gaphor.event.TransactionCommit` est émis. Si la transaction doit être "
+"annulée, un événement :obj:`~gaphor.event.TransactionRollback` est émis à la "
+"place."
 
 #: gaphor.transaction.Transaction.in_transaction:1 of
 msgid "Are you running inside a transaction?"
@@ -8497,6 +8513,8 @@ msgid ""
 "First, the transaction is closed. A "
 ":obj:`~gaphor.event.TransactionRollback` event is emitted."
 msgstr ""
+"Tout d'abord, la transaction est fermée. Un événement "
+":obj:`~gaphor.event.TransactionRollback` est émis."
 
 #: gaphor.event.TransactionBegin:1 of
 msgid "This event denotes the beginning of a transaction."
@@ -8532,30 +8550,30 @@ msgstr "Références"
 
 #: ../undo.md:63
 msgid ""
-"[A Framework for Undoing Actions in Collaborative "
-"Systems](http://web.eecs.umich.edu/~aprakash/papers/undo-tochi94.pdf)"
+"`A Framework for Undoing Actions in Collaborative "
+"Systems <http://web.eecs.umich.edu/~aprakash/papers/undo-tochi94.pdf>`_"
 msgstr ""
-"[Un «Framework» pour l'annulation d'actions dans les Systèmes "
-"Collaboratifs] (http://web.eecs.umich.edu/~aprakash/papers/undo-"
-"tochi94.pdf)"
+"`Un «Framework» pour l'annulation d'actions dans les Systèmes "
+"Collaboratifs <http://web.eecs.umich.edu/~aprakash/papers/undo-"
+"tochi94.pdf>`_"
 
 #: ../undo.md:65
 msgid ""
-"[Undoing Actions in Collaborative Work: Framework and "
-"Experience](https://www.eecs.umich.edu/techreports/cse/94/CSE-"
-"TR-196-94.pdf)"
+"`Undoing Actions in Collaborative Work: Framework and "
+"Experience <https://www.eecs.umich.edu/techreports/cse/94/CSE-"
+"TR-196-94.pdf>`_"
 msgstr ""
-"[Défaire les actions dans le Travail Collaboratif : «Framework » et "
-"Expérience] (https://www.eecs.umich.edu/techreports/cse/94/CSE-"
-"TR-196-94.pdf)"
+"`Défaire les actions dans le Travail Collaboratif : «Framework » et "
+"Expérience <https://www.eecs.umich.edu/techreports/cse/94/CSE-"
+"TR-196-94.pdf>`_"
 
 #: ../undo.md:67
 msgid ""
-"[Implementing a Selective Undo Framework in "
-"Python](https://legacy.python.org/workshops/1997-10/proceedings/zukowski.html)"
+"`Implementing a Selective Undo Framework in "
+"Python <https://legacy.python.org/workshops/1997-10/proceedings/zukowski.html>`_"
 msgstr ""
-"[Implémentation d'un «Framework » d'Annulation Sélective en Python] "
-"(https://legacy.python.org/workshops/1997-10/proceedings/zukowski.html)"
+"`Implémentation d'un «Framework » d'Annulation Sélective en Python "
+"<https://legacy.python.org/workshops/1997-10/proceedings/zukowski.html>`_"
 
 #: ../windows.md:1
 msgid "Gaphor on Windows"
