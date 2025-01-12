@@ -4,15 +4,16 @@ msgstr ""
 "Project-Id-Version: Gaphor 0.14.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-12-30 13:50-0500\n"
-"PO-Revision-Date: 2024-10-30 15:10+0000\n"
-"Last-Translator: Léo <leonardoleozinho576@gmail.com>\n"
+"PO-Revision-Date: 2025-01-09 21:08+0000\n"
+"Last-Translator: aquila0101 <aquila.santos@ba.estudante.senai.br>\n"
+"Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/"
+"gaphor/gaphor/pt_BR/>\n"
 "Language: pt_BR\n"
-"Language-Team: Portuguese (Brazil) "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/pt_BR/>\n"
-"Plural-Forms: nplurals=2; plural=n > 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 5.10-dev\n"
 "Generated-By: Babel 2.16.0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:28 gaphor/C4Model/toolbox.py:57
@@ -80,7 +81,6 @@ msgid "Dependency"
 msgstr "Dependência"
 
 #: gaphor/C4Model/toolbox.py:141
-#, fuzzy
 msgid "C4 Diagram"
 msgstr "Novo Diagrama C4"
 
@@ -148,7 +148,7 @@ msgstr "Classe"
 #: gaphor/C4Model/toolbox.py:160 gaphor/UML/toolbox.py:54
 #, fuzzy
 msgid "Data Type"
-msgstr "tipoDado"
+msgstr "Tipo de Dados"
 
 #: gaphor/C4Model/toolbox.py:162 gaphor/SysML/blocks/blockstoolbox.py:118
 #: gaphor/SysML/toolbox.py:186 gaphor/UML/classes/classestoolbox.py:154
@@ -349,7 +349,7 @@ msgstr "Relevante para"
 
 #: gaphor/SysML/diagramtype.py:42
 msgid "Can’t create “{name}” nested under a “{elem}”"
-msgstr ""
+msgstr "Não é possível criar “{name}” aninhado sob um “{elem}”"
 
 #: gaphor/SysML/modelinglanguage.py:25 gaphor/ui/greeter.py:41
 msgid "SysML"
@@ -421,7 +421,7 @@ msgstr "Texto"
 #: gaphor/SysML/propertypages.ui:258
 #, fuzzy
 msgid "Show text"
-msgstr "Exibir tipo"
+msgstr "Mostrar texto"
 
 #: gaphor/SysML/sysmlfmt.py:10
 msgid "sourceContext: {name}"
@@ -499,9 +499,8 @@ msgid "Block"
 msgstr "Bloco"
 
 #: gaphor/SysML/toolbox.py:189
-#, fuzzy
 msgid "Interface Block"
-msgstr "blocointerface"
+msgstr "Bloco de Interface"
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:17
 #: gaphor/SysML/toolbox.py:193
@@ -3465,4 +3464,3 @@ msgstr "geral: {name}"
 
 #~ msgid "New package"
 #~ msgstr "Novo pacote"
-
