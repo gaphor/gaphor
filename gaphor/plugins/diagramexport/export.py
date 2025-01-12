@@ -118,9 +118,7 @@ class DiagramExport(Service, ActionProvider, TaskOwner):
     @action(
         name="all-export-svg",
         label=gettext("Export all diagrams as SVG"),
-        tooltip=gettext(
-            "Export all diagrams as SVG diagrams in a specified" "directory"
-        ),
+        tooltip=gettext("Export all diagrams as SVG diagrams in a specifieddirectory"),
     )
     def export_all_svg_action(self):
         dialog = Gtk.FileDialog.new()
@@ -138,9 +136,7 @@ class DiagramExport(Service, ActionProvider, TaskOwner):
     @action(
         name="all-export-png",
         label=gettext("Export all diagrams as PNG"),
-        tooltip=gettext(
-            "Export all diagrams as PNG diagrams in a specified" "directory"
-        ),
+        tooltip=gettext("Export all diagrams as PNG diagrams in a specifieddirectory"),
     )
     def export_all_png_action(self):
         dialog = Gtk.FileDialog.new()
@@ -158,9 +154,7 @@ class DiagramExport(Service, ActionProvider, TaskOwner):
     @action(
         name="all-export-pdf",
         label=gettext("Export all diagrams as PDF"),
-        tooltip=gettext(
-            "Export all diagrams as PDF diagrams in a specified" "directory"
-        ),
+        tooltip=gettext("Export all diagrams as PDF diagrams in a specifieddirectory"),
     )
     def export_all_pdf_action(self):
         dialog = Gtk.FileDialog.new()
@@ -178,9 +172,7 @@ class DiagramExport(Service, ActionProvider, TaskOwner):
     @action(
         name="all-export-eps",
         label=gettext("Export all diagrams as EPS"),
-        tooltip=gettext(
-            "Export all diagrams as EPS diagrams in a specified" "directory"
-        ),
+        tooltip=gettext("Export all diagrams as EPS diagrams in a specifieddirectory"),
     )
     def export_all_eps_action(self):
         dialog = Gtk.FileDialog.new()

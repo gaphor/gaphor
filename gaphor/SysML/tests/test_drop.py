@@ -52,9 +52,9 @@ def test_drop_proxy_port_on_property(diagram, element_factory):
     assert property_item
 
     port = element_factory.create(sysml.ProxyPort)
-    assert not drop(
-        port, diagram, 0, 0
-    ), "unable to add port when there is no item that it can be attached to"
+    assert not drop(port, diagram, 0, 0), (
+        "unable to add port when there is no item that it can be attached to"
+    )
 
     block.ownedPort.append(port)
 
@@ -67,12 +67,12 @@ def test_drop_proxy_port_on_property(diagram, element_factory):
 
     port_item = drop(port, diagram, 500, 500)
     assert isinstance(port_item, ProxyPortItem), "port was added"
-    assert (
-        port_item in property_item_2.children
-    ), "port is attached to the second property item"
+    assert port_item in property_item_2.children, (
+        "port is attached to the second property item"
+    )
 
     port_item = drop(port, diagram, 100, 200)
     assert isinstance(port_item, ProxyPortItem), "port was added"
-    assert (
-        port_item in property_item.children
-    ), "port is attached to the first property item"
+    assert port_item in property_item.children, (
+        "port is attached to the first property item"
+    )

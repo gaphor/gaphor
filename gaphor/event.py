@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from dataclasses import dataclass
 from pathlib import Path
 from typing import TYPE_CHECKING
 
@@ -11,28 +12,28 @@ if TYPE_CHECKING:
     from gaphor.application import Application, Session
 
 
+@dataclass
 class ServiceInitializedEvent:
     """This event is emitted every time a new service has been initialized."""
 
-    def __init__(self, name: str, service: Service):
-        self.name = name
-        self.service = service
+    name: str
+    service: Service
 
 
+@dataclass
 class ServiceShutdownEvent:
     """This event is emitted every time a service has been shut down."""
 
-    def __init__(self, name: str, service: Service):
-        self.name = name
-        self.service = service
+    name: str
+    service: Service
 
 
+@dataclass
 class ApplicationShutdown:
     """This event is emitted from the application when it has been shut
     down."""
 
-    def __init__(self, application: Application):
-        self.application = application
+    application: Application
 
 
 class SessionCreated:
@@ -55,12 +56,12 @@ class SessionCreated:
         self.interactive = interactive
 
 
+@dataclass
 class ActiveSessionChanged:
     """Event emitted when a session becomes the active session."""
 
-    def __init__(self, service: Service):
-        # NB. This is wrong: it should have the session as argument
-        self.service = service
+    # NB. This is wrong: it should have the session as argument
+    service: Service
 
 
 class SessionShutdownRequested:
@@ -74,9 +75,9 @@ class SessionShutdown:
     """The session is emitting this event when it's ready to shut down."""
 
 
+@dataclass
 class ModelSaved:
-    def __init__(self, filename: Path | None = None):
-        self.filename = filename
+    filename: Path | None = None
 
 
 class TransactionBegin:

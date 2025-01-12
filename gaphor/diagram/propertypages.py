@@ -316,9 +316,9 @@ class InternalsPropertyPage(PropertyPageBase):
         if isinstance(subject, Presentation):
             presentation_text = textwrap.dedent(
                 f"""\
-                {gettext('Presentation')}:
-                  {gettext('class')}: {presentation_class(subject)}
-                  {gettext('id')}: {subject.id}"""
+                {gettext("Presentation")}:
+                  {gettext("class")}: {presentation_class(subject)}
+                  {gettext("id")}: {subject.id}"""
             )
             element = subject.subject
         else:
@@ -328,10 +328,10 @@ class InternalsPropertyPage(PropertyPageBase):
         element_text = (
             textwrap.dedent(
                 f"""\
-                {gettext('Model Element')}:
-                  {gettext('qname')}: {'.'.join(map(str, getattr(element, "qualifiedName", ["-"])))}
-                  {gettext('class')}: {model_element_class(element)}
-                  {gettext('id')}: {element.id}"""
+                {gettext("Model Element")}:
+                  {gettext("qname")}: {".".join(map(str, getattr(element, "qualifiedName", ["-"])))}
+                  {gettext("class")}: {model_element_class(element)}
+                  {gettext("id")}: {element.id}"""
             )
             if element
             else ""
