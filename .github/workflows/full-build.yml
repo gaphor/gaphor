@@ -53,7 +53,7 @@ jobs:
         with:
           python-version: ${{ env.python_version }}
       - name: Check Github Actions workflows
-        run: pipx run zizmor --config .github/zizmor.yml .github/workflows/
+        run: pipx run --pip-args='--constraint=.github/constraints.txt' zizmor --config .github/zizmor.yml .github/workflows/
       - name: Lint with Pre-commit
         uses: pre-commit/action@2c7b3805fd2a0fd8c1884dcaebf91fc102a13ecd # v3.0.1
       - name: Check REUSE compliance
