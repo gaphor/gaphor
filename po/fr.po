@@ -4,15 +4,16 @@ msgstr ""
 "Project-Id-Version: Gaphor 0.13.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2024-12-30 13:59-0500\n"
-"PO-Revision-Date: 2024-12-17 03:51+0000\n"
+"PO-Revision-Date: 2025-01-14 12:17+0000\n"
 "Last-Translator: Stan SZLAPKA <stansz@free.fr>\n"
+"Language-Team: French <https://hosted.weblate.org/projects/gaphor/gaphor/fr/>"
+"\n"
 "Language: fr\n"
-"Language-Team: French "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/fr/>\n"
-"Plural-Forms: nplurals=2; plural=n > 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 5.10-dev\n"
 "Generated-By: Babel 2.16.0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:28 gaphor/C4Model/toolbox.py:57
@@ -1257,17 +1258,15 @@ msgid ""
 "items.\n"
 "Use <b>-</b>/<b>=</b> to move items up or down."
 msgstr ""
-"Ajouter et modifier les opérations de classe conformément à la syntaxe "
-"UML.\n"
+"Ajouter et modifier les opérations de classe conformément à la syntaxe UML.\n"
 "\n"
 "  • <tt>call()</tt>\n"
-"  • <tt>+ call(a: int[*], b : str) : bool</tt> (publique, paramètres)\n"
-"  • <tt># call(a: int, b : str) # a note</tt> (protégé, avec remarques)\n"
+"  • <tt>+ call(a: int[*], b : str) : bool</tt> (publique, paramètres)\n"
+"  • <tt># call(a: int, b : str) # a note</tt> (protégé, avec remarques)\n"
 "\n"
-"Appuyer sur <b>Entrée</b> pour modifier, <b>Retour "
-"arrière</b>/<b>Suppr.</b> pour supprimer des éléments.\n"
-"Utiliser <b>-</b>/<b>=</b> pour déplacer les éléments plus haut ou plus "
-"bas."
+"Appuyer sur <b>Entrée</b> pour modifier, <b>Retour arrière</b>/<b>Suppr.</b> "
+"pour supprimer des éléments.\n"
+"Utiliser <b>-</b>/<b>=</b> pour déplacer les éléments plus haut ou plus bas."
 
 #: gaphor/UML/classes/propertypages.ui:666
 msgid "Show Operations"
@@ -2576,9 +2575,8 @@ msgid "Zoom In"
 msgstr "Zoom avant"
 
 #: gaphor/ui/diagrampage.ui:117
-#, fuzzy
 msgid "Align selected elements"
-msgstr "Élément connectable"
+msgstr "Aligner les éléments sélectionnés"
 
 #: gaphor/ui/diagrampage.ui:132
 msgid "Align Left"
@@ -2613,9 +2611,8 @@ msgid "Max Size"
 msgstr "Taille maximale"
 
 #: gaphor/ui/diagrams.py:322
-#, fuzzy
 msgid "Selected element is not in present in this diagram."
-msgstr "L'élément ne peut pas être représenté sur un diagramme."
+msgstr "L'élément sélectionné n'est pas présent sur ce diagramme."
 
 #: gaphor/ui/diagrams.ui:12
 msgid "Open a Diagram"
@@ -2695,9 +2692,8 @@ msgid "The (natural) language used in this model."
 msgstr "La langue (naturelle) utilisée dans ce modèle."
 
 #: gaphor/ui/elementeditor.ui:158
-#, fuzzy
 msgid "CSS Editor"
-msgstr "Éditeur de Style"
+msgstr "Éditeur CSS"
 
 #: gaphor/ui/elementeditor.ui:186
 msgid "CSS nodes of focused item"
@@ -3127,9 +3123,8 @@ msgid "Change from System Language to English"
 msgstr "Passer de la langue du système à l'anglais"
 
 #: gaphor/ui/help/preferences.ui:42
-#, fuzzy
 msgid "Editing"
-msgstr "Direction"
+msgstr "Édition"
 
 #: gaphor/ui/help/preferences.ui:45
 msgid "Reset Tool Automatically"
@@ -3137,7 +3132,7 @@ msgstr "Réinitialiser l’outil automatiquement"
 
 #: gaphor/ui/help/preferences.ui:46
 msgid "After an element is created, switch back to the pointer tool."
-msgstr ""
+msgstr "Après la création d'un élément, revenez à l'outil pointeur."
 
 #: gaphor/ui/help/preferences.ui:51
 msgid "Remove Unused Elements"
@@ -3417,4 +3412,3 @@ msgstr "general : Général"
 
 #~ msgid "New package"
 #~ msgstr "Nouveau paquet"
-
