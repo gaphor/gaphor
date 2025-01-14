@@ -45,6 +45,6 @@ def test_property_name_matches_assigned_name(element_type):
     for name in dir(element_type):
         prop = getattr(element_type, name)
         if isinstance(prop, umlproperty):
-            assert (
-                name == prop.name
-            ), f"No matching property name for {element_type}.{name}"
+            assert name == prop.name, (
+                f"No matching property name for {element_type}.{name}"
+            )

@@ -40,7 +40,7 @@ class MetadataItem(ElementPresentation):
                         *(
                             [
                                 cell(
-                                    heading(f'{diagram.gettext("Created By")}:'),
+                                    heading(f"{diagram.gettext('Created By')}:"),
                                     content(lambda: self.createdBy or ""),
                                 )
                             ]
@@ -50,7 +50,7 @@ class MetadataItem(ElementPresentation):
                         *(
                             [
                                 cell(
-                                    heading(f'{diagram.gettext("Website")}:'),
+                                    heading(f"{diagram.gettext('Website')}:"),
                                     content(lambda: self.website or ""),
                                     draw=draw_left_separator,
                                 )
@@ -67,7 +67,7 @@ class MetadataItem(ElementPresentation):
             *(
                 [
                     cell(
-                        heading(f'{diagram.gettext("Description")}:'),
+                        heading(f"{diagram.gettext('Description')}:"),
                         content(lambda: self.description or ""),
                         draw=draw_top_separator,
                     )
@@ -81,7 +81,7 @@ class MetadataItem(ElementPresentation):
                         *(
                             [
                                 cell(
-                                    heading(f'{diagram.gettext("Revision")}:'),
+                                    heading(f"{diagram.gettext('Revision')}:"),
                                     content(lambda: self.revision or ""),
                                 )
                             ]
@@ -91,7 +91,7 @@ class MetadataItem(ElementPresentation):
                         *(
                             [
                                 cell(
-                                    heading(f'{diagram.gettext("License")}:'),
+                                    heading(f"{diagram.gettext('License')}:"),
                                     content(lambda: self.license or ""),
                                     draw=draw_left_separator,
                                 )
@@ -102,7 +102,7 @@ class MetadataItem(ElementPresentation):
                         *(
                             [
                                 cell(
-                                    heading(f'{diagram.gettext("Created On")}:'),
+                                    heading(f"{diagram.gettext('Created On')}:"),
                                     content(lambda: self.createdOn or ""),
                                     draw=draw_left_separator,
                                 )
@@ -113,7 +113,7 @@ class MetadataItem(ElementPresentation):
                         *(
                             [
                                 cell(
-                                    heading(f'{diagram.gettext("Updated On")}:'),
+                                    heading(f"{diagram.gettext('Updated On')}:"),
                                     content(lambda: self.updatedOn or ""),
                                     draw=draw_left_separator,
                                 )

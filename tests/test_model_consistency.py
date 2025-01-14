@@ -301,9 +301,9 @@ class ModelConsistency(RuleBasedStateMachine):
                     modeling_language=self.session.get_service("modeling_language"),
                 )
 
-            assert (
-                self.model.size() == new_model.size()
-            ), f"{self.model.lselect()} != {new_model.lselect()}"
+            assert self.model.size() == new_model.size(), (
+                f"{self.model.lselect()} != {new_model.lselect()}"
+            )
             assert {e.id for e in self.model} == {e.id for e in new_model}
         except Exception:
             with open("falsifying_model.gaphor", "w", encoding="utf") as out:

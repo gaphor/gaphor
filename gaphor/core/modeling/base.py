@@ -6,6 +6,7 @@ from __future__ import annotations
 import importlib
 import logging
 from collections.abc import Callable, Iterator
+from dataclasses import dataclass
 from functools import cache
 from typing import TYPE_CHECKING, Protocol, TypeVar, overload
 from uuid import uuid1
@@ -21,6 +22,7 @@ if TYPE_CHECKING:
 log = logging.getLogger(__name__)
 
 
+@dataclass
 class UnlinkEvent:
     """Used to tell event handlers this element should be unlinked.
 
@@ -28,9 +30,8 @@ class UnlinkEvent:
     `gaphor.core.modeling`.
     """
 
-    def __init__(self, element: Base, diagram: Diagram | None = None):
-        self.element = element
-        self.diagram = diagram
+    element: Base
+    diagram: Diagram | None = None
 
 
 Id = str

@@ -24,9 +24,9 @@ class TypedElementPropertyPage(PropertyPageBase):
         self.subject = subject
         self.event_manager = event_manager
 
-        assert (not subject) or isinstance(
-            self.typed_element, UML.TypedElement
-        ), subject
+        assert (not subject) or isinstance(self.typed_element, UML.TypedElement), (
+            subject
+        )
 
     @property
     def typed_element(self):
@@ -74,9 +74,9 @@ class ShowTypedElementPropertyPage(PropertyPageBase):
         self.item = item
         self.event_manager = event_manager
 
-        assert (not item.subject) or isinstance(
-            self.typed_element, UML.TypedElement
-        ), item.subject
+        assert (not item.subject) or isinstance(self.typed_element, UML.TypedElement), (
+            item.subject
+        )
 
     @property
     def typed_element(self):

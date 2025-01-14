@@ -82,7 +82,7 @@ def parse_compound_selector(tokens, namespaces):
         return CompoundSelector(simple_selectors)
     peek = tokens.peek()
     raise SelectorError(
-        peek, f'expected a compound selector, got {peek.type if peek else "EOF"}'
+        peek, f"expected a compound selector, got {peek.type if peek else 'EOF'}"
     )
 
 
