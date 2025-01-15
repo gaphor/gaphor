@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import logging
 
-from generic.event import Event
 from gi.repository import Gtk
 
 from gaphor.abc import ActionProvider
@@ -10,12 +9,13 @@ from gaphor.core import action, event_handler
 from gaphor.core.modeling import (
     AttributeUpdated,
     Diagram,
+    ElementDeleted,
     ModelFlushed,
     ModelReady,
     StyleSheet,
 )
 from gaphor.diagram.drop import drop
-from gaphor.diagram.event import DiagramOpened, DiagramSelectionChanged
+from gaphor.diagram.event import DiagramClosed, DiagramOpened, DiagramSelectionChanged
 from gaphor.event import ActionEnabled, Notification
 from gaphor.i18n import gettext, translated_ui_string
 from gaphor.transaction import Transaction
@@ -23,7 +23,6 @@ from gaphor.ui.abc import UIComponent
 from gaphor.ui.diagrampage import DiagramPage, GtkView
 from gaphor.ui.event import (
     CurrentDiagramChanged,
-    DiagramClosed,
     ElementFocused,
     ElementOpened,
 )
@@ -55,12 +54,6 @@ class Diagrams(UIComponent, ActionProvider):
         self._notebook = builder.get_object("notebook")
         self._stack = builder.get_object("stack")
         self._page_handler_ids = [
-            self._notebook.connect(
-                "close-page",
-                lambda _notebook, page: self.event_manager.handle(
-                    DiagramClosed(page.get_child().diagram_page.get_diagram())
-                ),
-            ),
             self._notebook.connect("page-attached", self._on_page_changed),
             self._notebook.connect("page-detached", self._on_page_changed),
             self._notebook.connect("page-reordered", self._on_page_changed),
@@ -73,7 +66,7 @@ class Diagrams(UIComponent, ActionProvider):
         self.event_manager.subscribe(self._on_show_diagram)
         self.event_manager.subscribe(self._on_element_focused)
         self.event_manager.subscribe(self._on_element_opened)
-        self.event_manager.subscribe(self._on_close_diagram)
+        self.event_manager.subscribe(self._on_element_deleted)
         self.event_manager.subscribe(self._on_name_change)
         self.event_manager.subscribe(self._on_flush_model)
         self.event_manager.subscribe(self._on_model_ready)
@@ -86,7 +79,7 @@ class Diagrams(UIComponent, ActionProvider):
         self.event_manager.unsubscribe(self._on_model_ready)
         self.event_manager.unsubscribe(self._on_flush_model)
         self.event_manager.unsubscribe(self._on_name_change)
-        self.event_manager.unsubscribe(self._on_close_diagram)
+        self.event_manager.unsubscribe(self._on_element_deleted)
         self.event_manager.unsubscribe(self._on_element_focused)
         self.event_manager.unsubscribe(self._on_element_opened)
         self.event_manager.unsubscribe(self._on_show_diagram)
@@ -138,6 +131,18 @@ class Diagrams(UIComponent, ActionProvider):
         self._update_action_state()
         return page
 
+    def close_diagram_page(self, diagram: Diagram) -> None:
+        for _page_num, widget in get_widgets_on_pages(self._notebook):
+            if widget.diagram_page.get_diagram() is diagram:
+                break
+        else:
+            return
+
+        self._notebook.close_page(self._notebook.get_nth_page(_page_num))
+        widget.diagram_page.close()
+        self._update_action_state()
+        self.event_manager.handle(DiagramClosed(diagram))
+
     def _create_tab(self, title, widget):
         """Creates a new Notebook tab with a label and close button.
 
@@ -181,8 +186,8 @@ class Diagrams(UIComponent, ActionProvider):
 
     @action(name="close-current-tab", shortcut="<Primary>w")
     def close_current_tab(self):
-        diagram = self.get_current_diagram()
-        self.event_manager.handle(DiagramClosed(diagram))
+        if diagram := self.get_current_diagram():
+            self.close_diagram_page(diagram)
 
     @action(
         name="zoom-in",
@@ -350,21 +355,12 @@ class Diagrams(UIComponent, ActionProvider):
         if not self.set_current_diagram(diagram):
             self.create_diagram_page(diagram)
 
-    @event_handler(DiagramClosed)
-    def _on_close_diagram(self, event: Event) -> None:
-        """Callback to close the tab and remove the notebook page."""
-        diagram = event.diagram
-
-        for _page_num, widget in get_widgets_on_pages(self._notebook):
-            if widget.diagram_page.get_diagram() is diagram:
-                break
-        else:
+    @event_handler(ElementDeleted)
+    def _on_element_deleted(self, event: ElementDeleted):
+        if not isinstance(event.element, Diagram):
             return
 
-        self._notebook.close_page(self._notebook.get_nth_page(_page_num))
-
-        widget.diagram_page.close()
-        self._update_action_state()
+        self.close_diagram_page(event.element)
 
     @event_handler(ModelReady)
     def _on_model_ready(self, event=None):
