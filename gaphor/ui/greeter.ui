@@ -29,109 +29,113 @@
     <property name="menu-model">hamburger-menu</property>
   </object>
 
-  <object class="GtkWindow" id="greeter">
+  <object class="AdwApplicationWindow" id="greeter">
     <property name="width-request">800</property>
     <property name="height-request">600</property>
-    <child type="titlebar">
-      <object class="GtkHeaderBar">
-        <child type="title">
-          <object class="GtkBox">
-            <property name="orientation">vertical</property>
-            <property name="valign">center</property>
-            <child>
-              <object class="GtkLabel" id="title">
-                <property name="label">Gaphor</property>
-                <style>
-                  <class name="title"/>
-                </style>
-              </object>
-            </child>
-          </object>
-        </child>
-        <child>
-          <object class="GtkButton">
-            <property name="label" translatable="yes">Open Model…</property>
-            <property name="action-name">app.file-open</property>
-          </object>
-        </child>
-        <child type="end">
-          <object class="GtkMenuButton">
-            <property name="popover">hamburger</property>
-            <property name="icon_name">open-menu-symbolic</property>
-            <property name="primary">1</property>
-          </object>
-        </child>
-        <style>
-          <class name="flat"/>
-        </style>
-      </object>
-    </child>
-    <child>
-      <object class="GtkBox">
-        <property name="orientation">vertical</property>
-        <child>
-          <object class="GtkScrolledWindow">
-            <property name="hscrollbar-policy">never</property>
-            <child>
-              <object class="GtkViewport">
+    <property name="content">
+      <object class="AdwToolbarView">
+        <child type="top">
+          <object class="GtkHeaderBar">
+            <child type="title">
+              <object class="GtkBox">
+                <property name="orientation">vertical</property>
+                <property name="valign">center</property>
                 <child>
-                  <object class="GtkBox">
-                    <property name="halign">center</property>
-                    <property name="vexpand">1</property>
-                    <property name="orientation">vertical</property>
-                    <child>
-                      <object class="GtkLabel" id="recent-files-title">
-                        <property name="label" translatable="yes">Recently Opened</property>
-                        <property name="xalign">0</property>
-                        <style>
-                          <class name="section-title"/>
-                        </style>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkListBox" id="recent-files">
-                        <property name="selection-mode">none</property>
-                        <style>
-                          <class name="boxed-list"/>
-                        </style>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkLabel">
-                        <property name="label" translatable="yes">Create New Model</property>
-                        <property name="xalign">0</property>
-                        <style>
-                          <class name="section-title"/>
-                        </style>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkListBox" id="templates">
-                        <property name="selection-mode">none</property>
-                        <style>
-                          <class name="boxed-list"/>
-                        </style>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkListBox" id="examples">
-                        <property name="selection-mode">none</property>
-                        <style>
-                          <class name="boxed-list"/>
-                        </style>
-                      </object>
-                    </child>
+                  <object class="GtkLabel" id="title">
+                    <property name="label">Gaphor</property>
                     <style>
-                      <class name="greeter-selection"/>
+                      <class name="title"/>
                     </style>
                   </object>
                 </child>
               </object>
             </child>
+            <child>
+              <object class="GtkButton">
+                <property name="label" translatable="yes">Open Model…</property>
+                <property name="action-name">app.file-open</property>
+              </object>
+            </child>
+            <child type="end">
+              <object class="GtkMenuButton">
+                <property name="popover">hamburger</property>
+                <property name="icon_name">open-menu-symbolic</property>
+                <property name="primary">1</property>
+              </object>
+            </child>
+            <style>
+              <class name="flat"/>
+            </style>
           </object>
         </child>
+        <property name="content">
+          <object class="GtkBox">
+            <property name="orientation">vertical</property>
+            <child>
+              <object class="GtkScrolledWindow">
+                <property name="hscrollbar-policy">never</property>
+                <child>
+                  <object class="GtkViewport">
+                    <child>
+                      <object class="GtkBox">
+                        <property name="halign">center</property>
+                        <property name="vexpand">1</property>
+                        <property name="orientation">vertical</property>
+                        <child>
+                          <object class="GtkLabel" id="recent-files-title">
+                            <property name="label" translatable="yes">Recently Opened</property>
+                            <property name="xalign">0</property>
+                            <style>
+                              <class name="section-title"/>
+                            </style>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkListBox" id="recent-files">
+                            <property name="selection-mode">none</property>
+                            <style>
+                              <class name="boxed-list"/>
+                            </style>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkLabel">
+                            <property name="label" translatable="yes">Create New Model</property>
+                            <property name="xalign">0</property>
+                            <style>
+                              <class name="section-title"/>
+                            </style>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkListBox" id="templates">
+                            <property name="selection-mode">none</property>
+                            <style>
+                              <class name="boxed-list"/>
+                            </style>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkListBox" id="examples">
+                            <property name="selection-mode">none</property>
+                            <style>
+                              <class name="boxed-list"/>
+                            </style>
+                          </object>
+                        </child>
+                        <style>
+                          <class name="greeter-selection"/>
+                        </style>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </property>
       </object>
-    </child>
+    </property>
     <style>
       <class name="greeter"/>
     </style>
