@@ -8,16 +8,17 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2024-12-30 13:50-0500\n"
-"PO-Revision-Date: 2024-11-17 00:00+0000\n"
+"PO-Revision-Date: 2025-01-16 08:00+0000\n"
 "Last-Translator: PC <antyinteligent@proton.me>\n"
+"Language-Team: Polish <https://hosted.weblate.org/projects/gaphor/gaphor/pl/>"
+"\n"
 "Language: pl\n"
-"Language-Team: Polish "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/pl/>\n"
-"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && "
-"(n%100<10 || n%100>=20) ? 1 : 2);\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2);\n"
+"X-Generator: Weblate 5.10-dev\n"
 "Generated-By: Babel 2.16.0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:28 gaphor/C4Model/toolbox.py:57
@@ -137,7 +138,7 @@ msgstr "Czynność"
 #: gaphor/templates/sysml-example.gaphor gaphor/templates/uml-example.gaphor
 #: gaphor/templates/uml.gaphor
 msgid "Interaction"
-msgstr ""
+msgstr "Oddziaływanie"
 
 #: gaphor/C4Model/toolbox.py:156 gaphor/SysML/toolbox.py:201
 #: gaphor/UML/states/statestoolbox.py:46 gaphor/UML/states/statestoolbox.py:63
@@ -354,7 +355,7 @@ msgstr "Istotne Dla"
 
 #: gaphor/SysML/diagramtype.py:42
 msgid "Can’t create “{name}” nested under a “{elem}”"
-msgstr ""
+msgstr "Nie można utworzyć “{name}” zagnieżdżonego pod “{elem}”"
 
 #: gaphor/SysML/modelinglanguage.py:25 gaphor/ui/greeter.py:41
 msgid "SysML"
@@ -448,7 +449,7 @@ msgstr "Własność"
 
 #: gaphor/SysML/toolbox.py:72
 msgid "Proxy Port"
-msgstr ""
+msgstr "Port Pośrednika"
 
 #: gaphor/SysML/toolbox.py:99
 #, fuzzy
@@ -501,7 +502,7 @@ msgstr "Nowy Diagram Przypadku Użycia"
 #: gaphor/SysML/toolbox.py:184 gaphor/UML/toolbox.py:50
 #: gaphor/UML/usecases/usecasetoolbox.py:28 gaphor/templates/uml-example.gaphor
 msgid "Actor"
-msgstr ""
+msgstr "Aktor"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:29 gaphor/SysML/toolbox.py:185
 msgid "Block"
@@ -717,11 +718,11 @@ msgstr "Nowy Diagram Profilu"
 
 #: gaphor/UML/deployments/deploymentstoolbox.py:16 gaphor/UML/toolbox.py:51
 msgid "Artifact"
-msgstr ""
+msgstr "Artefakt"
 
 #: gaphor/UML/deployments/deploymentstoolbox.py:40 gaphor/UML/toolbox.py:55
 msgid "Device"
-msgstr ""
+msgstr "Urządzenie"
 
 #: gaphor/UML/toolbox.py:61
 #, fuzzy
@@ -734,15 +735,15 @@ msgstr "Interfejs"
 
 #: gaphor/UML/deployments/deploymentstoolbox.py:28 gaphor/UML/toolbox.py:69
 msgid "Node"
-msgstr ""
+msgstr "Węzeł"
 
 #: gaphor/UML/profiles/profilestoolbox.py:22 gaphor/UML/toolbox.py:70
 msgid "Profile"
-msgstr ""
+msgstr "Profil"
 
 #: gaphor/UML/profiles/profilestoolbox.py:44 gaphor/UML/toolbox.py:75
 msgid "Stereotype"
-msgstr ""
+msgstr "Stereotyp"
 
 #: gaphor/UML/actions/actionstoolbox.py:18
 #: gaphor/UML/interactions/interactionstoolbox.py:16
@@ -761,7 +762,7 @@ msgstr "<Zależności>"
 
 #: gaphor/UML/umlfmt.py:22
 msgid "supplier: {name}"
-msgstr ""
+msgstr "dostawca: {name}"
 
 #: gaphor/UML/umlfmt.py:86
 #, fuzzy
@@ -770,23 +771,23 @@ msgstr "Ponów"
 
 #: gaphor/UML/umlfmt.py:232
 msgid "general: {name}"
-msgstr ""
+msgstr "ogólne: {name}"
 
 #: gaphor/UML/umlfmt.py:237
 msgid "extend: {name}"
-msgstr ""
+msgstr "rozszerz: {name}"
 
 #: gaphor/UML/umlfmt.py:244
 msgid "include: {name}"
-msgstr ""
+msgstr "dołącz: {name}"
 
 #: gaphor/UML/actions/actionstoolbox.py:49
 msgid "Swimlane One"
-msgstr ""
+msgstr "Tor Pływacki Nr Jeden"
 
 #: gaphor/UML/actions/actionstoolbox.py:53
 msgid "Swimlane Two"
-msgstr ""
+msgstr "Tor Pływacki Nr Dwa"
 
 #: gaphor/UML/actions/actionstoolbox.py:59
 msgid "ValueSpecificationAction"
@@ -944,7 +945,7 @@ msgstr "Połącz specyfikacje"
 
 #: gaphor/UML/actions/propertypages.ui:89
 msgid "Swimlanes"
-msgstr ""
+msgstr "Tory pływackie"
 
 #: gaphor/UML/actions/propertypages.ui:100
 msgid "Partitions"
@@ -952,7 +953,7 @@ msgstr "Podziały"
 
 #: gaphor/UML/actions/propertypages.ui:130
 msgid "Upper Bound"
-msgstr ""
+msgstr "Górna Granica"
 
 #: gaphor/UML/actions/propertypages.ui:145
 #, fuzzy
@@ -1140,24 +1141,24 @@ msgstr ""
 #: gaphor/UML/classes/propertypages.ui:110
 #: gaphor/UML/classes/propertypages.ui:222
 msgid "Unknown navigation"
-msgstr ""
+msgstr "nieznana droga"
 
 #: gaphor/UML/classes/propertypages.ui:111
 #: gaphor/UML/classes/propertypages.ui:223
 msgid "Not navigable"
-msgstr ""
+msgstr "nie znaleziono drogi"
 
 #: gaphor/UML/classes/propertypages.ui:112
 #: gaphor/UML/classes/propertypages.ui:224
 msgid "Navigable"
-msgstr ""
+msgstr "Droga znaleziona"
 
 #: gaphor/UML/classes/propertypages.ui:144
 #: gaphor/UML/classes/propertypages.ui:256
 #: gaphor/UML/profiles/propertypages.ui:33
 #: gaphor/UML/profiles/propertypages.ui:51
 msgid "Stereotypes"
-msgstr ""
+msgstr "Stereotypy"
 
 #: gaphor/UML/classes/propertypages.ui:149
 #: gaphor/UML/classes/propertypages.ui:261
@@ -1173,7 +1174,7 @@ msgstr ""
 #: gaphor/UML/classes/propertypages.ui:285
 #: gaphor/UML/classes/propertypages.ui:341
 msgid "Attributes"
-msgstr ""
+msgstr "Atrybuty"
 
 #: gaphor/UML/classes/propertypages.ui:314
 msgid ""
@@ -1209,16 +1210,16 @@ msgstr "Ponów"
 #: gaphor/UML/classes/propertypages.ui:352
 #: gaphor/UML/classes/propertypages.ui:642
 msgid "Static"
-msgstr ""
+msgstr "Statyczny"
 
 #: gaphor/UML/classes/propertypages.ui:376
 msgid "Show Attributes"
-msgstr ""
+msgstr "Pokaż Atrybuty"
 
 #: gaphor/UML/classes/propertypages.ui:400
 #: gaphor/UML/classes/propertypages.ui:637
 msgid "Abstract"
-msgstr ""
+msgstr "Wypis"
 
 #: gaphor/UML/classes/propertypages.ui:417
 #, fuzzy
@@ -1227,40 +1228,40 @@ msgstr "Połącz specyfikacje"
 
 #: gaphor/UML/classes/propertypages.ui:442
 msgid "Source:"
-msgstr ""
+msgstr "Źródło:"
 
 #: gaphor/UML/classes/propertypages.ui:466
 msgid "Target:"
-msgstr ""
+msgstr "Cel:"
 
 #: gaphor/UML/classes/propertypages.ui:502
 msgid "Dependency type"
-msgstr ""
+msgstr "Typ zależności"
 
 #: gaphor/UML/classes/propertypages.ui:513
 msgid "Automatic"
-msgstr ""
+msgstr "Automatyczny"
 
 #: gaphor/UML/classes/propertypages.ui:532
 msgid "Usage"
-msgstr ""
+msgstr "Urzycie"
 
 #: gaphor/UML/classes/propertypages.ui:533
 msgid "Realization"
-msgstr ""
+msgstr "Rozwiązanie"
 
 #: gaphor/UML/classes/propertypages.ui:534
 msgid "Implementation"
-msgstr ""
+msgstr "Wdrożenie"
 
 #: gaphor/UML/classes/propertypages.ui:553
 msgid "Folded"
-msgstr ""
+msgstr "Zawinięty"
 
 #: gaphor/UML/classes/propertypages.ui:577
 #: gaphor/UML/classes/propertypages.ui:631
 msgid "Operations"
-msgstr ""
+msgstr "Operacje"
 
 #: gaphor/UML/classes/propertypages.ui:604
 msgid ""
@@ -1286,12 +1287,12 @@ msgstr ""
 
 #: gaphor/UML/classes/propertypages.ui:666
 msgid "Show Operations"
-msgstr ""
+msgstr "Pokaż Operacje"
 
 #: gaphor/UML/classes/propertypages.ui:690
 #: gaphor/UML/classes/propertypages.ui:741
 msgid "Enumeration Literals"
-msgstr ""
+msgstr "literały wyliczeniowe"
 
 #: gaphor/UML/classes/propertypages.ui:714
 msgid ""
@@ -1306,19 +1307,19 @@ msgstr ""
 
 #: gaphor/UML/classes/propertypages.ui:766
 msgid "Show Enumeration Literals"
-msgstr ""
+msgstr "Pokaż Literały Wyliczeniowe"
 
 #: gaphor/UML/classes/propertypages.ui:791
 msgid "Indirectly Instantiated"
-msgstr ""
+msgstr "Pośrednio Wywołane"
 
 #: gaphor/UML/deployments/deploymentstoolbox.py:12
 msgid "Deployments"
-msgstr ""
+msgstr "Rozmieszczenie"
 
 #: gaphor/UML/deployments/node.py:47
 msgid "device"
-msgstr ""
+msgstr "urządzenie"
 
 #: gaphor/UML/general/generaltoolbox.py:21
 #: gaphor/UML/general/imagepropertypage.py:66
@@ -1328,35 +1329,35 @@ msgstr "Nowy tor"
 
 #: gaphor/UML/general/generaltoolbox.py:25 gaphor/ui/help/shortcuts.ui:14
 msgid "General"
-msgstr ""
+msgstr "Ogólne"
 
 #: gaphor/UML/general/generaltoolbox.py:29
 msgid "Pointer"
-msgstr ""
+msgstr "Wskaźnik"
 
 #: gaphor/UML/general/generaltoolbox.py:36
 msgid "Magnet"
-msgstr ""
+msgstr "Magnes"
 
 #: gaphor/UML/general/generaltoolbox.py:43
 msgid "Line"
-msgstr ""
+msgstr "Linia"
 
 #: gaphor/UML/general/generaltoolbox.py:50
 msgid "Box"
-msgstr ""
+msgstr "Pudełko"
 
 #: gaphor/UML/general/generaltoolbox.py:58
 msgid "Ellipse"
-msgstr ""
+msgstr "Elipsa"
 
 #: gaphor/UML/general/generaltoolbox.py:66 gaphor/diagram/propertypages.ui:9
 msgid "Comment"
-msgstr ""
+msgstr "Komentarz"
 
 #: gaphor/UML/general/generaltoolbox.py:74
 msgid "Comment line"
-msgstr ""
+msgstr "Linia komentarza"
 
 #: gaphor/UML/general/generaltoolbox.py:81
 msgid "Diagram metadata"
@@ -1364,11 +1365,11 @@ msgstr "Metadane diagramu"
 
 #: gaphor/UML/general/generaltoolbox.py:88
 msgid "Picture"
-msgstr ""
+msgstr "Obraz"
 
 #: gaphor/UML/general/imagepropertypage.py:43
 msgid "Select a picture..."
-msgstr ""
+msgstr "Wybierz obraz..."
 
 #: gaphor/UML/general/imagepropertypage.py:71
 #, fuzzy
@@ -1382,27 +1383,27 @@ msgstr ""
 #: gaphor/UML/interactions/interactionstoolbox.py:53
 #: gaphor/templates/uml-example.gaphor gaphor/templates/uml.gaphor
 msgid "Interactions"
-msgstr ""
+msgstr "Oddziaływania"
 
 #: gaphor/UML/interactions/interactionstoolbox.py:69
 msgid "Lifeline"
-msgstr ""
+msgstr "Linia sygnałowa"
 
 #: gaphor/UML/interactions/interactionstoolbox.py:81
 msgid "Execution Specification"
-msgstr ""
+msgstr "Specyfikacja Wykonania"
 
 #: gaphor/UML/interactions/interactionstoolbox.py:89
 msgid "Message"
-msgstr ""
+msgstr "Wiadomość"
 
 #: gaphor/UML/interactions/interactionstoolbox.py:96
 msgid "Reflexive message"
-msgstr ""
+msgstr "Wiadomość Zwrotna"
 
 #: gaphor/UML/interactions/propertypages.ui:9
 msgid "Message Sort"
-msgstr ""
+msgstr "Rodzaj Wiadomości"
 
 #: gaphor/UML/interactions/propertypages.ui:21
 #, fuzzy
@@ -1411,15 +1412,15 @@ msgstr "Anuluj"
 
 #: gaphor/UML/interactions/propertypages.ui:22
 msgid "Asynchronous"
-msgstr ""
+msgstr "Asynchroniczny"
 
 #: gaphor/UML/interactions/propertypages.ui:23
 msgid "Signal"
-msgstr ""
+msgstr "Sygnał"
 
 #: gaphor/UML/interactions/propertypages.ui:24
 msgid "Reply"
-msgstr ""
+msgstr "Powtórz"
 
 #: gaphor/UML/interactions/propertypages.ui:25
 #, fuzzy
@@ -1438,11 +1439,11 @@ msgstr "Zdarzenie warunkujące"
 
 #: gaphor/UML/profiles/packageimport.py:23
 msgid "import"
-msgstr ""
+msgstr "import"
 
 #: gaphor/UML/profiles/profilestoolbox.py:18
 msgid "Profiles"
-msgstr ""
+msgstr "Profile"
 
 #: gaphor/UML/profiles/profilestoolbox.py:34
 msgid "Metaclass"
@@ -1450,31 +1451,31 @@ msgstr ""
 
 #: gaphor/UML/profiles/profilestoolbox.py:56
 msgid "Extension"
-msgstr ""
+msgstr "Rozszerzenie"
 
 #: gaphor/UML/profiles/profilestoolbox.py:63
 msgid "Import"
-msgstr ""
+msgstr "Import"
 
 #: gaphor/UML/profiles/propertypages.ui:80
 msgid "Show Stereotypes"
-msgstr ""
+msgstr "Pokaż Stereotypy"
 
 #: gaphor/UML/profiles/stereotypepropertypages.py:172
 msgid "New Slot Value…"
-msgstr ""
+msgstr "Wartość Nowej Szczeliny…"
 
 #: gaphor/UML/states/propertypages.ui:9
 msgid "Activities"
-msgstr ""
+msgstr "Aktywności"
 
 #: gaphor/UML/states/propertypages.ui:18
 msgid "Entry"
-msgstr ""
+msgstr "Wpis"
 
 #: gaphor/UML/states/propertypages.ui:35
 msgid "Exit"
-msgstr ""
+msgstr "Wyjście"
 
 #: gaphor/UML/states/propertypages.ui:52
 #, fuzzy
@@ -1489,11 +1490,11 @@ msgstr "Łańcuch znaków"
 #: gaphor/UML/states/propertypages.ui:129
 #: gaphor/UML/states/propertypages.ui:140
 msgid "Regions"
-msgstr ""
+msgstr "Regiony"
 
 #: gaphor/UML/states/propertypages.ui:157
 msgid "Show Regions"
-msgstr ""
+msgstr "Pokaż Regiony"
 
 #: gaphor/UML/states/statemachine.py:41
 msgid "statemachine"
@@ -1501,15 +1502,15 @@ msgstr ""
 
 #: gaphor/UML/states/statestoolbox.py:16 gaphor/UML/states/statestoolbox.py:75
 msgid "State"
-msgstr ""
+msgstr "Stan"
 
 #: gaphor/UML/states/statestoolbox.py:59
 msgid "States"
-msgstr ""
+msgstr "Stany"
 
 #: gaphor/UML/states/statestoolbox.py:87
 msgid "Initial Pseudostate"
-msgstr ""
+msgstr "Początkowy Pseudostan"
 
 #: gaphor/UML/states/statestoolbox.py:99
 msgid "Final State"
@@ -1517,69 +1518,69 @@ msgstr "Stan końcowy"
 
 #: gaphor/UML/states/statestoolbox.py:111
 msgid "Transition"
-msgstr ""
+msgstr "Przejście"
 
 #: gaphor/UML/states/statestoolbox.py:118
 msgid "Shallow History Pseudostate"
-msgstr ""
+msgstr "Pokaż Historię Pseudostanów"
 
 #: gaphor/UML/states/statestoolbox.py:130
 msgid "Deep History Pseudostate"
-msgstr ""
+msgstr "Głęboka Historia Pseudostanów"
 
 #: gaphor/UML/states/statestoolbox.py:142
 msgid "Join Pseudostate"
-msgstr ""
+msgstr "Dołącz Pseudostan"
 
 #: gaphor/UML/states/statestoolbox.py:154
 msgid "Fork Pseudostate"
-msgstr ""
+msgstr "Rozwidlenie Pseudostanu"
 
 #: gaphor/UML/states/statestoolbox.py:166
 msgid "Junction Pseudostate"
-msgstr ""
+msgstr "Skrzyżowanie Pseudostanu"
 
 #: gaphor/UML/states/statestoolbox.py:178
 msgid "Choice Pseudostate"
-msgstr ""
+msgstr "Wybór Pseudostanu"
 
 #: gaphor/UML/states/statestoolbox.py:190
 msgid "Entry Point Pseudostate"
-msgstr ""
+msgstr "Punkt Wejściowy Pseudostanu"
 
 #: gaphor/UML/states/statestoolbox.py:202
 msgid "Exit Point Pseudostate"
-msgstr ""
+msgstr "Punkt Wyjścia Pseudostanu"
 
 #: gaphor/UML/states/statestoolbox.py:214
 msgid "Terminate Pseudostate"
-msgstr ""
+msgstr "Przerwij Pseudostan"
 
 #: gaphor/UML/usecases/extend.py:19
 msgid "extend"
-msgstr ""
+msgstr "rozszerz"
 
 #: gaphor/UML/usecases/include.py:19
 msgid "include"
-msgstr ""
+msgstr "włącz"
 
 #: gaphor/UML/usecases/usecasetoolbox.py:12
 #: gaphor/templates/sysml-example.gaphor gaphor/templates/sysml.gaphor
 #: gaphor/templates/uml-example.gaphor gaphor/templates/uml.gaphor
 msgid "Use Cases"
-msgstr ""
+msgstr "Przypadki Użycia"
 
 #: gaphor/UML/usecases/usecasetoolbox.py:16
 msgid "Use case"
-msgstr ""
+msgstr "Przypadek użycia"
 
 #: gaphor/UML/usecases/usecasetoolbox.py:47
 msgid "Include"
-msgstr ""
+msgstr "Włącz"
 
 #: gaphor/UML/usecases/usecasetoolbox.py:55
 msgid "Extend"
-msgstr ""
+msgstr "Rozszerz"
 
 #: gaphor/diagram/propertypages.py:319
 #, fuzzy
@@ -1608,15 +1609,15 @@ msgstr "Nazwa"
 
 #: gaphor/diagram/propertypages.ui:74
 msgid "Style"
-msgstr ""
+msgstr "Styl"
 
 #: gaphor/diagram/propertypages.ui:87
 msgid "Rectilinear"
-msgstr ""
+msgstr "Prostoliniowy"
 
 #: gaphor/diagram/propertypages.ui:107
 msgid "Flip orientation"
-msgstr ""
+msgstr "Odwróć orientacje"
 
 #: gaphor/diagram/propertypages.ui:130
 #, fuzzy
@@ -1625,19 +1626,19 @@ msgstr "NOT"
 
 #: gaphor/diagram/general/metadata.py:43 gaphor/diagram/propertypages.ui:156
 msgid "Created By"
-msgstr ""
+msgstr "Stowrzony przez"
 
 #: gaphor/diagram/general/metadata.py:53 gaphor/diagram/propertypages.ui:184
 msgid "Website"
-msgstr ""
+msgstr "Strona internetowa"
 
 #: gaphor/diagram/general/metadata.py:84 gaphor/diagram/propertypages.ui:198
 msgid "Revision"
-msgstr ""
+msgstr "Rewizja"
 
 #: gaphor/diagram/general/metadata.py:94 gaphor/diagram/propertypages.ui:212
 msgid "License"
-msgstr ""
+msgstr "Licencja"
 
 #: gaphor/diagram/general/metadata.py:105 gaphor/diagram/propertypages.ui:226
 msgid "Created On"
@@ -1645,15 +1646,15 @@ msgstr "Utworzono"
 
 #: gaphor/diagram/general/metadata.py:116 gaphor/diagram/propertypages.ui:240
 msgid "Updated On"
-msgstr ""
+msgstr "Zaktulizowany"
 
 #: gaphor/diagram/propertypages.ui:261
 msgid "Select picture..."
-msgstr ""
+msgstr "Wybierz obraz..."
 
 #: gaphor/diagram/propertypages.ui:267
 msgid "Set default size"
-msgstr ""
+msgstr "Wybierz domyślny rozmiar"
 
 #: gaphor/diagram/propertypages.ui:280
 #, fuzzy
@@ -1687,7 +1688,7 @@ msgstr "Zamknij"
 
 #: gaphor/diagram/styleeditor.ui:68
 msgid "Background Color"
-msgstr ""
+msgstr "Kolor tła"
 
 #: gaphor/diagram/styleeditor.ui:85
 #, fuzzy
@@ -1787,7 +1788,7 @@ msgstr "Eksportuj diagram jako SVG"
 
 #: gaphor/plugins/diagramexport/export.py:121
 msgid "Export all diagrams as SVG diagrams in a specifieddirectory"
-msgstr ""
+msgstr "Wyeksportuj wszystkie diagramy w formacie SVG do określonego fodleru"
 
 #: gaphor/plugins/diagramexport/export.py:127
 #: gaphor/plugins/diagramexport/export.py:147
@@ -1804,7 +1805,7 @@ msgstr "Eksportuj diagram jako PNG"
 
 #: gaphor/plugins/diagramexport/export.py:141
 msgid "Export all diagrams as PNG diagrams in a specifieddirectory"
-msgstr ""
+msgstr "Wyeksportuj wszystkie diagramy w formacie PNG do określonego fodleru"
 
 #: gaphor/plugins/diagramexport/export.py:160
 #, fuzzy
@@ -1813,7 +1814,7 @@ msgstr "Eksportuj diagram jako PDF"
 
 #: gaphor/plugins/diagramexport/export.py:161
 msgid "Export all diagrams as PDF diagrams in a specifieddirectory"
-msgstr ""
+msgstr "Wyeksportuj wszystkie diagramy w formacie PDF do określonego fodleru"
 
 #: gaphor/plugins/diagramexport/export.py:180
 #, fuzzy
@@ -1822,7 +1823,7 @@ msgstr "Eksportuj diagram jako EPS"
 
 #: gaphor/plugins/diagramexport/export.py:181
 msgid "Export all diagrams as EPS diagrams in a specifieddirectory"
-msgstr ""
+msgstr "Wyeksportuj wszystkie diagramy w formacie EPS do określonego fodleru"
 
 #: gaphor/plugins/errorreports/errorreports.py:60
 #: gaphor/plugins/errorreports/errorreports.ui:6
@@ -3444,4 +3445,3 @@ msgstr ""
 
 #~ msgid "New package"
 #~ msgstr "Nowy pakiet"
-
