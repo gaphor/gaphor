@@ -41,9 +41,7 @@ class HelpService(Service, ActionProvider):
         about = builder.get_object("about")
 
         about.set_version(distribution().version)
-        about.set_transient_for(self.window)
-        about.set_modal(True)
-        about.set_visible(True)
+        about.present(self.window)
 
     @action(name="app.shortcuts", shortcut="<Primary>question")
     def shortcuts(self):
