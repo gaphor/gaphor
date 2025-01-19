@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import logging
+import sys
 from collections.abc import Callable
 from pathlib import Path
 
@@ -218,6 +219,8 @@ class MainWindow(Service, ActionProvider):
         self._on_modeling_language_selection_changed()
         self.in_app_notifier = InAppNotifier(builder.get_object("main-overlay"))
 
+        platform_specific_window_decorations(builder)
+
         window.connect("close-request", self._on_window_close_request)
         window.connect("notify::default-height", self._on_window_size_changed)
         window.connect("notify::default-width", self._on_window_size_changed)
@@ -365,3 +368,27 @@ def track_paned_position(paned, name, properties):
         paned.set_position(position)
 
     paned.connect("notify::position", _paned_position_changed, name, properties)
+
+
+def platform_specific_window_decorations(builder: Gtk.Builder):
+    if sys.platform == "darwin":
+        # Reset custom decorations from previous versions
+        Gtk.Settings.get_default().reset_property("gtk-decoration-layout")
+        builder.get_object("sidebar-header").set_use_native_controls(True)
+        builder.get_object("sidebar-header").set_decoration_layout(
+            "close,minimize,maximize:"
+        )
+        builder.get_object("main-header").set_decoration_layout(":")
+    else:
+        decoration_layout = (
+            Gtk.Settings.get_default().get_property("gtk-decoration-layout") or ""
+        )
+        if ":" in decoration_layout:
+            left, right = decoration_layout.split(":", 2)
+            builder.get_object("sidebar-header").set_decoration_layout(left)
+            builder.get_object("main-header").set_decoration_layout(f":{right}")
+        else:
+            builder.get_object("sidebar-header").set_decoration_layout(
+                decoration_layout
+            )
+            builder.get_object("main-header").set_decoration_layout("")
