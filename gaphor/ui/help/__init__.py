@@ -53,10 +53,7 @@ class HelpService(Service, ActionProvider):
         builder.add_from_string(ui)
 
         shortcuts = builder.get_object("shortcuts-gaphor")
-        shortcuts.set_modal(True)
-        shortcuts.set_transient_for(self.window)
-
-        shortcuts.set_visible(True)
+        shortcuts.present(self.window)
         return shortcuts
 
     def _on_style_variant_selected(self, combo_row: Adw.ComboRow, param) -> None:
