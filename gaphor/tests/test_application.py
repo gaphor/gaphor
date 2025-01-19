@@ -18,13 +18,13 @@ def test_service_load(application):
 
     session = application.new_session()
 
-    assert (
-        session.get_service("undo_manager") is not None
-    ), "Failed to load the undo manager service"
+    assert session.get_service("undo_manager") is not None, (
+        "Failed to load the undo manager service"
+    )
 
-    assert (
-        session.get_service("file_manager") is not None
-    ), "Failed to load the file manager service"
+    assert session.get_service("file_manager") is not None, (
+        "Failed to load the file manager service"
+    )
 
 
 @pytest.mark.asyncio

@@ -1,5 +1,5 @@
-poetry==2.0.0
-poetry-plugin-export==1.8.0
+poetry==2.0.1
+poetry-plugin-export==1.9.0
 reuse==5.0.2
 Babel==2.16.0
 lastversion==3.5.7
