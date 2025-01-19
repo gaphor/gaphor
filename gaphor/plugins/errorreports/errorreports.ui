@@ -7,7 +7,7 @@
     <property name="default-width">600</property>
     <property name="default-height">400</property>
     <child type="titlebar">
-      <object class="GtkHeaderBar">
+      <object class="AdwHeaderBar">
         <property name="decoration-layout">:close</property>
       </object>
     </child>
