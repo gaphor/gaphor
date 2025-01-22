@@ -47,15 +47,15 @@ flowboxchild {
   font-weight: bold;
 }
 
-.greeter row {
-  padding: 6px 0 6px 6px;
-  min-width: 400px;
-}
-
 .greeter-selection {
   margin-top: 18px;
   margin-bottom: 12px;
   border-spacing: 12px;
+}
+
+.greeter-selection row {
+  padding: 6px 0 6px 6px;
+  min-width: 400px;
 }
 
 .greeter-selection > .title {

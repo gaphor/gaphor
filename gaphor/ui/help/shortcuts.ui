@@ -1,228 +1,253 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <object class="GtkShortcutsWindow" id="shortcuts-gaphor">
-    <property name="modal">1</property>
-
+  <object class="AdwDialog" id="shortcuts-gaphor">
+    <property name="title" translatable="yes">Shortcuts</property>
     <child>
-      <object class="GtkShortcutsSection">
-        <property name="section-name">shortcuts</property>
-        <property name="max-height">18</property>
-
-        <!-- General shortcuts -->
-        <child>
-          <object class="GtkShortcutsGroup">
-            <property name="title" translatable="yes">General</property>
-
-            <child>
-              <object class="GtkShortcutsShortcut">
-                <property name="accelerator">&lt;Primary&gt;comma</property>
-                <property name="title" translatable="yes">Preferences</property>
+      <object class="AdwToolbarView">
+        <child type="top">
+          <object class="AdwHeaderBar">
+            <property name="title-widget">
+              <object class="GtkLabel">
+                <property name="label" translatable="yes">Shortcuts</property>
+                <style>
+                  <class name="title"/>
+                </style>
               </object>
-            </child>
-
-            <child>
-              <object class="GtkShortcutsShortcut">
-                <property name="accelerator">&lt;Primary&gt;q</property>
-                <property name="title" translatable="yes">Quit Gaphor</property>
-              </object>
-            </child>
-
+            </property>
           </object>
         </child>
 
-        <!-- File shortcuts -->
-        <child>
-          <object class="GtkShortcutsGroup">
-            <property name="title" translatable="yes">Model</property>
-
+        <property name="content">
+          <object class="GtkScrolledWindow">
+            <!-- <property name="hscrollbar-policy">never</property> -->
+            <property name="propagate-natural-height">1</property>
+            <property name="propagate-natural-width">1</property>
             <child>
-              <object class="GtkShortcutsShortcut">
-                <property name="accelerator">F2</property>
-                <property name="title" translatable="yes">Rename</property>
-              </object>
-            </child>
 
-            <child>
-              <object class="GtkShortcutsShortcut">
-                <property name="accelerator">&lt;Primary&gt;f</property>
-                <property name="title" translatable="yes">Search</property>
-              </object>
-            </child>
+              <object class="GtkShortcutsSection">
+                <property name="section-name">shortcuts</property>
+                <property name="max-height">18</property>
 
-            <child>
-              <object class="GtkShortcutsShortcut">
-                <property name="accelerator">F9</property>
-                <property name="title" translatable="yes">Toggle Property Editor</property>
-              </object>
-            </child>
+                <!-- General shortcuts -->
+                <child>
+                  <object class="GtkShortcutsGroup">
+                    <property name="title" translatable="yes">General</property>
 
-            <child>
-              <object class="GtkShortcutsShortcut">
-                <property name="accelerator">&lt;Primary&gt;semicolon</property>
-                <property name="title" translatable="yes">Toggle Model Preferences</property>
-              </object>
-            </child>
+                    <child>
+                      <object class="GtkShortcutsShortcut">
+                        <property name="accelerator">&lt;Primary&gt;comma</property>
+                        <property name="title" translatable="yes">Preferences</property>
+                      </object>
+                    </child>
 
-            <child>
-              <object class="GtkShortcutsShortcut">
-                <property name="accelerator">&lt;Primary&gt;w</property>
-                <property name="title" translatable="yes">Close Diagram</property>
-              </object>
-            </child>
+                    <child>
+                      <object class="GtkShortcutsShortcut">
+                        <property name="accelerator">&lt;Primary&gt;q</property>
+                        <property name="title" translatable="yes">Quit Gaphor</property>
+                      </object>
+                    </child>
 
-            <child>
-              <object class="GtkShortcutsShortcut">
-                <property name="accelerator">F11</property>
-                <property name="title" translatable="yes">Toggle Fullscreen</property>
-              </object>
-            </child>
+                  </object>
+                </child>
 
+                <!-- File shortcuts -->
+                <child>
+                  <object class="GtkShortcutsGroup">
+                    <property name="title" translatable="yes">Model</property>
+
+                    <child>
+                      <object class="GtkShortcutsShortcut">
+                        <property name="accelerator">F2</property>
+                        <property name="title" translatable="yes">Rename</property>
+                      </object>
+                    </child>
+
+                    <child>
+                      <object class="GtkShortcutsShortcut">
+                        <property name="accelerator">&lt;Primary&gt;f</property>
+                        <property name="title" translatable="yes">Search</property>
+                      </object>
+                    </child>
+
+                    <child>
+                      <object class="GtkShortcutsShortcut">
+                        <property name="accelerator">F9</property>
+                        <property name="title" translatable="yes">Toggle Property Editor</property>
+                      </object>
+                    </child>
+
+                    <child>
+                      <object class="GtkShortcutsShortcut">
+                        <property name="accelerator">&lt;Primary&gt;semicolon</property>
+                        <property name="title" translatable="yes">Toggle Model Preferences</property>
+                      </object>
+                    </child>
+
+                    <child>
+                      <object class="GtkShortcutsShortcut">
+                        <property name="accelerator">&lt;Primary&gt;w</property>
+                        <property name="title" translatable="yes">Close Diagram</property>
+                      </object>
+                    </child>
+
+                    <child>
+                      <object class="GtkShortcutsShortcut">
+                        <property name="accelerator">F11</property>
+                        <property name="title" translatable="yes">Toggle Fullscreen</property>
+                      </object>
+                    </child>
+
+                  </object>
+                </child>
+
+                <!-- Undo shortcuts -->
+                <child>
+                  <object class="GtkShortcutsGroup">
+                    <property name="title" translatable="yes">Undo and Redo</property>
+
+                    <child>
+                      <object class="GtkShortcutsShortcut">
+                        <property name="accelerator">&lt;Primary&gt;z</property>
+                        <property name="title" translatable="yes">Undo</property>
+                      </object>
+                    </child>
+
+                    <child>
+                      <object class="GtkShortcutsShortcut">
+                        <property name="accelerator">&lt;Primary&gt;&lt;Shift&gt;z</property>
+                        <property name="title" translatable="yes">Redo</property>
+                      </object>
+                    </child>
+
+                  </object>
+                </child>
+
+                <!-- Selections shortcuts -->
+                <child>
+                  <object class="GtkShortcutsGroup">
+                    <property name="title" translatable="yes">Selections</property>
+
+                    <child>
+                      <object class="GtkShortcutsShortcut">
+                        <property name="accelerator">&lt;Primary&gt;a</property>
+                        <property name="title" translatable="yes">Select All</property>
+                      </object>
+                    </child>
+
+                    <child>
+                      <object class="GtkShortcutsShortcut">
+                        <property name="accelerator">&lt;Primary&gt;&lt;Shift&gt;a</property>
+                        <property name="title" translatable="yes">Deselect All</property>
+                      </object>
+                    </child>
+
+                  </object>
+                </child>
+
+                <!-- Copy shortcuts -->
+                <child>
+                  <object class="GtkShortcutsGroup">
+                    <property name="title" translatable="yes">Copy and Paste</property>
+
+                    <child>
+                      <object class="GtkShortcutsShortcut">
+                        <property name="accelerator">&lt;Primary&gt;c</property>
+                        <property name="title" translatable="yes">Copy</property>
+                      </object>
+                    </child>
+
+                    <child>
+                      <object class="GtkShortcutsShortcut">
+                        <property name="accelerator">&lt;Primary&gt;x</property>
+                        <property name="title" translatable="yes">Cut</property>
+                      </object>
+                    </child>
+
+                    <child>
+                      <object class="GtkShortcutsShortcut">
+                        <property name="accelerator">&lt;Primary&gt;v</property>
+                        <property name="title" translatable="yes">Paste (link defining elements)</property>
+                      </object>
+                    </child>
+
+                    <child>
+                      <object class="GtkShortcutsShortcut">
+                        <property name="accelerator">&lt;Primary&gt;&lt;Shift&gt;v</property>
+                        <property name="title" translatable="yes">Paste (copy defining elements)</property>
+                      </object>
+                    </child>
+
+                  </object>
+                </child>
+
+                <!-- Zoom shortcuts -->
+                <child>
+                  <object class="GtkShortcutsGroup">
+                    <property name="title" translatable="yes">Zoom</property>
+
+                    <child>
+                      <object class="GtkShortcutsShortcut">
+                        <property name="accelerator">&lt;Primary&gt;equal</property>
+                        <property name="title" translatable="yes">Zoom In</property>
+                      </object>
+                    </child>
+
+                    <child>
+                      <object class="GtkShortcutsShortcut">
+                        <property name="accelerator">&lt;Primary&gt;minus</property>
+                        <property name="title" translatable="yes">Zoom Out</property>
+                      </object>
+                    </child>
+
+                    <child>
+                      <object class="GtkShortcutsShortcut">
+                        <property name="accelerator">&lt;Primary&gt;0</property>
+                        <property name="title" translatable="yes">Reset Zoom</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+
+                <!-- File shortcuts -->
+                <child>
+                  <object class="GtkShortcutsGroup">
+                    <property name="title" translatable="yes">Files</property>
+
+                    <child>
+                      <object class="GtkShortcutsShortcut">
+                        <property name="accelerator">&lt;Primary&gt;n</property>
+                        <property name="title" translatable="yes">New Model…</property>
+                      </object>
+                    </child>
+
+                    <child>
+                      <object class="GtkShortcutsShortcut">
+                        <property name="accelerator">&lt;Primary&gt;o</property>
+                        <property name="title" translatable="yes">Open a Model…</property>
+                      </object>
+                    </child>
+
+                    <child>
+                      <object class="GtkShortcutsShortcut">
+                        <property name="accelerator">&lt;Primary&gt;s</property>
+                        <property name="title" translatable="yes">Save</property>
+                      </object>
+                    </child>
+
+                    <child>
+                      <object class="GtkShortcutsShortcut">
+                        <property name="accelerator">&lt;Primary&gt;&lt;Shift&gt;s</property>
+                        <property name="title" translatable="yes">Save As…</property>
+                      </object>
+                    </child>
+
+                  </object>
+                </child>
+              </object>
+
+            </child>
           </object>
-        </child>
-
-        <!-- Undo shortcuts -->
-        <child>
-          <object class="GtkShortcutsGroup">
-            <property name="title" translatable="yes">Undo and Redo</property>
-
-            <child>
-              <object class="GtkShortcutsShortcut">
-                <property name="accelerator">&lt;Primary&gt;z</property>
-                <property name="title" translatable="yes">Undo</property>
-              </object>
-            </child>
-
-            <child>
-              <object class="GtkShortcutsShortcut">
-                <property name="accelerator">&lt;Primary&gt;&lt;Shift&gt;z</property>
-                <property name="title" translatable="yes">Redo</property>
-              </object>
-            </child>
-
-          </object>
-        </child>
-
-        <!-- Selections shortcuts -->
-        <child>
-          <object class="GtkShortcutsGroup">
-            <property name="title" translatable="yes">Selections</property>
-
-            <child>
-              <object class="GtkShortcutsShortcut">
-                <property name="accelerator">&lt;Primary&gt;a</property>
-                <property name="title" translatable="yes">Select All</property>
-              </object>
-            </child>
-
-            <child>
-              <object class="GtkShortcutsShortcut">
-                <property name="accelerator">&lt;Primary&gt;&lt;Shift&gt;a</property>
-                <property name="title" translatable="yes">Deselect All</property>
-              </object>
-            </child>
-
-          </object>
-        </child>
-
-        <!-- Copy shortcuts -->
-        <child>
-          <object class="GtkShortcutsGroup">
-            <property name="title" translatable="yes">Copy and Paste</property>
-
-            <child>
-              <object class="GtkShortcutsShortcut">
-                <property name="accelerator">&lt;Primary&gt;c</property>
-                <property name="title" translatable="yes">Copy</property>
-              </object>
-            </child>
-
-            <child>
-              <object class="GtkShortcutsShortcut">
-                <property name="accelerator">&lt;Primary&gt;x</property>
-                <property name="title" translatable="yes">Cut</property>
-              </object>
-            </child>
-
-            <child>
-              <object class="GtkShortcutsShortcut">
-                <property name="accelerator">&lt;Primary&gt;v</property>
-                <property name="title" translatable="yes">Paste (link defining elements)</property>
-              </object>
-            </child>
-
-            <child>
-              <object class="GtkShortcutsShortcut">
-                <property name="accelerator">&lt;Primary&gt;&lt;Shift&gt;v</property>
-                <property name="title" translatable="yes">Paste (copy defining elements)</property>
-              </object>
-            </child>
-
-          </object>
-        </child>
-
-        <!-- Zoom shortcuts -->
-        <child>
-          <object class="GtkShortcutsGroup">
-            <property name="title" translatable="yes">Zoom</property>
-
-            <child>
-              <object class="GtkShortcutsShortcut">
-                <property name="accelerator">&lt;Primary&gt;equal</property>
-                <property name="title" translatable="yes">Zoom In</property>
-              </object>
-            </child>
-
-            <child>
-              <object class="GtkShortcutsShortcut">
-                <property name="accelerator">&lt;Primary&gt;minus</property>
-                <property name="title" translatable="yes">Zoom Out</property>
-              </object>
-            </child>
-
-            <child>
-              <object class="GtkShortcutsShortcut">
-                <property name="accelerator">&lt;Primary&gt;0</property>
-                <property name="title" translatable="yes">Reset Zoom</property>
-              </object>
-            </child>
-          </object>
-        </child>
-
-        <!-- File shortcuts -->
-        <child>
-          <object class="GtkShortcutsGroup">
-            <property name="title" translatable="yes">Files</property>
-
-            <child>
-              <object class="GtkShortcutsShortcut">
-                <property name="accelerator">&lt;Primary&gt;n</property>
-                <property name="title" translatable="yes">New Model…</property>
-              </object>
-            </child>
-
-            <child>
-              <object class="GtkShortcutsShortcut">
-                <property name="accelerator">&lt;Primary&gt;o</property>
-                <property name="title" translatable="yes">Open a Model…</property>
-              </object>
-            </child>
-
-            <child>
-              <object class="GtkShortcutsShortcut">
-                <property name="accelerator">&lt;Primary&gt;s</property>
-                <property name="title" translatable="yes">Save</property>
-              </object>
-            </child>
-
-            <child>
-              <object class="GtkShortcutsShortcut">
-                <property name="accelerator">&lt;Primary&gt;&lt;Shift&gt;s</property>
-                <property name="title" translatable="yes">Save As…</property>
-              </object>
-            </child>
-
-          </object>
-        </child>
+        </property>
 
       </object>
     </child>

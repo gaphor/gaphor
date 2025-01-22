@@ -2,8 +2,7 @@
 <interface>
   <requires lib="gtk" version="4.0"/>
   <requires lib="adw" version="1.2"/>
-  <object class="AdwAboutWindow" id="about">
-    <property name="modal">true</property>
+  <object class="AdwAboutDialog" id="about">
     <property name="application-name">Gaphor</property>
     <property name="application-icon">org.gaphor.Gaphor</property>
     <property name="developer-name">Arjan Molenaar and Dan Yeaw</property>
