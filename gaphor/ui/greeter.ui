@@ -31,7 +31,7 @@
 
   <object class="AdwApplicationWindow" id="greeter">
     <property name="width-request">800</property>
-    <property name="height-request">600</property>
+    <property name="height-request">728</property>
     <property name="content">
       <object class="AdwToolbarView">
         <child type="top">
