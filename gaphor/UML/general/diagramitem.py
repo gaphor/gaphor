@@ -32,7 +32,7 @@ class DiagramItem(ElementPresentation, Named):
             text_name(self),
         )
 
-        self.watch("subject[Core:Diagram].name")
+        self.watch("subject[UML:Diagram].name")
         self.watch("subject[Core:Diagram].diagramType")
         self.watch("subject[UML:Element].appliedStereotype.classifier.name")
 
