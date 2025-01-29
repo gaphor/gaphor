@@ -3,18 +3,19 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version:  0.6.0\n"
+"Project-Id-Version: 0.6.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2024-12-30 13:50-0500\n"
-"PO-Revision-Date: 2024-12-06 15:00+0000\n"
-"Last-Translator: Arjan Molenaar <gaphor@gmail.com>\n"
+"PO-Revision-Date: 2025-01-30 23:58+0000\n"
+"Last-Translator: Philip Goto <philip.goto@gmail.com>\n"
+"Language-Team: Dutch <https://hosted.weblate.org/projects/gaphor/gaphor/nl/>"
+"\n"
 "Language: nl\n"
-"Language-Team: Dutch "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/nl/>\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Weblate 5.10-dev\n"
 "Generated-By: Babel 2.16.0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:28 gaphor/C4Model/toolbox.py:57
@@ -106,9 +107,8 @@ msgstr "Staatmachinediagram"
 
 #: gaphor/C4Model/toolbox.py:146 gaphor/RAAML/toolbox.py:32
 #: gaphor/SysML/toolbox.py:178 gaphor/UML/toolbox.py:44
-#, fuzzy
 msgid "Generic Diagram"
-msgstr "Nieuw algemeen diagram"
+msgstr "Algemeen diagram"
 
 #: gaphor/C4Model/toolbox.py:150 gaphor/RAAML/toolbox.py:36
 #: gaphor/SysML/blocks/blockstoolbox.py:51 gaphor/SysML/toolbox.py:182
@@ -1208,7 +1208,7 @@ msgstr "Finale Specificatie"
 
 #: gaphor/UML/classes/propertypages.ui:442
 msgid "Source:"
-msgstr ""
+msgstr "Bron:"
 
 #: gaphor/UML/classes/propertypages.ui:466
 msgid "Target:"
@@ -1911,7 +1911,7 @@ msgstr "Single-page-applicatie"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Mobile App"
-msgstr ""
+msgstr "Mobiele app"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Visit bigbank.com/lb using"
@@ -1930,9 +1930,8 @@ msgid "Reads from, writes to"
 msgstr ""
 
 #: gaphor/templates/c4model-example.gaphor
-#, fuzzy
 msgid "Delivers"
-msgstr "deriveReqt"
+msgstr "Levert"
 
 #: gaphor/templates/c4model-example.gaphor
 #, fuzzy
@@ -1962,9 +1961,8 @@ msgid "Mainframe Banking System Facade"
 msgstr ""
 
 #: gaphor/templates/c4model-example.gaphor
-#, fuzzy
 msgid "Uses"
-msgstr "gebruiken"
+msgstr "Gebruikt"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid ""
@@ -3121,9 +3119,8 @@ msgid "Change from System Language to English"
 msgstr "Van systeem­taal naar Engels wijzigen"
 
 #: gaphor/ui/help/preferences.ui:42
-#, fuzzy
 msgid "Editing"
-msgstr "Richting"
+msgstr "Bewerken"
 
 #: gaphor/ui/help/preferences.ui:45
 msgid "Reset Tool Automatically"
@@ -3148,9 +3145,8 @@ msgid "Quit Gaphor"
 msgstr "Gaphor sluiten"
 
 #: gaphor/ui/help/shortcuts.ui:36
-#, fuzzy
 msgid "Model"
-msgstr "C4-model"
+msgstr "Model"
 
 #: gaphor/ui/help/shortcuts.ui:41
 msgid "Rename"
@@ -3308,4 +3304,3 @@ msgstr "algemeen: {name}"
 
 #~ msgid "New package"
 #~ msgstr "Nieuw pakket"
-
