@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-12-30 13:59-0500\n"
+"POT-Creation-Date: 2025-01-29 12:18-0300\n"
 "PO-Revision-Date: 2024-12-19 18:12+0000\n"
 "Last-Translator: Tim <rc2225@ghueder-schrott.com>\n"
 "Language: de\n"
@@ -1342,7 +1342,7 @@ msgstr "Gerät"
 msgid "New Image"
 msgstr "Neue Swimlane"
 
-#: gaphor/UML/general/generaltoolbox.py:25 gaphor/ui/help/shortcuts.ui:14
+#: gaphor/UML/general/generaltoolbox.py:25 gaphor/ui/help/shortcuts.ui:34
 msgid "General"
 msgstr "Allgemein"
 
@@ -1797,34 +1797,34 @@ msgstr "Alle Diagramme als SVG exportieren"
 msgid "Export all diagrams as SVG diagrams in a specifieddirectory"
 msgstr ""
 
-#: gaphor/plugins/diagramexport/export.py:127
-#: gaphor/plugins/diagramexport/export.py:147
-#: gaphor/plugins/diagramexport/export.py:167
-#: gaphor/plugins/diagramexport/export.py:187
+#: gaphor/plugins/diagramexport/export.py:125
+#: gaphor/plugins/diagramexport/export.py:143
+#: gaphor/plugins/diagramexport/export.py:161
+#: gaphor/plugins/diagramexport/export.py:179
 msgid "Export all diagrams"
 msgstr "Alle Diagramme exportieren"
 
-#: gaphor/plugins/diagramexport/export.py:140
+#: gaphor/plugins/diagramexport/export.py:138
 msgid "Export all diagrams as PNG"
 msgstr "Alle Diagramme als PNG exportieren"
 
-#: gaphor/plugins/diagramexport/export.py:141
+#: gaphor/plugins/diagramexport/export.py:139
 msgid "Export all diagrams as PNG diagrams in a specifieddirectory"
 msgstr "Alle Diagramme als PNG exportieren"
 
-#: gaphor/plugins/diagramexport/export.py:160
+#: gaphor/plugins/diagramexport/export.py:156
 msgid "Export all diagrams as PDF"
 msgstr "Alle Diagramme als PDF exportieren"
 
-#: gaphor/plugins/diagramexport/export.py:161
+#: gaphor/plugins/diagramexport/export.py:157
 msgid "Export all diagrams as PDF diagrams in a specifieddirectory"
 msgstr "Alle Diagramme als PDF exportieren"
 
-#: gaphor/plugins/diagramexport/export.py:180
+#: gaphor/plugins/diagramexport/export.py:174
 msgid "Export all diagrams as EPS"
 msgstr "Alle Diagramme als EPS exportieren"
 
-#: gaphor/plugins/diagramexport/export.py:181
+#: gaphor/plugins/diagramexport/export.py:175
 msgid "Export all diagrams as EPS diagrams in a specifieddirectory"
 msgstr "Alle Diagramme als EPS exportieren"
 
@@ -1868,7 +1868,7 @@ msgstr ""
 "gespeicherte Änderungen gehen dauerhaft verloren."
 
 #: gaphor/templates/blank.gaphor gaphor/ui/mainwindow.py:273
-#: gaphor/ui/mainwindow.py:278 gaphor/ui/mainwindow.ui:124
+#: gaphor/ui/mainwindow.py:278 gaphor/ui/mainwindow.ui:125
 msgid "New model"
 msgstr "Neues Modell"
 
@@ -2597,23 +2597,23 @@ msgstr "Wechseln"
 msgid "Show in Model Browser"
 msgstr "Ziege im Modell Browser"
 
-#: gaphor/ui/diagrampage.ui:29 gaphor/ui/help/shortcuts.ui:91
+#: gaphor/ui/diagrampage.ui:29 gaphor/ui/help/shortcuts.ui:111
 msgid "Undo"
 msgstr "Rückgängig machen"
 
-#: gaphor/ui/diagrampage.ui:44 gaphor/ui/help/shortcuts.ui:98
+#: gaphor/ui/diagrampage.ui:44 gaphor/ui/help/shortcuts.ui:118
 msgid "Redo"
 msgstr "Wiederholen"
 
-#: gaphor/ui/diagrampage.ui:66 gaphor/ui/help/shortcuts.ui:178
+#: gaphor/ui/diagrampage.ui:66 gaphor/ui/help/shortcuts.ui:198
 msgid "Zoom Out"
 msgstr "Verkleinern"
 
-#: gaphor/ui/diagrampage.ui:81 gaphor/ui/help/shortcuts.ui:185
+#: gaphor/ui/diagrampage.ui:81 gaphor/ui/help/shortcuts.ui:205
 msgid "Reset Zoom"
 msgstr "Tatsächliche Größe"
 
-#: gaphor/ui/diagrampage.ui:96 gaphor/ui/help/shortcuts.ui:171
+#: gaphor/ui/diagrampage.ui:96 gaphor/ui/help/shortcuts.ui:191
 msgid "Zoom In"
 msgstr "Vergrößern"
 
@@ -2630,8 +2630,9 @@ msgstr "Links ausrichten"
 msgid "Align Right"
 msgstr "Rechts ausrichten"
 
-#: gaphor/ui/diagrampage.ui:142 gaphor/ui/diagrampage.ui:159
-msgid "Align Horizontal Center"
+#: gaphor/ui/diagrampage.ui:142
+#, fuzzy
+msgid "Align Vertical Center"
 msgstr "Horizontal mittig ausrichten"
 
 #: gaphor/ui/diagrampage.ui:149
@@ -2641,6 +2642,10 @@ msgstr "Oben ausrichten"
 #: gaphor/ui/diagrampage.ui:154
 msgid "Align Bottom"
 msgstr "Unten ausrichten"
+
+#: gaphor/ui/diagrampage.ui:159
+msgid "Align Horizontal Center"
+msgstr "Horizontal mittig ausrichten"
 
 #: gaphor/ui/diagrampage.ui:166
 msgid "Max Width"
@@ -2720,7 +2725,7 @@ msgid "Editors"
 msgstr "Editoren"
 
 #: gaphor/ui/elementeditor.ui:116 gaphor/ui/greeter.ui:14
-#: gaphor/ui/help/preferences.ui:6 gaphor/ui/help/shortcuts.ui:19
+#: gaphor/ui/help/preferences.ui:6 gaphor/ui/help/shortcuts.ui:39
 #: gaphor/ui/mainwindow.py:61
 msgid "Preferences"
 msgstr "Einstellungen"
@@ -2941,7 +2946,7 @@ msgstr ""
 msgid "Discard"
 msgstr "Verwerfen"
 
-#: gaphor/ui/filemanager.py:416 gaphor/ui/help/shortcuts.ui:213
+#: gaphor/ui/filemanager.py:416 gaphor/ui/help/shortcuts.ui:233
 #: gaphor/ui/mainwindow.py:51
 msgid "Save"
 msgstr "Speichern"
@@ -3002,7 +3007,7 @@ msgstr "C4-Model-Beispiel"
 msgid "C4 Model example of a banking system"
 msgstr ""
 
-#: gaphor/ui/greeter.ui:8 gaphor/ui/greeter.ui:53 gaphor/ui/mainwindow.py:47
+#: gaphor/ui/greeter.ui:8 gaphor/ui/greeter.ui:55 gaphor/ui/mainwindow.py:47
 msgid "Open Model…"
 msgstr "Modell öffnen…"
 
@@ -3010,24 +3015,23 @@ msgstr "Modell öffnen…"
 msgid "Keyboard Shortcuts"
 msgstr "Tastenkürzel"
 
-#: gaphor/ui/greeter.ui:22 gaphor/ui/help/about.ui:10
-#: gaphor/ui/mainwindow.py:63
+#: gaphor/ui/greeter.ui:22 gaphor/ui/help/about.ui:9 gaphor/ui/mainwindow.py:63
 msgid "About Gaphor"
 msgstr "Über Gaphor"
 
-#: gaphor/ui/greeter.ui:84
+#: gaphor/ui/greeter.ui:86
 msgid "Recently Opened"
 msgstr "Kürzlich eröffnet"
 
-#: gaphor/ui/greeter.ui:101
+#: gaphor/ui/greeter.ui:103
 msgid "Create New Model"
 msgstr "Neues Modell erstellen"
 
-#: gaphor/ui/help/shortcuts.ui:199 gaphor/ui/mainwindow.py:46
+#: gaphor/ui/help/shortcuts.ui:219 gaphor/ui/mainwindow.py:46
 msgid "New Model…"
 msgstr "Neues Modell…"
 
-#: gaphor/ui/help/shortcuts.ui:220 gaphor/ui/mainwindow.py:52
+#: gaphor/ui/help/shortcuts.ui:240 gaphor/ui/mainwindow.py:52
 msgid "Save As…"
 msgstr "Speichern unter…"
 
@@ -3055,11 +3059,11 @@ msgstr "Anwendungsmenü öffnen"
 msgid "New diagram menu"
 msgstr "Neues Diagrammmenü"
 
-#: gaphor/ui/help/shortcuts.ui:62 gaphor/ui/mainwindow.ui:137
+#: gaphor/ui/help/shortcuts.ui:82 gaphor/ui/mainwindow.ui:138
 msgid "Toggle Model Preferences"
 msgstr "Modelleinstellungen umschalten"
 
-#: gaphor/ui/help/shortcuts.ui:55 gaphor/ui/mainwindow.ui:152
+#: gaphor/ui/help/shortcuts.ui:75 gaphor/ui/mainwindow.ui:153
 msgid "Toggle Property Editor"
 msgstr "Eigenschaften-Editor umschalten"
 
@@ -3103,11 +3107,11 @@ msgstr "Modell auf Festplatte geändert"
 msgid "Discard Changes and Reload"
 msgstr "Änderungen verwerfen und neu laden"
 
-#: gaphor/ui/help/__init__.py:78
+#: gaphor/ui/help/__init__.py:73
 msgid "Restart Gaphor to enable language changes"
 msgstr "Starte Gaphor neu, um Sprachänderungen zu aktivieren"
 
-#: gaphor/ui/help/about.ui:13
+#: gaphor/ui/help/about.ui:12
 msgid ""
 "Copyright © 2001 The Gaphor Development Team.\n"
 "\n"
@@ -3121,7 +3125,7 @@ msgstr ""
 "Handelsmarken der Object Management Group, Inc. in den Vereinigten "
 "Staaten und/oder anderen Ländern."
 
-#: gaphor/ui/help/about.ui:21
+#: gaphor/ui/help/about.ui:20
 msgid ""
 "Licensed under the Apache License, Version 2.0 (the \"License\"); you may"
 " not use this application except in compliance with the License. You may "
@@ -3195,75 +3199,80 @@ msgstr ""
 "Entfernen Sie automatisch Elemente die in keinem Diagramm mehr verwendet "
 "werden."
 
-#: gaphor/ui/help/shortcuts.ui:26
+#: gaphor/ui/help/shortcuts.ui:4 gaphor/ui/help/shortcuts.ui:11
+#, fuzzy
+msgid "Shortcuts"
+msgstr "Tastenkürzel"
+
+#: gaphor/ui/help/shortcuts.ui:46
 msgid "Quit Gaphor"
 msgstr "Gaphor beenden"
 
-#: gaphor/ui/help/shortcuts.ui:36
+#: gaphor/ui/help/shortcuts.ui:56
 msgid "Model"
 msgstr "Modell"
 
-#: gaphor/ui/help/shortcuts.ui:41
+#: gaphor/ui/help/shortcuts.ui:61
 msgid "Rename"
 msgstr "Umbenennen"
 
-#: gaphor/ui/help/shortcuts.ui:48
+#: gaphor/ui/help/shortcuts.ui:68
 msgid "Search"
 msgstr "Suchen"
 
-#: gaphor/ui/help/shortcuts.ui:69
+#: gaphor/ui/help/shortcuts.ui:89
 msgid "Close Diagram"
 msgstr "Diagramm schließen"
 
-#: gaphor/ui/help/shortcuts.ui:76
+#: gaphor/ui/help/shortcuts.ui:96
 msgid "Toggle Fullscreen"
 msgstr "Vollbildmodus umschalten"
 
-#: gaphor/ui/help/shortcuts.ui:86
+#: gaphor/ui/help/shortcuts.ui:106
 msgid "Undo and Redo"
 msgstr "Rückgängig und Wiederholen"
 
-#: gaphor/ui/help/shortcuts.ui:108
+#: gaphor/ui/help/shortcuts.ui:128
 msgid "Selections"
 msgstr "Auswahl"
 
-#: gaphor/ui/help/shortcuts.ui:113
+#: gaphor/ui/help/shortcuts.ui:133
 msgid "Select All"
 msgstr "Alles auswählen"
 
-#: gaphor/ui/help/shortcuts.ui:120
+#: gaphor/ui/help/shortcuts.ui:140
 msgid "Deselect All"
 msgstr "Alles abwählen"
 
-#: gaphor/ui/help/shortcuts.ui:130
+#: gaphor/ui/help/shortcuts.ui:150
 msgid "Copy and Paste"
 msgstr "Kopieren und Einfügen"
 
-#: gaphor/ui/help/shortcuts.ui:135
+#: gaphor/ui/help/shortcuts.ui:155
 msgid "Copy"
 msgstr "Kopieren"
 
-#: gaphor/ui/help/shortcuts.ui:142
+#: gaphor/ui/help/shortcuts.ui:162
 msgid "Cut"
 msgstr "Ausschneiden"
 
-#: gaphor/ui/help/shortcuts.ui:149
+#: gaphor/ui/help/shortcuts.ui:169
 msgid "Paste (link defining elements)"
 msgstr "Einfügen (verknüpfe definierende Elemente)"
 
-#: gaphor/ui/help/shortcuts.ui:156
+#: gaphor/ui/help/shortcuts.ui:176
 msgid "Paste (copy defining elements)"
 msgstr "Einfügen (kopiere definierende Elemente)"
 
-#: gaphor/ui/help/shortcuts.ui:166
+#: gaphor/ui/help/shortcuts.ui:186
 msgid "Zoom"
 msgstr "Zoom"
 
-#: gaphor/ui/help/shortcuts.ui:194
+#: gaphor/ui/help/shortcuts.ui:214
 msgid "Files"
 msgstr "Dateien"
 
-#: gaphor/ui/help/shortcuts.ui:206
+#: gaphor/ui/help/shortcuts.ui:226
 msgid "Open a Model…"
 msgstr "Ein Modell öffnen…"
 
