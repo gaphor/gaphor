@@ -3153,12 +3153,8 @@ msgstr "Sneltoetsen"
 msgid "Quit Gaphor"
 msgstr "Gaphor sluiten"
 
-<<<<<<< HEAD
 #: gaphor/ui/help/shortcuts.ui:56
 #, fuzzy
-=======
-#: gaphor/ui/help/shortcuts.ui:36
->>>>>>> 3b2efbca8 (Update Dutch translation for Gaphor)
 msgid "Model"
 msgstr "Model"
 
