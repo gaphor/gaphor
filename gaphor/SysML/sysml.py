@@ -4,6 +4,8 @@
 
 from __future__ import annotations
 
+from decimal import Decimal as UnlimitedNatural
+
 from gaphor.core.modeling.properties import (
     association,
     attribute as _attribute,
@@ -77,7 +79,7 @@ class TestCase(Behavior):
 
 
 class Block(_Class):
-    isEncapsulated: _attribute[int] = _attribute("isEncapsulated", int, default=False)
+    isEncapsulated: _attribute[bool] = _attribute("isEncapsulated", bool, default=False)
 
 
 from gaphor.UML.uml import Property
@@ -279,8 +281,8 @@ class Refine(Dependency, DirectedRelationshipPropertyPath):
 
 
 class Tagged(Property):
-    nonunique: _attribute[int] = _attribute("nonunique", int)
-    ordered: _attribute[int] = _attribute("ordered", int)
+    nonunique: _attribute[bool] = _attribute("nonunique", bool)
+    ordered: _attribute[bool] = _attribute("ordered", bool)
     subsets: _attribute[str] = _attribute("subsets", str)
 
 

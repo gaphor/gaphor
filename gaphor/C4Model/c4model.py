@@ -4,6 +4,8 @@
 
 from __future__ import annotations
 
+from decimal import Decimal as UnlimitedNatural
+
 from gaphor.core.modeling.properties import (
     association,
     attribute as _attribute,

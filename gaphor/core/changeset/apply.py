@@ -1,5 +1,6 @@
 from functools import singledispatch
 
+from gaphor.core.modeling import recipes
 from gaphor.core.modeling.coremodel import (
     ElementChange,
     RefChange,
@@ -48,7 +49,8 @@ def _(change: ValueChange, element_factory):
     element = element_factory.lookup(change.element_id)
     return bool(
         element
-        and getattr(element, change.property_name, None) != change.property_value
+        and getattr(element, change.property_name, None)
+        != recipes.get_value_change_property_value(change)
     )
 
 
@@ -57,7 +59,7 @@ def _(change: ValueChange, element_factory, modeling_factory):
     if change.applied:
         return
     element = element_factory[change.element_id]
-    element.load(change.property_name, change.property_value)
+    element.load(change.property_name, recipes.get_value_change_property_value(change))
     element.postload()
     change.applied = True
 

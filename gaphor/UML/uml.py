@@ -4,6 +4,8 @@
 
 from __future__ import annotations
 
+from decimal import Decimal as UnlimitedNatural
+
 from gaphor.core.modeling.properties import (
     association,
     attribute as _attribute,
@@ -58,7 +60,7 @@ class InstanceSpecification(DeployedArtifact, DeploymentTarget, PackageableEleme
     classifier: relation_many[Classifier]
     extended: relation_many[Element]
     slot: relation_many[Slot]
-    specification: _attribute[str] = _attribute("specification", str)
+    specification: relation_one[ValueSpecification]
 
 
 class EnumerationLiteral(InstanceSpecification):
@@ -81,7 +83,7 @@ class PackageMerge(DirectedRelationship):
 
 
 class RedefinableElement(NamedElement):
-    isLeaf: _attribute[int] = _attribute("isLeaf", int, default=True)
+    isLeaf: _attribute[bool] = _attribute("isLeaf", bool, default=True)
     redefinedElement: relation_many[RedefinableElement]
     redefinitionContext: relation_many[Classifier]
     visibility = _enumeration("visibility", ("public", "private", "package", "protected"), "public")
@@ -108,8 +110,8 @@ class Classifier(Namespace, RedefinableElement, Type):
     generalization: relation_many[Generalization]
     inheritedMember: derivedunion[NamedElement]
     instanceSpecification: relation_many[InstanceSpecification]
-    isAbstract: _attribute[int] = _attribute("isAbstract", int, default=False)
-    isFinalSpecialization: _attribute[int] = _attribute("isFinalSpecialization", int, default=False)
+    isAbstract: _attribute[bool] = _attribute("isAbstract", bool, default=False)
+    isFinalSpecialization: _attribute[bool] = _attribute("isFinalSpecialization", bool, default=False)
     nestingClass: relation_one[Class]
     ownedUseCase: relation_many[UseCase]
     redefinedClassifier: relation_many[Classifier]
@@ -119,19 +121,21 @@ class Classifier(Namespace, RedefinableElement, Type):
 
 class Association(Classifier, Relationship):
     endType: derived[Type]
-    isDerived: _attribute[int] = _attribute("isDerived", int, default=False)
+    isDerived: _attribute[bool] = _attribute("isDerived", bool, default=False)
     memberEnd: relation_many[Property]
     navigableOwnedEnd: relation_many[Property]
     ownedEnd: relation_many[Property]
 
 
 class Extension(Association):
-    isRequired: _attribute[int] = _attribute("isRequired", int)
+    isRequired: _attribute[bool] = _attribute("isRequired", bool)
     metaclass: property
     ownedEnd: relation_one[ExtensionEnd]  # type: ignore[assignment]
 
 
 class BehavioredClassifier(Classifier):
+    behavior: relation_many[Behavior]
+    classifierBehavior: relation_one[Behavior]
     interfaceRealization: relation_many[InterfaceRealization]
     ownedBehavior: relation_many[Behavior]
 
@@ -159,20 +163,45 @@ class MergeNode(ControlNode):
 
 class Feature(RedefinableElement):
     featuringClassifier: relation_many[Classifier]
-    isStatic: _attribute[int] = _attribute("isStatic", int, default=False)
+    isStatic: _attribute[bool] = _attribute("isStatic", bool, default=False)
 
 
 class ActivityEdge(RedefinableElement):
     activity: relation_one[Activity]
-    guard: _attribute[str] = _attribute("guard", str)
+    guard: relation_one[ValueSpecification]
     inGroup: relation_many[ActivityGroup]
     redefinedElement: relation_many[ActivityEdge]  # type: ignore[assignment]
     source: relation_one[ActivityNode]
     target: relation_one[ActivityNode]
+    weight: relation_one[ValueSpecification]
 
 
 class ObjectFlow(ActivityEdge):
     pass
+
+
+class TypedElement(PackageableElement):
+    type: relation_one[Type]
+    typeValue: _attribute[str] = _attribute("typeValue", str)
+
+
+class ValueSpecification(TypedElement):
+    activityEdge: relation_one[ActivityEdge]
+    changeEvent: relation_one[ChangeEvent]
+    joinNode: relation_one[JoinNode]
+    lifeline: relation_one[Lifeline]
+    objectNode: relation_one[ObjectNode]
+    owningConstraint: relation_one[Constraint]
+    owningLower: relation_one[MultiplicityElement]
+    owningParameter: relation_one[Parameter]
+    owningProperty: relation_one[Property]
+    owningSlot: relation_one[Slot]
+    owningUpper: relation_one[MultiplicityElement]
+    valueSpecificationAction: relation_one[ValueSpecificationAction]
+
+
+class LiteralSpecification(ValueSpecification):
+    value: _attribute[str] = _attribute("value", str)
 
 
 class FinalNode(ControlNode):
@@ -200,34 +229,27 @@ class Realization(Abstraction):
     pass
 
 
-class TypedElement(NamedElement):
-    type: relation_one[Type]
-    typeValue: _attribute[str] = _attribute("typeValue", str)
-
-
 class ObjectNode(ActivityNode, TypedElement):
-    isControlType: _attribute[int] = _attribute("isControlType", int, default=False)
+    isControlType: _attribute[bool] = _attribute("isControlType", bool, default=False)
     ordering = _enumeration("ordering", ("unordered", "ordered", "LIFO", "FIFO"), "unordered")
     selection: relation_one[Behavior]
-    upperBound: _attribute[str] = _attribute("upperBound", str)
+    upperBound: relation_one[ValueSpecification]
 
 
 class MultiplicityElement(Element):
-    isOrdered: _attribute[int] = _attribute("isOrdered", int, default=True)
-    isUnique: _attribute[int] = _attribute("isUnique", int, default=True)
-    lower: _attribute[str]
-    lowerValue: _attribute[str] = _attribute("lowerValue", str)
-    upper: _attribute[str]
-    upperValue: _attribute[str] = _attribute("upperValue", str)
+    isOrdered: _attribute[bool] = _attribute("isOrdered", bool, default=False)
+    isUnique: _attribute[bool] = _attribute("isUnique", bool, default=True)
+    lowerValue: relation_one[ValueSpecification]
+    upperValue: relation_one[ValueSpecification]
 
 
 class Pin(MultiplicityElement, ObjectNode):
-    isControl: _attribute[int] = _attribute("isControl", int, default=False)
+    isControl: _attribute[bool] = _attribute("isControl", bool, default=False)
 
 
 class Generalization(DirectedRelationship):
     general: relation_one[Classifier]
-    isSubstitutable: _attribute[int] = _attribute("isSubstitutable", int)
+    isSubstitutable: _attribute[bool] = _attribute("isSubstitutable", bool)
     specific: relation_one[Classifier]
 
 
@@ -244,7 +266,7 @@ class EncapsulatedClassifier(StructuredClassifier):
 
 class Class(BehavioredClassifier, EncapsulatedClassifier):
     extension: property
-    isActive: _attribute[int] = _attribute("isActive", int, default=False)
+    isActive: _attribute[bool] = _attribute("isActive", bool, default=False)
     nestedClassifier: relation_many[Classifier]
     ownedAttribute: relation_many[Property]  # type: ignore[assignment]
     ownedOperation: relation_many[Operation]
@@ -261,7 +283,7 @@ class Device(Node):
 
 
 class StructuralFeature(Feature, MultiplicityElement, TypedElement):
-    isReadOnly: _attribute[int] = _attribute("isReadOnly", int, default=False)
+    isReadOnly: _attribute[bool] = _attribute("isReadOnly", bool, default=False)
     slot: relation_many[Slot]
 
 
@@ -270,6 +292,10 @@ class UseCase(BehavioredClassifier):
     extensionPoint: relation_many[ExtensionPoint]
     include: relation_many[Include]
     subject: relation_many[Classifier]
+
+
+class LiteralNull(LiteralSpecification):
+    pass
 
 
 class InputPin(Pin):
@@ -281,7 +307,7 @@ class Manifestation(Abstraction):
 
 
 class Component(Class):
-    isIndirectlyInstantiated: _attribute[int] = _attribute("isIndirectlyInstantiated", int, default=True)
+    isIndirectlyInstantiated: _attribute[bool] = _attribute("isIndirectlyInstantiated", bool, default=True)
     packagedElement: relation_many[PackageableElement]
     provided: property
     realization: relation_many[ComponentRealization]
@@ -294,6 +320,7 @@ class ConnectableElement(TypedElement):
 
 
 class Interface(Classifier, ConnectableElement):
+    interfaceRealization: relation_many[InterfaceRealization]
     nestedClassifier: relation_many[Classifier]
     ownedAttribute: relation_many[Property]
     ownedOperation: relation_many[Operation]
@@ -303,6 +330,10 @@ class Interface(Classifier, ConnectableElement):
 class Include(DirectedRelationship, NamedElement):
     addition: relation_one[UseCase]
     includingCase: relation_one[UseCase]
+
+
+class LiteralInteger(LiteralSpecification):
+    value: _attribute[int] = _attribute("value", int)
 
 
 class ProfileApplication(DirectedRelationship):
@@ -328,19 +359,22 @@ class Property(ConnectableElement, StructuralFeature):
     aggregation = _enumeration("aggregation", ("none", "shared", "composite"), "none")
     artifact: relation_one[Artifact]
     association: relation_one[Association]
+    association2: relation_one[Association]
     class_: relation_one[Class]
     classifier: relation_one[Classifier]
     datatype: relation_one[DataType]
-    defaultValue: _attribute[str] = _attribute("defaultValue", str)
+    defaultValue: relation_one[ValueSpecification]
     interface_: relation_one[Interface]
     isComposite: derived[bool]
-    isDerived: _attribute[int] = _attribute("isDerived", int, default=False)
-    isDerivedUnion: _attribute[int] = _attribute("isDerivedUnion", int, default=False)
-    isReadOnly: _attribute[int] = _attribute("isReadOnly", int, default=False)
+    isDerived: _attribute[bool] = _attribute("isDerived", bool, default=False)
+    isDerivedUnion: _attribute[bool] = _attribute("isDerivedUnion", bool, default=False)
+    isID: _attribute[bool] = _attribute("isID", bool, default=False)
+    isReadOnly: _attribute[bool] = _attribute("isReadOnly", bool, default=False)
     navigability: derived[bool | None]
-    opposite: relation_one[Property | None]
+    opposite: relation_one[Property]
     owningAssociation: relation_one[Association]
     redefinedProperty: relation_many[Property]
+    structuredClassifier: relation_one[StructuredClassifier]
     subsettedProperty: relation_many[Property]
 
 
@@ -360,7 +394,7 @@ class Enumeration(DataType):
 class Slot(Element):
     definingFeature: relation_one[StructuralFeature]
     owningInstance: relation_one[InstanceSpecification]
-    value: _attribute[str] = _attribute("value", str)
+    value: relation_one[ValueSpecification]
 
 
 class ExecutableNode(ActivityNode):
@@ -384,6 +418,10 @@ class Artifact(Classifier, DeployedArtifact):
     ownedOperation: relation_many[Operation]
 
 
+class LiteralUnlimitedNatural(LiteralSpecification):
+    value: _attribute[UnlimitedNatural] = _attribute("value", UnlimitedNatural)
+
+
 class ActivityParameterNode(ObjectNode):
     parameter: relation_one[Parameter]
 
@@ -399,8 +437,8 @@ class DecisionNode(ControlNode):
 class Package(Namespace, PackageableElement):
     appliedProfile: relation_many[ProfileApplication]
     nestedPackage: relation_many[Package]
+    nestingPackage: relation_one[Package]
     ownedType: relation_many[Type]
-    package: relation_one[Package]
     packageMerge: relation_many[PackageMerge]
     packagedElement: relation_many[PackageableElement]
 
@@ -413,7 +451,11 @@ class Profile(Package):
 class Behavior(Class):
     action_transition: relation_one[Transition]
     behavioredClassifier: relation_one[BehavioredClassifier]
-    isReentrant: _attribute[int] = _attribute("isReentrant", int)
+    behavioredClassifier_: relation_one[BehavioredClassifier]
+    context: relation_one[BehavioredClassifier]
+    isReentrant: _attribute[bool] = _attribute("isReentrant", bool)
+    ownedParameter: relation_many[Parameter]
+    ownedParameterSet: relation_many[ParameterSet]
     redefinedBehavior: relation_many[Behavior]
     trigger_transition: relation_one[Transition]
 
@@ -426,22 +468,27 @@ class Activity(Behavior):
     node: relation_many[ActivityNode]
 
 
+class LiteralBoolean(LiteralSpecification):
+    value: _attribute[bool] = _attribute("value", bool)
+
+
 class InterfaceRealization(Realization):
-    contract: relation_many[Interface]
+    contract: relation_one[Interface]
     implementingClassifier: relation_one[BehavioredClassifier]
 
 
 class Parameter(ConnectableElement, MultiplicityElement):
-    defaultValue: _attribute[str] = _attribute("defaultValue", str)
+    activityParameterNode: relation_many[ActivityParameterNode]
+    behavior: relation_one[Behavior]
+    defaultValue: relation_one[ValueSpecification]
     direction = _enumeration("direction", ("inout", "in", "out", "return"), "inout")
     operation: relation_one[Operation]
     ownerFormalParam: relation_one[BehavioralFeature]
-    owningNode: relation_one[ActivityParameterNode]
     parameterSet: relation_many[ParameterSet]
 
 
 class BehavioralFeature(Feature, Namespace):
-    isAbstract: _attribute[int] = _attribute("isAbstract", int)
+    isAbstract: _attribute[bool] = _attribute("isAbstract", bool)
     method: relation_many[Behavior]
     ownedParameter: relation_many[Parameter]
     ownedParameterSet: relation_one[ParameterSet]
@@ -454,7 +501,7 @@ class Operation(BehavioralFeature):
     class_: relation_one[Class]
     datatype: relation_one[DataType]
     interface_: relation_one[Interface]
-    isQuery: _attribute[int] = _attribute("isQuery", int, default=False)
+    isQuery: _attribute[bool] = _attribute("isQuery", bool, default=False)
     ownedParameter: relation_many[Parameter]  # type: ignore[assignment]
     postcondition: relation_many[Constraint]
     precondition: relation_many[Constraint]
@@ -467,12 +514,16 @@ class ControlFlow(ActivityEdge):
     pass
 
 
+class LiteralString(LiteralSpecification):
+    value: _attribute[str] = _attribute("value", str)
+
+
 class OutputPin(Pin):
     opaqueAction: relation_one[Action]
 
 
 class ValuePin(InputPin):
-    value_: _attribute[str] = _attribute("value_", str)
+    value_: relation_one[ValueSpecification]
 
 
 class Action(ExecutableNode):
@@ -505,9 +556,10 @@ class ActivityGroup(NamedElement):
 
 class Constraint(PackageableElement):
     constrainedElement: relation_many[Element]
+    context: relation_one[Namespace]
     owningState: relation_one[State]
     parameterSet: relation_one[ParameterSet]
-    specification: _attribute[str] = _attribute("specification", str)
+    specification: relation_one[ValueSpecification]
     stateInvariant: relation_one[StateInvariant]
     transition: relation_one[Transition]
 
@@ -540,13 +592,13 @@ class Lifeline(NamedElement):
     coveredBy: relation_many[InteractionFragment]
     interaction: relation_one[Interaction]
     represents: relation_one[ConnectableElement]
-    selector: _attribute[str] = _attribute("selector", str)
+    selector: relation_one[ValueSpecification]
     parse: Callable[[Lifeline, str], None]
     render: Callable[[Lifeline], str]
 
 
 class Message(NamedElement):
-    argument: _attribute[str] = _attribute("argument", str)
+    argument: relation_one[ValueSpecification]
     interaction: relation_one[Interaction]
     messageEnd: relation_many[MessageEnd]
     messageKind: property
@@ -591,8 +643,8 @@ class FlowFinalNode(FinalNode):
 
 
 class JoinNode(ControlNode):
-    isCombineDuplicate: _attribute[int] = _attribute("isCombineDuplicate", int, default=True)
-    joinSpec: _attribute[str] = _attribute("joinSpec", str)
+    isCombineDuplicate: _attribute[bool] = _attribute("isCombineDuplicate", bool, default=True)
+    joinSpec: relation_one[ValueSpecification]
 
 
 class ForkNode(ControlNode):
@@ -653,8 +705,8 @@ class FinalState(State):
 
 class Port(Property):
     encapsulatedClassifier: relation_one[EncapsulatedClassifier]
-    isBehavior: _attribute[int] = _attribute("isBehavior", int)
-    isService: _attribute[int] = _attribute("isService", int)
+    isBehavior: _attribute[bool] = _attribute("isBehavior", bool)
+    isService: _attribute[bool] = _attribute("isService", bool)
 
 
 class Deployment(Dependency):
@@ -663,8 +715,8 @@ class Deployment(Dependency):
 
 
 class ActivityPartition(ActivityGroup):
-    isDimension: _attribute[int] = _attribute("isDimension", int, default=False)
-    isExternal: _attribute[int] = _attribute("isExternal", int, default=False)
+    isDimension: _attribute[bool] = _attribute("isDimension", bool, default=False)
+    isExternal: _attribute[bool] = _attribute("isExternal", bool, default=False)
     node: relation_many[ActivityNode]
     represents: relation_one[Element]
     subpartition: relation_many[ActivityPartition]
@@ -675,7 +727,7 @@ class MessageOccurrenceSpecification(MessageEnd, OccurrenceSpecification):
 
 
 class AcceptEventAction(Action):
-    isUnmarshall: _attribute[int] = _attribute("isUnmarshall", int, default=False)
+    isUnmarshall: _attribute[bool] = _attribute("isUnmarshall", bool, default=False)
     result: relation_many[OutputPin]
 
 
@@ -734,7 +786,7 @@ class BehaviorExecutionSpecification(ExecutionSpecification):
 
 
 class ChangeEvent(Event):
-    changeExpression: _attribute[str] = _attribute("changeExpression", str)
+    changeExpression: relation_one[ValueSpecification]
 
 
 class StructuralFeatureAction(Action):
@@ -746,10 +798,11 @@ class WriteStructuralFeatureAction(StructuralFeatureAction):
 
 
 class AddStructuralFeatureValueAction(WriteStructuralFeatureAction):
-    isReplaceAll: _attribute[int] = _attribute("isReplaceAll", int, default=False)
+    isReplaceAll: _attribute[bool] = _attribute("isReplaceAll", bool, default=False)
 
 
 class ParameterSet(NamedElement):
+    behavior: relation_one[Behavior]
     behavioralFeature: relation_one[BehavioralFeature]
     condition: relation_many[Constraint]
     parameter: relation_many[Parameter]
@@ -785,7 +838,7 @@ class OpaqueAction(Action):
 
 
 class CallAction(InvocationAction):
-    isSynchronous: _attribute[int] = _attribute("isSynchronous", int, default=True)
+    isSynchronous: _attribute[bool] = _attribute("isSynchronous", bool, default=True)
     result: relation_many[OutputPin]
 
 
@@ -795,7 +848,7 @@ class CallBehaviorAction(CallAction):
 
 class ValueSpecificationAction(Action):
     result: relation_one[OutputPin]
-    value: _attribute[str] = _attribute("value", str)
+    value: relation_one[ValueSpecification]
 
 
 class Comment(Element):
@@ -808,10 +861,19 @@ class Diagram(NamedElement, _Diagram):
     element: relation_one[Element]
 
 
-# 77: override Lifeline.parse: Callable[[Lifeline, str], None]
+class OpaqueBehavior(Behavior):
+    body: _attribute[str] = _attribute("body", str)
+    language: _attribute[str] = _attribute("language", str)
+
+
+class FunctionalBehavior(OpaqueBehavior):
+    pass
+
+
+# 65: override Lifeline.parse: Callable[[Lifeline, str], None]
 # defined in umloverrides.py
 
-# 80: override Lifeline.render: Callable[[Lifeline], str]
+# 68: override Lifeline.render: Callable[[Lifeline], str]
 # defined in umloverrides.py
 
 
@@ -840,9 +902,11 @@ DeploymentTarget.deployment = association("deployment", Deployment, composite=Tr
 Element.ownedElement.add(DeploymentTarget.deployment)  # type: ignore[attr-defined]
 NamedElement.clientDependency.add(DeploymentTarget.deployment)  # type: ignore[attr-defined]
 InstanceSpecification.slot = association("slot", Slot, composite=True, opposite="owningInstance")
+InstanceSpecification.specification = association("specification", ValueSpecification, upper=1, composite=True)
 InstanceSpecification.classifier = association("classifier", Classifier, opposite="instanceSpecification")
 InstanceSpecification.extended = association("extended", Element, opposite="appliedStereotype")
 Element.ownedElement.add(InstanceSpecification.slot)  # type: ignore[attr-defined]
+Element.ownedElement.add(InstanceSpecification.specification)  # type: ignore[attr-defined]
 EnumerationLiteral.enumeration = association("enumeration", Enumeration, upper=1, opposite="ownedLiteral")
 NamedElement.namespace.add(EnumerationLiteral.enumeration)  # type: ignore[attr-defined]
 Relationship.abstraction = association("abstraction", InformationFlow, composite=True, opposite="realization")
@@ -858,12 +922,12 @@ Element.owner.add(PackageMerge.mergingPackage)  # type: ignore[attr-defined]
 DirectedRelationship.target.add(PackageMerge.mergedPackage)  # type: ignore[attr-defined]
 RedefinableElement.redefinedElement = derivedunion("redefinedElement", RedefinableElement)
 RedefinableElement.redefinitionContext = derivedunion("redefinitionContext", Classifier)
-# 59: override Namespace.importedMember: derivedunion[PackageableElement]
+# 53: override Namespace.importedMember: derivedunion[PackageableElement]
 Namespace.importedMember = derivedunion('importedMember', PackageableElement, 0, '*')
 
 Namespace.elementImport = association("elementImport", ElementImport, composite=True, opposite="importingNamespace")
 Namespace.packageImport = association("packageImport", PackageImport, composite=True, opposite="importingNamespace")
-Namespace.ownedRule = association("ownedRule", Constraint, composite=True)
+Namespace.ownedRule = association("ownedRule", Constraint, composite=True, opposite="context")
 Namespace.member = derivedunion("member", NamedElement)
 Namespace.ownedMember = derivedunion("ownedMember", NamedElement)
 Element.ownedElement.add(Namespace.elementImport)  # type: ignore[attr-defined]
@@ -873,22 +937,23 @@ Namespace.member.add(Namespace.ownedMember)  # type: ignore[attr-defined]
 Element.ownedElement.add(Namespace.ownedMember)  # type: ignore[attr-defined]
 Type.package = association("package", Package, upper=1, opposite="ownedType")
 PackageableElement.owningPackage.add(Type.package)  # type: ignore[attr-defined]
+Classifier.componentRealization = association("componentRealization", ComponentRealization, opposite="realizingClassifier")
 Classifier.generalization = association("generalization", Generalization, composite=True, opposite="specific")
 Classifier.instanceSpecification = association("instanceSpecification", InstanceSpecification, composite=True, opposite="classifier")
 Classifier.ownedUseCase = association("ownedUseCase", UseCase, composite=True)
 Classifier.specialization = association("specialization", Generalization, opposite="general")
 Classifier.redefinedClassifier = association("redefinedClassifier", Classifier)
-# 50: override Classifier.inheritedMember: derivedunion[NamedElement]
+# 44: override Classifier.inheritedMember: derivedunion[NamedElement]
 Classifier.inheritedMember = derivedunion('inheritedMember', NamedElement, 0, '*')
 
 Classifier.attribute = derivedunion("attribute", Property)
-# 53: override Classifier.general(Generalization.general): derived[Classifier]
+# 47: override Classifier.general(Generalization.general): derived[Classifier]
 Classifier.general = derived('general', Classifier, 0, '*', lambda self: [g.general for g in self.generalization])
 
 Classifier.useCase = association("useCase", UseCase, opposite="subject")
 Classifier.nestingClass = association("nestingClass", Class, upper=1, opposite="nestedClassifier")
 Classifier.feature = derivedunion("feature", Feature)
-Classifier.componentRealization = redefine(Classifier, "componentRealization", ComponentRealization, NamedElement.clientDependency)
+NamedElement.clientDependency.add(Classifier.componentRealization)  # type: ignore[attr-defined]
 Element.ownedElement.add(Classifier.generalization)  # type: ignore[attr-defined]
 Namespace.ownedMember.add(Classifier.ownedUseCase)  # type: ignore[attr-defined]
 Element.relationship.add(Classifier.specialization)  # type: ignore[attr-defined]
@@ -897,7 +962,7 @@ Namespace.member.add(Classifier.inheritedMember)  # type: ignore[attr-defined]
 Classifier.feature.add(Classifier.attribute)  # type: ignore[attr-defined]
 NamedElement.namespace.add(Classifier.nestingClass)  # type: ignore[attr-defined]
 RedefinableElement.redefinitionContext.add(Classifier.nestingClass)  # type: ignore[attr-defined]
-# 27: override Association.endType(Association.memberEnd, Property.type): derived[Type]
+# 21: override Association.endType(Association.memberEnd, Property.type): derived[Type]
 
 # References the classifiers that are used as types of the ends of the
 # association.
@@ -907,18 +972,23 @@ Association.endType = derived('endType', Type, 0, '*', lambda self: [end.type fo
 
 Association.ownedEnd = association("ownedEnd", Property, composite=True, opposite="owningAssociation")
 Association.memberEnd = association("memberEnd", Property, lower=2, composite=True, opposite="association")
-Association.navigableOwnedEnd = association("navigableOwnedEnd", Property)
+Association.navigableOwnedEnd = association("navigableOwnedEnd", Property, opposite="association2")
 Classifier.feature.add(Association.ownedEnd)  # type: ignore[attr-defined]
+Association.memberEnd.add(Association.ownedEnd)  # type: ignore[attr-defined]
 Namespace.ownedMember.add(Association.ownedEnd)  # type: ignore[attr-defined]
 Namespace.member.add(Association.memberEnd)  # type: ignore[attr-defined]
 Association.ownedEnd.add(Association.navigableOwnedEnd)  # type: ignore[attr-defined]
-# 47: override Extension.metaclass(Extension.ownedEnd, Association.memberEnd): property
+# 41: override Extension.metaclass(Extension.ownedEnd, Association.memberEnd): property
 # defined in umloverrides.py
 
 Extension.ownedEnd = association("ownedEnd", ExtensionEnd, upper=1, composite=True)
+BehavioredClassifier.interfaceRealization = association("interfaceRealization", InterfaceRealization, composite=True, opposite="implementingClassifier")
 BehavioredClassifier.ownedBehavior = association("ownedBehavior", Behavior, composite=True, opposite="behavioredClassifier")
-BehavioredClassifier.interfaceRealization = redefine(BehavioredClassifier, "interfaceRealization", InterfaceRealization, NamedElement.clientDependency)
+BehavioredClassifier.classifierBehavior = association("classifierBehavior", Behavior, upper=1, opposite="behavioredClassifier_")
+BehavioredClassifier.behavior = association("behavior", Behavior, opposite="context")
+NamedElement.supplierDependency.add(BehavioredClassifier.interfaceRealization)  # type: ignore[attr-defined]
 Namespace.ownedMember.add(BehavioredClassifier.ownedBehavior)  # type: ignore[attr-defined]
+BehavioredClassifier.classifierBehavior.add(BehavioredClassifier.classifierBehavior)  # type: ignore[attr-defined]
 ActivityNode.incoming = association("incoming", ActivityEdge, opposite="target")
 ActivityNode.outgoing = association("outgoing", ActivityEdge, opposite="source")
 ActivityNode.inPartition = association("inPartition", ActivityPartition, opposite="node")
@@ -931,34 +1001,60 @@ Feature.featuringClassifier = derivedunion("featuringClassifier", Classifier, lo
 ActivityEdge.source = association("source", ActivityNode, upper=1, opposite="outgoing")
 ActivityEdge.activity = association("activity", Activity, upper=1, opposite="edge")
 ActivityEdge.target = association("target", ActivityNode, upper=1, opposite="incoming")
+ActivityEdge.guard = association("guard", ValueSpecification, upper=1, composite=True, opposite="activityEdge")
 ActivityEdge.inGroup = association("inGroup", ActivityGroup, opposite="edgeContents")
+ActivityEdge.weight = association("weight", ValueSpecification, upper=1, composite=True)
 ActivityEdge.redefinedElement = redefine(ActivityEdge, "redefinedElement", ActivityEdge, RedefinableElement.redefinedElement)
 Element.owner.add(ActivityEdge.activity)  # type: ignore[attr-defined]
+Element.ownedElement.add(ActivityEdge.guard)  # type: ignore[attr-defined]
+Element.ownedElement.add(ActivityEdge.weight)  # type: ignore[attr-defined]
+TypedElement.type = association("type", Type, upper=1)
+ValueSpecification.owningLower = association("owningLower", MultiplicityElement, upper=1, opposite="lowerValue")
+ValueSpecification.activityEdge = association("activityEdge", ActivityEdge, upper=1, opposite="guard")
+ValueSpecification.owningParameter = association("owningParameter", Parameter, upper=1, opposite="defaultValue")
+ValueSpecification.owningSlot = association("owningSlot", Slot, upper=1, opposite="value")
+ValueSpecification.owningUpper = association("owningUpper", MultiplicityElement, upper=1, opposite="upperValue")
+ValueSpecification.changeEvent = association("changeEvent", ChangeEvent, upper=1, opposite="changeExpression")
+ValueSpecification.lifeline = association("lifeline", Lifeline, upper=1, opposite="selector")
+ValueSpecification.owningProperty = association("owningProperty", Property, upper=1, opposite="defaultValue")
+ValueSpecification.joinNode = association("joinNode", JoinNode, upper=1, opposite="joinSpec")
+ValueSpecification.objectNode = association("objectNode", ObjectNode, upper=1, opposite="upperBound")
+ValueSpecification.owningConstraint = association("owningConstraint", Constraint, upper=1, opposite="specification")
+ValueSpecification.valueSpecificationAction = association("valueSpecificationAction", ValueSpecificationAction, upper=1, opposite="value")
+Element.owner.add(ValueSpecification.owningLower)  # type: ignore[attr-defined]
+Element.owner.add(ValueSpecification.activityEdge)  # type: ignore[attr-defined]
+Element.owner.add(ValueSpecification.owningParameter)  # type: ignore[attr-defined]
+Element.owner.add(ValueSpecification.owningSlot)  # type: ignore[attr-defined]
+Element.owner.add(ValueSpecification.owningUpper)  # type: ignore[attr-defined]
+Element.owner.add(ValueSpecification.owningProperty)  # type: ignore[attr-defined]
+Element.owner.add(ValueSpecification.joinNode)  # type: ignore[attr-defined]
+Element.owner.add(ValueSpecification.objectNode)  # type: ignore[attr-defined]
+Element.owner.add(ValueSpecification.owningConstraint)  # type: ignore[attr-defined]
+Element.owner.add(ValueSpecification.valueSpecificationAction)  # type: ignore[attr-defined]
 Dependency.client = association("client", NamedElement, lower=1, opposite="clientDependency")
 Dependency.supplier = association("supplier", NamedElement, lower=1, opposite="supplierDependency")
 DirectedRelationship.source.add(Dependency.client)  # type: ignore[attr-defined]
 DirectedRelationship.target.add(Dependency.supplier)  # type: ignore[attr-defined]
-TypedElement.type = association("type", Type, upper=1)
 ObjectNode.selection = association("selection", Behavior, upper=1)
-# 21: override MultiplicityElement.lower(MultiplicityElement.lowerValue): _attribute[str]
-MultiplicityElement.lower = MultiplicityElement.lowerValue
-
-# 24: override MultiplicityElement.upper(MultiplicityElement.upperValue): _attribute[str]
-MultiplicityElement.upper = MultiplicityElement.upperValue
-
+ObjectNode.upperBound = association("upperBound", ValueSpecification, upper=1, composite=True, opposite="objectNode")
+Element.ownedElement.add(ObjectNode.upperBound)  # type: ignore[attr-defined]
+MultiplicityElement.upperValue = association("upperValue", ValueSpecification, upper=1, composite=True, opposite="owningUpper")
+MultiplicityElement.lowerValue = association("lowerValue", ValueSpecification, upper=1, composite=True, opposite="owningLower")
+Element.ownedElement.add(MultiplicityElement.upperValue)  # type: ignore[attr-defined]
+Element.ownedElement.add(MultiplicityElement.lowerValue)  # type: ignore[attr-defined]
 Generalization.general = association("general", Classifier, upper=1, opposite="specialization")
 Generalization.specific = association("specific", Classifier, upper=1, opposite="generalization")
 Relationship.relatedElement.add(Generalization.general)  # type: ignore[attr-defined]
 DirectedRelationship.source.add(Generalization.specific)  # type: ignore[attr-defined]
 Element.owner.add(Generalization.specific)  # type: ignore[attr-defined]
 StructuredClassifier.role = derivedunion("role", ConnectableElement)
-# 92: override StructuredClassifier.part: property
+StructuredClassifier.ownedConnector = association("ownedConnector", Connector, composite=True, opposite="structuredClassifier")
+StructuredClassifier.ownedAttribute = association("ownedAttribute", Property, composite=True, opposite="structuredClassifier")
+# 80: override StructuredClassifier.part: property
 StructuredClassifier.part = property(lambda self: tuple(a for a in self.ownedAttribute if a.isComposite), doc="""
     Properties owned by a classifier by composition.
 """)
 
-StructuredClassifier.ownedConnector = association("ownedConnector", Connector, composite=True, opposite="structuredClassifier")
-StructuredClassifier.ownedAttribute = association("ownedAttribute", Property, composite=True)
 Namespace.member.add(StructuredClassifier.role)  # type: ignore[attr-defined]
 Namespace.ownedMember.add(StructuredClassifier.ownedConnector)  # type: ignore[attr-defined]
 Classifier.feature.add(StructuredClassifier.ownedConnector)  # type: ignore[attr-defined]
@@ -969,9 +1065,8 @@ EncapsulatedClassifier.ownedPort = association("ownedPort", Port, composite=True
 StructuredClassifier.role.add(EncapsulatedClassifier.ownedPort)  # type: ignore[attr-defined]
 Classifier.attribute.add(EncapsulatedClassifier.ownedPort)  # type: ignore[attr-defined]
 Namespace.ownedMember.add(EncapsulatedClassifier.ownedPort)  # type: ignore[attr-defined]
-Class.ownedAttribute = association("ownedAttribute", Property, composite=True, opposite="class_")
 Class.ownedOperation = association("ownedOperation", Operation, composite=True, opposite="class_")
-# 35: override Class.extension(Extension.metaclass): property
+# 29: override Class.extension(Extension.metaclass): property
 # See https://www.omg.org/spec/UML/2.5/PDF, section 11.8.3.6, page 219
 # It defines `Extension.allInstances()`, which basically means we have to query the element factory.
 
@@ -983,10 +1078,11 @@ Class.extension = property(lambda self: self.model.lselect(lambda e: e.isKindOf(
 metaclass. The property is derived from the extensions whose memberEnds
 are typed by the Class.""")
 
-# 56: override Class.superClass: derived[Classifier]
+# 50: override Class.superClass: derived[Classifier]
 Class.superClass = Classifier.general
 
 Class.nestedClassifier = association("nestedClassifier", Classifier, composite=True, opposite="nestingClass")
+Class.ownedAttribute = redefine(Class, "ownedAttribute", Property, StructuredClassifier.ownedAttribute, opposite="class_")
 Classifier.attribute.add(Class.ownedAttribute)  # type: ignore[attr-defined]
 Namespace.ownedMember.add(Class.ownedAttribute)  # type: ignore[attr-defined]
 Classifier.feature.add(Class.ownedOperation)  # type: ignore[attr-defined]
@@ -1011,27 +1107,32 @@ Element.owner.add(InputPin.opaqueAction)  # type: ignore[attr-defined]
 Manifestation.artifact = association("artifact", Artifact, upper=1, opposite="manifestation")
 Dependency.client.add(Manifestation.artifact)  # type: ignore[attr-defined]
 Element.owner.add(Manifestation.artifact)  # type: ignore[attr-defined]
-# 83: override Component.provided: property
+# 71: override Component.provided: property
 # defined in umloverrides.py
 
 Component.packagedElement = association("packagedElement", PackageableElement, composite=True, opposite="component")
-# 86: override Component.required: property
+Component.realization = association("realization", ComponentRealization, opposite="abstraction")
+# 74: override Component.required: property
 # defined in umloverrides.py
 
-Component.realization = redefine(Component, "realization", ComponentRealization, NamedElement.supplierDependency)
 Namespace.ownedMember.add(Component.packagedElement)  # type: ignore[attr-defined]
+Element.ownedElement.add(Component.realization)  # type: ignore[attr-defined]
+NamedElement.supplierDependency.add(Component.realization)  # type: ignore[attr-defined]
 ConnectableElement.end = association("end", ConnectorEnd, opposite="role")
 ConnectableElement.lifeline = association("lifeline", Lifeline, opposite="represents")
 Interface.ownedOperation = association("ownedOperation", Operation, composite=True, opposite="interface_")
 Interface.nestedClassifier = association("nestedClassifier", Classifier, composite=True)
 Interface.redefinedInterface = association("redefinedInterface", Interface)
 Interface.ownedAttribute = association("ownedAttribute", Property, composite=True, opposite="interface_")
+Interface.interfaceRealization = association("interfaceRealization", InterfaceRealization, opposite="contract")
 Classifier.feature.add(Interface.ownedOperation)  # type: ignore[attr-defined]
 Namespace.ownedMember.add(Interface.ownedOperation)  # type: ignore[attr-defined]
 Namespace.ownedMember.add(Interface.nestedClassifier)  # type: ignore[attr-defined]
 RedefinableElement.redefinedElement.add(Interface.redefinedInterface)  # type: ignore[attr-defined]
 Classifier.attribute.add(Interface.ownedAttribute)  # type: ignore[attr-defined]
 Namespace.ownedMember.add(Interface.ownedAttribute)  # type: ignore[attr-defined]
+Element.ownedElement.add(Interface.interfaceRealization)  # type: ignore[attr-defined]
+NamedElement.clientDependency.add(Interface.interfaceRealization)  # type: ignore[attr-defined]
 Include.addition = association("addition", UseCase, upper=1)
 Include.includingCase = association("includingCase", UseCase, upper=1, opposite="include")
 DirectedRelationship.target.add(Include.addition)  # type: ignore[attr-defined]
@@ -1045,38 +1146,43 @@ ElementImport.importedElement = association("importedElement", PackageableElemen
 DirectedRelationship.source.add(ElementImport.importingNamespace)  # type: ignore[attr-defined]
 Element.owner.add(ElementImport.importingNamespace)  # type: ignore[attr-defined]
 DirectedRelationship.target.add(ElementImport.importedElement)  # type: ignore[attr-defined]
-Property.redefinedProperty = association("redefinedProperty", Property)
 Property.interface_ = association("interface_", Interface, upper=1, opposite="ownedAttribute")
 Property.class_ = association("class_", Class, upper=1, opposite="ownedAttribute")
-Property.subsettedProperty = association("subsettedProperty", Property)
 Property.association = association("association", Association, upper=1, opposite="memberEnd")
 Property.owningAssociation = association("owningAssociation", Association, upper=1, opposite="ownedEnd")
 Property.classifier = derivedunion("classifier", Classifier, upper=1)
-# 65: override Property.isComposite(Property.aggregation): derived[bool]
+# 56: override Property.isComposite(Property.aggregation): derived[bool]
 Property.isComposite = derived('isComposite', bool, 0, 1, lambda obj: [obj.aggregation == 'composite'])
 
 Property.datatype = association("datatype", DataType, upper=1, opposite="ownedAttribute")
-# 62: override Property.opposite(Property.association, Association.memberEnd): relation_one[Property | None]
-# defined in umloverrides.py
-
-# 71: override Property.navigability(Property.opposite, Property.association): derived[bool | None]
-# defined in umloverrides.py
-
+Property.redefinedProperty = association("redefinedProperty", Property)
+Property.defaultValue = association("defaultValue", ValueSpecification, upper=1, composite=True, opposite="owningProperty")
+Property.subsettedProperty = association("subsettedProperty", Property)
+Property.opposite = derivedunion("opposite", Property, upper=1)
 Property.artifact = association("artifact", Artifact, upper=1, opposite="ownedAttribute")
-RedefinableElement.redefinedElement.add(Property.redefinedProperty)  # type: ignore[attr-defined]
+# 59: override Property.navigability(Property.opposite, Property.association): derived[bool | None]
+# defined in umloverrides.py
+
+Property.structuredClassifier = association("structuredClassifier", StructuredClassifier, upper=1, opposite="ownedAttribute")
+Property.association2 = association("association2", Association, upper=1, opposite="navigableOwnedEnd")
 Property.classifier.add(Property.interface_)  # type: ignore[attr-defined]
 NamedElement.namespace.add(Property.interface_)  # type: ignore[attr-defined]
 Property.classifier.add(Property.class_)  # type: ignore[attr-defined]
 NamedElement.namespace.add(Property.class_)  # type: ignore[attr-defined]
-Feature.featuringClassifier.add(Property.class_)  # type: ignore[attr-defined]
+Property.structuredClassifier.add(Property.class_)  # type: ignore[attr-defined]
 NamedElement.memberNamespace.add(Property.association)  # type: ignore[attr-defined]
 NamedElement.namespace.add(Property.owningAssociation)  # type: ignore[attr-defined]
 Feature.featuringClassifier.add(Property.owningAssociation)  # type: ignore[attr-defined]
+RedefinableElement.redefinitionContext.add(Property.owningAssociation)  # type: ignore[attr-defined]
 RedefinableElement.redefinitionContext.add(Property.classifier)  # type: ignore[attr-defined]
 NamedElement.namespace.add(Property.datatype)  # type: ignore[attr-defined]
 Property.classifier.add(Property.datatype)  # type: ignore[attr-defined]
+RedefinableElement.redefinedElement.add(Property.redefinedProperty)  # type: ignore[attr-defined]
+Element.ownedElement.add(Property.defaultValue)  # type: ignore[attr-defined]
 Property.classifier.add(Property.artifact)  # type: ignore[attr-defined]
 NamedElement.namespace.add(Property.artifact)  # type: ignore[attr-defined]
+Property.classifier.add(Property.structuredClassifier)  # type: ignore[attr-defined]
+NamedElement.namespace.add(Property.structuredClassifier)  # type: ignore[attr-defined]
 ExtensionEnd.type = redefine(ExtensionEnd, "type", Stereotype, Property.type)
 DataType.ownedOperation = association("ownedOperation", Operation, composite=True, opposite="datatype")
 DataType.ownedAttribute = association("ownedAttribute", Property, composite=True, opposite="datatype")
@@ -1087,8 +1193,10 @@ Namespace.ownedMember.add(DataType.ownedAttribute)  # type: ignore[attr-defined]
 Enumeration.ownedLiteral = association("ownedLiteral", EnumerationLiteral, composite=True, opposite="enumeration")
 Namespace.ownedMember.add(Enumeration.ownedLiteral)  # type: ignore[attr-defined]
 Slot.owningInstance = association("owningInstance", InstanceSpecification, upper=1, opposite="slot")
+Slot.value = association("value", ValueSpecification, upper=1, composite=True, opposite="owningSlot")
 Slot.definingFeature = association("definingFeature", StructuralFeature, upper=1, opposite="slot")
 Element.owner.add(Slot.owningInstance)  # type: ignore[attr-defined]
+Element.ownedElement.add(Slot.value)  # type: ignore[attr-defined]
 Stereotype.profile = derivedunion("profile", Profile, upper=1)
 Stereotype.icon = association("icon", Image, composite=True)
 Namespace.ownedMember.add(Stereotype.icon)  # type: ignore[attr-defined]
@@ -1105,20 +1213,19 @@ Classifier.attribute.add(Artifact.ownedAttribute)  # type: ignore[attr-defined]
 Namespace.ownedMember.add(Artifact.ownedAttribute)  # type: ignore[attr-defined]
 Classifier.feature.add(Artifact.ownedOperation)  # type: ignore[attr-defined]
 Namespace.ownedMember.add(Artifact.ownedOperation)  # type: ignore[attr-defined]
-ActivityParameterNode.parameter = association("parameter", Parameter, upper=1, composite=True, opposite="owningNode")
-Element.ownedElement.add(ActivityParameterNode.parameter)  # type: ignore[attr-defined]
+ActivityParameterNode.parameter = association("parameter", Parameter, upper=1, composite=True, opposite="activityParameterNode")
 DecisionNode.decisionInput = association("decisionInput", Behavior, upper=1)
 Package.packagedElement = association("packagedElement", PackageableElement, composite=True, opposite="owningPackage")
 Package.ownedType = association("ownedType", Type, composite=True, opposite="package")
 Package.packageMerge = association("packageMerge", PackageMerge, composite=True, opposite="mergingPackage")
 Package.appliedProfile = association("appliedProfile", ProfileApplication, composite=True)
-Package.package = association("package", Package, upper=1, opposite="nestedPackage")
-Package.nestedPackage = association("nestedPackage", Package, composite=True, opposite="package")
+Package.nestingPackage = association("nestingPackage", Package, upper=1, opposite="nestedPackage")
+Package.nestedPackage = association("nestedPackage", Package, composite=True, opposite="nestingPackage")
 Namespace.ownedMember.add(Package.packagedElement)  # type: ignore[attr-defined]
 Package.packagedElement.add(Package.ownedType)  # type: ignore[attr-defined]
 Element.ownedElement.add(Package.packageMerge)  # type: ignore[attr-defined]
 Element.ownedElement.add(Package.appliedProfile)  # type: ignore[attr-defined]
-PackageableElement.owningPackage.add(Package.package)  # type: ignore[attr-defined]
+PackageableElement.owningPackage.add(Package.nestingPackage)  # type: ignore[attr-defined]
 Package.packagedElement.add(Package.nestedPackage)  # type: ignore[attr-defined]
 Profile.metamodelReference = association("metamodelReference", PackageImport, composite=True)
 Profile.metaclassReference = association("metaclassReference", ElementImport, composite=True)
@@ -1128,30 +1235,44 @@ Behavior.redefinedBehavior = association("redefinedBehavior", Behavior)
 Behavior.behavioredClassifier = association("behavioredClassifier", BehavioredClassifier, upper=1, opposite="ownedBehavior")
 Behavior.action_transition = association("action_transition", Transition, upper=1, opposite="action")
 Behavior.trigger_transition = association("trigger_transition", Transition, upper=1, opposite="trigger")
+Behavior.ownedParameter = association("ownedParameter", Parameter, composite=True, opposite="behavior")
+Behavior.ownedParameterSet = association("ownedParameterSet", ParameterSet, composite=True, opposite="behavior")
+Behavior.behavioredClassifier_ = association("behavioredClassifier_", BehavioredClassifier, upper=1, opposite="classifierBehavior")
+Behavior.context = derivedunion("context", BehavioredClassifier, upper=1)
 RedefinableElement.redefinedElement.add(Behavior.redefinedBehavior)  # type: ignore[attr-defined]
 NamedElement.namespace.add(Behavior.behavioredClassifier)  # type: ignore[attr-defined]
 Element.owner.add(Behavior.action_transition)  # type: ignore[attr-defined]
 Element.owner.add(Behavior.trigger_transition)  # type: ignore[attr-defined]
+Namespace.ownedMember.add(Behavior.ownedParameter)  # type: ignore[attr-defined]
+Namespace.ownedMember.add(Behavior.ownedParameterSet)  # type: ignore[attr-defined]
+Behavior.behavioredClassifier.add(Behavior.behavioredClassifier_)  # type: ignore[attr-defined]
+RedefinableElement.redefinitionContext.add(Behavior.context)  # type: ignore[attr-defined]
 Activity.group = association("group", ActivityGroup, composite=True, opposite="activity")
 Activity.edge = association("edge", ActivityEdge, composite=True, opposite="activity")
 Activity.node = association("node", ActivityNode, composite=True, opposite="activity")
 Element.ownedElement.add(Activity.group)  # type: ignore[attr-defined]
 Element.ownedElement.add(Activity.edge)  # type: ignore[attr-defined]
 Element.ownedElement.add(Activity.node)  # type: ignore[attr-defined]
-InterfaceRealization.contract = redefine(InterfaceRealization, "contract", Interface, Dependency.supplier)
-InterfaceRealization.implementingClassifier = redefine(InterfaceRealization, "implementingClassifier", BehavioredClassifier, Dependency.client)
-Parameter.owningNode = association("owningNode", ActivityParameterNode, upper=1, opposite="parameter")
+InterfaceRealization.contract = association("contract", Interface, upper=1, opposite="interfaceRealization")
+InterfaceRealization.implementingClassifier = association("implementingClassifier", BehavioredClassifier, upper=1, opposite="interfaceRealization")
+Dependency.supplier.add(InterfaceRealization.contract)  # type: ignore[attr-defined]
+Dependency.client.add(InterfaceRealization.implementingClassifier)  # type: ignore[attr-defined]
+Element.owner.add(InterfaceRealization.implementingClassifier)  # type: ignore[attr-defined]
+Parameter.activityParameterNode = association("activityParameterNode", ActivityParameterNode, opposite="parameter")
+Parameter.defaultValue = association("defaultValue", ValueSpecification, upper=1, composite=True, opposite="owningParameter")
 Parameter.parameterSet = association("parameterSet", ParameterSet, opposite="parameter")
 Parameter.ownerFormalParam = association("ownerFormalParam", BehavioralFeature, upper=1, opposite="ownedParameter")
-Parameter.operation = redefine(Parameter, "operation", Operation, Parameter.ownerFormalParam)
-Element.owner.add(Parameter.owningNode)  # type: ignore[attr-defined]
+Parameter.behavior = association("behavior", Behavior, upper=1, opposite="ownedParameter")
+Parameter.operation = redefine(Parameter, "operation", Operation, Parameter.ownerFormalParam, opposite="ownedParameter")
+Element.ownedElement.add(Parameter.defaultValue)  # type: ignore[attr-defined]
 NamedElement.namespace.add(Parameter.ownerFormalParam)  # type: ignore[attr-defined]
+NamedElement.namespace.add(Parameter.behavior)  # type: ignore[attr-defined]
 BehavioralFeature.raisedException = association("raisedException", Type)
 BehavioralFeature.ownedParameter = association("ownedParameter", Parameter, composite=True, opposite="ownerFormalParam")
 BehavioralFeature.method = association("method", Behavior)
 BehavioralFeature.ownedParameterSet = association("ownedParameterSet", ParameterSet, upper=1, composite=True, opposite="behavioralFeature")
 Namespace.ownedMember.add(BehavioralFeature.ownedParameter)  # type: ignore[attr-defined]
-NamedElement.namespace.add(BehavioralFeature.ownedParameterSet)  # type: ignore[attr-defined]
+Namespace.ownedMember.add(BehavioralFeature.ownedParameterSet)  # type: ignore[attr-defined]
 Operation.precondition = association("precondition", Constraint, composite=True)
 Operation.postcondition = association("postcondition", Constraint, composite=True)
 Operation.class_ = association("class_", Class, upper=1, opposite="ownedOperation")
@@ -1159,12 +1280,12 @@ Operation.redefinedOperation = association("redefinedOperation", Operation)
 Operation.raisedException = association("raisedException", Type)
 Operation.bodyCondition = association("bodyCondition", Constraint, upper=1, composite=True)
 Operation.datatype = association("datatype", DataType, upper=1, opposite="ownedOperation")
-# 74: override Operation.type: derivedunion[DataType]
+# 62: override Operation.type: derivedunion[DataType]
 Operation.type = derivedunion('type', DataType, 0, 1)
 
 Operation.artifact = association("artifact", Artifact, upper=1, opposite="ownedOperation")
 Operation.interface_ = association("interface_", Interface, upper=1, opposite="ownedOperation")
-Operation.ownedParameter = redefine(Operation, "ownedParameter", Parameter, BehavioralFeature.ownedParameter)
+Operation.ownedParameter = redefine(Operation, "ownedParameter", Parameter, BehavioralFeature.ownedParameter, opposite="operation")
 Namespace.ownedMember.add(Operation.precondition)  # type: ignore[attr-defined]
 Namespace.ownedRule.add(Operation.precondition)  # type: ignore[attr-defined]
 Namespace.ownedMember.add(Operation.postcondition)  # type: ignore[attr-defined]
@@ -1183,6 +1304,7 @@ NamedElement.namespace.add(Operation.interface_)  # type: ignore[attr-defined]
 Feature.featuringClassifier.add(Operation.interface_)  # type: ignore[attr-defined]
 OutputPin.opaqueAction = association("opaqueAction", Action, upper=1, opposite="outputValue")
 Element.owner.add(OutputPin.opaqueAction)  # type: ignore[attr-defined]
+ValuePin.value_ = association("value_", ValueSpecification, upper=1, composite=True)
 Action.context_ = derivedunion("context_", Classifier, upper=1)
 Action.interaction = association("interaction", Interaction, upper=1, opposite="action")
 Action.outputValue = association("outputValue", OutputPin, composite=True, opposite="opaqueAction")
@@ -1205,14 +1327,18 @@ ActivityGroup.subgroup = derivedunion("subgroup", ActivityGroup)
 Element.owner.add(ActivityGroup.superGroup)  # type: ignore[attr-defined]
 Element.owner.add(ActivityGroup.activity)  # type: ignore[attr-defined]
 Element.ownedElement.add(ActivityGroup.subgroup)  # type: ignore[attr-defined]
+Constraint.specification = association("specification", ValueSpecification, upper=1, composite=True, opposite="owningConstraint")
 Constraint.constrainedElement = association("constrainedElement", Element)
 Constraint.owningState = association("owningState", State, upper=1, opposite="statevariant")
 Constraint.stateInvariant = association("stateInvariant", StateInvariant, upper=1, opposite="invariant")
 Constraint.parameterSet = association("parameterSet", ParameterSet, upper=1, opposite="condition")
 Constraint.transition = association("transition", Transition, upper=1, opposite="guard")
+Constraint.context = association("context", Namespace, upper=1, opposite="ownedRule")
+Element.ownedElement.add(Constraint.specification)  # type: ignore[attr-defined]
 Element.owner.add(Constraint.stateInvariant)  # type: ignore[attr-defined]
 Element.owner.add(Constraint.parameterSet)  # type: ignore[attr-defined]
 Element.owner.add(Constraint.transition)  # type: ignore[attr-defined]
+NamedElement.namespace.add(Constraint.context)  # type: ignore[attr-defined]
 PackageImport.importedPackage = association("importedPackage", Package, upper=1)
 PackageImport.importingNamespace = association("importingNamespace", Namespace, upper=1, opposite="packageImport")
 DirectedRelationship.target.add(PackageImport.importedPackage)  # type: ignore[attr-defined]
@@ -1236,9 +1362,10 @@ StateInvariant.covered = redefine(StateInvariant, "covered", Lifeline, Interacti
 Element.ownedElement.add(StateInvariant.invariant)  # type: ignore[attr-defined]
 Lifeline.interaction = association("interaction", Interaction, upper=1, opposite="lifeline")
 Lifeline.coveredBy = association("coveredBy", InteractionFragment, opposite="covered")
+Lifeline.selector = association("selector", ValueSpecification, upper=1, composite=True, opposite="lifeline")
 Lifeline.represents = association("represents", ConnectableElement, upper=1, opposite="lifeline")
 NamedElement.namespace.add(Lifeline.interaction)  # type: ignore[attr-defined]
-# 89: override Message.messageKind: property
+# 77: override Message.messageKind: property
 # defined in umloverrides.py
 
 Message.sendEvent = association("sendEvent", MessageEnd, upper=1, composite=True, opposite="sendMessage")
@@ -1246,9 +1373,11 @@ Message.receiveEvent = association("receiveEvent", MessageEnd, upper=1, composit
 Message.signature = association("signature", NamedElement, upper=1)
 Message.messageEnd = derivedunion("messageEnd", MessageEnd, upper=2)
 Message.interaction = association("interaction", Interaction, upper=1, opposite="message")
+Message.argument = association("argument", ValueSpecification, upper=1, composite=True)
 Message.messageEnd.add(Message.sendEvent)  # type: ignore[attr-defined]
 Message.messageEnd.add(Message.receiveEvent)  # type: ignore[attr-defined]
 NamedElement.namespace.add(Message.interaction)  # type: ignore[attr-defined]
+Element.ownedElement.add(Message.argument)  # type: ignore[attr-defined]
 MessageEnd.sendMessage = association("sendMessage", Message, upper=1, opposite="sendEvent")
 MessageEnd.receiveMessage = association("receiveMessage", Message, upper=1, opposite="receiveEvent")
 MessageEnd.message = derivedunion("message", Message, upper=1)
@@ -1271,6 +1400,8 @@ Element.ownedElement.add(Connector.informationFlow)  # type: ignore[attr-defined
 ConnectorEnd.definingEnd = derivedunion("definingEnd", Property, upper=1)
 ConnectorEnd.role = association("role", ConnectableElement, upper=1, opposite="end")
 ConnectorEnd.partWithPort = association("partWithPort", Property, upper=1)
+JoinNode.joinSpec = association("joinSpec", ValueSpecification, upper=1, composite=True, opposite="joinNode")
+Element.ownedElement.add(JoinNode.joinSpec)  # type: ignore[attr-defined]
 StateMachine.region = association("region", Region, lower=1, composite=True, opposite="stateMachine")
 Namespace.ownedMember.add(StateMachine.region)  # type: ignore[attr-defined]
 Region.stateMachine = association("stateMachine", StateMachine, upper=1, opposite="region")
@@ -1339,11 +1470,11 @@ Collaboration.collaborationRole = association("collaborationRole", ConnectableEl
 StructuredClassifier.role.add(Collaboration.collaborationRole)  # type: ignore[attr-defined]
 Trigger.event = association("event", Event, upper=1)
 Trigger.port = association("port", Port)
-# 101: override ExecutionSpecification.finish(ExecutionSpecification.executionOccurrenceSpecification): relation_one[ExecutionOccurrenceSpecification]
+# 89: override ExecutionSpecification.finish(ExecutionSpecification.executionOccurrenceSpecification): relation_one[ExecutionOccurrenceSpecification]
 ExecutionSpecification.finish = derived('finish', OccurrenceSpecification, 0, 1,
     lambda obj: [eos for i, eos in enumerate(obj.executionOccurrenceSpecification) if i == 1])
 
-# 97: override ExecutionSpecification.start(ExecutionSpecification.executionOccurrenceSpecification): relation_one[ExecutionOccurrenceSpecification]
+# 85: override ExecutionSpecification.start(ExecutionSpecification.executionOccurrenceSpecification): relation_one[ExecutionOccurrenceSpecification]
 ExecutionSpecification.start = derived('start', OccurrenceSpecification, 0, 1,
     lambda obj: [eos for i, eos in enumerate(obj.executionOccurrenceSpecification) if i == 0])
 
@@ -1351,12 +1482,19 @@ ExecutionSpecification.executionOccurrenceSpecification = association("execution
 ExecutionOccurrenceSpecification.execution = association("execution", ExecutionSpecification, upper=1, opposite="executionOccurrenceSpecification")
 ActionExecutionSpecification.action = association("action", Action, upper=1)
 BehaviorExecutionSpecification.behavior = association("behavior", Behavior, upper=1)
+ChangeEvent.changeExpression = association("changeExpression", ValueSpecification, upper=1, composite=True, opposite="changeEvent")
 ParameterSet.parameter = association("parameter", Parameter, lower=1, opposite="parameterSet")
 ParameterSet.condition = association("condition", Constraint, composite=True, opposite="parameterSet")
 ParameterSet.behavioralFeature = association("behavioralFeature", BehavioralFeature, upper=1, opposite="ownedParameterSet")
+ParameterSet.behavior = association("behavior", Behavior, upper=1, opposite="ownedParameterSet")
 Element.ownedElement.add(ParameterSet.condition)  # type: ignore[attr-defined]
-ComponentRealization.abstraction = redefine(ComponentRealization, "abstraction", Component, Dependency.supplier)
-ComponentRealization.realizingClassifier = redefine(ComponentRealization, "realizingClassifier", Classifier, Dependency.client)
+NamedElement.namespace.add(ParameterSet.behavioralFeature)  # type: ignore[attr-defined]
+NamedElement.namespace.add(ParameterSet.behavior)  # type: ignore[attr-defined]
+ComponentRealization.abstraction = association("abstraction", Component, upper=1, opposite="realization")
+ComponentRealization.realizingClassifier = association("realizingClassifier", Classifier, upper=1, opposite="componentRealization")
+Dependency.supplier.add(ComponentRealization.abstraction)  # type: ignore[attr-defined]
+Element.owner.add(ComponentRealization.abstraction)  # type: ignore[attr-defined]
+Dependency.client.add(ComponentRealization.realizingClassifier)  # type: ignore[attr-defined]
 InformationItem.represented = association("represented", Classifier)
 InformationFlow.realizingActivityEdge = association("realizingActivityEdge", ActivityEdge)
 InformationFlow.realizingMessage = association("realizingMessage", Message)
@@ -1371,6 +1509,8 @@ DirectedRelationship.target.add(InformationFlow.informationTarget)  # type: igno
 CallAction.result = association("result", OutputPin, composite=True)
 CallBehaviorAction.behavior = association("behavior", Behavior, upper=1, composite=True)
 ValueSpecificationAction.result = association("result", OutputPin, upper=1, composite=True)
+ValueSpecificationAction.value = association("value", ValueSpecification, upper=1, composite=True, opposite="valueSpecificationAction")
+Element.ownedElement.add(ValueSpecificationAction.value)  # type: ignore[attr-defined]
 Comment.annotatedElement = association("annotatedElement", Element, opposite="comment")
 Diagram.element = association("element", Element, upper=1, opposite="ownedDiagram")
 Element.owner.add(Diagram.element)  # type: ignore[attr-defined]

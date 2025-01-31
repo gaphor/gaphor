@@ -25,7 +25,9 @@ methods:
 
 from __future__ import annotations
 
+import decimal
 import logging
+import math
 from collections.abc import Callable, Iterable, Sequence
 from typing import (
     Any,
@@ -186,8 +188,8 @@ class subsettable_umlproperty(umlproperty):
             )
         self.subsets.add(subset)
         assert isinstance(
-            subset, association | derived
-        ), f"have element {subset}, expected association"
+            subset, association | derived | redefine
+        ), f"have element {subset}, expected association, derived or redefine"
         subset.dependent_properties.add(self)
 
     def propagate(self, event): ...
@@ -234,8 +236,21 @@ class attribute(umlproperty, Generic[T]):
                 or self.type
             )
 
-        if self.type is int and isinstance(value, str | bool):
-            value = 0 if value == "False" else 1 if value == "True" else int(value)
+        if self.type is decimal.Decimal and isinstance(value, str):
+            if value == "*" or value == "inf" or value == "Infinity":
+                value = decimal.Decimal(math.inf)
+            else:
+                value = decimal.Decimal(int(value))
+        elif self.type is int and isinstance(value, str | bool):
+            value = (
+                0
+                if value == "False"
+                else 1
+                if value == "True"
+                else math.inf
+                if value == "*"
+                else int(value)
+            )
 
         if value == self.get(obj):
             return
@@ -329,17 +344,19 @@ class association(subsettable_umlproperty):
     Making the outcomes deterministic requires making some policy choices. In the cases below,
     those marked with ***POLICY*** are not solely determined by the logic of set theory.
 
-    There is a significant design assumption that drives the policy decisions: there is only one superset-subset path
-    by which an element may become a member of the superset. In other words, if the superset has two or more subsets,
-    a given element can be a member of at most one subset. This is really an assumption about the metamodel architecture.
-    The implication is that if an element is removed from a subset, it must be removed from the superset. Furthermore,
-    if an element is present in both the superset and the subset, and the element is removed from the superset, it must
-    also be removed from the subset.
+    The handling of the subset-superset relation depends upon the nature of the superset.
+        If the superset is a derived union, the removal of an element from the subset should also remove
+            it from the superset unless the element is present in the superset because of a different subset.
+        If the superset is an ordinary collection, the removal of an element from the subset should not
+            cause the element to be removed from the superset.
+        if the superset is an ordinary collection and an element is removed from the superset, it must
+            also be removed from the subset.
 
     Subset changes, both sets have a multiplicity of 1:
         Both sets {}: subset {a1} => superset {a1}
         Superset {a1}, subset {}: subset {a2} => superset {a2} ***POLICY***
-        Superset {a1}, subset {a1}: subset {} => superset {} ***POLICY***
+        Derived Union: Superset {a1}, subset {a1}: subset {} => superset {} ***POLICY***
+        Ordinary Collection: Superset {a1}, subset {a1}: subset {} => superset {a1} ***POLICY***
         Superset {a1}, subset {a1}: subset {a2} => superset {a2} ***POLICY***
 
     Superset changes, both sets have a multiplicity of 1:
@@ -350,8 +367,11 @@ class association(subsettable_umlproperty):
     Subset changes, superset has multiplicity *, subset has multiplicity 1 or *:
         Both sets {}: subset {a1} => superset {a1}
         Superset {a1}, subset {}, subset {a2} => superset {a1, a2}
-        Superset {a1}, subset {a1}: subset {} => superset {} ***POLICY***
-        Superset {a1}, subset {a1}: subset {a2}, => superset {a2} ***POLICY***
+        Derived Union: Superset {a1}, subset {a1}: subset {} => superset {} ***POLICY***
+        Ordinary Collection: Superset {a1}, subset {a1}: subset {} => superset {a1} ***POLICY***
+        Derived Union: Superset {a1}, subset {a1}: subset {a2}, => superset {a2} ***POLICY***
+            assuming that a1 is not in another subset of the derived union
+        Ordinary Collection: Superset {a1}, subset {a1}: subset {a2}, => superset {a1, a2} ***POLICY***
 
     Superset changes, superset has multiplicity *, subset has multiplicity 1 or *:
         Both sets {}: superset {a1} => subset {}
@@ -589,16 +609,28 @@ class association(subsettable_umlproperty):
 
         current_value = self.get(event.element)
 
+        upper_gt_1 = self.upper == "*" or int(self.upper) > 1
         if isinstance(event, AssociationSet):
             if event.new_value != current_value:
-                self.set(event.element, event.new_value)
+                # new_value is coming from a subset. If the value is None and self is not derived
+                # and has upper > 1 then we make no change to this association.
+                not_derived = not isinstance(self, derived)
+                null_value = event.new_value is None
+                if not (not_derived and null_value and upper_gt_1):
+                    self.set(event.element, event.new_value)
         elif isinstance(event, AssociationDeleted):
             value = self.get(event.element)
             if isinstance(value, collection):
                 if event.old_value in self.get(event.element):
-                    self.delete(event.element, event.old_value)
+                    # new_value is coming from a subset. If self is not derived and this is a collection
+                    # we make no change to this association.
+                    if isinstance(self, derived) or not upper_gt_1:
+                        self.delete(event.element, event.old_value)
             elif event.old_value is value:
-                self.delete(event.element, event.old_value)
+                # new_value is coming from a subset. If self is not derived and this is a collection
+                # we make no change to this association.
+                if isinstance(self, derived) or not upper_gt_1:
+                    self.delete(event.element, event.old_value)
         elif isinstance(event, AssociationAdded):
             self.set(event.element, event.new_value)
 
@@ -866,7 +898,9 @@ class derivedunion(derived[T]):
         elif isinstance(event, AssociationSet):
             old_value, new_value = event.old_value, event.new_value
             if old_value and old_value not in values:
-                self.handle(DerivedDeleted(event.element, self, old_value))
+                pass
+                # Change so that deletions from subsets no longer delete from superset
+                # self.handle(DerivedDeleted(event.element, self, old_value))
             if new_value and new_value not in values:
                 self.handle(DerivedAdded(event.element, self, new_value))
 
@@ -901,6 +935,7 @@ class redefine(umlproperty):
         name: str,
         type: type[T],
         original: relation,
+        opposite: str | None = None,
     ):
         super().__init__(name)
         assert isinstance(
@@ -911,6 +946,8 @@ class redefine(umlproperty):
         self.original: association | derived = original
         self.upper = original.upper
         self.lower = original.lower
+        if opposite is not None:
+            self.original.opposite = opposite
 
         original.dependent_properties.add(self)
 

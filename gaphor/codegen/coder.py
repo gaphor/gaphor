@@ -25,6 +25,7 @@ from __future__ import annotations
 import argparse
 import contextlib
 import logging
+import math
 import sys
 import textwrap
 from collections.abc import Iterable
@@ -53,6 +54,8 @@ header = textwrap.dedent(
     # fmt: off
 
     from __future__ import annotations
+
+    from decimal import Decimal as UnlimitedNatural
 
     from gaphor.core.modeling.properties import (
         association,
@@ -224,7 +227,11 @@ def variables(class_: UML.Class, overrides: Overrides | None = None):
                 enum_values = ", ".join(f'"{e.name}"' for e in a.type.ownedAttribute)
                 yield f'{a.name} = _enumeration("{a.name}", ({enum_values}), "{a.type.ownedAttribute[0].name}")'
             elif a.type:
-                mult = "one" if a.upper == "1" else "many"
+                mult = (
+                    "one"
+                    if UML.recipes.get_property_upper_value_as_string(a) == "1"
+                    else "many"
+                )
                 comment = "  # type: ignore[assignment]" if is_reassignment(a) else ""
                 yield f"{a.name}: relation_{mult}[{a.type.name}]{comment}"
             else:
@@ -260,7 +267,7 @@ def associations(
             continue
         elif redefines(a):
             redefinitions.append(
-                f'{full_name} = redefine({c.name}, "{a.name}", {a.type.name}, {redefines(a)})'
+                f'{full_name} = redefine({c.name}, "{a.name}", {a.type.name}, {redefines(a)}{opposite(a)})'
             )
         elif a.isDerived:
             yield f'{full_name} = derivedunion("{a.name}", {a.type.name}{lower(a)}{upper(a)})'
@@ -289,7 +296,9 @@ def subsets(
                 continue
 
             full_name = f"{c.name}.{a.name}"
-            for value in slot.value.split(","):
+            raw_slot_value = UML.recipes.get_slot_value(slot)
+            slotValue = raw_slot_value if isinstance(raw_slot_value, str) else ""
+            for value in slotValue.split(","):
                 element_type, d = attribute(c, value.strip(), super_models)
                 if d:  # and d.isDerived:
                     if element_type:
@@ -314,17 +323,43 @@ def operations(c: UML.Class, overrides: Overrides | None = None):
                 yield overrides.get_override(full_name)
 
 
-def default_value(a):
+def default_value(a) -> str:
     if a.defaultValue:
         if a.typeValue == "int":
-            defaultValue = a.defaultValue.title()
+            if isinstance(
+                a.defaultValue,
+                UML.LiteralString
+                | UML.LiteralInteger
+                | UML.LiteralUnlimitedNatural
+                | UML.LiteralBoolean,
+            ):
+                defaultValue = UML.recipes.get_literal_value_as_string(a.defaultValue)
+            else:
+                defaultValue = a.defaultValue.title()
         elif a.typeValue == "str":
-            if (a.defaultValue[0] == a.defaultValue[-1]) and (
+            if isinstance(
+                a.defaultValue,
+                UML.LiteralString
+                | UML.LiteralInteger
+                | UML.LiteralUnlimitedNatural
+                | UML.LiteralBoolean,
+            ):
+                defaultValue = UML.recipes.get_literal_value_as_string(a.defaultValue)
+            elif (a.defaultValue[0] == a.defaultValue[-1]) and (
                 a.defaultValue[0] in ['"', "'"]
             ):
                 defaultValue = a.defaultValue
             else:
                 defaultValue = f'"{a.defaultValue}"'
+        elif a.typeValue == "bool":
+            if isinstance(a.defaultValue, UML.LiteralBoolean | UML.LiteralString):
+                defaultValue = UML.recipes.get_literal_value_as_string(a.defaultValue)
+            else:
+                defaultValue = a.defaultValue
+            if defaultValue == "true":
+                defaultValue = "True"
+            elif defaultValue == "false":
+                defaultValue = "False"
         else:
             raise ValueError(
                 f"Unknown default value type: {a.owner.name}.{a.name}: {a.typeValue} = {a.defaultValue}"
@@ -335,11 +370,25 @@ def default_value(a):
 
 
 def lower(a):
-    return "" if a.lowerValue in (None, "0") else f", lower={a.lowerValue}"
+    lowerValue = ""
+    if isinstance(a.lowerValue, UML.LiteralInteger):
+        if a.lowerValue.value is not None and a.lowerValue.value != 0:
+            lowerValue = str(a.lowerValue.value)
+    else:
+        if a.lowerValue is not None and a.lowerValue != "0":
+            lowerValue = a.lowerValue
+    return "" if lowerValue == "" else f", lower={lowerValue}"
 
 
 def upper(a):
-    return "" if a.upperValue in (None, "*") else f", upper={a.upperValue}"
+    upperValue = ""
+    if isinstance(a.upperValue, UML.LiteralUnlimitedNatural):
+        if a.upperValue.value is not None and not math.isinf(a.upperValue.value):
+            upperValue = str(int(a.upperValue.value))
+    else:
+        if a.upperValue is not None and a.upperValue != "*":
+            upperValue = a.upperValue
+    return "" if upperValue == "" else f", upper={upperValue}"
 
 
 def composite(a):
@@ -428,7 +477,7 @@ def redefines(a: UML.Property) -> str | None:
     # Redefine is the only one where
     return next(
         (
-            slot.value
+            UML.recipes.get_slot_value(slot)
             for slot in a.appliedStereotype[:].slot
             if slot.definingFeature.name == "redefines"
         ),
@@ -479,14 +528,15 @@ def resolve_attribute_type_values(element_factory: ElementFactory) -> None:
     for prop in element_factory.select(UML.Property):
         if prop.typeValue in ("String", "str", "object"):
             prop.typeValue = "str"
+        elif prop.typeValue in ("Boolean", "bool"):
+            prop.typeValue = "bool"
         elif prop.typeValue in (
             "Integer",
             "int",
-            "Boolean",
-            "bool",
-            "UnlimitedNatural",
         ):
             prop.typeValue = "int"
+        elif prop.typeValue == "UnlimitedNatural":
+            pass
         elif c := next(
             element_factory.select(
                 lambda e: isinstance(e, UML.Class) and e.name == prop.typeValue  # noqa: B023
@@ -501,7 +551,13 @@ def resolve_attribute_type_values(element_factory: ElementFactory) -> None:
             prop.typeValue = "str"
             del prop.type
 
-        if not prop.type and prop.typeValue not in ("str", "int", None):
+        if not prop.type and prop.typeValue not in (
+            "str",
+            "int",
+            "bool",
+            "UnlimitedNatural",
+            None,
+        ):
             raise ValueError(f"Property value type {prop.typeValue} can not be found")
 
 

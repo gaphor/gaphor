@@ -13,7 +13,7 @@ __all__ = ["parse_property", "parse_operation"]
 import re
 
 from gaphor.core.format import parse
-from gaphor.UML import uml
+from gaphor.UML import recipes, uml
 
 # Visibility (optional) ::= '+' | '-' | '#'
 vis_subpat = r"\s*(?P<vis>[-+#])?"
@@ -181,11 +181,11 @@ def parse_attribute(el: uml.Property, s: str) -> None:
         el.isDerived = bool(g("derived"))
         el.name = g("name")
         el.typeValue = g("type")
-        el.lowerValue = g("mult_l")
-        el.upperValue = g("mult_u")
+        recipes.set_property_lower_value_from_string(el, g("mult_l"))
+        recipes.set_property_upper_value_from_string(el, g("mult_u"))
         if g("has_mult") and not g("mult_u"):
-            el.upperValue = "*"
-        el.defaultValue = g("default")
+            recipes.set_property_upper_value_from_string(el, "*")
+        recipes.set_property_default_value_from_string(el, g("default"))
         el.note = g("note")
 
 
@@ -204,14 +204,15 @@ def parse_association_end(el: uml.Property, s: str) -> None:
     # clear also multiplicity if no characters in ``s``
     m = association_end_mult_pat.match(s)
     if m and not m.group("mult_u") and el.upperValue:
-        el.upperValue = None
+        el.upperValue.value = None
+        el.upperValue.name = None
 
     if m and m.group("mult_u") or m.group("tags"):
         g = m.group
         _set_visibility(el, g("vis"))
         el.isDerived = bool(g("derived"))
-        el.lowerValue = g("mult_l")
-        el.upperValue = g("mult_u")
+        recipes.set_property_lower_value_from_string(el, g("mult_l"))
+        recipes.set_property_upper_value_from_string(el, g("mult_u"))
     else:
         m = association_end_name_pat.match(s)
         g = m.group
@@ -227,14 +228,15 @@ def parse_association_end(el: uml.Property, s: str) -> None:
             el.note = g("note")
             # Optionally, the multiplicity and tagged values may be defined:
             if g("mult_l"):
-                el.lowerValue = g("mult_l")
+                recipes.set_property_lower_value_from_string(el, g("mult_l"))
 
             if g("mult_u"):
                 if not g("mult_l"):
-                    el.lowerValue = None
-                el.upperValue = g("mult_u")
+                    recipes.set_property_lower_value_from_string(el, None)
+                recipes.set_property_upper_value_from_string(el, g("mult_u"))
+
             elif g("has_mult") and not g("mult_u"):
-                el.upperValue = "*"
+                recipes.set_property_upper_value_from_string(el, "*")
 
 
 @parse.register(uml.Element)
@@ -282,10 +284,10 @@ def parse_operation(el: uml.Operation, s: str) -> None:
                 el.ownedParameter = p
                 p.direction = "return"
             p.typeValue = g("type")
-            p.lowerValue = g("mult_l")
-            p.upperValue = g("mult_u")
+            recipes.set_parameter_lower_value_from_string(p, g("mult_l"))
+            recipes.set_parameter_upper_value_from_string(p, g("mult_u"))
             if g("has_mult") and not g("mult_u"):
-                p.upperValue = "*"
+                recipes.set_parameter_upper_value_from_string(p, "*")
             defined_params.add(p)
 
         pindex = 0
@@ -304,11 +306,11 @@ def parse_operation(el: uml.Operation, s: str) -> None:
             p.direction = g("dir") or "in"
             p.name = g("name")
             p.typeValue = g("type")
-            p.lowerValue = g("mult_l")
-            p.upperValue = g("mult_u")
+            recipes.set_parameter_lower_value_from_string(p, g("mult_l"))
+            recipes.set_parameter_upper_value_from_string(p, g("mult_u"))
             if g("has_mult") and not g("mult_u"):
-                p.upperValue = "*"
-            p.defaultValue = g("default")
+                recipes.set_parameter_upper_value_from_string(p, "*")
+            recipes.set_parameter_default_value_from_string(p, g("default"))
             el.ownedParameter = p
             defined_params.add(p)
             # Do the next parameter:
@@ -332,11 +334,11 @@ def parse_parameter(el: uml.Parameter, s: str) -> None:
         el.direction = g("dir") or "in"
         el.name = g("name")
         el.typeValue = g("type")
-        el.lowerValue = g("mult_l")
-        el.upperValue = g("mult_u")
+        recipes.set_parameter_lower_value_from_string(el, g("mult_l"))
+        recipes.set_parameter_upper_value_from_string(el, g("mult_u"))
         if g("has_mult") and not g("mult_u"):
-            el.upperValue = "*"
-        el.defaultValue = g("default")
+            recipes.set_parameter_upper_value_from_string(el, "*")
+        recipes.set_parameter_default_value_from_string(el, g("default"))
 
 
 def parse_lifeline(el: uml.Lifeline, s: str) -> None:

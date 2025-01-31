@@ -9,8 +9,8 @@ def test_qualified_name():
     p1.name = "package1"
     p2.name = "package2"
     p3.name = "package3"
-    p3.package = p2
-    p2.package = p1
+    p3.nestingPackage = p2
+    p2.nestingPackage = p1
 
     assert p3.qualifiedName == ["package1", "package2", "package3"]
 
@@ -43,4 +43,4 @@ def test_component_provided_relation():
     component.interfaceRealization = realization
     realization.contract = interface
 
-    assert [interface] in component.provided
+    assert interface in component.provided

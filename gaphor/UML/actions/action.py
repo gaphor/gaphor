@@ -32,7 +32,7 @@ class ValueSpecificationActionItem(Valued, ElementPresentation):
         self.width = 100
         self.shape = Box(
             text_stereotypes(self, lambda: ["valueSpecification"]),
-            CssNode("value", None, Text(text=lambda: self.subject.value or "")),
+            CssNode("value", None, Text(text=lambda: self.subject.value.value or "")),
             draw=draw_border,
         )
 

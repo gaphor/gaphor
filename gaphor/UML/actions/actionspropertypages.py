@@ -43,7 +43,14 @@ class ObjectNodePropertyPage(PropertyPageBase):
         )
 
         upper_bound = builder.get_object("upper-bound")
-        upper_bound.set_text(subject.upperBound or "")
+        upperBoundText = ""
+        if subject.upperBound:
+            raw_upper_bound_text = UML.recipes.get_literal_value_as_string(
+                subject.upperBound
+            )
+            if isinstance(raw_upper_bound_text, str):
+                upperBoundText = raw_upper_bound_text
+        upper_bound.set_text(upperBoundText)
 
         ordering = builder.get_object("ordering")
         ordering.set_selected(self.ORDERING_VALUES.index(subject.ordering))
@@ -53,7 +60,13 @@ class ObjectNodePropertyPage(PropertyPageBase):
     def _on_upper_bound_change(self, entry):
         value = entry.get_text().strip()
         with Transaction(self.event_manager):
-            self.subject.upperBound = value
+            if value == "":
+                self.subject.upperBound = None
+            else:
+                upperBound = self.subject.model.create(UML.LiteralString)
+                upperBound.value = value
+                upperBound.objectNode = self.subject
+                self.subject.upperBound = upperBound
 
     def _on_ordering_change(self, dropdown, _pspec):
         value = self.ORDERING_VALUES[dropdown.get_selected()]
@@ -251,7 +264,15 @@ class JoinNodePropertyPage(PropertyPageBase):
     def _on_join_spec_change(self, entry):
         value = entry.get_text().strip()
         with Transaction(self.event_manager):
-            self.subject.joinSpec = value
+            if (
+                self.subject.joinSpec is None
+                or UML.recipes.get_literal_value_as_string(self.subject.joinSpec)
+                != value
+            ):
+                joinSpec = self.subject.model.create(UML.LiteralString)
+                joinSpec.value = value
+                joinSpec.joinNode = self.subject
+                self.subject.joinSpec = joinSpec
 
 
 @PropertyPages.register(UML.ControlFlow)
@@ -296,7 +317,14 @@ class FlowPropertyPageAbstract(PropertyPageBase):
     def _on_guard_change(self, entry):
         value = entry.get_text().strip()
         with Transaction(self.event_manager):
-            self.subject.guard = value
+            if (
+                self.subject.guard is None
+                or UML.recipes.get_literal_value_as_string(self.subject.guard) != value
+            ):
+                guard = self.subject.model.create(UML.LiteralString)
+                guard.value = value
+                guard.activityEdge = self.subject
+                self.subject.guard = guard
 
 
 @PropertyPages.register(UML.Pin)

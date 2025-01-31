@@ -18,12 +18,6 @@ from typing import Callable
 override NamedElement.qualifiedName: property
 # defined in umloverrides.py
 %%
-override MultiplicityElement.lower(MultiplicityElement.lowerValue): _attribute[str]
-MultiplicityElement.lower = MultiplicityElement.lowerValue
-%%
-override MultiplicityElement.upper(MultiplicityElement.upperValue): _attribute[str]
-MultiplicityElement.upper = MultiplicityElement.upperValue
-%%
 override Association.endType(Association.memberEnd, Property.type): derived[Type]
 
 # References the classifiers that are used as types of the ends of the
@@ -59,14 +53,8 @@ Class.superClass = Classifier.general
 override Namespace.importedMember: derivedunion[PackageableElement]
 Namespace.importedMember = derivedunion('importedMember', PackageableElement, 0, '*')
 %%
-override Property.opposite(Property.association, Association.memberEnd): relation_one[Property | None]
-# defined in umloverrides.py
-%%
 override Property.isComposite(Property.aggregation): derived[bool]
 Property.isComposite = derived('isComposite', bool, 0, 1, lambda obj: [obj.aggregation == 'composite'])
-%%
-override Constraint.context: derivedunion[Namespace]
-Constraint.context = derivedunion('context', Namespace, 0, 1)
 %%
 override Property.navigability(Property.opposite, Property.association): derived[bool | None]
 # defined in umloverrides.py
