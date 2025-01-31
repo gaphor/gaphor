@@ -9,6 +9,10 @@ authors = [
 
 readme = "README.md"
 
+homepage = "https://gaphor.org/"
+repository = "https://github.com/gaphor/gaphor"
+documentation = "https://docs.gaphor.org/"
+
 keywords = ["GTK", "diagram", "UML", "MBSE", "modeling"]
 
 classifiers = [
