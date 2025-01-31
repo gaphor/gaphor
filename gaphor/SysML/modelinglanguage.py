@@ -10,13 +10,27 @@ from gaphor.diagram.diagramtoolbox import (
     ElementCreateInfo,
     ToolboxDefinition,
 )
+from gaphor.diagram.support import represents
 from gaphor.SysML import diagramitems, sysml
 from gaphor.SysML.toolbox import (
     sysml_diagram_types,
     sysml_element_types,
     sysml_toolbox_actions,
 )
+from gaphor.UML.general.diagramitem import DiagramItem
 from gaphor.UML.treemodel import TreeModel
+
+for _type in (
+    sysml.ActivityDiagram,
+    sysml.BlockDefinitionDiagram,
+    sysml.InternalBlockDiagram,
+    sysml.PackageDiagram,
+    sysml.RequirementDiagram,
+    sysml.SequenceDiagram,
+    sysml.StateMachineDiagram,
+    sysml.UseCaseDiagram,
+):
+    represents(_type)(DiagramItem)
 
 
 class SysMLModelingLanguage(ModelingLanguage):

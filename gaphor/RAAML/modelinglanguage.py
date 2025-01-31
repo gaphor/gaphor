@@ -10,13 +10,18 @@ from gaphor.diagram.diagramtoolbox import (
     ElementCreateInfo,
     ToolboxDefinition,
 )
+from gaphor.diagram.support import represents
 from gaphor.RAAML import diagramitems, raaml
 from gaphor.RAAML.toolbox import (
     raaml_diagram_types,
     raaml_element_types,
     raaml_toolbox_actions,
 )
+from gaphor.UML.general.diagramitem import DiagramItem
 from gaphor.UML.treemodel import TreeModel
+
+represents(raaml.FTADiagram)(DiagramItem)
+represents(raaml.STPADiagram)(DiagramItem)
 
 
 class RAAMLModelingLanguage(ModelingLanguage):
