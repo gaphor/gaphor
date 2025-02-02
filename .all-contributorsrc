@@ -1587,6 +1587,16 @@
       "contributions": [
         "translation"
       ]
+    },
+    {
+      "login": "Jummit",
+      "name": "Jummit",
+      "avatar_url": "https://avatars.githubusercontent.com/u/28286961?v=4",
+      "profile": "http://jummit.com",
+      "contributions": [
+        "bug",
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
