@@ -347,8 +347,11 @@ class association(subsettable_umlproperty):
     The handling of the subset-superset relation depends upon the nature of the superset.
         If the superset is a derived union, the removal of an element from the subset should also remove
             it from the superset unless the element is present in the superset because of a different subset.
-        If the superset is an ordinary collection, the removal of an element from the subset should not
-            cause the element to be removed from the superset.
+        If the superset is an ordinary collection, the behavior depends upon the multiplicity of the set.
+            If the superset has an allowed multiplicity > 1, the removal of an element from the subset should not
+                cause the element to be removed from the superset.
+            If the superset has an allowed multiplicity of 1, the removal of an element from the subset should
+                cause the element to be removed from the superset.
         if the superset is an ordinary collection and an element is removed from the superset, it must
             also be removed from the subset.
 
