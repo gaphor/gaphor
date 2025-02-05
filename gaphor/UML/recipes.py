@@ -102,9 +102,9 @@ def apply_stereotype(element: Element, stereotype: Stereotype) -> InstanceSpecif
      stereotype
         UML metamodel stereotype instance.
     """
-    assert (
-        element.model is stereotype.model
-    ), "Element and Stereotype are from different models"
+    assert element.model is stereotype.model, (
+        "Element and Stereotype are from different models"
+    )
     model = element.model
     obj = model.create(InstanceSpecification)
     obj.classifier = stereotype
@@ -166,9 +166,9 @@ def get_applied_stereotypes(element: Element) -> Sequence[Stereotype]:
 
 def create_extension(metaclass: Class, stereotype: Stereotype) -> Extension:
     """Create an Extension association between a metaclass and a stereotype."""
-    assert (
-        metaclass.model is stereotype.model
-    ), "Metaclass and Stereotype are from different models"
+    assert metaclass.model is stereotype.model, (
+        "Metaclass and Stereotype are from different models"
+    )
 
     model = metaclass.model
     ext: Extension = model.create(Extension)
@@ -200,9 +200,9 @@ def add_slot(
     instance: InstanceSpecification, definingFeature: StructuralFeature
 ) -> Slot:
     """Add slot to instance specification for an attribute."""
-    assert (
-        instance.model is definingFeature.model
-    ), "Instance and Defining feature are from different models"
+    assert instance.model is definingFeature.model, (
+        "Instance and Defining feature are from different models"
+    )
     model = instance.model
     slot = model.create(Slot)
     slot.definingFeature = definingFeature
@@ -230,9 +230,9 @@ def set_slot_value(slot: Slot, value: str) -> None:
 
 
 def create_dependency(supplier, client):
-    assert (
-        supplier.model is client.model
-    ), "Supplier and Client are from different models"
+    assert supplier.model is client.model, (
+        "Supplier and Client are from different models"
+    )
     model = supplier.model
     dep = model.create(Dependency)
     dep.supplier = supplier
@@ -241,9 +241,9 @@ def create_dependency(supplier, client):
 
 
 def create_realization(realizingClassifier, abstraction):
-    assert (
-        realizingClassifier.model is abstraction.model
-    ), "Realizing classifier and Abstraction are from different models"
+    assert realizingClassifier.model is abstraction.model, (
+        "Realizing classifier and Abstraction are from different models"
+    )
     model = realizingClassifier.model
     dep = model.create(Realization)
     dep.realizingClassifier = realizingClassifier
@@ -252,9 +252,9 @@ def create_realization(realizingClassifier, abstraction):
 
 
 def create_generalization(general, specific):
-    assert (
-        general.model is specific.model
-    ), "General and Specific are from different models"
+    assert general.model is specific.model, (
+        "General and Specific are from different models"
+    )
     model = general.model
     gen = model.create(Generalization)
     gen.general = general

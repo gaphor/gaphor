@@ -174,7 +174,7 @@ class MainWindow(Service, ActionProvider):
 
         select_modeling_language = builder.get_object("select-modeling-language")
         select_modeling_language.set_menu_model(
-            create_modeling_language_model(self.modeling_language),
+            create_modeling_language_model(self.modeling_language)
         )
         self.modeling_language_name = builder.get_object("modeling-language-name")
 

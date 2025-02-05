@@ -109,7 +109,7 @@ runs:
       env:
         PRODUCT_PATH: "_packaging/dist/Gaphor-${{ inputs.version }}-${{ inputs.arch }}.dmg"
       run: |
-        ditto -c -k --keepParent "${.PRODUCT_PATH}" "notarization.zip"
+        ditto -c -k --keepParent "${PRODUCT_PATH}" "notarization.zip"
         xcrun notarytool submit "notarization.zip" --keychain-profile "notarytool-profile" --wait
       shell: bash
     - name: Staple .dmg

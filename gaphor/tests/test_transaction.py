@@ -135,9 +135,9 @@ def test_transaction_context(event_manager):
     """Test the transaction context manager."""
 
     with Transaction(event_manager) as tx:
-        assert isinstance(
-            tx, TransactionContext
-        ), "Context is not a TransactionContext instance"
+        assert isinstance(tx, TransactionContext), (
+            "Context is not a TransactionContext instance"
+        )
         assert Transaction._stack, "Transaction instance has no stack inside a context"
 
     assert not Transaction._stack, "Transaction stack should be empty"

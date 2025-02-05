@@ -159,9 +159,9 @@ class ElementDispatcher(Service):
                 else:
                     ns = c.__modeling_language__
                 c = self.modeling_language.lookup_element(cname, ns)
-                assert c and issubclass(
-                    c, prop.type
-                ), f"{ns}:{cname} (== {c}) should be a subclass of {prop.type}"
+                assert c and issubclass(c, prop.type), (
+                    f"{ns}:{cname} (== {c}) should be a subclass of {prop.type}"
+                )
             else:
                 c = prop.type
         return tuple(tpath)

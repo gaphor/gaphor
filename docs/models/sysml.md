@@ -18,4 +18,5 @@ sysml/Libraries
 sysml/ModelElements
 sysml/PortsAndFlows
 sysml/Requirements
+sysml/Diagrams
 ```

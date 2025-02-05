@@ -1,4 +1,3 @@
-from gaphor import UML
 from gaphor.core.modeling.properties import attribute
 from gaphor.diagram.presentation import (
     AttachedPresentation,
@@ -10,9 +9,10 @@ from gaphor.diagram.presentation import (
 from gaphor.diagram.shapes import Box, CssNode, Text, draw_border
 from gaphor.diagram.support import represents
 from gaphor.UML.compartments import text_stereotypes
+from gaphor.UML.uml import Activity, ActivityParameterNode
 
 
-@represents(UML.Activity)
+@represents(Activity)
 class ActivityItem(Classified, ElementPresentation):
     def __init__(self, diagram, id=None):
         super().__init__(diagram, id, width=50, height=50)
@@ -22,13 +22,7 @@ class ActivityItem(Classified, ElementPresentation):
         self.watch("subject[NamedElement].name").watch(
             "subject[Element].appliedStereotype.classifier.name"
         ).watch("subject[Classifier].isAbstract", self.update_shapes).watch(
-            "subject[Activity].node[ActivityParameterNode].parameter.name",
-            self.update_parameters,
-        ).watch(
-            "subject[Activity].node[ActivityParameterNode].parameter.type.name",
-            self.update_parameters,
-        ).watch(
-            "subject[Activity].node[ActivityParameterNode].parameter.typeValue",
+            "subject[Activity].node[ActivityParameterNode].parameter",
             self.update_parameters,
         )
 
@@ -44,33 +38,37 @@ class ActivityItem(Classified, ElementPresentation):
         )
 
     def update_parameters(self, event=None):
-        diagram = self.diagram
-        parameter_nodes = (
-            [p for p in self.subject.node if isinstance(p, UML.ActivityParameterNode)]
-            if self.subject
-            else []
-        )
-        parameter_items = {
-            i.subject: i
-            for i in self.children
-            if isinstance(i, ActivityParameterNodeItem)
-        }
-
-        for node in parameter_nodes:
-            if node not in parameter_items:
-                item = diagram.create(
-                    ActivityParameterNodeItem, parent=self, subject=node
-                )
-                item.matrix.translate(0, 10)
-                connect(item, item.handles()[0], self)
-
-        for node in parameter_items:
-            if node not in parameter_nodes:
-                del self.children[parameter_items[node]]
+        update_parameter_nodes(self)
 
 
-@represents(UML.ActivityParameterNode)
-class ActivityParameterNodeItem(AttachedPresentation[UML.ActivityParameterNode]):
+def update_parameter_nodes(item: ActivityItem):
+    diagram = item.diagram
+    subject = item.subject
+
+    parameter_nodes = (
+        [p for p in subject.node if isinstance(p, ActivityParameterNode)]
+        if subject
+        else []
+    )
+    parameter_items = {
+        i.subject: i for i in item.children if isinstance(i, ActivityParameterNodeItem)
+    }
+
+    for node in parameter_nodes:
+        if node not in parameter_items:
+            node_item = diagram.create(
+                ActivityParameterNodeItem, parent=item, subject=node
+            )
+            node_item.matrix.translate(0, 10)
+            connect(node_item, node_item.handles()[0], item)
+
+    for node in parameter_items:
+        if node not in parameter_nodes:
+            del item.children[parameter_items[node]]
+
+
+@represents(ActivityParameterNode)
+class ActivityParameterNodeItem(AttachedPresentation[ActivityParameterNode]):
     def __init__(self, diagram, id=None):
         super().__init__(
             diagram,

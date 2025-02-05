@@ -65,21 +65,6 @@ def test_clear_and_add_event_log(event_log):
     assert ["another line"] in lines
 
 
-@pytest.mark.xfail(reason="Normally a log is read first")
-def test_should_not_append_if_file_changed(event_log, test_file):
-    event_log.write(["my", "line"])
-    event_log.close()
-
-    # Open the log file for appending.
-    test_file.write_bytes(b"123")
-    event_log.write(["new", "line"])
-
-    lines = list(event_log.read())
-
-    assert ["my", "line"] not in lines
-    assert ["new", "line"] in lines
-
-
 def test_move_aside_event_log(event_log):
     event_log.write(["my", "line"])
 

@@ -3,6 +3,8 @@
 import re
 from functools import singledispatch
 
+from gaphor.core.modeling import Diagram
+
 TO_KEBAB = re.compile(r"([a-z0-9])([A-Z]+)")
 
 
@@ -16,3 +18,8 @@ def get_default_icon_name(element):
 
 
 icon_name = singledispatch(get_default_icon_name)
+
+
+@icon_name.register(Diagram)
+def get_name_for_diagram(_element):
+    return "gaphor-diagram-symbolic"

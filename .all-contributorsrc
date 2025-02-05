@@ -1569,6 +1569,43 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "fangsz2022",
+      "name": "fangsz2022",
+      "avatar_url": "https://avatars.githubusercontent.com/u/104124298?v=4",
+      "profile": "https://github.com/fangsz2022",
+      "contributions": [
+        "ideas"
+      ]
+    },
+    {
+      "login": "TamilNeram",
+      "name": "தமிழ் நேரம்",
+      "avatar_url": "https://avatars.githubusercontent.com/u/67970539?v=4",
+      "profile": "https://github.com/TamilNeram",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "Jummit",
+      "name": "Jummit",
+      "avatar_url": "https://avatars.githubusercontent.com/u/28286961?v=4",
+      "profile": "http://jummit.com",
+      "contributions": [
+        "bug",
+        "code"
+      ]
+    },
+    {
+      "login": "smolBlackCat",
+      "name": "Gabriel de Moura",
+      "avatar_url": "https://avatars.githubusercontent.com/u/66385489?v=4",
+      "profile": "https://github.com/smolBlackCat",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,

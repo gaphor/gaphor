@@ -14,6 +14,7 @@ from __future__ import annotations
 
 import logging
 from collections.abc import Callable
+from dataclasses import dataclass
 
 from gaphor.abc import ActionProvider, Service
 from gaphor.action import action
@@ -72,11 +73,11 @@ class ActionStack:
             act()
 
 
+@dataclass
 class UndoManagerStateChanged:
     """Event class used to send state changes on the Undo Manager."""
 
-    def __init__(self, undo_manager: UndoManager):
-        self.undo_manager = undo_manager
+    undo_manager: UndoManager
 
 
 class _UndoManagerTransactionCommitted:

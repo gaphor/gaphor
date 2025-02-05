@@ -15,7 +15,11 @@ from gaphor.diagram.diagramtoolbox import (
     ElementCreateInfo,
     ToolboxDefinition,
 )
+from gaphor.diagram.support import represents
+from gaphor.UML.general.diagramitem import DiagramItem
 from gaphor.UML.treemodel import TreeModel
+
+represents(c4model.C4Diagram)(DiagramItem)
 
 
 class C4ModelLanguage(ModelingLanguage):

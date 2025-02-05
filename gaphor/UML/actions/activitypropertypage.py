@@ -20,6 +20,7 @@ from gaphor.diagram.propertypages import (
 )
 from gaphor.transaction import Transaction
 from gaphor.UML.actions.activity import ActivityParameterNodeItem
+from gaphor.UML.actions.objectnode import ObjectNodeItem
 from gaphor.UML.propertypages import (
     ShowTypedElementPropertyPage,
     TypedElementPropertyPage,
@@ -218,6 +219,10 @@ class ActivityParameterNodeNamePropertyPage(PropertyPageBase):
         if self.subject.parameter.name != entry.get_text():
             with Transaction(self.event_manager):
                 self.subject.parameter.name = entry.get_text()
+
+
+PropertyPages.register(UML.ObjectNode)(TypedElementPropertyPage)
+PropertyPages.register(ObjectNodeItem)(ShowTypedElementPropertyPage)
 
 
 @PropertyPages.register(UML.ActivityParameterNode)

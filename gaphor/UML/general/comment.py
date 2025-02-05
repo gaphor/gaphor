@@ -5,6 +5,7 @@ from gaphor.diagram.presentation import ElementPresentation, LinePresentation
 from gaphor.diagram.shapes import Box, CssNode, Text, stroke
 from gaphor.diagram.support import represents
 from gaphor.UML import Comment
+from gaphor.UML.compartments import text_stereotypes
 
 
 @represents(Comment)
@@ -15,6 +16,7 @@ class CommentItem(ElementPresentation):
         self.width = 100
 
         self.shape = Box(
+            text_stereotypes(self),
             CssNode(
                 "body",
                 None,
@@ -25,6 +27,7 @@ class CommentItem(ElementPresentation):
             draw=draw_border,
         )
         self.watch("subject[Comment].body")
+        self.watch("subject[Element].appliedStereotype.classifier.name")
 
 
 def draw_border(box, context, bounding_box):

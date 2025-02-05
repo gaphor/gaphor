@@ -221,7 +221,10 @@ def test_disconnect_association_in_new_diagram_should_clear_ends(
     assert not asc.tail_subject
 
 
-@pytest.mark.xfail
+@pytest.mark.xfail(
+    reason="We cannot determine if the head of tail end of the association is missing"
+)
+# See https://github.com/gaphor/gaphor/pull/2741
 def test_connect_association_missing_head_subject(create, element_factory):
     asc_item = create(AssociationItem, UML.Association)
     c1 = create(ClassItem, UML.Class)
@@ -236,5 +239,5 @@ def test_connect_association_missing_head_subject(create, element_factory):
     connect(asc_item, asc_item.head, c2)
 
     assert len(asc_item.subject.memberEnd) == 2
-    assert not asc_item.head_subject
+    assert asc_item.head_subject
     assert asc_item.tail_subject

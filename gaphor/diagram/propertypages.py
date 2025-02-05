@@ -58,17 +58,25 @@ class _PropertyPages:
 
     def __init__(self) -> None:
         self.pages: list[tuple[type[Base], type[PropertyPageBase]]] = []
+        self.replaced: set[tuple[type[Base], type[PropertyPageBase]]] = set()
 
-    def register(self, subject_type, func=None):
-        def reg(func):
-            self.pages.append((subject_type, func))
-            return func
+    def register(
+        self, subject_type: type[Base], page: type[PropertyPageBase] | None = None
+    ):
+        def reg(page):
+            if page.__base__ is not PropertyPageBase:
+                self.replaced.add((subject_type, page.__base__))
+            self.pages.append((subject_type, page))
+            return page
 
-        return reg(func) if func else reg
+        return reg(page) if page else reg
 
-    def find(self, subject) -> Iterator[type[PropertyPageBase]]:
+    def find(self, subject: Base) -> Iterator[type[PropertyPageBase]]:
         for subject_type, page in self.pages:
-            if isinstance(subject, subject_type):
+            if (
+                isinstance(subject, subject_type)
+                and (type(subject), page) not in self.replaced
+            ):
                 yield page
 
 
@@ -127,6 +135,28 @@ def unsubscribe_all_on_destroy(widget, watcher):
     return widget
 
 
+@PropertyPages.register(Base)
+class TypeLabelPropertyPage(PropertyPageBase):
+    order = 0
+
+    def __init__(self, subject):
+        super().__init__()
+        self.subject = subject.subject if isinstance(subject, Presentation) else subject
+
+    def construct(self):
+        if not self.subject:
+            return
+
+        builder = new_builder(
+            "type-label-editor",
+        )
+
+        type = builder.get_object("type-label")
+        type.set_text(gettext(self.subject.__class__.__name__))
+
+        return builder.get_object("type-label-editor")
+
+
 @PropertyPages.register(Diagram)
 class NamePropertyPage(PropertyPageBase):
     """An adapter which works for any named item view.
@@ -155,9 +185,6 @@ class NamePropertyPage(PropertyPageBase):
 
         entry = builder.get_object("name-entry")
         entry.set_text(subject and subject.name or "")
-
-        type = builder.get_object("type-label")
-        type.set_text(subject.__class__.__name__)
 
         @handler_blocking(entry, "changed", self._on_name_changed)
         def handler(event):
@@ -289,9 +316,9 @@ class InternalsPropertyPage(PropertyPageBase):
         if isinstance(subject, Presentation):
             presentation_text = textwrap.dedent(
                 f"""\
-                {gettext('Presentation')}:
-                  {gettext('class')}: {presentation_class(subject)}
-                  {gettext('id')}: {subject.id}"""
+                {gettext("Presentation")}:
+                  {gettext("class")}: {presentation_class(subject)}
+                  {gettext("id")}: {subject.id}"""
             )
             element = subject.subject
         else:
@@ -301,10 +328,10 @@ class InternalsPropertyPage(PropertyPageBase):
         element_text = (
             textwrap.dedent(
                 f"""\
-                {gettext('Model Element')}:
-                  {gettext('qname')}: {'.'.join(map(str, getattr(element, "qualifiedName", ["-"])))}
-                  {gettext('class')}: {model_element_class(element)}
-                  {gettext('id')}: {element.id}"""
+                {gettext("Model Element")}:
+                  {gettext("qname")}: {".".join(map(str, getattr(element, "qualifiedName", ["-"])))}
+                  {gettext("class")}: {model_element_class(element)}
+                  {gettext("id")}: {element.id}"""
             )
             if element
             else ""

@@ -1,7 +1,12 @@
 import pytest
 
+from gaphor.services.modelinglanguage import ModelingLanguageService
 from gaphor.storage.parser import element
-from gaphor.storage.storage import load_elements
+from gaphor.storage.storage import (
+    load_elements,
+    sysml_diagram_type_to_class,
+    uml_diagram_type_to_class,
+)
 from gaphor.storage.upgrade_canvasitem import upgrade_canvasitem
 from gaphor.UML import Dependency, Diagram, Image, Package, diagramitems
 
@@ -202,3 +207,59 @@ def test_upgrade_dependency_owning_package(loader, element_factory):
     new_dep = next(element_factory.select(Dependency))
 
     assert new_dep.owner is new_pkg
+
+
+@pytest.mark.parametrize(
+    "orig_type,kind,ns,new_type",
+    [
+        ["Diagram", "", "UML", "Diagram"],
+        ["Diagram", "cls", "UML", "ClassDiagram"],
+        ["Diagram", "pkg", "UML", "PackageDiagram"],
+        ["Diagram", "cmp", "UML", "ComponentDiagram"],
+        ["Diagram", "dep", "UML", "DeploymentDiagram"],
+        ["Diagram", "prf", "UML", "ProfileDiagram"],
+        ["Diagram", "act", "UML", "ActivityDiagram"],
+        ["Diagram", "sd", "UML", "SequenceDiagram"],
+        ["Diagram", "com", "UML", "CommunicationDiagram"],
+        ["Diagram", "stm", "UML", "StateMachineDiagram"],
+        ["Diagram", "uc", "UML", "UseCaseDiagram"],
+        ["Diagram", "bdd", "SysML", "BlockDefinitionDiagram"],
+        ["Diagram", "bdd", "SysML", "BlockDefinitionDiagram"],
+        ["Diagram", "ibd", "SysML", "InternalBlockDiagram"],
+        ["Diagram", "req", "SysML", "RequirementDiagram"],
+        ["SysMLDiagram", "bdd", "SysML", "BlockDefinitionDiagram"],
+        ["SysMLDiagram", "ibd", "SysML", "InternalBlockDiagram"],
+        ["SysMLDiagram", "par", "SysML", "ParametricDiagram"],
+        ["SysMLDiagram", "pkg", "SysML", "PackageDiagram"],
+        ["SysMLDiagram", "req", "SysML", "RequirementDiagram"],
+        ["SysMLDiagram", "act", "SysML", "ActivityDiagram"],
+        ["SysMLDiagram", "sd", "SysML", "SequenceDiagram"],
+        ["SysMLDiagram", "stm", "SysML", "StateMachineDiagram"],
+        ["SysMLDiagram", "uc", "SysML", "UseCaseDiagram"],
+    ],
+)
+def test_diagram_type_to_class(
+    orig_type, kind, ns, new_type, element_factory, modeling_language
+):
+    e = element(id="1", type=orig_type)
+    e.values["diagramType"] = kind
+
+    load_elements({"1": e}, element_factory, modeling_language)
+    diagram = next(element_factory.select())
+    expected_type = modeling_language.lookup_element(new_type, ns)
+
+    assert type(diagram) is expected_type
+
+
+@pytest.mark.parametrize(
+    "kind,ns,name",
+    (
+        [(k, n, m) for k, (n, m) in uml_diagram_type_to_class.items()]
+        + [(k, n, m) for k, (n, m) in sysml_diagram_type_to_class.items()]
+    ),
+)
+def test_diagram_type_to_class_mapping(kind, ns, name):
+    modeling_language = ModelingLanguageService()
+    diagram_class = modeling_language.lookup_element(name, ns)
+
+    assert diagram_class.diagramType.default == kind

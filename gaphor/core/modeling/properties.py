@@ -29,6 +29,7 @@ import decimal
 import logging
 import math
 from collections.abc import Callable, Iterable, Sequence
+from dataclasses import dataclass
 from typing import (
     Any,
     Generic,
@@ -187,9 +188,9 @@ class subsettable_umlproperty(umlproperty):
                 + self.name
             )
         self.subsets.add(subset)
-        assert isinstance(
-            subset, association | derived | redefine
-        ), f"have element {subset}, expected association, derived or redefine"
+        assert isinstance(subset, association | derived | redefine), (
+            f"have element {subset}, expected association, derived or redefine"
+        )
         subset.dependent_properties.add(self)
 
     def propagate(self, event): ...
@@ -692,13 +693,13 @@ class associationstub(umlproperty):
             c.discard(value)
 
 
+@dataclass
 class unioncache:
     """Small cache helper object for derivedunions."""
 
-    def __init__(self, owner: object, data: object, version: int) -> None:
-        self.owner = owner
-        self.data = data
-        self.version = version
+    owner: object
+    data: object
+    version: int
 
 
 class derived(subsettable_umlproperty, Generic[T]):
@@ -941,9 +942,9 @@ class redefine(umlproperty):
         opposite: str | None = None,
     ):
         super().__init__(name)
-        assert isinstance(
-            original, association | derived
-        ), f"expected association or derived, got {original}"
+        assert isinstance(original, association | derived), (
+            f"expected association or derived, got {original}"
+        )
         self.decl_class = decl_class
         self.type = type
         self.original: association | derived = original

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gaphor 2.18.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-27 15:44-0500\n"
+"POT-Creation-Date: 2024-12-30 14:25-0500\n"
 "PO-Revision-Date: 2023-04-29 13:23+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language: de\n"
@@ -1755,6 +1755,24 @@ msgid ""
 "representations in any of the diagrams."
 msgstr ""
 
+#: ../first_model.md:78
+msgid "Examples of Gaphor models"
+msgstr ""
+
+#: ../first_model.md:80
+#, fuzzy
+msgid "SysML Models"
+msgstr "C4 Modell"
+
+#: ../first_model.md:81
+msgid ""
+"To see how a larger model comes together in Gaphor check out [Gaphor "
+"Distilled](https://github.com/mikekidner/gaphor_distilled) which "
+"implements the DELL-SAT-77 model used as the basis for [SysML "
+"Distilled](https://delligattiassociates.com/publications/?_gl=1*1tu6ekh*_ga*MTMwMTU4NjMyNC4xNzMyNTYyOTUw*_up*MQ..)"
+" one of the standard references for the SysML language."
+msgstr ""
+
 #: ../framework.md:1
 msgid "Framework"
 msgstr ""
@@ -1788,7 +1806,7 @@ msgid ""
 "interested in. For example, a diagram item could register an event rule "
 "and then check if the element that sent the event is actually the event "
 "the item is representing. For more information see the full description "
-"of the [event system](event_system.md)."
+"of the [event system](event_system)."
 msgstr ""
 
 #: ../framework.md:23
@@ -1861,7 +1879,7 @@ msgid ""
 "stored if a transaction is active. If a transaction is completed "
 "(committed) a new undo action is stored. Transactions can also be rolled "
 "back, in which case all changes are played back directly. For more "
-"information see the full description of the [undo manager](undo.md)."
+"information see the full description of the [undo manager](undo)."
 msgstr ""
 
 #: ../framework.md:65
@@ -1889,38 +1907,38 @@ msgstr ""
 msgid "It looks something like this:"
 msgstr ""
 
-#: ../gaphor-services.md:51
+#: ../gaphor-services.md:56
 msgid "Let's first load the entry points."
 msgstr ""
 
-#: ../gaphor-services.md:61
+#: ../gaphor-services.md:68
 msgid "Now let's create a component in our model for every service."
 msgstr ""
 
-#: ../gaphor-services.md:78
+#: ../gaphor-services.md:85
 msgid ""
 "With all components mapped, we can create dependencies between those "
 "components, based on the constructor parameter names."
 msgstr ""
 
-#: ../gaphor-services.md:94
+#: ../gaphor-services.md:101
 msgid ""
 "With all elements in the model, we can create a diagram. Let's drop the "
 "components and dependencies on the diagram and let auto-layout do its "
 "magic."
 msgstr ""
 
-#: ../gaphor-services.md:97
+#: ../gaphor-services.md:104
 msgid ""
 "To make the dependency look good, we have to add a style sheet. If you "
 "create a new diagram via the GUI, this element is automatically added."
 msgstr ""
 
-#: ../gaphor-services.md:111
+#: ../gaphor-services.md:118
 msgid "Last step is to layout and draw the diagram."
 msgstr ""
 
-#: ../gaphor-services.md:121
+#: ../gaphor-services.md:128
 msgid ""
 "That's all. As you can see from the diagram, a lot of services rely on "
 "`EventManager`."
@@ -2028,6 +2046,7 @@ msgid "Diagram Element Toolbox"
 msgstr ""
 
 #: ../getting_started.md:36 ../getting_started.md:80
+#: ../models/raaml/Diagrams.rst:2 ../models/sysml/Diagrams.rst:2
 msgid "Diagrams"
 msgstr ""
 
@@ -2475,55 +2494,59 @@ msgid ""
 "execute:"
 msgstr ""
 
-#: ../linux.md:61 ../macos.md:18
+#: ../linux.md:61
+msgid "For Redhat/RPM/Fedora based systems:"
+msgstr ""
+
+#: ../linux.md:67 ../macos.md:18
 msgid ""
 "Install [Poetry](https://python-poetry.org) using "
 "[pipx](https://pypa.github.io/pipx/):"
 msgstr ""
 
-#: ../linux.md:66
+#: ../linux.md:72
 msgid ""
 "Next, [clone the repository](https://help.github.com/en/github/creating-"
 "cloning-and-archiving-repositories/cloning-a-repository), after which you"
 " need to execute the following consecutive commands:"
 msgstr ""
 
-#: ../linux.md:77 ../macos.md:30
+#: ../linux.md:83 ../macos.md:30
 msgid "Now, you can run gaphor as"
 msgstr ""
 
-#: ../linux.md:82
+#: ../linux.md:88
 msgid ""
 "NOTE: Gaphor requires GTK 4. It works best with GTK >=4.8 and libadwaita "
 ">=1.2."
 msgstr ""
 
-#: ../linux.md:84 ../macos.md:44 ../windows.md:169
+#: ../linux.md:90 ../macos.md:44 ../windows.md:169
 msgid "Debugging using Visual Studio Code"
 msgstr ""
 
-#: ../linux.md:86
+#: ../linux.md:92
 msgid ""
 "Before you start debugging you'll need to open Gaphor in vscode (the "
 "folder containing `pyproject.toml`). You'll need to have the Python "
 "extension installed."
 msgstr ""
 
-#: ../linux.md:89 ../macos.md:49
+#: ../linux.md:95 ../macos.md:49
 msgid "Create a file `.vscode/launch.json` with the following content:"
 msgstr ""
 
-#: ../linux.md:109
+#: ../linux.md:115
 msgid ""
 "`GDK_BACKEND` is added since VSCode by default uses XWayland (the X11 "
 "emulator)."
 msgstr ""
 
-#: ../linux.md:111
+#: ../linux.md:117
 msgid "Create a Flatpak Package"
 msgstr ""
 
-#: ../linux.md:113
+#: ../linux.md:119
 msgid ""
 "The main method that Gaphor is packaged for Linux is with a Flatpak "
 "package. [Flatpak](https://flatpak.org) is a software utility for "
@@ -2532,64 +2555,64 @@ msgid ""
 "from the rest of the system."
 msgstr ""
 
-#: ../linux.md:118
+#: ../linux.md:124
 msgid ""
 "We distribute the official Flatpak using [Flathub](https://flathub.org), "
 "and building of the image is done at the [Gaphor Flathub "
 "repository](https://github.com/flathub/org.gaphor.Gaphor)."
 msgstr ""
 
-#: ../linux.md:122
+#: ../linux.md:128
 msgid "[Install Flatpak](https://flatpak.org/setup)"
 msgstr ""
 
-#: ../linux.md:124
+#: ../linux.md:130
 msgid "Install flatpak-builder"
 msgstr ""
 
-#: ../linux.md:128
+#: ../linux.md:134
 msgid "Install the GNOME SDK"
 msgstr ""
 
-#: ../linux.md:132
+#: ../linux.md:138
 msgid "Clone the Flathub repository and install the necessary SDK:"
 msgstr ""
 
-#: ../linux.md:138
+#: ../linux.md:144
 msgid "Build Gaphor Flatpak"
 msgstr ""
 
-#: ../linux.md:142
+#: ../linux.md:148
 msgid "Install the Flatpak"
 msgstr ""
 
-#: ../linux.md:146
+#: ../linux.md:152
 msgid "Linux Distribution Packages"
 msgstr ""
 
-#: ../linux.md:148
+#: ../linux.md:154
 msgid ""
 "Examples of Gaphor and Gaphas RPM spec files can be found in [PLD "
 "Linux](https://www.pld-linux.org/) [repository](https://github.com/pld-"
 "linux/):"
 msgstr ""
 
-#: ../linux.md:152
+#: ../linux.md:158
 msgid "https://github.com/pld-linux/python-gaphas"
 msgstr ""
 
-#: ../linux.md:153
+#: ../linux.md:159
 msgid "https://github.com/pld-linux/gaphor"
 msgstr ""
 
-#: ../linux.md:155
+#: ../linux.md:161
 msgid ""
 "There is also an [Arch User Repository (AUR) for "
 "Gaphor](https://aur.archlinux.org/packages/python-gaphor) available for "
 "Arch users."
 msgstr ""
 
-#: ../linux.md:159
+#: ../linux.md:165
 msgid ""
 "Please, do not hesitate to contact us if you need help to create a Linux "
 "package for Gaphor or Gaphas."
@@ -2896,6 +2919,10 @@ msgid ""
 "that specific modeling language only."
 msgstr ""
 
+#: gaphor.abc.ModelingLanguage.model_browser_model:1 of
+msgid "A model for use in the Model Browser."
+msgstr ""
+
 #: gaphor.abc.ModelingLanguage.name:1 of
 msgid "Human-readable name of the modeling language."
 msgstr ""
@@ -3117,40 +3144,51 @@ msgstr ""
 
 #: ../modeling_language.md:163
 msgid ""
+"Return the owner for `element`. The owner may be `Root`, denoting the "
+"element should be placed in the root of the ownership hierarchy. If "
+"`None` is returned, there is no owner."
+msgstr ""
+
+#: ../modeling_language.md:169
+msgid "Returns all elements owned by `element"
+msgstr ""
+
+#: ../modeling_language.md:174
+msgid ""
 "Group an element in a parent element. The grouping can be based on "
 "ownership, but other types of grouping are also possible."
 msgstr ""
 
-#: ../modeling_language.md:169
+#: ../modeling_language.md:180
 msgid ""
 "Remove the grouping from an element. The function needs to check if the "
 "provided `parent` node is the right one."
 msgstr ""
 
-#: ../modeling_language.md:175
+#: ../modeling_language.md:186
 msgid ""
 "This function tries to determine if grouping is possible, without "
 "actually performing a group operation. This is not 100% accurate."
 msgstr ""
 
-#: ../modeling_language.md:180
+#: ../modeling_language.md:191
 msgid "Dropping"
 msgstr ""
 
-#: ../modeling_language.md:182
+#: ../modeling_language.md:193
 msgid ""
 "Dropping is performed by dragging an element from the tree view and drop "
 "it on a diagram. This is an easy way to extend a diagram with already "
 "existing model elements."
 msgstr ""
 
-#: ../modeling_language.md:185
+#: ../modeling_language.md:196
 msgid ""
 "Alternatively, a presentation item can be dropped on top of another "
 "element."
 msgstr ""
 
-#: ../modeling_language.md:189
+#: ../modeling_language.md:200
 msgid ""
 "The drop function creates a new presentation for an element on the "
 "diagram, if the element is not a presentation yet. For relationships, a "
@@ -3158,43 +3196,43 @@ msgid ""
 "diagram."
 msgstr ""
 
-#: ../modeling_language.md:194
+#: ../modeling_language.md:205
 msgid ""
 "While grouping deals with connecting model elements, dropping deals with "
 "creating and placing presentation elements on the right item in a "
 "diagram."
 msgstr ""
 
-#: ../modeling_language.md:198
+#: ../modeling_language.md:209
 msgid "Automated model cleanup"
 msgstr ""
 
-#: ../modeling_language.md:200
+#: ../modeling_language.md:211
 msgid "Gaphor wants to keep the model in sync with the diagrams."
 msgstr ""
 
-#: ../modeling_language.md:202
+#: ../modeling_language.md:213
 msgid ""
 "A little dispatch function is used to determine if a model element can be"
 " removed."
 msgstr ""
 
-#: ../modeling_language.md:206
+#: ../modeling_language.md:217
 msgid "Determine if a model element can safely be removed."
 msgstr ""
 
-#: ../modeling_language.md:209
+#: ../modeling_language.md:220
 msgid "Property Editor pages"
 msgstr ""
 
-#: ../modeling_language.md:211
+#: ../modeling_language.md:222
 msgid ""
 "The editor page is constructed from snippets. For example: almost each "
 "element has a name, so there is a UI snippet that allows you to edit a "
 "name."
 msgstr ""
 
-#: ../modeling_language.md:214
+#: ../modeling_language.md:225
 msgid "Each property page (snippet) should inherit from `PropertyPageBase`."
 msgstr ""
 
@@ -3210,29 +3248,29 @@ msgstr ""
 msgid "Returns the page's toplevel widget (Gtk.Widget)."
 msgstr ""
 
-#: ../modeling_language.md:221
+#: ../modeling_language.md:232
 msgid "Instant (diagram) editor popups"
 msgstr ""
 
-#: ../modeling_language.md:223
+#: ../modeling_language.md:234
 msgid ""
 "When you double-click on an item in a diagram, a popup can show up, so "
 "you can easily change the name."
 msgstr ""
 
-#: ../modeling_language.md:225
+#: ../modeling_language.md:236
 msgid ""
 "By default, this works for any named element. You can register your own "
 "inline editor function if you need to."
 msgstr ""
 
-#: ../modeling_language.md:229
+#: ../modeling_language.md:240
 msgid ""
 "Show a small editor popup in the diagram. Makes for easy editing without "
 "resorting to the Element editor."
 msgstr ""
 
-#: ../modeling_language.md:232
+#: ../modeling_language.md:243
 msgid ""
 "In case of a mouse press event, the mouse position (relative to the "
 "element) are also provided."
@@ -3275,11 +3313,15 @@ msgid ""
 "This allows us to provide you nice diagrams of Gaphor’s internal model."
 msgstr ""
 
-#: ../models/core.rst:18
+#: ../models/core.rst:16
+msgid "The core model with presentation classes"
+msgstr ""
+
+#: ../models/core.rst:19
 msgid "The ``Base`` Class"
 msgstr ""
 
-#: ../models/core.rst:20
+#: ../models/core.rst:21
 msgid ""
 "The :obj:`~gaphor.core.modeling.Base` class provides event notification "
 "and integrates with the model repository (internally known as "
@@ -3290,7 +3332,7 @@ msgid ""
 "relations."
 msgstr ""
 
-#: ../models/core.rst:27
+#: ../models/core.rst:28
 msgid ""
 "The :obj:`~gaphor.core.modeling.base.RepositoryProtocol`, and "
 ":obj:`~gaphor.core.modeling.base.EventWatcherProtocol` protocols are "
@@ -3298,7 +3340,7 @@ msgid ""
 "mechanisms."
 msgstr ""
 
-#: ../models/core.rst:32
+#: ../models/core.rst:33
 msgid "The class ``Base`` is the core of Gaphor’s data model."
 msgstr ""
 
@@ -3330,7 +3372,7 @@ msgid ""
 "avoid recursion problems."
 msgstr ""
 
-#: ../models/core.rst:44
+#: ../models/core.rst:45
 msgid "Event handling"
 msgstr ""
 
@@ -3364,7 +3406,7 @@ msgstr ""
 msgid "This example is purely illustrative:"
 msgstr ""
 
-#: ../models/core.rst:52
+#: ../models/core.rst:53
 msgid "Loading and saving"
 msgstr ""
 
@@ -3388,7 +3430,7 @@ msgstr ""
 msgid "Save the state by calling ``save_func(name, value)``."
 msgstr ""
 
-#: ../models/core.rst:62
+#: ../models/core.rst:63
 msgid "OCL-style methods"
 msgstr ""
 
@@ -3400,7 +3442,7 @@ msgstr ""
 msgid "Returns :const:`True` if the object is of the same type as the ``other``."
 msgstr ""
 
-#: ../models/core.rst:70
+#: ../models/core.rst:71
 msgid "The ``Presentation`` class"
 msgstr ""
 
@@ -3452,7 +3494,7 @@ msgid ""
 "remains in the same place."
 msgstr ""
 
-#: ../models/core.rst:83
+#: ../models/core.rst:84
 msgid "The ``Diagram`` class"
 msgstr ""
 
@@ -3514,45 +3556,45 @@ msgid ""
 "it's invoked. Constraints are solved."
 msgstr ""
 
-#: ../models/core.rst:98
+#: ../models/core.rst:99
 msgid "Protocols"
 msgstr ""
 
-#: ../models/core.rst:104
+#: ../models/core.rst:105
 msgid "Create a new element in the repository."
 msgstr ""
 
-#: ../models/core.rst:108
+#: ../models/core.rst:109
 msgid "Select elements from the repository that fulfill ``expression``."
 msgstr ""
 
-#: ../models/core.rst:113
+#: ../models/core.rst:114
 msgid "Select all elements from the repository of type ``type_``."
 msgstr ""
 
-#: ../models/core.rst:118
+#: ../models/core.rst:119
 msgid "Select all elements from the repository."
 msgstr ""
 
-#: ../models/core.rst:122
+#: ../models/core.rst:123
 msgid "Get an element by id from the repository."
 msgstr ""
 
-#: ../models/core.rst:124
+#: ../models/core.rst:125
 msgid "Returns :const:`None` if no such element exists."
 msgstr ""
 
-#: ../models/core.rst:130
+#: ../models/core.rst:131
 msgid ""
 "Add a watch for a specific path. The path is relative to the element that"
 " created the watcher object."
 msgstr ""
 
-#: ../models/core.rst:133
+#: ../models/core.rst:134
 msgid "Returns ``self``, so watch operations can be chained."
 msgstr ""
 
-#: ../models/core.rst:137
+#: ../models/core.rst:138
 msgid ""
 "Should be called before the watcher is disposed, to release all watched "
 "paths."
@@ -4541,6 +4583,37 @@ msgid ""
 " Oriented Architecture documentation page](service_oriented.md)."
 msgstr ""
 
+#: ../plugins.md:118
+msgid "Community Developed Plugins"
+msgstr ""
+
+#: ../plugins.md:120
+msgid "Gaphor_Tools"
+msgstr ""
+
+#: ../plugins.md:121
+msgid "What does it do?"
+msgstr ""
+
+#: ../plugins.md:122
+msgid ""
+"Import and export of SysML requirements and notes to Excel and "
+"Confluence. It's currently at the proof-of-concept stage of development, "
+"but does allow a requirements table to be exported, then edited and "
+"imported bringing in all the changes to the model, similarly for element "
+"notes."
+msgstr ""
+
+#: ../plugins.md:123
+msgid "Where can I get it?"
+msgstr ""
+
+#: ../plugins.md:124
+msgid ""
+"From this [BitBucket "
+"Repo](https://bitbucket.org/resonatesystems/gaphor_tools/src/main/)"
+msgstr ""
+
 #: ../scripting.md:5
 msgid "Jupyter and Scripting"
 msgstr ""
@@ -4610,13 +4683,13 @@ msgid ""
 "manager."
 msgstr ""
 
-#: ../scripting.md:66
+#: ../scripting.md:68
 msgid ""
 "At this point the model is loaded in the `element_factory` and can be "
 "queried."
 msgstr ""
 
-#: ../scripting.md:69
+#: ../scripting.md:71
 msgid ""
 "A modeling language consists of the model elements, and diagram items. "
 "Graphical components are loaded separately. For the most basic "
@@ -4624,14 +4697,14 @@ msgid ""
 "run into situations where Gaphor tries to load the GTK library."
 msgstr ""
 
-#: ../scripting.md:74
+#: ../scripting.md:76
 msgid ""
 "One trick to avoid this (when generating Sphinx docs at least) is to use "
 "autodoc’s mock function to mock out the GTK and GDK libraries. However, "
 "Pango needs to be installed for text rendering."
 msgstr ""
 
-#: ../scripting.md:79
+#: ../scripting.md:81
 msgid ""
 "A simple query only tells you what elements are in the model. The method "
 "`ElementFactory.select()` returns an iterator. Sometimes it’s easier to "
@@ -4639,54 +4712,54 @@ msgid ""
 "`ElementFatory.lselect()`. Here we select the last five elements:"
 msgstr ""
 
-#: ../scripting.md:89
+#: ../scripting.md:91
 msgid "Elements can also be queried by type and with a predicate function:"
 msgstr ""
 
-#: ../scripting.md:104
+#: ../scripting.md:106
 msgid ""
 "Now, let’s say we want to do some simple (pseudo-)code generation. We can"
 " iterate class attributes and write some output."
 msgstr ""
 
-#: ../scripting.md:125
+#: ../scripting.md:127
 msgid ""
 "To find out which relations can be queried, have a look at the [modeling "
 "language](modeling_language) documentation. Gaphor’s data models have "
 "been built using the [UML](models/uml) language."
 msgstr ""
 
-#: ../scripting.md:129
+#: ../scripting.md:131
 msgid "You can find out more about a model property by printing it."
 msgstr ""
 
-#: ../scripting.md:135
+#: ../scripting.md:137
 msgid ""
 "In this case it tells us that the type of `UML.Class.ownedAttribute` is "
 "`UML.Property`. `UML.Property.class_` is set to the owner class when "
 "`ownedAttribute` is set. It is a bidirectional relation."
 msgstr ""
 
-#: ../scripting.md:139
+#: ../scripting.md:141
 msgid "Draw a diagram"
 msgstr ""
 
-#: ../scripting.md:141
+#: ../scripting.md:143
 msgid ""
 "Another nice feature is drawing the diagrams. At this moment this "
 "requires a function. This behavior is similar to the [`diagram` "
 "directive](sphinx)."
 msgstr ""
 
-#: ../scripting.md:152
+#: ../scripting.md:154
 msgid "Create a diagram"
 msgstr ""
 
-#: ../scripting.md:154
+#: ../scripting.md:156
 msgid "(Requires Gaphor 2.13)"
 msgstr ""
 
-#: ../scripting.md:156
+#: ../scripting.md:158
 msgid ""
 "Now let's make something a little more fancy. We still have the core "
 "model loaded in the element factory. From this model we can create a "
@@ -4694,7 +4767,7 @@ msgid ""
 "make it a readable diagram."
 msgstr ""
 
-#: ../scripting.md:161
+#: ../scripting.md:163
 msgid ""
 "To create the diagram, we [`drop` elements](modeling_language:dropping) "
 "on the diagram. Items on a diagram represent an element in the model. "
@@ -4702,92 +4775,104 @@ msgid ""
 "connect, the association will be added."
 msgstr ""
 
-#: ../scripting.md:187
+#: ../scripting.md:189
 msgid "The diagram is not perfect, but you get the picture."
 msgstr ""
 
-#: ../scripting.md:189
+#: ../scripting.md:191
 msgid "Update a model"
 msgstr ""
 
-#: ../scripting.md:191
+#: ../scripting.md:193
 msgid ""
 "Updating a model always starts with the element factory: that’s where "
 "elements are created."
 msgstr ""
 
-#: ../scripting.md:194
+#: ../scripting.md:196
 msgid "To create a UML Class instance, you can:"
 msgstr ""
 
-#: ../scripting.md:201
+#: ../scripting.md:203
 msgid ""
 "To give it an attribute, create an attribute type (`UML.Property`) and "
 "then assign the attribute values."
 msgstr ""
 
-#: ../scripting.md:211
+#: ../scripting.md:213
 msgid "Adding it to the diagram looks like this:"
 msgstr ""
 
-#: ../scripting.md:219
+#: ../scripting.md:221
 msgid "If you save the model, your changes are persisted:"
 msgstr ""
 
-#: ../scripting.md:227
+#: ../scripting.md:229
 msgid "Updating elements"
 msgstr ""
 
-#: ../scripting.md:229
+#: ../scripting.md:231
 msgid ""
 "If you need to update existing elements, this can be done by keeping "
 "track of the element ID. Each element in the model has a unique internal "
 "id. Once again we need some imports from Gaphor:"
 msgstr ""
 
-#: ../scripting.md:242
+#: ../scripting.md:244
 msgid "Then start up the services we will use:"
 msgstr ""
 
-#: ../scripting.md:261
+#: ../scripting.md:263
 msgid "and load in the model to the session"
 msgstr ""
 
-#: ../scripting.md:278
+#: ../scripting.md:280
 msgid ""
 "Importantly, the changes are made as part of a `Transaction`. Here we "
 "find the element with the same id, and then update the content. We then "
 "save the altered model to a file."
 msgstr ""
 
-#: ../scripting.md:293
+#: ../scripting.md:295
 msgid "What else"
 msgstr ""
 
-#: ../scripting.md:295
+#: ../scripting.md:297
 msgid "What else is there to know…"
 msgstr ""
 
-#: ../scripting.md:297
+#: ../scripting.md:299
 msgid ""
 "Gaphor supports derived associations. For example, `element.owner` points"
 " to the owner element. For an attribute that would be its containing "
 "class."
 msgstr ""
 
-#: ../scripting.md:298
+#: ../scripting.md:300
+msgid ""
+"The module `gaphor.UML.recipes` contains several functions for "
+"manipulating elements and their associations."
+msgstr ""
+
+#: ../scripting.md:301
+msgid ""
+"The tests for a given modelling language are a good place to find "
+"reference examples of element creation and modification."
+msgstr ""
+
+#: ../scripting.md:302
 msgid ""
 "All data models are described in the `Modeling Languages` section of the "
 "docs."
 msgstr ""
 
-#: ../scripting.md:299
+#: ../scripting.md:303
 msgid ""
 "If you use Gaphor’s Console, you’ll need to apply all changes in a "
 "transaction, or they will result in an error."
 msgstr ""
 
-#: ../scripting.md:300
+#: ../scripting.md:304
 msgid ""
 "If you want a comprehensive example of a code generator, have a look at "
 "[Gaphor’s `coder` "
@@ -4796,42 +4881,42 @@ msgid ""
 "Gaphor."
 msgstr ""
 
-#: ../scripting.md:301
+#: ../scripting.md:305
 msgid ""
 "This page is rendered with [MyST-NB](https://myst-nb.readthedocs.io/). "
 "It’s actually a Jupyter Notebook!"
 msgstr ""
 
-#: ../scripting.md:303
+#: ../scripting.md:307
 msgid "Examples"
 msgstr ""
 
-#: ../scripting.md:305
+#: ../scripting.md:309
 msgid ""
 "Expanding on the information above the following snippetts show how to "
 "create requirements and interfaces."
 msgstr ""
 
-#: ../scripting.md:307
+#: ../scripting.md:311
 msgid "Requirements from text fields"
 msgstr ""
 
-#: ../scripting.md:332
+#: ../scripting.md:336
 #, fuzzy
 msgid "Interfaces from dictionaries"
 msgstr "Interaktionen"
 
-#: ../scripting.md:363
+#: ../scripting.md:367
 msgid "Basic Validation"
 msgstr ""
 
-#: ../scripting.md:364
+#: ../scripting.md:368
 msgid ""
 "Some simple validation checks can be run using a couple of small "
 "functions to select and evaluate elements."
 msgstr ""
 
-#: ../scripting.md:388
+#: ../scripting.md:392
 msgid "Here is another example:"
 msgstr ""
 
@@ -5063,88 +5148,92 @@ msgid ""
 msgstr ""
 
 #: ../sphinx.rst:36
-msgid "`Image properties`_ can also be applied:"
+msgid "`Figure`_, and `Image properties`_ can also be applied:"
 msgstr ""
 
-#: ../sphinx.rst:-1
+#: ../sphinx.rst:47
 msgid "A description suitable for an example"
 msgstr ""
 
 #: ../sphinx.rst:53
+msgid "You can also add a caption, if you want."
+msgstr ""
+
+#: ../sphinx.rst:56
 msgid "Configuration"
 msgstr ""
 
-#: ../sphinx.rst:55
+#: ../sphinx.rst:58
 msgid ""
 "To add Gaphor diagram support to Sphinx, make sure Gaphor is listed as a "
 "dependency."
 msgstr ""
 
-#: ../sphinx.rst:59
+#: ../sphinx.rst:62
 msgid "Gaphor requires at least Python 3.9."
 msgstr ""
 
-#: ../sphinx.rst:61
+#: ../sphinx.rst:64
 msgid "Secondly, add the following to your ``conf.py`` file:"
 msgstr ""
 
-#: ../sphinx.rst:63
+#: ../sphinx.rst:66
 msgid "Step 1: Add gaphor as extension."
 msgstr ""
 
-#: ../sphinx.rst:71
+#: ../sphinx.rst:74
 msgid "Step 2: Add references to models"
 msgstr ""
 
-#: ../sphinx.rst:84
+#: ../sphinx.rst:87
 msgid "Now include ``diagram`` directives in your documents."
 msgstr ""
 
-#: ../sphinx.rst:88
+#: ../sphinx.rst:91
 msgid "Read the Docs"
 msgstr ""
 
-#: ../sphinx.rst:90
+#: ../sphinx.rst:93
 msgid ""
 "The diagram directive plays nice with `Read the docs`_. To make diagrams "
 "render, it's best to use a `.readthedocs.yaml`_ file in your project. "
 "Make sure to include the extra ``apt_packages`` as shown below."
 msgstr ""
 
-#: ../sphinx.rst:94
+#: ../sphinx.rst:97
 msgid "This is the ``.readthedocs.yaml`` file we use for Gaphor:"
 msgstr ""
 
-#: ../sphinx.rst:99
+#: ../sphinx.rst:102
 msgid "``libgirepository1.0-dev`` is required to build PyGObject."
 msgstr ""
 
-#: ../sphinx.rst:100
+#: ../sphinx.rst:103
 msgid "``gir1.2-pango-1.0`` is required for text rendering."
 msgstr ""
 
-#: ../sphinx.rst:104
+#: ../sphinx.rst:107
 msgid ""
 "For Gaphor 2.7.0, ``gir1.2-gtk-3.0`` and ``gir1.2-gtksource-4`` are "
 "required ``apt_packages``, although we do not use the GUI. From Gaphor "
 "2.7.1 onwards all you need is GI-repository and Pango."
 msgstr ""
 
-#: ../sphinx.rst:109
+#: ../sphinx.rst:112
 msgid "Errors"
 msgstr ""
 
-#: ../sphinx.rst:111
+#: ../sphinx.rst:114
 msgid ""
 "Errors are shown on the console when the documentation is built and in "
 "the document."
 msgstr ""
 
-#: ../sphinx.rst:113
+#: ../sphinx.rst:116
 msgid "An error will appear in the documentation. Something like this:"
 msgstr ""
 
-#: ../sphinx.rst:117
+#: ../sphinx.rst:120
 msgid ""
 "No diagram ‘Wrong name’ in model ‘example’ (../examples/sequence-"
 "diagram.gaphor)."
@@ -6882,7 +6971,7 @@ msgid ""
 msgstr ""
 
 #: ../windows.md:244
-msgid "where ``gaphor'' can be any name desired for the environment."
+msgid "where  ``gaphor`` can be any name desired for the environment."
 msgstr ""
 
 #: ../windows.md:246
@@ -7735,5 +7824,8 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "Grab a coffee, the build will take a few minutes to complete."
+#~ msgstr ""
+
+#~ msgid "`Image properties`_ can also be applied:"
 #~ msgstr ""
 

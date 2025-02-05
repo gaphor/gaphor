@@ -870,6 +870,58 @@ class FunctionalBehavior(OpaqueBehavior):
     pass
 
 
+class StructureDiagram(Diagram):
+    pass
+
+
+class ProfileDiagram(StructureDiagram):
+    diagramType: _attribute[str] = _attribute("diagramType", str, default="prf")
+
+
+class DeploymentDiagram(StructureDiagram):
+    diagramType: _attribute[str] = _attribute("diagramType", str, default="dep")
+
+
+class ClassDiagram(StructureDiagram):
+    diagramType: _attribute[str] = _attribute("diagramType", str, default="cls")
+
+
+class ComponentDiagram(StructureDiagram):
+    diagramType: _attribute[str] = _attribute("diagramType", str, default="cmp")
+
+
+class PackageDiagram(StructureDiagram):
+    diagramType: _attribute[str] = _attribute("diagramType", str, default="pkg")
+
+
+class BehaviorDiagram(Diagram):
+    pass
+
+
+class InteractionDiagram(BehaviorDiagram, StructureDiagram):
+    pass
+
+
+class CommunicationDiagram(InteractionDiagram, StructureDiagram):
+    diagramType: _attribute[str] = _attribute("diagramType", str, default="com")
+
+
+class UseCaseDiagram(BehaviorDiagram, StructureDiagram):
+    diagramType: _attribute[str] = _attribute("diagramType", str, default="uc")
+
+
+class ActivityDiagram(BehaviorDiagram, StructureDiagram):
+    diagramType: _attribute[str] = _attribute("diagramType", str, default="act")
+
+
+class StateMachineDiagram(BehaviorDiagram, StructureDiagram):
+    diagramType: _attribute[str] = _attribute("diagramType", str, default="stm")
+
+
+class SequenceDiagram(InteractionDiagram, StructureDiagram):
+    diagramType: _attribute[str] = _attribute("diagramType", str, default="sd")
+
+
 # 65: override Lifeline.parse: Callable[[Lifeline, str], None]
 # defined in umloverrides.py
 

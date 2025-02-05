@@ -516,9 +516,9 @@ def in_super_model(
         ):
             if not (is_in_profile(cls) or is_enumeration(cls)):
                 element_type = modeling_language.lookup_element(cls.name)
-                assert (
-                    element_type
-                ), f"Type {cls.name} found in model, but not in generated model"
+                assert element_type, (
+                    f"Type {cls.name} found in model, but not in generated model"
+                )
                 return element_type, cls
     return None, None
 

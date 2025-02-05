@@ -2,6 +2,7 @@ from gaphor.diagram.diagramtoolbox import DiagramType
 from gaphor.diagram.group import change_owner
 from gaphor.diagram.support import represents
 from gaphor.i18n import gettext
+from gaphor.SysML.diagramframe import DiagramFrameItem
 from gaphor.SysML.sysml import SysMLDiagram
 from gaphor.UML.general import DiagramItem
 
@@ -16,23 +17,21 @@ class DiagramDefault:
 
 
 class SysMLDiagramType(DiagramType):
-    def __init__(self, id, name, sections, allowed_types=(), defaults=()):
-        super().__init__(id, name, sections)
-        self._allowed_types = allowed_types
+    def __init__(self, diagram_type, name, sections, allowed_types, defaults=()):
+        super().__init__(diagram_type, name, sections, allowed_types)
         assert all(d.to_type in allowed_types for d in defaults)
         self._defaults = defaults
 
     def allowed(self, element) -> bool:
-        if isinstance(element, self._allowed_types):
-            return True
-
-        return any(isinstance(element, d.from_type) for d in self._defaults)
+        return super().allowed(element) or any(
+            isinstance(element, d.from_type) for d in self._defaults
+        )
 
     def create(self, element_factory, element):
-        if not isinstance(element, self._allowed_types):
+        if not isinstance(element, self.allowed_owner_types):
             try:
                 d = next(d for d in self._defaults if isinstance(element, d.from_type))
-                assert d.to_type in self._allowed_types
+                assert d.to_type in self.allowed_owner_types
                 new_element = element_factory.create(d.to_type)
                 new_element.name = d.name
                 if element:
@@ -45,10 +44,14 @@ class SysMLDiagramType(DiagramType):
                     )
                 ) from si
 
-        diagram = element_factory.create(SysMLDiagram)
+        diagram = element_factory.create(self.diagram_type)
         diagram.name = diagram.gettext(self.name)
         diagram.diagramType = self.id
         if element:
             change_owner(element, diagram)
+
+        frame = diagram.create(DiagramFrameItem, subject=diagram.element)
+        frame.width = max(600, frame.width)
+        frame.height = max(400, frame.height)
 
         return diagram

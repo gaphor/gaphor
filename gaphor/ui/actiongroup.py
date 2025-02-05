@@ -43,6 +43,12 @@ def window_action_group(component_registry) -> ActionGroup:
     return ActionGroup(actions=action_group, shortcuts=store)
 
 
+def apply_action_group(provider, scope, target_widget):
+    action_group, shortcuts = create_action_group(provider, scope)
+    target_widget.insert_action_group(scope, action_group)
+    target_widget.add_controller(create_shortcut_controller(shortcuts))
+
+
 def create_action_group(provider, scope) -> ActionGroup:
     action_group = Gio.SimpleActionGroup.new()
     store = Gio.ListStore.new(Gtk.Shortcut)
@@ -52,6 +58,12 @@ def create_action_group(provider, scope) -> ActionGroup:
         for shortcut in act.shortcuts:
             store.append(_new_shortcut(_platform_specific(shortcut), act.detailed_name))
     return ActionGroup(actions=action_group, shortcuts=store)
+
+
+def create_shortcut_controller(shortcuts):
+    ctrl = Gtk.ShortcutController.new_for_model(shortcuts)
+    ctrl.set_scope(Gtk.ShortcutScope.LOCAL)
+    return ctrl
 
 
 def _platform_specific(shortcut):

@@ -1,6 +1,6 @@
 repos:
 - repo: https://github.com/pre-commit/mirrors-mypy
-  rev: f56614daa94d5cd733d3b7004c5df9caad267b4a  # frozen: v1.13.0
+  rev: bbc3dc1f890007061f18f17e2334f216ea9e5df7  # frozen: v1.14.1
   hooks:
   - id: mypy
     additional_dependencies:
@@ -17,7 +17,7 @@ repos:
   - id: shellcheck
     args: [--exclude, SC1017]
 - repo: https://github.com/astral-sh/ruff-pre-commit
-  rev: '8b76f04e7e5a9cd259e9d1db7799599355f97cdf'  # frozen: v0.8.2
+  rev: '871f3bcae4fe473cd7109c3a068db975dc035e3b'  # frozen: v0.9.4
   hooks:
   - id: ruff
     args: [--fix, --preview]

@@ -14,4 +14,5 @@ Gaphor implements parts of the [RAAML 1.0 specification](https://www.omg.org/spe
 raaml/Core
 raaml/General
 raaml/Methods
+raaml/Diagrams
 ```

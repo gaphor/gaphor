@@ -10,6 +10,8 @@ from gaphas.tool.rubberband import RubberbandPainter, RubberbandState
 from gaphas.view import GtkView
 from gi.repository import Adw, Gdk, GdkPixbuf, Gio, GLib, Gtk
 
+import gaphor.diagram.align
+from gaphor.action import action
 from gaphor.core import event_handler, gettext
 from gaphor.core.modeling.diagram import StyledDiagram
 from gaphor.core.modeling.event import (
@@ -19,6 +21,7 @@ from gaphor.core.modeling.event import (
 )
 from gaphor.diagram.diagramtoolbox import get_tool_def, tooliter
 from gaphor.diagram.painter import DiagramTypePainter, ItemPainter
+from gaphor.diagram.presentation import ElementPresentation
 from gaphor.diagram.tools import (
     apply_default_tool_set,
     apply_magnet_tool_set,
@@ -27,6 +30,7 @@ from gaphor.diagram.tools import (
 from gaphor.diagram.tools.magnet import MagnetPainter
 from gaphor.i18n import translated_ui_string
 from gaphor.transaction import Transaction
+from gaphor.ui.actiongroup import apply_action_group
 from gaphor.ui.clipboard import Clipboard
 from gaphor.ui.event import DiagramClosed, ToolSelected
 
@@ -79,6 +83,19 @@ def get_placement_icon(display, icon_name):
 
 def get_placement_cursor(display, icon_name):
     return Gdk.Cursor.new_from_texture(get_placement_icon(display, icon_name), 1, 1)
+
+
+align = {
+    "left": gaphor.diagram.align.align_left,
+    "right": gaphor.diagram.align.align_right,
+    "vertical-center": gaphor.diagram.align.align_vertical_center,
+    "top": gaphor.diagram.align.align_top,
+    "bottom": gaphor.diagram.align.align_bottom,
+    "horizontal-center": gaphor.diagram.align.align_horizontal_center,
+    "max-height": gaphor.diagram.align.resize_max_height,
+    "max-width": gaphor.diagram.align.resize_max_width,
+    "max-size": gaphor.diagram.align.resize_max_size,
+}
 
 
 class DiagramPage:
@@ -145,7 +162,26 @@ class DiagramPage:
         # Set model only after the painters are set
         view.model = self.diagram
 
-        return builder.get_object("diagrampage")
+        diagrampage = builder.get_object("diagrampage")
+        apply_action_group(self, "diagram", diagrampage)
+
+        return diagrampage
+
+    @action(name="diagram.align")
+    def toggle_editor_preferences(self, target: str):
+        if self.view and (
+            len(
+                elements := {
+                    item
+                    for item in self.view.selection.selected_items
+                    if isinstance(item, ElementPresentation)
+                }
+            )
+            >= 2
+        ):
+            with Transaction(self.event_manager):
+                align[target](elements)
+                self.diagram.update(self.diagram.ownedPresentation)
 
     def apply_tool_set(self, tool_name):
         """Return a tool associated with an id (action name).
@@ -297,6 +333,7 @@ def context_menu_controller(context_menu, diagram):
     def on_show_popup(ctrl, n_press, x, y):
         if (
             Transaction.in_transaction()
+            or ctrl.get_last_event() is None
             or not ctrl.get_last_event().triggers_context_menu()
         ):
             return

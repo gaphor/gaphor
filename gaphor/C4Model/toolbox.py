@@ -4,6 +4,7 @@ from functools import partial
 
 from gaphas.item import SE
 
+import gaphor.UML.uml as UML
 from gaphor.C4Model import c4model, diagramitems
 from gaphor.diagram.diagramtoolbox import (
     DiagramType,
@@ -21,17 +22,6 @@ from gaphor.UML.general.generaltoolbox import general_tools
 from gaphor.UML.interactions.interactionstoolbox import interactions
 from gaphor.UML.states.statestoolbox import states
 from gaphor.UML.toolboxconfig import default_namespace, namespace_config
-from gaphor.UML.uml import (
-    Activity,
-    Class,
-    Component,
-    DataType,
-    Enumeration,
-    Interaction,
-    Package,
-    PrimitiveType,
-    StateMachine,
-)
 
 
 def software_system_config(new_item):
@@ -148,27 +138,34 @@ c4model_toolbox_actions: ToolboxDefinition = (
 )
 
 c4model_diagram_types: DiagramTypes = (
-    DiagramType("c4", i18nize("C4 Diagram"), (c4,)),
-    DiagramType("cls", i18nize("Class Diagram"), (classes,)),
-    DiagramType("act", i18nize("Activity Diagram"), (actions,)),
-    DiagramType("sd", i18nize("Sequence Diagram"), (interactions,)),
-    DiagramType("stm", i18nize("State Machine Diagram"), (states,)),
+    DiagramType(c4model.C4Diagram, i18nize("C4 Diagram"), (c4,)),
+    DiagramType(UML.ClassDiagram, i18nize("Class Diagram"), (classes,)),
+    DiagramType(UML.ActivityDiagram, i18nize("Activity Diagram"), (actions,)),
+    DiagramType(UML.SequenceDiagram, i18nize("Sequence Diagram"), (interactions,)),
+    DiagramType(UML.StateMachineDiagram, i18nize("State Machine Diagram"), (states,)),
+    DiagramType(UML.Diagram, i18nize("Generic Diagram"), ()),
 )
 
 c4model_element_types = (
-    ElementCreateInfo("package", i18nize("Package"), Package, (Package,)),
-    ElementCreateInfo("activity", i18nize("Activity"), Activity, (Package,)),
-    ElementCreateInfo("interaction", i18nize("Interaction"), Interaction, (Package,)),
+    ElementCreateInfo("package", i18nize("Package"), UML.Package, (UML.Package,)),
+    ElementCreateInfo("activity", i18nize("Activity"), UML.Activity, (UML.Package,)),
     ElementCreateInfo(
-        "statemachine", i18nize("State Machine"), StateMachine, (Package,)
+        "interaction", i18nize("Interaction"), UML.Interaction, (UML.Package,)
     ),
-    ElementCreateInfo("class", i18nize("Class"), Class, (Package,)),
-    ElementCreateInfo("component", i18nize("Component"), Component, (Package,)),
-    ElementCreateInfo("datatype", i18nize("Data Type"), DataType, (Package,)),
-    ElementCreateInfo("enumeration", i18nize("Enumeration"), Enumeration, (Package,)),
     ElementCreateInfo(
-        "primitive", i18nize("Primitive Type"), PrimitiveType, (Package,)
+        "statemachine", i18nize("State Machine"), UML.StateMachine, (UML.Package,)
     ),
-    ElementCreateInfo("person", i18nize("Person"), c4model.Person, (Package,)),
-    ElementCreateInfo("database", i18nize("Database"), c4model.Database, (Package,)),
+    ElementCreateInfo("class", i18nize("Class"), UML.Class, (UML.Package,)),
+    ElementCreateInfo("component", i18nize("Component"), UML.Component, (UML.Package,)),
+    ElementCreateInfo("datatype", i18nize("Data Type"), UML.DataType, (UML.Package,)),
+    ElementCreateInfo(
+        "enumeration", i18nize("Enumeration"), UML.Enumeration, (UML.Package,)
+    ),
+    ElementCreateInfo(
+        "primitive", i18nize("Primitive Type"), UML.PrimitiveType, (UML.Package,)
+    ),
+    ElementCreateInfo("person", i18nize("Person"), c4model.Person, (UML.Package,)),
+    ElementCreateInfo(
+        "database", i18nize("Database"), c4model.Database, (UML.Package,)
+    ),
 )

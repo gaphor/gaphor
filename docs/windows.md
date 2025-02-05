@@ -241,7 +241,7 @@ If you use anaconda for other projects, it's a good idea to create a new environ
 conda create -n "gaphor"
 conda activate gaphor
 ```
-where ``gaphor'' can be any name desired for the environment.
+where ``gaphor`` can be any name desired for the environment.
 
 ### Update packages in the new environment
 

@@ -39,21 +39,25 @@
   padding: 0;
 }
 
-:root > pentagon {
+diagramframe {
+  justify-content: start;
+}
+
+:is(:root, diagramframe) > pentagon {
   line-width: 1;
   background-color: var(--opaque-background-color);
 }
 
-:root > pentagon > diagramtype {
+:is(:root, diagramframe) > pentagon > diagramtype {
   font-weight: bold;
   padding: 4 0 4 4;
 }
 
-:root > pentagon > stereotypes {
+:is(:root, diagramframe) > pentagon > stereotypes {
   padding: 4 0 4 4;
 }
 
-:root > pentagon > name {
+:is(:root, diagramframe) > pentagon > name {
   padding: 4;
 }
 
@@ -88,6 +92,10 @@ comment {
   padding: 4 16 4 4;
 }
 
+comment stereotypes {
+  text-align: center;
+}
+
 comment body {
   padding: 0;
 }
@@ -119,6 +127,7 @@ metadata heading {
 pentagon {
   padding: 4;
   justify-content: start;
+  text-align: left;
 }
 
 /* UML */
@@ -309,7 +318,6 @@ from {
   font-size: x-small;
 }
 
-interaction > pentagon,
 activity > :is(name, stereotypes) {
   text-align: left;
 }

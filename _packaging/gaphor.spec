@@ -23,9 +23,7 @@ mo_files = [
 def get_version() -> Version:
     project_dir = Path.cwd().parent
     f = project_dir / "pyproject.toml"
-    return Version(
-        tomllib.loads(f.read_text(encoding="utf-8"))["tool"]["poetry"]["version"]
-    )
+    return Version(tomllib.loads(f.read_text(encoding="utf-8"))["project"]["version"])
 
 
 def collect_entry_points(*names):
