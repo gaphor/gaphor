@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-12-30 13:50-0500\n"
+"POT-Creation-Date: 2025-01-29 12:18-0300\n"
 "PO-Revision-Date: 2021-10-21 12:41+0000\n"
 "Last-Translator: Tomo Dote <fu7mu4@gmail.com>\n"
 "Language: ja\n"
@@ -1327,7 +1327,7 @@ msgstr "デバイス"
 msgid "New Image"
 msgstr "新スイムレーン"
 
-#: gaphor/UML/general/generaltoolbox.py:25 gaphor/ui/help/shortcuts.ui:14
+#: gaphor/UML/general/generaltoolbox.py:25 gaphor/ui/help/shortcuts.ui:34
 msgid "General"
 msgstr ""
 
@@ -1804,38 +1804,38 @@ msgstr "新ダイアグラム(_D)"
 msgid "Export all diagrams as SVG diagrams in a specifieddirectory"
 msgstr ""
 
-#: gaphor/plugins/diagramexport/export.py:127
-#: gaphor/plugins/diagramexport/export.py:147
-#: gaphor/plugins/diagramexport/export.py:167
-#: gaphor/plugins/diagramexport/export.py:187
+#: gaphor/plugins/diagramexport/export.py:125
+#: gaphor/plugins/diagramexport/export.py:143
+#: gaphor/plugins/diagramexport/export.py:161
+#: gaphor/plugins/diagramexport/export.py:179
 #, fuzzy
 msgid "Export all diagrams"
 msgstr "新ダイアグラム(_D)"
 
-#: gaphor/plugins/diagramexport/export.py:140
+#: gaphor/plugins/diagramexport/export.py:138
 #, fuzzy
 msgid "Export all diagrams as PNG"
 msgstr "新ダイアグラム(_D)"
 
-#: gaphor/plugins/diagramexport/export.py:141
+#: gaphor/plugins/diagramexport/export.py:139
 msgid "Export all diagrams as PNG diagrams in a specifieddirectory"
 msgstr ""
 
-#: gaphor/plugins/diagramexport/export.py:160
+#: gaphor/plugins/diagramexport/export.py:156
 #, fuzzy
 msgid "Export all diagrams as PDF"
 msgstr "新ダイアグラム(_D)"
 
-#: gaphor/plugins/diagramexport/export.py:161
+#: gaphor/plugins/diagramexport/export.py:157
 msgid "Export all diagrams as PDF diagrams in a specifieddirectory"
 msgstr ""
 
-#: gaphor/plugins/diagramexport/export.py:180
+#: gaphor/plugins/diagramexport/export.py:174
 #, fuzzy
 msgid "Export all diagrams as EPS"
 msgstr "新ダイアグラム(_D)"
 
-#: gaphor/plugins/diagramexport/export.py:181
+#: gaphor/plugins/diagramexport/export.py:175
 msgid "Export all diagrams as EPS diagrams in a specifieddirectory"
 msgstr ""
 
@@ -1870,7 +1870,7 @@ msgid "This model contains unsaved changes. The changes have been restored."
 msgstr ""
 
 #: gaphor/templates/blank.gaphor gaphor/ui/mainwindow.py:273
-#: gaphor/ui/mainwindow.py:278 gaphor/ui/mainwindow.ui:124
+#: gaphor/ui/mainwindow.py:278 gaphor/ui/mainwindow.ui:125
 msgid "New model"
 msgstr "新モデル"
 
@@ -2620,23 +2620,23 @@ msgstr ""
 msgid "Show in Model Browser"
 msgstr ""
 
-#: gaphor/ui/diagrampage.ui:29 gaphor/ui/help/shortcuts.ui:91
+#: gaphor/ui/diagrampage.ui:29 gaphor/ui/help/shortcuts.ui:111
 msgid "Undo"
 msgstr "取消"
 
-#: gaphor/ui/diagrampage.ui:44 gaphor/ui/help/shortcuts.ui:98
+#: gaphor/ui/diagrampage.ui:44 gaphor/ui/help/shortcuts.ui:118
 msgid "Redo"
 msgstr "再実行"
 
-#: gaphor/ui/diagrampage.ui:66 gaphor/ui/help/shortcuts.ui:178
+#: gaphor/ui/diagrampage.ui:66 gaphor/ui/help/shortcuts.ui:198
 msgid "Zoom Out"
 msgstr "ズームアウト"
 
-#: gaphor/ui/diagrampage.ui:81 gaphor/ui/help/shortcuts.ui:185
+#: gaphor/ui/diagrampage.ui:81 gaphor/ui/help/shortcuts.ui:205
 msgid "Reset Zoom"
 msgstr ""
 
-#: gaphor/ui/diagrampage.ui:96 gaphor/ui/help/shortcuts.ui:171
+#: gaphor/ui/diagrampage.ui:96 gaphor/ui/help/shortcuts.ui:191
 msgid "Zoom In"
 msgstr "ズームイン"
 
@@ -2653,8 +2653,8 @@ msgstr ""
 msgid "Align Right"
 msgstr ""
 
-#: gaphor/ui/diagrampage.ui:142 gaphor/ui/diagrampage.ui:159
-msgid "Align Horizontal Center"
+#: gaphor/ui/diagrampage.ui:142
+msgid "Align Vertical Center"
 msgstr ""
 
 #: gaphor/ui/diagrampage.ui:149
@@ -2663,6 +2663,10 @@ msgstr ""
 
 #: gaphor/ui/diagrampage.ui:154
 msgid "Align Bottom"
+msgstr ""
+
+#: gaphor/ui/diagrampage.ui:159
+msgid "Align Horizontal Center"
 msgstr ""
 
 #: gaphor/ui/diagrampage.ui:166
@@ -2730,7 +2734,7 @@ msgid "Editors"
 msgstr "エディタ"
 
 #: gaphor/ui/elementeditor.ui:116 gaphor/ui/greeter.ui:14
-#: gaphor/ui/help/preferences.ui:6 gaphor/ui/help/shortcuts.ui:19
+#: gaphor/ui/help/preferences.ui:6 gaphor/ui/help/shortcuts.ui:39
 #: gaphor/ui/mainwindow.py:61
 msgid "Preferences"
 msgstr "設定"
@@ -2940,7 +2944,7 @@ msgstr ""
 msgid "Discard"
 msgstr ""
 
-#: gaphor/ui/filemanager.py:416 gaphor/ui/help/shortcuts.ui:213
+#: gaphor/ui/filemanager.py:416 gaphor/ui/help/shortcuts.ui:233
 #: gaphor/ui/mainwindow.py:51
 msgid "Save"
 msgstr "保存"
@@ -3003,7 +3007,7 @@ msgstr "C4 モデル"
 msgid "C4 Model example of a banking system"
 msgstr ""
 
-#: gaphor/ui/greeter.ui:8 gaphor/ui/greeter.ui:53 gaphor/ui/mainwindow.py:47
+#: gaphor/ui/greeter.ui:8 gaphor/ui/greeter.ui:55 gaphor/ui/mainwindow.py:47
 #, fuzzy
 msgid "Open Model…"
 msgstr "Gaphorモデルを開く"
@@ -3012,26 +3016,25 @@ msgstr "Gaphorモデルを開く"
 msgid "Keyboard Shortcuts"
 msgstr "キーボードショートカット"
 
-#: gaphor/ui/greeter.ui:22 gaphor/ui/help/about.ui:10
-#: gaphor/ui/mainwindow.py:63
+#: gaphor/ui/greeter.ui:22 gaphor/ui/help/about.ui:9 gaphor/ui/mainwindow.py:63
 msgid "About Gaphor"
 msgstr "Gaphor について"
 
-#: gaphor/ui/greeter.ui:84
+#: gaphor/ui/greeter.ui:86
 msgid "Recently Opened"
 msgstr ""
 
-#: gaphor/ui/greeter.ui:101
+#: gaphor/ui/greeter.ui:103
 #, fuzzy
 msgid "Create New Model"
 msgstr "新モデル"
 
-#: gaphor/ui/help/shortcuts.ui:199 gaphor/ui/mainwindow.py:46
+#: gaphor/ui/help/shortcuts.ui:219 gaphor/ui/mainwindow.py:46
 #, fuzzy
 msgid "New Model…"
 msgstr "新モデル"
 
-#: gaphor/ui/help/shortcuts.ui:220 gaphor/ui/mainwindow.py:52
+#: gaphor/ui/help/shortcuts.ui:240 gaphor/ui/mainwindow.py:52
 msgid "Save As…"
 msgstr "別名で保存…"
 
@@ -3061,12 +3064,12 @@ msgstr "アプリケーションメニューを開く"
 msgid "New diagram menu"
 msgstr "新ダイアグラム(_D)"
 
-#: gaphor/ui/help/shortcuts.ui:62 gaphor/ui/mainwindow.ui:137
+#: gaphor/ui/help/shortcuts.ui:82 gaphor/ui/mainwindow.ui:138
 #, fuzzy
 msgid "Toggle Model Preferences"
 msgstr "設定"
 
-#: gaphor/ui/help/shortcuts.ui:55 gaphor/ui/mainwindow.ui:152
+#: gaphor/ui/help/shortcuts.ui:75 gaphor/ui/mainwindow.ui:153
 msgid "Toggle Property Editor"
 msgstr ""
 
@@ -3112,11 +3115,11 @@ msgstr ""
 msgid "Discard Changes and Reload"
 msgstr ""
 
-#: gaphor/ui/help/__init__.py:78
+#: gaphor/ui/help/__init__.py:73
 msgid "Restart Gaphor to enable language changes"
 msgstr ""
 
-#: gaphor/ui/help/about.ui:13
+#: gaphor/ui/help/about.ui:12
 msgid ""
 "Copyright © 2001 The Gaphor Development Team.\n"
 "\n"
@@ -3125,7 +3128,7 @@ msgid ""
 "countries."
 msgstr ""
 
-#: gaphor/ui/help/about.ui:21
+#: gaphor/ui/help/about.ui:20
 msgid ""
 "Licensed under the Apache License, Version 2.0 (the \"License\"); you may"
 " not use this application except in compliance with the License. You may "
@@ -3188,79 +3191,84 @@ msgstr ""
 msgid "Automatically remove elements no longer in use in any diagram."
 msgstr ""
 
-#: gaphor/ui/help/shortcuts.ui:26
+#: gaphor/ui/help/shortcuts.ui:4 gaphor/ui/help/shortcuts.ui:11
+#, fuzzy
+msgid "Shortcuts"
+msgstr "キーボードショートカット"
+
+#: gaphor/ui/help/shortcuts.ui:46
 msgid "Quit Gaphor"
 msgstr "Gaphor終了"
 
-#: gaphor/ui/help/shortcuts.ui:36
+#: gaphor/ui/help/shortcuts.ui:56
 #, fuzzy
 msgid "Model"
 msgstr "C4 モデル"
 
-#: gaphor/ui/help/shortcuts.ui:41
+#: gaphor/ui/help/shortcuts.ui:61
 #, fuzzy
 msgid "Rename"
 msgstr "別名(_R)"
 
-#: gaphor/ui/help/shortcuts.ui:48
+#: gaphor/ui/help/shortcuts.ui:68
 msgid "Search"
 msgstr ""
 
-#: gaphor/ui/help/shortcuts.ui:69
+#: gaphor/ui/help/shortcuts.ui:89
 msgid "Close Diagram"
 msgstr "ダイアグラムを閉じる"
 
-#: gaphor/ui/help/shortcuts.ui:76
+#: gaphor/ui/help/shortcuts.ui:96
 msgid "Toggle Fullscreen"
 msgstr ""
 
-#: gaphor/ui/help/shortcuts.ui:86
+#: gaphor/ui/help/shortcuts.ui:106
 #, fuzzy
 msgid "Undo and Redo"
 msgstr "順序なし"
 
-#: gaphor/ui/help/shortcuts.ui:108
+#: gaphor/ui/help/shortcuts.ui:128
 #, fuzzy
 msgid "Selections"
 msgstr "アクション"
 
-#: gaphor/ui/help/shortcuts.ui:113
+#: gaphor/ui/help/shortcuts.ui:133
 msgid "Select All"
 msgstr "全て選択"
 
-#: gaphor/ui/help/shortcuts.ui:120
+#: gaphor/ui/help/shortcuts.ui:140
 msgid "Deselect All"
 msgstr "全ての選択を解除"
 
-#: gaphor/ui/help/shortcuts.ui:130
+#: gaphor/ui/help/shortcuts.ui:150
 msgid "Copy and Paste"
 msgstr ""
 
-#: gaphor/ui/help/shortcuts.ui:135
+#: gaphor/ui/help/shortcuts.ui:155
 msgid "Copy"
 msgstr "コピー"
 
-#: gaphor/ui/help/shortcuts.ui:142
+#: gaphor/ui/help/shortcuts.ui:162
 msgid "Cut"
 msgstr ""
 
-#: gaphor/ui/help/shortcuts.ui:149
+#: gaphor/ui/help/shortcuts.ui:169
 msgid "Paste (link defining elements)"
 msgstr ""
 
-#: gaphor/ui/help/shortcuts.ui:156
+#: gaphor/ui/help/shortcuts.ui:176
 msgid "Paste (copy defining elements)"
 msgstr ""
 
-#: gaphor/ui/help/shortcuts.ui:166
+#: gaphor/ui/help/shortcuts.ui:186
 msgid "Zoom"
 msgstr "ズーム"
 
-#: gaphor/ui/help/shortcuts.ui:194
+#: gaphor/ui/help/shortcuts.ui:214
 msgid "Files"
 msgstr "ファイル"
 
-#: gaphor/ui/help/shortcuts.ui:206
+#: gaphor/ui/help/shortcuts.ui:226
 #, fuzzy
 msgid "Open a Model…"
 msgstr "Gaphorモデルを開く"

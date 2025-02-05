@@ -7,17 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-12-30 13:59-0500\n"
+"POT-Creation-Date: 2025-01-29 12:18-0300\n"
 "PO-Revision-Date: 2025-01-07 01:02+0000\n"
 "Last-Translator: ovari <ovari123@zoho.com>\n"
-"Language-Team: Hungarian <https://hosted.weblate.org/projects/gaphor/gaphor/"
-"hu/>\n"
 "Language: hu\n"
+"Language-Team: Hungarian "
+"<https://hosted.weblate.org/projects/gaphor/gaphor/hu/>\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.10-dev\n"
 "Generated-By: Babel 2.16.0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:28 gaphor/C4Model/toolbox.py:57
@@ -1327,7 +1326,7 @@ msgstr "eszköz"
 msgid "New Image"
 msgstr "Új kép"
 
-#: gaphor/UML/general/generaltoolbox.py:25 gaphor/ui/help/shortcuts.ui:14
+#: gaphor/UML/general/generaltoolbox.py:25 gaphor/ui/help/shortcuts.ui:34
 msgid "General"
 msgstr "Általános"
 
@@ -1769,34 +1768,34 @@ msgstr "Összes ábra exportálása SVG-fájlként"
 msgid "Export all diagrams as SVG diagrams in a specifieddirectory"
 msgstr "Összes ábra exportálása SVG-fájlként egy megadott könyvtárba"
 
-#: gaphor/plugins/diagramexport/export.py:127
-#: gaphor/plugins/diagramexport/export.py:147
-#: gaphor/plugins/diagramexport/export.py:167
-#: gaphor/plugins/diagramexport/export.py:187
+#: gaphor/plugins/diagramexport/export.py:125
+#: gaphor/plugins/diagramexport/export.py:143
+#: gaphor/plugins/diagramexport/export.py:161
+#: gaphor/plugins/diagramexport/export.py:179
 msgid "Export all diagrams"
 msgstr "Összes ábra exportálása"
 
-#: gaphor/plugins/diagramexport/export.py:140
+#: gaphor/plugins/diagramexport/export.py:138
 msgid "Export all diagrams as PNG"
 msgstr "Összes ábra exportálása PNG-fájlként"
 
-#: gaphor/plugins/diagramexport/export.py:141
+#: gaphor/plugins/diagramexport/export.py:139
 msgid "Export all diagrams as PNG diagrams in a specifieddirectory"
 msgstr "Összes ábra exportálása PNG-fájlként egy megadott könyvtárba"
 
-#: gaphor/plugins/diagramexport/export.py:160
+#: gaphor/plugins/diagramexport/export.py:156
 msgid "Export all diagrams as PDF"
 msgstr "Összes ábra exportálása PDF-fájlként"
 
-#: gaphor/plugins/diagramexport/export.py:161
+#: gaphor/plugins/diagramexport/export.py:157
 msgid "Export all diagrams as PDF diagrams in a specifieddirectory"
 msgstr "Összes ábra exportálása PDF-fájlként egy megadott könyvtárba"
 
-#: gaphor/plugins/diagramexport/export.py:180
+#: gaphor/plugins/diagramexport/export.py:174
 msgid "Export all diagrams as EPS"
 msgstr "Összes ábra exportálása EPS-fájlként"
 
-#: gaphor/plugins/diagramexport/export.py:181
+#: gaphor/plugins/diagramexport/export.py:175
 msgid "Export all diagrams as EPS diagrams in a specifieddirectory"
 msgstr "Összes ábra exportálása EPS-fájlként egy megadott könyvtárba"
 
@@ -1838,7 +1837,7 @@ msgstr ""
 "helyreállították."
 
 #: gaphor/templates/blank.gaphor gaphor/ui/mainwindow.py:273
-#: gaphor/ui/mainwindow.py:278 gaphor/ui/mainwindow.ui:124
+#: gaphor/ui/mainwindow.py:278 gaphor/ui/mainwindow.ui:125
 msgid "New model"
 msgstr "Új modell"
 
@@ -2556,23 +2555,23 @@ msgstr "Váltás"
 msgid "Show in Model Browser"
 msgstr "Megjelenítés a Modellböngészőben"
 
-#: gaphor/ui/diagrampage.ui:29 gaphor/ui/help/shortcuts.ui:91
+#: gaphor/ui/diagrampage.ui:29 gaphor/ui/help/shortcuts.ui:111
 msgid "Undo"
 msgstr "Visszavonás"
 
-#: gaphor/ui/diagrampage.ui:44 gaphor/ui/help/shortcuts.ui:98
+#: gaphor/ui/diagrampage.ui:44 gaphor/ui/help/shortcuts.ui:118
 msgid "Redo"
 msgstr "Ismét"
 
-#: gaphor/ui/diagrampage.ui:66 gaphor/ui/help/shortcuts.ui:178
+#: gaphor/ui/diagrampage.ui:66 gaphor/ui/help/shortcuts.ui:198
 msgid "Zoom Out"
 msgstr "Kicsinyítés"
 
-#: gaphor/ui/diagrampage.ui:81 gaphor/ui/help/shortcuts.ui:185
+#: gaphor/ui/diagrampage.ui:81 gaphor/ui/help/shortcuts.ui:205
 msgid "Reset Zoom"
 msgstr "Tényleges méret"
 
-#: gaphor/ui/diagrampage.ui:96 gaphor/ui/help/shortcuts.ui:171
+#: gaphor/ui/diagrampage.ui:96 gaphor/ui/help/shortcuts.ui:191
 msgid "Zoom In"
 msgstr "Nagyítás"
 
@@ -2588,8 +2587,9 @@ msgstr "Balra igazítás"
 msgid "Align Right"
 msgstr "Jobbra igazítás"
 
-#: gaphor/ui/diagrampage.ui:142 gaphor/ui/diagrampage.ui:159
-msgid "Align Horizontal Center"
+#: gaphor/ui/diagrampage.ui:142
+#, fuzzy
+msgid "Align Vertical Center"
 msgstr "Vízszintes középre igazítás"
 
 #: gaphor/ui/diagrampage.ui:149
@@ -2599,6 +2599,10 @@ msgstr "Felülre igazítás"
 #: gaphor/ui/diagrampage.ui:154
 msgid "Align Bottom"
 msgstr "Alulra igazítás"
+
+#: gaphor/ui/diagrampage.ui:159
+msgid "Align Horizontal Center"
+msgstr "Vízszintes középre igazítás"
 
 #: gaphor/ui/diagrampage.ui:166
 msgid "Max Width"
@@ -2677,7 +2681,7 @@ msgid "Editors"
 msgstr "Szerkesztők"
 
 #: gaphor/ui/elementeditor.ui:116 gaphor/ui/greeter.ui:14
-#: gaphor/ui/help/preferences.ui:6 gaphor/ui/help/shortcuts.ui:19
+#: gaphor/ui/help/preferences.ui:6 gaphor/ui/help/shortcuts.ui:39
 #: gaphor/ui/mainwindow.py:61
 msgid "Preferences"
 msgstr "Beállítások"
@@ -2889,7 +2893,7 @@ msgstr ""
 msgid "Discard"
 msgstr "Elvetés"
 
-#: gaphor/ui/filemanager.py:416 gaphor/ui/help/shortcuts.ui:213
+#: gaphor/ui/filemanager.py:416 gaphor/ui/help/shortcuts.ui:233
 #: gaphor/ui/mainwindow.py:51
 msgid "Save"
 msgstr "Mentés"
@@ -2956,7 +2960,7 @@ msgstr "C4-modell példa"
 msgid "C4 Model example of a banking system"
 msgstr "C4-modell példa egy bankrendszerre"
 
-#: gaphor/ui/greeter.ui:8 gaphor/ui/greeter.ui:53 gaphor/ui/mainwindow.py:47
+#: gaphor/ui/greeter.ui:8 gaphor/ui/greeter.ui:55 gaphor/ui/mainwindow.py:47
 msgid "Open Model…"
 msgstr "Modell megnyitása…"
 
@@ -2964,24 +2968,23 @@ msgstr "Modell megnyitása…"
 msgid "Keyboard Shortcuts"
 msgstr "Billentyűparancsok"
 
-#: gaphor/ui/greeter.ui:22 gaphor/ui/help/about.ui:10
-#: gaphor/ui/mainwindow.py:63
+#: gaphor/ui/greeter.ui:22 gaphor/ui/help/about.ui:9 gaphor/ui/mainwindow.py:63
 msgid "About Gaphor"
 msgstr "A Gaphor névjegye"
 
-#: gaphor/ui/greeter.ui:84
+#: gaphor/ui/greeter.ui:86
 msgid "Recently Opened"
 msgstr "Legutóbb megnyitott"
 
-#: gaphor/ui/greeter.ui:101
+#: gaphor/ui/greeter.ui:103
 msgid "Create New Model"
 msgstr "Új modell létrehozása"
 
-#: gaphor/ui/help/shortcuts.ui:199 gaphor/ui/mainwindow.py:46
+#: gaphor/ui/help/shortcuts.ui:219 gaphor/ui/mainwindow.py:46
 msgid "New Model…"
 msgstr "Új modell…"
 
-#: gaphor/ui/help/shortcuts.ui:220 gaphor/ui/mainwindow.py:52
+#: gaphor/ui/help/shortcuts.ui:240 gaphor/ui/mainwindow.py:52
 msgid "Save As…"
 msgstr "Mentés másként…"
 
@@ -3009,11 +3012,11 @@ msgstr "Alkalmazásmenü megnyitása"
 msgid "New diagram menu"
 msgstr "Új ábra menü"
 
-#: gaphor/ui/help/shortcuts.ui:62 gaphor/ui/mainwindow.ui:137
+#: gaphor/ui/help/shortcuts.ui:82 gaphor/ui/mainwindow.ui:138
 msgid "Toggle Model Preferences"
 msgstr "Modellbeállítások kapcsoló"
 
-#: gaphor/ui/help/shortcuts.ui:55 gaphor/ui/mainwindow.ui:152
+#: gaphor/ui/help/shortcuts.ui:75 gaphor/ui/mainwindow.ui:153
 msgid "Toggle Property Editor"
 msgstr "Tulajdonságszerkesztő kapcsoló"
 
@@ -3057,11 +3060,11 @@ msgstr "Modell módosított a lemezen"
 msgid "Discard Changes and Reload"
 msgstr "Módosítások elvetése és újratöltés"
 
-#: gaphor/ui/help/__init__.py:78
+#: gaphor/ui/help/__init__.py:73
 msgid "Restart Gaphor to enable language changes"
 msgstr "Indítsa újra a Gaphort a nyelvi módosítások engedélyezéséhez"
 
-#: gaphor/ui/help/about.ui:13
+#: gaphor/ui/help/about.ui:12
 msgid ""
 "Copyright © 2001 The Gaphor Development Team.\n"
 "\n"
@@ -3074,7 +3077,7 @@ msgstr ""
 "Az UML, SysML és RAAML az Object Management Group, Inc. bejegyzett "
 "védjegyei vagy védjegyei az Egyesült Államokban és/vagy más országokban."
 
-#: gaphor/ui/help/about.ui:21
+#: gaphor/ui/help/about.ui:20
 msgid ""
 "Licensed under the Apache License, Version 2.0 (the \"License\"); you may"
 " not use this application except in compliance with the License. You may "
@@ -3146,75 +3149,80 @@ msgstr ""
 "Önműködően távolítsa el azokat az elemeket, amelyeket már nem használnak "
 "az ábrákban."
 
-#: gaphor/ui/help/shortcuts.ui:26
+#: gaphor/ui/help/shortcuts.ui:4 gaphor/ui/help/shortcuts.ui:11
+#, fuzzy
+msgid "Shortcuts"
+msgstr "Billentyűparancsok"
+
+#: gaphor/ui/help/shortcuts.ui:46
 msgid "Quit Gaphor"
 msgstr "A Gaphor bezárása"
 
-#: gaphor/ui/help/shortcuts.ui:36
+#: gaphor/ui/help/shortcuts.ui:56
 msgid "Model"
 msgstr "Modell"
 
-#: gaphor/ui/help/shortcuts.ui:41
+#: gaphor/ui/help/shortcuts.ui:61
 msgid "Rename"
 msgstr "Átnevezés"
 
-#: gaphor/ui/help/shortcuts.ui:48
+#: gaphor/ui/help/shortcuts.ui:68
 msgid "Search"
 msgstr "Keresés"
 
-#: gaphor/ui/help/shortcuts.ui:69
+#: gaphor/ui/help/shortcuts.ui:89
 msgid "Close Diagram"
 msgstr "Ábra bezárása"
 
-#: gaphor/ui/help/shortcuts.ui:76
+#: gaphor/ui/help/shortcuts.ui:96
 msgid "Toggle Fullscreen"
 msgstr "Teljes képernyős nézet ki-/bekapcsolása"
 
-#: gaphor/ui/help/shortcuts.ui:86
+#: gaphor/ui/help/shortcuts.ui:106
 msgid "Undo and Redo"
 msgstr "Visszavonás és ismét"
 
-#: gaphor/ui/help/shortcuts.ui:108
+#: gaphor/ui/help/shortcuts.ui:128
 msgid "Selections"
 msgstr "Kijelölések"
 
-#: gaphor/ui/help/shortcuts.ui:113
+#: gaphor/ui/help/shortcuts.ui:133
 msgid "Select All"
 msgstr "Összes kijelölése"
 
-#: gaphor/ui/help/shortcuts.ui:120
+#: gaphor/ui/help/shortcuts.ui:140
 msgid "Deselect All"
 msgstr "Minden kijelölés megszüntetése"
 
-#: gaphor/ui/help/shortcuts.ui:130
+#: gaphor/ui/help/shortcuts.ui:150
 msgid "Copy and Paste"
 msgstr "Másolás és beillesztés"
 
-#: gaphor/ui/help/shortcuts.ui:135
+#: gaphor/ui/help/shortcuts.ui:155
 msgid "Copy"
 msgstr "Másolás"
 
-#: gaphor/ui/help/shortcuts.ui:142
+#: gaphor/ui/help/shortcuts.ui:162
 msgid "Cut"
 msgstr "Kivágás"
 
-#: gaphor/ui/help/shortcuts.ui:149
+#: gaphor/ui/help/shortcuts.ui:169
 msgid "Paste (link defining elements)"
 msgstr "Beillesztés (meghatározó elemek összekapcsolása)"
 
-#: gaphor/ui/help/shortcuts.ui:156
+#: gaphor/ui/help/shortcuts.ui:176
 msgid "Paste (copy defining elements)"
 msgstr "Beillesztés (meghatározó elemek másolása)"
 
-#: gaphor/ui/help/shortcuts.ui:166
+#: gaphor/ui/help/shortcuts.ui:186
 msgid "Zoom"
 msgstr "Nagyítás"
 
-#: gaphor/ui/help/shortcuts.ui:194
+#: gaphor/ui/help/shortcuts.ui:214
 msgid "Files"
 msgstr "Fájlok"
 
-#: gaphor/ui/help/shortcuts.ui:206
+#: gaphor/ui/help/shortcuts.ui:226
 msgid "Open a Model…"
 msgstr "Modell megnyitása…"
 
@@ -3344,3 +3352,4 @@ msgstr "általános: Általános"
 
 #~ msgid "New package"
 #~ msgstr "Új csomag"
+

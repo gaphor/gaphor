@@ -139,7 +139,7 @@
         <attribute name="target">right</attribute>
       </item>
       <item>
-        <attribute name='label' translatable='yes'>Align Horizontal Center</attribute>
+        <attribute name='label' translatable='yes'>Align Vertical Center</attribute>
         <attribute name='action'>diagram.align</attribute>
         <attribute name="target">vertical-center</attribute>
       </item>
