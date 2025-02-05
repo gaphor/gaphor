@@ -1597,6 +1597,15 @@
         "bug",
         "code"
       ]
+    },
+    {
+      "login": "smolBlackCat",
+      "name": "Gabriel de Moura",
+      "avatar_url": "https://avatars.githubusercontent.com/u/66385489?v=4",
+      "profile": "https://github.com/smolBlackCat",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
