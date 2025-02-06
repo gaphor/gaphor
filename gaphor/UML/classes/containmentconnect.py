@@ -65,7 +65,10 @@ class ContainmentConnect(BaseConnector):
                 assert isinstance(hct.subject, UML.Type | UML.Package)
                 ungroup(oct.subject, hct.subject)
                 assert isinstance(hct.diagram, UML.Diagram)
-                hct.subject.nestingPackage = owner_package(hct.diagram.owner)
+                if isinstance(hct.subject, UML.Package):
+                    hct.subject.nestingPackage = owner_package(hct.diagram.owner)
+                else:
+                    hct.subject.package = owner_package(hct.diagram.owner)
             if (
                 isinstance(hct.subject, UML.Element)
                 and oct.subject in hct.subject.ownedElement
