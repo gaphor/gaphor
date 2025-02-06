@@ -470,7 +470,7 @@ def get_literal_value_as_string(value: ValueSpecification) -> str | None:
     if isinstance(value, LiteralString):
         return str(value.value)
     if isinstance(value, LiteralBoolean):
-        if value.value:
+        if value.value is True:
             return "true"
         return "false"
     return None
@@ -506,7 +506,7 @@ def create_value_specification_for_type_and_value(
             type = "str"
     value_specification = None
     match type:
-        case "bool":
+        case "bool" | "Boolean":
             value_specification = model.create(LiteralBoolean)
             if value == "true":
                 value_specification.value = True
@@ -514,12 +514,12 @@ def create_value_specification_for_type_and_value(
             else:
                 value_specification.value = False
                 value_specification.name = "false"
-        case "str":
+        case "str" | "String":
             stripped_value = value.replace('"', "")
             value_specification = model.create(LiteralString)
-            value_specification.value = stripped_value
+            value_specification.value = value
             value_specification.name = stripped_value
-        case "int":
+        case "int" | "Integer":
             value_specification = model.create(LiteralInteger)
             value_specification.value = int(value)
             value_specification.name = value
@@ -531,7 +531,7 @@ def create_value_specification_for_type_and_value(
             else:
                 value_specification.value = UnlimitedNatural(int(value))
                 value_specification.name = value
-        # case "float":
+        # case "float" | "Real":
         #     value_specification = model.create(LiteralReal)
         #     value_specification.value = float(value)
     return value_specification

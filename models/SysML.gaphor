@@ -2130,23 +2130,12 @@
 </reflist>
 </specialization>
 </UML:Stereotype>
-<UML:LiteralBoolean id="df167348-e3d8-11ef-a509-be7f4daace3f">
-<name>
-<val>false</val>
-</name>
-<owningProperty>
-<ref refid="6c2d7f8e-20e7-11ea-9209-e76c3117c943"/>
-</owningProperty>
-<value>
-<val>False</val>
-</value>
-</UML:LiteralBoolean>
 <UML:Property id="6c2d7f8e-20e7-11ea-9209-e76c3117c943">
 <class_>
 <ref refid="635e0dce-20e7-11ea-9209-e76c3117c943"/>
 </class_>
 <defaultValue>
-<ref refid="df167348-e3d8-11ef-a509-be7f4daace3f"/>
+<ref refid="0b2bc374-e405-11ef-8b16-14abc554333b"/>
 </defaultValue>
 <name>
 <val>isEncapsulated</val>
@@ -14561,7 +14550,7 @@ otherwise MRO can not be resolved.</val>
 <val>100.0</val>
 </width>
 <height>
-<val>82.0</val>
+<val>87.0</val>
 </height>
 <diagram>
 <ref refid="7a0704c6-5921-11ec-befa-0456e5e540ed"/>
@@ -14984,7 +14973,7 @@ otherwise MRO can not be resolved.</val>
 <val>(0.0, 0.0)</val>
 </top-left>
 <width>
-<val>115.0</val>
+<val>125.0</val>
 </width>
 <height>
 <val>74.0</val>
@@ -15158,7 +15147,7 @@ otherwise MRO can not be resolved.</val>
 <val>(0.0, 0.0)</val>
 </top-left>
 <width>
-<val>128.0</val>
+<val>150.0</val>
 </width>
 <height>
 <val>62.0</val>
@@ -15210,7 +15199,7 @@ otherwise MRO can not be resolved.</val>
 <val>(0.0, 0.0)</val>
 </top-left>
 <width>
-<val>125.0</val>
+<val>145.0</val>
 </width>
 <height>
 <val>62.0</val>
@@ -15259,10 +15248,10 @@ otherwise MRO can not be resolved.</val>
 <val>(0.0, 0.0)</val>
 </top-left>
 <width>
-<val>198.0</val>
+<val>226.0</val>
 </width>
 <height>
-<val>62.0</val>
+<val>66.0</val>
 </height>
 <diagram>
 <ref refid="0210b378-292b-11ee-aad9-e38f5215237c"/>
@@ -15313,10 +15302,10 @@ otherwise MRO can not be resolved.</val>
 <val>(0.0, 0.0)</val>
 </top-left>
 <width>
-<val>193.0</val>
+<val>221.0</val>
 </width>
 <height>
-<val>62.0</val>
+<val>66.0</val>
 </height>
 <diagram>
 <ref refid="0210b378-292b-11ee-aad9-e38f5215237c"/>
@@ -15365,7 +15354,7 @@ otherwise MRO can not be resolved.</val>
 <val>242.0</val>
 </width>
 <height>
-<val>62.0</val>
+<val>66.0</val>
 </height>
 <diagram>
 <ref refid="0210b378-292b-11ee-aad9-e38f5215237c"/>
@@ -15411,10 +15400,10 @@ otherwise MRO can not be resolved.</val>
 <val>(0.0, 0.0)</val>
 </top-left>
 <width>
-<val>197.0</val>
+<val>225.0</val>
 </width>
 <height>
-<val>62.0</val>
+<val>66.0</val>
 </height>
 <diagram>
 <ref refid="0210b378-292b-11ee-aad9-e38f5215237c"/>
@@ -15426,23 +15415,12 @@ otherwise MRO can not be resolved.</val>
 <ref refid="49c21352-b7d6-11ef-8f23-be7f4daace40"/>
 </subject>
 </UML:ClassItem>
-<UML:LiteralString id="df1e3150-e3d8-11ef-a509-be7f4daace3f">
-<name>
-<val>bdd</val>
-</name>
-<owningProperty>
-<ref refid="550e8a92-b7d6-11ef-8f23-be7f4daace40"/>
-</owningProperty>
-<value>
-<val>bdd</val>
-</value>
-</UML:LiteralString>
 <UML:Property id="550e8a92-b7d6-11ef-8f23-be7f4daace40">
 <class_>
 <ref refid="2dca16ea-b7d6-11ef-8f23-be7f4daace40"/>
 </class_>
 <defaultValue>
-<ref refid="df1e3150-e3d8-11ef-a509-be7f4daace3f"/>
+<ref refid="9240ebf8-e405-11ef-893f-14abc554333b"/>
 </defaultValue>
 <name>
 <val>diagramType</val>
@@ -15454,23 +15432,12 @@ otherwise MRO can not be resolved.</val>
 <val>String</val>
 </typeValue>
 </UML:Property>
-<UML:LiteralString id="df1e3222-e3d8-11ef-a509-be7f4daace3f">
-<name>
-<val>ibd</val>
-</name>
-<owningProperty>
-<ref refid="68beb4ea-b7d6-11ef-8f23-be7f4daace40"/>
-</owningProperty>
-<value>
-<val>ibd</val>
-</value>
-</UML:LiteralString>
 <UML:Property id="68beb4ea-b7d6-11ef-8f23-be7f4daace40">
 <class_>
 <ref refid="356a0ebe-b7d6-11ef-8f23-be7f4daace40"/>
 </class_>
 <defaultValue>
-<ref refid="df1e3222-e3d8-11ef-a509-be7f4daace3f"/>
+<ref refid="acc53d81-e405-11ef-b08b-14abc554333b"/>
 </defaultValue>
 <name>
 <val>diagramType</val>
@@ -15482,23 +15449,12 @@ otherwise MRO can not be resolved.</val>
 <val>String</val>
 </typeValue>
 </UML:Property>
-<UML:LiteralString id="df1e32b8-e3d8-11ef-a509-be7f4daace3f">
-<name>
-<val>pkg</val>
-</name>
-<owningProperty>
-<ref refid="737b0d3e-b7d6-11ef-8f23-be7f4daace40"/>
-</owningProperty>
-<value>
-<val>pkg</val>
-</value>
-</UML:LiteralString>
 <UML:Property id="737b0d3e-b7d6-11ef-8f23-be7f4daace40">
 <class_>
 <ref refid="49c21352-b7d6-11ef-8f23-be7f4daace40"/>
 </class_>
 <defaultValue>
-<ref refid="df1e32b8-e3d8-11ef-a509-be7f4daace3f"/>
+<ref refid="d0ba0957-e405-11ef-917d-14abc554333b"/>
 </defaultValue>
 <name>
 <val>diagramType</val>
@@ -15510,23 +15466,12 @@ otherwise MRO can not be resolved.</val>
 <val>String</val>
 </typeValue>
 </UML:Property>
-<UML:LiteralString id="df1e334e-e3d8-11ef-a509-be7f4daace3f">
-<name>
-<val>par</val>
-</name>
-<owningProperty>
-<ref refid="deccb650-b7d6-11ef-8f23-be7f4daace40"/>
-</owningProperty>
-<value>
-<val>par</val>
-</value>
-</UML:LiteralString>
 <UML:Property id="deccb650-b7d6-11ef-8f23-be7f4daace40">
 <class_>
 <ref refid="429d52a8-b7d6-11ef-8f23-be7f4daace40"/>
 </class_>
 <defaultValue>
-<ref refid="df1e334e-e3d8-11ef-a509-be7f4daace3f"/>
+<ref refid="bf7c15a8-e405-11ef-b6f5-14abc554333b"/>
 </defaultValue>
 <name>
 <val>diagramType</val>
@@ -15572,10 +15517,10 @@ otherwise MRO can not be resolved.</val>
 <val>(0.0, 0.0)</val>
 </top-left>
 <width>
-<val>195.0</val>
+<val>222.0</val>
 </width>
 <height>
-<val>62.0</val>
+<val>66.0</val>
 </height>
 <diagram>
 <ref refid="0210b378-292b-11ee-aad9-e38f5215237c"/>
@@ -15587,23 +15532,12 @@ otherwise MRO can not be resolved.</val>
 <ref refid="06b13a24-b7d7-11ef-8f23-be7f4daace40"/>
 </subject>
 </UML:ClassItem>
-<UML:LiteralString id="df1e3b0a-e3d8-11ef-a509-be7f4daace3f">
-<name>
-<val>req</val>
-</name>
-<owningProperty>
-<ref refid="0dfe091a-b7d7-11ef-8f23-be7f4daace40"/>
-</owningProperty>
-<value>
-<val>req</val>
-</value>
-</UML:LiteralString>
 <UML:Property id="0dfe091a-b7d7-11ef-8f23-be7f4daace40">
 <class_>
 <ref refid="06b13a24-b7d7-11ef-8f23-be7f4daace40"/>
 </class_>
 <defaultValue>
-<ref refid="df1e3b0a-e3d8-11ef-a509-be7f4daace3f"/>
+<ref refid="e653dad6-e405-11ef-b1df-14abc554333b"/>
 </defaultValue>
 <name>
 <val>diagramType</val>
@@ -15632,7 +15566,7 @@ otherwise MRO can not be resolved.</val>
 <val>(1.0, 0.0, 0.0, 1.0, 274.5, 467.5)</val>
 </matrix>
 <points>
-<val>[(-36.74609375, 189.5), (-36.74609375, -0.37109375)]</val>
+<val>[(-31.168628961267586, 189.5), (-36.74609375, -0.37109375)]</val>
 </points>
 <head-connection>
 <ref refid="49c255ba-b7d6-11ef-8f23-be7f4daace40"/>
@@ -15671,7 +15605,7 @@ otherwise MRO can not be resolved.</val>
 <val>(1.0, 0.0, 0.0, 1.0, 202.5, 451.5)</val>
 </matrix>
 <points>
-<val>[(-97.75390625, 104.5), (-97.75390625, 61.0), (34.75390625, 61.0), (34.75390625, 15.62890625)]</val>
+<val>[(-92.20250438084112, 104.5), (-92.20250438084112, 61.0), (34.75390625, 61.0), (34.75390625, 15.62890625)]</val>
 </points>
 <head-connection>
 <ref refid="2dca5588-b7d6-11ef-8f23-be7f4daace40"/>
@@ -15710,7 +15644,7 @@ otherwise MRO can not be resolved.</val>
 <val>(1.0, 0.0, 0.0, 1.0, 259.5, 450.5)</val>
 </matrix>
 <points>
-<val>[(106.614501953125, 105.5), (106.614501953125, 62.0), (-21.74609375, 62.0), (-21.74609375, 16.62890625)]</val>
+<val>[(112.15517180958432, 105.5), (112.15517180958432, 62.0), (-21.74609375, 62.0), (-21.74609375, 16.62890625)]</val>
 </points>
 <head-connection>
 <ref refid="356a6d82-b7d6-11ef-8f23-be7f4daace40"/>
@@ -15788,7 +15722,7 @@ otherwise MRO can not be resolved.</val>
 <val>(1.0, 0.0, 0.0, 1.0, 403.5, 297.5)</val>
 </matrix>
 <points>
-<val>[(92.114501953125, 107.62890625), (92.114501953125, 20.340087890625)]</val>
+<val>[(97.68593052455356, 107.62890625), (92.114501953125, 20.340087890625)]</val>
 </points>
 <head-connection>
 <ref refid="06b1a9f0-b7d7-11ef-8f23-be7f4daace40"/>
@@ -15866,7 +15800,7 @@ otherwise MRO can not be resolved.</val>
 <val>(1.0, 0.0, 0.0, 1.0, 412.5, 598.5)</val>
 </matrix>
 <points>
-<val>[(-46.385498046875, 185.5), (-46.385498046875, 19.5)]</val>
+<val>[(-46.385498046875, 185.5), (-40.84482819041568, 23.5)]</val>
 </points>
 <head-connection>
 <ref refid="429da0f0-b7d6-11ef-8f23-be7f4daace40"/>
@@ -15922,10 +15856,10 @@ otherwise MRO can not be resolved.</val>
 <val>(0.0, 0.0)</val>
 </top-left>
 <width>
-<val>193.0</val>
+<val>221.0</val>
 </width>
 <height>
-<val>62.0</val>
+<val>66.0</val>
 </height>
 <diagram>
 <ref refid="0210b378-292b-11ee-aad9-e38f5215237c"/>
@@ -15971,10 +15905,10 @@ otherwise MRO can not be resolved.</val>
 <val>(0.0, 0.0)</val>
 </top-left>
 <width>
-<val>189.0</val>
+<val>215.0</val>
 </width>
 <height>
-<val>62.0</val>
+<val>66.0</val>
 </height>
 <diagram>
 <ref refid="0210b378-292b-11ee-aad9-e38f5215237c"/>
@@ -16020,10 +15954,10 @@ otherwise MRO can not be resolved.</val>
 <val>(0.0, 0.0)</val>
 </top-left>
 <width>
-<val>197.0</val>
+<val>225.0</val>
 </width>
 <height>
-<val>62.0</val>
+<val>66.0</val>
 </height>
 <diagram>
 <ref refid="0210b378-292b-11ee-aad9-e38f5215237c"/>
@@ -16069,10 +16003,10 @@ otherwise MRO can not be resolved.</val>
 <val>(0.0, 0.0)</val>
 </top-left>
 <width>
-<val>189.0</val>
+<val>216.0</val>
 </width>
 <height>
-<val>62.0</val>
+<val>66.0</val>
 </height>
 <diagram>
 <ref refid="0210b378-292b-11ee-aad9-e38f5215237c"/>
@@ -16084,23 +16018,12 @@ otherwise MRO can not be resolved.</val>
 <ref refid="8d3702cc-b7d7-11ef-8f23-be7f4daace40"/>
 </subject>
 </UML:ClassItem>
-<UML:LiteralString id="df1e644a-e3d8-11ef-a509-be7f4daace3f">
-<name>
-<val>act</val>
-</name>
-<owningProperty>
-<ref refid="9eb5fd46-b7d7-11ef-8f23-be7f4daace40"/>
-</owningProperty>
-<value>
-<val>act</val>
-</value>
-</UML:LiteralString>
 <UML:Property id="9eb5fd46-b7d7-11ef-8f23-be7f4daace40">
 <class_>
 <ref refid="7311bdf6-b7d7-11ef-8f23-be7f4daace40"/>
 </class_>
 <defaultValue>
-<ref refid="df1e644a-e3d8-11ef-a509-be7f4daace3f"/>
+<ref refid="f327149f-e405-11ef-8414-14abc554333b"/>
 </defaultValue>
 <name>
 <val>diagramType</val>
@@ -16112,23 +16035,12 @@ otherwise MRO can not be resolved.</val>
 <val>String</val>
 </typeValue>
 </UML:Property>
-<UML:LiteralString id="df1e6512-e3d8-11ef-a509-be7f4daace3f">
-<name>
-<val>uc</val>
-</name>
-<owningProperty>
-<ref refid="a38ccffc-b7d7-11ef-8f23-be7f4daace40"/>
-</owningProperty>
-<value>
-<val>uc</val>
-</value>
-</UML:LiteralString>
 <UML:Property id="a38ccffc-b7d7-11ef-8f23-be7f4daace40">
 <class_>
 <ref refid="8d3702cc-b7d7-11ef-8f23-be7f4daace40"/>
 </class_>
 <defaultValue>
-<ref refid="df1e6512-e3d8-11ef-a509-be7f4daace3f"/>
+<ref refid="34253717-e406-11ef-94fb-14abc554333b"/>
 </defaultValue>
 <name>
 <val>diagramType</val>
@@ -16140,23 +16052,12 @@ otherwise MRO can not be resolved.</val>
 <val>String</val>
 </typeValue>
 </UML:Property>
-<UML:LiteralString id="df1e65a8-e3d8-11ef-a509-be7f4daace3f">
-<name>
-<val>stm</val>
-</name>
-<owningProperty>
-<ref refid="a7477c3c-b7d7-11ef-8f23-be7f4daace40"/>
-</owningProperty>
-<value>
-<val>stm</val>
-</value>
-</UML:LiteralString>
 <UML:Property id="a7477c3c-b7d7-11ef-8f23-be7f4daace40">
 <class_>
 <ref refid="854432b0-b7d7-11ef-8f23-be7f4daace40"/>
 </class_>
 <defaultValue>
-<ref refid="df1e65a8-e3d8-11ef-a509-be7f4daace3f"/>
+<ref refid="2595737b-e406-11ef-bafa-14abc554333b"/>
 </defaultValue>
 <name>
 <val>diagramType</val>
@@ -16168,23 +16069,12 @@ otherwise MRO can not be resolved.</val>
 <val>String</val>
 </typeValue>
 </UML:Property>
-<UML:LiteralString id="df1e663e-e3d8-11ef-a509-be7f4daace3f">
-<name>
-<val>sd</val>
-</name>
-<owningProperty>
-<ref refid="ac719b02-b7d7-11ef-8f23-be7f4daace40"/>
-</owningProperty>
-<value>
-<val>sd</val>
-</value>
-</UML:LiteralString>
 <UML:Property id="ac719b02-b7d7-11ef-8f23-be7f4daace40">
 <class_>
 <ref refid="7ebad41c-b7d7-11ef-8f23-be7f4daace40"/>
 </class_>
 <defaultValue>
-<ref refid="df1e663e-e3d8-11ef-a509-be7f4daace3f"/>
+<ref refid="16e2997e-e406-11ef-b8a5-14abc554333b"/>
 </defaultValue>
 <name>
 <val>diagramType</val>
@@ -16213,7 +16103,7 @@ otherwise MRO can not be resolved.</val>
 <val>(1.0, 0.0, 0.0, 1.0, 696.6312032405008, 456.6917726764706)</val>
 </matrix>
 <points>
-<val>[(164.33192460485884, 99.30822732352942), (164.33192460485884, 55.80822732352942), (70.33192460485884, 55.80822732352942), (70.33192460485884, 10.437133573529422)]</val>
+<val>[(169.89074813427055, 99.30822732352942), (169.89074813427055, 55.80822732352942), (70.33192460485884, 55.80822732352942), (70.33192460485884, 10.437133573529422)]</val>
 </points>
 <head-connection>
 <ref refid="8d373f6c-b7d7-11ef-8f23-be7f4daace40"/>
@@ -16252,7 +16142,7 @@ otherwise MRO can not be resolved.</val>
 <val>(1.0, 0.0, 0.0, 1.0, 613.6312032405008, 466.6917726764706)</val>
 </matrix>
 <points>
-<val>[(-5.668075395141159, 89.30822732352942), (-5.668075395141159, 45.80822732352942), (153.33192460485884, 45.80822732352942), (153.33192460485884, 0.4371335735294224)]</val>
+<val>[(-0.1274055386818418, 89.30822732352942), (-0.1274055386818418, 45.80822732352942), (153.33192460485884, 45.80822732352942), (153.33192460485884, 0.4371335735294224)]</val>
 </points>
 <head-connection>
 <ref refid="731225ac-b7d7-11ef-8f23-be7f4daace40"/>
@@ -16291,7 +16181,7 @@ otherwise MRO can not be resolved.</val>
 <val>(1.0, 0.0, 0.0, 1.0, 688.6312032405008, 453.6917726764706)</val>
 </matrix>
 <points>
-<val>[(44.33192460485884, 203.30822732352942), (44.33192460485884, 58.80822732352942), (78.33192460485884, 58.80822732352942), (78.33192460485884, 13.437133573529422)]</val>
+<val>[(49.918131501410585, 203.30822732352942), (49.918131501410585, 58.80822732352942), (78.33192460485884, 58.80822732352942), (78.33192460485884, 13.437133573529422)]</val>
 </points>
 <head-connection>
 <ref refid="7ebb27d2-b7d7-11ef-8f23-be7f4daace40"/>
@@ -16330,7 +16220,7 @@ otherwise MRO can not be resolved.</val>
 <val>(1.0, 0.0, 0.0, 1.0, 692.6312032405008, 450.6917726764706)</val>
 </matrix>
 <points>
-<val>[(284.0406717594992, 206.30822732352942), (284.0406717594992, 61.80822732352942), (74.33192460485884, 61.80822732352942), (74.33192460485884, 16.437133573529422)]</val>
+<val>[(289.58996753414715, 206.30822732352942), (289.58996753414715, 61.80822732352942), (74.33192460485884, 61.80822732352942), (74.33192460485884, 16.437133573529422)]</val>
 </points>
 <head-connection>
 <ref refid="85447a9a-b7d7-11ef-8f23-be7f4daace40"/>
@@ -16352,5 +16242,115 @@ otherwise MRO can not be resolved.</val>
 <ref refid="854432b0-b7d7-11ef-8f23-be7f4daace40"/>
 </specific>
 </UML:Generalization>
+<UML:LiteralBoolean id="0b2bc374-e405-11ef-8b16-14abc554333b">
+<name>
+<val>false</val>
+</name>
+<owningProperty>
+<ref refid="6c2d7f8e-20e7-11ea-9209-e76c3117c943"/>
+</owningProperty>
+<value>
+<val>False</val>
+</value>
+</UML:LiteralBoolean>
+<UML:LiteralString id="9240ebf8-e405-11ef-893f-14abc554333b">
+<name>
+<val>bdd</val>
+</name>
+<owningProperty>
+<ref refid="550e8a92-b7d6-11ef-8f23-be7f4daace40"/>
+</owningProperty>
+<value>
+<val>"bdd"</val>
+</value>
+</UML:LiteralString>
+<UML:LiteralString id="acc53d81-e405-11ef-b08b-14abc554333b">
+<name>
+<val>ibd</val>
+</name>
+<owningProperty>
+<ref refid="68beb4ea-b7d6-11ef-8f23-be7f4daace40"/>
+</owningProperty>
+<value>
+<val>"ibd"</val>
+</value>
+</UML:LiteralString>
+<UML:LiteralString id="bf7c15a8-e405-11ef-b6f5-14abc554333b">
+<name>
+<val>par</val>
+</name>
+<owningProperty>
+<ref refid="deccb650-b7d6-11ef-8f23-be7f4daace40"/>
+</owningProperty>
+<value>
+<val>"par"</val>
+</value>
+</UML:LiteralString>
+<UML:LiteralString id="d0ba0957-e405-11ef-917d-14abc554333b">
+<name>
+<val>pkg</val>
+</name>
+<owningProperty>
+<ref refid="737b0d3e-b7d6-11ef-8f23-be7f4daace40"/>
+</owningProperty>
+<value>
+<val>"pkg"</val>
+</value>
+</UML:LiteralString>
+<UML:LiteralString id="e653dad6-e405-11ef-b1df-14abc554333b">
+<name>
+<val>req</val>
+</name>
+<owningProperty>
+<ref refid="0dfe091a-b7d7-11ef-8f23-be7f4daace40"/>
+</owningProperty>
+<value>
+<val>"req"</val>
+</value>
+</UML:LiteralString>
+<UML:LiteralString id="f327149f-e405-11ef-8414-14abc554333b">
+<name>
+<val>act</val>
+</name>
+<owningProperty>
+<ref refid="9eb5fd46-b7d7-11ef-8f23-be7f4daace40"/>
+</owningProperty>
+<value>
+<val>"act"</val>
+</value>
+</UML:LiteralString>
+<UML:LiteralString id="16e2997e-e406-11ef-b8a5-14abc554333b">
+<name>
+<val>sd</val>
+</name>
+<owningProperty>
+<ref refid="ac719b02-b7d7-11ef-8f23-be7f4daace40"/>
+</owningProperty>
+<value>
+<val>"sd"</val>
+</value>
+</UML:LiteralString>
+<UML:LiteralString id="2595737b-e406-11ef-bafa-14abc554333b">
+<name>
+<val>stm</val>
+</name>
+<owningProperty>
+<ref refid="a7477c3c-b7d7-11ef-8f23-be7f4daace40"/>
+</owningProperty>
+<value>
+<val>"stm"</val>
+</value>
+</UML:LiteralString>
+<UML:LiteralString id="34253717-e406-11ef-94fb-14abc554333b">
+<name>
+<val>uc</val>
+</name>
+<owningProperty>
+<ref refid="a38ccffc-b7d7-11ef-8f23-be7f4daace40"/>
+</owningProperty>
+<value>
+<val>"uc"</val>
+</value>
+</UML:LiteralString>
 </model>
 </gaphor>

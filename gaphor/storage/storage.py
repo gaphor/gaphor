@@ -166,7 +166,7 @@ def load_elements_generator(
         update_status_queue,
         homeless_literals,
     )
-    if version_lower_than(gaphor_version, (2, 29, 0)):
+    if version_lower_than(gaphor_version, (3, 0, 0)):
         upgrade_package_nestingPackage(elements)
 
     yield from _load_attributes_and_references(elements, update_status_queue)
