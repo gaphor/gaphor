@@ -9,6 +9,7 @@
     <child type="titlebar">
       <object class="GtkHeaderBar">
         <property name="decoration-layout">:close</property>
+        <property name="use-native-controls">1</property>
       </object>
     </child>
     <child>
