@@ -29,7 +29,7 @@ class ControlFlowItem(Named, LinePresentation):
                 Text(
                     text=lambda: self.subject
                     and self.subject.guard
-                    and f"[{self.subject.guard}]"
+                    and f"[{self.subject.guard.value}]"
                     or ""
                 ),
             ),
@@ -62,7 +62,7 @@ class ObjectFlowItem(Named, LinePresentation):
                 Text(
                     text=lambda: self.subject
                     and self.subject.guard
-                    and f"[{self.subject.guard}]"
+                    and f"[{self.subject.guard.value}]"
                     or ""
                 ),
             ),

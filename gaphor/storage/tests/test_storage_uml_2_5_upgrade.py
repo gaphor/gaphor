@@ -39,13 +39,13 @@ def test_owned_classifier_to_owned_type(loader):
 
 
 def test_implementation_to_interface_realization(loader):
-    i = element(id="1", type="Implementation")
+    i = element(id="1", type="InterfaceRealization")
     c = element(id="2", type="Class")
-    c.references["clientDependency"] = ["1"]
+    c.references["interfaceRealization"] = ["1"]
 
     interface_realization, clazz = loader(i, c)
-    assert interface_realization in clazz.interfaceRealization
-    assert clazz in interface_realization.implementingClassifier
+    assert interface_realization in clazz.clientDependency
+    assert clazz is interface_realization.implementingClassifier
 
 
 def test_formal_parameter_to_owned_parameter(loader):

@@ -52,7 +52,7 @@ def test_nested_attribute_of_subject(diagram, element_factory):
     classitem = diagram.create(ClassItem, subject=class_)
 
     attr.name = "myname"
-    attr.isStatic = 1
+    attr.isStatic = True
     node = StyledItem(classitem)
 
     assert node.attribute("attribute") == "property"

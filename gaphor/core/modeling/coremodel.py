@@ -4,6 +4,8 @@
 
 from __future__ import annotations
 
+from decimal import Decimal as UnlimitedNatural
+
 from gaphor.core.modeling.properties import (
     association,
     attribute as _attribute,
@@ -42,6 +44,7 @@ class ElementChange(PendingChange):
 
 class ValueChange(PendingChange):
     property_name: _attribute[str] = _attribute("property_name", str)
+    property_type: _attribute[str] = _attribute("property_type", str)
     property_value: _attribute[str] = _attribute("property_value", str)
 
 

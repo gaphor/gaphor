@@ -57,7 +57,7 @@ def test_adding_slot(case, create):
     assert not compartments(c)
 
     slot = UML.recipes.add_slot(instance_spec, case.st1.ownedAttribute[0])
-    slot.value = "foo"
+    UML.recipes.set_slot_value(slot, "foo")
 
     assert len(compartments(c)) == 1
 
@@ -70,7 +70,7 @@ def test_removing_last_slot(case, create):
     instance_spec = UML.recipes.apply_stereotype(c.subject, case.st1)
 
     slot = UML.recipes.add_slot(instance_spec, case.st1.ownedAttribute[0])
-    slot.value = "foo"
+    UML.recipes.set_slot_value(slot, "foo")
 
     # test precondition
     assert compartments(c)
@@ -87,7 +87,7 @@ def test_deleting_extension(case, create):
 
     instance_spec = UML.recipes.apply_stereotype(c.subject, case.st1)
     slot = UML.recipes.add_slot(instance_spec, case.st1.ownedAttribute[0])
-    slot.value = "foo"
+    UML.recipes.set_slot_value(slot, "foo")
 
     # test precondition
     assert len(compartments(c)) == 1
@@ -107,7 +107,7 @@ def test_deleting_stereotype(case, create):
     st1 = case.st1
     instance_spec = UML.recipes.apply_stereotype(c.subject, st1)
     slot = UML.recipes.add_slot(instance_spec, case.st1.ownedAttribute[0])
-    slot.value = "foo"
+    UML.recipes.set_slot_value(slot, "foo")
 
     # test precondition
     assert len(compartments(c)) == 1
@@ -135,7 +135,7 @@ def test_removing_stereotype_attribute(case, element_factory, create):
 
     attr = case.st1.ownedAttribute[0]
     slot = UML.recipes.add_slot(obj, attr)
-    slot.value = "foo"
+    UML.recipes.set_slot_value(slot, "foo")
     assert len(obj.slot) == 1
     assert len(element_factory.lselect(UML.Slot)) == 1
     assert slot.definingFeature
@@ -161,7 +161,7 @@ def test_stereotype_attributes_status_saving(
     # change attribute of 2nd stereotype
     attr = case.st2.ownedAttribute[0]
     slot = UML.recipes.add_slot(obj, attr)
-    slot.value = "st2 test21"
+    UML.recipes.set_slot_value(slot, "st2 test21")
 
     data = saver()
     loader(data)
@@ -189,9 +189,9 @@ def test_saving_stereotype_attributes(case, element_factory, create, saver, load
 
     obj = c.subject.appliedStereotype[0]
     slot = UML.recipes.add_slot(obj, attr1)
-    slot.value = "st1 test1"
+    UML.recipes.set_slot_value(slot, "st1 test1")
     slot = UML.recipes.add_slot(obj, attr2)
-    slot.value = "st1 test2"
+    UML.recipes.set_slot_value(slot, "st1 test2")
 
     data = saver()
     loader(data)
@@ -209,9 +209,9 @@ def test_saving_stereotype_attributes(case, element_factory, create, saver, load
     obj = el.appliedStereotype[0]
     assert len(obj.slot) == 2
     assert "st1_attr_1" == obj.slot[0].definingFeature.name
-    assert "st1 test1" == obj.slot[0].value
+    assert "st1 test1" == UML.recipes.get_slot_value(obj.slot[0])
     assert "st1_attr_2" == obj.slot[1].definingFeature.name
-    assert "st1 test2" == obj.slot[1].value
+    assert "st1 test2" == UML.recipes.get_slot_value(obj.slot[1])
 
     # no stereotype st2 attribute changes, no slots
     obj = el.appliedStereotype[1]

@@ -1,5 +1,8 @@
 """Formatting of UML model elements into text tests."""
 
+import math
+from decimal import Decimal
+
 import pytest
 
 from gaphor.core.eventmanager import EventManager
@@ -23,7 +26,9 @@ def add_tag_is_foo_metadata_field(e, factory):
 
     instance_spec = recipes.apply_stereotype(e, s)
     slot = recipes.add_slot(instance_spec, s.ownedAttribute[0])
-    slot.value = "foo"
+    slotValue = factory.create(UML.LiteralString)
+    slotValue.value = "foo"
+    slot.value = slotValue
     return slot
 
 
@@ -164,7 +169,7 @@ def test_pin(factory):
     pin.type = factory.create(UML.Class)
     pin.type.name = "MyClass"
 
-    pin.lowerValue = "1"
-    pin.upperValue = "*"
+    recipes.set_multiplicity_lower_value(pin, 1)
+    recipes.set_multiplicity_upper_value(pin, Decimal(math.inf))
 
     assert format(pin) == "foo: MyClass[1..*]"

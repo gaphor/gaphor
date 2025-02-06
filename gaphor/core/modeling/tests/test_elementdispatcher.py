@@ -189,7 +189,10 @@ def test_notification_2(
         dispatcher._handlers.keys()
     ), list(dispatcher._handlers.keys())
 
-    g.specification = "x"
+    specification = element_factory.create(UML.LiteralString)
+    specification.owningConstraint = g
+    specification.value = "x"
+    g.specification = specification
     assert len(event.events) == 1, event.events
 
     element.guard = element_factory.create(UML.Constraint)
@@ -210,7 +213,10 @@ def test_notification_of_change(
     assert len(dispatcher._handlers) == 2
     assert not event.events
 
-    g.specification = "x"
+    specification = element_factory.create(UML.LiteralString)
+    specification.owningConstraint = g
+    specification.value = "x"
+    g.specification = specification
     assert len(event.events) == 1, event.events
 
     element.guard = element_factory.create(UML.Constraint)
@@ -252,10 +258,17 @@ def test_notification_with_incompatible_elements(
         dispatcher._handlers.keys()
     ), list(dispatcher._handlers.keys())
 
-    g.specification = "x"
+    specification = uml_transition.model.create(UML.LiteralString)
+    specification.owningConstraint = g
+    specification.value = "x"
+    g.specification = specification
     assert len(event.events) == 1, event.events
 
-    g.specification = "a"
+    specification = uml_transition.model.create(UML.LiteralString)
+    specification.owningConstraint = g
+    specification.value = "a"
+    g.specification = specification
+    g.specification.value = "a"
     assert len(event.events) == 2, event.events
 
 
@@ -313,10 +326,10 @@ def test_association_notification_complex(element_factory, dispatcher, handler):
     element = element_factory.create(UML.Association)
     p1 = element.memberEnd = element_factory.create(UML.Property)
     p2 = element.memberEnd = element_factory.create(UML.Property)
-    p1.lowerValue = "0"
-    p1.upperValue = "1"
-    p2.lowerValue = "1"
-    p2.upperValue = "*"
+    UML.recipes.set_property_lower_value_from_string(p1, "0")
+    UML.recipes.set_property_upper_value_from_string(p1, "1")
+    UML.recipes.set_property_lower_value_from_string(p2, "1")
+    UML.recipes.set_property_upper_value_from_string(p2, "*")
 
     assert len(element.memberEnd) == 2
 

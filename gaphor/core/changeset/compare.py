@@ -11,6 +11,7 @@ from gaphor.core.modeling import (
     RefChange,
     StyleSheet,
     ValueChange,
+    recipes,
 )
 from gaphor.core.modeling.collection import collection
 
@@ -138,13 +139,14 @@ def updated_properties(ancestor, incoming, create) -> Iterable[ValueChange | Ref
                     property_ref=None,
                 )
             elif not isinstance(other, collection):
-                yield create(
+                value_change = create(
                     ValueChange,
                     op="update",
                     element_id=id,
                     property_name=name,
-                    property_value=value,
                 )
+                recipes.set_value_change_property_value(value_change, value)
+                yield value_change
 
         if isinstance(other, collection):
             assert value is None or isinstance(value, collection)

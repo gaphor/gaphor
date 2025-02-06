@@ -57,7 +57,10 @@ def partition_config(new_item):
 
 def value_specification_action_config(new_item):
     activity_config(new_item, i18nize("ValueSpecificationAction"))
-    new_item.subject.value = "1"
+    value = new_item.subject.model.create(UML.LiteralString)
+    value.value = "1"
+    value.valueSpecificationAction = new_item.subject
+    new_item.subject.value = value
 
 
 actions = ToolSection(

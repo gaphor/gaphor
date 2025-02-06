@@ -317,7 +317,7 @@ def test_save_and_load_with_invalid_attribute(element_factory, saver, loader):
 def test_save_and_load_with_invalid_reference(element_factory, saver, loader):
     p1 = element_factory.create(UML.Package)
     p2 = element_factory.create(UML.Package)
-    p2.package = p1
+    p2.nestingPackage = p1
 
     data = saver()
     data = data.replace(p1.id, "foobar", 1)

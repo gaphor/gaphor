@@ -30,7 +30,7 @@ def test_group_container_group_from_package_to_container(diagram, element_factor
     parent = container(diagram, element_factory)
     child = container(diagram, element_factory)
 
-    child.subject.package = package
+    child.subject.nestingPackage = package
     group(parent.subject, child.subject)
 
     assert child.subject.namespace is parent.subject
@@ -41,7 +41,7 @@ def test_group_container_ungroup(diagram, element_factory):
     diagram.element = package
     parent = container(diagram, element_factory)
     child = container(diagram, element_factory)
-    child.subject.package = parent.subject
+    child.subject.nestingPackage = parent.subject
 
     did_group = group(package, child.subject)
 

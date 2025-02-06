@@ -1,4 +1,4 @@
-from gaphor.core.modeling import ElementChange, ValueChange
+from gaphor.core.modeling import ElementChange, ValueChange, recipes
 from gaphor.ui.modelmerge.editor import ModelMerge
 
 
@@ -13,7 +13,7 @@ def test_build_list_store(event_manager, element_factory, modeling_language):
     vchange.op = "update"
     vchange.element_id = "1234"
     vchange.property_name = "name"
-    vchange.property_value = "my diagram"
+    recipes.set_value_change_property_value(vchange, "my diagram")
 
     model_merge.refresh_model()
 

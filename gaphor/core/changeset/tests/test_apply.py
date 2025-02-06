@@ -6,8 +6,15 @@ from gaphor.core.modeling import (
     ElementChange,
     RefChange,
     ValueChange,
+    recipes,
 )
-from gaphor.UML import Class, Element, Property
+from gaphor.UML import (
+    Class,
+    Element,
+    LiteralBoolean,
+    LiteralInteger,
+    Property,
+)
 from gaphor.UML import Diagram as UMLDiagram
 
 
@@ -68,7 +75,7 @@ def test_update_str_value(element_factory, modeling_language):
     change: ValueChange = element_factory.create(ValueChange)
     change.element_id = diagram.id
     change.property_name = "name"
-    change.property_value = "new value"
+    recipes.set_value_change_property_value(change, "new value")
 
     apply_change(change, element_factory, modeling_language)
 
@@ -76,16 +83,29 @@ def test_update_str_value(element_factory, modeling_language):
     assert change.applied
 
 
-def test_update_int_value(element_factory, modeling_language):
-    klass = element_factory.create(Class)
+def test_update_bool_value(element_factory, modeling_language):
+    literal = element_factory.create(LiteralBoolean)
     change: ValueChange = element_factory.create(ValueChange)
-    change.element_id = klass.id
-    change.property_name = "isAbstract"
-    change.property_value = "1"
+    change.element_id = literal.id
+    change.property_name = "value"
+    recipes.set_value_change_property_value(change, True)
 
     apply_change(change, element_factory, modeling_language)
 
-    assert klass.isAbstract == 1
+    assert literal.value
+    assert change.applied
+
+
+def test_update_int_value(element_factory, modeling_language):
+    literal = element_factory.create(LiteralInteger)
+    change: ValueChange = element_factory.create(ValueChange)
+    change.element_id = literal.id
+    change.property_name = "value"
+    recipes.set_value_change_property_value(change, 3)
+
+    apply_change(change, element_factory, modeling_language)
+
+    assert literal.value == 3
     assert change.applied
 
 
@@ -102,9 +122,9 @@ def test_update_str_default_value(element_factory, modeling_language):
     assert change.applied
 
 
-def test_update_int_default_value(element_factory, modeling_language):
+def test_update_bool_default_value(element_factory, modeling_language):
     klass = element_factory.create(Class)
-    klass.isAbstract = 1
+    klass.isAbstract = True
     change: ValueChange = element_factory.create(ValueChange)
     change.element_id = klass.id
     change.property_name = "isAbstract"
@@ -242,7 +262,7 @@ def test_update_value_applicable(element_factory):
     change: ValueChange = element_factory.create(ValueChange)
     change.element_id = diagram.id
     change.property_name = "name"
-    change.property_value = "new value"
+    recipes.set_value_change_property_value(change, "new value")
 
     assert applicable(change, element_factory)
 
@@ -252,7 +272,7 @@ def test_update_value_not_applicable(element_factory):
     change: ValueChange = element_factory.create(ValueChange)
     change.element_id = diagram.id
     change.property_name = "name"
-    change.property_value = "new value"
+    recipes.set_value_change_property_value(change, "new value")
     diagram.name = "new value"
 
     assert not applicable(change, element_factory)

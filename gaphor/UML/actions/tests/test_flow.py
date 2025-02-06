@@ -33,7 +33,10 @@ def test_guard_text_update(create):
 
     assert "" == guard.child.text()
 
-    flow.subject.guard = "GuardMe"
+    specification = flow.model.create(UML.LiteralString)
+    specification.value = "GuardMe"
+    specification.owningConstraint = flow.subject.guard
+    flow.subject.guard = specification
     assert "[GuardMe]" == guard.child.text()
 
     flow.subject = None

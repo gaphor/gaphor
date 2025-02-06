@@ -9,7 +9,10 @@ def test_transition_guard(create, element_factory):
     assert guard.child.text() == ""
 
     c = element_factory.create(UML.Constraint)
-    c.specification = "blah"
+    specification = element_factory.create(UML.LiteralString)
+    specification.owningConstraint = c
+    specification.value = "blah"
+    c.specification = specification
     assert guard.child.text() == ""
 
     item.subject.guard = c
@@ -19,5 +22,6 @@ def test_transition_guard(create, element_factory):
     del c.specification
     assert guard.child.text() == "", guard.text()
 
-    c.specification = "foo"
+    specification.value = "foo"
+    c.specification = specification
     assert guard.child.text() == "[foo]", guard.text()

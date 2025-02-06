@@ -186,7 +186,7 @@ class StereotypeView(GObject.Object):
     @GObject.Property(type=str)
     def slot_value(self):
         slot = self.slot
-        return slot.value if slot else ""
+        return UML.recipes.get_slot_value(slot) if slot else ""
 
     @slot_value.setter  # type: ignore[no-redef]
     def slot_value(self, value):
@@ -195,7 +195,7 @@ class StereotypeView(GObject.Object):
             if value:
                 if slot is None:
                     slot = UML.recipes.add_slot(self.instance, self.attr)
-                slot.value = value
+                UML.recipes.set_slot_value(slot, value)
             elif slot:
                 del self.instance.slot[slot]
 

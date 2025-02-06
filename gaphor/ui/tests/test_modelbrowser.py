@@ -103,7 +103,7 @@ def test_model_browser_unset_nested_element(model_browser, element_factory):
     package = element_factory.create(UML.Package)
 
     class_.package = package
-    del class_.package
+    del class_.owningPackage
     package_item = tree_model.tree_item_for_element(package)
     class_item = tree_model.tree_item_for_element(class_)
     child_model = tree_model.child_model(package_item)
@@ -405,11 +405,11 @@ def test_stereotype_base_class_should_not_end_up_in_root(
 def test_drag_and_drop_parent_on_child(model_browser, element_factory, event_manager):
     root = element_factory.create(UML.Package)
     parent = element_factory.create(UML.Package)
-    parent.package = root
+    parent.nestingPackage = root
     parent_diagram = element_factory.create(UML.Diagram)
     parent_diagram.element = parent
     child = element_factory.create(UML.Package)
-    child.package = parent
+    child.nestingPackage = parent
     child_diagram = element_factory.create(UML.Diagram)
     child_diagram.element = child
 

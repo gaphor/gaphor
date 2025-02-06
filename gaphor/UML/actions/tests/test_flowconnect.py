@@ -194,7 +194,10 @@ def test_object_flow_reconnect(create, element_factory, sanitizer_service):
 
     f = flow.subject
     f.name = "tname"
-    f.guard = "tguard"
+    guard = f.model.create(UML.LiteralString)
+    guard.value = "tguard"
+    guard.activityEdge = f
+    f.guard = guard
 
     # reconnect: a1 -> o2
     connect(flow, flow.tail, o2)
@@ -211,7 +214,7 @@ def test_object_flow_reconnect(create, element_factory, sanitizer_service):
     assert len(element_factory.lselect(UML.ObjectFlow)) == 1
     # one guard
     assert flow.subject.name == "tname"
-    assert flow.subject.guard == "tguard"
+    assert flow.subject.guard.value == "tguard"
 
 
 def test_control_flow_reconnection(create, sanitizer_service):
@@ -227,7 +230,10 @@ def test_control_flow_reconnection(create, sanitizer_service):
 
     f = flow.subject
     f.name = "tname"
-    f.guard = "tguard"
+    guard = f.model.create(UML.LiteralString)
+    guard.value = "tguard"
+    guard.activityEdge = f
+    f.guard = guard
 
     # reconnect with object flow: a1 -> o1
     connect(flow, flow.tail, a3)
@@ -243,7 +249,7 @@ def test_control_flow_reconnection(create, sanitizer_service):
 
     # one guard, not changed
     assert flow.subject.name == "tname"
-    assert flow.subject.guard == "tguard"
+    assert flow.subject.guard.value == "tguard"
 
 
 def test_glue(create):
@@ -312,7 +318,10 @@ def test_reconnect(create, element_factory, sanitizer_service):
     connect(flow, flow.tail, a2)
     f = flow.subject
     f.name = "tname"
-    f.guard = "tguard"
+    guard = f.model.create(UML.LiteralString)
+    guard.value = "tguard"
+    guard.activityEdge = f
+    f.guard = guard
 
     # reconnect: a1 -> a3
     connect(flow, flow.tail, a3)
@@ -329,7 +338,7 @@ def test_reconnect(create, element_factory, sanitizer_service):
     assert len(element_factory.lselect(UML.ControlFlow)) == 1
     # one guard
     assert flow.subject.name == "tname"
-    assert flow.subject.guard == "tguard"
+    assert flow.subject.guard.value == "tguard"
 
 
 def test_object_flow_reconnection(create, sanitizer_service):
@@ -345,7 +354,10 @@ def test_object_flow_reconnection(create, sanitizer_service):
 
     f = flow.subject
     f.name = "tname"
-    f.guard = "tguard"
+    guard = f.model.create(UML.LiteralString)
+    guard.value = "tguard"
+    guard.activityEdge = f
+    f.guard = guard
 
     # reconnect with object flow: a1 -> a2
     connect(flow, flow.tail, o2)
@@ -361,7 +373,7 @@ def test_object_flow_reconnection(create, sanitizer_service):
 
     # one guard, not changed
     assert flow.subject.name == "tname"
-    assert flow.subject.guard == "tguard"
+    assert flow.subject.guard.value == "tguard"
 
 
 fork_and_decision_items = pytest.mark.parametrize(

@@ -43,7 +43,7 @@ class TransitionItem(Named, LinePresentation[UML.Transition]):
         guard_text = (
             self.subject.guard
             and self.subject.guard.specification
-            and f"[{self.subject.guard.specification}]"
+            and f"[{UML.recipes.get_literal_value_as_string(self.subject.guard.specification)}]"
             or ""
         )
         action_text = (

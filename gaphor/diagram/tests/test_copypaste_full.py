@@ -90,7 +90,7 @@ def test_shallow_copy_package_with_owned_package(element_factory):
     diagram: UML.Diagram = element_factory.create(UML.Diagram)
     package = element_factory.create(UML.Package)
     subpackage = element_factory.create(UML.Package)
-    subpackage.package = package
+    subpackage.nestingPackage = package
     package_item = diagram.create(PackageItem, subject=package)
 
     copy_buffer = copy_full([package_item])
@@ -98,7 +98,7 @@ def test_shallow_copy_package_with_owned_package(element_factory):
     new_package = new_package_item.subject
 
     assert subpackage in package.nestedPackage
-    assert subpackage.package is package
+    assert subpackage.nestingPackage is package
     assert subpackage not in new_package.nestedPackage
 
 
@@ -106,7 +106,7 @@ def test_full_copy_package_with_owned_package(element_factory):
     diagram: UML.Diagram = element_factory.create(UML.Diagram)
     package = element_factory.create(UML.Package)
     subpackage = element_factory.create(UML.Package)
-    subpackage.package = package
+    subpackage.nestingPackage = package
     subpackage.name = "subpackage"
     package_item = diagram.create(PackageItem, subject=package)
 
@@ -115,7 +115,7 @@ def test_full_copy_package_with_owned_package(element_factory):
     new_package = new_package_item.subject
 
     assert subpackage in package.nestedPackage
-    assert subpackage.package is package
+    assert subpackage.nestingPackage is package
     assert new_package.nestedPackage
     assert subpackage not in new_package.nestedPackage
     assert new_package.nestedPackage[0].name == "subpackage"

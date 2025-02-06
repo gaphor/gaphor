@@ -77,7 +77,7 @@ def test_stereotype_property_page_slot_value(diagram, element_factory, event_man
     slot = applied_stereotype.slot[0]
 
     assert stereotype.ownedAttribute[0] is slot.definingFeature
-    assert "test" == slot.value
+    assert "test" == UML.recipes.get_slot_value(slot)
 
 
 def test_inherited_stereotype(diagram, element_factory, event_manager):

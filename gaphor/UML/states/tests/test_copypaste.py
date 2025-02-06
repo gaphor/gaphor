@@ -30,11 +30,14 @@ def test_connected_transition(diagram, element_factory):
 
     connect(transition_item, transition_item.head, state_item_1)
     connect(transition_item, transition_item.tail, state_item_2)
-    transition_item.subject.guard.specification = "[test]"
+    specification = element_factory.create(UML.LiteralString)
+    specification.value = "[test]"
+    specification.owningConstraint = transition_item.subject.guard
+    transition_item.subject.guard.specification = specification
 
     new_items = copy_clear_and_paste_link({transition_item}, diagram, element_factory)
     new_transition_item = new_items.pop()
 
     assert isinstance(new_transition_item, TransitionItem), new_items
     assert new_transition_item.subject.guard
-    assert new_transition_item.subject.guard.specification == "[test]"
+    assert new_transition_item.subject.guard.specification.value == "[test]"

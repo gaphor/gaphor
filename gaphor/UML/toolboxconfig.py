@@ -1,3 +1,4 @@
+from gaphor.UML import Package
 from gaphor.UML.recipes import owner_package
 
 
@@ -9,7 +10,10 @@ def named_element_config(new_item, name=None):
 
 def default_namespace(new_item):
     if not new_item.subject.namespace:
-        new_item.subject.package = owner_package(new_item.diagram)
+        if isinstance(new_item.subject, Package):
+            new_item.subject.nestingPackage = owner_package(new_item.diagram)
+        else:
+            new_item.subject.package = owner_package(new_item.diagram)
 
 
 def namespace_config(new_item, name=None):
