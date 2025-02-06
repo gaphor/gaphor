@@ -67,7 +67,7 @@ def test_parse_property_complex_1(factory):
     assert "str" == a.typeValue
     assert UML.recipes.get_property_lower_value(a) == 0
     assert UML.recipes.get_property_upper_value(a) == math.inf
-    assert UML.recipes.get_property_default_value_as_string(a) == "aap"
+    assert UML.recipes.get_property_default_value_as_string(a) == '"aap"'
     assert "and a note" == a.note
 
 
@@ -82,7 +82,7 @@ def test_parse_property_complex_2(factory):
     assert "str" == a.typeValue
     assert UML.recipes.get_property_lower_value(a) == 0
     assert UML.recipes.get_property_upper_value(a) == math.inf
-    assert UML.recipes.get_property_default_value_as_string(a) == "aap bbq"
+    assert UML.recipes.get_property_default_value_as_string(a) == '"aap bbq"'
     assert "and a note" == a.note
 
 

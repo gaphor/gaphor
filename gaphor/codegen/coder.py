@@ -345,10 +345,6 @@ def default_value(a) -> str:
                 | UML.LiteralBoolean,
             ):
                 defaultValue = UML.recipes.get_literal_value_as_string(a.defaultValue)
-            elif (a.defaultValue[0] == a.defaultValue[-1]) and (
-                a.defaultValue[0] in ['"', "'"]
-            ):
-                defaultValue = a.defaultValue
             else:
                 defaultValue = f'"{a.defaultValue}"'
         elif a.typeValue == "bool":
@@ -372,7 +368,11 @@ def default_value(a) -> str:
 def lower(a):
     lowerValue = ""
     if isinstance(a.lowerValue, UML.LiteralInteger):
-        if a.lowerValue.value is not None and a.lowerValue.value != 0:
+        if (
+            a.lowerValue.value
+            and a.lowerValue.value is not None
+            and a.lowerValue.value != 0
+        ):
             lowerValue = str(a.lowerValue.value)
     else:
         if a.lowerValue is not None and a.lowerValue != "0":
@@ -383,7 +383,11 @@ def lower(a):
 def upper(a):
     upperValue = ""
     if isinstance(a.upperValue, UML.LiteralUnlimitedNatural):
-        if a.upperValue.value is not None and not math.isinf(a.upperValue.value):
+        if (
+            a.upperValue.value
+            and a.upperValue.value is not None
+            and not math.isinf(a.upperValue.value)
+        ):
             upperValue = str(int(a.upperValue.value))
     else:
         if a.upperValue is not None and a.upperValue != "*":
