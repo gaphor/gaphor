@@ -1,0 +1,29 @@
+name: Promote
+
+on:
+  issue_comment:
+    types:
+      - created
+
+permissions:
+  issues: write
+
+jobs:
+  promote:
+    name: ⬆️ Promote to stable
+    runs-on: ubuntu-24.04
+    if: |
+      ( !github.event.issue.pull_request )
+      && contains(github.event.comment.body, '/promote ')
+      && contains(github.event.*.labels.*.name, 'testing')
+    steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f # v2.10.2
+        with:
+          egress-policy: audit
+
+      - name: ⬆️ Promote to stable
+        uses: snapcrafters/ci/promote-to-stable@5d324dfd09955a81a018be6d7544d07770552644 # main
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          store-token: ${{ secrets.SNAP_STORE }}
