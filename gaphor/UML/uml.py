@@ -898,27 +898,27 @@ class BehaviorDiagram(Diagram):
     pass
 
 
-class InteractionDiagram(BehaviorDiagram, StructureDiagram):
+class InteractionDiagram(BehaviorDiagram):
     pass
 
 
-class CommunicationDiagram(InteractionDiagram, StructureDiagram):
+class CommunicationDiagram(InteractionDiagram):
     diagramType: _attribute[str] = _attribute("diagramType", str, default="com")
 
 
-class UseCaseDiagram(BehaviorDiagram, StructureDiagram):
+class UseCaseDiagram(BehaviorDiagram):
     diagramType: _attribute[str] = _attribute("diagramType", str, default="uc")
 
 
-class ActivityDiagram(BehaviorDiagram, StructureDiagram):
+class ActivityDiagram(BehaviorDiagram):
     diagramType: _attribute[str] = _attribute("diagramType", str, default="act")
 
 
-class StateMachineDiagram(BehaviorDiagram, StructureDiagram):
+class StateMachineDiagram(BehaviorDiagram):
     diagramType: _attribute[str] = _attribute("diagramType", str, default="stm")
 
 
-class SequenceDiagram(InteractionDiagram, StructureDiagram):
+class SequenceDiagram(InteractionDiagram):
     diagramType: _attribute[str] = _attribute("diagramType", str, default="sd")
 
 
