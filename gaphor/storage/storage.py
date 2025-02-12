@@ -166,8 +166,9 @@ def load_elements_generator(
         update_status_queue,
         homeless_literals,
     )
-    if version_lower_than(gaphor_version, (3, 0, 0)):
-        upgrade_package_nestingPackage(elements)
+    if version_lower_than(gaphor_version, (3, 1, 0)):
+        upgrade_package_package_to_nesting_package(elements)
+        upgrade_parameter_owned_node_to_activity_parameter_node(elements)
 
     yield from _load_attributes_and_references(elements, update_status_queue)
 
@@ -220,7 +221,7 @@ def _load_elements_and_canvasitems(
         if version_lower_than(gaphor_version, (2, 28, 0)):
             elem = upgrade_modeling_language(elem)
             elem = upgrade_diagram_type_to_class(elem)
-        if version_lower_than(gaphor_version, (3, 0, 0)):
+        if version_lower_than(gaphor_version, (3, 1, 0)):
             elem = upgrade_simple_properties_to_value_specifications(
                 elem, element_factory, modeling_language, homeless_literals
             )
@@ -577,7 +578,7 @@ sysml_diagram_type_to_class = {
 }
 
 
-# since 3.0.0
+# since 3.1.0
 def upgrade_simple_properties_to_value_specifications(
     elem: element,
     element_factory: ElementFactory,
@@ -611,24 +612,24 @@ def upgrade_simple_properties_to_value_specifications(
                         lowerValue.name = value
                         elem.values["lowerValue"] = lowerValue
                         homeless_literals[lowerValue.id] = (elem.id, name)
-            case "defaultValue":
-                value_attr = getattr(element_type, "defaultValue", None)
+            case "defaultValue" | "joinSpec" | "specification" | "value":
+                value_attr = getattr(element_type, name, None)
                 if value_attr and value_attr.type == valueSpecification:
                     defaultValue = get_value_specification_from_value(
                         value, elem, element_factory, modeling_language
                     )
                     if defaultValue is not None:
-                        elem.values["defaultValue"] = defaultValue
+                        elem.values[name] = defaultValue
                         homeless_literals[defaultValue.id] = (elem.id, name)
-            case "value":
-                value_attr = getattr(element_type, "value", None)
+            case "guard" if elem.type in ("ActivityEdge", "ControlFlow", "ObjectFlow"):
+                value_attr = getattr(element_type, name, None)
                 if value_attr and value_attr.type == valueSpecification:
-                    value_literal = get_value_specification_from_value(
+                    defaultValue = get_value_specification_from_value(
                         value, elem, element_factory, modeling_language
                     )
-                    if value_literal is not None:
-                        elem.values["value"] = value_literal
-                        homeless_literals[value_literal.id] = (elem.id, name)
+                    if defaultValue is not None:
+                        elem.values[name] = defaultValue
+                        homeless_literals[defaultValue.id] = (elem.id, name)
     return elem
 
 
@@ -687,9 +688,19 @@ def house_homeless_literals(
             setattr(element, name, literal)
 
 
-def upgrade_package_nestingPackage(elements):
+# since 3.1.0
+def upgrade_package_package_to_nesting_package(elements):
     for _id, elem in list(elements.items()):
         if elem.type in ["Package", "Profile"]:
             if "package" in elem.references:
                 elem.references["nestingPackage"] = elem.references["package"]
                 del elem.references["package"]
+
+
+# since 3.1.0
+def upgrade_parameter_owned_node_to_activity_parameter_node(elements):
+    for _id, elem in list(elements.items()):
+        if elem.type == "Parameter":
+            if "owningNode" in elem.references:
+                elem.references["activityParameterNode"] = elem.references["owningNode"]
+                del elem.references["owningNode"]
