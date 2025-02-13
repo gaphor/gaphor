@@ -1199,7 +1199,6 @@ DirectedRelationship.source.add(ElementImport.importingNamespace)  # type: ignor
 Element.owner.add(ElementImport.importingNamespace)  # type: ignore[attr-defined]
 DirectedRelationship.target.add(ElementImport.importedElement)  # type: ignore[attr-defined]
 Property.interface_ = association("interface_", Interface, upper=1, opposite="ownedAttribute")
-Property.class_ = association("class_", Class, upper=1, opposite="ownedAttribute")
 Property.association = association("association", Association, upper=1, opposite="memberEnd")
 Property.owningAssociation = association("owningAssociation", Association, upper=1, opposite="ownedEnd")
 Property.classifier = derivedunion("classifier", Classifier, upper=1)
@@ -1217,11 +1216,11 @@ Property.artifact = association("artifact", Artifact, upper=1, opposite="ownedAt
 
 Property.structuredClassifier = association("structuredClassifier", StructuredClassifier, upper=1, opposite="ownedAttribute")
 Property.association2 = association("association2", Association, upper=1, opposite="navigableOwnedEnd")
+Property.class_ = redefine(Property, "class_", Class, Property.structuredClassifier, opposite="ownedAttribute")
 Property.classifier.add(Property.interface_)  # type: ignore[attr-defined]
 NamedElement.namespace.add(Property.interface_)  # type: ignore[attr-defined]
 Property.classifier.add(Property.class_)  # type: ignore[attr-defined]
 NamedElement.namespace.add(Property.class_)  # type: ignore[attr-defined]
-Property.structuredClassifier.add(Property.class_)  # type: ignore[attr-defined]
 NamedElement.memberNamespace.add(Property.association)  # type: ignore[attr-defined]
 NamedElement.namespace.add(Property.owningAssociation)  # type: ignore[attr-defined]
 Feature.featuringClassifier.add(Property.owningAssociation)  # type: ignore[attr-defined]

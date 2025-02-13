@@ -950,16 +950,17 @@ class redefine(umlproperty):
         self.original: association | derived = original
         self.upper = original.upper
         self.lower = original.lower
-        if opposite is not None:
-            self.original.opposite = opposite
+        self._opposite = opposite
 
         original.dependent_properties.add(self)
 
     @property
     def opposite(self) -> str | None:
-        return (
-            self.original.opposite if isinstance(self.original, association) else None
-        )
+        if self._opposite:
+            return self._opposite
+        elif isinstance(self.original, association):
+            return self.original.opposite
+        return None
 
     @property
     def composite(self) -> bool:

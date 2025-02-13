@@ -269,8 +269,8 @@ def create_association(type_a: Type, type_b: Type):
     assoc = model.create(Association)
     end_a = model.create(Property)
     end_b = model.create(Property)
-    assoc.ownedEnd = end_a
-    assoc.ownedEnd = end_b
+    end_a.association = assoc
+    end_b.association = assoc
     end_a.type = type_a
     end_b.type = type_b
     # set default navigability (unknown)
