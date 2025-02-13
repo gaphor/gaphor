@@ -1,8 +1,15 @@
 from gaphor.diagram.copypaste import copy, copy_presentation
-from gaphor.UML import Activity, ActivityEdge, ActivityParameterNode
+from gaphor.UML import (
+    Activity,
+    ActivityEdge,
+    ActivityParameterNode,
+    JoinNode,
+    ObjectNode,
+    Pin,
+)
 from gaphor.UML.actions.activity import ActivityParameterNodeItem
 from gaphor.UML.actions.partition import PartitionItem
-from gaphor.UML.copypaste import copy_named_element
+from gaphor.UML.copypaste import copy_multiplicity, copy_named_element
 
 
 @copy.register
@@ -38,3 +45,23 @@ def copy_activity_edge(element: ActivityEdge):
         yield from copy(element.guard)
     if element.weight:
         yield from copy(element.weight)
+
+
+@copy.register
+def copy_pin(element: Pin):
+    yield element.id, copy_named_element(element)
+    yield from copy_multiplicity(element)
+
+
+@copy.register
+def copy_object_node(element: ObjectNode):
+    yield element.id, copy_named_element(element)
+    if element.upperBound:
+        yield from copy(element.upperBound)
+
+
+@copy.register
+def copy_join_node(element: JoinNode):
+    yield element.id, copy_named_element(element)
+    if element.joinSpec:
+        yield from copy(element.joinSpec)

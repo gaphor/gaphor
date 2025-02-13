@@ -2,6 +2,7 @@ import pytest
 
 from gaphor import UML
 from gaphor.core.format import format, parse
+from gaphor.diagram.copypaste import copy_full, paste_full
 from gaphor.diagram.tests.fixtures import (
     connect,
     copy_and_paste_link,
@@ -178,3 +179,42 @@ def test_copy_remove_paste_items_with_connections(diagram, element_factory):
     assert new_assoc.presentation[0] in new_items
     assert new_assoc.presentation[0].head_subject
     assert new_assoc.presentation[0].tail_subject
+
+
+@pytest.mark.parametrize("uml_type", [UML.Property, UML.Parameter])
+def test_copy_multiplicity(uml_type, diagram, element_factory):
+    prop = element_factory.create(uml_type)
+    prop.lowerValue = element_factory.create(UML.LiteralInteger)
+    prop.lowerValue.value = 1
+    prop.upperValue = element_factory.create(UML.LiteralInteger)
+    prop.upperValue.value = 2
+
+    buffer = copy_full({prop})
+    prop.unlink()
+    paste_full(buffer, diagram)
+
+    new_prop = next(element_factory.select(uml_type))
+
+    assert new_prop.lowerValue
+    assert new_prop.lowerValue.value == 1
+    assert new_prop.upperValue
+    assert new_prop.upperValue.value == 2
+
+
+def test_copy_property_default_value(diagram, element_factory):
+    prop = element_factory.create(UML.Property)
+    prop.defaultValue = element_factory.create(UML.LiteralString)
+    prop.defaultValue.value = "foo"
+    prop.lowerValue = element_factory.create(UML.LiteralInteger)
+    prop.lowerValue.value = 1
+    prop.upperValue = element_factory.create(UML.LiteralInteger)
+    prop.upperValue.value = 2
+
+    buffer = copy_full({prop})
+    prop.unlink()
+    paste_full(buffer, diagram)
+
+    new_prop = next(element_factory.select(UML.Property))
+
+    assert new_prop.defaultValue
+    assert new_prop.defaultValue.value == "foo"
