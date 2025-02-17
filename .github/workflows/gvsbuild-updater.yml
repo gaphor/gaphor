@@ -9,6 +9,9 @@ env:
   file: '.github/workflows/full-build.yml'
   yaml_key: '.jobs.windows.env.gvsbuild_version'
 
+permissions:
+  contents: read
+
 jobs:
 
   check-version:

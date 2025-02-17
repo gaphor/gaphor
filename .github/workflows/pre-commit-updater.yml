@@ -7,6 +7,9 @@ on:
 env:
   python_version: '3.13'
 
+permissions:
+  contents: read
+
 jobs:
 
   updater:
