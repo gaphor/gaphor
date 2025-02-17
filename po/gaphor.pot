@@ -3143,4 +3143,3 @@ msgstr ""
 #: gaphor/ui/tests/test_modelbrowser.py:330
 msgid "general: General"
 msgstr ""
-

@@ -3352,4 +3352,3 @@ msgstr "általános: Általános"
 
 #~ msgid "New package"
 #~ msgstr "Új csomag"
-

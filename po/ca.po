@@ -3493,4 +3493,3 @@ msgstr "generalització: {name}"
 
 #~ msgid "New package"
 #~ msgstr "Paquet"
-
