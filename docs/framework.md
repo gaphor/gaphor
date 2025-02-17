@@ -65,4 +65,3 @@ of the [undo manager](undo).
 ### file_manager
 
 Loading and saving a model is done through this service.
-

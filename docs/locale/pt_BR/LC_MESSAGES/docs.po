@@ -9909,4 +9909,3 @@ msgstr ""
 
 #~ msgid "`Image properties`_ can also be applied:"
 #~ msgstr ""
-
