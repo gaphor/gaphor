@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: 0.6.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2024-12-30 13:50-0500\n"
-"PO-Revision-Date: 2025-01-30 23:58+0000\n"
+"PO-Revision-Date: 2025-02-17 16:02+0000\n"
 "Last-Translator: Philip Goto <philip.goto@gmail.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/gaphor/gaphor/nl/>"
 "\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Weblate 5.10-dev\n"
+"X-Generator: Weblate 5.10.1-dev\n"
 "Generated-By: Babel 2.16.0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:28 gaphor/C4Model/toolbox.py:57
@@ -1939,18 +1939,16 @@ msgid "Sign In Controller"
 msgstr "bediener"
 
 #: gaphor/templates/c4model-example.gaphor
-#, fuzzy
 msgid "Security Component"
-msgstr "Nieuwe component"
+msgstr "Beveiligings­component"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Reset Password Controller"
 msgstr ""
 
 #: gaphor/templates/c4model-example.gaphor
-#, fuzzy
 msgid "E-mail Component"
-msgstr "Nieuwe component"
+msgstr "E-mail­component"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Account Summary Controller"
@@ -2692,9 +2690,8 @@ msgid "The (natural) language used in this model."
 msgstr "De (natuurlijke) taal gebruikt in dit model."
 
 #: gaphor/ui/elementeditor.ui:158
-#, fuzzy
 msgid "CSS Editor"
-msgstr "Stijl editor"
+msgstr "CSS-bewerker"
 
 #: gaphor/ui/elementeditor.ui:186
 msgid "CSS nodes of focused item"
@@ -2967,7 +2964,7 @@ msgstr "Over Gaphor"
 
 #: gaphor/ui/greeter.ui:86
 msgid "Recently Opened"
-msgstr ""
+msgstr "Onlangs geopend"
 
 #: gaphor/ui/greeter.ui:103
 msgid "Create New Model"
@@ -3145,17 +3142,14 @@ msgstr ""
 "diagram."
 
 #: gaphor/ui/help/shortcuts.ui:4 gaphor/ui/help/shortcuts.ui:11
-#, fuzzy
 msgid "Shortcuts"
-msgstr "Sneltoetsen"
+msgstr "Snel­toetsen"
 
 #: gaphor/ui/help/shortcuts.ui:46
 msgid "Quit Gaphor"
 msgstr "Gaphor sluiten"
 
-
 #: gaphor/ui/help/shortcuts.ui:56
-#, fuzzy
 msgid "Model"
 msgstr "Model"
 
@@ -3300,9 +3294,8 @@ msgid "Update relation “{name}”"
 msgstr "Relatie ‘{name}’ bijwerken"
 
 #: gaphor/ui/tests/test_modelbrowser.py:330
-#, fuzzy
 msgid "general: General"
-msgstr "algemeen: {name}"
+msgstr "algemeen: Algemeen"
 
 #~ msgid "Align vertical center"
 #~ msgstr "Verticaal centreren"
