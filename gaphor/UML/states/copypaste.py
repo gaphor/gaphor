@@ -1,5 +1,5 @@
 from gaphor.diagram.copypaste import copy
-from gaphor.UML import State, Transition
+from gaphor.UML import Constraint, State, Transition
 from gaphor.UML.copypaste import copy_named_element
 
 
@@ -19,3 +19,10 @@ def copy_transition(element: Transition):
     yield element.id, copy_named_element(element)
     if element.guard:
         yield from copy(element.guard)
+
+
+@copy.register
+def copy_constraint(element: Constraint):
+    yield element.id, copy_named_element(element)
+    if element.specification:
+        yield from copy(element.specification)

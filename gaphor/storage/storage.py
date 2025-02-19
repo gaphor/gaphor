@@ -8,7 +8,9 @@ __all__ = ["load", "save"]
 
 import io
 import logging
+import math
 from collections.abc import Callable, Iterable
+from decimal import Decimal
 from functools import partial
 
 from gaphor import application
@@ -106,8 +108,12 @@ def save_element(name, value, element_factory, writer):
             with writer.element(name, {}):
                 with writer.element("val", {}):
                     if isinstance(value, bool):
-                        # Write booleans as 0/1.
-                        writer.characters(str(int(value)))
+                        writer.characters(str(value))
+                    elif isinstance(value, Decimal):
+                        if value == Decimal(math.inf):
+                            writer.characters("*")
+                        else:
+                            writer.characters(str(value))
                     else:
                         writer.characters(str(value))
 
@@ -148,6 +154,8 @@ def load_elements_generator(
         if progress % 30 == 0:
             yield (progress * 100) / size
 
+    homeless_literals: dict[str, element] = {}
+
     # First create elements and canvas items in the factory
     # The elements are stored as attribute 'element' on the parser objects:
     yield from _load_elements_and_canvasitems(
@@ -156,7 +164,12 @@ def load_elements_generator(
         modeling_language,
         gaphor_version,
         update_status_queue,
+        homeless_literals,
     )
+    if version_lower_than(gaphor_version, (3, 1, 0)):
+        upgrade_package_package_to_nesting_package(elements)
+        upgrade_parameter_owned_node_to_activity_parameter_node(elements)
+
     yield from _load_attributes_and_references(elements, update_status_queue)
 
     upgrade_ensure_style_sheet_is_present(element_factory)
@@ -171,6 +184,10 @@ def load_elements_generator(
     for diagram in element_factory.select(Diagram):
         diagram.update()
 
+    house_homeless_literals(
+        element_factory, homeless_literals, elements, modeling_language
+    )
+
 
 def _load_elements_and_canvasitems(
     elements: dict[str, element],
@@ -178,6 +195,7 @@ def _load_elements_and_canvasitems(
     modeling_language: ModelingLanguage,
     gaphor_version: str,
     update_status_queue: Callable[[], Iterable[float]],
+    homeless_literals: dict[str, element],
 ):
     def create_element(elem):
         if elem.element:
@@ -203,6 +221,10 @@ def _load_elements_and_canvasitems(
         if version_lower_than(gaphor_version, (2, 28, 0)):
             elem = upgrade_modeling_language(elem)
             elem = upgrade_diagram_type_to_class(elem)
+        if version_lower_than(gaphor_version, (3, 1, 0)):
+            elem = upgrade_simple_properties_to_value_specifications(
+                elem, element_factory, modeling_language, homeless_literals
+            )
 
         if not (cls := modeling_language.lookup_element(elem.type, elem.ns)):
             raise UnknownModelElementError(
@@ -459,8 +481,14 @@ def upgrade_note_on_model_element_only(
 ) -> element:
     if elem.type.endswith("Item") and "note" in elem.values:
         if subject := elements.get(elem.references.get("subject", None)):  # type: ignore[arg-type]
-            if subject.values.get("note"):
-                subject.values["note"] += "\n\n" + elem.values["note"]
+            if (
+                subject.values.get("note")
+                and isinstance(subject.values["note"], str)
+                and isinstance(elem.values["note"], str)
+            ):
+                subject.values["note"] = (
+                    str(subject.values["note"]) + "\n\n" + str(elem.values["note"])
+                )
             else:
                 subject.values["note"] = elem.values["note"]
             del elem.values["note"]
@@ -509,9 +537,11 @@ def upgrade_dependency_owning_package(
 def upgrade_diagram_type_to_class(elem: element) -> element:
     if elem.type == "Diagram":
         if diagram_type := elem.values.get("diagramType"):
+            assert isinstance(diagram_type, str)
             elem.ns, elem.type = uml_diagram_type_to_class[diagram_type]
     elif elem.type == "SysMLDiagram":
         if diagram_type := elem.values.get("diagramType"):
+            assert isinstance(diagram_type, str)
             elem.ns, elem.type = sysml_diagram_type_to_class[diagram_type]
     return elem
 
@@ -546,3 +576,131 @@ sysml_diagram_type_to_class = {
     "uc": ("SysML", "UseCaseDiagram"),
     "par": ("SysML", "ParametricDiagram"),
 }
+
+
+# since 3.1.0
+def upgrade_simple_properties_to_value_specifications(
+    elem: element,
+    element_factory: ElementFactory,
+    modeling_language: ModelingLanguage,
+    homeless_literals: dict,
+) -> element:
+    valueSpecification = modeling_language.lookup_element("ValueSpecification", "UML")
+    element_type = modeling_language.lookup_element(elem.type, elem.ns)
+    for name, value in dict(elem.values).items():
+        match name:
+            case "upperValue":
+                value_attr = getattr(element_type, "upperValue", None)
+                if value_attr and value_attr.type == valueSpecification:
+                    type = modeling_language.lookup_element(
+                        "LiteralUnlimitedNatural", elem.ns
+                    )
+                    if type is not None and isinstance(value, str):
+                        upperValue = element_factory.create(type)
+                        decimalValue = Decimal(math.inf if value == "*" else int(value))
+                        upperValue.value = decimalValue
+                        upperValue.name = value
+                        elem.values["upperValue"] = upperValue
+                        homeless_literals[upperValue.id] = (elem.id, name)
+            case "lowerValue":
+                value_attr = getattr(element_type, "lowerValue", None)
+                if value_attr and value_attr.type == valueSpecification:
+                    type = modeling_language.lookup_element("LiteralInteger", elem.ns)
+                    if type is not None and isinstance(value, str):
+                        lowerValue = element_factory.create(type)
+                        lowerValue.value = int(value)
+                        lowerValue.name = value
+                        elem.values["lowerValue"] = lowerValue
+                        homeless_literals[lowerValue.id] = (elem.id, name)
+            case "defaultValue" | "joinSpec" | "specification" | "value":
+                value_attr = getattr(element_type, name, None)
+                if value_attr and value_attr.type == valueSpecification:
+                    defaultValue = get_value_specification_from_value(
+                        value, elem, element_factory, modeling_language
+                    )
+                    if defaultValue is not None:
+                        elem.values[name] = defaultValue
+                        homeless_literals[defaultValue.id] = (elem.id, name)
+            case "guard" if elem.type in ("ActivityEdge", "ControlFlow", "ObjectFlow"):
+                value_attr = getattr(element_type, name, None)
+                if value_attr and value_attr.type == valueSpecification:
+                    defaultValue = get_value_specification_from_value(
+                        value, elem, element_factory, modeling_language
+                    )
+                    if defaultValue is not None:
+                        elem.values[name] = defaultValue
+                        homeless_literals[defaultValue.id] = (elem.id, name)
+    return elem
+
+
+def get_value_specification_from_value(
+    value, elem, element_factory, modeling_language
+) -> Base | None:
+    defaultValue = None
+    if value[0] == '"' and value[-1] == '"':
+        value = value[1:-1]
+        type = modeling_language.lookup_element("LiteralString", elem.ns)
+        defaultValue = element_factory.create(type)
+        defaultValue.value = value
+        defaultValue.name = value
+    elif value in ["true", "True", "false", "False"]:
+        type = modeling_language.lookup_element("LiteralBoolean", elem.ns)
+        defaultValue = element_factory.create(type)
+        if value in ["true", "True"]:
+            defaultValue.value = True
+        else:
+            defaultValue.value = False
+        defaultValue.name = value
+    elif value == "*":
+        type = modeling_language.lookup_element("LiteralUnlimitedNatural", elem.ns)
+        defaultValue = element_factory.create(type)
+        defaultValue.value = Decimal(math.inf)
+        defaultValue.name = value
+    elif value.isdigit():
+        type = modeling_language.lookup_element("LiteralInteger", elem.ns)
+        defaultValue = element_factory.create(type)
+        defaultValue.value = int(value)
+        defaultValue.name = value
+    else:
+        # Anything else we assume as string.
+        type = modeling_language.lookup_element("LiteralString", elem.ns)
+        defaultValue = element_factory.create(type)
+        defaultValue.value = value
+        defaultValue.name = value
+
+    if defaultValue and isinstance(defaultValue, Base):
+        base_default_value: Base = defaultValue
+        return base_default_value
+    return None
+
+
+def house_homeless_literals(
+    element_factory: ElementFactory,
+    homeless_literals: dict,
+    elements: dict[str, element],
+    modeling_language: ModelingLanguage,
+):
+    for literal_id, (elem_id, name) in homeless_literals.items():
+        literal = element_factory.lookup(literal_id)
+        elem = elements.get(elem_id)
+        if elem is not None:
+            element = elem.element
+            setattr(element, name, literal)
+
+
+# since 3.1.0
+def upgrade_package_package_to_nesting_package(elements):
+    for _id, elem in list(elements.items()):
+        if elem.type in ["Package", "Profile"]:
+            if "package" in elem.references:
+                elem.references["nestingPackage"] = elem.references["package"]
+                del elem.references["package"]
+
+
+# since 3.1.0
+def upgrade_parameter_owned_node_to_activity_parameter_node(elements):
+    for _id, elem in list(elements.items()):
+        if elem.type == "Parameter":
+            if "owningNode" in elem.references:
+                elem.references["activityParameterNode"] = elem.references["owningNode"]
+                del elem.references["owningNode"]

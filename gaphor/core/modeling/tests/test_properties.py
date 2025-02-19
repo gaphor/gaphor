@@ -406,21 +406,21 @@ def test_association_subsettable_0_n(element_factory):
     assert a1 in c2.original
     assert a2 in c2.original
 
-    #     Superset {a1}, subset {a1}: subset {a2}, => superset {a2} ***POLICY***
+    #     Superset {a1}, subset {a1}: subset {a2}, => superset {a1, a2} ***POLICY***
     c3 = C()
     c3.subset = a1
     assert a1 in c3.original
     c3.subset.remove(a1)
     c3.subset = a2
-    assert len(c3.original) == 1
+    assert len(c3.original) == 2
     assert a2 in c3.original
 
-    #     Superset {a1}, subset {a1}: subset {} => superset {} ***POLICY***
+    #     Superset {a1}, subset {a1}: subset {} => superset {a1} ***POLICY***
     c4 = C()
     c4.original = a1
     c4.subset = a1
     c4.subset.remove(a1)
-    assert len(c4.original) == 0
+    assert len(c4.original) == 1
 
     # Superset changes, superset has multiplicity *, subset has multiplicity 1 or *:
     #     Both sets {}: superset {a1} => subset {}

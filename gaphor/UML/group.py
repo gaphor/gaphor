@@ -87,20 +87,35 @@ def packageable_element_ungroup(
 
 
 @group.register(UML.Package, UML.Type)
-@group.register(UML.Package, UML.Package)
 def container_group(parent, element) -> bool:
     if element.owner:
         ungroup(element.owner, element)
-
+    element.owningPackage = parent
     element.package = parent
     return True
 
 
 @ungroup.register(UML.Package, UML.Type)
-@ungroup.register(UML.Package, UML.Package)
 def container_ungroup(parent, element) -> bool:
     if element.package is parent:
+        del element.owningPackage
         del element.package
+        return True
+    return False
+
+
+@group.register(UML.Package, UML.Package)
+def package_group(parent, element) -> bool:
+    if element.owner:
+        ungroup(element.owner, element)
+    element.nestingPackage = parent
+    return True
+
+
+@ungroup.register(UML.Package, UML.Package)
+def package_ungroup(parent, element) -> bool:
+    if element.nestingPackage is parent:
+        del element.nestingPackage
         return True
     return False
 

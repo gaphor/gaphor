@@ -52,3 +52,19 @@ def test_full_copy_package_from_owned_diagram_in_super_package(element_factory):
     assert new_package_item.subject
     assert new_package_item.subject is not package_item.subject
     assert new_package_item.subject.owner is new_diagram.owner
+
+
+def test_copy_slot(diagram, element_factory):
+    slot = element_factory.create(UML.Slot)
+    slot.value = element_factory.create(UML.LiteralInteger)
+    slot.value.value = 1
+
+    buffer = copy_full({slot})
+    paste_full(buffer, diagram)
+
+    new_slot = next(p for p in element_factory.select(UML.Slot) if p is not slot)
+
+    assert new_slot.value
+    assert new_slot.value.value == 1
+
+    assert new_slot.value is not slot.value

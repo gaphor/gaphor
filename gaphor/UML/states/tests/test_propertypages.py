@@ -124,7 +124,7 @@ def test_transition_property_page(element_factory, event_manager):
     guard = find(widget, "guard")
     guard.set_text("test")
 
-    assert subject.guard.specification == "test"
+    assert subject.guard.specification.value == "test"
 
 
 def test_region_property_page(create, event_manager):

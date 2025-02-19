@@ -1,3 +1,5 @@
+from decimal import Decimal
+
 import pytest
 
 from gaphor import UML
@@ -131,8 +133,14 @@ def test_coder_write_class_with_n_m_association(navigable_association):
 
 
 def test_coder_write_class_with_1_n_association(navigable_association):
+    UML.recipes.set_property_upper_value(navigable_association.memberEnd[1], Decimal(1))
     class_a = navigable_association.memberEnd[0].type
-    navigable_association.memberEnd[1].upper = "1"
+    assert (
+        UML.recipes.get_property_upper_value_as_string(
+            navigable_association.memberEnd[1]
+        )
+        == "1"
+    )
 
     attr_def = list(variables(class_a))
 
@@ -208,8 +216,8 @@ def test_simple_attribute(uml_metamodel: ElementFactory):
     literal_spec = next(uml_metamodel.select(by_name("LiteralSpecification")))
 
     assert not is_simple_type(package)
-    assert is_simple_type(value_spec)
-    assert is_simple_type(literal_spec)
+    assert not is_simple_type(value_spec)
+    assert not is_simple_type(literal_spec)
 
 
 def test_order_classes(uml_metamodel):
@@ -228,7 +236,7 @@ def test_coder_write_association(navigable_association: UML.Association):
 
 def test_coder_write_association_lower_value(navigable_association: UML.Association):
     end = navigable_association.memberEnd[1]
-    end.lowerValue = "1"
+    UML.recipes.set_property_lower_value(end, 1)
 
     a = list(associations(navigable_association.memberEnd[0].type))
 
@@ -237,7 +245,7 @@ def test_coder_write_association_lower_value(navigable_association: UML.Associat
 
 def test_coder_write_association_upper_value(navigable_association: UML.Association):
     end = navigable_association.memberEnd[1]
-    end.upperValue = "1"
+    UML.recipes.set_property_upper_value(end, Decimal(1))
 
     a = list(associations(navigable_association.memberEnd[0].type))
 
@@ -296,13 +304,11 @@ def test_attribute_from_super_model(
 
 
 def test_replace_simple_attribute(uml_metamodel: ElementFactory):
-    instancespec = next(
-        uml_metamodel.select(
-            lambda e: isinstance(e, UML.Class) and e.name == "InstanceSpecification"
-        )
+    klass = next(
+        uml_metamodel.select(lambda e: isinstance(e, UML.Class) and e.name == "Class")
     )
-    a = next(it for it in instancespec.ownedAttribute if it.name == "specification")
+    a = next(it for it in klass.ownedAttribute if it.name == "isActive")
 
-    assert a.name == "specification"
-    assert a.typeValue == "str"
+    assert a.name == "isActive"
+    assert a.typeValue == "bool"
     assert not a.type

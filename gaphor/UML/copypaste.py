@@ -14,7 +14,24 @@ from gaphor.diagram.copypaste import (
     paste_element,
 )
 from gaphor.UML.recipes import owner_package
-from gaphor.UML.uml import Diagram, NamedElement, Package, Relationship, Type
+from gaphor.UML.uml import (
+    Diagram,
+    MultiplicityElement,
+    NamedElement,
+    Package,
+    Relationship,
+    Slot,
+    Type,
+)
+
+
+def copy_multiplicity(
+    element: MultiplicityElement, blacklist: list[str] | None = None
+) -> Iterator[tuple[Id, Opaque]]:
+    if element.lowerValue:
+        yield from copy(element.lowerValue)
+    if element.upperValue:
+        yield from copy(element.upperValue)
 
 
 class NamedElementCopy(NamedTuple):
@@ -54,7 +71,17 @@ def paste_named_element(copy_data: NamedElementCopy, diagram, lookup):
         and (not element.namespace)
         and (package := owner_package(diagram.owner)) is not element
     ):
-        element.package = package
+        if isinstance(element, Package):
+            element.nestingPackage = package
+        else:
+            element.package = package
 
 
 paste.register(NamedElementCopy, paste_named_element)
+
+
+@copy.register
+def copy_slot(element: Slot):
+    yield element.id, copy_element(element)
+    if element.value:
+        yield from copy(element.value)

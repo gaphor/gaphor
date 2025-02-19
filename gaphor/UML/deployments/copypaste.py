@@ -1,6 +1,6 @@
-from gaphor.diagram.copypaste import copy
+from gaphor.diagram.copypaste import copy, copy_element
 from gaphor.UML import Connector, ConnectorEnd
-from gaphor.UML.copypaste import copy_element, copy_named_element
+from gaphor.UML.copypaste import copy_multiplicity, copy_named_element
 
 
 @copy.register
@@ -15,3 +15,4 @@ def copy_connector_end(element: ConnectorEnd):
     yield element.id, copy_element(element)
     if element.partWithPort:
         yield from copy(element.partWithPort)
+    yield from copy_multiplicity(element)

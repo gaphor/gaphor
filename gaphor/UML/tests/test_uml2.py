@@ -99,13 +99,16 @@ def test_constraint(factory):
     constrainedElement = factory.create(UML.Class)
 
     element.constrainedElement = constrainedElement
-    element.specification = "Constraint specification"
+    if element.specification is None:
+        element.specification = factory.create(UML.LiteralString)
+        element.specification.owningConstraint = element
+    element.specification.value = "Constraint specification"
 
     assert constrainedElement in element.constrainedElement, (
         f"Constraint.constrainedElement does not contain the correct element - {element.constrainedElement}"
     )
 
-    assert element.specification == "Constraint specification", (
+    assert element.specification.value == "Constraint specification", (
         f"Constraint.specification is incorrect - {element.specification}"
     )
 

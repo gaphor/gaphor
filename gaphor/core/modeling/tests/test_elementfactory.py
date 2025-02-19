@@ -11,7 +11,7 @@ from gaphor.core.modeling.event import (
     ModelFlushed,
 )
 from gaphor.core.modeling.presentation import Presentation
-from gaphor.UML import Operation, Parameter
+from gaphor.UML import LiteralString, Operation, Parameter
 
 
 def test_element_factory_is_an_iterable(element_factory):
@@ -79,9 +79,12 @@ def test_unlink(element_factory):
     assert not list(element_factory.values()), list(element_factory.values())
 
     p = element_factory.create(Parameter)
-    p.defaultValue = "l"
+    defaultValue = element_factory.create(LiteralString)
+    defaultValue.value = "l"
+    defaultValue.owningParameter = p
+    p.defaultValue = defaultValue
 
-    assert len(list(element_factory.values())) == 1
+    assert len(list(element_factory.values())) == 2
 
     p.unlink()
     del p

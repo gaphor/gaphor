@@ -5,6 +5,7 @@ from gaphor.core.modeling import (
     ElementFactory,
     PendingChange,
     StyleSheet,
+    recipes,
 )
 from gaphor.diagram.general.simpleitem import Box
 from gaphor.UML import Class, Diagram, Element, Property
@@ -123,8 +124,8 @@ def test_removed_element(current, ancestor, incoming):
         [Diagram, "name", "Old", "New", "New"],
         [Diagram, "name", None, "New", "New"],
         [Diagram, "name", "Old", None, None],
-        [Class, "isAbstract", 0, 1, "1"],
-        [Class, "isAbstract", 1, 0, None],
+        [Class, "isAbstract", False, True, True],
+        [Class, "isAbstract", True, False, None],
     ],
 )
 def test_changed_value(
@@ -147,7 +148,7 @@ def test_changed_value(
     assert change.op == "update"
     assert change.element_id == ancestor_element.id
     assert change.property_name == name
-    assert change.property_value == expected_value
+    assert recipes.get_value_change_property_value(change) == expected_value
 
 
 def test_changed_enumeration_with_default_value(current, ancestor, incoming):

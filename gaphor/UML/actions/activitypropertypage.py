@@ -63,6 +63,7 @@ class ActivityParameterNodeView(GObject.Object):
                 model = self.activity.model
                 node = model.create(UML.ActivityParameterNode)
                 node.parameter = model.create(UML.Parameter)
+                node.parameter.behavior = self.activity
                 self.node = node
                 self.activity.node = node
             parse(self.node.parameter, value)

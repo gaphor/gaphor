@@ -1,4 +1,5 @@
 from gaphor import UML
+from gaphor.diagram.copypaste import copy_full, paste_full
 from gaphor.diagram.tests.fixtures import connect, copy_clear_and_paste_link
 from gaphor.UML.classes import ComponentItem, InterfaceItem
 from gaphor.UML.deployments import ConnectorItem
@@ -28,3 +29,26 @@ def test_connector(diagram, element_factory):
     assert len(new_conn.end) == 1
     assert new_conn.end[0].role is new_iface
     assert new_conn.end[0].partWithPort in new_comp.ownedPort
+
+
+def test_connector_end(diagram, element_factory):
+    connector_end = element_factory.create(UML.ConnectorEnd)
+    connector_end.lowerValue = element_factory.create(UML.LiteralInteger)
+    connector_end.lowerValue.value = 1
+    connector_end.upperValue = element_factory.create(UML.LiteralInteger)
+    connector_end.upperValue.value = 2
+
+    buffer = copy_full({connector_end})
+    paste_full(buffer, diagram)
+
+    new_connector_end = next(
+        ce for ce in element_factory.select(UML.ConnectorEnd) if ce is not connector_end
+    )
+
+    assert new_connector_end.lowerValue
+    assert new_connector_end.upperValue
+    assert new_connector_end.lowerValue.value == 1
+    assert new_connector_end.upperValue.value == 2
+
+    assert new_connector_end.lowerValue is not connector_end.lowerValue
+    assert new_connector_end.upperValue is not connector_end.upperValue

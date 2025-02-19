@@ -48,7 +48,10 @@ def test_vertex_reconnect(create, select, sanitizer_service):
 
     s = t.subject
     s.name = "tname"
-    s.guard.specification = "tguard"
+    specification = t.model.create(UML.LiteralString)
+    specification.value = "tguard"
+    specification.owningConstraint = s.guard
+    s.guard.specification = specification
 
     # reconnect: v1 -> v3
     connect(t, t.tail, v3)

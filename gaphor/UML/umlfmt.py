@@ -4,6 +4,7 @@ import re
 
 from gaphor.core.format import format
 from gaphor.i18n import gettext
+from gaphor.UML import recipes
 from gaphor.UML import uml as UML
 
 
@@ -78,7 +79,9 @@ def format_property(
         s.append(format_multiplicity(el))
 
     if default and el.defaultValue:
-        s.append(f" = {el.defaultValue}")
+        default_value = recipes.get_literal_value_as_string(el.defaultValue)
+        if default_value:
+            s.append(f" = {default_value}")
 
     if tags:
         tag_vals = []
@@ -193,14 +196,14 @@ def format_parameter(
     if multiplicity:
         s.append(format_multiplicity(el))
 
-    if default and el.defaultValue:
-        s.append(f" = {el.defaultValue}")
+    if default and el.defaultValue and el.defaultValue.value:
+        s.append(f" = {recipes.get_literal_value_as_string(el.defaultValue)}")
     return "".join(s)
 
 
 @format.register(UML.Slot)
 def format_slot(el):
-    return f'{el.definingFeature.name} = "{el.value}"'
+    return f'{el.definingFeature.name} = "{el.value.value}"'
 
 
 @format.register(UML.Pin)
@@ -222,8 +225,14 @@ def format_pin(el, **kwargs):
 @format.register(UML.MultiplicityElement)
 def format_multiplicity(el, bare=False):
     m = ""
-    if el.upperValue:
-        m = f"{el.lowerValue}..{el.upperValue}" if el.lowerValue else f"{el.upperValue}"
+    upper_value_string = recipes.get_multiplicity_upper_value_as_string(el)
+    lower_value_string = recipes.get_multiplicity_lower_value_as_string(el)
+    if el.upperValue and upper_value_string is not None:
+        m = (
+            f"{lower_value_string}..{upper_value_string}"
+            if el.lowerValue and lower_value_string is not None
+            else f"{upper_value_string}"
+        )
     return f"[{m}]" if m and not bare else m
 
 
