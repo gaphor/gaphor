@@ -15,8 +15,6 @@ from gaphor.core.modeling.properties import (
     relation_one,
 )
 
-from gaphor.core.modeling.base import UnlimitedNatural
-
 
 from gaphor.UML.uml import Actor
 class Person(Actor):

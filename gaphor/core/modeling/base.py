@@ -22,9 +22,6 @@ if TYPE_CHECKING:
 log = logging.getLogger(__name__)
 
 
-UnlimitedNatural = int  # | Literal["*"]
-
-
 @dataclass
 class UnlinkEvent:
     """Used to tell event handlers this element should be unlinked.

@@ -16,7 +16,7 @@ def set_value_change_property_value(
     elif isinstance(new_value, int):
         value_change.property_value = str(new_value)
         value_change.property_type = "int"
-    elif isinstance(new_value, UnlimitedNatural):
+    elif new_value == "*":
         value_change.property_value = str(new_value)
         value_change.property_type = "UnlimitedNatural"
 

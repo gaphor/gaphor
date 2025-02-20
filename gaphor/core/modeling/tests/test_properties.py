@@ -7,6 +7,7 @@ from gaphor.core.modeling import Base
 from gaphor.core.modeling.collection import collection
 from gaphor.core.modeling.event import AssociationUpdated
 from gaphor.core.modeling.properties import (
+    UnlimitedNatural,
     association,
     attribute,
     derived,
@@ -601,6 +602,43 @@ def test_int_and_boolean_attributes(input, expected):
     a.a = input
 
     assert a.a == expected
+
+
+@pytest.mark.parametrize(
+    "input,expected",
+    [
+        [None, None],
+        [0, 0],
+        [1, 1],
+        [2, 2],
+        ["*", "*"],
+    ],
+)
+def test_unlimited_natural_attributes(input, expected):
+    class A(Base):
+        a = attribute("a", UnlimitedNatural, 0)
+
+    a = A()
+    a.a = input
+
+    assert a.a == expected
+
+
+@pytest.mark.parametrize(
+    "input",
+    [
+        "foo",
+        -1,
+    ],
+)
+def test_unlimited_natural_attributes_wrong_inputs(input):
+    class A(Base):
+        a = attribute("a", UnlimitedNatural, 0)
+
+    a = A()
+
+    with pytest.raises(ValueError):
+        a.a = input
 
 
 def test_attributes_loading_failure():

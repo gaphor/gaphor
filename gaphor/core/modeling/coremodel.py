@@ -15,8 +15,6 @@ from gaphor.core.modeling.properties import (
     relation_one,
 )
 
-from gaphor.core.modeling.base import UnlimitedNatural
-
 
 # 1: override Base
 from gaphor.core.modeling.base import Base

@@ -59,6 +59,9 @@ __all__ = ["attribute", "enumeration", "association", "derivedunion", "redefine"
 log = logging.getLogger(__name__)
 
 
+UnlimitedNatural = int | Literal["*"]
+
+
 E = TypeVar("E")
 
 
@@ -197,13 +200,13 @@ class subsettable_umlproperty(umlproperty):
 class attribute(umlproperty, Generic[T]):
     """Attribute.
 
-    Element.attr = attribute('attr', types.StringType, '')
+    Element.attr = attribute('attr', str, '')
     """
 
     def __init__(
         self,
         name: str,
-        type: type[str | int],
+        type: type[str | int | bool],
         default: str | int | None = None,
     ):
         super().__init__(name)
@@ -226,14 +229,18 @@ class attribute(umlproperty, Generic[T]):
     def set(self, obj, value):
         if (
             value is not None
-            and not isinstance(value, self.type)
-            and not isinstance(value, str)
+            and self.type is not UnlimitedNatural
+            and not isinstance(value, str | self.type)
         ):
-            raise TypeError(
-                f"Value should be of type {self.type}"
-                and self.type.__name__
-                or self.type
-            )
+            raise TypeError(f"Value should be of type {self.type}, not {type(value)}")
+
+        elif value is not None and self.type is UnlimitedNatural:
+            if value != "*":
+                value = int(value)
+                if value < 0:
+                    raise ValueError(
+                        "Value for UnlimitedNatural should be int >= 0, or '*'"
+                    )
 
         elif self.type is int and isinstance(value, str | bool):
             value = (

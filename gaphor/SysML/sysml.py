@@ -15,8 +15,6 @@ from gaphor.core.modeling.properties import (
     relation_one,
 )
 
-from gaphor.core.modeling.base import UnlimitedNatural
-
 
 
 def _directed_relationship_property_path_target_source(type):

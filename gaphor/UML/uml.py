@@ -15,12 +15,10 @@ from gaphor.core.modeling.properties import (
     relation_one,
 )
 
-from gaphor.core.modeling.base import UnlimitedNatural
-
 
 from typing import Callable
 
-from gaphor.core.modeling.base import UnlimitedNatural
+from gaphor.core.modeling import UnlimitedNatural
 
 
 from gaphor.core.modeling.base import Base

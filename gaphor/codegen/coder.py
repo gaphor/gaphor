@@ -65,8 +65,6 @@ header = textwrap.dedent(
         relation_one,
     )
 
-    from gaphor.core.modeling.base import UnlimitedNatural
-
     """.format("ruff")  # work around tooling triggers
 )
 
