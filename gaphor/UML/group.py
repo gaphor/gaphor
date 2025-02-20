@@ -33,7 +33,8 @@ def _(
     | UML.Comment
     | UML.Image
     | UML.InstanceSpecification
-    | UML.OccurrenceSpecification,
+    | UML.OccurrenceSpecification
+    | UML.ValueSpecification,
 ):
     return None
 
