@@ -181,10 +181,10 @@ def parse_attribute(el: uml.Property, s: str) -> None:
         el.isDerived = bool(g("derived"))
         el.name = g("name")
         el.typeValue = g("type")
-        recipes.set_property_lower_value_from_string(el, g("mult_l"))
-        recipes.set_property_upper_value_from_string(el, g("mult_u"))
+        recipes.set_multiplicity_lower_value(el, g("mult_l"))
+        recipes.set_multiplicity_upper_value(el, g("mult_u"))
         if g("has_mult") and not g("mult_u"):
-            recipes.set_property_upper_value_from_string(el, "*")
+            recipes.set_multiplicity_upper_value(el, "*")
         recipes.set_property_default_value_from_string(el, g("default"))
         el.note = g("note")
 
@@ -211,8 +211,8 @@ def parse_association_end(el: uml.Property, s: str) -> None:
         g = m.group
         _set_visibility(el, g("vis"))
         el.isDerived = bool(g("derived"))
-        recipes.set_property_lower_value_from_string(el, g("mult_l"))
-        recipes.set_property_upper_value_from_string(el, g("mult_u"))
+        recipes.set_multiplicity_lower_value(el, g("mult_l"))
+        recipes.set_multiplicity_upper_value(el, g("mult_u"))
     else:
         m = association_end_name_pat.match(s)
         g = m.group
@@ -228,15 +228,15 @@ def parse_association_end(el: uml.Property, s: str) -> None:
             el.note = g("note")
             # Optionally, the multiplicity and tagged values may be defined:
             if g("mult_l"):
-                recipes.set_property_lower_value_from_string(el, g("mult_l"))
+                recipes.set_multiplicity_lower_value(el, g("mult_l"))
 
             if g("mult_u"):
                 if not g("mult_l"):
-                    recipes.set_property_lower_value_from_string(el, None)
-                recipes.set_property_upper_value_from_string(el, g("mult_u"))
+                    recipes.set_multiplicity_lower_value(el, None)
+                recipes.set_multiplicity_upper_value(el, g("mult_u"))
 
             elif g("has_mult") and not g("mult_u"):
-                recipes.set_property_upper_value_from_string(el, "*")
+                recipes.set_multiplicity_upper_value(el, "*")
 
 
 @parse.register(uml.Element)
@@ -284,10 +284,10 @@ def parse_operation(el: uml.Operation, s: str) -> None:
                 el.ownedParameter = p
                 p.direction = "return"
             p.typeValue = g("type")
-            recipes.set_parameter_lower_value_from_string(p, g("mult_l"))
-            recipes.set_parameter_upper_value_from_string(p, g("mult_u"))
+            recipes.set_multiplicity_lower_value(p, g("mult_l"))
+            recipes.set_multiplicity_upper_value(p, g("mult_u"))
             if g("has_mult") and not g("mult_u"):
-                recipes.set_parameter_upper_value_from_string(p, "*")
+                recipes.set_multiplicity_upper_value(p, "*")
             defined_params.add(p)
 
         pindex = 0
@@ -306,10 +306,10 @@ def parse_operation(el: uml.Operation, s: str) -> None:
             p.direction = g("dir") or "in"
             p.name = g("name")
             p.typeValue = g("type")
-            recipes.set_parameter_lower_value_from_string(p, g("mult_l"))
-            recipes.set_parameter_upper_value_from_string(p, g("mult_u"))
+            recipes.set_multiplicity_lower_value(p, g("mult_l"))
+            recipes.set_multiplicity_upper_value(p, g("mult_u"))
             if g("has_mult") and not g("mult_u"):
-                recipes.set_parameter_upper_value_from_string(p, "*")
+                recipes.set_multiplicity_upper_value(p, "*")
             recipes.set_parameter_default_value_from_string(p, g("default"))
             el.ownedParameter = p
             defined_params.add(p)
@@ -334,10 +334,10 @@ def parse_parameter(el: uml.Parameter, s: str) -> None:
         el.direction = g("dir") or "in"
         el.name = g("name")
         el.typeValue = g("type")
-        recipes.set_parameter_lower_value_from_string(el, g("mult_l"))
-        recipes.set_parameter_upper_value_from_string(el, g("mult_u"))
+        recipes.set_multiplicity_lower_value(el, g("mult_l"))
+        recipes.set_multiplicity_upper_value(el, g("mult_u"))
         if g("has_mult") and not g("mult_u"):
-            recipes.set_parameter_upper_value_from_string(el, "*")
+            recipes.set_multiplicity_upper_value(el, "*")
         recipes.set_parameter_default_value_from_string(el, g("default"))
 
 

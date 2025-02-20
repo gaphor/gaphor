@@ -456,6 +456,22 @@ def get_property_default_value_as_string(property: Property) -> str | None:
     return get_literal_value_as_string(property.defaultValue)
 
 
+def set_property_default_value_from_string(
+    property: Property, value: str | None
+) -> None:
+    """Set default value of a property."""
+    if property.defaultValue:
+        property.defaultValue.unlink()
+    if value is None:
+        return
+    default_value = create_value_specification_for_type_and_value(
+        property.model, property.typeValue, value
+    )
+    property.defaultValue = default_value
+    if default_value is not None:
+        default_value.owningProperty = property
+
+
 def get_literal_value_as_string(value: ValueSpecification) -> str | None:
     """Get literal value as a string."""
     if value is None:
@@ -471,22 +487,6 @@ def get_literal_value_as_string(value: ValueSpecification) -> str | None:
             return "true"
         return "false"
     return None
-
-
-def set_property_default_value_from_string(
-    property: Property, value: str | None
-) -> None:
-    """Set default value of a property."""
-    if property.defaultValue:
-        property.defaultValue.unlink()
-    if value is None:
-        return
-    default_value = create_value_specification_for_type_and_value(
-        property.model, property.typeValue, value
-    )
-    property.defaultValue = default_value
-    if default_value is not None:
-        default_value.owningProperty = property
 
 
 def create_value_specification_for_type_and_value(
@@ -530,99 +530,12 @@ def create_value_specification_for_type_and_value(
     return value_specification
 
 
-def get_property_lower_value(property: Property) -> int | None:
-    """Get lower value of a property."""
-    if property.lowerValue is None:
+def get_multiplicity_lower_value(element: MultiplicityElement) -> int | None:
+    """Get lower value of a multiplicity element."""
+    if element.lowerValue is None:
         return None
-    if isinstance(property.lowerValue, LiteralInteger):
-        return int(property.lowerValue.value)
-    return None
-
-
-def get_property_lower_value_as_string(property: Property) -> str | None:
-    """Get lower value of a property as a string."""
-    if property.lowerValue is None:
-        return None
-    if isinstance(property.lowerValue, LiteralInteger):
-        return str(property.lowerValue.value)
-    return None
-
-
-def set_property_lower_value(property: Property, value: int | None) -> None:
-    """Set lower value of a property."""
-    if property.lowerValue:
-        property.lowerValue.unlink()
-    if value is None:
-        return
-    lower_value = property.model.create(LiteralInteger)
-    property.lowerValue = lower_value
-    lower_value.owningLower = property
-    property.lowerValue.value = value
-    property.lowerValue.name = str(value)
-
-
-def set_property_lower_value_from_string(property: Property, value: str | None) -> None:
-    """Set lower value of a property from a string."""
-    if property.lowerValue:
-        property.lowerValue.unlink()
-    if value is None:
-        return
-    lower_value = property.model.create(LiteralInteger)
-    lower_value.value = "*" if value == "*" else int(value)
-    lower_value.name = value
-    property.lowerValue = lower_value
-
-
-def get_property_upper_value(property: Property) -> UnlimitedNatural | None:
-    """Get upper value of a property."""
-    if property.upperValue is None:
-        return None
-    if isinstance(property.upperValue, LiteralUnlimitedNatural):
-        return property.upperValue.value  # type: ignore[no-any-return]
-    return None
-
-
-def get_property_upper_value_as_string(property: Property) -> str | None:
-    """Get upper value of a property as a string."""
-    if property.upperValue is None:
-        return None
-    if isinstance(property.upperValue, LiteralUnlimitedNatural):
-        return str(property.upperValue.value)
-    return None
-
-
-def set_property_upper_value(
-    property: Property, value: UnlimitedNatural | None
-) -> None:
-    """Set upper value of a property."""
-    if property.upperValue:
-        property.upperValue.unlink()
-    if value is None:
-        return
-    upper_value = property.model.create(LiteralUnlimitedNatural)
-    upper_value.value = value
-    upper_value.name = str(value)
-    property.upperValue = upper_value
-
-
-def set_property_upper_value_from_string(property: Property, value: str | None) -> None:
-    """Set upper value of a property from a string."""
-    if property.upperValue:
-        property.upperValue.unlink()
-    if value is None:
-        return
-    upper_value = property.model.create(LiteralUnlimitedNatural)
-    upper_value.value = "*" if value == "*" else int(value)
-    upper_value.name = value
-    property.upperValue = upper_value
-
-
-def get_multiplicity_lower_value(multiplicity: MultiplicityElement) -> int | None:
-    """Get lower value of a multiplicity."""
-    if multiplicity.lowerValue is None:
-        return None
-    if isinstance(multiplicity.lowerValue, LiteralInteger):
-        return int(multiplicity.lowerValue.value)
+    if isinstance(element.lowerValue, LiteralInteger):
+        return int(element.lowerValue.value)
     return None
 
 
@@ -638,80 +551,53 @@ def get_multiplicity_lower_value_as_string(
 
 
 def set_multiplicity_lower_value(
-    multiplicity: MultiplicityElement, value: int | None
+    element: MultiplicityElement, value: int | str | None
 ) -> None:
     """Set lower value of a multiplicity."""
-    if multiplicity.lowerValue:
-        multiplicity.lowerValue.unlink()
+    if element.lowerValue:
+        element.lowerValue.unlink()
     if value is None:
         return
-    lower_value = multiplicity.model.create(LiteralInteger)
-    multiplicity.lowerValue = lower_value
-    lower_value.owningLower = multiplicity
-    multiplicity.lowerValue.value = value
-    multiplicity.lowerValue.name = str(value)
-
-
-def set_multiplicity_lower_value_from_string(
-    multiplicity: MultiplicityElement, value: str | None
-) -> None:
-    """Set lower value of a multiplicity from a string."""
-    if multiplicity.lowerValue:
-        multiplicity.lowerValue.unlink()
-    if value is None:
-        return
-    lower_value = multiplicity.model.create(LiteralInteger)
-    lower_value.value = "*" if value == "*" else int(value)
-    lower_value.name = value
-    multiplicity.lowerValue = lower_value
+    lower_value = element.model.create(LiteralInteger)
+    lower_value.value = int(value)
+    lower_value.name = str(value)
+    element.lowerValue = lower_value
 
 
 def get_multiplicity_upper_value(
-    multiplicity: MultiplicityElement,
+    element: MultiplicityElement,
 ) -> UnlimitedNatural | None:
-    """Get upper value of a multiplicity."""
-    if isinstance(multiplicity.upperValue, LiteralUnlimitedNatural):
-        return multiplicity.upperValue.value  # type: ignore[no-any-return]
+    """Get upper value of a parameter."""
+    if element.upperValue is None:
+        return None
+    if isinstance(element.upperValue, LiteralUnlimitedNatural):
+        return element.upperValue.value  # type: ignore[no-any-return]
     return None
 
 
 def get_multiplicity_upper_value_as_string(
-    multiplicity: MultiplicityElement,
+    element: MultiplicityElement,
 ) -> str | None:
     """Get upper value of a multiplicity as a string."""
-    if multiplicity.upperValue is None:
+    if element.upperValue is None:
         return None
-    if isinstance(multiplicity.upperValue, LiteralUnlimitedNatural):
-        return str(multiplicity.upperValue.value)
+    if isinstance(element.upperValue, LiteralUnlimitedNatural):
+        return str(element.upperValue.value)
     return None
 
 
 def set_multiplicity_upper_value(
-    multiplicity: MultiplicityElement, value: UnlimitedNatural | None
+    element: MultiplicityElement, value: UnlimitedNatural | str | None
 ) -> None:
     """Set upper value of a multiplicity."""
-    if multiplicity.upperValue:
-        multiplicity.upperValue.unlink()
+    if element.upperValue:
+        element.upperValue.unlink()
     if value is None:
         return
-    upper_value = multiplicity.model.create(LiteralUnlimitedNatural)
-    upper_value.value = value
-    upper_value.name = str(value)
-    multiplicity.upperValue = upper_value
-
-
-def set_multiplicity_upper_value_from_string(
-    multiplicity: MultiplicityElement, value: str | None
-) -> None:
-    """Set upper value of a multiplicity from a string."""
-    if multiplicity.upperValue:
-        multiplicity.upperValue.unlink()
-    if value is None:
-        return
-    upper_value = multiplicity.model.create(LiteralUnlimitedNatural)
+    upper_value = element.model.create(LiteralUnlimitedNatural)
     upper_value.value = "*" if value == "*" else int(value)
-    upper_value.name = value
-    multiplicity.upperValue = upper_value
+    upper_value.name = str(value)
+    element.upperValue = upper_value
 
 
 def get_parameter_default_value(parameter: Parameter) -> ValueSpecification | None:
@@ -724,18 +610,6 @@ def get_parameter_default_value_as_string(parameter: Parameter) -> str | None:
     if parameter.defaultValue is None:
         return None
     return get_literal_value_as_string(parameter.defaultValue)
-
-
-def set_parameter_default_value(
-    parameter: Parameter, value: ValueSpecification | None
-) -> None:
-    """Set default value of a parameter."""
-    if parameter.defaultValue:
-        parameter.defaultValue.unlink()
-    if value is None:
-        return
-    parameter.defaultValue = value
-    value.owningParameter = parameter
 
 
 def set_parameter_default_value_from_string(
@@ -752,98 +626,3 @@ def set_parameter_default_value_from_string(
     parameter.defaultValue = default_value
     if default_value is not None:
         default_value.owningParameter = parameter
-
-
-def get_parameter_lower_value(parameter: Parameter) -> int | None:
-    """Get lower value of a parameter."""
-    if parameter.lowerValue is None:
-        return None
-    if isinstance(parameter.lowerValue, LiteralInteger):
-        return int(parameter.lowerValue.value)
-    return None
-
-
-def get_parameter_lower_value_as_string(parameter: Parameter) -> str | None:
-    """Get lower value of a parameter as a string."""
-    if parameter.lowerValue is None:
-        return None
-    if isinstance(parameter.lowerValue, LiteralInteger):
-        return str(parameter.lowerValue.value)
-    return None
-
-
-def set_parameter_lower_value(parameter: Parameter, value: int | None) -> None:
-    """Set lower value of a parameter."""
-    if parameter.lowerValue:
-        parameter.lowerValue.unlink()
-    if value is None:
-        return
-    lower_value = parameter.model.create(LiteralInteger)
-    parameter.lowerValue = lower_value
-    lower_value.owningLower = parameter
-    parameter.lowerValue.value = value
-    parameter.lowerValue.name = str(value)
-
-
-def set_parameter_lower_value_from_string(
-    parameter: Parameter, value: str | None
-) -> None:
-    """Set lower value of a parameter from a string."""
-    if parameter.lowerValue:
-        parameter.lowerValue.unlink()
-    if value is None:
-        return
-    lower_value = parameter.model.create(LiteralInteger)
-    lower_value.value = "*" if value == "*" else int(value)
-    lower_value.name = value
-    parameter.lowerValue = lower_value
-
-
-def get_parameter_upper_value(parameter: Parameter) -> UnlimitedNatural | None:
-    """Get upper value of a parameter."""
-    if parameter.upperValue is None:
-        return None
-    if isinstance(parameter.upperValue, LiteralUnlimitedNatural):
-        return parameter.upperValue.value  # type: ignore[no-any-return]
-    return None
-
-
-def get_parameter_upper_value_as_string(parameter: Parameter) -> str | None:
-    """Get upper value of a parameter as a string."""
-    if parameter.upperValue is None:
-        return None
-    if (
-        isinstance(parameter.upperValue, LiteralUnlimitedNatural)
-        and parameter.upperValue.value is not None
-    ):
-        return str(parameter.upperValue.value)
-    return None
-
-
-def set_parameter_upper_value(
-    parameter: Parameter, value: UnlimitedNatural | None
-) -> None:
-    """Set upper value of a parameter."""
-    if parameter.upperValue:
-        parameter.upperValue.unlink()
-    if value is None:
-        return
-    upper_value = parameter.model.create(LiteralUnlimitedNatural)
-    upper_value.value = value
-    upper_value.name = str(value)
-    parameter.upperValue = upper_value
-
-
-def set_parameter_upper_value_from_string(
-    parameter: Parameter, value: str | None
-) -> None:
-    """Set upper value of a parameter from a string."""
-    if parameter.upperValue:
-        parameter.upperValue.unlink()
-    if value is None:
-        return
-    upper_value = parameter.model.create(LiteralUnlimitedNatural)
-    upper_value.value = "*" if value == "*" else int(value)
-    upper_value.name = value
-    parameter.upperValue = upper_value
-    upper_value.owningUpper = parameter

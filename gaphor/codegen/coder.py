@@ -228,7 +228,7 @@ def variables(class_: UML.Class, overrides: Overrides | None = None):
             elif a.type:
                 mult = (
                     "one"
-                    if UML.recipes.get_property_upper_value_as_string(a) == "1"
+                    if UML.recipes.get_multiplicity_upper_value_as_string(a) == "1"
                     else "many"
                 )
                 comment = "  # type: ignore[assignment]" if is_reassignment(a) else ""

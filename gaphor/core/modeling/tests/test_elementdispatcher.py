@@ -326,10 +326,10 @@ def test_association_notification_complex(element_factory, dispatcher, handler):
     element = element_factory.create(UML.Association)
     p1 = element.memberEnd = element_factory.create(UML.Property)
     p2 = element.memberEnd = element_factory.create(UML.Property)
-    UML.recipes.set_property_lower_value_from_string(p1, "0")
-    UML.recipes.set_property_upper_value_from_string(p1, "1")
-    UML.recipes.set_property_lower_value_from_string(p2, "1")
-    UML.recipes.set_property_upper_value_from_string(p2, "*")
+    UML.recipes.set_multiplicity_lower_value(p1, "0")
+    UML.recipes.set_multiplicity_upper_value(p1, "1")
+    UML.recipes.set_multiplicity_lower_value(p2, "1")
+    UML.recipes.set_multiplicity_upper_value(p2, "*")
 
     assert len(element.memberEnd) == 2
 
