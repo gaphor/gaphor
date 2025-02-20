@@ -1,6 +1,6 @@
 from functools import singledispatch
 
-from gaphor.core.modeling import recipes
+from gaphor.core.modeling import UnlimitedNatural
 from gaphor.core.modeling.coremodel import (
     ElementChange,
     RefChange,
@@ -50,7 +50,7 @@ def _(change: ValueChange, element_factory):
     return bool(
         element
         and getattr(element, change.property_name, None)
-        != recipes.get_value_change_property_value(change)
+        != get_value_change_property_value(change)
     )
 
 
@@ -59,7 +59,7 @@ def _(change: ValueChange, element_factory, modeling_factory):
     if change.applied:
         return
     element = element_factory[change.element_id]
-    element.load(change.property_name, recipes.get_value_change_property_value(change))
+    element.load(change.property_name, get_value_change_property_value(change))
     element.postload()
     change.applied = True
 
@@ -99,3 +99,25 @@ def _(change: RefChange, element_factory, modeling_factory):
             None,
         ):
             other.applied = True
+
+
+def get_value_change_property_value(
+    value_change,
+) -> None | str | int | UnlimitedNatural | bool:
+    if value_change.property_value is None:
+        return None
+    elif value_change.property_type == "str":
+        return str(value_change.property_value)
+    elif value_change.property_type == "int":
+        return int(value_change.property_value)
+    elif value_change.property_type == "bool":
+        return bool(value_change.property_value == "True")
+    elif (
+        value_change.property_type == "UnlimitedNatural"
+        and value_change.property_value == "*"
+    ):
+        return "*"
+    elif value_change.property_type == "UnlimitedNatural":
+        return int(value_change.property_value)
+    else:
+        return None

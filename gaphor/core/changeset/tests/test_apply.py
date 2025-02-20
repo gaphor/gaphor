@@ -1,12 +1,12 @@
 import pytest
 
 from gaphor.core.changeset.apply import applicable, apply_change
+from gaphor.core.changeset.compare import set_value_change_property_value
 from gaphor.core.modeling import (
     Diagram,
     ElementChange,
     RefChange,
     ValueChange,
-    recipes,
 )
 from gaphor.UML import (
     Class,
@@ -75,7 +75,7 @@ def test_update_str_value(element_factory, modeling_language):
     change: ValueChange = element_factory.create(ValueChange)
     change.element_id = diagram.id
     change.property_name = "name"
-    recipes.set_value_change_property_value(change, "new value")
+    set_value_change_property_value(change, "new value")
 
     apply_change(change, element_factory, modeling_language)
 
@@ -88,7 +88,7 @@ def test_update_bool_value(element_factory, modeling_language):
     change: ValueChange = element_factory.create(ValueChange)
     change.element_id = literal.id
     change.property_name = "value"
-    recipes.set_value_change_property_value(change, True)
+    set_value_change_property_value(change, True)
 
     apply_change(change, element_factory, modeling_language)
 
@@ -101,7 +101,7 @@ def test_update_int_value(element_factory, modeling_language):
     change: ValueChange = element_factory.create(ValueChange)
     change.element_id = literal.id
     change.property_name = "value"
-    recipes.set_value_change_property_value(change, 3)
+    set_value_change_property_value(change, 3)
 
     apply_change(change, element_factory, modeling_language)
 
@@ -262,7 +262,7 @@ def test_update_value_applicable(element_factory):
     change: ValueChange = element_factory.create(ValueChange)
     change.element_id = diagram.id
     change.property_name = "name"
-    recipes.set_value_change_property_value(change, "new value")
+    set_value_change_property_value(change, "new value")
 
     assert applicable(change, element_factory)
 
@@ -272,7 +272,7 @@ def test_update_value_not_applicable(element_factory):
     change: ValueChange = element_factory.create(ValueChange)
     change.element_id = diagram.id
     change.property_name = "name"
-    recipes.set_value_change_property_value(change, "new value")
+    set_value_change_property_value(change, "new value")
     diagram.name = "new value"
 
     assert not applicable(change, element_factory)

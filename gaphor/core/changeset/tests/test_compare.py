@@ -1,11 +1,11 @@
 import pytest
 
+from gaphor.core.changeset.apply import get_value_change_property_value
 from gaphor.core.changeset.compare import RefChange, UnmatchableModel, compare
 from gaphor.core.modeling import (
     ElementFactory,
     PendingChange,
     StyleSheet,
-    recipes,
 )
 from gaphor.diagram.general.simpleitem import Box
 from gaphor.UML import Class, Diagram, Element, Property
@@ -148,7 +148,7 @@ def test_changed_value(
     assert change.op == "update"
     assert change.element_id == ancestor_element.id
     assert change.property_name == name
-    assert recipes.get_value_change_property_value(change) == expected_value
+    assert get_value_change_property_value(change) == expected_value
 
 
 def test_changed_enumeration_with_default_value(current, ancestor, incoming):
