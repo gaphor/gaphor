@@ -444,34 +444,6 @@ def owner_package(element: Element | None) -> Package | None:
     return owner_of_type(element, Package)
 
 
-def get_property_default_value(property: Property) -> ValueSpecification:
-    """Get default value of a property."""
-    return property.defaultValue
-
-
-def get_property_default_value_as_string(property: Property) -> str | None:
-    """Get default value of a property as a string."""
-    if property.defaultValue is None:
-        return None
-    return get_literal_value_as_string(property.defaultValue)
-
-
-def set_property_default_value_from_string(
-    property: Property, value: str | None
-) -> None:
-    """Set default value of a property."""
-    if property.defaultValue:
-        property.defaultValue.unlink()
-    if value is None:
-        return
-    default_value = create_value_specification_for_type_and_value(
-        property.model, property.typeValue, value
-    )
-    property.defaultValue = default_value
-    if default_value is not None:
-        default_value.owningProperty = property
-
-
 def get_literal_value_as_string(value: ValueSpecification) -> str | None:
     """Get literal value as a string."""
     if value is None:
@@ -600,29 +572,22 @@ def set_multiplicity_upper_value(
     element.upperValue = upper_value
 
 
-def get_parameter_default_value(parameter: Parameter) -> ValueSpecification | None:
-    """Get default value of a parameter."""
-    return parameter.defaultValue
-
-
-def get_parameter_default_value_as_string(parameter: Parameter) -> str | None:
+def get_default_value_as_string(element: Parameter | Property) -> str | None:
     """Get default value of a parameter as a string."""
-    if parameter.defaultValue is None:
+    if element.defaultValue is None:
         return None
-    return get_literal_value_as_string(parameter.defaultValue)
+    return get_literal_value_as_string(element.defaultValue)
 
 
-def set_parameter_default_value_from_string(
-    parameter: Parameter, value: str | None
+def set_default_value_from_string(
+    element: Parameter | Property, value: str | None
 ) -> None:
     """Set default value of a parameter."""
-    if parameter.defaultValue:
-        parameter.defaultValue.unlink()
+    if element.defaultValue:
+        element.defaultValue.unlink()
     if value is None:
         return
     default_value = create_value_specification_for_type_and_value(
-        parameter.model, parameter.typeValue, value
+        element.model, element.typeValue, value
     )
-    parameter.defaultValue = default_value
-    if default_value is not None:
-        default_value.owningParameter = parameter
+    element.defaultValue = default_value

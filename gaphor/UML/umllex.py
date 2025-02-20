@@ -185,7 +185,7 @@ def parse_attribute(el: uml.Property, s: str) -> None:
         recipes.set_multiplicity_upper_value(el, g("mult_u"))
         if g("has_mult") and not g("mult_u"):
             recipes.set_multiplicity_upper_value(el, "*")
-        recipes.set_property_default_value_from_string(el, g("default"))
+        recipes.set_default_value_from_string(el, g("default"))
         el.note = g("note")
 
 
@@ -310,7 +310,7 @@ def parse_operation(el: uml.Operation, s: str) -> None:
             recipes.set_multiplicity_upper_value(p, g("mult_u"))
             if g("has_mult") and not g("mult_u"):
                 recipes.set_multiplicity_upper_value(p, "*")
-            recipes.set_parameter_default_value_from_string(p, g("default"))
+            recipes.set_default_value_from_string(p, g("default"))
             el.ownedParameter = p
             defined_params.add(p)
             # Do the next parameter:
@@ -338,7 +338,7 @@ def parse_parameter(el: uml.Parameter, s: str) -> None:
         recipes.set_multiplicity_upper_value(el, g("mult_u"))
         if g("has_mult") and not g("mult_u"):
             recipes.set_multiplicity_upper_value(el, "*")
-        recipes.set_parameter_default_value_from_string(el, g("default"))
+        recipes.set_default_value_from_string(el, g("default"))
 
 
 def parse_lifeline(el: uml.Lifeline, s: str) -> None:
