@@ -1,7 +1,5 @@
 """Parsing of UML model elements from string tests."""
 
-import math
-
 import pytest
 
 from gaphor import UML
@@ -66,7 +64,7 @@ def test_parse_property_complex_1(factory):
     assert "name" == a.name
     assert "str" == a.typeValue
     assert UML.recipes.get_property_lower_value(a) == 0
-    assert UML.recipes.get_property_upper_value(a) == math.inf
+    assert UML.recipes.get_property_upper_value(a) == "*"
     assert UML.recipes.get_property_default_value_as_string(a) == '"aap"'
     assert "and a note" == a.note
 
@@ -81,7 +79,7 @@ def test_parse_property_complex_2(factory):
     assert "name" == a.name
     assert "str" == a.typeValue
     assert UML.recipes.get_property_lower_value(a) == 0
-    assert UML.recipes.get_property_upper_value(a) == math.inf
+    assert UML.recipes.get_property_upper_value(a) == "*"
     assert UML.recipes.get_property_default_value_as_string(a) == '"aap bbq"'
     assert "and a note" == a.note
 
@@ -112,7 +110,7 @@ def test_parse_property_with_square_brackets(factory):
 
     assert "attr" == a.name
     assert UML.recipes.get_property_lower_value(a) is None
-    assert UML.recipes.get_property_upper_value(a) == math.inf
+    assert UML.recipes.get_property_upper_value(a) == "*"
 
 
 @pytest.mark.parametrize(
@@ -214,7 +212,7 @@ def test_parse_association_end_derived_end(factory):
     assert "end name" == p.name
     assert not p.typeValue
     assert UML.recipes.get_property_lower_value(p) is None
-    assert UML.recipes.get_property_upper_value(p) == math.inf
+    assert UML.recipes.get_property_upper_value(p) == "*"
     assert not p.defaultValue
 
 
@@ -229,7 +227,7 @@ def test_parse_association_end_derived_end_without_name(factory):
     assert not p.name
     assert not p.typeValue
     assert UML.recipes.get_property_lower_value(p) is None
-    assert UML.recipes.get_property_upper_value(p) == math.inf
+    assert UML.recipes.get_property_upper_value(p) == "*"
     assert not p.defaultValue
 
 
@@ -265,7 +263,7 @@ def test_parse_association_end_with_square_brackets(factory):
     parse(p, "end[]")
     assert "end" == p.name
     assert UML.recipes.get_property_lower_value(p) is None
-    assert UML.recipes.get_property_upper_value(p) == math.inf
+    assert UML.recipes.get_property_upper_value(p) == "*"
 
 
 def test_parse_operation(factory):
@@ -356,7 +354,7 @@ def test_parse_operation_with_square_brackets(factory):
     assert "args" == p.name
     assert "string" == p.typeValue
     assert UML.recipes.get_parameter_lower_value(p) is None
-    assert UML.recipes.get_parameter_upper_value(p) == math.inf
+    assert UML.recipes.get_parameter_upper_value(p) == "*"
 
 
 def test_parse_operation_return_with_square_brackets(factory):
@@ -366,7 +364,7 @@ def test_parse_operation_return_with_square_brackets(factory):
     assert "return" == p.direction
     assert "string" == p.typeValue
     assert UML.recipes.get_parameter_lower_value(p) is None
-    assert UML.recipes.get_parameter_upper_value(p) == math.inf
+    assert UML.recipes.get_parameter_upper_value(p) == "*"
 
 
 @pytest.mark.parametrize(

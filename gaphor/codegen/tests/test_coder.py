@@ -1,5 +1,3 @@
-from decimal import Decimal
-
 import pytest
 
 from gaphor import UML
@@ -133,7 +131,7 @@ def test_coder_write_class_with_n_m_association(navigable_association):
 
 
 def test_coder_write_class_with_1_n_association(navigable_association):
-    UML.recipes.set_property_upper_value(navigable_association.memberEnd[1], Decimal(1))
+    UML.recipes.set_property_upper_value(navigable_association.memberEnd[1], 1)
     class_a = navigable_association.memberEnd[0].type
     assert (
         UML.recipes.get_property_upper_value_as_string(
@@ -245,7 +243,7 @@ def test_coder_write_association_lower_value(navigable_association: UML.Associat
 
 def test_coder_write_association_upper_value(navigable_association: UML.Association):
     end = navigable_association.memberEnd[1]
-    UML.recipes.set_property_upper_value(end, Decimal(1))
+    UML.recipes.set_property_upper_value(end, 1)
 
     a = list(associations(navigable_association.memberEnd[0].type))
 

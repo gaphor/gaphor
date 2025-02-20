@@ -25,7 +25,6 @@ from __future__ import annotations
 import argparse
 import contextlib
 import logging
-import math
 import sys
 import textwrap
 from collections.abc import Iterable
@@ -55,8 +54,6 @@ header = textwrap.dedent(
 
     from __future__ import annotations
 
-    from decimal import Decimal as UnlimitedNatural
-
     from gaphor.core.modeling.properties import (
         association,
         attribute as _attribute,
@@ -67,6 +64,8 @@ header = textwrap.dedent(
         relation_many,
         relation_one,
     )
+
+    from gaphor.core.modeling.base import UnlimitedNatural
 
     """.format("ruff")  # work around tooling triggers
 )
@@ -386,7 +385,7 @@ def upper(a):
         if (
             a.upperValue.value
             and a.upperValue.value is not None
-            and not math.isinf(a.upperValue.value)
+            and a.upperValue.value != "*"
         ):
             upperValue = str(int(a.upperValue.value))
     else:

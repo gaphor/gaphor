@@ -1,8 +1,5 @@
 """Formatting of UML model elements into text tests."""
 
-import math
-from decimal import Decimal
-
 import pytest
 
 from gaphor.core.eventmanager import EventManager
@@ -170,6 +167,6 @@ def test_pin(factory):
     pin.type.name = "MyClass"
 
     recipes.set_multiplicity_lower_value(pin, 1)
-    recipes.set_multiplicity_upper_value(pin, Decimal(math.inf))
+    recipes.set_multiplicity_upper_value(pin, "*")
 
     assert format(pin) == "foo: MyClass[1..*]"

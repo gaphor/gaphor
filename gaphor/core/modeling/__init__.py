@@ -1,6 +1,6 @@
 # ruff: noqa: F401,F403
 
-from gaphor.core.modeling.base import Base, Id, swap_element_type
+from gaphor.core.modeling.base import Base, Id, UnlimitedNatural, swap_element_type
 from gaphor.core.modeling.coremodel import (
     ElementChange,
     PendingChange,

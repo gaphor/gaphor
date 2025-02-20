@@ -1,6 +1,4 @@
-from decimal import Decimal as UnlimitedNatural
-
-from gaphor.core.modeling import ValueChange
+from gaphor.core.modeling import UnlimitedNatural, ValueChange
 
 
 def set_value_change_property_value(
@@ -34,7 +32,12 @@ def get_value_change_property_value(
         return int(value_change.property_value)
     elif value_change.property_type == "bool":
         return bool(value_change.property_value == "True")
+    elif (
+        value_change.property_type == "UnlimitedNatural"
+        and value_change.property_value == "*"
+    ):
+        return "*"
     elif value_change.property_type == "UnlimitedNatural":
-        return UnlimitedNatural(value_change.property_value)
+        return int(value_change.property_value)
     else:
         return None

@@ -25,9 +25,7 @@ methods:
 
 from __future__ import annotations
 
-import decimal
 import logging
-import math
 from collections.abc import Callable, Iterable, Sequence
 from dataclasses import dataclass
 from typing import (
@@ -237,18 +235,13 @@ class attribute(umlproperty, Generic[T]):
                 or self.type
             )
 
-        if self.type is decimal.Decimal and isinstance(value, str):
-            if value == "*" or value == "inf" or value == "Infinity":
-                value = decimal.Decimal(math.inf)
-            else:
-                value = decimal.Decimal(int(value))
         elif self.type is int and isinstance(value, str | bool):
             value = (
                 0
                 if value == "False"
                 else 1
                 if value == "True"
-                else math.inf
+                else "*"
                 if value == "*"
                 else int(value)
             )

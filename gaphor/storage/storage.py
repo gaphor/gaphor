@@ -8,9 +8,7 @@ __all__ = ["load", "save"]
 
 import io
 import logging
-import math
 from collections.abc import Callable, Iterable
-from decimal import Decimal
 from functools import partial
 
 from gaphor import application
@@ -107,15 +105,7 @@ def save_element(name, value, element_factory, writer):
         if value is not None:
             with writer.element(name, {}):
                 with writer.element("val", {}):
-                    if isinstance(value, bool):
-                        writer.characters(str(value))
-                    elif isinstance(value, Decimal):
-                        if value == Decimal(math.inf):
-                            writer.characters("*")
-                        else:
-                            writer.characters(str(value))
-                    else:
-                        writer.characters(str(value))
+                    writer.characters(str(value))
 
     if isinstance(value, Base):
         save_reference(name, value)
@@ -597,8 +587,7 @@ def upgrade_simple_properties_to_value_specifications(
                     )
                     if type is not None and isinstance(value, str):
                         upperValue = element_factory.create(type)
-                        decimalValue = Decimal(math.inf if value == "*" else int(value))
-                        upperValue.value = decimalValue
+                        upperValue.value = "*" if value == "*" else int(value)
                         upperValue.name = value
                         elem.values["upperValue"] = upperValue
                         homeless_literals[upperValue.id] = (elem.id, name)
@@ -654,7 +643,7 @@ def get_value_specification_from_value(
     elif value == "*":
         type = modeling_language.lookup_element("LiteralUnlimitedNatural", elem.ns)
         defaultValue = element_factory.create(type)
-        defaultValue.value = Decimal(math.inf)
+        defaultValue.value = value
         defaultValue.name = value
     elif value.isdigit():
         type = modeling_language.lookup_element("LiteralInteger", elem.ns)
