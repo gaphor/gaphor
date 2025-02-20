@@ -3,7 +3,7 @@ from __future__ import annotations
 import importlib.resources
 import textwrap
 
-from gaphor.core.modeling.base import Base
+from gaphor.core.modeling.base import Base, Id, RepositoryProtocol
 from gaphor.core.modeling.event import AttributeUpdated, StyleSheetUpdated
 from gaphor.core.modeling.properties import attribute
 from gaphor.core.styling import CompiledStyleSheet
@@ -24,7 +24,9 @@ DEFAULT_STYLE_SHEET = textwrap.dedent(
 class StyleSheet(Base):
     _compiled_style_sheet: CompiledStyleSheet
 
-    def __init__(self, id=None, model=None):
+    def __init__(
+        self, id: Id | None = None, model: RepositoryProtocol | None = None
+    ) -> None:
         super().__init__(id, model)
         self._instant_style_declarations = ""
         self._system_font_family = "sans"
@@ -48,7 +50,7 @@ class StyleSheet(Base):
         return self._system_font_family
 
     @system_font_family.setter
-    def system_font_family(self, font_family: str):
+    def system_font_family(self, font_family: str) -> None:
         self._system_font_family = font_family
         self.compile_style_sheet()
 
@@ -63,11 +65,11 @@ class StyleSheet(Base):
     def new_compiled_style_sheet(self) -> CompiledStyleSheet:
         return self._compiled_style_sheet.copy()
 
-    def postload(self):
+    def postload(self) -> None:
         super().postload()
         self.compile_style_sheet()
 
-    def handle(self, event):
+    def handle(self, event: object) -> None:
         # Ensure compiled style sheet is always up-to-date:
         if is_style_sheet_update := (
             isinstance(event, AttributeUpdated)

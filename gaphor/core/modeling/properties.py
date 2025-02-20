@@ -709,7 +709,7 @@ class derived(subsettable_umlproperty, Generic[T]):
 
     opposite = None
 
-    def __init__(  # type: ignore[misc]
+    def __init__(  # type: ignore[explicit-any]
         self,
         name: str,
         type: type[T],

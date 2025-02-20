@@ -5,7 +5,7 @@ from __future__ import annotations
 import ast
 import logging
 import re
-from typing import TYPE_CHECKING, Generic, Self, TypeVar
+from typing import TYPE_CHECKING, Any, Generic, Self, TypeVar
 
 from gaphas.item import Matrices
 
@@ -21,7 +21,7 @@ log = logging.getLogger(__name__)
 S = TypeVar("S", bound=Base)
 
 
-def literal_eval(value: str):
+def literal_eval(value: str) -> Any:  # type: ignore[explicit-any]
     return ast.literal_eval(re.sub("\r|\n", "", value))
 
 

@@ -32,8 +32,8 @@ class collection(Generic[T]):
     @overload
     def __getitem__(self, key: int) -> T: ...
 
-    @overload  # Literal[slice(None, None, None)]
-    def __getitem__(self, key: slice) -> recurseproxy[T]: ...  # type: ignore[misc]
+    @overload
+    def __getitem__(self, key: slice[None, None, None]) -> recurseproxy[T]: ...
 
     def __getitem__(self, key):
         if key == _recurseproxy_trigger:
@@ -147,8 +147,8 @@ class recurseproxy(Generic[T]):
     def __init__(self, sequence: Sequence[T]):
         self.__sequence = sequence
 
-    def __getitem__(self, key: int | slice) -> T:  # type: ignore[misc]
-        return self.__sequence.__getitem__(key)  # type: ignore[return-value]
+    def __getitem__(self, key: int | slice[None, None, None]) -> T | Sequence[T]:
+        return self.__sequence.__getitem__(key)
 
     def __iter__(self):
         """Iterate over the items.

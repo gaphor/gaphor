@@ -29,7 +29,7 @@ class action:
     'my action'
     """
 
-    def __init__(  # type: ignore[misc]
+    def __init__(  # type: ignore[explicit-any]
         self,
         name,
         label: str | None = None,
