@@ -3,12 +3,12 @@ from uuid import uuid1
 import pytest
 
 from gaphor import UML
+from gaphor.core.changeset.compare import set_value_change_property_value
 from gaphor.core.modeling import (
     Diagram,
     ElementChange,
     RefChange,
     ValueChange,
-    recipes,
 )
 from gaphor.ui.modelmerge.organize import organize_changes
 from gaphor.UML.diagramitems import ClassItem
@@ -85,7 +85,7 @@ def test_add_element_with_attribute_update(element_factory, modeling_language):
     vchange.op = "update"
     vchange.element_id = "1234"
     vchange.property_name = "name"
-    recipes.set_value_change_property_value(vchange, "my diagram")
+    set_value_change_property_value(vchange, "my diagram")
 
     tree = list(organize_changes(element_factory, modeling_language))
 
@@ -112,7 +112,7 @@ def test_remove_element_with_attribute_update(
         element_id=diagram.id,
         property_name="name",
     )
-    recipes.set_value_change_property_value(vchange, "my diagram")
+    set_value_change_property_value(vchange, "my diagram")
 
     tree = list(organize_changes(element_factory, modeling_language))
 
@@ -134,7 +134,7 @@ def test_update_diagram_attribute(element_factory, modeling_language, change):
         element_id=diagram.id,
         property_name="name",
     )
-    recipes.set_value_change_property_value(vchange, "my diagram")
+    set_value_change_property_value(vchange, "my diagram")
 
     tree = list(organize_changes(element_factory, modeling_language))
 
@@ -154,7 +154,7 @@ def test_update_model_attribute(element_factory, modeling_language, change):
         element_id=klass.id,
         property_name="name",
     )
-    recipes.set_value_change_property_value(vchange, "my class")
+    set_value_change_property_value(vchange, "my class")
 
     tree = list(organize_changes(element_factory, modeling_language))
 
@@ -361,7 +361,7 @@ def test_update_presentation_to_existing_diagram(
         element_id=class_item.id,
         property_name="name",
     )
-    recipes.set_value_change_property_value(vchange, "new name")
+    set_value_change_property_value(vchange, "new name")
 
     tree = list(organize_changes(element_factory, modeling_language))
 

@@ -14,6 +14,8 @@ comment
 header
 from typing import Callable
 
+from gaphor.core.modeling import UnlimitedNatural
+
 %%
 override NamedElement.qualifiedName: property
 # defined in umloverrides.py

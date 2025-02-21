@@ -25,7 +25,6 @@ from __future__ import annotations
 import argparse
 import contextlib
 import logging
-import math
 import sys
 import textwrap
 from collections.abc import Iterable
@@ -54,8 +53,6 @@ header = textwrap.dedent(
     # fmt: off
 
     from __future__ import annotations
-
-    from decimal import Decimal as UnlimitedNatural
 
     from gaphor.core.modeling.properties import (
         association,
@@ -229,7 +226,7 @@ def variables(class_: UML.Class, overrides: Overrides | None = None):
             elif a.type:
                 mult = (
                     "one"
-                    if UML.recipes.get_property_upper_value_as_string(a) == "1"
+                    if UML.recipes.get_multiplicity_upper_value_as_string(a) == "1"
                     else "many"
                 )
                 comment = "  # type: ignore[assignment]" if is_reassignment(a) else ""
@@ -386,7 +383,7 @@ def upper(a):
         if (
             a.upperValue.value
             and a.upperValue.value is not None
-            and not math.isinf(a.upperValue.value)
+            and a.upperValue.value != "*"
         ):
             upperValue = str(int(a.upperValue.value))
     else:

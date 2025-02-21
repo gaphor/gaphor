@@ -10,8 +10,8 @@ from gaphor.core.modeling import (
     Presentation,
     RefChange,
     StyleSheet,
+    UnlimitedNatural,
     ValueChange,
-    recipes,
 )
 from gaphor.core.modeling.collection import collection
 
@@ -145,7 +145,7 @@ def updated_properties(ancestor, incoming, create) -> Iterable[ValueChange | Ref
                     element_id=id,
                     property_name=name,
                 )
-                recipes.set_value_change_property_value(value_change, value)
+                set_value_change_property_value(value_change, value)
                 yield value_change
 
         if isinstance(other, collection):
@@ -163,3 +163,23 @@ def updated_properties(ancestor, incoming, create) -> Iterable[ValueChange | Ref
                 for o in other
                 if o.id not in value_ids
             )
+
+
+def set_value_change_property_value(
+    value_change: ValueChange, new_value: None | str | int | UnlimitedNatural | bool
+):
+    if new_value is None:
+        value_change.property_value = None
+        value_change.property_type = None
+    elif isinstance(new_value, str):
+        value_change.property_value = new_value
+        value_change.property_type = "str"
+    elif isinstance(new_value, bool):
+        value_change.property_value = str(new_value)
+        value_change.property_type = "bool"
+    elif isinstance(new_value, int):
+        value_change.property_value = str(new_value)
+        value_change.property_type = "int"
+    elif new_value == "*":
+        value_change.property_value = str(new_value)
+        value_change.property_type = "UnlimitedNatural"

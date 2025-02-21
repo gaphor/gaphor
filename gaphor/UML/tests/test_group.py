@@ -145,6 +145,8 @@ def test_should_not_group_association_end(element_factory):
         UML.Image,
         UML.InstanceSpecification,
         UML.OccurrenceSpecification,
+        UML.LiteralSpecification,
+        UML.LiteralUnlimitedNatural,
         # The following elements are not shown if they have no owner
         UML.ConnectorEnd,
         UML.Parameter,

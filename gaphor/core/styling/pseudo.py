@@ -24,10 +24,10 @@ class PseudoStyleNode:
     def state(self) -> Sequence[str]:
         return self._node.state()
 
-    def __hash__(self):
+    def __hash__(self) -> int:
         return hash((self._node, self.pseudo))
 
-    def __eq__(self, other):
+    def __eq__(self, other) -> bool:
         return (
             isinstance(other, PseudoStyleNode)
             and self._node == other._node
