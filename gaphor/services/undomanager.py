@@ -252,7 +252,7 @@ class UndoManager(Service, ActionProvider):
 
         self._action_executed()
 
-    @action(name="edit-undo", shortcut="<Primary>z")
+    @action(name="text.undo", shortcut="<Primary>z")
     def undo_transaction(self):
         if not self._undo_stack:
             return
@@ -268,7 +268,7 @@ class UndoManager(Service, ActionProvider):
         self._action_executed()
 
     @action(
-        name="edit-redo",
+        name="text.redo",
         shortcut="<Primary><Shift>z",
     )
     def redo_transaction(self):
@@ -290,8 +290,8 @@ class UndoManager(Service, ActionProvider):
         return bool(self._redo_stack)
 
     def _action_executed(self, state_changed=True):
-        self.event_manager.handle(ActionEnabled("win.edit-undo", self.can_undo()))
-        self.event_manager.handle(ActionEnabled("win.edit-redo", self.can_redo()))
+        self.event_manager.handle(ActionEnabled("text.undo", self.can_undo()))
+        self.event_manager.handle(ActionEnabled("text.redo", self.can_redo()))
         if state_changed:
             self.event_manager.handle(UndoManagerStateChanged(self))
 
