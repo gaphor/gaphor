@@ -182,3 +182,32 @@ flowboxchild:active {
 .style-editor-content > button {
   margin-top: 12px;
 }
+
+
+.tips label {
+  margin: 0px 0px 6px;
+}
+
+.tips label:first-child {
+  margin-top: 6px;
+}
+
+.cta {
+  border: 3px solid var(--blue-4);
+  border-radius: 6px;
+}
+
+.cta label {
+  margin: 0px 6px 6px;
+}
+
+.cta label:nth-child(2) {
+  margin-top: 6px;
+}
+
+.cta .title {
+  background-color: var(--blue-4);
+  color: white;
+  margin: 0;
+  padding: 6px 6px;
+}
