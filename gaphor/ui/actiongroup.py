@@ -29,9 +29,8 @@ def apply_shortcuts_from_entry_point(entry_point, scope, gtk_app) -> None:
                 )
 
 
-def window_action_group(component_registry) -> Gio.SimpleActionGroup:
+def window_action_group(component_registry, scope="win") -> Gio.SimpleActionGroup:
     action_group = Gio.SimpleActionGroup.new()
-    scope = "win"
     for _name, provider in component_registry.all(ActionProvider):
         for attrname, act in iter_actions(type(provider), scope):
             a = create_gio_action(act, provider, attrname)
