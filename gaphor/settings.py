@@ -142,9 +142,9 @@ class Settings:
             self._gio_settings.bind(name, target, prop, Gio.SettingsBindFlags.DEFAULT)
 
     @property
-    def menubar(self):
+    def macos_menubar(self):
         flags = os.getenv("GAPHOR_FEATURE_FLAG", "").split(",")
-        return "menubar" in flags
+        return sys.platform == "darwin" and "menubar" in flags
 
 
 settings = Settings()

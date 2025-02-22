@@ -157,7 +157,7 @@ class MainWindow(Service, ActionProvider):
             create_diagram_types_model(self.modeling_language)
         )
 
-        if settings.menubar:
+        if settings.macos_menubar:
             builder.get_object("hamburger-menu-button").unparent()
         else:
             builder.get_object("export-menu").append_submenu(

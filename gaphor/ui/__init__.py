@@ -140,7 +140,7 @@ class UIApplication(Adw.Application):
 
         builder = Gtk.Builder()
         builder.add_from_string(translated_ui_string("gaphor.ui", "menubar.ui"))
-        if settings.menubar:
+        if settings.macos_menubar:
             self.set_menubar(builder.get_object("menu"))
             # Set keyboard shortcuts on toplevel, so they appear in the menu
             self.set_accels_for_action("clipboard.paste-full", ["<Meta><Shift>v"])
