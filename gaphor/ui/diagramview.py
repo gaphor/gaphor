@@ -36,6 +36,14 @@ class DiagramView(GtkView):
     def _delete(self):
         pass
 
+    @GObject.Signal(name="select-all", flags=GObject.SignalFlags.RUN_LAST)
+    def _select_all(self):
+        pass
+
+    @GObject.Signal(name="unselect-all", flags=GObject.SignalFlags.RUN_LAST)
+    def _unselect_all(self):
+        pass
+
 
 def _trigger_signal(signal_name):
     def _trigger_action(self, _action_name, _param):
@@ -56,7 +64,13 @@ if hasattr(DiagramView, "install_action"):
     DiagramView.install_action(
         "clipboard.paste-full", None, _trigger_signal("paste-full-clipboard")
     )
-    DiagramView.install_action("diagram.delete", None, _trigger_signal("delete"))
+    DiagramView.install_action("selection.delete", None, _trigger_signal("delete"))
+    DiagramView.install_action(
+        "selection.select-all", None, _trigger_signal("select-all")
+    )
+    DiagramView.install_action(
+        "selection.unselect-all", None, _trigger_signal("unselect-all")
+    )
 
     DiagramView.add_shortcut(named_shortcut("<Primary>x", "clipboard.cut"))
     DiagramView.add_shortcut(named_shortcut("<Primary>c", "clipboard.copy"))
@@ -65,5 +79,9 @@ if hasattr(DiagramView, "install_action"):
         named_shortcut("<Primary><Shift>v", "clipboard.paste-full")
     )
     DiagramView.add_shortcut(
-        named_shortcut("Delete|BackSpace|<Meta>BackSpace", "diagram.delete")
+        named_shortcut("Delete|BackSpace|<Meta>BackSpace", "selection.delete")
+    )
+    DiagramView.add_shortcut(named_shortcut("<Primary>a", "selection.select-all"))
+    DiagramView.add_shortcut(
+        named_shortcut("<Primary><Shift>a", "selection.unselect-all")
     )

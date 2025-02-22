@@ -282,33 +282,6 @@ class Diagrams(UIComponent, ActionProvider):
             for item in selection:
                 item.matrix.translate(dx, dy)
 
-    @action(
-        name="select-all",
-        shortcut="<Primary>a",
-    )
-    def select_all(self):
-        view = self.get_current_view()
-        if view and view.has_focus():
-            selection = view.selection
-            selection.select_items(*view.model.get_all_items())
-            self.event_manager.handle(
-                DiagramSelectionChanged(
-                    view, selection.focused_item, selection.selected_items
-                )
-            )
-
-    @action(name="unselect-all", shortcut="<Primary><Shift>a")
-    def unselect_all(self):
-        view = self.get_current_view()
-        if view and view.has_focus():
-            selection = view.selection
-            selection.unselect_all()
-            self.event_manager.handle(
-                DiagramSelectionChanged(
-                    view, selection.focused_item, selection.selected_items
-                )
-            )
-
     @event_handler(ElementFocused)
     def _on_element_focused(self, event: ElementFocused):
         view = self.get_current_view()
