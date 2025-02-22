@@ -53,6 +53,10 @@
           <attribute name="action">clipboard.paste</attribute>
         </item>
         <item>
+          <attribute name="label" translatable="yes">Paste (copy defining elements)</attribute>
+          <attribute name="action">clipboard.paste-full</attribute>
+        </item>
+        <item>
           <attribute name="label" translatable="yes">Delete</attribute>
           <attribute name="action">selection.delete</attribute>
         </item>
