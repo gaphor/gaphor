@@ -64,6 +64,10 @@
           <attribute name="label" translatable="yes">Select All</attribute>
           <attribute name="action">selection.select-all</attribute>
         </item>
+        <item>
+          <attribute name="label" translatable="yes">Unselect All</attribute>
+          <attribute name="action">selection.unselect-all</attribute>
+        </item>
       </section>
     </submenu>
     <submenu>

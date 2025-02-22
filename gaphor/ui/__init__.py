@@ -142,6 +142,10 @@ class UIApplication(Adw.Application):
         builder.add_from_string(translated_ui_string("gaphor.ui", "menubar.ui"))
         if settings.menubar:
             self.set_menubar(builder.get_object("menu"))
+            # Set keyboard shortcuts on toplevel, so they appear in the menu
+            self.set_accels_for_action("clipboard.paste-full", ["<Meta><Shift>v"])
+            self.set_accels_for_action("selection.unselect-all", ["<Meta><Shift>a"])
+
         self._menus["export"] = (gettext("Export"), builder.get_object("export-menu"))
         self._menus["tools"] = (gettext("Tools"), builder.get_object("tools-menu"))
 
