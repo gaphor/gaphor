@@ -143,6 +143,9 @@ class DiagramPage:
         view.connect("copy-clipboard", self.clipboard.copy)
         view.connect("paste-clipboard", self.clipboard.paste_link)
         view.connect("paste-full-clipboard", self.clipboard.paste_full)
+        self.clipboard.clipboard.connect(
+            "notify::content", self._clipboard_content_changed
+        )
 
         self.diagram_css = Gtk.CssProvider.new()
         Gtk.StyleContext.add_provider_for_display(
@@ -165,6 +168,7 @@ class DiagramPage:
 
         diagrampage = builder.get_object("diagrampage")
         apply_action_group(self, "diagram", diagrampage)
+        self._clipboard_content_changed(self.clipboard.clipboard)
 
         return diagrampage
 
@@ -251,6 +255,14 @@ class DiagramPage:
     def _on_style_sheet_updated(self, _event):
         self.update_drawing_style()
         self.diagram.update(self.diagram.ownedPresentation)
+
+    def _clipboard_content_changed(self, clipboard, _pspec=None):
+        if not self.view:
+            return
+
+        enabled = self.clipboard.can_paste()
+        self.view.action_set_enabled("clipboard.paste", enabled)
+        self.view.action_set_enabled("clipboard.paste-full", enabled)
 
     def _on_notify_dark(self, style_manager, gparam):
         self.update_drawing_style()
