@@ -137,13 +137,12 @@ class DiagramPage:
         view = builder.get_object("view")
         view.add_css_class(self._css_class())
         view.connect("delete", delete_selected_items, self.event_manager)
-        view.connect("select-all", select_all, self.event_manager)
-        view.connect("unselect-all", unselect_all, self.event_manager)
+        view.connect_after("select-all", selection_changed, self.event_manager)
+        view.connect_after("unselect-all", selection_changed, self.event_manager)
         view.connect("cut-clipboard", self.clipboard.cut)
         view.connect("copy-clipboard", self.clipboard.copy)
         view.connect("paste-clipboard", self.clipboard.paste_link)
         view.connect("paste-full-clipboard", self.clipboard.paste_full)
-        view.selection.add_handler(self._on_selection_changed)
 
         self.diagram_css = Gtk.CssProvider.new()
         Gtk.StyleContext.add_provider_for_display(
@@ -166,7 +165,6 @@ class DiagramPage:
 
         diagrampage = builder.get_object("diagrampage")
         apply_action_group(self, "diagram", diagrampage)
-        self._on_selection_changed()
 
         return diagrampage
 
@@ -254,19 +252,6 @@ class DiagramPage:
         self.update_drawing_style()
         self.diagram.update(self.diagram.ownedPresentation)
 
-    def _on_selection_changed(self, _item=None):
-        if not self.view:
-            return
-
-        self.view.action_set_enabled(
-            "selection.delete", bool(self.view.selection.selected_items)
-        )
-        self.view.action_set_enabled(
-            "selection.select-all",
-            len(self.view.selection.selected_items)
-            < len(self.diagram.ownedPresentation),
-        )
-
     def _on_notify_dark(self, style_manager, gparam):
         self.update_drawing_style()
 
@@ -339,17 +324,8 @@ def delete_selected_items(view: GtkView, event_manager):
             i.unlink()
 
 
-def select_all(view: GtkView, event_manager):
+def selection_changed(view: GtkView, event_manager):
     selection = view.selection
-    selection.select_items(*view.model.get_all_items())
-    event_manager.handle(
-        DiagramSelectionChanged(view, selection.focused_item, selection.selected_items)
-    )
-
-
-def unselect_all(view: GtkView, event_manager):
-    selection = view.selection
-    selection.unselect_all()
     event_manager.handle(
         DiagramSelectionChanged(view, selection.focused_item, selection.selected_items)
     )

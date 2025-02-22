@@ -15,6 +15,8 @@ class DiagramView(GtkView):
 
     def __init__(self, model: Model | None = None):
         super().__init__(model, Selection())
+        self.selection.add_handler(self._on_selection_changed)
+        self._on_selection_changed()
 
     @GObject.Signal(name="cut-clipboard", flags=GObject.SignalFlags.RUN_LAST)
     def _cut_clipboard(self):
@@ -38,11 +40,18 @@ class DiagramView(GtkView):
 
     @GObject.Signal(name="select-all", flags=GObject.SignalFlags.RUN_LAST)
     def _select_all(self):
-        pass
+        self.selection.select_items(*self.model.get_all_items())
 
     @GObject.Signal(name="unselect-all", flags=GObject.SignalFlags.RUN_LAST)
     def _unselect_all(self):
-        pass
+        self.selection.unselect_all()
+
+    def _on_selection_changed(self, _item=None):
+        enabled = bool(self.selection.selected_items)
+        self.action_set_enabled("clipboard.cut", enabled)
+        self.action_set_enabled("clipboard.copy", enabled)
+        self.action_set_enabled("selection.delete", enabled)
+        self.action_set_enabled("selection.unselect-all", enabled)
 
 
 def _trigger_signal(signal_name):
