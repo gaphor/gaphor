@@ -6,6 +6,7 @@ and diagram windows."""
 from __future__ import annotations
 
 import logging
+import os
 import sys
 
 import gi
@@ -125,6 +126,15 @@ def recover_sessions(application):
             )
 
 
+def macos_menubar():
+    if sys.platform != "darwin":
+        return False
+
+    supported = (Gtk.MAJOR_VERSION, Gtk.MINOR_VERSION) >= (4, 17)
+    flags = os.getenv("GAPHOR_FEATURE_FLAG", "").split(",")
+    return supported and "nomenubar" not in flags
+
+
 class UIApplication(Adw.Application):
     def __init__(self):
         # Register session on Darwin, so the NSApplicationDelegate is registered for opening files
@@ -140,7 +150,7 @@ class UIApplication(Adw.Application):
 
         builder = Gtk.Builder()
         builder.add_from_string(translated_ui_string("gaphor.ui", "menubar.ui"))
-        if settings.menubar:
+        if macos_menubar():
             self.set_menubar(builder.get_object("menu"))
             # Set keyboard shortcuts on toplevel, so they appear in the menu
             self.set_accels_for_action("clipboard.paste-full", ["<Meta><Shift>v"])
