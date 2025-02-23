@@ -11,7 +11,7 @@ from pathlib import Path
 from gi.repository import Adw, Gio, Gtk
 
 from gaphor.abc import ActionProvider, Service
-from gaphor.asyncio import TaskOwner, response_from_adwaita_dialog, sleep
+from gaphor.asyncio import response_from_adwaita_dialog, sleep
 from gaphor.babel import translate_model
 from gaphor.core import action, event_handler, gettext
 from gaphor.core.changeset.compare import compare
@@ -54,7 +54,7 @@ def error_message(e):
     ).format(exc=str(e))
 
 
-class FileManager(Service, ActionProvider, TaskOwner):
+class FileManager(Service, ActionProvider):
     """The file service, responsible for loading and saving Gaphor models."""
 
     def __init__(self, event_manager, element_factory, modeling_language, main_window):
@@ -75,7 +75,6 @@ class FileManager(Service, ActionProvider, TaskOwner):
 
     def shutdown(self):
         """Called when shutting down the file manager service."""
-        self.cancel_background_task()
         self.event_manager.unsubscribe(self._on_session_shutdown_request)
         self.event_manager.unsubscribe(self._on_session_created)
 
@@ -126,15 +125,12 @@ class FileManager(Service, ActionProvider, TaskOwner):
         self.event_manager.handle(ModelReady(self, filename=filename))
 
     @action("file-reload")
-    def reload(self):
+    async def reload(self):
         if self.filename and self.filename.exists():
             self.element_factory.flush()
 
-            async def _reload(filename: Path):
-                await self.load(filename)
-                self.event_manager.handle(ModelReady(self))
-
-            self.create_background_task(_reload(self.filename))
+            await self.load(self.filename)
+            self.event_manager.handle(ModelReady(self))
 
     async def merge(
         self,
@@ -310,7 +306,7 @@ class FileManager(Service, ActionProvider, TaskOwner):
         return self.main_window.window if self.main_window else None
 
     @action(name="file-save", shortcut="<Primary>s")
-    def action_save(self):
+    async def action_save(self):
         """Save the file. Depending on if there is a file name, either perform
         the save directly or present the user with a save dialog box.
 
@@ -318,25 +314,22 @@ class FileManager(Service, ActionProvider, TaskOwner):
         """
 
         if filename := self.filename:
-            self.create_background_task(self.save(filename))
+            await self.save(filename)
         else:
-            self.action_save_as()
+            await self.action_save_as()
 
     @action(name="file-save-as", shortcut="<Primary><Shift>s")
-    def action_save_as(self):
+    async def action_save_as(self):
         """Save the model in the element_factory by allowing the user to select
         a file name."""
 
-        async def save_as():
-            filename = await save_file_dialog(
-                gettext("Save Gaphor Model As"),
-                self.filename or Path(gettext("New Model")).with_suffix(".gaphor"),
-                parent=self.parent_window,
-                filters=GAPHOR_FILTER,
-            )
-            await self.save(filename)
-
-        self.create_background_task(save_as())
+        filename = await save_file_dialog(
+            gettext("Save Gaphor Model As"),
+            self.filename or Path(gettext("New Model")).with_suffix(".gaphor"),
+            parent=self.parent_window,
+            filters=GAPHOR_FILTER,
+        )
+        await self.save(filename)
 
     @event_handler(SessionCreated)
     async def _on_session_created(self, event: SessionCreated) -> None:
