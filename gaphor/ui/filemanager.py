@@ -414,4 +414,6 @@ async def save_changes_before_close_dialog(window: Gtk.Window) -> str:
     dialog.set_default_response("save")
     dialog.set_close_response("cancel")
 
+    window.present()
+
     return await response_from_adwaita_dialog(dialog, window)
