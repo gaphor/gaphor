@@ -99,3 +99,21 @@ def test_priority_handler_error_in_handler_and_second_event(event_manager):
         event_manager.handle(event)
 
     assert other_events
+
+
+@pytest.mark.asyncio
+async def test_async_event_handler(event_manager):
+    events = []
+
+    @event_handler(Event)
+    async def handler(event):
+        events.append(event)
+
+    event_manager.subscribe(handler)
+
+    event = Event()
+
+    event_manager.handle(event)
+    await event_manager.gather_tasks()
+
+    assert event in events

@@ -339,21 +339,19 @@ class FileManager(Service, ActionProvider, TaskOwner):
         self.create_background_task(save_as())
 
     @event_handler(SessionCreated)
-    def _on_session_created(self, event: SessionCreated) -> None:
+    async def _on_session_created(self, event: SessionCreated) -> None:
         if event.filename:
-
-            async def _load(filename: Path):
-                await self.load(filename)
-                self.event_manager.handle(ModelReady(self))
-
-            self.create_background_task(_load(event.filename))
+            await self.load(event.filename)
+            self.event_manager.handle(ModelReady(self))
         elif event.template:
             self.load_template(event.template)
         else:
             self.event_manager.handle(ModelReady(self, filename=event.filename))
 
     @event_handler(SessionShutdownRequested)
-    def _on_session_shutdown_request(self, event: SessionShutdownRequested) -> None:
+    async def _on_session_shutdown_request(
+        self, _event: SessionShutdownRequested
+    ) -> None:
         """Ask user to close window if the model has changed.
 
         The user is asked to either discard the changes, keep the
@@ -363,7 +361,7 @@ class FileManager(Service, ActionProvider, TaskOwner):
         def confirm_shutdown():
             self.event_manager.handle(SessionShutdown())
 
-        async def save_or_discard_changes():
+        if self.main_window.model_changed:
             answer = await save_changes_before_close_dialog(self.parent_window)
             if answer == "save":
                 if filename := self.filename:
@@ -382,9 +380,6 @@ class FileManager(Service, ActionProvider, TaskOwner):
                         confirm_shutdown()
             elif answer == "discard":
                 confirm_shutdown()
-
-        if self.main_window.model_changed:
-            self.create_background_task(save_or_discard_changes())
         else:
             confirm_shutdown()
 
