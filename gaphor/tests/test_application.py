@@ -13,7 +13,8 @@ def application():
     application.shutdown()
 
 
-def test_service_load(application):
+@pytest.mark.asyncio
+async def test_service_load(application):
     """Test loading services and querying utilities."""
 
     session = application.new_session()
@@ -37,15 +38,18 @@ async def test_model_loaded(application, test_models):
     assert session.filename == test_models / "all-elements.gaphor"
 
 
-def test_model_saved(application):
+@pytest.mark.asyncio
+async def test_model_saved(application):
     session = application.new_session()
     session.event_manager.handle(ModelSaved(Path("some_file_name")))
 
     assert session.filename == Path("some_file_name")
 
 
-def test_new_session_from_template(application, test_models):
+@pytest.mark.asyncio
+async def test_new_session_from_template(application, test_models, event_manager):
     with (test_models / "test-model.gaphor").open(encoding="utf-8") as model:
         session = application.new_session(template=model)
+        await session.get_service("event_manager").gather_tasks()
 
     assert any(session.get_service("element_factory").select())
