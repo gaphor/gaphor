@@ -10,22 +10,6 @@ import contextlib
 from gi.events import GLibEventLoopPolicy
 from gi.repository import GLib
 
-
-async def response_from_adwaita_dialog(dialog, window) -> str:
-    response = asyncio.get_running_loop().create_future()
-
-    def response_cb(_dialog, answer):
-        response.set_result(answer)
-
-    dialog.connect("response", response_cb)
-    dialog.present(window)
-
-    answer = await response
-    assert isinstance(answer, str)
-
-    return answer
-
-
 # Notes for PyGObject 3.52:
 # * `glib_event_loop_policy` can be removed: use `with GLibEventLoopPolicy()`.
 # * `sleep` can be removed: use `task.set_priority(GLib.PRIORITY_LOW)`.

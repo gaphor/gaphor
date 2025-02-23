@@ -11,7 +11,7 @@ from pathlib import Path
 from gi.repository import Adw, Gio, Gtk
 
 from gaphor.abc import ActionProvider, Service
-from gaphor.asyncio import response_from_adwaita_dialog, sleep
+from gaphor.asyncio import sleep
 from gaphor.babel import translate_model
 from gaphor.core import action, event_handler, gettext
 from gaphor.core.changeset.compare import compare
@@ -390,7 +390,7 @@ async def resolve_merge_conflict_dialog(window: Gtk.Window) -> str:
     dialog.add_response("incoming", gettext("Open Incoming"))
     dialog.set_close_response("cancel")
 
-    return await response_from_adwaita_dialog(dialog, window)
+    return str(await dialog.choose(window))
 
 
 async def save_changes_before_close_dialog(window: Gtk.Window) -> str:
@@ -409,4 +409,4 @@ async def save_changes_before_close_dialog(window: Gtk.Window) -> str:
 
     window.present()
 
-    return await response_from_adwaita_dialog(dialog, window)
+    return str(await dialog.choose(window))
