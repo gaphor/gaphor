@@ -35,8 +35,7 @@
     <property name="content">
       <object class="AdwToolbarView">
         <child type="top">
-          <object class="GtkHeaderBar">
-            <property name="use-native-controls">1</property>
+          <object class="AdwHeaderBar">
             <child type="title">
               <object class="GtkBox">
                 <property name="orientation">vertical</property>
