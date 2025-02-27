@@ -2,6 +2,7 @@
 
 import hashlib
 import logging
+import os
 import sys
 from enum import Enum
 from pathlib import Path
@@ -139,6 +140,11 @@ class Settings:
     def _bind_propery(self, name, target, prop):
         if self._gio_settings:
             self._gio_settings.bind(name, target, prop, Gio.SettingsBindFlags.DEFAULT)
+
+    @property
+    def macos_menubar(self):
+        flags = os.getenv("GAPHOR_FEATURE_FLAG", "").split(",")
+        return sys.platform == "darwin" and "menubar" in flags
 
 
 settings = Settings()

@@ -98,6 +98,7 @@ class ModelBrowser(UIComponent, ActionProvider):
         scrolled_window.set_child(self.tree_view)
 
         apply_action_group(self, "tree-view", self.tree_view)
+        apply_action_group(self, "selection", self.tree_view)
 
         self.tree_view.add_controller(
             create_popup_controller(
@@ -173,18 +174,18 @@ class ModelBrowser(UIComponent, ActionProvider):
         if self.sorter:
             self.sorter.changed(Gtk.SorterChange.DIFFERENT)
 
-    @action(name="tree-view.open")
+    @action(name="selection.open")
     def tree_view_open_selected(self):
         element = self.get_selected_element()
         if element:
             self.open_element(element)
 
-    @action(name="tree-view.show-in-diagram")
+    @action(name="selection.show-in-diagram")
     def tree_view_show_in_diagram(self, diagram_id: str) -> None:
         element = self.element_factory.lookup(diagram_id)
         self.event_manager.handle(DiagramOpened(element))
 
-    @action(name="tree-view.rename", shortcut="F2")
+    @action(name="selection.rename", shortcut="F2")
     def tree_view_rename_selected(self):
         if row_item := get_first_selected_item(self.selection):
             tree_item = row_item.get_item()
@@ -233,7 +234,7 @@ class ModelBrowser(UIComponent, ActionProvider):
             self.select_element(element)
             self.tree_view_rename_selected()
 
-    @action(name="tree-view.delete", shortcut="Delete")
+    @action(name="selection.delete", shortcut="Delete")
     def tree_view_delete(self):
         with Transaction(self.event_manager):
             for element in self.get_selected_elements():
@@ -570,9 +571,9 @@ def popup_model(element, modeling_language):
 
     part.append(
         gettext("_Open") if isinstance(element, Diagram) else gettext("Add to diagram"),
-        "tree-view.open",
+        "selection.open",
     )
-    part.append(gettext("_Rename"), "tree-view.rename")
+    part.append(gettext("_Rename"), "selection.rename")
     model.append_section(None, part)
 
     part = Gio.Menu.new()
@@ -591,7 +592,7 @@ def popup_model(element, modeling_language):
     model.append_section(None, part)
 
     part = Gio.Menu.new()
-    part.append(gettext("De_lete"), "tree-view.delete")
+    part.append(gettext("De_lete"), "selection.delete")
     model.append_section(None, part)
 
     if not element:
@@ -602,7 +603,7 @@ def popup_model(element, modeling_language):
         if diagram := presentation.diagram:
             menu_item = Gio.MenuItem.new(
                 gettext("Show in “{diagram}”").format(diagram=diagram.name),
-                "tree-view.show-in-diagram",
+                "selection.show-in-diagram",
             )
             menu_item.set_attribute_value("target", GLib.Variant.new_string(diagram.id))
             part.append_item(menu_item)
