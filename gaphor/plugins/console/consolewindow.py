@@ -65,7 +65,8 @@ class ConsoleWindow(UIComponent, ActionProvider):
             }
         )
         box = Gtk.Box(orientation="vertical")
-        header_bar = Gtk.HeaderBar()
+        header_bar = Adw.HeaderBar()
+
         box.append(header_bar)
         box.append(console)
         window.set_content(box)

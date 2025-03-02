@@ -35,7 +35,8 @@
     <property name="content">
       <object class="AdwToolbarView">
         <child type="top">
-          <object class="GtkHeaderBar">
+          <object class="AdwHeaderBar">
+            <property name="decoration-layout">:close</property>
             <child type="title">
               <object class="GtkBox">
                 <property name="orientation">vertical</property>

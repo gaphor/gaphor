@@ -6,7 +6,7 @@
     <property name="resizable">false</property>
 
     <child type="titlebar">
-      <object class="GtkHeaderBar">
+      <object class="AdwHeaderBar">
         <property name="decoration-layout">:close</property>
       </object>
     </child>
