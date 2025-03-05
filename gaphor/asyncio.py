@@ -6,55 +6,9 @@ async tasks.
 
 import asyncio
 import contextlib
-from collections.abc import Coroutine
 
 from gi.events import GLibEventLoopPolicy
 from gi.repository import GLib
-
-
-class TaskOwner:
-    """Mixin that allows an object to manage an asyncio task.
-
-    The TaskOwner allows for managing one (!) task at a time.
-    """
-
-    def __init__(self):
-        self._background_task: asyncio.Task | None = None
-
-    def create_background_task(self, coro: Coroutine) -> asyncio.Task:
-        assert self._background_task is None or self._background_task.done()
-        task = asyncio.create_task(coro)
-        self._background_task = task
-
-        def task_done(task):
-            assert self._background_task is task
-            self._background_task = None
-
-        task.add_done_callback(task_done)
-        return task
-
-    def cancel_background_task(self) -> bool:
-        return (self._background_task is not None) and self._background_task.cancel()
-
-    async def gather_background_task(self):
-        if self._background_task:
-            await asyncio.gather(self._background_task)
-
-
-async def response_from_adwaita_dialog(dialog, window) -> str:
-    response = asyncio.get_running_loop().create_future()
-
-    def response_cb(_dialog, answer):
-        response.set_result(answer)
-
-    dialog.connect("response", response_cb)
-    dialog.present(window)
-
-    answer = await response
-    assert isinstance(answer, str)
-
-    return answer
-
 
 # Notes for PyGObject 3.52:
 # * `glib_event_loop_policy` can be removed: use `with GLibEventLoopPolicy()`.

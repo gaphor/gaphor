@@ -1,3 +1,7 @@
+import inspect
+
+import pytest
+
 from gaphor.action import action
 
 
@@ -16,6 +20,10 @@ class ActionsMock:
 
     @action(name="fully-typed-action")
     def fully_typed_action(self, arg: str) -> None:
+        pass
+
+    @action(name="async-action")
+    async def async_action(self):
         pass
 
 
@@ -47,3 +55,29 @@ def test_fully_typed_action():
     action_data = ActionsMock.fully_typed_action.__action__
 
     assert action_data.arg_type is str
+
+
+def test_async_action_is_wrapped_as_synchrounous_function():
+    assert not inspect.iscoroutinefunction(ActionsMock.async_action)
+
+
+@pytest.mark.asyncio
+async def test_async_action_schedules_task():
+    mock = ActionsMock()
+    action_data = ActionsMock.async_action.__action__
+
+    mock.async_action()
+
+    assert action_data.task
+
+
+@pytest.mark.asyncio
+async def test_async_action_will_not_be_executed_twice():
+    mock = ActionsMock()
+    action_data = ActionsMock.async_action.__action__
+
+    mock.async_action()
+    task = action_data.task
+    mock.async_action()
+
+    assert task is action_data.task
