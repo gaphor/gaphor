@@ -96,7 +96,7 @@ jobs:
       - name: Set ownership of checkout directory
         run: chown -R $(id -u):$(id -g) $PWD
       - name: Use Python Dependency Cache
-        uses: actions/cache@0c907a75c2c80ebcb7f088228285e798b750cf8f # v4.2.1
+        uses: actions/cache@d4323d4df104b026a6aa633fdb11d772146be0bf # v4.2.2
         with:
           path: ~/.cache/pip
           key: ${{ runner.os }}-python${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}-41
@@ -152,7 +152,7 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}
           persist-credentials: false
       - name: Use Python Dependency Cache
-        uses: actions/cache@0c907a75c2c80ebcb7f088228285e798b750cf8f # v4.2.1
+        uses: actions/cache@d4323d4df104b026a6aa633fdb11d772146be0bf # v4.2.2
         with:
           path: ~/.cache/pip
           key: ${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}-22.04
@@ -243,7 +243,7 @@ jobs:
     runs-on: ${{ matrix.target.runner }}
     timeout-minutes: 10
     steps:
-      - uses: actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16 # v4.1.8
+      - uses: actions/download-artifact@cc203385981b70ca67e1cc392babf9cc229d5806 # v4.1.9
         id: download
         with:
           name: ${{ matrix.target.artifact }}
@@ -273,7 +273,7 @@ jobs:
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     steps:
       - name: GTK binaries get from cache
-        uses: actions/cache@0c907a75c2c80ebcb7f088228285e798b750cf8f # v4.2.1
+        uses: actions/cache@d4323d4df104b026a6aa633fdb11d772146be0bf # v4.2.2
         id: cache
         with:
           path: C:\gtk\**
@@ -324,7 +324,7 @@ jobs:
     runs-on: windows-latest
     timeout-minutes: 15
     steps:
-      - uses: actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16 # v4.1.8
+      - uses: actions/download-artifact@cc203385981b70ca67e1cc392babf9cc229d5806 # v4.1.9
         with:
           name: ${{ needs.windows.outputs.installer }}
           path: .
@@ -352,7 +352,7 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16 # v4.1.8
+      - uses: actions/download-artifact@cc203385981b70ca67e1cc392babf9cc229d5806 # v4.1.9
         with:
           name: ${{ needs.windows.outputs.installer }}
           path: .
@@ -382,11 +382,11 @@ jobs:
         with:
           egress-policy: audit
 
-      - uses: actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16 # v4.1.8
+      - uses: actions/download-artifact@cc203385981b70ca67e1cc392babf9cc229d5806 # v4.1.9
         with:
           name: ${{ needs.linux-wheel.outputs.targz }}
           path: dist
-      - uses: actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16 # v4.1.8
+      - uses: actions/download-artifact@cc203385981b70ca67e1cc392babf9cc229d5806 # v4.1.9
         with:
           name: ${{ needs.linux-wheel.outputs.wheel }}
           path: dist
