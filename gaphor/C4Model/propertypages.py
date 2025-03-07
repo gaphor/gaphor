@@ -38,7 +38,7 @@ class DescriptionPropertyPage(PropertyPageBase):
         @handler_blocking(buffer, "changed", self._on_description_changed)
         def text_handler(event):
             if not description.props.has_focus:
-                buffer.set_text(event.new_value)
+                buffer.set_text(event.new_value or "")
 
         self.watcher.watch("description", text_handler)
 

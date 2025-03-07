@@ -188,7 +188,7 @@ class NamePropertyPage(PropertyPageBase):
 
         @handler_blocking(entry, "changed", self._on_name_changed)
         def handler(event):
-            if event.element is subject and event.new_value != entry.get_text():
+            if event.element is subject and (event.new_value or "") != entry.get_text():
                 entry.set_text(event.new_value or "")
 
         self.watcher.watch("name", handler)
@@ -198,9 +198,8 @@ class NamePropertyPage(PropertyPageBase):
         )
 
     def _on_name_changed(self, entry):
-        with Transaction(self.event_manager):
-            if self.subject.name != entry.get_text():
-                self.subject.name = entry.get_text()
+        with Transaction(self.event_manager, context="editing"):
+            self.subject.name = entry.get_text()
 
 
 @PropertyPages.register(gaphas.item.Line)
