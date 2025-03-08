@@ -162,7 +162,7 @@ class AssociationPropertyPage(PropertyPageBase):
     @blockable
     def _on_end_name_change(self, entry, subject):
         with self.update_end_name.block():
-            with Transaction(self.event_manager):
+            with Transaction(self.event_manager, context="editing"):
                 parse(subject, entry.get_text())
 
     @blockable

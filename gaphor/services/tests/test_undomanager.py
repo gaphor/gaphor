@@ -489,3 +489,41 @@ def test_redo_stack(event_manager, element_factory, undo_manager):
     assert element_factory.size() == 2
 
     assert element_factory.lookup(p.id)
+
+
+def test_editing_transaction(event_manager, element_factory, undo_manager):
+    class A(Base):
+        attr = attribute("attr", bytes, default="")
+
+    with Transaction(event_manager):
+        a = element_factory.create(A)
+
+    with Transaction(event_manager, context="editing"):
+        a.attr = "some text"
+
+    with Transaction(event_manager, context="editing"):
+        a.attr = "new text"
+
+    undo_manager.undo_transaction()
+
+    assert a.attr == ""
+
+
+def test_editing_with_closed_transaction(event_manager, element_factory, undo_manager):
+    class A(Base):
+        attr = attribute("attr", bytes, default="")
+
+    with Transaction(event_manager):
+        a = element_factory.create(A)
+
+    with Transaction(event_manager, context="editing"):
+        a.attr = "some text"
+
+    undo_manager.close_transaction()
+
+    with Transaction(event_manager, context="editing"):
+        a.attr = "new text"
+
+    undo_manager.undo_transaction()
+
+    assert a.attr == "some text"

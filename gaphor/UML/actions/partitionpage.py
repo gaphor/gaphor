@@ -88,7 +88,7 @@ class PartitionPropertyPage(PropertyPageBase):
 
     def _on_partition_name_changed(self, entry, partition):
         """Event handler for editing partition names."""
-        with Transaction(self.event_manager):
+        with Transaction(self.event_manager, context="editing"):
             partition.name = entry.get_text()
 
     def _on_partition_type_changed(self, combo, _pspec, partition):

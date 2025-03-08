@@ -38,7 +38,7 @@ class DescriptionPropertyPage(PropertyPageBase):
         @handler_blocking(buffer, "changed", self._on_description_changed)
         def text_handler(event):
             if not description.props.has_focus:
-                buffer.set_text(event.new_value)
+                buffer.set_text(event.new_value or "")
 
         self.watcher.watch("description", text_handler)
 
@@ -47,7 +47,7 @@ class DescriptionPropertyPage(PropertyPageBase):
         )
 
     def _on_description_changed(self, buffer):
-        with Transaction(self.event_manager):
+        with Transaction(self.event_manager, context="editing"):
             self.subject.description = buffer.get_text(
                 buffer.get_start_iter(), buffer.get_end_iter(), False
             )
@@ -62,21 +62,31 @@ class TechnologyPropertyPage(PropertyPageBase):
         super().__init__()
         self.subject = subject
         self.event_manager = event_manager
+        self.watcher = subject.watcher()
 
     def construct(self):
         builder = new_builder(
             "technology-editor",
-            signals={
-                "technology-changed": (self._on_technology_changed,),
-            },
         )
         subject = self.subject
 
         technology = builder.get_object("technology")
         technology.set_text(subject.technology or "")
 
-        return builder.get_object("technology-editor")
+        @handler_blocking(technology, "changed", self._on_technology_changed)
+        def text_handler(event):
+            if (
+                event.element is subject
+                and (event.new_value or "") != technology.get_text()
+            ):
+                technology.set_text(event.new_value or "")
+
+        self.watcher.watch("technology", text_handler)
+
+        return unsubscribe_all_on_destroy(
+            builder.get_object("technology-editor"), self.watcher
+        )
 
     def _on_technology_changed(self, entry):
-        with Transaction(self.event_manager):
+        with Transaction(self.event_manager, context="editing"):
             self.subject.technology = entry.get_text()
