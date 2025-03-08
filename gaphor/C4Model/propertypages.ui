@@ -43,9 +43,7 @@
       </object>
     </child>
     <child>
-      <object class="GtkEntry" id="technology">
-        <signal name="changed" handler="technology-changed" swapped="no"/>
-      </object>
+      <object class="GtkEntry" id="technology" />
     </child>
     <style>
       <class name="propertypage"/>
