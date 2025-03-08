@@ -41,6 +41,6 @@ class MetadataPropertyPage(PropertyPageBase):
         return builder.get_object("metadata-editor")
 
     def _on_field_change(self, entry, field_name):
-        with Transaction(self.event_manager):
+        with Transaction(self.event_manager, context="editing"):
             text = entry.get_text()
             setattr(self.item, field_name, text)

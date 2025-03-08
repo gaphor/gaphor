@@ -71,11 +71,11 @@ class RequirementPropertyPage(PropertyPageBase):
         )
 
     def _on_id_changed(self, entry):
-        with Transaction(self.event_manager):
+        with Transaction(self.event_manager, context="editing"):
             self.subject.externalId = entry.get_text()
 
     def _on_text_changed(self, buffer):
-        with Transaction(self.event_manager):
+        with Transaction(self.event_manager, context="editing"):
             self.subject.text = buffer.get_text(
                 buffer.get_start_iter(), buffer.get_end_iter(), False
             )
@@ -324,7 +324,7 @@ class ItemFlowPropertyPage(PropertyPageBase):
             return
 
         assert isinstance(iflow, sysml.ItemFlow)
-        with Transaction(self.event_manager):
+        with Transaction(self.event_manager, context="editing"):
             iflow.itemProperty.name = entry.get_text()
 
     def _on_item_flow_type_changed(self, dropdown, _pspec):

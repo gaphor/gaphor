@@ -285,7 +285,7 @@ class NotePropertyPage(PropertyPageBase):
         return builder.get_object("note-editor")
 
     def _on_body_change(self, buffer):
-        with Transaction(self.event_manager):
+        with Transaction(self.event_manager, context="editing"):
             self.subject.note = buffer.get_text(
                 buffer.get_start_iter(), buffer.get_end_iter(), False
             )

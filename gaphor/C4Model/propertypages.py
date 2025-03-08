@@ -47,7 +47,7 @@ class DescriptionPropertyPage(PropertyPageBase):
         )
 
     def _on_description_changed(self, buffer):
-        with Transaction(self.event_manager):
+        with Transaction(self.event_manager, context="editing"):
             self.subject.description = buffer.get_text(
                 buffer.get_start_iter(), buffer.get_end_iter(), False
             )
@@ -78,5 +78,5 @@ class TechnologyPropertyPage(PropertyPageBase):
         return builder.get_object("technology-editor")
 
     def _on_technology_changed(self, entry):
-        with Transaction(self.event_manager):
+        with Transaction(self.event_manager, context="editing"):
             self.subject.technology = entry.get_text()
