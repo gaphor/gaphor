@@ -8,168 +8,268 @@ msgstr ""
 "Project-Id-Version: Gaphor 3.0.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-12-30 14:25-0500\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2025-03-11 16:32+0000\n"
+"Last-Translator: Максим Горпиніч <maksimgorpinic2005a@gmail.com>\n"
+"Language-Team: Ukrainian <https://hosted.weblate.org/projects/gaphor/"
+"docs-gaphor-org/uk/>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 5.10.3-dev\n"
 
 #: ../changelog.rst:2
 msgid "Change Log"
-msgstr ""
+msgstr "Журнал змін"
 
 #: ../changelog.rst:4
 msgid "Our change log is with the project's source code on `GitHub <https://github.com/gaphor/gaphor/blob/main/CHANGELOG.md>`_."
 msgstr ""
+"Наш журнал змін містить вихідний код проекту на `GitHub <https://github.com/"
+"gaphor/gaphor/blob/main/CHANGELOG.md>`_."
 
 #: ../changelog.rst:8
 msgid "The latest version may not have been released yet."
-msgstr ""
+msgstr "Можливо, остання версія ще не була випущена."
 
 #: ../coffee_machine.md:1
 msgid "Tutorial: Coffee Machine"
-msgstr ""
+msgstr "Підручник: Кавоварка"
 
 #: ../coffee_machine.md:4
 #: ../first_model.md:4
 msgid "In this tutorial we refer to the different parts of the gaphor interface: {ref}`Model Browser <getting_started:model browser>`, [Toolbox](getting_started:toolbox), {ref}`Property Editor <getting_started:property editor>`."
 msgstr ""
+"У цьому підручнику ми посилаємося на різні частини інтерфейсу gaphor: {ref}`"
+"Model Browser <getting_started:model browser>`, [Toolbox]"
+"(getting_started:toolbox), {ref}`Property Editor <getting_started:property "
+"editor>`."
 
 #: ../coffee_machine.md:8
 msgid "Although the names should speak for themselves, you can check out the [Getting Started](getting_started) page for more information about those sections."
 msgstr ""
+"Хоча назви мають говорити самі за себе, ви можете переглянути сторінку "
+"[Початок роботи](getting_started), щоб дізнатися більше про ці розділи."
 
 #: ../coffee_machine.md:12
 #: ../coffee_machine_concept.md:7
 #: ../coffee_machine_logical.md:7
 msgid "Introduction"
-msgstr ""
+msgstr "вступ"
 
 #: ../coffee_machine.md:14
 msgid "In the bustling town of Antville, a colony of ants had formed a Systems Engineering consulting company called AntSource. They value collaboration, transparency, and community-driven engineering, and seeks to empower their employees and customers through open communication and participation in the systems engineering process."
 msgstr ""
+"У галасливому містечку Ентвіль колонія мурашок створила консалтингову "
+"компанію з системної інженерії під назвою AntSource. Вони цінують співпрацю, "
+"прозорість і розробку, керовану спільнотою, і прагнуть розширити можливості "
+"своїх співробітників і клієнтів через відкрите спілкування та участь у "
+"процесі розробки систем."
 
 #: ../coffee_machine.md:20
 msgid "The engineers at AntSource all have nicknames that reflect the key principles and concepts of their craft: Qual-ant, Reli-ant, Safe-ant, Usa-ant, and Sust-ant. They were experts in designing and optimizing complex systems, and they took pride in their work."
 msgstr ""
+"Усі інженери AntSource мають псевдоніми, які відображають ключові принципи "
+"та концепції їх ремесла: Qual-ant, Reli-ant, Safe-ant, Usa-ant та Sust-ant. "
+"Вони були експертами з розробки та оптимізації складних систем і пишалися "
+"своєю роботою."
 
 #: ../coffee_machine.md:25
 msgid "One day, a new client approached AntSource with an unusual request. Cappuccino, a cat who owned a popular coffee shop called Milk & Whiskers Café, needed a custom espresso machine designed specifically for felines. Cats just love their coffee strong, with a creamy and smooth body and topped with the perfect foamy layer of crema. The ants were intrigued by the challenge and immediately set to work."
 msgstr ""
+"Одного разу новий клієнт звернувся до AntSource із незвичайним запитом. "
+"Капучіно, коту, який володів популярною кав’ярнею під назвою Milk & Whiskers "
+"Café, потрібна була спеціальна еспресо-машина, розроблена спеціально для "
+"котячих. Коти просто обожнюють міцну каву з вершковим і гладким вмістом і "
+"ідеальним пінним шаром вершків. Мурахи були заінтриговані викликом і негайно "
+"взялися до роботи."
 
 #: ../coffee_machine.md:32
 msgid "Qual-ant was responsible for ensuring that the machine met all quality standards and specifications, while Reli-ant was tasked with making sure that the machine was dependable and would work correctly every time it was used. Safe-ant designed the machine with safety in mind, ensuring that it wouldn't cause harm to anyone who used it. Usa-ant designed the machine to be easy and intuitive to use, while Sust-ant ensured that the machine was environmentally friendly and sustainable. In this tutorial we follow the adventures of AntSource to create the perfect kittie espresso machine."
 msgstr ""
+"Qual-ant відповідав за те, щоб машина відповідала всім стандартам якості та "
+"специфікаціям, тоді як Reli-ant мав забезпечити надійність машини та її "
+"правильну роботу щоразу, коли її використовують. Safe-ant розробив машину з "
+"урахуванням безпеки, гарантуючи, що вона не завдасть шкоди нікому, хто її "
+"використовує. Компанія Usa-ant розробила машину так, щоб вона була простою "
+"та інтуїтивно зрозумілою у використанні, а Sust-ant подбала про "
+"екологічність та екологічність машини. У цьому підручнику ми спостерігаємо "
+"за пригодами AntSource, щоб створити ідеальну кавоварку Kittie espresso."
 
 #: ../coffee_machine.md:41
 msgid "![Two shots of espresso being pulled from an espresso machine.](images/coffee-machine-double-shot.jpg)"
 msgstr ""
+"![Дві порції еспресо витягують із еспресо-машини.](images/coffee-machine-"
+"double-shot.jpg)"
 
 #: ../coffee_machine.md:41
 msgid "Two shots of espresso being pulled from an espressomachine."
-msgstr ""
+msgstr "Дві порції еспресо витягують з еспресомашини."
 
 #: ../coffee_machine.md:44
 msgid "The first thing the ants did was to open Gaphor to the Greeter window and start a new model with the _SysML_ template. You can now decide to either:"
 msgstr ""
+"Перше, що зробили мурахи, це відкрили Gaphor у вікні Greeter і запустили "
+"нову модель із шаблоном _SysML_. Тепер ви можете вирішити:"
 
 #: ../coffee_machine.md:46
 msgid "recreate their work as part of this tutorial. For this, open the SysML Example model shown at the bottom of the Greeter window"
 msgstr ""
+"відтворити свою роботу в рамках цього підручника. Для цього відкрийте "
+"приклад моделі SysML, показаний у нижній частині вікна Greeter"
 
 #: ../coffee_machine.md:48
 msgid "inspect the result of their work by opening the `coffee-machine` model located in the `examples` folder."
 msgstr ""
+"перевірити результат своєї роботи, відкривши модель `кавоварка`, яка "
+"знаходиться в папці `examples`."
 
 #: ../coffee_machine.md:51
 msgid "Abstraction Levels"
-msgstr ""
+msgstr "Рівні абстракції"
 
 #: ../coffee_machine.md:52
 msgid "Abstraction is a way of simplifying complex systems by focusing on only the most important details, while ignoring the rest. It's a process of reducing complexity by removing unnecessary details and highlighting the key aspects of a system in order to focus on the problem to be solved. It is the key to rigorous analysis of a system."
 msgstr ""
+"Абстракція — це спосіб спрощення складних систем шляхом зосередження лише на "
+"найважливіших деталях, ігноруючи решту. Це процес зменшення складності "
+"шляхом видалення непотрібних деталей і виділення ключових аспектів системи, "
+"щоб зосередитися на проблемі, яку потрібно вирішити. Це ключ до ретельного "
+"аналізу системи."
 
 #: ../coffee_machine.md:58
 msgid "To understand abstraction, think about a painting. When you look at a painting, you see a representation of something - perhaps a person, a landscape, or an object. The artist has simplified the real world into a set of lines, shapes, and colors that represent the most important details of the subject. In the same way, systems engineers, like our friends the ants, use abstraction to represent complex systems by breaking them down into their essential components and highlighting the most important aspects."
 msgstr ""
+"Щоб зрозуміти абстракцію, подумайте про картину. Дивлячись на картину, ви "
+"бачите зображення чогось – можливо, людини, пейзажу чи об’єкта. Художник "
+"спростив реальний світ у набір ліній, форм і кольорів, які представляють "
+"найважливіші деталі предмета. Таким же чином системні інженери, як і наші "
+"друзі мурахи, використовують абстракцію для представлення складних систем, "
+"розбиваючи їх на основні компоненти та виділяючи найважливіші аспекти."
 
 #: ../coffee_machine.md:66
 msgid "Abstraction levels refer to the different levels of detail at which a system can be represented. These levels are used to break down complex systems into smaller, more manageable parts that can be analyzed and optimized. Said another way, abstraction levels group portions of a design where similar types of questions are answered."
 msgstr ""
+"Рівні абстракції стосуються різних рівнів деталізації, на яких може бути "
+"представлена система. Ці рівні використовуються для розбиття складних систем "
+"на менші, більш керовані частини, які можна аналізувати та оптимізувати. "
+"Іншими словами, рівні абстракції групують частини дизайну, де відповідають "
+"схожі типи питань."
 
 #: ../coffee_machine.md:72
 msgid "There are typically three levels of abstraction in systems engineering and these are the three levels used in the SysML template:"
 msgstr ""
+"У системній інженерії зазвичай існує три рівні абстракції, і це три рівні, "
+"які використовуються в шаблоні SysML:"
 
 #: ../coffee_machine.md:75
 msgid "Concept Level: Sometimes also called Conceptual Level. Defines the problem being solved. This is the highest level of abstraction, where the system is described in terms of its overall purpose, goals, and functions. At this level, the focus is on understanding the system's requirements and how it will interact with other systems."
 msgstr ""
+"Концептуальний рівень: іноді також називається концептуальним рівнем. "
+"Визначає проблему, що розв’язується. Це найвищий рівень абстракції, де "
+"система описується з точки зору її загальної мети, цілей і функцій. На цьому "
+"рівні увага зосереджена на розумінні вимог до системи та того, як вона "
+"взаємодіятиме з іншими системами."
 
 #: ../coffee_machine.md:80
 msgid "Logical Level: Defines a technology-agnostic solution. This is the middle level of abstraction, where the system is described in terms of its structure and behavior. At this level, the focus is on how the system components are organized and how they interact with each other."
 msgstr ""
+"Логічний рівень: визначає технологічно-незалежне рішення. Це середній рівень "
+"абстракції, де система описується з точки зору її структури та поведінки. На "
+"цьому рівні основна увага приділяється тому, як організовані компоненти "
+"системи та як вони взаємодіють один з одним."
 
 #: ../coffee_machine.md:84
 msgid "Technology Level: Sometimes also called Physical level. Defines the detailed technical solution. This is the lowest level of abstraction, where the system is described in terms of its components and their properties. At this level, the focus is on the details of the system's implementation."
 msgstr ""
+"Технологічний рівень: іноді також називається фізичним рівнем. Визначає "
+"детальне технічне рішення. Це найнижчий рівень абстракції, де система "
+"описується з точки зору її компонентів та їхніх властивостей. На цьому рівні "
+"основна увага приділяється деталям реалізації системи."
 
 #: ../coffee_machine.md:89
 msgid "Each level of abstraction provides a different perspective on the system, and each level is important for different aspects of system design and analysis. For example, the conceptual level is important for understanding the overall goals and requirements of the system, while the physical level is important for understanding how the system will be built and how it will interact with the environment."
 msgstr ""
+"Кожен рівень абстракції забезпечує різний погляд на систему, і кожен рівень "
+"важливий для різних аспектів проектування та аналізу системи. Наприклад, "
+"концептуальний рівень важливий для розуміння загальних цілей і вимог "
+"системи, тоді як фізичний рівень важливий для розуміння того, як система "
+"буде побудована і як вона взаємодіятиме з навколишнім середовищем."
 
 #: ../coffee_machine.md:96
 msgid "There is a fourth abstraction level called the Implementation Level that isn't modeled, which is the concrete built system."
 msgstr ""
+"Існує четвертий рівень абстракції, який називається рівнем реалізації, який "
+"не моделюється, тобто конкретно побудована система."
 
 #: ../coffee_machine.md:99
 msgid "In the upper left hand corner of Gaphor, the Model Browser shows the three top level packages, dividing up the model in to these three abstraction levels."
 msgstr ""
+"У верхньому лівому куті Gaphor браузер моделей показує три пакети верхнього "
+"рівня, які поділяють модель на ці три рівні абстракції."
 
 #: ../coffee_machine.md:102
 msgid "![Top level packages of the SysML template.](images/coffee-machine-top-level-packages.png)"
 msgstr ""
+"![Пакети верхнього рівня шаблону SysML.](images/coffee-machine-top-level-"
+"packages.png)"
 
 #: ../coffee_machine.md:102
 msgid "Top level packages of the SysMLtemplate."
-msgstr ""
+msgstr "Пакунки верхнього рівня шаблону SysML."
 
 #: ../coffee_machine.md:105
 msgid "Pillars"
-msgstr ""
+msgstr "Стовпи"
 
 #: ../coffee_machine.md:107
 msgid "There are four pillars of SysML which help classify the types of diagrams based on what they represent:"
 msgstr ""
+"Існує чотири стовпи SysML, які допомагають класифікувати типи діаграм на "
+"основі того, що вони представляють:"
 
 #: ../coffee_machine.md:110
 msgid "Behavior: The functionality of a system"
-msgstr ""
+msgstr "Поведінка: функціональність системи"
 
 #: ../coffee_machine.md:111
 msgid "Structure: How a system is formed using parts and connections"
-msgstr ""
+msgstr "Структура: як система формується за допомогою частин і зв’язків"
 
 #: ../coffee_machine.md:112
 msgid "Requirements: Written statements that constrain the system"
-msgstr ""
+msgstr "Вимоги: Письмові заяви, що обмежують систему"
 
 #: ../coffee_machine.md:113
 msgid "Parametric: Enforces mathematical rules across values in the system"
 msgstr ""
+"Параметричний: забезпечує дотримання математичних правил для значень у "
+"системі"
 
 #: ../coffee_machine.md:115
 msgid "If you want to learn more about these four pillars, there is a 30-minute video by Rick Steiner called [The Four Pillars of SysML](https://youtu.be/998UznK9ogY)."
 msgstr ""
+"Якщо ви хочете дізнатися більше про ці чотири стовпи, перегляньте 30-"
+"хвилинне відео Ріка Штайнера під назвою [Чотири стовпи SysML] (https://"
+"youtu.be/998UznK9ogY)."
 
 #: ../coffee_machine.md:118
 msgid "Since Parametric Diagrams are one of the least used diagram types in SysML, we are going to only focus on the first three. The power of SysML comes in being able to make relationships between these three pillars. For example, by allocating behavior like an activity to an element of the structure like a block."
 msgstr ""
+"Оскільки параметричні діаграми є одними з найменш використовуваних типів "
+"діаграм у SysML, ми зосередимося лише на перших трьох. Потужність SysML "
+"полягає в тому, що він здатний встановлювати зв’язки між цими трьома "
+"стовпами. Наприклад, шляхом призначення поведінки, як діяльності, елементу "
+"структури, наприклад блоку."
 
 #: ../coffee_machine.md:123
 msgid "If you expand the top-level Abstraction Level packages in the Model Browser, each one contains three more packages, one for each pillar. It is in these packages that we will start to build up the design for the espresso machine."
 msgstr ""
+"Якщо розгорнути пакунки рівня абстракції верхнього рівня в браузері моделей, "
+"кожен з них міститиме ще три пакунки, по одному для кожного стовпа. Саме з "
+"цих упаковок ми і почнемо будувати дизайн для еспресо-машини."
 
 #: ../coffee_machine.md:127
 msgid "![Three pillar packages nested under each abstraction level package.](images/coffee-machine-pillars.png)"
@@ -225,7 +325,7 @@ msgstr ""
 
 #: ../coffee_machine_concept.md:26
 msgid "Use Case Diagram"
-msgstr ""
+msgstr "Діаграма варіантів використання"
 
 #: ../coffee_machine_concept.md:28
 msgid "First the ants work on the behavior of the system. Expand the Behavior package in the Model Browser and double-click on the diagram named Use Cases."
@@ -489,7 +589,7 @@ msgstr ""
 
 #: ../coffee_machine_logical.md:89
 msgid "Controller"
-msgstr ""
+msgstr "Контролер"
 
 #: ../coffee_machine_logical.md:90
 msgid "Group head"
@@ -2666,7 +2766,7 @@ msgstr ""
 
 #: ../models/raaml/General.rst:5
 msgid "Basic Event"
-msgstr ""
+msgstr "Основна подія"
 
 #: ../models/raaml/General.rst:11
 msgid "General Concepts Library/Abstract Cause"
@@ -3012,7 +3112,7 @@ msgstr ""
 
 #: ../models/sysml/PortsAndFlows.rst:29
 msgid "Item Flow"
-msgstr ""
+msgstr "Потік предметів"
 
 #: ../models/sysml/Requirements.rst:2
 #: ../style_sheets.md:331
@@ -4661,7 +4761,7 @@ msgstr ""
 #: ../style_sheets.md:322
 #: ../style_sheets.md:323
 msgid "UML"
-msgstr ""
+msgstr "UML"
 
 #: ../style_sheets.md:315
 msgid "Classes"
@@ -4711,7 +4811,7 @@ msgstr ""
 
 #: ../style_sheets.md:319
 msgid "Swimlane"
-msgstr ""
+msgstr "Swimlane"
 
 #: ../style_sheets.md:319
 msgid "``partition``"
@@ -4765,11 +4865,11 @@ msgstr ""
 #: ../style_sheets.md:327
 #: ../style_sheets.md:328
 msgid "C4 Model"
-msgstr ""
+msgstr "Модель C4"
 
 #: ../style_sheets.md:324
 msgid "Person"
-msgstr ""
+msgstr "Особа"
 
 #: ../style_sheets.md:324
 msgid "``c4person``"
@@ -4777,7 +4877,7 @@ msgstr ""
 
 #: ../style_sheets.md:325
 msgid "Software System"
-msgstr ""
+msgstr "Програмна система"
 
 #: ../style_sheets.md:325
 msgid "``c4container[type=\"Software System\"]``"
@@ -4785,7 +4885,7 @@ msgstr ""
 
 #: ../style_sheets.md:326
 msgid "Component"
-msgstr ""
+msgstr "Компонент"
 
 #: ../style_sheets.md:326
 msgid "``c4container[type=\"Component\"]``"
@@ -4793,7 +4893,7 @@ msgstr ""
 
 #: ../style_sheets.md:327
 msgid "Container"
-msgstr ""
+msgstr "Контейнер"
 
 #: ../style_sheets.md:327
 msgid "``c4container[type=\"Container\"]``"
@@ -4801,7 +4901,7 @@ msgstr ""
 
 #: ../style_sheets.md:328
 msgid "Container: Database"
-msgstr ""
+msgstr "Контейнер: база даних"
 
 #: ../style_sheets.md:328
 msgid "``c4database``"
@@ -4811,7 +4911,7 @@ msgstr ""
 #: ../style_sheets.md:330
 #: ../style_sheets.md:331
 msgid "SysML"
-msgstr ""
+msgstr "SysML"
 
 #: ../style_sheets.md:329
 msgid "ValueType"
@@ -4836,11 +4936,11 @@ msgstr ""
 
 #: ../style_sheets.md:332
 msgid "RAAML"
-msgstr ""
+msgstr "RAAML"
 
 #: ../style_sheets.md:332
 msgid "FTA"
-msgstr ""
+msgstr "FTA"
 
 #: ../style_sheets.md:332
 msgid "any AND/OR/… Gate"
