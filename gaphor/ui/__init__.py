@@ -64,6 +64,7 @@ def run(argv: list[str], *, launch_service="greeter", recover=False) -> int:
 
         apply_shortcuts_from_entry_point("gaphor.appservices", "app", gtk_app)
         apply_shortcuts_from_entry_point("gaphor.services", "win", gtk_app)
+        apply_shortcuts_from_entry_point("gaphor.services", "text", gtk_app)
 
         try:
             application = Application(gtk_app=gtk_app)
