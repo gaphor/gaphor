@@ -17,7 +17,6 @@ from collections.abc import Callable
 from dataclasses import dataclass
 
 from gaphor.abc import ActionProvider, Service
-from gaphor.action import action
 from gaphor.core import event_handler
 from gaphor.core.modeling.base import Base, RepositoryProtocol, swap_element_type
 from gaphor.core.modeling.event import (
@@ -293,9 +292,7 @@ class UndoManager(Service, ActionProvider):
             if isinstance(last_transaction, EditingStack):
                 last_transaction.close()
 
-    @action(name="text.undo", shortcut="<Primary>z")
     def undo_transaction(self):
-        # First check if focused element can handle action (handles from keyboard shortcut)
         if not self._undo_stack:
             return
 
@@ -309,10 +306,6 @@ class UndoManager(Service, ActionProvider):
 
         self._action_executed()
 
-    @action(
-        name="text.redo",
-        shortcut="<Primary><Shift>z",
-    )
     def redo_transaction(self):
         if not self._redo_stack:
             return
