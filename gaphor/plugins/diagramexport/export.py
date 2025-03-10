@@ -6,7 +6,8 @@ from gi.repository import Gtk
 
 from gaphor.abc import ActionProvider, Service
 from gaphor.asyncio import TaskOwner
-from gaphor.core import action, gettext
+from gaphor.core import action, event_handler, gettext
+from gaphor.diagram.event import DiagramClosed, DiagramOpened
 from gaphor.diagram.export import (
     escape_filename,
     save_eps,
@@ -14,6 +15,7 @@ from gaphor.diagram.export import (
     save_png,
     save_svg,
 )
+from gaphor.event import ActionEnabled
 from gaphor.plugins.diagramexport.exportall import export_all
 from gaphor.ui.filedialog import save_file_dialog
 
@@ -22,9 +24,15 @@ class DiagramExport(Service, ActionProvider, TaskOwner):
     """Service for exporting diagrams as images (SVG, PNG, PDF)."""
 
     def __init__(
-        self, diagrams=None, export_menu=None, main_window=None, element_factory=None
+        self,
+        event_manager,
+        diagrams=None,
+        export_menu=None,
+        main_window=None,
+        element_factory=None,
     ):
         super().__init__()
+        self.event_manager = event_manager
         self.diagrams = diagrams
         self.export_menu = export_menu
         self.main_window = main_window
@@ -32,8 +40,10 @@ class DiagramExport(Service, ActionProvider, TaskOwner):
             export_menu.add_actions(self)
         self.filename: Path = Path("export").absolute()
         self.factory = element_factory
+        event_manager.subscribe(self.on_diagram_opened_or_closed)
 
     def shutdown(self):
+        self.event_manager.unsubscribe(self.on_diagram_opened_or_closed)
         self.cancel_background_task()
         if self.export_menu:
             self.export_menu.remove_actions(self)
@@ -186,3 +196,17 @@ class DiagramExport(Service, ActionProvider, TaskOwner):
             export_all(self.factory, folder, save_eps, "eps")
 
         dialog.select_folder(callback=response)
+
+    @event_handler(DiagramOpened, DiagramClosed)
+    def on_diagram_opened_or_closed(self, event: DiagramOpened | DiagramClosed):
+        enabled = (
+            isinstance(event, DiagramOpened) or self.diagrams.get_current_diagram()
+        )
+
+        for action_name in (
+            "win.file-export-svg",
+            "win.file-export-png",
+            "win.file-export-pdf",
+            "win.file-export-eps",
+        ):
+            self.event_manager.handle(ActionEnabled(action_name, enabled))
