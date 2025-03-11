@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2025-01-29 12:18-0300\n"
-"PO-Revision-Date: 2025-03-11 16:32+0000\n"
+"PO-Revision-Date: 2025-03-11 21:38+0000\n"
 "Last-Translator: Максим Горпиніч <maksimgorpinic2005a@gmail.com>\n"
 "Language-Team: Ukrainian <https://hosted.weblate.org/projects/gaphor/gaphor/"
 "uk/>\n"
@@ -495,7 +495,7 @@ msgstr "Інтерфейсний блок"
 #: gaphor/SysML/requirements/requirementstoolbox.py:17
 #: gaphor/SysML/toolbox.py:193
 msgid "Requirement"
-msgstr ""
+msgstr "Вимога"
 
 #: gaphor/SysML/toolbox.py:203 gaphor/UML/toolbox.py:77
 msgid "Use Case"
@@ -503,153 +503,153 @@ msgstr "Випадок використання"
 
 #: gaphor/SysML/toolbox.py:204
 msgid "Value Type"
-msgstr ""
+msgstr "Тип значення"
 
 #: gaphor/SysML/allocations/allocationstoolbox.py:6
 msgid "Allocations"
-msgstr ""
+msgstr "Виділення"
 
 #: gaphor/SysML/allocations/allocationstoolbox.py:10
 msgid "Allocate"
-msgstr ""
+msgstr "Виділити"
 
 #: gaphor/SysML/allocations/relationships.py:10
 msgid "allocate"
-msgstr ""
+msgstr "виділяти"
 
 #: gaphor/SysML/blocks/block.py:59 gaphor/SysML/blocks/interfaceblock.py:58
 msgid "ControlStructure"
-msgstr ""
+msgstr "ControlStructure"
 
 #: gaphor/SysML/blocks/block.py:63
 msgid "block"
-msgstr ""
+msgstr "блок"
 
 #: gaphor/SysML/blocks/block.py:74
 msgid "parts"
-msgstr ""
+msgstr "частин"
 
 #: gaphor/SysML/blocks/block.py:88 gaphor/SysML/blocks/interfaceblock.py:71
 msgid "references"
-msgstr ""
+msgstr "властивість"
 
 #: gaphor/SysML/blocks/block.py:100 gaphor/SysML/blocks/interfaceblock.py:83
 msgid "values"
-msgstr ""
+msgstr "значення"
 
 #: gaphor/SysML/blocks/block.py:119 gaphor/SysML/blocks/interfaceblock.py:102
 msgid "operations"
-msgstr ""
+msgstr "операції"
 
 #: gaphor/SysML/blocks/block.py:131 gaphor/SysML/blocks/block.py:149
 #: gaphor/SysML/blocks/interfaceblock.py:114
 #: gaphor/SysML/blocks/interfaceblock.py:136
 msgid "unnamed"
-msgstr ""
+msgstr "безіменний"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:25
 msgid "Blocks"
-msgstr ""
+msgstr "Блоки"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:39
 msgid "InterfaceBlock"
-msgstr ""
+msgstr "Інтерфейсний блок"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:63
 #: gaphor/UML/classes/classestoolbox.py:82
 msgid "Composite Association"
-msgstr ""
+msgstr "Композитна асоціація"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:73
 #: gaphor/UML/classes/classestoolbox.py:92
 msgid "Shared Association"
-msgstr ""
+msgstr "Спільна асоціація"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:83
 #: gaphor/UML/classes/classestoolbox.py:102
 #: gaphor/UML/usecases/usecasetoolbox.py:40
 msgid "Association"
-msgstr ""
+msgstr "Асоціація"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:90
 #: gaphor/UML/classes/classestoolbox.py:109
 msgid "Direct Association"
-msgstr ""
+msgstr "Пряма асоціація"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:107
 msgid "ValueType"
-msgstr ""
+msgstr "ValueType"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:130
 #: gaphor/UML/classes/classestoolbox.py:166
 msgid "Primitive"
-msgstr ""
+msgstr "Примітивний"
 
 #: gaphor/SysML/blocks/interfaceblock.py:60
 msgid "interfaceblock"
-msgstr ""
+msgstr "інтерфейсний блок"
 
 #: gaphor/SysML/blocks/proxyport.py:39
 msgid "proxy"
-msgstr ""
+msgstr "проксі"
 
 #: gaphor/SysML/requirements/relationships.py:12
 msgid "satisfy"
-msgstr ""
+msgstr "задовольнити"
 
 #: gaphor/SysML/requirements/relationships.py:23
 msgid "deriveReqt"
-msgstr ""
+msgstr "deriveReqt"
 
 #: gaphor/SysML/requirements/relationships.py:30
 msgid "trace"
-msgstr ""
+msgstr "слід"
 
 #: gaphor/SysML/requirements/relationships.py:39
 msgid "verify"
-msgstr ""
+msgstr "перевірити"
 
 #: gaphor/SysML/requirements/relationships.py:48
 msgid "refine"
-msgstr ""
+msgstr "доопрацювати"
 
 #: gaphor/SysML/requirements/requirement.py:56
 msgid "requirement"
-msgstr ""
+msgstr "вимога"
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:13
 #: gaphor/templates/sysml-example.gaphor gaphor/templates/sysml.gaphor
 msgid "Requirements"
-msgstr ""
+msgstr "Вимоги"
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:29
 msgid "Satisfy"
-msgstr ""
+msgstr "Задовольнити"
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:36
 msgid "Derive Requirement"
-msgstr ""
+msgstr "Вивести вимогу"
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:43
 msgid "Trace"
-msgstr ""
+msgstr "Слід"
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:50
 msgid "Refine"
-msgstr ""
+msgstr "Уточніть"
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:57
 msgid "Verify"
-msgstr ""
+msgstr "Підтвердити"
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:64
 #: gaphor/UML/classes/classestoolbox.py:75
 msgid "Containment"
-msgstr ""
+msgstr "Стримування"
 
 #: gaphor/UML/compartments.py:63
 msgid "(from {namespace})"
-msgstr ""
+msgstr "(з {простір імен})"
 
 #: gaphor/UML/modelinglanguage.py:21 gaphor/ui/greeter.py:34
 msgid "UML"
@@ -657,155 +657,157 @@ msgstr "UML"
 
 #: gaphor/UML/actions/propertypages.ui:445 gaphor/UML/propertypages.ui:9
 msgid "Type"
-msgstr ""
+msgstr "Тип"
 
 #: gaphor/UML/propertypages.ui:35
 msgid "Show Type"
-msgstr ""
+msgstr "Показати тип"
 
 #: gaphor/UML/sanitizerservice.py:106
 msgid ""
 "Removed unused elements from the model: they are not used in any other "
 "diagram."
 msgstr ""
+"Видалені невикористані елементи з моделі: вони не використовуються в жодній "
+"іншій діаграмі."
 
 #: gaphor/UML/toolbox.py:34
 msgid "Component Diagram"
-msgstr ""
+msgstr "Діаграма компонентів"
 
 #: gaphor/UML/toolbox.py:35
 msgid "Deployment Diagram"
-msgstr ""
+msgstr "Схема розгортання"
 
 #: gaphor/UML/toolbox.py:39
 msgid "Communication Diagram"
-msgstr ""
+msgstr "Діаграма зв'язку"
 
 #: gaphor/UML/toolbox.py:43
 msgid "Profile Diagram"
-msgstr ""
+msgstr "Схема профілю"
 
 #: gaphor/UML/deployments/deploymentstoolbox.py:16 gaphor/UML/toolbox.py:51
 msgid "Artifact"
-msgstr ""
+msgstr "Артефакт"
 
 #: gaphor/UML/deployments/deploymentstoolbox.py:40 gaphor/UML/toolbox.py:55
 msgid "Device"
-msgstr ""
+msgstr "Пристрій"
 
 #: gaphor/UML/toolbox.py:61
 msgid "Instance Specification"
-msgstr ""
+msgstr "Специфікація екземпляра"
 
 #: gaphor/UML/classes/classestoolbox.py:39 gaphor/UML/toolbox.py:68
 msgid "Interface"
-msgstr ""
+msgstr "Інтерфейс"
 
 #: gaphor/UML/deployments/deploymentstoolbox.py:28 gaphor/UML/toolbox.py:69
 msgid "Node"
-msgstr ""
+msgstr "Вузол"
 
 #: gaphor/UML/profiles/profilestoolbox.py:22 gaphor/UML/toolbox.py:70
 msgid "Profile"
-msgstr ""
+msgstr "Профіль"
 
 #: gaphor/UML/profiles/profilestoolbox.py:44 gaphor/UML/toolbox.py:75
 msgid "Stereotype"
-msgstr ""
+msgstr "Стереотип"
 
 #: gaphor/UML/actions/actionstoolbox.py:18
 #: gaphor/UML/interactions/interactionstoolbox.py:16
 #: gaphor/UML/states/statestoolbox.py:27 gaphor/UML/toolboxconfig.py:5
 msgid "New {name}"
-msgstr ""
+msgstr "Новий {name}"
 
 #: gaphor/UML/treemodel.py:57 gaphor/ui/diagrampage.py:122
 #: gaphor/ui/mainwindow.py:292 gaphor/ui/modelmerge/organize.py:138
 msgid "<None>"
-msgstr ""
+msgstr "<жодного>"
 
 #: gaphor/UML/tests/test_treemodel.py:199 gaphor/UML/treemodel.py:76
 msgid "<Relationships>"
-msgstr ""
+msgstr "<стосунки>"
 
 #: gaphor/UML/umlfmt.py:22
 msgid "supplier: {name}"
-msgstr ""
+msgstr "постачальник: {name}"
 
 #: gaphor/UML/umlfmt.py:86
 msgid "readOnly"
-msgstr ""
+msgstr "тільки для читання"
 
 #: gaphor/UML/umlfmt.py:232
 msgid "general: {name}"
-msgstr ""
+msgstr "загальний: {name}"
 
 #: gaphor/UML/umlfmt.py:237
 msgid "extend: {name}"
-msgstr ""
+msgstr "розширити: {name}"
 
 #: gaphor/UML/umlfmt.py:244
 msgid "include: {name}"
-msgstr ""
+msgstr "включити: {name}"
 
 #: gaphor/UML/actions/actionstoolbox.py:49
 msgid "Swimlane One"
-msgstr ""
+msgstr "Свімлане Один"
 
 #: gaphor/UML/actions/actionstoolbox.py:53
 msgid "Swimlane Two"
-msgstr ""
+msgstr "Swimlane два"
 
 #: gaphor/UML/actions/actionstoolbox.py:59
 msgid "ValueSpecificationAction"
-msgstr ""
+msgstr "ЗначенняВизначення"
 
 #: gaphor/UML/actions/actionstoolbox.py:64
 msgid "Actions"
-msgstr ""
+msgstr "Дії"
 
 #: gaphor/UML/actions/actionstoolbox.py:80
 #: gaphor/UML/actions/actionstoolbox.py:86
 #: gaphor/UML/states/propertypages.ui:103
 msgid "Action"
-msgstr ""
+msgstr "Дія"
 
 #: gaphor/UML/actions/actionstoolbox.py:92
 msgid "Call behavior action"
-msgstr ""
+msgstr "Виклик поведінки дії"
 
 #: gaphor/UML/actions/actionstoolbox.py:99
 msgid "CallBehaviorAction"
-msgstr ""
+msgstr "CallBehaviorAction"
 
 #: gaphor/UML/actions/actionstoolbox.py:106
 msgid "Value specification action"
-msgstr ""
+msgstr "Дія визначення значення"
 
 #: gaphor/UML/actions/actionstoolbox.py:118
 msgid "Initial node"
-msgstr ""
+msgstr "Початковий вузол"
 
 #: gaphor/UML/actions/actionstoolbox.py:130
 msgid "Activity final node"
-msgstr ""
+msgstr "Кінцевий вузол діяльності"
 
 #: gaphor/UML/actions/actionstoolbox.py:142
 msgid "Flow final node"
-msgstr ""
+msgstr "Кінцевий вузол потоку"
 
 #: gaphor/UML/actions/actionstoolbox.py:154
 msgid "Decision/merge node"
-msgstr ""
+msgstr "Вузол рішення/злиття"
 
 #: gaphor/UML/actions/actionstoolbox.py:166
 msgid "Fork/join node"
-msgstr ""
+msgstr "Розгалуження/вузол приєднання"
 
 #: gaphor/UML/actions/actionstoolbox.py:178
 #: gaphor/UML/actions/actionstoolbox.py:184
 msgid "Object node"
-msgstr ""
+msgstr "Вузол об'єкта"
 
 #: gaphor/UML/actions/actionstoolbox.py:190
 msgid "Swimlane"
@@ -813,151 +815,151 @@ msgstr "Swimlane"
 
 #: gaphor/UML/actions/actionstoolbox.py:202
 msgid "Control flow"
-msgstr ""
+msgstr "Контроль потоку"
 
 #: gaphor/UML/actions/actionstoolbox.py:209
 msgid "Object flow"
-msgstr ""
+msgstr "Потік об'єктів"
 
 #: gaphor/UML/actions/actionstoolbox.py:216
 msgid "Send signal action"
-msgstr ""
+msgstr "Надіслати сигнал"
 
 #: gaphor/UML/actions/actionstoolbox.py:222
 msgid "Send signal"
-msgstr ""
+msgstr "Надіслати сигнал"
 
 #: gaphor/UML/actions/actionstoolbox.py:228
 msgid "Accept event action"
-msgstr ""
+msgstr "Прийняти дію події"
 
 #: gaphor/UML/actions/actionstoolbox.py:234
 msgid "Accept event"
-msgstr ""
+msgstr "Прийняти подію"
 
 #: gaphor/UML/actions/actionstoolbox.py:240
 msgid "Input pin"
-msgstr ""
+msgstr "Вхідний штифт"
 
 #: gaphor/UML/actions/actionstoolbox.py:247
 msgid "Output pin"
-msgstr ""
+msgstr "Вихідний штифт"
 
 #: gaphor/UML/actions/activitynodes.py:182
 msgid "merge/decision"
-msgstr ""
+msgstr "злиття/рішення"
 
 #: gaphor/UML/actions/activitynodes.py:184
 msgid "merge"
-msgstr ""
+msgstr "злиття"
 
 #: gaphor/UML/actions/activitynodes.py:186
 msgid "decision"
-msgstr ""
+msgstr "рішення"
 
 #: gaphor/UML/actions/activitypropertypage.py:148
 msgid "New Parameter…"
-msgstr ""
+msgstr "Новий параметр…"
 
 #: gaphor/UML/actions/objectnode.py:14 gaphor/UML/actions/propertypages.ui:157
 msgid "unordered"
-msgstr ""
+msgstr "невпорядкований"
 
 #: gaphor/UML/actions/objectnode.py:15 gaphor/UML/actions/propertypages.ui:158
 msgid "ordered"
-msgstr ""
+msgstr "замовив"
 
 #: gaphor/UML/actions/objectnode.py:16
 msgid "LIFO"
-msgstr ""
+msgstr "LIFO"
 
 #: gaphor/UML/actions/objectnode.py:17
 msgid "FIFO"
-msgstr ""
+msgstr "FIFO"
 
 #: gaphor/UML/actions/objectnode.py:45
 msgid "upperBound"
-msgstr ""
+msgstr "верхня межа"
 
 #: gaphor/UML/actions/objectnode.py:55
 msgid "ordering"
-msgstr ""
+msgstr "замовлення"
 
 #: gaphor/UML/actions/partitionpage.py:115
 msgid "New Swimlane"
-msgstr ""
+msgstr "Новий Swimlane"
 
 #: gaphor/UML/actions/pin.py:58
 msgid "input pin"
-msgstr ""
+msgstr "вхідний контакт"
 
 #: gaphor/UML/actions/pin.py:64
 msgid "output pin"
-msgstr ""
+msgstr "вихідний штифт"
 
 #: gaphor/UML/actions/propertypages.ui:11
 msgid "Show type"
-msgstr ""
+msgstr "Тип шоу"
 
 #: gaphor/UML/actions/propertypages.ui:37
 msgid "Horizontal"
-msgstr ""
+msgstr "Горизонтальний"
 
 #: gaphor/UML/actions/propertypages.ui:59
 msgid "Join Specification"
-msgstr ""
+msgstr "Специфікація приєднання"
 
 #: gaphor/UML/actions/propertypages.ui:89
 msgid "Swimlanes"
-msgstr ""
+msgstr "Плавальні доріжки"
 
 #: gaphor/UML/actions/propertypages.ui:100
 msgid "Partitions"
-msgstr ""
+msgstr "Перегородки"
 
 #: gaphor/UML/actions/propertypages.ui:130
 msgid "Upper Bound"
-msgstr ""
+msgstr "Верхня межа"
 
 #: gaphor/UML/actions/propertypages.ui:145
 msgid "Ordering"
-msgstr ""
+msgstr "Замовлення"
 
 #: gaphor/UML/actions/propertypages.ui:159
 msgid "Last In First Out (LIFO)"
-msgstr ""
+msgstr "Останній прийшов, перший вийшов (LIFO)"
 
 #: gaphor/UML/actions/propertypages.ui:160
 msgid "First In First Out (FIFO)"
-msgstr ""
+msgstr "Перший прийшов, перший вийшов (FIFO)"
 
 #: gaphor/UML/actions/propertypages.ui:178
 msgid "Show Ordering"
-msgstr ""
+msgstr "Показати замовлення"
 
 #: gaphor/UML/actions/propertypages.ui:209
 #: gaphor/UML/profiles/propertypages.ui:9 gaphor/diagram/propertypages.ui:53
 msgid "Name"
-msgstr ""
+msgstr "Ім'я"
 
 #: gaphor/UML/actions/propertypages.ui:244
 #: gaphor/templates/sysml-example.gaphor gaphor/templates/sysml.gaphor
 msgid "Behavior"
-msgstr ""
+msgstr "Поведінка"
 
 #: gaphor/UML/actions/propertypages.ui:268
 msgid "Value"
-msgstr ""
+msgstr "Значення"
 
 #: gaphor/UML/actions/propertypages.ui:289
 #: gaphor/UML/states/propertypages.ui:90
 msgid "Guard"
-msgstr ""
+msgstr "Охоронець"
 
 #: gaphor/UML/actions/propertypages.ui:312
 #: gaphor/UML/actions/propertypages.ui:368
 msgid "Parameter Nodes"
-msgstr ""
+msgstr "Вузли параметрів"
 
 #: gaphor/UML/actions/propertypages.ui:324
 #: gaphor/UML/classes/propertypages.ui:66
@@ -966,7 +968,7 @@ msgstr ""
 #: gaphor/UML/classes/propertypages.ui:589
 #: gaphor/UML/classes/propertypages.ui:702
 msgid "ⓘ Help"
-msgstr ""
+msgstr "ⓘ Довідка"
 
 #: gaphor/UML/actions/propertypages.ui:341
 msgid ""
@@ -982,6 +984,17 @@ msgid ""
 "items.\n"
 "Use <b>-</b>/<b>=</b> to move items up or down."
 msgstr ""
+"Додавати та редагувати діяльність класу відповідно до синтаксису UML. \n"
+"\n"
+"  • <tt>attr</tt> (ім'я, за замовчуванням загальнодоступний) \n"
+"  • <tt>+ attr: int</tt> (публічний із типом) \n"
+"  • <tt>+ attr: int[0..1]</tt> (публічний, тип і множинність) \n"
+"  • <tt>+ attr: int | bool</tt> (публічний, тип об'єднання) \n"
+"  • <tt># /attr: int # примітка</tt> (захищена, похідна, із зауваженням) \n"
+"\n"
+"Натисніть <b>Enter</b>, щоб редагувати, <b>Backspace</b>/<b>Delete</b>, щоб "
+"видалити елементи. \n"
+"Використовуйте <b>-</b>/<b>=</b>, щоб перемістити елементи вгору або вниз."
 
 #: gaphor/UML/actions/propertypages.ui:391
 msgid "Direction"
