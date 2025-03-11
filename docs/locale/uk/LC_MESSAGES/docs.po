@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gaphor 3.0.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-12-30 14:25-0500\n"
-"PO-Revision-Date: 2025-03-11 16:32+0000\n"
+"PO-Revision-Date: 2025-03-11 21:38+0000\n"
 "Last-Translator: Максим Горпиніч <maksimgorpinic2005a@gmail.com>\n"
 "Language-Team: Ukrainian <https://hosted.weblate.org/projects/gaphor/"
 "docs-gaphor-org/uk/>\n"
@@ -3030,7 +3030,7 @@ msgstr ""
 
 #: ../models/sysml/Allocations.rst:2
 msgid "Allocations"
-msgstr ""
+msgstr "Виділення"
 
 #: ../models/sysml/Allocations.rst:5
 msgid "AllocatedActivityPartition"
@@ -3044,7 +3044,7 @@ msgstr ""
 #: ../style_sheets.md:329
 #: ../style_sheets.md:330
 msgid "Blocks"
-msgstr ""
+msgstr "Блоки"
 
 #: ../models/sysml/Blocks.rst:8
 msgid "Adjunt and Classifier Behavior Properties"
@@ -3117,7 +3117,7 @@ msgstr "Потік предметів"
 #: ../models/sysml/Requirements.rst:2
 #: ../style_sheets.md:331
 msgid "Requirements"
-msgstr ""
+msgstr "Вимоги"
 
 #: ../models/uml.md:1
 msgid "Unified Modeling Language"
@@ -4721,7 +4721,7 @@ msgstr ""
 
 #: ../style_sheets.md:310
 msgid "Profile"
-msgstr ""
+msgstr "Профіль"
 
 #: ../style_sheets.md:310
 msgid "Group"
@@ -4791,7 +4791,7 @@ msgstr ""
 #: ../style_sheets.md:318
 #: ../style_sheets.md:319
 msgid "Actions"
-msgstr ""
+msgstr "Дії"
 
 #: ../style_sheets.md:317
 msgid "Decision/Merge Node"
@@ -4915,7 +4915,7 @@ msgstr "SysML"
 
 #: ../style_sheets.md:329
 msgid "ValueType"
-msgstr ""
+msgstr "ValueType"
 
 #: ../style_sheets.md:329
 #: ../style_sheets.md:330
@@ -4924,11 +4924,11 @@ msgstr ""
 
 #: ../style_sheets.md:330
 msgid "Primitive"
-msgstr ""
+msgstr "Примітивний"
 
 #: ../style_sheets.md:331
 msgid "Derive Requirement"
-msgstr ""
+msgstr "Вивести вимогу"
 
 #: ../style_sheets.md:331
 msgid "``derivedreq``"
