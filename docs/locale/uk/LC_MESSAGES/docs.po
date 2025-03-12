@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gaphor 3.0.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-12-30 14:25-0500\n"
-"PO-Revision-Date: 2025-03-11 21:38+0000\n"
+"PO-Revision-Date: 2025-03-12 15:46+0000\n"
 "Last-Translator: Максим Горпиніч <maksimgorpinic2005a@gmail.com>\n"
 "Language-Team: Ukrainian <https://hosted.weblate.org/projects/gaphor/"
 "docs-gaphor-org/uk/>\n"
@@ -274,54 +274,75 @@ msgstr ""
 #: ../coffee_machine.md:127
 msgid "![Three pillar packages nested under each abstraction level package.](images/coffee-machine-pillars.png)"
 msgstr ""
+"![Три стовпчасті пакети, вкладені під кожен пакет рівня абстракції.](images/"
+"coffee-machine-pillars.png)"
 
 #: ../coffee_machine.md:127
 msgid "Three pillar packages nested under each abstraction levelpackage."
-msgstr ""
+msgstr "Три стовпчасті пакети, вкладені під кожен пакет рівня абстракції."
 
 #: ../coffee_machine.md:130
 msgid "Table of Contents"
-msgstr ""
+msgstr "Зміст"
 
 #: ../coffee_machine_concept.md:5
 msgid "Coffee Machine: Concept Level"
-msgstr ""
+msgstr "Кавоварка: рівень концепції"
 
 #: ../coffee_machine_concept.md:9
 msgid "The concept level defines the problem we are trying to solve. For the espresso machine, we are going to use diagrams at this abstraction level to answer questions like:"
 msgstr ""
+"Рівень концепції визначає проблему, яку ми намагаємося вирішити. Для еспресо-"
+"машини ми збираємося використовувати діаграми на цьому рівні абстракції, щоб "
+"відповісти на такі питання, як:"
 
 #: ../coffee_machine_concept.md:12
 msgid "Who will use the machine and what are their goals while using it?"
 msgstr ""
+"Хто буде використовувати машину і які цілі вони переслідують при її "
+"використанні?"
 
 #: ../coffee_machine_concept.md:13
 msgid "What sequence of events will a person take while operating the machine?"
-msgstr ""
+msgstr "Яка послідовність подій відбудеться у людини під час роботи з машиною?"
 
 #: ../coffee_machine_concept.md:14
 msgid "What are the key features and capabilities required for the machine to perform its intended function?"
 msgstr ""
+"Які ключові характеристики та можливості необхідні машині для виконання "
+"призначеної функції?"
 
 #: ../coffee_machine_concept.md:15
 msgid "What are the design constraints and requirements that must be considered when designing the machine?"
 msgstr ""
+"Які конструктивні обмеження та вимоги необхідно враховувати при проектуванні "
+"машини?"
 
 #: ../coffee_machine_concept.md:16
 msgid "What are the key performance metrics that the machine must meet in order to be considered successful?"
 msgstr ""
+"Яким ключовим показникам продуктивності має відповідати машина, щоб "
+"вважатися успішною?"
 
 #: ../coffee_machine_concept.md:17
 msgid "How will the machine fit into the larger context of the café, and how will it interact with other systems and components within the café?"
 msgstr ""
+"Як машина впишеться в ширший контекст кав’ярні та як вона взаємодіятиме з "
+"іншими системами та компонентами в кав’ярні?"
 
 #: ../coffee_machine_concept.md:19
 msgid "What are the needs of others like those marketing, selling, manufacturing, or buying the machine?"
 msgstr ""
+"Які потреби інших, наприклад тих, хто займається маркетингом, продажем, "
+"виробництвом або купівлею машини?"
 
 #: ../coffee_machine_concept.md:21
 msgid "At this level, the focus is on understanding the big picture of the espresso machine and its role within the café system. The answers to these questions will help guide the design and development of the machine at the logical and technology levels of abstraction."
 msgstr ""
+"На цьому рівні увага зосереджена на розумінні загальної картини еспресо-"
+"машини та її ролі в системі кафе. Відповіді на ці запитання допоможуть "
+"скерувати дизайн і розробку машини на логічному та технологічному рівнях "
+"абстракції."
 
 #: ../coffee_machine_concept.md:26
 msgid "Use Case Diagram"
@@ -330,262 +351,424 @@ msgstr "Діаграма варіантів використання"
 #: ../coffee_machine_concept.md:28
 msgid "First the ants work on the behavior of the system. Expand the Behavior package in the Model Browser and double-click on the diagram named Use Cases."
 msgstr ""
+"Спочатку мурахи працюють над поведінкою системи. Розгорніть пакет Behavior у "
+"браузері моделей і двічі клацніть діаграму з назвою Use Cases."
 
 #: ../coffee_machine_concept.md:31
 msgid "A use case diagram is a type of visual representation used in systems engineering to describe the functional requirements of a system, such as an espresso machine. In the context of the espresso machine, a use case diagram would be used to identify and define the different ways in which the machine will be used by its users, such as the café staff and customers."
 msgstr ""
+"Діаграма варіантів використання — це тип візуального представлення, який "
+"використовується в системній інженерії для опису функціональних вимог "
+"системи, наприклад еспресо-машини. У контексті кавоварки еспресо діаграма "
+"варіантів використання використовувалася б для ідентифікації та визначення "
+"різних способів використання машини її користувачами, наприклад персоналом "
+"кафе та клієнтами."
 
 #: ../coffee_machine_concept.md:37
 msgid "The diagram would typically include different actors or users, such as the barista, the customer, and possibly a manager or maintenance technician. It would also include different \"use cases\" or scenarios, which describe the different actions that the users can take with the machine, such as placing an order, making an espresso, or cleaning the machine."
 msgstr ""
+"Діаграма зазвичай включатиме різних учасників або користувачів, таких як "
+"бариста, клієнт і, можливо, менеджер або технік з обслуговування. Він також "
+"включатиме різні «випадки використання» або сценарії, які описують різні "
+"дії, які користувачі можуть виконувати з машиною, як-от розміщення "
+"замовлення, приготування еспресо або чищення машини."
 
 #: ../coffee_machine_concept.md:43
 msgid "The use case diagram helps to ensure that all the necessary functional requirements of the espresso machine are identified and accounted for, and that the system is designed to meet the needs of its users. It can also be used as a communication tool between the different stakeholders involved in the development of the machine, such as the ants and Cappuccino the cat."
 msgstr ""
+"Діаграма варіантів використання допомагає переконатися, що всі необхідні "
+"функціональні вимоги еспресо-машини визначені та враховані, а також що "
+"система розроблена відповідно до потреб своїх користувачів. Його також можна "
+"використовувати як засіб спілкування між різними зацікавленими сторонами, "
+"залученими до розробки машини, наприклад мурахами та котом Капучіно."
 
 #: ../coffee_machine_concept.md:49
 msgid "The ants need your help updating the diagrams, so let's get started:"
-msgstr ""
+msgstr "Мурахам потрібна ваша допомога в оновленні діаграм, тож почнемо:"
 
 #: ../coffee_machine_concept.md:51
 msgid "Double-click on the actor to pop up the rename dialog, and replace User with Barista."
 msgstr ""
+"Двічі клацніть на акторі, щоб відкрити діалогове вікно перейменування та "
+"замінити User на Barista."
 
 #: ../coffee_machine_concept.md:53
 msgid "Update the name of the oval Use Case from Use Case #1 to Brew espresso."
 msgstr ""
+"Оновіть назву овального варіанту використання з варіанта використання №1 на "
+"варіння еспресо."
 
 #: ../coffee_machine_concept.md:54
 msgid "Update the name of the rectangle Block from Feature to Espresso Machine"
-msgstr ""
+msgstr "Оновіть назву прямокутного блоку з Feature на Espresso Machine"
 
 #: ../coffee_machine_concept.md:56
 msgid "A barista interacts with the espresso machine. The barista is provided a simple interface with a few push buttons."
 msgstr ""
+"Бариста взаємодіє з еспресо-машиною. Бариста має простий інтерфейс із "
+"кількома кнопками."
 
 #: ../coffee_machine_concept.md:59
 msgid "In this particular use case diagram, we have one actor named Barista and one use case called Brew espresso, which is allocated to a block called Espresso Machine. The actor, in this case, is a cat barista who interacts with the system (an espresso machine) to accomplish a particular task, which is brewing espresso."
 msgstr ""
+"На цій конкретній діаграмі варіантів використання ми маємо одного актора під "
+"назвою Barista та один варіант використання під назвою Brew espresso, який "
+"виділено в блок під назвою Espresso Machine. У цьому випадку актором є кіт-"
+"бариста, який взаємодіє з системою (машиною для приготування еспресо), щоб "
+"виконати певне завдання, яким є приготування еспресо."
 
 #: ../coffee_machine_concept.md:65
 msgid "Use case diagram showing an actor named Barista and a use case called Brew espresso"
 msgstr ""
+"Діаграма варіантів використання, на якій показано актора на ім’я Бариста та "
+"варіант використання під назвою «Варити еспресо»"
 
 #: ../coffee_machine_concept.md:70
 msgid "The use case Brew espresso represents a specific functionality or action that the system (the Espresso Machine block) can perform. It describes the steps or interactions necessary to complete the task of brewing espresso, such as selecting the appropriate settings, starting the brewing process, and stopping the process once it's complete."
 msgstr ""
+"Варіант використання Варити еспресо представляє певну функцію або дію, яку "
+"може виконувати система (блок еспресо-машини). Він описує кроки або дії, "
+"необхідні для завершення завдання приготування еспресо, як-от вибір "
+"відповідних налаштувань, запуск процесу заварювання та зупинка процесу після "
+"його завершення."
 
 #: ../coffee_machine_concept.md:76
 msgid "The use case diagram shows the relationship between the actor and the use case. It is represented by an oval shape with the use case name inside and an association with the actor. The association represents the interaction from the actor to the use case."
 msgstr ""
+"Діаграма варіантів використання показує зв’язок між актором і варіантом "
+"використання. Він представлений овальною формою з назвою варіанта "
+"використання всередині та асоціацією з актором. Асоціація представляє "
+"взаємодію від актора до варіанту використання."
 
 #: ../coffee_machine_concept.md:81
 msgid "Domain Diagram"
-msgstr ""
+msgstr "Діаграма домену"
 
 #: ../coffee_machine_concept.md:83
 msgid "A domain diagram is a graphical representation of the concepts, terms, and relationships within a specific domain. In the case of a coffee shop, a domain diagram could represent the key elements and relationships within the coffee shop domain."
 msgstr ""
+"Діаграма предметної області — це графічне представлення понять, термінів і "
+"зв’язків у певній області. У випадку кав’ярні діаграма домену може "
+"представляти ключові елементи та зв’язки в межах домену кав’ярні."
 
 #: ../coffee_machine_concept.md:88
 msgid "The following is a domain diagram that builds upon the context diagram with additional blocks:"
 msgstr ""
+"Нижче наведено діаграму домену, яка будується на діаграмі контексту з "
+"додатковими блоками:"
 
 #: ../coffee_machine_concept.md:90
 msgid "Barista"
-msgstr ""
+msgstr "Бариста"
 
 #: ../coffee_machine_concept.md:91
 msgid "Coffee Machine"
-msgstr ""
+msgstr "Кавоварка"
 
 #: ../coffee_machine_concept.md:92
 msgid "Roasted Coffee"
-msgstr ""
+msgstr "Смажена кава"
 
 #: ../coffee_machine_concept.md:93
 msgid "Coffee Grinder"
-msgstr ""
+msgstr "Кавомолка"
 
 #: ../coffee_machine_concept.md:94
 msgid "Water Supply"
-msgstr ""
+msgstr "Водопостачання"
 
 #: ../coffee_machine_concept.md:95
 msgid "Customer"
-msgstr ""
+msgstr "Замовник"
 
 #: ../coffee_machine_concept.md:97
 msgid "Each block in the Block Definition Diagram (bdd) represents a key concept within the coffee shop domain, and the containment relationship is used between the domain and the blocks to show that they are part of the domain."
 msgstr ""
+"Кожен блок на діаграмі визначення блоку (bdd) представляє ключову концепцію "
+"в межах домену кав’ярні, а зв’язок утримання використовується між доменом і "
+"блоками, щоб показати, що вони є частиною домену."
 
 #: ../coffee_machine_concept.md:101
 msgid "Block Definition Diagram showing hierarchy of blocks in the Coffee Shop domain"
 msgstr ""
+"Діаграма визначення блоку, що показує ієрархію блоків у домені Coffee Shop"
 
 #: ../coffee_machine_concept.md:106
 msgid "The Barista block is responsible for preparing and serving the coffee to the customers. The Roasted Coffee block contains the types of coffee available for the barista to use. The Coffee Grinder block grinds the roasted coffee beans to the desired consistency before brewing. The Water Supply block contains the water source for the coffee machine, and finally the Customer block represents the person who orders and receives the coffee."
 msgstr ""
+"Блок бариста відповідає за приготування та подачу кави клієнтам. Блок «"
+"Смажена кава» містить види кави, доступні для використання бариста. Блок "
+"кавомолки подрібнює смажені кавові зерна до потрібної консистенції перед "
+"приготуванням. Блок водопостачання містить джерело води для кавоварки, і, "
+"нарешті, блок клієнта представляє особу, яка замовляє та отримує каву."
 
 #: ../coffee_machine_concept.md:113
 msgid "The ants need more of your help to rename the Feature Domain diagram and update it so that it matches the one above. Make sure that \"Profile: SysML\" is selected in the top-left corner of the Gaphor user interface. The names of the blocks can be changed directly in the diagram, but the name of the bdd can only be changed in the Model Browser. In the Structure package, right-click on the Blocks with the B symbol and rename them from the context menu. Also remember that you can use [auto-layout](first_model.md#adding-relations) to align and distribute all elements."
 msgstr ""
+"Мурахам потрібна додаткова ваша допомога, щоб перейменувати діаграму домену "
+"ознак і оновити її так, щоб вона відповідала наведеній вище. Переконайтеся, "
+"що у верхньому лівому куті інтерфейсу користувача Gaphor вибрано «Профіль: "
+"SysML». Назви блоків можна змінити безпосередньо на схемі, але ім’я bdd "
+"можна змінити лише в браузері моделей. У пакеті Structure клацніть правою "
+"кнопкою миші на блоках із символом B і перейменуйте їх у контекстному меню. "
+"Також пам’ятайте, що ви можете використовувати [auto-layout](first_model.md"
+"#adding-relations) для вирівнювання та розподілу всіх елементів."
 
 #: ../coffee_machine_concept.md:121
 msgid "The domain diagram provides a high-level view of the coffee shop domain and the key concepts and relationships involved in it. It can be a useful tool for understanding the relationships between different elements of the domain and for communicating these relationships to others."
 msgstr ""
+"Діаграма домену надає уявлення високого рівня про домен кав’ярні та ключові "
+"концепції та зв’язки, які в ньому беруть участь. Це може бути корисним "
+"інструментом для розуміння зв’язків між різними елементами домену та для "
+"передачі цих зв’язків іншим."
 
 #: ../coffee_machine_concept.md:126
 msgid "Context Diagram"
-msgstr ""
+msgstr "Контекстна Діаграма"
 
 #: ../coffee_machine_concept.md:128
 msgid "The context diagram is a high-level view of the system, and it shows its interaction with external entities. In the case of a coffee machine, a context diagram provides a clear and concise representation of the system and its interactions with the external environment."
 msgstr ""
+"Контекстна діаграма — це високорівневе уявлення про систему, яке показує її "
+"взаємодію із зовнішніми об’єктами. У випадку кавомашини контекстна діаграма "
+"забезпечує чітке та стисле уявлення про систему та її взаємодію із зовнішнім "
+"середовищем."
 
 #: ../coffee_machine_concept.md:133
 msgid "The context diagram for a coffee machine shows the coffee machine as the system at the center, with all its external entities surrounding it. The external entities include the barista, the power source, the coffee grinder, and the water source."
 msgstr ""
+"Контекстна діаграма для кавомашини показує кавоварку як систему в центрі з "
+"усіма зовнішніми об’єктами, які її оточують. Зовнішні об’єкти включають "
+"бариста, джерело живлення, кавомолку та джерело води."
 
 #: ../coffee_machine_concept.md:138
 msgid "Block definition diagram showing context of the coffee shop with external entities"
-msgstr ""
+msgstr "Блок-схема визначення контексту кав’ярні з зовнішніми об’єктами"
 
 #: ../coffee_machine_concept.md:143
 msgid "The ants need more of your help to rename the Feature Context diagram and update it so that it matches the one above. To create the specific arrows shown, use an Association entity, then toggle Enable Item Flow to on for that association and fill in the Item Property field."
 msgstr ""
+"Мурахам потрібна додаткова ваша допомога, щоб перейменувати діаграму "
+"контексту ознак і оновити її так, щоб вона відповідала наведеній вище. Щоб "
+"створити показані конкретні стрілки, скористайтеся сутністю асоціації, потім "
+"увімкніть параметр «Увімкнути потік елементів» для цієї асоціації та "
+"заповніть поле «Властивості елемента»."
 
 #: ../coffee_machine_concept.md:148
 msgid "Overall, the context diagram for a coffee machine provides a high-level view of the system and its interactions with external entities. It is a useful tool for understanding the system and its role in the broader environment."
 msgstr ""
+"Загалом, діаграма контексту для кавоварки забезпечує високорівневе уявлення "
+"про систему та її взаємодію із зовнішніми об’єктами. Це корисний інструмент "
+"для розуміння системи та її ролі в ширшому середовищі."
 
 #: ../coffee_machine_concept.md:152
 msgid "Concept Requirements"
-msgstr ""
+msgstr "Вимоги до концепції"
 
 #: ../coffee_machine_concept.md:153
 msgid "Concept requirements are typically collected by analyzing the needs of the stakeholders involved in the development of the coffee machine. This involves identifying and gathering input from various stakeholders, such as the barista, the other engineers working on the product, manufacturing, and service."
 msgstr ""
+"Концептуальні вимоги зазвичай збираються шляхом аналізу потреб зацікавлених "
+"сторін, залучених до розробки кавоварки. Це передбачає визначення та збір "
+"інформації від різних зацікавлених сторін, таких як бариста, інші інженери, "
+"які працюють над продуктом, виробництвом і обслуговуванням."
 
 #: ../coffee_machine_concept.md:158
 msgid "To collect concept requirements, stakeholders may be asked questions about what they want the coffee machine to do, what features it should have, and what problems it should solve. They may also be asked to provide feedback on existing coffee machines to identify areas where improvements could be made."
 msgstr ""
+"Щоб зібрати вимоги до концепції, зацікавленим сторонам можуть поставити "
+"запитання про те, що вони хочуть робити від кавоварки, які функції вона "
+"повинна мати та які проблеми вона повинна вирішувати. Їх також можуть "
+"попросити надати відгук про існуючі кавоварки, щоб визначити області, де "
+"можна було б зробити покращення."
 
 #: ../coffee_machine_concept.md:163
 msgid "Once the needs of the stakeholders have been gathered, they can be analyzed to identify common themes and requirements. This information can then be used to develop the concept requirements for the coffee machine, which serve as a starting point for the design process."
 msgstr ""
+"Після того як потреби зацікавлених сторін зібрано, їх можна проаналізувати "
+"для визначення спільних тем і вимог. Потім ця інформація може бути "
+"використана для розробки вимог до концепції кавоварки, які служать "
+"відправною точкою для процесу проектування."
 
 #: ../coffee_machine_concept.md:168
 msgid "The following are some concept requirements for a coffee machine that addresses a water tank, heat-up time, and HMI button:"
 msgstr ""
+"Нижче наведено деякі концептуальні вимоги до кавоварки, яка стосується "
+"резервуара для води, часу нагрівання та кнопки HMI:"
 
 #: ../coffee_machine_concept.md:171
 msgid "Water Tank: The coffee machine shall have a water tank of sufficient size to make multiple cups of coffee before needing a refill. The water tank should be easy to access and fill."
 msgstr ""
+"Резервуар для води: кавова машина має мати резервуар для води достатнього "
+"розміру, щоб приготувати кілька чашок кави, перш ніж потребуватиме "
+"доповнення. Резервуар для води має бути легким для доступу та наповнення."
 
 #: ../coffee_machine_concept.md:175
 msgid "Heat-up Time: The coffee machine shall have a heat-up time of no more than 10 minutes from the time the user turns on the machine until it's ready to brew coffee."
 msgstr ""
+"Час нагріву: час нагрівання кавомашини не повинен перевищувати 10 хвилин з "
+"моменту, коли користувач увімкнув машину, до моменту, коли вона буде готова "
+"до приготування кави."
 
 #: ../coffee_machine_concept.md:179
 msgid "1 Cup Button: The coffee machine shall have an HMI with a 1 cup brew button to make it easy for the user to select the amount of coffee they want to brew."
 msgstr ""
+"Кнопка «1 чашка»: кавова машина повинна мати HMI з кнопкою заварювання 1 "
+"чашки, щоб користувачеві було легко вибрати кількість кави, яку він хоче "
+"зварити."
 
 #: ../coffee_machine_concept.md:182
 msgid "Concept requirements for water tank, heat-up time, and HMI button"
-msgstr ""
+msgstr "Концептуальні вимоги до резервуара для води, часу нагріву та кнопки HMI"
 
 #: ../coffee_machine_concept.md:187
 msgid "Help the ants update the Concept Requirements diagram with these requirements."
-msgstr ""
+msgstr "Допоможіть мурахам оновити діаграму концептуальних вимог до цих вимог."
 
 #: ../coffee_machine_concept.md:190
 msgid "Throughout the design process, the concept requirements will be refined and expanded upon as more information becomes available and the needs of the stakeholders become clearer. This iterative process ensures that the final design of the coffee machine meets the needs of all stakeholders and delivers a high-quality product."
 msgstr ""
+"Протягом усього процесу проектування вимоги до концепції будуть уточнюватися "
+"та розширюватися в міру того, як стане доступною більше інформації та з’"
+"ясуються потреби зацікавлених сторін. Цей ітеративний процес гарантує, що "
+"остаточний дизайн кавоварки відповідає потребам усіх зацікавлених сторін і "
+"забезпечує високоякісний продукт."
 
 #: ../coffee_machine_logical.md:5
 msgid "Coffee Machine: Logical Level"
-msgstr ""
+msgstr "Кавоварка: логічний рівень"
 
 #: ../coffee_machine_logical.md:9
 msgid "At the logical Level, we'll define a technology-agnostic solution. This is the middle level of abstraction, where the system is described in terms of its structure and behavior. At this level, the focus is on how the system components are organized and how they interact with each other."
 msgstr ""
+"На логічному рівні ми визначимо технологічно агностичне рішення. Це середній "
+"рівень абстракції, де система описується з точки зору її структури та "
+"поведінки. На цьому рівні основна увага приділяється тому, як організовані "
+"компоненти системи та як вони взаємодіють один з одним."
 
 #: ../coffee_machine_logical.md:14
 msgid "Functional Boundary Behavior"
-msgstr ""
+msgstr "Функціональна гранична поведінка"
 
 #: ../coffee_machine_logical.md:16
 msgid "A Functional Boundary Behavior diagram is a type of SysML Activity diagram used to show the interactions between different logical blocks. The swim lanes divide the diagram into different areas, each representing a different functional block or component."
 msgstr ""
+"Діаграма функціональної межі — це тип діаграми активності SysML, який "
+"використовується для відображення взаємодії між різними логічними блоками. "
+"Доріжки для плавання поділяють діаграму на різні області, кожна з яких "
+"представляє окремий функціональний блок або компонент."
 
 #: ../coffee_machine_logical.md:21
 msgid "In this case, the diagram includes swimlanes for the HMI, Controller, Water Pump, Water Heater, Group Head, and Portafilter. The HMI receives the button press from the barista and then sends a command to the Controller. The Controller then commands the Water Heater to start, and once the water has reached the correct temperature, the Controller commands the Pump to start. The water would then be pumped through the Group Head and into the Portafilter, brewing the coffee. The diagram shows the flow of information and actions between the different logical blocks, and help to ensure that the behavior that each block provides is properly connected and integrated into the system."
 msgstr ""
+"У цьому випадку діаграма включає доріжки для HMI, контролера, водяного "
+"насоса, водонагрівача, головки групи та портафільтра. HMI отримує натискання "
+"кнопки від бариста, а потім надсилає команду контролеру. Потім контролер дає "
+"команду на запуск водонагрівача, і коли вода досягне потрібної температури, "
+"контролер дає команду на запуск насоса. Потім вода прокачується через "
+"головку групи в портафільтр, заварюючи каву. Діаграма показує потік "
+"інформації та дії між різними логічними блоками та допомагає переконатися, "
+"що поведінка, яку забезпечує кожен блок, належним чином пов’язана та "
+"інтегрована в систему."
 
 #: ../coffee_machine_logical.md:36
 msgid "From the Logical package, expand the Behavior package in the Model Browser and double-click on the diagram named Functional Boundary Behavior. Additional swimlanes can be added by clicking on the swimlanes and add additional partitions in the Property Editor. The name of the partition before the colon can also be changed in the Property Editor. The names of the Blocks can be changed in the Structure package, as was explained in the [Domain Diagram section](coffee_machine_concept.md#domain-diagram)."
 msgstr ""
+"У пакеті Logical розгорніть пакет Behavior у браузері моделей і двічі "
+"клацніть діаграму з назвою Functional Boundary Behavior. Додаткові доріжки "
+"можна додати, натиснувши на доріжки та додавши додаткові розділи в редакторі "
+"властивостей. Ім’я розділу перед двокрапкою також можна змінити в редакторі "
+"властивостей. Назви блоків можна змінити в пакеті Structure, як пояснювалося "
+"в [розділі діаграми домену](coffee_machine_concept.md#domain-diagram)."
 
 #: ../coffee_machine_logical.md:43
 msgid "Additional Object Flows, pins (pay attention to inputs vs outputs), and actions can be created using the Toolbox. The Parameter Nodes which are attached to the Activity on the very left and right of the diagram are created and renamed created by clicking on the Activity and modifying them in the Property Editor."
 msgstr ""
+"Додаткові потоки об’єктів, закріплення (зверніть увагу на входи та виходи) і "
+"дії можна створити за допомогою панелі інструментів. Вузли параметрів, які "
+"приєднані до активності ліворуч і праворуч від діаграми, створюються та "
+"перейменовуються шляхом натискання на дію та зміни їх у редакторі "
+"властивостей."
 
 #: ../coffee_machine_logical.md:48
 msgid "Logical State Machine"
-msgstr ""
+msgstr "Логічний кінцевий автомат"
 
 #: ../coffee_machine_logical.md:50
 msgid "The logical state machine for the coffee machine is a diagram that shows the different states and transitions that the machine goes through to make coffee. In this case, there are two main states: On and Off."
 msgstr ""
+"Машина логічного стану для кавомашини – це діаграма, яка показує різні стани "
+"та переходи, через які проходить машина для приготування кави. У цьому "
+"випадку є два основних стани: увімкнено та вимкнено."
 
 #: ../coffee_machine_logical.md:54
 msgid "When the coffee machine is turned on, it enters the On state. Inside the On state, there are some substates, starting with the heat water state. The machine will transition from the heat water state to the ready state when the temperature reaches the set point."
 msgstr ""
+"Коли кавова машина вмикається, вона переходить у стан On. Усередині стану "
+"«Ввімкнуто» є кілька підстанів, починаючи зі стану тепла, води. Машина "
+"перейде зі стану нагріву води в стан готовності, коли температура досягне "
+"заданої точки."
 
 #: ../coffee_machine_logical.md:59
 msgid "Once the machine is in the ready state, the user can select one or two cup mode. Depending on the mode selected, the machine will transition to either the one cup mode or two cup mode."
 msgstr ""
+"Коли машина перебуває в стані готовності, користувач може вибрати режим "
+"однієї або двох чашок. Залежно від вибраного режиму машина перейде в режим "
+"однієї або двох чашок."
 
 #: ../coffee_machine_logical.md:63
 msgid "State machine diagram showing logical states including on and off"
 msgstr ""
+"Схема кінцевого автомата, що показує логічні стани, включаючи ввімкнення та "
+"вимкнення"
 
 #: ../coffee_machine_logical.md:68
 msgid "Open the Logical States diagram and add a region to the On state via the Property Editor. Next use the Toolbox to add the additional substates and transition. Guards for the transitions, shown surrounded by brackets, are added by selecting the transition and adding the guard in the Property Editor."
 msgstr ""
+"Відкрийте діаграму логічних станів і за допомогою редактора властивостей "
+"додайте область у стан «Увімкнено». Далі використовуйте Toolbox, щоб додати "
+"додаткові підстани та перехід. Захисники для переходів, показані в дужках, "
+"додаються шляхом вибору переходу та додавання обмежувача в редакторі "
+"властивостей."
 
 #: ../coffee_machine_logical.md:73
 msgid "The logical state machine diagram for the coffee machine shows these states, and the different conditions that trigger the transitions. This helps the ants designing the machine to understand how the coffee machine works and ensure that it functions properly."
 msgstr ""
+"Схема логічного автомата стану для кавомашини показує ці стани та різні "
+"умови, які викликають переходи. Це допомагає мурахам, які розробляють "
+"машину, зрозуміти, як працює кавоварка, і переконатися, що вона працює "
+"належним чином."
 
 #: ../coffee_machine_logical.md:78
 msgid "Logical Structure"
-msgstr ""
+msgstr "Логічна структура"
 
 #: ../coffee_machine_logical.md:80
 msgid "The logical structure shows which logical blocks the espresso machine is made up of. Since we are at the logical level, these blocks should be agnostic to technical choices."
 msgstr ""
+"Логічна структура показує, з яких логічних блоків складається еспресо-"
+"машина. Оскільки ми знаходимося на логічному рівні, ці блоки повинні бути "
+"агностиками щодо технічного вибору."
 
 #: ../coffee_machine_logical.md:84
 msgid "The following logical blocks are part of the espresso machine:"
-msgstr ""
+msgstr "До складу еспресо-машини входять такі логічні блоки:"
 
 #: ../coffee_machine_logical.md:85
 msgid "Water tank"
-msgstr ""
+msgstr "Резервуар для води"
 
 #: ../coffee_machine_logical.md:86
 msgid "Water pump"
-msgstr ""
+msgstr "Водяний насос"
 
 #: ../coffee_machine_logical.md:87
 msgid "Water heater"
-msgstr ""
+msgstr "Водонагрівач"
 
 #: ../coffee_machine_logical.md:88
 msgid "Portafilter"
-msgstr ""
+msgstr "Портафільтр"
 
 #: ../coffee_machine_logical.md:89
 msgid "Controller"
@@ -593,842 +776,1232 @@ msgstr "Контролер"
 
 #: ../coffee_machine_logical.md:90
 msgid "Group head"
-msgstr ""
+msgstr "Керівник групи"
 
 #: ../coffee_machine_logical.md:91
 msgid "HMI"
-msgstr ""
+msgstr "HMI"
 
 #: ../coffee_machine_logical.md:93
 msgid "Each block represents a key portion of the espresso machine, and the containment relationship is used between the espresso machine and its logical parts."
 msgstr ""
+"Кожен блок представляє ключову частину еспресо-машини, а зв’язок утримання "
+"використовується між еспресо-машиною та її логічними частинами."
 
 #: ../coffee_machine_logical.md:97
 msgid "Block definition diagram showing the coffee machine and its logical parts"
-msgstr ""
+msgstr "Блок-схема визначення кавоварки та її логічних частин"
 
 #: ../coffee_machine_logical.md:102
 msgid "Water tank: The water tank is a container that stores the water used in the espresso machine. It typically has a specific capacity and is designed for easy filling and cleaning. The water tank supplies water to the water pump when needed."
 msgstr ""
+"Резервуар для води: резервуар для води – це ємність, у якій зберігається "
+"вода, яка використовується в еспресо-машині. Зазвичай він має певну "
+"місткість і призначений для легкого наповнення та очищення. Резервуар для "
+"води подає воду до водяного насоса, коли це необхідно."
 
 #: ../coffee_machine_logical.md:107
 msgid "Water pump: The water pump is responsible for drawing water from the water tank and creating the necessary pressure to force the water through the coffee grounds in the portafilter. It plays a crucial role in the espresso extraction process by ensuring a consistent flow of water."
 msgstr ""
+"Водяний насос: водяний насос відповідає за забір води з резервуара для води "
+"та створення необхідного тиску, щоб проштовхнути воду через кавову гущу в "
+"портафільтрі. Він відіграє вирішальну роль у процесі екстракції еспресо, "
+"забезпечуючи постійний потік води."
 
 #: ../coffee_machine_logical.md:112
 msgid "Water heater: The water heater, also known as the boiler or heating element, is responsible for heating the water to the optimal temperature for brewing espresso. It maintains the water at the desired temperature to ensure proper extraction and flavor."
 msgstr ""
+"Водонагрівач: водонагрівач, також відомий як бойлер або нагрівальний "
+"елемент, відповідає за нагрівання води до оптимальної температури для "
+"приготування еспресо. Він підтримує бажану температуру води, щоб забезпечити "
+"правильний віджим і смак."
 
 #: ../coffee_machine_logical.md:117
 msgid "Portafilter: The portafilter is a detachable handle-like device that holds the coffee grounds. It is attached to the espresso machine and acts as a filter holder. The water from the pump is forced through the coffee grounds in the portafilter to extract the flavors and create the espresso."
 msgstr ""
+"Портафільтр: портафільтр – це знімний пристрій, схожий на ручку, який "
+"утримує кавову гущу. Він кріпиться до еспресо-машини і виконує роль тримача "
+"фільтра. Вода з насоса проходить через кавову гущу в портафільтрі, щоб "
+"отримати аромати та створити еспресо."
 
 #: ../coffee_machine_logical.md:122
 msgid "Controller: The controller, often a microcontroller or a dedicated circuit board, is the brain of the espresso machine. It manages and coordinates the operation of various components, such as the water pump, water heater, and HMI, to ensure the correct brewing process. It monitors and controls temperature, pressure, and other parameters to maintain consistency and deliver the desired results."
 msgstr ""
+"Контролер: Контролер, часто мікроконтролер або спеціальна друкована плата, є "
+"мозком кавоварки еспресо. Він керує та координує роботу різних компонентів, "
+"таких як водяний насос, водонагрівач і HMI, щоб забезпечити правильний "
+"процес пивоваріння. Він відстежує та контролює температуру, тиск та інші "
+"параметри для підтримки стабільності та досягнення бажаних результатів."
 
 #: ../coffee_machine_logical.md:129
 msgid "Group head: The group head is a part of the espresso machine where the portafilter attaches. It provides a secure connection between the portafilter and the machine, allowing the brewed espresso to flow out of the portafilter and into the cup. The group head also helps to maintain proper temperature and pressure during the brewing process."
 msgstr ""
+"Групова головка: групова головка є частиною еспресо-машини, до якої "
+"кріпиться портафільтр. Він забезпечує надійне з’єднання між портафільтром і "
+"машиною, дозволяючи звареному еспресо витікати з портафільтра в чашку. "
+"Голова групи також допомагає підтримувати належну температуру та тиск під "
+"час процесу пивоваріння."
 
 #: ../coffee_machine_logical.md:135
 msgid "HMI (Human-Machine Interface): The HMI is the user interface of the espresso machine. It provides a means for the user to interact with the machine, usually through buttons, switches, or a touchscreen. The HMI allows the user to select different brewing options, adjust settings, and monitor the status of the machine. It provides feedback and displays information related to the brewing process, such as brewing time, temperature, and cup size selection."
 msgstr ""
+"HMI (людина-машинний інтерфейс): HMI — це інтерфейс користувача кавоварки "
+"для приготування еспресо. Він надає користувачеві засоби для взаємодії з "
+"машиною, зазвичай за допомогою кнопок, перемикачів або сенсорного екрана. "
+"HMI дозволяє користувачеві вибирати різні параметри заварювання, регулювати "
+"параметри та контролювати стан машини. Він забезпечує зворотній зв’язок і "
+"відображає інформацію, пов’язану з процесом заварювання, наприклад час "
+"заварювання, температуру та вибір розміру чашки."
 
 #: ../coffee_machine_logical.md:142
 msgid "We didn't make any technical choices at this time, for example we didn't specify which type of controller, the pump capacity, or the model of the group head. These details will be defined once we get to the Technology level."
 msgstr ""
+"Наразі ми не робили жодного технічного вибору, наприклад, ми не вказали тип "
+"контролера, потужність насоса чи модель головки групи. Ці деталі будуть "
+"визначені, коли ми перейдемо до рівня технологій."
 
 #: ../coffee_machine_logical.md:146
 msgid "The ants need more of your help to update the Logical Structure diagram so that it matches the one above."
 msgstr ""
+"Мурахам потрібна більше вашої допомоги, щоб оновити схему логічної "
+"структури, щоб вона відповідала наведеній вище."
 
 #: ../coffee_machine_logical.md:149
 msgid "Logical Boundary"
-msgstr ""
+msgstr "Логічна межа"
 
 #: ../coffee_machine_logical.md:151
 msgid "The Logical Boundary is a type of Internal Block Diagram that represents the internal structure of a system, illustrating the relationships between its internal components or blocks. It helps to visualize how these blocks interact and exchange information within the system. The term boundary used here means a clear box view inside the espresso machine at the logical boundary. It uses part properties of the blocks that were in the Logical Structure diagram above."
 msgstr ""
+"Логічна границя — це тип внутрішньої блок-схеми, яка представляє внутрішню "
+"структуру системи, ілюструючи зв’язки між її внутрішніми компонентами або "
+"блоками. Це допомагає візуалізувати, як ці блоки взаємодіють і обмінюються "
+"інформацією в системі. Термін «межа», який використовується тут, означає "
+"чіткий вигляд коробки всередині еспресо-машини на логічній межі. Він "
+"використовує властивості частин блоків, які були на схемі логічної структури "
+"вище."
 
 #: ../coffee_machine_logical.md:158
 msgid "Internal block diagram showing the clear box view of the espresso machine"
-msgstr ""
+msgstr "Внутрішня блок-схема, що демонструє зовнішній вигляд еспресо-машини"
 
 #: ../coffee_machine_logical.md:163
 msgid "The interactions between the part properties inside the espresso machine are shown as ItemFlows on the Connectors."
 msgstr ""
+"Взаємодія між властивостями частин всередині еспресо-машини показано як "
+"ItemFlows на конекторах."
 
 #: ../coffee_machine_logical.md:166
 msgid "Water: Represents the flow of water from the water tank to the water pump."
-msgstr ""
+msgstr "Вода: відображає потік води з резервуара для води до водяного насоса."
 
 #: ../coffee_machine_logical.md:167
 msgid "On/Off: Represents the command or signal to turn the espresso machine on or off."
 msgstr ""
+"Увімк./Вимк.: представляє команду або сигнал для ввімкнення або вимкнення "
+"еспресо-машини."
 
 #: ../coffee_machine_logical.md:168
 msgid "Volume Adjustment: Represents the user-selected volume adjustment for the coffee output."
 msgstr ""
+"Volume Adjustment (Регулювання гучності): являє собою вибране користувачем "
+"регулювання гучності для випуску кави."
 
 #: ../coffee_machine_logical.md:169
 msgid "Pressurized Water: Represents the water flow under pressure for extracting coffee."
-msgstr ""
+msgstr "Вода під тиском: являє собою потік води під тиском для видобутку кави."
 
 #: ../coffee_machine_logical.md:170
 msgid "Heat Command: Represents the command or signal to activate the water heater and initiate the heating process."
 msgstr ""
+"Команда нагріву: представляє команду або сигнал для активації водонагрівача "
+"та початку процесу нагрівання."
 
 #: ../coffee_machine_logical.md:171
 msgid "Temperature: Represents the feedback signal indicating the current temperature of the water."
 msgstr ""
+"Температура: являє собою сигнал зворотного зв'язку, що вказує на поточну "
+"температуру води."
 
 #: ../coffee_machine_logical.md:172
 msgid "Hot Pressurized Water: Represents the pressurized hot water for brewing coffee."
-msgstr ""
+msgstr "Гаряча вода під тиском: гаряча вода під тиском для заварювання кави."
 
 #: ../coffee_machine_logical.md:173
 msgid "Coffee Water Mixture: Represents the mixture of hot water and coffee grounds during the brewing process."
 msgstr ""
+"Суміш кави з водою: являє собою суміш гарячої води та кавової гущі під час "
+"процесу заварювання."
 
 #: ../coffee_machine_logical.md:177
 msgid "Notice that we aren't actually showing anything entering or leaving the boundary of the espresso machine, like the input from the barista or the resulting coffee. Gaphor doesn't current support adding ports to the boundary of an internal block diagram, but hopefully we'll be able to add support soon!"
 msgstr ""
+"Зверніть увагу, що ми не показуємо нічого, що входить або виходить за межі "
+"еспресо-машини, наприклад, вхідні дані від бариста або отриману каву. Наразі "
+"Gaphor не підтримує додавання портів до межі внутрішньої блок-схеми, але ми "
+"сподіваємося, що скоро зможемо додати підтримку!"
 
 #: ../coffee_machine_logical.md:183
 msgid "These item flows capture the essential interactions and exchanges within the espresso machine. They represent the flow of water, control signals, temperature feedback, and the resulting coffee water mixture. The item flows illustrate the sequence and connections between the various components, allowing for a better understanding of how the machine functions as a whole."
 msgstr ""
+"Ці потоки елементів відображають основні взаємодії та обміни всередині "
+"еспресо-машини. Вони представляють потік води, сигнали керування, зворотний "
+"зв'язок по температурі та отриману кавово-водяну суміш. Потоки елементів "
+"ілюструють послідовність і зв'язки між різними компонентами, що дає змогу "
+"краще зрозуміти, як функціонує кавомашина в цілому."
 
 #: ../coffee_machine_logical.md:189
 msgid "Once again, help the ants by updating the Logical Boundary diagram so that it matches the one above."
 msgstr ""
+"Знову допоможіть мурахам, оновивши схему логічної межі так, щоб вона "
+"відповідала наведеній вище."
 
 #: ../coffee_machine_logical.md:192
 msgid "Logical Requirements"
-msgstr ""
+msgstr "Логічні вимоги"
 
 #: ../coffee_machine_logical.md:193
 msgid "Logical requirements refer to the high-level specifications and functionalities that describe what a system or product should accomplish without specifying how it will be implemented. These requirements focus on the desired outcomes and behavior of the system rather than the specific technical details."
 msgstr ""
+"Логічні вимоги - це високорівневі специфікації та функціональні можливості, "
+"які описують, що повинна виконувати система або продукт, не вказуючи, як це "
+"буде реалізовано. Ці вимоги зосереджені на бажаних результатах і поведінці "
+"системи, а не на конкретних технічних деталях."
 
 #: ../coffee_machine_logical.md:198
 msgid "We have also already defined the behavior and the structure of the espresso machine at the logical level, so the main task now is to translate that information in to words as requirement statements."
 msgstr ""
+"Ми також уже визначили поведінку та структуру еспресо-машини на логічному "
+"рівні, тому зараз головним завданням є переклад цієї інформації словами у "
+"вигляді вимог."
 
 #: ../coffee_machine_logical.md:203
 msgid "If you need help writing good requirements, the [INCOSE Guide to Needs and Requirements](https://portal.incose.org/commerce/store?productId=INCOSE-GUIDENEEDSREQ) and the [Easy Approach to Requirements Syntax](https://alistairmavin.com/ears/) are recommended resources."
 msgstr ""
+"Якщо вам потрібна допомога у написанні хороших вимог, рекомендуємо "
+"скористатися [INCOSE Guide to Needs and Requirements] (https://"
+"portal.incose.org/commerce/store?productId=INCOSE-GUIDENEEDSREQ) та "
+"[Easy Approach to Requirements Syntax] (https://alistairmavin.com/ears/)."
 
 #: ../coffee_machine_logical.md:209
 msgid "We use the Derive Requirement relation from the Logical Requirement to the Concept Requirements that we previously created. The direction of this relationship is in the derived from direction, which might be opposite to what you are used to where the higher level requirement points to the lower level requirement."
 msgstr ""
+"Ми використовуємо зв'язок \"Похідна вимога\" від Логічної вимоги до "
+"Концептуальної вимоги, який ми створили раніше. Напрямок цього зв'язку є "
+"похідним від напрямку, який може бути протилежним тому, до якого ви звикли, "
+"коли вимога вищого рівня вказує на вимогу нижчого рівня."
 
 #: ../coffee_machine_logical.md:215
 msgid "Here we derive two requirements:"
-msgstr ""
+msgstr "Тут ми виводимо дві вимоги:"
 
 #: ../coffee_machine_logical.md:217
 msgid "Controller commands heat up"
-msgstr ""
+msgstr "Команди контролера нагріваються"
 
 #: ../coffee_machine_logical.md:218
 msgid "900kPa of water pressure"
-msgstr ""
+msgstr "Тиск води 900 кПа"
 
 #: ../coffee_machine_logical.md:220
 msgid "Logical requirements for the controller command and the water pressure derived from concept requirements"
 msgstr ""
+"Логічні вимоги до команд контролера та тиску води випливають із вимог "
+"концепції"
 
 #: ../coffee_machine_logical.md:225
 msgid "Update the Logical Requirements diagram with these requirements. If you want, you can also develop additional requirements for all the logical behavior and structure that we specified in the other diagrams."
 msgstr ""
+"Оновіть діаграму \"Логічні вимоги\" цими вимогами. Якщо ви хочете, ви також "
+"можете розробити додаткові вимоги для всієї логічної поведінки та структури, "
+"які ми визначили на інших діаграмах."
 
 #: ../coffee_machine_wrapup.md:1
 msgid "Coffee Machine: Summary"
-msgstr ""
+msgstr "Кавоварка: Резюме"
 
 #: ../coffee_machine_wrapup.md:3
 msgid "The Technology Level design uses a very similar approach as the Logical Level. Work on the behavior, structure, and then the requirements. At this level, you will now specify all the design details for how this specific espresso machine will work. We'll leave this exercise up to you to do, and we would be glad to have contributions of this design back in to this tutorial if you are interested in getting involved in Gaphor."
 msgstr ""
+"На технологічному рівні проектування використовується дуже схожий підхід, як "
+"і на логічному рівні. Попрацюйте над поведінкою, структурою, а потім над "
+"вимогами. На цьому рівні ви визначаєте всі деталі проектування того, як буде "
+"працювати ця конкретна еспресо-кавоварка. Ми залишаємо цю вправу на ваше "
+"розсуд, і ми будемо раді, якщо ви повернетеся до цього підручника, якщо ви "
+"зацікавлені в участі в Gaphor."
 
 #: ../coffee_machine_wrapup.md:10
 msgid "As they worked, the ants encountered numerous challenges. They had to ensure that the machine was safe, efficient, and easy to use, all while meeting the unique needs of their feline client. But with their deep understanding of systems engineering and their commitment to key principles and concepts, they were able to overcome these challenges and design an exceptional espresso machine."
 msgstr ""
+"Під час роботи мурахи зіткнулися з численними проблемами. Вони повинні були "
+"забезпечити безпеку, ефективність і простоту використання кавомашини, і при "
+"цьому задовольнити унікальні потреби їхнього котячого клієнта. Але завдяки "
+"глибокому розумінню системної інженерії та відданості ключовим принципам і "
+"концепціям, вони змогли подолати ці виклики і розробити виняткову "
+"еспресо-машину."
 
 #: ../coffee_machine_wrapup.md:17
 msgid "In the end, Cappuccino was thrilled with the machine, which worked flawlessly and was a big hit with his customers. He was so impressed with the ants' work that he offered them a long-term contract to design all of his café's systems. The ants were proud of their success, knowing that it was all thanks to their expertise and deep understanding of systems engineering principles. They had proven that, with the right tools and approach, anything is possible."
 msgstr ""
+"Зрештою, Капучіно був у захваті від машини, яка працювала бездоганно і "
+"користувалася великим успіхом у його клієнтів. Він був настільки вражений "
+"роботою мурах, що запропонував їм довгостроковий контракт на проектування "
+"всіх систем свого кафе. Мурахи пишалися своїм успіхом, знаючи, що все це "
+"завдяки їхньому досвіду і глибокому розумінню принципів системної інженерії. "
+"Вони довели, що з правильними інструментами та підходом можливо все."
 
 #: ../connect.md:1
 msgid "Connection Protocol"
-msgstr ""
+msgstr "Протокол підключення"
 
 #: ../connect.md:3
 msgid "In Gaphor, if a connection is made on a diagram between an element and a relationship, the connection is also made at semantic level (the model). From a GUI point of view, a button release event is what kicks of the decision whether the connection is allowed."
 msgstr ""
+"У Gaphor, якщо зв'язок встановлюється на діаграмі між елементом і зв'язком, "
+"зв'язок також встановлюється на семантичному рівні (модель). З точки зору "
+"графічного інтерфейсу, подія відпускання кнопки - це те, що дає старт "
+"рішенню про те, чи дозволено з'єднання."
 
 #: ../connect.md:12
 msgid "The check if a connection is allowed should also check if it is valid to create a relation to/from the same element (like associations, but not generalizations)."
 msgstr ""
+"Перевірка дозволеного з’єднання також повинна перевіряти, чи можна створити "
+"зв’язок до/з того самого елемента (як асоціації, але не узагальнення)."
 
 #: ../container.md:1
 msgid "Gaphor in a Container"
-msgstr ""
+msgstr "Gaphor в контейнері"
 
 #: ../container.md:3
 msgid "Instead of setting up a development environment locally, the easiest way to contribute to the project is using GitHub Codespaces."
 msgstr ""
+"Замість того, щоб налаштовувати середовище розробки локально, найпростіший "
+"спосіб внести свій внесок у проект — використовувати GitHub Codespaces."
 
 #: ../container.md:6
 msgid "GitHub Codespaces"
-msgstr ""
+msgstr "Кодові простори GitHub"
 
 #: ../container.md:8
 msgid "Follow these steps to open Gaphor in a Codespace:"
-msgstr ""
+msgstr "Щоб відкрити Gaphor у кодовому просторі, виконайте такі дії:"
 
 #: ../container.md:9
 msgid "Navigate to https://github.com/gaphor/gaphor"
-msgstr ""
+msgstr "Перейдіть до https://github.com/gaphor/gaphor"
 
 #: ../container.md:10
 msgid "Click the Code drop-down menu and select the **Open with Codespaces** option."
 msgstr ""
+"Натисніть спадне меню «Код» і виберіть параметр **Відкрити за допомогою "
+"кодових просторів**."
 
 #: ../container.md:11
 msgid "Select **+ New codespace** at the bottom on the pane."
-msgstr ""
+msgstr "Виберіть **+ Новий кодовий простір** у нижній частині панелі."
 
 #: ../container.md:13
 msgid "For more info, check out the [GitHub documentation](https://docs.github.com/en/free-pro-team@latest/github/developing-online-with-codespaces/creating-a-codespace#creating-a-codespace)."
 msgstr ""
+"Щоб дізнатися більше, перегляньте [документацію GitHub](https://"
+"docs.github.com/en/free-pro-team@latest/github/"
+"developing-online-with-codespaces/creating-a-codespace#creating-a-codespace)."
 
 #: ../container.md:15
 msgid "Remote access to Gaphor graphic window with Codespaces"
-msgstr ""
+msgstr "Віддалений доступ до графічного вікна Gaphor за допомогою Codespaces"
 
 #: ../container.md:17
 msgid "When using Codespaces, chances are that you also want to interact with the graphical window of Gaphor."
 msgstr ""
+"Використовуючи Codespaces, є ймовірність, що ви також захочете взаємодіяти з "
+"графічним вікном Gaphor."
 
 #: ../container.md:20
 msgid "This is facilitated in Gaphor by use of container feature called [desktop-lite](https://github.com/devcontainers/features/tree/main/src/desktop-lite). This feature is activated by default in the Gaphor's [devcontainer.json](https://github.com/gaphor/gaphor/blob/main/.devcontainer/devcontainer.json) file."
 msgstr ""
+"У Gaphor це полегшено завдяки використанню функції контейнера під назвою "
+"[desktop-lite](https://github.com/devcontainers/features/tree/main/src/"
+"desktop-lite). За замовчуванням ця можливість активована у файлі "
+"[devcontainer.json](https://github.com/gaphor/gaphor/blob/main/.devcontainer/"
+"devcontainer.json) Gaphor."
 
 #: ../container.md:22
 msgid "Notice the webPort/vncPort and password values. These are used in subsequent steps."
 msgstr ""
+"Зверніть увагу на значення webPort/vncPort і пароль. Вони використовуються "
+"на наступних етапах."
 
 #: ../container.md:33
 msgid "There are two options:"
-msgstr ""
+msgstr "Є два варіанти:"
 
 #: ../container.md:34
 msgid "Using a local VNC viewer"
-msgstr ""
+msgstr "Використання локального засобу перегляду VNC"
 
 #: ../container.md:35
 msgid "Download and install VNC viewer of your choice (e.g. realvnc)"
 msgstr ""
+"Завантажте та встановіть програму перегляду VNC на ваш вибір (наприклад, "
+"realvnc)"
 
 #: ../container.md:36
 msgid "Specify remote hostname as *localhost* and port as *5901* and connect VNC. The port number should be same as specified in attribute *vncPort*"
 msgstr ""
+"Вкажіть ім’я віддаленого хоста як *localhost* і порт як *5901* і підключіть "
+"VNC. Номер порту має бути таким же, як указано в атрибуті *vncPort*"
 
 #: ../container.md:37
 msgid "Upon [debugging/running](https://github.com/gaphor/gaphor/blob/main/.devcontainer/devcontainer.json) Gaphor the familiar Graphic window should be displayed in VNC view"
 msgstr ""
+"Після [налагодження/запуску](https://github.com/gaphor/gaphor/blob/main/"
+".devcontainer/devcontainer.json) Gaphor має відображатися знайоме графічне "
+"вікно у поданні VNC"
 
 #: ../container.md:39
 msgid "Using noVNC viewer on the Browser"
-msgstr ""
+msgstr "Використання програми перегляду noVNC у браузері"
 
 #: ../container.md:40
 msgid "This is based on [noVNC](https://novnc.com/info.html) application"
-msgstr ""
+msgstr "Це базується на програмі [noVNC](https://novnc.com/info.html)"
 
 #: ../container.md:41
 msgid "Open the browser on your local machine and give address as *http://127.0.0.1:6080/*. The port number should be same as specified in attribute *webPort*"
 msgstr ""
+"Відкрийте браузер на локальному комп’ютері та введіть адресу "
+"*http://127.0.0.1:6080/*. Номер порту має бути таким же, як указано в "
+"атрибуті *webPort*"
 
 #: ../container.md:42
 msgid "A noVNC window will open, click on Connect and provide password as *vscode*. The password should be same as specified in attribute *password*"
 msgstr ""
+"Відкриється вікно noVNC, натисніть «Підключитися» та введіть пароль як "
+"*vscode*. Пароль має бути таким же, як указано в атрибуті *password*"
 
 #: ../container.md:43
 msgid "Upon [debugging/running](https://github.com/gaphor/gaphor/blob/main/.devcontainer/devcontainer.json) Gaphor the familiar Graphic window should be displayed in noVNC view on Browser"
 msgstr ""
+"Після [налагодження/запуску](https://github.com/gaphor/gaphor/blob/main/"
+".devcontainer/devcontainer.json) Gaphor знайоме графічне вікно має "
+"відображатися у перегляді noVNC у браузері"
 
 #: ../contribute.md:1
 msgid "Contribute to Gaphor"
-msgstr ""
+msgstr "Зробити внесок у Gaphor"
 
 #: ../contribute.md:3
 msgid "Would you like to contribute to the development of Gaphor? If you think this is only something for experienced developers, please reconsider, there are plenty of ways to contribute to Gaphor, no matter your level of experience or skill set."
 msgstr ""
+"Бажаєте зробити свій внесок у розвиток Gaphor? Якщо ви думаєте, що це тільки "
+"для досвідчених розробників, будь ласка, перегляньте свою думку, є багато "
+"способів зробити свій внесок у Gaphor, незалежно від вашого рівня досвіду "
+"або набору навичок."
 
 #: ../contribute.md:7
 msgid "You can help to support Gaphor in your language. You can do that on [Weblate](https://hosted.weblate.org/engage/gaphor/), directly from your browser. This service will periodically create [Pull Requests](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests) for Gaphor with updated translations."
 msgstr ""
+"Ви можете допомогти підтримати Gaphor своєю мовою. Ви можете зробити це на "
+"[Weblate](https://hosted.weblate.org/engage/gaphor/), безпосередньо з вашого "
+"браузера. Цей сервіс періодично створює [Pull Requests](https://"
+"docs.github.com/en/pull-requests/collaborating-with-pull-requests/"
+"proposing-changes-to-your-work-with-pull-requests/about-pull-requests) для "
+"Gaphor з оновленими перекладами."
 
 #: ../contribute.md:13
 msgid "It is also very nice if you create your own content around Gaphor. Think about blog posts, videos, and conference talks. When you created something, please drop us a line, so we can add it to the [Tutorials](https://gaphor.org/tutorials) page on the website."
 msgstr ""
+"Також дуже добре, якщо ви створюєте власний контент на основі Gaphor. "
+"Подумайте про публікації в блогах, відео та доповіді на конференціях. Коли "
+"ви щось створили, будь ласка, напишіть нам, щоб ми могли додати це на "
+"сторінку [Tutorials] (https://gaphor.org/tutorials) на сайті."
 
 #: ../contribute.md:17
 msgid "If you want to contribute code, a good starting point is this site. It contains a lot of information on how Gaphor is build, especially in the *Concepts* section."
 msgstr ""
+"Якщо ви хочете додати код, гарною відправною точкою є цей сайт. Він містить "
+"багато інформації про збірку Gaphor, особливо в розділі *Концепції*."
 
 #: ../contribute.md:20
 msgid "Some issues are labeled with *first-timers-only*. Those issues are a good starting point to make yourself familiar with the code and code style."
 msgstr ""
+"Деякі проблеми позначені *лише для перших осіб*. Ці проблеми є хорошою "
+"відправною точкою для ознайомлення з кодом і стилем коду."
 
 #: ../contribute.md:23
 msgid "It's always a good idea to create an [issue](https://github.com/gaphor/gaphor/issues) or start a [discussion](https://github.com/gaphor/gaphor/discussions) if you want to build something for which there is no issue yet. That way you can assure that your idea is implemented in a way consistent with the application, and it increases the chance your work will be accepted."
 msgstr ""
+"Завжди корисно створити [проблему] (https://github.com/gaphor/gaphor/issues) "
+"або розпочати [обговорення] (https://github.com/gaphor/gaphor/discussions), "
+"якщо ви хочете створити щось, для чого ще не існує проблеми. Таким чином ви "
+"можете бути впевнені, що ваша ідея буде реалізована відповідно до заявки, і "
+"це збільшує шанси на те, що ваша робота буде прийнята."
 
 #: ../contribute.md:28
 msgid "You'll need to [fork](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo) Gaphor and set up a [development environment](linux.md) ([macOS](macos.md), [Windows](windows.md))."
 msgstr ""
+"Вам потрібно [форкнути](https://docs.github.com/en/pull-requests/"
+"collaborating-with-pull-requests/working-with-forks/fork-a-repo) Gaphor і "
+"встановити [середовище розробки](linux.md) ([macOS](macos.md), [Windows]"
+"(windows.md))."
 
 #: ../contribute.md:33
 msgid "In our pipeline we do a couple of quality checks. We strongly recommend that you [install pre-commit](https://pre-commit.com/) and its git hook scripts, so your PR does build on our build environment."
 msgstr ""
+"На нашому етапі ми проводимо кілька перевірок якості. Ми наполегливо "
+"рекомендуємо вам [установити pre-commit](https://pre-commit.com/) і його "
+"сценарії git hook, щоб ваш PR базувався на нашому середовищі збірки."
 
 #: ../design_principles.md:1
 msgid "Design Principles"
-msgstr ""
+msgstr "Принципи проектування"
 
 #: ../design_principles.md:3
 msgid "Gaphor has been around for quite a few years. In those years we (the Gaphor developers) learned a few things on how to build it. Gaphor tries to be easily accessible for novice users as well as a useful tool for more experienced users."
 msgstr ""
+"Gaphor існує вже досить багато років. За ці роки ми (розробники Gaphor) "
+"дізналися кілька речей про те, як його створювати. Gaphor намагається бути "
+"легко доступним для користувачів-початківців, а також корисним інструментом "
+"для більш досвідчених користувачів."
 
 #: ../design_principles.md:7
 msgid "Gaphor is not your average editor. It's a modeling environment. This implies there is a language underpinning the models. Languages adhere to rules and Gaphor tries to follow those rules."
 msgstr ""
+"Gaphor — не звичайний редактор. Це модельне середовище. Це означає, що існує "
+"мова, що лежить в основі моделей. Мови дотримуються правил, і Gaphor "
+"намагається дотримуватися цих правил."
 
 #: ../design_principles.md:11
 msgid "Usability is very important. When you're new to Gaphor, it should be easy to find your way around. Minimal knowledge of UML should at least allow you to create a class diagram."
 msgstr ""
+"Зручність використання дуже важлива. Якщо ви новачок у Gaphor, вам буде "
+"легко зорієнтуватися. Мінімальні знання UML повинні принаймні дозволити вам "
+"створити діаграму класів."
 
 #: ../design_principles.md:19
 msgid "Guidance"
-msgstr ""
+msgstr "Керівництво"
 
 #: ../design_principles.md:21
 msgid "To help users, Gaphor should provide guidance where it can."
 msgstr ""
+"Щоб допомогти користувачам, Gaphor має надавати вказівки, де це можливо."
 
 #: ../design_principles.md:23
 msgid "Help with relationships"
-msgstr ""
+msgstr "Допомога у відносинах"
 
 #: ../design_principles.md:25
 msgid "The diagram has a feature that it grays out all elements a relationship can not connect to. This helps you to decide where a relation can connect to. You can still mix different elements, but we try to make it as simple as possible to make consistent models."
 msgstr ""
+"Діаграма має особливість: вона зафарбовує сірим кольором всі елементи, з "
+"якими зв'язок не може з'єднатися. Це допомагає вам вирішити, з чим може "
+"з'єднуватися зв'язок. Ви все ще можете змішувати різні елементи, але ми "
+"намагаємося зробити це якомога простіше, щоб створювати узгоджені моделі."
 
 #: ../design_principles.md:30
 msgid "Keep the model in sync"
-msgstr ""
+msgstr "Тримайте модель в синхронізації"
 
 #: ../design_principles.md:32
 msgid "An important part of modeling is to design a system in abstractions and be able to explain those to others. As systems become more complicated, it's important to have the design (model) layed out in diagrams."
 msgstr ""
+"Важливою частиною моделювання є розробка системи в абстракціях і вміння "
+"пояснювати їх іншим. Оскільки системи стають складнішими, важливо, щоб "
+"дизайн (модель) був викладений у вигляді діаграм."
 
 #: ../design_principles.md:36
 msgid "Gaphor goes through great lengths to keep the model in sync with the diagrams. In doing so, unused elements can be automatically removed from the model if they're no longer shown in any diagram."
 msgstr ""
+"Gaphor докладає чимало зусиль, щоб підтримувати синхронізацію моделі з "
+"діаграмами. При цьому невикористовувані елементи можуть бути автоматично "
+"видалені з моделі, якщо вони більше не відображаються на жодній діаграмі."
 
 #: ../design_principles.md:40
 msgid "Out of your way"
-msgstr ""
+msgstr "З твоєї дороги"
 
 #: ../design_principles.md:42
 msgid "When modeling, you should be busy with your problem or solution domain, not with the tool. Gaphor tries to stay out of your way as much as possible. It does not try to nag you with error messages, because the model is not \"correct\"."
 msgstr ""
+"Під час моделювання ви повинні бути зайняті своєю проблемою або областю "
+"рішення, а не інструментом. Gaphor намагається не заважати вам, наскільки це "
+"можливо. Він не намагається надокучати вам повідомленнями про помилки, тому "
+"що модель не є \"правильною\"."
 
 #: ../design_principles.md:46
 msgid "Avoid dialogs"
-msgstr ""
+msgstr "Уникайте діалогів"
 
 #: ../design_principles.md:48
 msgid "In doing the right thing, and staying out of the way of users, Gaphor avoids the use of dialogs as much as possible."
 msgstr ""
+"Роблячи правильні речі та не заважаючи користувачам, Gaphor уникає "
+"використання діалогів, наскільки це можливо."
 
 #: ../design_principles.md:51
 msgid "Gaphor should allow you to do the sensible thing (see above) and not get you out of your flow with all sorts of questions."
 msgstr ""
+"Gaphor має дозволити вам робити розумні речі (див. вище), а не виводити вас "
+"із потоку всілякими запитаннями."
 
 #: ../design_principles.md:54
 msgid "Notify on changes"
-msgstr ""
+msgstr "Повідомляти про зміни"
 
 #: ../design_principles.md:56
 msgid "When Gaphor is doing something that is not directly visible, you'll see a notification, for example, an element that's indirectly removed from the model. It will not interrupt you with dialogs, but only provide a small in-app notification. If the change is undesired, hit `undo`."
 msgstr ""
+"Коли Gaphor робить щось, що не видно безпосередньо, ви побачите сповіщення, "
+"наприклад, про те, що елемент непрямим чином видаляється з моделі. Це не "
+"буде переривати вас діалогами, а лише надасть невелике сповіщення в додатку. "
+"Якщо зміна небажана, натисніть \"скасувати\"."
 
 #: ../design_principles.md:61
 msgid "Balanced"
-msgstr ""
+msgstr "Збалансований"
 
 #: ../design_principles.md:63
 msgid "Although Gaphor implements quite a bit of the UML 2 model, it's not complete. We try to find the right balance in features to suite both expert and novice modellers."
 msgstr ""
+"Хоча Gaphor реалізує досить багато моделі UML 2, він не є повним. Ми "
+"намагаємося знайти правильний баланс у функціях, щоб підходити як експертам, "
+"так і новачкам."
 
 #: ../design_principles.md:67
 msgid "Continuity"
-msgstr ""
+msgstr "Безперервність"
 
 #: ../design_principles.md:69
 msgid "A model that is created should be usable in the future. Gaphor does acknowledge that. We care about compatibility."
 msgstr ""
+"Створена модель повинна бути придатною для використання в майбутньому. Гафор "
+"це визнає. Ми дбаємо про сумісність."
 
 #: ../design_principles.md:72
 msgid "Backwards compatibility"
-msgstr ""
+msgstr "Зворотна сумісність"
 
 #: ../design_principles.md:74
 msgid "Gaphor is capable of loading models going back to Gaphor 1.0. It's important for a tool to always allow older models to be loaded."
 msgstr ""
+"Gaphor здатний завантажувати моделі, починаючи з Gaphor 1.0. Важливо, щоб "
+"інструмент завжди дозволяв завантажувати старіші моделі."
 
 #: ../design_principles.md:77
 msgid "Multi-platform"
-msgstr ""
+msgstr "Мультиплатформенність"
 
 #: ../design_principles.md:79
 msgid "We put a lot of effort in making Gaphor run on all major platforms: Windows, macOS, and Linux. Having Gaphor available on all platforms is essential if the model needs to be shared. It would be awful if you need to run one specific operating system in order to open a model."
 msgstr ""
+"Ми доклали багато зусиль, щоб Gaphor працював на всіх основних платформах: "
+"Windows, macOS та Linux. Наявність Gaphor на всіх платформах дуже важлива, "
+"якщо модель потребує спільного використання. Було б жахливо, якби для того, "
+"щоб відкрити модель, вам потрібно було б запустити одну конкретну операційну "
+"систему."
 
 #: ../design_principles.md:84
 msgid "So far, we do not support the fourth major platform (web). Native applications provide a better user experience (once installed). But this may change."
 msgstr ""
+"Наразі ми не підтримуємо четверту основну платформу (веб). Власні програми "
+"забезпечують кращий досвід користувача (після встановлення). Але це може "
+"змінитися."
 
 #: ../design_principles.md:87
 msgid "User interaction"
-msgstr ""
+msgstr "Взаємодія з користувачем"
 
 #: ../design_principles.md:89
 msgid "Gaphor is originally written on Linux. It uses [GTK](https://gtk.org) as it's user interface toolkit. This sort of implies that Gaphor follows the [GNOME Human Interface Guidelines (HIG)](https://developer.gnome.org/hig/). Gaphor is also a multi-platform application. We try to stay close to the GNOME HIG, but try not to introduce concepts that are not available on Windows and macOS."
 msgstr ""
+"Gaphor спочатку написано на Linux. Вона використовує [GTK](https://gtk.org) "
+"як інструментарій інтерфейсу користувача. Це означає, що Gaphor дотримується "
+"[GNOME Human Interface Guidelines (HIG)] (https://developer.gnome.org/hig/). "
+"Gaphor також є багатоплатформною програмою. Ми намагаємося дотримуватися "
+"GNOME HIG, але намагаємося не вводити концепції, недоступні у Windows і "
+"macOS."
 
 #: ../design_principles.md:95
 msgid "User interface components are not generated. We found that UI generation (like many enterprise modeling tools do) provides an awful user experience. We want users to use Gaphor on a regular basis, so we aim for it to be a tool that's pleasant to look at and easy to work with."
 msgstr ""
+"Компоненти інтерфейсу користувача не генеруються. Ми виявили, що генерація "
+"інтерфейсу користувача (як це роблять багато інструментів корпоративного "
+"моделювання) забезпечує жахливий користувацький досвід. Ми хочемо, щоб "
+"користувачі використовували Gaphor на регулярній основі, тому ми прагнемо, "
+"щоб він був інструментом, на який приємно дивитися і з яким легко працювати."
 
 #: ../design_principles.md:101
 msgid "What else?"
-msgstr ""
+msgstr "Що ще?"
 
 #: ../design_principles.md:103
 msgid "On a technical level, the following principles are also applicable:"
-msgstr ""
+msgstr "На технічному рівні також застосовуються такі принципи:"
 
 #: ../design_principles.md:105
 msgid "**Idempotency** Allow the same operation to be applied multiple times. This should not affect the result."
 msgstr ""
+"**Ідемпотентність** Дозволяє застосовувати ту саму операцію кілька разів. Це "
+"не повинно вплинути на результат."
 
 #: ../design_principles.md:107
 msgid "**Event Driven** Gaphor is a user application. It acts to user events. The application uses an internal event dispatches (event bus) to distribute events to interested parties. Everyone should be able to listen to events."
 msgstr ""
+"**Gaphor - це користувацький додаток, керований подіями. Він реагує на події "
+"користувача. Додаток використовує внутрішню шину подій для розповсюдження "
+"подій серед зацікавлених осіб. Кожен повинен мати можливість прослуховувати "
+"події."
 
 #: ../event_system.md:1
 msgid "Event System"
-msgstr ""
+msgstr "Система подій"
 
 #: ../event_system.md:3
 msgid "The event system in Gaphor provides an API to *handle* events and to *subscribe* to events."
 msgstr ""
+"Система подій у Gaphor надає API для *обробки* подій і *підписки* на події."
 
 #: ../event_system.md:6
 msgid "In Gaphor we manage event handler subscriptions through the `EventManager` service. Gaphor is highly event driven:"
 msgstr ""
+"У Gaphor ми керуємо підписками на обробник подій через службу EventManager. "
+"Gaphor дуже орієнтований на події:"
 
 #: ../event_system.md:9
 msgid "Changes in the loaded model are emitted as events"
-msgstr ""
+msgstr "Зміни в завантаженій моделі видаються як події"
 
 #: ../event_system.md:10
 msgid "Changes on diagrams are emitted as events"
-msgstr ""
+msgstr "Зміни на діаграмах видаються як події"
 
 #: ../event_system.md:11
 msgid "Changes in the UI are emitted as events"
-msgstr ""
+msgstr "Зміни в інтерфейсі користувача випромінюються як події"
 
 #: ../event_system.md:13
 msgid "Although Gaphor depends heavily on GTK for its user interface, Gaphor is using its own event dispatcher. Events can be structured in hierarchies. For example, an `AttributeUpdated` event is a subtype of `ElementUpdated`. If we are interested in all changes to elements, we can also register `ElementUpdated` and receive all `AttributeUpdated` events as well."
 msgstr ""
+"Хоча користувацький інтерфейс Gaphor значною мірою залежить від GTK, Gaphor "
+"використовує власний диспетчер подій. Події можна структурувати у вигляді "
+"ієрархій. Наприклад, подія `AttributeUpdated` є підтипом події "
+"`ElementUpdated`. Якщо нас цікавлять всі зміни в елементах, ми також можемо "
+"зареєструвати `ElementUpdated` і отримувати всі події `AttributeUpdated`."
 
 #: ../../gaphor/core/eventmanager.py:docstring of gaphor.core.eventmanager.EventManager:1
 msgid "The Event Manager provides a flexible way to dispatch events."
-msgstr ""
+msgstr "Менеджер подій забезпечує гнучкий спосіб відправки подій."
 
 #: ../../gaphor/core/eventmanager.py:docstring of gaphor.core.eventmanager.EventManager:3
 msgid "Event dispatching is a central component in Gaphor. It allows components in Gaphor to react to changes in the application."
 msgstr ""
+"Диспетчеризація подій є центральним компонентом Gaphor. Це дозволяє "
+"компонентам Gaphor реагувати на зміни в програмі."
 
 #: ../../gaphor/core/eventmanager.py:docstring of gaphor.core.eventmanager.EventManager:6
 msgid "Events are dispatched by type."
-msgstr ""
+msgstr "Події розсилаються за типом."
 
 #: ../../gaphor/core/eventmanager.py:docstring of gaphor.core.eventmanager.EventManager.subscribe:1
 msgid "Register a handler."
-msgstr ""
+msgstr "Зареєструйте обробника."
 
 #: ../../gaphor/core/eventmanager.py:docstring of gaphor.core.eventmanager.EventManager.subscribe:3
 msgid "Handlers are triggered (executed) when events are emitted through the :obj:`~gaphor.core.eventmanager.EventManager.handle` method."
 msgstr ""
+"Обробники запускаються (виконуються), коли події надходять через метод "
+":obj:`~gaphor.core.eventmanager.EventManager.handle`."
 
 #: ../../gaphor/core/eventmanager.py:docstring of gaphor.core.eventmanager.EventManager.unsubscribe:1
 msgid "Unregister a previously registered handler."
-msgstr ""
+msgstr "Скасувати реєстрацію попередньо зареєстрованого обробника."
 
 #: ../../gaphor/core/eventmanager.py:docstring of gaphor.core.eventmanager.EventManager.handle:1
 msgid "Send event notifications to registered handlers."
-msgstr ""
+msgstr "Надсилати сповіщення про події зареєстрованим обробникам."
 
 #: ../../gaphor/core/eventmanager.py:docstring of gaphor.core.eventmanager.event_handler:1
 msgid "Mark a function/method as an event handler for a particular type of event."
-msgstr ""
+msgstr "Позначте функцію/метод як обробник події для певного типу події."
 
 #: ../../gaphor/core/eventmanager.py:docstring of gaphor.core.eventmanager.event_handler:4
 msgid "Given a custom event type:"
-msgstr ""
+msgstr "Враховуючи настроюваний тип події:"
 
 #: ../../gaphor/core/eventmanager.py:docstring of gaphor.core.eventmanager.event_handler:10
 msgid "You can apply this to a handler method or function:"
-msgstr ""
+msgstr "Ви можете застосувати це до методу або функції обробника:"
 
 #: ../../gaphor/core/eventmanager.py:docstring of gaphor.core.eventmanager.event_handler:16
 msgid "This will allow you to let the even be handled by an event manager:"
-msgstr ""
+msgstr "Це дозволить вам дозволити керування подією менеджеру подій:"
 
 #: ../event_system.md:31
 msgid "Under the hood events are handled by the Generics library. For more information about how the Generic library handles events see the [Generic documentation](https://generic.readthedocs.io)."
 msgstr ""
+"Події під капотом обробляються бібліотекою Generics. Щоб дізнатися більше "
+"про те, як загальна бібліотека обробляє події, перегляньте "
+"[загальну документацію](https://generic.readthedocs.io)."
 
 #: ../first_model.md:1
 msgid "Your First Model"
-msgstr ""
+msgstr "Ваша перша модель"
 
 #: ../first_model.md:8
 msgid "Although the names should speak for themselves, you can check out the [Getting Started](getting_started) page for more information."
 msgstr ""
+"Хоча назви повинні говорити самі за себе, ви можете переглянути сторінку "
+"[Початок роботи](getting_started) для отримання додаткової інформації."
 
 #: ../first_model.md:12
 msgid "Once Gaphor is started, and you can start a new model with the _Generic_ template. The initial diagram is already open in the Diagram section."
 msgstr ""
+"Після запуску Gaphor ви можете почати нову модель за допомогою шаблону "
+"_Generic_. Початкова діаграма вже відкрита в розділі Діаграма."
 
 #: ../first_model.md:15
 msgid "Select an element you want to place, in this case a Class (![Icon for Class.](../gaphor/ui/icons/hicolor/scalable/actions/gaphor-class-symbolic.svg)) by clicking on the icon in the Toolbox and click on the diagram. This will place a new Class item instance on the diagram and add a new Class to the model -- it shows up in the Model Browser. The selected tool will reset itself to the Pointer tool after the element is placed on the diagram."
 msgstr ""
+"Виберіть елемент, який ви хочете розмістити, у цьому випадку клас (!"
+"[Іконка для класу.](../gaphor/ui/icons/hicolor/scalable/actions/gaphor-class-"
+"symbolic.svg)), натиснувши на іконку на панелі інструментів, і клацніть на "
+"діаграмі. Це розмістить новий екземпляр класу на діаграмі і додасть новий "
+"клас до моделі - він з'явиться у Браузері моделей. Після розміщення елемента "
+"на діаграмі вибраний інструмент зміниться на інструмент Вказівник."
 
 #: ../first_model.md:15
 msgid "Icon for Class."
-msgstr ""
+msgstr "Значок для класу."
 
 #: ../first_model.md:21
 msgid "The Property Editor on the right side will show you details about the newly added class, such as its name (_New Class_), attributes and operations (methods). The Note field can contain any text you wish to associate with the element, (this will not show on a diagram)."
 msgstr ""
+"Редактор властивостей праворуч покаже вам детальну інформацію про щойно "
+"доданий клас, зокрема його назву (_Новий клас_), атрибути та операції "
+"(методи). Поле Примітка може містити будь-який текст, який ви бажаєте "
+"пов'язати з елементом (на діаграмі він не відображатиметься)."
 
 #: ../first_model.md:25
 msgid "![The Gaphor main window showing a single class added to the model.](images/first-model-class.png)"
 msgstr ""
+"![Головне вікно Gaphor, у якому показано один клас, доданий до моделі.]("
+"images/first-model-class.png)"
 
 #: ../first_model.md:25
 msgid "The Gaphor main window showing a single class added to the model."
-msgstr ""
+msgstr "Головне вікно Gaphor, у якому показано один клас, доданий до моделі."
 
 #: ../first_model.md:27
 msgid "It's simple to add elements to a diagram."
-msgstr ""
+msgstr "До діаграми легко додавати елементи."
 
 #: ../first_model.md:29
 msgid "Gaphor does not make any assumptions about which elements should be placed on a diagram. A diagram is a diagram. UML defines all different kinds of diagrams, such as Class diagrams, Component diagrams, Action diagrams, Sequence diagrams. But Gaphor does not place any restrictions."
 msgstr ""
+"Gaphor не робить жодних припущень щодо того, які елементи слід розміщувати "
+"на діаграмі. Діаграма є діаграмою. UML визначає різні типи діаграм, такі як "
+"діаграми класів, діаграми компонентів, діаграми дій, діаграми послідовності. "
+"Але Gaphor не накладає жодних обмежень."
 
 #: ../first_model.md:34
 msgid "Adding Relations"
-msgstr ""
+msgstr "Додавання відносин"
 
 #: ../first_model.md:36
 msgid "Add another Class. Change the names to `Shape` and `Circle`. Let's define that `Circle` is a sub-type of `Shape`. You can do this by selecting one and changing the name in the Property Editor, or by double-clicking the element."
 msgstr ""
+"Додайте ще один клас. Змінимо імена на `Shape` та `Circle`. Визначимо, що "
+"`Circle` є підтипом `Shape`. Ви можете зробити це, вибравши його і змінивши "
+"назву в редакторі властивостей, або двічі клацнувши елемент."
 
 #: ../first_model.md:40
 msgid "Select Generalization (![Icon for generalization relationships.](../gaphor/ui/icons/hicolor/scalable/actions/gaphor-generalization-symbolic.svg))."
 msgstr ""
+"Виберіть Узагальнення (![Піктограма для зв’язків узагальнення.](../gaphor/ui/"
+"icons/hicolor/scalable/actions/gaphor-generalization-symbolic.svg))."
 
 #: ../first_model.md:40
 msgid "Icon for generalization relationships."
-msgstr ""
+msgstr "Піктограма для зв'язків узагальнення."
 
 #: ../first_model.md:42
 msgid "Move the mouse cursor over `Shape`. Click, hold and drag the line end over `Circle`. Release the mouse button, and you should have your relationship between `Shape` and `Circle`. You can see both ends of the relation are red, indicating they are connected to their class."
 msgstr ""
+"Наведіть курсор миші на `Фігуру`. Клацніть, утримуючи, і перетягніть кінець "
+"лінії на `Circle`. Відпустіть кнопку миші, і ви отримаєте зв'язок між `Shape`"
+" та `Circle`. Ви можете бачити, що обидва кінці зв'язку червоні, що вказує "
+"на те, що вони з'єднані зі своїми класами."
 
 #: ../first_model.md:47
 msgid "![The Gaphor main window showing two classes connected by a generalization relationship.](images/first-model-generalization.png)"
 msgstr ""
+"![Головне вікно Gaphor, що показує два класи, з’єднані узагальнюючим "
+"відношенням.](images/first-model-generalization.png)"
 
 #: ../first_model.md:47
 msgid "The Gaphor main window showing two classes connected by a generalization relationship."
 msgstr ""
+"Головне вікно Gaphor, що показує два класи, з’єднані узагальнюючим "
+"відношенням."
 
 #: ../first_model.md:49
 msgid "Optionally you can run the auto-layout (![Menu icon](images/open-menu-symbolic.svg) → Tools → Auto Layout) to align the elements on the diagram."
 msgstr ""
+"За бажанням ви можете запустити автоматичний макет (![Піктограма меню]("
+"images/open-menu-symbolic.svg) → Інструменти → Автоматичний макет), щоб "
+"вирівняти елементи на діаграмі."
 
 #: ../first_model.md:49
 #: ../plugins.md:45
 #: ../style_sheets.md:343
 msgid "Menu icon"
-msgstr ""
+msgstr "Значок меню"
 
 #: ../first_model.md:53
 msgid "Creating New Diagrams"
-msgstr ""
+msgstr "Створення нових діаграм"
 
 #: ../first_model.md:55
 msgid "To create a new diagram, use the Model Browser. Select the element that should contain the new diagram. For now, select _New Model_. Click the New Diagram menu (![Plus symbol of the New Diagram popup menu.](images/list-add-symbolic.svg)) in the header bar."
 msgstr ""
+"Щоб створити нову діаграму, скористайтеся браузером моделей. Виберіть "
+"елемент, який має містити нову діаграму. Наразі виберіть _Нова модель_. "
+"Клацніть меню Нова діаграма (![Символ плюса спливного меню Нова діаграма.]("
+"images/list-add-symbolic.svg)) у рядку заголовка."
 
 #: ../first_model.md:55
 msgid "Plus symbol of the New Diagram popup menu."
-msgstr ""
+msgstr "Символ «плюс» спливаючого меню «Нова діаграма»."
 
 #: ../first_model.md:59
 msgid "![The New Diagram popup window.](images/first-model-new-diagram-popup.png)"
 msgstr ""
+"![Спливаюче вікно «Нова діаграма»..](images/first-model-new-diagram-"
+"popup.png)"
 
 #: ../first_model.md:59
 msgid "The New Diagram popup window."
-msgstr ""
+msgstr "Спливаюче вікно «Нова діаграма»."
 
 #: ../first_model.md:61
 msgid "Select _New Generic Diagram_ and a new diagram is created."
-msgstr ""
+msgstr "Виберіть _New Generic Diagram_, і буде створено нову діаграму."
 
 #: ../first_model.md:63
 msgid "Now drag the elements from the Model Browser onto the new diagram. First the classes `Shape` and `Circle`. Add the generalization last. Drop it somewhere between the two classes. The relation will be created to the diagram."
 msgstr ""
+"Тепер перетягніть елементи з браузера моделей на нову діаграму. Спочатку "
+"класи `Shape` та `Circle`. Узагальнення додайте останнім. Помістіть його "
+"десь між цими двома класами. Буде створено відношення до діаграми."
 
 #: ../first_model.md:67
 msgid "Now change the name of class `Circle` to `Ellipse`. Check the other diagram. The name has been changed there as well."
 msgstr ""
+"Тепер змініть назву класу `Circle` на `Ellipse`. Перевірте іншу схему. Там "
+"також змінили назву."
 
 #: ../first_model.md:72
 msgid "Elements in a diagram are only a _representation_ of the elements in the underlying model. The model is what you see in the Model Browser."
 msgstr ""
+"Елементи на діаграмі є лише _представленням_ елементів базової моделі. "
+"Модель – це те, що ви бачите в переглядачі моделей."
 
 #: ../first_model.md:75
 msgid "Elements in the model are automatically removed when there are no more representations in any of the diagrams."
 msgstr ""
+"Елементи в моделі автоматично видаляються, коли на жодній із діаграм більше "
+"немає зображень."
 
 #: ../first_model.md:78
 msgid "Examples of Gaphor models"
-msgstr ""
+msgstr "Приклади моделей Gaphor"
 
 #: ../first_model.md:80
 msgid "SysML Models"
-msgstr ""
+msgstr "Моделі SysML"
 
 #: ../first_model.md:81
 msgid "To see how a larger model comes together in Gaphor check out [Gaphor Distilled](https://github.com/mikekidner/gaphor_distilled) which implements the DELL-SAT-77 model used as the basis for [SysML Distilled](https://delligattiassociates.com/publications/?_gl=1*1tu6ekh*_ga*MTMwMTU4NjMyNC4xNzMyNTYyOTUw*_up*MQ..) one of the standard references for the SysML language."
 msgstr ""
+"Щоб побачити, як більша модель збирається в Gaphor, перегляньте "
+"[Gaphor Distilled](https://github.com/mikekidner/gaphor_distilled), який "
+"реалізує модель DELL-SAT-77, що використовується як основа для "
+"[SysML Distilled](https://delligattiassociates.com/publications/"
+"?_gl=1*1tu6ekh*_ga*MTMwMTU4NjMyNC4xNzMyNTYyOTUw*_up*MQ..), одного зі "
+"стандартних посилань для мови SysML."
 
 #: ../framework.md:1
 msgid "Framework"
-msgstr ""
+msgstr "Каркас"
 
 #: ../framework.md:3
 msgid "Overview"
-msgstr ""
+msgstr "Огляд"
 
 #: ../framework.md:5
 msgid "Gaphor is built in a light, service oriented fashion. The application is split in a series of services, such as a file, event, and undo managers. Those services are loaded based on entry points defined in the `pyproject.toml` file. To learn more about the architecture, please see the description about the [Service Oriented Architecture](service_oriented.md)."
 msgstr ""
+"Gaphor побудований у легкій, сервіс-орієнтованій манері. Додаток розділено "
+"на низку сервісів, таких як менеджери файлів, подій та скасувань. Ці сервіси "
+"завантажуються на основі точок входу, визначених у файлі `pyproject.toml`. "
+"Щоб дізнатися більше про архітектуру, будь ласка, перегляньте опис "
+"[Сервісно-орієнтованої архітектури] (service_oriented.md)."
 
 #: ../framework.md:11
 msgid "Event driven"
-msgstr ""
+msgstr "Керується подією"
 
 #: ../framework.md:13
 msgid "Parts of Gaphor communicate with each other through events. Whenever something important happens, for example, an attribute of a model element changes, an event is sent. When other parts of the application are interested in a change, they register an event handler for that event type. Events are emitted though a central broker so you do not have to register on every individual element that can send an event they are interested in. For example, a diagram item could register an event rule and then check if the element that sent the event is actually the event the item is representing. For more information see the full description of the [event system](event_system)."
 msgstr ""
+"Частини Gaphor спілкуються між собою за допомогою подій. Щоразу, коли "
+"відбувається щось важливе, наприклад, змінюється атрибут елемента моделі, "
+"надсилається подія. Коли інші частини програми зацікавлені у зміні, вони "
+"реєструють обробник події для цього типу подій. Події надсилаються через "
+"центральний брокер, тому вам не потрібно реєструвати кожен окремий елемент, "
+"який може надіслати подію, що їх цікавить. Наприклад, елемент діаграми може "
+"зареєструвати правило події, а потім перевірити, чи елемент, який надіслав "
+"подію, насправді є тією подією, яку представляє цей елемент. Для отримання "
+"додаткової інформації зверніться до повного опису [системи подій]"
+"(event_system)."
 
 #: ../framework.md:23
 msgid "Transactional"
-msgstr ""
+msgstr "Трансакційний"
 
 #: ../framework.md:25
 msgid "Gaphor is transactional, which means it keeps track of the functions it performs as a series of transactions. The transactions work by sending an event when a transaction starts and sending another when a transaction ends. This allows, for example, the undo manager to keep a running log of the previous transactions so that a transaction can be reversed if the undo button is pressed."
 msgstr ""
+"Gaphor є транзакційним, що означає, що він відстежує функції, які він "
+"виконує, як серію транзакцій. Транзакції працюють, надсилаючи подію, коли "
+"транзакція починається, і надсилаючи іншу, коли транзакція закінчується. Це "
+"дозволяє, наприклад, менеджеру скасувань вести журнал попередніх транзакцій, "
+"щоб можна було скасувати транзакцію, якщо натиснути кнопку скасування."
 
 #: ../framework.md:32
 msgid "Main Components"
-msgstr ""
+msgstr "Основні компоненти"
 
 #: ../framework.md:34
 msgid "The main portion of Gaphor that executes first is called the `Application`. Gaphor can have multiple models open at any time. Each model is kept in a `Session`. Only one Application instance is active. Each session will load its own services defined as [gaphor.services](service_oriented.md)."
 msgstr ""
+"Основна частина Gaphor, яка виконується першою, називається \"Додаток\". У "
+"Gaphor може бути відкрито декілька моделей одночасно. Кожна модель "
+"зберігається у \"Сесії\". Активним є лише один екземпляр додатку. Кожен "
+"сеанс завантажує власні сервіси, визначені як [gaphor.services]"
+"(service_oriented.md)."
 
 #: ../framework.md:40
 msgid "The most notable services are:"
-msgstr ""
+msgstr "Найпомітніші послуги:"
 
 #: ../framework.md:42
 msgid "event_manager"
-msgstr ""
+msgstr "event_manager"
 
 #: ../framework.md:44
 msgid "This is the central component used for event dispatching. Every service that does something with events (both sending and receiving) depends on this component."
 msgstr ""
+"Це центральний компонент, який використовується для диспетчеризації подій. "
+"Кожна служба, яка щось робить з подіями (як надсилання, так і отримання), "
+"залежить від цього компонента."
 
 #: ../framework.md:48
 msgid "element_factory"
-msgstr ""
+msgstr "element_factory"
 
 #: ../framework.md:50
 msgid "The [data model](models/core) itself is maintained in the element factory ({obj}`~gaphor.core.modeling.ElementFactory`). This service is used to create model elements, as well as to lookup elements or query for a set of elements."
 msgstr ""
+"Сама [модель даних](models/core) зберігається у фабриці елементів "
+"({obj}`~gaphor.core.modeling.ElementFactory`). Цей сервіс використовується "
+"для створення елементів моделі, а також для пошуку елементів або запиту "
+"набору елементів."
 
 #: ../framework.md:54
 msgid "undo_manager"
-msgstr ""
+msgstr "undo_manager"
 
 #: ../framework.md:56
 msgid "One of the most appreciated services. It allows users to make a mistake every now and then!"
 msgstr ""
+"Одна з найдорожчих послуг. Це дозволяє користувачам час від часу робити "
+"помилки!"
 
 #: ../framework.md:59
 msgid "The undo manager is transactional. Actions performed by a user are only stored if a transaction is active. If a transaction is completed (committed) a new undo action is stored. Transactions can also be rolled back, in which case all changes are played back directly. For more information see the full description of the [undo manager](undo)."
 msgstr ""
+"Менеджер скасувань є транзакційним. Дії, виконані користувачем, зберігаються "
+"лише тоді, коли транзакція активна. Якщо транзакцію завершено (зафіксовано), "
+"зберігається нова дія скасування. Транзакції також можна відкотити, в цьому "
+"випадку всі зміни відтворюються безпосередньо. Для отримання додаткової "
+"інформації дивіться повний опис [undo manager](менеджер відміни)."
 
 #: ../framework.md:65
 msgid "file_manager"
-msgstr ""
+msgstr "file_manager"
 
 #: ../framework.md:67
 msgid "Loading and saving a model is done through this service."
-msgstr ""
+msgstr "Завантаження та збереження моделі здійснюється через цей сервіс."
 
 #: ../gaphor-services.md:5
 msgid "Example: Gaphor services"
-msgstr ""
+msgstr "Приклад: послуги Gaphor"
 
 #: ../gaphor-services.md:7
 msgid "In this example we're doing something a little less trivial. In Gaphor, services are defined as [entry points](https://packaging.python.org/en/latest/specifications/entry-points/). Each service is a class, and takes parameters with names that match other services. This allows services to depend on other services."
 msgstr ""
+"У цьому прикладі ми робимо дещо менш тривіальне. У Gaphor сервіси "
+"визначаються як [точки входу] (https://packaging.python.org/en/latest/"
+"specifications/entry-points/). Кожен сервіс є класом і отримує параметри з "
+"іменами, які збігаються з іменами інших сервісів. Це дозволяє сервісам "
+"залежати від інших сервісів."
 
 #: ../gaphor-services.md:12
 msgid "It looks something like this:"
-msgstr ""
+msgstr "Виглядає це приблизно так:"
 
 #: ../gaphor-services.md:56
 msgid "Let's first load the entry points."
-msgstr ""
+msgstr "Давайте спочатку завантажимо точки входу."
 
 #: ../gaphor-services.md:68
 msgid "Now let's create a component in our model for every service."
-msgstr ""
+msgstr "Тепер давайте створимо компонент у нашій моделі для кожної служби."
 
 #: ../gaphor-services.md:85
 msgid "With all components mapped, we can create dependencies between those components, based on the constructor parameter names."
 msgstr ""
+"Коли всі компоненти зіставлені, ми можемо створювати залежності між цими "
+"компонентами на основі імен параметрів конструктора."
 
 #: ../gaphor-services.md:101
 msgid "With all elements in the model, we can create a diagram. Let's drop the components and dependencies on the diagram and let auto-layout do its magic."
 msgstr ""
+"З усіма елементами моделі ми можемо створити діаграму. Давайте відкинемо "
+"компоненти та залежності на діаграмі та дозволимо автоматичному компонуванню "
+"зробити свою магію."
 
 #: ../gaphor-services.md:104
 msgid "To make the dependency look good, we have to add a style sheet. If you create a new diagram via the GUI, this element is automatically added."
 msgstr ""
+"Щоб залежність виглядала добре, нам потрібно додати таблицю стилів. Якщо ви "
+"створюєте нову діаграму через GUI, цей елемент додається автоматично."
 
 #: ../gaphor-services.md:118
 msgid "Last step is to layout and draw the diagram."
-msgstr ""
+msgstr "Останнім кроком є макет і малювання діаграми."
 
 #: ../gaphor-services.md:128
 msgid "That's all. As you can see from the diagram, a lot of services rely on `EventManager`."
 msgstr ""
+"Ось і все. Як ви можете бачити на діаграмі, багато служб покладаються на "
+"`EventManager`."
 
 #: ../getting_started.md:1
 msgid "Get Started with Gaphor"
-msgstr ""
+msgstr "Почніть роботу з Gaphor"
 
 #: ../getting_started.md:3
 msgid "Gaphor is more than a diagram editor: it's a modeling environment. Where simple diagram editors such as Microsoft Visio and [draw.io](https://draw.io) allow you to create pictures, Gaphor actually keeps track of the elements you add to the model. In Gaphor you can create diagrams to track and visualize different aspects of the system you're developing."
 msgstr ""
+"Gaphor - це більше, ніж редактор діаграм: це середовище для моделювання. "
+"Якщо прості редактори діаграм, такі як Microsoft Visio та [draw.io] "
+"(https://draw.io), дозволяють створювати малюнки, то Gaphor фактично "
+"відстежує елементи, які ви додаєте до моделі. У Gaphor ви можете створювати "
+"діаграми для відстеження та візуалізації різних аспектів системи, яку ви "
+"розробляєте."
 
 #: ../getting_started.md:9
 msgid "Enough talk, let's get started."
-msgstr ""
+msgstr "Досить говорити, почнемо."
 
 #: ../getting_started.md:11
 msgid "You can find installers for Gaphor on the [Gaphor Website](https://gaphor.org/download). Gaphor can be installed on Linux (Flatpak), Windows, and macOS."
 msgstr ""
+"Ви можете знайти інсталятори для Gaphor на [веб-сайті Gaphor](https://"
+"gaphor.org/download). Gaphor можна встановити на Linux (Flatpak), Windows і "
+"macOS."
 
 #: ../getting_started.md:14
 msgid "Once Gaphor is launched, it provides you a welcome screen. It shows you previously opened models and model templates."
 msgstr ""
+"Після запуску Gaphor ви побачите екран привітання. Він показує раніше "
+"відкриті моделі та шаблони моделей."
 
 #: ../getting_started.md:17
 msgid "![Gaphor's welcome screen showing recently opened models and model templates.](images/getting-started-greeter.png)"
 msgstr ""
+"![Екран привітання Gaphor показує нещодавно відкриті моделі та шаблони "
+"моделей.](images/getting-started-greeter.png)"
 
 #: ../getting_started.md:17
 msgid "Gaphor's welcome screen showing recently opened models and model templates."
 msgstr ""
+"Екран привітання Gaphor показує нещодавно відкриті моделі та шаблони моделей."
 
 #: ../getting_started.md:19
 msgid "You can select a template to get started."
-msgstr ""
+msgstr "Ви можете вибрати шаблон, щоб почати."
 
 #: ../getting_started.md:21
 msgid "**Generic:** a blank model to start with"
-msgstr ""
+msgstr "**Загальний:** порожня модель для початку"
 
 #: ../getting_started.md:22
 msgid "**UML:** A template for the *Unified Modeling Language* for modeling a software system"
 msgstr ""
+"**UML:** Шаблон для *Уніфікованої мови моделювання* для моделювання "
+"програмної системи"
 
 #: ../getting_started.md:23
 msgid "**SysML:** A template for the *Systems Modeling Language* for modeling a wide range of systems and systems-of-systems"
 msgstr ""
+"**SysML:** Шаблон для *Systems Modeling Language* для моделювання широкого "
+"діапазону систем і систем-систем"
 
 #: ../getting_started.md:24
 msgid "**RAAML:** A template for the *Risk Analysis and Assessment Modeling language* for safety and reliability analysis"
 msgstr ""
+"**RAAML:** шаблон для *мови моделювання аналізу ризиків і оцінки* для "
+"аналізу безпеки та надійності"
 
 #: ../getting_started.md:25
 msgid "**C4 Model:** A template for *Context, Containers, Components, and Code* which is for lean modeling of software architecture"
 msgstr ""
+"**Модель C4:** Шаблон для *Контексту, контейнерів, компонентів і коду*, "
+"призначений для економічного моделювання архітектури програмного забезпечення"
 
 #: ../getting_started.md:27
 msgid "Once the model interface is loaded you'll see the modeling interface."
-msgstr ""
+msgstr "Після завантаження інтерфейсу моделі ви побачите інтерфейс моделювання."
 
 #: ../getting_started.md:29
 msgid "![The Gaphor main window, with numbers refering to parts of the UI.](images/getting-started-new-model.png)"
 msgstr ""
+"![Головне вікно Gaphor із цифрами, що стосуються частин інтерфейсу "
+"користувача.](images/getting-started-new-model.png)"
 
 #: ../getting_started.md:29
 msgid "The Gaphor main window, with numbers refering to parts of the UI."
 msgstr ""
+"Головне вікно Gaphor із цифрами, що стосуються частин інтерфейсу користувача."
 
 #: ../getting_started.md:31
 msgid "The layout of the Gaphor interface is divided into four sections, namely:"
-msgstr ""
+msgstr "Компонування інтерфейсу Gaphor поділено на чотири розділи, а саме:"
 
 #: ../getting_started.md:34
 #: ../getting_started.md:41
 msgid "Model Browser"
-msgstr ""
+msgstr "Модель браузера"
 
 #: ../getting_started.md:35
 msgid "Diagram Element Toolbox"
-msgstr ""
+msgstr "Панель інструментів елементів діаграми"
 
 #: ../getting_started.md:36
 #: ../getting_started.md:80
@@ -1529,7 +2102,7 @@ msgstr ""
 
 #: ../getting_started.md:123
 msgid "Copy and Paste"
-msgstr ""
+msgstr "Копіювати та вставляти"
 
 #: ../getting_started.md:125
 msgid "As stated before, Gaphor is a modeling environment. This means that every _item_ in a diagram is backed by a _model element_ found in the model browser. This means that you can show the same _model element_ in different diagrams."
@@ -1549,7 +2122,7 @@ msgstr ""
 
 #: ../getting_started.md:136
 msgid "Undo and Redo"
-msgstr ""
+msgstr "Скасувати та повторити"
 
 #: ../getting_started.md:138
 msgid "Undo a change press <kbd>Ctrl</kbd>+<kbd>z</kbd> or left-click on the back arrow at the top of the Property Editor. To re-do a change, hit <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>z</kbd> or press the forward arrow at the top of the Property Editor."
@@ -1581,7 +2154,7 @@ msgstr ""
 
 #: ../getting_started.md:159
 msgid "Reset Tool Automatically"
-msgstr ""
+msgstr "Скинути інструмент автоматично"
 
 #: ../getting_started.md:161
 msgid "By default, the pointer tool is selected after an element is placed from the toolbox. If this option is turned off, the same type of element will be placed by clicking in the diagram until another element is selected in the toolbox."
@@ -1589,7 +2162,7 @@ msgstr ""
 
 #: ../getting_started.md:163
 msgid "Remove Unused Elements"
-msgstr ""
+msgstr "Видалити невикористані елементи"
 
 #: ../getting_started.md:165
 msgid "By default, elements that are not part of any diagram in the model will be removed. If this option is turned off, elements remain in the model and may be found in the model browser."
@@ -1597,7 +2170,7 @@ msgstr ""
 
 #: ../getting_started.md:167
 msgid "Diagram Language"
-msgstr ""
+msgstr "Мова діаграм"
 
 #: ../getting_started.md:169
 msgid "The diagram language modifier is only applicable to the loaded model and how it is shown in the diagram. The diagram language setting is saved as part of the model and defaults to English."
@@ -1617,7 +2190,7 @@ msgstr ""
 
 #: ../getting_started.md:178
 msgid "Style Sheet"
-msgstr ""
+msgstr "Таблиця стилів"
 
 #: ../getting_started.md:180
 msgid "The [style sheet](style_sheets) allows to change the visual appearance of diagrams and model elements."
@@ -1649,7 +2222,7 @@ msgstr ""
 
 #: ../index.rst:2
 msgid "About Gaphor"
-msgstr ""
+msgstr "Про Gaphor"
 
 #: ../index.rst:6
 msgid "The documentation is up to date for Gaphor |version|"
@@ -2762,7 +3335,7 @@ msgstr ""
 
 #: ../models/raaml/General.rst:2
 msgid "General"
-msgstr ""
+msgstr "Загальний"
 
 #: ../models/raaml/General.rst:5
 msgid "Basic Event"
@@ -3026,7 +3599,7 @@ msgstr ""
 
 #: ../models/sysml/Activities.rst:2
 msgid "Activities"
-msgstr ""
+msgstr "Діяльністі"
 
 #: ../models/sysml/Allocations.rst:2
 msgid "Allocations"
@@ -3997,7 +4570,7 @@ msgstr ""
 
 #: ../stereotypes.md:1
 msgid "Stereotypes"
-msgstr ""
+msgstr "Стереотипи"
 
 #: ../stereotypes.md:3
 msgid "In UML, stereotypes are way to extend the application of the UML language to new domains. For example: SysML started as a profile for UML."
@@ -4393,7 +4966,7 @@ msgstr ""
 
 #: ../style_sheets.md:140
 msgid "Colors"
-msgstr ""
+msgstr "Кольори"
 
 #: ../style_sheets.md:144
 msgid "``background-color``"
@@ -4765,7 +5338,7 @@ msgstr "UML"
 
 #: ../style_sheets.md:315
 msgid "Classes"
-msgstr ""
+msgstr "Заняття"
 
 #: ../style_sheets.md:315
 msgid "all Association's"
@@ -4811,7 +5384,7 @@ msgstr ""
 
 #: ../style_sheets.md:319
 msgid "Swimlane"
-msgstr "Swimlane"
+msgstr "Свімлане"
 
 #: ../style_sheets.md:319
 msgid "``partition``"
@@ -4819,11 +5392,11 @@ msgstr ""
 
 #: ../style_sheets.md:320
 msgid "Interactions"
-msgstr ""
+msgstr "Взаємодії"
 
 #: ../style_sheets.md:320
 msgid "Reflexive message"
-msgstr ""
+msgstr "Рефлексивне повідомлення"
 
 #: ../style_sheets.md:320
 msgid "``message``"
@@ -4832,11 +5405,11 @@ msgstr ""
 #: ../style_sheets.md:321
 #: ../style_sheets.md:322
 msgid "States"
-msgstr ""
+msgstr "Держави"
 
 #: ../style_sheets.md:321
 msgid "Initial Pseudostate"
-msgstr ""
+msgstr "Початковий псевдостан"
 
 #: ../style_sheets.md:321
 #: ../style_sheets.md:322
@@ -4849,11 +5422,11 @@ msgstr ""
 
 #: ../style_sheets.md:323
 msgid "Profiles"
-msgstr ""
+msgstr "Профілі"
 
 #: ../style_sheets.md:323
 msgid "Metaclass"
-msgstr ""
+msgstr "Метаклас"
 
 #: ../style_sheets.md:323
 msgid "``class``"
