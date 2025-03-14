@@ -37,7 +37,7 @@ def association_item_editor(item, view, event_manager, pos=None) -> bool:
 
         def update_text():
             assert end_item
-            with Transaction(event_manager):
+            with Transaction(event_manager, context="editing"):
                 parse(end_item.subject, entry.get_buffer().get_text())
 
         bb = end_item.name_bounds
@@ -49,7 +49,7 @@ def association_item_editor(item, view, event_manager, pos=None) -> bool:
         entry = popup_entry(text)
 
         def update_text():
-            with Transaction(event_manager):
+            with Transaction(event_manager, context="editing"):
                 item.subject.name = entry.get_buffer().get_text()
 
         box = item.middle_shape_size

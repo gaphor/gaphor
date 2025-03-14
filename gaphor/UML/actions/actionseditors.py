@@ -18,7 +18,7 @@ def fork_node_item_editor(item, view, event_manager, pos=None) -> bool:
     entry = popup_entry(join_spec)
 
     def update_text():
-        with Transaction(event_manager):
+        with Transaction(event_manager, context="editing"):
             item.subject.joinSpec = entry.get_buffer().get_text()
 
     show_popover(entry, view, box, update_text)
@@ -38,7 +38,7 @@ def activity_parameter_node_item_editor(
     entry = popup_entry(name)
 
     def update_text():
-        with Transaction(event_manager):
+        with Transaction(event_manager, context="editing"):
             item.subject.parameter.name = entry.get_buffer().get_text()
 
     show_popover(entry, view, box, update_text)

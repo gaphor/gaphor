@@ -43,7 +43,7 @@ def named_item_editor(item, view, event_manager, pos=None) -> bool:
     entry = popup_entry(name)
 
     def update_text():
-        with Transaction(event_manager):
+        with Transaction(event_manager, context="editing"):
             item.subject.name = entry.get_buffer().get_text()
 
     show_popover(entry, view, box, update_text)
@@ -71,7 +71,7 @@ def valued_item_editor(item, view, event_manager, pos=None) -> bool:
     entry = popup_entry(value)
 
     def update_text():
-        with Transaction(event_manager):
+        with Transaction(event_manager, context="editing"):
             item.subject.value = entry.get_buffer().get_text()
 
     show_popover(entry, view, box, update_text)
