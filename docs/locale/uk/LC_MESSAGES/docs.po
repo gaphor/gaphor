@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: Gaphor 3.0.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-12-30 14:25-0500\n"
-"PO-Revision-Date: 2025-03-12 21:51+0000\n"
-"Last-Translator: Максим Горпиніч <maksimgorpinic2005a@gmail.com>\n"
+"PO-Revision-Date: 2025-03-13 02:22+0000\n"
+"Last-Translator: Dan Yeaw <dan@yeaw.me>\n"
 "Language-Team: Ukrainian <https://hosted.weblate.org/projects/gaphor/"
 "docs-gaphor-org/uk/>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Weblate 5.10.3-dev\n"
 
 #: ../changelog.rst:2
@@ -1747,7 +1747,7 @@ msgstr ""
 "на низку сервісів, таких як менеджери файлів, подій та скасувань. Ці сервіси "
 "завантажуються на основі точок входу, визначених у файлі `pyproject.toml`. "
 "Щоб дізнатися більше про архітектуру, будь ласка, перегляньте опис "
-"[Сервісно-орієнтованої архітектури] (service_oriented.md)."
+"[Сервісно-орієнтованої архітектури](service_oriented.md)."
 
 #: ../framework.md:11
 msgid "Event driven"
@@ -1837,7 +1837,7 @@ msgstr ""
 "лише тоді, коли транзакція активна. Якщо транзакцію завершено (зафіксовано), "
 "зберігається нова дія скасування. Транзакції також можна відкотити, в цьому "
 "випадку всі зміни відтворюються безпосередньо. Для отримання додаткової "
-"інформації дивіться повний опис [undo manager](менеджер відміни)."
+"інформації дивіться повний опис [менеджер відміни](undo)."
 
 #: ../framework.md:65
 msgid "file_manager"
@@ -2319,7 +2319,7 @@ msgstr "Про Gaphor"
 
 #: ../index.rst:6
 msgid "The documentation is up to date for Gaphor |version|"
-msgstr "Документація актуальна для Gaphor |версії|"
+msgstr "Документація актуальна для Gaphor |version|"
 
 #: ../index.rst:8
 msgid "Gaphor is a UML and SysML modeling application written in Python. It is designed to be easy to use, while still being powerful. Gaphor implements a fully-compliant UML 2 data model, so it is much more than a picture drawing tool."
@@ -4550,7 +4550,7 @@ msgstr ""
 msgid "A more complete description of this approach can be found in the [Service Oriented Architecture documentation page](service_oriented.md)."
 msgstr ""
 "Більш повний опис цього підходу можна знайти на "
-"[сторінці документації щодо сервісно-орієнтованої архітектури] "
+"[сторінці документації щодо сервісно-орієнтованої архітектури]"
 "(service_oriented.md)."
 
 #: ../plugins.md:118
@@ -4720,7 +4720,7 @@ msgstr "Намалюйте схему"
 msgid "Another nice feature is drawing the diagrams. At this moment this requires a function. This behavior is similar to the [`diagram` directive](sphinx)."
 msgstr ""
 "Ще одна приємна функція - малювання схем. На даний момент для цього потрібна "
-"функція. Ця поведінка схожа на директиву [`diagram`] (sphinx)."
+"функція. Ця поведінка схожа на директиву [`diagram` directive](sphinx)."
 
 #: ../scripting.md:154
 msgid "Create a diagram"
@@ -4741,8 +4741,8 @@ msgstr ""
 #: ../scripting.md:163
 msgid "To create the diagram, we [`drop` elements](modeling_language:dropping) on the diagram. Items on a diagram represent an element in the model. We'll also drop all associations on the model. Only if both ends can connect, the association will be added."
 msgstr ""
-"Щоб створити діаграму, ми [`кидаємо` елементи](мова_моделювання:кидання) на "
-"діаграму. Елементи на діаграмі представляють елемент у моделі. Ми також "
+"Щоб створити діаграму, ми [`кидаємо` елементи](modeling_language:dropping) "
+"на діаграму. Елементи на діаграмі представляють елемент у моделі. Ми також "
 "відкинемо всі асоціації на моделі. Тільки якщо обидва кінці можуть "
 "з'єднуватися, асоціація буде додана."
 
