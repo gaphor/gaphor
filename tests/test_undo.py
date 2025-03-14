@@ -1,6 +1,7 @@
 import logging
 
 import pytest
+import pytest_asyncio
 
 from gaphor import UML
 from gaphor.application import Application
@@ -25,8 +26,8 @@ def application():
     app.shutdown()
 
 
-@pytest.fixture
-def session(application):
+@pytest_asyncio.fixture
+async def session(application):
     return application.new_session()
 
 

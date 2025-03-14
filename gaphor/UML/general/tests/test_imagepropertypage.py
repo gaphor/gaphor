@@ -1,3 +1,4 @@
+import asyncio
 from pathlib import Path
 
 import pytest
@@ -33,7 +34,7 @@ async def test_picture_property_select_opens_dialog(
     # Test code
     button_widget.activate()
 
-    await property_page.gather_background_task()
+    await asyncio.gather(property_page.background_task)
 
     assert called is True
 
