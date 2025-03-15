@@ -9,7 +9,7 @@ from gaphor.UML.umlfmt import format_call_behavior_action_name
 
 
 @represents(UML.Action)
-class ActionItem(Named, ElementPresentation):
+class ActionItem(Named, ElementPresentation[UML.Action]):
     def __init__(self, diagram, id=None):
         super().__init__(diagram, id, width=50, height=30)
 

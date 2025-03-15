@@ -144,3 +144,19 @@ def test_drop_from_second_swimlane_to_outside(create):
 
     assert action.subject not in swimlanes.partition[0].node
     assert action.subject not in swimlanes.partition[1].node
+
+
+def test_move_action_from_activity_to_swimlane(create):
+    activity: ActivityItem = create(ActivityItem, uml.Activity)
+    swimlanes: PartitionItem = create(PartitionItem, uml.ActivityPartition)
+    partition_config(swimlanes)
+    action = create(ActionItem, uml.Action)
+
+    drop(action, activity, 0, 0)
+    drop(swimlanes, activity, 0, 0)
+
+    handles = swimlanes.handles()
+    drop_on_partition(action, swimlanes, handles[0].pos.x + 10, swimlanes.height / 2)
+
+    assert action.subject in swimlanes.partition[0].node
+    assert action.subject not in activity.subject.ownedElement

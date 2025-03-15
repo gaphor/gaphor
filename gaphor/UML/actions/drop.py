@@ -123,7 +123,9 @@ def drop_on_partition(item, new_parent, x, y):
     if target_subject is item.subject.inPartition:
         return
 
-    if old_parent and any(ungroup(p, item.subject) for p in old_parent.partition):
+    if isinstance(old_parent, PartitionItem) and any(
+        ungroup(p, item.subject) for p in old_parent.partition
+    ):
         item.change_parent(None)
         old_parent.request_update()
 
