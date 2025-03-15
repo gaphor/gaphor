@@ -13,7 +13,7 @@ from gaphor.UML.uml import Activity, ActivityParameterNode
 
 
 @represents(Activity)
-class ActivityItem(Classified, ElementPresentation):
+class ActivityItem(Classified, ElementPresentation[Activity]):
     def __init__(self, diagram, id=None):
         super().__init__(diagram, id, width=50, height=50)
 
