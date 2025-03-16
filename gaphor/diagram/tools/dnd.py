@@ -33,6 +33,7 @@ def on_motion(
 ) -> Gdk.DragAction:
     view = target.get_widget()
     source_value = target.get_value()
+
     if view.selection.dropzone_item:
         view.model.request_update(view.selection.dropzone_item)
 
@@ -66,10 +67,13 @@ def on_drop(target, source_value, x, y, modeling_language, event_manager):
     view = target.get_widget()
     if isinstance(source_value, ElementDragData):
         elements = source_value.elements
+        new_parent = view.selection.dropzone_item
+        view.selection.dropzone_item = None
+
         with Transaction(event_manager):
             items = []
             for element in elements:
-                if item := _drop(view, element, x, y):
+                if item := _drop(view, element, new_parent, x, y):
                     x += 20
                     y += 20
                     items.append(item)
@@ -86,7 +90,6 @@ def on_drop(target, source_value, x, y, modeling_language, event_manager):
                 event_manager.handle(
                     Notification(gettext("Element can’t be represented on a diagram."))
                 )
-        view.selection.dropzone_item = None
         return True
     elif isinstance(source_value, ToolboxActionDragData):
         tool_def = get_tool_def(modeling_language, source_value.action)
@@ -97,8 +100,7 @@ def on_drop(target, source_value, x, y, modeling_language, event_manager):
     return False
 
 
-def _drop(view, item, x, y):
-    new_parent = view.selection.dropzone_item
+def _drop(view, item, new_parent, x, y):
     return (
         drop(
             item,
