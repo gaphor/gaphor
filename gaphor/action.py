@@ -2,8 +2,13 @@
 
 from __future__ import annotations
 
+import asyncio
+import inspect
+import logging
 from collections.abc import Callable, Iterator
 from typing import Any, get_type_hints
+
+log = logging.getLogger(__name__)
 
 
 class action:
@@ -47,6 +52,7 @@ class action:
         self.shortcut = shortcut
         self.state = state
         self.arg_type = None
+        self.task: asyncio.Task | None = None
 
     @property
     def detailed_name(self) -> str:
@@ -67,8 +73,28 @@ class action:
         if type_hints:
             # assume the first argument (excluding self) is our parameter
             self.arg_type = next(iter(type_hints.values()))
-        func.__action__ = self
-        return func
+
+        if inspect.iscoroutinefunction(func):
+
+            def async_action(*args) -> None:
+                if self.task:
+                    log.warning("Action %s is already running", self.detailed_name)
+                    return
+
+                coro = func(*args)
+                task = asyncio.create_task(coro)
+                self.task = task
+                task.add_done_callback(self._task_done)
+
+            async_action.__action__ = self  # type: ignore[attr-defined]
+            return async_action
+
+        else:
+            func.__action__ = self
+            return func
+
+    def _task_done(self, task: asyncio.Task) -> None:
+        self.task = None
 
 
 def is_action(func):

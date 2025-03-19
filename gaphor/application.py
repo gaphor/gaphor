@@ -129,7 +129,7 @@ class Application(Service, ActionProvider):
             if not self._sessions and not (
                 self._gtk_app and self._gtk_app.get_windows()
             ):
-                self.quit()
+                self.shutdown()
 
         event_manager = session.get_service("event_manager")
         event_manager.subscribe(on_active_session_changed)
@@ -175,11 +175,9 @@ class Application(Service, ActionProvider):
             self._active_session = session
             event_manager = session.get_service("event_manager")
             event_manager.handle(SessionShutdownRequested())
-            if self._active_session == session:
-                logger.info("Window not closed, abort quit operation")
-                return False
-        self.shutdown()
-        return True
+
+        if not self._sessions and not (self._gtk_app and self._gtk_app.get_windows()):
+            self.shutdown()
 
     def all(self, base: type[T]) -> Iterator[tuple[str, T]]:
         return (

@@ -1,5 +1,7 @@
 """Event Manager."""
 
+import asyncio
+import inspect
 from collections import deque
 
 from generic.event import Event, Handler
@@ -52,10 +54,12 @@ class EventManager(Service):
         self._events = _Manager()
         self._priority = _Manager()
         self._queue: deque[Event] = deque()
+        self._async_tasks: set[asyncio.Task] = set()
         self._handling = False
 
     def shutdown(self) -> None:
-        pass
+        for task in set(self._async_tasks):
+            task.cancel()
 
     def subscribe(self, handler: Handler) -> None:
         """Register a handler.
@@ -63,7 +67,26 @@ class EventManager(Service):
         Handlers are triggered (executed) when events are
         emitted through the :obj:`~gaphor.core.eventmanager.EventManager.handle` method.
         """
-        self._subscribe(handler, self._events)
+        if inspect.iscoroutinefunction(handler):
+
+            def async_handler(event: Event) -> None:
+                coro = handler(event)
+                task = asyncio.create_task(coro)
+                self._async_tasks.add(task)
+                task.add_done_callback(self._task_done)
+
+            self._subscribe(
+                self._events, async_handler, getattr(handler, "__event_types__", None)
+            )
+        else:
+            self._subscribe(self._events, handler)
+
+    async def gather_tasks(self):
+        if self._async_tasks:
+            await asyncio.gather(*self._async_tasks)
+
+    def _task_done(self, task: asyncio.Task) -> None:
+        self._async_tasks.remove(task)
 
     def priority_subscribe(self, handler: Handler) -> None:
         """Register a handler.
@@ -74,10 +97,10 @@ class EventManager(Service):
         It's basically to make sure that all events are recorded by the
         undo manager.
         """
-        self._subscribe(handler, self._priority)
+        self._subscribe(self._priority, handler)
 
-    def _subscribe(self, handler: Handler, manager: _Manager) -> None:
-        event_types = getattr(handler, "__event_types__", None)
+    def _subscribe(self, manager: _Manager, handler: Handler, event_types=None) -> None:
+        event_types = getattr(handler, "__event_types__", event_types)
         if not event_types:
             raise Exception(f"No event types provided for function {handler}")
 
