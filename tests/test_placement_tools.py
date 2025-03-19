@@ -1,4 +1,5 @@
 import pytest
+import pytest_asyncio
 from gi.repository import Gtk
 
 from gaphor import UML
@@ -31,8 +32,8 @@ def properties():
     return {}
 
 
-@pytest.fixture
-def tab(event_manager, element_factory):
+@pytest_asyncio.fixture()
+async def tab(event_manager, element_factory):
     diagram = element_factory.create(UML.Diagram)
     tab = DiagramPage(diagram, event_manager, element_factory, UMLModelingLanguage())
 
@@ -55,6 +56,7 @@ def flatten(list):
     return [item for sublist in list for item in sublist]
 
 
+@pytest.mark.asyncio
 @pytest.mark.parametrize(
     "tool_def",
     set(
@@ -68,7 +70,7 @@ def flatten(list):
         )
     ),
 )
-def test_placement_action(tool_def, tab, event_manager):
+async def test_placement_action(tool_def, tab, event_manager):
     if not tool_def.item_factory:
         return
 
@@ -79,18 +81,20 @@ def test_placement_action(tool_def, tab, event_manager):
         tool_def.item_factory, event_manager, tool_def.handle_index
     )
     on_drag_begin(tool, 0, 0, placement_state)
-    tab.view.update()
+    await tab.view.update()
 
 
-def test_placement_object_node(tab, element_factory, event_manager):
-    test_placement_action(
+@pytest.mark.asyncio
+async def test_placement_object_node(tab, element_factory, event_manager):
+    await test_placement_action(
         get_tool_def(UMLModelingLanguage(), "toolbox-object-node"), tab, event_manager
     )
     assert len(element_factory.lselect(UML.ObjectNode)) == 1
 
 
-def test_placement_partition(tab, element_factory, event_manager):
-    test_placement_action(
+@pytest.mark.asyncio
+async def test_placement_partition(tab, element_factory, event_manager):
+    await test_placement_action(
         get_tool_def(UMLModelingLanguage(), "toolbox-partition"), tab, event_manager
     )
 

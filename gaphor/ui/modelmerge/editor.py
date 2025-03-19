@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from gaphas.decorators import nonrecursive
 from gi.repository import Gio, Gtk
 
 from gaphor.core import event_handler
@@ -65,7 +64,6 @@ class ModelMerge:
         self.event_manager.unsubscribe(self.on_model_loaded)
         self.event_manager.unsubscribe(self.on_model_updated)
 
-    @nonrecursive
     def apply(self, change_node: Node | None):
         def do_apply(node):
             for element in node.elements:

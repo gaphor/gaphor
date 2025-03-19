@@ -1,6 +1,7 @@
 import os
 
 import pytest
+import pytest_asyncio
 from gi.repository import Gdk
 
 from gaphor import UML
@@ -17,8 +18,8 @@ from gaphor.UML.diagramitems import ClassItem, PackageItem
 from gaphor.UML.general.comment import CommentItem
 
 
-@pytest.fixture
-def page(diagram, event_manager, element_factory, modeling_language):
+@pytest_asyncio.fixture
+async def page(diagram, event_manager, element_factory, modeling_language):
     page = DiagramPage(diagram, event_manager, element_factory, modeling_language)
     page.construct()
     assert page.diagram == diagram
@@ -62,9 +63,11 @@ def test_placement_cursor():
     assert cursor
 
 
-def test_delete_selected_items(create, diagram, view, event_manager):
+@pytest.mark.asyncio
+async def test_delete_selected_items(create, diagram, view, event_manager):
     package_item = create(PackageItem, UML.Package)
     view.selection.select_items(package_item)
+    await view.update()
 
     delete_selected_items(view, event_manager)
 
@@ -82,13 +85,15 @@ def test_delete_selected_owner(create, diagram, view, event_manager, sanitizer_s
     assert diagram.element is None
 
 
-def test_not_delete_selected_package_owner(
+@pytest.mark.asyncio
+async def test_not_delete_selected_package_owner(
     create, diagram, view, event_manager, sanitizer_service
 ):
     package_item = create(PackageItem, UML.Package)
     package = package_item.subject
     diagram.element = package_item.subject
     view.selection.select_items(package_item)
+    await view.update()
 
     delete_selected_items(view, event_manager)
 
