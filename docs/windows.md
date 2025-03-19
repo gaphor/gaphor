@@ -24,7 +24,7 @@ To set up a development environment in Windows first install
 [Git](https://gitforwindows.org) by executing as an administrator:
 
 ```PowerShell
-winget install git
+winget install git.git
 ```
 
 ### GTK and Python with Gvsbuild
@@ -47,7 +47,7 @@ The default installation options should be fine for use with Gaphor.
 2. Open a PowerShell terminal as a normal user and check the python version:
 
    ```PowerShell
-   py -3.12 --version
+   py -3.13 --version
    ```
 
 #### Install Graphviz
@@ -56,21 +56,22 @@ Graphviz is used by Gaphor for automatic diagram formatting.
 
 1. Install from WinGet with administrator PowerShell:
 
-   ```PowerShell
-   winget install graphviz
-   ```
+```PowerShell
+winget install graphviz
+```
 
 #### Install pipx
 
 From the regular user PowerShell terminal execute:
+
 ```PowerShell
-py -3.12 -m pip install --user pipx
-py -3.12 -m pipx ensurepath
+py -3.13 -m pip install --user pipx
+py -3.13 -m pipx ensurepath
 ```
 
 #### Download GTK
 
-Download the latest release asset at https://github.com/wingtk/gvsbuild/releases. The file will be
+Download the latest release asset at [https://github.com/wingtk/gvsbuild/releases](https://github.com/wingtk/gvsbuild/releases). The file will be
 called `GTK4_Gvsbuild_VERSION_x64.zip`, where `VERSION` is the latest released version.
 
 Unzip the `GTK4_Gvsbuild_VERSION_x64.zip` file to `C:\gtk`. For example with 7Zip:
@@ -94,18 +95,21 @@ C:\gtk
 ### Setup Gaphor
 
 In the same PowerShell terminal, clone the repository:
+
 ```PowerShell
 cd (to the location you want to put Gaphor)
 git clone https://github.com/gaphor/gaphor.git
 cd gaphor
 ```
 
-Install Poetry
+Install Poetry:
+
 ```PowerShell
 pipx install poetry
 ```
 
 Add GTK to your environmental variables:
+
 ```PowerShell
 $env:Path = $env:Path + ";C:\gtk\bin;C:\Program Files\Graphviz\bin"
 $env:LIB = "C:\gtk\lib"
@@ -116,18 +120,21 @@ $env:XDG_DATA_HOME = "$HOME\.local\share"
 You can also edit your account's Environmental Variables to persist across
 PowerShell sessions.
 
-Install Gaphor's dependencies
+Install Gaphor's dependencies:
+
 ```PowerShell
 poetry install
 ```
 
-Reinstall PyGObject and pycairo using gvsbuild wheels
+Reinstall PyGObject and pycairo using gvsbuild wheels:
+
 ```PowerShell
 poetry run pip install --force-reinstall (Resolve-Path C:\gtk\wheels\PyGObject*.whl)
 poetry run pip install --force-reinstall (Resolve-Path C:\gtk\wheels\pycairo*.whl)
 ```
 
 Launch Gaphor!
+
 ```PowerShell
 poetry run gaphor
 ```
@@ -136,7 +143,9 @@ poetry run gaphor
 
 When setting up a plugin workspace you need to perform the following steps:
 
+```
 cd (your project's workspace)
+```
 
 If your project does not already have a pyproject.toml file, create one. For details see the [Poetry
 documentation](https://python-poetry.org/docs/basic-usage/). If you already have a .toml file, make sure you have gaphor
@@ -152,7 +161,8 @@ Install your project's dependencies. If you have made your project dependent upo
 poetry install
 ```
 
-Reinstall PyGObject and pycairo using gvsbuild wheels
+Reinstall PyGObject and pycairo using gvsbuild wheels:
+
 ```PowerShell
 poetry run pip install --force-reinstall (Resolve-Path C:\gtk\wheels\PyGObject*.whl)
 poetry run pip install --force-reinstall (Resolve-Path C:\gtk\wheels\pycairo*.whl)
@@ -162,6 +172,7 @@ Note that if you have forgotten to reinstall PyGObject and pycairo, the first ti
 has text, gaphor will crash!
 
 Launch Gaphor!
+
 ```PowerShell
 poetry run gaphor
 ```
@@ -169,16 +180,19 @@ poetry run gaphor
 ### Debugging using Visual Studio Code
 
 Start a new PowerShell terminal, and set current directory to the project folder:
-```PowerShell
+
+```
 cd (to the location you put gaphor)
 ```
 
 Ensure that path environment variable is set:
+
 ```PowerShell
 $env:Path = "C:\gtk\bin;" + $env:Path
 ```
 
 Start Visual Studio Code:
+
 ```PowerShell
 code .
 ```
@@ -194,7 +208,9 @@ Visual Studio Code will start the application in debug mode, and will stop at ma
 
 ### Debugging Your Plugin Using Visual Studio Code
 
+```
 cd (your project's workspace)
+```
 
 Start gaphor:
 1. In the VSCode menu, select Run → Start debugging
@@ -241,6 +257,7 @@ If you use anaconda for other projects, it's a good idea to create a new environ
 conda create -n "gaphor"
 conda activate gaphor
 ```
+
 where ``gaphor`` can be any name desired for the environment.
 
 ### Update packages in the new environment
@@ -254,18 +271,22 @@ conda update --all
 ### Install dependencies
 
 The following Gaphor dependencies are installable from anaconda:
+
 ```
 conda install graphviz
 conda install -c conda-forge gobject-introspection gtk4 pygobject pycairo hicolor-icon-theme adwaita-icon-theme
 ```
+
 Unfortunately, the `gtksourceview5` and `libadwaita` dependencies are not available as anaconda packages. So you may not be able to fully build/run the program in this environment.
 
 ### Set up your development environment
 
 Now, to develop with Gaphor, you will want to set it up with your development. If you want to work with `ipython`, install it below:
+
 ```
 conda install ipython ipykernel
 ```
+
 #### VSCode Tips
 VSCode should work out-of-the box if it is already installed. Just set 'gaphor' as the kernel in your VSCode Profile or notebook.
 
@@ -273,9 +294,11 @@ VSCode should work out-of-the box if it is already installed. Just set 'gaphor' 
 You can install spyder in this environment using `conda install spyder`.
 
 If this does not work, (i.e., if `conda install spyder` reveals conflicts), you can instead use the following workaround:
+
 ```
 conda install spyder-kernels=2.4
 ```
+
 Then, in spyder, set 'gaphor' as your python interpreter
 
 ### Install Gaphor
