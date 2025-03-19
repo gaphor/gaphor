@@ -59,7 +59,7 @@ class ObjectNodePropertyPage(PropertyPageBase):
 
     def _on_upper_bound_change(self, entry):
         value = entry.get_text().strip()
-        with Transaction(self.event_manager):
+        with Transaction(self.event_manager, context="editing"):
             if value == "":
                 self.subject.upperBound = None
             else:
@@ -123,7 +123,7 @@ class ValueSpecificationActionPropertyPage(PropertyPageBase):
         return builder.get_object("value-specifiation-action-editor")
 
     def _on_value_change(self, entry):
-        with Transaction(self.event_manager):
+        with Transaction(self.event_manager, context="editing"):
             value = entry.get_text()
             self.subject.value = value
 
@@ -263,7 +263,7 @@ class JoinNodePropertyPage(PropertyPageBase):
 
     def _on_join_spec_change(self, entry):
         value = entry.get_text().strip()
-        with Transaction(self.event_manager):
+        with Transaction(self.event_manager, context="editing"):
             if (
                 self.subject.joinSpec is None
                 or UML.recipes.get_literal_value_as_string(self.subject.joinSpec)
@@ -316,7 +316,7 @@ class FlowPropertyPageAbstract(PropertyPageBase):
 
     def _on_guard_change(self, entry):
         value = entry.get_text().strip()
-        with Transaction(self.event_manager):
+        with Transaction(self.event_manager, context="editing"):
             if (
                 self.subject.guard is None
                 or UML.recipes.get_literal_value_as_string(self.subject.guard) != value
@@ -397,10 +397,10 @@ class PinPropertyPage(PropertyPageBase):
 
     def _on_multiplicity_lower_change(self, entry):
         value = entry.get_text().strip()
-        with Transaction(self.event_manager):
+        with Transaction(self.event_manager, context="editing"):
             self.subject.lowerValue = value
 
     def _on_multiplicity_upper_change(self, entry):
         value = entry.get_text().strip()
-        with Transaction(self.event_manager):
+        with Transaction(self.event_manager, context="editing"):
             self.subject.upperValue = value

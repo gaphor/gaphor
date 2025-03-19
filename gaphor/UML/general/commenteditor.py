@@ -11,7 +11,7 @@ def comment_item_editor(item, view, event_manager, pos=None) -> bool:
         text = buffer.get_text(
             buffer.get_start_iter(), buffer.get_end_iter(), include_hidden_chars=True
         )
-        with Transaction(event_manager):
+        with Transaction(event_manager, context="editing"):
             item.subject.body = text
 
     subject = item.subject

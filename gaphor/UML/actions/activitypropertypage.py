@@ -217,7 +217,7 @@ class ActivityParameterNodeNamePropertyPage(PropertyPageBase):
 
     def _on_name_changed(self, entry):
         if self.subject.parameter.name != entry.get_text():
-            with Transaction(self.event_manager):
+            with Transaction(self.event_manager, context="editing"):
                 self.subject.parameter.name = entry.get_text()
 
 

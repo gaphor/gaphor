@@ -109,6 +109,15 @@ class TransactionRollback:
         self.context = context
 
 
+class TransactionClosed:
+    """Close an amendable transaction.
+
+    In some transaction contexts (notably "editing") changes can be
+    added to an existing transaction. This event closes those transactions
+    for new changes.
+    """
+
+
 class ActionEnabled:
     """Signal if an action can be activated or not."""
 

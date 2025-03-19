@@ -19,6 +19,7 @@ from gaphor.event import (
     Notification,
     SessionCreated,
     SessionShutdownRequested,
+    TransactionClosed,
 )
 from gaphor.i18n import translated_ui_string
 from gaphor.services.modelinglanguage import ModelingLanguageChanged
@@ -224,6 +225,7 @@ class MainWindow(Service, ActionProvider):
         window.connect("notify::maximized", self._on_window_mode_changed)
         window.connect("notify::fullscreened", self._on_window_mode_changed)
         window.connect("notify::is-active", self._on_window_active)
+        window.connect("notify::focus-widget", self._on_window_focus_widget)
         window.present()
 
         for handler in self._ui_updates:
@@ -323,10 +325,13 @@ class MainWindow(Service, ActionProvider):
 
         self.in_app_notifier.handle(event)
 
-    def _on_window_active(self, window, prop):
+    def _on_window_active(self, _window, _prop):
         self.event_manager.handle(ActiveSessionChanged(self))
 
-    def _on_window_close_request(self, window, event=None):
+    def _on_window_focus_widget(self, _window, _prop):
+        self.event_manager.handle(TransactionClosed())
+
+    def _on_window_close_request(self, _window, _event=None):
         self.event_manager.handle(SessionShutdownRequested())
         return True
 
