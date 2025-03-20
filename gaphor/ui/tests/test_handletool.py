@@ -85,7 +85,8 @@ def current_diagram_view(diagrams):
     return view
 
 
-def test_iconnect(event_manager, element_factory, diagrams):
+@pytest.mark.asyncio
+async def test_iconnect(event_manager, element_factory, diagrams):
     """Test basic glue functionality using CommentItem and CommentLine
     items."""
     diagram = element_factory.create(Diagram)
@@ -102,6 +103,7 @@ def test_iconnect(event_manager, element_factory, diagrams):
 
     move = HandleMove(line, handle, view)
     handle.pos = (0, 0)
+    await view.update()
     item = move.glue(handle.pos)
     assert item is not None
 
@@ -117,14 +119,14 @@ def test_iconnect(event_manager, element_factory, diagrams):
     assert cinfo is None
 
 
-def test_connect_comment_and_actor(event_manager, element_factory, diagrams):
+@pytest.mark.asyncio
+async def test_connect_comment_and_actor(event_manager, element_factory, diagrams):
     """Test connect/disconnect on comment and actor using comment-line."""
     diagram = element_factory.create(Diagram)
     event_manager.handle(DiagramOpened(diagram))
     comment = diagram.create(CommentItem, subject=element_factory.create(UML.Comment))
 
     line = diagram.create(CommentLineItem)
-
     view = current_diagram_view(diagrams)
     assert view, "View should be available here"
 
@@ -132,7 +134,9 @@ def test_connect_comment_and_actor(event_manager, element_factory, diagrams):
     move = HandleMove(line, handle, view)
 
     handle.pos = (0, 0)
+    await view.update()
     sink = move.glue(handle.pos)
+
     assert sink is not None
     assert sink.item is comment
 
@@ -149,12 +153,15 @@ def test_connect_comment_and_actor(event_manager, element_factory, diagrams):
     move = HandleMove(line, handle, view)
 
     handle.pos = (0, 0)
+    await view.update()
     sink = move.glue(handle.pos)
+
     assert sink, f"No sink at {handle.pos}"
     assert sink.item is actor
-    move.connect(handle.pos)
 
+    move.connect(handle.pos)
     cinfo = view.model.connections.get_connection(handle)
+
     assert cinfo.item is line
     assert cinfo.connected is actor
 

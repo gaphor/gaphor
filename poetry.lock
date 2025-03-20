@@ -722,19 +722,19 @@ sphinx-basic-ng = ">=1.0.0.beta2"
 
 [[package]]
 name = "gaphas"
-version = "4.1.1"
+version = "5.0.0"
 description = "Gaphas is a GTK diagramming widget"
 optional = false
 python-versions = "<4,>=3.9"
 groups = ["main"]
 files = [
-    {file = "gaphas-4.1.1-py3-none-any.whl", hash = "sha256:888aefdd266ffc91cff03768190bec89e0adb1fb903f8e5779d9b900600dd5d0"},
-    {file = "gaphas-4.1.1.tar.gz", hash = "sha256:719db9009962ca6d83f52389020f70ac0206a77da0cf76933cd1918a3953d5ea"},
+    {file = "gaphas-5.0.0-py3-none-any.whl", hash = "sha256:307e3ca00c17c3a71dc7734ec1f5632160eda6a3a9f63cb769210a83e88daa48"},
+    {file = "gaphas-5.0.0.tar.gz", hash = "sha256:ba8004abe22c3e66bfc12a4b71231ee1972a17260b88377d3aee5340280f1030"},
 ]
 
 [package.dependencies]
 pycairo = ">=1.20.0,<2.0.0"
-PyGObject = ">=3.38.0,<4.0.0"
+PyGObject = ">=3.50,<4.0"
 
 [[package]]
 name = "generic"
@@ -3096,4 +3096,4 @@ type = ["pytest-mypy"]
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.11,<3.14"
-content-hash = "c176086fed22b7c4cf826267db6720a7f05ab4e9de8ab9be28c7cef603ed0665"
+content-hash = "f8d3b51d58787b15496ff85aa60b12e008df8a033178c1d441037201c330efd1"
