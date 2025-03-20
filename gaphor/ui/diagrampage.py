@@ -16,10 +16,10 @@ from gaphor.core import event_handler, gettext
 from gaphor.core.modeling.diagram import StyledDiagram
 from gaphor.core.modeling.event import (
     AttributeUpdated,
-    ElementDeleted,
     StyleSheetUpdated,
 )
 from gaphor.diagram.diagramtoolbox import get_tool_def, tooliter
+from gaphor.diagram.event import DiagramSelectionChanged
 from gaphor.diagram.painter import DiagramTypePainter, ItemPainter
 from gaphor.diagram.presentation import ElementPresentation
 from gaphor.diagram.tools import (
@@ -32,7 +32,7 @@ from gaphor.i18n import translated_ui_string
 from gaphor.transaction import Transaction
 from gaphor.ui.actiongroup import apply_action_group
 from gaphor.ui.clipboard import Clipboard
-from gaphor.ui.event import DiagramClosed, ToolSelected
+from gaphor.ui.event import ToolSelected
 
 log = logging.getLogger(__name__)
 
@@ -112,7 +112,6 @@ class DiagramPage:
         self.rubberband_state = RubberbandState()
         self.context_menu = Gtk.PopoverMenu.new_from_model(popup_model(diagram))
 
-        self.event_manager.subscribe(self._on_element_delete)
         self.event_manager.subscribe(self._on_attribute_updated)
         self.event_manager.subscribe(self._on_style_sheet_updated)
         self.event_manager.subscribe(self._on_tool_selected)
@@ -138,10 +137,15 @@ class DiagramPage:
         view = builder.get_object("view")
         view.add_css_class(self._css_class())
         view.connect("delete", delete_selected_items, self.event_manager)
+        view.connect_after("select-all", selection_changed, self.event_manager)
+        view.connect_after("unselect-all", selection_changed, self.event_manager)
         view.connect("cut-clipboard", self.clipboard.cut)
         view.connect("copy-clipboard", self.clipboard.copy)
         view.connect("paste-clipboard", self.clipboard.paste_link)
         view.connect("paste-full-clipboard", self.clipboard.paste_full)
+        self.clipboard.clipboard.connect(
+            "notify::content", self._clipboard_content_changed
+        )
 
         self.diagram_css = Gtk.CssProvider.new()
         Gtk.StyleContext.add_provider_for_display(
@@ -164,11 +168,12 @@ class DiagramPage:
 
         diagrampage = builder.get_object("diagrampage")
         apply_action_group(self, "diagram", diagrampage)
+        self._clipboard_content_changed(self.clipboard.clipboard)
 
         return diagrampage
 
     @action(name="diagram.align")
-    def toggle_editor_preferences(self, target: str):
+    def align_elements(self, target: str):
         if self.view and (
             len(
                 elements := {
@@ -241,11 +246,6 @@ class DiagramPage:
     def _on_tool_selected(self, event: ToolSelected):
         self.select_tool(event.tool_name)
 
-    @event_handler(ElementDeleted)
-    def _on_element_delete(self, event: ElementDeleted):
-        if event.element is self.diagram:
-            self.event_manager.handle(DiagramClosed(self.diagram))
-
     @event_handler(AttributeUpdated)
     def _on_attribute_updated(self, event: AttributeUpdated):
         if event.property.name == "name" and self.view:
@@ -255,6 +255,14 @@ class DiagramPage:
     def _on_style_sheet_updated(self, _event):
         self.update_drawing_style()
         self.diagram.update(self.diagram.ownedPresentation)
+
+    def _clipboard_content_changed(self, clipboard, _pspec=None):
+        if not self.view:
+            return
+
+        enabled = self.clipboard.can_paste()
+        self.view.action_set_enabled("clipboard.paste", enabled)
+        self.view.action_set_enabled("clipboard.paste-full", enabled)
 
     def _on_notify_dark(self, style_manager, gparam):
         self.update_drawing_style()
@@ -271,7 +279,6 @@ class DiagramPage:
             self.diagram_css,
         )
 
-        self.event_manager.unsubscribe(self._on_element_delete)
         self.event_manager.unsubscribe(self._on_attribute_updated)
         self.event_manager.unsubscribe(self._on_style_sheet_updated)
         self.event_manager.unsubscribe(self._on_tool_selected)
@@ -327,6 +334,13 @@ def delete_selected_items(view: GtkView, event_manager):
         items = view.selection.selected_items
         for i in list(items):
             i.unlink()
+
+
+def selection_changed(view: GtkView, event_manager):
+    selection = view.selection
+    event_manager.handle(
+        DiagramSelectionChanged(view, selection.focused_item, selection.selected_items)
+    )
 
 
 def context_menu_controller(context_menu, diagram):
