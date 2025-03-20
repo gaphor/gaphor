@@ -36,9 +36,6 @@
     </child>
     <child>
       <object class="GtkBox" id="tips">
-        <property name="margin_top">12</property>
-        <property name="margin_bottom">12</property>
-        <property name="spacing">12</property>
         <property name="orientation">vertical</property>
         <child>
           <object class="GtkLabel">
@@ -72,6 +69,55 @@
             <property name="xalign">0</property>
           </object>
         </child>
+        <style>
+          <class name="tips" />
+        </style>
+      </object>
+    </child>
+    <child>
+      <object class="GtkBox">
+        <property name="vexpand">1</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkBox" id="cta">
+        <property name="orientation">vertical</property>
+        <child>
+          <object class="GtkLabel">
+            <property name="label" translatable="yes">Help improve Gaphor</property>
+            <property name="xalign">0</property>
+            <style>
+              <class name="title" />
+            </style>
+          </object>
+        </child>
+        <child>
+          <object class="GtkLabel">
+            <property name="label" translatable="yes">Gaphor is free and open source software, written by devoted volunteers.</property>
+            <property name="use_markup">1</property>
+            <property name="wrap">1</property>
+            <property name="xalign">0</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkLabel">
+            <property name="label" translatable="yes">There are many ways to help make Gaphor better: write a blog post, translate Gaphor into your language, report bugs, or suggest new features. Join us in improving Gaphor!</property>
+            <property name="use_markup">1</property>
+            <property name="wrap">1</property>
+            <property name="xalign">0</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkLabel">
+            <property name="label" translatable="yes">Visit &lt;a href=&quot;https://gaphor.org/contribute/&quot;&gt;gaphor.org&lt;/a&gt; for more information.</property>
+            <property name="use_markup">1</property>
+            <property name="wrap">1</property>
+            <property name="xalign">0</property>
+          </object>
+        </child>
+        <style>
+          <class name="cta" />
+        </style>
       </object>
     </child>
   </object>
