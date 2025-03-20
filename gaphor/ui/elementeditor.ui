@@ -101,7 +101,7 @@
         </child>
         <child>
           <object class="GtkLabel">
-            <property name="label" translatable="yes">There's many ways you can help make Gaphor better: write a blog post, help translate Gaphor to your language, reporting bugs, suggesting features. Help make Gaphor better!</property>
+            <property name="label" translatable="yes">There are many ways to help make Gaphor better: write a blog post, translate Gaphor into your language, report bugs, or suggest new features. Join us in improving Gaphor!</property>
             <property name="use_markup">1</property>
             <property name="wrap">1</property>
             <property name="xalign">0</property>
