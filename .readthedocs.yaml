@@ -5,7 +5,7 @@ build:
   tools:
     python: "3.13"
   apt_packages:
-  - libgirepository1.0-dev
+  - libgirepository-2.0-dev
   - gir1.2-pango-1.0
   - graphviz
   jobs:
