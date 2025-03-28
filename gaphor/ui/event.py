@@ -11,11 +11,6 @@ class ElementOpened:
         self.element = element
 
 
-class DiagramClosed:
-    def __init__(self, diagram):
-        self.diagram = diagram
-
-
 class CurrentDiagramChanged:
     def __init__(self, diagram):
         self.diagram = diagram

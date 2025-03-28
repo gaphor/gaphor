@@ -50,6 +50,13 @@ class Clipboard:
             for i in list(items):
                 i.unlink()
 
+    def can_paste(self):
+        return (
+            self.clipboard.is_local()
+            and (content_provider := self.clipboard.get_content())
+            and content_provider.ref_formats().contain_gtype(CopyBuffer.__gtype__)
+        )
+
     def paste_link(self, view):
         self.create_background_task(self._paste(view, paste_link))
 

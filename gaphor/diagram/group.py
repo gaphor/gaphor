@@ -62,7 +62,7 @@ Root = RootType.Root
 
 
 @singledispatch
-def owner(_element: Base) -> Base | RootType | None:
+def owner(_element: Base | RootType | None) -> Base | RootType | None:
     return None
 
 

@@ -17,6 +17,8 @@ def text_edit_tools(event_manager):
 def on_key_pressed(controller, keyval, keycode, state, event_manager):
     view = controller.get_widget()
     item = view.selection.hovered_item
+
+    # action: selection.rename
     if item and keyval == Gdk.KEY_F2:
         return instant_editor(item, view, event_manager)
 
