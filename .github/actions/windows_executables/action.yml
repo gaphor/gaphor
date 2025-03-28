@@ -19,9 +19,8 @@ runs:
     - name: Install Build Dependencies
       run: poetry install --only main,packaging --no-interaction
       shell: bash
-    - name: Windows specific overrides
+    - name: Windows specific Cairo override
       run: |
-        poetry run pip install --force-reinstall (Resolve-Path C:\gtk\wheels\PyGObject*.whl)
         poetry run pip install --force-reinstall (Resolve-Path C:\gtk\wheels\pycairo*.whl)
       shell: pwsh
     - name: Build PyInstaller Bootloader

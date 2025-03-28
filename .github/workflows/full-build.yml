@@ -264,7 +264,7 @@ jobs:
     env:
       INCLUDE: C:\gtk\include;C:\gtk\include\cairo;C:\gtk\include\glib-2.0;C:\gtk\include\gobject-introspection-1.0;C:\gtk\lib\glib-2.0\include;
       LIB: C:\gtk\lib
-      gvsbuild_version: 2025.2.0
+      gvsbuild_version: 2025.3.0
     permissions:
       contents: write
     timeout-minutes: 45

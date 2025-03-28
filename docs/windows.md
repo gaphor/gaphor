@@ -126,10 +126,9 @@ Install Gaphor's dependencies:
 poetry install
 ```
 
-Reinstall PyGObject and pycairo using gvsbuild wheels:
+Reinstall pycairo using gvsbuild wheels:
 
 ```PowerShell
-poetry run pip install --force-reinstall (Resolve-Path C:\gtk\wheels\PyGObject*.whl)
 poetry run pip install --force-reinstall (Resolve-Path C:\gtk\wheels\pycairo*.whl)
 ```
 
@@ -161,10 +160,9 @@ Install your project's dependencies. If you have made your project dependent upo
 poetry install
 ```
 
-Reinstall PyGObject and pycairo using gvsbuild wheels:
+Reinstall pycairo using gvsbuild wheels:
 
 ```PowerShell
-poetry run pip install --force-reinstall (Resolve-Path C:\gtk\wheels\PyGObject*.whl)
 poetry run pip install --force-reinstall (Resolve-Path C:\gtk\wheels\pycairo*.whl)
 ```
 
