@@ -55,7 +55,7 @@ execute:
 
 ```bash
 sudo apt-get install -y python3-dev python3-gi python3-gi-cairo
-gir1.2-gtk-4.0 libgirepository1.0-dev libcairo2-dev libgtksourceview-5-dev
+gir1.2-gtk-4.0 libgirepository-2.0-dev libcairo2-dev libgtksourceview-5-dev
 ```
 
 For Redhat/RPM/Fedora based systems:

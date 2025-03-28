@@ -99,7 +99,7 @@ This is the ``.readthedocs.yaml`` file we use for Gaphor:
 .. literalinclude :: ../.readthedocs.yaml
    :language: yaml
 
-* ``libgirepository1.0-dev`` is required to build PyGObject.
+* ``libgirepository-2.0-dev`` is required to build PyGObject.
 * ``gir1.2-pango-1.0`` is required for text rendering.
 
 .. note::
