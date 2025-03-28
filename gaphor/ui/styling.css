@@ -184,11 +184,11 @@ flowboxchild:active {
 }
 
 
-.tips label {
+.tips > label {
   margin: 0px 0px 6px;
 }
 
-.tips label:first-child {
+.tips > label:first-child {
   margin-top: 6px;
 }
 
@@ -209,5 +209,5 @@ flowboxchild:active {
   background-color: var(--blue-4);
   color: white;
   margin: 0;
-  padding: 6px 6px;
+  padding: 6px;
 }
