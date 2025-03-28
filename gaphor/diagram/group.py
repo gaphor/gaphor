@@ -37,7 +37,8 @@ def change_owner(new_parent: Base | None, element: Base) -> bool:
         o = None
 
     if new_parent and o is new_parent:
-        return False
+        # idempotency
+        return True
 
     if new_parent and element in self_and_owners(new_parent):
         return False

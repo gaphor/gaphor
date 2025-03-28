@@ -5,7 +5,7 @@
   background-color: transparent;
 }
 
-:drop {
+:not(diagramframe):drop {
   color: #1a5fb4;
   line-width: 3;
 }

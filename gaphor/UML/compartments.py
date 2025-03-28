@@ -55,8 +55,7 @@ def from_package_str(item):
     namespace = subject.namespace
     parent = item.parent
 
-    # if there is a parent (i.e. interaction)
-    if parent and parent.subject and parent.subject.namespace is not namespace:
+    if parent and parent.subject and parent.subject is namespace:
         return False
 
     return (
