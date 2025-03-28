@@ -587,8 +587,8 @@ def upgrade_simple_properties_to_value_specifications(
                     )
                     if type is not None and isinstance(value, str):
                         upperValue = element_factory.create(type)
-                        #upperValue.value = "*" if value == "*" else int(value)
-                        upperValue.value = '*' if isinstance(value, str) else int(value)
+                        #Overwrite any string value that is not '*'
+                        upperValue.value = "*" if isinstance(value, str) else int(value)
                         upperValue.name = value
                         elem.values["upperValue"] = upperValue
                         homeless_literals[upperValue.id] = (elem.id, name)
