@@ -154,7 +154,7 @@ class Greeter(Service, ActionProvider):
             self.greeter.destroy()
             self.greeter = None
 
-    @action(name="app.new-model", shortcut="<Primary>n")
+    @action(name="app.new-window", shortcut="<Primary>n")
     def new_model(self):
         self.open()
 
