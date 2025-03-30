@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import asyncio
 import contextlib
 import io
 from collections.abc import Collection
@@ -9,7 +10,6 @@ from collections.abc import Collection
 import cairo
 from gi.repository import Gdk, GLib, GObject
 
-from gaphor.asyncio import TaskOwner
 from gaphor.core import Transaction
 from gaphor.core.modeling import Presentation
 from gaphor.diagram.copypaste import copy_full, paste_full, paste_link
@@ -24,7 +24,7 @@ class CopyBuffer(GObject.Object):
     buffer = GObject.Property(type=object)
 
 
-class Clipboard(TaskOwner):
+class Clipboard:
     """Copy/Cut/Paste functionality for diagrams."""
 
     def __init__(self, event_manager, element_factory, clipboard=None):
@@ -33,6 +33,7 @@ class Clipboard(TaskOwner):
         self.element_factory = element_factory
 
         self.clipboard = clipboard or Gdk.Display.get_default().get_clipboard()
+        self._background_task: asyncio.Task | None = None
 
     def copy(self, view):
         if items := view.selection.selected_items:
@@ -99,6 +100,25 @@ class Clipboard(TaskOwner):
         selection = view.selection
         selection.unselect_all()
         selection.select_items(*new_items)
+
+    def create_background_task(self, coro) -> asyncio.Task:
+        assert self._background_task is None or self._background_task.done()
+        task = asyncio.create_task(coro)
+        self._background_task = task
+
+        def task_done(task):
+            assert self._background_task is task
+            self._background_task = None
+
+        task.add_done_callback(task_done)
+        return task
+
+    def cancel_background_task(self) -> bool:
+        return (self._background_task is not None) and self._background_task.cancel()
+
+    async def gather_background_task(self):
+        if self._background_task:
+            await asyncio.gather(self._background_task)
 
 
 def render_svg(diagram, items) -> bytes:

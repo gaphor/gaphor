@@ -1,3 +1,4 @@
+import pytest
 from gaphas.item import NW, SE
 
 from gaphor import UML
@@ -6,7 +7,8 @@ from gaphor.diagram.tools.dropzone import drop_zone_tool, on_motion
 from gaphor.UML.deployments import ArtifactItem, NodeItem
 
 
-def test_hover_over_drop_zone(diagram, element_factory, view):
+@pytest.mark.asyncio
+async def test_hover_over_drop_zone(diagram, element_factory, view):
     node_item = diagram.create(NodeItem, subject=element_factory.create(UML.Node))
     node_item.width = node_item.height = 200
     comp_item = diagram.create(
@@ -14,6 +16,7 @@ def test_hover_over_drop_zone(diagram, element_factory, view):
     )
 
     view.request_update((node_item, comp_item))
+    await view.update()
 
     tool = drop_zone_tool(ArtifactItem, UML.Artifact)
     view.add_controller(tool)

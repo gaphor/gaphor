@@ -5,7 +5,6 @@ from pathlib import Path
 from gi.repository import Gtk
 
 from gaphor.abc import ActionProvider, Service
-from gaphor.asyncio import TaskOwner
 from gaphor.core import action, gettext
 from gaphor.diagram.export import (
     escape_filename,
@@ -18,7 +17,7 @@ from gaphor.plugins.diagramexport.exportall import export_all
 from gaphor.ui.filedialog import save_file_dialog
 
 
-class DiagramExport(Service, ActionProvider, TaskOwner):
+class DiagramExport(Service, ActionProvider):
     """Service for exporting diagrams as images (SVG, PNG, PDF)."""
 
     def __init__(
@@ -34,43 +33,39 @@ class DiagramExport(Service, ActionProvider, TaskOwner):
         self.factory = element_factory
 
     def shutdown(self):
-        self.cancel_background_task()
         if self.export_menu:
             self.export_menu.remove_actions(self)
 
-    def save_dialog(self, diagram, title, ext, mime_type, handler):
+    async def save_dialog(self, diagram, title, ext, mime_type, handler):
         dot_ext = f".{ext}"
         filename = self.filename.with_name(
             escape_filename(diagram.name) or "export"
         ).with_suffix(dot_ext)
 
-        async def save_as():
-            new_filename = await save_file_dialog(
-                title,
-                filename,
-                parent=self.main_window.window,
-                filters=[
-                    (
-                        gettext("All {ext} Files").format(ext=ext.upper()),
-                        dot_ext,
-                        mime_type,
-                    )
-                ],
-            )
-            if new_filename:
-                self.filename = new_filename
-                handler(filename, diagram)
-
-        self.create_background_task(save_as())
+        new_filename = await save_file_dialog(
+            title,
+            filename,
+            parent=self.main_window.window,
+            filters=[
+                (
+                    gettext("All {ext} Files").format(ext=ext.upper()),
+                    dot_ext,
+                    mime_type,
+                )
+            ],
+        )
+        if new_filename:
+            self.filename = new_filename
+            handler(filename, diagram)
 
     @action(
         name="file-export-svg",
         label=gettext("Export as SVG"),
         tooltip=gettext("Export diagram as SVG"),
     )
-    def save_svg_action(self):
+    async def save_svg_action(self):
         diagram = self.diagrams.get_current_diagram()
-        self.save_dialog(
+        await self.save_dialog(
             diagram, gettext("Export diagram as SVG"), "svg", "image/svg+xml", save_svg
         )
 
@@ -79,9 +74,9 @@ class DiagramExport(Service, ActionProvider, TaskOwner):
         label=gettext("Export as PNG"),
         tooltip=gettext("Export diagram as PNG"),
     )
-    def save_png_action(self):
+    async def save_png_action(self):
         diagram = self.diagrams.get_current_diagram()
-        self.save_dialog(
+        await self.save_dialog(
             diagram, gettext("Export diagram as PNG"), "png", "image/png", save_png
         )
 
@@ -90,9 +85,9 @@ class DiagramExport(Service, ActionProvider, TaskOwner):
         label=gettext("Export as PDF"),
         tooltip=gettext("Export diagram as PDF"),
     )
-    def save_pdf_action(self):
+    async def save_pdf_action(self):
         diagram = self.diagrams.get_current_diagram()
-        self.save_dialog(
+        await self.save_dialog(
             diagram,
             gettext("Export diagram as PDF"),
             "pdf",
@@ -105,9 +100,9 @@ class DiagramExport(Service, ActionProvider, TaskOwner):
         label=gettext("Export as EPS"),
         tooltip=gettext("Export diagram as Encapsulated PostScript"),
     )
-    def save_eps_action(self):
+    async def save_eps_action(self):
         diagram = self.diagrams.get_current_diagram()
-        self.save_dialog(
+        await self.save_dialog(
             diagram,
             gettext("Export diagram as EPS"),
             "eps",

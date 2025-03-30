@@ -86,7 +86,7 @@ class TransitionPropertyPage(PropertyPageBase):
 
     def _on_guard_change(self, entry):
         value = entry.get_text().strip()
-        with Transaction(self.event_manager):
+        with Transaction(self.event_manager, context="editing"):
             if not self.subject.guard:
                 self.subject.guard = self.subject.model.create(UML.Constraint)
             specification = self.subject.model.create(UML.LiteralString)
@@ -96,14 +96,14 @@ class TransitionPropertyPage(PropertyPageBase):
 
     def _on_trigger_change(self, entry):
         value = entry.get_text().strip()
-        with Transaction(self.event_manager):
+        with Transaction(self.event_manager, context="editing"):
             if not self.subject.trigger:
                 self.subject.trigger = self.subject.model.create(UML.Behavior)
             self.subject.trigger.name = value
 
     def _on_action_change(self, entry):
         value = entry.get_text().strip()
-        with Transaction(self.event_manager):
+        with Transaction(self.event_manager, context="editing"):
             if not self.subject.action:
                 self.subject.action = self.subject.model.create(UML.Behavior)
             self.subject.action.name = value

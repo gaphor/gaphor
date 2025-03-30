@@ -45,7 +45,8 @@ def test_creation(session):
     assert get_current_diagram(session) is None
 
 
-def test_show_diagram(session):
+@pytest.mark.asyncio
+async def test_show_diagram(session):
     element_factory = session.get_service("element_factory")
     diagram = element_factory.create(Diagram)
 
@@ -54,7 +55,8 @@ def test_show_diagram(session):
     assert get_current_diagram(session) == diagram
 
 
-def test_close_diagram(session):
+@pytest.mark.asyncio
+async def test_close_diagram(session):
     element_factory = session.get_service("element_factory")
     diagram = element_factory.create(Diagram)
 
@@ -67,7 +69,8 @@ def test_close_diagram(session):
     assert not get_current_diagram(session)
 
 
-def test_open_element_on_diagram(session):
+@pytest.mark.asyncio
+async def test_open_element_on_diagram(session):
     element_factory = session.get_service("element_factory")
     diagram = element_factory.create(Diagram)
     comment = element_factory.create(Comment)
@@ -81,7 +84,8 @@ def test_open_element_on_diagram(session):
     assert comment.presentation[0] in get_current_diagram(session).ownedPresentation
 
 
-def test_update_diagram_name(session):
+@pytest.mark.asyncio
+async def test_update_diagram_name(session):
     element_factory = session.get_service("element_factory")
     diagram = element_factory.create(Diagram)
 
@@ -91,7 +95,8 @@ def test_update_diagram_name(session):
     diagram.name = "Foo"
 
 
-def test_flush_model(session):
+@pytest.mark.asyncio
+async def test_flush_model(session):
     element_factory = session.get_service("element_factory")
     diagram = element_factory.create(Diagram)
 

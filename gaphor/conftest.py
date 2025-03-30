@@ -11,6 +11,7 @@ from io import StringIO
 from pathlib import Path
 
 import pytest
+import pytest_asyncio
 
 import gaphor.services.properties
 
@@ -135,8 +136,8 @@ def models():
     return Path(__file__).parent.parent / "models"
 
 
-@pytest.fixture
-def view(diagram):
+@pytest_asyncio.fixture
+async def view(diagram):
     view = DiagramView(model=diagram)
     item_painter = ItemPainter(view.selection)
     view.painter = item_painter

@@ -1,4 +1,5 @@
 import pytest
+import pytest_asyncio
 
 from gaphor.application import Session
 from gaphor.core import Transaction
@@ -42,8 +43,8 @@ def diagram(element_factory, event_manager):
         return element_factory.create(Diagram)
 
 
-@pytest.fixture
-def view(diagram, event_manager, element_factory, modeling_language):
+@pytest_asyncio.fixture
+async def view(diagram, event_manager, element_factory, modeling_language):
     page = DiagramPage(diagram, event_manager, element_factory, modeling_language)
     page.construct()
     return page.view
