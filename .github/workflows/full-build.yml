@@ -196,6 +196,9 @@ jobs:
           # https://github.com/actions/runner-images/issues/9966
           brew install --overwrite python@${python_version}
           brew install gtksourceview5 libadwaita adwaita-icon-theme gobject-introspection graphviz create-dmg
+      - name: Ensure Homebrew Library Path
+        run: test ! -d /opt/homebrew/lib || echo "DYLD_LIBRARY_PATH=/opt/homebrew/lib" >> $GITHUB_ENV
+        shell: bash
       - name: Set up Python
         uses: actions/setup-python@42375524e23c412d93fb67b49958b491fce71c38 # v5.4.0
         with:
