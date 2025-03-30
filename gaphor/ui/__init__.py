@@ -72,6 +72,8 @@ def run(argv: list[str], *, launch_service="greeter", recover=False) -> int:
         assert application
         if not application.sessions:
             application.get_service(launch_service).open()
+        elif gtk_app.get_active_window():
+            gtk_app.get_active_window().present()
 
     def app_open(gtk_app, files, n_files, hint):
         # appfilemanager should take care of this:
