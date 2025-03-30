@@ -1606,6 +1606,16 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "City-busz",
+      "name": "Balló György",
+      "avatar_url": "https://avatars.githubusercontent.com/u/530525?v=4",
+      "profile": "https://pkgbuild.com/~bgyorgy/",
+      "contributions": [
+        "bug",
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
