@@ -209,5 +209,5 @@ flowboxchild:active {
   background-color: var(--blue-4);
   color: white;
   margin: 0;
-  padding: 6px;
+  padding: 3px 6px 6px 6px;
 }
