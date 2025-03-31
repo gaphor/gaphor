@@ -22,3 +22,7 @@
               0 2px 6px 2px alpha(black, 0.1),
               0 0 0 1px alpha(black, 0.06);
 }
+
+.monospace {
+  font-family: monospace;
+}
