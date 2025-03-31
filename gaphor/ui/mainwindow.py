@@ -24,6 +24,7 @@ from gaphor.event import (
 from gaphor.i18n import translated_ui_string
 from gaphor.services.modelinglanguage import ModelingLanguageChanged
 from gaphor.services.undomanager import UndoManagerStateChanged
+from gaphor.ui import macos_menubar
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.actiongroup import window_action_group
 from gaphor.ui.event import CurrentDiagramChanged
@@ -38,33 +39,6 @@ def new_builder():
     builder = Gtk.Builder()
     builder.add_from_string(translated_ui_string("gaphor.ui", "mainwindow.ui"))
     return builder
-
-
-def create_hamburger_model(export_menu, tools_menu):
-    model = Gio.Menu.new()
-
-    part = Gio.Menu.new()
-    part.append(gettext("New Model…"), "app.new-window")
-    part.append(gettext("Open Model…"), "app.file-open")
-    model.append_section(None, part)
-
-    part = Gio.Menu.new()
-    part.append(gettext("Save"), "win.file-save")
-    part.append(gettext("Save As…"), "win.file-save-as")
-    part.append_submenu(gettext("Export"), export_menu)
-    model.append_section(None, part)
-
-    part = Gio.Menu.new()
-    part.append_submenu(gettext("Tools"), tools_menu)
-    model.append_section(None, part)
-
-    part = Gio.Menu.new()
-    part.append(gettext("Preferences"), "app.preferences")
-    part.append(gettext("Keyboard Shortcuts"), "app.shortcuts")
-    part.append(gettext("About Gaphor"), "app.about")
-    model.append_section(None, part)
-
-    return model
 
 
 def create_modeling_language_model(modeling_language):
@@ -99,7 +73,7 @@ class MainWindow(Service, ActionProvider):
         self.tools_menu = tools_menu
 
         self._builder: Gtk.Builder | None = new_builder()
-        self.action_group: Gio.ActionGroup = None
+        self.action_groups: dict[str, Gio.ActionGroup] = {}
         self.modeling_language_name = None
         self.diagram_types = None
         self.in_app_notifier = None
@@ -184,10 +158,15 @@ class MainWindow(Service, ActionProvider):
             create_diagram_types_model(self.modeling_language)
         )
 
-        hamburger = builder.get_object("hamburger")
-        hamburger.set_menu_model(
-            create_hamburger_model(self.export_menu.menu, self.tools_menu.menu),
-        )
+        if macos_menubar():
+            builder.get_object("hamburger-menu-button").unparent()
+        else:
+            builder.get_object("export-menu").append_submenu(
+                gettext("Export"), self.export_menu.menu
+            )
+            builder.get_object("tools-menu").append_submenu(
+                gettext("Tools"), self.tools_menu.menu
+            )
 
         window.set_default_size(*(self.properties.get("ui.window-size", (1024, 640))))
         if self.properties.get("ui.window-mode", "") == "maximized":
@@ -212,9 +191,12 @@ class MainWindow(Service, ActionProvider):
                 widget.set_name(name)
                 bin.set_child(widget)
 
-        self.action_group, shortcuts = window_action_group(self.component_registry)
-        window.insert_action_group("win", self.action_group)
-        window.add_controller(Gtk.ShortcutController.new_for_model(shortcuts))
+        self.action_groups = {
+            "win": window_action_group(self.component_registry),
+            "text": window_action_group(self.component_registry, scope="text"),
+        }
+        for scope, action_group in self.action_groups.items():
+            window.insert_action_group(scope, action_group)
 
         self._on_modeling_language_selection_changed()
         self.in_app_notifier = InAppNotifier(builder.get_object("main-overlay"))
@@ -243,6 +225,16 @@ class MainWindow(Service, ActionProvider):
         if overlay := self.element_editor_overlay:
             overlay.set_show_sidebar(active)
         self.properties.set("show-editors", active)
+
+    @action("maximize", state=lambda self: self.window.is_maximized())
+    def toggle_maximized(self, active):
+        if not self.window:
+            return
+
+        if active:
+            self.window.maximize()
+        else:
+            self.window.unmaximize()
 
     @action(
         "fullscreen", shortcut="F11", state=lambda self: self.window.is_fullscreen()
@@ -300,10 +292,10 @@ class MainWindow(Service, ActionProvider):
 
     @event_handler(ActionEnabled)
     def _on_action_enabled(self, event):
-        if not self.action_group:
+        if not self.action_groups:
             self._ui_updates.append(lambda: self._on_action_enabled(event))
-        elif self.action_group and event.scope == "win":
-            a = self.action_group.lookup_action(event.name)
+        elif action_group := self.action_groups.get(event.scope):
+            a = action_group.lookup_action(event.name)
             a.set_enabled(event.enabled)
 
     @event_handler(ModelingLanguageChanged)
@@ -325,7 +317,10 @@ class MainWindow(Service, ActionProvider):
 
         self.in_app_notifier.handle(event)
 
-    def _on_window_active(self, _window, _prop):
+    def _on_window_active(self, window, _prop):
+        app = window.get_application()
+        app.update_menu("export", self.export_menu.menu)
+        app.update_menu("tools", self.tools_menu.menu)
         self.event_manager.handle(ActiveSessionChanged(self))
 
     def _on_window_focus_widget(self, _window, _prop):

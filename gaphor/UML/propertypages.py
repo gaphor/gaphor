@@ -200,6 +200,7 @@ def list_view_key_handler(ctrl, keyval, _keycode, state):
     selection = list_view.get_model()
     item = selection.get_selected_item()
 
+    # action: selection.rename
     if keyval in (Gdk.KEY_F2,):
         item.editing = True
         return True
@@ -207,6 +208,7 @@ def list_view_key_handler(ctrl, keyval, _keycode, state):
     if not item or item.empty():
         return False
 
+    # action: selection.delete
     if keyval in (Gdk.KEY_Delete, Gdk.KEY_BackSpace) and not state & (
         Gdk.ModifierType.CONTROL_MASK | Gdk.ModifierType.SHIFT_MASK
     ):

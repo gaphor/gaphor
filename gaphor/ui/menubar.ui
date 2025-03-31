@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface domain="gtk40">
+  <menu id="menu">
+    <submenu>
+      <attribute name="label" translatable="yes">_File</attribute>
+      <section>
+        <item>
+          <attribute name="label" translatable="yes">New Model…</attribute>
+          <attribute name="action">app.new-window</attribute>
+        </item>
+        <item>
+          <attribute name="label" translatable="yes">Open Model…</attribute>
+          <attribute name="action">app.file-open</attribute>
+        </item>
+      </section>
+      <section>
+        <item>
+          <attribute name="label" translatable="yes">Save</attribute>
+          <attribute name="action">win.file-save</attribute>
+        </item>
+        <item>
+          <attribute name="label" translatable="yes">Save As…</attribute>
+          <attribute name="action">win.file-save-as</attribute>
+        </item>
+      </section>
+      <section>
+        <link name="section" id="export-menu"/>
+      </section>
+    </submenu>
+    <submenu>
+      <attribute name="label" translatable="yes">_Edit</attribute>
+      <section>
+        <item>
+          <attribute name="label" translatable="yes">Undo</attribute>
+          <attribute name="action">text.undo</attribute>
+        </item>
+        <item>
+          <attribute name="label" translatable="yes">Redo</attribute>
+          <attribute name="action">text.redo</attribute>
+        </item>
+      </section>
+      <section>
+        <item>
+          <attribute name="label" translatable="yes">Cut</attribute>
+          <attribute name="action">clipboard.cut</attribute>
+        </item>
+        <item>
+          <attribute name="label" translatable="yes">Copy</attribute>
+          <attribute name="action">clipboard.copy</attribute>
+        </item>
+        <item>
+          <attribute name="label" translatable="yes">Paste</attribute>
+          <attribute name="action">clipboard.paste</attribute>
+        </item>
+        <item>
+          <attribute name="label" translatable="yes">Paste (copy defining elements)</attribute>
+          <attribute name="action">clipboard.paste-full</attribute>
+        </item>
+        <item>
+          <attribute name="label" translatable="yes">Delete</attribute>
+          <attribute name="action">selection.delete</attribute>
+        </item>
+      </section>
+      <section>
+        <item>
+          <attribute name="label" translatable="yes">Select All</attribute>
+          <attribute name="action">selection.select-all</attribute>
+        </item>
+        <item>
+          <attribute name="label" translatable="yes">Unselect All</attribute>
+          <attribute name="action">selection.unselect-all</attribute>
+        </item>
+      </section>
+    </submenu>
+    <submenu>
+      <attribute name="label" translatable="yes">_View</attribute>
+      <section>
+        <item>
+          <attribute name="label" translatable="yes">Zoom In</attribute>
+          <attribute name="action">win.zoom-in</attribute>
+        </item>
+        <item>
+          <attribute name="label" translatable="yes">Zoom Out</attribute>
+          <attribute name="action">win.zoom-out</attribute>
+        </item>
+        <item>
+          <attribute name="label" translatable="yes">Actual Size</attribute>
+          <attribute name="action">win.zoom-100</attribute>
+        </item>
+      </section>
+      <section>
+        <item>
+          <attribute name="label" translatable="yes">Close</attribute>
+          <attribute name="action">win.close-current-tab</attribute>
+        </item>
+      </section>
+    </submenu>
+    <submenu>
+      <link name="section" id="tools-menu"/>
+    </submenu>
+    <submenu>
+      <attribute name="label" translatable="yes">_Window</attribute>
+      <section>
+        <item>
+          <attribute name="label" translatable="yes">Maximize</attribute>
+          <attribute name="action">win.maximize</attribute>
+        </item>
+        <item>
+          <attribute name="label" translatable="yes">Full screen</attribute>
+          <attribute name="action">win.fullscreen</attribute>
+        </item>
+      </section>
+    </submenu>
+    <submenu>
+      <attribute name="label" translatable="yes">_Help</attribute>
+      <section>
+        <item>
+          <attribute name="label" translatable="yes">Online Documentation</attribute>
+          <attribute name="action">app.documentation</attribute>
+        </item>
+        <item>
+          <attribute name="label" translatable="yes">Keyboard Shortcuts</attribute>
+          <attribute name="action">app.shortcuts</attribute>
+        </item>
+      </section>
+    </submenu>
+  </menu>
+</interface>

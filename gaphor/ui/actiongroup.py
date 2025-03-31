@@ -1,81 +1,75 @@
 from __future__ import annotations
 
 import sys
-from typing import NamedTuple
 
 from gi.repository import Gio, GLib, Gtk
 
 from gaphor.abc import ActionProvider
 from gaphor.action import action
+from gaphor.entrypoint import load_entry_points
 
 
-def apply_application_actions(component_registry, gtk_app):
+def apply_application_actions(component_registry, gtk_app) -> None:
     scope = "app"
     for _name, provider in component_registry.all(ActionProvider):
-        for attrname, act in iter_actions(provider, scope):
+        for attrname, act in iter_actions(type(provider), scope):
             a = create_gio_action(act, provider, attrname)
             gtk_app.add_action(a)
+
+
+def apply_shortcuts_from_entry_point(entry_point, scope, gtk_app) -> None:
+    for provider_class in load_entry_points(entry_point).values():
+        if not issubclass(provider_class, ActionProvider):
+            continue
+        for _attrname, act in iter_actions(provider_class, scope):
             if act.shortcut:
                 gtk_app.set_accels_for_action(
                     f"{scope}.{act.name}",
-                    [_platform_specific(s) for s in act.shortcuts],
+                    [_platform_modifier(s) for s in act.shortcuts],
                 )
-    return gtk_app
 
 
-class ActionGroup(NamedTuple):
-    actions: Gio.SimpleActionGroup
-    shortcuts: Gio.ListModel
-
-
-def window_action_group(component_registry) -> ActionGroup:
+def window_action_group(component_registry, scope="win") -> Gio.SimpleActionGroup:
     action_group = Gio.SimpleActionGroup.new()
-    store = Gio.ListStore.new(Gtk.Shortcut)
-    scope = "win"
     for _name, provider in component_registry.all(ActionProvider):
-        for attrname, act in iter_actions(provider, scope):
+        for attrname, act in iter_actions(type(provider), scope):
             a = create_gio_action(act, provider, attrname)
             action_group.add_action(a)
-            for shortcut in act.shortcuts:
-                store.append(
-                    _new_shortcut(_platform_specific(shortcut), act.detailed_name)
-                )
-    return ActionGroup(actions=action_group, shortcuts=store)
+    return action_group
 
 
 def apply_action_group(provider, scope, target_widget):
-    action_group, shortcuts = create_action_group(provider, scope)
+    action_group, shortcuts = create_action_group_and_shortcuts(provider, scope)
     target_widget.insert_action_group(scope, action_group)
-    target_widget.add_controller(create_shortcut_controller(shortcuts))
+    target_widget.add_controller(shortcuts)
 
 
-def create_action_group(provider, scope) -> ActionGroup:
+def create_action_group_and_shortcuts(
+    provider, scope
+) -> tuple[Gio.SimpleActionGroup, Gtk.ShortcutController]:
     action_group = Gio.SimpleActionGroup.new()
     store = Gio.ListStore.new(Gtk.Shortcut)
-    for attrname, act in iter_actions(provider, scope):
+    for attrname, act in iter_actions(type(provider), scope):
         a = create_gio_action(act, provider, attrname)
         action_group.add_action(a)
         for shortcut in act.shortcuts:
-            store.append(_new_shortcut(_platform_specific(shortcut), act.detailed_name))
-    return ActionGroup(actions=action_group, shortcuts=store)
+            store.append(named_shortcut(shortcut, act.detailed_name))
 
-
-def create_shortcut_controller(shortcuts):
-    ctrl = Gtk.ShortcutController.new_for_model(shortcuts)
+    ctrl = Gtk.ShortcutController.new_for_model(store)
     ctrl.set_scope(Gtk.ShortcutScope.LOCAL)
-    return ctrl
+    return (action_group, ctrl)
 
 
-def _platform_specific(shortcut):
-    return shortcut.replace(
-        "<Primary>", "<Meta>" if sys.platform == "darwin" else "<Control>"
+def named_shortcut(shortcut, detailed_name):
+    return Gtk.Shortcut.new(
+        trigger=Gtk.ShortcutTrigger.parse_string(_platform_modifier(shortcut)),
+        action=Gtk.NamedAction.new(detailed_name),
     )
 
 
-def _new_shortcut(shortcut, detailed_name):
-    return Gtk.Shortcut.new(
-        trigger=Gtk.ShortcutTrigger.parse_string(shortcut),
-        action=Gtk.NamedAction.new(detailed_name),
+def _platform_modifier(shortcut):
+    return shortcut.replace(
+        "<Primary>", "<Meta>" if sys.platform == "darwin" else "<Control>"
     )
 
 
@@ -92,13 +86,13 @@ def create_gio_action(act, provider, attrname):
     return a
 
 
-def iter_actions(provider, scope):
-    provider_class = type(provider)
+def iter_actions(provider_class, scope):
     for attrname in dir(provider_class):
-        method = getattr(provider_class, attrname)
-        act: action | None = getattr(method, "__action__", None)
-        if act and act.scope == scope:
-            yield (attrname, act)
+        func = getattr(provider_class, attrname)
+        if callable(func):
+            act: action | None = getattr(func, "__action__", None)
+            if act and act.scope == scope:
+                yield (attrname, act)
 
 
 _GVARIANT_TYPE_STR = GLib.VariantType.new("s")

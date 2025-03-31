@@ -13,14 +13,17 @@ from gaphas.segment import Segment
 import gaphor.UML.interactions
 from gaphor.abc import ActionProvider, Service
 from gaphor.action import action
+from gaphor.core import event_handler
 from gaphor.core.modeling import Base, Diagram, Presentation
 from gaphor.diagram.connectors import ItemTemporaryDisconnected
+from gaphor.diagram.event import DiagramClosed, DiagramOpened
 from gaphor.diagram.presentation import (
     AttachedPresentation,
     ElementPresentation,
     HandlePositionEvent,
     LinePresentation,
 )
+from gaphor.event import ActionEnabled
 from gaphor.i18n import gettext
 from gaphor.transaction import Transaction
 from gaphor.UML.actions.activitynodes import ForkNodeItem
@@ -38,8 +41,10 @@ class AutoLayoutService(Service, ActionProvider):
             tools_menu.add_actions(self)
         self.dump_gv = dump_gv
 
+        event_manager.subscribe(self.on_diagram_opened_or_closed)
+
     def shutdown(self):
-        pass
+        self.event_manager.unsubscribe(self.on_diagram_opened_or_closed)
 
     @action(
         name="auto-layout", label=gettext("Auto Layout"), shortcut="<Primary><Shift>L"
@@ -62,6 +67,15 @@ class AutoLayoutService(Service, ActionProvider):
 
         with Transaction(self.event_manager):
             auto_layout.layout(diagram, splines)
+
+    @event_handler(DiagramOpened, DiagramClosed)
+    def on_diagram_opened_or_closed(self, event: DiagramOpened | DiagramClosed):
+        enabled = (
+            isinstance(event, DiagramOpened) or self.diagrams.get_current_diagram()
+        )
+
+        for action_name in ("win.auto-layout", "win.auto-layout-ortho"):
+            self.event_manager.handle(ActionEnabled(action_name, enabled))
 
 
 class AutoLayout:
