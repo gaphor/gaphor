@@ -49,7 +49,7 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}
           persist-credentials: false
       - name: Set up Python
-        uses: actions/setup-python@42375524e23c412d93fb67b49958b491fce71c38 # v5.4.0
+        uses: actions/setup-python@8d9ed9ac5c53483de85588cdf95a591a75ab9f55 # v5.5.0
         with:
           python-version: ${{ env.python_version }}
       - name: Check Github Actions workflows
@@ -198,7 +198,7 @@ jobs:
           brew install --overwrite python@${python_version}
           brew install gtksourceview5 libadwaita adwaita-icon-theme gobject-introspection graphviz create-dmg
       - name: Set up Python
-        uses: actions/setup-python@42375524e23c412d93fb67b49958b491fce71c38 # v5.4.0
+        uses: actions/setup-python@8d9ed9ac5c53483de85588cdf95a591a75ab9f55 # v5.5.0
         with:
           python-version: ${{ env.python_version }}
           cache: pip
@@ -299,7 +299,7 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}
           persist-credentials: false
       - name: Set up Python
-        uses: actions/setup-python@42375524e23c412d93fb67b49958b491fce71c38 # v5.4.0
+        uses: actions/setup-python@8d9ed9ac5c53483de85588cdf95a591a75ab9f55 # v5.5.0
         with:
           python-version: ${{ env.python_version }}
           cache: pip
@@ -357,7 +357,7 @@ jobs:
           name: ${{ needs.windows.outputs.installer }}
           path: .
       - name: VirusTotal Scan
-        uses: crazy-max/ghaction-virustotal@93ce6fb8ca09fed3d3d2010a8be65552ae5d3854 # v4.1.0
+        uses: crazy-max/ghaction-virustotal@d34968c958ae283fe976efed637081b9f9dcf74f # v4.2.0
         if: env.mainline_build == 'true'
         with:
           vt_api_key: ${{ secrets.VIRUSTOTAL_API_KEY }}
