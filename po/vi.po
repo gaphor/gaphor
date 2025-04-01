@@ -8,19 +8,22 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2025-01-29 12:18-0300\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2025-04-01 12:15+0000\n"
+"Last-Translator: Bế Trọng Nghĩa <benghia1st@gmail.com>\n"
+"Language-Team: Vietnamese <https://hosted.weblate.org/projects/gaphor/gaphor/"
+"vi/>\n"
 "Language: vi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.11-dev\n"
 "Generated-By: Babel 2.16.0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:28 gaphor/C4Model/toolbox.py:57
 #: gaphor/ui/greeter.py:55
 msgid "C4 Model"
-msgstr ""
+msgstr "Mô hình C4"
 
 #: gaphor/C4Model/propertypages.ui:11 gaphor/diagram/general/metadata.py:70
 #: gaphor/diagram/propertypages.ui:170
@@ -30,11 +33,11 @@ msgstr ""
 #: gaphor/C4Model/propertypages.ui:38 gaphor/templates/sysml-example.gaphor
 #: gaphor/templates/sysml.gaphor
 msgid "Technology"
-msgstr ""
+msgstr "Công nghệ"
 
 #: gaphor/C4Model/toolbox.py:31
 msgid "New Software System"
-msgstr ""
+msgstr "Hệ thống phần mềm mới"
 
 #: gaphor/C4Model/toolbox.py:38
 msgid "New Container"
@@ -43,11 +46,11 @@ msgstr ""
 #: gaphor/C4Model/toolbox.py:45 gaphor/C4Model/toolbox.py:169
 #: gaphor/templates/c4model-example.gaphor
 msgid "Database"
-msgstr ""
+msgstr "Cơ sở dữ liệu"
 
 #: gaphor/C4Model/toolbox.py:46
 msgid "New Database"
-msgstr ""
+msgstr "Cơ sở dữ liệu mới"
 
 #: gaphor/C4Model/toolbox.py:53
 msgid "New Component"
@@ -60,7 +63,7 @@ msgstr ""
 
 #: gaphor/C4Model/toolbox.py:73
 msgid "Software System"
-msgstr ""
+msgstr "Hệ thống phần mềm"
 
 #: gaphor/C4Model/toolbox.py:85
 msgid "Container"
@@ -79,30 +82,30 @@ msgstr ""
 #: gaphor/UML/classes/classestoolbox.py:119
 #: gaphor/UML/classes/propertypages.ui:531
 msgid "Dependency"
-msgstr ""
+msgstr "Phụ thuộc"
 
 #: gaphor/C4Model/toolbox.py:141
 msgid "C4 Diagram"
-msgstr ""
+msgstr "Biểu đồ C4"
 
 #: gaphor/C4Model/toolbox.py:142 gaphor/UML/toolbox.py:32
 msgid "Class Diagram"
-msgstr ""
+msgstr "Biểu đồ lớp"
 
 #: gaphor/C4Model/toolbox.py:143 gaphor/SysML/toolbox.py:138
 #: gaphor/UML/toolbox.py:36
 msgid "Activity Diagram"
-msgstr ""
+msgstr "Biểu đồ hoạt động"
 
 #: gaphor/C4Model/toolbox.py:144 gaphor/SysML/toolbox.py:148
 #: gaphor/UML/toolbox.py:37
 msgid "Sequence Diagram"
-msgstr ""
+msgstr "Biểu đồ tuần tự"
 
 #: gaphor/C4Model/toolbox.py:145 gaphor/SysML/toolbox.py:158
 #: gaphor/UML/toolbox.py:41
 msgid "State Machine Diagram"
-msgstr ""
+msgstr "Biểu đồ máy trạng thái"
 
 #: gaphor/C4Model/toolbox.py:146 gaphor/RAAML/toolbox.py:32
 #: gaphor/SysML/toolbox.py:178 gaphor/UML/toolbox.py:44
@@ -120,7 +123,7 @@ msgstr ""
 #: gaphor/UML/actions/actionstoolbox.py:68 gaphor/UML/toolbox.py:49
 #: gaphor/templates/sysml-example.gaphor gaphor/templates/uml-example.gaphor
 msgid "Activity"
-msgstr ""
+msgstr "Hoạt động"
 
 #: gaphor/C4Model/toolbox.py:153 gaphor/SysML/toolbox.py:187
 #: gaphor/UML/interactions/interactionstoolbox.py:36
@@ -128,22 +131,22 @@ msgstr ""
 #: gaphor/templates/sysml-example.gaphor gaphor/templates/uml-example.gaphor
 #: gaphor/templates/uml.gaphor
 msgid "Interaction"
-msgstr ""
+msgstr "Tương tác"
 
 #: gaphor/C4Model/toolbox.py:156 gaphor/SysML/toolbox.py:201
 #: gaphor/UML/states/statestoolbox.py:46 gaphor/UML/states/statestoolbox.py:63
 #: gaphor/UML/toolbox.py:72 gaphor/templates/sysml-example.gaphor
 msgid "State Machine"
-msgstr ""
+msgstr "Máy trạng thái"
 
 #: gaphor/C4Model/toolbox.py:158 gaphor/UML/classes/classestoolbox.py:29
 #: gaphor/UML/profiles/profilestoolbox.py:14 gaphor/UML/toolbox.py:52
 msgid "Class"
-msgstr ""
+msgstr "Lớp"
 
 #: gaphor/C4Model/toolbox.py:160 gaphor/UML/toolbox.py:54
 msgid "Data Type"
-msgstr ""
+msgstr "Kiểu dữ liệu"
 
 #: gaphor/C4Model/toolbox.py:162 gaphor/SysML/blocks/blockstoolbox.py:118
 #: gaphor/SysML/toolbox.py:186 gaphor/UML/classes/classestoolbox.py:154
@@ -153,7 +156,7 @@ msgstr ""
 
 #: gaphor/C4Model/toolbox.py:165
 msgid "Primitive Type"
-msgstr ""
+msgstr "Kiểu nguyên thủy"
 
 #: gaphor/RAAML/modelinglanguage.py:25 gaphor/ui/greeter.py:48
 msgid "RAAML"
@@ -404,7 +407,7 @@ msgstr ""
 
 #: gaphor/SysML/propertypages.ui:215
 msgid "Id"
-msgstr ""
+msgstr "Id"
 
 #: gaphor/SysML/propertypages.ui:229
 msgid "Text"
@@ -457,7 +460,7 @@ msgstr ""
 
 #: gaphor/SysML/toolbox.py:126
 msgid "Requirement Diagram"
-msgstr ""
+msgstr "Biểu đồ yêu cầu"
 
 #: gaphor/SysML/toolbox.py:142 gaphor/SysML/toolbox.py:143
 msgid "New Activity"
@@ -628,15 +631,15 @@ msgstr ""
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:43
 msgid "Trace"
-msgstr ""
+msgstr "Truy vết"
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:50
 msgid "Refine"
-msgstr ""
+msgstr "Làm mịn"
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:57
 msgid "Verify"
-msgstr ""
+msgstr "Kiểm định"
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:64
 #: gaphor/UML/classes/classestoolbox.py:75
@@ -649,7 +652,7 @@ msgstr ""
 
 #: gaphor/UML/modelinglanguage.py:21 gaphor/ui/greeter.py:34
 msgid "UML"
-msgstr ""
+msgstr "UML"
 
 #: gaphor/UML/actions/propertypages.ui:445 gaphor/UML/propertypages.ui:9
 msgid "Type"
@@ -671,11 +674,11 @@ msgstr ""
 
 #: gaphor/UML/toolbox.py:35
 msgid "Deployment Diagram"
-msgstr ""
+msgstr "Biểu đồ triển khai"
 
 #: gaphor/UML/toolbox.py:39
 msgid "Communication Diagram"
-msgstr ""
+msgstr "Biểu đồ giao tiếp"
 
 #: gaphor/UML/toolbox.py:43
 msgid "Profile Diagram"
