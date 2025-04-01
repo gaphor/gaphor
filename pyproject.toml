@@ -118,7 +118,10 @@ install-schemas = "gaphor.ui.installschemas:install_schemas_parser"
 
 [tool.poetry]
 requires-poetry = ">=2.0"
-include = ["gaphor/locale/*/LC_MESSAGES/*"]
+include = [
+    { path = "gaphor/locale/*/LC_MESSAGES/*" },
+    { path = "data/org.gaphor.Gaphor*", format = "sdist" },
+]
 exclude = ["**/tests", "gaphor/conftest.py" ]
 
 [tool.poetry.group.dev.dependencies]
@@ -199,6 +202,7 @@ lint = "pre-commit run --all-files"
 docs = { "cwd" = "docs", "shell" = "sphinx-build -W -b html . _build/html" }
 docs-gettext-pot = { "cwd" = "docs", "shell" = "sphinx-build -b gettext . locale" }
 clean = { "shell" = "rm -rf dist build _packaging/dist _packaging/build _packaging/windows/file_version_info.txt docs/_build" }
+appdata = { "shell" = "python data/update-appdata.py $(poetry version -s)"}
 package = { "cwd" = "_packaging", shell = "pyinstaller -y gaphor.spec"}
 win-installer = { "script" = "_packaging.windows.build-win-installer:main" }
 gettext-pot = "pybabel extract -o po/gaphor.pot -F po/babel.ini -k i18nize gaphor"

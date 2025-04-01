@@ -1,0 +1,578 @@
+<?xml version='1.0' encoding='utf-8'?>
+<component type="desktop-application">
+  <id>org.gaphor.Gaphor</id>
+  <launchable type="desktop-id">org.gaphor.Gaphor.desktop</launchable>
+  <name>Gaphor</name>
+  <summary>Simple UML and SysML modeling tool</summary>
+  <summary xml:lang="es">Herramienta sencilla de modelado UML y SysML</summary>
+  <summary xml:lang="hr">Jednostavan alat za UML i SysML modeliranje</summary>
+  <summary xml:lang="hu">Egyszerű UML és SysML modellező eszköz</summary>
+  <metadata_license>CC-BY-3.0</metadata_license>
+  <project_license>Apache-2.0</project_license>
+  <developer_name>Arjan J. Molenaar</developer_name>
+  <categories>
+    <category>Development</category>
+    <category>Graphics</category>
+  </categories>
+  <branding>
+    <color type="primary" scheme_preference="light">#ccf5d4</color>
+    <color type="primary" scheme_preference="dark">#0f3f29</color>
+  </branding>
+  <screenshots>
+    <screenshot type="default">
+      <caption>The Gaphor main window</caption>
+      <caption xml:lang="es">Ventana principal de Gaphor</caption>
+      <caption xml:lang="hu">A Gaphor főablak</caption>
+      <image type="source">https://gaphor.org/images/screenshot.png</image>
+    </screenshot>
+    <screenshot>
+      <caption>Sequence diagram</caption>
+      <caption xml:lang="es">Diagrama de secuencia</caption>
+      <caption xml:lang="hu">Sorozat ábra</caption>
+      <image type="source">https://gaphor.org/images/screenshot-interaction.png</image>
+    </screenshot>
+    <screenshot>
+      <caption>Customizable styling</caption>
+      <caption xml:lang="es">Estilo personalizable</caption>
+      <caption xml:lang="hu">Testreszabható stílus</caption>
+      <image type="source">https://gaphor.org/images/screenshot-styles.png</image>
+    </screenshot>
+    <screenshot>
+      <caption>Dark mode</caption>
+      <caption xml:lang="es">Modo oscuro</caption>
+      <caption xml:lang="hu">Sötét üzemmód</caption>
+      <image type="source">https://gaphor.org/images/screenshot-dark-mode.png</image>
+    </screenshot>
+  </screenshots>
+  <url type="homepage">https://gaphor.org</url>
+  <url type="bugtracker">https://github.com/gaphor/gaphor/issues</url>
+  <url type="help">https://docs.gaphor.org</url>
+  <url type="donation">https://github.com/sponsors/danyeaw</url>
+  <url type="translate">https://hosted.weblate.org/projects/gaphor/gaphor</url>
+  <url type="vcs-browser">https://github.com/gaphor/gaphor</url>
+  <description>
+    <p>
+      Gaphor is a UML, SysML, RAAML, and C4 modeling application. It is
+      designed to be easy to use, while still being powerful. Gaphor implements
+      a fully-compliant UML 2 data model, so it is much more than a picture
+      drawing tool. You can use Gaphor to quickly visualize different aspects
+      of a system as well as create complete, highly complex models.
+    </p>
+    <p>
+      Gaphor provides four modeling languages: UML, SysML, RAAML and C4 and
+      makes them accessible to beginners.
+    </p>
+    <p xml:lang="es">
+      Gaphor es una aplicación de modelado UML, SysML, RAAML y C4. Está
+      diseñado para ser fácil de usar, sin dejar de ser potente. Gaphor
+      implementa un modelo de datos UML 2 totalmente compatible, por lo
+      que es mucho más que una herramienta de dibujo. Puede usar Gaphor
+      para visualizar rápidamente diferentes aspectos de un sistema, así
+      como para crear modelos completos y muy complejos.
+    </p>
+    <p xml:lang="es">
+      Gaphor ofrece cuatro lenguajes de modelado: UML, SysML, RAAML y C4 y
+      los hace accesibles a los principiantes.
+    </p>
+    <p xml:lang="hr">
+      Gaphor je program za UML, SysML, RAAML i C4 modeliranje. Jednostavan u
+      upotrebi, a istovremeno moćan alat. Gaphor implementira potpuno usklađen
+      UML 2 model podataka, stoga je on puno više od običnog alata za crtanje
+      slika. Gaphor se može koristiti za brzu vizualizaciju različitih aspekata
+      nekog sustava, kao i za stvaranje cjelovitih i vrlo složenih modela.
+    </p>
+    <p xml:lang="hr">
+      Gaphor nudi četiri jezika za modeliranje: UML, SysML, RAAML i C4 te
+      omogućuje pristup početnicima.
+    </p>
+    <p xml:lang="hu">
+      A Gaphor egy UML, SysML, RAAML és C4 modellező alkalmazás. Úgy tervezték,
+      hogy könnyen használható legyen, ugyanakkor erős legyen. A Gaphor egy
+      teljesen kompatibilis UML 2 adatmodellt valósít meg, tehát sokkal több,
+      mint egy képrajzoló eszköz. A Gaphor segítségével gyorsan megjelenítheti
+      a rendszer különböző aspektusait, valamint komplett, rendkívül összetett
+      modelleket hozhat létre.
+    </p>
+    <p xml:lang="hu">
+      A Gaphor négy modellezési nyelvet kínál: UML, SysML, RAAML és C4, és
+      elérhetővé teszi a kezdők számára.
+    </p>
+  </description>
+  <releases>
+    <release version="3.0.0" date="2025-01-26">
+      <description>
+        <ul>
+          <li>Improved UI, based on user feedback from the University of Mannheim and Mainz.</li>
+          <li>Double click on a model element in the Model Browser now selects
+the element on the open diagram.</li>
+          <li>Edit settings have moved to global preferences.</li>
+          <li>Added a small, neat style editor to get you started customizing the diagram style.</li>
+          <li>UML Dependencies now show as relationships on package level.</li>
+        </ul>
+        <p>Internal changes:</p>
+        <ul>
+          <li>Data model changes: UML is now a completely separate model.
+This gives us the ability to implement models not based on UML,
+such as SysML v2.</li>
+          <li>Models are now saved with their language/domain namespace.
+This allows for elements in different models to have the same name.</li>
+          <li>Associations can now also contain subsets. This allows for
+relations in UML that were previously not possible.</li>
+        </ul>
+        <p>Bug fixes:</p>
+        <ul>
+          <li>Fixed file changed notification after save</li>
+          <li>Fixed issues in Undo behavior</li>
+        </ul>
+      </description>
+      <url>https://github.com/gaphor/gaphor/releases/tag/3.0.0</url>
+    </release>
+    <release version="2.27.0" date="2024-10-09">
+      <description>
+        <ul>
+          <li>File changed notification only show when the file really changed.</li>
+          <li>Support macOS ARM (Apple Silicon) and improve macOS styling</li>
+          <li>Add option to export all diagrams from UI</li>
+          <li>Remove XMI export plugin</li>
+          <li>Show main window and progress indicator when loading model from command line</li>
+          <li>Model improvements: Move Types to Core model, InterfaceRealization.implementingClassifier</li>
+          <li>Add trigger and action for State Machine transitions</li>
+          <li>Add a special C4 Dependency with a technology field</li>
+          <li>Class attributes: add read-only attribute support, and allow spaces in values</li>
+          <li>Improved Picture selection and provide a default name based on the filename</li>
+          <li>Be more lenient with association end multiplicity</li>
+          <li>Model Browser: fix elements showing up in the root of the model</li>
+          <li>Fix long file names and loaded models showing as modified</li>
+          <li>Fix exception when dropping an association on a diagram</li>
+          <li>Update docs for plugin development, CSS examples, and C4 banking example</li>
+          <li>Update translations for Gaphor</li>
+        </ul>
+      </description>
+      <url>https://github.com/gaphor/gaphor/releases/tag/2.27.0</url>
+    </release>
+    <release version="2.26.0" date="2024-07-08">
+      <description>
+        <ul>
+          <li>After a crash, Gaphor can now restore your modeling sessions</li>
+          <li>Start migrating root model to KerML</li>
+          <li>Add ability to apply stereotypes to diagrams</li>
+          <li>Ensure the diagram always has default focus</li>
+          <li>Improve how Property Pages are created.</li>
+          <li>Improve checks to avoid cycles in element ownership</li>
+          <li>Change Gaphor logo to SysML/UML Modeling</li>
+          <li>Improve scripting docs</li>
+          <li>Adding instructions for anaconda install with Windows</li>
+          <li>Fix long Property Editor slot text doesn't wrap</li>
+          <li>Fix diagram renaming shortcut</li>
+          <li>Fix unexpected model changed popup</li>
+          <li>Fix deletion of attribute/operation in element editor</li>
+          <li>Fix select association AssertionError</li>
+          <li>Update Italian, Spanish, and Croatian translations</li>
+        </ul>
+      </description>
+      <url>https://github.com/gaphor/gaphor/releases/tag/2.26.0</url>
+    </release>
+    <release version="2.25.1" date="2024-04-30">
+      <description>
+        <ul>
+          <li>macOS: fix screen update delays</li>
+          <li>Restore zoom buttons</li>
+          <li>Add feature to hide requirement text</li>
+          <li>Fix pasting of associations fails</li>
+          <li>Improve undo for cases when a key is pressed when dragging</li>
+          <li>Add Icelandic, and update Hungarian, Chinese (Simplified), and Italian translations</li>
+        </ul>
+      </description>
+      <url>https://github.com/gaphor/gaphor/releases/tag/2.25.1</url>
+    </release>
+    <release version="2.25.0" date="2024-04-15">
+      <description>
+        <ul>
+          <li>Update UI to modern Adwaita layout</li>
+          <li>Greeter now has separate sections for templates and examples</li>
+          <li>Element details are now in Property Pages</li>
+          <li>Element selected in Model Browser shows in Property Editor</li>
+          <li>Right-click in diagram to find selected element in Model Browser</li>
+          <li>Allow to drop a ConnectableElement on a Lifeline</li>
+          <li>Display diagram type in model browser</li>
+          <li>Add simple notifier for file changes</li>
+          <li>Exception is now thrown when creating wrong diagram type in SysML</li>
+          <li>Do not perform diagram updates outside of a transaction</li>
+          <li>Use TypedElement.type for Lifeline and other types</li>
+          <li>Prevent removing relationships with Remove Unused Elements disabled</li>
+          <li>Do not quit if there are windows open after sessions are closed</li>
+          <li>Make `self-test` a command, instead of an option</li>
+          <li>Do not show "block" stereotype if other stereotypes are applied</li>
+          <li>Fix: associate Action with right Partition</li>
+          <li>Fix popover menus after profile change</li>
+          <li>Update Code of Conduct link to https://conduct.gnome.org/</li>
+          <li>Add virus scan with VirusTotal to CI</li>
+          <li>Many translation updates</li>
+        </ul>
+      </description>
+      <url>https://github.com/gaphor/gaphor/releases/tag/2.25.0</url>
+    </release>
+    <release version="2.24.0" date="2024-02-15">
+      <description>
+        <ul>
+          <li>Fine grained CSS styling for model elements</li>
+          <li>Gaphor is now REUSE compliant</li>
+          <li>Connected elements are no longer automatcally removed from a diagram</li>
+          <li>Fix header bars for various windows</li>
+          <li>Various smaller UX improvements: greeter, diagram background, empty parameters</li>
+          <li>Install schemas by running `gaphor install-schemas`</li>
+          <li>Mitigations for false virus warnings on Windows</li>
+          <li>Fix issue when undoing fails</li>
+        </ul>
+      </description>
+      <url>https://github.com/gaphor/gaphor/releases/tag/2.24.0</url>
+    </release>
+    <release version="2.23.2" date="2024-01-14">
+      <description>
+        <ul>
+          <li>Fix models failing to load for collection not hashable TypeError</li>
+          <li>Fix file filters for export image dialog</li>
+          <li>Add CSS for "from: ", stereotypes, and compartments</li>
+          <li>Update Hungarian translations</li>
+        </ul>
+      </description>
+      <url>https://github.com/gaphor/gaphor/releases/tag/2.23.2</url>
+    </release>
+    <release version="2.23.1" date="2024-01-11">
+      <description>
+        <ul>
+          <li>Fix Activity Swimlanes aren't visible</li>
+          <li>Fix CSS attribute rules</li>
+          <li>Remove duplicate stereotypes at root of model browser</li>
+          <li>Update Croatian translations</li>
+        </ul>
+      </description>
+      <url>https://github.com/gaphor/gaphor/releases/tag/2.23.1</url>
+    </release>
+    <release version="2.23.0" date="2024-01-07">
+      <description>
+        <ul>
+          <li>Support types for parameters</li>
+          <li>Restore windows in maximized and full-screen state</li>
+          <li>Fine grained CSS: elements in a presentation item can be changed from CSS (experimental)</li>
+          <li>Very long element names are now wrapped</li>
+          <li>Format files accessed from Flatpak via portals</li>
+          <li>Update Property Editor to use Gtk.ColumnView and ListView</li>
+          <li>Replace deprecated Gtk.FileChooser by FileDialog</li>
+          <li>Replace in-app notifications by Adwaita Toasts</li>
+          <li>macOS: Update app icon</li>
+          <li>macOS: Fix ⓘ icon in Property Editor isn't displayed</li>
+          <li>macOS and Windows: Apply custom window shadow</li>
+          <li>Fix Gaphor should work if GSettings schema is not available</li>
+          <li>Fix values showing under part compartment in SysML Block elements</li>
+          <li>Fix merge-node icon</li>
+          <li>Fix connecting lines when model is loaded and documentation updates</li>
+          <li>Fix macOS build and documentation generation</li>
+          <li>Update Russian, Chinese, Polish, Hungarian, Turkish and German translations</li>
+        </ul>
+      </description>
+      <url>https://github.com/gaphor/gaphor/releases/tag/2.23.0</url>
+    </release>
+    <release version="2.22.1" date="2023-11-30">
+      <description>
+        <ul>
+          <li>Flatpak: Fix app preferences aren't saved</li>
+          <li>Fix TypeError when changing to dark mode and refactor settings</li>
+          <li>Fix grouping: allow to group to "root"</li>
+          <li>Add support for dropping SysML diagrams on diagrams</li>
+          <li>Catch errors when a clipboard is empty</li>
+          <li>Fix DnD file opening on macOS</li>
+          <li>Fix libadwaita 1.4.0 missing for hypothesis tests</li>
+        </ul>
+      </description>
+      <url>https://github.com/gaphor/gaphor/releases/tag/2.22.1</url>
+    </release>
+    <release version="2.22.0" date="2023-11-28">
+      <description>
+        <ul>
+          <li>Proxy port improvements</li>
+          <li>Add preferences for overriding dark mode and language to English</li>
+          <li>Add allocations toolbox with allocate relationship item</li>
+          <li>Add members in model browser</li>
+          <li>Make line selection easier by increasing tolerance</li>
+          <li>Make model loading more lenient</li>
+          <li>Remove duplicated elements in Component.provided property</li>
+          <li>Replace Black, check toml, isort, and refurb with Ruff</li>
+          <li>macOS: fix About dialog links</li>
+          <li>macOS: upgrade notarization from altool to notarytool</li>
+          <li>Upgrade to libadwaita 1.4.0</li>
+          <li>Update Sphinx to version 6.0</li>
+          <li>Update PyInstaller to version 6.1</li>
+          <li>Clean up transactional event handling</li>
+          <li>Use defusedxml to avoid loading potentially dangerous xml</li>
+          <li>Update Portuguese (Brazilian), Italian, Tamil,</li>
+        </ul>
+      </description>
+      <url>https://github.com/gaphor/gaphor/releases/tag/2.22.0</url>
+    </release>
+    <release version="2.21.0" date="2023-09-08">
+      <description>
+        <ul>
+          <li>Add picture as core element</li>
+          <li>Move diagram elements with the arrow keys</li>
+          <li>Add interface block to element creation menu</li>
+          <li>Support state entry, exit, and do behavior selection via dropdown</li>
+          <li>Add feature to align diagram elements</li>
+          <li>Display type of element in the properties panel</li>
+          <li>Removed unnecessary operations and attributes for requirements</li>
+          <li>Enable macOS keybindings again</li>
+          <li>Fix missing derive relationship icon in the model browser</li>
+          <li>Fix block not showing parts and references</li>
+          <li>Fixed Profile is created instead of Stereotype in model browser</li>
+          <li>Add ownership rules to DirectedRelationshipPropertyPath.targetContext</li>
+          <li>Add tests and fix `Component.required`</li>
+          <li>Present the Greeter, instead of only making it visible</li>
+          <li>Fix derive-reqt model browser icon</li>
+          <li>Improve coverage reporting</li>
+          <li>Add system style sheet to the documentation</li>
+        </ul>
+      </description>
+      <url>https://github.com/gaphor/gaphor/releases/tag/2.21.0</url>
+    </release>
+    <release version="2.20.0" date="2023-08-08">
+      <description>
+        <ul>
+          <li>Add ValueSpecificationAction</li>
+          <li>New element creation through model browser</li>
+          <li>Interface block support on diagram</li>
+          <li>Constrain SysML diagram creation in the model explorer to conform with SysML 1.6 specification</li>
+          <li>Add type selection for Lifelines</li>
+          <li>Support SysMLDiagram type and diagram type specific header formatting</li>
+          <li>Pin type multiplicity</li>
+          <li>Deep copy for packages and diagrams</li>
+          <li>Add Direct association to toolbar menu</li>
+          <li>Add CallBehaviorAction to Activity profile</li>
+          <li>Add operations compartment to Blocks</li>
+          <li>Toggle visibility of ProxyPort type</li>
+          <li>Provide value for 'Show value' in properties page</li>
+          <li>Format pins by their name</li>
+          <li>Do not remove unused Packages with children</li>
+          <li>Fix: tree view should not collapse when an element is deleted</li>
+          <li>Fix: only open model browser elements with a model element</li>
+          <li>Upgrade Gvsbuild to 2023.7.1</li>
+          <li>Update minimal Pytho nversion to 3.10</li>
+          <li>Fix: ensure a newly placed item is no longer a dropzone item</li>
+          <li>Fix: incorrect filling between shapes</li>
+          <li>Fix: weird pin rendering</li>
+          <li>Fix: diagram background shouldn't be shared between open models</li>
+          <li>Fix: activity parameter node is always stuck to the activity when moving</li>
+          <li>Fix: notes should be applied to model elements and will be named "Note"</li>
+          <li>Fix: error when inverting association</li>
+          <li>Update Croatian translations</li>
+        </ul>
+      </description>
+      <url>https://github.com/gaphor/gaphor/releases/tag/2.20.0</url>
+    </release>
+    <release version="2.19.3" date="2023-07-14">
+      <description>
+        <ul>
+          <li>Windows: Fix missing toolbar icons</li>
+          <li>Fix loading of ProxyPorts with informationFlow attached</li>
+          <li>Fix to resolve CSS style variables before using the values</li>
+        </ul>
+      </description>
+      <url>https://github.com/gaphor/gaphor/releases/tag/2.19.3</url>
+    </release>
+    <release version="2.19.2" date="2023-07-09">
+      <description>
+        <ul>
+          <li>Add SysML Requirements trace derived unions</li>
+          <li>Fix Parameter Node and Execution Specification with Dark mode</li>
+          <li>Scale parameter nodes to contain long names</li>
+          <li>Lenient derived unions</li>
+          <li>Fix segfault by reverting Gtk.ListVew for Parameters</li>
+          <li>Fix connect interaction fragments</li>
+          <li>chore: clean up deprecated properties from UIComponent</li>
+          <li>Add Python 3.12 Support, Update Poetry to version 1.5.1</li>
+          <li>Apply security best practices to GitHub Actions</li>
+          <li>Create a Security Policy and Run Scorecard Checks</li>
+          <li>Only use mature translations for released versions of Gaphor</li>
+          <li>Update Spanish, Hungarian, and Finnish translations</li>
+          <li>Fix scaling of Activity Parameter nodes</li>
+        </ul>
+      </description>
+      <url>https://github.com/gaphor/gaphor/releases/tag/2.19.2</url>
+    </release>
+    <release version="2.19.1" date="2023-07-02">
+      <description>
+        <ul>
+          <li>Fix: order is preserved when undoing a change</li>
+          <li>Actions: ObjectNode now also connects to decision/merge and join/fork nodes.</li>
+          <li>Fix: ports should be nested under properties</li>
+          <li>Experimental: support for plugins</li>
+          <li>Add fullscreen mode with F11</li>
+          <li>Remove Tkinter from packaging</li>
+        </ul>
+      </description>
+      <url>https://github.com/gaphor/gaphor/releases/tag/2.19.1</url>
+    </release>
+    <release version="2.19.0" date="2023-06-17">
+      <description>
+        <ul>
+          <li>Dropped support for AppImage</li>
+          <li>Add Information Flow support for Associations</li>
+          <li>Interactions: fixed DnD for partially connected messages</li>
+          <li>Restore CSS auto-complete</li>
+          <li>Docs: A coffee machine tutorial has been added</li>
+          <li>Make model loading more lenient to model corruption</li>
+          <li>CLI: export diagrams and run scripts within Gaphor</li>
+          <li>Enable PyPI Trusted Publisher</li>
+          <li>Replace deprecated Gtk.TreeView with ListView: Activity Parameter Nodes</li>
+          <li>Use consistent naming for element_factory in storage module</li>
+          <li>Use new style Dropdowns for selecting items in property editor</li>
+          <li>Updates to translations</li>
+        </ul>
+      </description>
+      <url>https://github.com/gaphor/gaphor/releases/tag/2.19.0</url>
+    </release>
+    <release version="2.18.1" date="2023-04-29">
+      <description>
+        <ul>
+          <li>Make operations visible on Blocks</li>
+          <li>A quick fix for crashes in the CSS editor, disable autocomplete</li>
+          <li>Fix doc translation catalogs not found</li>
+          <li>Fix encoding warnings for no encoding argument</li>
+          <li>Update AppImage build with GTK 4.10</li>
+          <li>Add non-goals to README</li>
+          <li>Enable translation of docs, and add Crotian, German, and Dutch</li>
+          <li>Updates to most translations and add Tamil</li>
+        </ul>
+      </description>
+      <url>https://github.com/gaphor/gaphor/releases/tag/2.18.1</url>
+    </release>
+    <release version="2.18.0" date="2023-04-07">
+      <description>
+        <ul>
+          <li>Support for manually resolving Git merge conflicts</li>
+          <li>Drop support for GTK3, bundle macOS with GTK4</li>
+          <li>Enable middle-click mouse scrolling of diagrams</li>
+          <li>Support for changing the spoken language in a model</li>
+          <li>Add diagrams in diagrams</li>
+          <li>Upgrade development build to GNOME 44</li>
+          <li>Clean up application architecture for copy service</li>
+          <li>Css editor dark mode</li>
+          <li>macOS: update notarize, staple, and cert actions</li>
+          <li>Just load modules for gaphor.modules entry points</li>
+          <li>Finnish, Dutch, Spanish, Polish, Portuguese (BRA) translation update</li>
+          <li>Toggle the "no tabs" background based on notebook activity</li>
+          <li>Fix drag from model browser</li>
+          <li>Fix orthogonal lines during copy/paste</li>
+          <li>Update diagram directly when partitions change</li>
+          <li>Make main window always available to avoid warnings</li>
+        </ul>
+      </description>
+      <url>https://github.com/gaphor/gaphor/releases/tag/2.18.0</url>
+    </release>
+    <release version="2.17.0" date="2023-02-25">
+      <description>
+        <ul>
+          <li>Add support for diagram metadata</li>
+          <li>macOS: Fix freeze creating new diagram</li>
+          <li>Properly unsubscribe when property page is removed</li>
+          <li>Package GSettings daemon schemas for AppImage</li>
+          <li>Consider only default modifiers in toolbox shortcuts</li>
+          <li>New status page icon</li>
+          <li>Workaround removing skip-changelog labels</li>
+          <li>Update gvsbuild to version 2023.2.0</li>
+          <li>meta: Add .doap-file</li>
+          <li>Update "Keep model in sync" design principle</li>
+          <li>Update to using the GNOME Code of Conduct</li>
+          <li>Add Polish translation</li>
+          <li>Spanish, Dutch, Croatian, Turkish, and German Translation Updates</li>
+        </ul>
+      </description>
+      <url>https://github.com/gaphor/gaphor/releases/tag/2.17.0</url>
+    </release>
+    <release version="2.16.0" date="2023-02-04">
+      <description>
+        <ul>
+          <li>Automatic switching to dark mode in diagrams</li>
+          <li>Add Model browser multi select and popup menu</li>
+          <li>Refactor and improve model browser</li>
+          <li>Use normal + icon for new diagram dropdown</li>
+          <li>Add support for CSS variables and named colors</li>
+          <li>Apply development mode for dev releases</li>
+          <li>Show diagram name in header</li>
+          <li>Show something when no diagrams are opened</li>
+          <li>Fix the packaged data dirs</li>
+          <li>Stabilize macOS/GTK tests</li>
+          <li>Add a comments option to our documentation</li>
+          <li>Split tips in to multiple labels</li>
+          <li>Win and macOS: Fix wrong language selected when region not default</li>
+          <li>Fix translation warning never logged with missing mo files</li>
+          <li>Spanish, Russian, Hungarian, Czech translation update</li>
+        </ul>
+      </description>
+      <url>https://github.com/gaphor/gaphor/releases/tag/2.16.0</url>
+    </release>
+    <release version="2.15.0" date="2023-01-08">
+      <description>
+        <ul>
+          <li>Add basic git merge conflict support by asking which model to load</li>
+          <li>Improvements to CSS autocomplete with function completion</li>
+          <li>Insert colons, spaces, and () automatically for CSS autocomplete</li>
+          <li>Use native file chooser in Windows</li>
+          <li>Fix translations not loading in Windows, macOS, and AppImage</li>
+          <li>Fix PyInstaller versionfile parse error with pre-release versions</li>
+          <li>Update CI to publish to PyPI after all other jobs have passed</li>
+          <li>Replace pytest-mock with monkeypatch for tests</li>
+          <li>Fix PEP597 encoding warnings</li>
+          <li>Fix regression that caused line handles to not snap to elements</li>
+          <li>Add Turkish, and update French, Russian, and Swedish translations</li>
+          <li>Remove translation Makefile</li>
+        </ul>
+      </description>
+      <url>https://github.com/gaphor/gaphor/releases/tag/2.15.0</url>
+    </release>
+    <release version="2.14.2" date="2022-12-28" />
+    <release version="2.14.1" date="2022-12-28" />
+    <release version="2.14.0" date="2022-12-24" />
+    <release version="2.13.0" date="2022-11-27" />
+    <release version="2.12.1" date="2022-10-07" />
+    <release version="2.12.0" date="2022-09-25" />
+    <release version="2.11.0" date="2022-07-09" />
+    <release version="2.10.0" date="2022-05-22" />
+    <release version="2.9.2" date="2022-03-18" />
+    <release version="2.9.1" date="2022-03-17" />
+    <release version="2.9.0" date="2022-03-17" />
+    <release version="2.8.2" date="2022-01-30" />
+    <release version="2.8.1" date="2022-01-18" />
+    <release version="2.8.0" date="2022-01-15" />
+    <release version="2.7.1" date="2021-12-01" />
+    <release version="2.7.0" date="2021-11-26" />
+    <release version="2.6.5" date="2021-10-18" />
+    <release version="2.6.4" date="2021-10-03" />
+    <release version="2.6.2" date="2021-10-01" />
+    <release version="2.6.1" date="2021-09-25" />
+    <release version="2.6.0" date="2021-09-14" />
+    <release version="2.5.1" date="2021-07-04" />
+    <release version="2.5.0" date="2021-06-29" />
+    <release version="2.4.2" date="2021-05-23" />
+    <release version="2.4.1" date="2021-05-10" />
+    <release version="2.4.0" date="2021-05-01" />
+    <release version="2.3.2" date="2021-03-29" />
+    <release version="2.3.1" date="2021-03-28" />
+    <release version="2.3.0" date="2021-03-20" />
+    <release version="2.2.2" date="2021-02-07" />
+    <release version="2.2.1" date="2021-01-26" />
+    <release version="2.2.0" date="2021-01-23" />
+    <release version="2.1.1" date="2020-11-30" />
+    <release version="2.1.0" date="2020-11-29" />
+    <release version="2.0.1" date="2020-08-27" />
+    <release version="2.0.0" date="2020-07-31" />
+    <release version="1.2.0" date="2020-03-15" />
+    <release version="1.1.1" date="2019-11-02" />
+    <release version="1.1.0" date="2019-10-26" />
+    <release version="1.0.2" date="2019-07-26" />
+    <release version="1.0.1" date="2019-04-19" />
+    <release version="1.0.0" date="2019-04-04" />
+    <release version="0.17.2" date="2013-07-05" />
+  </releases>
+  <content_rating type="oars-1.1" />
+  <update_contact>dan@yeaw.me</update_contact>
+</component>
