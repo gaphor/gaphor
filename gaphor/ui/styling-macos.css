@@ -17,3 +17,7 @@
 .csd:backdrop {
   box-shadow: none;
 }
+
+.monospace {
+  font-family: monospace;
+}
