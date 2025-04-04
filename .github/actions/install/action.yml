@@ -32,7 +32,6 @@ runs:
     - name: Windows specific overrides
       if: runner.os == 'Windows'
       run: |
-        poetry run pip install --force-reinstall (Resolve-Path C:\gtk\wheels\PyGObject*.whl)
         poetry run pip install --force-reinstall (Resolve-Path C:\gtk\wheels\pycairo*.whl)
       shell: pwsh
     - name: Install settings schemas
