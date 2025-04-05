@@ -48,7 +48,7 @@ jobs:
     - name: Install Linux Dependencies
       run: >
         sudo apt-get update -qq && sudo apt-get install -qq --no-install-recommends
-        libgirepository1.0-dev libcairo2-dev
+        libgirepository-2.0-dev libcairo2-dev
     - name: Install Poetry
       run: python${python_version} -m pip install --constraint=.github/constraints.txt poetry
     - name: Configure Poetry
