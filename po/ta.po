@@ -8,21 +8,22 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2025-01-29 12:18-0300\n"
-"PO-Revision-Date: 2024-12-31 11:53+0000\n"
+"PO-Revision-Date: 2025-04-07 02:47+0000\n"
 "Last-Translator: தமிழ்நேரம் <anishprabu.t@gmail.com>\n"
+"Language-Team: Tamil <https://hosted.weblate.org/projects/gaphor/gaphor/ta/>"
+"\n"
 "Language: ta\n"
-"Language-Team: Tamil "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/ta/>\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.11-dev\n"
 "Generated-By: Babel 2.16.0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:28 gaphor/C4Model/toolbox.py:57
 #: gaphor/ui/greeter.py:55
 msgid "C4 Model"
-msgstr "C4 மாதிரி"
+msgstr "சி4 மாதிரி"
 
 #: gaphor/C4Model/propertypages.ui:11 gaphor/diagram/general/metadata.py:70
 #: gaphor/diagram/propertypages.ui:170
@@ -159,7 +160,7 @@ msgstr "பழமையான வகை"
 
 #: gaphor/RAAML/modelinglanguage.py:25 gaphor/ui/greeter.py:48
 msgid "RAAML"
-msgstr "சட்டகம்"
+msgstr "ராகுமொ"
 
 #: gaphor/RAAML/toolbox.py:30
 msgid "FTA Diagram"
@@ -347,7 +348,7 @@ msgstr "“{name}” இன் கீழ் கூடு கட்டப்ப�
 
 #: gaphor/SysML/modelinglanguage.py:25 gaphor/ui/greeter.py:41
 msgid "SysML"
-msgstr "Sysml"
+msgstr "முறைகுமொ"
 
 #: gaphor/SysML/propertypages.ui:9
 msgid "Item Flow"
@@ -475,7 +476,7 @@ msgstr "புதிய மாநில இயந்திரம்"
 
 #: gaphor/SysML/toolbox.py:168 gaphor/UML/toolbox.py:42
 msgid "Use Case Diagram"
-msgstr "வழக்கு வரைபடத்தைப் பயன்படுத்தவும்"
+msgstr "வழக்கு வரைபடத்தைப் பயன்படுத்து"
 
 #: gaphor/SysML/toolbox.py:184 gaphor/UML/toolbox.py:50
 #: gaphor/UML/usecases/usecasetoolbox.py:28 gaphor/templates/uml-example.gaphor
@@ -576,7 +577,7 @@ msgstr "நேரடி சங்கம்"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:107
 msgid "ValueType"
-msgstr "VALUETYPE"
+msgstr "மதிப்புவகை"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:130
 #: gaphor/UML/classes/classestoolbox.py:166
@@ -651,7 +652,7 @@ msgstr "({namespace})"
 
 #: gaphor/UML/modelinglanguage.py:21 gaphor/ui/greeter.py:34
 msgid "UML"
-msgstr "யுஎம்எல்"
+msgstr "ஒகுமொ"
 
 #: gaphor/UML/actions/propertypages.ui:445 gaphor/UML/propertypages.ui:9
 msgid "Type"
@@ -1145,7 +1146,7 @@ msgstr "செல்லக்கூடியது"
 #: gaphor/UML/profiles/propertypages.ui:33
 #: gaphor/UML/profiles/propertypages.ui:51
 msgid "Stereotypes"
-msgstr "ச்டீரியோடைப்கள்"
+msgstr "ஒரேமாதிரிகள்"
 
 #: gaphor/UML/classes/propertypages.ui:149
 #: gaphor/UML/classes/propertypages.ui:261
@@ -1433,7 +1434,7 @@ msgstr "இறக்குமதி"
 
 #: gaphor/UML/profiles/profilestoolbox.py:18
 msgid "Profiles"
-msgstr "சுயவிவரங்கள்"
+msgstr "தன்விவரங்கள்"
 
 #: gaphor/UML/profiles/profilestoolbox.py:34
 msgid "Metaclass"
@@ -1498,7 +1499,7 @@ msgstr "மாநிலங்கள்"
 
 #: gaphor/UML/states/statestoolbox.py:87
 msgid "Initial Pseudostate"
-msgstr "ஆரம்ப சூடோச்டேட்"
+msgstr "ஆரம்ப போலிநிலை"
 
 #: gaphor/UML/states/statestoolbox.py:99
 msgid "Final State"
@@ -2000,7 +2001,7 @@ msgstr "இழப்பு வரையறை"
 
 #: gaphor/templates/raaml-example.gaphor gaphor/templates/raaml.gaphor
 msgid "FTA"
-msgstr "Fta"
+msgstr "எப்டிஎ"
 
 #: gaphor/templates/raaml-example.gaphor
 msgid "Loss of System"
@@ -2112,7 +2113,7 @@ msgstr "வெளிப்புற உறுப்பு"
 
 #: gaphor/templates/sysml-example.gaphor gaphor/templates/sysml.gaphor
 msgid "Concept Requirements"
-msgstr "கருத்து தேவைகள்"
+msgstr "கருத்துருத் தேவைகள்"
 
 #: gaphor/templates/sysml-example.gaphor
 msgid "Feature User Need"
@@ -2582,9 +2583,8 @@ msgid "Zoom In"
 msgstr "பெரிதாக்கு"
 
 #: gaphor/ui/diagrampage.ui:117
-#, fuzzy
 msgid "Align selected elements"
-msgstr "இணைக்கக்கூடிய உறுப்பு"
+msgstr "தேர்ந்தெடுக்கப்பட்ட கூறுகளைச் சீரமை"
 
 #: gaphor/ui/diagrampage.ui:132
 msgid "Align Left"
@@ -2595,9 +2595,8 @@ msgid "Align Right"
 msgstr "வலதுபுறம் சீரமைக்கவும்"
 
 #: gaphor/ui/diagrampage.ui:142
-#, fuzzy
 msgid "Align Vertical Center"
-msgstr "கிடைமட்ட மையத்தை சீரமைக்கவும்"
+msgstr "செங்குத்தாக நடுவில் சீரமை"
 
 #: gaphor/ui/diagrampage.ui:149
 msgid "Align Top"
@@ -2624,9 +2623,8 @@ msgid "Max Size"
 msgstr "அதிகபட்ச அளவு"
 
 #: gaphor/ui/diagrams.py:322
-#, fuzzy
 msgid "Selected element is not in present in this diagram."
-msgstr "ஒரு வரைபடத்தில் உறுப்பை குறிப்பிட முடியாது."
+msgstr "தேர்ந்தெடுக்கப்பட்ட உறுப்பு இந்த வரைபடத்தில் இல்லை."
 
 #: gaphor/ui/diagrams.ui:12
 msgid "Open a Diagram"
@@ -2697,20 +2695,19 @@ msgstr "விருப்பத்தேர்வுகள்"
 
 #: gaphor/ui/elementeditor.ui:127
 msgid "Style Sheet"
-msgstr "பாணி சீட்"
+msgstr "பாணி தாள்"
 
 #: gaphor/ui/elementeditor.ui:140
 msgid "Diagram Language"
-msgstr "வரைபடம் மொழி"
+msgstr "வரைபட மொழி"
 
 #: gaphor/ui/elementeditor.ui:142 gaphor/ui/elementeditor.ui:150
 msgid "The (natural) language used in this model."
 msgstr "இந்த மாதிரியில் பயன்படுத்தப்படும் (இயற்கை) மொழி."
 
 #: gaphor/ui/elementeditor.ui:158
-#, fuzzy
 msgid "CSS Editor"
-msgstr "பாணி ஆசிரியர்"
+msgstr "அபாத திருத்தி"
 
 #: gaphor/ui/elementeditor.ui:186
 msgid "CSS nodes of focused item"
@@ -3137,17 +3134,16 @@ msgid "Change from System Language to English"
 msgstr "கணினி மொழியிலிருந்து ஆங்கிலத்திற்கு மாற்றவும்"
 
 #: gaphor/ui/help/preferences.ui:42
-#, fuzzy
 msgid "Editing"
-msgstr "திசை"
+msgstr "திருத்துகிறது"
 
 #: gaphor/ui/help/preferences.ui:45
 msgid "Reset Tool Automatically"
-msgstr "கருவியை தானாக மீட்டமைக்கவும்"
+msgstr "கருவியைத் தானாக மீட்டமை"
 
 #: gaphor/ui/help/preferences.ui:46
 msgid "After an element is created, switch back to the pointer tool."
-msgstr ""
+msgstr "ஒரு உறுப்பு உருவாக்கப்பட்ட பிறகு, சுட்டிக்காட்டி கருவிக்குத் திரும்புக."
 
 #: gaphor/ui/help/preferences.ui:51
 msgid "Remove Unused Elements"
@@ -3158,9 +3154,8 @@ msgid "Automatically remove elements no longer in use in any diagram."
 msgstr "எந்தவொரு வரைபடத்திலும் இனி பயன்பாட்டில் இல்லாத கூறுகளை தானாக அகற்றவும்."
 
 #: gaphor/ui/help/shortcuts.ui:4 gaphor/ui/help/shortcuts.ui:11
-#, fuzzy
 msgid "Shortcuts"
-msgstr "விசைப்பலகை குறுக்குவழிகள்"
+msgstr "குறுக்குவழிகள்"
 
 #: gaphor/ui/help/shortcuts.ui:46
 msgid "Quit Gaphor"
