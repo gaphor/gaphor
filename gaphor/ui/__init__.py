@@ -62,7 +62,9 @@ def run(argv: list[str], *, launch_service="greeter", recover=False) -> int:
         def on_quit(_event: ApplicationShutdown):
             gtk_app.quit()
 
-        apply_shortcuts_from_entry_point("gaphor.appservices", "app", gtk_app)
+        apply_shortcuts_from_entry_point(
+            "gaphor.appservices", "app", gtk_app, extra=[Application]
+        )
         apply_shortcuts_from_entry_point("gaphor.services", "win", gtk_app)
         apply_shortcuts_from_entry_point("gaphor.services", "text", gtk_app)
 

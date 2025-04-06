@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import sys
+from itertools import chain
 
 from gi.repository import Gio, GLib, Gtk
 
@@ -17,8 +18,10 @@ def apply_application_actions(component_registry, gtk_app) -> None:
             gtk_app.add_action(a)
 
 
-def apply_shortcuts_from_entry_point(entry_point, scope, gtk_app) -> None:
-    for provider_class in load_entry_points(entry_point).values():
+def apply_shortcuts_from_entry_point(
+    entry_point, scope, gtk_app, *, extra=None
+) -> None:
+    for provider_class in chain(load_entry_points(entry_point).values(), extra or []):
         if not issubclass(provider_class, ActionProvider):
             continue
         for _attrname, act in iter_actions(provider_class, scope):
