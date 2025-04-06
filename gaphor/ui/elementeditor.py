@@ -241,12 +241,10 @@ class EditorStack:
         self.vbox.append(builder.get_object("no-item-selected"))
 
         tips = builder.get_object("tips")
-        cta = builder.get_object("cta")
 
         def on_show_tips_changed(checkbox, gparam):
             active = checkbox.get_active()
-            tips.set_visible(active)
-            cta.set_visible(active)
+            tips.set_visible_child_name("tips" if active else "empty")
             self.properties.set("show-tips", active)
 
         show_tips = builder.get_object("show-tips")
