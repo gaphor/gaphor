@@ -65,6 +65,16 @@ jobs:
           python${python_version} -m pip install --constraint=.github/constraints.txt poetry
           poetry config virtualenvs.in-project true
           poetry check
+      - name: Check versions are in sync
+        if: github.event_name == 'release'
+        env:
+          TAG_VERSION: "${{ github.ref_name }}"
+        run: |
+          PROJECT_VERSION="$(poetry version -s)"
+          APPDATA_VERSION="$(python .github/scripts/appdata-release.py)"
+          echo "Project version: $PROJECT_VERSION; tag: $TAG_VERSION appdata version: $APPDATA_VERSION"
+          test "$PROJECT_VERSION" == "$TAG_VERSION" || exit 1
+          test $PROJECT_VERSION" == "$APPDATA_VERSION" || exit 1
 
   linux-wheel:
     name:  🐧 Linux (Wheel) with Python ${{ matrix.python_version }}
