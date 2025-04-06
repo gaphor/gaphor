@@ -58,7 +58,7 @@
               </object>
             </child>
             <child type="end">
-              <object class="GtkMenuButton">
+              <object class="GtkMenuButton" id="hamburger-menu-button">
                 <property name="popover">hamburger</property>
                 <property name="icon_name">open-menu-symbolic</property>
                 <property name="primary">1</property>

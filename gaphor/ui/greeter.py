@@ -10,7 +10,7 @@ from gaphor.application import distribution
 from gaphor.core import event_handler
 from gaphor.event import SessionCreated
 from gaphor.i18n import gettext, translated_ui_string
-from gaphor.ui import APPLICATION_ID
+from gaphor.ui import APPLICATION_ID, macos_menubar
 from gaphor.ui.filedialog import pretty_path
 
 
@@ -128,6 +128,9 @@ class Greeter(Service, ActionProvider):
         self.greeter.set_application(self.gtk_app)
         if ".dev" in distribution().version:
             self.greeter.add_css_class("devel")
+
+        if macos_menubar():
+            builder.get_object("hamburger-menu-button").unparent()
 
         listbox = builder.get_object("recent-files")
         templates = builder.get_object("templates")
