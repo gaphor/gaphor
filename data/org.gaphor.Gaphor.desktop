@@ -16,3 +16,8 @@ Type=Application
 Categories=GTK;GNOME;Development;ProjectManagement;
 MimeType=application/x-gaphor
 Keywords=UML;RAAML;C4;SysML;Design;Graph;
+Actions=new-window;
+
+[Desktop Action new-window]
+Exec=gaphor --greeter
+Name=New Model

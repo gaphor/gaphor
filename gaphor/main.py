@@ -110,6 +110,8 @@ def gui_parser():
 
         # Recreate a command line for our GTK gui
         run_argv = [sys.argv[0]]
+        if args.greeter:
+            run_argv += ["--greeter"]
         if args.gapplication_service:
             run_argv += ["--gapplication-service"]
         run_argv.extend(args.model)
@@ -121,6 +123,9 @@ def gui_parser():
     )
 
     group = parser.add_argument_group("options (no command provided)")
+    group.add_argument(
+        "-g", "--greeter", help="create a new model", action="store_true"
+    )
     group.add_argument("--gapplication-service", action="store_true")
     group.add_argument("model", nargs="*", help="model file(s) to load")
     parser.set_defaults(command=run)
