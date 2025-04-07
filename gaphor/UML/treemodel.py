@@ -205,12 +205,18 @@ class TreeModel:
             new_branch = Branch()
             self.branches[item] = new_branch
             for e in owned_elements:
-                new_branch.append(e)
+                if self.should_show(e):
+                    new_branch.append(e)
             return new_branch.elements
         return None
 
     def tree_item_sort(self, a, b) -> int:
         return tree_item_sort(a, b)
+
+    def should_show(self, element: Base) -> bool:
+        if isinstance(element, UML.Parameter):
+            return element.activityParameterNode.isEmpty() is True
+        return True
 
     def should_expand(self, item: TreeItem, element: Base) -> bool:
         return isinstance(element, UML.Relationship) and isinstance(
