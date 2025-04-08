@@ -7,6 +7,10 @@
   </object>
   <object class="GtkPopoverMenu" id="recent-files">
   </object>
+  <object class="GtkPopoverMenu" id="alignment">
+    <property name="menu-model">alignment-menu</property>
+  </object>
+
   <object class="AdwApplicationWindow" id="main-window">
     <property name="default-width">1024</property>
     <property name="default-height">640</property>
@@ -163,6 +167,14 @@
                       </object>
                     </child>
 
+                    <child type="start">
+                      <object class="GtkMenuButton">
+                        <property name="icon-name">format-justify-center-symbolic</property>
+                        <property name="tooltip-text" translatable="yes">Align selected elements</property>
+                        <property name="popover">alignment</property>
+                      </object>
+                    </child>
+
                     <child type="end">
                       <object class="GtkToggleButton">
                         <property name="tooltip_text" translatable="yes">Toggle Model Preferences</property>
@@ -296,4 +308,59 @@
       </item>
     </section>
   </menu>
+
+  <menu id='alignment-menu'>
+    <section>
+      <item>
+        <attribute name='label' translatable='yes'>Align Left</attribute>
+        <attribute name='action'>diagram.align</attribute>
+        <attribute name="target">left</attribute>
+      </item>
+      <item>
+        <attribute name='label' translatable='yes'>Align Right</attribute>
+        <attribute name='action'>diagram.align</attribute>
+        <attribute name="target">right</attribute>
+      </item>
+      <item>
+        <attribute name='label' translatable='yes'>Align Vertical Center</attribute>
+        <attribute name='action'>diagram.align</attribute>
+        <attribute name="target">vertical-center</attribute>
+      </item>
+    </section>
+    <section>
+      <item>
+        <attribute name='label' translatable='yes'>Align Top</attribute>
+        <attribute name='action'>diagram.align</attribute>
+        <attribute name="target">top</attribute>
+      </item>
+      <item>
+        <attribute name='label' translatable='yes'>Align Bottom</attribute>
+        <attribute name='action'>diagram.align</attribute>
+        <attribute name="target">bottom</attribute>
+      </item>
+      <item>
+        <attribute name='label' translatable='yes'>Align Horizontal Center</attribute>
+        <attribute name='action'>diagram.align</attribute>
+        <attribute name="target">horizontal-center</attribute>
+      </item>
+    </section>
+    <section>
+      <item>
+        <attribute name='label' translatable='yes'>Max Width</attribute>
+        <attribute name='action'>diagram.align</attribute>
+        <attribute name="target">max-width</attribute>
+      </item>
+      <item>
+        <attribute name='label' translatable='yes'>Max Height</attribute>
+        <attribute name='action'>diagram.align</attribute>
+        <attribute name="target">max-height</attribute>
+      </item>
+      <item>
+        <attribute name='label' translatable='yes'>Max Size</attribute>
+        <attribute name='action'>diagram.align</attribute>
+        <attribute name="target">max-size</attribute>
+      </item>
+    </section>
+  </menu>
+
 </interface>
