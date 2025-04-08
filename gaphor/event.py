@@ -80,24 +80,25 @@ class ModelSaved:
     filename: Path | None = None
 
 
+@dataclass
 class TransactionBegin:
     """This event denotes the beginning of a transaction.
 
     Nested (sub-) transactions should not emit this signal.
     """
 
-    def __init__(self, context):
-        self.context = context
+    context: str | None
 
 
+@dataclass
 class TransactionCommit:
     """This event is emitted when a transaction (toplevel) is successfully
     committed."""
 
-    def __init__(self, context):
-        self.context = context
+    context: str | None
 
 
+@dataclass
 class TransactionRollback:
     """This event is emitted to tell the operation has failed.
 
@@ -105,8 +106,7 @@ class TransactionRollback:
     transaction should be marked for rollback.
     """
 
-    def __init__(self, context):
-        self.context = context
+    context: str | None
 
 
 class TransactionClosed:
@@ -118,18 +118,16 @@ class TransactionClosed:
     """
 
 
+@dataclass
 class ActionEnabled:
     """Signal if an action can be activated or not."""
 
-    def __init__(self, action_name: str, enabled: bool) -> None:
-        self.scope, self.name = (
-            action_name.split(".", 2) if "." in action_name else ("win", action_name)
-        )
-        self.enabled = enabled
+    action_name: str
+    enabled: bool
 
 
+@dataclass
 class Notification:
     """Inform the user about important events."""
 
-    def __init__(self, message):
-        self.message = message
+    message: str

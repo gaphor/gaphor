@@ -292,7 +292,7 @@ class MainWindow(Service, ActionProvider):
     @event_handler(ActionEnabled)
     def _on_action_enabled(self, event):
         if self.window.is_visible():
-            self.window.action_set_enabled(f"{event.scope}.{event.name}", event.enabled)
+            self.window.action_set_enabled(event.action_name, event.enabled)
         else:
             self._ui_updates.append(lambda: self._on_action_enabled(event))
 
