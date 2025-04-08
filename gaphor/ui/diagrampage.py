@@ -107,6 +107,7 @@ class DiagramPage:
         self.style_manager = Adw.StyleManager.get_default()
 
         self.view: GtkView | None = None
+        self.alignment_button: Gtk.Button | None = None
         self.diagram_css: Gtk.CssProvider | None = None
 
         self.rubberband_state = RubberbandState()
@@ -134,15 +135,14 @@ class DiagramPage:
         assert self.diagram
 
         builder = new_builder()
-        view = builder.get_object("view")
+        view: GtkView = builder.get_object("view")
         view.add_css_class(self._css_class())
         view.connect("delete", delete_selected_items, self.event_manager)
-        view.connect_after("select-all", selection_changed, self.event_manager)
-        view.connect_after("unselect-all", selection_changed, self.event_manager)
         view.connect("cut-clipboard", self.clipboard.cut)
         view.connect("copy-clipboard", self.clipboard.copy)
         view.connect("paste-clipboard", self.clipboard.paste_link)
         view.connect("paste-full-clipboard", self.clipboard.paste_full)
+        view.selection.add_handler(self._selection_changed)
         self.clipboard.clipboard.connect(
             "notify::content", self._clipboard_content_changed
         )
@@ -169,6 +169,8 @@ class DiagramPage:
         diagrampage = builder.get_object("diagrampage")
         apply_action_group(self, "diagram", diagrampage)
         self._clipboard_content_changed(self.clipboard.clipboard)
+
+        self.alignment_button = builder.get_object("alignment-button")
 
         return diagrampage
 
@@ -241,6 +243,18 @@ class DiagramPage:
 
     def _css_class(self):
         return f"diagram-{id(self)}"
+
+    def _selection_changed(self, _item):
+        view = self.view
+        assert view
+        selection = view.selection
+        self.event_manager.handle(
+            DiagramSelectionChanged(
+                view, selection.focused_item, selection.selected_items
+            )
+        )
+        if self.alignment_button:
+            self.alignment_button.set_sensitive(len(selection.selected_items) > 1)
 
     @event_handler(ToolSelected)
     def _on_tool_selected(self, event: ToolSelected):
@@ -334,13 +348,6 @@ def delete_selected_items(view: GtkView, event_manager):
         items = view.selection.selected_items
         for i in list(items):
             i.unlink()
-
-
-def selection_changed(view: GtkView, event_manager):
-    selection = view.selection
-    event_manager.handle(
-        DiagramSelectionChanged(view, selection.focused_item, selection.selected_items)
-    )
 
 
 def context_menu_controller(context_menu, diagram):

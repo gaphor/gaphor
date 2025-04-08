@@ -112,10 +112,11 @@
         </child>
 
         <child>
-          <object class="GtkMenuButton">
+          <object class="GtkMenuButton" id="alignment-button">
             <property name="icon-name">format-justify-center-symbolic</property>
             <property name="tooltip-text" translatable="yes">Align selected elements</property>
             <property name="popover">alignment</property>
+            <property name="sensitive">0</property>
             <style>
               <class name="flat"/>
             </style>
