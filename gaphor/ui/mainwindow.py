@@ -73,7 +73,6 @@ class MainWindow(Service, ActionProvider):
         self.tools_menu = tools_menu
 
         self._builder: Gtk.Builder | None = new_builder()
-        self.action_groups: dict[str, Gio.ActionGroup] = {}
         self.modeling_language_name = None
         self.diagram_types = None
         self.in_app_notifier = None
@@ -191,11 +190,11 @@ class MainWindow(Service, ActionProvider):
                 widget.set_name(name)
                 bin.set_child(widget)
 
-        self.action_groups = {
+        action_groups = {
             "win": window_action_group(self.component_registry),
             "text": window_action_group(self.component_registry, scope="text"),
         }
-        for scope, action_group in self.action_groups.items():
+        for scope, action_group in action_groups.items():
             window.insert_action_group(scope, action_group)
 
         self._on_modeling_language_selection_changed()
@@ -292,11 +291,10 @@ class MainWindow(Service, ActionProvider):
 
     @event_handler(ActionEnabled)
     def _on_action_enabled(self, event):
-        if not self.action_groups:
+        if self.window.is_visible():
+            self.window.action_set_enabled(f"{event.scope}.{event.name}", event.enabled)
+        else:
             self._ui_updates.append(lambda: self._on_action_enabled(event))
-        elif action_group := self.action_groups.get(event.scope):
-            a = action_group.lookup_action(event.name)
-            a.set_enabled(event.enabled)
 
     @event_handler(ModelingLanguageChanged)
     def _on_modeling_language_selection_changed(self, event=None):
