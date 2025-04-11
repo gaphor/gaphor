@@ -16,7 +16,7 @@ gi.require_version("Gdk", "4.0")
 gi.require_version("GtkSource", "5")
 gi.require_version("Adw", "1")
 
-from gi.repository import Adw, Gio, Gtk, GtkSource
+from gi.repository import Adw, Gio, GLib, Gtk, GtkSource
 
 import gaphor.asyncio
 import gaphor.ui.diagramview  # noqa: F401
@@ -38,8 +38,17 @@ GtkSource.init()
 log = logging.getLogger(__name__)
 
 
-def run(argv: list[str], *, launch_service="greeter", recover=False) -> int:
+def run(argv: list[str], *, launch_service="greeter", recover=False) -> int:  # noqa: C901
     application: Application | None = None
+
+    def app_handle_local_options(gtk_app, options):
+        if options.contains("greeter"):
+            gtk_app.register()
+            if gtk_app.get_property("is-remote"):
+                gtk_app.activate_action("new-window")
+                return 0
+
+        return -1
 
     def app_startup(gtk_app):
         nonlocal application
@@ -111,6 +120,17 @@ def run(argv: list[str], *, launch_service="greeter", recover=False) -> int:
 
     settings.style_variant_changed(update_color_scheme)
     gtk_app.exit_code = 0
+
+    gtk_app.add_main_option(
+        "greeter",
+        b"g",
+        GLib.OptionFlags.NONE,
+        GLib.OptionArg.NONE,
+        "Create a new model",
+        None,
+    )
+
+    gtk_app.connect("handle-local-options", app_handle_local_options)
     gtk_app.connect("startup", app_startup)
     gtk_app.connect("activate", app_activate)
     gtk_app.connect("open", app_open)
