@@ -11,6 +11,7 @@ Comment[ru]=Простой инструмент моделирования
 Comment[it]=Lo strumento di modellazione semplice
 Exec=gaphor %f
 Icon=org.gaphor.Gaphor
+DBusActivatable=true
 Terminal=false
 Type=Application
 Categories=GTK;GNOME;Development;ProjectManagement;
