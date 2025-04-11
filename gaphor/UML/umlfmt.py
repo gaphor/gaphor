@@ -259,3 +259,12 @@ def format_include(el):
 def format_call_behavior_action_name(el):
     """Name conforms to UML2.5.1 16.3.4.1 naming description"""
     return el.behavior.name if el.behavior and not el.name else el.name or ""
+
+
+@format.register(UML.ActivityParameterNode)
+def format_activity_parameter_node_name(
+    el, direction=False, type=False, multiplicity=False, default=False
+):
+    if el.parameter is None:
+        return ""
+    return format_parameter(el.parameter, direction, type, multiplicity, default)
