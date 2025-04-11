@@ -12,7 +12,7 @@ def pkg2dir(package):
     name: list[str] = []
     while package:
         name.insert(0, package.name)
-        package = package.nestingPackage
+        package = package.owningPackage
     return "/".join(name)
 
 
