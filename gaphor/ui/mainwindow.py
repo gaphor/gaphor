@@ -73,6 +73,7 @@ class MainWindow(Service, ActionProvider):
         self.tools_menu = tools_menu
 
         self._builder: Gtk.Builder | None = new_builder()
+        self.window: Gtk.Window | None = None
         self.action_groups: dict[str, Gio.ActionGroup] = {}
         self.modeling_language_name = None
         self.diagram_types = None
@@ -103,10 +104,6 @@ class MainWindow(Service, ActionProvider):
         em.unsubscribe(self._on_action_enabled)
         em.unsubscribe(self._on_modeling_language_selection_changed)
         em.unsubscribe(self._on_notification)
-
-    @property
-    def window(self):
-        return self._builder.get_object("main-window") if self._builder else None
 
     @property
     def title(self):
@@ -142,6 +139,10 @@ class MainWindow(Service, ActionProvider):
 
         builder = self._builder
         assert builder
+
+        if not self.window:
+            self.window = builder.get_object("main-window")
+
         window = self.window
         window.set_application(gtk_app)
         if ".dev" in distribution().version:
