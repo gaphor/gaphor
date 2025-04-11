@@ -44,7 +44,7 @@ class Transaction:
 
     _stack: list[Transaction] = []
 
-    def __init__(self, event_manager, context=None):
+    def __init__(self, event_manager, context: str | None = None):
         """Initialize the transaction.
 
         If this is the first transaction in the stack, a
