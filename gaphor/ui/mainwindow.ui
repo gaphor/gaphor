@@ -30,10 +30,9 @@
                       <object class="GtkMenuButton" id="select-modeling-language">
                         <property name="focus-on-click">0</property>
                         <property name="always-show-arrow">1</property>
+                        <property name="tooltip-text" translatable="yes">Change modeling profile</property>
                         <child>
-                          <object class="GtkLabel" id="modeling-language-name">
-                            <property name="ellipsize">start</property>
-                          </object>
+                          <object class="GtkLabel" id="modeling-language-name" />
                         </child>
                       </object>
                     </child>

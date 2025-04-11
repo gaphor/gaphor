@@ -301,9 +301,7 @@ class MainWindow(Service, ActionProvider):
     @event_handler(ModelingLanguageChanged)
     def _on_modeling_language_selection_changed(self, event=None):
         if self.modeling_language_name:
-            self.modeling_language_name.set_label(
-                gettext("Profile: {name}").format(name=self.modeling_language.name)
-            )
+            self.modeling_language_name.set_label(self.modeling_language.name)
         if self.diagram_types:
             self.diagram_types.set_menu_model(
                 create_diagram_types_model(self.modeling_language)
