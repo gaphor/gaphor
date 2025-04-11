@@ -1,9 +1,35 @@
-from gaphor.core.modeling import Diagram
+from gaphor.core.modeling import Diagram, Presentation
 from gaphor.diagram.drop import drop
 from gaphor.diagram.presentation import connect
 from gaphor.diagram.support import get_diagram_item
+from gaphor.SysML.diagramframe import DiagramFrameItem
 from gaphor.SysML.sysml import Block, ProxyPort
-from gaphor.UML.uml import Property
+from gaphor.UML.uml import Element, Property
+
+
+@drop.register(Element, DiagramFrameItem)
+def drop_element_on_diagram_frame(
+    element: Element, diagram_frame: DiagramFrameItem, x, y
+):
+    if item := drop(element, diagram_frame.diagram, x, y):
+        item.parent = diagram_frame
+        item.request_update()
+
+    return item
+
+
+@drop.register(Presentation, DiagramFrameItem)
+def drop_presentation_on_diagram_frame(
+    item: Presentation, diagram_frame: DiagramFrameItem, x, y
+):
+    """When dropped on a diagram frame, change item ownership.
+
+    Do not change model element ownership.
+    """
+    item.change_parent(diagram_frame)
+    item.request_update()
+
+    return item
 
 
 @drop.register(ProxyPort, Diagram)

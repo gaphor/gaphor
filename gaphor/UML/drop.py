@@ -2,8 +2,14 @@ from __future__ import annotations
 
 from gaphor import UML
 from gaphor.core.modeling import Base, Diagram
-from gaphor.diagram.drop import diagram_has_presentation, drop, drop_relationship
-from gaphor.diagram.presentation import Presentation, connect
+from gaphor.diagram.drop import (
+    diagram_has_presentation,
+    drop,
+    drop_relationship,
+    grow_parent,
+)
+from gaphor.diagram.group import change_owner
+from gaphor.diagram.presentation import ElementPresentation, Presentation, connect
 from gaphor.diagram.support import get_diagram_item, get_diagram_item_metadata
 
 
@@ -104,3 +110,25 @@ def drop_relationship_on_diagram(
                     if new_item:
                         return new_item
     return None
+
+
+@drop.register(UML.Element, ElementPresentation)
+def drop_element_on_element_presentation(
+    element: UML.Element, parent_item: ElementPresentation, x: float, y: float
+) -> Presentation | None:
+    item_class = get_diagram_item(type(element))
+    if not item_class:
+        return None
+
+    diagram = parent_item.diagram
+    item = diagram.create(item_class, subject=element)
+    assert item
+
+    if change_owner(parent_item.subject, element):
+        item.parent = parent_item
+        item.matrix.translate(x, y)
+        grow_parent(parent_item, item)
+
+    parent_item.request_update()
+
+    return item

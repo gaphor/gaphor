@@ -19,9 +19,13 @@ def no_drop(element: Base, diagram: Diagram, x: float, y: float):
     return None
 
 
-drop: FunctionDispatcher[Callable[[Base, Base], Presentation | None]] = multidispatch(
-    Base, Diagram
-)(no_drop)
+drop: FunctionDispatcher[Callable[[Base, Base, float, float], Presentation | None]] = (
+    multidispatch(Base, Diagram)(no_drop)
+)
+"""Drop an element on a diagram or presentation
+
+The position (x, y) is in parent element coordinates.
+"""
 
 
 @drop.register(Presentation, Diagram)
@@ -40,7 +44,7 @@ def drop_presentation(item: Presentation, diagram: Diagram, x: float, y: float):
 def drop_on_presentation(
     item: Presentation, new_parent: Presentation, x: float, y: float
 ):
-    """Place :obj:`item`, with position :obj:`pos` relative to :obj:`new_parent`."""
+    """Place :obj:`item`, with position (:obj:`x`, :obj:`y`) relative to :obj:`new_parent`."""
     assert item.diagram is new_parent.diagram
 
     old_parent = item.parent
