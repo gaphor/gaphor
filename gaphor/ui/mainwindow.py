@@ -293,6 +293,10 @@ class MainWindow(Service, ActionProvider):
     def _on_action_enabled(self, event):
         if self.window.is_visible():
             self.window.action_set_enabled(event.action_name, event.enabled)
+            if self._builder and event.action_name == "win.diagram-align":
+                self._builder.get_object("alignment-button").set_sensitive(
+                    event.enabled
+                )
         else:
             self._ui_updates.append(lambda: self._on_action_enabled(event))
 
