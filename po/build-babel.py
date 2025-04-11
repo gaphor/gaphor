@@ -40,15 +40,18 @@ def compile_mo_all():
 def compile_mo_release():
     mature_translations = [
         "cs",
-        "es",
         "de",
-        "nl",
+        "es",
         "fi",
+        "hi",
         "hr",
         "hu",
+        "nl",
         "pt_BR",
         "ru",
+        "ta",
         "tr",
+        "uk",
         "zh_hans",
     ]
     for path in (
