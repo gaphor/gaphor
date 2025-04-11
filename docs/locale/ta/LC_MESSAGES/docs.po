@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gaphor 2.27.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-11-27 15:44-0500\n"
-"PO-Revision-Date: 2025-04-11 17:02+0000\n"
+"PO-Revision-Date: 2025-04-11 17:22+0000\n"
 "Last-Translator: Dan Yeaw <dan@yeaw.me>\n"
 "Language-Team: Tamil <https://hosted.weblate.org/projects/gaphor/"
 "docs-gaphor-org/ta/>\n"
@@ -4422,8 +4422,6 @@ msgid ""
 ":obj:`~gaphor.core.modeling.Presentation` form the basis for everything "
 "you see in a diagram."
 msgstr ""
-"தி :obj:`~gaphor.core.modeling.base` வகுப்பு அனைத்து காஃபர் டொமைன் வகுப்புகளுக்கும் "
-"மூலமாக செயல்படுகிறது."
 
 #: ../models/core.rst:10
 msgid ""
@@ -4452,10 +4450,6 @@ msgid ""
 "directional relationships are also possible, as well as derived "
 "relations."
 msgstr ""
-"தி: ஒப். ஒரு மாதிரியில் உள்ள அனைத்து வகுப்புகளும் இந்த வகுப்பிலிருந்து பெறப்பட வேண்டும். "
-"ஒரு மாதிரி ஒரு உறுப்புக்கான அடிப்படை வகுப்பைக் காட்டவில்லை என்றால், அது பெறப்படும்: OBJ:"
-" `~ gaphor.core.modeling.base`. இரு திசை உறவுகளும் சாத்தியமாகும், அத்துடன் பெறப்பட்"
-"ட உறவுகள்."
 
 #: ../models/core.rst:28
 msgid ""
@@ -4480,7 +4474,6 @@ msgstr "ஒரு ஐடி (படிக்க மட்டும்), மா�
 #: gaphor.core.modeling.Base.model:1 of
 msgid "The owning model, raises :class:`TypeError` when model is not set."
 msgstr ""
-"சொந்தமான மாதிரி, எழுப்புகிறது: வகுப்பு: மாதிரி அமைக்கப்படாதபோது `தட்டச்சு."
 
 #: gaphor.core.modeling.base.Base.unlink:1 of
 msgid "Unlink the element."
@@ -6595,7 +6588,7 @@ msgstr ""
 
 #: ../sphinx.rst:36
 msgid "`Figure`_, and `Image properties`_ can also be applied:"
-msgstr "`படம்`_, மற்றும்` பட பண்புகள்`_ ஐப் பயன்படுத்தலாம்:"
+msgstr "`Figure`_, மற்றும் `Image properties`_ ஐப் பயன்படுத்தலாம்:"
 
 #: ../sphinx.rst:47
 msgid "A description suitable for an example"
