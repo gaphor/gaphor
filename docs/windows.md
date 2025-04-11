@@ -114,7 +114,8 @@ Add GTK to your environmental variables:
 $env:Path = $env:Path + ";C:\gtk\bin;C:\Program Files\Graphviz\bin"
 $env:LIB = "C:\gtk\lib"
 $env:INCLUDE = "C:\gtk\include;C:\gtk\include\cairo;C:\gtk\include\glib-2.0;C:\gtk\include\gobject-introspection-1.0;C:\gtk\lib\glib-2.0\include;"
-$env:XDG_DATA_HOME = "$HOME\.local\share"
+$env:GI_TYPELIB_PATH = "C:\gtk\lib\girepository-1.0"
+$env:XDG_DATA_HOME = "$env:userprofile\.local\share"
 ```
 
 You can also edit your account's Environmental Variables to persist across
