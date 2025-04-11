@@ -630,36 +630,43 @@ def get_value_specification_from_value(
     value, elem, element_factory, modeling_language
 ) -> Base | None:
     defaultValue = None
-    if value[0] == '"' and value[-1] == '"':
-        value = value[1:-1]
-        type = modeling_language.lookup_element("LiteralString", elem.ns)
-        defaultValue = element_factory.create(type)
-        defaultValue.value = value
-        defaultValue.name = value
-    elif value in ["true", "True", "false", "False"]:
-        type = modeling_language.lookup_element("LiteralBoolean", elem.ns)
-        defaultValue = element_factory.create(type)
-        if value in ["true", "True"]:
-            defaultValue.value = True
+    if (len(value)!=0): 
+        if value[0] == '"' and value[-1] == '"':
+            value = value[1:-1]
+            type = modeling_language.lookup_element("LiteralString", elem.ns)
+            defaultValue = element_factory.create(type)
+            defaultValue.value = value
+            defaultValue.name = value
+        elif value in ["true", "True", "false", "False"]:
+            type = modeling_language.lookup_element("LiteralBoolean", elem.ns)
+            defaultValue = element_factory.create(type)
+            if value in ["true", "True"]:
+                defaultValue.value = True
+            else:
+                defaultValue.value = False
+            defaultValue.name = value
+        elif value == "*":
+            type = modeling_language.lookup_element("LiteralUnlimitedNatural", elem.ns)
+            defaultValue = element_factory.create(type)
+            defaultValue.value = value
+            defaultValue.name = value
+        elif value.isdigit():
+            type = modeling_language.lookup_element("LiteralInteger", elem.ns)
+            defaultValue = element_factory.create(type)
+            defaultValue.value = int(value)
+            defaultValue.name = value
         else:
-            defaultValue.value = False
-        defaultValue.name = value
-    elif value == "*":
-        type = modeling_language.lookup_element("LiteralUnlimitedNatural", elem.ns)
-        defaultValue = element_factory.create(type)
-        defaultValue.value = value
-        defaultValue.name = value
-    elif value.isdigit():
-        type = modeling_language.lookup_element("LiteralInteger", elem.ns)
-        defaultValue = element_factory.create(type)
-        defaultValue.value = int(value)
-        defaultValue.name = value
+            # Anything else we assume as string.
+            type = modeling_language.lookup_element("LiteralString", elem.ns)
+            defaultValue = element_factory.create(type)
+            defaultValue.value = value
+            defaultValue.name = value
     else:
-        # Anything else we assume as string.
         type = modeling_language.lookup_element("LiteralString", elem.ns)
         defaultValue = element_factory.create(type)
         defaultValue.value = value
         defaultValue.name = value
+
 
     if defaultValue and isinstance(defaultValue, Base):
         base_default_value: Base = defaultValue
