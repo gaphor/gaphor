@@ -608,7 +608,7 @@ def upgrade_simple_properties_to_value_specifications(
             case "defaultValue" | "joinSpec" | "specification" | "value":
                 value_attr = getattr(element_type, name, None)
                 if value_attr and value_attr.type == valueSpecification:
-                    defaultValue = get_value_specification_from_value(
+                    defaultValue = _value_specification_from_value(
                         value, elem, element_factory, modeling_language
                     )
                     if defaultValue is not None:
@@ -617,7 +617,7 @@ def upgrade_simple_properties_to_value_specifications(
             case "guard" if elem.type in ("ActivityEdge", "ControlFlow", "ObjectFlow"):
                 value_attr = getattr(element_type, name, None)
                 if value_attr and value_attr.type == valueSpecification:
-                    defaultValue = get_value_specification_from_value(
+                    defaultValue = _value_specification_from_value(
                         value, elem, element_factory, modeling_language
                     )
                     if defaultValue is not None:
@@ -626,11 +626,11 @@ def upgrade_simple_properties_to_value_specifications(
     return elem
 
 
-def get_value_specification_from_value(
+def _value_specification_from_value(
     value, elem, element_factory, modeling_language
 ) -> Base | None:
     defaultValue = None
-    if value[0] == '"' and value[-1] == '"':
+    if value and value[0] == '"' and value[-1] == '"':
         value = value[1:-1]
         type = modeling_language.lookup_element("LiteralString", elem.ns)
         defaultValue = element_factory.create(type)
@@ -649,7 +649,7 @@ def get_value_specification_from_value(
         defaultValue = element_factory.create(type)
         defaultValue.value = value
         defaultValue.name = value
-    elif value.isdigit():
+    elif value and value.isdigit():
         type = modeling_language.lookup_element("LiteralInteger", elem.ns)
         defaultValue = element_factory.create(type)
         defaultValue.value = int(value)

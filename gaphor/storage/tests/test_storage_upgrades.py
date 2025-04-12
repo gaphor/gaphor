@@ -298,6 +298,9 @@ def test_diagram_type_to_class_mapping(kind, ns, name):
                     ["True", "LiteralBoolean", True],
                     ["false", "LiteralBoolean", False],
                     ["False", "LiteralBoolean", False],
+                    ["", "LiteralString", ""],
+                    [None, "LiteralString", None],
+                    ['"', "LiteralString", ""],
                 ],
             )
         ),
@@ -318,10 +321,14 @@ def test_update_value_to_value_specification(
     load_elements({"1": e}, element_factory, modeling_language)
 
     p = element_factory.lookup("1")
+    value_spec = getattr(p, property_name)
 
-    assert type(getattr(p, property_name)).__name__ == literal_type
-    if getattr(p, property_name) is not None:
-        assert getattr(p, property_name).value == expected_value
+    assert type(p).__name__ == element_type
+    assert type(value_spec).__name__ == literal_type
+
+    if value_spec is not None:
+        assert value_spec.value == expected_value
+        assert value_spec in element_factory
 
 
 @pytest.mark.parametrize(
