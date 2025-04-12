@@ -12,12 +12,12 @@ from collections.abc import Callable, Iterable
 from functools import partial
 
 from gaphor import application
-from gaphor.core.modeling import Base, Diagram, ElementFactory, Presentation
+from gaphor.core.modeling import Base, Diagram, ElementFactory, Id, Presentation
 from gaphor.core.modeling.collection import collection
 from gaphor.core.modeling.modelinglanguage import ModelingLanguage
 from gaphor.core.modeling.stylesheet import StyleSheet
 from gaphor.storage.parser import GaphorLoader, element, parse_generator
-from gaphor.storage.xmlwriter import XMLWriter
+from gaphor.storage.xmlwriter import WriterProtocol, XMLWriter
 
 FILE_FORMAT_VERSION = "4"
 MODEL_NS = "https://gaphor.org/model"
@@ -26,13 +26,19 @@ MODELING_LANGUAGE_NS = "https://gaphor.org/modelinglanguage"
 log = logging.getLogger(__name__)
 
 
-def save(out=None, element_factory=None, status_queue=None):
+def save(
+    out: WriterProtocol,
+    element_factory: ElementFactory,
+    status_queue: Callable[[float], None] | None = None,
+):
     for status in save_generator(out, element_factory):
         if status_queue:
             status_queue(status)
 
 
-def save_generator(out, element_factory: ElementFactory):
+def save_generator(
+    out: WriterProtocol, element_factory: ElementFactory
+) -> Iterable[float]:
     """Save the current model using @writer, which is a
     gaphor.storage.xmlwriter.XMLWriter instance."""
 
@@ -64,7 +70,12 @@ def save_generator(out, element_factory: ElementFactory):
                         yield (n * 100) / size
 
 
-def save_element(name, value, element_factory, writer):
+def save_element(
+    name: str,
+    value: str | int | bool | Base | collection[Base],
+    element_factory: ElementFactory,
+    writer: XMLWriter,
+) -> None:
     """Save attributes and references from items in the gaphor.UML module.
 
     A value may be a primitive (string, int), a
@@ -80,7 +91,7 @@ def save_element(name, value, element_factory, writer):
         )
         return False
 
-    def save_reference(name, value):
+    def save_reference(name: str, value: Base):
         """Save a value as a reference to another element in the model.
 
         This applies to both UML and canvas items.
@@ -90,7 +101,7 @@ def save_element(name, value, element_factory, writer):
                 with writer.element("ref", {"refid": value.id}):
                     pass
 
-    def save_collection(name, value):
+    def save_collection(name: str, value: collection[Base]):
         """Save a list of references."""
         if value:
             with writer.element(name, {}):
@@ -100,7 +111,7 @@ def save_element(name, value, element_factory, writer):
                             with writer.element("ref", {"refid": v.id}):
                                 pass
 
-    def save_value(name, value):
+    def save_value(name: str, value: str | int | bool):
         """Save a value (attribute)."""
         if value is not None:
             with writer.element(name, {}):
@@ -115,7 +126,12 @@ def save_element(name, value, element_factory, writer):
         save_value(name, value)
 
 
-def load_elements(elements, element_factory, modeling_language, gaphor_version="1.0.0"):
+def load_elements(
+    elements: dict[Id, element],
+    element_factory: ElementFactory,
+    modeling_language: ModelingLanguage,
+    gaphor_version="1.0.0",
+) -> None:
     for _ in load_elements_generator(
         elements, element_factory, modeling_language, gaphor_version
     ):
@@ -123,7 +139,7 @@ def load_elements(elements, element_factory, modeling_language, gaphor_version="
 
 
 def load_elements_generator(
-    elements: dict[str, element],
+    elements: dict[Id, element],
     element_factory: ElementFactory,
     modeling_language: ModelingLanguage,
     gaphor_version: str,
@@ -175,12 +191,12 @@ def load_elements_generator(
 
 
 def _load_elements_and_canvasitems(
-    elements: dict[str, element],
+    elements: dict[Id, element],
     element_factory: ElementFactory,
     modeling_language: ModelingLanguage,
     gaphor_version: str,
     update_status_queue: Callable[[], Iterable[float]],
-):
+) -> Iterable[float]:
     def create_element(elem):
         if elem.element:
             return
@@ -237,7 +253,11 @@ def _load_elements_and_canvasitems(
         create_element(elem)
 
 
-def _load_attributes_and_references(elements, element_factory, update_status_queue):
+def _load_attributes_and_references(
+    elements: dict[Id, element],
+    element_factory: ElementFactory,
+    update_status_queue: Callable[[], Iterable[float]],
+) -> Iterable[float]:
     for _id, elem in list(elements.items()):
         yield from update_status_queue()
         # Ensure that all elements have their element instance ready...
@@ -250,6 +270,7 @@ def _load_attributes_and_references(elements, element_factory, update_status_que
             except AttributeError:
                 log.exception(f"Invalid attribute name {elem.type}.{name}")
 
+        ref: element | None
         for name, refids in list(elem.references.items()):
             if isinstance(refids, list):
                 for refid in refids:
@@ -260,9 +281,11 @@ def _load_attributes_and_references(elements, element_factory, update_status_que
                             f"Invalid ID for reference ({refid}) for element {elem.type}.{name}"
                         )
                     else:
+                        assert ref.element
                         elem.element.load(name, ref.element)
             else:
                 if ref := elements.get(refids):
+                    assert ref.element
                     elem.element.load(name, ref.element)
                 elif ref_elem := element_factory.lookup(refids):
                     # Element may have been created by an updater
@@ -272,8 +295,11 @@ def _load_attributes_and_references(elements, element_factory, update_status_que
 
 
 def load(
-    file_obj: io.TextIOBase, element_factory, modeling_language, status_queue=None
-):
+    file_obj: io.TextIOBase,
+    element_factory: ElementFactory,
+    modeling_language: ModelingLanguage,
+    status_queue: Callable[[int], None] | None = None,
+) -> None:
     """Load a file and create a model if possible.
 
     Optionally, a status queue function can be given, to which the
@@ -327,7 +353,7 @@ def load_generator(
     yield 100
 
 
-def version_lower_than(gaphor_version, version):
+def version_lower_than(gaphor_version: str, version: tuple[int, ...]) -> bool:
     """Only major and minor versions are checked.
 
     >>> version_lower_than("0.3.0", (0, 15, 0))
@@ -343,7 +369,7 @@ class UnknownModelElementError(Exception):
 
 
 # since 2.1.0
-def upgrade_element_owned_comment_to_comment(elem):
+def upgrade_element_owned_comment_to_comment(elem: element):
     for name, refids in dict(elem.references).items():
         if name == "ownedComment":
             elem.references["comment"] = refids
@@ -353,14 +379,14 @@ def upgrade_element_owned_comment_to_comment(elem):
 
 
 # since 2.2.0
-def upgrade_ensure_style_sheet_is_present(factory):
+def upgrade_ensure_style_sheet_is_present(factory: ElementFactory) -> None:
     style_sheet = next(factory.select(StyleSheet), None)
     if not style_sheet:
         factory.create(StyleSheet)
 
 
 # since 2.3.0
-def upgrade_package_owned_classifier_to_owned_type(elem):
+def upgrade_package_owned_classifier_to_owned_type(elem: element) -> element:
     for name, refids in dict(elem.references).items():
         if name == "ownedClassifier":
             elem.references["ownedType"] = refids
@@ -370,29 +396,29 @@ def upgrade_package_owned_classifier_to_owned_type(elem):
 
 
 # since 2.3.0
-def upgrade_implementation_to_interface_realization(elem):
+def upgrade_implementation_to_interface_realization(elem: element) -> element:
     if elem.type == "Implementation":
         elem.type = "InterfaceRealization"
     return elem
 
 
 # since 2.3.0
-def upgrade_feature_parameters_to_owned_parameter(elem):
-    formal_params = []
-    return_results = []
+def upgrade_feature_parameters_to_owned_parameter(elem: element) -> element:
+    formal_params: list[Id] = []
+    return_results: list[Id] = []
     for name, refids in dict(elem.references).items():
         if name == "formalParameter":
-            formal_params = refids
+            formal_params = refids  # type: ignore[assignment]
             del elem.references["formalParameter"]
         elif name == "returnResult":
-            return_results = refids
+            return_results = refids  # type: ignore[assignment]
             del elem.references["returnResult"]
     elem.references["ownedParameter"] = formal_params + return_results
     return elem
 
 
 # since 2.3.0
-def upgrade_parameter_owner_formal_param(elem):
+def upgrade_parameter_owner_formal_param(elem: element) -> element:
     for name, refids in dict(elem.references).items():
         if name == "ownerReturnParam":
             elem.references["ownerFormalParam"] = refids
@@ -402,7 +428,7 @@ def upgrade_parameter_owner_formal_param(elem):
 
 
 # since 2.5.0
-def upgrade_diagram_element(elem):
+def upgrade_diagram_element(elem: element) -> element:
     if elem.type == "Diagram":
         for name, refids in dict(elem.references).items():
             if name == "package":
@@ -413,27 +439,30 @@ def upgrade_diagram_element(elem):
 
 
 # since 2.6.0
-def upgrade_generalization_arrow_direction(elem):
+def upgrade_generalization_arrow_direction(elem: element) -> element:
     if elem.type == "GeneralizationItem":
-        head_ids, tail_ids = 0, 0
+        head_id: str | None = None
+        tail_id: str | None = None
         for name, refids in dict(elem.references).items():
             if name == "head-connection":
-                head_ids = refids
+                head_id = refids  # type: ignore[assignment]
             elif name == "tail-connection":
-                tail_ids = refids
-        if head_ids and tail_ids:
+                tail_id = refids  # type: ignore[assignment]
+        if head_id and tail_id:
             elem.references["head-connection"], elem.references["tail-connection"] = (
-                tail_ids,
-                head_ids,
+                tail_id,
+                head_id,
             )
     return elem
 
 
 # since 2.9.0
-def upgrade_flow_item_to_control_flow_item(elem, elements):
+def upgrade_flow_item_to_control_flow_item(
+    elem: element, elements: dict[Id, element]
+) -> element:
     if elem.type == "FlowItem":
         if subject_id := elem.references.get("subject"):
-            subject_type = elements[subject_id].type
+            subject_type = elements[subject_id].type  # type: ignore[index]
         else:
             subject_type = "ControlFlow"
 
@@ -442,7 +471,7 @@ def upgrade_flow_item_to_control_flow_item(elem, elements):
 
 
 # since 2.19.0
-def upgrade_decision_node_item_show_type(elem):
+def upgrade_decision_node_item_show_type(elem: element) -> element:
     if elem.type == "DecisionNodeItem":
         if "show_type" in elem.values:
             elem.values["show_underlying_type"] = elem.values["show_type"]
@@ -451,7 +480,7 @@ def upgrade_decision_node_item_show_type(elem):
 
 
 # since 2.19.0
-def upgrade_delete_property_information_flow(elem):
+def upgrade_delete_property_information_flow(elem: element) -> element:
     if (
         elem.type in ("Property", "Port", "ProxyPort")
         and "informationFlow" in elem.references
@@ -462,7 +491,7 @@ def upgrade_delete_property_information_flow(elem):
 
 # since 2.20.0
 def upgrade_note_on_model_element_only(
-    elem: element, elements: dict[str, element]
+    elem: element, elements: dict[Id, element]
 ) -> element:
     if elem.type.endswith("Item") and "note" in elem.values:
         if subject := elements.get(elem.references.get("subject", None)):  # type: ignore[arg-type]
@@ -667,7 +696,7 @@ def _value_specification_from_value(
 
 
 # since 3.1.0
-def upgrade_package_package_to_nesting_package(elements):
+def upgrade_package_package_to_nesting_package(elements: dict[Id, element]) -> None:
     for _id, elem in list(elements.items()):
         if elem.type in ["Package", "Profile"]:
             if "package" in elem.references:
@@ -676,7 +705,9 @@ def upgrade_package_package_to_nesting_package(elements):
 
 
 # since 3.1.0
-def upgrade_parameter_owned_node_to_activity_parameter_node(elements):
+def upgrade_parameter_owned_node_to_activity_parameter_node(
+    elements: dict[Id, element],
+) -> None:
     for _id, elem in list(elements.items()):
         if elem.type == "Parameter":
             if "owningNode" in elem.references:
