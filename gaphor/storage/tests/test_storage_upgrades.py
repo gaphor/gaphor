@@ -301,6 +301,8 @@ def test_diagram_type_to_class_mapping(kind, ns, name):
                     ["", "LiteralString", ""],
                     [None, "LiteralString", None],
                     ['"', "LiteralString", ""],
+                    ["-1", "LiteralString", "-1"],
+                    ["1a", "LiteralString", "1a"],
                 ],
             )
         ),
