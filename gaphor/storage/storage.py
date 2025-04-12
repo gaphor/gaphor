@@ -144,8 +144,6 @@ def load_elements_generator(
         if progress % 30 == 0:
             yield (progress * 100) / size
 
-    homeless_literals: dict[str, element] = {}
-
     # First create elements and canvas items in the factory
     # The elements are stored as attribute 'element' on the parser objects:
     yield from _load_elements_and_canvasitems(
@@ -154,13 +152,14 @@ def load_elements_generator(
         modeling_language,
         gaphor_version,
         update_status_queue,
-        homeless_literals,
     )
     if version_lower_than(gaphor_version, (3, 1, 0)):
         upgrade_package_package_to_nesting_package(elements)
         upgrade_parameter_owned_node_to_activity_parameter_node(elements)
 
-    yield from _load_attributes_and_references(elements, update_status_queue)
+    yield from _load_attributes_and_references(
+        elements, element_factory, update_status_queue
+    )
 
     upgrade_ensure_style_sheet_is_present(element_factory)
     if version_lower_than(gaphor_version, (2, 28, 0)):
@@ -174,10 +173,6 @@ def load_elements_generator(
     for diagram in element_factory.select(Diagram):
         diagram.update()
 
-    house_homeless_literals(
-        element_factory, homeless_literals, elements, modeling_language
-    )
-
 
 def _load_elements_and_canvasitems(
     elements: dict[str, element],
@@ -185,7 +180,6 @@ def _load_elements_and_canvasitems(
     modeling_language: ModelingLanguage,
     gaphor_version: str,
     update_status_queue: Callable[[], Iterable[float]],
-    homeless_literals: dict[str, element],
 ):
     def create_element(elem):
         if elem.element:
@@ -213,7 +207,7 @@ def _load_elements_and_canvasitems(
             elem = upgrade_diagram_type_to_class(elem)
         if version_lower_than(gaphor_version, (3, 1, 0)):
             elem = upgrade_simple_properties_to_value_specifications(
-                elem, element_factory, modeling_language, homeless_literals
+                elem, element_factory, modeling_language
             )
 
         if not (cls := modeling_language.lookup_element(elem.type, elem.ns)):
@@ -243,7 +237,7 @@ def _load_elements_and_canvasitems(
         create_element(elem)
 
 
-def _load_attributes_and_references(elements, update_status_queue):
+def _load_attributes_and_references(elements, element_factory, update_status_queue):
     for _id, elem in list(elements.items()):
         yield from update_status_queue()
         # Ensure that all elements have their element instance ready...
@@ -268,12 +262,13 @@ def _load_attributes_and_references(elements, update_status_queue):
                     else:
                         elem.element.load(name, ref.element)
             else:
-                try:
-                    ref = elements[refids]
-                except KeyError:
-                    log.exception(f"Invalid ID for reference ({refids})")
-                else:
+                if ref := elements.get(refids):
                     elem.element.load(name, ref.element)
+                elif ref_elem := element_factory.lookup(refids):
+                    # Element may have been created by an updater
+                    elem.element.load(name, ref_elem)
+                else:
+                    log.exception(f"Invalid ID for reference ({refids})")
 
 
 def load(
@@ -573,7 +568,6 @@ def upgrade_simple_properties_to_value_specifications(
     elem: element,
     element_factory: ElementFactory,
     modeling_language: ModelingLanguage,
-    homeless_literals: dict,
 ) -> element:
     valueSpecification = modeling_language.lookup_element("ValueSpecification", "UML")
     element_type = modeling_language.lookup_element(elem.type, elem.ns)
@@ -586,99 +580,90 @@ def upgrade_simple_properties_to_value_specifications(
                         "LiteralUnlimitedNatural", elem.ns
                     )
                     if type is not None and isinstance(value, str):
-                        upperValue = element_factory.create(type)
+                        upper_value = element_factory.create(type)
                         try:
                             # Overwrite any string value that is not '*'
-                            upperValue.value = int(value)
+                            upper_value.value = int(value)
                         except ValueError:
-                            upperValue.value = "*"
-                        upperValue.name = value
-                        elem.values["upperValue"] = upperValue
-                        homeless_literals[upperValue.id] = (elem.id, name)
+                            upper_value.value = "*"
+                        upper_value.name = value
+                        del elem.values["upperValue"]
+                        elem.references["upperValue"] = upper_value.id
             case "lowerValue":
                 value_attr = getattr(element_type, "lowerValue", None)
                 if value_attr and value_attr.type == valueSpecification:
                     type = modeling_language.lookup_element("LiteralInteger", elem.ns)
                     if type is not None and isinstance(value, str):
-                        lowerValue = element_factory.create(type)
-                        lowerValue.value = int(value)
-                        lowerValue.name = value
-                        elem.values["lowerValue"] = lowerValue
-                        homeless_literals[lowerValue.id] = (elem.id, name)
+                        lower_value = element_factory.create(type)
+                        lower_value.value = int(value)
+                        lower_value.name = value
+                        del elem.values["lowerValue"]
+                        elem.references["lowerValue"] = lower_value.id
             case "defaultValue" | "joinSpec" | "specification" | "value":
                 value_attr = getattr(element_type, name, None)
                 if value_attr and value_attr.type == valueSpecification:
-                    defaultValue = _value_specification_from_value(
+                    value_spec = _value_specification_from_value(
                         value, elem, element_factory, modeling_language
                     )
-                    if defaultValue is not None:
-                        elem.values[name] = defaultValue
-                        homeless_literals[defaultValue.id] = (elem.id, name)
+                    if value_spec is not None:
+                        del elem.values[name]
+                        elem.references[name] = value_spec.id
             case "guard" if elem.type in ("ActivityEdge", "ControlFlow", "ObjectFlow"):
                 value_attr = getattr(element_type, name, None)
                 if value_attr and value_attr.type == valueSpecification:
-                    defaultValue = _value_specification_from_value(
+                    value_spec = _value_specification_from_value(
                         value, elem, element_factory, modeling_language
                     )
-                    if defaultValue is not None:
-                        elem.values[name] = defaultValue
-                        homeless_literals[defaultValue.id] = (elem.id, name)
+                    if value_spec is not None:
+                        del elem.values["guard"]
+                        elem.references["guard"] = value_spec.id
     return elem
 
 
 def _value_specification_from_value(
-    value, elem, element_factory, modeling_language
+    value: str | None,
+    elem: element,
+    element_factory: ElementFactory,
+    modeling_language: ModelingLanguage,
 ) -> Base | None:
-    defaultValue = None
+    value_spec: Base | None = None
     if value and value[0] == '"' and value[-1] == '"':
         value = value[1:-1]
         type = modeling_language.lookup_element("LiteralString", elem.ns)
-        defaultValue = element_factory.create(type)
-        defaultValue.value = value
-        defaultValue.name = value
+        assert type
+        value_spec = element_factory.create(type)
+        value_spec.value = value
+        value_spec.name = value
     elif value in ["true", "True", "false", "False"]:
         type = modeling_language.lookup_element("LiteralBoolean", elem.ns)
-        defaultValue = element_factory.create(type)
+        assert type
+        value_spec = element_factory.create(type)
         if value in ["true", "True"]:
-            defaultValue.value = True
+            value_spec.value = True
         else:
-            defaultValue.value = False
-        defaultValue.name = value
+            value_spec.value = False
+        value_spec.name = value
     elif value == "*":
         type = modeling_language.lookup_element("LiteralUnlimitedNatural", elem.ns)
-        defaultValue = element_factory.create(type)
-        defaultValue.value = value
-        defaultValue.name = value
+        assert type
+        value_spec = element_factory.create(type)
+        value_spec.value = value
+        value_spec.name = value
     elif value and value.isdigit():
         type = modeling_language.lookup_element("LiteralInteger", elem.ns)
-        defaultValue = element_factory.create(type)
-        defaultValue.value = int(value)
-        defaultValue.name = value
+        assert type
+        value_spec = element_factory.create(type)
+        value_spec.value = int(value)
+        value_spec.name = value
     else:
         # Anything else we assume as string.
         type = modeling_language.lookup_element("LiteralString", elem.ns)
-        defaultValue = element_factory.create(type)
-        defaultValue.value = value
-        defaultValue.name = value
+        assert type
+        value_spec = element_factory.create(type)
+        value_spec.value = value
+        value_spec.name = value
 
-    if defaultValue and isinstance(defaultValue, Base):
-        base_default_value: Base = defaultValue
-        return base_default_value
-    return None
-
-
-def house_homeless_literals(
-    element_factory: ElementFactory,
-    homeless_literals: dict,
-    elements: dict[str, element],
-    modeling_language: ModelingLanguage,
-):
-    for literal_id, (elem_id, name) in homeless_literals.items():
-        literal = element_factory.lookup(literal_id)
-        elem = elements.get(elem_id)
-        if elem is not None:
-            element = elem.element
-            setattr(element, name, literal)
+    return value_spec
 
 
 # since 3.1.0

@@ -41,7 +41,7 @@ class base:
 
     def __init__(self):
         # added Base as an alternate type for values to support upgrading simple types to UML.ValueSpecification
-        self.values: dict[str, str | Base] = {}
+        self.values: dict[str, str] = {}
         self.references: dict[str, str | list[str]] = {}
 
     def __getattr__(self, key):
