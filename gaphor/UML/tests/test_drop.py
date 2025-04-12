@@ -1,5 +1,6 @@
 from gaphor import UML
 from gaphor.diagram.drop import drop
+from gaphor.UML.classes import PackageItem
 from gaphor.UML.interactions import MessageItem
 from gaphor.UML.interactions.interactionsconnect import connect_lifelines
 from gaphor.UML.recipes import (
@@ -153,3 +154,27 @@ def test_drop_pin(diagram, element_factory):
     assert ouput_item
     assert ouput_item.subject is output_pin
     assert ouput_item.parent.subject is action
+
+
+def test_drop_element_on_presentation(diagram, element_factory):
+    package_item = diagram.create(
+        PackageItem, subject=element_factory.create(UML.Package)
+    )
+    cls = element_factory.create(UML.Class)
+
+    drop(cls, package_item, 0, 0)
+    class_item = cls.presentation[0]
+
+    assert class_item.parent is package_item
+
+
+def test_drop_element_on_presentation_that_cannot_be_owned(diagram, element_factory):
+    package_item = diagram.create(
+        PackageItem, subject=element_factory.create(UML.Package)
+    )
+    action = element_factory.create(UML.Action)
+
+    drop(action, package_item, 0, 0)
+    class_item = action.presentation[0]
+
+    assert class_item.parent is None
