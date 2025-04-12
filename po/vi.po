@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2025-01-29 12:18-0300\n"
-"PO-Revision-Date: 2025-04-01 12:15+0000\n"
+"PO-Revision-Date: 2025-04-12 12:31+0000\n"
 "Last-Translator: Bế Trọng Nghĩa <benghia1st@gmail.com>\n"
 "Language-Team: Vietnamese <https://hosted.weblate.org/projects/gaphor/gaphor/"
 "vi/>\n"
@@ -476,12 +476,12 @@ msgstr ""
 
 #: gaphor/SysML/toolbox.py:168 gaphor/UML/toolbox.py:42
 msgid "Use Case Diagram"
-msgstr ""
+msgstr "Biểu đồ ca sử dụng"
 
 #: gaphor/SysML/toolbox.py:184 gaphor/UML/toolbox.py:50
 #: gaphor/UML/usecases/usecasetoolbox.py:28 gaphor/templates/uml-example.gaphor
 msgid "Actor"
-msgstr ""
+msgstr "Tác nhân"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:29 gaphor/SysML/toolbox.py:185
 msgid "Block"
@@ -494,11 +494,11 @@ msgstr ""
 #: gaphor/SysML/requirements/requirementstoolbox.py:17
 #: gaphor/SysML/toolbox.py:193
 msgid "Requirement"
-msgstr ""
+msgstr "Yêu cầu"
 
 #: gaphor/SysML/toolbox.py:203 gaphor/UML/toolbox.py:77
 msgid "Use Case"
-msgstr ""
+msgstr "Ca sử dụng"
 
 #: gaphor/SysML/toolbox.py:204
 msgid "Value Type"
@@ -690,7 +690,7 @@ msgstr ""
 
 #: gaphor/UML/deployments/deploymentstoolbox.py:40 gaphor/UML/toolbox.py:55
 msgid "Device"
-msgstr ""
+msgstr "Thiết bị"
 
 #: gaphor/UML/toolbox.py:61
 msgid "Instance Specification"
