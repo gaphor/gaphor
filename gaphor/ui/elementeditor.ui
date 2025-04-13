@@ -145,13 +145,20 @@
     <property name="margin_top">2</property>
     <property name="orientation">vertical</property>
     <child>
-      <object class="GtkStack" id="editor-stack">
-        <property name="transition_type">slide-left-right</property>
+      <object class="AdwViewSwitcher">
+        <property name="stack">editor-stack</property>
+        <!-- <property name="policy">wide</property> -->
+      </object>
+    </child>
+    <child>
+      <object class="AdwViewStack" id="editor-stack">
+        <property name="enable-transitions">1</property>
         <property name="hhomogeneous">0</property>
         <child>
-          <object class="GtkStackPage">
+          <object class="AdwViewStackPage">
             <property name="name">editors</property>
             <property name="title" translatable="yes">Editors</property>
+            <property name="icon-name">document-edit-symbolic</property>
             <property name="child">
               <object class="GtkScrolledWindow">
                 <property name="hscrollbar_policy">never</property>
@@ -174,9 +181,10 @@
         </child>
 
         <child>
-          <object class="GtkStackPage">
+          <object class="AdwViewStackPage">
             <property name="name">preferences</property>
-            <property name="title" translatable="yes">Preferences</property>
+            <property name="title" translatable="yes">Styling</property>
+            <property name="icon-name">document-properties-symbolic</property>
             <property name="child">
               <object class="GtkBox">
                 <property name="margin_start">6</property>
@@ -283,9 +291,10 @@
         </child>
 
         <child>
-          <object class="GtkStackPage">
+          <object class="AdwViewStackPage">
             <property name="name">modelmerge</property>
             <property name="title" translatable="yes">Merge Models</property>
+            <property name="visible">0</property>
             <property name="child">
               <object class="GtkBox">
                 <property name="margin_start">6</property>

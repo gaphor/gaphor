@@ -21,6 +21,10 @@ headerbar box.end {
   padding-left: 6px;
 }
 
+#toolbox > viewport > box {
+  margin: 6px;
+}
+
 diagramview {
   background: white;
 }
@@ -164,7 +168,7 @@ tabbar > revealer > box,
   font-weight: bold;
 }
 
-#toolbox > viewport > box {
+#element_editor viewswitcher {
   margin: 6px;
 }
 
