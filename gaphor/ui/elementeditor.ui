@@ -158,8 +158,8 @@
         <child>
           <object class="AdwViewStackPage">
             <property name="name">editors</property>
-            <property name="title" translatable="yes">Editors</property>
-            <property name="icon-name">document-edit-symbolic</property>
+            <property name="title" translatable="yes">Editor</property>
+            <property name="icon-name">document-edit</property>
             <property name="child">
               <object class="GtkScrolledWindow">
                 <property name="hscrollbar_policy">never</property>
@@ -185,7 +185,7 @@
           <object class="AdwViewStackPage">
             <property name="name">preferences</property>
             <property name="title" translatable="yes">Styling</property>
-            <property name="icon-name">document-properties-symbolic</property>
+            <property name="icon-name">document-properties</property>
             <property name="child">
               <object class="GtkBox">
                 <property name="margin_start">6</property>
@@ -292,9 +292,10 @@
         </child>
 
         <child>
-          <object class="AdwViewStackPage">
+          <object class="AdwViewStackPage" id="modelmerge-page">
             <property name="name">modelmerge</property>
             <property name="title" translatable="yes">Merge Models</property>
+            <property name="icon-name">document-revert</property>
             <property name="visible">0</property>
             <property name="child">
               <object class="GtkBox">
