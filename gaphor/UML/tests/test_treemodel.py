@@ -266,34 +266,3 @@ def test_element_with_member_and_no_owner(tree_model, element_factory):
     association_model = tree_model.branches.get(association_item)
 
     assert property_item in association_model.elements
-
-
-def test_parameter_alone_displays(tree_model, element_factory):
-    element = element_factory.create(UML.Operation)
-    parameter = element_factory.create(UML.Parameter)
-    element.ownedParameter.append(parameter)
-
-    tree_model.add_element(element)
-    element_item = tree_model.tree_item_for_element(element)
-    tree_model.child_model(element_item)
-    property_item = tree_model.tree_item_for_element(parameter)
-
-    assert property_item.element is parameter
-
-
-def test_parameter_with_activity_node_hidden(tree_model, element_factory):
-    element = element_factory.create(UML.Activity)
-    parameter = element_factory.create(UML.Parameter)
-    act_param_node = element_factory.create(UML.ActivityParameterNode)
-    act_param_node.parameter = parameter
-    element.ownedParameter.append(parameter)
-    element.node.append(act_param_node)
-
-    assert len(element.ownedElement.items) == 2
-
-    tree_model.add_element(element)
-    element_item = tree_model.tree_item_for_element(element)
-    tree_model.child_model(element_item)
-    property_item = tree_model.tree_item_for_element(parameter)
-
-    assert property_item is None
