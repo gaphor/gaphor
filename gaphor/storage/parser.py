@@ -40,7 +40,6 @@ class base:
     """Simple base class for element, and canvas."""
 
     def __init__(self):
-        # added Base as an alternate type for values to support upgrading simple types to UML.ValueSpecification
         self.values: dict[str, str] = {}
         self.references: dict[str, str | list[str]] = {}
 
