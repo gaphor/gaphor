@@ -168,8 +168,9 @@ tabbar > revealer > box,
   font-weight: bold;
 }
 
-#element_editor sourceview {
+#element_editor .sourceview {
   min-height: 200px;
+  padding: 3px;
 }
 
 #element_editor viewswitcher {

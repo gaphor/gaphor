@@ -141,19 +141,9 @@
   </object>
   <object class="GtkSourceBuffer" id="style-sheet-buffer"/>
 
-  <object class="GtkBox" id="elementeditor">
-    <property name="margin_top">2</property>
-    <property name="orientation">vertical</property>
-    <child>
-      <object class="AdwViewSwitcher">
-        <property name="stack">editor-stack</property>
-        <property name="halign">center</property>
-        <!-- <property name="policy">wide</property> -->
-      </object>
-    </child>
-    <child>
+  <object class="AdwToolbarView" id="elementeditor">
+    <property name="content">
       <object class="AdwViewStack" id="editor-stack">
-        <property name="enable-transitions">1</property>
         <property name="hhomogeneous">0</property>
         <child>
           <object class="AdwViewStackPage">
@@ -346,6 +336,12 @@
           </object>
         </child>
 
+      </object>
+    </property>
+    <child type="bottom">
+      <object class="AdwViewSwitcher">
+        <property name="stack">editor-stack</property>
+        <property name="policy">wide</property>
       </object>
     </child>
   </object>
