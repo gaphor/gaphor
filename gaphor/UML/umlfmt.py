@@ -203,7 +203,7 @@ def format_parameter(
 
 @format.register(UML.Slot)
 def format_slot(el):
-    return f'{el.definingFeature.name} = "{el.value.value}"'
+    return f'{el.definingFeature.name} = "{el.value.value}"' if el.value else ""
 
 
 @format.register(UML.Pin)

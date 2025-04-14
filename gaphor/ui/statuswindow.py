@@ -35,7 +35,7 @@ class StatusWindow:
         self.window.add_css_class("status-window")
         self.window.present(parent)
 
-    def progress(self, percentage: int):
+    def progress(self, percentage: float):
         """Update progress percentage (0..100)."""
         if self.progress_bar:
             self.progress_bar.set_fraction(min(percentage, 100.0) / 100.0)
