@@ -19,7 +19,7 @@ from gaphor.transaction import Transaction
 class StylePropertyPage(PropertyPageBase):
     """A button to open a easy-to-use CSS editor."""
 
-    order = 300
+    order = 450
     style_editor = None
 
     def __init__(self, subject, event_manager, element_factory, main_window):
