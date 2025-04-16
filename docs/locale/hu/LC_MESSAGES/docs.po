@@ -5608,7 +5608,7 @@ msgid "This is the ``.readthedocs.yaml`` file we use for Gaphor:"
 msgstr ""
 
 #: ../sphinx.rst:102
-msgid "``libgirepository1.0-dev`` is required to build PyGObject."
+msgid "``libgirepository-2.0-dev`` is required to build PyGObject."
 msgstr ""
 
 #: ../sphinx.rst:103
