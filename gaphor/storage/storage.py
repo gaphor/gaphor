@@ -623,11 +623,16 @@ def upgrade_simple_properties_to_value_specifications(
                 if value_attr and value_attr.type == valueSpecification:
                     type = modeling_language.lookup_element("LiteralInteger", elem.ns)
                     if type is not None and isinstance(value, str):
-                        lower_value = element_factory.create(type)
-                        lower_value.value = int(value)
-                        lower_value.name = value
-                        del elem.values["lowerValue"]
-                        elem.references["lowerValue"] = lower_value.id
+                        try:
+                            int_value = int(value)
+                        except ValueError:
+                            pass
+                        else:
+                            lower_value = element_factory.create(type)
+                            lower_value.value = int_value
+                            lower_value.name = value
+                            del elem.values["lowerValue"]
+                            elem.references["lowerValue"] = lower_value.id
             case "defaultValue" | "joinSpec" | "specification" | "value":
                 value_attr = getattr(element_type, name, None)
                 if value_attr and value_attr.type == valueSpecification:
