@@ -298,7 +298,7 @@ class InternalsPropertyPage(PropertyPageBase):
     This info may come in handy if you want to code.
     """
 
-    order = 400
+    order = 500
 
     def __init__(self, subject):
         self.subject = subject

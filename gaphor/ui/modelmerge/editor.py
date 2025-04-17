@@ -22,6 +22,7 @@ class ModelMerge:
         self.modeling_language = modeling_language
         self.model = Gio.ListStore.new(Node.__gtype__)
         self.selection = None
+        self.page = None
         self.tree_view = None
         self._tx_depth = 0
 
@@ -34,6 +35,9 @@ class ModelMerge:
 
         for node in organize_changes(self.element_factory, self.modeling_language):
             self.model.append(node)
+
+        if self.model and self.page:
+            self.page.set_visible(True)
 
     def open(self, builder):
         tree_model = Gtk.TreeListModel.new(
@@ -49,6 +53,7 @@ class ModelMerge:
         factory = Gtk.SignalListItemFactory.new()
         factory.connect("setup", list_item_factory_setup, self.apply)
 
+        self.page = builder.get_object("modelmerge-page")
         self.tree_view = builder.get_object("modelmerge")
         self.tree_view.set_model(self.selection)
         self.tree_view.set_factory(factory)
@@ -61,6 +66,8 @@ class ModelMerge:
         self.refresh_model()
 
     def close(self):
+        if self.page:
+            self.page.set_visible(False)
         self.event_manager.unsubscribe(self.on_model_loaded)
         self.event_manager.unsubscribe(self.on_model_updated)
 

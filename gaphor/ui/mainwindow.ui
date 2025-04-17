@@ -177,20 +177,6 @@
 
                     <child type="end">
                       <object class="GtkToggleButton">
-                        <property name="tooltip_text" translatable="yes">Toggle Model Preferences</property>
-                        <property name="action_name">win.show-preferences</property>
-                        <child>
-                          <object class="GtkImage">
-                            <property name="icon_name">document-properties-symbolic</property>
-                          </object>
-                        </child>
-                        <style>
-                          <class name="flat"/>
-                        </style>
-                      </object>
-                    </child>
-                    <child type="end">
-                      <object class="GtkToggleButton">
                         <property name="action_name">win.show-editors</property>
                         <property name="tooltip-text" translatable="yes">Toggle Property Editor</property>
                         <child>
