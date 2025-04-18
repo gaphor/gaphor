@@ -1,6 +1,6 @@
 from gaphor import UML
 from gaphor.core.modeling import Diagram
-from gaphor.storage.storage import load
+from gaphor.storage.load import load
 from gaphor.UML import diagramitems
 
 

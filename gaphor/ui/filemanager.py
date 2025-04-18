@@ -10,6 +10,7 @@ from pathlib import Path
 
 from gi.repository import Adw, Gio, Gtk
 
+import gaphor.storage as storage
 from gaphor.abc import ActionProvider, Service
 from gaphor.asyncio import sleep
 from gaphor.babel import translate_model
@@ -23,7 +24,6 @@ from gaphor.event import (
     SessionShutdown,
     SessionShutdownRequested,
 )
-from gaphor.storage import storage
 from gaphor.storage.mergeconflict import split_ours_and_theirs
 from gaphor.storage.parser import MergeConflictDetected
 from gaphor.ui.errordialog import error_dialog

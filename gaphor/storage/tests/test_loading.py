@@ -4,7 +4,7 @@ from xml.sax import SAXParseException
 
 import pytest
 
-from gaphor.storage import storage
+import gaphor.storage as storage
 from gaphor.storage.parser import MergeConflictDetected, ParserException
 
 
