@@ -201,28 +201,28 @@ def _load_elements_and_canvasitems(
         if elem.element:
             return
         if version_lower_than(gaphor_version, (2, 1, 0)):
-            elem = upgrade_element_owned_comment_to_comment(elem)
+            upgrade_element_owned_comment_to_comment(elem)
         if version_lower_than(gaphor_version, (2, 3, 0)):
-            elem = upgrade_package_owned_classifier_to_owned_type(elem)
-            elem = upgrade_implementation_to_interface_realization(elem)
-            elem = upgrade_feature_parameters_to_owned_parameter(elem)
-            elem = upgrade_parameter_owner_formal_param(elem)
+            upgrade_package_owned_classifier_to_owned_type(elem)
+            upgrade_implementation_to_interface_realization(elem)
+            upgrade_feature_parameters_to_owned_parameter(elem)
+            upgrade_parameter_owner_formal_param(elem)
         if version_lower_than(gaphor_version, (2, 5, 0)):
-            elem = upgrade_diagram_element(elem)
+            upgrade_diagram_element(elem)
         if version_lower_than(gaphor_version, (2, 6, 0)):
-            elem = upgrade_generalization_arrow_direction(elem)
+            upgrade_generalization_arrow_direction(elem)
         if version_lower_than(gaphor_version, (2, 9, 0)):
-            elem = upgrade_flow_item_to_control_flow_item(elem, elements)
+            upgrade_flow_item_to_control_flow_item(elem, elements)
         if version_lower_than(gaphor_version, (2, 19, 0)):
-            elem = upgrade_delete_property_information_flow(elem)
-            elem = upgrade_decision_node_item_show_type(elem)
+            upgrade_delete_property_information_flow(elem)
+            upgrade_decision_node_item_show_type(elem)
         if version_lower_than(gaphor_version, (2, 20, 0)):
-            elem = upgrade_note_on_model_element_only(elem, elements)
+            upgrade_note_on_model_element_only(elem, elements)
         if version_lower_than(gaphor_version, (2, 28, 0)):
-            elem = upgrade_modeling_language(elem)
-            elem = upgrade_diagram_type_to_class(elem)
+            upgrade_modeling_language(elem)
+            upgrade_diagram_type_to_class(elem)
         if version_lower_than(gaphor_version, (3, 1, 0)):
-            elem = upgrade_simple_properties_to_value_specifications(
+            upgrade_simple_properties_to_value_specifications(
                 elem, element_factory, modeling_language
             )
 
@@ -382,7 +382,6 @@ def upgrade_element_owned_comment_to_comment(elem: element):
             elem.references["comment"] = refids
             del elem.references["ownedComment"]
             break
-    return elem
 
 
 @since(2, 2, 0)
@@ -393,24 +392,22 @@ def upgrade_ensure_style_sheet_is_present(factory: ElementFactory) -> None:
 
 
 @since(2, 3, 0)
-def upgrade_package_owned_classifier_to_owned_type(elem: element) -> element:
+def upgrade_package_owned_classifier_to_owned_type(elem: element) -> None:
     for name, refids in dict(elem.references).items():
         if name == "ownedClassifier":
             elem.references["ownedType"] = refids
             del elem.references["ownedClassifier"]
             break
-    return elem
 
 
 @since(2, 3, 0)
-def upgrade_implementation_to_interface_realization(elem: element) -> element:
+def upgrade_implementation_to_interface_realization(elem: element) -> None:
     if elem.type == "Implementation":
         elem.type = "InterfaceRealization"
-    return elem
 
 
 @since(2, 3, 0)
-def upgrade_feature_parameters_to_owned_parameter(elem: element) -> element:
+def upgrade_feature_parameters_to_owned_parameter(elem: element) -> None:
     formal_params: list[Id] = []
     return_results: list[Id] = []
     for name, refids in dict(elem.references).items():
@@ -421,32 +418,29 @@ def upgrade_feature_parameters_to_owned_parameter(elem: element) -> element:
             return_results = refids  # type: ignore[assignment]
             del elem.references["returnResult"]
     elem.references["ownedParameter"] = formal_params + return_results
-    return elem
 
 
 @since(2, 3, 0)
-def upgrade_parameter_owner_formal_param(elem: element) -> element:
+def upgrade_parameter_owner_formal_param(elem: element) -> None:
     for name, refids in dict(elem.references).items():
         if name == "ownerReturnParam":
             elem.references["ownerFormalParam"] = refids
             del elem.references["ownerReturnParam"]
             break
-    return elem
 
 
 @since(2, 5, 0)
-def upgrade_diagram_element(elem: element) -> element:
+def upgrade_diagram_element(elem: element) -> None:
     if elem.type == "Diagram":
         for name, refids in dict(elem.references).items():
             if name == "package":
                 elem.references["element"] = refids
                 del elem.references["package"]
                 break
-    return elem
 
 
 @since(2, 6, 0)
-def upgrade_generalization_arrow_direction(elem: element) -> element:
+def upgrade_generalization_arrow_direction(elem: element) -> None:
     if elem.type == "GeneralizationItem":
         head_id: str | None = None
         tail_id: str | None = None
@@ -460,13 +454,12 @@ def upgrade_generalization_arrow_direction(elem: element) -> element:
                 tail_id,
                 head_id,
             )
-    return elem
 
 
 @since(2, 9, 0)
 def upgrade_flow_item_to_control_flow_item(
     elem: element, elements: dict[Id, element]
-) -> element:
+) -> None:
     if elem.type == "FlowItem":
         if subject_id := elem.references.get("subject"):
             subject_type = elements[subject_id].type  # type: ignore[index]
@@ -474,32 +467,29 @@ def upgrade_flow_item_to_control_flow_item(
             subject_type = "ControlFlow"
 
         elem.type = f"{subject_type}Item"
-    return elem
 
 
 @since(2, 19, 0)
-def upgrade_decision_node_item_show_type(elem: element) -> element:
+def upgrade_decision_node_item_show_type(elem: element) -> None:
     if elem.type == "DecisionNodeItem":
         if "show_type" in elem.values:
             elem.values["show_underlying_type"] = elem.values["show_type"]
             del elem.values["show_type"]
-    return elem
 
 
 @since(2, 19, 0)
-def upgrade_delete_property_information_flow(elem: element) -> element:
+def upgrade_delete_property_information_flow(elem: element) -> None:
     if (
         elem.type in ("Property", "Port", "ProxyPort")
         and "informationFlow" in elem.references
     ):
         del elem.references["informationFlow"]
-    return elem
 
 
 @since(2, 20, 0)
 def upgrade_note_on_model_element_only(
     elem: element, elements: dict[Id, element]
-) -> element:
+) -> None:
     if elem.type.endswith("Item") and "note" in elem.values:
         if subject := elements.get(elem.references.get("subject", None)):  # type: ignore[arg-type]
             if (
@@ -513,11 +503,10 @@ def upgrade_note_on_model_element_only(
             else:
                 subject.values["note"] = elem.values["note"]
             del elem.values["note"]
-    return elem
 
 
 @since(2, 28, 0)
-def upgrade_modeling_language(elem: element) -> element:
+def upgrade_modeling_language(elem: element) -> None:
     if elem.type == "Diagram" and elem.ns in (None, "", "Core"):
         elem.ns = "UML"
     elif elem.ns:
@@ -533,7 +522,6 @@ def upgrade_modeling_language(elem: element) -> element:
     elif elem.type == "PictureItem":
         elem.ns = "UML"
         elem.type = "ImageItem"
-    return elem
 
 
 @since(2, 28, 0)
@@ -555,7 +543,7 @@ def upgrade_dependency_owning_package(
 
 
 @since(2, 28, 0)
-def upgrade_diagram_type_to_class(elem: element) -> element:
+def upgrade_diagram_type_to_class(elem: element) -> None:
     if elem.type == "Diagram":
         if diagram_type := elem.values.get("diagramType"):
             assert isinstance(diagram_type, str)
@@ -564,7 +552,6 @@ def upgrade_diagram_type_to_class(elem: element) -> element:
         if diagram_type := elem.values.get("diagramType"):
             assert isinstance(diagram_type, str)
             elem.ns, elem.type = sysml_diagram_type_to_class[diagram_type]
-    return elem
 
 
 uml_diagram_type_to_class = {
@@ -604,7 +591,7 @@ def upgrade_simple_properties_to_value_specifications(
     elem: element,
     element_factory: ElementFactory,
     modeling_language: ModelingLanguage,
-) -> element:
+) -> None:
     valueSpecification = modeling_language.lookup_element("ValueSpecification", "UML")
     element_type = modeling_language.lookup_element(elem.type, elem.ns)
     for name, value in dict(elem.values).items():
@@ -658,7 +645,6 @@ def upgrade_simple_properties_to_value_specifications(
                     if value_spec is not None:
                         del elem.values["guard"]
                         elem.references["guard"] = value_spec.id
-    return elem
 
 
 def _value_specification_from_value(
