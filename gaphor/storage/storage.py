@@ -368,7 +368,14 @@ class UnknownModelElementError(Exception):
     pass
 
 
-# since 2.1.0
+def since(major, minor, patch):
+    def _since(func):
+        return func
+
+    return _since
+
+
+@since(2, 1, 0)
 def upgrade_element_owned_comment_to_comment(elem: element):
     for name, refids in dict(elem.references).items():
         if name == "ownedComment":
@@ -378,14 +385,14 @@ def upgrade_element_owned_comment_to_comment(elem: element):
     return elem
 
 
-# since 2.2.0
+@since(2, 2, 0)
 def upgrade_ensure_style_sheet_is_present(factory: ElementFactory) -> None:
     style_sheet = next(factory.select(StyleSheet), None)
     if not style_sheet:
         factory.create(StyleSheet)
 
 
-# since 2.3.0
+@since(2, 3, 0)
 def upgrade_package_owned_classifier_to_owned_type(elem: element) -> element:
     for name, refids in dict(elem.references).items():
         if name == "ownedClassifier":
@@ -395,14 +402,14 @@ def upgrade_package_owned_classifier_to_owned_type(elem: element) -> element:
     return elem
 
 
-# since 2.3.0
+@since(2, 3, 0)
 def upgrade_implementation_to_interface_realization(elem: element) -> element:
     if elem.type == "Implementation":
         elem.type = "InterfaceRealization"
     return elem
 
 
-# since 2.3.0
+@since(2, 3, 0)
 def upgrade_feature_parameters_to_owned_parameter(elem: element) -> element:
     formal_params: list[Id] = []
     return_results: list[Id] = []
@@ -417,7 +424,7 @@ def upgrade_feature_parameters_to_owned_parameter(elem: element) -> element:
     return elem
 
 
-# since 2.3.0
+@since(2, 3, 0)
 def upgrade_parameter_owner_formal_param(elem: element) -> element:
     for name, refids in dict(elem.references).items():
         if name == "ownerReturnParam":
@@ -427,7 +434,7 @@ def upgrade_parameter_owner_formal_param(elem: element) -> element:
     return elem
 
 
-# since 2.5.0
+@since(2, 5, 0)
 def upgrade_diagram_element(elem: element) -> element:
     if elem.type == "Diagram":
         for name, refids in dict(elem.references).items():
@@ -438,7 +445,7 @@ def upgrade_diagram_element(elem: element) -> element:
     return elem
 
 
-# since 2.6.0
+@since(2, 6, 0)
 def upgrade_generalization_arrow_direction(elem: element) -> element:
     if elem.type == "GeneralizationItem":
         head_id: str | None = None
@@ -456,7 +463,7 @@ def upgrade_generalization_arrow_direction(elem: element) -> element:
     return elem
 
 
-# since 2.9.0
+@since(2, 9, 0)
 def upgrade_flow_item_to_control_flow_item(
     elem: element, elements: dict[Id, element]
 ) -> element:
@@ -470,7 +477,7 @@ def upgrade_flow_item_to_control_flow_item(
     return elem
 
 
-# since 2.19.0
+@since(2, 19, 0)
 def upgrade_decision_node_item_show_type(elem: element) -> element:
     if elem.type == "DecisionNodeItem":
         if "show_type" in elem.values:
@@ -479,7 +486,7 @@ def upgrade_decision_node_item_show_type(elem: element) -> element:
     return elem
 
 
-# since 2.19.0
+@since(2, 19, 0)
 def upgrade_delete_property_information_flow(elem: element) -> element:
     if (
         elem.type in ("Property", "Port", "ProxyPort")
@@ -489,7 +496,7 @@ def upgrade_delete_property_information_flow(elem: element) -> element:
     return elem
 
 
-# since 2.20.0
+@since(2, 20, 0)
 def upgrade_note_on_model_element_only(
     elem: element, elements: dict[Id, element]
 ) -> element:
@@ -509,7 +516,7 @@ def upgrade_note_on_model_element_only(
     return elem
 
 
-# since 2.28.0
+@since(2, 28, 0)
 def upgrade_modeling_language(elem: element) -> element:
     if elem.type == "Diagram" and elem.ns in (None, "", "Core"):
         elem.ns = "UML"
@@ -529,7 +536,7 @@ def upgrade_modeling_language(elem: element) -> element:
     return elem
 
 
-# since 2.28.0
+@since(2, 28, 0)
 def upgrade_dependency_owning_package(
     element_factory: ElementFactory, modeling_language
 ):
@@ -547,7 +554,7 @@ def upgrade_dependency_owning_package(
             maybe_pkg = maybe_pkg.owner
 
 
-# since 2.28.0
+@since(2, 28, 0)
 def upgrade_diagram_type_to_class(elem: element) -> element:
     if elem.type == "Diagram":
         if diagram_type := elem.values.get("diagramType"):
@@ -592,7 +599,7 @@ sysml_diagram_type_to_class = {
 }
 
 
-# since 3.1.0
+@since(3, 1, 0)
 def upgrade_simple_properties_to_value_specifications(
     elem: element,
     element_factory: ElementFactory,
@@ -700,7 +707,7 @@ def _value_specification_from_value(
     return value_spec
 
 
-# since 3.1.0
+@since(3, 1, 0)
 def upgrade_package_package_to_nesting_package(elements: dict[Id, element]) -> None:
     for _id, elem in list(elements.items()):
         if elem.type in ["Package", "Profile"]:
@@ -709,7 +716,7 @@ def upgrade_package_package_to_nesting_package(elements: dict[Id, element]) -> N
                 del elem.references["package"]
 
 
-# since 3.1.0
+@since(3, 1, 0)
 def upgrade_parameter_owned_node_to_activity_parameter_node(
     elements: dict[Id, element],
 ) -> None:
