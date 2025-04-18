@@ -148,6 +148,11 @@ def load_elements_generator(
 
     Exceptions: IOError, ValueError.
     """
+
+    def maybe_upgrade(upgrade_func, *args) -> None:
+        if version_lower_than(gaphor_version, upgrade_func.__since__):
+            upgrade_func(*args)
+
     log.debug(f"Loading {len(elements)} elements")
 
     # The elements are iterated three times:
@@ -166,20 +171,18 @@ def load_elements_generator(
         elements,
         element_factory,
         modeling_language,
-        gaphor_version,
+        maybe_upgrade,
         update_status_queue,
     )
-    if version_lower_than(gaphor_version, (3, 1, 0)):
-        upgrade_package_package_to_nesting_package(elements)
-        upgrade_parameter_owned_node_to_activity_parameter_node(elements)
+    maybe_upgrade(upgrade_package_package_to_nesting_package, elements)
+    maybe_upgrade(upgrade_parameter_owned_node_to_activity_parameter_node, elements)
 
     yield from _load_attributes_and_references(
         elements, element_factory, update_status_queue
     )
 
     upgrade_ensure_style_sheet_is_present(element_factory)
-    if version_lower_than(gaphor_version, (2, 28, 0)):
-        upgrade_dependency_owning_package(element_factory, modeling_language)
+    maybe_upgrade(upgrade_dependency_owning_package, element_factory, modeling_language)
 
     for _id, elem in list(elements.items()):
         yield from update_status_queue()
@@ -190,41 +193,36 @@ def load_elements_generator(
         diagram.update()
 
 
-def _load_elements_and_canvasitems(
+def _load_elements_and_canvasitems(  # type: ignore[explicit-any]
     elements: dict[Id, element],
     element_factory: ElementFactory,
     modeling_language: ModelingLanguage,
-    gaphor_version: str,
+    maybe_upgrade: Callable[..., None],
     update_status_queue: Callable[[], Iterable[float]],
 ) -> Iterable[float]:
     def create_element(elem):
         if elem.element:
             return
-        if version_lower_than(gaphor_version, (2, 1, 0)):
-            upgrade_element_owned_comment_to_comment(elem)
-        if version_lower_than(gaphor_version, (2, 3, 0)):
-            upgrade_package_owned_classifier_to_owned_type(elem)
-            upgrade_implementation_to_interface_realization(elem)
-            upgrade_feature_parameters_to_owned_parameter(elem)
-            upgrade_parameter_owner_formal_param(elem)
-        if version_lower_than(gaphor_version, (2, 5, 0)):
-            upgrade_diagram_element(elem)
-        if version_lower_than(gaphor_version, (2, 6, 0)):
-            upgrade_generalization_arrow_direction(elem)
-        if version_lower_than(gaphor_version, (2, 9, 0)):
-            upgrade_flow_item_to_control_flow_item(elem, elements)
-        if version_lower_than(gaphor_version, (2, 19, 0)):
-            upgrade_delete_property_information_flow(elem)
-            upgrade_decision_node_item_show_type(elem)
-        if version_lower_than(gaphor_version, (2, 20, 0)):
-            upgrade_note_on_model_element_only(elem, elements)
-        if version_lower_than(gaphor_version, (2, 28, 0)):
-            upgrade_modeling_language(elem)
-            upgrade_diagram_type_to_class(elem)
-        if version_lower_than(gaphor_version, (3, 1, 0)):
-            upgrade_simple_properties_to_value_specifications(
-                elem, element_factory, modeling_language
-            )
+
+        maybe_upgrade(upgrade_element_owned_comment_to_comment, elem)
+        maybe_upgrade(upgrade_package_owned_classifier_to_owned_type, elem)
+        maybe_upgrade(upgrade_implementation_to_interface_realization, elem)
+        maybe_upgrade(upgrade_feature_parameters_to_owned_parameter, elem)
+        maybe_upgrade(upgrade_parameter_owner_formal_param, elem)
+        maybe_upgrade(upgrade_diagram_element, elem)
+        maybe_upgrade(upgrade_generalization_arrow_direction, elem)
+        maybe_upgrade(upgrade_flow_item_to_control_flow_item, elem, elements)
+        maybe_upgrade(upgrade_delete_property_information_flow, elem)
+        maybe_upgrade(upgrade_decision_node_item_show_type, elem)
+        maybe_upgrade(upgrade_note_on_model_element_only, elem, elements)
+        maybe_upgrade(upgrade_modeling_language, elem)
+        maybe_upgrade(upgrade_diagram_type_to_class, elem)
+        maybe_upgrade(
+            upgrade_simple_properties_to_value_specifications,
+            elem,
+            element_factory,
+            modeling_language,
+        )
 
         if not (cls := modeling_language.lookup_element(elem.type, elem.ns)):
             raise UnknownModelElementError(
@@ -368,8 +366,9 @@ class UnknownModelElementError(Exception):
     pass
 
 
-def since(major, minor, patch):
+def since(major, minor, patch=0):
     def _since(func):
+        func.__since__ = (major, minor, patch)
         return func
 
     return _since
