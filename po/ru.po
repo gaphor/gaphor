@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: Gaphor 0.13.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2025-01-29 12:18-0300\n"
-"PO-Revision-Date: 2025-04-14 14:03+0000\n"
+"PO-Revision-Date: 2025-04-20 02:40+0000\n"
 "Last-Translator: Сергей <asvmail.as@gmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/gaphor/gaphor/ru/"
 ">\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Weblate 5.11-dev\n"
+"X-Generator: Weblate 5.11.1-dev\n"
 "Generated-By: Babel 2.16.0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:28 gaphor/C4Model/toolbox.py:57
@@ -1655,9 +1655,8 @@ msgid "Open Style Editor"
 msgstr "Открыть редактор стилей"
 
 #: gaphor/diagram/styleeditor.ui:27
-#, fuzzy
 msgid "Border Radius"
-msgstr "упорядоченно"
+msgstr "Радиус рамки"
 
 #: gaphor/diagram/styleeditor.ui:51
 msgid "Color"
@@ -2273,13 +2272,12 @@ msgid "FeatureInput"
 msgstr ""
 
 #: gaphor/templates/sysml-example.gaphor
-#, fuzzy
 msgid "Request Actuation"
-msgstr "Первое Действие"
+msgstr "Запрос на активацию"
 
 #: gaphor/templates/sysml-example.gaphor
 msgid "Actuation Command"
-msgstr ""
+msgstr "Команда активации"
 
 #: gaphor/templates/sysml-example.gaphor gaphor/templates/sysml.gaphor
 msgid "Model Navigation"
@@ -2502,6 +2500,8 @@ msgstr ""
 #: gaphor/templates/uml-example.gaphor gaphor/templates/uml.gaphor
 msgid "Create detailed class diagrams to capture your object-oriented data model."
 msgstr ""
+"Создавайте подробные диаграммы классов, чтобы охватить свою объектно-"
+"ориентированную модель данных."
 
 #: gaphor/templates/uml-example.gaphor gaphor/templates/uml.gaphor
 msgid ""
@@ -2719,7 +2719,7 @@ msgstr ""
 
 #: gaphor/ui/elementeditor.ui:267
 msgid "Resolve"
-msgstr ""
+msgstr "Разрешить"
 
 #: gaphor/ui/errordialog.py:21
 msgid ""
@@ -3119,7 +3119,7 @@ msgstr "Перезапускать Инструмент Автоматическ
 
 #: gaphor/ui/help/preferences.ui:46
 msgid "After an element is created, switch back to the pointer tool."
-msgstr ""
+msgstr "После создания элемента вернитесь к инструменту указателя."
 
 #: gaphor/ui/help/preferences.ui:51
 msgid "Remove Unused Elements"
