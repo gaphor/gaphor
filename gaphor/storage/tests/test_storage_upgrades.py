@@ -271,9 +271,11 @@ def test_diagram_type_to_class_mapping(kind, ns, name):
     "element_type,property_name,value,literal_type,expected_value",
     [
         ["MultiplicityElement", "lowerValue", "1", "LiteralInteger", 1],
+        ["MultiplicityElement", "lowerValue", "", "NoneType", None],
         ["MultiplicityElement", "lowerValue", None, "NoneType", None],
         ["MultiplicityElement", "upperValue", "1", "LiteralUnlimitedNatural", 1],
         ["MultiplicityElement", "upperValue", "*", "LiteralUnlimitedNatural", "*"],
+        ["MultiplicityElement", "upperValue", "", "LiteralUnlimitedNatural", "*"],
         ["MultiplicityElement", "upperValue", None, "NoneType", None],
         *(
             a[0] + a[1]
