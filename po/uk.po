@@ -8,21 +8,22 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2025-04-23 21:47+0200\n"
-"PO-Revision-Date: 2025-03-12 15:46+0000\n"
+"PO-Revision-Date: 2025-04-26 10:01+0000\n"
 "Last-Translator: Максим Горпиніч <maksimgorpinic2005a@gmail.com>\n"
+"Language-Team: Ukrainian <https://hosted.weblate.org/projects/gaphor/gaphor/"
+"uk/>\n"
 "Language: uk\n"
-"Language-Team: Ukrainian "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/uk/>\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Weblate 5.12-dev\n"
 "Generated-By: Babel 2.16.0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:28
 msgid "C4"
-msgstr ""
+msgstr "C4"
 
 #: gaphor/C4Model/propertypages.ui:11 gaphor/diagram/general/metadata.py:70
 #: gaphor/diagram/propertypages.ui:170
@@ -2635,11 +2636,13 @@ msgstr ""
 
 #: gaphor/ui/elementeditor.ui:87
 msgid "Help improve Gaphor"
-msgstr ""
+msgstr "Допоможіть покращити Gaphor"
 
 #: gaphor/ui/elementeditor.ui:96
 msgid "Gaphor is free and open source software, written by devoted volunteers."
 msgstr ""
+"Gaphor — це безкоштовне програмне забезпечення з відкритим кодом, створене "
+"відданими волонтерами."
 
 #: gaphor/ui/elementeditor.ui:104
 msgid ""
@@ -2647,22 +2650,25 @@ msgid ""
 "translate Gaphor into your language, report bugs, or suggest new "
 "features. Join us in improving Gaphor!"
 msgstr ""
+"Є багато способів допомогти покращити Gaphor: написати допис у блозі, "
+"перекласти Gaphor на вашу мову, повідомити про помилки або запропонувати "
+"нові функції. Приєднуйтесь до нас у вдосконаленні Gaphor!"
 
 #: gaphor/ui/elementeditor.ui:112
 msgid ""
 "Visit <a href=\"https://gaphor.org/contribute/\">gaphor.org</a> for more "
 "information."
 msgstr ""
+"Для отримання додаткової інформації відвідайте <a href="
+"\"https://gaphor.org/contribute/\">gaphor.org</a>."
 
 #: gaphor/ui/elementeditor.ui:151
-#, fuzzy
 msgid "Editor"
-msgstr "Редактори"
+msgstr "Редактор"
 
 #: gaphor/ui/elementeditor.ui:177
-#, fuzzy
 msgid "Styling"
-msgstr "Рядок"
+msgstr "Стайлінг"
 
 #: gaphor/ui/elementeditor.ui:189
 msgid "Style Sheet"
@@ -2966,9 +2972,8 @@ msgid "Press F11 to exit Fullscreen"
 msgstr "Натисніть F11, щоб вийти з повноекранного режиму"
 
 #: gaphor/ui/mainwindow.ui:37
-#, fuzzy
 msgid "Change modeling profile"
-msgstr "Завантаження моделі з {filename}"
+msgstr "Змінити профіль моделювання"
 
 #: gaphor/ui/mainwindow.ui:47
 msgid "Open application menu"
@@ -3007,9 +3012,8 @@ msgid "Save As…"
 msgstr "Зберегти як…"
 
 #: gaphor/ui/mainwindow.ui:284
-#, fuzzy
 msgid "Preferences…"
-msgstr "Уподобання"
+msgstr "Уподобання…"
 
 #: gaphor/ui/mainwindow.ui:301
 msgid "Align Left"
@@ -3048,14 +3052,12 @@ msgid "Max Size"
 msgstr "Максимальний розмір"
 
 #: gaphor/ui/menubar.ui:5
-#, fuzzy
 msgid "_File"
-msgstr "Файли"
+msgstr "_Файл"
 
 #: gaphor/ui/menubar.ui:31
-#, fuzzy
 msgid "_Edit"
-msgstr "Вихід"
+msgstr "_Редагувати"
 
 #: gaphor/ui/help/shortcuts.ui:162 gaphor/ui/menubar.ui:44
 msgid "Cut"
@@ -3066,9 +3068,8 @@ msgid "Copy"
 msgstr "Копіювати"
 
 #: gaphor/ui/menubar.ui:52
-#, fuzzy
 msgid "Paste"
-msgstr "Дата"
+msgstr "Вставити"
 
 #: gaphor/ui/help/shortcuts.ui:176 gaphor/ui/menubar.ui:56
 msgid "Paste (copy defining elements)"
@@ -3079,42 +3080,36 @@ msgid "Select All"
 msgstr "Виберіть усі"
 
 #: gaphor/ui/menubar.ui:70
-#, fuzzy
 msgid "Unselect All"
-msgstr "Виберіть усі"
+msgstr "Скасувати вибір усіх"
 
 #: gaphor/ui/menubar.ui:76
 msgid "_View"
-msgstr ""
+msgstr "_Перегляд"
 
 #: gaphor/ui/menubar.ui:87
-#, fuzzy
 msgid "Actual Size"
-msgstr "Максимальний розмір"
+msgstr "Фактичний розмір"
 
 #: gaphor/ui/menubar.ui:102
 msgid "_Window"
-msgstr ""
+msgstr "_Вікно"
 
 #: gaphor/ui/menubar.ui:105
-#, fuzzy
 msgid "Maximize"
-msgstr "Максимальний розмір"
+msgstr "Максимізувати"
 
 #: gaphor/ui/menubar.ui:109
-#, fuzzy
 msgid "Full screen"
-msgstr "Перемкнути повноекранний режим"
+msgstr "Повний екран"
 
 #: gaphor/ui/menubar.ui:115
-#, fuzzy
 msgid "_Help"
-msgstr "ⓘ Довідка"
+msgstr "_Допомога"
 
 #: gaphor/ui/menubar.ui:118
-#, fuzzy
 msgid "Online Documentation"
-msgstr "Перевернути орієнтацію"
+msgstr "Онлайн-документація"
 
 #: gaphor/ui/modelbrowser.py:404
 msgid "New _Package"
