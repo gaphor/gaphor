@@ -4,21 +4,22 @@ msgstr ""
 "Project-Id-Version: Gaphor 0.13.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2025-04-23 21:47+0200\n"
-"PO-Revision-Date: 2025-04-14 14:03+0000\n"
+"PO-Revision-Date: 2025-04-26 10:01+0000\n"
 "Last-Translator: Сергей <asvmail.as@gmail.com>\n"
+"Language-Team: Russian <https://hosted.weblate.org/projects/gaphor/gaphor/ru/"
+">\n"
 "Language: ru\n"
-"Language-Team: Russian "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/ru/>\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Weblate 5.12-dev\n"
 "Generated-By: Babel 2.16.0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:28
 msgid "C4"
-msgstr ""
+msgstr "C4"
 
 #: gaphor/C4Model/propertypages.ui:11 gaphor/diagram/general/metadata.py:70
 #: gaphor/diagram/propertypages.ui:170
@@ -1472,9 +1473,8 @@ msgid "Do activity"
 msgstr "Выполнить деятельность"
 
 #: gaphor/UML/states/propertypages.ui:77
-#, fuzzy
 msgid "Trigger"
-msgstr "Строка"
+msgstr "Триггер"
 
 #: gaphor/UML/states/propertypages.ui:129
 #: gaphor/UML/states/propertypages.ui:140
@@ -1887,11 +1887,11 @@ msgstr "Мейнфреймовая банковская система"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "View account balances, and make payments using"
-msgstr ""
+msgstr "Просматривать остатки на счёте и осуществлять платежи с помощью"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Get account information from, and makes payments using"
-msgstr ""
+msgstr "Получать информацию о счёте и совершать платежи с помощью"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "E-mail System"
@@ -1903,7 +1903,7 @@ msgstr "Действие отправки электронной почты в"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Sends e-mail using"
-msgstr ""
+msgstr "Отправка электронной почты с помощью"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Web Application"
@@ -1927,7 +1927,7 @@ msgstr "Посетите bigbank.com/lb, используя"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "View account balances and make payments using"
-msgstr ""
+msgstr "Просматривать остатки на счете и совершать платежи с помощью"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Makes API calls to"
@@ -2628,11 +2628,13 @@ msgstr ""
 
 #: gaphor/ui/elementeditor.ui:87
 msgid "Help improve Gaphor"
-msgstr ""
+msgstr "Помочь улучшить Gaphor"
 
 #: gaphor/ui/elementeditor.ui:96
 msgid "Gaphor is free and open source software, written by devoted volunteers."
 msgstr ""
+"Gaphor — это бесплатное программное обеспечение с открытым исходным кодом, "
+"написанное преданными своему делу добровольцами."
 
 #: gaphor/ui/elementeditor.ui:104
 msgid ""
@@ -2640,17 +2642,21 @@ msgid ""
 "translate Gaphor into your language, report bugs, or suggest new "
 "features. Join us in improving Gaphor!"
 msgstr ""
+"Есть много способов помочь сделать Gaphor лучше: написать сообщение в блоге, "
+"перевести Gaphor на свой язык, сообщить об ошибках или предложить новые "
+"функции. Присоединяйтесь к нам в улучшении Gaphor!"
 
 #: gaphor/ui/elementeditor.ui:112
 msgid ""
 "Visit <a href=\"https://gaphor.org/contribute/\">gaphor.org</a> for more "
 "information."
 msgstr ""
+"Для получения дополнительной информации посетите <a href="
+"\"https://gaphor.org/contribute/\">gaphor.org</a>."
 
 #: gaphor/ui/elementeditor.ui:151
-#, fuzzy
 msgid "Editor"
-msgstr "Редакторы"
+msgstr "Редактор"
 
 #: gaphor/ui/elementeditor.ui:177
 #, fuzzy
@@ -2957,9 +2963,8 @@ msgid "Press F11 to exit Fullscreen"
 msgstr "Нажмите F11 для выхода из полноэкранного режима"
 
 #: gaphor/ui/mainwindow.ui:37
-#, fuzzy
 msgid "Change modeling profile"
-msgstr "Загрузка модели из {filename}"
+msgstr "Изменить профиль моделирования"
 
 #: gaphor/ui/mainwindow.ui:47
 msgid "Open application menu"
@@ -2998,9 +3003,8 @@ msgid "Save As…"
 msgstr "Сохранить Как…"
 
 #: gaphor/ui/mainwindow.ui:284
-#, fuzzy
 msgid "Preferences…"
-msgstr "Параметры"
+msgstr "Параметры…"
 
 #: gaphor/ui/mainwindow.ui:301
 msgid "Align Left"
@@ -3039,14 +3043,12 @@ msgid "Max Size"
 msgstr "Максимальный размер"
 
 #: gaphor/ui/menubar.ui:5
-#, fuzzy
 msgid "_File"
-msgstr "Файлы"
+msgstr "_Файл"
 
 #: gaphor/ui/menubar.ui:31
-#, fuzzy
 msgid "_Edit"
-msgstr "Выход"
+msgstr "_Правка"
 
 #: gaphor/ui/help/shortcuts.ui:162 gaphor/ui/menubar.ui:44
 msgid "Cut"
@@ -3057,9 +3059,8 @@ msgid "Copy"
 msgstr "Копировать"
 
 #: gaphor/ui/menubar.ui:52
-#, fuzzy
 msgid "Paste"
-msgstr "Дата"
+msgstr "Вставить"
 
 #: gaphor/ui/help/shortcuts.ui:176 gaphor/ui/menubar.ui:56
 msgid "Paste (copy defining elements)"
@@ -3070,42 +3071,36 @@ msgid "Select All"
 msgstr "Выделить Всё"
 
 #: gaphor/ui/menubar.ui:70
-#, fuzzy
 msgid "Unselect All"
-msgstr "Выделить Всё"
+msgstr "Снять выделение со всего"
 
 #: gaphor/ui/menubar.ui:76
 msgid "_View"
-msgstr ""
+msgstr "_Вид"
 
 #: gaphor/ui/menubar.ui:87
-#, fuzzy
 msgid "Actual Size"
-msgstr "Максимальный размер"
+msgstr "Фактический размер"
 
 #: gaphor/ui/menubar.ui:102
 msgid "_Window"
-msgstr ""
+msgstr "_Окно"
 
 #: gaphor/ui/menubar.ui:105
-#, fuzzy
 msgid "Maximize"
-msgstr "Максимальный размер"
+msgstr "Развернуть"
 
 #: gaphor/ui/menubar.ui:109
-#, fuzzy
 msgid "Full screen"
 msgstr "Во весь экран"
 
 #: gaphor/ui/menubar.ui:115
-#, fuzzy
 msgid "_Help"
-msgstr "ⓘ Справка"
+msgstr "_Справка"
 
 #: gaphor/ui/menubar.ui:118
-#, fuzzy
 msgid "Online Documentation"
-msgstr "Отразить ориентацию"
+msgstr "Он-лайн документация"
 
 #: gaphor/ui/modelbrowser.py:404
 msgid "New _Package"
