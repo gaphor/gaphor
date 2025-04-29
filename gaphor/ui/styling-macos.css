@@ -9,6 +9,10 @@
  * See: https://gitlab.gnome.org/GNOME/gtk/-/issues/6255
  */
 
+:root {
+  font-size: 13pt;
+}
+
 .csd {
   box-shadow: none;
   border-radius: 0;

@@ -62,6 +62,7 @@ def _trigger_signal(signal_name):
 
 
 if hasattr(DiagramView, "install_action"):
+    DiagramView.set_css_name("diagramview")
     # Deal with Gtk being mocked when generating docs
     DiagramView.install_action("clipboard.cut", None, _trigger_signal("cut-clipboard"))
     DiagramView.install_action(

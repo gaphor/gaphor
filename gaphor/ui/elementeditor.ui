@@ -36,7 +36,6 @@
     </child>
     <child>
       <object class="GtkStack" id="tips">
-        <property name="transition-type">crossfade</property>
         <child>
           <object class="GtkStackPage">
             <property name="name">tips</property>
