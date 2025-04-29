@@ -8,20 +8,21 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2025-04-23 21:47+0200\n"
-"PO-Revision-Date: 2025-03-13 09:20+0000\n"
+"PO-Revision-Date: 2025-04-27 09:02+0000\n"
 "Last-Translator: ovari <ovari123@zoho.com>\n"
+"Language-Team: Hungarian <https://hosted.weblate.org/projects/gaphor/gaphor/"
+"hu/>\n"
 "Language: hu\n"
-"Language-Team: Hungarian "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/hu/>\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12-dev\n"
 "Generated-By: Babel 2.16.0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:28
 msgid "C4"
-msgstr ""
+msgstr "C4"
 
 #: gaphor/C4Model/propertypages.ui:11 gaphor/diagram/general/metadata.py:70
 #: gaphor/diagram/propertypages.ui:170
@@ -2642,11 +2643,13 @@ msgstr ""
 
 #: gaphor/ui/elementeditor.ui:87
 msgid "Help improve Gaphor"
-msgstr ""
+msgstr "Segítsen a Gaphor fejlesztésében"
 
 #: gaphor/ui/elementeditor.ui:96
 msgid "Gaphor is free and open source software, written by devoted volunteers."
 msgstr ""
+"A Gaphor egy ingyenes és nyílt forráskódú szoftver, amelyet elkötelezett "
+"önkéntesek írtak."
 
 #: gaphor/ui/elementeditor.ui:104
 msgid ""
@@ -2654,22 +2657,25 @@ msgid ""
 "translate Gaphor into your language, report bugs, or suggest new "
 "features. Join us in improving Gaphor!"
 msgstr ""
+"Sokféleképpen segíthetsz a Gaphor fejlesztésében: blogbejegyzések írása, a "
+"Gaphor fordítása a saját nyelvedre, hibák bejelentése vagy új funkciók "
+"javaslata. Csatlakozzon hozzánk a Gaphor fejlesztéséhez!"
 
 #: gaphor/ui/elementeditor.ui:112
 msgid ""
 "Visit <a href=\"https://gaphor.org/contribute/\">gaphor.org</a> for more "
 "information."
 msgstr ""
+"További tájékoztatásért látogasson el a <a href="
+"\"https://gaphor.org/contribute/\">gaphor.org</a> webhelyre."
 
 #: gaphor/ui/elementeditor.ui:151
-#, fuzzy
 msgid "Editor"
-msgstr "Szerkesztők"
+msgstr "Szerkesztő"
 
 #: gaphor/ui/elementeditor.ui:177
-#, fuzzy
 msgid "Styling"
-msgstr "Karakterlánc"
+msgstr "Stílusozás"
 
 #: gaphor/ui/elementeditor.ui:189
 msgid "Style Sheet"
@@ -2977,9 +2983,8 @@ msgid "Press F11 to exit Fullscreen"
 msgstr "Kilépés a teljes képernyős nézetbol F11 megnyomásával"
 
 #: gaphor/ui/mainwindow.ui:37
-#, fuzzy
 msgid "Change modeling profile"
-msgstr "Modell betöltése innen: {filename}"
+msgstr "Modellezési profil módosítása"
 
 #: gaphor/ui/mainwindow.ui:47
 msgid "Open application menu"
@@ -3018,9 +3023,8 @@ msgid "Save As…"
 msgstr "Mentés másként…"
 
 #: gaphor/ui/mainwindow.ui:284
-#, fuzzy
 msgid "Preferences…"
-msgstr "Beállítások"
+msgstr "Beállítások…"
 
 #: gaphor/ui/mainwindow.ui:301
 msgid "Align Left"
@@ -3059,14 +3063,12 @@ msgid "Max Size"
 msgstr "Maximális méret"
 
 #: gaphor/ui/menubar.ui:5
-#, fuzzy
 msgid "_File"
-msgstr "Fájlok"
+msgstr "_Fájl"
 
 #: gaphor/ui/menubar.ui:31
-#, fuzzy
 msgid "_Edit"
-msgstr "Kilépés"
+msgstr "S_zerkesztés"
 
 #: gaphor/ui/help/shortcuts.ui:162 gaphor/ui/menubar.ui:44
 msgid "Cut"
@@ -3077,9 +3079,8 @@ msgid "Copy"
 msgstr "Másolás"
 
 #: gaphor/ui/menubar.ui:52
-#, fuzzy
 msgid "Paste"
-msgstr "Dátum"
+msgstr "Beillesztés"
 
 #: gaphor/ui/help/shortcuts.ui:176 gaphor/ui/menubar.ui:56
 msgid "Paste (copy defining elements)"
@@ -3090,42 +3091,36 @@ msgid "Select All"
 msgstr "Összes kijelölése"
 
 #: gaphor/ui/menubar.ui:70
-#, fuzzy
 msgid "Unselect All"
-msgstr "Összes kijelölése"
+msgstr "Minden kijelölés megszüntetése"
 
 #: gaphor/ui/menubar.ui:76
 msgid "_View"
-msgstr ""
+msgstr "_Nézet"
 
 #: gaphor/ui/menubar.ui:87
-#, fuzzy
 msgid "Actual Size"
-msgstr "Maximális méret"
+msgstr "Tényleges méret"
 
 #: gaphor/ui/menubar.ui:102
 msgid "_Window"
-msgstr ""
+msgstr "_Ablak"
 
 #: gaphor/ui/menubar.ui:105
-#, fuzzy
 msgid "Maximize"
-msgstr "Maximális méret"
+msgstr "Teljes méret"
 
 #: gaphor/ui/menubar.ui:109
-#, fuzzy
 msgid "Full screen"
-msgstr "Teljes képernyős nézet ki-/bekapcsolása"
+msgstr "Teljes képernyő"
 
 #: gaphor/ui/menubar.ui:115
-#, fuzzy
 msgid "_Help"
-msgstr "ⓘ Súgó"
+msgstr "_Súgó"
 
 #: gaphor/ui/menubar.ui:118
-#, fuzzy
 msgid "Online Documentation"
-msgstr "Tájolás váltása"
+msgstr "Online dokumentáció"
 
 #: gaphor/ui/modelbrowser.py:404
 msgid "New _Package"
