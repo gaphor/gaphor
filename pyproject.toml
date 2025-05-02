@@ -33,7 +33,7 @@ classifiers = [
 requires-python = ">=3.11,<3.14"
 
 dependencies = [
-    "pycairo>=1.22.0",
+    "pycairo>=1.22.0,<1.28.0",
     "PyGObject>=3.50",
     "gaphas>=5.0",
     "generic>=1.0.0",
