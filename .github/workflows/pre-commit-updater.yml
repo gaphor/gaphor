@@ -44,7 +44,7 @@ jobs:
       - name: Run pre-commit hooks
         run: pre-commit run --all-files
       - name: Create GitHub App Token
-        uses: actions/create-github-app-token@3ff1caaa28b64c9cc276ce0a02e2ff584f3900c5 # v2.0.2
+        uses: actions/create-github-app-token@db3cdf40984fe6fd25ae19ac2bf2f4886ae8d959 # v2.0.5
         id: generate-token
         with:
           app-id: ${{ secrets.GAPHOR_UPDATER_APP_ID }}
