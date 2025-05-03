@@ -44,7 +44,7 @@
       "name": "install",
       "buildsystem": "simple",
       "build-commands": [
-        "pip3 install --prefix=${FLATPAK_DEST} --constraint=constraints.txt poetry poetry-plugin-export",
+        "pip3 install --prefix=${FLATPAK_DEST} --constraint=github-requirements.txt poetry poetry-plugin-export",
         "${FLATPAK_DEST}/bin/poetry export --output=requirements.txt",
         "pip3 install --no-cache-dir --ignore-installed --prefix=${FLATPAK_DEST} -r requirements.txt"
       ],
@@ -59,7 +59,7 @@
         },
         {
           "type": "file",
-          "path": ".github/constraints.txt"
+          "path": ".github/github-requirements.txt"
         }
        ]
     },

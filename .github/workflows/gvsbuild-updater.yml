@@ -46,7 +46,7 @@ jobs:
       - name: Get latest version
         id: latest-version
         run: |
-          pip install --constraint=.github/constraints.txt lastversion
+          pip install --constraint=.github/github-requirements.txt lastversion
           echo "latest_version=$(python -m lastversion gvsbuild)" >> "$GITHUB_OUTPUT"
 
   update-version:
