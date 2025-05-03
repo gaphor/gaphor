@@ -7153,7 +7153,7 @@ msgstr "ஒரு பெயரைக் கொண்ட வரைபடம் \"
 
 #: ../style_sheets.md:96
 msgid "``:focus``"
-msgstr "``:focus``"
+msgstr "``:கவனம்``"
 
 #: ../style_sheets.md:96
 msgid "The focused item. Other pseudo classes are:"
@@ -7199,7 +7199,7 @@ msgstr "இது வரைபடத்திற்கு மட்டுமே 
 
 #: ../style_sheets.md:106
 msgid "``:first-child``"
-msgstr "``:first-child``"
+msgstr "``:முதல்-குழந்தை``"
 
 #: ../style_sheets.md:106
 msgid "A node is the first element among a group of sibling."
@@ -7207,7 +7207,7 @@ msgstr "உடன்பிறப்பு ஒரு குழுவில் ஒ
 
 #: ../style_sheets.md:107
 msgid "``:has()``"
-msgstr "``:has()``"
+msgstr "``:உள்ளது()``"
 
 #: ../style_sheets.md:107
 msgid "The item contains any of the provided selectors."
@@ -7243,7 +7243,7 @@ msgstr "எ.கா. ``:not([subject])``: \"பொருள்\" இல்லா�
 
 #: ../style_sheets.md:116
 msgid "``::after``"
-msgstr "``::after``"
+msgstr "``::பிறகு``"
 
 #: ../style_sheets.md:116
 msgid ""
@@ -7317,7 +7317,7 @@ msgstr "நிறங்கள்"
 
 #: ../style_sheets.md:144
 msgid "``background-color``"
-msgstr "``background-color``"
+msgstr "``பின்னணி-வண்ணம்``"
 
 #: ../style_sheets.md:144
 msgid "Examples:"
@@ -7325,15 +7325,15 @@ msgstr "எடுத்துக்காட்டுகள்:"
 
 #: ../style_sheets.md:146
 msgid "``background-color: azure;``"
-msgstr "``background-color: azure;``"
+msgstr "``பின்னணி-வண்ணம்: அசூர்;``"
 
 #: ../style_sheets.md:148
 msgid "``background-color: rgb(255, 255, 255);``"
-msgstr "``background-color: rgb(255, 255, 255);``"
+msgstr "``பின்னணி-வண்ணம்: சிபநி(255, 255, 255);``"
 
 #: ../style_sheets.md:150
 msgid "``background-color: hsl(130, 95%, 10%);``"
-msgstr "``background-color: hsl(130, 95%, 10%);``"
+msgstr "``பின்னணி-வண்ணம்: எச்சுஎல்(130, 95%, 10%);``"
 
 #: ../style_sheets.md:151
 msgid "``color``"
@@ -7357,7 +7357,7 @@ msgstr "முடிந்தால் வண்ணத்தைப் பயன�
 
 #: ../style_sheets.md:155
 msgid "``opacity``"
-msgstr "``opacity``"
+msgstr "``ஒளிபுகாமை``"
 
 #: ../style_sheets.md:155
 msgid "Color opacity factor (``0.0`` - ``1.0``), applied to all colors."
@@ -7384,7 +7384,7 @@ msgstr "உரை மற்றும் எழுத்துருக்கள�
 
 #: ../style_sheets.md:168
 msgid "``font-family``"
-msgstr "``font-family``"
+msgstr "``எழுத்துரு-குடும்பம்``"
 
 #: ../style_sheets.md:168
 msgid "A single font name (e.g. ``sans``, ``serif``, ``courier``). *(inherited)*"
@@ -7394,7 +7394,7 @@ msgstr ""
 
 #: ../style_sheets.md:169
 msgid "``font-size``"
-msgstr "``font-size``"
+msgstr "``எழுத்துரு-அளவு``"
 
 #: ../style_sheets.md:169
 msgid ""
@@ -7414,7 +7414,7 @@ msgstr "ஒன்று ``normal`` அல்லது ``italic``. *(மரபு
 
 #: ../style_sheets.md:171
 msgid "``font-weight``"
-msgstr "``font-weight``"
+msgstr "``எழுத்துரு-எடை``"
 
 #: ../style_sheets.md:171
 msgid "Either ``normal`` or ``bold``. *(inherited)*"
@@ -7422,7 +7422,7 @@ msgstr "normal`` இயல்பானது` அல்லது ``bold``. *(ம
 
 #: ../style_sheets.md:172
 msgid "``text-align``"
-msgstr "``text-align``"
+msgstr "``உரை-ஒழுங்கு``"
 
 #: ../style_sheets.md:172
 msgid "Either ``left``, ``center``, ``right``. *(inherited)*"
@@ -7430,7 +7430,7 @@ msgstr "ஒன்று ``left``, ``center``, ``right``. *(மரபுரிம
 
 #: ../style_sheets.md:173
 msgid "``text-decoration``"
-msgstr "``text-decoration``"
+msgstr "``உரை-அழகுபடுத்துதல்``"
 
 #: ../style_sheets.md:173
 msgid "Either ``none`` or ``underline``."
@@ -7438,7 +7438,7 @@ msgstr "ஒன்று ``none` அல்லது ``underline``."
 
 #: ../style_sheets.md:174
 msgid "``vertical-align``"
-msgstr "``vertical-align``"
+msgstr "``செங்குத்து-ஒழுங்கு``"
 
 #: ../style_sheets.md:174
 msgid "Vertical alignment for text."
@@ -7450,7 +7450,7 @@ msgstr "ஒன்று ``top``, ``middle`` அல்லது ``bottom``."
 
 #: ../style_sheets.md:177
 msgid "``vertical-spacing``"
-msgstr "``vertical-spacing``"
+msgstr "``செங்குத்து-இடைவெளி``"
 
 #: ../style_sheets.md:177
 msgid "Set vertical spacing for icon-like items (actors, start state)."
@@ -7464,7 +7464,7 @@ msgstr "எடுத்துக்காட்டு: ``vertical-spacing: 4``."
 
 #: ../style_sheets.md:180
 msgid "``white-space``"
-msgstr "``white-space``"
+msgstr "``வெள்ளை-இடம்``"
 
 #: ../style_sheets.md:180
 msgid "Change the line wrapping behavior for text. *(inherited)*"
@@ -7503,7 +7503,7 @@ msgstr "செவ்வகங்களுக்கான ஆரம்: ``border-
 
 #: ../style_sheets.md:194
 msgid "``dash-style``"
-msgstr "``dash-style``"
+msgstr "``கோடு-பாணி``"
 
 #: ../style_sheets.md:194
 msgid "Style for dashed lines: ``dash-style: 7 5``."
@@ -7531,7 +7531,7 @@ msgstr "ஒன்று ``normal`` or ``sloppy [factor]``."
 
 #: ../style_sheets.md:199
 msgid "``line-width``"
-msgstr "``line-width``"
+msgstr "``வரி-அகலம்``"
 
 #: ../style_sheets.md:199
 msgid "Set the width for lines: ``line-width: 2``. *(inherited)*"
@@ -7539,7 +7539,7 @@ msgstr "வரிகளுக்கு அகலத்தை அமைக்க�
 
 #: ../style_sheets.md:200
 msgid "``min-height``"
-msgstr "``min-height``"
+msgstr "``குறைந்த-உயரம்``"
 
 #: ../style_sheets.md:200
 msgid "Set minimal height for an item: ``min-height: 50``."
@@ -7547,7 +7547,7 @@ msgstr "ஒரு உருப்படிக்கு குறைந்தப�
 
 #: ../style_sheets.md:201
 msgid "``min-width``"
-msgstr "``min-width``"
+msgstr "``குறைந்த-அகலம்``"
 
 #: ../style_sheets.md:201
 msgid "Set minimal width for an item: ``min-width: 100``."
@@ -7555,7 +7555,7 @@ msgstr "ஒரு பொருளுக்கு குறைந்தபட்�
 
 #: ../style_sheets.md:202
 msgid "``max-width``"
-msgstr "``max-width``"
+msgstr "``அதிக-அகலம்``"
 
 #: ../style_sheets.md:202
 msgid "Set maximum width (text fields only): ``max-width: 100``."
@@ -7565,7 +7565,7 @@ msgstr ""
 
 #: ../style_sheets.md:203
 msgid "``padding``"
-msgstr "``padding``"
+msgstr "``ஒட்டுத்தல்``"
 
 #: ../style_sheets.md:203
 msgid "CSS style padding (top, right, bottom, left)."
@@ -7801,7 +7801,7 @@ msgstr "அனைத்து சங்கங்கள்"
 
 #: ../style_sheets.md:315
 msgid "``association``"
-msgstr "``association``"
+msgstr "``சங்கம்``"
 
 #: ../style_sheets.md:316
 msgid "Components"
@@ -7825,7 +7825,7 @@ msgstr "முடிவு/ஒன்றிணைத்தல் முனை"
 
 #: ../style_sheets.md:317
 msgid "``decisionnode``"
-msgstr "``decisionnode``"
+msgstr "``தேர்வுமுனை``"
 
 #: ../style_sheets.md:318
 msgid "Fork/Join Node"
@@ -7833,7 +7833,7 @@ msgstr "முட்கரண்டி/சேர முனை"
 
 #: ../style_sheets.md:318
 msgid "``forknode``"
-msgstr "``forknode``"
+msgstr "``பிரிவுமுனை``"
 
 #: ../style_sheets.md:319
 msgid "Swimlane"
@@ -7881,7 +7881,7 @@ msgstr "உருவகவகுப்பு"
 
 #: ../style_sheets.md:323
 msgid "``class``"
-msgstr "``class``"
+msgstr "``வகுப்பு``"
 
 #: ../style_sheets.md:324 ../style_sheets.md:325 ../style_sheets.md:326
 #: ../style_sheets.md:327 ../style_sheets.md:328
@@ -7894,7 +7894,7 @@ msgstr "ஆள்"
 
 #: ../style_sheets.md:324
 msgid "``c4person``"
-msgstr "``c4person``"
+msgstr "``சி4நபர்``"
 
 #: ../style_sheets.md:325
 msgid "Software System"
@@ -7938,7 +7938,7 @@ msgstr "மதிப்புவகை"
 
 #: ../style_sheets.md:329 ../style_sheets.md:330
 msgid "``datatype``"
-msgstr "``datatype``"
+msgstr "``தரவுவகை``"
 
 #: ../style_sheets.md:330
 msgid "Primitive"
@@ -7950,7 +7950,7 @@ msgstr "பெறப்பட்ட தேவை"
 
 #: ../style_sheets.md:331
 msgid "``derivedreq``"
-msgstr "``derivedreq``"
+msgstr "``பெறப்பட்டதேவை``"
 
 #: ../style_sheets.md:332
 msgid "RAAML"
