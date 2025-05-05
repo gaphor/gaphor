@@ -8,20 +8,21 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2025-04-23 21:47+0200\n"
-"PO-Revision-Date: 2025-04-12 12:31+0000\n"
-"Last-Translator: Dan Yeaw <dan@yeaw.me>\n"
+"PO-Revision-Date: 2025-05-04 04:02+0000\n"
+"Last-Translator: தமிழ்நேரம் <anishprabu.t@gmail.com>\n"
+"Language-Team: Tamil <https://hosted.weblate.org/projects/gaphor/gaphor/ta/>"
+"\n"
 "Language: ta\n"
-"Language-Team: Tamil "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/ta/>\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12-dev\n"
 "Generated-By: Babel 2.16.0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:28
 msgid "C4"
-msgstr ""
+msgstr "சி4"
 
 #: gaphor/C4Model/propertypages.ui:11 gaphor/diagram/general/metadata.py:70
 #: gaphor/diagram/propertypages.ui:170
@@ -350,7 +351,7 @@ msgstr "“{name}” இன் கீழ் கூடு கட்டப்ப�
 
 #: gaphor/SysML/modelinglanguage.py:39 gaphor/ui/greeter.py:41
 msgid "SysML"
-msgstr "SysML"
+msgstr "முறைமைமமொ"
 
 #: gaphor/SysML/propertypages.ui:9
 msgid "Item Flow"
@@ -2649,11 +2650,13 @@ msgstr ""
 
 #: gaphor/ui/elementeditor.ui:87
 msgid "Help improve Gaphor"
-msgstr ""
+msgstr "காஃபோரை மேம்படுத்த உதவு"
 
 #: gaphor/ui/elementeditor.ui:96
 msgid "Gaphor is free and open source software, written by devoted volunteers."
 msgstr ""
+"காஃபர் என்பது அர்ப்பணிப்புள்ள தன்னார்வலர்களால் எழுதப்பட்ட இலவச மற்றும் திறந்த மூல "
+"மென்பொருளாகும்."
 
 #: gaphor/ui/elementeditor.ui:104
 msgid ""
@@ -2661,22 +2664,25 @@ msgid ""
 "translate Gaphor into your language, report bugs, or suggest new "
 "features. Join us in improving Gaphor!"
 msgstr ""
+"Gaphor-ஐ மேம்படுத்த பல வழிகள் உள்ளன: ஒரு வலைப்பதிவு இடுகையை எழுதுங்கள், Gaphor-ஐ "
+"உங்கள் மொழியில் மொழிபெயர்க்கவும், பிழைகளைப் புகாரளிக்கவும் அல்லது புதிய அம்சங்களைப் "
+"பரிந்துரைக்கவும். Gaphor-ஐ மேம்படுத்துவதில் எங்களுடன் சேருங்கள்!"
 
 #: gaphor/ui/elementeditor.ui:112
 msgid ""
 "Visit <a href=\"https://gaphor.org/contribute/\">gaphor.org</a> for more "
 "information."
 msgstr ""
+"மேலும் தகவலுக்கு <a href=\"https://gaphor.org/contribute/\">gaphor.org</a> ஐப் "
+"பார்வையிடவும்."
 
 #: gaphor/ui/elementeditor.ui:151
-#, fuzzy
 msgid "Editor"
-msgstr "ஆசிரியர்கள்"
+msgstr "திருத்தி"
 
 #: gaphor/ui/elementeditor.ui:177
-#, fuzzy
 msgid "Styling"
-msgstr "சரம்"
+msgstr "பாணியிடு"
 
 #: gaphor/ui/elementeditor.ui:189
 msgid "Style Sheet"
@@ -2981,9 +2987,8 @@ msgid "Press F11 to exit Fullscreen"
 msgstr "முழுத்திரை வெளியேற F11 ஐ அழுத்தவும்"
 
 #: gaphor/ui/mainwindow.ui:37
-#, fuzzy
 msgid "Change modeling profile"
-msgstr "{filename} இருந்து இலிருந்து மாதிரியை ஏற்றுகிறது"
+msgstr "தன்வய மாதிரியை மாற்று"
 
 #: gaphor/ui/mainwindow.ui:47
 msgid "Open application menu"
@@ -3022,9 +3027,8 @@ msgid "Save As…"
 msgstr "சேமிக்கவும்…"
 
 #: gaphor/ui/mainwindow.ui:284
-#, fuzzy
 msgid "Preferences…"
-msgstr "விருப்பத்தேர்வுகள்"
+msgstr "விருப்பத்தேர்வுகள்…"
 
 #: gaphor/ui/mainwindow.ui:301
 msgid "Align Left"
@@ -3063,14 +3067,12 @@ msgid "Max Size"
 msgstr "அதிகபட்ச அளவு"
 
 #: gaphor/ui/menubar.ui:5
-#, fuzzy
 msgid "_File"
-msgstr "கோப்புகள்"
+msgstr "கோப்பு"
 
 #: gaphor/ui/menubar.ui:31
-#, fuzzy
 msgid "_Edit"
-msgstr "வெளியேறு"
+msgstr "திருத்து"
 
 #: gaphor/ui/help/shortcuts.ui:162 gaphor/ui/menubar.ui:44
 msgid "Cut"
@@ -3081,9 +3083,8 @@ msgid "Copy"
 msgstr "நகலெடு"
 
 #: gaphor/ui/menubar.ui:52
-#, fuzzy
 msgid "Paste"
-msgstr "திகதி"
+msgstr "ஒட்டு"
 
 #: gaphor/ui/help/shortcuts.ui:176 gaphor/ui/menubar.ui:56
 msgid "Paste (copy defining elements)"
@@ -3094,42 +3095,36 @@ msgid "Select All"
 msgstr "அனைத்தையும் தெரிவுசெய்"
 
 #: gaphor/ui/menubar.ui:70
-#, fuzzy
 msgid "Unselect All"
-msgstr "அனைத்தையும் தெரிவுசெய்"
+msgstr "அனைத்தையும் தெரிவுநீக்கு"
 
 #: gaphor/ui/menubar.ui:76
 msgid "_View"
-msgstr ""
+msgstr "பார்வை"
 
 #: gaphor/ui/menubar.ui:87
-#, fuzzy
 msgid "Actual Size"
-msgstr "அதிகபட்ச அளவு"
+msgstr "உண்மையான அளவு"
 
 #: gaphor/ui/menubar.ui:102
 msgid "_Window"
-msgstr ""
+msgstr "சாளரம்"
 
 #: gaphor/ui/menubar.ui:105
-#, fuzzy
 msgid "Maximize"
-msgstr "அதிகபட்ச அளவு"
+msgstr "பெரிதுபடுத்து"
 
 #: gaphor/ui/menubar.ui:109
-#, fuzzy
 msgid "Full screen"
-msgstr "மாற்று முழுத்திரை"
+msgstr "முழுத்திரை"
 
 #: gaphor/ui/menubar.ui:115
-#, fuzzy
 msgid "_Help"
-msgstr "Ⓘ உதவி"
+msgstr "உதவி"
 
 #: gaphor/ui/menubar.ui:118
-#, fuzzy
 msgid "Online Documentation"
-msgstr "ஃபிளிப் நோக்குநிலை"
+msgstr "இணைய ஆவணம்"
 
 #: gaphor/ui/modelbrowser.py:404
 msgid "New _Package"
