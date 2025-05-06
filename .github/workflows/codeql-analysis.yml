@@ -50,15 +50,15 @@ jobs:
         sudo apt-get update -qq && sudo apt-get install -qq --no-install-recommends
         libgirepository1.0-dev libcairo2-dev
     - name: Install Poetry
-      run: python${python_version} -m pip install --constraint=.github/constraints.txt poetry
+      run: python${python_version} -m pip install --constraint=.github/github-requirements.txt poetry
     - name: Configure Poetry
       run: poetry config virtualenvs.in-project true
     - name: Install Python Dependencies
       run: |
         poetry install --no-interaction
     - name: Initialize CodeQL
-      uses: github/codeql-action/init@28deaeda66b76a05916b6923827895f2b14ab387 # v3.28.16
+      uses: github/codeql-action/init@60168efe1c415ce0f5521ea06d5c2062adbeed1b # v3.28.17
       with:
         languages: python
     - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@28deaeda66b76a05916b6923827895f2b14ab387 # v3.28.16
+      uses: github/codeql-action/analyze@60168efe1c415ce0f5521ea06d5c2062adbeed1b # v3.28.17

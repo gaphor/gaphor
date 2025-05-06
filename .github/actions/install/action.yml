@@ -16,7 +16,7 @@ runs:
         PYTHON: ${{ inputs.python-command }}
       run: |
         $PYTHON -m ensurepip
-        $PYTHON -m pip install --constraint=.github/constraints.txt poetry
+        $PYTHON -m pip install --constraint=.github/github-requirements.txt poetry
       shell: bash
     - name: Configure Poetry
       run: poetry config virtualenvs.in-project true

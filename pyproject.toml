@@ -34,7 +34,7 @@ requires-python = ">=3.11,<3.14"
 
 dependencies = [
     "pycairo>=1.22.0",
-    "PyGObject>=3.50",
+    "PyGObject>=3.50,<3.52",
     "gaphas>=5.0",
     "generic>=1.0.0",
     "tinycss2>=1.0.2",
