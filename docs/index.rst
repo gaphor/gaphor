@@ -33,6 +33,7 @@ Did you know Gaphor has excellent integration with :doc:`Sphinx <sphinx>` and :d
    getting_started
    first_model
    coffee_machine
+   troubleshooting
    changelog
 
 .. toctree::
