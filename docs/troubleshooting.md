@@ -10,7 +10,7 @@ This page covers common issues and their solutions when using Gaphor.
 
 Some Windows 10 users with Intel integrated graphics (especially older GPUs like the Intel HD 4000 / 4600 series) — often in systems that also have NVIDIA GPUs — may experience an **invisible UI** when launching Gaphor. The window appears, and UI elements are clickable (buttons, menus), but nothing is visible.
 
-This issue is tracked upstream in GTK:  
+This issue is tracked upstream in GTK:
 👉 [GNOME/gtk#7283](https://gitlab.gnome.org/GNOME/gtk/-/issues/7283)
 
 ### Example:
