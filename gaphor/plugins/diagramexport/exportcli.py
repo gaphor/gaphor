@@ -4,10 +4,10 @@ import argparse
 import logging
 import re
 
+import gaphor.storage as storage
 from gaphor.application import Session
 from gaphor.diagram.export import save_eps, save_pdf, save_png, save_svg
 from gaphor.plugins.diagramexport.exportall import export_all
-from gaphor.storage import storage
 
 log = logging.getLogger(__name__)
 

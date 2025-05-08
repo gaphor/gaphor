@@ -5,10 +5,11 @@ from io import StringIO
 
 import pytest
 
+import gaphor.storage as storage
 from gaphor import UML
 from gaphor.core.modeling import Diagram, StyleSheet
 from gaphor.diagram.tests.fixtures import connect
-from gaphor.storage import storage
+from gaphor.storage.load import version_lower_than
 from gaphor.UML.classes import AssociationItem, ClassItem, InterfaceItem
 from gaphor.UML.general import CommentItem
 
@@ -25,8 +26,6 @@ class PseudoFile:
 
 
 def test_version_check():
-    from gaphor.storage.storage import version_lower_than
-
     assert version_lower_than("0.3.0", (0, 15, 0))
     assert version_lower_than("0", (0, 15, 0))
     assert version_lower_than("0.14", (0, 15, 0))

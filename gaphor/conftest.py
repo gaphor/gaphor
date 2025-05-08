@@ -29,7 +29,7 @@ from gaphor.core.modeling.modelinglanguage import (
 )
 from gaphor.diagram.general.modelinglanguage import GeneralModelingLanguage
 from gaphor.diagram.painter import ItemPainter
-from gaphor.storage import storage
+import gaphor.storage as storage
 from gaphor.SysML.modelinglanguage import SysMLModelingLanguage
 from gaphor.UML.modelinglanguage import UMLModelingLanguage
 from gaphor.UML.sanitizerservice import SanitizerService

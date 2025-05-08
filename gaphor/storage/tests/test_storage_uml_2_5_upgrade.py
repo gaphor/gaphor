@@ -1,8 +1,8 @@
 import pytest
 
 from gaphor.core.modeling import StyleSheet
+from gaphor.storage.load import load_elements
 from gaphor.storage.parser import element
-from gaphor.storage.storage import load_elements
 
 
 @pytest.fixture

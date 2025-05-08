@@ -3,12 +3,12 @@ import itertools
 import pytest
 
 from gaphor.services.modelinglanguage import ModelingLanguageService
-from gaphor.storage.parser import element
-from gaphor.storage.storage import (
+from gaphor.storage.load import (
     load_elements,
     sysml_diagram_type_to_class,
     uml_diagram_type_to_class,
 )
+from gaphor.storage.parser import element
 from gaphor.storage.upgrade_canvasitem import upgrade_canvasitem
 from gaphor.UML import Dependency, Diagram, Image, Package, diagramitems
 
