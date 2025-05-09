@@ -5,7 +5,7 @@ from pathlib import Path
 
 def gi_init():
     """Workaround for https://gitlab.gnome.org/GNOME/pygobject/-/issues/545."""
-    if sys.platform != "win32" or sys.version_info < (3, 8):
+    if sys.platform != "win32":
         import gi
 
         return gi
@@ -13,7 +13,7 @@ def gi_init():
     if first_gtk_path := next(
         filter(
             lambda path: path is not None
-            and Path.is_file(Path(path) / "girepository-1.0-1.dll"),
+            and Path.is_file(Path(path) / "girepository-2.0-0.dll"),
             env_path,
         ),
         None,
@@ -22,3 +22,4 @@ def gi_init():
             import gi
 
             return gi
+    return None
