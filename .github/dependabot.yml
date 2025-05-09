@@ -20,6 +20,16 @@ updates:
       interval: weekly
     labels: ["skip-changelog"]
 
+  - package-ecosystem: "pip"
+    directory: "/.github"
+    groups:
+      github-requirements-updates:
+        patterns:
+          - "*"
+    schedule:
+      interval: weekly
+    labels: ["skip-changelog"]
+
   - package-ecosystem: docker
     directory: /.devcontainer
     groups:

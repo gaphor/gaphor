@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from collections.abc import Iterator
 from contextlib import contextmanager
+from typing import Protocol
 from xml.sax.saxutils import escape, quoteattr
 
 # See whether the xmlcharrefreplace error handler is
@@ -15,8 +16,13 @@ except ImportError:
     _error_handling = "strict"
 
 
+class WriterProtocol(Protocol):
+    def write(self, text: str):
+        """Write text"""
+
+
 class XMLWriter:
-    def __init__(self, out, encoding="utf-8"):
+    def __init__(self, out: WriterProtocol, encoding="utf-8"):
         super().__init__()
         self._out = out
         self._encoding = encoding

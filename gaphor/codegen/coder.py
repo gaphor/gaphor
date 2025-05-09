@@ -30,6 +30,7 @@ import textwrap
 from collections.abc import Iterable
 from pathlib import Path
 
+import gaphor.storage as storage
 from gaphor import UML
 from gaphor.codegen.override import Overrides
 from gaphor.core.modeling import Base, ElementFactory
@@ -40,7 +41,6 @@ from gaphor.core.modeling.modelinglanguage import (
 )
 from gaphor.diagram.general.modelinglanguage import GeneralModelingLanguage
 from gaphor.entrypoint import initialize
-from gaphor.storage import storage
 from gaphor.SysML.modelinglanguage import SysMLModelingLanguage
 from gaphor.UML.modelinglanguage import UMLModelingLanguage
 

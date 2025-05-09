@@ -1,8 +1,8 @@
 # ruff: noqa: F401,F811
+import gaphor.storage as storage
 from gaphor import UML
 from gaphor.conftest import element_factory, event_manager, modeling_language
 from gaphor.core.modeling import Diagram
-from gaphor.storage import storage
 from gaphor.UML.actions import ActionItem, ControlFlowItem
 
 

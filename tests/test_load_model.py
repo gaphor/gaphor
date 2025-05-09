@@ -2,7 +2,7 @@
 diagram items)."""
 
 from gaphor import UML
-from gaphor.storage.storage import load
+from gaphor.storage.load import load
 from gaphor.UML.classes.association import (
     draw_head_navigable,
     draw_tail_composite,

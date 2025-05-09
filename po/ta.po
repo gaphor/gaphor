@@ -7,22 +7,22 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-01-29 12:18-0300\n"
-"PO-Revision-Date: 2024-12-31 11:53+0000\n"
+"POT-Creation-Date: 2025-04-23 21:47+0200\n"
+"PO-Revision-Date: 2025-05-04 04:02+0000\n"
 "Last-Translator: தமிழ்நேரம் <anishprabu.t@gmail.com>\n"
+"Language-Team: Tamil <https://hosted.weblate.org/projects/gaphor/gaphor/ta/>"
+"\n"
 "Language: ta\n"
-"Language-Team: Tamil "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/ta/>\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12-dev\n"
 "Generated-By: Babel 2.16.0\n"
 
-#: gaphor/C4Model/modelinglanguage.py:28 gaphor/C4Model/toolbox.py:57
-#: gaphor/ui/greeter.py:55
-msgid "C4 Model"
-msgstr "C4 மாதிரி"
+#: gaphor/C4Model/modelinglanguage.py:28
+msgid "C4"
+msgstr "சி4"
 
 #: gaphor/C4Model/propertypages.ui:11 gaphor/diagram/general/metadata.py:70
 #: gaphor/diagram/propertypages.ui:170
@@ -55,6 +55,10 @@ msgstr "புதிய தரவுத்தளம்"
 msgid "New Component"
 msgstr "புதிய கூறு"
 
+#: gaphor/C4Model/toolbox.py:57 gaphor/ui/greeter.py:55
+msgid "C4 Model"
+msgstr "சி4 மாதிரி"
+
 #: gaphor/C4Model/diagramitems/person.py:24 gaphor/C4Model/toolbox.py:61
 #: gaphor/C4Model/toolbox.py:67 gaphor/C4Model/toolbox.py:167
 msgid "Person"
@@ -79,7 +83,7 @@ msgstr "கூறு"
 
 #: gaphor/C4Model/toolbox.py:121 gaphor/RAAML/fta/ftatoolbox.py:16
 #: gaphor/UML/classes/classestoolbox.py:119
-#: gaphor/UML/classes/propertypages.ui:531
+#: gaphor/UML/classes/propertypages.ui:533
 msgid "Dependency"
 msgstr "சார்பு"
 
@@ -119,7 +123,7 @@ msgstr "தொகுப்பு"
 
 #: gaphor/C4Model/toolbox.py:151 gaphor/SysML/toolbox.py:183
 #: gaphor/UML/actions/actionstoolbox.py:41
-#: gaphor/UML/actions/actionstoolbox.py:68 gaphor/UML/toolbox.py:49
+#: gaphor/UML/actions/actionstoolbox.py:71 gaphor/UML/toolbox.py:49
 #: gaphor/templates/sysml-example.gaphor gaphor/templates/uml-example.gaphor
 msgid "Activity"
 msgstr "செய்கைப்பாடு"
@@ -157,9 +161,9 @@ msgstr "கணக்கீடு"
 msgid "Primitive Type"
 msgstr "பழமையான வகை"
 
-#: gaphor/RAAML/modelinglanguage.py:25 gaphor/ui/greeter.py:48
+#: gaphor/RAAML/modelinglanguage.py:30 gaphor/ui/greeter.py:48
 msgid "RAAML"
-msgstr "சட்டகம்"
+msgstr "ராகுமொ"
 
 #: gaphor/RAAML/toolbox.py:30
 msgid "FTA Diagram"
@@ -345,9 +349,9 @@ msgstr "பொருத்தமானது"
 msgid "Can’t create “{name}” nested under a “{elem}”"
 msgstr "“{name}” இன் கீழ் கூடு கட்டப்பட்ட “{elem}” ஐ உருவாக்க முடியாது"
 
-#: gaphor/SysML/modelinglanguage.py:25 gaphor/ui/greeter.py:41
+#: gaphor/SysML/modelinglanguage.py:39 gaphor/ui/greeter.py:41
 msgid "SysML"
-msgstr "Sysml"
+msgstr "முறைமைமமொ"
 
 #: gaphor/SysML/propertypages.ui:9
 msgid "Item Flow"
@@ -389,18 +393,18 @@ msgstr "மதிப்புகளைக் காட்டு"
 msgid "Aggregation"
 msgstr "திரள்வு"
 
-#: gaphor/SysML/propertypages.ui:195 gaphor/UML/classes/propertypages.ui:124
-#: gaphor/UML/classes/propertypages.ui:236
+#: gaphor/SysML/propertypages.ui:195 gaphor/UML/classes/propertypages.ui:125
+#: gaphor/UML/classes/propertypages.ui:238
 msgid "No aggregation"
 msgstr "திரட்டல் இல்லை"
 
-#: gaphor/SysML/propertypages.ui:196 gaphor/UML/classes/propertypages.ui:125
-#: gaphor/UML/classes/propertypages.ui:237
+#: gaphor/SysML/propertypages.ui:196 gaphor/UML/classes/propertypages.ui:126
+#: gaphor/UML/classes/propertypages.ui:239
 msgid "Shared"
 msgstr "பகிரப்பட்டது"
 
-#: gaphor/SysML/propertypages.ui:197 gaphor/UML/classes/propertypages.ui:126
-#: gaphor/UML/classes/propertypages.ui:238
+#: gaphor/SysML/propertypages.ui:197 gaphor/UML/classes/propertypages.ui:127
+#: gaphor/UML/classes/propertypages.ui:240
 msgid "Composite"
 msgstr "கூட்டு"
 
@@ -475,7 +479,7 @@ msgstr "புதிய மாநில இயந்திரம்"
 
 #: gaphor/SysML/toolbox.py:168 gaphor/UML/toolbox.py:42
 msgid "Use Case Diagram"
-msgstr "வழக்கு வரைபடத்தைப் பயன்படுத்தவும்"
+msgstr "வழக்கு வரைபடத்தைப் பயன்படுத்து"
 
 #: gaphor/SysML/toolbox.py:184 gaphor/UML/toolbox.py:50
 #: gaphor/UML/usecases/usecasetoolbox.py:28 gaphor/templates/uml-example.gaphor
@@ -576,7 +580,7 @@ msgstr "நேரடி சங்கம்"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:107
 msgid "ValueType"
-msgstr "VALUETYPE"
+msgstr "மதிப்புவகை"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:130
 #: gaphor/UML/classes/classestoolbox.py:166
@@ -645,13 +649,13 @@ msgstr "சரிபார்"
 msgid "Containment"
 msgstr "கட்டுப்பாடு"
 
-#: gaphor/UML/compartments.py:63
+#: gaphor/UML/compartments.py:62
 msgid "(from {namespace})"
 msgstr "({namespace})"
 
 #: gaphor/UML/modelinglanguage.py:21 gaphor/ui/greeter.py:34
 msgid "UML"
-msgstr "யுஎம்எல்"
+msgstr "ஒகுமொ"
 
 #: gaphor/UML/actions/propertypages.ui:445 gaphor/UML/propertypages.ui:9
 msgid "Type"
@@ -715,12 +719,12 @@ msgstr "ச்டீரியோடைப்"
 
 #: gaphor/UML/actions/actionstoolbox.py:18
 #: gaphor/UML/interactions/interactionstoolbox.py:16
-#: gaphor/UML/states/statestoolbox.py:27 gaphor/UML/toolboxconfig.py:5
+#: gaphor/UML/states/statestoolbox.py:27 gaphor/UML/toolboxconfig.py:6
 msgid "New {name}"
 msgstr "புதிய {name}"
 
-#: gaphor/UML/treemodel.py:57 gaphor/ui/diagrampage.py:122
-#: gaphor/ui/mainwindow.py:292 gaphor/ui/modelmerge/organize.py:138
+#: gaphor/UML/treemodel.py:57 gaphor/ui/diagrampage.py:106
+#: gaphor/ui/mainwindow.py:287 gaphor/ui/modelmerge/organize.py:138
 msgid "<None>"
 msgstr "<இல்லை>"
 
@@ -728,23 +732,23 @@ msgstr "<இல்லை>"
 msgid "<Relationships>"
 msgstr "<உறவுகள்>"
 
-#: gaphor/UML/umlfmt.py:22
+#: gaphor/UML/umlfmt.py:23
 msgid "supplier: {name}"
 msgstr "சப்ளையர்: {name}"
 
-#: gaphor/UML/umlfmt.py:86
+#: gaphor/UML/umlfmt.py:89
 msgid "readOnly"
 msgstr "படிக்கமட்டும்"
 
-#: gaphor/UML/umlfmt.py:232
+#: gaphor/UML/umlfmt.py:241
 msgid "general: {name}"
 msgstr "பொது: {name}"
 
-#: gaphor/UML/umlfmt.py:237
+#: gaphor/UML/umlfmt.py:246
 msgid "extend: {name}"
 msgstr "நீட்டிப்பு: {name}"
 
-#: gaphor/UML/umlfmt.py:244
+#: gaphor/UML/umlfmt.py:253
 msgid "include: {name}"
 msgstr "அடங்கும்: {name}"
 
@@ -760,86 +764,86 @@ msgstr "நீச்சல் இரண்டு"
 msgid "ValueSpecificationAction"
 msgstr "மதிப்புகள் விவரக்குறிப்பு"
 
-#: gaphor/UML/actions/actionstoolbox.py:64
+#: gaphor/UML/actions/actionstoolbox.py:67
 msgid "Actions"
 msgstr "செயல்கள்"
 
-#: gaphor/UML/actions/actionstoolbox.py:80
-#: gaphor/UML/actions/actionstoolbox.py:86
+#: gaphor/UML/actions/actionstoolbox.py:83
+#: gaphor/UML/actions/actionstoolbox.py:89
 #: gaphor/UML/states/propertypages.ui:103
 msgid "Action"
 msgstr "செயல்"
 
-#: gaphor/UML/actions/actionstoolbox.py:92
+#: gaphor/UML/actions/actionstoolbox.py:95
 msgid "Call behavior action"
 msgstr "அழைப்பு நடத்தை நடவடிக்கை"
 
-#: gaphor/UML/actions/actionstoolbox.py:99
+#: gaphor/UML/actions/actionstoolbox.py:102
 msgid "CallBehaviorAction"
 msgstr "Callbyhavioraction"
 
-#: gaphor/UML/actions/actionstoolbox.py:106
+#: gaphor/UML/actions/actionstoolbox.py:109
 msgid "Value specification action"
 msgstr "மதிப்பு விவரக்குறிப்பு நடவடிக்கை"
 
-#: gaphor/UML/actions/actionstoolbox.py:118
+#: gaphor/UML/actions/actionstoolbox.py:121
 msgid "Initial node"
 msgstr "ஆரம்ப முனை"
 
-#: gaphor/UML/actions/actionstoolbox.py:130
+#: gaphor/UML/actions/actionstoolbox.py:133
 msgid "Activity final node"
 msgstr "செயல்பாட்டு இறுதி முனை"
 
-#: gaphor/UML/actions/actionstoolbox.py:142
+#: gaphor/UML/actions/actionstoolbox.py:145
 msgid "Flow final node"
 msgstr "இறுதி முனை ஓட்டம்"
 
-#: gaphor/UML/actions/actionstoolbox.py:154
+#: gaphor/UML/actions/actionstoolbox.py:157
 msgid "Decision/merge node"
 msgstr "முடிவு/ஒன்றிணைத்தல் முனை"
 
-#: gaphor/UML/actions/actionstoolbox.py:166
+#: gaphor/UML/actions/actionstoolbox.py:169
 msgid "Fork/join node"
 msgstr "முட்கரண்டி/சேர முனை"
 
-#: gaphor/UML/actions/actionstoolbox.py:178
-#: gaphor/UML/actions/actionstoolbox.py:184
+#: gaphor/UML/actions/actionstoolbox.py:181
+#: gaphor/UML/actions/actionstoolbox.py:187
 msgid "Object node"
 msgstr "பொருள் முனை"
 
-#: gaphor/UML/actions/actionstoolbox.py:190
+#: gaphor/UML/actions/actionstoolbox.py:193
 msgid "Swimlane"
 msgstr "நீச்சல்"
 
-#: gaphor/UML/actions/actionstoolbox.py:202
+#: gaphor/UML/actions/actionstoolbox.py:205
 msgid "Control flow"
 msgstr "கட்டுப்பாட்டு ஓட்டம்"
 
-#: gaphor/UML/actions/actionstoolbox.py:209
+#: gaphor/UML/actions/actionstoolbox.py:212
 msgid "Object flow"
 msgstr "பொருள் ஓட்டம்"
 
-#: gaphor/UML/actions/actionstoolbox.py:216
+#: gaphor/UML/actions/actionstoolbox.py:219
 msgid "Send signal action"
 msgstr "சமிக்ஞை நடவடிக்கை அனுப்பவும்"
 
-#: gaphor/UML/actions/actionstoolbox.py:222
+#: gaphor/UML/actions/actionstoolbox.py:225
 msgid "Send signal"
 msgstr "சிக்னலை அனுப்பவும்"
 
-#: gaphor/UML/actions/actionstoolbox.py:228
+#: gaphor/UML/actions/actionstoolbox.py:231
 msgid "Accept event action"
 msgstr "நிகழ்வு நடவடிக்கையை ஏற்றுக்கொள்ளுங்கள்"
 
-#: gaphor/UML/actions/actionstoolbox.py:234
+#: gaphor/UML/actions/actionstoolbox.py:237
 msgid "Accept event"
 msgstr "நிகழ்வை ஏற்றுக்கொள்ளுங்கள்"
 
-#: gaphor/UML/actions/actionstoolbox.py:240
+#: gaphor/UML/actions/actionstoolbox.py:243
 msgid "Input pin"
 msgstr "உள்ளீட்டு முள்"
 
-#: gaphor/UML/actions/actionstoolbox.py:247
+#: gaphor/UML/actions/actionstoolbox.py:250
 msgid "Output pin"
 msgstr "வெளியீட்டு முள்"
 
@@ -855,7 +859,7 @@ msgstr "ஒன்றிணைக்கவும்"
 msgid "decision"
 msgstr "முடிவு"
 
-#: gaphor/UML/actions/activitypropertypage.py:148
+#: gaphor/UML/actions/activitypropertypage.py:149
 msgid "New Parameter…"
 msgstr "புதிய அளவுரு…"
 
@@ -960,11 +964,11 @@ msgid "Parameter Nodes"
 msgstr "அளவுரு முனைகள்"
 
 #: gaphor/UML/actions/propertypages.ui:324
-#: gaphor/UML/classes/propertypages.ui:66
-#: gaphor/UML/classes/propertypages.ui:178
-#: gaphor/UML/classes/propertypages.ui:297
-#: gaphor/UML/classes/propertypages.ui:589
-#: gaphor/UML/classes/propertypages.ui:702
+#: gaphor/UML/classes/propertypages.ui:67
+#: gaphor/UML/classes/propertypages.ui:180
+#: gaphor/UML/classes/propertypages.ui:299
+#: gaphor/UML/classes/propertypages.ui:591
+#: gaphor/UML/classes/propertypages.ui:704
 msgid "ⓘ Help"
 msgstr "Ⓘ உதவி"
 
@@ -1097,8 +1101,8 @@ msgstr "தன்வயவிவரம்"
 msgid "Head:"
 msgstr "தலை:"
 
-#: gaphor/UML/classes/propertypages.ui:83
-#: gaphor/UML/classes/propertypages.ui:195
+#: gaphor/UML/classes/propertypages.ui:84
+#: gaphor/UML/classes/propertypages.ui:197
 msgid ""
 "Add and edit association ends according to UML syntax.\n"
 "\n"
@@ -1125,44 +1129,44 @@ msgstr ""
 " உருப்படிகளை மேலே அல்லது கீழ் நோக்கி நகர்த்த <b>-</b>/<b> = </b> ஐப் "
 "பயன்படுத்தவும்."
 
-#: gaphor/UML/classes/propertypages.ui:110
-#: gaphor/UML/classes/propertypages.ui:222
+#: gaphor/UML/classes/propertypages.ui:111
+#: gaphor/UML/classes/propertypages.ui:224
 msgid "Unknown navigation"
 msgstr "அறியப்படாத வழிசெலுத்தல்"
 
-#: gaphor/UML/classes/propertypages.ui:111
-#: gaphor/UML/classes/propertypages.ui:223
+#: gaphor/UML/classes/propertypages.ui:112
+#: gaphor/UML/classes/propertypages.ui:225
 msgid "Not navigable"
 msgstr "செல்ல முடியாதது அல்ல"
 
-#: gaphor/UML/classes/propertypages.ui:112
-#: gaphor/UML/classes/propertypages.ui:224
+#: gaphor/UML/classes/propertypages.ui:113
+#: gaphor/UML/classes/propertypages.ui:226
 msgid "Navigable"
 msgstr "செல்லக்கூடியது"
 
-#: gaphor/UML/classes/propertypages.ui:144
-#: gaphor/UML/classes/propertypages.ui:256
+#: gaphor/UML/classes/propertypages.ui:145
+#: gaphor/UML/classes/propertypages.ui:258
 #: gaphor/UML/profiles/propertypages.ui:33
 #: gaphor/UML/profiles/propertypages.ui:51
 msgid "Stereotypes"
-msgstr "ச்டீரியோடைப்கள்"
+msgstr "ஒரேமாதிரிகள்"
 
-#: gaphor/UML/classes/propertypages.ui:149
-#: gaphor/UML/classes/propertypages.ui:261
+#: gaphor/UML/classes/propertypages.ui:150
+#: gaphor/UML/classes/propertypages.ui:263
 #: gaphor/UML/profiles/propertypages.ui:56
 msgid "Values"
 msgstr "மதிப்புகள்"
 
-#: gaphor/UML/classes/propertypages.ui:166
+#: gaphor/UML/classes/propertypages.ui:167
 msgid "Tail:"
 msgstr "வால்:"
 
-#: gaphor/UML/classes/propertypages.ui:285
-#: gaphor/UML/classes/propertypages.ui:341
+#: gaphor/UML/classes/propertypages.ui:287
+#: gaphor/UML/classes/propertypages.ui:343
 msgid "Attributes"
 msgstr "பண்புக்கூறுகள்"
 
-#: gaphor/UML/classes/propertypages.ui:314
+#: gaphor/UML/classes/propertypages.ui:316
 msgid ""
 "Add and edit class attributes according to UML syntax.\n"
 "\n"
@@ -1190,66 +1194,66 @@ msgstr ""
 " உருப்படிகளை மேலே அல்லது கீழ் நோக்கி நகர்த்த <b>-</b>/<b> = </b> ஐப் "
 "பயன்படுத்தவும்."
 
-#: gaphor/UML/classes/propertypages.ui:347
+#: gaphor/UML/classes/propertypages.ui:349
 msgid "ReadOnly"
 msgstr "படிக்கமட்டும்"
 
-#: gaphor/UML/classes/propertypages.ui:352
-#: gaphor/UML/classes/propertypages.ui:642
+#: gaphor/UML/classes/propertypages.ui:354
+#: gaphor/UML/classes/propertypages.ui:644
 msgid "Static"
 msgstr "நிலையான"
 
-#: gaphor/UML/classes/propertypages.ui:376
+#: gaphor/UML/classes/propertypages.ui:378
 msgid "Show Attributes"
 msgstr "பண்புகளைக் காட்டு"
 
-#: gaphor/UML/classes/propertypages.ui:400
-#: gaphor/UML/classes/propertypages.ui:637
+#: gaphor/UML/classes/propertypages.ui:402
+#: gaphor/UML/classes/propertypages.ui:639
 msgid "Abstract"
 msgstr "சுருக்கம்"
 
-#: gaphor/UML/classes/propertypages.ui:417
+#: gaphor/UML/classes/propertypages.ui:419
 msgid "Final specialization"
 msgstr "இறுதி நிபுணத்துவம்"
 
-#: gaphor/UML/classes/propertypages.ui:442
+#: gaphor/UML/classes/propertypages.ui:444
 msgid "Source:"
 msgstr "ஆதாரம்:"
 
-#: gaphor/UML/classes/propertypages.ui:466
+#: gaphor/UML/classes/propertypages.ui:468
 msgid "Target:"
 msgstr "இலக்கு:"
 
-#: gaphor/UML/classes/propertypages.ui:502
+#: gaphor/UML/classes/propertypages.ui:504
 msgid "Dependency type"
 msgstr "சார்பு வகை"
 
-#: gaphor/UML/classes/propertypages.ui:513
+#: gaphor/UML/classes/propertypages.ui:515
 msgid "Automatic"
 msgstr "தானியங்கி"
 
-#: gaphor/UML/classes/propertypages.ui:532
+#: gaphor/UML/classes/propertypages.ui:534
 msgid "Usage"
 msgstr "பயன்பாடு"
 
-#: gaphor/UML/classes/propertypages.ui:533
+#: gaphor/UML/classes/propertypages.ui:535
 msgid "Realization"
 msgstr "உணர்தல்"
 
-#: gaphor/UML/classes/propertypages.ui:534
+#: gaphor/UML/classes/propertypages.ui:536
 msgid "Implementation"
 msgstr "செயல்படுத்தல்"
 
-#: gaphor/UML/classes/propertypages.ui:553
+#: gaphor/UML/classes/propertypages.ui:555
 msgid "Folded"
 msgstr "மடிந்தது"
 
-#: gaphor/UML/classes/propertypages.ui:577
-#: gaphor/UML/classes/propertypages.ui:631
+#: gaphor/UML/classes/propertypages.ui:579
+#: gaphor/UML/classes/propertypages.ui:633
 msgid "Operations"
 msgstr "செயல்பாடுகள்"
 
-#: gaphor/UML/classes/propertypages.ui:604
+#: gaphor/UML/classes/propertypages.ui:606
 msgid ""
 "Add and edit class operations according to UML syntax.\n"
 "\n"
@@ -1273,16 +1277,16 @@ msgstr ""
 " உருப்படிகளை மேலே அல்லது கீழ் நோக்கி நகர்த்த <b>-</b>/<b> = </b> ஐப் "
 "பயன்படுத்தவும்."
 
-#: gaphor/UML/classes/propertypages.ui:666
+#: gaphor/UML/classes/propertypages.ui:668
 msgid "Show Operations"
 msgstr "செயல்பாடுகளைக் காட்டு"
 
-#: gaphor/UML/classes/propertypages.ui:690
-#: gaphor/UML/classes/propertypages.ui:741
+#: gaphor/UML/classes/propertypages.ui:692
+#: gaphor/UML/classes/propertypages.ui:743
 msgid "Enumeration Literals"
 msgstr "கணக்கீட்டு எழுத்துக்கள்"
 
-#: gaphor/UML/classes/propertypages.ui:714
+#: gaphor/UML/classes/propertypages.ui:716
 msgid ""
 "Add and edit enumeration literals according to UML syntax.\n"
 "\n"
@@ -1301,11 +1305,11 @@ msgstr ""
 " உருப்படிகளை மேலே அல்லது கீழ் நோக்கி நகர்த்த <b>-</b>/<b> = </b> ஐப் "
 "பயன்படுத்தவும்."
 
-#: gaphor/UML/classes/propertypages.ui:766
+#: gaphor/UML/classes/propertypages.ui:768
 msgid "Show Enumeration Literals"
 msgstr "கணக்கீட்டு எழுத்துக்களைக் காட்டு"
 
-#: gaphor/UML/classes/propertypages.ui:791
+#: gaphor/UML/classes/propertypages.ui:793
 msgid "Indirectly Instantiated"
 msgstr "மறைமுகமாக உடனடிப்படுத்தியது"
 
@@ -1318,7 +1322,7 @@ msgid "device"
 msgstr "சாதனம்"
 
 #: gaphor/UML/general/generaltoolbox.py:21
-#: gaphor/UML/general/imagepropertypage.py:66
+#: gaphor/UML/general/imagepropertypage.py:67
 msgid "New Image"
 msgstr "புதிய படம்"
 
@@ -1362,11 +1366,11 @@ msgstr "வரைபடம் மேனிலை தரவு"
 msgid "Picture"
 msgstr "படம்"
 
-#: gaphor/UML/general/imagepropertypage.py:43
+#: gaphor/UML/general/imagepropertypage.py:44
 msgid "Select a picture..."
 msgstr "ஒரு படத்தைத் தேர்ந்தெடுக்கவும் ..."
 
-#: gaphor/UML/general/imagepropertypage.py:71
+#: gaphor/UML/general/imagepropertypage.py:72
 msgid "Unable to parse picture “{filename}”."
 msgstr "படத்தை அலச முடியவில்லை “{filename}”."
 
@@ -1419,7 +1423,7 @@ msgstr "பதில்"
 msgid "Create"
 msgstr "உருவாக்கு"
 
-#: gaphor/UML/interactions/propertypages.ui:26
+#: gaphor/UML/interactions/propertypages.ui:26 gaphor/ui/menubar.ui:60
 msgid "Delete"
 msgstr "நீக்கு"
 
@@ -1433,7 +1437,7 @@ msgstr "இறக்குமதி"
 
 #: gaphor/UML/profiles/profilestoolbox.py:18
 msgid "Profiles"
-msgstr "சுயவிவரங்கள்"
+msgstr "தன்விவரங்கள்"
 
 #: gaphor/UML/profiles/profilestoolbox.py:34
 msgid "Metaclass"
@@ -1498,7 +1502,7 @@ msgstr "மாநிலங்கள்"
 
 #: gaphor/UML/states/statestoolbox.py:87
 msgid "Initial Pseudostate"
-msgstr "ஆரம்ப சூடோச்டேட்"
+msgstr "ஆரம்ப போலிநிலை"
 
 #: gaphor/UML/states/statestoolbox.py:99
 msgid "Final State"
@@ -1570,23 +1574,23 @@ msgstr "அடங்கும்"
 msgid "Extend"
 msgstr "நீட்டிக்க"
 
-#: gaphor/diagram/propertypages.py:319
+#: gaphor/diagram/propertypages.py:318
 msgid "Presentation"
 msgstr "விளக்கக்காட்சி"
 
-#: gaphor/diagram/propertypages.py:320 gaphor/diagram/propertypages.py:333
+#: gaphor/diagram/propertypages.py:319 gaphor/diagram/propertypages.py:332
 msgid "class"
 msgstr "வகுப்பு"
 
-#: gaphor/diagram/propertypages.py:321 gaphor/diagram/propertypages.py:334
+#: gaphor/diagram/propertypages.py:320 gaphor/diagram/propertypages.py:333
 msgid "id"
 msgstr "அடையாளம்"
 
-#: gaphor/diagram/propertypages.py:331
+#: gaphor/diagram/propertypages.py:330
 msgid "Model Element"
 msgstr "மாதிரி உறுப்பு"
 
-#: gaphor/diagram/propertypages.py:332
+#: gaphor/diagram/propertypages.py:331
 msgid "qname"
 msgstr "Qname"
 
@@ -1643,7 +1647,7 @@ msgid "Internals of focused item"
 msgstr "கவனம் செலுத்திய உருப்படியின் உள்"
 
 #: gaphor/diagram/propertypages.ui:297 gaphor/ui/elementeditor.py:410
-#: gaphor/ui/elementeditor.ui:200
+#: gaphor/ui/elementeditor.ui:262
 msgid "No focused item."
 msgstr "கவனம் செலுத்திய உருப்படி இல்லை."
 
@@ -1675,7 +1679,7 @@ msgstr "உரை நிறம்"
 msgid "Add to Style Sheet"
 msgstr "பாணி சீட்டில் சேர்க்கவும்"
 
-#: gaphor/diagram/tools/dnd.py:50
+#: gaphor/diagram/tools/dnd.py:91
 msgid "Element can’t be represented on a diagram."
 msgstr "ஒரு வரைபடத்தில் உறுப்பை குறிப்பிட முடியாது."
 
@@ -1687,11 +1691,11 @@ msgstr "மாதிரி '{model_name}' க்கு மாதிரி கோ
 msgid "No diagram '{name}' in model '{model_name}' ({model_file})."
 msgstr "மாதிரியில் '{name}' எந்த வரைபடமும் இல்லை '{model_name}' ({model_file})."
 
-#: gaphor/plugins/autolayout/pydot.py:45
+#: gaphor/plugins/autolayout/pydot.py:50
 msgid "Auto Layout"
 msgstr "ஆட்டோ தளவமைப்பு"
 
-#: gaphor/plugins/autolayout/pydot.py:53
+#: gaphor/plugins/autolayout/pydot.py:58
 msgid "Auto Layout (orthogonal)"
 msgstr "ஆட்டோ -ஆர்த்தோகனல்)"
 
@@ -1713,91 +1717,91 @@ msgstr "கன்சோல்"
 msgid "Gaphor Console"
 msgstr "கஃபர் கன்சோல்"
 
-#: gaphor/plugins/diagramexport/export.py:54
+#: gaphor/plugins/diagramexport/export.py:61
 msgid "All {ext} Files"
 msgstr "அனைத்து {ext} கோப்புகள்"
 
-#: gaphor/plugins/diagramexport/export.py:68
+#: gaphor/plugins/diagramexport/export.py:73
 msgid "Export as SVG"
 msgstr "எச்.வி.சி என ஏற்றுமதி"
 
-#: gaphor/plugins/diagramexport/export.py:69
 #: gaphor/plugins/diagramexport/export.py:74
+#: gaphor/plugins/diagramexport/export.py:79
 msgid "Export diagram as SVG"
 msgstr "எச்.வி.சி என ஏற்றுமதி வரைபடம்"
 
-#: gaphor/plugins/diagramexport/export.py:79
+#: gaphor/plugins/diagramexport/export.py:84
 msgid "Export as PNG"
 msgstr "Png ஆக ஏற்றுமதி"
 
-#: gaphor/plugins/diagramexport/export.py:80
 #: gaphor/plugins/diagramexport/export.py:85
+#: gaphor/plugins/diagramexport/export.py:90
 msgid "Export diagram as PNG"
 msgstr "Png ஆக ஏற்றுமதி வரைபடம்"
 
-#: gaphor/plugins/diagramexport/export.py:90
+#: gaphor/plugins/diagramexport/export.py:95
 msgid "Export as PDF"
 msgstr "PDF ஆக ஏற்றுமதி"
 
-#: gaphor/plugins/diagramexport/export.py:91
-#: gaphor/plugins/diagramexport/export.py:97
+#: gaphor/plugins/diagramexport/export.py:96
+#: gaphor/plugins/diagramexport/export.py:102
 msgid "Export diagram as PDF"
 msgstr "PDF ஆக ஏற்றுமதி வரைபடம்"
 
-#: gaphor/plugins/diagramexport/export.py:105
+#: gaphor/plugins/diagramexport/export.py:110
 msgid "Export as EPS"
 msgstr "இபிஎச் என ஏற்றுமதி"
 
-#: gaphor/plugins/diagramexport/export.py:106
+#: gaphor/plugins/diagramexport/export.py:111
 msgid "Export diagram as Encapsulated PostScript"
 msgstr "இணைக்கப்பட்ட போச்ட்ச்கிரிப்டாக வரைபடத்தை ஏற்றுமதி செய்யுங்கள்"
 
-#: gaphor/plugins/diagramexport/export.py:112
+#: gaphor/plugins/diagramexport/export.py:117
 msgid "Export diagram as EPS"
 msgstr "வரைபடத்தை EPS ஆக ஏற்றுமதி செய்யுங்கள்"
 
-#: gaphor/plugins/diagramexport/export.py:120
+#: gaphor/plugins/diagramexport/export.py:125
 msgid "Export all diagrams as SVG"
 msgstr "அனைத்து வரைபடங்களையும் எச்.வி.சி என ஏற்றுமதி செய்யுங்கள்"
 
-#: gaphor/plugins/diagramexport/export.py:121
+#: gaphor/plugins/diagramexport/export.py:126
 msgid "Export all diagrams as SVG diagrams in a specifieddirectory"
 msgstr ""
 "அனைத்து வரைபடங்களையும் எச்.வி.சி வரைபடங்களாக ஒரு குறிப்பிட்ட அடைவில் "
 "ஏற்றுமதி செய்யுங்கள்"
 
-#: gaphor/plugins/diagramexport/export.py:125
-#: gaphor/plugins/diagramexport/export.py:143
-#: gaphor/plugins/diagramexport/export.py:161
-#: gaphor/plugins/diagramexport/export.py:179
+#: gaphor/plugins/diagramexport/export.py:130
+#: gaphor/plugins/diagramexport/export.py:148
+#: gaphor/plugins/diagramexport/export.py:166
+#: gaphor/plugins/diagramexport/export.py:184
 msgid "Export all diagrams"
 msgstr "அனைத்து வரைபடங்களையும் ஏற்றுமதி செய்யுங்கள்"
 
-#: gaphor/plugins/diagramexport/export.py:138
+#: gaphor/plugins/diagramexport/export.py:143
 msgid "Export all diagrams as PNG"
 msgstr "அனைத்து வரைபடங்களையும் png ஆக ஏற்றுமதி செய்யுங்கள்"
 
-#: gaphor/plugins/diagramexport/export.py:139
+#: gaphor/plugins/diagramexport/export.py:144
 msgid "Export all diagrams as PNG diagrams in a specifieddirectory"
 msgstr ""
 "அனைத்து வரைபடங்களையும் PNG வரைபடங்களாக ஒரு குறிப்பிட்ட அடைவில் ஏற்றுமதி "
 "செய்யுங்கள்"
 
-#: gaphor/plugins/diagramexport/export.py:156
+#: gaphor/plugins/diagramexport/export.py:161
 msgid "Export all diagrams as PDF"
 msgstr "அனைத்து வரைபடங்களையும் PDF ஆக ஏற்றுமதி செய்யுங்கள்"
 
-#: gaphor/plugins/diagramexport/export.py:157
+#: gaphor/plugins/diagramexport/export.py:162
 msgid "Export all diagrams as PDF diagrams in a specifieddirectory"
 msgstr ""
 "அனைத்து வரைபடங்களையும் ஒரு குறிப்பிட்ட கோப்பகத்தில் PDF வரைபடமாக ஏற்றுமதி"
 " செய்யுங்கள்"
 
-#: gaphor/plugins/diagramexport/export.py:174
+#: gaphor/plugins/diagramexport/export.py:179
 msgid "Export all diagrams as EPS"
 msgstr "அனைத்து வரைபடங்களையும் EPS ஆக ஏற்றுமதி செய்யுங்கள்"
 
-#: gaphor/plugins/diagramexport/export.py:175
+#: gaphor/plugins/diagramexport/export.py:180
 msgid "Export all diagrams as EPS diagrams in a specifieddirectory"
 msgstr ""
 "அனைத்து வரைபடங்களையும் EPS வரைபடங்களாக ஒரு குறிப்பிட்ட அடைவில் ஏற்றுமதி "
@@ -1840,12 +1844,12 @@ msgstr ""
 "இந்த மாதிரியில் சேமிக்கப்படாத மாற்றங்கள் உள்ளன. மாற்றங்கள் "
 "மீட்டமைக்கப்பட்டுள்ளன."
 
-#: gaphor/templates/blank.gaphor gaphor/ui/mainwindow.py:273
-#: gaphor/ui/mainwindow.py:278 gaphor/ui/mainwindow.ui:125
+#: gaphor/templates/blank.gaphor gaphor/ui/mainwindow.py:268
+#: gaphor/ui/mainwindow.py:273 gaphor/ui/mainwindow.ui:129
 msgid "New model"
 msgstr "புதிய மாதிரி"
 
-#: gaphor/templates/blank.gaphor gaphor/ui/modelbrowser.py:207
+#: gaphor/templates/blank.gaphor gaphor/ui/modelbrowser.py:208
 msgid "New Diagram"
 msgstr "புதிய வரைபடம்"
 
@@ -2000,7 +2004,7 @@ msgstr "இழப்பு வரையறை"
 
 #: gaphor/templates/raaml-example.gaphor gaphor/templates/raaml.gaphor
 msgid "FTA"
-msgstr "Fta"
+msgstr "எப்டிஎ"
 
 #: gaphor/templates/raaml-example.gaphor
 msgid "Loss of System"
@@ -2112,7 +2116,7 @@ msgstr "வெளிப்புற உறுப்பு"
 
 #: gaphor/templates/sysml-example.gaphor gaphor/templates/sysml.gaphor
 msgid "Concept Requirements"
-msgstr "கருத்து தேவைகள்"
+msgstr "கருத்துருத் தேவைகள்"
 
 #: gaphor/templates/sysml-example.gaphor
 msgid "Feature User Need"
@@ -2533,15 +2537,23 @@ msgstr "சரம்"
 msgid "Date"
 msgstr "திகதி"
 
-#: gaphor/ui/appfilemanager.py:36
+#: gaphor/ui/__init__.py:187 gaphor/ui/mainwindow.py:166
+msgid "Export"
+msgstr "ஏற்றுமதி"
+
+#: gaphor/ui/__init__.py:188 gaphor/ui/mainwindow.py:169
+msgid "Tools"
+msgstr "கருவிகள்"
+
+#: gaphor/ui/appfilemanager.py:34
 msgid "Open a Model"
 msgstr "ஒரு மாதிரியைத் திறக்கவும்"
 
-#: gaphor/ui/appfilemanager.py:51
+#: gaphor/ui/appfilemanager.py:49
 msgid "Switch to {name}?"
 msgstr "{name} என மாற்றவா?"
 
-#: gaphor/ui/appfilemanager.py:52
+#: gaphor/ui/appfilemanager.py:50
 msgid ""
 "{name} is already opened. Do you want to switch to the opened window "
 "instead?"
@@ -2549,84 +2561,35 @@ msgstr ""
 "{name} ஏற்கனவே திறக்கப்பட்டுள்ளது. அதற்கு பதிலாக திறந்த சாளரத்திற்கு மாற "
 "விரும்புகிறீர்களா?"
 
-#: gaphor/ui/appfilemanager.py:63
+#: gaphor/ui/appfilemanager.py:61
 msgid "Open Again"
 msgstr "மீண்டும் திறக்கவும்"
 
-#: gaphor/ui/appfilemanager.py:64
+#: gaphor/ui/appfilemanager.py:62
 msgid "Switch"
 msgstr "ஆளி, நிலைமாறி"
 
-#: gaphor/ui/diagrampage.py:367
+#: gaphor/ui/diagrampage.py:355
 msgid "Show in Model Browser"
 msgstr "மாதிரி உலாவியில் காட்டு"
 
-#: gaphor/ui/diagrampage.ui:29 gaphor/ui/help/shortcuts.ui:111
-msgid "Undo"
-msgstr "செயல்தவிர்"
-
-#: gaphor/ui/diagrampage.ui:44 gaphor/ui/help/shortcuts.ui:118
-msgid "Redo"
-msgstr "மீண்டும்செய்"
-
-#: gaphor/ui/diagrampage.ui:66 gaphor/ui/help/shortcuts.ui:198
+#: gaphor/ui/diagrampage.ui:29 gaphor/ui/help/shortcuts.ui:198
+#: gaphor/ui/menubar.ui:83
 msgid "Zoom Out"
 msgstr "சிறிதாக்கு"
 
-#: gaphor/ui/diagrampage.ui:81 gaphor/ui/help/shortcuts.ui:205
+#: gaphor/ui/diagrampage.ui:44 gaphor/ui/help/shortcuts.ui:205
 msgid "Reset Zoom"
 msgstr "பெரிதாக்கு மீட்டமைக்கவும்"
 
-#: gaphor/ui/diagrampage.ui:96 gaphor/ui/help/shortcuts.ui:191
+#: gaphor/ui/diagrampage.ui:59 gaphor/ui/help/shortcuts.ui:191
+#: gaphor/ui/menubar.ui:79
 msgid "Zoom In"
 msgstr "பெரிதாக்கு"
 
-#: gaphor/ui/diagrampage.ui:117
-#, fuzzy
-msgid "Align selected elements"
-msgstr "இணைக்கக்கூடிய உறுப்பு"
-
-#: gaphor/ui/diagrampage.ui:132
-msgid "Align Left"
-msgstr "இடதுபுறம் சீரமைக்கவும்"
-
-#: gaphor/ui/diagrampage.ui:137
-msgid "Align Right"
-msgstr "வலதுபுறம் சீரமைக்கவும்"
-
-#: gaphor/ui/diagrampage.ui:142
-#, fuzzy
-msgid "Align Vertical Center"
-msgstr "கிடைமட்ட மையத்தை சீரமைக்கவும்"
-
-#: gaphor/ui/diagrampage.ui:149
-msgid "Align Top"
-msgstr "மேலே சீரமைக்கவும்"
-
-#: gaphor/ui/diagrampage.ui:154
-msgid "Align Bottom"
-msgstr "கீழே சீரமைக்கவும்"
-
-#: gaphor/ui/diagrampage.ui:159
-msgid "Align Horizontal Center"
-msgstr "கிடைமட்ட மையத்தை சீரமைக்கவும்"
-
-#: gaphor/ui/diagrampage.ui:166
-msgid "Max Width"
-msgstr "அதிகபட்ச அகலம்"
-
-#: gaphor/ui/diagrampage.ui:171
-msgid "Max Height"
-msgstr "அதிகபட்ச உயரம்"
-
-#: gaphor/ui/diagrampage.ui:176
-msgid "Max Size"
-msgstr "அதிகபட்ச அளவு"
-
-#: gaphor/ui/diagrams.py:322
-#, fuzzy
+#: gaphor/ui/diagrams.py:301
 msgid "Selected element is not in present in this diagram."
-msgstr "ஒரு வரைபடத்தில் உறுப்பை குறிப்பிட முடியாது."
+msgstr "தேர்ந்தெடுக்கப்பட்ட உறுப்பு இந்த வரைபடத்தில் இல்லை."
 
 #: gaphor/ui/diagrams.ui:12
 msgid "Open a Diagram"
@@ -2648,7 +2611,7 @@ msgstr "உருப்படி எதுவும் தேர்ந்தெ�
 msgid "Show Tips"
 msgstr "உதவிக்குறிப்புகளைக் காட்டு"
 
-#: gaphor/ui/elementeditor.ui:45
+#: gaphor/ui/elementeditor.ui:50
 msgid ""
 "Add a model element from the tool box (bottom left) to the diagram. Here "
 "you will see its properties appear."
@@ -2656,13 +2619,13 @@ msgstr ""
 "கருவி பெட்டியிலிருந்து (கீழ் இடது) வரைபடத்தில் ஒரு மாதிரி உறுப்பைச் "
 "சேர்க்கவும். அதன் பண்புகள் தோன்றுவதை இங்கே காண்பீர்கள்."
 
-#: gaphor/ui/elementeditor.ui:53
+#: gaphor/ui/elementeditor.ui:58
 msgid "This pane can be hidden by clicking the pane icon in the header."
 msgstr ""
 "தலைப்பில் உள்ள பலக ஐகானைக் சொடுக்கு செய்வதன் மூலம் இந்த பலகத்தை மறைக்க "
 "முடியும்."
 
-#: gaphor/ui/elementeditor.ui:61
+#: gaphor/ui/elementeditor.ui:66
 msgid ""
 "<b>Tip:</b> Most elements in the toolbox have a keyboard shortcut (e.g. "
 "\"c\" for Class). Tool selection only works from the diagram. If a tool "
@@ -2675,7 +2638,7 @@ msgstr ""
 "தேர்ந்தெடுக்கப்படாவிட்டால், ஒரு முறை வரைபடத்தைக் சொடுக்கு செய்க (எனவே இது"
 " கவனம் செலுத்துகிறது) பின்னர் குறுக்குவழி விசையை அழுத்தவும்."
 
-#: gaphor/ui/elementeditor.ui:69
+#: gaphor/ui/elementeditor.ui:74
 msgid ""
 "<b>Tip:</b> To search for an element in the model browser (top left), "
 "select an element in the model browser and start typing. A search box "
@@ -2685,38 +2648,63 @@ msgstr ""
 "மாதிரி உலாவியில் ஒரு உறுப்பைத் தேர்ந்தெடுத்து தட்டச்சு செய்யத் "
 "தொடங்குங்கள். ஒரு தேடல் பெட்டி தானாகவே தோன்றும்."
 
-#: gaphor/ui/elementeditor.ui:91
-msgid "Editors"
-msgstr "ஆசிரியர்கள்"
+#: gaphor/ui/elementeditor.ui:87
+msgid "Help improve Gaphor"
+msgstr "காஃபோரை மேம்படுத்த உதவு"
 
-#: gaphor/ui/elementeditor.ui:116 gaphor/ui/greeter.ui:14
-#: gaphor/ui/help/preferences.ui:6 gaphor/ui/help/shortcuts.ui:39
-#: gaphor/ui/mainwindow.py:61
-msgid "Preferences"
-msgstr "விருப்பத்தேர்வுகள்"
+#: gaphor/ui/elementeditor.ui:96
+msgid "Gaphor is free and open source software, written by devoted volunteers."
+msgstr ""
+"காஃபர் என்பது அர்ப்பணிப்புள்ள தன்னார்வலர்களால் எழுதப்பட்ட இலவச மற்றும் திறந்த மூல "
+"மென்பொருளாகும்."
 
-#: gaphor/ui/elementeditor.ui:127
+#: gaphor/ui/elementeditor.ui:104
+msgid ""
+"There are many ways to help make Gaphor better: write a blog post, "
+"translate Gaphor into your language, report bugs, or suggest new "
+"features. Join us in improving Gaphor!"
+msgstr ""
+"Gaphor-ஐ மேம்படுத்த பல வழிகள் உள்ளன: ஒரு வலைப்பதிவு இடுகையை எழுதுங்கள், Gaphor-ஐ "
+"உங்கள் மொழியில் மொழிபெயர்க்கவும், பிழைகளைப் புகாரளிக்கவும் அல்லது புதிய அம்சங்களைப் "
+"பரிந்துரைக்கவும். Gaphor-ஐ மேம்படுத்துவதில் எங்களுடன் சேருங்கள்!"
+
+#: gaphor/ui/elementeditor.ui:112
+msgid ""
+"Visit <a href=\"https://gaphor.org/contribute/\">gaphor.org</a> for more "
+"information."
+msgstr ""
+"மேலும் தகவலுக்கு <a href=\"https://gaphor.org/contribute/\">gaphor.org</a> ஐப் "
+"பார்வையிடவும்."
+
+#: gaphor/ui/elementeditor.ui:151
+msgid "Editor"
+msgstr "திருத்தி"
+
+#: gaphor/ui/elementeditor.ui:177
+msgid "Styling"
+msgstr "பாணியிடு"
+
+#: gaphor/ui/elementeditor.ui:189
 msgid "Style Sheet"
-msgstr "பாணி சீட்"
+msgstr "பாணி தாள்"
 
-#: gaphor/ui/elementeditor.ui:140
+#: gaphor/ui/elementeditor.ui:202
 msgid "Diagram Language"
-msgstr "வரைபடம் மொழி"
+msgstr "வரைபட மொழி"
 
-#: gaphor/ui/elementeditor.ui:142 gaphor/ui/elementeditor.ui:150
+#: gaphor/ui/elementeditor.ui:204 gaphor/ui/elementeditor.ui:212
 msgid "The (natural) language used in this model."
 msgstr "இந்த மாதிரியில் பயன்படுத்தப்படும் (இயற்கை) மொழி."
 
-#: gaphor/ui/elementeditor.ui:158
-#, fuzzy
+#: gaphor/ui/elementeditor.ui:220
 msgid "CSS Editor"
-msgstr "பாணி ஆசிரியர்"
+msgstr "அபாத திருத்தி"
 
-#: gaphor/ui/elementeditor.ui:186
+#: gaphor/ui/elementeditor.ui:248
 msgid "CSS nodes of focused item"
 msgstr "கவனம் செலுத்திய உருப்படியின் சிஎச்எச் முனைகள்"
 
-#: gaphor/ui/elementeditor.ui:211
+#: gaphor/ui/elementeditor.ui:273
 msgid ""
 "🔗 <a href=\"https://docs.gaphor.org/en/latest/style_sheets.html\">Style "
 "sheets in Gaphor</a>"
@@ -2724,15 +2712,15 @@ msgstr ""
 "🔗 <a href = \"https://docs.gaphor.org/en/latest/style_sheets.html\"> "
 "gaphor இல் பாணி தாள்கள் </a>"
 
-#: gaphor/ui/elementeditor.ui:225
+#: gaphor/ui/elementeditor.ui:287
 msgid "Merge Models"
 msgstr "மாதிரிகளை ஒன்றிணைக்கவும்"
 
-#: gaphor/ui/elementeditor.ui:236
+#: gaphor/ui/elementeditor.ui:300
 msgid "Merge Model Changes"
 msgstr "மாதிரி மாற்றங்களை ஒன்றிணைக்கவும்"
 
-#: gaphor/ui/elementeditor.ui:247
+#: gaphor/ui/elementeditor.ui:311
 msgid ""
 "Apply incoming changes from the conflicting model. Use Undo to revert "
 "changes."
@@ -2740,11 +2728,11 @@ msgstr ""
 "முரண்பட்ட மாதிரியிலிருந்து உள்வரும் மாற்றங்களைப் பயன்படுத்துங்கள். "
 "மாற்றங்களைத் திருப்புவதற்கு செயல்தவிர் பயன்படுத்தவும்."
 
-#: gaphor/ui/elementeditor.ui:267
+#: gaphor/ui/elementeditor.ui:331
 msgid "Resolve"
 msgstr "தீர்க்க"
 
-#: gaphor/ui/errordialog.py:21
+#: gaphor/ui/errordialog.py:20
 msgid ""
 "It looks like Gaphor is started from the command line. Do you want to "
 "open a debug session?"
@@ -2752,11 +2740,11 @@ msgstr ""
 "கட்டளை வரியிலிருந்து காஃபர் தொடங்கப்படுவது போல் தெரிகிறது. பிழைத்திருத்த "
 "அமர்வை திறக்க விரும்புகிறீர்களா?"
 
-#: gaphor/ui/errordialog.py:28
+#: gaphor/ui/errordialog.py:27 gaphor/ui/menubar.ui:93
 msgid "Close"
 msgstr "மூடு"
 
-#: gaphor/ui/errordialog.py:30
+#: gaphor/ui/errordialog.py:29
 msgid "Start Debug Session"
 msgstr "பிழைத்திருத்த அமர்வைத் தொடங்கவும்"
 
@@ -2818,55 +2806,55 @@ msgstr ""
 " நீங்கள் இருப்பிடத்தை சரியாக தட்டச்சு செய்துள்ளீர்களா என்பதைச் "
 "சரிபார்த்து மீண்டும் முயற்சிக்கவும்."
 
-#: gaphor/ui/filemanager.py:117 gaphor/ui/filemanager.py:146
+#: gaphor/ui/filemanager.py:116 gaphor/ui/filemanager.py:142
 msgid "Loading…"
 msgstr "ஏற்றுகிறது…"
 
-#: gaphor/ui/filemanager.py:118
+#: gaphor/ui/filemanager.py:117
 msgid "Loading model from {filename}"
 msgstr "{filename} இருந்து இலிருந்து மாதிரியை ஏற்றுகிறது"
 
-#: gaphor/ui/filemanager.py:147
+#: gaphor/ui/filemanager.py:143
 msgid "Loading current and incoming model"
 msgstr "தற்போதைய மற்றும் உள்வரும் மாதிரியை ஏற்றுகிறது"
 
-#: gaphor/ui/filemanager.py:209 gaphor/ui/filemanager.py:253
+#: gaphor/ui/filemanager.py:205 gaphor/ui/filemanager.py:249
 msgid "Unable to open model “{filename}”."
 msgstr "மாதிரியைத் திறக்க முடியவில்லை “{filename}”."
 
-#: gaphor/ui/filemanager.py:212 gaphor/ui/filemanager.py:256
+#: gaphor/ui/filemanager.py:208 gaphor/ui/filemanager.py:252
 msgid "This file does not contain a valid Gaphor model."
 msgstr "இந்த கோப்பில் செல்லுபடியாகும் காஃபர் மாதிரி இல்லை."
 
-#: gaphor/ui/filemanager.py:277
+#: gaphor/ui/filemanager.py:273
 msgid "Saving…"
 msgstr "சேமிப்பு…"
 
-#: gaphor/ui/filemanager.py:278
+#: gaphor/ui/filemanager.py:274
 msgid "Saving model to {filename}"
 msgstr "{filename} க்கு மாதிரி சேமிப்பு"
 
-#: gaphor/ui/filemanager.py:294
+#: gaphor/ui/filemanager.py:290
 msgid "Unable to save model “{filename}”."
 msgstr "மாதிரியை சேமிக்க முடியவில்லை “{filename}”."
 
-#: gaphor/ui/filemanager.py:306
+#: gaphor/ui/filemanager.py:302
 msgid "Model has been saved."
 msgstr "மாதிரி சேமிக்கப்பட்டுள்ளது."
 
-#: gaphor/ui/filemanager.py:332 gaphor/ui/filemanager.py:374
+#: gaphor/ui/filemanager.py:327 gaphor/ui/filemanager.py:365
 msgid "Save Gaphor Model As"
 msgstr "கஃபர் மாதிரியை சேமிக்கவும்"
 
-#: gaphor/ui/filemanager.py:333 gaphor/ui/filemanager.py:376
+#: gaphor/ui/filemanager.py:328 gaphor/ui/filemanager.py:367
 msgid "New Model"
 msgstr "புதிய மாதிரி"
 
-#: gaphor/ui/filemanager.py:394
+#: gaphor/ui/filemanager.py:382
 msgid "Resolve Merge Conflict?"
 msgstr "ஒன்றிணைக்கும் மோதலைத் தீர்க்கவா?"
 
-#: gaphor/ui/filemanager.py:395
+#: gaphor/ui/filemanager.py:383
 msgid ""
 "The model you are opening contains a merge conflict. Do you want to open "
 "the current model or the incoming change to the model?"
@@ -2874,27 +2862,27 @@ msgstr ""
 "நீங்கள் திறக்கும் மாதிரியில் ஒன்றிணைக்கும் மோதல் உள்ளது. தற்போதைய "
 "மாதிரியை அல்லது உள்வரும் மாற்றத்தை மாதிரியில் திறக்க விரும்புகிறீர்களா?"
 
-#: gaphor/ui/filemanager.py:399 gaphor/ui/filemanager.py:414
+#: gaphor/ui/filemanager.py:387 gaphor/ui/filemanager.py:402
 msgid "Cancel"
 msgstr "ரத்துசெய்"
 
-#: gaphor/ui/filemanager.py:400
+#: gaphor/ui/filemanager.py:388
 msgid "Open Merge Editor"
 msgstr "ஒன்றிணைக்கும் எடிட்டரை திறந்த"
 
-#: gaphor/ui/filemanager.py:401
+#: gaphor/ui/filemanager.py:389
 msgid "Open Current"
 msgstr "திறந்த மின்னோட்டம்"
 
-#: gaphor/ui/filemanager.py:402
+#: gaphor/ui/filemanager.py:390
 msgid "Open Incoming"
 msgstr "உள்வரும் திறக்க"
 
-#: gaphor/ui/filemanager.py:409
+#: gaphor/ui/filemanager.py:397
 msgid "Save Changes?"
 msgstr "மாற்றங்களைச் சேமிக்கவா?"
 
-#: gaphor/ui/filemanager.py:410
+#: gaphor/ui/filemanager.py:398
 msgid ""
 "The open model contains unsaved changes. Changes which are not saved will"
 " be permanently lost."
@@ -2902,12 +2890,12 @@ msgstr ""
 "திறந்த மாதிரியில் சேமிக்கப்படாத மாற்றங்கள் உள்ளன. சேமிக்கப்படாத "
 "மாற்றங்கள் நிரந்தரமாக இழக்கப்படும்."
 
-#: gaphor/ui/filemanager.py:415
+#: gaphor/ui/filemanager.py:403
 msgid "Discard"
 msgstr "நிராகரிக்கவும்"
 
-#: gaphor/ui/filemanager.py:416 gaphor/ui/help/shortcuts.ui:233
-#: gaphor/ui/mainwindow.py:51
+#: gaphor/ui/filemanager.py:404 gaphor/ui/help/shortcuts.ui:233
+#: gaphor/ui/mainwindow.ui:266 gaphor/ui/menubar.ui:18
 msgid "Save"
 msgstr "சேமி"
 
@@ -2967,95 +2955,206 @@ msgstr "சி 4 மாதிரி எடுத்துக்காட்ட�
 msgid "C4 Model example of a banking system"
 msgstr "சி 4 ஒரு வங்கி அமைப்பின் மாதிரி எடுத்துக்காட்டு"
 
-#: gaphor/ui/greeter.ui:8 gaphor/ui/greeter.ui:55 gaphor/ui/mainwindow.py:47
+#: gaphor/ui/greeter.ui:8 gaphor/ui/greeter.ui:56 gaphor/ui/mainwindow.ui:260
+#: gaphor/ui/menubar.ui:12
 msgid "Open Model…"
 msgstr "திறந்த மாதிரி…"
 
-#: gaphor/ui/greeter.ui:18 gaphor/ui/mainwindow.py:62
+#: gaphor/ui/greeter.ui:14 gaphor/ui/help/preferences.ui:6
+#: gaphor/ui/help/shortcuts.ui:39
+msgid "Preferences"
+msgstr "விருப்பத்தேர்வுகள்"
+
+#: gaphor/ui/greeter.ui:18 gaphor/ui/mainwindow.ui:288 gaphor/ui/menubar.ui:122
 msgid "Keyboard Shortcuts"
 msgstr "விசைப்பலகை குறுக்குவழிகள்"
 
-#: gaphor/ui/greeter.ui:22 gaphor/ui/help/about.ui:9 gaphor/ui/mainwindow.py:63
+#: gaphor/ui/greeter.ui:22 gaphor/ui/help/about.ui:9
+#: gaphor/ui/mainwindow.ui:292
 msgid "About Gaphor"
 msgstr "கஃபர் பற்றி"
 
-#: gaphor/ui/greeter.ui:86
+#: gaphor/ui/greeter.ui:87
 msgid "Recently Opened"
 msgstr "அண்மைக் காலத்தில் திறக்கப்பட்டது"
 
-#: gaphor/ui/greeter.ui:103
+#: gaphor/ui/greeter.ui:104
 msgid "Create New Model"
 msgstr "புதிய மாதிரியை உருவாக்கவும்"
 
-#: gaphor/ui/help/shortcuts.ui:219 gaphor/ui/mainwindow.py:46
-msgid "New Model…"
-msgstr "புதிய மாடல்…"
-
-#: gaphor/ui/help/shortcuts.ui:240 gaphor/ui/mainwindow.py:52
-msgid "Save As…"
-msgstr "சேமிக்கவும்…"
-
-#: gaphor/ui/mainwindow.py:53
-msgid "Export"
-msgstr "ஏற்றுமதி"
-
-#: gaphor/ui/mainwindow.py:57
-msgid "Tools"
-msgstr "கருவிகள்"
-
-#: gaphor/ui/mainwindow.py:255
+#: gaphor/ui/mainwindow.py:250
 msgid "Press F11 to exit Fullscreen"
 msgstr "முழுத்திரை வெளியேற F11 ஐ அழுத்தவும்"
 
-#: gaphor/ui/mainwindow.py:311
-msgid "Profile: {name}"
-msgstr "சுயவிவரம்: {name}"
+#: gaphor/ui/mainwindow.ui:37
+msgid "Change modeling profile"
+msgstr "தன்வய மாதிரியை மாற்று"
 
-#: gaphor/ui/mainwindow.ui:43
+#: gaphor/ui/mainwindow.ui:47
 msgid "Open application menu"
 msgstr "பயன்பாட்டு மெனுவைத் திறக்கவும்"
 
-#: gaphor/ui/mainwindow.ui:50
+#: gaphor/ui/mainwindow.ui:54
 msgid "New diagram menu"
 msgstr "புதிய வரைபட பட்டியல்"
 
-#: gaphor/ui/help/shortcuts.ui:82 gaphor/ui/mainwindow.ui:138
-msgid "Toggle Model Preferences"
-msgstr "மாதிரி விருப்பங்களை மாற்றவும்"
+#: gaphor/ui/help/shortcuts.ui:111 gaphor/ui/mainwindow.ui:142
+#: gaphor/ui/menubar.ui:34
+msgid "Undo"
+msgstr "செயல்தவிர்"
 
-#: gaphor/ui/help/shortcuts.ui:75 gaphor/ui/mainwindow.ui:153
+#: gaphor/ui/help/shortcuts.ui:118 gaphor/ui/mainwindow.ui:157
+#: gaphor/ui/menubar.ui:38
+msgid "Redo"
+msgstr "மீண்டும்செய்"
+
+#: gaphor/ui/mainwindow.ui:173
+msgid "Align selected elements"
+msgstr "தேர்ந்தெடுக்கப்பட்ட கூறுகளைச் சீரமை"
+
+#: gaphor/ui/help/shortcuts.ui:75 gaphor/ui/mainwindow.ui:181
 msgid "Toggle Property Editor"
 msgstr "சொத்து எடிட்டரை மாற்றவும்"
 
-#: gaphor/ui/modelbrowser.py:403
+#: gaphor/ui/help/shortcuts.ui:219 gaphor/ui/mainwindow.ui:256
+#: gaphor/ui/menubar.ui:8
+msgid "New Model…"
+msgstr "புதிய மாடல்…"
+
+#: gaphor/ui/help/shortcuts.ui:240 gaphor/ui/mainwindow.ui:270
+#: gaphor/ui/menubar.ui:22
+msgid "Save As…"
+msgstr "சேமிக்கவும்…"
+
+#: gaphor/ui/mainwindow.ui:284
+msgid "Preferences…"
+msgstr "விருப்பத்தேர்வுகள்…"
+
+#: gaphor/ui/mainwindow.ui:301
+msgid "Align Left"
+msgstr "இடதுபுறம் சீரமைக்கவும்"
+
+#: gaphor/ui/mainwindow.ui:306
+msgid "Align Right"
+msgstr "வலதுபுறம் சீரமைக்கவும்"
+
+#: gaphor/ui/mainwindow.ui:311
+msgid "Align Vertical Center"
+msgstr "செங்குத்தாக நடுவில் சீரமை"
+
+#: gaphor/ui/mainwindow.ui:318
+msgid "Align Top"
+msgstr "மேலே சீரமைக்கவும்"
+
+#: gaphor/ui/mainwindow.ui:323
+msgid "Align Bottom"
+msgstr "கீழே சீரமைக்கவும்"
+
+#: gaphor/ui/mainwindow.ui:328
+msgid "Align Horizontal Center"
+msgstr "கிடைமட்ட மையத்தை சீரமைக்கவும்"
+
+#: gaphor/ui/mainwindow.ui:335
+msgid "Max Width"
+msgstr "அதிகபட்ச அகலம்"
+
+#: gaphor/ui/mainwindow.ui:340
+msgid "Max Height"
+msgstr "அதிகபட்ச உயரம்"
+
+#: gaphor/ui/mainwindow.ui:345
+msgid "Max Size"
+msgstr "அதிகபட்ச அளவு"
+
+#: gaphor/ui/menubar.ui:5
+msgid "_File"
+msgstr "கோப்பு"
+
+#: gaphor/ui/menubar.ui:31
+msgid "_Edit"
+msgstr "திருத்து"
+
+#: gaphor/ui/help/shortcuts.ui:162 gaphor/ui/menubar.ui:44
+msgid "Cut"
+msgstr "வெட்டு"
+
+#: gaphor/ui/help/shortcuts.ui:155 gaphor/ui/menubar.ui:48
+msgid "Copy"
+msgstr "நகலெடு"
+
+#: gaphor/ui/menubar.ui:52
+msgid "Paste"
+msgstr "ஒட்டு"
+
+#: gaphor/ui/help/shortcuts.ui:176 gaphor/ui/menubar.ui:56
+msgid "Paste (copy defining elements)"
+msgstr "ஒட்டுதல் (நகலெடு வரையறுக்கும் கூறுகள்)"
+
+#: gaphor/ui/help/shortcuts.ui:133 gaphor/ui/menubar.ui:66
+msgid "Select All"
+msgstr "அனைத்தையும் தெரிவுசெய்"
+
+#: gaphor/ui/menubar.ui:70
+msgid "Unselect All"
+msgstr "அனைத்தையும் தெரிவுநீக்கு"
+
+#: gaphor/ui/menubar.ui:76
+msgid "_View"
+msgstr "பார்வை"
+
+#: gaphor/ui/menubar.ui:87
+msgid "Actual Size"
+msgstr "உண்மையான அளவு"
+
+#: gaphor/ui/menubar.ui:102
+msgid "_Window"
+msgstr "சாளரம்"
+
+#: gaphor/ui/menubar.ui:105
+msgid "Maximize"
+msgstr "பெரிதுபடுத்து"
+
+#: gaphor/ui/menubar.ui:109
+msgid "Full screen"
+msgstr "முழுத்திரை"
+
+#: gaphor/ui/menubar.ui:115
+msgid "_Help"
+msgstr "உதவி"
+
+#: gaphor/ui/menubar.ui:118
+msgid "Online Documentation"
+msgstr "இணைய ஆவணம்"
+
+#: gaphor/ui/modelbrowser.py:404
 msgid "New _Package"
 msgstr "புதிய _ பேக்கேச்"
 
-#: gaphor/ui/modelbrowser.py:572
+#: gaphor/ui/modelbrowser.py:573
 msgid "_Open"
 msgstr "_OPEN"
 
-#: gaphor/ui/modelbrowser.py:572
+#: gaphor/ui/modelbrowser.py:573
 msgid "Add to diagram"
 msgstr "வரைபடத்தில் சேர்க்கவும்"
 
-#: gaphor/ui/modelbrowser.py:575
+#: gaphor/ui/modelbrowser.py:576
 msgid "_Rename"
 msgstr "_ரினேம்"
 
-#: gaphor/ui/modelbrowser.py:581
+#: gaphor/ui/modelbrowser.py:582
 msgid "New _Diagram"
 msgstr "புதிய _diagram"
 
-#: gaphor/ui/modelbrowser.py:588
+#: gaphor/ui/modelbrowser.py:589
 msgid "New _Element"
 msgstr "புதிய _ எலிமென்ட்"
 
-#: gaphor/ui/modelbrowser.py:594
+#: gaphor/ui/modelbrowser.py:595
 msgid "De_lete"
 msgstr "நீக்கு (_l)"
 
-#: gaphor/ui/modelbrowser.py:604
+#: gaphor/ui/modelbrowser.py:605
 msgid "Show in “{diagram}”"
 msgstr "“{diagram}” இல் காண்பி"
 
@@ -3137,17 +3236,16 @@ msgid "Change from System Language to English"
 msgstr "கணினி மொழியிலிருந்து ஆங்கிலத்திற்கு மாற்றவும்"
 
 #: gaphor/ui/help/preferences.ui:42
-#, fuzzy
 msgid "Editing"
-msgstr "திசை"
+msgstr "திருத்துகிறது"
 
 #: gaphor/ui/help/preferences.ui:45
 msgid "Reset Tool Automatically"
-msgstr "கருவியை தானாக மீட்டமைக்கவும்"
+msgstr "கருவியைத் தானாக மீட்டமை"
 
 #: gaphor/ui/help/preferences.ui:46
 msgid "After an element is created, switch back to the pointer tool."
-msgstr ""
+msgstr "ஒரு உறுப்பு உருவாக்கப்பட்ட பிறகு, சுட்டிக்காட்டி கருவிக்குத் திரும்புக."
 
 #: gaphor/ui/help/preferences.ui:51
 msgid "Remove Unused Elements"
@@ -3158,9 +3256,8 @@ msgid "Automatically remove elements no longer in use in any diagram."
 msgstr "எந்தவொரு வரைபடத்திலும் இனி பயன்பாட்டில் இல்லாத கூறுகளை தானாக அகற்றவும்."
 
 #: gaphor/ui/help/shortcuts.ui:4 gaphor/ui/help/shortcuts.ui:11
-#, fuzzy
 msgid "Shortcuts"
-msgstr "விசைப்பலகை குறுக்குவழிகள்"
+msgstr "குறுக்குவழிகள்"
 
 #: gaphor/ui/help/shortcuts.ui:46
 msgid "Quit Gaphor"
@@ -3178,6 +3275,10 @@ msgstr "மறுபெயரிடுங்கள்"
 msgid "Search"
 msgstr "தேடல்"
 
+#: gaphor/ui/help/shortcuts.ui:82
+msgid "Toggle Model Preferences"
+msgstr "மாதிரி விருப்பங்களை மாற்றவும்"
+
 #: gaphor/ui/help/shortcuts.ui:89
 msgid "Close Diagram"
 msgstr "வரைபடத்தை மூடு"
@@ -3194,10 +3295,6 @@ msgstr "செயல்தவிர் மற்றும் மீண்டு�
 msgid "Selections"
 msgstr "தேர்வுகள்"
 
-#: gaphor/ui/help/shortcuts.ui:133
-msgid "Select All"
-msgstr "அனைத்தையும் தெரிவுசெய்"
-
 #: gaphor/ui/help/shortcuts.ui:140
 msgid "Deselect All"
 msgstr "அனைத்தையும் தேர்வு செய்யுங்கள்"
@@ -3206,21 +3303,9 @@ msgstr "அனைத்தையும் தேர்வு செய்யு�
 msgid "Copy and Paste"
 msgstr "நகலெடுத்து ஒட்டவும்"
 
-#: gaphor/ui/help/shortcuts.ui:155
-msgid "Copy"
-msgstr "நகலெடு"
-
-#: gaphor/ui/help/shortcuts.ui:162
-msgid "Cut"
-msgstr "வெட்டு"
-
 #: gaphor/ui/help/shortcuts.ui:169
 msgid "Paste (link defining elements)"
 msgstr "ஒட்டுதல் (இணைப்புகளை வரையறுக்கும் உறுப்புகளை)"
-
-#: gaphor/ui/help/shortcuts.ui:176
-msgid "Paste (copy defining elements)"
-msgstr "ஒட்டுதல் (நகலெடு வரையறுக்கும் கூறுகள்)"
 
 #: gaphor/ui/help/shortcuts.ui:186
 msgid "Zoom"
@@ -3469,3 +3554,6 @@ msgstr "பொது: பொது"
 
 #~ msgid "New package"
 #~ msgstr "புதிய தொகுப்பு"
+
+#~ msgid "Profile: {name}"
+#~ msgstr "சுயவிவரம்: {name}"

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gaphor 2.23.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-12-30 14:25-0500\n"
-"PO-Revision-Date: 2025-03-13 09:20+0000\n"
+"PO-Revision-Date: 2025-04-11 07:03+0000\n"
 "Last-Translator: Stan SZLAPKA <stansz@free.fr>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/gaphor/"
 "docs-gaphor-org/fr/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.10.3-dev\n"
+"X-Generator: Weblate 5.11-dev\n"
 "Generated-By: Babel 2.16.0\n"
 
 #: ../changelog.rst:2
@@ -3308,7 +3308,7 @@ msgstr "Concepts"
 
 #: ../index.rst:79
 msgid "Internals"
-msgstr "Fonctionnements internes"
+msgstr "Ressources internes"
 
 #: ../index.rst:2
 msgid "About Gaphor"
@@ -3361,8 +3361,8 @@ msgid ""
 "For download instructions, and the blog, please visit the `Gaphor Website"
 " <https://gaphor.org>`_."
 msgstr ""
-"Pour les instructions de téléchargement et le blog, veuillez visiter le "
-"`Gaphor Website <https://gaphor.org>`_."
+"Pour les instructions de téléchargement et le blog, veuillez visiter le `le "
+"site web de Gaphor <https://gaphor.org>`_."
 
 #: ../index.rst:26
 msgid ""
@@ -7554,7 +7554,7 @@ msgstr "``font-family``"
 msgid "A single font name (e.g. ``sans``, ``serif``, ``courier``). *(inherited)*"
 msgstr ""
 "Un nom de police unique (par exemple ``sans``, ``serif``, ``courier``). "
-"*(inherited)*"
+"*(hérité)*"
 
 #: ../style_sheets.md:169
 msgid "``font-size``"
@@ -7598,7 +7598,7 @@ msgstr "``text-decoration``"
 
 #: ../style_sheets.md:173
 msgid "Either ``none`` or ``underline``."
-msgstr "Soit ``none`` ou ``underline``."
+msgstr "Soit ``non`` ou ``souligné``."
 
 #: ../style_sheets.md:174
 msgid "``vertical-align``"
@@ -7683,7 +7683,7 @@ msgstr "Alignement du contenu des boîtes."
 
 #: ../style_sheets.md:197
 msgid "Either ``start``, ``end``, ``center`` or ``stretch``."
-msgstr "Soit ``start``, ``end``, ``center`` ou ``stretch``."
+msgstr "Soit ``début``, ``fin``, ``centre`` ou ``étiré``."
 
 #: ../style_sheets.md:198
 msgid "``line-style``"
@@ -7699,7 +7699,7 @@ msgstr "``line-width``"
 
 #: ../style_sheets.md:199
 msgid "Set the width for lines: ``line-width: 2``. *(inherited)*"
-msgstr "Définir la largeur des lignes : ``line-width : 2``. *(inherited)*"
+msgstr "Définir la largeur des lignes : ``largeur ligne : 2``. *(hérité)*"
 
 #: ../style_sheets.md:200
 msgid "``min-height``"

@@ -1,0 +1,3 @@
+[D-BUS Service]
+Name=org.gaphor.Gaphor
+Exec=/usr/bin/gaphor --gapplication-service

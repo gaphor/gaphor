@@ -4,7 +4,7 @@ from gaphor import UML
 from gaphor.application import Session
 from gaphor.core import Transaction
 from gaphor.core.modeling import Diagram
-from gaphor.storage.storage import load
+from gaphor.storage.load import load
 
 
 @pytest.fixture

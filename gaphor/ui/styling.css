@@ -1,6 +1,11 @@
+headerbar box.start,
+headerbar box.end {
+  margin-left: 0px;
+  margin-right: 0px;
+}
 
 #toolbox expander {
-  border-top: 1px solid @unfocused_borders;
+  border-top: 1px solid var(--unfocused-borders);
   margin-top: 6px;
   padding-top: 6px;
   padding-bottom: 6px;
@@ -16,17 +21,21 @@
   padding-left: 6px;
 }
 
+#toolbox > viewport > box {
+  margin: 6px;
+}
+
 diagramview {
   background: white;
 }
 
 .diagram-toolbar {
-  margin: 12px;
-  padding: 6px;
-  border-radius: 12px;
-  background-color: alpha(@window_bg_color, 0.95);
-  border: 1px solid @borders;
-  box-shadow: 0px 3px 6px @shade_color;
+  margin: 18px;
+  padding: 1px;
+  border-radius: 10px;
+  background-color: alpha(var(--window-bg-color), 0.95);
+  border: 1px solid var(--border-color);
+  box-shadow: 0px 3px 6px var(--shade-color);
 }
 
 .status-window box {
@@ -101,13 +110,13 @@ row {
 }
 
 textfield text {
-  background-color: @theme_bg_color;
-  color: @theme_fg_color;
-  border: 1px solid @theme_bg_color;
+  background-color: var(--window-bg-color);
+  color: var(--window-fg-color);
+  border: 1px solid var(--window-bg-color);
 }
 
 textfield text selection {
-  background-color: alpha(@theme_selected_bg_color, 0.3);
+  background-color: alpha(var(--accent-bg-color), 0.3);
 }
 
 .info {
@@ -117,7 +126,7 @@ textfield text selection {
 }
 
 .info:hover {
-  background-color: @shade_color;
+  background-color: var(--shade-color);
 }
 
 .info-popover {
@@ -129,7 +138,7 @@ textfield text selection {
 }
 
 #model_browser .row {
-  border-top: 0 solid @shade_color;
+  border-top: 0 solid var(--shade-color);
   transition: border 200ms;
 }
 
@@ -147,8 +156,8 @@ tabbar > revealer > box,
 }
 
 .pseudo-sidebar-pane {
-  background-color: @sidebar_bg_color;
-  color: @sidebar_fg_color;
+  background-color: var(--sidebar-bg-color);
+  color: var(--sidebar-fg-color);
 }
 
 #element_editor {
@@ -159,16 +168,21 @@ tabbar > revealer > box,
   font-weight: bold;
 }
 
-#toolbox > viewport > box {
+#element_editor .sourceview {
+  min-height: 200px;
+  padding: 3px;
+}
+
+#element_editor viewswitcher {
   margin: 6px;
 }
 
 flowboxchild:hover {
-  background-color: @shade_color;
+  background-color: var(--shade-color);
 }
 
 flowboxchild:active {
-  background-color: alpha(@shade_color, 2);
+  background-color: alpha(var(--shade-color), 2);
 }
 
 .mono {
@@ -184,11 +198,11 @@ flowboxchild:active {
 }
 
 
-.tips label {
+.tips > label {
   margin: 0px 0px 6px;
 }
 
-.tips label:first-child {
+.tips > label:first-child {
   margin-top: 6px;
 }
 
@@ -209,5 +223,5 @@ flowboxchild:active {
   background-color: var(--blue-4);
   color: white;
   margin: 0;
-  padding: 6px 6px;
+  padding: 3px 6px 6px 6px;
 }

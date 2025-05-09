@@ -34,18 +34,18 @@ requires-python = ">=3.11,<3.14"
 
 dependencies = [
     "pycairo>=1.22.0,<1.28.0",
-    "PyGObject>=3.50",
+    "PyGObject>=3.52",
     "gaphas>=5.0",
     "generic>=1.0.0",
     "tinycss2>=1.0.2",
     "babel>=2.10.3",
-    "jedi>=0.18.1",
+    "jedi (>=0.18.1,<0.20.0)",
     "better-exceptions>=0.3.3",
-    "pydot>=3.0.0",
+    "pydot (>=1.4.2,<4.0.0)",
     "pillow>=10.0.0",
     "defusedxml>=0.7.1",
-    "pyobjc-framework-cocoa>=9.0.1 ; sys_platform == 'darwin'",
-    "dulwich>=0.22.0",
+    "pyobjc-framework-cocoa (>=9.0.1,<11.0.0) ; sys_platform == 'darwin'",
+    "dulwich (>=0.21.7,<0.23.0)",
 ]
 
 [project.scripts]
@@ -92,6 +92,7 @@ documentation = "https://docs.gaphor.org/"
 "model_browser" = "gaphor.ui.modelbrowser:ModelBrowser"
 "toolbox" = "gaphor.ui.toolbox:Toolbox"
 "diagrams" = "gaphor.ui.diagrams:Diagrams"
+"diagram_align" = "gaphor.ui.diagramalign:DiagramAlign"
 "element_editor" = "gaphor.ui.elementeditor:ElementEditor"
 "model_changed" = "gaphor.ui.modelchanged:ModelChanged"
 "console_window" = "gaphor.plugins.console.consolewindow:ConsoleWindow"
@@ -118,7 +119,10 @@ install-schemas = "gaphor.ui.installschemas:install_schemas_parser"
 
 [tool.poetry]
 requires-poetry = ">=2.0"
-include = ["gaphor/locale/*/LC_MESSAGES/*"]
+include = [
+    { path = "gaphor/locale/*/LC_MESSAGES/*" },
+    { path = "data/org.gaphor.Gaphor*", format = "sdist" },
+]
 exclude = ["**/tests", "gaphor/conftest.py" ]
 
 [tool.poetry.group.dev.dependencies]
@@ -154,7 +158,7 @@ furo = ">=2022,<2025"
 optional=true
 
 [tool.poetry.group.packaging.dependencies]
-pyinstaller = { git = "https://github.com/pyinstaller/pyinstaller.git", rev="3eea708" }
+pyinstaller = ">=6.13.0"
 pyinstaller-versionfile = "^2.0.0"
 semver = ">=2.13,<4.0"
 tomli = { version = ">=1.2,<3.0", python = "<3.11" }
@@ -199,6 +203,7 @@ lint = "pre-commit run --all-files"
 docs = { "cwd" = "docs", "shell" = "sphinx-build -W -b html . _build/html" }
 docs-gettext-pot = { "cwd" = "docs", "shell" = "sphinx-build -b gettext . locale" }
 clean = { "shell" = "rm -rf dist build _packaging/dist _packaging/build _packaging/windows/file_version_info.txt docs/_build" }
+appdata = { "shell" = "python data/update-appdata.py $(poetry version -s)"}
 package = { "cwd" = "_packaging", shell = "pyinstaller -y gaphor.spec"}
 win-installer = { "script" = "_packaging.windows.build-win-installer:main" }
 gettext-pot = "pybabel extract -o po/gaphor.pot -F po/babel.ini -k i18nize gaphor"

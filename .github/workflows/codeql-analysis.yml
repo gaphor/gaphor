@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
     - name: Harden Runner
-      uses: step-security/harden-runner@4d991eb9b905ef189e4c376166672c3f2f230481 # v2.11.0
+      uses: step-security/harden-runner@0634a2670c59f64b4a01f0f96f84700a4088b9f0 # v2.12.0
       with:
         egress-policy: block
         allowed-endpoints: >
@@ -41,7 +41,7 @@ jobs:
       with:
         persist-credentials: false
     - name: Set up Python
-      uses: actions/setup-python@42375524e23c412d93fb67b49958b491fce71c38 # v5.4.0
+      uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
       with:
         python-version: ${{ env.python_version }}
         cache: pip
@@ -50,15 +50,15 @@ jobs:
         sudo apt-get update -qq && sudo apt-get install -qq --no-install-recommends
         libgirepository-2.0-dev libcairo2-dev
     - name: Install Poetry
-      run: python${python_version} -m pip install --constraint=.github/constraints.txt poetry
+      run: python${python_version} -m pip install --constraint=.github/github-requirements.txt poetry
     - name: Configure Poetry
       run: poetry config virtualenvs.in-project true
     - name: Install Python Dependencies
       run: |
         poetry install --no-interaction
     - name: Initialize CodeQL
-      uses: github/codeql-action/init@1b549b9259bda1cb5ddde3b41741a82a2d15a841 # v3.28.13
+      uses: github/codeql-action/init@60168efe1c415ce0f5521ea06d5c2062adbeed1b # v3.28.17
       with:
         languages: python
     - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@1b549b9259bda1cb5ddde3b41741a82a2d15a841 # v3.28.13
+      uses: github/codeql-action/analyze@60168efe1c415ce0f5521ea06d5c2062adbeed1b # v3.28.17

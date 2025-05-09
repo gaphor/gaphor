@@ -25,7 +25,7 @@ represents(c4model.C4Diagram)(DiagramItem)
 class C4ModelLanguage(ModelingLanguage):
     @property
     def name(self) -> str:
-        return gettext("C4 Model")
+        return gettext("C4")
 
     @property
     def toolbox_definition(self) -> ToolboxDefinition:

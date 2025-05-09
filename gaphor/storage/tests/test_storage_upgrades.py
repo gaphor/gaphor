@@ -1,12 +1,14 @@
+import itertools
+
 import pytest
 
 from gaphor.services.modelinglanguage import ModelingLanguageService
-from gaphor.storage.parser import element
-from gaphor.storage.storage import (
+from gaphor.storage.load import (
     load_elements,
     sysml_diagram_type_to_class,
     uml_diagram_type_to_class,
 )
+from gaphor.storage.parser import element
 from gaphor.storage.upgrade_canvasitem import upgrade_canvasitem
 from gaphor.UML import Dependency, Diagram, Image, Package, diagramitems
 
@@ -263,3 +265,95 @@ def test_diagram_type_to_class_mapping(kind, ns, name):
     diagram_class = modeling_language.lookup_element(name, ns)
 
     assert diagram_class.diagramType.default == kind
+
+
+@pytest.mark.parametrize(
+    "element_type,property_name,value,literal_type,expected_value",
+    [
+        ["MultiplicityElement", "lowerValue", "1", "LiteralInteger", 1],
+        ["MultiplicityElement", "lowerValue", "", "NoneType", None],
+        ["MultiplicityElement", "lowerValue", None, "NoneType", None],
+        ["MultiplicityElement", "upperValue", "1", "LiteralUnlimitedNatural", 1],
+        ["MultiplicityElement", "upperValue", "*", "LiteralUnlimitedNatural", "*"],
+        ["MultiplicityElement", "upperValue", "", "LiteralUnlimitedNatural", "*"],
+        ["MultiplicityElement", "upperValue", None, "NoneType", None],
+        *(
+            a[0] + a[1]
+            for a in itertools.product(
+                [
+                    ["Parameter", "defaultValue"],
+                    ["Slot", "value"],
+                    ["ValueSpecificationAction", "value"],
+                    ["InstanceSpecification", "specification"],
+                    ["Constraint", "specification"],
+                    ["ActivityEdge", "guard"],
+                    ["ControlFlow", "guard"],
+                    ["ObjectFlow", "guard"],
+                    ["JoinNode", "joinSpec"],
+                ],
+                [
+                    ["value", "LiteralString", "value"],
+                    ['"value"', "LiteralString", "value"],
+                    ["1", "LiteralInteger", 1],
+                    ["*", "LiteralUnlimitedNatural", "*"],
+                    ["true", "LiteralBoolean", True],
+                    ["True", "LiteralBoolean", True],
+                    ["false", "LiteralBoolean", False],
+                    ["False", "LiteralBoolean", False],
+                    ["", "LiteralString", ""],
+                    [None, "LiteralString", None],
+                    ['"', "LiteralString", ""],
+                    ["-1", "LiteralString", "-1"],
+                    ["1a", "LiteralString", "1a"],
+                ],
+            )
+        ),
+    ],
+)
+def test_update_value_to_value_specification(
+    element_type,
+    property_name,
+    value,
+    literal_type,
+    expected_value,
+    element_factory,
+    modeling_language,
+):
+    e = element(id="1", type=element_type)
+    e.values[property_name] = value
+
+    load_elements({"1": e}, element_factory, modeling_language)
+
+    p = element_factory.lookup("1")
+    value_spec = getattr(p, property_name)
+
+    assert type(p).__name__ == element_type
+    assert type(value_spec).__name__ == literal_type
+
+    if value_spec is not None:
+        assert value_spec.value == expected_value
+        assert value_spec in element_factory
+
+
+@pytest.mark.parametrize(
+    "element_type",
+    [
+        "LiteralString",
+        "LiteralInteger",
+        "LiteralBoolean",
+        "LiteralUnlimitedNatural",
+        "LiteralSpecification",
+    ],
+)
+def test_do_not_update_value_for_literal_specification(
+    element_type, element_factory, modeling_language
+):
+    e = element(id="1", type=element_type)
+    e.values["value"] = "1"
+
+    load_elements({"1": e}, element_factory, modeling_language)
+
+    p = element_factory.lookup("1")
+
+    assert type(p).__name__ == element_type
+    assert str(p.value) == "1"
