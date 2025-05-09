@@ -170,3 +170,22 @@ def test_pin(factory):
     recipes.set_multiplicity_upper_value(pin, "*")
 
     assert format(pin) == "foo: MyClass[1..*]"
+
+
+@pytest.mark.parametrize(
+    "text,formatted_text",
+    [
+        ("", ""),
+        ("param", "in param"),
+        ("in param: str", "in param: str"),
+        ("param = val", "in param = val"),
+    ],
+)
+def test_activity_parameter_node(factory, text, formatted_text):
+    """Test simple operation formatting."""
+    p = factory.create(UML.Parameter)
+    n = factory.create(UML.ActivityParameterNode)
+    n.parameter = p
+    parse(p, text)
+
+    assert formatted_text == format(n)
