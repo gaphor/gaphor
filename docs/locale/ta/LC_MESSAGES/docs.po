@@ -7153,7 +7153,7 @@ msgstr "ஒரு பெயரைக் கொண்ட வரைபடம் \"
 
 #: ../style_sheets.md:96
 msgid "``:focus``"
-msgstr "``:கவனம்``"
+msgstr "``:focus``"
 
 #: ../style_sheets.md:96
 msgid "The focused item. Other pseudo classes are:"
