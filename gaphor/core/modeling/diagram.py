@@ -110,7 +110,7 @@ def attrstr(obj):
         return "true" if obj else ""
     elif isinstance(obj, Base):
         return obj.__class__.__name__.lower()
-    log.warn(
+    log.warning(
         f'Can not make a string out of {obj}, returning "". Please raise an issue.'
     )
     return ""
