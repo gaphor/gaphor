@@ -4,20 +4,21 @@ msgstr ""
 "Project-Id-Version: Gaphor 0.13.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2025-04-23 21:47+0200\n"
-"PO-Revision-Date: 2025-03-13 09:20+0000\n"
+"PO-Revision-Date: 2025-05-15 09:55+0000\n"
 "Last-Translator: Stan SZLAPKA <stansz@free.fr>\n"
+"Language-Team: French <https://hosted.weblate.org/projects/gaphor/gaphor/fr/>"
+"\n"
 "Language: fr\n"
-"Language-Team: French "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/fr/>\n"
-"Plural-Forms: nplurals=2; plural=n > 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 5.12-dev\n"
 "Generated-By: Babel 2.16.0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:28
 msgid "C4"
-msgstr ""
+msgstr "C4"
 
 #: gaphor/C4Model/propertypages.ui:11 gaphor/diagram/general/metadata.py:70
 #: gaphor/diagram/propertypages.ui:170
@@ -2641,11 +2642,12 @@ msgstr ""
 
 #: gaphor/ui/elementeditor.ui:87
 msgid "Help improve Gaphor"
-msgstr ""
+msgstr "Contribuer à l'amélioration de Gaphor"
 
 #: gaphor/ui/elementeditor.ui:96
 msgid "Gaphor is free and open source software, written by devoted volunteers."
 msgstr ""
+"Gaphor est un logiciel libre et gratuit, écrit par des bénévoles dévoués."
 
 #: gaphor/ui/elementeditor.ui:104
 msgid ""
@@ -2653,22 +2655,26 @@ msgid ""
 "translate Gaphor into your language, report bugs, or suggest new "
 "features. Join us in improving Gaphor!"
 msgstr ""
+"Vous pouvez contribuer à l'amélioration de Gaphor de nombreuses façons : "
+"écrire un article de blog, le traduire dans votre langue, signaler des bugs "
+"ou suggérer de nouvelles fonctionnalités. Rejoignez-nous pour contribuer à "
+"l'amélioration de Gaphor !"
 
 #: gaphor/ui/elementeditor.ui:112
 msgid ""
 "Visit <a href=\"https://gaphor.org/contribute/\">gaphor.org</a> for more "
 "information."
 msgstr ""
+"Visitez <a href=\"https://gaphor.org/contribute/\">gaphor.org</a> pour plus "
+"d'information."
 
 #: gaphor/ui/elementeditor.ui:151
-#, fuzzy
 msgid "Editor"
 msgstr "Éditeurs"
 
 #: gaphor/ui/elementeditor.ui:177
-#, fuzzy
 msgid "Styling"
-msgstr "Chaîne de caractères"
+msgstr "Style"
 
 #: gaphor/ui/elementeditor.ui:189
 msgid "Style Sheet"
@@ -2977,9 +2983,8 @@ msgid "Press F11 to exit Fullscreen"
 msgstr "Appuyer sur F11 pour quitter le plein écran"
 
 #: gaphor/ui/mainwindow.ui:37
-#, fuzzy
 msgid "Change modeling profile"
-msgstr "Chargement du modèle à partir de {filename}"
+msgstr "Modifier le profil de modélisation"
 
 #: gaphor/ui/mainwindow.ui:47
 msgid "Open application menu"
@@ -3018,9 +3023,8 @@ msgid "Save As…"
 msgstr "Enregistrer sous…"
 
 #: gaphor/ui/mainwindow.ui:284
-#, fuzzy
 msgid "Preferences…"
-msgstr "Préférences"
+msgstr "Préférences…"
 
 #: gaphor/ui/mainwindow.ui:301
 msgid "Align Left"
@@ -3059,14 +3063,12 @@ msgid "Max Size"
 msgstr "Taille maximale"
 
 #: gaphor/ui/menubar.ui:5
-#, fuzzy
 msgid "_File"
-msgstr "Fichiers"
+msgstr "_Fichier"
 
 #: gaphor/ui/menubar.ui:31
-#, fuzzy
 msgid "_Edit"
-msgstr "Sortie"
+msgstr "_Edition"
 
 #: gaphor/ui/help/shortcuts.ui:162 gaphor/ui/menubar.ui:44
 msgid "Cut"
@@ -3077,9 +3079,8 @@ msgid "Copy"
 msgstr "Copier"
 
 #: gaphor/ui/menubar.ui:52
-#, fuzzy
 msgid "Paste"
-msgstr "Date"
+msgstr "Coller"
 
 #: gaphor/ui/help/shortcuts.ui:176 gaphor/ui/menubar.ui:56
 msgid "Paste (copy defining elements)"
@@ -3090,42 +3091,36 @@ msgid "Select All"
 msgstr "Tout Sélectionner"
 
 #: gaphor/ui/menubar.ui:70
-#, fuzzy
 msgid "Unselect All"
-msgstr "Tout Sélectionner"
+msgstr "Tout désélectionner"
 
 #: gaphor/ui/menubar.ui:76
 msgid "_View"
-msgstr ""
+msgstr "_Vue"
 
 #: gaphor/ui/menubar.ui:87
-#, fuzzy
 msgid "Actual Size"
-msgstr "Taille maximale"
+msgstr "Taille actuelle"
 
 #: gaphor/ui/menubar.ui:102
 msgid "_Window"
-msgstr ""
+msgstr "_Fenêtre"
 
 #: gaphor/ui/menubar.ui:105
-#, fuzzy
 msgid "Maximize"
-msgstr "Taille maximale"
+msgstr "Maximiser"
 
 #: gaphor/ui/menubar.ui:109
-#, fuzzy
 msgid "Full screen"
-msgstr "Basculer le plein écran"
+msgstr "Plein écran"
 
 #: gaphor/ui/menubar.ui:115
-#, fuzzy
 msgid "_Help"
-msgstr "ⓘ Aide"
+msgstr "_Aide"
 
 #: gaphor/ui/menubar.ui:118
-#, fuzzy
 msgid "Online Documentation"
-msgstr "Inverser l'orientation"
+msgstr "Documentation en ligne"
 
 #: gaphor/ui/modelbrowser.py:404
 msgid "New _Package"
