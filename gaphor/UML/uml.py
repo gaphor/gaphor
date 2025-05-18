@@ -1558,7 +1558,7 @@ DirectedRelationship.source.add(InformationFlow.informationSource)  # type: igno
 Element.owner.add(InformationFlow.realizingConnector)  # type: ignore[attr-defined]
 DirectedRelationship.target.add(InformationFlow.informationTarget)  # type: ignore[attr-defined]
 CallAction.result = association("result", OutputPin, composite=True)
-CallBehaviorAction.behavior = association("behavior", Behavior, upper=1, composite=True)
+CallBehaviorAction.behavior = association("behavior", Behavior, upper=1)
 ValueSpecificationAction.result = association("result", OutputPin, upper=1, composite=True)
 ValueSpecificationAction.value = association("value", ValueSpecification, upper=1, composite=True, opposite="valueSpecificationAction")
 Element.ownedElement.add(ValueSpecificationAction.value)  # type: ignore[attr-defined]
