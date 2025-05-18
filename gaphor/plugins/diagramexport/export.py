@@ -66,7 +66,7 @@ class DiagramExport(Service, ActionProvider):
         )
         if new_filename:
             self.filename = new_filename
-            handler(filename, diagram)
+            handler(new_filename, diagram)
 
     @action(
         name="file-export-svg",
