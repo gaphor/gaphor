@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gaphor 2.27.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-11-27 15:44-0500\n"
-"PO-Revision-Date: 2025-05-20 12:04+0000\n"
+"PO-Revision-Date: 2025-05-20 12:08+0000\n"
 "Last-Translator: Dan Yeaw <dan@yeaw.me>\n"
 "Language-Team: Tamil <https://hosted.weblate.org/projects/gaphor/"
 "docs-gaphor-org/ta/>\n"
@@ -7179,7 +7179,7 @@ msgstr ""
 
 #: ../style_sheets.md:102
 msgid "``:empty``"
-msgstr "``:காலி``"
+msgstr "``:empty``"
 
 #: ../style_sheets.md:102
 msgid "A node containing no child nodes in the diagram."
@@ -7199,7 +7199,7 @@ msgstr "இது வரைபடத்திற்கு மட்டுமே 
 
 #: ../style_sheets.md:106
 msgid "``:first-child``"
-msgstr "``:முதல்-குழந்தை``"
+msgstr "``:first-child``"
 
 #: ../style_sheets.md:106
 msgid "A node is the first element among a group of sibling."
@@ -7207,7 +7207,7 @@ msgstr "உடன்பிறப்பு ஒரு குழுவில் ஒ
 
 #: ../style_sheets.md:107
 msgid "``:has()``"
-msgstr "``:உள்ளது()``"
+msgstr "``:has()``"
 
 #: ../style_sheets.md:107
 msgid "The item contains any of the provided selectors."
@@ -7243,7 +7243,7 @@ msgstr "எ.கா. ``:not([subject])``: \"பொருள்\" இல்லா�
 
 #: ../style_sheets.md:116
 msgid "``::after``"
-msgstr "``::பிறகு``"
+msgstr "``::after``"
 
 #: ../style_sheets.md:116
 msgid ""
