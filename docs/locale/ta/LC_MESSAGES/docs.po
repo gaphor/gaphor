@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gaphor 2.27.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-11-27 15:44-0500\n"
-"PO-Revision-Date: 2025-05-20 12:15+0000\n"
+"PO-Revision-Date: 2025-05-20 12:29+0000\n"
 "Last-Translator: Dan Yeaw <dan@yeaw.me>\n"
 "Language-Team: Tamil <https://hosted.weblate.org/projects/gaphor/"
 "docs-gaphor-org/ta/>\n"
@@ -7317,7 +7317,7 @@ msgstr "நிறங்கள்"
 
 #: ../style_sheets.md:144
 msgid "``background-color``"
-msgstr "``பின்னணி-வண்ணம்``"
+msgstr "``background-color``"
 
 #: ../style_sheets.md:144
 msgid "Examples:"
@@ -7384,7 +7384,7 @@ msgstr "உரை மற்றும் எழுத்துருக்கள�
 
 #: ../style_sheets.md:168
 msgid "``font-family``"
-msgstr "``எழுத்துரு-குடும்பம்``"
+msgstr "``font-family``"
 
 #: ../style_sheets.md:168
 msgid "A single font name (e.g. ``sans``, ``serif``, ``courier``). *(inherited)*"
@@ -7394,7 +7394,7 @@ msgstr ""
 
 #: ../style_sheets.md:169
 msgid "``font-size``"
-msgstr "``எழுத்துரு-அளவு``"
+msgstr "``font-size``"
 
 #: ../style_sheets.md:169
 msgid ""
@@ -7414,7 +7414,7 @@ msgstr "ஒன்று ``normal`` அல்லது ``italic``. *(மரபு
 
 #: ../style_sheets.md:171
 msgid "``font-weight``"
-msgstr "``எழுத்துரு-எடை``"
+msgstr "``font-weight``"
 
 #: ../style_sheets.md:171
 msgid "Either ``normal`` or ``bold``. *(inherited)*"
@@ -7422,7 +7422,7 @@ msgstr "normal`` இயல்பானது` அல்லது ``bold``. *(ம
 
 #: ../style_sheets.md:172
 msgid "``text-align``"
-msgstr "``உரை-ஒழுங்கு``"
+msgstr "``text-align``"
 
 #: ../style_sheets.md:172
 msgid "Either ``left``, ``center``, ``right``. *(inherited)*"
@@ -7430,7 +7430,7 @@ msgstr "ஒன்று ``left``, ``center``, ``right``. *(மரபுரிம
 
 #: ../style_sheets.md:173
 msgid "``text-decoration``"
-msgstr "``உரை-அழகுபடுத்துதல்``"
+msgstr "``text-decoration``"
 
 #: ../style_sheets.md:173
 msgid "Either ``none`` or ``underline``."
@@ -7438,7 +7438,7 @@ msgstr "ஒன்று ``none` அல்லது ``underline``."
 
 #: ../style_sheets.md:174
 msgid "``vertical-align``"
-msgstr "``செங்குத்து-ஒழுங்கு``"
+msgstr "``vertical-align``"
 
 #: ../style_sheets.md:174
 msgid "Vertical alignment for text."
@@ -7450,7 +7450,7 @@ msgstr "ஒன்று ``top``, ``middle`` அல்லது ``bottom``."
 
 #: ../style_sheets.md:177
 msgid "``vertical-spacing``"
-msgstr "``செங்குத்து-இடைவெளி``"
+msgstr "``vertical-spacing``"
 
 #: ../style_sheets.md:177
 msgid "Set vertical spacing for icon-like items (actors, start state)."
@@ -7464,7 +7464,7 @@ msgstr "எடுத்துக்காட்டு: ``vertical-spacing: 4``."
 
 #: ../style_sheets.md:180
 msgid "``white-space``"
-msgstr "``வெள்ளை-இடம்``"
+msgstr "``white-space``"
 
 #: ../style_sheets.md:180
 msgid "Change the line wrapping behavior for text. *(inherited)*"
@@ -7503,7 +7503,7 @@ msgstr "செவ்வகங்களுக்கான ஆரம்: ``border-
 
 #: ../style_sheets.md:194
 msgid "``dash-style``"
-msgstr "``கோடு-பாணி``"
+msgstr "``dash-style``"
 
 #: ../style_sheets.md:194
 msgid "Style for dashed lines: ``dash-style: 7 5``."
@@ -7531,7 +7531,7 @@ msgstr "ஒன்று ``normal`` or ``sloppy [factor]``."
 
 #: ../style_sheets.md:199
 msgid "``line-width``"
-msgstr "``வரி-அகலம்``"
+msgstr "``line-width``"
 
 #: ../style_sheets.md:199
 msgid "Set the width for lines: ``line-width: 2``. *(inherited)*"
@@ -7539,7 +7539,7 @@ msgstr "வரிகளுக்கு அகலத்தை அமைக்க�
 
 #: ../style_sheets.md:200
 msgid "``min-height``"
-msgstr "``குறைந்த-உயரம்``"
+msgstr "``min-height``"
 
 #: ../style_sheets.md:200
 msgid "Set minimal height for an item: ``min-height: 50``."
@@ -7547,7 +7547,7 @@ msgstr "ஒரு உருப்படிக்கு குறைந்தப�
 
 #: ../style_sheets.md:201
 msgid "``min-width``"
-msgstr "``குறைந்த-அகலம்``"
+msgstr "``min-width``"
 
 #: ../style_sheets.md:201
 msgid "Set minimal width for an item: ``min-width: 100``."
