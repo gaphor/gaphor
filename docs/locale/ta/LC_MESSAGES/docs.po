@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: Gaphor 2.27.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-11-27 15:44-0500\n"
-"PO-Revision-Date: 2025-05-11 18:01+0000\n"
-"Last-Translator: தமிழ்நேரம் <anishprabu.t@gmail.com>\n"
+"PO-Revision-Date: 2025-05-20 12:04+0000\n"
+"Last-Translator: Dan Yeaw <dan@yeaw.me>\n"
 "Language-Team: Tamil <https://hosted.weblate.org/projects/gaphor/"
 "docs-gaphor-org/ta/>\n"
 "Language: ta\n"
@@ -7357,7 +7357,7 @@ msgstr "முடிந்தால் வண்ணத்தைப் பயன�
 
 #: ../style_sheets.md:155
 msgid "``opacity``"
-msgstr "``ஒளிபுகாமை``"
+msgstr "``opacity``"
 
 #: ../style_sheets.md:155
 msgid "Color opacity factor (``0.0`` - ``1.0``), applied to all colors."
@@ -7555,7 +7555,7 @@ msgstr "ஒரு பொருளுக்கு குறைந்தபட்�
 
 #: ../style_sheets.md:202
 msgid "``max-width``"
-msgstr "``அதிக-அகலம்``"
+msgstr "``max-width``"
 
 #: ../style_sheets.md:202
 msgid "Set maximum width (text fields only): ``max-width: 100``."
@@ -7565,7 +7565,7 @@ msgstr ""
 
 #: ../style_sheets.md:203
 msgid "``padding``"
-msgstr "``ஒட்டுத்தல்``"
+msgstr "``padding``"
 
 #: ../style_sheets.md:203
 msgid "CSS style padding (top, right, bottom, left)."
@@ -7801,7 +7801,7 @@ msgstr "அனைத்து சங்கங்கள்"
 
 #: ../style_sheets.md:315
 msgid "``association``"
-msgstr "``சங்கம்``"
+msgstr "``association``"
 
 #: ../style_sheets.md:316
 msgid "Components"
@@ -7825,7 +7825,7 @@ msgstr "முடிவு/ஒன்றிணைத்தல் முனை"
 
 #: ../style_sheets.md:317
 msgid "``decisionnode``"
-msgstr "``தேர்வுமுனை``"
+msgstr "``decisionnode``"
 
 #: ../style_sheets.md:318
 msgid "Fork/Join Node"
@@ -7833,7 +7833,7 @@ msgstr "முட்கரண்டி/சேர முனை"
 
 #: ../style_sheets.md:318
 msgid "``forknode``"
-msgstr "``பிரிவுமுனை``"
+msgstr "``forknode``"
 
 #: ../style_sheets.md:319
 msgid "Swimlane"
@@ -7881,7 +7881,7 @@ msgstr "உருவகவகுப்பு"
 
 #: ../style_sheets.md:323
 msgid "``class``"
-msgstr "``வகுப்பு``"
+msgstr "``class``"
 
 #: ../style_sheets.md:324 ../style_sheets.md:325 ../style_sheets.md:326
 #: ../style_sheets.md:327 ../style_sheets.md:328
@@ -7894,7 +7894,7 @@ msgstr "ஆள்"
 
 #: ../style_sheets.md:324
 msgid "``c4person``"
-msgstr "``சி4நபர்``"
+msgstr "``c4person``"
 
 #: ../style_sheets.md:325
 msgid "Software System"
@@ -7938,7 +7938,7 @@ msgstr "மதிப்புவகை"
 
 #: ../style_sheets.md:329 ../style_sheets.md:330
 msgid "``datatype``"
-msgstr "``தரவுவகை``"
+msgstr "``datatype``"
 
 #: ../style_sheets.md:330
 msgid "Primitive"
@@ -7950,7 +7950,7 @@ msgstr "பெறப்பட்ட தேவை"
 
 #: ../style_sheets.md:331
 msgid "``derivedreq``"
-msgstr "``பெறப்பட்டதேவை``"
+msgstr "``derivedreq``"
 
 #: ../style_sheets.md:332
 msgid "RAAML"
