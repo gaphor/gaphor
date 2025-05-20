@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gaphor 2.27.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-11-27 15:44-0500\n"
-"PO-Revision-Date: 2025-05-20 12:08+0000\n"
+"PO-Revision-Date: 2025-05-20 12:15+0000\n"
 "Last-Translator: Dan Yeaw <dan@yeaw.me>\n"
 "Language-Team: Tamil <https://hosted.weblate.org/projects/gaphor/"
 "docs-gaphor-org/ta/>\n"
@@ -7325,15 +7325,15 @@ msgstr "எடுத்துக்காட்டுகள்:"
 
 #: ../style_sheets.md:146
 msgid "``background-color: azure;``"
-msgstr "``பின்னணி-வண்ணம்: அசூர்;``"
+msgstr "``background-color: azure;``"
 
 #: ../style_sheets.md:148
 msgid "``background-color: rgb(255, 255, 255);``"
-msgstr "``பின்னணி-வண்ணம்: சிபநி(255, 255, 255);``"
+msgstr "``background-color: rgb(255, 255, 255);``"
 
 #: ../style_sheets.md:150
 msgid "``background-color: hsl(130, 95%, 10%);``"
-msgstr "``பின்னணி-வண்ணம்: எச்சுஎல்(130, 95%, 10%);``"
+msgstr "``background-color: hsl(130, 95%, 10%);``"
 
 #: ../style_sheets.md:151
 msgid "``color``"
@@ -7499,7 +7499,7 @@ msgstr "``border-radius``"
 
 #: ../style_sheets.md:193
 msgid "Radius for rectangles: ``border-radius: 4``."
-msgstr "செவ்வகங்களுக்கான ஆரம்: `` border-radius: 4``."
+msgstr "செவ்வகங்களுக்கான ஆரம்: ``border-radius: 4``."
 
 #: ../style_sheets.md:194
 msgid "``dash-style``"
@@ -7507,7 +7507,7 @@ msgstr "``கோடு-பாணி``"
 
 #: ../style_sheets.md:194
 msgid "Style for dashed lines: ``dash-style: 7 5``."
-msgstr "கோடு கோடுகளுக்கான நடை: `` டாச்-பாணி: 7 5``."
+msgstr "கோடு கோடுகளுக்கான நடை: ``dash-style: 7 5``."
 
 #: ../style_sheets.md:195
 msgid "``justify-content``"
