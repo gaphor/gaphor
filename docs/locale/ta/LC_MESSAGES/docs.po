@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gaphor 2.27.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-11-27 15:44-0500\n"
-"PO-Revision-Date: 2025-04-11 17:22+0000\n"
+"PO-Revision-Date: 2025-05-20 12:29+0000\n"
 "Last-Translator: Dan Yeaw <dan@yeaw.me>\n"
 "Language-Team: Tamil <https://hosted.weblate.org/projects/gaphor/"
 "docs-gaphor-org/ta/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.11-dev\n"
+"X-Generator: Weblate 5.12-dev\n"
 "Generated-By: Babel 2.16.0\n"
 
 #: ../changelog.rst:2
@@ -1798,6 +1798,10 @@ msgid ""
 "and set up a [development environment](linux.md) ([macOS](macos.md), "
 "[Windows](windows.md))."
 msgstr ""
+"நீங்கள் [fork](https://docs.github.com/en/pull-requests/"
+"collaborating-with-pull-requests/working-with-forks/fork-a-repo) கஃபோரை "
+"நிறுவி [development environment](linux.md) ([macOS](macos.md), [Windows]"
+"(windows.md)) ஐ அமைக்க வேண்டும்."
 
 #: ../contribute.md:33
 msgid ""
@@ -2779,8 +2783,8 @@ msgstr ""
 #: ../getting_started.md:29
 msgid "![The Gaphor main window, with numbers refering to parts of the UI.](images/getting-started-new-model.png)"
 msgstr ""
-"![இமு இன் பகுதிகளைக் குறிக்கும் எண்களைக் கொண்ட காஃபோர் முதன்மை சாளரம்.](images/getting-"
-"started-new-model.png)"
+"![இடைமுகத்தின் பகுதிகளைக் குறிக்கும் எண்களைக் கொண்ட கஃபூர் முதன்மை சாளரம்.](images/"
+"getting-started-new-model.png)"
 
 #: ../getting_started.md:29
 msgid "The Gaphor main window, with numbers refering to parts of the UI."
@@ -4422,6 +4426,10 @@ msgid ""
 ":obj:`~gaphor.core.modeling.Presentation` form the basis for everything "
 "you see in a diagram."
 msgstr ""
+":obj:`~gaphor.core.modeling.Base` வகுப்பு அனைத்து gaphor டொமைன் வகுப்புகளுக்கும் "
+"மூலக்கூறாகச் செயல்படுகிறது. :obj:`~gaphor.core.modeling.Diagram` மற்றும் "
+":obj:`~gaphor.core.modeling.Presentation` ஆகியவை ஒரு வரைபடத்தில் நீங்கள் காணும் "
+"அனைத்திற்கும் அடிப்படையாக அமைகின்றன."
 
 #: ../models/core.rst:10
 msgid ""
@@ -4450,6 +4458,13 @@ msgid ""
 "directional relationships are also possible, as well as derived "
 "relations."
 msgstr ""
+":obj:`~gaphor.core.modeling.Base` வகுப்பு நிகழ்வு அறிவிப்பை வழங்குகிறது மற்றும் "
+"மாதிரி களஞ்சியத்துடன் ஒருங்கிணைக்கிறது (உள்நாட்டில் "
+":obj:`~gaphor.core.modeling.ElementFactory` என அழைக்கப்படுகிறது). ஒரு மாதிரியில்"
+" உள்ள அனைத்து வகுப்புகளும் இந்த வகுப்பிலிருந்து பெறப்பட வேண்டும். ஒரு மாதிரி ஒரு "
+"உறுப்புக்கான அடிப்படை வகுப்பைக் காட்டவில்லை என்றால், அது "
+":obj:`~gaphor.core.modeling.Base` இலிருந்து பெறப்படும். இரு திசை உறவுகளும் "
+"சாத்தியமாகும், அதே போல் பெறப்பட்ட உறவுகளும் சாத்தியமாகும்."
 
 #: ../models/core.rst:28
 msgid ""
@@ -4458,6 +4473,10 @@ msgid ""
 "important to connect the model to the repository and event handling "
 "mechanisms."
 msgstr ""
+"மாதிரியை களஞ்சியத்துடனும் நிகழ்வு கையாளும் வழிமுறைகளுடனும் இணைக்க "
+":obj:`~gaphor.core.modeling.base.RepositoryProtocol`, மற்றும் "
+":obj:`~gaphor.core.modeling.base.EventWatcherProtocol` நெறிமுறைகள் "
+"முக்கியமானவை."
 
 #: ../models/core.rst:33
 msgid "The class ``Base`` is the core of Gaphor’s data model."
@@ -4473,7 +4492,7 @@ msgstr "ஒரு ஐடி (படிக்க மட்டும்), மா�
 
 #: gaphor.core.modeling.Base.model:1 of
 msgid "The owning model, raises :class:`TypeError` when model is not set."
-msgstr ""
+msgstr "மாடல் அமைக்கப்படாதபோது, சொந்த மாதிரி :class:`TypeError` ஐ எழுப்புகிறது."
 
 #: gaphor.core.modeling.base.Base.unlink:1 of
 msgid "Unlink the element."
@@ -6651,7 +6670,7 @@ msgstr "இது ``.readthedocs.yaml`` கோப்பு, இதை காஃ�
 
 #: ../sphinx.rst:102
 msgid "``libgirepository-2.0-dev`` is required to build PyGObject."
-msgstr "பிகோப்செக்டை உருவாக்க ``libgirepositary1.0-dev`` தேவை."
+msgstr "பிகோப்செக்டை உருவாக்க ``libgirepositary2.0-dev`` தேவை."
 
 #: ../sphinx.rst:103
 msgid "``gir1.2-pango-1.0`` is required for text rendering."
@@ -7160,7 +7179,7 @@ msgstr ""
 
 #: ../style_sheets.md:102
 msgid "``:empty``"
-msgstr "``:காலி``"
+msgstr "``:empty``"
 
 #: ../style_sheets.md:102
 msgid "A node containing no child nodes in the diagram."
@@ -7480,7 +7499,7 @@ msgstr "``border-radius``"
 
 #: ../style_sheets.md:193
 msgid "Radius for rectangles: ``border-radius: 4``."
-msgstr "செவ்வகங்களுக்கான ஆரம்: `` border-radius: 4``."
+msgstr "செவ்வகங்களுக்கான ஆரம்: ``border-radius: 4``."
 
 #: ../style_sheets.md:194
 msgid "``dash-style``"
@@ -7488,11 +7507,11 @@ msgstr "``dash-style``"
 
 #: ../style_sheets.md:194
 msgid "Style for dashed lines: ``dash-style: 7 5``."
-msgstr "கோடு கோடுகளுக்கான நடை: `` டாச்-பாணி: 7 5``."
+msgstr "கோடு கோடுகளுக்கான நடை: ``dash-style: 7 5``."
 
 #: ../style_sheets.md:195
 msgid "``justify-content``"
-msgstr "`` நியாயப்படுத்தவும்-உள்ளடக்கத்தை நியாயப்படுத்தவும்"
+msgstr "``justify-content``"
 
 #: ../style_sheets.md:195
 msgid "Content alignment for boxes."
@@ -7604,8 +7623,9 @@ msgid ""
 "variables](https://developer.mozilla.org/en-"
 "US/docs/Web/CSS/Using_CSS_custom_properties) in your style sheets."
 msgstr ""
-"உங்கள் பாணியிலான தாள்களில் நீங்கள் [CSS மாறிகள்](https://developer.mozilla.org/en-us/"
-"docs/docs/Web/CSS/Using_CSS_custom_properties) ஐப் பயன்படுத்தலாம்."
+"காஃபோர் 2.16.0 முதல் உங்கள் பாணியிலான தாள்களில் நீங்கள் [CSS மாறிகள்](https://"
+"developer.mozilla.org/en-us/docs/docs/Web/CSS/Using_CSS_custom_properties) ஐப்"
+" பயன்படுத்தலாம்."
 
 #: ../style_sheets.md:229
 msgid ""
@@ -7722,7 +7742,7 @@ msgstr ""
 "கருவிப்பெட்டி (கீழ்-இடது பிரிவு) நீங்கள் ஒரு பொத்தானை நோக்கிச் சென்றால், உருப்படியின் பெயர் "
 "மற்றும் குறுக்குவழியுடன் ஒரு பாப்அப் தோன்றும். ஒரு பொதுவான விதியாக, நீங்கள் கூறுகளின் "
 "பெயரைப் பயன்படுத்தலாம், இது ச்டைல்சீட்டில் பெயராக ஒன்றாக ஒட்டப்படுகிறது. A * கூறு * "
-"`கூறு`, * வழக்கை *` usecase` எனக் குறிப்பிடலாம். பெயர் பொருத்தம் என்பது வழக்கு "
+"`component`, * வழக்கை *` usecase` எனக் குறிப்பிடலாம். பெயர் பொருத்தம் என்பது வழக்கு "
 "உணர்வற்றது. சிஎச்எச் பெயர்கள் இயல்புநிலையாகச் சிறிய விசயத்தில் எழுதப்பட்டுள்ளன."
 
 #: ../style_sheets.md:306
@@ -7910,7 +7930,7 @@ msgstr "``c4database``"
 
 #: ../style_sheets.md:329 ../style_sheets.md:330 ../style_sheets.md:331
 msgid "SysML"
-msgstr "SysML"
+msgstr "முறைமைமமொ"
 
 #: ../style_sheets.md:329
 msgid "ValueType"
@@ -8765,7 +8785,7 @@ msgstr ""
 
 #: ../windows.md:244
 msgid "where  ``gaphor`` can be any name desired for the environment."
-msgstr " ``gaphor`` சுற்றுச்சூழலுக்கு விரும்பிய எந்த பெயரும் இருக்கலாம்."
+msgstr "``கஃபர்`` சுற்றுச்சூழலுக்கு விரும்பிய எந்தப் பெயரும் இருக்கலாம்."
 
 #: ../windows.md:246
 msgid "Update packages in the new environment"
