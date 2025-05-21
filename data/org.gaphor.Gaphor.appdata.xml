@@ -99,6 +99,43 @@
     </p>
   </description>
   <releases>
+    <release version="3.1.0" date="2025-05-21">
+      <description>
+        <ul>
+          <li>Improve the UI with a replaced floating toolbar and view switcher in the element editor</li>
+          <li>Enhance window management: new window command, existing window activation</li>
+          <li>Add macOS-specific improvements: native menubar and window controls</li>
+          <li>Copy directly from diagram to clipboard as PNG and SVG</li>
+          <li>Improve drag and drop with highlighted drop zones</li>
+          <li>Add a "greeter" command-line option and D-Bus service file</li>
+          <li>Add support for Unlimited natural type as union type</li>
+          <li>Add a small teaser text to help users learn how to contribute to Gaphor</li>
+        </ul>
+        <p>Internal changes:</p>
+        <ul>
+          <li>Update core dependencies (Gaphas 5, jinja2, PyGObject)</li>
+          <li>Improve storage with separate load/save modules</li>
+          <li>Enhance documentation including troubleshooting for Windows</li>
+          <li>Add project metadata</li>
+          <li>Improve compatibility with UML specifications</li>
+          <li>Fix build issues with Read the Docs</li>
+          <li>Apply various styling and performance improvements</li>
+          <li>Improve handling of legacy models (pre-3.0)</li>
+        </ul>
+        <p>Bug fixes:</p>
+        <ul>
+          <li>Fix file export issues (exported file names and PDF diagram exports)</li>
+          <li>Correct issues with element relationships and properties</li>
+          <li>Fix window creation and activation problems</li>
+          <li>Resolve drag and drop issues between Activities and Partitions</li>
+          <li>Fix keyboard shortcuts including Ctrl+q</li>
+          <li>Correct handling of element values and limits</li>
+          <li>Fix touch interaction when dragging</li>
+          <li>Address UI display issues with long class names</li>
+        </ul>
+      </description>
+      <url>https://github.com/gaphor/gaphor/releases/tag/3.1.0</url>
+    </release>
     <release version="3.0.0" date="2025-01-26">
       <description>
         <ul>
