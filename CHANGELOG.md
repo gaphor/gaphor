@@ -1,3 +1,37 @@
+3.1.0
+-----
+
+- Improve the UI with a replaced floating toolbar and view switcher in the element editor
+- Enhance window management: new window command, existing window activation
+- Add macOS-specific improvements: native menubar and window controls
+- Copy directly from diagram to clipboard as PNG and SVG
+- Improve drag and drop with highlighted drop zones
+- Add a "greeter" command-line option and D-Bus service file
+- Add support for Unlimited natural type as union type
+- Add a small teaser text to help users learn how to contribute to Gaphor
+
+Internal changes:
+
+- Update core dependencies (Gaphas 5, jinja2, PyGObject)
+- Improve storage with separate load/save modules
+- Enhance documentation including troubleshooting for Windows
+- Add project metadata
+- Improve compatibility with UML specifications
+- Fix build issues with Read the Docs
+- Apply various styling and performance improvements
+- Improve handling of legacy models (pre-3.0)
+
+Bug fixes:
+
+- Fix file export issues (exported file names and PDF diagram exports)
+- Correct issues with element relationships and properties
+- Fix window creation and activation problems
+- Resolve drag and drop issues between Activities and Partitions
+- Fix keyboard shortcuts including Ctrl+q
+- Correct handling of element values and limits
+- Fix touch interaction when dragging
+- Address UI display issues with long class names
+
 3.0.0
 -----
 
