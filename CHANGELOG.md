@@ -2,12 +2,11 @@
 -----
 
 - Improve the UI with a replaced floating toolbar and view switcher in the element editor
-- Enhance window management (new window command, existing window activation)
-- Add macOS-specific improvements (native menubar and window controls)
-- Enable copying PNG and SVG to the clipboard
+- Enhance window management: new window command, existing window activation
+- Add macOS-specific improvements: native menubar and window controls
+- Copy directly from diagram to clipboard as PNG and SVG
 - Improve drag and drop with highlighted drop zones
 - Add a "greeter" command-line option and D-Bus service file
-- Enhance visual feedback with smooth cross-fade for tips
 - Add support for Unlimited natural type as union type
 - Add a small teaser text to help users learn how to contribute to Gaphor
 
