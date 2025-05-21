@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: Gaphor 0.13.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2025-04-23 21:47+0200\n"
-"PO-Revision-Date: 2025-04-26 10:01+0000\n"
+"PO-Revision-Date: 2025-05-21 12:03+0000\n"
 "Last-Translator: Сергей <asvmail.as@gmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/gaphor/gaphor/ru/"
 ">\n"
@@ -881,9 +881,8 @@ msgid "upperBound"
 msgstr "верхняя граница"
 
 #: gaphor/UML/actions/objectnode.py:55
-#, fuzzy
 msgid "ordering"
-msgstr "Показывать Порядок"
+msgstr "упорядоченность"
 
 #: gaphor/UML/actions/partitionpage.py:115
 msgid "New Swimlane"
@@ -922,9 +921,8 @@ msgid "Upper Bound"
 msgstr "Верхняя Граница"
 
 #: gaphor/UML/actions/propertypages.ui:145
-#, fuzzy
 msgid "Ordering"
-msgstr "Показывать Порядок"
+msgstr "Упорядоченность"
 
 #: gaphor/UML/actions/propertypages.ui:159
 msgid "Last In First Out (LIFO)"
@@ -936,7 +934,7 @@ msgstr "Первым пришёл — первым ушёл (FIFO)"
 
 #: gaphor/UML/actions/propertypages.ui:178
 msgid "Show Ordering"
-msgstr "Показывать Порядок"
+msgstr "Показывать Упорядоченность"
 
 #: gaphor/UML/actions/propertypages.ui:209
 #: gaphor/UML/profiles/propertypages.ui:9 gaphor/diagram/propertypages.ui:53
@@ -1899,7 +1897,7 @@ msgstr "Система электронной почты"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Sends e-mail to"
-msgstr "Действие отправки электронной почты в"
+msgstr "Отправка электронной почты в"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Sends e-mail using"
@@ -1931,7 +1929,7 @@ msgstr "Просматривать остатки на счете и совер�
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Makes API calls to"
-msgstr ""
+msgstr "Выполняет вызовы API к"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Reads from, writes to"
@@ -1960,11 +1958,11 @@ msgstr "Компонент электронной почты"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Account Summary Controller"
-msgstr ""
+msgstr "Контролер сводки счетов"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Mainframe Banking System Facade"
-msgstr ""
+msgstr "Фасад основной банковской системы"
 
 #: gaphor/templates/c4model-example.gaphor
 #, fuzzy
@@ -1976,6 +1974,8 @@ msgid ""
 "Makes API calls to\n"
 "[JSON/HTTPS]"
 msgstr ""
+"Выполняет вызовы API к\n"
+"[JSON/HTTPS]"
 
 #: gaphor/templates/raaml-example.gaphor gaphor/templates/raaml.gaphor
 #: gaphor/templates/uml-example.gaphor gaphor/templates/uml.gaphor
@@ -2104,9 +2104,8 @@ msgid "External Element"
 msgstr "Внешний Элемент"
 
 #: gaphor/templates/sysml-example.gaphor gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Concept Requirements"
-msgstr "Требования"
+msgstr "Требования к концепции"
 
 #: gaphor/templates/sysml-example.gaphor
 msgid "Feature User Need"
@@ -2158,7 +2157,7 @@ msgstr "Логические Состояния"
 
 #: gaphor/templates/sysml-example.gaphor gaphor/templates/sysml.gaphor
 msgid "Feature Event Flow"
-msgstr ""
+msgstr "Функция потока событий"
 
 #: gaphor/templates/sysml-example.gaphor
 msgid "Off"
@@ -2262,7 +2261,7 @@ msgstr "Событие Обнаружения"
 
 #: gaphor/templates/sysml-example.gaphor gaphor/templates/sysml.gaphor
 msgid "Feature Context"
-msgstr ""
+msgstr "Контекст функции"
 
 #: gaphor/templates/sysml-example.gaphor
 msgid "Read Input"
@@ -2659,9 +2658,8 @@ msgid "Editor"
 msgstr "Редактор"
 
 #: gaphor/ui/elementeditor.ui:177
-#, fuzzy
 msgid "Styling"
-msgstr "Строка"
+msgstr "Стайлинг"
 
 #: gaphor/ui/elementeditor.ui:189
 msgid "Style Sheet"
