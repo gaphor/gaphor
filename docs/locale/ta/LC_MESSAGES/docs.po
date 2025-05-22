@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gaphor 2.27.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-11-27 15:44-0500\n"
-"PO-Revision-Date: 2025-05-20 12:29+0000\n"
+"PO-Revision-Date: 2025-05-21 22:03+0000\n"
 "Last-Translator: Dan Yeaw <dan@yeaw.me>\n"
 "Language-Team: Tamil <https://hosted.weblate.org/projects/gaphor/"
 "docs-gaphor-org/ta/>\n"
@@ -2783,8 +2783,6 @@ msgstr ""
 #: ../getting_started.md:29
 msgid "![The Gaphor main window, with numbers refering to parts of the UI.](images/getting-started-new-model.png)"
 msgstr ""
-"![இடைமுகத்தின் பகுதிகளைக் குறிக்கும் எண்களைக் கொண்ட கஃபூர் முதன்மை சாளரம்.](images/"
-"getting-started-new-model.png)"
 
 #: ../getting_started.md:29
 msgid "The Gaphor main window, with numbers refering to parts of the UI."
