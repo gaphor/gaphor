@@ -8,20 +8,21 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2025-04-23 21:47+0200\n"
-"PO-Revision-Date: 2024-04-18 03:03+0000\n"
-"Last-Translator: zhangxinqiang <1933581361@qq.com>\n"
+"PO-Revision-Date: 2025-05-26 03:03+0000\n"
+"Last-Translator: Fabien Liang <zeyue.liang@gmail.com>\n"
+"Language-Team: Chinese (Simplified Han script) <https://hosted.weblate.org/"
+"projects/gaphor/gaphor/zh_Hans/>\n"
 "Language: zh_Hans\n"
-"Language-Team: Chinese (Simplified) "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/zh_Hans/>\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.12-dev\n"
 "Generated-By: Babel 2.16.0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:28
 msgid "C4"
-msgstr ""
+msgstr "C4"
 
 #: gaphor/C4Model/propertypages.ui:11 gaphor/diagram/general/metadata.py:70
 #: gaphor/diagram/propertypages.ui:170
@@ -116,9 +117,8 @@ msgstr "新建状态图"
 
 #: gaphor/C4Model/toolbox.py:146 gaphor/RAAML/toolbox.py:32
 #: gaphor/SysML/toolbox.py:178 gaphor/UML/toolbox.py:44
-#, fuzzy
 msgid "Generic Diagram"
-msgstr "新建通用图形"
+msgstr "新建通用图表"
 
 #: gaphor/C4Model/toolbox.py:150 gaphor/RAAML/toolbox.py:36
 #: gaphor/SysML/blocks/blockstoolbox.py:51 gaphor/SysML/toolbox.py:182
@@ -426,9 +426,8 @@ msgid "Text"
 msgstr "文本"
 
 #: gaphor/SysML/propertypages.ui:258
-#, fuzzy
 msgid "Show text"
-msgstr "显示类型"
+msgstr "显示文本"
 
 #: gaphor/SysML/sysmlfmt.py:10
 msgid "sourceContext: {name}"
@@ -758,9 +757,8 @@ msgid "supplier: {name}"
 msgstr "供应者：{name}"
 
 #: gaphor/UML/umlfmt.py:89
-#, fuzzy
 msgid "readOnly"
-msgstr "重做"
+msgstr "只读"
 
 #: gaphor/UML/umlfmt.py:241
 msgid "general: {name}"
@@ -1213,9 +1211,8 @@ msgstr ""
 "使用 <b>-</b>/<b>=</b> 向上或向下移动项目。"
 
 #: gaphor/UML/classes/propertypages.ui:349
-#, fuzzy
 msgid "ReadOnly"
-msgstr "重做"
+msgstr "只读"
 
 #: gaphor/UML/classes/propertypages.ui:354
 #: gaphor/UML/classes/propertypages.ui:644
@@ -1241,9 +1238,8 @@ msgid "Source:"
 msgstr ""
 
 #: gaphor/UML/classes/propertypages.ui:468
-#, fuzzy
 msgid "Target:"
-msgstr "磁铁"
+msgstr "目标:"
 
 #: gaphor/UML/classes/propertypages.ui:504
 msgid "Dependency type"
@@ -1493,9 +1489,8 @@ msgid "Do activity"
 msgstr "执行活动"
 
 #: gaphor/UML/states/propertypages.ui:77
-#, fuzzy
 msgid "Trigger"
-msgstr "字符串"
+msgstr "触发器"
 
 #: gaphor/UML/states/propertypages.ui:129
 #: gaphor/UML/states/propertypages.ui:140
@@ -3011,9 +3006,8 @@ msgid "Save As…"
 msgstr "另存为…"
 
 #: gaphor/ui/mainwindow.ui:284
-#, fuzzy
 msgid "Preferences…"
-msgstr "偏好设置"
+msgstr "偏好设置…"
 
 #: gaphor/ui/mainwindow.ui:301
 msgid "Align Left"
