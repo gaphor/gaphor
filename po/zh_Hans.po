@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2025-04-23 21:47+0200\n"
-"PO-Revision-Date: 2025-05-26 03:03+0000\n"
+"PO-Revision-Date: 2025-05-31 09:01+0000\n"
 "Last-Translator: Fabien Liang <zeyue.liang@gmail.com>\n"
 "Language-Team: Chinese (Simplified Han script) <https://hosted.weblate.org/"
 "projects/gaphor/gaphor/zh_Hans/>\n"
@@ -88,32 +88,27 @@ msgid "Dependency"
 msgstr "依赖"
 
 #: gaphor/C4Model/toolbox.py:141
-#, fuzzy
 msgid "C4 Diagram"
-msgstr "新建 C4 模型图"
+msgstr "C4 模型图"
 
 #: gaphor/C4Model/toolbox.py:142 gaphor/UML/toolbox.py:32
-#, fuzzy
 msgid "Class Diagram"
-msgstr "新建类图"
+msgstr "类图"
 
 #: gaphor/C4Model/toolbox.py:143 gaphor/SysML/toolbox.py:138
 #: gaphor/UML/toolbox.py:36
-#, fuzzy
 msgid "Activity Diagram"
-msgstr "新建活动图"
+msgstr "活动图"
 
 #: gaphor/C4Model/toolbox.py:144 gaphor/SysML/toolbox.py:148
 #: gaphor/UML/toolbox.py:37
-#, fuzzy
 msgid "Sequence Diagram"
-msgstr "新建序列图"
+msgstr "序列图"
 
 #: gaphor/C4Model/toolbox.py:145 gaphor/SysML/toolbox.py:158
 #: gaphor/UML/toolbox.py:41
-#, fuzzy
 msgid "State Machine Diagram"
-msgstr "新建状态图"
+msgstr "状态图"
 
 #: gaphor/C4Model/toolbox.py:146 gaphor/RAAML/toolbox.py:32
 #: gaphor/SysML/toolbox.py:178 gaphor/UML/toolbox.py:44
@@ -164,23 +159,20 @@ msgid "Enumeration"
 msgstr "枚举"
 
 #: gaphor/C4Model/toolbox.py:165
-#, fuzzy
 msgid "Primitive Type"
-msgstr "新建原始类型"
+msgstr "原始类型"
 
 #: gaphor/RAAML/modelinglanguage.py:30 gaphor/ui/greeter.py:48
 msgid "RAAML"
 msgstr "RAAML"
 
 #: gaphor/RAAML/toolbox.py:30
-#, fuzzy
 msgid "FTA Diagram"
-msgstr "新建 FTA 图"
+msgstr "FTA 图"
 
 #: gaphor/RAAML/toolbox.py:31
-#, fuzzy
 msgid "STPA Diagram"
-msgstr "新建 STPA 图"
+msgstr "STPA 图"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:195 gaphor/RAAML/fta/ftatoolbox.py:201
 #: gaphor/RAAML/fta/topevent.py:27 gaphor/RAAML/toolbox.py:37
@@ -356,7 +348,7 @@ msgstr "相关"
 
 #: gaphor/SysML/diagramtype.py:42
 msgid "Can’t create “{name}” nested under a “{elem}”"
-msgstr ""
+msgstr "无法在“{elem}”下创建“{name}”"
 
 #: gaphor/SysML/modelinglanguage.py:39 gaphor/ui/greeter.py:41
 msgid "SysML"
@@ -450,9 +442,8 @@ msgid "Proxy Port"
 msgstr "代理端口"
 
 #: gaphor/SysML/toolbox.py:99
-#, fuzzy
 msgid "Block Definition Diagram"
-msgstr "新建块定义图"
+msgstr "模块定义图"
 
 #: gaphor/SysML/toolbox.py:102 gaphor/SysML/toolbox.py:122
 #: gaphor/SysML/toolbox.py:134 gaphor/SysML/toolbox.py:176
@@ -460,23 +451,20 @@ msgid "New Package"
 msgstr "新建包"
 
 #: gaphor/SysML/toolbox.py:106
-#, fuzzy
 msgid "Internal Block Diagram"
-msgstr "新建内部框图"
+msgstr "新建内部块图"
 
 #: gaphor/SysML/toolbox.py:113 gaphor/SysML/toolbox.py:114
 msgid "New Block"
 msgstr "新建块"
 
 #: gaphor/SysML/toolbox.py:119 gaphor/UML/toolbox.py:33
-#, fuzzy
 msgid "Package Diagram"
-msgstr "新建包图"
+msgstr "包图"
 
 #: gaphor/SysML/toolbox.py:126
-#, fuzzy
 msgid "Requirement Diagram"
-msgstr "新建需求图"
+msgstr "需求图"
 
 #: gaphor/SysML/toolbox.py:142 gaphor/SysML/toolbox.py:143
 msgid "New Activity"
@@ -491,9 +479,8 @@ msgid "New State Machine"
 msgstr "新建状态机"
 
 #: gaphor/SysML/toolbox.py:168 gaphor/UML/toolbox.py:42
-#, fuzzy
 msgid "Use Case Diagram"
-msgstr "新建用例图"
+msgstr "用例图"
 
 #: gaphor/SysML/toolbox.py:184 gaphor/UML/toolbox.py:50
 #: gaphor/UML/usecases/usecasetoolbox.py:28 gaphor/templates/uml-example.gaphor
@@ -694,19 +681,16 @@ msgid "Component Diagram"
 msgstr "组件图"
 
 #: gaphor/UML/toolbox.py:35
-#, fuzzy
 msgid "Deployment Diagram"
-msgstr "新建部署图"
+msgstr "部署图"
 
 #: gaphor/UML/toolbox.py:39
-#, fuzzy
 msgid "Communication Diagram"
-msgstr "新建通讯图"
+msgstr "通讯图"
 
 #: gaphor/UML/toolbox.py:43
-#, fuzzy
 msgid "Profile Diagram"
-msgstr "新建配置图"
+msgstr "配置图"
 
 #: gaphor/UML/deployments/deploymentstoolbox.py:16 gaphor/UML/toolbox.py:51
 msgid "Artifact"
@@ -717,9 +701,8 @@ msgid "Device"
 msgstr "设备"
 
 #: gaphor/UML/toolbox.py:61
-#, fuzzy
 msgid "Instance Specification"
-msgstr "新建实例规范"
+msgstr "实例规范"
 
 #: gaphor/UML/classes/classestoolbox.py:39 gaphor/UML/toolbox.py:68
 msgid "Interface"
@@ -1229,13 +1212,12 @@ msgid "Abstract"
 msgstr "抽象"
 
 #: gaphor/UML/classes/propertypages.ui:419
-#, fuzzy
 msgid "Final specialization"
-msgstr "连接规范"
+msgstr "最终特化"
 
 #: gaphor/UML/classes/propertypages.ui:444
 msgid "Source:"
-msgstr ""
+msgstr "源:"
 
 #: gaphor/UML/classes/propertypages.ui:468
 msgid "Target:"
@@ -1335,9 +1317,8 @@ msgstr "设备"
 
 #: gaphor/UML/general/generaltoolbox.py:21
 #: gaphor/UML/general/imagepropertypage.py:67
-#, fuzzy
 msgid "New Image"
-msgstr "新建泳道"
+msgstr "新建图片"
 
 #: gaphor/UML/general/generaltoolbox.py:25 gaphor/ui/help/shortcuts.ui:34
 msgid "General"
@@ -1588,9 +1569,8 @@ msgid "Extend"
 msgstr "扩展"
 
 #: gaphor/diagram/propertypages.py:318
-#, fuzzy
 msgid "Presentation"
-msgstr "实现"
+msgstr "呈现"
 
 #: gaphor/diagram/propertypages.py:319 gaphor/diagram/propertypages.py:332
 #, fuzzy
@@ -1603,14 +1583,12 @@ msgid "id"
 msgstr "ID"
 
 #: gaphor/diagram/propertypages.py:330
-#, fuzzy
 msgid "Model Element"
-msgstr "新建元件"
+msgstr "模型元素"
 
 #: gaphor/diagram/propertypages.py:331
-#, fuzzy
 msgid "qname"
-msgstr "名"
+msgstr "限定名"
 
 #: gaphor/diagram/propertypages.ui:74
 msgid "Style"
@@ -1661,9 +1639,8 @@ msgid "Set default size"
 msgstr "设置默认尺寸"
 
 #: gaphor/diagram/propertypages.ui:280
-#, fuzzy
 msgid "Internals of focused item"
-msgstr "聚焦的item的CSS节点"
+msgstr "聚焦项的内部构造"
 
 #: gaphor/diagram/propertypages.ui:297 gaphor/ui/elementeditor.py:410
 #: gaphor/ui/elementeditor.ui:262
@@ -1671,19 +1648,16 @@ msgid "No focused item."
 msgstr "没有聚焦的节点."
 
 #: gaphor/diagram/propertypages.ui:319 gaphor/diagram/styleeditor.ui:5
-#, fuzzy
 msgid "Style Editor"
-msgstr "格式表"
+msgstr "样式编辑器"
 
 #: gaphor/diagram/propertypages.ui:328
-#, fuzzy
 msgid "Open Style Editor"
-msgstr "打开合并编辑器"
+msgstr "打开样式编辑器"
 
 #: gaphor/diagram/styleeditor.ui:27
-#, fuzzy
 msgid "Border Radius"
-msgstr "有序"
+msgstr "圆角"
 
 #: gaphor/diagram/styleeditor.ui:51
 #, fuzzy
@@ -1692,17 +1666,15 @@ msgstr "颜色"
 
 #: gaphor/diagram/styleeditor.ui:68
 msgid "Background Color"
-msgstr ""
+msgstr "背景颜色"
 
 #: gaphor/diagram/styleeditor.ui:85
-#, fuzzy
 msgid "Text Color"
-msgstr "颜色"
+msgstr "文本颜色"
 
 #: gaphor/diagram/styleeditor.ui:99
-#, fuzzy
 msgid "Add to Style Sheet"
-msgstr "格式表"
+msgstr "添加到样式表"
 
 #: gaphor/diagram/tools/dnd.py:91
 msgid "Element can’t be represented on a diagram."
@@ -1786,48 +1758,43 @@ msgid "Export diagram as EPS"
 msgstr "将图表导出为 EPS 文件"
 
 #: gaphor/plugins/diagramexport/export.py:125
-#, fuzzy
 msgid "Export all diagrams as SVG"
-msgstr "导出图型为 SVG 文件"
+msgstr "导出全部图表为 SVG 文件"
 
 #: gaphor/plugins/diagramexport/export.py:126
 msgid "Export all diagrams as SVG diagrams in a specifieddirectory"
-msgstr ""
+msgstr "导出指定目录下的全部图表为SVG文件"
 
 #: gaphor/plugins/diagramexport/export.py:130
 #: gaphor/plugins/diagramexport/export.py:148
 #: gaphor/plugins/diagramexport/export.py:166
 #: gaphor/plugins/diagramexport/export.py:184
-#, fuzzy
 msgid "Export all diagrams"
-msgstr "导出图型为 SVG 文件"
+msgstr "导出全部图表"
 
 #: gaphor/plugins/diagramexport/export.py:143
-#, fuzzy
 msgid "Export all diagrams as PNG"
-msgstr "导出图形为 PNG 文件"
+msgstr "导出全部图表为 PNG 文件"
 
 #: gaphor/plugins/diagramexport/export.py:144
 msgid "Export all diagrams as PNG diagrams in a specifieddirectory"
-msgstr ""
+msgstr "导出指定目录下的全部图表为PNG图片"
 
 #: gaphor/plugins/diagramexport/export.py:161
-#, fuzzy
 msgid "Export all diagrams as PDF"
-msgstr "导出图形为 PDF 文件"
+msgstr "导出全部图表为 PDF 文件"
 
 #: gaphor/plugins/diagramexport/export.py:162
 msgid "Export all diagrams as PDF diagrams in a specifieddirectory"
-msgstr ""
+msgstr "导出指定目录下的全部图表为PDF文件"
 
 #: gaphor/plugins/diagramexport/export.py:179
-#, fuzzy
 msgid "Export all diagrams as EPS"
-msgstr "将图表导出为 EPS 文件"
+msgstr "导出全部图表为 EPS 文件"
 
 #: gaphor/plugins/diagramexport/export.py:180
 msgid "Export all diagrams as EPS diagrams in a specifieddirectory"
-msgstr ""
+msgstr "导出指定目录下的全部图表为EPS文件"
 
 #: gaphor/plugins/errorreports/errorreports.py:60
 #: gaphor/plugins/errorreports/errorreports.ui:6
@@ -1905,104 +1872,95 @@ msgstr "代码图"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Personal Banking Customer"
-msgstr ""
+msgstr "个人银行客户"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Internet Banking System"
-msgstr ""
+msgstr "网络银行系统"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Mainframe Banking System"
-msgstr ""
+msgstr "大型银行系统"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "View account balances, and make payments using"
-msgstr ""
+msgstr "查看账户余额，并付款"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Get account information from, and makes payments using"
-msgstr ""
+msgstr "获取账户信息，并且支付"
 
 #: gaphor/templates/c4model-example.gaphor
-#, fuzzy
 msgid "E-mail System"
-msgstr "系统"
+msgstr "E-mail系统"
 
 #: gaphor/templates/c4model-example.gaphor
-#, fuzzy
 msgid "Sends e-mail to"
-msgstr "发送信号动作"
+msgstr "发送邮件给"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Sends e-mail using"
-msgstr ""
+msgstr "使用...发送邮件"
 
 #: gaphor/templates/c4model-example.gaphor
-#, fuzzy
 msgid "Web Application"
-msgstr "开启应用菜单"
+msgstr "Web应用"
 
 #: gaphor/templates/c4model-example.gaphor
-#, fuzzy
 msgid "API Application"
-msgstr "开启应用菜单"
+msgstr "API应用"
 
 #: gaphor/templates/c4model-example.gaphor
-#, fuzzy
 msgid "Single-Page Application"
-msgstr "开启应用菜单"
+msgstr "单页应用"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Mobile App"
-msgstr ""
+msgstr "移动应用"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Visit bigbank.com/lb using"
-msgstr ""
+msgstr "使用...访问bigbank.com/lb"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "View account balances and make payments using"
-msgstr ""
+msgstr "查看账户余额并使用...支付"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Makes API calls to"
-msgstr ""
+msgstr "调用...API"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Reads from, writes to"
-msgstr ""
+msgstr "读，写"
 
 #: gaphor/templates/c4model-example.gaphor
-#, fuzzy
 msgid "Delivers"
-msgstr "继承"
+msgstr "交付"
 
 #: gaphor/templates/c4model-example.gaphor
-#, fuzzy
 msgid "Sign In Controller"
-msgstr "控制器"
+msgstr "登录控制器"
 
 #: gaphor/templates/c4model-example.gaphor
-#, fuzzy
 msgid "Security Component"
-msgstr "新建组件"
+msgstr "安全组件"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Reset Password Controller"
-msgstr ""
+msgstr "重置密码控制器"
 
 #: gaphor/templates/c4model-example.gaphor
-#, fuzzy
 msgid "E-mail Component"
-msgstr "新建组件"
+msgstr "E-mail组件"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Account Summary Controller"
-msgstr ""
+msgstr "账户汇总控制器"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Mainframe Banking System Facade"
-msgstr ""
+msgstr "大型银行系统外观"
 
 #: gaphor/templates/c4model-example.gaphor
 #, fuzzy
@@ -2014,6 +1972,8 @@ msgid ""
 "Makes API calls to\n"
 "[JSON/HTTPS]"
 msgstr ""
+"调用API\n"
+"[JSON/HTTPS]"
 
 #: gaphor/templates/raaml-example.gaphor gaphor/templates/raaml.gaphor
 #: gaphor/templates/uml-example.gaphor gaphor/templates/uml.gaphor
@@ -2591,9 +2551,8 @@ msgid "Zoom In"
 msgstr "放大"
 
 #: gaphor/ui/diagrams.py:301
-#, fuzzy
 msgid "Selected element is not in present in this diagram."
-msgstr "元素无法在图表上表示。"
+msgstr "选定元素没有在图表上呈现。"
 
 #: gaphor/ui/diagrams.ui:12
 msgid "Open a Diagram"
@@ -2642,24 +2601,25 @@ msgstr "<b>提示：</b>若要在模型浏览器（左上角）中搜索图元�
 
 #: gaphor/ui/elementeditor.ui:87
 msgid "Help improve Gaphor"
-msgstr ""
+msgstr "协助改进Gaphor"
 
 #: gaphor/ui/elementeditor.ui:96
 msgid "Gaphor is free and open source software, written by devoted volunteers."
-msgstr ""
+msgstr "Gaphor是一个免费的开源软件，有忠诚的志愿者们编写。"
 
 #: gaphor/ui/elementeditor.ui:104
 msgid ""
 "There are many ways to help make Gaphor better: write a blog post, "
 "translate Gaphor into your language, report bugs, or suggest new "
 "features. Join us in improving Gaphor!"
-msgstr ""
+msgstr "多种方式可以帮助Gaphor做的更好：编写博文、翻译Gaphor、提报缺陷、或建议新功能"
+"。加入一起改进Gaphor！"
 
 #: gaphor/ui/elementeditor.ui:112
 msgid ""
 "Visit <a href=\"https://gaphor.org/contribute/\">gaphor.org</a> for more "
 "information."
-msgstr ""
+msgstr "访问 <a href=\"https://gaphor.org/contribute/\">gaphor.org</a> 获得更多信息。"
 
 #: gaphor/ui/elementeditor.ui:151
 #, fuzzy
@@ -2746,7 +2706,7 @@ msgstr "所有文件"
 
 #: gaphor/ui/filedialog.py:100
 msgid "Flatpak Document Portal"
-msgstr ""
+msgstr "Flatpak文档首页"
 
 #: gaphor/ui/filemanager.py:41
 msgid ""
@@ -2820,7 +2780,7 @@ msgstr "无法保存模型“{filename}”。"
 
 #: gaphor/ui/filemanager.py:302
 msgid "Model has been saved."
-msgstr ""
+msgstr "模型已保存."
 
 #: gaphor/ui/filemanager.py:327 gaphor/ui/filemanager.py:365
 msgid "Save Gaphor Model As"
@@ -2930,7 +2890,7 @@ msgstr "UML示例"
 
 #: gaphor/ui/greeter.py:87
 msgid "C4 Model example of a banking system"
-msgstr ""
+msgstr "银行系统C4模型样例"
 
 #: gaphor/ui/greeter.ui:8 gaphor/ui/greeter.ui:56 gaphor/ui/mainwindow.ui:260
 #: gaphor/ui/menubar.ui:12
@@ -2953,7 +2913,7 @@ msgstr "关于 Gaphor"
 
 #: gaphor/ui/greeter.ui:87
 msgid "Recently Opened"
-msgstr ""
+msgstr "近期打开的项目"
 
 #: gaphor/ui/greeter.ui:104
 msgid "Create New Model"
@@ -3084,7 +3044,7 @@ msgstr "选择全部"
 
 #: gaphor/ui/menubar.ui:76
 msgid "_View"
-msgstr ""
+msgstr "查看"
 
 #: gaphor/ui/menubar.ui:87
 #, fuzzy
@@ -3093,7 +3053,7 @@ msgstr "最大尺寸"
 
 #: gaphor/ui/menubar.ui:102
 msgid "_Window"
-msgstr ""
+msgstr "窗口"
 
 #: gaphor/ui/menubar.ui:105
 #, fuzzy
@@ -3226,7 +3186,7 @@ msgstr "自动重置工具"
 
 #: gaphor/ui/help/preferences.ui:46
 msgid "After an element is created, switch back to the pointer tool."
-msgstr ""
+msgstr "元素创建后，返回到指针工具。"
 
 #: gaphor/ui/help/preferences.ui:51
 msgid "Remove Unused Elements"
