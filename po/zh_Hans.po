@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2025-04-23 21:47+0200\n"
-"PO-Revision-Date: 2025-05-31 09:01+0000\n"
+"PO-Revision-Date: 2025-06-04 06:02+0000\n"
 "Last-Translator: Fabien Liang <zeyue.liang@gmail.com>\n"
 "Language-Team: Chinese (Simplified Han script) <https://hosted.weblate.org/"
 "projects/gaphor/gaphor/zh_Hans/>\n"
@@ -148,7 +148,6 @@ msgid "Class"
 msgstr "类"
 
 #: gaphor/C4Model/toolbox.py:160 gaphor/UML/toolbox.py:54
-#, fuzzy
 msgid "Data Type"
 msgstr "数据类型"
 
@@ -492,7 +491,6 @@ msgid "Block"
 msgstr "块"
 
 #: gaphor/SysML/toolbox.py:189
-#, fuzzy
 msgid "Interface Block"
 msgstr "接口块"
 
@@ -502,12 +500,10 @@ msgid "Requirement"
 msgstr "需求"
 
 #: gaphor/SysML/toolbox.py:203 gaphor/UML/toolbox.py:77
-#, fuzzy
 msgid "Use Case"
 msgstr "用例"
 
 #: gaphor/SysML/toolbox.py:204
-#, fuzzy
 msgid "Value Type"
 msgstr "值类型"
 
@@ -676,7 +672,6 @@ msgid ""
 msgstr "从模型中删除了未使用的元素：它们不会在任何其他图表中使用。"
 
 #: gaphor/UML/toolbox.py:34
-#, fuzzy
 msgid "Component Diagram"
 msgstr "组件图"
 
@@ -883,12 +878,10 @@ msgid "FIFO"
 msgstr "FIFO（先进先出）"
 
 #: gaphor/UML/actions/objectnode.py:45
-#, fuzzy
 msgid "upperBound"
 msgstr "上限"
 
 #: gaphor/UML/actions/objectnode.py:55
-#, fuzzy
 msgid "ordering"
 msgstr "显示顺序"
 
@@ -929,7 +922,6 @@ msgid "Upper Bound"
 msgstr "上限"
 
 #: gaphor/UML/actions/propertypages.ui:145
-#, fuzzy
 msgid "Ordering"
 msgstr "显示顺序"
 
@@ -1004,7 +996,6 @@ msgstr ""
 "使用 <b>-</b>/<b>=</b> 向上或向下移动项目。"
 
 #: gaphor/UML/actions/propertypages.ui:391
-#, fuzzy
 msgid "Direction"
 msgstr "显示方向"
 
@@ -1573,12 +1564,10 @@ msgid "Presentation"
 msgstr "呈现"
 
 #: gaphor/diagram/propertypages.py:319 gaphor/diagram/propertypages.py:332
-#, fuzzy
 msgid "class"
 msgstr "类"
 
 #: gaphor/diagram/propertypages.py:320 gaphor/diagram/propertypages.py:333
-#, fuzzy
 msgid "id"
 msgstr "ID"
 
@@ -1660,7 +1649,6 @@ msgid "Border Radius"
 msgstr "圆角"
 
 #: gaphor/diagram/styleeditor.ui:51
-#, fuzzy
 msgid "Color"
 msgstr "颜色"
 
@@ -1825,9 +1813,8 @@ msgid ""
 msgstr "此处显示任何未处理的错误。当你在GitHub上创建问题时，你可以使用这些来提供额外的信息。"
 
 #: gaphor/storage/recovery.py:154
-#, fuzzy
 msgid "This model contains unsaved changes. The changes have been restored."
-msgstr "打开的模型包含未保存的更改。未保存的更改将永久丢失。"
+msgstr "打开的模型包含未保存的更改，未保存的更改将永久丢失。"
 
 #: gaphor/templates/blank.gaphor gaphor/ui/mainwindow.py:268
 #: gaphor/ui/mainwindow.py:273 gaphor/ui/mainwindow.ui:129
@@ -1963,7 +1950,6 @@ msgid "Mainframe Banking System Facade"
 msgstr "大型银行系统外观"
 
 #: gaphor/templates/c4model-example.gaphor
-#, fuzzy
 msgid "Uses"
 msgstr "使用"
 
@@ -2164,7 +2150,7 @@ msgstr "开"
 
 #: gaphor/templates/sysml-example.gaphor
 msgid "actuator"
-msgstr "驱动器"
+msgstr "执行器"
 
 #: gaphor/templates/sysml-example.gaphor
 msgid "Use Case Function #1"
@@ -2622,14 +2608,12 @@ msgid ""
 msgstr "访问 <a href=\"https://gaphor.org/contribute/\">gaphor.org</a> 获得更多信息。"
 
 #: gaphor/ui/elementeditor.ui:151
-#, fuzzy
 msgid "Editor"
-msgstr "编辑"
+msgstr "编辑器"
 
 #: gaphor/ui/elementeditor.ui:177
-#, fuzzy
 msgid "Styling"
-msgstr "字符串"
+msgstr "格式化"
 
 #: gaphor/ui/elementeditor.ui:189
 msgid "Style Sheet"
@@ -2644,9 +2628,8 @@ msgid "The (natural) language used in this model."
 msgstr "此模型中使用的（自然）语言。"
 
 #: gaphor/ui/elementeditor.ui:220
-#, fuzzy
 msgid "CSS Editor"
-msgstr "格式表"
+msgstr "CSS样式表编辑器"
 
 #: gaphor/ui/elementeditor.ui:248
 msgid "CSS nodes of focused item"
@@ -2884,9 +2867,8 @@ msgid "Risk Analysis and Assessment Modeling Language example model"
 msgstr "风险分析与评估建模语言示例模型"
 
 #: gaphor/ui/greeter.py:86
-#, fuzzy
 msgid "C4 Model Example"
-msgstr "UML示例"
+msgstr "C4模型样例"
 
 #: gaphor/ui/greeter.py:87
 msgid "C4 Model example of a banking system"
@@ -2924,9 +2906,8 @@ msgid "Press F11 to exit Fullscreen"
 msgstr "按F11退出全屏"
 
 #: gaphor/ui/mainwindow.ui:37
-#, fuzzy
 msgid "Change modeling profile"
-msgstr "正在从{filename}加载模型"
+msgstr "变更建模配置文件（Profile）"
 
 #: gaphor/ui/mainwindow.ui:47
 msgid "Open application menu"
@@ -2947,9 +2928,8 @@ msgid "Redo"
 msgstr "重做"
 
 #: gaphor/ui/mainwindow.ui:173
-#, fuzzy
 msgid "Align selected elements"
-msgstr "可连接元件"
+msgstr "对齐选中的元素"
 
 #: gaphor/ui/help/shortcuts.ui:75 gaphor/ui/mainwindow.ui:181
 msgid "Toggle Property Editor"
@@ -2978,7 +2958,6 @@ msgid "Align Right"
 msgstr "右对齐"
 
 #: gaphor/ui/mainwindow.ui:311
-#, fuzzy
 msgid "Align Vertical Center"
 msgstr "水平居中对齐"
 
@@ -3007,14 +2986,12 @@ msgid "Max Size"
 msgstr "最大尺寸"
 
 #: gaphor/ui/menubar.ui:5
-#, fuzzy
 msgid "_File"
 msgstr "文件"
 
 #: gaphor/ui/menubar.ui:31
-#, fuzzy
 msgid "_Edit"
-msgstr "退出"
+msgstr "编辑"
 
 #: gaphor/ui/help/shortcuts.ui:162 gaphor/ui/menubar.ui:44
 msgid "Cut"
@@ -3025,9 +3002,8 @@ msgid "Copy"
 msgstr "复制"
 
 #: gaphor/ui/menubar.ui:52
-#, fuzzy
 msgid "Paste"
-msgstr "日期"
+msgstr "粘贴"
 
 #: gaphor/ui/help/shortcuts.ui:176 gaphor/ui/menubar.ui:56
 msgid "Paste (copy defining elements)"
@@ -3038,42 +3014,36 @@ msgid "Select All"
 msgstr "选择全部"
 
 #: gaphor/ui/menubar.ui:70
-#, fuzzy
 msgid "Unselect All"
-msgstr "选择全部"
+msgstr "全部取消全选"
 
 #: gaphor/ui/menubar.ui:76
 msgid "_View"
 msgstr "查看"
 
 #: gaphor/ui/menubar.ui:87
-#, fuzzy
 msgid "Actual Size"
-msgstr "最大尺寸"
+msgstr "实际尺寸"
 
 #: gaphor/ui/menubar.ui:102
 msgid "_Window"
 msgstr "窗口"
 
 #: gaphor/ui/menubar.ui:105
-#, fuzzy
 msgid "Maximize"
-msgstr "最大尺寸"
+msgstr "最大化"
 
 #: gaphor/ui/menubar.ui:109
-#, fuzzy
 msgid "Full screen"
-msgstr "切换全屏"
+msgstr "全屏"
 
 #: gaphor/ui/menubar.ui:115
-#, fuzzy
 msgid "_Help"
-msgstr "ⓘ 帮助"
+msgstr "帮助"
 
 #: gaphor/ui/menubar.ui:118
-#, fuzzy
 msgid "Online Documentation"
-msgstr "翻转方向"
+msgstr "在线文档"
 
 #: gaphor/ui/modelbrowser.py:404
 msgid "New _Package"
@@ -3176,9 +3146,8 @@ msgid "Change from System Language to English"
 msgstr "从系统语言到英语的转变"
 
 #: gaphor/ui/help/preferences.ui:42
-#, fuzzy
 msgid "Editing"
-msgstr "显示方向"
+msgstr "编辑"
 
 #: gaphor/ui/help/preferences.ui:45
 msgid "Reset Tool Automatically"
@@ -3197,7 +3166,6 @@ msgid "Automatically remove elements no longer in use in any diagram."
 msgstr "自动删除任何关系图中不再使用的元素。"
 
 #: gaphor/ui/help/shortcuts.ui:4 gaphor/ui/help/shortcuts.ui:11
-#, fuzzy
 msgid "Shortcuts"
 msgstr "快捷键"
 
@@ -3206,9 +3174,8 @@ msgid "Quit Gaphor"
 msgstr "退出 Gaphor"
 
 #: gaphor/ui/help/shortcuts.ui:56
-#, fuzzy
 msgid "Model"
-msgstr "C4 模型"
+msgstr "模型"
 
 #: gaphor/ui/help/shortcuts.ui:61
 msgid "Rename"
@@ -3219,9 +3186,8 @@ msgid "Search"
 msgstr "搜索"
 
 #: gaphor/ui/help/shortcuts.ui:82
-#, fuzzy
 msgid "Toggle Model Preferences"
-msgstr "偏好设置"
+msgstr "切换偏好设置"
 
 #: gaphor/ui/help/shortcuts.ui:89
 msgid "Close Diagram"
@@ -3340,9 +3306,8 @@ msgid "Update relation “{name}”"
 msgstr "更新关系“{name}”"
 
 #: gaphor/ui/tests/test_modelbrowser.py:330
-#, fuzzy
 msgid "general: General"
-msgstr "通用: {name}"
+msgstr "通用: 通用"
 
 #~ msgid "A."
 #~ msgstr "A."
