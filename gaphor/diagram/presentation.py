@@ -267,7 +267,7 @@ class LinePresentation(gaphas.Line, HandlePositionUpdate, Presentation[S]):
         self.update_orthogonal_constraints()
 
     def update_shape_bounds(self, context):
-        def shape_bounds(shape, align):
+        def shape_bounds(shape: Shape | None, align: TextAlign):
             if shape:
                 size = shape.size(context)
                 x, y = text_point_at_line(points, size, align)
