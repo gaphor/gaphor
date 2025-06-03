@@ -34,7 +34,7 @@ def disconnect(line, handle):
 def get_connected(item, handle):
     assert handle in item.handles()
     if cinfo := item.diagram.connections.get_connection(handle):
-        return cinfo.connected  # type: ignore[no-any-return] # noqa: F723
+        return cinfo.connected  # type: ignore[no-any-return]
     return None
 
 
