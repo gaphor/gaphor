@@ -15,6 +15,7 @@ from gaphor.core.styling import (
     Style,
     TextAlign,
     TextDecoration,
+    VerticalAlign,
 )
 
 Size = tuple[Number, Number]
@@ -136,13 +137,19 @@ class Layout:
             PangoCairo.show_layout(cr, layout)
 
 
-def text_point_at_line(points: list[Pos], size: Size, text_align: TextAlign) -> Pos:
+def text_point_at_line(
+    points: list[Pos],
+    size: Size,
+    text_align: TextAlign,
+    vertial_align: VerticalAlign | None,
+) -> Pos:
     """Provide a position (x, y) to draw a text close to a line.
 
     Parameters:
      - points:  the line points, a list of (x, y) points
      - size:    size of the text, a (width, height) tuple
      - text_align: alignment to the line: left, beginning of the line, center, middle and right: end of the line
+     - vertical_align: Vertical alignment, only applicable for a center aligned text
     """
 
     if text_align == TextAlign.LEFT:
@@ -151,7 +158,7 @@ def text_point_at_line(points: list[Pos], size: Size, text_align: TextAlign) -> 
         x, y = _text_point_at_line_end(size, p0, p1)
     elif text_align == TextAlign.CENTER:
         p0, p1 = middle_segment(points)
-        x, y = _text_point_at_line_center(size, p0, p1)
+        x, y = _text_point_at_line_center(size, p0, p1, vertial_align)
     elif text_align == TextAlign.RIGHT:
         p0 = points[-1]
         p1 = points[-2]
@@ -214,7 +221,9 @@ PADDING_HINT = (1, 1, -1)
 EPSILON = 1e-6
 
 
-def _text_point_at_line_center(size: Size, p1: Pos, p2: Pos) -> Pos:
+def _text_point_at_line_center(
+    size: Size, p1: Pos, p2: Pos, vertical_align: VerticalAlign | None
+) -> Pos:
     """Calculate position of the text relative to a line defined by points p1
     and p2.
 
@@ -249,6 +258,11 @@ def _text_point_at_line_center(size: Size, p1: Pos, p2: Pos) -> Pos:
 
         x = x0 - w2
         y = y0 + hint + ofs
+        y = (
+            (y0 - hint - ofs - height)
+            if vertical_align == VerticalAlign.TOP
+            else (y0 + hint + ofs)
+        )
     else:
         # much better in case of vertical lines
 
