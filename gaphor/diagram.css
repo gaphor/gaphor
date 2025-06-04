@@ -249,6 +249,7 @@ state compartment:first-child {
 
 :has(compartment + compartment),
 :has(regions),
+:has(package),
 :not([children=""]):has(compartment),
 :not([children=""]) > compartment {
   justify-content: start;
