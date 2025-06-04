@@ -13,6 +13,7 @@ from gaphor.core.styling.declarations import (
     JustifyContent,
     Number,
     Padding,
+    PrefersColorScheme,
     TextAlign,
     TextDecoration,
     Var,
@@ -76,7 +77,6 @@ INHERITED_DECLARATIONS = (
 
 class StyleNode(Hashable, Protocol):
     pseudo: str | None
-    dark_mode: bool | None
 
     def name(self) -> str: ...
 
@@ -154,11 +154,14 @@ class CompiledStyleSheet:
     def __init__(
         self,
         *css: str,
+        prefers_color_scheme: PrefersColorScheme = PrefersColorScheme.NONE,
         rules: list[tuple[Callable[[StyleNode], bool], Style]] | None = None,
     ):
         self.rules: list[tuple[Callable[[StyleNode], bool], Style]] = rules or [
             (selector, declarations)  # type: ignore[misc]
-            for selector, declarations in compile_style_sheet(*css)
+            for selector, declarations in compile_style_sheet(
+                *css, prefers_color_scheme=prefers_color_scheme
+            )
             if selector != "error"
         ]
         # Use this trick to bind a cache per instance, instead of globally.

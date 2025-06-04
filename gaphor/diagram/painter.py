@@ -17,18 +17,15 @@ from gaphor.diagram.selection import Selection
 
 
 class ItemPainter:
-    def __init__(
-        self, selection: Selection | None = None, dark_mode: bool | None = None
-    ):
+    def __init__(self, selection: Selection | None = None):
         self.selection: Selection = selection or Selection()
-        self.dark_mode = dark_mode
 
     def paint_item(self, item, cr):
         selection = self.selection
         if not (diagram := item.diagram):
             return
 
-        style = diagram.style(StyledItem(item, selection, self.dark_mode))
+        style = diagram.style(StyledItem(item, selection))
 
         cr.save()
         try:

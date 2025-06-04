@@ -7,7 +7,6 @@ class PseudoStyleNode:
     def __init__(self, node: StyleNode, psuedo: str | None):
         self._node = node
         self.pseudo = psuedo
-        self.dark_mode = node.dark_mode
 
     def name(self) -> str:
         return self._node.name()

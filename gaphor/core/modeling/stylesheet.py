@@ -6,7 +6,7 @@ import textwrap
 from gaphor.core.modeling.base import Base, Id, RepositoryProtocol
 from gaphor.core.modeling.event import AttributeUpdated, StyleSheetUpdated
 from gaphor.core.modeling.properties import attribute
-from gaphor.core.styling import CompiledStyleSheet
+from gaphor.core.styling import CompiledStyleSheet, PrefersColorScheme
 
 SYSTEM_STYLE_SHEET = (importlib.resources.files("gaphor") / "diagram.css").read_text(
     "utf-8"
@@ -30,10 +30,22 @@ class StyleSheet(Base):
         super().__init__(id, model)
         self._instant_style_declarations = ""
         self._system_font_family = "sans"
+        self._prefers_color_scheme = PrefersColorScheme.NONE
         self.compile_style_sheet()
 
     styleSheet: attribute[str] = attribute("styleSheet", str, DEFAULT_STYLE_SHEET)
     naturalLanguage: attribute[str] = attribute("naturalLanguage", str)
+
+    @property
+    def prefers_color_scheme(self) -> PrefersColorScheme:
+        return self._prefers_color_scheme
+
+    @prefers_color_scheme.setter
+    def prefers_color_scheme(self, color_scheme: PrefersColorScheme) -> None:
+        if self._prefers_color_scheme is not color_scheme:
+            self._prefers_color_scheme = color_scheme
+            self.compile_style_sheet()
+            super().handle(StyleSheetUpdated(self))
 
     @property
     def instant_style_declarations(self) -> str:
@@ -60,6 +72,7 @@ class StyleSheet(Base):
             f"diagram {{ font-family: {self._system_font_family} }}",
             self.styleSheet,
             self._instant_style_declarations,
+            prefers_color_scheme=self._prefers_color_scheme,
         )
 
     def new_compiled_style_sheet(self) -> CompiledStyleSheet:

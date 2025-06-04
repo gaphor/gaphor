@@ -137,12 +137,10 @@ class StyledDiagram:
         self,
         diagram: Diagram,
         selection: gaphas.selection.Selection | None = None,
-        dark_mode: bool | None = None,
     ):
         self.diagram = diagram
         self.selection = selection
         self.pseudo: str | None = None
-        self.dark_mode = dark_mode
 
     def name(self) -> str:
         return "diagram"
@@ -152,7 +150,7 @@ class StyledDiagram:
 
     def children(self) -> Iterator[StyleNode]:
         return (
-            StyledItem(item, self.selection, dark_mode=self.dark_mode)
+            StyledItem(item, self.selection)
             for item in self.diagram.get_all_items()
             if not item.parent
         )
@@ -164,14 +162,13 @@ class StyledDiagram:
         return ()
 
     def __hash__(self):
-        return hash((self.diagram, self.state(), self.dark_mode))
+        return hash((self.diagram, self.state()))
 
     def __eq__(self, other):
         return (
             isinstance(other, StyledDiagram)
             and self.diagram == other.diagram
             and self.state() == other.state()
-            and self.dark_mode == other.dark_mode
         )
 
 
@@ -186,14 +183,12 @@ class StyledItem:
         self,
         item: Presentation,
         selection: gaphas.selection.Selection | None = None,
-        dark_mode: bool | None = None,
     ):
         assert item.diagram
         self.item = item
         self.diagram = item.diagram
         self.selection = selection
         self.pseudo: str | None = None
-        self.dark_mode = dark_mode
         self._state = (
             (
                 "active" if item in selection.selected_items else "",
@@ -212,9 +207,9 @@ class StyledItem:
     def parent(self) -> StyleNode | None:
         parent = self.item.parent
         return (
-            StyledItem(parent, self.selection, dark_mode=self.dark_mode)
+            StyledItem(parent, self.selection)
             if parent
-            else StyledDiagram(self.diagram, self.selection, self.dark_mode)
+            else StyledDiagram(self.diagram, self.selection)
         )
 
     def children(self) -> Iterator[StyleNode]:
@@ -222,10 +217,7 @@ class StyledItem:
         yield from (node.style_node(self) for node in item.css_nodes())
 
         selection = self.selection
-        yield from (
-            StyledItem(child, selection, dark_mode=self.dark_mode)
-            for child in item.children
-        )
+        yield from (StyledItem(child, selection) for child in item.children)
 
     def attribute(self, name: str) -> str | None:
         if item_value := lookup_attribute(self.item, name):
@@ -243,14 +235,13 @@ class StyledItem:
         return self._state
 
     def __hash__(self):
-        return hash((self.item, self.state(), self.dark_mode))
+        return hash((self.item, self.state()))
 
     def __eq__(self, other):
         return (
             isinstance(other, StyledItem)
             and self.item == other.item
             and self.state() == other.state()
-            and self.dark_mode == other.dark_mode
         )
 
 
