@@ -20,7 +20,7 @@ from gaphor.diagram.text import (
     ],
 )
 def test_point_at_left_top(points, point_at_line):
-    x, y = text_point_at_line(points, (10, 5), TextAlign.LEFT)
+    x, y = text_point_at_line(points, (10, 5), TextAlign.LEFT, None)
 
     assert x == point_at_line[0]
     assert y == point_at_line[1]
@@ -36,7 +36,7 @@ def test_point_at_left_top(points, point_at_line):
     ],
 )
 def test_point_at_right_top(points, point_at_line):
-    x, y = text_point_at_line(points, (10, 5), TextAlign.RIGHT)
+    x, y = text_point_at_line(points, (10, 5), TextAlign.RIGHT, None)
 
     assert x == point_at_line[0]
     assert y == point_at_line[1]
@@ -61,7 +61,7 @@ def test_point_at_right_top(points, point_at_line):
 )
 def test_point_at_center_bottom(points, point_at_line):
     """Test aligned at the line text position calculation, horizontal mode."""
-    x, y = text_point_at_line(points, (10, 5), TextAlign.CENTER)
+    x, y = text_point_at_line(points, (10, 5), TextAlign.CENTER, None)
 
     assert x == pytest.approx(point_at_line[0])
     assert y == pytest.approx(point_at_line[1])

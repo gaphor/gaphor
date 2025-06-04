@@ -16,7 +16,12 @@ from gaphor.core.modeling.event import AttributeUpdated, RevertibleEvent
 from gaphor.core.modeling.presentation import Presentation, S, literal_eval
 from gaphor.core.modeling.properties import attribute
 from gaphor.diagram.shapes import CssNode, Shape, Text, stroke, traverse_css_nodes
-from gaphor.diagram.text import TextAlign, middle_segment, text_point_at_line
+from gaphor.diagram.text import (
+    TextAlign,
+    VerticalAlign,
+    middle_segment,
+    text_point_at_line,
+)
 
 DEFAULT_HEIGHT = 50
 DEFAULT_WIDTH = 100
@@ -214,12 +219,14 @@ class LinePresentation(gaphas.Line, HandlePositionUpdate, Presentation[S]):
         shape_head: Shape | None = None,
         shape_middle: Shape | None = None,
         shape_tail: Shape | None = None,
+        middle_valign: VerticalAlign | None = None,
     ):
         super().__init__(connections=diagram.connections, diagram=diagram, id=id)  # type: ignore[call-arg]
 
         self._shape_head = shape_head
         self._shape_middle = shape_middle
         self._shape_tail = shape_tail
+        self._middle_valign = middle_valign
 
         self.fuzziness = 4
         self._shape_head_rect = None
@@ -267,16 +274,20 @@ class LinePresentation(gaphas.Line, HandlePositionUpdate, Presentation[S]):
         self.update_orthogonal_constraints()
 
     def update_shape_bounds(self, context):
-        def shape_bounds(shape, align):
+        def shape_bounds(
+            shape: Shape | None, align: TextAlign, valign: VerticalAlign | None
+        ):
             if shape:
                 size = shape.size(context)
-                x, y = text_point_at_line(points, size, align)
+                x, y = text_point_at_line(points, size, align, valign)
                 return Rectangle(x, y, *size)
 
         points = [h.pos for h in self.handles()]
-        self._shape_head_rect = shape_bounds(self._shape_head, TextAlign.LEFT)
-        self._shape_middle_rect = shape_bounds(self._shape_middle, TextAlign.CENTER)
-        self._shape_tail_rect = shape_bounds(self._shape_tail, TextAlign.RIGHT)
+        self._shape_head_rect = shape_bounds(self._shape_head, TextAlign.LEFT, None)
+        self._shape_middle_rect = shape_bounds(
+            self._shape_middle, TextAlign.CENTER, self._middle_valign
+        )
+        self._shape_tail_rect = shape_bounds(self._shape_tail, TextAlign.RIGHT, None)
 
     def css_nodes(self) -> Iterator[CssNode]:
         if self._shape_head:

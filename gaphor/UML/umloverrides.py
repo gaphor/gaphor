@@ -38,8 +38,8 @@ def extension_metaclass(self):
 
 
 # Don't use derived() now, it can not deal with a [0..1] property derived from a [0..*] property.
-# Extension.metaclass = derived(Extension, 'metaclass', Class, 0, 1, Extension.ownedEnd, Association.memberEnd)  # noqa: E800
-# Extension.metaclass.filter = extension_metaclass  # noqa: E800
+# Extension.metaclass = derived(Extension, 'metaclass', Class, 0, 1, Extension.ownedEnd, Association.memberEnd)
+# Extension.metaclass.filter = extension_metaclass
 uml.Extension.metaclass = property(extension_metaclass, doc=extension_metaclass.__doc__)
 
 

@@ -71,7 +71,7 @@ class BaseConnector:
     def get_connected(self, handle: Handle) -> Presentation[Base] | None:
         """Get item connected to a handle."""
         if cinfo := self.diagram.connections.get_connection(handle):
-            return cinfo.connected  # type: ignore[no-any-return] # noqa: F723
+            return cinfo.connected  # type: ignore[no-any-return]
         return None
 
     def allow(self, handle: Handle, port: Port) -> bool:

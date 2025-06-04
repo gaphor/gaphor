@@ -13,7 +13,7 @@ from gaphor.UML.interactions.message import MessageItem
 def get_connected(item, handle) -> Presentation[UML.Element] | None:
     """Get item connected to a handle."""
     if cinfo := item.diagram.connections.get_connection(handle):
-        return cinfo.connected  # type: ignore[no-any-return] # noqa: F723
+        return cinfo.connected  # type: ignore[no-any-return]
     return None
 
 

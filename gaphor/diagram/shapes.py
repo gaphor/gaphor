@@ -519,8 +519,6 @@ class Text:
     def draw(self, context: DrawContext, bounding_box: Rectangle):
         """Draw the text, return the location and size."""
         style = context.style
-        min_w = max(style.get("min-width", 0), bounding_box.width)
-        min_h = max(style.get("min-height", 0), bounding_box.height)
         text_box = rectangle_shrink(bounding_box, style.get("padding", DEFAULT_PADDING))
 
         with cairo_state(context.cairo) as cr:
@@ -532,7 +530,7 @@ class Text:
             layout = self._layout
             cr.move_to(text_box.x, text_box.y)
             layout.set(font=style)
-            layout.show_layout(cr, text_box.width, default_size=(min_w, min_h))
+            layout.show_layout(cr, text_box.width)
 
 
 class CssNode:

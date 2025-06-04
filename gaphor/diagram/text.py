@@ -2,11 +2,23 @@
 
 from __future__ import annotations
 
+from cairo import Context as CairoContext
 from gaphas.canvas import instant_cairo_context
 from gaphas.painter.freehand import FreeHandCairoContext
+from gaphas.types import Pos
 from gi.repository import Pango, PangoCairo
 
-from gaphor.core.styling import FontStyle, FontWeight, Style, TextAlign, TextDecoration
+from gaphor.core.styling import (
+    FontStyle,
+    FontWeight,
+    Number,
+    Style,
+    TextAlign,
+    TextDecoration,
+    VerticalAlign,
+)
+
+Size = tuple[Number, Number]
 
 
 class Layout:
@@ -14,7 +26,7 @@ class Layout:
         self,
         text: str = "",
         font: Style | None = None,
-        width: int | None = None,
+        width: Number | None = None,
         text_align: TextAlign = TextAlign.CENTER,
         default_size: tuple[int, int] = (0, 0),
     ):
@@ -23,7 +35,7 @@ class Layout:
             tuple[str, float | str, FontWeight | None, FontStyle | None] | None
         ) = None
         self.text = ""
-        self.width = -1
+        self.width: Number = -1
         self.default_size = default_size
 
         if text:
@@ -34,10 +46,16 @@ class Layout:
             self.set_font(font)
         self.set_alignment(text_align)
 
-    def set(self, text=None, font=None, width=None, text_align=None):
+    def set(
+        self,
+        text: str | None = None,
+        font: Style | None = None,
+        width: Number | None = None,
+        text_align: TextAlign | None = None,
+    ) -> None:
         # Since text expressions can return False, we should also accommodate for that
         if text not in (None, False):
-            self.set_text(text)
+            self.set_text(text)  # type: ignore[arg-type]
         if font:
             self.set_font(font)
         if width is not None:
@@ -89,7 +107,7 @@ class Layout:
             self.text = text
             self.layout.set_text(self.text, length=-1)
 
-    def set_width(self, width: int) -> None:
+    def set_width(self, width: Number) -> None:
         self.width = width
         if width == -1:
             self.layout.set_width(-1)
@@ -105,10 +123,11 @@ class Layout:
         self.set_width(self.width)
         return self.layout.get_pixel_size()  # type: ignore[no-any-return]
 
-    def show_layout(self, cr, width=None, default_size=None):
-        layout = self.layout
+    def show_layout(self, cr: CairoContext, width: Number | None = None) -> None:
         if not self.text:
-            return default_size or self.default_size
+            return None
+
+        layout = self.layout
         if width is not None:
             layout.set_width(min(int(width * Pango.SCALE), 2147483647))
 
@@ -118,13 +137,19 @@ class Layout:
             PangoCairo.show_layout(cr, layout)
 
 
-def text_point_at_line(points, size, text_align):
+def text_point_at_line(
+    points: list[Pos],
+    size: Size,
+    text_align: TextAlign,
+    vertial_align: VerticalAlign | None,
+) -> Pos:
     """Provide a position (x, y) to draw a text close to a line.
 
     Parameters:
      - points:  the line points, a list of (x, y) points
      - size:    size of the text, a (width, height) tuple
      - text_align: alignment to the line: left, beginning of the line, center, middle and right: end of the line
+     - vertical_align: Vertical alignment, only applicable for a center aligned text
     """
 
     if text_align == TextAlign.LEFT:
@@ -133,7 +158,7 @@ def text_point_at_line(points, size, text_align):
         x, y = _text_point_at_line_end(size, p0, p1)
     elif text_align == TextAlign.CENTER:
         p0, p1 = middle_segment(points)
-        x, y = _text_point_at_line_center(size, p0, p1)
+        x, y = _text_point_at_line_center(size, p0, p1, vertial_align)
     elif text_align == TextAlign.RIGHT:
         p0 = points[-1]
         p1 = points[-2]
@@ -142,14 +167,14 @@ def text_point_at_line(points, size, text_align):
     return x, y
 
 
-def middle_segment(points):
+def middle_segment(points: list[Pos]) -> Pos:
     """Get middle line segment."""
     m = len(points) // 2
     assert m >= 1 and m < len(points)
     return points[m - 1], points[m]
 
 
-def _text_point_at_line_end(size, p1, p2):
+def _text_point_at_line_end(size: Size, p1: Pos, p2: Pos) -> Pos:
     """Calculate position of the text relative to a line defined by points p1
     and p2.
 
@@ -196,7 +221,9 @@ PADDING_HINT = (1, 1, -1)
 EPSILON = 1e-6
 
 
-def _text_point_at_line_center(size, p1, p2):
+def _text_point_at_line_center(
+    size: Size, p1: Pos, p2: Pos, vertical_align: VerticalAlign | None
+) -> Pos:
     """Calculate position of the text relative to a line defined by points p1
     and p2.
 
@@ -231,6 +258,11 @@ def _text_point_at_line_center(size, p1, p2):
 
         x = x0 - w2
         y = y0 + hint + ofs
+        y = (
+            (y0 - hint - ofs - height)
+            if vertical_align == VerticalAlign.TOP
+            else (y0 + hint + ofs)
+        )
     else:
         # much better in case of vertical lines
 
