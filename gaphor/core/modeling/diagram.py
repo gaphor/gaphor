@@ -157,6 +157,9 @@ class StyledDiagram:
             if not item.parent
         )
 
+    def classes(self) -> Sequence[str]:
+        return []
+
     def attribute(self, name: str) -> str | None:
         return lookup_attribute(self.diagram, name)
 
@@ -226,6 +229,9 @@ class StyledItem:
             StyledItem(child, selection, dark_mode=self.dark_mode)
             for child in item.children
         )
+
+    def classes(self) -> Sequence[str]:
+        return []
 
     def attribute(self, name: str) -> str | None:
         if item_value := lookup_attribute(self.item, name):
