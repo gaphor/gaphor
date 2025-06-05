@@ -231,7 +231,7 @@ class StyledItem:
         )
 
     def classes(self) -> Sequence[str]:
-        return []
+        return ["item"]
 
     def attribute(self, name: str) -> str | None:
         if item_value := lookup_attribute(self.item, name):
