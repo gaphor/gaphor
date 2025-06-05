@@ -84,6 +84,8 @@ class StyleNode(Hashable, Protocol):
 
     def children(self) -> Iterator[StyleNode]: ...
 
+    def classes(self) -> Sequence[str]: ...
+
     def attribute(self, name: str) -> str | None:
         """Obtain a string representation of an attribute.
 

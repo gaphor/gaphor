@@ -10,6 +10,7 @@ class Node:
         name,
         parent=None,
         children=None,
+        classes=None,
         attributes=None,
         state=(),
         pseudo=None,
@@ -20,6 +21,7 @@ class Node:
         self._name = name
         self._parent = parent
         self._children = children or []
+        self._classes = classes or []
         self._attributes = attributes
         self._state = state
         self.pseudo = pseudo
@@ -38,6 +40,9 @@ class Node:
 
     def children(self):
         return iter(self._children)
+
+    def classes(self):
+        return self._classes
 
     def attribute(self, name):
         return self._attributes.get(name, "") if name in self._attributes else None
@@ -128,6 +133,14 @@ def test_select_sibling_combinator():
         Node("other", parent=Node("parent", children=[Node("previous")]))
     )
     assert not selector(Node("sibling"))
+
+
+def test_class():
+    css = ".element {}"
+
+    selector, _declarations = next(compile_style_sheet(css))
+
+    assert selector(Node("item", classes=["element"]))
 
 
 def test_attributes():

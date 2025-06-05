@@ -247,10 +247,9 @@ state compartment:first-child {
   padding: 4;
 }
 
+:has(.item),
 :has(compartment + compartment),
-:has(regions),
-:not([children=""]):has(compartment),
-:not([children=""]) > compartment {
+:has(regions) {
   justify-content: start;
 }
 
@@ -367,11 +366,11 @@ c4database {
   padding: 20 4 4 4;
 }
 
-:is(c4container, c4database, c4person):not([children=""]) {
+:is(c4container, c4database, c4person):has(.item) {
   justify-content: end;
 }
 
-:is(c4container, c4database, c4person):not([children=""]) > :is(name, technology) {
+:is(c4container, c4database, c4person):has(.item) > :is(name, technology) {
   text-align: left;
 }
 
