@@ -11,42 +11,33 @@ from __future__ import annotations
 from functools import singledispatch
 
 from cairo import LINE_JOIN_ROUND
-from gaphas.view import GtkView
 
 from gaphor.core.modeling.diagram import (
-    FALLBACK_STYLE,
     Diagram,
     DrawContext,
     StyledItem,
+    Stylist,
 )
-from gaphor.core.styling import CompiledStyleSheet, PrefersColorScheme, StyleNode
 from gaphor.diagram.selection import Selection
 
 
 class ItemPainter:
     def __init__(
-        self, view: GtkView | None = None, prefers_color_scheme=PrefersColorScheme.NONE
+        self, selection: Selection | None = None, stylist: Stylist | None = None
     ):
-        self.selection: Selection = view.selection if view else Selection()
-        self.compiled_style_sheet: CompiledStyleSheet | None = (
-            style_sheet.compile_style_sheet(prefers_color_scheme)
-            if view and view.model and (style_sheet := view.model.styleSheet)
-            else None
-        )
-
-    def style(self, node: StyleNode):
-        return (
-            self.compiled_style_sheet.compute_style(node)
-            if self.compiled_style_sheet
-            else FALLBACK_STYLE
-        )
+        self.selection: Selection = selection or Selection()
+        self.stylist = stylist
 
     def paint_item(self, item, cr):
         if not item.diagram:
             return
 
         selection = self.selection
-        style = self.style(StyledItem(item, selection))
+        if not (stylist := self.stylist):
+            stylist = Stylist(item.diagram)
+
+        style = stylist(StyledItem(item, selection))
+
         cr.save()
         try:
             cr.set_line_join(LINE_JOIN_ROUND)
@@ -81,7 +72,7 @@ class DiagramTypePainter:
     such as is common for UML and SysML diagrams.
     """
 
-    def __init__(self, _diagram: Diagram):
+    def __init__(self, _diagram: Diagram, stylist: Stylist | None = None):
         pass
 
     def paint(self, _items, _cr):

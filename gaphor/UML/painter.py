@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from gaphas.geometry import Rectangle
 
-from gaphor.core.modeling.diagram import DrawContext, StyledDiagram
+from gaphor.core.modeling.diagram import DrawContext, StyledDiagram, Stylist
 from gaphor.diagram.painter import DiagramTypePainter
 from gaphor.diagram.shapes import Box, CssNode, Orientation, Text, cairo_state, stroke
 from gaphor.UML.recipes import get_applied_stereotypes, stereotypes_str
@@ -11,8 +11,9 @@ from gaphor.UML.uml import Diagram
 
 @DiagramTypePainter.register(Diagram)  # type: ignore[attr-defined]
 class UMLDiagramTypePainter:
-    def __init__(self, diagram: Diagram):
+    def __init__(self, diagram: Diagram, stylist: Stylist | None = None):
         self.diagram = diagram
+        self.stylist = stylist
         self._pentagon = CssNode(
             "pentagon",
             diagram,
@@ -35,11 +36,12 @@ class UMLDiagramTypePainter:
         if not diagram.diagramType and not any(get_applied_stereotypes(diagram)):
             return
 
-        style = diagram.style(StyledDiagram(diagram))
+        if not (stylist := self.stylist):
+            stylist = Stylist(diagram)
 
         context = DrawContext(
             cairo=cr,
-            style=style,
+            style=stylist(StyledDiagram(diagram)),
             selected=False,
             focused=False,
             hovered=False,

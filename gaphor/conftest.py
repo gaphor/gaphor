@@ -28,7 +28,6 @@ from gaphor.core.modeling.modelinglanguage import (
     MockModelingLanguage,
 )
 from gaphor.diagram.general.modelinglanguage import GeneralModelingLanguage
-from gaphor.diagram.painter import ItemPainter
 import gaphor.storage as storage
 from gaphor.SysML.modelinglanguage import SysMLModelingLanguage
 from gaphor.UML.modelinglanguage import UMLModelingLanguage
@@ -139,9 +138,6 @@ def models():
 @pytest_asyncio.fixture
 async def view(diagram):
     view = DiagramView(model=diagram)
-    item_painter = ItemPainter(view)
-    view.painter = item_painter
-    view.bounding_box_painter = item_painter
     return view
 
 

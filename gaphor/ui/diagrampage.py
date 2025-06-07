@@ -11,7 +11,7 @@ from gaphas.view import GtkView
 from gi.repository import Adw, Gdk, GdkPixbuf, Gio, GLib, Gtk
 
 from gaphor.core import event_handler, gettext
-from gaphor.core.modeling.diagram import StyledDiagram
+from gaphor.core.modeling.diagram import StyledDiagram, Stylist
 from gaphor.core.modeling.event import (
     AttributeUpdated,
     StyleSheetUpdated,
@@ -288,9 +288,10 @@ class DiagramPage:
         )
 
         view = self.view
-        item_painter = ItemPainter(view, prefers_color_scheme)
+        stylist = Stylist(view.model, prefers_color_scheme)
+        item_painter = ItemPainter(view.selection, stylist)
 
-        style = item_painter.style(StyledDiagram(self.diagram))
+        style = stylist(StyledDiagram(self.diagram))
         bg = style.get("background-color", (0.0, 0.0, 0.0, 0.0))
         self.diagram_css.load_from_string(
             f".{self._css_class()} {{ background-color: rgba({int(255 * bg[0])}, {int(255 * bg[1])}, {int(255 * bg[2])}, {bg[3]}); }}",
@@ -308,7 +309,7 @@ class DiagramPage:
             .append(GuidePainter(view))
             .append(MagnetPainter(view))
             .append(RubberbandPainter(self.rubberband_state))
-            .append(DiagramTypePainter(self.diagram))  # + prefers_color_scheme
+            .append(DiagramTypePainter(self.diagram, stylist))
         )
 
         view.request_update(self.diagram.get_all_items())

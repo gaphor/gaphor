@@ -7,7 +7,7 @@ import cairo
 from gaphas.geometry import Rectangle
 from gaphas.painter import FreeHandPainter, PainterChain
 
-from gaphor.core.modeling.diagram import StyledDiagram
+from gaphor.core.modeling.diagram import StyledDiagram, Stylist
 from gaphor.diagram.painter import DiagramTypePainter, ItemPainter
 
 
@@ -19,12 +19,17 @@ def render(diagram, new_surface, items=None, with_diagram_type=True, padding=8) 
     if items is None:
         items = list(diagram.get_all_items())
 
-    # TODO: Here we need styles without prefers-color-scheme
     diagram.update(diagram.ownedPresentation)
 
-    painter = new_painter(diagram)
+    stylist = Stylist(diagram)
+    item_painter = ItemPainter(stylist=stylist)
+    sloppiness = stylist(StyledDiagram(diagram)).get("line-style", 0.0)
+    painter = PainterChain().append(
+        FreeHandPainter(item_painter, sloppiness) if sloppiness else item_painter
+    )
+
     if with_diagram_type:
-        painter.append(DiagramTypePainter(diagram))
+        painter.append(DiagramTypePainter(diagram, stylist))
         type_padding = diagram_type_height(diagram)
     else:
         type_padding = 0
@@ -41,7 +46,7 @@ def render(diagram, new_surface, items=None, with_diagram_type=True, padding=8) 
     with new_surface(w, h) as surface:
         cr = cairo.Context(surface)
 
-        bg_color = diagram.style(StyledDiagram(diagram)).get("background-color")
+        bg_color = stylist(StyledDiagram(diagram)).get("background-color")
         if bg_color and bg_color[3]:
             cr.rectangle(0, 0, w, h)
             cr.set_source_rgba(*bg_color)
@@ -101,13 +106,3 @@ def save_eps(filename, diagram):
         return surface
 
     render(diagram, new_surface)
-
-
-def new_painter(diagram):
-    item_painter = ItemPainter()
-    style = item_painter.style(StyledDiagram(diagram))
-    sloppiness = style.get("line-style", 0.0)
-    item_painter = (
-        FreeHandPainter(item_painter, sloppiness) if sloppiness else item_painter
-    )
-    return PainterChain().append(item_painter)

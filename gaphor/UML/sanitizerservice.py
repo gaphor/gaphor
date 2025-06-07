@@ -12,6 +12,7 @@ from gaphor.core.modeling.event import (
     AssociationSet,
     DerivedSet,
     DiagramUpdateRequested,
+    ElementDeleted,
 )
 from gaphor.diagram.deletable import deletable
 from gaphor.event import Notification
@@ -48,6 +49,7 @@ class SanitizerService(Service):
         event_manager.subscribe(self._begin_transaction)
         event_manager.subscribe(self._end_transaction)
         event_manager.subscribe(self._diagram_update_requested)
+        event_manager.subscribe(self._element_deleted)
         event_manager.subscribe(self._on_update_diagrams)
         event_manager.subscribe(self._unlink_on_subject_delete)
         event_manager.subscribe(self._update_annotated_element_link)
@@ -60,6 +62,7 @@ class SanitizerService(Service):
         event_manager.unsubscribe(self._end_transaction)
         event_manager.unsubscribe(self._on_update_diagrams)
         event_manager.unsubscribe(self._diagram_update_requested)
+        event_manager.unsubscribe(self._element_deleted)
         event_manager.unsubscribe(self._unlink_on_subject_delete)
         event_manager.unsubscribe(self._update_annotated_element_link)
         event_manager.unsubscribe(self._unlink_on_extension_delete)
@@ -76,6 +79,10 @@ class SanitizerService(Service):
     @event_handler(DiagramUpdateRequested)
     def _diagram_update_requested(self, event: DiagramUpdateRequested):
         self._to_be_updated_diagrams.add(event.diagram)
+
+    @event_handler(ElementDeleted)
+    def _element_deleted(self, event: ElementDeleted):
+        self._to_be_updated_diagrams.discard(event.element)
 
     @event_handler(TransactionCommit, TransactionRollback)
     def _on_update_diagrams(self, event):

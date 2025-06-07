@@ -33,7 +33,7 @@ from gaphor.core.modeling.properties import (
     relation_many,
 )
 from gaphor.core.modeling.stylesheet import StyleSheet
-from gaphor.core.styling import Style, StyleNode
+from gaphor.core.styling import CompiledStyleSheet, PrefersColorScheme, Style, StyleNode
 from gaphor.i18n import translation
 
 log = logging.getLogger(__name__)
@@ -45,6 +45,28 @@ FALLBACK_STYLE: Style = {
     "font-family": "sans",
     "font-size": 14,
 }
+
+
+class Stylist:
+    """Handle styling for a painter."""
+
+    def __init__(
+        self,
+        diagram: Diagram | None = None,
+        prefers_color_scheme=PrefersColorScheme.NONE,
+    ):
+        self.compiled_style_sheet: CompiledStyleSheet | None = (
+            style_sheet.compile_style_sheet(prefers_color_scheme)
+            if diagram and (style_sheet := diagram.styleSheet)
+            else None
+        )
+
+    def __call__(self, node: StyleNode):
+        return (
+            self.compiled_style_sheet.compute_style(node)
+            if self.compiled_style_sheet
+            else FALLBACK_STYLE
+        )
 
 
 @dataclass(frozen=True)
@@ -304,16 +326,12 @@ class Diagram(Base):
     @property
     def styleSheet(self) -> StyleSheet | None:
         if not self._style_sheet:
-            self._style_sheet = next(self.model.select(StyleSheet), None)
+            try:
+                self._style_sheet = next(self.model.select(StyleSheet), None)
+            except TypeError:
+                # Model is not set
+                pass
         return self._style_sheet
-
-    def style(self, node: StyleNode) -> Style:
-        """Simple styles, with no media features enabled."""
-        return (
-            style_sheet.compile_style_sheet().compute_style(node)
-            if (style_sheet := self.styleSheet)
-            else FALLBACK_STYLE
-        )
 
     def gettext(self, message: str) -> str:
         """Translate a message to the language used in the model."""
@@ -414,9 +432,10 @@ class Diagram(Base):
         if style_sheet := self.styleSheet:
             style_sheet.clear_caches()
 
+        stylist = Stylist(self)
         for item in reversed(list(self.sort(dirty_items_with_ancestors()))):
             if update := getattr(item, "update", None):
-                update(UpdateContext(style=self.style(StyledItem(item))))
+                update(UpdateContext(style=stylist(StyledItem(item))))
 
         self._connections.solve()
 

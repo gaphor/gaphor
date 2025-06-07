@@ -8,7 +8,7 @@ from gaphor.core.modeling import (
     StyleSheet,
     css_name,
 )
-from gaphor.core.modeling.diagram import StyledItem
+from gaphor.core.modeling.diagram import StyledItem, Stylist
 from gaphor.core.styling import Color, Style
 from gaphor.diagram.propertypages import PropertyPageBase, PropertyPages, new_builder
 from gaphor.i18n import translated_ui_string
@@ -107,7 +107,7 @@ class StyleEditor:
         self.window.present()
 
     def fields(self):
-        style = self.subject.diagram.style(StyledItem(self.subject))
+        style = Stylist(self.subject.diagram)(StyledItem(self.subject))
         if style.get("color"):
             self.color.set_rgba(to_gdk_rgba(style["color"]))
             self.text_color.set_rgba(to_gdk_rgba(style["color"]))
