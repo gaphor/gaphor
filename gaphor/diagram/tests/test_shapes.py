@@ -324,7 +324,6 @@ def test_text_with_after_pseudo_element():
     class DummyStyleNode:
         name = "text"
         pseudo = None
-        dark_mode = False
 
         def parent(self):
             return None

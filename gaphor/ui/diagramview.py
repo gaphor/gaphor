@@ -4,6 +4,7 @@ from gaphas.model import Model
 from gaphas.view import GtkView
 from gi.repository import GObject
 
+from gaphor.diagram.painter import ItemPainter
 from gaphor.diagram.selection import Selection
 from gaphor.ui.actiongroup import named_shortcut
 
@@ -15,6 +16,7 @@ class DiagramView(GtkView):
 
     def __init__(self, model: Model | None = None):
         super().__init__(model, Selection())
+        self.painter = ItemPainter(self)
         self.selection.add_handler(self._on_selection_changed)
         self._on_selection_changed()
 
@@ -52,6 +54,8 @@ class DiagramView(GtkView):
         self.action_set_enabled("clipboard.copy", enabled)
         self.action_set_enabled("selection.delete", enabled)
         self.action_set_enabled("selection.unselect-all", enabled)
+
+    # TODO: Inject the screen prefers-color-scheme in the update process
 
 
 def _trigger_signal(signal_name):

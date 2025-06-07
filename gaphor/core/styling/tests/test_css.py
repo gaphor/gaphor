@@ -4,7 +4,7 @@ from gaphor.core.styling import (
     CompiledStyleSheet,
     compile_style_sheet,
 )
-from gaphor.core.styling.declarations import WhiteSpace
+from gaphor.core.styling.declarations import PrefersColorScheme, WhiteSpace
 from gaphor.core.styling.pseudo import compute_pseudo_element_style
 from gaphor.core.styling.tests.test_compiler import Node
 
@@ -337,10 +337,13 @@ def test_color_schemes():
         }
     """
 
-    compiled_style_sheet = CompiledStyleSheet(css)
-    normal_props = compiled_style_sheet.compute_style(Node("node"))
-    dark_props = compiled_style_sheet.compute_style(Node("node", dark_mode=True))
-    light_props = compiled_style_sheet.compute_style(Node("node", dark_mode=False))
+    normal_props = CompiledStyleSheet(css).compute_style(Node("node"))
+    dark_props = CompiledStyleSheet(
+        css, prefers_color_scheme=PrefersColorScheme.DARK
+    ).compute_style(Node("node"))
+    light_props = CompiledStyleSheet(
+        css, prefers_color_scheme=PrefersColorScheme.LIGHT
+    ).compute_style(Node("node"))
 
     assert normal_props.get("line-width") == pytest.approx(1.0)
     assert dark_props.get("line-width") == pytest.approx(2.0)
