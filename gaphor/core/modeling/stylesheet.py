@@ -22,30 +22,16 @@ DEFAULT_STYLE_SHEET = textwrap.dedent(
 
 
 class StyleSheet(Base):
-    _compiled_style_sheet: CompiledStyleSheet
-
     def __init__(
         self, id: Id | None = None, model: RepositoryProtocol | None = None
     ) -> None:
         super().__init__(id, model)
         self._instant_style_declarations = ""
         self._system_font_family = "sans"
-        self._prefers_color_scheme = PrefersColorScheme.NONE
-        self.compile_style_sheet()
+        self._compiled_cache: dict[PrefersColorScheme, CompiledStyleSheet] = {}
 
     styleSheet: attribute[str] = attribute("styleSheet", str, DEFAULT_STYLE_SHEET)
     naturalLanguage: attribute[str] = attribute("naturalLanguage", str)
-
-    @property
-    def prefers_color_scheme(self) -> PrefersColorScheme:
-        return self._prefers_color_scheme
-
-    @prefers_color_scheme.setter
-    def prefers_color_scheme(self, color_scheme: PrefersColorScheme) -> None:
-        if self._prefers_color_scheme is not color_scheme:
-            self._prefers_color_scheme = color_scheme
-            self.compile_style_sheet()
-            super().handle(StyleSheetUpdated(self))
 
     @property
     def instant_style_declarations(self) -> str:
@@ -54,8 +40,7 @@ class StyleSheet(Base):
     @instant_style_declarations.setter
     def instant_style_declarations(self, declarations: str) -> None:
         self._instant_style_declarations = declarations
-        self.compile_style_sheet()
-        super().handle(StyleSheetUpdated(self))
+        self._style_sheet_updated()
 
     @property
     def system_font_family(self) -> str:
@@ -64,36 +49,41 @@ class StyleSheet(Base):
     @system_font_family.setter
     def system_font_family(self, font_family: str) -> None:
         self._system_font_family = font_family
-        self.compile_style_sheet()
+        self._style_sheet_updated()
 
-    def compile_style_sheet(self) -> None:
-        self._compiled_style_sheet = CompiledStyleSheet(
+    def compile_style_sheet(
+        self, prefers_color_scheme=PrefersColorScheme.NONE
+    ) -> CompiledStyleSheet:
+        """Provide a compiled style sheet.
+
+        Style sheets are cached, to speed up subsequent calls.
+        """
+        if compiled_style_sheet := self._compiled_cache.get(prefers_color_scheme):
+            return compiled_style_sheet
+
+        compiled_style_sheet = CompiledStyleSheet(
             SYSTEM_STYLE_SHEET,
             f"diagram {{ font-family: {self._system_font_family} }}",
             self.styleSheet,
             self._instant_style_declarations,
-            prefers_color_scheme=self._prefers_color_scheme,
+            prefers_color_scheme=prefers_color_scheme,
         )
+        self._compiled_cache[prefers_color_scheme] = compiled_style_sheet
+        return compiled_style_sheet
 
-    def new_compiled_style_sheet(self) -> CompiledStyleSheet:
-        return self._compiled_style_sheet.copy()
+    def clear_caches(self):
+        for compiled in self._compiled_cache.values():
+            compiled.compute_style.cache_clear()
 
-    def postload(self) -> None:
-        super().postload()
-        self.compile_style_sheet()
+    def _style_sheet_updated(self):
+        self._compiled_cache.clear()
+        super().handle(StyleSheetUpdated(self))
 
     def handle(self, event: object) -> None:
-        # Ensure compiled style sheet is always up-to-date:
-        if is_style_sheet_update := (
-            isinstance(event, AttributeUpdated)
-            and event.property is StyleSheet.styleSheet
-        ):
-            self.compile_style_sheet()
-
         super().handle(event)
 
-        if is_style_sheet_update or (
-            isinstance(event, AttributeUpdated)
-            and event.property is StyleSheet.naturalLanguage
+        if isinstance(event, AttributeUpdated) and event.property in (
+            StyleSheet.styleSheet,
+            StyleSheet.naturalLanguage,
         ):
-            super().handle(StyleSheetUpdated(self))
+            self._style_sheet_updated()

@@ -139,7 +139,7 @@ def models():
 @pytest_asyncio.fixture
 async def view(diagram):
     view = DiagramView(model=diagram)
-    item_painter = ItemPainter(view.selection)
+    item_painter = ItemPainter(view)
     view.painter = item_painter
     view.bounding_box_painter = item_painter
     return view

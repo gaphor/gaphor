@@ -33,7 +33,7 @@ from gaphor.core.modeling.properties import (
     relation_many,
 )
 from gaphor.core.modeling.stylesheet import StyleSheet
-from gaphor.core.styling import CompiledStyleSheet, Style, StyleNode
+from gaphor.core.styling import Style, StyleNode
 from gaphor.i18n import translation
 
 log = logging.getLogger(__name__)
@@ -269,7 +269,7 @@ class Diagram(Base):
         self._connections = gaphas.connections.Connections()
         self._connections.add_handler(self._on_constraint_solved)
 
-        self._compiled_style_sheet: CompiledStyleSheet | None = None
+        self._style_sheet: StyleSheet | None = None
         self._registered_views: set[gaphas.model.View] = set()
         self._dirty_items: set[gaphas.Item] = set()
 
@@ -306,18 +306,15 @@ class Diagram(Base):
 
     @property
     def styleSheet(self) -> StyleSheet | None:
-        return next(self.model.select(StyleSheet), None)
+        if not self._style_sheet:
+            self._style_sheet = next(self.model.select(StyleSheet), None)
+        return self._style_sheet
 
     def style(self, node: StyleNode) -> Style:
-        if not (compiled_style_sheet := self._compiled_style_sheet):
-            style_sheet = self.styleSheet
-            compiled_style_sheet = self._compiled_style_sheet = (
-                style_sheet.new_compiled_style_sheet() if style_sheet else None
-            )
-
+        """Simple styles, with no media features enabled."""
         return (
-            compiled_style_sheet.compute_style(node)
-            if compiled_style_sheet
+            style_sheet.compile_style_sheet().compute_style(node)
+            if (style_sheet := self.styleSheet)
             else FALLBACK_STYLE
         )
 
@@ -409,15 +406,16 @@ class Diagram(Base):
         are now updates. If an item has an ``update(context: UpdateContext)``
         method, it's invoked. Constraints are solved.
         """
-        self._update_dirty_items(dirty_items)
-
-        # Clear our (cached) style sheet first
-        self._compiled_style_sheet = None
 
         def dirty_items_with_ancestors():
             for item in self._dirty_items:
                 yield item
                 yield from gaphas.canvas.ancestors(self, item)
+
+        self._update_dirty_items(dirty_items)
+
+        if style_sheet := self.styleSheet:
+            style_sheet.clear_caches()
 
         for item in reversed(list(self.sort(dirty_items_with_ancestors()))):
             if update := getattr(item, "update", None):
