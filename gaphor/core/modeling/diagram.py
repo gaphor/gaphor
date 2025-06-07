@@ -206,11 +206,8 @@ class StyledItem:
 
     def parent(self) -> StyleNode | None:
         parent = self.item.parent
-        return (
-            StyledItem(parent, self.selection)
-            if parent
-            else StyledDiagram(self.diagram, self.selection)
-        )
+        # Do not propagate `selection`: item style should not be based on pseudo styles.
+        return StyledItem(parent) if parent else StyledDiagram(self.diagram)
 
     def children(self) -> Iterator[StyleNode]:
         item = self.item
