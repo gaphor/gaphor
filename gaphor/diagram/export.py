@@ -19,6 +19,7 @@ def render(diagram, new_surface, items=None, with_diagram_type=True, padding=8) 
     if items is None:
         items = list(diagram.get_all_items())
 
+    # TODO: Here we need styles without prefers-color-scheme
     diagram.update(diagram.ownedPresentation)
 
     painter = new_painter(diagram)
@@ -103,9 +104,10 @@ def save_eps(filename, diagram):
 
 
 def new_painter(diagram):
-    style = diagram.style(StyledDiagram(diagram))
+    item_painter = ItemPainter()
+    style = item_painter.style(StyledDiagram(diagram))
     sloppiness = style.get("line-style", 0.0)
     item_painter = (
-        FreeHandPainter(ItemPainter(), sloppiness) if sloppiness else ItemPainter()
+        FreeHandPainter(item_painter, sloppiness) if sloppiness else item_painter
     )
     return PainterChain().append(item_painter)

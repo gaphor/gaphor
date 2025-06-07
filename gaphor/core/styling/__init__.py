@@ -55,7 +55,7 @@ Style = TypedDict(
         "vertical-align": VerticalAlign,
         "vertical-spacing": Number,
         "white-space": WhiteSpace,
-        # Opaque elements to support inheritance
+        # Opaque elements to support inheritance and pseudo elements
         "-gaphor-style-node": object,
         "-gaphor-compiled-style-sheet": object,
     },
