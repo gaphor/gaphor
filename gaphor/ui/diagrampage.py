@@ -11,7 +11,8 @@ from gaphas.view import GtkView
 from gi.repository import Adw, Gdk, GdkPixbuf, Gio, GLib, Gtk
 
 from gaphor.core import event_handler, gettext
-from gaphor.core.modeling.diagram import StyledDiagram, Stylist
+from gaphor.core.modeling import StyleSheet
+from gaphor.core.modeling.diagram import StyledDiagram
 from gaphor.core.modeling.event import (
     AttributeUpdated,
     StyleSheetUpdated,
@@ -288,10 +289,17 @@ class DiagramPage:
         )
 
         view = self.view
-        stylist = Stylist(view.model, prefers_color_scheme)
-        item_painter = ItemPainter(view.selection, stylist)
+        style_sheet = view.model.styleSheet or StyleSheet()
+        item_painter = ItemPainter(
+            view.selection,
+            functools.partial(
+                style_sheet.compute_style, prefers_color_scheme=prefers_color_scheme
+            ),
+        )
 
-        style = stylist(StyledDiagram(self.diagram))
+        style = style_sheet.compute_style(
+            StyledDiagram(self.diagram), prefers_color_scheme
+        )
         bg = style.get("background-color", (0.0, 0.0, 0.0, 0.0))
         self.diagram_css.load_from_string(
             f".{self._css_class()} {{ background-color: rgba({int(255 * bg[0])}, {int(255 * bg[1])}, {int(255 * bg[2])}, {bg[3]}); }}",
@@ -309,7 +317,15 @@ class DiagramPage:
             .append(GuidePainter(view))
             .append(MagnetPainter(view))
             .append(RubberbandPainter(self.rubberband_state))
-            .append(DiagramTypePainter(self.diagram, stylist))
+            .append(
+                DiagramTypePainter(
+                    self.diagram,
+                    functools.partial(
+                        style_sheet.compute_style,
+                        prefers_color_scheme=prefers_color_scheme,
+                    ),
+                )
+            )
         )
 
         view.request_update(self.diagram.get_all_items())

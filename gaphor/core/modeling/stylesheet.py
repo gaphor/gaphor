@@ -6,7 +6,7 @@ import textwrap
 from gaphor.core.modeling.base import Base, Id, RepositoryProtocol
 from gaphor.core.modeling.event import AttributeUpdated, StyleSheetUpdated
 from gaphor.core.modeling.properties import attribute
-from gaphor.core.styling import CompiledStyleSheet, PrefersColorScheme
+from gaphor.core.styling import CompiledStyleSheet, PrefersColorScheme, Style, StyleNode
 
 SYSTEM_STYLE_SHEET = (importlib.resources.files("gaphor") / "diagram.css").read_text(
     "utf-8"
@@ -50,6 +50,11 @@ class StyleSheet(Base):
     def system_font_family(self, font_family: str) -> None:
         self._system_font_family = font_family
         self._style_sheet_updated()
+
+    def compute_style(
+        self, node: StyleNode, prefers_color_scheme=PrefersColorScheme.NONE
+    ) -> Style:
+        return self.compile_style_sheet(prefers_color_scheme).compute_style(node)
 
     def compile_style_sheet(
         self, prefers_color_scheme=PrefersColorScheme.NONE

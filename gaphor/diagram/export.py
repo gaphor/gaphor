@@ -7,7 +7,8 @@ import cairo
 from gaphas.geometry import Rectangle
 from gaphas.painter import FreeHandPainter, PainterChain
 
-from gaphor.core.modeling.diagram import StyledDiagram, Stylist
+from gaphor.core.modeling import StyleSheet
+from gaphor.core.modeling.diagram import Diagram, StyledDiagram
 from gaphor.diagram.painter import DiagramTypePainter, ItemPainter
 
 
@@ -15,21 +16,25 @@ def escape_filename(diagram_name):
     return re.sub("\\W+", "_", diagram_name)
 
 
-def render(diagram, new_surface, items=None, with_diagram_type=True, padding=8) -> None:
+def render(
+    diagram: Diagram, new_surface, items=None, with_diagram_type=True, padding=8
+) -> None:
     if items is None:
         items = list(diagram.get_all_items())
 
     diagram.update(diagram.ownedPresentation)
 
-    stylist = Stylist(diagram)
-    item_painter = ItemPainter(stylist=stylist)
-    sloppiness = stylist(StyledDiagram(diagram)).get("line-style", 0.0)
+    style_sheet = diagram.styleSheet or StyleSheet()
+    item_painter = ItemPainter(compute_style=style_sheet.compute_style)
+    sloppiness = style_sheet.compute_style(StyledDiagram(diagram)).get(
+        "line-style", 0.0
+    )
     painter = PainterChain().append(
         FreeHandPainter(item_painter, sloppiness) if sloppiness else item_painter
     )
 
     if with_diagram_type:
-        painter.append(DiagramTypePainter(diagram, stylist))
+        painter.append(DiagramTypePainter(diagram, style_sheet.compute_style))
         type_padding = diagram_type_height(diagram)
     else:
         type_padding = 0
@@ -46,7 +51,9 @@ def render(diagram, new_surface, items=None, with_diagram_type=True, padding=8) 
     with new_surface(w, h) as surface:
         cr = cairo.Context(surface)
 
-        bg_color = stylist(StyledDiagram(diagram)).get("background-color")
+        bg_color = style_sheet.compute_style(StyledDiagram(diagram)).get(
+            "background-color"
+        )
         if bg_color and bg_color[3]:
             cr.rectangle(0, 0, w, h)
             cr.set_source_rgba(*bg_color)

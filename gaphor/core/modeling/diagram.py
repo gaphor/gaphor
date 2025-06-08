@@ -33,7 +33,7 @@ from gaphor.core.modeling.properties import (
     relation_many,
 )
 from gaphor.core.modeling.stylesheet import StyleSheet
-from gaphor.core.styling import CompiledStyleSheet, PrefersColorScheme, Style, StyleNode
+from gaphor.core.styling import Style, StyleNode
 from gaphor.i18n import translation
 
 log = logging.getLogger(__name__)
@@ -45,28 +45,6 @@ FALLBACK_STYLE: Style = {
     "font-family": "sans",
     "font-size": 14,
 }
-
-
-class Stylist:
-    """Handle styling for a painter."""
-
-    def __init__(
-        self,
-        diagram: Diagram | None = None,
-        prefers_color_scheme=PrefersColorScheme.NONE,
-    ):
-        self.compiled_style_sheet: CompiledStyleSheet | None = (
-            style_sheet.compile_style_sheet(prefers_color_scheme)
-            if diagram and (style_sheet := diagram.styleSheet)
-            else None
-        )
-
-    def __call__(self, node: StyleNode):
-        return (
-            self.compiled_style_sheet.compute_style(node)
-            if self.compiled_style_sheet
-            else FALLBACK_STYLE
-        )
 
 
 @dataclass(frozen=True)
@@ -429,13 +407,12 @@ class Diagram(Base):
 
         self._update_dirty_items(dirty_items)
 
-        if style_sheet := self.styleSheet:
-            style_sheet.clear_caches()
+        style_sheet = self.styleSheet or StyleSheet()
+        style_sheet.clear_caches()
 
-        stylist = Stylist(self)
         for item in reversed(list(self.sort(dirty_items_with_ancestors()))):
             if update := getattr(item, "update", None):
-                update(UpdateContext(style=stylist(StyledItem(item))))
+                update(UpdateContext(style=style_sheet.compute_style(StyledItem(item))))
 
         self._connections.solve()
 
