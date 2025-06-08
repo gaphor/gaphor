@@ -89,7 +89,9 @@ def compile_rules(rules, prefers_color_scheme: PrefersColorScheme):
 
 
 def media_query_applies(query: list, prefers_color_scheme: PrefersColorScheme):
-    if len(query) == 1:
+    if len(query) == 0:
+        return True
+    elif len(query) == 1:
         mode = query[0].lower()
     elif (
         len(query) == 3

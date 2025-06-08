@@ -390,6 +390,7 @@ def test_has_and_is_selector():
 @pytest.mark.parametrize(
     "css",
     [
+        "@media { node { color: blue; } }",
         "@media(prefers-color-scheme = dark) { node { color: blue; } }",
         "@media prefers-color-scheme = dark { node { color: blue; } }",
         "@media(dark-mode) { node { color: blue; } }",
