@@ -78,7 +78,7 @@ class DiagramTypePainter:
     def __init__(
         self,
         _diagram: Diagram,
-        compute_style: Callable[[StyleNode], Style] | None = None,
+        _compute_style: Callable[[StyleNode], Style] | None = None,
     ):
         pass
 

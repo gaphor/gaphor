@@ -4,7 +4,6 @@ import cairo
 import pytest
 from gaphas.geometry import Rectangle
 
-from gaphor.core.modeling.diagram import FALLBACK_STYLE
 from gaphor.core.styling import (
     CompiledStyleSheet,
     JustifyContent,
@@ -25,6 +24,12 @@ from gaphor.diagram.shapes import (
     VerticalAlign,
     traverse_css_nodes,
 )
+
+FALLBACK_STYLE: Style = {
+    "color": (0, 0, 0, 1),
+    "font-family": "sans",
+    "font-size": 14,
+}
 
 
 class InlineStyle:

@@ -2,7 +2,7 @@
 
 from gaphor import UML
 from gaphor.core.modeling import UpdateContext
-from gaphor.core.modeling.diagram import FALLBACK_STYLE, Diagram
+from gaphor.core.modeling.diagram import Diagram
 from gaphor.UML.classes.klass import ClassItem
 
 
@@ -11,7 +11,7 @@ def compartments(item):
 
 
 def context():
-    return UpdateContext(style=FALLBACK_STYLE)
+    return UpdateContext(style={})
 
 
 def test_compartments(element_factory):
