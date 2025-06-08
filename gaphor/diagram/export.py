@@ -23,8 +23,8 @@ def render(
         items = list(diagram.get_all_items())
 
     diagram.update(diagram.ownedPresentation)
-
-    style_sheet = diagram.styleSheet or StyleSheet()
+    model = diagram.model
+    style_sheet = model.style_sheet or StyleSheet()
     item_painter = ItemPainter(compute_style=style_sheet.compute_style)
     sloppiness = style_sheet.compute_style(StyledDiagram(diagram)).get(
         "line-style", 0.0

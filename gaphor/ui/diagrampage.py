@@ -289,7 +289,7 @@ class DiagramPage:
         )
 
         view = self.view
-        style_sheet = view.model.styleSheet or StyleSheet()
+        style_sheet = self.element_factory.style_sheet or StyleSheet()
         item_painter = ItemPainter(
             view.selection,
             functools.partial(

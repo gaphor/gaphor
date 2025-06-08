@@ -46,7 +46,7 @@ class StylePropertyPage(PropertyPageBase):
         if StylePropertyPage.style_editor:
             StylePropertyPage.style_editor.close()
 
-        style_sheet = next(self.element_factory.select(StyleSheet))
+        style_sheet = self.element_factory.style_sheet
         StylePropertyPage.style_editor = StyleEditor(
             self.subject,
             style_sheet,

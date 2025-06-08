@@ -258,7 +258,6 @@ class Diagram(Base):
         self._connections = gaphas.connections.Connections()
         self._connections.add_handler(self._on_constraint_solved)
 
-        self._style_sheet: StyleSheet | None = None
         self._registered_views: set[gaphas.model.View] = set()
         self._dirty_items: set[gaphas.Item] = set()
 
@@ -293,19 +292,9 @@ class Diagram(Base):
         )
         self.ownedPresentation.order(new_order.index)
 
-    @property
-    def styleSheet(self) -> StyleSheet | None:
-        if not self._style_sheet:
-            try:
-                self._style_sheet = next(self.model.select(StyleSheet), None)
-            except TypeError:
-                # Model is not set
-                pass
-        return self._style_sheet
-
     def gettext(self, message: str) -> str:
         """Translate a message to the language used in the model."""
-        style_sheet = self.styleSheet
+        style_sheet = self.model.style_sheet
         if style_sheet and style_sheet.naturalLanguage:
             return translation(style_sheet.naturalLanguage).gettext(message)
         return message
@@ -391,6 +380,8 @@ class Diagram(Base):
         are now updates. If an item has an ``update(context: UpdateContext)``
         method, it's invoked. Constraints are solved.
         """
+        if not self._model:
+            return
 
         def dirty_items_with_ancestors():
             for item in self._dirty_items:
@@ -399,7 +390,7 @@ class Diagram(Base):
 
         self._update_dirty_items(dirty_items)
 
-        style_sheet = self.styleSheet or StyleSheet()
+        style_sheet = self.model.style_sheet or StyleSheet()
         style_sheet.clear_caches()
 
         for item in reversed(list(self.sort(dirty_items_with_ancestors()))):
