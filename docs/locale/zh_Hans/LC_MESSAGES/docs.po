@@ -8,45 +8,54 @@ msgstr ""
 "Project-Id-Version: Gaphor 3.0.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-12-30 14:25-0500\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2025-06-10 00:50+0000\n"
+"Last-Translator: Fabien Liang <zeyue.liang@gmail.com>\n"
+"Language-Team: Chinese (Simplified Han script) <https://hosted.weblate.org/"
+"projects/gaphor/docs-gaphor-org/zh_Hans/>\n"
 "Language: zh_Hans\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.12-dev\n"
 
 #: ../changelog.rst:2
 msgid "Change Log"
-msgstr ""
+msgstr "变更履历"
 
 #: ../changelog.rst:4
 msgid "Our change log is with the project's source code on `GitHub <https://github.com/gaphor/gaphor/blob/main/CHANGELOG.md>`_."
 msgstr ""
+"变更履历随项目源代码管理在`GitHub<https://github.com/gaphor/gaphor/blob/main/"
+"CHANGELOG.md>`上。"
 
 #: ../changelog.rst:8
 msgid "The latest version may not have been released yet."
-msgstr ""
+msgstr "最新版本有可能尚未发布。"
 
 #: ../coffee_machine.md:1
 msgid "Tutorial: Coffee Machine"
-msgstr ""
+msgstr "教程：咖啡机"
 
 #: ../coffee_machine.md:4
 #: ../first_model.md:4
 msgid "In this tutorial we refer to the different parts of the gaphor interface: {ref}`Model Browser <getting_started:model browser>`, [Toolbox](getting_started:toolbox), {ref}`Property Editor <getting_started:property editor>`."
 msgstr ""
+"在本教程中，我们参考了Gaphor的不同部分界面：{ref}`Model Browser "
+"<getting_started:model browser>`, [Toolbox](getting_started:toolbox), {ref}`"
+"Property Editor <getting_started:property editor>`。"
 
 #: ../coffee_machine.md:8
 msgid "Although the names should speak for themselves, you can check out the [Getting Started](getting_started) page for more information about those sections."
 msgstr ""
+"尽管名称已经能够反映含义，但是您仍然可以查看 [Getting Started]"
+"(getting_started) 页面获得这些章节内容的更多信息。"
 
 #: ../coffee_machine.md:12
 #: ../coffee_machine_concept.md:7
 #: ../coffee_machine_logical.md:7
 msgid "Introduction"
-msgstr ""
+msgstr "介绍"
 
 #: ../coffee_machine.md:14
 msgid "In the bustling town of Antville, a colony of ants had formed a Systems Engineering consulting company called AntSource. They value collaboration, transparency, and community-driven engineering, and seeks to empower their employees and customers through open communication and participation in the systems engineering process."
