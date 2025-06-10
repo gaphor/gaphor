@@ -57,7 +57,7 @@ from gaphor.diagram.presentation import (
     get_center_pos,
     text_name,
 )
-from gaphor.diagram.shapes import Box, cairo_state, stroke
+from gaphor.diagram.shapes import Box, VerticalAlign, cairo_state, stroke
 from gaphor.diagram.support import represents
 from gaphor.UML.compartments import text_stereotypes
 from gaphor.UML.interactions.lifeline import LifelineItem
@@ -89,6 +89,7 @@ class MessageItem(Named, LinePresentation[UML.Message]):
                 text_stereotypes(self),
                 text_name(self),
             ),
+            middle_valign=VerticalAlign.TOP,
         )
         self.handles()[1].pos = (40, 0)
 
