@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2025-04-23 21:47+0200\n"
-"PO-Revision-Date: 2025-06-04 06:02+0000\n"
+"PO-Revision-Date: 2025-06-11 18:29+0000\n"
 "Last-Translator: Fabien Liang <zeyue.liang@gmail.com>\n"
 "Language-Team: Chinese (Simplified Han script) <https://hosted.weblate.org/"
 "projects/gaphor/gaphor/zh_Hans/>\n"
@@ -2086,7 +2086,7 @@ msgstr "外部元件"
 
 #: gaphor/templates/sysml-example.gaphor gaphor/templates/sysml.gaphor
 msgid "Concept Requirements"
-msgstr "概念要求"
+msgstr "概念需求"
 
 #: gaphor/templates/sysml-example.gaphor
 msgid "Feature User Need"
@@ -2130,7 +2130,7 @@ msgstr "详细行为"
 
 #: gaphor/templates/sysml-example.gaphor gaphor/templates/sysml.gaphor
 msgid "Logical Requirements"
-msgstr "逻辑要求"
+msgstr "逻辑需求"
 
 #: gaphor/templates/sysml-example.gaphor gaphor/templates/sysml.gaphor
 msgid "Logical States"
@@ -2178,7 +2178,7 @@ msgstr "命令"
 
 #: gaphor/templates/sysml-example.gaphor gaphor/templates/sysml.gaphor
 msgid "Functional Boundary Behavior"
-msgstr "边界功能行为"
+msgstr "功能边界行为"
 
 #: gaphor/templates/sysml-example.gaphor
 msgid "Determine Actuator Command"
