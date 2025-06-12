@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gaphor 3.0.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-12-30 14:25-0500\n"
-"PO-Revision-Date: 2025-06-11 18:29+0000\n"
+"PO-Revision-Date: 2025-06-13 04:01+0000\n"
 "Last-Translator: Fabien Liang <zeyue.liang@gmail.com>\n"
 "Language-Team: Chinese (Simplified Han script) <https://hosted.weblate.org/"
 "projects/gaphor/docs-gaphor-org/zh_Hans/>\n"
@@ -1485,511 +1485,633 @@ msgstr ""
 
 #: ../framework.md:1
 msgid "Framework"
-msgstr ""
+msgstr "框架"
 
 #: ../framework.md:3
 msgid "Overview"
-msgstr ""
+msgstr "概述"
 
 #: ../framework.md:5
 msgid "Gaphor is built in a light, service oriented fashion. The application is split in a series of services, such as a file, event, and undo managers. Those services are loaded based on entry points defined in the `pyproject.toml` file. To learn more about the architecture, please see the description about the [Service Oriented Architecture](service_oriented.md)."
 msgstr ""
+"Gaphor采用轻量级的面向服务架构设计，其功能模块被划分为一系列独立服务，包括文"
+"件管理、事件管理和撤销管理等组件。这些服务通过`pyproject.toml`配置文件中定义"
+"的入口点动态加载。如需深入了解架构设计，请参阅[面向服务架构]"
+"(service_oriented.md)的详细说明。"
 
 #: ../framework.md:11
 msgid "Event driven"
-msgstr ""
+msgstr "事件驱动"
 
 #: ../framework.md:13
 msgid "Parts of Gaphor communicate with each other through events. Whenever something important happens, for example, an attribute of a model element changes, an event is sent. When other parts of the application are interested in a change, they register an event handler for that event type. Events are emitted though a central broker so you do not have to register on every individual element that can send an event they are interested in. For example, a diagram item could register an event rule and then check if the element that sent the event is actually the event the item is representing. For more information see the full description of the [event system](event_system)."
 msgstr ""
+"Gaphor各组件通过事件机制进行通信。当发生重要变更时（例如模型元素的属性修改）"
+"，系统会自动触发事件通知。应用中的其他模块只需在中央事件代理（Central "
+"Broker）注册对应类型的事件处理器（Event "
+"Handler），即可监听相关变更——无需向每个可能触发事件的元素单独注册。例如，图表"
+"项可以注册事件规则，并通过验证事件源是否与其所代表的模型元素匹配来实现精准响"
+"应。完整实现细节请参阅[事件系统](event_system)专题文档。"
 
 #: ../framework.md:23
 msgid "Transactional"
-msgstr ""
+msgstr "事务型处理机制（Transactional）"
 
 #: ../framework.md:25
 msgid "Gaphor is transactional, which means it keeps track of the functions it performs as a series of transactions. The transactions work by sending an event when a transaction starts and sending another when a transaction ends. This allows, for example, the undo manager to keep a running log of the previous transactions so that a transaction can be reversed if the undo button is pressed."
 msgstr ""
+"Gaphor采用事务处理机制，其核心原理是将所有功能操作记录为连续的事务序列。该机"
+"制通过以下方式实现：在事务开始时发送启动事件，事务结束时发送完成事件。这种设"
+"计使得（例如）撤销管理器能够持续记录历史事务日志，当用户点击撤销按钮时，系统"
+"即可回滚特定事务。"
 
 #: ../framework.md:32
 msgid "Main Components"
-msgstr ""
+msgstr "主要组件"
 
 #: ../framework.md:34
 msgid "The main portion of Gaphor that executes first is called the `Application`. Gaphor can have multiple models open at any time. Each model is kept in a `Session`. Only one Application instance is active. Each session will load its own services defined as [gaphor.services](service_oriented.md)."
 msgstr ""
+"Gaphor的初始执行主体称为`Application`核心模块。系统支持同时打开多个模型，每个"
+"模型均存储在独立的`Session`会话中。运行时仅允许一个Application实例处于激活状"
+"态，而每个会话会动态加载其专属的服务组件（定义于[gaphor.services]"
+"(service_oriented.md)）。"
 
 #: ../framework.md:40
 msgid "The most notable services are:"
-msgstr ""
+msgstr "核心服务组件包括："
 
 #: ../framework.md:42
 msgid "event_manager"
-msgstr ""
+msgstr "事件管理器（event_manager）"
 
 #: ../framework.md:44
 msgid "This is the central component used for event dispatching. Every service that does something with events (both sending and receiving) depends on this component."
-msgstr ""
+msgstr "该组件是事件调度的核心枢纽，所有涉及事件处理（包括发送与接收）的服务模块均依"
+"赖于此组件。"
 
 #: ../framework.md:48
 msgid "element_factory"
-msgstr ""
+msgstr "元素工厂 (element_factory)"
 
 #: ../framework.md:50
 msgid "The [data model](models/core) itself is maintained in the element factory ({obj}`~gaphor.core.modeling.ElementFactory`). This service is used to create model elements, as well as to lookup elements or query for a set of elements."
 msgstr ""
+"[数据模型](models/"
+"core)本身由元素工厂（{obj}`~gaphor.core.modeling.ElementFactory`）维护，该服"
+"务组件主要提供三大功能：创建模型元素、元素检索、元素集合查询。"
 
 #: ../framework.md:54
 msgid "undo_manager"
-msgstr ""
+msgstr "撤销管理器 (undo_manager)"
 
 #: ../framework.md:56
 msgid "One of the most appreciated services. It allows users to make a mistake every now and then!"
-msgstr ""
+msgstr "最受欢迎的服务组件之一：该管理器允许用户在执行操作时偶尔出错（毕竟谁能保证永"
+"不失误呢）！"
 
 #: ../framework.md:59
 msgid "The undo manager is transactional. Actions performed by a user are only stored if a transaction is active. If a transaction is completed (committed) a new undo action is stored. Transactions can also be rolled back, in which case all changes are played back directly. For more information see the full description of the [undo manager](undo)."
 msgstr ""
+"撤销管理器采用事务处理机制，其运作规则如下：事务激活原则（仅当事务处于活动状"
+"态时，用户操作才会被记录）、 "
+"提交处理（事务完成（提交）后，系统将存储新的撤销操作项）、 "
+"回滚机制（事务回滚时将直接逆向执行所有变更）。完整实现细节请参阅"
+"[撤销管理器专题文档](undo)。"
 
 #: ../framework.md:65
 msgid "file_manager"
-msgstr ""
+msgstr "文件管理器 (file_manager)"
 
 #: ../framework.md:67
 msgid "Loading and saving a model is done through this service."
-msgstr ""
+msgstr "模型加载与保存功能均通过该组件实现。"
 
 #: ../gaphor-services.md:5
 msgid "Example: Gaphor services"
-msgstr ""
+msgstr "示例：Gaphor服务"
 
 #: ../gaphor-services.md:7
 msgid "In this example we're doing something a little less trivial. In Gaphor, services are defined as [entry points](https://packaging.python.org/en/latest/specifications/entry-points/). Each service is a class, and takes parameters with names that match other services. This allows services to depend on other services."
 msgstr ""
+"在此示例中，我们将演示一个较为复杂的实现：Gaphor中的服务组件通过[入口点]"
+"(https://packaging.python.org/en/latest/specifications/entry-points/"
+")定义。每个服务均为独立类，其构造函数参数通过名称自动匹配其他服务实例，从而实"
+"现服务间的依赖注入。"
 
 #: ../gaphor-services.md:12
 msgid "It looks something like this:"
-msgstr ""
+msgstr "其实现方式如下所示："
 
 #: ../gaphor-services.md:56
 msgid "Let's first load the entry points."
-msgstr ""
+msgstr "首先加载入口点配置。"
 
 #: ../gaphor-services.md:68
 msgid "Now let's create a component in our model for every service."
-msgstr ""
+msgstr "现在为每个服务在模型中创建对应的组件。"
 
 #: ../gaphor-services.md:85
 msgid "With all components mapped, we can create dependencies between those components, based on the constructor parameter names."
-msgstr ""
+msgstr "当所有组件完成映射后，系统将根据构造函数参数名称自动建立组件间的依赖关系。"
 
 #: ../gaphor-services.md:101
 msgid "With all elements in the model, we can create a diagram. Let's drop the components and dependencies on the diagram and let auto-layout do its magic."
-msgstr ""
+msgstr "当模型中所有元素就绪后，即可创建图表。将组件及其依赖关系拖放至图表中，系统将"
+"通过自动布局功能智能排版。"
 
 #: ../gaphor-services.md:104
 msgid "To make the dependency look good, we have to add a style sheet. If you create a new diagram via the GUI, this element is automatically added."
-msgstr ""
+msgstr "为使依赖关系呈现更佳视觉效果，需添加样式表。若通过图形界面新建图表，该元素将"
+"自动加载。"
 
 #: ../gaphor-services.md:118
 msgid "Last step is to layout and draw the diagram."
-msgstr ""
+msgstr "最后一步是图表布局与绘制。"
 
 #: ../gaphor-services.md:128
 msgid "That's all. As you can see from the diagram, a lot of services rely on `EventManager`."
-msgstr ""
+msgstr "至此完成。如图所示，很多服务组件都依赖于`EventManager`事件管理器。"
 
 #: ../getting_started.md:1
 msgid "Get Started with Gaphor"
-msgstr ""
+msgstr "Gaphor 入门指南"
 
 #: ../getting_started.md:3
 msgid "Gaphor is more than a diagram editor: it's a modeling environment. Where simple diagram editors such as Microsoft Visio and [draw.io](https://draw.io) allow you to create pictures, Gaphor actually keeps track of the elements you add to the model. In Gaphor you can create diagrams to track and visualize different aspects of the system you're developing."
 msgstr ""
+"Gaphor不仅是一款图表编辑器，更是一个完整的建模环境。相较于Microsoft Visio和"
+"[draw.io]"
+"(https://draw.io)等基础绘图工具仅能创建静态图示，Gaphor会持续追踪模型中所有元"
+"素的关联关系。通过Gaphor，您可以创建多种图表来追踪和可视化目标系统的不同维度"
+"特征。"
 
 #: ../getting_started.md:9
 msgid "Enough talk, let's get started."
-msgstr ""
+msgstr "实战开始。"
 
 #: ../getting_started.md:11
 msgid "You can find installers for Gaphor on the [Gaphor Website](https://gaphor.org/download). Gaphor can be installed on Linux (Flatpak), Windows, and macOS."
 msgstr ""
+"您可访问[Gaphor官网](https://gaphor.org/"
+"download)下载安装程序、跨平台支持Linux系统（Flatpak格式）、Windows系统、macOS"
+"系统。"
 
 #: ../getting_started.md:14
 msgid "Once Gaphor is launched, it provides you a welcome screen. It shows you previously opened models and model templates."
-msgstr ""
+msgstr "当启动Gaphor时，系统会呈现欢迎界面，该界面会显示您最近打开的模型文件以及可用"
+"的模型模板库。"
 
 #: ../getting_started.md:17
 msgid "![Gaphor's welcome screen showing recently opened models and model templates.](images/getting-started-greeter.png)"
-msgstr ""
+msgstr "![Gaphor欢迎界面展示（含最近打开的模型文件与模型模板库）。](images/getting-"
+"started-greeter.png)"
 
 #: ../getting_started.md:17
 msgid "Gaphor's welcome screen showing recently opened models and model templates."
-msgstr ""
+msgstr "Gaphor欢迎界面展示（含最近打开的模型文件与模型模板库）。"
 
 #: ../getting_started.md:19
 msgid "You can select a template to get started."
-msgstr ""
+msgstr "可以选择一个模板快速开始建模。"
 
 #: ../getting_started.md:21
 msgid "**Generic:** a blank model to start with"
-msgstr ""
+msgstr "**通用模板**：空白模型（供全新建模使用）"
 
 #: ../getting_started.md:22
 msgid "**UML:** A template for the *Unified Modeling Language* for modeling a software system"
-msgstr ""
+msgstr "**UML模板**：适用于统一建模语言的软件系统建模模板"
 
 #: ../getting_started.md:23
 msgid "**SysML:** A template for the *Systems Modeling Language* for modeling a wide range of systems and systems-of-systems"
-msgstr ""
+msgstr "**SysML模板**：适用于系统建模语言的复杂系统及系统之系统建模模板"
 
 #: ../getting_started.md:24
 msgid "**RAAML:** A template for the *Risk Analysis and Assessment Modeling language* for safety and reliability analysis"
 msgstr ""
+"**RAAML模板**：适用于风险分析与评估建模语言（*Risk Analysis and Assessment "
+"Modeling language*）的安全性与可靠性分析模板"
 
 #: ../getting_started.md:25
 msgid "**C4 Model:** A template for *Context, Containers, Components, and Code* which is for lean modeling of software architecture"
 msgstr ""
+"**C4模型模板**： "
+"一套适用于软件架构精简建模的模板，包含*上下文（Context）、容器（Containers）"
+"、组件（Components）和代码（Code）*四个层级"
 
 #: ../getting_started.md:27
 msgid "Once the model interface is loaded you'll see the modeling interface."
-msgstr ""
+msgstr "当模型界面加载完成后，您将看到建模操作界面。"
 
 #: ../getting_started.md:29
 msgid "![The Gaphor main window, with numbers refering to parts of the UI.](images/getting-started-new-model.png)"
-msgstr ""
+msgstr "![Gaphor 主窗口示意图，图中数字对应界面各组成部分。](images/getting-started-"
+"new-model.png)"
 
 #: ../getting_started.md:29
 msgid "The Gaphor main window, with numbers refering to parts of the UI."
-msgstr ""
+msgstr "Gaphor 主窗口示意图，图中数字对应界面各组成部分。"
 
 #: ../getting_started.md:31
 msgid "The layout of the Gaphor interface is divided into four sections, namely:"
-msgstr ""
+msgstr "Gaphor 界面布局划分为以下四个区域："
 
 #: ../getting_started.md:34
 #: ../getting_started.md:41
 msgid "Model Browser"
-msgstr ""
+msgstr "模型浏览器"
 
 #: ../getting_started.md:35
 msgid "Diagram Element Toolbox"
-msgstr ""
+msgstr "图标元素工具箱"
 
 #: ../getting_started.md:36
 #: ../getting_started.md:80
 #: ../models/raaml/Diagrams.rst:2
 #: ../models/sysml/Diagrams.rst:2
 msgid "Diagrams"
-msgstr ""
+msgstr "图表区域"
 
 #: ../getting_started.md:37
 #: ../getting_started.md:143
 msgid "Property Editor"
-msgstr ""
+msgstr "属性编辑器"
 
 #: ../getting_started.md:39
 msgid "Each section has its own specific function."
-msgstr ""
+msgstr "每个功能区域都有其特定的用途。"
 
 #: ../getting_started.md:43
 msgid "The Model Browser section of the interface displays a hierarchical view of your model. Every model element you create will be inserted into the Model Browser. This view acts as a tree where you can expand and collapse different elements of your model. This provides an easy way to view the elements of your model from an elided perspective. That is, you can collapse those model elements that are irrelevant to the task at hand."
 msgstr ""
+"界面中的模型浏览器区域以层级结构展示模型内容。所有创建的模型元素都会自动载入"
+"模型浏览器。该视图采用树形结构，支持展开或折叠模型中的各个元素。这种设计让用"
+"户能够从简化的视角查看模型——通过折叠当前任务无关的模型元素，快速聚焦关键内容"
+"。"
 
 #: ../getting_started.md:51
 msgid "In the figure above, you will see that there are two elements in the Model Browser. The root element, _New Model_ is a package. Notice the small arrow beside _New Model_ that is pointing downward. This indicates that the element is expanded. You will also notice the two sub-elements are slightly indented in relation to _New Model_. The _main_ element is a diagram."
 msgstr ""
+"在上图中可见，模型浏览器内包含两个元素。根元素 _New Model_ "
+"是一个包（package）。注意 _New Model_ "
+"旁的小箭头朝下，表示该元素处于展开状态。另可见两个子元素相对 _New Model_ "
+"有轻微缩进，其中 _main_ 元素为图表（diagram）。"
 
 #: ../getting_started.md:58
 msgid "In the Model Browser view, you can also right-click the model elements to get a context menu. This context menu allows you to find out in which diagram model elements are shown, add new diagrams and packages, and delete an element."
 msgstr ""
+"在模型浏览器视图中，您还可以右键点击模型元素唤出上下文菜单。通过该菜单可以："
+"定位元素所在的图表、添加新图表或包（package）、以及删除元素。"
 
 #: ../getting_started.md:63
 msgid "Double-clicking on a diagram element will show it in the Diagram section. Elements such as classes and packages can be dragged from the tree view on the diagrams."
-msgstr ""
+msgstr "双击图表元素即可在【图表编辑区】显示该元素。您可以将类（Class）、包（Package"
+"）等元素从树状视图直接拖拽至图表中。"
 
 #: ../getting_started.md:67
 msgid "Toolbox"
-msgstr ""
+msgstr "工具箱"
 
 #: ../getting_started.md:69
 msgid "The toolbox is used to add new items to a diagram. Select the element you want to add by clicking on it. When you click on the diagram, the selected element is created. The arrow is selected again, so the element can be manipulated."
-msgstr ""
+msgstr "该工具箱用于向图表添加新元素，点击所需元素进行选择，然后在图表上点击即可创建"
+"所选元素。箭头工具将自动重新选中，以便对元素进行操作。"
 
 #: ../getting_started.md:73
 msgid "Tools can be selected by simply left-clicking on them. By default, the pointer tool is selected after every item placement. This can be changed by disabling the \"Reset tool\" option in the Preferences window. Tools can also be selected by keyboard shortcuts. The keyboard shortcut can be displayed as a tooltip by hovering over the tool button in the toolbox. Finally, it is also possible to drag elements on the Diagram from the toolbox."
 msgstr ""
+"工具选择只需左键点击相应图标即可。默认情况下，每次放置元素后指针工具会自动重"
+"新激活，该行为可通过偏好设置窗口禁用\"重置工具\"选项进行调整"
+"。工具还支持键盘快捷键选择：将鼠标悬停在工具箱按钮上可显示对应的快捷键提示。"
+"此外，用户还可直接从工具箱拖拽元素至图表区域进行创建。"
 
 #: ../getting_started.md:82
 msgid "The diagram section contains diagrams of the model and takes up the most space in the UI because it is where most of the modeling is done. Diagrams consist of items placed on the diagram. There are two main types of items:"
-msgstr ""
+msgstr "图表区域包含模型的各类图表，由于是主要建模操作界面，因此在用户界面中占据最大"
+"空间。图表由置于其上的元素构成，这些元素主要分为两种类型："
 
 #: ../getting_started.md:86
 #: ../getting_started.md:93
 msgid "Elements"
-msgstr ""
+msgstr "元素"
 
 #: ../getting_started.md:87
 msgid "Relationships"
-msgstr ""
+msgstr "关系"
 
 #: ../getting_started.md:89
 msgid "Multiple diagrams can be opened at once: they are shown in tabs. Tabs can be closed by pressing <kbd>Ctrl</kbd>+<kbd>w</kbd> or left-clicking on the x in the diagram tab."
 msgstr ""
+"可同时打开多个图表，并以标签页形式显示。关闭标签页的方式包括：按下 "
+"<kbd>Ctrl</kbd>+<kbd>W</kbd> 快捷键 或者 左键点击图表标签页上的×按钮。"
 
 #: ../getting_started.md:95
 msgid "Elements are the shapes that you add to a diagram, and together with Relations, allow you to build up a model."
-msgstr ""
+msgstr "元素是指添加到图表中的各种图形，它们与关系共同构成完整的模型。"
 
 #: ../getting_started.md:98
 msgid "To resize an element on the diagram, left-click on the element to select it and then drag the resize handles that appear at each corner."
-msgstr ""
+msgstr "调整图表中元素大小的操作步骤：首先左键点击需要调整的元素进行选中，然后拖动元"
+"素四周出现的缩放控制点即可调整大小。"
 
 #: ../getting_started.md:101
 msgid "To move an element on the diagram, drag the element where you want to place it by pressing and holding the left mouse button, and moving the mouse before releasing the button."
-msgstr ""
+msgstr "移动图表中元素的操作方法：将鼠标指针悬停在目标元素上，按住鼠标左键不放，拖动"
+"至目标位置后释放左键。"
 
 #: ../getting_started.md:105
 msgid "Relations"
-msgstr ""
+msgstr "关系"
 
 #: ../getting_started.md:107
 msgid "Relations are line-like items that form relationships between elements in the diagram. Each end of a relation is in one of two states:"
-msgstr ""
+msgstr "关系是图表中连接元素的线状组件，用于建立元素间的关联。每条关系的两端可处于以"
+"下两种状态之一："
 
 #: ../getting_started.md:110
 msgid "Connected to an element and the handle turns red"
-msgstr ""
+msgstr "当关系线连接到元素时，其控制端点将变为红色"
 
 #: ../getting_started.md:111
 msgid "Disconnected from an element and the handle turns green"
-msgstr ""
+msgstr "当关系线与元素断开连接时，其控制端点将变为绿色"
 
 #: ../getting_started.md:113
 msgid "If both ends of a relation are disconnected, the relation can be moved by left-clicking and dragging it."
-msgstr ""
+msgstr "若关系的两端均未连接，可通过左键点击并拖动来移动该关系线。"
 
 #: ../getting_started.md:116
 msgid "A new segment in a relation can be added by left-clicking on the relation to select it and then by hovering your mouse over it. A green handle will appear in the middle of the line segments that exist. Drag the handle to add another segment. For example, when you first create a new relation, it will have only one segment. If you drag the segment handle, then it will now have two segments with the knee of the two segments where the handle was."
 msgstr ""
+"通过左键点击关系线选中它，然后将鼠标悬停在其上，现有线段中间会出现一个绿色控"
+"制点，拖动该控制点可添加另一个线段。例如，初次创建新关系时，它仅有一个线段。"
+"如果拖动线段控制点，就会形成两个线段，且控制点所在位置将成为这两个线段的转折"
+"点。"
 
 #: ../getting_started.md:123
 msgid "Copy and Paste"
-msgstr ""
+msgstr "复制粘贴"
 
 #: ../getting_started.md:125
 msgid "As stated before, Gaphor is a modeling environment. This means that every _item_ in a diagram is backed by a _model element_ found in the model browser. This means that you can show the same _model element_ in different diagrams."
 msgstr ""
+"如前所述，Gaphor是一个建模环境。这意味着图表中的每个_项_都由模型浏览器中的_模"
+"型元素_支持。因此，同一个_模型元素_可以在不同图表中展示。"
 
 #: ../getting_started.md:129
 msgid "<kbd>Ctrl</kbd>+<kbd>v</kbd> is used to paste _only_ the presentation element."
-msgstr ""
+msgstr "<kbd>Ctrl</kbd>+<kbd>V</kbd> 快捷键_仅_用于粘贴表现层元素。"
 
 #: ../getting_started.md:130
 msgid "<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>v</kbd> is used to paste a new presentation with a new model element."
-msgstr ""
+msgstr "<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>V</kbd> "
+"用于粘贴包含新模型元素的新表现层对象。"
 
 #: ../getting_started.md:133
 msgid "<kbd>Ctrl</kbd>+<kbd>v</kbd> does a \"shallow\" paste. <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>v</kbd> does a \"deep\" paste."
 msgstr ""
+"<kbd>Ctrl</kbd>+<kbd>V</kbd> 执行\"浅层粘贴"
+"\"，而 <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>V</kbd> 执行\"深层粘贴\"。"
 
 #: ../getting_started.md:136
 msgid "Undo and Redo"
-msgstr ""
+msgstr "撤销与重做"
 
 #: ../getting_started.md:138
 msgid "Undo a change press <kbd>Ctrl</kbd>+<kbd>z</kbd> or left-click on the back arrow at the top of the Property Editor. To re-do a change, hit <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>z</kbd> or press the forward arrow at the top of the Property Editor."
 msgstr ""
+"撤销（Undo）操作请按 <kbd>Ctrl</kbd>+<kbd>Z</kbd> "
+"或左键点击属性编辑器顶部的后退箭头；重做（Redo）操作请按 "
+"<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Z</kbd> 或点击前进箭头。"
 
 #: ../getting_started.md:145
 msgid "The Property Editor is present on the right side of the diagrams. When no item is selected in the diagram, it shows you some tips and tricks. When an item is selected on the diagram, it contains the item details like name, attributes and stereotypes. It can be opened with <kbd>F9</kbd> and the ![Icon for showing and hiding the Property Editor.](images/sidebar-show-right-symbolic.svg) icon in the header bar."
 msgstr ""
+"属性编辑器位于图表右侧区域。当未选中任何元素时，该区域显示操作提示与技巧；当"
+"选中图表元素时，则展示元素详细信息（包括名称、属性和构造型）。可通过以下方式"
+"打开：按<kbd>F9</kbd>快捷键，或点击标题栏中的 ![属性编辑器显示/隐藏图标。]("
+"images/sidebar-show-right-symbolic.svg)图标。"
 
 #: ../getting_started.md:145
 msgid "Icon for showing and hiding the Property Editor."
-msgstr ""
+msgstr "属性编辑器显示/隐藏图标。"
 
 #: ../getting_started.md:152
 msgid "The properties that are shown depend on the item that is selected."
-msgstr ""
+msgstr "所显示的属性内容取决于当前选中的元素类型。"
 
 #: ../getting_started.md:154
 msgid "Model Preferences"
-msgstr ""
+msgstr "模型首选项"
 
 #: ../getting_started.md:156
 msgid "The Property Editor also contains model preferences: Click the ![Document with wrench icon for model specific configuration.](images/document-properties-symbolic.svg) button."
 msgstr ""
+"属性编辑器还包含模型首选项功能：点击![用于模型配置的文档与扳手组合图标。]("
+"images/document-properties-symbolic.svg)按钮即可访问。"
 
 #: ../getting_started.md:156
 msgid "Document with wrench icon for model specific configuration."
-msgstr ""
+msgstr "用于模型配置的文档与扳手组合图标。"
 
 #: ../getting_started.md:159
 msgid "Reset Tool Automatically"
-msgstr ""
+msgstr "自动重置工具"
 
 #: ../getting_started.md:161
 msgid "By default, the pointer tool is selected after an element is placed from the toolbox. If this option is turned off, the same type of element will be placed by clicking in the diagram until another element is selected in the toolbox."
 msgstr ""
+"默认情况下，从工具箱放置元素后将自动切换回指针工具。若禁用此选项，则持续保持"
+"当前元素类型——点击图表区域可重复放置同类型元素，直至在工具箱中选定其他元素类"
+"型。"
 
 #: ../getting_started.md:163
 msgid "Remove Unused Elements"
-msgstr ""
+msgstr "清理未使用元素"
 
 #: ../getting_started.md:165
 msgid "By default, elements that are not part of any diagram in the model will be removed. If this option is turned off, elements remain in the model and may be found in the model browser."
-msgstr ""
+msgstr "默认情况下，模型中未被任何图表引用的元素将被清理。若关闭此选项，这些元素会保"
+"留在模型中，仍可通过模型浏览器查看。"
 
 #: ../getting_started.md:167
 msgid "Diagram Language"
-msgstr ""
+msgstr "图表语言"
 
 #: ../getting_started.md:169
 msgid "The diagram language modifier is only applicable to the loaded model and how it is shown in the diagram. The diagram language setting is saved as part of the model and defaults to English."
-msgstr ""
+msgstr "图表语言设置仅对当前加载的模型有效，且仅影响其在图表中的呈现方式。该设置将作"
+"为模型组成部分保存，默认语言为英语。"
 
 #: ../getting_started.md:171
 msgid "The UI language of Gaphor is controlled by the operating system."
-msgstr ""
+msgstr "Gaphor 的界面语言由操作系统控制。"
 
 #: ../getting_started.md:174
 msgid "Gaphor considers the ``LANG`` environment variable on Linux, Windows and macOS."
-msgstr ""
+msgstr "Gaphor 在 Linux、Windows 和 macOS 系统中均会读取 ``LANG`` 环境变量。"
 
 #: ../getting_started.md:176
 msgid "On Windows and macOS it can be set independently of the operating system's language settings to a different language."
-msgstr ""
+msgstr "在 Windows 和 macOS "
+"系统上，该语言设置可独立于操作系统语言，单独指定为其他语言。"
 
 #: ../getting_started.md:178
 msgid "Style Sheet"
-msgstr ""
+msgstr "样式表"
 
 #: ../getting_started.md:180
 msgid "The [style sheet](style_sheets) allows to change the visual appearance of diagrams and model elements."
-msgstr ""
+msgstr "[样式表](style_sheets) 可用于更改图表和模型元素的视觉呈现效果。"
 
 #: ../index.rst:29
 msgid "Getting Started"
-msgstr ""
+msgstr "入门指南"
 
 #: ../index.rst:38
 msgid "Features"
-msgstr ""
+msgstr "功能特性"
 
 #: ../index.rst:49
 msgid "Development"
-msgstr ""
+msgstr "开发指南"
 
 #: ../index.rst:59
 msgid "Modeling languages"
-msgstr ""
+msgstr "建模语言"
 
 #: ../index.rst:69
 msgid "Concepts"
-msgstr ""
+msgstr "概念解析"
 
 #: ../index.rst:79
 msgid "Internals"
-msgstr ""
+msgstr "内部机制"
 
 #: ../index.rst:2
 msgid "About Gaphor"
-msgstr ""
+msgstr "关于Gaphor"
 
 #: ../index.rst:6
 msgid "The documentation is up to date for Gaphor |version|"
-msgstr ""
+msgstr "该文档版本与 Gaphor |version| 保持同步更新"
 
 #: ../index.rst:8
 msgid "Gaphor is a UML and SysML modeling application written in Python. It is designed to be easy to use, while still being powerful. Gaphor implements a fully-compliant UML 2 data model, so it is much more than a picture drawing tool."
 msgstr ""
+"Gaphor 是一款基于 Python 开发的 UML 和 SysML "
+"建模应用，其设计兼顾易用性与强大功能。作为完全符合 UML 2 数据规范的建模工具，"
+"Gaphor 远不止于普通的绘图工具。"
 
 #: ../index.rst:13
 msgid "You can use Gaphor to quickly visualize different aspects of a system as well as create complete, highly complex models."
-msgstr ""
+msgstr "您可以使用 Gaphor 快速构建系统的可视化视图，并创建完整且高度复杂的模型。"
 
 #: ../index.rst:18
 msgid "Gaphor is 100% Open source, available under a friendly `Apache 2 license <https://github.com/gaphor/gaphor/blob/main/LICENSES/Apache-2.0.txt>`_. The code and issue tracker can be found on `GitHub <https://github.com/gaphor/gaphor>`_."
 msgstr ""
+"Gaphor 是 100% 开源软件，采用友好的` Apache 2 许可证 <https://github.com/"
+"gaphor/gaphor/blob/main/LICENSES/Apache-2.0.txt>`。_您可以在 `GitHub "
+"<https://github.com/gaphor/gaphor> `上查看源代码和提交问题_。"
 
 #: ../index.rst:21
 msgid "What are you waiting for? :doc:`Let's get started <getting_started>`!"
-msgstr ""
+msgstr "还在等什么？快来 :doc:`开始使用 <getting_started> 吧`！"
 
 #: ../index.rst:23
 msgid "For download instructions, and the blog, please visit the `Gaphor Website <https://gaphor.org>`_."
-msgstr ""
+msgstr "请访问 `Gaphor 官网 <https://gaphor.org>`_ 获取下载指南和博客资讯。"
 
 #: ../index.rst:26
 msgid "Did you know Gaphor has excellent integration with :doc:`Sphinx <sphinx>` and :doc:`Jupyter notebooks <scripting>`?"
 msgstr ""
+"您知道吗Gaphor 与 :doc:`Sphinx <sphinx>` 和 :doc:`Jupyter notebooks "
+"<scripting>` 拥有卓越的集成能力吗？"
 
 #: ../linux.md:1
 msgid "Gaphor on Linux"
-msgstr ""
+msgstr "Linux 版 Gaphor"
 
 #: ../linux.md:3
 msgid "Gaphor can be installed as Flatpak on Linux, some distributions provide packages. Check out the [Gaphor download page](https://gaphor.org/download/#linux) for details."
 msgstr ""
+"Gaphor可在Linux系统中以Flatpak形式安装，部分发行版还提供了软件包。详情请查看"
+"[Gaphor下载页面](https://gaphor.org/download/#linux) 。"
 
 #: ../linux.md:7
 #: ../macos.md:5
 #: ../windows.md:7
 msgid "Older releases are available from [GitHub](https://github.com/gaphor/gaphor/releases)."
-msgstr ""
+msgstr "旧版发布文件可从[GitHub](https://github.com/gaphor/gaphor/releases)获取。"
 
 #: ../linux.md:9
 #: ../macos.md:7
 #: ../windows.md:9
 msgid "[CI builds](https://github.com/gaphor/gaphor/actions/workflows/full-build.yml) are also available."
 msgstr ""
+"[CI构建](https://github.com/gaphor/gaphor/actions/workflows/full-build.yml) "
+"也可供使用。"
 
 #: ../linux.md:11
 #: ../macos.md:10
 #: ../windows.md:11
 msgid "Development Environment"
-msgstr ""
+msgstr "开发环境"
 
 #: ../linux.md:13
 msgid "There are two ways to set up a development environment:"
-msgstr ""
+msgstr "开发环境可通过以下两种方式配置："
 
 #: ../linux.md:15
 msgid "[GNOME Builder](#gnome-builder), ideal for “drive by” contributions."
-msgstr ""
+msgstr "[GNOME Builder](#gnome-builder) —— 特别适合\"即兴贡献\"的开发环境。"
 
 #: ../linux.md:16
 msgid "[A local environment](#a-local-environment)."
-msgstr ""
+msgstr "[本地开发环境](#a-local-environment)."
 
 #: ../linux.md:18
 msgid "GNOME Builder"
-msgstr ""
+msgstr "GNOME Builder（GNOME 集成开发环境）"
 
 #: ../linux.md:20
 msgid "Open [GNOME Builder](https://flathub.org/apps/details/org.gnome.Builder) 43 or newer, [clone the repository](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository). Check if the _Build Profile_ is set to `org.gaphor.Gaphor.json`. If so, hit the _Run_ button to start the application."
 msgstr ""
+"请打开 [GNOME Builder](https://flathub.org/apps/details/org.gnome.Builder) "
+"43 或更高版本，并[克隆代码仓库](https://help.github.com/en/github/"
+"creating-cloning-and-archiving-repositories/cloning-a-repository)。检查 "
+"_Build Profile_ 是否设置为 `org.gaphor.Gaphor.json`。如果是，点击 "
+"_Run_按钮即可启动应用程序。"
 
 #: ../linux.md:25
 msgid "A Local Environment"
-msgstr ""
+msgstr "本地环境"
 
 #: ../linux.md:27
 msgid "To set up a development environment with Linux, you first need a fairly new Linux distribution version. For example, the latest Ubuntu LTS or newer, Arch, Debian Testing, SUSE Tumbleweed, or similar. Gaphor depends on newer versions of GTK, and we don't test for backwards compatibility. You will also need the latest stable version of Python. In order to get the latest stable version without interfering with your system-wide Python version, we recommend that you install [pyenv](https://github.com/pyenv/pyenv)."
 msgstr ""
+"要在 Linux 上搭建开发环境，首先需要一个较新的 Linux 发行版版本。例如最新的 "
+"Ubuntu LTS 或更新版本、Arch、Debian Testing、SUSE Tumbleweed 或类似发行版。"
+"Gaphor 依赖于较新版本的 GTK，且我们不保证向后兼容性。"
+"您还需要安装最新稳定版的 Python。为了避免影响系统自带的 Python 版本，"
+"我们建议您使用 [pyenv](https://github.com/pyenv/pyenv)来安装最新稳定版本。"
 
 #: ../linux.md:35
 msgid "Install the pyenv [prerequisites](https://github.com/pyenv/pyenv/wiki/Common-build-problems) first, and then install pyenv:"
 msgstr ""
+"请先安装 [pyenv](https://github.com/pyenv/pyenv/wiki/Common-build-problems) "
+"的必备组件，然后再安装 pyenv："
 
 #: ../linux.md:42
 msgid "Make sure you follow the instruction at the end of the installation script to install the commands in your shell's rc file. Next install the latest version of Python by executing:"
-msgstr ""
+msgstr "请确保按照安装脚本末尾的说明，将相关命令添加至您Shell终端的 rc 配置文件中。"
+"接着执行以下命令安装最新版 Python："
 
 #: ../linux.md:50
 msgid "Where 3.x.x is replaced by the latest stable version of Python (pyenv should let you tab-complete available versions)."
-msgstr ""
+msgstr "其中 3.x.x 应替换为 Python 的最新稳定版本（pyenv 支持通过 Tab "
+"键自动补全可用的版本号）。"
 
 #: ../linux.md:52
 msgid "Next install the Gaphor prerequisites by installing the gobject introspection and cairo build dependencies, for example, in Ubuntu execute:"
