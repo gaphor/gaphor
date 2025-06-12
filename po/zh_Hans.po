@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2025-04-23 21:47+0200\n"
-"PO-Revision-Date: 2025-06-11 18:29+0000\n"
+"PO-Revision-Date: 2025-06-13 10:01+0000\n"
 "Last-Translator: Fabien Liang <zeyue.liang@gmail.com>\n"
 "Language-Team: Chinese (Simplified Han script) <https://hosted.weblate.org/"
 "projects/gaphor/gaphor/zh_Hans/>\n"
@@ -2617,11 +2617,11 @@ msgstr "格式化"
 
 #: gaphor/ui/elementeditor.ui:189
 msgid "Style Sheet"
-msgstr "格式表"
+msgstr "样式表"
 
 #: gaphor/ui/elementeditor.ui:202
 msgid "Diagram Language"
-msgstr "图语言"
+msgstr "图表语言"
 
 #: gaphor/ui/elementeditor.ui:204 gaphor/ui/elementeditor.ui:212
 msgid "The (natural) language used in this model."
@@ -2891,7 +2891,7 @@ msgstr "快捷键"
 #: gaphor/ui/greeter.ui:22 gaphor/ui/help/about.ui:9
 #: gaphor/ui/mainwindow.ui:292
 msgid "About Gaphor"
-msgstr "关于 Gaphor"
+msgstr "关于Gaphor"
 
 #: gaphor/ui/greeter.ui:87
 msgid "Recently Opened"
@@ -3159,7 +3159,7 @@ msgstr "元素创建后，返回到指针工具。"
 
 #: gaphor/ui/help/preferences.ui:51
 msgid "Remove Unused Elements"
-msgstr "删除未使用的元素"
+msgstr "清理未使用元素"
 
 #: gaphor/ui/help/preferences.ui:52
 msgid "Automatically remove elements no longer in use in any diagram."
@@ -3199,7 +3199,7 @@ msgstr "切换全屏"
 
 #: gaphor/ui/help/shortcuts.ui:106
 msgid "Undo and Redo"
-msgstr "撤回和重做"
+msgstr "撤销与重做"
 
 #: gaphor/ui/help/shortcuts.ui:128
 msgid "Selections"
@@ -3211,7 +3211,7 @@ msgstr "取消选择全部"
 
 #: gaphor/ui/help/shortcuts.ui:150
 msgid "Copy and Paste"
-msgstr "复制和粘贴"
+msgstr "复制粘贴"
 
 #: gaphor/ui/help/shortcuts.ui:169
 msgid "Paste (link defining elements)"
