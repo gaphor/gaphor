@@ -53,7 +53,7 @@ class DiagramDirective(sphinx.util.docutils.SphinxDirective):
     final_argument_whitespace = True
     option_spec: ClassVar[OptionSpec] = {
         "model": directives.unchanged,
-        **images.Figure.option_spec,
+        **(images.Figure.option_spec or {}),
     }
 
     def run(self) -> list[nodes.Node]:
@@ -108,17 +108,19 @@ class DiagramDirective(sphinx.util.docutils.SphinxDirective):
         for _ in Path(self.env.docname).parts[:-1]:
             outfile = Path("..") / outfile
 
-        return images.Figure(  # type: ignore[no-any-return]
-            name="diagram/figure",
-            arguments=[f"{outfile}.*"],
-            options=self.options,
-            content=self.content,
-            lineno=self.lineno,
-            content_offset=self.content_offset,
-            block_text=self.block_text,
-            state=self.state,
-            state_machine=self.state_machine,
-        ).run()
+        return list(
+            images.Figure(
+                name="diagram/figure",
+                arguments=[f"{outfile}.*"],
+                options=self.options,
+                content=self.content,
+                lineno=self.lineno,
+                content_offset=self.content_offset,
+                block_text=self.block_text,
+                state=self.state,
+                state_machine=self.state_machine,
+            ).run()
+        )
 
     def logging_error_node(self, text: str) -> list[nodes.Node]:
         location = self.state_machine.get_source_and_line(self.lineno)
