@@ -12,7 +12,6 @@ from gaphor.core.modeling import (
     ElementDeleted,
     ModelFlushed,
     ModelReady,
-    StyleSheet,
 )
 from gaphor.diagram.drop import drop
 from gaphor.diagram.event import DiagramClosed, DiagramOpened, DiagramSelectionChanged
@@ -339,7 +338,7 @@ class Diagrams(UIComponent, ActionProvider):
     @event_handler(ModelReady)
     def _on_model_ready(self, event=None):
         """Open the toplevel element and load toplevel diagrams."""
-        if style_sheet := next(self.element_factory.select(StyleSheet), None):
+        if style_sheet := self.element_factory.style_sheet:
             style_sheet.system_font_family = (
                 Gtk.Settings.get_default().props.gtk_font_name.rsplit(" ", 1)[0]
             )
