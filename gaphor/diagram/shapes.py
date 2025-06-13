@@ -590,6 +590,9 @@ class StyledCssNode:
             for node in traverse_css_nodes(self._shape, only_children=True)
         )
 
+    def classes(self) -> Sequence[str]:
+        return []
+
     def attribute(self, name: str) -> str | None:
         if element := self._shape.element:
             return lookup_attribute(element, name)
