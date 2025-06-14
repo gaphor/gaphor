@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gaphor 3.0.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-12-30 14:25-0500\n"
-"PO-Revision-Date: 2025-06-13 04:01+0000\n"
+"PO-Revision-Date: 2025-06-15 07:01+0000\n"
 "Last-Translator: Fabien Liang <zeyue.liang@gmail.com>\n"
 "Language-Team: Chinese (Simplified Han script) <https://hosted.weblate.org/"
 "projects/gaphor/docs-gaphor-org/zh_Hans/>\n"
@@ -2115,248 +2115,297 @@ msgstr "其中 3.x.x 应替换为 Python 的最新稳定版本（pyenv 支持通
 
 #: ../linux.md:52
 msgid "Next install the Gaphor prerequisites by installing the gobject introspection and cairo build dependencies, for example, in Ubuntu execute:"
-msgstr ""
+msgstr "接下来通过安装GObject "
+"Introspection和Cairo的构建依赖项来安装Gaphor的先决条件，例如，在Ubuntu系统中"
+"执行："
 
 #: ../linux.md:61
 msgid "For Redhat/RPM/Fedora based systems:"
-msgstr ""
+msgstr "对于基于 Redhat/RPM/Fedora 的系统："
 
 #: ../linux.md:67
 #: ../macos.md:18
 msgid "Install [Poetry](https://python-poetry.org) using [pipx](https://pypa.github.io/pipx/):"
 msgstr ""
+"使用[pipx](https://pypa.github.io/pipx/)安装[Poetry](https://python-"
+"poetry.org) :"
 
 #: ../linux.md:72
 msgid "Next, [clone the repository](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository), after which you need to execute the following consecutive commands:"
 msgstr ""
+"接下来，[克隆代码仓库](https://help.github.com/en/github/"
+"creating-cloning-and-archiving-repositories/"
+"cloning-a-repository)，然后依次执行以下命令："
 
 #: ../linux.md:83
 #: ../macos.md:30
 msgid "Now, you can run gaphor as"
-msgstr ""
+msgstr "现在，您可以运行 Gaphor，方法是："
 
 #: ../linux.md:88
 msgid "NOTE: Gaphor requires GTK 4. It works best with GTK >=4.8 and libadwaita >=1.2."
-msgstr ""
+msgstr "注意：Gaphor 需要 GTK 4 环境，推荐使用 GTK ≥4.8 及 libadwaita ≥1.2 "
+"版本以获得最佳运行效果。"
 
 #: ../linux.md:90
 #: ../macos.md:44
 #: ../windows.md:169
 msgid "Debugging using Visual Studio Code"
-msgstr ""
+msgstr "使用 Visual Studio Code 进行调试"
 
 #: ../linux.md:92
 msgid "Before you start debugging you'll need to open Gaphor in vscode (the folder containing `pyproject.toml`). You'll need to have the Python extension installed."
 msgstr ""
+"开始调试前，需在 VS Code 中打开 Gaphor 项目目录（包含 `pyproject.toml` "
+"文件的文件夹），并确保已安装 Python 扩展插件。"
 
 #: ../linux.md:95
 #: ../macos.md:49
 msgid "Create a file `.vscode/launch.json` with the following content:"
-msgstr ""
+msgstr "创建` .vscode/launch.json` 文件，内容如下："
 
 #: ../linux.md:115
 msgid "`GDK_BACKEND` is added since VSCode by default uses XWayland (the X11 emulator)."
-msgstr ""
+msgstr "添加 ·GDK_BACKEND· 是因为 VS Code 默认使用 XWayland（X11 模拟器）。"
 
 #: ../linux.md:117
 msgid "Create a Flatpak Package"
-msgstr ""
+msgstr "创建 Flatpak 软件包"
 
 #: ../linux.md:119
 msgid "The main method that Gaphor is packaged for Linux is with a Flatpak package. [Flatpak](https://flatpak.org) is a software utility for software deployment and package management for Linux. It offers a sandbox environment in which users can run application software in isolation from the rest of the system."
 msgstr ""
+"Gaphor 在 Linux 系统上的主要打包方式是 Flatpak 软件包。 [Flatpak]"
+"(https://flatpak.org) 是一款面向 Linux "
+"的软件部署与包管理工具，它能提供沙箱运行环境，使应用程序与系统其他部分隔离运"
+"行。"
 
 #: ../linux.md:124
 msgid "We distribute the official Flatpak using [Flathub](https://flathub.org), and building of the image is done at the [Gaphor Flathub repository](https://github.com/flathub/org.gaphor.Gaphor)."
 msgstr ""
+"我们通过 [Flathub](https://flathub.org)分发官方 Flatpak "
+"软件包，镜像构建工作则在[Gaphor Flathub 仓库](https://github.com/flathub/"
+"org.gaphor.Gaphor) 完成。"
 
 #: ../linux.md:128
 msgid "[Install Flatpak](https://flatpak.org/setup)"
-msgstr ""
+msgstr "[安装 Flatpak](https://flatpak.org/setup)"
 
 #: ../linux.md:130
 msgid "Install flatpak-builder"
-msgstr ""
+msgstr "安装flatpak-builder"
 
 #: ../linux.md:134
 msgid "Install the GNOME SDK"
-msgstr ""
+msgstr "安装GNOME SDK"
 
 #: ../linux.md:138
 msgid "Clone the Flathub repository and install the necessary SDK:"
-msgstr ""
+msgstr "克隆 Flathub 仓库并安装必要的 SDK："
 
 #: ../linux.md:144
 msgid "Build Gaphor Flatpak"
-msgstr ""
+msgstr "构建Gaphor Flatpak"
 
 #: ../linux.md:148
 msgid "Install the Flatpak"
-msgstr ""
+msgstr "安装Flatpak"
 
 #: ../linux.md:152
 msgid "Linux Distribution Packages"
-msgstr ""
+msgstr "Linux 发行版软件包"
 
 #: ../linux.md:154
 msgid "Examples of Gaphor and Gaphas RPM spec files can be found in [PLD Linux](https://www.pld-linux.org/) [repository](https://github.com/pld-linux/):"
 msgstr ""
+"您可以在 [PLD Linux](https://www.pld-linux.org/)的[仓库](https://github.com/"
+"pld-linux/)中找到 Gaphor 和 Gaphas 的 RPM spec 文件示例。"
 
 #: ../linux.md:158
 msgid "https://github.com/pld-linux/python-gaphas"
-msgstr ""
+msgstr "https://github.com/pld-linux/python-gaphas"
 
 #: ../linux.md:159
 msgid "https://github.com/pld-linux/gaphor"
-msgstr ""
+msgstr "https://github.com/pld-linux/gaphor"
 
 #: ../linux.md:161
 msgid "There is also an [Arch User Repository (AUR) for Gaphor](https://aur.archlinux.org/packages/python-gaphor) available for Arch users."
 msgstr ""
+"Arch Linux 用户还可通过[Arch User Repository (AUR) for Gaphor](https://"
+"aur.archlinux.org/packages/python-gaphor)获取 Gaphor。"
 
 #: ../linux.md:165
 msgid "Please, do not hesitate to contact us if you need help to create a Linux package for Gaphor or Gaphas."
-msgstr ""
+msgstr "如您需要为 Gaphor 或 Gaphas 创建 Linux 软件包，请随时联系我们。"
 
 #: ../macos.md:1
 msgid "Gaphor on macOS"
-msgstr ""
+msgstr "macOS 版 Gaphor"
 
 #: ../macos.md:3
 msgid "The latest release of Gaphor can be downloaded from the [Gaphor download page](https://gaphor.org/download#macos). Gaphor can also be installed as a [Homebrew cask](https://formulae.brew.sh/cask/gaphor)."
 msgstr ""
+"最新版本的Gaphor可从[Gaphor下载页面](https://gaphor.org/download#macos)下载。"
+"Gaphor也可作为 [Homebrew cask](https://formulae.brew.sh/cask/gaphor)安装。"
 
 #: ../macos.md:12
 msgid "To set up a development environment with macOS:"
-msgstr ""
+msgstr "要在 macOS 上搭建开发环境："
 
 #: ../macos.md:13
 msgid "Install [Homebrew](https://brew.sh)"
-msgstr ""
+msgstr "安装 [Homebrew](https://brew.sh)"
 
 #: ../macos.md:14
 msgid "Open a terminal and execute:"
-msgstr ""
+msgstr "打开终端并执行："
 
 #: ../macos.md:23
 msgid "Next, [clone the repository](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository), after which you can execute the following consecutive commands to install the poetry environment:"
 msgstr ""
+"接下来，[克隆代码仓库](https://help.github.com/en/github/"
+"creating-cloning-and-archiving-repositories/"
+"cloning-a-repository)，之后可依次执行以下命令来安装Poetry环境："
 
 #: ../macos.md:35
 msgid "If PyGObject does not compile and complains about a missing `ffi.h` file, you may want to install libffi from Homebrew, and set the following environment variable and run `poetry install` again:"
 msgstr ""
+"如果 PyGObject 编译失败并提示缺少`ffi.h` 文件，您可能需要通过 Homebrew 安装 "
+"libffi，然后设置以下环境变量并重新运行 `poetry install` 命令："
 
 #: ../macos.md:46
 msgid "Before you start debugging you'll need to open Gaphor in VSCode (the folder containing `pyproject.toml`). You'll need to have the Python extension installed."
-msgstr ""
+msgstr "在开始调试之前，你需要在VSCode中打开Gaphor（包含`pyproject.toml`的文件夹）。"
+"你需要安装Python扩展。"
 
 #: ../macos.md:66
 msgid "Packaging for macOS"
-msgstr ""
+msgstr "macOS 平台打包指南"
 
 #: ../macos.md:68
 msgid "In order to create an exe installation package for macOS, we utilize [PyInstaller](https://pyinstaller.org) which analyzes Gaphor to find all the dependencies and bundle them in to a single folder."
 msgstr ""
+"为创建适用于 macOS 的 exe 安装包，我们采用 [PyInstaller]"
+"(https://pyinstaller.org) 工具。该工具会分析 Gaphor "
+"的所有依赖项，并将其打包至单个文件夹中。"
 
 #: ../macos.md:72
 msgid "Follow the instructions for settings up a development environment above"
-msgstr ""
+msgstr "请按照上述开发环境配置说明进行操作"
 
 #: ../macos.md:73
 msgid "Open a terminal and execute the following from the repository directory:"
-msgstr ""
+msgstr "打开终端，并在代码仓库目录中执行以下命令："
 
 #: ../merge_conflicts.md:1
 msgid "Resolve Merge Conflicts"
-msgstr ""
+msgstr "解决合并冲突"
 
 #: ../merge_conflicts.md:3
 msgid "Suppose you’re working on a model. If you create a change, while someone else has also made changes, there’s a fair chance you'll end up with a merge conflict."
-msgstr ""
+msgstr "假设您正在处理某个模型。如果您修改了模型内容，而其他协作者也做了改动，就很可"
+"能遇到合并冲突。"
 
 #: ../merge_conflicts.md:6
 msgid "Gaphor tries to make the changes to a model as small as possible: all elements are stored in the same order. However, since a Gaphor model is a persisted graph of objects, merging changes is not as simple as opening a text editor."
 msgstr ""
+"Gaphor 会尽可能精简模型变更：所有元素均按相同顺序存储。但由于 Gaphor "
+"模型本质上是持久化的对象图（Graph of "
+"objects），其合并操作远比文本编辑器复杂。"
 
 #: ../merge_conflicts.md:10
 msgid "From Gaphor 2.18 onwards Gaphor is also capable of merging models. Once a merge conflict has been detected (i.e., when the model file contains git conflict-resolution markers `<<<<<<<`, `=======`, and `>>>>>>>`), Gaphor will offer the option to open the current model, the incoming model or merge changes manually via the Merge Editor."
 msgstr ""
+"自 Gaphor 2.18 版本起，该软件已支持模型合并功能。当检测到合并冲突时（"
+"即模型文件中出现 Git 冲突标记 `<<<<<<<`、`=======` 和 `>>>>>>>`），Gaphor "
+"将提供以下处理选项：通过合并编辑器打开当前模型、接收的模型或手动合并变更。"
 
 #: ../merge_conflicts.md:15
 msgid "![A dialog showing options on how to deal with a merge conflict.](images/merge-dialog.png)"
-msgstr ""
+msgstr "![显示合并冲突处理选项的对话框。](images/merge-dialog.png)"
 
 #: ../merge_conflicts.md:15
 msgid "A dialog showing options on how to deal with a merge conflict."
-msgstr ""
+msgstr "显示合并冲突处理选项的对话框。"
 
 #: ../merge_conflicts.md:17
 msgid "If you choose *Open Merge Editor*, both models will be loaded. The current model remains as is. In addition, the changes made to the incoming model are calculated. Those changes are stored as _pending change_ objects in the model."
 msgstr ""
+"若选择*打开合并编辑器*，系统将同时加载两个模型：当前模型保持原状，同时会计算"
+"接收模型的变更内容。这些变更将以_待定变更（Pending "
+"change）_对象的形式存储在模型中。"
 
 #: ../merge_conflicts.md:21
 msgid "Pending changes are part of the model, you can save the model with changes and resolve those at a later point."
-msgstr ""
+msgstr "待定变更将作为模型组成部分保存，您可先保存含变更的模型，后续再行解决冲突。"
 
 #: ../merge_conflicts.md:24
 msgid "The Merge Editor is shown on the right side, replacing the (normal) Property Editor."
-msgstr ""
+msgstr "**合并编辑器**将显示在界面右侧，并取代（常规的）**属性编辑器**。"
 
 #: ../merge_conflicts.md:26
 msgid "![The Gaphor main window, showing the merge editor on the right.](images/merge-conflict-window.png)"
-msgstr ""
+msgstr "![Gaphor 主窗口界面，右侧显示合并编辑器。](images/merge-conflict-window.png)"
 
 #: ../merge_conflicts.md:26
 msgid "The Gaphor main window, showing the merge editor on the right."
-msgstr ""
+msgstr "Gaphor 主窗口界面，右侧显示合并编辑器。"
 
 #: ../merge_conflicts.md:28
 msgid "Merge actions are grouped by diagram, where possible. When you apply a change, all changes listed as children are also applied. Once changes are applied, they can only be reverted by undoing the change (hit _Undo_)."
 msgstr ""
+"合并操作将按图示分组处理（在可行情况下）。当应用某个变更时，其下属所有子变更"
+"将同步生效。已应用的变更仅能通过 _撤销_ 操作回退（点击 _撤销_ 按钮）。"
 
 #: ../merge_conflicts.md:33
 msgid "The Merge Editor replaces the Property Editor, as long as there are pending changes in the model."
-msgstr ""
+msgstr "只要模型中存在待定变更，合并编辑器就会取代属性编辑器。"
 
 #: ../merge_conflicts.md:35
 msgid "It is concidered good practice to resolve the merge conflict before you continue modeling."
-msgstr ""
+msgstr "建议最佳实践是在继续建模前先解决合并冲突。"
 
 #: ../merge_conflicts.md:38
 msgid "When all conflicts have been resolved, press *Resolve* to finish merge conflict resolution."
-msgstr ""
+msgstr "当所有冲突解决完毕后，点击*解决*按钮完成合并冲突处理。"
 
 #: ../modeling_language.md:1
 msgid "Modeling Languages"
-msgstr ""
+msgstr "建模语言"
 
 #: ../modeling_language.md:3
 msgid "Since version 2.0, Gaphor supports the concept of Modeling languages. This allows for development of separate modeling languages separate from the Gaphor core application."
-msgstr ""
+msgstr "自2.0版本起，Gaphor开始支持建模语言概念。这一特性使得建模语言的开发能够独立于"
+"Gaphor核心应用程序进行。"
 
 #: ../modeling_language.md:7
 msgid "The main language was, and will be UML. Gaphor now also supports a subset of SysML, RAAML and the C4 model."
-msgstr ""
+msgstr "UML始终是Gaphor的核心建模语言。当前版本还新增支持SysML子集、RAAML及C4模型。"
 
 #: ../modeling_language.md:10
 msgid "A modeling language in Gaphor is defined by a class implementing the `gaphor.abc.ModelingLanguage` abstract base class. The modeling language should be registered as a `gaphor.modelinglanguages` entry point."
 msgstr ""
+"在Gaphor中，建模语言通过实现`gaphor.abc.ModelingLanguage`抽象基类的类来定义。"
+"该建模语言需注册为`gaphor.modelinglanguages`入口点。"
 
 #: ../modeling_language.md:14
 msgid "The `ModelingLanguage` interface is fairly minimal. It allows other services to look up elements and diagram items, as well as a toolbox, and diagram types. However, the responsibilities of a modeling language do not stop there. Parts of functionality will be implemented by registering handlers to a set of generic functions."
 msgstr ""
+"`ModelingLanguage`接口设计极为精简，主要提供元素、工具箱及图表类型的查询功能"
+"。但建模语言的职责远不止于此，部分功能需通过向通用函数注册处理器来实现。"
 
 #: ../modeling_language.md:20
 msgid "But let's not get ahead of ourselves. What is the functionality a modeling language implementation can offer?"
-msgstr ""
+msgstr "但让我们循序渐进地探讨：建模语言的实现具体能提供哪些功能？"
 
 #: ../modeling_language.md:23
 msgid "Three functionalities are exposed by a [`ModelingLanguage` instance](#modeling-language):"
-msgstr ""
+msgstr "[`ModelingLanguage`实例](#modeling-language)主要提供三大功能："
 
 #: ../modeling_language.md:25
 msgid "A data model (elements) and diagram items"
-msgstr ""
+msgstr "数据模型（元素）与图表项"
 
 #: ../modeling_language.md:26
 msgid "Diagram types"
@@ -2416,191 +2465,212 @@ msgstr ""
 
 #: ../../gaphor/abc.py:docstring of gaphor.abc.ModelingLanguage:1
 msgid "A model provider is a special service that provides an entrypoint to a model implementation, such as UML, SysML, RAAML."
-msgstr ""
+msgstr "模型提供者（Model "
+"Provider）是一种特殊服务，它为UML、SysML、RAAML等模型实现提供入口点。"
 
 #: ../../gaphor/abc.py:docstring of gaphor.abc.ModelingLanguage.diagram_types:1
 msgid "Iterate diagram types."
-msgstr ""
+msgstr "迭代图表类型。"
 
 #: ../../gaphor/abc.py:docstring of gaphor.abc.ModelingLanguage.element_types:1
 msgid "Iterate element types."
-msgstr ""
+msgstr "迭代元素类型。"
 
 #: ../../gaphor/abc.py:docstring of gaphor.abc.ModelingLanguage.lookup_element:1
 msgid "Look up a model element type by (class) name."
-msgstr ""
+msgstr "通过（类）名称查询模型元素类型。"
 
 #: ../../gaphor/abc.py:docstring of gaphor.abc.ModelingLanguage.lookup_element:3
 msgid "A namespace may be provided. This will allow the model to be loaded from that specific modeling language only."
-msgstr ""
+msgstr "可提供命名空间，该设置将限定模型仅能从特定建模语言加载。"
 
 #: ../../gaphor/abc.py:docstring of gaphor.abc.ModelingLanguage.model_browser_model:1
 msgid "A model for use in the Model Browser."
-msgstr ""
+msgstr "用于模型浏览器的模型。"
 
 #: ../../gaphor/abc.py:docstring of gaphor.abc.ModelingLanguage.name:1
 msgid "Human-readable name of the modeling language."
-msgstr ""
+msgstr "该建模语言的人类可读名称。"
 
 #: ../../gaphor/abc.py:docstring of gaphor.abc.ModelingLanguage.toolbox_definition:1
 msgid "Get structure for the toolbox."
-msgstr ""
+msgstr "获取工具箱结构。"
 
 #: ../modeling_language.md:57
 msgid "As a convention, the package containing the modeling language should have an attribute `__modeling_language__` that has the same value as the modeling language name in the entry point."
-msgstr ""
+msgstr "根据约定，包含建模语言的包应设置`__modeling_language__`属性，其属性值需与入口"
+"点中的建模语言名称保持一致。"
 
 #: ../modeling_language.md:60
 msgid "To illustrate:"
-msgstr ""
+msgstr "示例说明："
 
 #: ../modeling_language.md:62
 msgid "The file `mytool/mylang/__init__.py` contains an entry:"
-msgstr ""
+msgstr "文件`mytool/mylang/__init__.py`中包含以下条目："
 
 #: ../modeling_language.md:68
 msgid "`pyproject.toml` contains an entry point:"
-msgstr ""
+msgstr "`pyproject.toml` 文件中包含以下入口点配置："
 
 #: ../modeling_language.md:75
 msgid "Connectors"
-msgstr ""
+msgstr "连接器"
 
 #: ../modeling_language.md:77
 msgid "Connectors are used to connect one element to another."
-msgstr ""
+msgstr "连接器用于实现元素间的相互连接。"
 
 #: ../modeling_language.md:79
 msgid "Connectors should adhere to the `ConnectorProtocol`. Normally you would inherit from `BaseConnector`."
-msgstr ""
+msgstr "连接器应遵循`ConnectorProtocol`协议规范。通常建议继承`BaseConnector`基类实现"
+"。"
 
 #: ../../gaphor/diagram/connectors.py:docstring of gaphor.diagram.connectors.BaseConnector:1
 msgid "Connection adapter for Gaphor diagram items."
-msgstr ""
+msgstr "Gaphor 图表项连接适配器。"
 
 #: ../../gaphor/diagram/connectors.py:docstring of gaphor.diagram.connectors.BaseConnector:3
 msgid "Line item ``line`` connects with a handle to a connectable item ``element``."
-msgstr ""
+msgstr "线段项 ``line`` 通过连接柄与可连接项 ``element`` 建立关联。"
 
 #: ../modeling_language.md:0
 msgid "Parameters"
-msgstr ""
+msgstr "参数"
 
 #: ../../gaphor/diagram/connectors.py:docstring of gaphor.diagram.connectors.BaseConnector:5
 msgid "connecting item"
-msgstr ""
+msgstr "连接项"
 
 #: ../../gaphor/diagram/connectors.py:docstring of gaphor.diagram.connectors.BaseConnector:6
 msgid "connectable item"
-msgstr ""
+msgstr "可连接项"
 
 #: ../../gaphor/diagram/connectors.py:docstring of gaphor.diagram.connectors.BaseConnector:8
 msgid "By convention the adapters are registered by (element, line) -- in that order."
-msgstr ""
+msgstr "根据规范，适配器需按（元素，线段）的顺序进行注册。"
 
 #: ../../gaphor/diagram/connectors.py:docstring of gaphor.diagram.connectors.BaseConnector.allow:1
 msgid "Determine if items can be connected."
-msgstr ""
+msgstr "判断项目是否可建立连接。"
 
 #: ../../gaphor/diagram/connectors.py:docstring of gaphor.diagram.connectors.BaseConnector.allow:3
 msgid "Is the connection allowed at all (during mouse movement for example)?"
-msgstr ""
+msgstr "（例如在鼠标移动过程中）该连接操作是否被允许？"
 
 #: ../../gaphor/diagram/connectors.py:docstring of gaphor.diagram.connectors.BaseConnector.allow:5
 msgid "Returns `True` if connection is allowed."
-msgstr ""
+msgstr "若允许连接，则返回`True`。"
 
 #: ../../gaphor/diagram/connectors.py:docstring of gaphor.diagram.connectors.BaseConnector.connect:1
 msgid "Connect to an element."
-msgstr ""
+msgstr "连接至元素。"
 
 #: ../../gaphor/diagram/connectors.py:docstring of gaphor.diagram.connectors.BaseConnector.connect:3
 msgid "Establish a connection between element and line. Also takes care of disconnects, if required (e.g. 1:1 relationships)."
-msgstr ""
+msgstr "建立元素与线段之间的连接关系。该操作还会根据需求（如1:1关系）处理断开连接的情"
+"况。"
 
 #: ../../gaphor/diagram/connectors.py:docstring of gaphor.diagram.connectors.BaseConnector.connect:6
 msgid "Note that at this point the line may be connected to some other, or the same element. The connection at model level also still exists."
-msgstr ""
+msgstr "请注意：此时线段可能已连接至其他元素或同一元素，且模型层级的连接关系仍然存在"
+"。"
 
 #: ../../gaphor/diagram/connectors.py:docstring of gaphor.diagram.connectors.BaseConnector.connect:10
 msgid "Returns `True` if a connection is established."
-msgstr ""
+msgstr "若成功建立连接，则返回 `True`。"
 
 #: ../../gaphor/diagram/connectors.py:docstring of gaphor.diagram.connectors.BaseConnector.disconnect:1
 msgid "Disconnect model level connections."
-msgstr ""
+msgstr "断开模型层级的连接关系。"
 
 #: ../../gaphor/diagram/connectors.py:docstring of gaphor.diagram.connectors.BaseConnector.disconnect:3
 msgid "Break connection, called when dropping a handle on a point where it can not connect."
-msgstr ""
+msgstr "断开连接（当连接柄被放置于不可连接位置时触发此操作）。"
 
 #: ../../gaphor/diagram/connectors.py:docstring of gaphor.diagram.connectors.BaseConnector.get_connected:1
 msgid "Get item connected to a handle."
-msgstr ""
+msgstr "获取与连接柄关联的项。"
 
 #: ../modeling_language.md:87
 msgid "Format and parse"
-msgstr ""
+msgstr "格式化与解析"
 
 #: ../modeling_language.md:89
 msgid "Model elements can be formatted to a simple text representation. For example, This is used in the Model Browser. It isn't a full serialization of the model element."
-msgstr ""
+msgstr "模型元素可格式化为简单文本表示形式（例如在模型浏览器中使用）。请注意，此非模"
+"型元素的完整序列化。"
 
 #: ../modeling_language.md:92
 msgid "In some cases it's useful to parse a text back into an object. This is done when you edit attributes and operations on a class."
-msgstr ""
+msgstr "某些情况下，将文本解析回对象十分实用。该功能常用于编辑类的属性和操作时。"
 
 #: ../modeling_language.md:95
 msgid "Not every ``format()`` needs to have an equivalent ``parse()`` function."
-msgstr ""
+msgstr "并非所有``format()``方法都需要对应的``parse()``函数。"
 
 #: ../modeling_language.md:100
 msgid "Returns a human readable representation of the model element. In most cases this is just the name, however, properties (attributes) and operations are formatted more extensively:"
-msgstr ""
+msgstr "返回模型元素的人类可读表示形式。多数情况下仅显示名称，但属性(attribute)和操作"
+"(operation)会以更详细的格式呈现："
 
 #: ../modeling_language.md:110
 msgid "Parse ``text`` and populate ``element``. The element is populated with elements from the text. This may mean that new model elements are created as part of the parse process."
-msgstr ""
+msgstr "解析 ``text`` 并填充 "
+"``element``。该元素将被文本中的内容填充，这可能意味着在解析过程中会创建新的模"
+"型元素。"
 
 #: ../modeling_language.md:114
 msgid "Copy and paste"
-msgstr ""
+msgstr "复制和粘贴"
 
 #: ../modeling_language.md:116
 msgid "Copy and paste works out of the box for simple items: one diagram item with one model element (the `subject`). It leverages the `load()` and `save()` methods of the elements to ensure all relevant data is copied."
 msgstr ""
+"对于简单项（即单个图表项对应单个模型元素的情况），复制粘贴功能可开箱即用。该"
+"功能通过调用元素的`load()`和`save()`方法，确保复制所有相关数据。"
 
 #: ../modeling_language.md:119
 msgid "Sometimes items need more than one model element to work. For example an Association: it has two association ends."
 msgstr ""
+"某些情况下，图表项需要多个模型元素协同工作。例如关联(Association)元素就需要两"
+"个关联端(association ends)才能正常运作。"
 
 #: ../modeling_language.md:121
 msgid "In those specific cases you need to implement your own copy and paste functions. To create such a thing you'll need to create two functions: one for copying and one for pasting."
-msgstr ""
+msgstr "针对这些特定情况，您需要自行实现复制粘贴功能。具体需要创建两个函数：一个处理"
+"复制操作，另一个处理粘贴操作。"
 
 #: ../modeling_language.md:126
 msgid "Create a copy of an element (or list of elements). The returned type should be distinct, so the `paste()` function can properly dispatch. A copy function normally copies only the element and mandatory related elements. E.g. an Association needs two association ends."
 msgstr ""
+"创建元素（或元素列表）的副本。返回类型应具有独特性，以便`paste()`函数能正确分"
+"发。复制函数通常仅复制元素及其必需关联元素，例如关联(Association)必须包含两个"
+"关联端。"
 
 #: ../modeling_language.md:134
 msgid "Paste previously copied data. Based on the data type created in the ``copy()`` function, try to duplicate the copied elements. Returns the newly created item or element."
-msgstr ""
+msgstr "粘贴先前复制的数据。根据``copy()``函数中创建的数据类型，尝试复制被拷贝的元素"
+"。返回新创建的项或元素。"
 
 #: ../modeling_language.md:139
 msgid "Gaphor provides some convenience functions:"
-msgstr ""
+msgstr "Gaphor 提供以下便捷功能："
 
 #: ../modeling_language.md:143
 msgid "Copy ``items``. The ``lookup`` function is used to look up owned elements (shown as child nodes in the Model Browser)."
-msgstr ""
+msgstr "复制 ``items``。该操作使用 ``lookup`` "
+"函数查询所属元素（这些元素在模型浏览器中显示为子节点）。"
 
 #: ../modeling_language.md:148
 msgid "Paste a copy of the Presentation element to the diagram, but try to link the underlying model element. A shallow copy."
-msgstr ""
+msgstr "将呈现元素(Presentation "
+"element)的副本粘贴到图表中，同时尝试关联底层模型元素。（该操作为浅拷贝）。"
 
 #: ../modeling_language.md:154
 msgid "Paste a copy of both Presentation and model element. A deep copy."
-msgstr ""
+msgstr "粘贴呈现元素(Presentation element)及模型元素(model "
+"element)的副本。（该操作为深拷贝）。"
 
 #: ../modeling_language.md:157
 msgid "Grouping"
