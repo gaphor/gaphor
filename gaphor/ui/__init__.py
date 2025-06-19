@@ -138,7 +138,7 @@ def run(argv: list[str], *, launch_service="greeter", recover=False) -> int:  # 
     with gaphor.asyncio.glib_event_loop_policy():
         gtk_app.run(argv)
 
-    return gtk_app.exit_code
+    return int(gtk_app.exit_code)
 
 
 def recover_sessions(application):

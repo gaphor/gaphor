@@ -129,11 +129,11 @@ class ElementPresentation(gaphas.Element, HandlePositionUpdate, Presentation[S])
 
         diagram.connections.add_constraint(
             self,
-            MinimalValueConstraint(self.min_width, width),  # type: ignore[has-type]
+            MinimalValueConstraint(self.min_width, width),
         )
         diagram.connections.add_constraint(
             self,
-            MinimalValueConstraint(self.min_height, height),  # type: ignore[has-type]
+            MinimalValueConstraint(self.min_height, height),
         )
 
     def port_side(self, port):
@@ -433,7 +433,7 @@ class AttachedPresentation(HandlePositionUpdate, Presentation[S]):
         self._connections = diagram.connections
         self._width_constraints: list[BaseConstraint] = []
         self._height_constraints: list[BaseConstraint] = []
-        self._last_connected_side = None
+        self._last_connected_side: str | None = None
         self._shape = shape
 
         handle = self._handle = Handle(strength=gaphas.solver.STRONG, connectable=True)
