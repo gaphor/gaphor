@@ -14,6 +14,7 @@ from gaphor.i18n import gettext, i18nize
 from gaphor.SysML import diagramitems as sysml_items
 from gaphor.SysML.allocations.allocationstoolbox import allocations
 from gaphor.SysML.blocks.blockstoolbox import blocks
+from gaphor.SysML.blocks.parametricstoolbox import parametric_blocks
 from gaphor.SysML.diagramtype import DiagramDefault, SysMLDiagramType
 from gaphor.SysML.requirements.requirementstoolbox import requirements
 from gaphor.SysML.sysml import (
@@ -23,6 +24,7 @@ from gaphor.SysML.sysml import (
     ConstraintBlock,
     InterfaceBlock,
     InternalBlockDiagram,
+    ParametricDiagram,
     PackageDiagram,
     Requirement,
     RequirementDiagram,
@@ -82,6 +84,7 @@ sysml_toolbox_actions: ToolboxDefinition = (
     general_tools,
     blocks,
     internal_blocks,
+    parametric_blocks,
     requirements,
     actions,
     interactions,
@@ -105,6 +108,19 @@ sysml_diagram_types: DiagramTypes = (
         InternalBlockDiagram,
         i18nize("Internal Block Diagram"),
         (internal_blocks,),
+        (
+            Block,
+            ConstraintBlock,
+        ),
+        (
+            DiagramDefault(Package, Block, i18nize("New Block")),
+            DiagramDefault(root, Block, i18nize("New Block")),
+        ),
+    ),
+    SysMLDiagramType(
+        ParametricDiagram,
+        i18nize("Parametric Diagram"),
+        (parametric_blocks,),
         (
             Block,
             ConstraintBlock,
