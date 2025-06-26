@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import functools
 import os
+from collections.abc import Sequence
 from pathlib import Path
 from typing import ClassVar
 
@@ -56,7 +57,7 @@ class DiagramDirective(sphinx.util.docutils.SphinxDirective):
         **(images.Figure.option_spec or {}),
     }
 
-    def run(self) -> list[nodes.Node]:
+    def run(self) -> Sequence[nodes.Node]:
         name = self.arguments[0]
         model_name = self.options.pop("model", "default")
         model_file = self.config.gaphor_models.get(model_name)
@@ -108,19 +109,17 @@ class DiagramDirective(sphinx.util.docutils.SphinxDirective):
         for _ in Path(self.env.docname).parts[:-1]:
             outfile = Path("..") / outfile
 
-        return list(
-            images.Figure(
-                name="diagram/figure",
-                arguments=[f"{outfile}.*"],
-                options=self.options,
-                content=self.content,
-                lineno=self.lineno,
-                content_offset=self.content_offset,
-                block_text=self.block_text,
-                state=self.state,
-                state_machine=self.state_machine,
-            ).run()
-        )
+        return images.Figure(
+            name="diagram/figure",
+            arguments=[f"{outfile}.*"],
+            options=self.options,
+            content=self.content,
+            lineno=self.lineno,
+            content_offset=self.content_offset,
+            block_text=self.block_text,
+            state=self.state,
+            state_machine=self.state_machine,
+        ).run()
 
     def logging_error_node(self, text: str) -> list[nodes.Node]:
         location = self.state_machine.get_source_and_line(self.lineno)
