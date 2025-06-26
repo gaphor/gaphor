@@ -11,10 +11,6 @@ class SatisfyItem(DirectedRelationshipPropertyPathItem):
     def relation_type(self):
         return self.diagram.gettext("satisfy")
 
-    @relation_type.setter
-    def relation_type(self, value):
-        pass
-
 
 @represents(
     sysml.DeriveReqt,
@@ -26,20 +22,12 @@ class DeriveReqtItem(DirectedRelationshipPropertyPathItem):
     def relation_type(self):
         return self.diagram.gettext("deriveReqt")
 
-    @relation_type.setter
-    def relation_type(self, value):
-        pass
-
 
 @represents(sysml.Trace, head=sysml.Trace.sourceContext, tail=sysml.Trace.targetContext)
 class TraceItem(DirectedRelationshipPropertyPathItem):
     @property
     def relation_type(self):
         return self.diagram.gettext("trace")
-
-    @relation_type.setter
-    def relation_type(self, value):
-        pass
 
 
 @represents(
@@ -50,10 +38,6 @@ class VerifyItem(DirectedRelationshipPropertyPathItem):
     def relation_type(self):
         return self.diagram.gettext("verify")
 
-    @relation_type.setter
-    def relation_type(self, value):
-        pass
-
 
 @represents(
     sysml.Refine, head=sysml.Refine.sourceContext, tail=sysml.Refine.targetContext
@@ -62,7 +46,3 @@ class RefineItem(DirectedRelationshipPropertyPathItem):
     @property
     def relation_type(self):
         return self.diagram.gettext("refine")
-
-    @relation_type.setter
-    def relation_type(self, value):
-        pass

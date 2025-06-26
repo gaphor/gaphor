@@ -8,7 +8,3 @@ class AllocateItem(DirectedRelationshipPropertyPathItem):
     @property
     def relation_type(self):
         return self.diagram.gettext("allocate")
-
-    @relation_type.setter
-    def relation_type(self, value):
-        pass
