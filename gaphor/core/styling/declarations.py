@@ -56,6 +56,12 @@ class Var(NamedTuple):
     name: str
 
 
+class PrefersColorScheme(Enum):
+    NONE = "none"
+    DARK = "dark"
+    LIGHT = "light"
+
+
 FONT_SIZE_VALUES: dict[str, int | float] = {
     "x-small": 3 / 4,
     "small": 8 / 9,

@@ -12,7 +12,7 @@ from typing import Literal
 import tinycss2
 
 from gaphor.core.styling import selectors
-from gaphor.core.styling.declarations import parse_declarations
+from gaphor.core.styling.declarations import PrefersColorScheme, parse_declarations
 
 # http://dev.w3.org/csswg/selectors/#whitespace
 split_whitespace = re.compile("[^ \t\r\n\f]+").findall
@@ -24,7 +24,9 @@ Rule = (
 )
 
 
-def compile_style_sheet(*css: str) -> Iterator[Rule]:
+def compile_style_sheet(
+    *css: str, prefers_color_scheme: PrefersColorScheme = PrefersColorScheme.NONE
+) -> Iterator[Rule]:
     return (
         compiled_rule
         for _specificity, _order, compiled_rule in sorted(
@@ -39,7 +41,8 @@ def compile_style_sheet(*css: str) -> Iterator[Rule]:
                 for rule in compile_rules(
                     tinycss2.parse_stylesheet(
                         sheet, skip_comments=True, skip_whitespace=True
-                    )
+                    ),
+                    prefers_color_scheme=prefers_color_scheme,
                 )
                 if sheet
             )
@@ -47,7 +50,7 @@ def compile_style_sheet(*css: str) -> Iterator[Rule]:
     )
 
 
-def compile_rules(rules):
+def compile_rules(rules, prefers_color_scheme: PrefersColorScheme):
     for rule in rules:
         if rule.type == "error":
             yield "error", rule
@@ -58,14 +61,14 @@ def compile_rules(rules):
                 rule.content, skip_comments=True, skip_whitespace=True
             )
             media_selector = selectors.media_query_selector(rule.prelude)
-            if not media_selector:
-                continue
-            media_query = compile_node(media_selector)
-            yield from (
-                ((_combine(media_query, selspec[0]), selspec[1]), declaration)
-                for selspec, declaration in compile_rules(at_rules)
-                if selspec != "error"
-            )
+            if media_query_applies(media_selector.query, prefers_color_scheme):
+                yield from (
+                    (selspec, declaration)
+                    for selspec, declaration in compile_rules(
+                        at_rules, prefers_color_scheme=prefers_color_scheme
+                    )
+                    if selspec != "error"
+                )
 
         if rule.type != "qualified-rule":
             continue
@@ -85,8 +88,25 @@ def compile_rules(rules):
         yield from ((selector, declaration) for selector in selector_list)
 
 
-def _combine(a, b):
-    return lambda el: a(el) and b(el)
+def media_query_applies(query: list, prefers_color_scheme: PrefersColorScheme):
+    if len(query) == 0:
+        return True
+    elif len(query) == 1:
+        mode = query[0].lower()
+    elif (
+        len(query) == 3
+        and query[0].lower() == "prefers-color-scheme"
+        and query[1] == "="
+    ):
+        mode = query[2].lower()
+    else:
+        mode = None
+
+    if mode in ("dark", "dark-mode"):
+        return prefers_color_scheme is PrefersColorScheme.DARK
+    elif mode in ("light", "light-mode"):
+        return prefers_color_scheme is PrefersColorScheme.LIGHT
+    return False
 
 
 def compile_selector_list(input):
@@ -109,27 +129,6 @@ def compile_node(selector):
     Default behavior is to deny (no match).
     """
     raise selectors.SelectorError("Unknown selector", selector)
-
-
-@compile_node.register
-def compile_media_selector(selector: selectors.MediaSelector):
-    query = selector.query
-    if len(query) == 1:
-        mode = query[0].lower()
-    elif (
-        len(query) == 3
-        and query[0].lower() == "prefers-color-scheme"
-        and query[1] == "="
-    ):
-        mode = query[2].lower()
-    else:
-        mode = None
-
-    if mode in ("dark", "dark-mode"):
-        return lambda el: el.dark_mode is True
-    elif mode in ("light", "light-mode"):
-        return lambda el: el.dark_mode is False
-    return lambda el: False
 
 
 @compile_node.register

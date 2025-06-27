@@ -11,11 +11,13 @@ from gaphas.view import GtkView
 from gi.repository import Adw, Gdk, GdkPixbuf, Gio, GLib, Gtk
 
 from gaphor.core import event_handler, gettext
+from gaphor.core.modeling import StyleSheet
 from gaphor.core.modeling.diagram import StyledDiagram
 from gaphor.core.modeling.event import (
     AttributeUpdated,
     StyleSheetUpdated,
 )
+from gaphor.core.styling import PrefersColorScheme
 from gaphor.diagram.diagramtoolbox import get_tool_def, tooliter
 from gaphor.diagram.event import DiagramSelectionChanged
 from gaphor.diagram.painter import DiagramTypePainter, ItemPainter
@@ -85,6 +87,7 @@ def get_placement_cursor(display, icon_name):
 class DiagramPage:
     def __init__(self, diagram, event_manager, element_factory, modeling_language):
         self.event_manager = event_manager
+        self.element_factory = element_factory
         self.diagram = diagram
         self.modeling_language = modeling_language
         self.clipboard = Clipboard(event_manager, element_factory)
@@ -140,15 +143,14 @@ class DiagramPage:
 
         self.style_manager.connect("notify::dark", self._on_notify_dark)
 
+        view.model = self.diagram
         self.view = view
         self.context_menu.set_parent(view)
 
         self.select_tool("toolbox-pointer")
 
+        self._on_notify_dark(self.style_manager)
         self.update_drawing_style()
-
-        # Set model only after the painters are set
-        view.model = self.diagram
 
         diagrampage = builder.get_object("diagrampage")
         apply_action_group(self, "diagram", diagrampage)
@@ -244,7 +246,7 @@ class DiagramPage:
         self.view.action_set_enabled("clipboard.paste", enabled)
         self.view.action_set_enabled("clipboard.paste-full", enabled)
 
-    def _on_notify_dark(self, style_manager, gparam):
+    def _on_notify_dark(self, style_manager, _gparam=None):
         self.update_drawing_style()
 
     def close(self):
@@ -280,16 +282,28 @@ class DiagramPage:
         assert self.view
         assert self.diagram_css
 
-        dark_mode = self.style_manager.get_dark()
-        style = self.diagram.style(StyledDiagram(self.diagram, dark_mode=dark_mode))
+        prefers_color_scheme = (
+            PrefersColorScheme.DARK
+            if self.style_manager.get_dark()
+            else PrefersColorScheme.LIGHT
+        )
 
+        view = self.view
+        style_sheet = self.element_factory.style_sheet or StyleSheet()
+        item_painter = ItemPainter(
+            view.selection,
+            functools.partial(
+                style_sheet.compute_style, prefers_color_scheme=prefers_color_scheme
+            ),
+        )
+
+        style = style_sheet.compute_style(
+            StyledDiagram(self.diagram), prefers_color_scheme
+        )
         bg = style.get("background-color", (0.0, 0.0, 0.0, 0.0))
         self.diagram_css.load_from_string(
             f".{self._css_class()} {{ background-color: rgba({int(255 * bg[0])}, {int(255 * bg[1])}, {int(255 * bg[2])}, {bg[3]}); }}",
         )
-
-        view = self.view
-        item_painter = ItemPainter(view.selection, dark_mode)
 
         if sloppiness := style.get("line-style", 0.0):
             item_painter = FreeHandPainter(item_painter, sloppiness=sloppiness)
@@ -303,7 +317,15 @@ class DiagramPage:
             .append(GuidePainter(view))
             .append(MagnetPainter(view))
             .append(RubberbandPainter(self.rubberband_state))
-            .append(DiagramTypePainter(self.diagram))
+            .append(
+                DiagramTypePainter(
+                    self.diagram,
+                    functools.partial(
+                        style_sheet.compute_style,
+                        prefers_color_scheme=prefers_color_scheme,
+                    ),
+                )
+            )
         )
 
         view.request_update(self.diagram.get_all_items())

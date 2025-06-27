@@ -576,7 +576,6 @@ class StyledCssNode:
         )
         self._shape = shape
         self.pseudo: str | None = None
-        self.dark_mode = self._parent.dark_mode if self._parent else None
 
     def name(self) -> str:
         return self._shape.name

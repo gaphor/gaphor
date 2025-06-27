@@ -33,18 +33,10 @@ from gaphor.core.modeling.properties import (
     relation_many,
 )
 from gaphor.core.modeling.stylesheet import StyleSheet
-from gaphor.core.styling import CompiledStyleSheet, Style, StyleNode
+from gaphor.core.styling import Style, StyleNode
 from gaphor.i18n import translation
 
 log = logging.getLogger(__name__)
-
-# Not all styles are required: "background-color", "font-weight",
-# "text-color", and "text-decoration" are optional (can default to None)
-FALLBACK_STYLE: Style = {
-    "color": (0, 0, 0, 1),
-    "font-family": "sans",
-    "font-size": 14,
-}
 
 
 @dataclass(frozen=True)
@@ -137,12 +129,10 @@ class StyledDiagram:
         self,
         diagram: Diagram,
         selection: gaphas.selection.Selection | None = None,
-        dark_mode: bool | None = None,
     ):
         self.diagram = diagram
         self.selection = selection
         self.pseudo: str | None = None
-        self.dark_mode = dark_mode
 
     def name(self) -> str:
         return "diagram"
@@ -152,7 +142,7 @@ class StyledDiagram:
 
     def children(self) -> Iterator[StyleNode]:
         return (
-            StyledItem(item, self.selection, dark_mode=self.dark_mode)
+            StyledItem(item, self.selection)
             for item in self.diagram.get_all_items()
             if not item.parent
         )
@@ -167,14 +157,13 @@ class StyledDiagram:
         return ()
 
     def __hash__(self):
-        return hash((self.diagram, self.state(), self.dark_mode))
+        return hash((self.diagram, self.state()))
 
     def __eq__(self, other):
         return (
             isinstance(other, StyledDiagram)
             and self.diagram == other.diagram
             and self.state() == other.state()
-            and self.dark_mode == other.dark_mode
         )
 
 
@@ -189,14 +178,12 @@ class StyledItem:
         self,
         item: Presentation,
         selection: gaphas.selection.Selection | None = None,
-        dark_mode: bool | None = None,
     ):
         assert item.diagram
         self.item = item
         self.diagram = item.diagram
         self.selection = selection
         self.pseudo: str | None = None
-        self.dark_mode = dark_mode
         self._state = (
             (
                 "active" if item in selection.selected_items else "",
@@ -214,21 +201,15 @@ class StyledItem:
 
     def parent(self) -> StyleNode | None:
         parent = self.item.parent
-        return (
-            StyledItem(parent, self.selection, dark_mode=self.dark_mode)
-            if parent
-            else StyledDiagram(self.diagram, self.selection, self.dark_mode)
-        )
+        # Do not propagate `selection`: item style should not be based on pseudo styles.
+        return StyledItem(parent) if parent else StyledDiagram(self.diagram)
 
     def children(self) -> Iterator[StyleNode]:
         item = self.item
         yield from (node.style_node(self) for node in item.css_nodes())
 
         selection = self.selection
-        yield from (
-            StyledItem(child, selection, dark_mode=self.dark_mode)
-            for child in item.children
-        )
+        yield from (StyledItem(child, selection) for child in item.children)
 
     def classes(self) -> Sequence[str]:
         return ["item"]
@@ -249,14 +230,13 @@ class StyledItem:
         return self._state
 
     def __hash__(self):
-        return hash((self.item, self.state(), self.dark_mode))
+        return hash((self.item, self.state()))
 
     def __eq__(self, other):
         return (
             isinstance(other, StyledItem)
             and self.item == other.item
             and self.state() == other.state()
-            and self.dark_mode == other.dark_mode
         )
 
 
@@ -284,7 +264,6 @@ class Diagram(Base):
         self._connections = gaphas.connections.Connections()
         self._connections.add_handler(self._on_constraint_solved)
 
-        self._compiled_style_sheet: CompiledStyleSheet | None = None
         self._registered_views: set[gaphas.model.View] = set()
         self._dirty_items: set[gaphas.Item] = set()
 
@@ -319,26 +298,9 @@ class Diagram(Base):
         )
         self.ownedPresentation.order(new_order.index)
 
-    @property
-    def styleSheet(self) -> StyleSheet | None:
-        return next(self.model.select(StyleSheet), None)
-
-    def style(self, node: StyleNode) -> Style:
-        if not (compiled_style_sheet := self._compiled_style_sheet):
-            style_sheet = self.styleSheet
-            compiled_style_sheet = self._compiled_style_sheet = (
-                style_sheet.new_compiled_style_sheet() if style_sheet else None
-            )
-
-        return (
-            compiled_style_sheet.compute_style(node)
-            if compiled_style_sheet
-            else FALLBACK_STYLE
-        )
-
     def gettext(self, message: str) -> str:
         """Translate a message to the language used in the model."""
-        style_sheet = self.styleSheet
+        style_sheet = self.model.style_sheet
         if style_sheet and style_sheet.naturalLanguage:
             return translation(style_sheet.naturalLanguage).gettext(message)
         return message
@@ -424,19 +386,22 @@ class Diagram(Base):
         are now updates. If an item has an ``update(context: UpdateContext)``
         method, it's invoked. Constraints are solved.
         """
-        self._update_dirty_items(dirty_items)
-
-        # Clear our (cached) style sheet first
-        self._compiled_style_sheet = None
+        if not self._model:
+            return
 
         def dirty_items_with_ancestors():
             for item in self._dirty_items:
                 yield item
                 yield from gaphas.canvas.ancestors(self, item)
 
+        self._update_dirty_items(dirty_items)
+
+        style_sheet = self.model.style_sheet or StyleSheet()
+        style_sheet.clear_caches()
+
         for item in reversed(list(self.sort(dirty_items_with_ancestors()))):
             if update := getattr(item, "update", None):
-                update(UpdateContext(style=self.style(StyledItem(item))))
+                update(UpdateContext(style=style_sheet.compute_style(StyledItem(item))))
 
         self._connections.solve()
 

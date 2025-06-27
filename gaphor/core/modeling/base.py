@@ -18,6 +18,7 @@ from gaphor.core.modeling.properties import relation_many, umlproperty
 if TYPE_CHECKING:
     from gaphor.core.modeling.diagram import Diagram
     from gaphor.core.modeling.presentation import Presentation
+    from gaphor.core.modeling.stylesheet import StyleSheet
 
 log = logging.getLogger(__name__)
 
@@ -228,6 +229,9 @@ class RepositoryProtocol(Protocol):
 
     @overload
     def select(self, expression: None) -> Iterator[Base]: ...
+
+    @property
+    def style_sheet(self) -> StyleSheet | None: ...
 
     def lookup(self, id: str) -> Base | None: ...
 
