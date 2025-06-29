@@ -261,7 +261,7 @@
                         <property name="label" translatable="yes">No focused item.</property>
                         <property name="xalign">0</property>
                         <style>
-                          <class name="mono" />
+                          <class name="monospace" />
                         </style>
                       </object>
                     </child>
