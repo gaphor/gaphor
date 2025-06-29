@@ -3,7 +3,6 @@
 (help browser anyone?)
 """
 
-import logging
 import sys
 
 from gi.repository import Adw, Gtk
@@ -13,8 +12,7 @@ from gaphor.application import distribution
 from gaphor.core import action
 from gaphor.i18n import gettext, translated_ui_string
 from gaphor.settings import StyleVariant, settings
-
-logger = logging.getLogger(__name__)
+from gaphor.ui.help.debuginfo import DebugInfo
 
 
 def new_builder(ui_file):
@@ -27,9 +25,10 @@ class HelpService(Service, ActionProvider):
     def __init__(self, application):
         self.application = application
         self.preferences_dialog = None
+        self.debug_info = DebugInfo(application)
 
     def shutdown(self):
-        pass
+        self.debug_info.shutdown()
 
     @property
     def window(self):
@@ -41,7 +40,9 @@ class HelpService(Service, ActionProvider):
         about = builder.get_object("about")
 
         about.set_version(distribution().version)
+        about.set_debug_info(self.debug_info.create_debug_info())
         about.present(self.window)
+        return about
 
     @action(name="app.shortcuts", shortcut="<Primary>question")
     def shortcuts(self):

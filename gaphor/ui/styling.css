@@ -221,3 +221,9 @@ flowboxchild:active {
   margin: 0;
   padding: 3px 6px 6px 6px;
 }
+
+/* Customize error reports in about dialog. */
+.about textview {
+  font-family: monospace;
+  font-size: 90%;
+}
