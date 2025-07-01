@@ -26,6 +26,7 @@ from gaphor.core.modeling.event import (
     ModelFlushed,
 )
 from gaphor.core.modeling.presentation import Presentation
+from gaphor.core.modeling.stylesheet import StyleSheet
 
 T = TypeVar("T", bound=Base)
 P = TypeVar("P", bound=Presentation)
@@ -66,6 +67,7 @@ class ElementFactory(Service):
         self.event_manager: EventHandler | None = event_manager
         self.element_dispatcher = element_dispatcher
         self._elements: dict[Id, Base] = OrderedDict()
+        self._style_sheet: StyleSheet | None = None
         if event_manager:
             event_manager.subscribe(self._on_unlink_event)
 
@@ -180,6 +182,13 @@ class ElementFactory(Service):
     def is_empty(self) -> bool:
         """Returns ``True`` if the factory holds no elements."""
         return bool(self._elements)
+
+    @property
+    def style_sheet(self) -> StyleSheet | None:
+        """A convenience property to obtain the style sheet."""
+        if not self._style_sheet:
+            self._style_sheet = next(self.select(StyleSheet), None)
+        return self._style_sheet
 
     def watcher(
         self, element: Base, default_handler: Handler | None = None
