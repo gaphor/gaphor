@@ -236,9 +236,9 @@ def load_generator(
             elements, element_factory, modeling_language, gaphor_version
         ):
             if percentage:
-                yield percentage / 2 + 50
+                yield int(percentage / 2 + 50)
             else:
-                yield percentage
+                yield int(percentage)
 
     yield 100
 
