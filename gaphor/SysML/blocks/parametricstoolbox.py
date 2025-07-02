@@ -3,6 +3,7 @@
 from gaphor.core import gettext
 from gaphor.diagram.diagramtoolbox import ToolDef, ToolSection, new_item_factory
 from gaphor.SysML import diagramitems as sysml_items
+from gaphor.SysML import sysml
 from gaphor.UML import diagramitems as uml_items
 from gaphor.UML.toolboxconfig import named_element_config
 
@@ -13,16 +14,18 @@ parametric_blocks = ToolSection(
             "toolbox-connector",
             gettext("Connector"),
             "gaphor-connector-symbolic",
-            "<Shift>C",
+            None,
             new_item_factory(uml_items.ConnectorItem),
         ),
         ToolDef(
             "toolbox-constraint-block",
             gettext("Constraint Block"),
             "gaphor-constraint-block-symbolic",
-            "o",
+            None,
             new_item_factory(
-                sysml_items.ConstraintBlockItem, config_func=named_element_config
+                sysml_items.ConstraintBlockItem,
+                sysml.ConstraintBlock,
+                config_func=named_element_config,
             ),
         ),
     ),
