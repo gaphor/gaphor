@@ -2921,23 +2921,23 @@ msgstr "请确保所有元素加载完成后调用 postload() 方法。"
 
 #: ../../gaphor/core/modeling/base.py:docstring of gaphor.core.modeling.base.Base.postload:1
 msgid "Fix up the odds and ends."
-msgstr "修复遗留问题"
+msgstr "修复遗留问题。"
 
 #: ../../gaphor/core/modeling/base.py:docstring of gaphor.core.modeling.base.Base.postload:3
 msgid "This is run after all elements are loaded."
-msgstr ""
+msgstr "此操作将在所有元素加载完成后执行。"
 
 #: ../../gaphor/core/modeling/base.py:docstring of gaphor.core.modeling.base.Base.save:1
 msgid "Save the state by calling ``save_func(name, value)``."
-msgstr ""
+msgstr "通过调用 ``save_func(name, value)`` 保存状态。"
 
 #: ../models/core.rst:63
 msgid "OCL-style methods"
-msgstr ""
+msgstr "OCL 风格方法"
 
 #: ../../gaphor/core/modeling/base.py:docstring of gaphor.core.modeling.base.Base.isKindOf:1
 msgid "Returns :const:`True` if the object is an instance of ``class_``."
-msgstr ""
+msgstr "如果该对象是 ``class_`` 的实例，则返回 :const:``True``。"
 
 #: ../../gaphor/core/modeling/base.py:docstring of gaphor.core.modeling.base.Base.isTypeOf:1
 msgid "Returns :const:`True` if the object is of the same type as the ``other``."
@@ -2961,71 +2961,75 @@ msgstr "``Presentation`` 的子类型应实现 :obj:`gaphas.item.Item` 协议。
 
 #: ../../gaphor/core/modeling/presentation.py:docstring of gaphor.core.modeling.presentation.Presentation.request_update:1
 msgid "Mark this presentation object for update."
-msgstr ""
+msgstr "将此呈现对象标记为待更新。"
 
 #: ../../gaphor/core/modeling/presentation.py:docstring of gaphor.core.modeling.presentation.Presentation.request_update:3
 msgid "Updates are orchestrated by diagrams."
-msgstr ""
+msgstr "更新操作由图表统一协调。"
 
 #: ../../gaphor/core/modeling/presentation.py:docstring of gaphor.core.modeling.presentation.Presentation.watch:1
 msgid "Watch a certain path of elements starting with ``self``."
-msgstr ""
+msgstr "监控以 ``self`` 为起点的特定元素路径。"
 
 #: ../../gaphor/core/modeling/presentation.py:docstring of gaphor.core.modeling.presentation.Presentation.watch:3
 msgid "The handler is optional and will default to a simple :obj:`request_update`."
-msgstr ""
+msgstr "该处理器（Handler）为可选配置，默认使用简单的 :obj:`request_update` 方法。"
 
 #: ../../gaphor/core/modeling/presentation.py:docstring of gaphor.core.modeling.presentation.Presentation.watch:5
 msgid "Watches should be set in the constructor, so they can be registered and unregistered in one shot."
-msgstr ""
+msgstr "监视器（Watchers）应在构造函数中设置，以便一次性完成注册和注销操作。"
 
 #: ../../gaphor/core/modeling/presentation.py:docstring of gaphor.core.modeling.presentation.Presentation.watch:12
 msgid "This interface is fluent: returns ``self``."
-msgstr ""
+msgstr "该接口采用流式设计：返回 self 以实现链式调用。"
 
 #: ../../gaphor/core/modeling/presentation.py:docstring of gaphor.core.modeling.presentation.Presentation.change_parent:1
 msgid "Change the parent and update the item's matrix so the item visually remains in the same place."
-msgstr ""
+msgstr "更改父级对象并更新该项目的矩阵变换，使其在视觉上保持原位。"
 
 #: ../models/core.rst:84
 msgid "The ``Diagram`` class"
-msgstr ""
+msgstr "``Diagram`` 类"
 
 #: ../../gaphor/core/modeling/diagram.py:docstring of gaphor.core.modeling.diagram.Diagram:1
 msgid "Diagrams may contain :obj:`Presentation` elements."
-msgstr ""
+msgstr "图表（Diagram）可以包含 :obj:`Presentation` 呈现元素。"
 
 #: ../../gaphor/core/modeling/diagram.py:docstring of gaphor.core.modeling.diagram.Diagram:3
 msgid "If diagrams need to be owned, the modeling language (e.g. UML) should subclass ``Diagram`` and add ownership relationships and rules."
-msgstr ""
+msgstr "若需为图表（Diagram）设置所有权关系，建模语言（如UML）应继承`` Diagram`` "
+"类，并添加所有权关联规则。"
 
 #: ../../gaphor/core/modeling/diagram.py:docstring of gaphor.core.modeling.diagram.Diagram.create:1
 msgid "Create a new diagram item on the diagram."
-msgstr ""
+msgstr "在图表上创建新的图表项。"
 
 #: ../../gaphor/core/modeling/diagram.py:docstring of gaphor.core.modeling.diagram.Diagram.create:3
 msgid "It is created with a unique ID, and it is attached to the diagram's root item.  The type parameter is the element class to create.  The new element also has an optional parent and subject."
 msgstr ""
+"该元素创建时将分配唯一ID，并挂载至图表根项（root "
+"item）。参数type指定要创建的元素类，新元素还可选包含父级关联（parent）和主题"
+"对象（subject）。"
 
 #: ../../gaphor/core/modeling/diagram.py:docstring of gaphor.core.modeling.diagram.Diagram.lookup:1
 msgid "Find a presentation item by id."
-msgstr ""
+msgstr "按ID查找呈现项。"
 
 #: ../../gaphor/core/modeling/diagram.py:docstring of gaphor.core.modeling.diagram.Diagram.lookup:3
 msgid "Returns a presentation in this diagram or return ``None``."
-msgstr ""
+msgstr "返回此图表中的呈现项，若未找到则返回 ``None``。"
 
 #: ../../gaphor/core/modeling/diagram.py:docstring of gaphor.core.modeling.diagram.Diagram.select:1
 msgid "Return an iterator of all canvas items that match expression."
-msgstr ""
+msgstr "返回匹配表达式的所有画布项（canvas items）的迭代器。"
 
 #: ../../gaphor/core/modeling/diagram.py:docstring of gaphor.core.modeling.diagram.Diagram.request_update:1
 msgid "Schedule an item for updating."
-msgstr ""
+msgstr "将项目标记为待更新状态。"
 
 #: ../../gaphor/core/modeling/diagram.py:docstring of gaphor.core.modeling.diagram.Diagram.request_update:3
 msgid "No update is done at this point, it's only added to the set of to-be updated items."
-msgstr ""
+msgstr "此处不会立即执行更新，仅将项目添加至待更新集合中。"
 
 #: ../../gaphor/core/modeling/diagram.py:docstring of gaphor.core.modeling.diagram.Diagram.request_update:6
 msgid "This method is part of the :obj:`gaphas.model.Model` protocol."
