@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gaphor 3.0.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-12-30 14:25-0500\n"
-"PO-Revision-Date: 2025-06-18 15:01+0000\n"
+"PO-Revision-Date: 2025-07-06 03:49+0000\n"
 "Last-Translator: Fabien Liang <zeyue.liang@gmail.com>\n"
 "Language-Team: Chinese (Simplified Han script) <https://hosted.weblate.org/"
 "projects/gaphor/docs-gaphor-org/zh_Hans/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.12.1\n"
+"X-Generator: Weblate 5.13-dev\n"
 
 #: ../changelog.rst:2
 msgid "Change Log"
@@ -2886,39 +2886,42 @@ msgstr "传播传入事件（Propagate Incoming Events）。"
 
 #: ../../gaphor/core/modeling/base.py:docstring of gaphor.core.modeling.base.Base.handle:3
 msgid "This only works if the element has been created by an :class:`~gaphor.core.modeling.ElementFactory`"
-msgstr ""
+msgstr "只有当元素是由 :class:`~gaphor.core.modeling.ElementFactory` 创建时，这才有效"
 
 #: ../../gaphor/core/modeling/base.py:docstring of gaphor.core.modeling.base.Base.watcher:1
 msgid "Create a new watcher for this element."
-msgstr ""
+msgstr "为此元素创建一个新的监视器。"
 
 #: ../../gaphor/core/modeling/base.py:docstring of gaphor.core.modeling.base.Base.watcher:3
 msgid "Watchers provide a convenient way to get signalled when a property relative to ``self`` has been changed."
-msgstr ""
+msgstr "当与 ``self`` "
+"相关的属性发生更改时，监视器（Watchers）提供了一种便捷的方式来接收通知。"
 
 #: ../../gaphor/core/modeling/base.py:docstring of gaphor.core.modeling.base.Base.watcher:6
 msgid "To use a watcher, the element should be created by a properly wired up :class:`~gaphor.core.modeling.ElementFactory``."
 msgstr ""
+"要使用监视器（Watcher），该元素必须由正确配置的 "
+":class:`~gaphor.core.modeling.ElementFactory`` 创建。"
 
 #: ../../gaphor/core/modeling/base.py:docstring of gaphor.core.modeling.base.Base.watcher:8
 msgid "This example is purely illustrative:"
-msgstr ""
+msgstr "此示例仅作说明用途："
 
 #: ../models/core.rst:53
 msgid "Loading and saving"
-msgstr ""
+msgstr "加载与保存"
 
 #: ../../gaphor/core/modeling/base.py:docstring of gaphor.core.modeling.base.Base.load:1
 msgid "Loads value in name."
-msgstr ""
+msgstr "加载名为（name）的值。"
 
 #: ../../gaphor/core/modeling/base.py:docstring of gaphor.core.modeling.base.Base.load:3
 msgid "Make sure that after all elements are loaded, postload() should be called."
-msgstr ""
+msgstr "请确保所有元素加载完成后调用 postload() 方法。"
 
 #: ../../gaphor/core/modeling/base.py:docstring of gaphor.core.modeling.base.Base.postload:1
 msgid "Fix up the odds and ends."
-msgstr ""
+msgstr "修复遗留问题"
 
 #: ../../gaphor/core/modeling/base.py:docstring of gaphor.core.modeling.base.Base.postload:3
 msgid "This is run after all elements are loaded."
