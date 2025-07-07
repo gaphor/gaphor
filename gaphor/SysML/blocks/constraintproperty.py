@@ -1,5 +1,7 @@
 """Constraint Property item."""
 
+from dataclasses import replace
+
 from gaphor import UML
 from gaphor.core.modeling.properties import attribute
 from gaphor.diagram.presentation import ElementPresentation, Named
@@ -24,6 +26,12 @@ class ConstraintPropertyItem(Named, ElementPresentation[UML.Property]):
     show_stereotypes: attribute[int] = attribute("show_stereotypes", int)
 
     def update_shapes(self, event=None):
+        def draw_rounded_border(box, context, bounding_box):
+            new_style = context.style.copy()
+            new_style["border-radius"] = 25
+            new_context = replace(context, style=new_style)
+            draw_border(box, new_context, bounding_box)
+
         self.shape = Box(
             CssNode(
                 "compartment",
@@ -42,5 +50,5 @@ class ConstraintPropertyItem(Named, ElementPresentation[UML.Property]):
                 ),
             ),
             *(self.show_stereotypes and stereotype_compartments(self.subject) or []),
-            draw=draw_border,
+            draw=draw_rounded_border,
         )
