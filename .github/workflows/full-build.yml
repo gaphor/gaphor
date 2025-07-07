@@ -206,6 +206,15 @@ jobs:
           # https://github.com/actions/runner-images/issues/9966
           brew install --overwrite python@${python_version}
           brew install gtksourceview5 libadwaita adwaita-icon-theme gobject-introspection graphviz create-dmg
+      - name: Workaround for broken svg pixbuf loader
+        # Force SVG loader to the gdk-pixbuf loader cache. This is broken on Homebrew (July 2nd 2025)
+        # See https://gitlab.gnome.org/GNOME/librsvg/-/issues/1161, https://github.com/Homebrew/brew/pull/9102
+        run: >
+          test ! -d /opt/homebrew/lib || {
+            install_name_tool -change @rpath/librsvg-2.2.dylib /opt/homebrew/opt/librsvg/lib/librsvg-2.2.dylib /opt/homebrew/opt/librsvg/lib/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader_svg.so
+            codesign --sign - --force --preserve-metadata=entitlements,requirements,flags,runtime /opt/homebrew/opt/librsvg/lib/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader_svg.so
+            GDK_PIXBUF_MODULEDIR=/opt/homebrew/lib/gdk-pixbuf-2.0/2.10.0/loaders gdk-pixbuf-query-loaders --update-cache
+          }
       - name: Ensure Homebrew Library Path
         run: test ! -d /opt/homebrew/lib || echo "DYLD_LIBRARY_PATH=/opt/homebrew/lib" >> $GITHUB_ENV
         shell: bash
