@@ -82,7 +82,7 @@ class DebugInfo:
             session.get_service("event_manager").handle(
                 Notification(
                     gettext(
-                        "An unexpected error occurred.\nPlease file an issue on GitHub and include information from Tools → Error Reports."
+                        "An unexpected error occurred.\nPlease file an issue on GitHub and include information from About Gaphor → Troubleshooting → Debugging Information."
                     )
                 )
             )
