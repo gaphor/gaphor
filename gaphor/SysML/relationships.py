@@ -7,8 +7,6 @@ from gaphor.UML.compartments import text_stereotypes
 class DirectedRelationshipPropertyPathItem(
     Named, LinePresentation[sysml.DirectedRelationshipPropertyPath]
 ):
-    relation_type = ""
-
     def __init__(self, diagram, id=None):
         super().__init__(
             diagram,
@@ -23,3 +21,7 @@ class DirectedRelationshipPropertyPathItem(
         self.watch("subject[UML:NamedElement].name").watch(
             "subject[UML:Element].appliedStereotype.classifier.name"
         )
+
+    @property
+    def relation_type(self):
+        return ""

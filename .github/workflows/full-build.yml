@@ -32,7 +32,7 @@ jobs:
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@0634a2670c59f64b4a01f0f96f84700a4088b9f0 # v2.12.0
+        uses: step-security/harden-runner@6c439dc8bdf85cadbbce9ed30d1c7b959517bc49 # v2.12.2
         with:
           disable-sudo: true
           disable-file-monitoring: true
@@ -152,7 +152,7 @@ jobs:
       options: --privileged
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@0634a2670c59f64b4a01f0f96f84700a4088b9f0 # v2.12.0
+        uses: step-security/harden-runner@6c439dc8bdf85cadbbce9ed30d1c7b959517bc49 # v2.12.2
         with:
           egress-policy: audit
 
@@ -202,12 +202,21 @@ jobs:
           HOMEBREW_NO_INSTALL_CLEANUP: 1
         run: |
           brew update
-          # Pre-installed Python conflicts with Homebrew Python
+          # Pre-installed Python conflicts with Homebrew Python (Intel only)
           # https://github.com/actions/runner-images/issues/9966
           brew install --overwrite python@${python_version}
           brew install gtksourceview5 libadwaita adwaita-icon-theme gobject-introspection graphviz create-dmg
-      - name: Ensure Homebrew Library Path
-        run: test ! -d /opt/homebrew/lib || echo "DYLD_LIBRARY_PATH=/opt/homebrew/lib" >> $GITHUB_ENV
+      - name: Workaround for broken gdk-pixbuf SVG loader (ARM only)
+        if: matrix.target.arch == 'arm'
+        run: |
+          # Fix gdk-pixbuf SVG loader. This is broken on Homebrew (July 2nd 2025)
+          # See https://gitlab.gnome.org/GNOME/librsvg/-/issues/1161, https://github.com/Homebrew/brew/pull/9102
+          install_name_tool -change @rpath/librsvg-2.2.dylib /opt/homebrew/opt/librsvg/lib/librsvg-2.2.dylib /opt/homebrew/opt/librsvg/lib/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader_svg.so
+          codesign --sign - --force --preserve-metadata=entitlements,requirements,flags,runtime /opt/homebrew/opt/librsvg/lib/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader_svg.so
+          GDK_PIXBUF_MODULEDIR=/opt/homebrew/lib/gdk-pixbuf-2.0/2.10.0/loaders gdk-pixbuf-query-loaders --update-cache
+      - name: Ensure Homebrew Library Path (ARM only)
+        if: matrix.target.arch == 'arm'
+        run: echo "DYLD_LIBRARY_PATH=/opt/homebrew/lib" >> $GITHUB_ENV
         shell: bash
       - name: Set up Python
         uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
@@ -276,7 +285,7 @@ jobs:
     env:
       INCLUDE: C:\gtk\include;C:\gtk\include\cairo;C:\gtk\include\glib-2.0;C:\gtk\include\gobject-introspection-1.0;C:\gtk\lib\glib-2.0\include;
       LIB: C:\gtk\lib
-      gvsbuild_version: 2025.5.0
+      gvsbuild_version: 2025.6.0
     permissions:
       contents: write
     timeout-minutes: 45
@@ -315,6 +324,7 @@ jobs:
         with:
           python-version: ${{ env.python_version }}
           cache: pip
+          check-latest: true  # Python 3.13.4 is broken on Windows
       - name: Install Dependencies
         id: install
         uses: ./.github/actions/install
@@ -390,7 +400,7 @@ jobs:
       version: ${{ needs.linux-wheel.outputs.version }}
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@0634a2670c59f64b4a01f0f96f84700a4088b9f0 # v2.12.0
+        uses: step-security/harden-runner@6c439dc8bdf85cadbbce9ed30d1c7b959517bc49 # v2.12.2
         with:
           egress-policy: audit
 
@@ -411,7 +421,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@0634a2670c59f64b4a01f0f96f84700a4088b9f0 # v2.12.0
+        uses: step-security/harden-runner@6c439dc8bdf85cadbbce9ed30d1c7b959517bc49 # v2.12.2
         with:
           egress-policy: audit
 
@@ -429,7 +439,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@0634a2670c59f64b4a01f0f96f84700a4088b9f0 # v2.12.0
+        uses: step-security/harden-runner@6c439dc8bdf85cadbbce9ed30d1c7b959517bc49 # v2.12.2
         with:
           egress-policy: audit
 

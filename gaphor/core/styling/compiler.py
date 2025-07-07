@@ -195,6 +195,13 @@ def compile_combined_selector(selector: selectors.CombinedSelector):
 
 
 @compile_node.register
+def compile_class_selector(selector: selectors.ClassSelector):
+    class_name = selector.class_name
+
+    return lambda el: class_name in el.classes()
+
+
+@compile_node.register
 def compile_attribute_selector(selector: selectors.AttributeSelector):
     name = selector.lower_name
     operator = selector.operator
