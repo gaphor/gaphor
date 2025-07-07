@@ -21,11 +21,11 @@ from gaphor.SysML.sysml import (
     ActivityDiagram,
     Block,
     BlockDefinitionDiagram,
-    ConstraintBlock,
+    Constraint,
     InterfaceBlock,
     InternalBlockDiagram,
-    ParametricDiagram,
     PackageDiagram,
+    ParametricDiagram,
     Requirement,
     RequirementDiagram,
     SequenceDiagram,
@@ -101,7 +101,7 @@ sysml_diagram_types: DiagramTypes = (
         BlockDefinitionDiagram,
         i18nize("Block Definition Diagram"),
         (blocks,),
-        (Block, Package, ConstraintBlock, Activity),
+        (Block, Package, Constraint, Activity),
         (DiagramDefault(root, Package, i18nize("New Package")),),
     ),
     SysMLDiagramType(
@@ -110,7 +110,7 @@ sysml_diagram_types: DiagramTypes = (
         (internal_blocks,),
         (
             Block,
-            ConstraintBlock,
+            Constraint,
         ),
         (
             DiagramDefault(Package, Block, i18nize("New Block")),
@@ -123,7 +123,7 @@ sysml_diagram_types: DiagramTypes = (
         (parametric_blocks,),
         (
             Block,
-            ConstraintBlock,
+            Constraint,
         ),
         (
             DiagramDefault(Package, Block, i18nize("New Block")),

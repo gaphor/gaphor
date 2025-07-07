@@ -12,7 +12,7 @@ from gaphor.diagram.shapes import (
     draw_border,
     stroke,
 )
-from gaphor.SysML.sysml import Block, ConstraintBlock, Requirement
+from gaphor.SysML.sysml import Block, Constraint, Requirement
 from gaphor.UML import Interaction, Package, Profile, StateMachine
 from gaphor.UML.actions.activity import update_parameter_nodes
 from gaphor.UML.recipes import stereotypes_str
@@ -101,8 +101,8 @@ def diagram_label(diagram):
 def _model_element_type(el) -> str:
     if isinstance(el, Activity):
         return "activity"
-    if isinstance(el, ConstraintBlock):
-        return "constraint block"
+    if isinstance(el, Constraint):
+        return "constraint"
     if isinstance(el, Block):
         return "block"
     if isinstance(el, Interaction):

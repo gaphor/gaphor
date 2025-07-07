@@ -23,8 +23,8 @@ parametric_blocks = ToolSection(
             "gaphor-constraint-block-symbolic",
             None,
             new_item_factory(
-                sysml_items.ConstraintBlockItem,
-                sysml.ConstraintBlock,
+                sysml_items.ConstraintItem,
+                sysml.Constraint,
                 config_func=named_element_config,
             ),
         ),

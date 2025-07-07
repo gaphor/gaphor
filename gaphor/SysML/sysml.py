@@ -223,8 +223,8 @@ class ElementGroup(Comment):
     orderedMember: relation_many[Element]
 
 
-class ConstraintBlock(Block):
-    pass
+class Constraint(Block):
+    specification: _attribute[str] = _attribute("specification", str)
 
 
 from gaphor.UML.uml import Parameter

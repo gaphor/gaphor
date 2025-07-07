@@ -81,6 +81,51 @@ class RequirementPropertyPage(PropertyPageBase):
             )
 
 
+@PropertyPages.register(sysml.Constraint)
+class ConstraintPropertyPage(PropertyPageBase):
+    order = 15
+
+    def __init__(self, subject: sysml.Constraint, event_manager):
+        super().__init__()
+        assert subject
+        self.subject = subject
+        self.event_manager = event_manager
+        self.watcher = subject.watcher()
+
+    def construct(self):
+        builder = new_builder(
+            "constraint-editor",
+            "constraint-specification-buffer",
+            signals={
+                "constraint-specification-changed": (self._on_specification_changed,),
+            },
+        )
+        subject = self.subject
+
+        text_view = builder.get_object("constraint-specification")
+
+        buffer = builder.get_object("constraint-specification-buffer")
+        if subject.specification:
+            buffer.set_text(subject.specification)
+
+        @handler_blocking(buffer, "changed", self._on_specification_changed)
+        def specification_handler(event):
+            if not text_view.props.has_focus:
+                buffer.set_text(event.new_value)
+
+        self.watcher.watch("specification", specification_handler)
+
+        return unsubscribe_all_on_destroy(
+            builder.get_object("constraint-editor"), self.watcher
+        )
+
+    def _on_specification_changed(self, buffer):
+        with Transaction(self.event_manager, context="editing"):
+            self.subject.specification = buffer.get_text(
+                buffer.get_start_iter(), buffer.get_end_iter(), False
+            )
+
+
 @PropertyPages.register(RequirementItem)
 class RequirementItemPropertyPage(PropertyPageBase):
     order = 16
