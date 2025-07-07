@@ -5,7 +5,6 @@ from gaphor.core.modeling.properties import attribute
 from gaphor.diagram.presentation import ElementPresentation, Named
 from gaphor.diagram.shapes import Box, CssNode, Text, draw_border
 from gaphor.UML.classes.stereotype import stereotype_compartments, stereotype_watches
-from gaphor.UML.compartments import text_stereotypes
 from gaphor.UML.umlfmt import format_property
 
 
@@ -30,9 +29,6 @@ class ConstraintPropertyItem(Named, ElementPresentation[UML.Property]):
                 "compartment",
                 None,
                 Box(
-                    text_stereotypes(
-                        self, lambda: [self.diagram.gettext("constraintProperty")]
-                    ),
                     CssNode(
                         "name",
                         self.subject,
