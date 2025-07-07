@@ -46,7 +46,7 @@ class StylePropertyPage(PropertyPageBase):
         if StylePropertyPage.style_editor:
             StylePropertyPage.style_editor.close()
 
-        style_sheet = next(self.element_factory.select(StyleSheet))
+        style_sheet = self.element_factory.style_sheet
         StylePropertyPage.style_editor = StyleEditor(
             self.subject,
             style_sheet,
@@ -107,7 +107,7 @@ class StyleEditor:
         self.window.present()
 
     def fields(self):
-        style = self.subject.diagram.style(StyledItem(self.subject))
+        style = self.style_sheet.compute_style(StyledItem(self.subject))
         if style.get("color"):
             self.color.set_rgba(to_gdk_rgba(style["color"]))
             self.text_color.set_rgba(to_gdk_rgba(style["color"]))

@@ -2,7 +2,7 @@ import gaphas
 import pytest
 
 from gaphor.core import event_handler
-from gaphor.core.modeling import Base, Diagram, ElementDeleted, Presentation, StyleSheet
+from gaphor.core.modeling import Base, Diagram, ElementDeleted, Presentation
 from gaphor.core.modeling.properties import association
 
 
@@ -79,13 +79,6 @@ def test_can_only_add_diagram_items(element_factory):
 
     with pytest.raises(TypeError):
         diagram.create(Diagram)
-
-
-def test_diagram_stylesheet(element_factory):
-    diagram = element_factory.create(Diagram)
-    styleSheet = element_factory.create(StyleSheet)
-
-    assert diagram.styleSheet is styleSheet
 
 
 class ViewMock:

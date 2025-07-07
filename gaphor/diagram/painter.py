@@ -8,27 +8,38 @@ and handles).
 
 from __future__ import annotations
 
+from collections.abc import Callable
 from functools import singledispatch
 
 from cairo import LINE_JOIN_ROUND
 
-from gaphor.core.modeling.diagram import Diagram, DrawContext, StyledItem
+from gaphor.core.modeling import StyleSheet
+from gaphor.core.modeling.diagram import (
+    Diagram,
+    DrawContext,
+    StyledItem,
+)
+from gaphor.core.styling import Style, StyleNode
 from gaphor.diagram.selection import Selection
 
 
 class ItemPainter:
     def __init__(
-        self, selection: Selection | None = None, dark_mode: bool | None = None
+        self,
+        selection: Selection | None = None,
+        compute_style: Callable[[StyleNode], Style] | None = None,
     ):
         self.selection: Selection = selection or Selection()
-        self.dark_mode = dark_mode
+        self.compute_style: Callable[[StyleNode], Style] = (
+            compute_style or StyleSheet().compute_style
+        )
 
     def paint_item(self, item, cr):
-        selection = self.selection
-        if not (diagram := item.diagram):
+        if not item.diagram:
             return
 
-        style = diagram.style(StyledItem(item, selection, self.dark_mode))
+        selection = self.selection
+        style = self.compute_style(StyledItem(item, selection))
 
         cr.save()
         try:
@@ -64,7 +75,11 @@ class DiagramTypePainter:
     such as is common for UML and SysML diagrams.
     """
 
-    def __init__(self, _diagram: Diagram):
+    def __init__(
+        self,
+        _diagram: Diagram,
+        _compute_style: Callable[[StyleNode], Style] | None = None,
+    ):
         pass
 
     def paint(self, _items, _cr):

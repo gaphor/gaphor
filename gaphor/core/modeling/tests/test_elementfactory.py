@@ -11,6 +11,7 @@ from gaphor.core.modeling.event import (
     ModelFlushed,
 )
 from gaphor.core.modeling.presentation import Presentation
+from gaphor.core.modeling.stylesheet import StyleSheet
 from gaphor.UML import LiteralString, Operation, Parameter
 
 
@@ -42,6 +43,12 @@ def test_create_is_idempotent_but_validates_type(element_factory):
 def test_should_not_create_presentation_elements(element_factory):
     with pytest.raises(TypeError):
         element_factory.create(Presentation)
+
+
+def test_style_sheet(element_factory):
+    style_sheet = element_factory.create(StyleSheet)
+
+    assert element_factory.style_sheet is style_sheet
 
 
 def test_flush(element_factory):

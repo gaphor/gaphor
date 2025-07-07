@@ -13,6 +13,7 @@ from gaphor.core.styling.declarations import (
     JustifyContent,
     Number,
     Padding,
+    PrefersColorScheme,
     TextAlign,
     TextDecoration,
     Var,
@@ -54,7 +55,7 @@ Style = TypedDict(
         "vertical-align": VerticalAlign,
         "vertical-spacing": Number,
         "white-space": WhiteSpace,
-        # Opaque elements to support inheritance
+        # Opaque elements to support inheritance and pseudo elements
         "-gaphor-style-node": object,
         "-gaphor-compiled-style-sheet": object,
     },
@@ -76,7 +77,6 @@ INHERITED_DECLARATIONS = (
 
 class StyleNode(Hashable, Protocol):
     pseudo: str | None
-    dark_mode: bool | None
 
     def name(self) -> str: ...
 
@@ -156,20 +156,20 @@ class CompiledStyleSheet:
     def __init__(
         self,
         *css: str,
-        rules: list[tuple[Callable[[StyleNode], bool], Style]] | None = None,
+        prefers_color_scheme: PrefersColorScheme = PrefersColorScheme.NONE,
     ):
-        self.rules: list[tuple[Callable[[StyleNode], bool], Style]] = rules or [
+        self.rules: list[tuple[Callable[[StyleNode], bool], Style]] = [
             (selector, declarations)  # type: ignore[misc]
-            for selector, declarations in compile_style_sheet(*css)
+            for selector, declarations in compile_style_sheet(
+                *css, prefers_color_scheme=prefers_color_scheme
+            )
             if selector != "error"
         ]
         # Use this trick to bind a cache per instance, instead of globally.
+        # This avoids recalculating (parent) styles.
         self.compute_style = functools.lru_cache(maxsize=1000)(
             self._compute_style_uncached
         )
-
-    def copy(self) -> CompiledStyleSheet:
-        return CompiledStyleSheet(rules=self.rules)
 
     def _compute_style_uncached(self, node: StyleNode) -> Style:
         parent = node.parent()

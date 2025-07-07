@@ -13,6 +13,9 @@ class DummyVisualComponent:
     def draw(self, ctx, bounding_box):
         pass
 
+    def __iter__(self):
+        return iter(())
+
 
 class StubElement(ElementPresentation):
     def __init__(self, diagram, id=None):
