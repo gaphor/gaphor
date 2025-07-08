@@ -1,4 +1,5 @@
 from gaphor.core.modeling.properties import attribute
+from gaphor.diagram.group import group
 from gaphor.diagram.presentation import (
     Classified,
     ElementPresentation,
@@ -21,6 +22,7 @@ from gaphor.UML.classes.klass import (
 from gaphor.UML.classes.stereotype import stereotype_compartments, stereotype_watches
 from gaphor.UML.compartments import name_compartment
 from gaphor.UML.recipes import get_applied_stereotypes
+from gaphor.UML.uml import Namespace
 
 
 @represents(Constraint)
@@ -28,6 +30,7 @@ class ConstraintItem(Classified, ElementPresentation[Constraint]):
     def __init__(self, diagram, id=None):
         super().__init__(diagram, id=id)
 
+        self.watch("subject", self.on_subject_change)
         self.watch("show_stereotypes", self.update_shapes).watch(
             "show_attributes", self.update_shapes
         ).watch("show_operations", self.update_shapes).watch(
@@ -44,6 +47,21 @@ class ConstraintItem(Classified, ElementPresentation[Constraint]):
     show_attributes: attribute[int] = attribute("show_attributes", int, default=False)
 
     show_operations: attribute[int] = attribute("show_operations", int, default=False)
+
+    def on_subject_change(self, event):
+        """If a constraint is created on a diagram, it is owned by the
+        diagram's owner."""
+        owner = self.diagram and getattr(self.diagram, "element", None)
+        if (
+            self.subject
+            and owner
+            and isinstance(owner, Namespace)
+            and self.subject.owner is not owner
+        ):
+            # New items created from the toolbox do not have an owner yet.
+            if not self.subject.owner:
+                group(owner, self.subject)
+        self.update_shapes()
 
     def additional_stereotypes(self):
         # Check if any other stereotypes are applied to avoid showing "constraintblock" redundantly
