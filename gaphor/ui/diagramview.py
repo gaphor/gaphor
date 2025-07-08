@@ -4,6 +4,7 @@ from gaphas.model import Model
 from gaphas.view import GtkView
 from gi.repository import GObject
 
+from gaphor.diagram.painter import ItemPainter
 from gaphor.diagram.selection import Selection
 from gaphor.ui.actiongroup import named_shortcut
 
@@ -15,6 +16,8 @@ class DiagramView(GtkView):
 
     def __init__(self, model: Model | None = None):
         super().__init__(model, Selection())
+        self.painter = ItemPainter(self.selection)
+        self.bounding_box_painter = self.painter
         self.selection.add_handler(self._on_selection_changed)
         self._on_selection_changed()
 

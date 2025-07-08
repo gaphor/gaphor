@@ -430,8 +430,8 @@ def dump_css_tree(styled_item: StyleNode) -> str:
 
 
 def _dump_css_tree(styled_item: StyleNode) -> Iterator[str]:
-    yield styled_item.name()
-    children = list(styled_item.children())
+    yield styled_item.name() + "".join(f" .{c}" for c in styled_item.classes())
+    children = [c for c in styled_item.children() if "item" not in c.classes()]
     for child in children:
         if isinstance(child, StyledItem):
             continue

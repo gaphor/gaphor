@@ -1,6 +1,6 @@
 import pytest
 
-from gaphor.core.styling import compile_style_sheet
+from gaphor.core.styling import PrefersColorScheme, compile_style_sheet
 from gaphor.core.styling.selectors import SelectorError
 
 
@@ -14,7 +14,6 @@ class Node:
         attributes=None,
         state=(),
         pseudo=None,
-        dark_mode=None,
     ):
         if attributes is None:
             attributes = {}
@@ -25,7 +24,6 @@ class Node:
         self._attributes = attributes
         self._state = state
         self.pseudo = pseudo
-        self.dark_mode = dark_mode
 
         if parent:
             parent._children.append(self)  # noqa: SLF001
@@ -405,6 +403,7 @@ def test_has_and_is_selector():
 @pytest.mark.parametrize(
     "css",
     [
+        "@media { node { color: blue; } }",
         "@media(prefers-color-scheme = dark) { node { color: blue; } }",
         "@media prefers-color-scheme = dark { node { color: blue; } }",
         "@media(dark-mode) { node { color: blue; } }",
@@ -412,9 +411,11 @@ def test_has_and_is_selector():
     ],
 )
 def test_media_query(css):
-    selector, _declarations = next(compile_style_sheet(css))
+    selector, _declarations = next(
+        compile_style_sheet(css, prefers_color_scheme=PrefersColorScheme.DARK)
+    )
 
-    assert selector(Node("node", dark_mode=True))
+    assert selector(Node("node"))
 
 
 @pytest.mark.parametrize(

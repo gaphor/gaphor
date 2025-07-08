@@ -1,8 +1,12 @@
 from __future__ import annotations
 
+from collections.abc import Callable
+
 from gaphas.geometry import Rectangle
 
+from gaphor.core.modeling import StyleSheet
 from gaphor.core.modeling.diagram import DrawContext, StyledDiagram
+from gaphor.core.styling import Style, StyleNode
 from gaphor.diagram.painter import DiagramTypePainter
 from gaphor.diagram.shapes import Box, CssNode, Orientation, Text, cairo_state, stroke
 from gaphor.UML.recipes import get_applied_stereotypes, stereotypes_str
@@ -11,8 +15,15 @@ from gaphor.UML.uml import Diagram
 
 @DiagramTypePainter.register(Diagram)  # type: ignore[attr-defined]
 class UMLDiagramTypePainter:
-    def __init__(self, diagram: Diagram):
+    def __init__(
+        self,
+        diagram: Diagram,
+        compute_style: Callable[[StyleNode], Style] | None = None,
+    ):
         self.diagram = diagram
+        self.compute_style: Callable[[StyleNode], Style] = (
+            compute_style or StyleSheet().compute_style
+        )
         self._pentagon = CssNode(
             "pentagon",
             diagram,
@@ -35,11 +46,9 @@ class UMLDiagramTypePainter:
         if not diagram.diagramType and not any(get_applied_stereotypes(diagram)):
             return
 
-        style = diagram.style(StyledDiagram(diagram))
-
         context = DrawContext(
             cairo=cr,
-            style=style,
+            style=self.compute_style(StyledDiagram(diagram)),
             selected=False,
             focused=False,
             hovered=False,
