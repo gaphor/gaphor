@@ -64,7 +64,6 @@ documentation = "https://docs.gaphor.org/"
 "greeter" = "gaphor.ui.greeter:Greeter"
 "help" = "gaphor.ui.help:HelpService"
 "self_test" = "gaphor.ui.selftest:SelfTest"
-"error_reports" = "gaphor.plugins.errorreports:ErrorReports"
 
 [project.entry-points."gaphor.modules"]
 "general_ui_components" = "gaphor.diagram.general.uicomponents"
