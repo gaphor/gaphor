@@ -124,10 +124,10 @@ class Application(Service, ActionProvider):
             self._active_session = session
 
         @event_handler(SessionShutdown)
-        def on_session_shutdown(_event):
+        def on_session_shutdown(event: SessionShutdown):
             self.shutdown_session(session)
-            if not self._sessions and not (
-                self._gtk_app and self._gtk_app.get_windows()
+            if not self._sessions and (
+                event.quitting or not (self._gtk_app and self._gtk_app.get_windows())
             ):
                 self.shutdown()
 
@@ -174,9 +174,9 @@ class Application(Service, ActionProvider):
         for session in list(self._sessions):
             self._active_session = session
             event_manager = session.get_service("event_manager")
-            event_manager.handle(SessionShutdownRequested())
+            event_manager.handle(SessionShutdownRequested(quitting=True))
 
-        if not self._sessions and not (self._gtk_app and self._gtk_app.get_windows()):
+        if not self._sessions:
             self.shutdown()
 
     def all(self, base: type[T]) -> Iterator[tuple[str, T]]:

@@ -210,7 +210,7 @@ class FileManager(Service, ActionProvider):
                 ),
                 window=self.parent_window,
             )
-            self.event_manager.handle(SessionShutdown())
+            self.event_manager.handle(SessionShutdown(quitting=False))
 
     async def resolve_merge_conflict(self, filename: Path):
         temp_dir = tempfile.TemporaryDirectory()
@@ -229,7 +229,7 @@ class FileManager(Service, ActionProvider):
         if split:
             answer = await resolve_merge_conflict_dialog(self.parent_window)
             if answer == "cancel":
-                self.event_manager.handle(SessionShutdown())
+                self.event_manager.handle(SessionShutdown(quitting=False))
             elif answer == "current":
                 await self.load(current_filename)
             elif answer == "incoming":
@@ -254,7 +254,7 @@ class FileManager(Service, ActionProvider):
                 ),
                 window=self.parent_window,
             )
-            self.event_manager.handle(SessionShutdown())
+            self.event_manager.handle(SessionShutdown(quitting=False))
 
     async def save(self, filename):
         """Save the current model to the specified file name.
@@ -343,7 +343,7 @@ class FileManager(Service, ActionProvider):
 
     @event_handler(SessionShutdownRequested)
     async def _on_session_shutdown_request(
-        self, _event: SessionShutdownRequested
+        self, event: SessionShutdownRequested
     ) -> None:
         """Ask user to close window if the model has changed.
 
@@ -352,7 +352,7 @@ class FileManager(Service, ActionProvider):
         """
 
         def confirm_shutdown():
-            self.event_manager.handle(SessionShutdown())
+            self.event_manager.handle(SessionShutdown(quitting=event.quitting))
 
         if self.main_window.model_changed:
             answer = await save_changes_before_close_dialog(self.parent_window)
