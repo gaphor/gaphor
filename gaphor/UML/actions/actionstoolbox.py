@@ -6,6 +6,7 @@ from gaphas.item import SE
 
 from gaphor import UML
 from gaphor.diagram.diagramtoolbox import ToolDef, ToolSection, new_item_factory
+from gaphor.diagram.group import owner_of_type
 from gaphor.i18n import gettext, i18nize
 from gaphor.UML import diagramitems
 from gaphor.UML.recipes import owner_package
@@ -21,7 +22,7 @@ def activity_config(new_item, name=None):
 
     diagram = new_item.diagram
 
-    if owner_activity := UML.recipes.owner_of_type(diagram, UML.Activity):
+    if owner_activity := owner_of_type(diagram, UML.Activity):
         subject.activity = owner_activity
         return
 
