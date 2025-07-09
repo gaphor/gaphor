@@ -1,7 +1,7 @@
 """Constraint Parameter item."""
 
 from gaphor import UML
-from gaphor.diagram.presentation import AttachedPresentation, Named
+from gaphor.diagram.presentation import ElementPresentation, Named
 from gaphor.diagram.shapes import (
     Box,
     CssNode,
@@ -12,7 +12,11 @@ from gaphor.diagram.shapes import (
 from gaphor.UML.umlfmt import format_property
 
 
-class ConstraintParameterItem(Named, AttachedPresentation[UML.Property]):
+class ConstraintParameterItem(Named, ElementPresentation[UML.Property]):
+    """
+    An item that represents a constraint parameter as a standalone block.
+    """
+
     def __init__(self, diagram, id=None):
         super().__init__(diagram, id, width=16, height=16)
         self.watch("subject[UML:NamedElement].name").watch(
