@@ -23,6 +23,10 @@ class ConstraintParameterItem(Named, AttachedPresentation[UML.Property]):
             "subject[UML:TypedElement].type.name"
         ).watch("subject[Property].lowerValue").watch("subject[Property].upperValue")
 
+        # Make the handle connectable, so the connect tool can start a connection.
+        # An AttachedPresentation has one handle, which we can access at index 0.
+        self.handles()[0].connectable = True
+
     def update_shapes(self, event=None):
         self.shape = IconBox(
             Box(draw=draw_border),
@@ -37,3 +41,29 @@ class ConstraintParameterItem(Named, AttachedPresentation[UML.Property]):
                 ),
             ),
         )
+
+    def connect(self, handle, port):
+        """
+        Allow the item to be connected to a new parent, even if it already
+        has one. This enables "gluing" the parameter to a different item.
+
+        This overrides the default `AttachedPresentation.connect()` which
+        prevents connecting if a parent already exists.
+        """
+        if not port.connectable:
+            return False
+
+        # The key change: allow re-parenting by changing the parent.
+        self.parent = port.owner
+
+        # Register the connection, which will update the existing connection if one exists.
+        self.diagram.connections.connect_item(self, handle, port)
+        return True
+
+    def disconnect(self, handle):
+        """
+        Disconnect from the parent item.
+        """
+        if self.parent:
+            self.diagram.connections.disconnect_item(self, handle)
+            self.parent = None
