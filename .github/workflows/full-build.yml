@@ -204,7 +204,7 @@ jobs:
           brew update
           # Pre-installed Python conflicts with Homebrew Python (Intel only)
           # https://github.com/actions/runner-images/issues/9966
-          brew install --overwrite python@${python_version}
+          brew install --quiet --overwrite python@${python_version}
           brew install gtksourceview5 libadwaita adwaita-icon-theme gobject-introspection graphviz create-dmg
       - name: Workaround for broken gdk-pixbuf SVG loader
         run: |
