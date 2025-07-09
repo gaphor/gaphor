@@ -31,10 +31,6 @@ class TreeItem(GObject.Object):
         self.element = element
         self.sync()
 
-    __gsignals__ = {
-        "format-text-changed": (GObject.SignalFlags.RUN_FIRST, None, ()),
-    }
-
     icon = GObject.Property(type=str)
     icon_visible = GObject.Property(type=bool, default=False)
 
@@ -58,11 +54,7 @@ class TreeItem(GObject.Object):
 
     def sync(self) -> None:
         if element := self.element:
-            new_text = format(element) or gettext("<None>")
-            emit_format_text_changed = new_text != self.readonly_text
-            self.readonly_text = new_text
-            if emit_format_text_changed:
-                self.emit("format-text-changed")
+            self.readonly_text = format(element) or gettext("<None>")
             self.notify("editable-text")
             self.icon = icon_name(element)
             self.icon_visible = bool(
@@ -89,7 +81,6 @@ class Branch:
     def __init__(self):
         self.elements = Gio.ListStore.new(TreeItem.__gtype__)
         self.relationships = Gio.ListStore.new(TreeItem.__gtype__)
-        self.callbacks: dict[TreeModel, int] = {}
 
     def append(self, element: Base):
         if isinstance(element, UML.Relationship):
@@ -97,11 +88,7 @@ class Branch:
                 self.elements.insert(0, RelationshipItem(self.relationships))
             self.relationships.append(TreeItem(element))
         else:
-            tree_item = TreeItem(element)
-            self.callbacks[tree_item] = tree_item.connect(
-                "format-text-changed", self.on_format_text_changed
-            )
-            self.elements.append(tree_item)
+            self.elements.append(TreeItem(element))
 
     def remove(self, element):
         list_store = (
@@ -115,10 +102,6 @@ class Branch:
                 None,
             )
         ) is not None:
-            callback = self.callbacks.get(list_store.get_item(index), None)
-            if callback is not None:
-                list_store.get_item(index).disconnect(callback)
-                del self.callbacks[list_store.get_item(index)]
             list_store.remove(index)
 
         # Clean up empty relationships node
@@ -155,26 +138,6 @@ class Branch:
     def __iter__(self):
         yield from self.elements
         yield from self.relationships
-
-    def on_format_text_changed(self, tree_item: TreeItem):
-        if (
-            isinstance(tree_item.element, UML.Parameter)
-            and tree_item.element.activityParameterNode
-        ):
-            for (
-                activity_parameter_node
-            ) in tree_item.element.activityParameterNode.items:
-                found_tree_item = self.get_tree_item(activity_parameter_node)
-                if found_tree_item is not None:
-                    found_tree_item.sync()
-
-    def get_tree_item(self, element: Base) -> TreeItem | None:
-        tree_item = next((ti for ti in self.elements if ti.element is element), None)
-        if tree_item is None:
-            tree_item = next(
-                (ti for ti in self.relationships if ti.element is element), None
-            )
-        return tree_item
 
 
 def tree_item_sort(a: TreeItem, b: TreeItem) -> int:
@@ -228,6 +191,12 @@ class TreeModel:
             tree_item.sync()
             if self._on_sync:
                 self._on_sync()
+            if own := owner(element):
+                self.sync(own)
+            if isinstance(element, UML.Parameter) and element.activityParameterNode:
+                for node in element.activityParameterNode:
+                    self.sync(node)
+            # TODO: sync type
 
     def child_model(self, item: TreeItem) -> Gio.ListStore | None:
         """This method will create branches on demand (lazy)."""
