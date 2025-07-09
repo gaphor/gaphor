@@ -401,7 +401,9 @@ def toplevel_popup_model(modeling_language) -> Gio.Menu:
     model = create_diagram_types_model(modeling_language)
 
     part = Gio.Menu.new()
-    part.append(gettext("New _Package"), "tree-view.create-package")
+    menu_item = Gio.MenuItem.new(gettext("Package"), "tree-view.create-element")
+    menu_item.set_attribute_value("target", GLib.Variant.new_string("package"))
+    part.append_item(menu_item)
     model.prepend_section(None, part)
     return model
 
