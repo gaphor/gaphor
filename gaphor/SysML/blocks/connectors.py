@@ -4,11 +4,46 @@ from gaphor import UML
 from gaphor.diagram.connectors import Connector, RelationshipConnect
 from gaphor.SysML import sysml
 from gaphor.SysML.blocks.block import BlockItem
+from gaphor.SysML.blocks.constraintparameter import ConstraintParameterItem
+from gaphor.SysML.blocks.constraintproperty import ConstraintPropertyItem
 from gaphor.SysML.blocks.interfaceblock import InterfaceBlockItem
 from gaphor.SysML.blocks.property import PropertyItem
 from gaphor.SysML.blocks.proxyport import ProxyPortItem
 from gaphor.SysML.diagramtype import DiagramFrameItem
 from gaphor.UML.deployments import ConnectorItem
+
+
+@Connector.register(ConstraintPropertyItem, ConstraintParameterItem)
+class ConstraintPropertyParameterConnector:
+    def __init__(
+        self,
+        element: ConstraintPropertyItem,
+        parameter: ConstraintParameterItem,
+    ) -> None:
+        self.element = element
+        self.parameter = parameter
+
+    def allow(self, handle: Handle, port: Port) -> bool:
+        element = self.element
+        parameter = self.parameter
+
+        if not (element.subject and parameter.subject):
+            return False
+
+        # Parameter can be attached to a constraint property, if the property
+        # is typed by the constraint block that owns the parameter.
+        return (
+            isinstance(element.subject, UML.Property)
+            and parameter.subject.owner is element.subject.type
+        )
+
+    def connect(self, handle: Handle, port: Port) -> bool:
+        """Connect and reconnect at model level."""
+        self.parameter.change_parent(self.element)
+        return True
+
+    def disconnect(self, handle: Handle) -> None:
+        self.parameter.change_parent(None)
 
 
 @Connector.register(InterfaceBlockItem, ProxyPortItem)
@@ -76,11 +111,12 @@ class BlockProperyProxyPortConnector:
 
 @Connector.register(ProxyPortItem, ConnectorItem)
 @Connector.register(PropertyItem, ConnectorItem)
+@Connector.register(ConstraintParameterItem, ConnectorItem)
 class PropertyConnectorConnector(RelationshipConnect):
     """Connect a Connector to a Port or Property."""
 
     line: ConnectorItem
-    element: PropertyItem | ProxyPortItem
+    element: PropertyItem | ProxyPortItem | ConstraintParameterItem
 
     def allow(self, handle, port):
         element = self.element

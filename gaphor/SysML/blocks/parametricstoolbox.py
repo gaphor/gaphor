@@ -40,5 +40,16 @@ parametric_blocks = ToolSection(
                 config_func=named_element_config,
             ),
         ),
+        ToolDef(
+            "toolbox-constraint-parameter",
+            gettext("Constraint Parameter"),
+            "gaphor-property-symbolic",
+            None,
+            new_item_factory(
+                sysml_items.ConstraintParameterItem,
+                UML.Property,
+                config_func=named_element_config,
+            ),
+        ),
     ),
 )
