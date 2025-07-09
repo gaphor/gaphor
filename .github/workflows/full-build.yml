@@ -206,14 +206,13 @@ jobs:
           # https://github.com/actions/runner-images/issues/9966
           brew install --overwrite python@${python_version}
           brew install gtksourceview5 libadwaita adwaita-icon-theme gobject-introspection graphviz create-dmg
-      - name: Workaround for broken gdk-pixbuf SVG loader (ARM only)
-        if: matrix.target.arch == 'arm'
+      - name: Workaround for broken gdk-pixbuf SVG loader
         run: |
           # Fix gdk-pixbuf SVG loader. This is broken on Homebrew (July 2nd 2025)
           # See https://gitlab.gnome.org/GNOME/librsvg/-/issues/1161, https://github.com/Homebrew/brew/pull/9102
-          install_name_tool -change @rpath/librsvg-2.2.dylib /opt/homebrew/opt/librsvg/lib/librsvg-2.2.dylib /opt/homebrew/opt/librsvg/lib/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader_svg.so
-          codesign --sign - --force --preserve-metadata=entitlements,requirements,flags,runtime /opt/homebrew/opt/librsvg/lib/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader_svg.so
-          GDK_PIXBUF_MODULEDIR=/opt/homebrew/lib/gdk-pixbuf-2.0/2.10.0/loaders gdk-pixbuf-query-loaders --update-cache
+          install_name_tool -change @rpath/librsvg-2.2.dylib $(brew --prefix librsvg)/lib/librsvg-2.2.dylib $(brew --prefix librsvg)/lib/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader_svg.so
+          codesign --sign - --force --preserve-metadata=entitlements,requirements,flags,runtime $(brew --prefix librsvg)/lib/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader_svg.so
+          GDK_PIXBUF_MODULEDIR=$(brew --prefix)/lib/gdk-pixbuf-2.0/2.10.0/loaders gdk-pixbuf-query-loaders --update-cache
       - name: Ensure Homebrew Library Path (ARM only)
         if: matrix.target.arch == 'arm'
         run: echo "DYLD_LIBRARY_PATH=/opt/homebrew/lib" >> $GITHUB_ENV
