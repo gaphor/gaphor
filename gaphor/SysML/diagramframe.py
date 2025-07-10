@@ -65,10 +65,6 @@ class DiagramFrameItem(Classified, ElementPresentation):
         if isinstance(self.subject, Activity):
             self.update_activity_parameters()
 
-    def point(self, x, y):
-        # Only allow to select the frame when you click on the border.
-        return abs(super().point(x, y))
-
     def update_activity_parameters(self, event=None):
         if not isinstance(self.subject, Activity):
             return
