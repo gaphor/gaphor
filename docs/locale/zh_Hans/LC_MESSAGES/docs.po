@@ -26,8 +26,7 @@ msgstr "变更履历"
 #: ../changelog.rst:4
 msgid "Our change log is with the project's source code on `GitHub <https://github.com/gaphor/gaphor/blob/main/CHANGELOG.md>`_."
 msgstr ""
-"变更履历随项目源代码管理在`GitHub<https://github.com/gaphor/gaphor/blob/main/"
-"CHANGELOG.md>`上。"
+"变更履历随项目源代码管理在`GitHub<https://github.com/gaphor/gaphor/blob/main/CHANGELOG.md>`_ 。"
 
 #: ../changelog.rst:8
 msgid "The latest version may not have been released yet."
@@ -568,6 +567,7 @@ msgstr ""
 "Behavior的图表。可通过点击泳道并在属性编辑器（Property "
 "Editor）中添加分区来增加更多泳道。冒号前的分区名称同样可在属性编辑器中修改。"
 "模块名称需在结构（Structure）包中更改，具体操作方式如领域图章节所述。"
+"[Domain Diagram section](coffee_machine_concept.md#domain-diagram)"
 
 #: ../coffee_machine_logical.md:43
 msgid "Additional Object Flows, pins (pay attention to inputs vs outputs), and actions can be created using the Toolbox. The Parameter Nodes which are attached to the Activity on the very left and right of the diagram are created and renamed created by clicking on the Activity and modifying them in the Property Editor."
@@ -1044,7 +1044,7 @@ msgstr ""
 "您需要先 [fork](https://docs.github.com/en/pull-requests/"
 "collaborating-with-pull-requests/working-with-forks/fork-a-repo) "
 "Gaphor代码库，并搭建相应的[Linux开发环境](linux.md) （[macOS版]"
-"(macos.md)、(Windows版)(windows.md)）。"
+"(macos.md)、[Windows版](windows.md)）。"
 
 #: ../contribute.md:33
 msgid "In our pipeline we do a couple of quality checks. We strongly recommend that you [install pre-commit](https://pre-commit.com/) and its git hook scripts, so your PR does build on our build environment."
@@ -1256,11 +1256,7 @@ msgstr "UI变更通过事件触发"
 
 #: ../event_system.md:13
 msgid "Although Gaphor depends heavily on GTK for its user interface, Gaphor is using its own event dispatcher. Events can be structured in hierarchies. For example, an `AttributeUpdated` event is a subtype of `ElementUpdated`. If we are interested in all changes to elements, we can also register `ElementUpdated` and receive all `AttributeUpdated` events as well."
-msgstr ""
-"尽管Gaphor的用户界面重度依赖GTK，但其事件分发器（event "
-"dispatcher）采用自主实现的方案。事件支持层级化结构——例如，`AttributeUpdated`"
-"事件就是`ElementUpdated`事件的子类型。若需要监听元素的所有变更，只需注册`Elem"
-"entUpdated`事件即可同时接收所有`AttributeUpdated`事件通知。"
+msgstr "尽管Gaphor的用户界面重度依赖GTK，但其事件分发器（event dispatcher）采用自主实现的方案。事件支持层级化结构——例如，`AttributeUpdated` 事件就是 `ElementUpdated` 事件的子类型。若需要监听元素的所有变更，只需注册`ElementUpdated`事件即可同时接收所有`AttributeUpdated`事件通知。"
 
 #: ../../gaphor/core/eventmanager.py:docstring of gaphor.core.eventmanager.EventManager:1
 msgid "The Event Manager provides a flexible way to dispatch events."
@@ -1282,7 +1278,7 @@ msgstr "注册事件处理器（handler）。"
 #: ../../gaphor/core/eventmanager.py:docstring of gaphor.core.eventmanager.EventManager.subscribe:3
 msgid "Handlers are triggered (executed) when events are emitted through the :obj:`~gaphor.core.eventmanager.EventManager.handle` method."
 msgstr ""
-"当事件通过:obj:`~gaphor.core.eventmanager.EventManager.handle`方法触发时，相"
+"当事件通过 :obj:`~gaphor.core.eventmanager.EventManager.handle` 方法触发时，相"
 "关处理器（handler）被执行。"
 
 #: ../../gaphor/core/eventmanager.py:docstring of gaphor.core.eventmanager.EventManager.unsubscribe:1
@@ -2010,14 +2006,11 @@ msgstr "您可以使用 Gaphor 快速构建系统的可视化视图，并创建�
 
 #: ../index.rst:18
 msgid "Gaphor is 100% Open source, available under a friendly `Apache 2 license <https://github.com/gaphor/gaphor/blob/main/LICENSES/Apache-2.0.txt>`_. The code and issue tracker can be found on `GitHub <https://github.com/gaphor/gaphor>`_."
-msgstr ""
-"Gaphor 是 100% 开源软件，采用友好的` Apache 2 许可证 <https://github.com/"
-"gaphor/gaphor/blob/main/LICENSES/Apache-2.0.txt>`。_您可以在 `GitHub "
-"<https://github.com/gaphor/gaphor> `上查看源代码和提交问题_。"
+msgstr "Gaphor 是 100% 开源软件，采用友好的` Apache 2 许可证 <https://github.com/gaphor/gaphor/blob/main/LICENSES/Apache-2.0.txt>`_。_您可以在 `GitHub <https://github.com/gaphor/gaphor>`_ 上查看源代码和提交问题。"
 
 #: ../index.rst:21
 msgid "What are you waiting for? :doc:`Let's get started <getting_started>`!"
-msgstr "还在等什么？快来 :doc:`开始使用 <getting_started> 吧`！"
+msgstr "还在等什么？快来 :doc:`开始使用 <getting_started>`！"
 
 #: ../index.rst:23
 msgid "For download instructions, and the blog, please visit the `Gaphor Website <https://gaphor.org>`_."
@@ -2937,7 +2930,7 @@ msgstr "OCL 风格方法"
 
 #: ../../gaphor/core/modeling/base.py:docstring of gaphor.core.modeling.base.Base.isKindOf:1
 msgid "Returns :const:`True` if the object is an instance of ``class_``."
-msgstr "如果该对象是 ``class_`` 的实例，则返回 :const:``True``。"
+msgstr "如果该对象是 ``class_`` 的实例，则返回 :const:`True`。"
 
 #: ../../gaphor/core/modeling/base.py:docstring of gaphor.core.modeling.base.Base.isTypeOf:1
 msgid "Returns :const:`True` if the object is of the same type as the ``other``."
