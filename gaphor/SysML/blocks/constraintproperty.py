@@ -33,9 +33,10 @@ class ConstraintPropertyItem(Named, ElementPresentation[UML.Property]):
             draw_border(box, new_context, bounding_box)
 
         self.shape = Box(
+            # First compartment with the property name
             CssNode(
                 "compartment",
-                None,
+                self.subject,
                 Box(
                     CssNode(
                         "name",
@@ -48,6 +49,12 @@ class ConstraintPropertyItem(Named, ElementPresentation[UML.Property]):
                         ),
                     ),
                 ),
+            ),
+            # Second, invisible compartment to push the first to the top
+            CssNode(
+                "compartment",
+                self.subject,
+                Box(draw=lambda box, context, bounding_box: None),
             ),
             *(self.show_stereotypes and stereotype_compartments(self.subject) or []),
             draw=draw_rounded_border,
