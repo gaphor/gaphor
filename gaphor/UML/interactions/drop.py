@@ -6,7 +6,7 @@ from gaphor.UML.uml import ConnectableElement
 
 
 @drop.register(ConnectableElement, Diagram)
-def drop_connectable_element(element: ConnectableElement, diagram, x, y):
+def drop_connectable_element(element: ConnectableElement, diagram: Diagram, x, y):
     def drop_distance_to_item(item):
         local_x, local_y = item.matrix_i2c.inverse().transform_point(x, y)
         return item.point(local_x, local_y)
