@@ -8,14 +8,11 @@ import asyncio
 
 from gi.repository import GLib
 
-# Notes for PyGObject 3.52:
-# * `sleep` can be removed: use `task.set_priority(GLib.PRIORITY_LOW)`.
-
 
 def sleep(delay, result=None, priority=GLib.PRIORITY_LOW):
-    """Prioritizable version of asyncio.sleep().
+    """Prioritizable version of :func:`asyncio.sleep`.
 
-    Normal asyncio.sleep() runs with priority DEFAULT,
+    Normal asyncio.sleep() runs with priority ``DEFAULT``,
     which blocks the UI. This sleep has a configurable
     priority.
     """
