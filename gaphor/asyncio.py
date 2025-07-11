@@ -5,25 +5,11 @@ async tasks.
 """
 
 import asyncio
-import contextlib
 
-from gi.events import GLibEventLoopPolicy
 from gi.repository import GLib
 
 # Notes for PyGObject 3.52:
-# * `glib_event_loop_policy` can be removed: use `with GLibEventLoopPolicy()`.
 # * `sleep` can be removed: use `task.set_priority(GLib.PRIORITY_LOW)`.
-
-
-@contextlib.contextmanager
-def glib_event_loop_policy():
-    original = asyncio.get_event_loop_policy()
-    policy = GLibEventLoopPolicy()
-    asyncio.set_event_loop_policy(policy)
-    try:
-        yield policy
-    finally:
-        asyncio.set_event_loop_policy(original)
 
 
 def sleep(delay, result=None, priority=GLib.PRIORITY_LOW):
