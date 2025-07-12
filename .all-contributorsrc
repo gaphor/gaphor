@@ -1661,6 +1661,15 @@
       "contributions": [
         "translation"
       ]
+    },
+    {
+      "login": "jacobsaki",
+      "name": "Jacob Saki",
+      "avatar_url": "https://avatars.githubusercontent.com/u/79813296?v=4",
+      "profile": "https://github.com/jacobsaki",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
