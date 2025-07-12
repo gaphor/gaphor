@@ -111,7 +111,13 @@ def ungroup(parent, element) -> bool:
 
 
 @ungroup.register(None, Base)
-def none_ungroup(none, element):
+def none_base_ungroup(none, element):
     """In the rare (error?) case a model element has no parent, but is grouped
     in a diagram, allow it to ungroup."""
+    return True
+
+
+@ungroup.register(Base, None)
+def base_none_ungroup(element, none):
+    """Some elements, such as relationship items can have no subject."""
     return True
