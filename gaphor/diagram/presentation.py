@@ -39,6 +39,10 @@ class Classified(Named):
     """Marker for Classifier presentations."""
 
 
+class Framed(Named):
+    """Marker for a frame-like presentation."""
+
+
 def text_name(item: Presentation):
     """An item subject's `name` field."""
     return CssNode(

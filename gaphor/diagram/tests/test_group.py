@@ -39,6 +39,12 @@ def test_do_not_ungroup_diagram_from_wrong_parent(element_factory):
     assert diagram.element is parent
 
 
+def test_ungroup_with_none(element_factory):
+    parent = element_factory.create(Element)
+
+    assert ungroup(parent, None)
+
+
 def test_can_group_with_type(element_factory):
     parent = element_factory.create(Element)
 
