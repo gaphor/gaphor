@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import logging
 import tempfile
-from collections.abc import Callable
+from collections.abc import Awaitable, Callable
 from functools import partial
 from pathlib import Path
 
@@ -12,7 +12,6 @@ from gi.repository import Adw, Gio, Gtk
 
 import gaphor.storage as storage
 from gaphor.abc import ActionProvider, Service
-from gaphor.asyncio import sleep
 from gaphor.babel import translate_model
 from gaphor.core import action, event_handler, gettext
 from gaphor.core.changeset.compare import compare
@@ -144,8 +143,8 @@ class FileManager(Service, ActionProvider):
             parent=self.parent_window,
         )
 
-        def progress(percentage, completed=0):
-            status_window.progress(completed + percentage / 3)
+        async def progress(percentage, completed=0):
+            await status_window.progress(completed + percentage / 3)
 
         try:
             log.debug("Loading current model from %s", current_filename)
@@ -182,7 +181,7 @@ class FileManager(Service, ActionProvider):
     async def _load_async(
         self,
         filename: Path,
-        progress: Callable[[int], None] | None = None,
+        progress: Callable[[float], Awaitable[None]] | None = None,
         element_factory=None,
     ):
         factory = element_factory or self.element_factory
@@ -194,8 +193,7 @@ class FileManager(Service, ActionProvider):
                     self.modeling_language,
                 ):
                     if progress:
-                        progress(percentage)
-                    await sleep(0)
+                        await progress(percentage)
         except MergeConflictDetected:
             self.filename = None
             await self.resolve_merge_conflict(filename)
@@ -282,8 +280,7 @@ class FileManager(Service, ActionProvider):
             with filename.open("w", encoding="utf-8") as out:
                 for percentage in storage.save_generator(out, self.element_factory):
                     if status_window:
-                        status_window.progress(percentage)
-                    await sleep(0)
+                        await status_window.progress(percentage)
             self.event_manager.handle(ModelSaved(filename))
         except Exception as e:
             await error_dialog(
