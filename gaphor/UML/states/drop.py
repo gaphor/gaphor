@@ -12,7 +12,12 @@ from gaphor.UML.states.transition import TransitionItem
 @drop.register(PseudostateItem, StateMachineItem)
 @drop.register(TransitionItem, StateItem)
 @drop.register(TransitionItem, StateMachineItem)
-def drop_region(item, new_parent: StateItem | StateMachineItem, x, y):
+def drop_region(
+    item: StateItem | PseudostateItem | TransitionItem,
+    new_parent: StateItem | StateMachineItem,
+    x,
+    y,
+):
     assert item.diagram is new_parent.diagram
 
     if not item.subject:

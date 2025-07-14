@@ -64,6 +64,7 @@ def create_item(view, factory, event_manager, x, y):
     view.model.update({item})
     if parent:
         drop(item, parent, *view.get_matrix_v2i(parent).transform_point(x, y))
+
     selection.unselect_all()
     selection.focused_item = item
     event_manager.handle(

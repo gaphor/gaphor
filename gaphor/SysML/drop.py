@@ -1,5 +1,5 @@
 from gaphor.core.modeling import Diagram, Presentation
-from gaphor.diagram.drop import drop
+from gaphor.diagram.drop import drop, grow_parent
 from gaphor.diagram.presentation import connect
 from gaphor.diagram.support import get_diagram_item
 from gaphor.SysML.diagramframe import DiagramFrameItem
@@ -14,6 +14,7 @@ def drop_element_on_diagram_frame(
     if item := drop(element, diagram_frame.diagram, x, y):
         item.parent = diagram_frame
         item.request_update()
+        grow_parent(diagram_frame, item)
 
     return item
 
