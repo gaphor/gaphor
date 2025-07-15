@@ -5,7 +5,7 @@ import logging
 from gaphas.guide import GuidePainter
 from gaphas.painter import FreeHandPainter, HandlePainter, PainterChain
 from gaphas.segment import LineSegmentPainter
-from gaphas.tool.itemtool import find_item_and_handle_at_point
+from gaphas.tool.itemtool import default_find_item_and_handle_at_point
 from gaphas.tool.rubberband import RubberbandPainter, RubberbandState
 from gaphas.view import GtkView
 from gi.repository import Adw, Gdk, GdkPixbuf, Gio, GLib, Gtk
@@ -348,7 +348,7 @@ def context_menu_controller(context_menu, diagram):
             return
 
         view = ctrl.get_widget()
-        item, _handle = find_item_and_handle_at_point(view, (x, y))
+        item, _handle = default_find_item_and_handle_at_point(view, (x, y))
 
         context_menu.set_menu_model(
             popup_model(item.subject if item and item.subject else diagram)

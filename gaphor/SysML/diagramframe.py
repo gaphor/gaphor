@@ -1,6 +1,6 @@
 from gaphor.diagram.presentation import (
-    Classified,
     ElementPresentation,
+    Framed,
 )
 from gaphor.diagram.shapes import (
     DEFAULT_PADDING,
@@ -19,7 +19,7 @@ from gaphor.UML.recipes import stereotypes_str
 from gaphor.UML.uml import Activity, Diagram, NamedElement
 
 
-class DiagramFrameItem(Classified, ElementPresentation):
+class DiagramFrameItem(Framed, ElementPresentation):
     def __init__(self, diagram, id=None):
         super().__init__(
             diagram,

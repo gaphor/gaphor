@@ -111,7 +111,17 @@ def drop_partition(partition: ActivityPartition, diagram: Diagram, x: float, y: 
 @drop.register(CallBehaviorActionItem, PartitionItem)
 @drop.register(ValueSpecificationActionItem, PartitionItem)
 @drop.register(ObjectNodeItem, PartitionItem)
-def drop_on_partition(item, new_parent, x, y):
+def drop_on_partition(
+    item: ActionItem
+    | AcceptEventActionItem
+    | SendSignalActionItem
+    | CallBehaviorActionItem
+    | ValueSpecificationActionItem
+    | ObjectNodeItem,
+    new_parent: PartitionItem,
+    x: float,
+    y: float,
+):
     assert item.diagram is new_parent.diagram
 
     if not item.subject:

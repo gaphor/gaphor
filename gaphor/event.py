@@ -64,15 +64,21 @@ class ActiveSessionChanged:
     service: Service
 
 
+@dataclass
 class SessionShutdownRequested:
     """When the application is asked to terminate, it will inform all sessions.
 
     The user can then save his/her work.
     """
 
+    quitting: bool
 
+
+@dataclass
 class SessionShutdown:
     """The session is emitting this event when it's ready to shut down."""
+
+    quitting: bool
 
 
 @dataclass

@@ -1661,6 +1661,42 @@
       "contributions": [
         "translation"
       ]
+    },
+    {
+      "login": "jacobsaki",
+      "name": "Jacob Saki",
+      "avatar_url": "https://avatars.githubusercontent.com/u/79813296?v=4",
+      "profile": "https://github.com/jacobsaki",
+      "contributions": [
+        "bug"
+      ]
+    },
+    {
+      "login": "hbartsch0",
+      "name": "hayden",
+      "avatar_url": "https://avatars.githubusercontent.com/u/126112798?v=4",
+      "profile": "https://github.com/hbartsch0",
+      "contributions": [
+        "bug"
+      ]
+    },
+    {
+      "login": "mvinca",
+      "name": "mvinca",
+      "avatar_url": "https://avatars.githubusercontent.com/u/27032375?v=4",
+      "profile": "https://github.com/mvinca",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "bgkerion",
+      "name": "Paolo Bellagente",
+      "avatar_url": "https://avatars.githubusercontent.com/u/7568698?v=4",
+      "profile": "https://github.com/bgkerion",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,

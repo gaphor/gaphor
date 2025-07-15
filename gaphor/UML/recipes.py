@@ -10,9 +10,9 @@ from __future__ import annotations
 
 import itertools
 from collections.abc import Iterable, Sequence
-from typing import TypeVar
 
 from gaphor.core.modeling import UnlimitedNatural
+from gaphor.diagram.group import owner_of_type
 from gaphor.UML.uml import (
     Artifact,
     Association,
@@ -50,8 +50,6 @@ from gaphor.UML.uml import (
     Usage,
     ValueSpecification,
 )
-
-T = TypeVar("T", bound=Element)
 
 
 def stereotypes_str(element: Element, stereotypes: Sequence[str] = ()) -> str:
@@ -432,12 +430,6 @@ def clone_message(msg, inverted=False):
         message.sendEvent = send
         message.receiveEvent = receive
     return message
-
-
-def owner_of_type(element: Element | None, owner_type: type[T]) -> T | None:
-    if element is None or isinstance(element, owner_type):
-        return element
-    return owner_of_type(element.owner, owner_type)
 
 
 def owner_package(element: Element | None) -> Package | None:

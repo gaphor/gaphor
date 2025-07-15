@@ -186,11 +186,33 @@ class TreeModel:
     def root(self) -> Gio.ListStore:
         return self.branches[Root].elements
 
-    def sync(self, element):
-        if owner(element) and (tree_item := self.tree_item_for_element(element)):
-            tree_item.sync()
-            if self._on_sync:
-                self._on_sync()
+    def sync(self, element, seen=None):
+        if seen is None:
+            seen = set()
+
+        if (
+            element in seen
+            or not owner(element)
+            or not (tree_item := self.tree_item_for_element(element))
+        ):
+            return
+
+        seen.add(element)
+        tree_item.sync()
+        if self._on_sync:
+            self._on_sync()
+
+        if own := owner(element):
+            self.sync(own, seen)
+
+        if isinstance(element, UML.Parameter) and element.activityParameterNode:
+            for node in element.activityParameterNode:
+                self.sync(node, seen)
+
+        if isinstance(element, UML.Type):
+            for e in self.element_factory.select(UML.TypedElement):
+                if e.type is element:
+                    self.sync(e, seen)
 
     def child_model(self, item: TreeItem) -> Gio.ListStore | None:
         """This method will create branches on demand (lazy)."""

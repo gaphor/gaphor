@@ -10,10 +10,13 @@ import itertools
 from collections.abc import Callable, Iterator
 from enum import Enum
 from functools import singledispatch
+from typing import TypeVar
 
 from generic.multidispatch import FunctionDispatcher, multidispatch
 
 from gaphor.core.modeling import Base, Diagram, Presentation
+
+T = TypeVar("T", bound=Base)
 
 
 def self_and_owners(element: Base | RootType | None) -> Iterator[Base]:
@@ -26,6 +29,15 @@ def self_and_owners(element: Base | RootType | None) -> Iterator[Base]:
         yield e
         seen.add(e)
         e = owner(e)
+
+
+def owner_of_type(element: Base | None, owner_type: type[T]) -> T | None:
+    if element is None or isinstance(element, owner_type):
+        return element
+
+    if (o := owner(element)) is Root:
+        return None
+    return owner_of_type(o, owner_type)
 
 
 def change_owner(new_parent: Base | None, element: Base) -> bool:
@@ -111,7 +123,13 @@ def ungroup(parent, element) -> bool:
 
 
 @ungroup.register(None, Base)
-def none_ungroup(none, element):
+def none_base_ungroup(none, element):
     """In the rare (error?) case a model element has no parent, but is grouped
     in a diagram, allow it to ungroup."""
+    return True
+
+
+@ungroup.register(Base, None)
+def base_none_ungroup(element, none):
+    """Some elements, such as relationship items can have no subject."""
     return True
