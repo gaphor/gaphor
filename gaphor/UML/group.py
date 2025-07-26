@@ -137,6 +137,14 @@ def class_ungroup(parent, element) -> bool:
     return False
 
 
+@group.register(UML.Association, UML.Property)
+def association_group(parent, element):
+    if len(parent.ownedEnd) >= 2 or element.owner:
+        return False
+    parent.ownedEnd = element
+    return True
+
+
 @group.register(UML.BehavioredClassifier, UML.Behavior)
 def behavior_group(parent, element) -> bool:
     if element.owner:

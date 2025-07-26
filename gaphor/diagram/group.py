@@ -7,6 +7,7 @@ These concepts are mostly used in the ownership module (`change_owner`)
 from __future__ import annotations
 
 import itertools
+import logging
 from collections.abc import Callable, Iterator
 from enum import Enum
 from functools import singledispatch
@@ -15,6 +16,8 @@ from typing import TypeVar
 from generic.multidispatch import FunctionDispatcher, multidispatch
 
 from gaphor.core.modeling import Base, Diagram, Presentation
+
+log = logging.getLogger(__name__)
 
 T = TypeVar("T", bound=Base)
 
@@ -95,6 +98,7 @@ def _(element: Diagram):
 
 
 def no_group(parent, element) -> bool:
+    log.debug("No gouping for parent=%s, child=%s", parent, element)
     return False
 
 

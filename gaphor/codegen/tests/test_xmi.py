@@ -1,3 +1,5 @@
+import pytest
+
 from gaphor.codegen.xmi import convert
 
 
