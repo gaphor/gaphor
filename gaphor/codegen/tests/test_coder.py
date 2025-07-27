@@ -1,3 +1,5 @@
+from pathlib import Path
+
 import pytest
 
 from gaphor import UML
@@ -28,7 +30,7 @@ from gaphor.UML.modelinglanguage import UMLModelingLanguage
 @pytest.fixture(scope="session")
 def core_metamodel():
     return load_model(
-        "models/Core.gaphor",
+        Path("models/Core.gaphor"),
         MockModelingLanguage(
             CoreModelingLanguage(), GeneralModelingLanguage(), UMLModelingLanguage()
         ),
@@ -38,7 +40,7 @@ def core_metamodel():
 @pytest.fixture(scope="session")
 def uml_metamodel():
     return load_model(
-        "models/UML.gaphor",
+        Path("models/UML.gaphor"),
         MockModelingLanguage(
             CoreModelingLanguage(), GeneralModelingLanguage(), UMLModelingLanguage()
         ),

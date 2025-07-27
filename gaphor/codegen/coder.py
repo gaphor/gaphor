@@ -34,6 +34,7 @@ from pathlib import Path
 import gaphor.storage as storage
 from gaphor import UML
 from gaphor.codegen.override import Overrides
+from gaphor.codegen.xmi import convert
 from gaphor.core.modeling import Base, ElementFactory
 from gaphor.core.modeling.modelinglanguage import (
     CoreModelingLanguage,
@@ -99,10 +100,10 @@ def main(
         )
     )
 
-    model = load_model(modelfile, modeling_language)
+    model = load_model(Path(modelfile), modeling_language)
     super_models = (
         {
-            lang: (load_modeling_language(lang), load_model(f, modeling_language))
+            lang: (load_modeling_language(lang), load_model(Path(f), modeling_language))
             for lang, f in supermodelfiles
         }
         if supermodelfiles
@@ -119,14 +120,17 @@ def main(
             print(line, file=out)
 
 
-def load_model(modelfile: str, modeling_language: ModelingLanguage) -> ElementFactory:
-    element_factory = ElementFactory()
-    with open(modelfile, encoding="utf-8") as file_obj:
-        storage.load(
-            file_obj,
-            element_factory,
-            modeling_language,
-        )
+def load_model(modelfile: Path, modeling_language: ModelingLanguage) -> ElementFactory:
+    if modelfile.suffix == ".xmi":
+        element_factory = convert(modelfile)
+    else:
+        element_factory = ElementFactory()
+        with modelfile.open(encoding="utf-8") as file_obj:
+            storage.load(
+                file_obj,
+                element_factory,
+                modeling_language,
+            )
 
     resolve_attribute_type_values(element_factory)
 
@@ -581,6 +585,7 @@ def resolve_attribute_type_values(element_factory: ElementFactory) -> None:
             prop.typeValue = "bool"
         elif prop.typeValue in (
             "Integer",
+            "Real",
             "int",
         ):
             prop.typeValue = "int"
