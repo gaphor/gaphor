@@ -1,13 +1,17 @@
 import pytest
 
+from gaphor import UML
 from gaphor.codegen.xmi import convert
 
 
-def test_kerml_xmi_conversion():
-    element_factory = convert("models/KerML-25-04-04.xmi")
+@pytest.fixture(scope="module")
+def kerml():
+    return convert("models/KerML-25-04-04.xmi")
 
-    assert not element_factory.is_empty()
-    assert element_factory.lookup("KerML")
+
+def test_kerml_xmi_conversion(kerml):
+    assert not kerml.is_empty()
+    assert kerml.lookup("KerML")
 
 
 def test_generalization_conversion(kerml):
