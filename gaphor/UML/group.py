@@ -138,10 +138,26 @@ def class_ungroup(parent, element) -> bool:
 
 
 @group.register(UML.Association, UML.Property)
-def association_group(parent, element):
+def association_group(parent: UML.Association, element: UML.Property):
     if len(parent.ownedEnd) >= 2 or element.owner:
         return False
     parent.ownedEnd = element
+    return True
+
+
+@group.register(UML.Enumeration, UML.EnumerationLiteral)
+def enumeration_literal_group(parent: UML.Enumeration, element: UML.EnumerationLiteral):
+    if element.owner:
+        return False
+    parent.ownedLiteral = element
+    return True
+
+
+@group.register(UML.Operation, UML.Parameter)
+def parameter_group(parent: UML.Operation, element: UML.Parameter):
+    if element.owner:
+        return False
+    parent.ownedParameter = element
     return True
 
 
