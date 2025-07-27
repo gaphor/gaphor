@@ -8,6 +8,7 @@ official XMI files.
 """
 
 import logging
+from pathlib import Path
 from xml.etree import ElementTree as etree
 
 from gaphor import UML
@@ -161,7 +162,7 @@ def link_feature(elem: etree.Element, element_factory: ElementFactory):
                 raise ValueError(f"Unhandled tag {unsupported}")
 
 
-def convert(filename: str):
+def convert(filename: Path) -> ElementFactory:
     tree = etree.parse(filename)
 
     root = tree.getroot()
@@ -188,7 +189,7 @@ def convert(filename: str):
 
 
 def main(infile: str, outfile: str):
-    element_factory = convert(infile)
+    element_factory = convert(Path(infile))
 
     with open(outfile, "w", encoding="utf-8") as f:
         save(f, element_factory)

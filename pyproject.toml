@@ -197,6 +197,11 @@ c4model.script = """gaphor.codegen.coder:main(
         ('UML', 'models/UML.gaphor'),
         ('Core', 'models/Core.gaphor')]
     )"""
+kerml.script = """gaphor.codegen.coder:main(
+    modelfile='models/KerML-25-04-04.xmi',
+    outfile='gaphor/KerML/kerml.py',
+    supermodelfiles=[('Core', 'models/Core.gaphor')]
+    )"""
 lint = "pre-commit run --all-files"
 docs = { "cwd" = "docs", "shell" = "sphinx-build -W -b html . _build/html" }
 docs-gettext-pot = { "cwd" = "docs", "shell" = "sphinx-build -b gettext . locale" }
