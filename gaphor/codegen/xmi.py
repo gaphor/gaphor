@@ -162,6 +162,30 @@ def link_feature(elem: etree.Element, element_factory: ElementFactory):
                 raise ValueError(f"Unhandled tag {unsupported}")
 
 
+def link_core_model(element_factory):
+    for element in element_factory.lselect(
+        lambda e: isinstance(e, UML.Class) and not any(e.general)
+    ):
+        log.info("Element %s will inherit from Core.Base", element)
+        base_element = next(
+            element_factory.select(
+                lambda e: isinstance(e, UML.Class) and e.name == "Base"
+            ),
+            None,
+        )
+        if not base_element:
+            core_package = element_factory.create(UML.Package)
+            core_package.name = "Core"
+            base_element = element_factory.create(UML.Class)
+            base_element.name = "Base"
+            base_element.package = core_package
+        generalization = element_factory.create(
+            modeling_language.lookup_element("Generalization")
+        )
+        generalization.general = base_element
+        generalization.specific = element
+
+
 def convert(filename: Path) -> ElementFactory:
     tree = etree.parse(filename)
 
@@ -180,6 +204,7 @@ def convert(filename: Path) -> ElementFactory:
             for child in create_element(elem, element_factory):
                 assert group(package, child)
             link_element(elem, element_factory)
+            link_core_model(element_factory)
         elif elem.tag == f"{xmlns.mofext}Tag":
             pass
         else:
