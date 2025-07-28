@@ -105,6 +105,7 @@ documentation = "https://docs.gaphor.org/"
 "C4Model" = "gaphor.C4Model.modelinglanguage:C4ModelLanguage"
 "RAAML" = "gaphor.RAAML.modelinglanguage:RAAMLModelingLanguage"
 "general" = "gaphor.diagram.general.modelinglanguage:GeneralModelingLanguage"
+"KerML" = "gaphor.KerML.modelinglanguage:KerMLModelingLanguage"
 
 [project.entry-points."gaphor.argparsers"]
 gui = "gaphor.main:gui_parser"
@@ -247,6 +248,7 @@ namespace_packages = true
 [[tool.mypy.overrides]]
 module = [
     "gaphor.core.modeling.coremodel",
+    "gaphor.KerML.kerml",
     "gaphor.UML.uml",
     "gaphor.SysML.sysml",
 ]
@@ -267,6 +269,7 @@ exclude = [
     "dist",
     "gaphor/core/modeling/coremodel.py",
     "gaphor/C4Model/c4model.py",
+    "gaphor/KerML/kerml.py",
     "gaphor/RAAML/raaml.py",
     "gaphor/SysML/sysml.py",
     "gaphor/UML/uml.py",
