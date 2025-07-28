@@ -127,7 +127,7 @@ jobs:
           mutter --wayland --no-x11 --sm-disable --headless -- poetry run pytest --cov
           poetry run coverage lcov
       - name: Upload Code Coverage to Qlty
-        uses: qltysh/qlty-action/coverage@v1
+        uses: qltysh/qlty-action/coverage@f13b3559771beedd11e68b03d49512f3c21a75ba # v1
         with:
           token: ${{ secrets.QLTY_COVERAGE_TOKEN }}
           files: coverage.lcov
