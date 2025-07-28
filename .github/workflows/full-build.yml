@@ -91,6 +91,11 @@ jobs:
       wheel: gaphor-${{ steps.install.outputs.version }}-py3-none-any.whl
       version: ${{ steps.install.outputs.version }}
     steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@6c439dc8bdf85cadbbce9ed30d1c7b959517bc49 # v2.12.2
+        with:
+          egress-policy: audit
+
       - name: Install Linux Dependencies
         run: >
           dnf install -y gcc git graphviz pkg-config python-launcher upx
