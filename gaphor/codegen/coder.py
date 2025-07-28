@@ -324,11 +324,19 @@ def subsets(
             or is_extension_end(a)
         ):
             continue
+
+        full_name = f"{c.name}.{a.name}"
+
+        for prop in a.subsettedProperty:
+            if prop.class_:
+                yield f"{prop.class_.name}.{prop.name}.add({full_name})  # type: ignore[attr-defined]"
+            else:
+                log.warning(f"Subsetted property {prop} not owned by a class")
+
         for slot in a.appliedStereotype[:].slot:
             if slot.definingFeature.name != "subsets":
                 continue
 
-            full_name = f"{c.name}.{a.name}"
             raw_slot_value = UML.recipes.get_slot_value(slot)
             slotValue = raw_slot_value if isinstance(raw_slot_value, str) else ""
             for value in slotValue.split(","):
@@ -515,7 +523,17 @@ def is_in_toplevel_package(c: UML.Class, package_name: str) -> bool:
 def redefines(a: UML.Property) -> str | None:
     # TODO: look up element name and add underscore if needed.
     # maybe resolve redefines before we start writing?
-    # Redefine is the only one where
+
+    if len(a.redefinedProperty) > 1:
+        redefs = ", ".join(f"{r.class_.name}.{r.name}" for r in a.redefinedProperty)
+        log.warning(
+            f"{a.class_.name}.{a.name} has multiple redefines: {redefs}. Picking the first."
+        )
+
+    for r in a.redefinedProperty:
+        return f"{r.class_.name}.{r.name}"
+
+    # UML metamodel style: with stereotype
     return next(
         (
             UML.recipes.get_slot_value(slot)
