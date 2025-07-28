@@ -120,13 +120,6 @@ jobs:
         run: |
           eval $(dbus-launch --auto-syntax)
           mutter --wayland --no-x11 --sm-disable --headless -- poetry run pytest --cov
-      - name: Upload Code Coverage to Code Climate
-        if: ${{ matrix.python_version == env.python_version }}
-        uses: paambaati/codeclimate-action@f429536ee076d758a24705203199548125a28ca7 # v9.0.0
-        env:
-          CC_TEST_REPORTER_ID: 05f6288b94a87daa172d3e96a33ec331a4374be7d01eb9a42b3b21c4c550a8ff
-        with:
-          coverageCommand: poetry run coverage xml --omit="/tmp/*"
       - name: Create Source Dist and Wheel
         if: ${{ matrix.python_version == env.python_version }}
         run: poetry build
