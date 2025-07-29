@@ -8,7 +8,8 @@
 [![Matrix](https://img.shields.io/badge/chat-on%20Matrix-success)](https://app.element.io/#/room/#gaphor_Lobby:gitter.im)
 
 [![Maintainability](https://qlty.sh/gh/gaphor/projects/gaphor/maintainability.svg)](https://qlty.sh/gh/gaphor/projects/gaphor)
-[![Code Coverage](https://qlty.sh/gh/gaphor/projects/gaphor/coverage.svg)](https://qlty.sh/gh/gaphor/projects/gaphor)[![Translation Status](https://hosted.weblate.org/widgets/gaphor/-/gaphor/svg-badge.svg)](https://hosted.weblate.org/engage/gaphor)
+[![Code Coverage](https://qlty.sh/gh/gaphor/projects/gaphor/coverage.svg)](https://qlty.sh/gh/gaphor/projects/gaphor)
+[![Translation Status](https://hosted.weblate.org/widgets/gaphor/-/gaphor/svg-badge.svg)](https://hosted.weblate.org/engage/gaphor)
 [![OpenSSF Best Practices](https://www.bestpractices.dev/projects/9512/badge)](https://www.bestpractices.dev/projects/9512)
 [![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg)](https://github.com/RichardLitt/standard-readme)
 
