@@ -41,7 +41,6 @@ from gaphor.core.modeling.modelinglanguage import (
 )
 from gaphor.diagram.general.modelinglanguage import GeneralModelingLanguage
 from gaphor.entrypoint import initialize
-from gaphor.SysML.modelinglanguage import SysMLModelingLanguage
 from gaphor.UML.modelinglanguage import UMLModelingLanguage
 
 log = logging.getLogger(__name__)
@@ -81,7 +80,7 @@ def main(
         [
             load_modeling_language(lang)
             for lang, _ in supermodelfiles
-            if lang not in ("Core", "UML", "SysML")
+            if lang not in ("Core", "general", "UML")
         ]
         if supermodelfiles
         else []
@@ -92,7 +91,6 @@ def main(
                 CoreModelingLanguage(),
                 GeneralModelingLanguage(),
                 UMLModelingLanguage(),
-                SysMLModelingLanguage(),
             ]
             + extra_langs
         )
