@@ -4,6 +4,8 @@
 
 from __future__ import annotations
 
+import enum
+
 from gaphor.core.modeling.properties import (
     association,
     attribute as _attribute,
@@ -23,6 +25,18 @@ def _directed_relationship_property_path_target_source(type):
         for element in self.model.select(type)
         if element.sourceContext is self and element.targetContext
     ]
+
+class FeatureDirectionKind(enum.StrEnum):
+    provided = "provided"
+    providedRequired = "providedRequired"
+    required = "required"
+
+
+class FlowDirectionKind(enum.StrEnum):
+    in_ = "in"
+    inout = "inout"
+    out = "out"
+
 
 from gaphor.UML.uml import NamedElement
 class AbstractRequirement(NamedElement):

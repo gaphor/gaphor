@@ -4,6 +4,8 @@
 
 from __future__ import annotations
 
+import enum
+
 from gaphor.core.modeling.properties import (
     association,
     attribute as _attribute,
@@ -14,6 +16,12 @@ from gaphor.core.modeling.properties import (
     relation_many,
     relation_one,
 )
+
+
+class ChangeKind(enum.StrEnum):
+    add = "add"
+    remove = "remove"
+    update = "update"
 
 
 # 1: override Base

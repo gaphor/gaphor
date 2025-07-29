@@ -24,6 +24,7 @@ from __future__ import annotations
 
 import argparse
 import contextlib
+import keyword
 import logging
 import sys
 import textwrap
@@ -52,6 +53,8 @@ header = textwrap.dedent(
     # fmt: off
 
     from __future__ import annotations
+
+    import enum
 
     from gaphor.core.modeling.properties import (
         association,
@@ -139,6 +142,13 @@ def coder(
     super_models: list[tuple[ModelingLanguage, ElementFactory]],
     overrides: Overrides | None,
 ) -> Iterable[str]:
+    yield header
+    if overrides and overrides.header:
+        yield overrides.header
+
+    for enum in sorted((model.select(UML.Enumeration)), key=lambda e: e.name):
+        yield from enumeration(enum)
+
     classes = list(
         order_classes(
             c
@@ -149,10 +159,6 @@ def coder(
             and not is_tilde_type(c)
         )
     )
-
-    yield header
-    if overrides and overrides.header:
-        yield overrides.header
 
     already_imported = set()
     for c in classes:
@@ -194,6 +200,17 @@ def coder(
                 already_imported.add(line)
             else:
                 yield line
+
+
+def enumeration(enum: UML.Enumeration):
+    yield f"class {enum.name}(enum.StrEnum):"
+    for literal in enum.ownedLiteral:
+        name = literal.name
+        if keyword.iskeyword(name):
+            name = f"{name}_"
+        yield f'    {name} = "{literal.name}"'
+    yield ""
+    yield ""
 
 
 def class_declaration(class_: UML.Class):
