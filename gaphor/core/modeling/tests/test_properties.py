@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import enum
+
 import pytest
 
 from gaphor.core import event_handler
@@ -13,6 +15,7 @@ from gaphor.core.modeling.properties import (
     derived,
     derivedunion,
     enumeration,
+    newenumeration,
     relation_many,
     relation_one,
 )
@@ -669,6 +672,32 @@ def test_enumerations():
         a.a = "four"
 
     assert a.a == "three"
+
+    del a.a
+    assert a.a == "one"
+
+
+def test_enumeration_with_type():
+    class EnumKind(enum.StrEnum):
+        one = "one"
+        two = "two"
+        three = "three"
+
+    class A(Base):
+        a: enumeration
+
+    A.a = newenumeration("a", EnumKind, EnumKind.one)
+    a = A()
+    assert a.a == "one"
+    a.a = "two"
+    assert a.a == "two"
+    a.a = "three"
+    assert a.a == "three"
+
+    with pytest.raises(TypeError):
+        a.a = "four"
+
+    assert a.a == EnumKind.three
 
     del a.a
     assert a.a == "one"

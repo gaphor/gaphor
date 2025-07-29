@@ -241,7 +241,7 @@ class ShowActivityParameterNodeTypePropertyPage(ShowTypedElementPropertyPage):
 
 @PropertyPages.register(UML.ActivityParameterNode)
 class ActivityParameterNodeDirectionPropertyPage(PropertyPageBase):
-    DIRECTION = UML.Parameter.direction.values
+    DIRECTION = list(UML.Parameter.direction.type)
     order = 40
 
     def __init__(self, subject: UML.ActivityParameterNode, event_manager):

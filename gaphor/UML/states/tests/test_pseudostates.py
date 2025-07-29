@@ -17,6 +17,6 @@ def test_history_pseudostate(create):
     assert "shallowHistory" == item.subject.kind
 
 
-@pytest.mark.parametrize("kind", UML.Pseudostate.kind.values)
+@pytest.mark.parametrize("kind", UML.Pseudostate.kind.type)
 def test_all_pseudostates_are_supported(kind):
     assert kind in PSEUDOSTATE_SHAPE

@@ -11,7 +11,7 @@ from gaphor.core.modeling.properties import (
     attribute as _attribute,
     derived,
     derivedunion,
-    enumeration as _enumeration,
+    newenumeration as _enumeration,
     redefine,
     relation_many,
     relation_one,
@@ -39,7 +39,7 @@ from gaphor.core.modeling.stylesheet import StyleSheet
 class PendingChange(Base):
     applied: _attribute[int] = _attribute("applied", int, default=0)
     element_id: _attribute[str] = _attribute("element_id", str)
-    op = _enumeration("op", ("add", "remove", "update"), "add")
+    op = _enumeration("op", ChangeKind, ChangeKind.add)
 
 
 class ElementChange(PendingChange):
