@@ -123,6 +123,9 @@ def main(
 def load_model(modelfile: Path, modeling_language: ModelingLanguage) -> ElementFactory:
     if modelfile.suffix == ".xmi":
         element_factory = convert(modelfile)
+        assert not element_factory.lselect(
+            lambda e: isinstance(e, UML.Class) and not e.name
+        )
     else:
         element_factory = ElementFactory()
         with modelfile.open(encoding="utf-8") as file_obj:
@@ -234,7 +237,10 @@ def class_declaration(class_: UML.Class):
     return f"class {class_.name}({base_classes}):"
 
 
-def variables(class_: UML.Class, overrides: Overrides | None = None):
+def variables(
+    class_: UML.Class,
+    overrides: Overrides | None = None,
+):
     if class_.ownedAttribute:
         a: UML.Property
         for a in sorted(class_.ownedAttribute, key=lambda a: a.name or ""):
@@ -250,12 +256,19 @@ def variables(class_: UML.Class, overrides: Overrides | None = None):
                 yield f'{a.name}: _attribute[{a.typeValue}] = _attribute("{a.name}", {a.typeValue}{default_value(a)})'
             elif is_enumeration(a.type):
                 assert isinstance(a.type, UML.Enumeration)
-                default = (
-                    a.defaultValue.value
-                    if isinstance(a.defaultValue, UML.LiteralString)
+                if (
+                    isinstance(a.defaultValue, UML.LiteralString)
                     and a.defaultValue.value
-                    else a.type.ownedLiteral[0].name
-                )
+                ):
+                    default = a.defaultValue.value
+                elif (
+                    isinstance(a.defaultValue, UML.InstanceValue)
+                    and a.defaultValue.instance
+                ):
+                    default = a.defaultValue.instance.name
+                else:
+                    default = a.type.ownedLiteral[0].name
+
                 if keyword.iskeyword(default):
                     default = f"{default}_"
                 yield f'{a.name} = _enumeration("{a.name}", {a.type.name}, {a.type.name}.{default})'
