@@ -6,7 +6,6 @@ from gaphor.codegen.coder import (
     attribute,
     bases,
     class_declaration,
-    is_enumeration,
     is_in_profile,
     is_in_toplevel_package,
     is_simple_type,
@@ -78,6 +77,12 @@ def create_attribute(s: str, element_factory=None):
     return attr
 
 
+def create_literal(s: str, element_factory):
+    literal = UML.EnumerationLiteral()
+    parse(literal, s)
+    return literal
+
+
 def test_coder_write_class_with_attributes():
     class_ = UML.Class()
     class_.ownedAttribute = create_attribute("first: str")
@@ -95,10 +100,10 @@ def test_coder_write_class_with_enumeration(element_factory: ElementFactory):
     class_ = element_factory.create(UML.Class)
     class_.ownedAttribute = create_attribute("first: EnumKind", element_factory)
 
-    enum = element_factory.create(UML.Class)
+    enum = element_factory.create(UML.Enumeration)
     enum.name = "EnumKind"
-    enum.ownedAttribute = create_attribute("in", element_factory)
-    enum.ownedAttribute = create_attribute("out", element_factory)
+    enum.ownedLiteral = create_literal("in", element_factory)
+    enum.ownedLiteral = create_literal("out", element_factory)
 
     resolve_attribute_type_values(element_factory)
 
@@ -144,17 +149,6 @@ def test_coder_write_class_with_1_n_association(navigable_association):
 
     assert class_a.name == "A"
     assert attr_def == ["b: relation_one[B]"]
-
-
-def class_with_name(name):
-    c = UML.Class()
-    c.name = name
-    return c
-
-
-def test_enumeration():
-    assert not is_enumeration(class_with_name("A"))
-    assert is_enumeration(class_with_name("AKind"))
 
 
 def test_in_profile():
