@@ -11,7 +11,7 @@ from gaphor.core.modeling.properties import (
     attribute as _attribute,
     derived,
     derivedunion,
-    newenumeration as _enumeration,
+    enumeration as _enumeration,
     redefine,
     relation_many,
     relation_one,

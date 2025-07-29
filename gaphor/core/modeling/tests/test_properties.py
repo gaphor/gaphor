@@ -15,7 +15,6 @@ from gaphor.core.modeling.properties import (
     derived,
     derivedunion,
     enumeration,
-    newenumeration,
     relation_many,
     relation_one,
 )
@@ -657,27 +656,6 @@ def test_attributes_loading_failure():
 
 
 def test_enumerations():
-    class A(Base):
-        a: enumeration
-
-    A.a = enumeration("a", ("one", "two", "three"), "one")
-    a = A()
-    assert a.a == "one"
-    a.a = "two"
-    assert a.a == "two"
-    a.a = "three"
-    assert a.a == "three"
-
-    with pytest.raises(TypeError):
-        a.a = "four"
-
-    assert a.a == "three"
-
-    del a.a
-    assert a.a == "one"
-
-
-def test_enumeration_with_type():
     class EnumKind(enum.StrEnum):
         one = "one"
         two = "two"
@@ -686,7 +664,7 @@ def test_enumeration_with_type():
     class A(Base):
         a: enumeration
 
-    A.a = newenumeration("a", EnumKind, EnumKind.one)
+    A.a = enumeration("a", EnumKind, EnumKind.one)
     a = A()
     assert a.a == "one"
     a.a = "two"

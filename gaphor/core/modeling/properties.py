@@ -27,7 +27,7 @@ from __future__ import annotations
 
 import enum
 import logging
-from collections.abc import Callable, Iterable, Sequence
+from collections.abc import Callable, Iterable
 from dataclasses import dataclass
 from typing import (
     Any,
@@ -275,58 +275,6 @@ class attribute(umlproperty, Generic[T]):
 
 
 class enumeration(umlproperty):
-    """Enumeration.
-
-      Element.enum = enumeration('enum', ('one', 'two', 'three'), 'one')
-
-    An enumeration is a special kind of attribute that can only hold a
-    predefined set of values. Multiplicity is always `[0..1]`
-    """
-
-    # All enumerations have a type 'str'
-    type = str
-
-    def __init__(self, name: str, values: Sequence[str], default: str):
-        super().__init__(name)
-        self.values = values
-        self.default = default
-
-    def __str__(self):
-        return f"<enumeration {self.name}: {self.values} = {self.default}>"
-
-    def get(self, obj):
-        return getattr(obj, self._name, self.default)
-
-    def load(self, obj, value: str | None):
-        self.set(obj, self.default if value is None else value)
-
-    def unlink(self, obj):
-        self.set(obj, self.default)
-
-    def set(self, obj, value):
-        if value not in self.values:
-            raise TypeError(f"Value should be one of {self.values}")
-        old = self.get(obj)
-        if value == old:
-            return
-
-        if value == self.default:
-            delattr(obj, self._name)
-        else:
-            setattr(obj, self._name, value)
-        self.handle(AttributeUpdated(obj, self, old, value))
-
-    def delete(self, obj, value=None):
-        old = self.get(obj)
-        try:
-            delattr(obj, self._name)
-        except AttributeError:
-            pass
-        else:
-            self.handle(AttributeUpdated(obj, self, old, self.default))
-
-
-class newenumeration(umlproperty):
     """Enumeration.
 
       Element.enum = enumeration('enum', EnumKind, 'one')
