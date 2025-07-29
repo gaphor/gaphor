@@ -143,7 +143,7 @@ class FullPort(Port):
 
 
 class FlowProperty(Property):
-    direction = _enumeration("direction", ("in", "inout", "out"), "in")
+    direction = _enumeration("direction", ("in", "inout", "out"), "inout")
 
 
 class InterfaceBlock(Block):

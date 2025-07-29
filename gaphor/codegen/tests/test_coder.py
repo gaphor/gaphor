@@ -112,6 +112,24 @@ def test_coder_write_class_with_enumeration(element_factory: ElementFactory):
     assert attr_def == ['first = _enumeration("first", ("in", "out"), "in")']
 
 
+def test_coder_write_class_with_enumeration_and_default_value(
+    element_factory: ElementFactory,
+):
+    class_ = element_factory.create(UML.Class)
+    class_.ownedAttribute = create_attribute("first: EnumKind = out", element_factory)
+
+    enum = element_factory.create(UML.Enumeration)
+    enum.name = "EnumKind"
+    enum.ownedLiteral = create_literal("in", element_factory)
+    enum.ownedLiteral = create_literal("out", element_factory)
+
+    resolve_attribute_type_values(element_factory)
+
+    attr_def = list(variables(class_))
+
+    assert attr_def == ['first = _enumeration("first", ("in", "out"), "out")']
+
+
 @pytest.fixture
 def navigable_association(element_factory):
     class_a = element_factory.create(UML.Class)

@@ -465,7 +465,7 @@ def create_value_specification_for_type_and_value(
             type = "int"
         else:
             type = "str"
-    value_specification = None
+    value_specification: ValueSpecification
     match type:
         case "bool" | "Boolean":
             value_specification = model.create(LiteralBoolean)
@@ -491,6 +491,11 @@ def create_value_specification_for_type_and_value(
         # case "float" | "Real":
         #     value_specification = model.create(LiteralReal)
         #     value_specification.value = float(value)
+        case _:
+            # If we do not know, cram it in a string
+            value_specification = model.create(LiteralString)
+            value_specification.value = value
+            value_specification.name = value
     return value_specification
 
 
