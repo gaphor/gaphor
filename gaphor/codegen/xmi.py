@@ -5,6 +5,9 @@ XMI files.
 
 It's purpose is to help code generation directly from the
 official XMI files.
+
+This importer is very oppinionated and tailored towards the
+KerML and SysML 2 models provided by the OMG.
 """
 
 import logging
@@ -72,6 +75,54 @@ def create(elem: etree.Element, element_factory: ElementFactory) -> UML.Element:
     return element
 
 
+# These functions relies on the URL and id consistency of KerML identifiers.
+# These functions should only be called when generating KerML derived models.
+# Hrefs look like: "https://www.omg.org/spec/KerML/20250201/KerML.xmi#Kernel-Interactions-Interaction"
+
+
+def create_class_from_href(href: str, element_factory: ElementFactory) -> UML.Class:
+    uri, id = href.split("#")
+    assert uri == "https://www.omg.org/spec/KerML/20250201/KerML.xmi"
+
+    if class_ := element_factory.lookup(id):
+        assert isinstance(class_, UML.Class)
+        assert class_.owner.id == uri
+        return class_
+
+    if not (package := element_factory.lookup(uri)):
+        package = element_factory.create_as(UML.Package, id=uri)
+        package.name = "KerML"
+
+    class_ = element_factory.create_as(UML.Class, id=id)
+    class_.name = id.split("-")[-1]
+    assert group(package, class_)
+    return class_
+
+
+def create_property_from_href(
+    href: str, element_factory: ElementFactory
+) -> UML.Property | None:
+    uri, id = href.split("#")
+    assert uri == "https://www.omg.org/spec/KerML/20250201/KerML.xmi"
+
+    if "-A_" in id:
+        # Property is owned by association, skip it
+        return None
+
+    if prop := element_factory.lookup(id):
+        assert isinstance(prop, UML.Property)
+        assert prop.owner.owner.id == uri
+        return prop
+
+    class_href, name = href.rsplit("-", 1)
+    class_ = create_class_from_href(class_href, element_factory)
+
+    prop = element_factory.create_as(UML.Property, id=id)
+    prop.name = name
+    class_.ownedAttribute = prop
+    return prop
+
+
 def link_element(elem: etree.Element, element_factory: ElementFactory):
     element = element_factory[elem.attrib[f"{xmlns.xmi}id"]]
     for child in elem:
@@ -84,10 +135,11 @@ def link_element(elem: etree.Element, element_factory: ElementFactory):
                     modeling_language.lookup_element("Generalization"),
                     id=child.attrib[f"{xmlns.xmi}id"],
                 )
-                generalization.general = element_factory[
-                    general.attrib[f"{xmlns.xmi}idref"]
-                ]
-                # TODO: for SysML, cover case: <general href="https://www.omg.org/spec/KerML/20250201/KerML.xmi#Kernel-Interactions-Interaction"/>
+                generalization.general = (
+                    element_factory[general.attrib[f"{xmlns.xmi}idref"]]
+                    if f"{xmlns.xmi}idref" in general.attrib
+                    else create_class_from_href(general.attrib["href"], element_factory)
+                )
                 generalization.specific = element
             case "memberEnd":
                 element.memberEnd = element_factory[child.attrib[f"{xmlns.xmi}idref"]]
@@ -105,7 +157,7 @@ def link_element(elem: etree.Element, element_factory: ElementFactory):
                 raise ValueError(f"Unhandled tag {unsupported}")
 
 
-def link_feature(elem: etree.Element, element_factory: ElementFactory):
+def link_feature(elem: etree.Element, element_factory: ElementFactory):  # noqa: C901
     element = element_factory[elem.attrib[f"{xmlns.xmi}id"]]
     for child in elem:
         match child.tag:
@@ -116,10 +168,15 @@ def link_feature(elem: etree.Element, element_factory: ElementFactory):
             case "defaultValue":
                 element.defaultValue = create(child, element_factory)
                 if (instance := child.find("instance")) is not None:
-                    assert isinstance(element, UML.Parameter | UML.Property)
-                    element.defaultValue.instance = element_factory[
-                        instance.attrib[f"{xmlns.xmi}idref"]
-                    ]
+                    if idref := child.attrib.get(f"{xmlns.xmi}idref"):
+                        assert isinstance(element, UML.Parameter | UML.Property)
+                        element.defaultValue.instance = element_factory[
+                            instance.attrib[f"{xmlns.xmi}idref"]
+                        ]
+                    elif "href" in child.attrib:
+                        log.warning(
+                            "should default value instance %s", child.attrib["href"]
+                        )
             case "lowerValue":
                 element.lowerValue = create(child, element_factory)
                 assert isinstance(element, UML.MultiplicityElement)
@@ -132,8 +189,8 @@ def link_feature(elem: etree.Element, element_factory: ElementFactory):
                 ):
                     element.typeValue = href.split("#")[1]
                 else:
-                    log.warning(
-                        "No type idref. Have href instead: %s", child.attrib.get("href")
+                    element.type = create_class_from_href(
+                        child.attrib["href"], element_factory
                     )
             case "upperValue":
                 element.upperValue = create(child, element_factory)
@@ -141,21 +198,36 @@ def link_feature(elem: etree.Element, element_factory: ElementFactory):
                 upper = int(child.attrib.get("value", 1))
                 element.upperValue.value = "*" if upper == -1 else upper
             case "redefinedOperation":
-                element.redefinedOperation = element_factory[
-                    child.attrib[f"{xmlns.xmi}idref"]
-                ]
-            case "redefinedProperty":
-                element.redefinedProperty = element_factory[
-                    child.attrib[f"{xmlns.xmi}idref"]
-                ]
-            case "subsettedProperty":
-                subsetted = element_factory[child.attrib[f"{xmlns.xmi}idref"]]
-                if subsetted is element:
-                    log.warning("Property %s subsets itself", element)
-                else:
-                    element.subsettedProperty = element_factory[
+                if f"{xmlns.xmi}idref" in child.attrib:
+                    element.redefinedOperation = element_factory[
                         child.attrib[f"{xmlns.xmi}idref"]
                     ]
+                elif "href" in child.attrib:
+                    log.warning("should redefine operation %s", child.attrib["href"])
+            case "redefinedProperty":
+                if f"{xmlns.xmi}idref" in child.attrib:
+                    element.redefinedProperty = element_factory[
+                        child.attrib[f"{xmlns.xmi}idref"]
+                    ]
+                elif "href" in child.attrib:
+                    if prop := create_property_from_href(
+                        child.attrib["href"], element_factory=element_factory
+                    ):
+                        element.redefinedProperty = prop
+            case "subsettedProperty":
+                if f"{xmlns.xmi}idref" in child.attrib:
+                    subsetted = element_factory[child.attrib[f"{xmlns.xmi}idref"]]
+                    if subsetted is element:
+                        log.warning("Property %s subsets itself", element)
+                    else:
+                        element.subsettedProperty = element_factory[
+                            child.attrib[f"{xmlns.xmi}idref"]
+                        ]
+                elif "href" in child.attrib:
+                    if prop := create_property_from_href(
+                        child.attrib["href"], element_factory=element_factory
+                    ):
+                        element.subsettedProperty = prop
             case "ownedParameter":
                 pass
             case unsupported:
@@ -163,10 +235,28 @@ def link_feature(elem: etree.Element, element_factory: ElementFactory):
 
 
 def link_core_model(element_factory):
-    for element in element_factory.lselect(
-        lambda e: isinstance(e, UML.Class) and not any(e.general)
+    if element := next(
+        element_factory.select(
+            lambda e: isinstance(e, UML.Class)
+            and e.name == "Element"
+            and e.owningPackage.name != "KerML"
+        ),
+        None,
     ):
         log.info("Element %s will inherit from Core.Base", element)
+
+        core_package = next(
+            element_factory.select(
+                lambda e: isinstance(e, UML.Package)
+                and e.name == "Core"
+                and not e.owningPackage
+            ),
+            None,
+        )
+        if not core_package:
+            core_package = element_factory.create(UML.Package)
+            core_package.name = "Core"
+
         base_element = next(
             element_factory.select(
                 lambda e: isinstance(e, UML.Class) and e.name == "Base"
@@ -174,16 +264,21 @@ def link_core_model(element_factory):
             None,
         )
         if not base_element:
-            core_package = element_factory.create(UML.Package)
-            core_package.name = "Core"
             base_element = element_factory.create(UML.Class)
             base_element.name = "Base"
             base_element.package = core_package
+
         generalization = element_factory.create(
             modeling_language.lookup_element("Generalization")
         )
         generalization.general = base_element
         generalization.specific = element
+
+
+def patch_sysml2_model(element_factory: ElementFactory):
+    """Apply some changes to make the SysML v2 model play well with out generator."""
+    if prop := element_factory.lookup("Systems-Views-Expose-visibility"):
+        prop.unlink()
 
 
 def convert(filename: Path) -> ElementFactory:
@@ -205,6 +300,7 @@ def convert(filename: Path) -> ElementFactory:
                 assert group(package, child)
             link_element(elem, element_factory)
             link_core_model(element_factory)
+            patch_sysml2_model(element_factory)
         elif elem.tag == f"{xmlns.mofext}Tag":
             pass
         else:

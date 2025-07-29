@@ -203,6 +203,13 @@ kerml.script = """gaphor.codegen.coder:main(
     outfile='gaphor/KerML/kerml.py',
     supermodelfiles=[('Core', 'models/Core.gaphor')]
     )"""
+sysml2.script = """gaphor.codegen.coder:main(
+    modelfile='models/SysML2-25-02-15.xmi',
+    outfile='gaphor/SysML2/sysml2.py',
+    supermodelfiles=[
+        ('KerML', 'models/KerML-25-04-04.xmi'),
+        ('Core', 'models/Core.gaphor')]
+    )"""
 lint = "pre-commit run --all-files"
 docs = { "cwd" = "docs", "shell" = "sphinx-build -W -b html . _build/html" }
 docs-gettext-pot = { "cwd" = "docs", "shell" = "sphinx-build -b gettext . locale" }
@@ -251,6 +258,7 @@ module = [
     "gaphor.KerML.kerml",
     "gaphor.UML.uml",
     "gaphor.SysML.sysml",
+    "gaphor.SysML2.sysml2",
 ]
 warn_unused_ignores = false
 ignore_errors = true
@@ -272,6 +280,7 @@ exclude = [
     "gaphor/KerML/kerml.py",
     "gaphor/RAAML/raaml.py",
     "gaphor/SysML/sysml.py",
+    "gaphor/SysML2/sysml2.py",
     "gaphor/UML/uml.py",
 ]
 ignore = ["E501"]
