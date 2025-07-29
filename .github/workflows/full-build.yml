@@ -91,6 +91,11 @@ jobs:
       wheel: gaphor-${{ steps.install.outputs.version }}-py3-none-any.whl
       version: ${{ steps.install.outputs.version }}
     steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@6c439dc8bdf85cadbbce9ed30d1c7b959517bc49 # v2.12.2
+        with:
+          egress-policy: audit
+
       - name: Install Linux Dependencies
         run: >
           dnf install -y gcc git graphviz pkg-config python-launcher upx
@@ -120,13 +125,12 @@ jobs:
         run: |
           eval $(dbus-launch --auto-syntax)
           mutter --wayland --no-x11 --sm-disable --headless -- poetry run pytest --cov
-      - name: Upload Code Coverage to Code Climate
-        if: ${{ matrix.python_version == env.python_version }}
-        uses: paambaati/codeclimate-action@f429536ee076d758a24705203199548125a28ca7 # v9.0.0
-        env:
-          CC_TEST_REPORTER_ID: 05f6288b94a87daa172d3e96a33ec331a4374be7d01eb9a42b3b21c4c550a8ff
+          poetry run coverage lcov
+      - name: Upload Code Coverage to Qlty
+        uses: qltysh/qlty-action/coverage@f13b3559771beedd11e68b03d49512f3c21a75ba # v1
         with:
-          coverageCommand: poetry run coverage xml --omit="/tmp/*"
+          token: ${{ secrets.QLTY_COVERAGE_TOKEN }}
+          files: coverage.lcov
       - name: Create Source Dist and Wheel
         if: ${{ matrix.python_version == env.python_version }}
         run: poetry build
