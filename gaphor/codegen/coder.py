@@ -220,9 +220,9 @@ def variables(class_: UML.Class, overrides: Overrides | None = None):
             elif a.typeValue:
                 yield f'{a.name}: _attribute[{a.typeValue}] = _attribute("{a.name}", {a.typeValue}{default_value(a)})'
             elif is_enumeration(a.type):
-                assert isinstance(a.type, UML.Class)
-                enum_values = ", ".join(f'"{e.name}"' for e in a.type.ownedAttribute)
-                yield f'{a.name} = _enumeration("{a.name}", ({enum_values}), "{a.type.ownedAttribute[0].name}")'
+                assert isinstance(a.type, UML.Enumeration)
+                enum_values = ", ".join(f'"{e.name}"' for e in a.type.ownedLiteral)
+                yield f'{a.name} = _enumeration("{a.name}", ({enum_values}), "{a.type.ownedLiteral[0].name}")'
             elif a.type:
                 mult = (
                     "one"
@@ -429,7 +429,7 @@ def bases(c: UML.Class) -> Iterable[UML.Class]:
 
 
 def is_enumeration(c: UML.Type) -> bool:
-    return c and c.name and (c.name.endswith("Kind") or c.name.endswith("Sort"))  # type: ignore[return-value]
+    return isinstance(c, UML.Enumeration)
 
 
 def is_simple_type(c: UML.Type) -> bool:
@@ -515,7 +515,7 @@ def in_super_model(
         for cls in factory.select(  # type: ignore[assignment]
             lambda e: isinstance(e, UML.Class) and e.name == name
         ):
-            if not (is_in_profile(cls) or is_enumeration(cls)):
+            if not is_in_profile(cls):
                 element_type = modeling_language.lookup_element(cls.name)
                 assert element_type, (
                     f"Type {cls.name} found in model, but not in generated model"
@@ -540,7 +540,8 @@ def resolve_attribute_type_values(element_factory: ElementFactory) -> None:
             pass
         elif c := next(
             element_factory.select(
-                lambda e: isinstance(e, UML.Class) and e.name == prop.typeValue  # noqa: B023
+                lambda e: isinstance(e, UML.Class | UML.Enumeration)
+                and e.name == prop.typeValue  # noqa: B023
             ),
             None,
         ):
