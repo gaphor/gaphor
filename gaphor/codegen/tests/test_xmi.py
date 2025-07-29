@@ -9,9 +9,19 @@ def kerml():
     return convert("models/KerML-25-04-04.xmi")
 
 
+@pytest.fixture(scope="module")
+def sysml():
+    return convert("models/SysML2-25-02-15.xmi")
+
+
 def test_kerml_xmi_conversion(kerml):
     assert not kerml.is_empty()
     assert kerml.lookup("KerML")
+
+
+def test_sysml_xmi_conversion(sysml):
+    assert not sysml.is_empty()
+    assert sysml.lookup("SysML")
 
 
 def test_generalization_conversion(kerml):
