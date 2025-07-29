@@ -109,7 +109,7 @@ def test_coder_write_class_with_enumeration(element_factory: ElementFactory):
 
     attr_def = list(variables(class_))
 
-    assert attr_def == ['first = _enumeration("first", ("in", "out"), "in")']
+    assert attr_def == ['first = _enumeration("first", EnumKind, EnumKind.in_)']
 
 
 def test_coder_write_class_with_enumeration_and_default_value(
@@ -127,7 +127,7 @@ def test_coder_write_class_with_enumeration_and_default_value(
 
     attr_def = list(variables(class_))
 
-    assert attr_def == ['first = _enumeration("first", ("in", "out"), "out")']
+    assert attr_def == ['first = _enumeration("first", EnumKind, EnumKind.out)']
 
 
 @pytest.fixture

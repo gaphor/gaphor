@@ -25,6 +25,7 @@ methods:
 
 from __future__ import annotations
 
+import enum
 import logging
 from collections.abc import Callable, Iterable, Sequence
 from dataclasses import dataclass
@@ -305,6 +306,55 @@ class enumeration(umlproperty):
     def set(self, obj, value):
         if value not in self.values:
             raise TypeError(f"Value should be one of {self.values}")
+        old = self.get(obj)
+        if value == old:
+            return
+
+        if value == self.default:
+            delattr(obj, self._name)
+        else:
+            setattr(obj, self._name, value)
+        self.handle(AttributeUpdated(obj, self, old, value))
+
+    def delete(self, obj, value=None):
+        old = self.get(obj)
+        try:
+            delattr(obj, self._name)
+        except AttributeError:
+            pass
+        else:
+            self.handle(AttributeUpdated(obj, self, old, self.default))
+
+
+class newenumeration(umlproperty):
+    """Enumeration.
+
+      Element.enum = enumeration('enum', EnumKind, 'one')
+
+    An enumeration is a special kind of attribute that can only hold a
+    predefined set of values. Multiplicity is always `[0..1]`.
+    """
+
+    def __init__(self, name: str, type: type[enum.StrEnum], default: enum.StrEnum):
+        super().__init__(name)
+        self.type = type
+        self.default = default
+
+    def __str__(self):
+        return f"<enumeration {self.name}: {self.type.__name__} = {self.default}>"
+
+    def get(self, obj):
+        return getattr(obj, self._name, self.default)
+
+    def load(self, obj, value: str | None):
+        self.set(obj, self.default if value is None else value)
+
+    def unlink(self, obj):
+        self.set(obj, self.default)
+
+    def set(self, obj, value):
+        if value not in self.type:
+            raise TypeError(f"Value should be one of {list(self.type)}")
         old = self.get(obj)
         if value == old:
             return

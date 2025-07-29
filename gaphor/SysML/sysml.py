@@ -11,7 +11,7 @@ from gaphor.core.modeling.properties import (
     attribute as _attribute,
     derived,
     derivedunion,
-    enumeration as _enumeration,
+    newenumeration as _enumeration,
     redefine,
     relation_many,
     relation_one,
@@ -157,7 +157,7 @@ class FullPort(Port):
 
 
 class FlowProperty(Property):
-    direction = _enumeration("direction", ("in", "inout", "out"), "inout")
+    direction = _enumeration("direction", FlowDirectionKind, FlowDirectionKind.inout)
 
 
 class InterfaceBlock(Block):
@@ -192,7 +192,7 @@ class AcceptChangeStructuralFeatureEventAction(AcceptEventAction):
 
 from gaphor.UML.uml import Feature
 class DirectedFeature(Feature):
-    featureDirection = _enumeration("featureDirection", ("provided", "providedRequired", "required"), "provided")
+    featureDirection = _enumeration("featureDirection", FeatureDirectionKind, FeatureDirectionKind.provided)
 
 
 from gaphor.UML.uml import Generalization

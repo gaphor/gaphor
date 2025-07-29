@@ -61,7 +61,7 @@ header = textwrap.dedent(
         attribute as _attribute,
         derived,
         derivedunion,
-        enumeration as _enumeration,
+        newenumeration as _enumeration,
         redefine,
         relation_many,
         relation_one,
@@ -236,14 +236,15 @@ def variables(class_: UML.Class, overrides: Overrides | None = None):
                 yield f'{a.name}: _attribute[{a.typeValue}] = _attribute("{a.name}", {a.typeValue}{default_value(a)})'
             elif is_enumeration(a.type):
                 assert isinstance(a.type, UML.Enumeration)
-                enum_values = ", ".join(f'"{e.name}"' for e in a.type.ownedLiteral)
                 default = (
                     a.defaultValue.value
                     if isinstance(a.defaultValue, UML.LiteralString)
                     and a.defaultValue.value
                     else a.type.ownedLiteral[0].name
                 )
-                yield f'{a.name} = _enumeration("{a.name}", ({enum_values}), "{default}")'
+                if keyword.iskeyword(default):
+                    default = f"{default}_"
+                yield f'{a.name} = _enumeration("{a.name}", {a.type.name}, {a.type.name}.{default})'
             elif a.type:
                 mult = (
                     "one"
