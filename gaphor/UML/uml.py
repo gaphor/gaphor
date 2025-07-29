@@ -4,6 +4,8 @@
 
 from __future__ import annotations
 
+import enum
+
 from gaphor.core.modeling.properties import (
     association,
     attribute as _attribute,
@@ -19,6 +21,86 @@ from gaphor.core.modeling.properties import (
 from typing import Callable
 
 from gaphor.core.modeling import UnlimitedNatural
+
+
+class AggregationKind(enum.StrEnum):
+    none = "none"
+    shared = "shared"
+    composite = "composite"
+
+
+class CallConcurrencyKind(enum.StrEnum):
+    sequential = "sequential"
+    guarded = "guarded"
+    concurrent = "concurrent"
+
+
+class ConnectorKind(enum.StrEnum):
+    assembly = "assembly"
+    delegation = "delegation"
+
+
+class MessageKind(enum.StrEnum):
+    complete = "complete"
+    lost = "lost"
+    found = "found"
+    unknown = "unknown"
+
+
+class MessageSort(enum.StrEnum):
+    synchCall = "synchCall"
+    asynchCall = "asynchCall"
+    asynchSignal = "asynchSignal"
+    createMessage = "createMessage"
+    deleteMessage = "deleteMessage"
+    reply = "reply"
+
+
+class ObjectOrderingKind(enum.StrEnum):
+    unordered = "unordered"
+    ordered = "ordered"
+    LIFO = "LIFO"
+    FIFO = "FIFO"
+
+
+class ParameterDirectionKind(enum.StrEnum):
+    inout = "inout"
+    in_ = "in"
+    out = "out"
+    return_ = "return"
+
+
+class ParameterEffectKind(enum.StrEnum):
+    create = "create"
+    read = "read"
+    update = "update"
+    delete = "delete"
+
+
+class PseudostateKind(enum.StrEnum):
+    initial = "initial"
+    deepHistory = "deepHistory"
+    shallowHistory = "shallowHistory"
+    join = "join"
+    fork = "fork"
+    junction = "junction"
+    choice = "choice"
+    entryPoint = "entryPoint"
+    exitPoint = "exitPoint"
+    terminate = "terminate"
+
+
+class TransitionKind(enum.StrEnum):
+    internal = "internal"
+    local = "local"
+    external = "external"
+
+
+class VisibilityKind(enum.StrEnum):
+    public = "public"
+    private = "private"
+    package = "package"
+    protected = "protected"
 
 
 from gaphor.core.modeling.base import Base
