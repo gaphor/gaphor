@@ -220,7 +220,13 @@ def variables(class_: UML.Class, overrides: Overrides | None = None):
             elif is_enumeration(a.type):
                 assert isinstance(a.type, UML.Enumeration)
                 enum_values = ", ".join(f'"{e.name}"' for e in a.type.ownedLiteral)
-                yield f'{a.name} = _enumeration("{a.name}", ({enum_values}), "{a.type.ownedLiteral[0].name}")'
+                default = (
+                    a.defaultValue.value
+                    if isinstance(a.defaultValue, UML.LiteralString)
+                    and a.defaultValue.value
+                    else a.type.ownedLiteral[0].name
+                )
+                yield f'{a.name} = _enumeration("{a.name}", ({enum_values}), "{default}")'
             elif a.type:
                 mult = (
                     "one"

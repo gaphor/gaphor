@@ -231,7 +231,7 @@ class Realization(Abstraction):
 
 class ObjectNode(ActivityNode, TypedElement):
     isControlType: _attribute[bool] = _attribute("isControlType", bool, default=False)
-    ordering = _enumeration("ordering", ("unordered", "ordered", "LIFO", "FIFO"), "unordered")
+    ordering = _enumeration("ordering", ("unordered", "ordered", "LIFO", "FIFO"), "FIFO")
     selection: relation_one[Behavior]
     upperBound: relation_one[ValueSpecification]
 
@@ -481,7 +481,7 @@ class Parameter(ConnectableElement, MultiplicityElement):
     activityParameterNode: relation_many[ActivityParameterNode]
     behavior: relation_one[Behavior]
     defaultValue: relation_one[ValueSpecification]
-    direction = _enumeration("direction", ("inout", "in", "out", "return"), "inout")
+    direction = _enumeration("direction", ("inout", "in", "out", "return"), "in")
     operation: relation_one[Operation]
     ownerFormalParam: relation_one[BehavioralFeature]
     parameterSet: relation_many[ParameterSet]
