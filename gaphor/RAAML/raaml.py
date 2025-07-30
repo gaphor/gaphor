@@ -25,16 +25,16 @@ class Situation(Block, Class):
 
 
 from gaphor.SysML.sysml import DirectedRelationshipPropertyPath
-from gaphor.UML.uml import Dependency as _Dependency
-class RelevantTo(DirectedRelationshipPropertyPath, _Dependency):
+from gaphor.UML.uml import Dependency
+class RelevantTo(Dependency, DirectedRelationshipPropertyPath):
     pass
 
 
-class ControllingMeasure(DirectedRelationshipPropertyPath, _Dependency):
+class ControllingMeasure(Dependency, DirectedRelationshipPropertyPath):
     affects: relation_many[Property]
 
 
-class Violates(_Dependency):
+class Violates(Dependency):
     pass
 
 
@@ -89,7 +89,6 @@ class AbstractRisk(Scenario):
     trigger: relation_many[AbstractEvent]
 
 
-from gaphor.UML.uml import Dependency
 class Detection(ControllingMeasure, Dependency):
     pass
 
@@ -191,8 +190,8 @@ class TopEvent(Class):
     pass
 
 
-from gaphor.UML.uml import Property as _Property
-class TransferIn(_Property):
+from gaphor.UML.uml import Property
+class TransferIn(Property):
     pass
 
 
@@ -281,7 +280,6 @@ class UnsafeControlAction_Def(Situation):
     harmPotential: relation_many[HarmPotential]
 
 
-from gaphor.UML.uml import Property
 class Actuator(Property):
     pass
 
@@ -452,7 +450,7 @@ class STPADiagram(Diagram):
 
 
 
-ControllingMeasure.affects = association("affects", _Property, composite=True)
+ControllingMeasure.affects = association("affects", Property)
 AnySituation.to = association("to", AnySituation, opposite="from_")
 AnySituation.from_ = association("from_", AnySituation, opposite="to")
 AbstractCause.error = association("error", DysfunctionalEvent, opposite="fault")
