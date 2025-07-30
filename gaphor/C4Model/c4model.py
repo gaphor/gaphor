@@ -18,14 +18,14 @@ from gaphor.core.modeling.properties import (
 )
 
 
-from gaphor.UML.uml import Actor
-class Person(Actor):
+from gaphor.UML.uml import Actor as _Actor
+class Person(_Actor):
     description: _attribute[str] = _attribute("description", str)
     location: _attribute[str] = _attribute("location", str)
 
 
-from gaphor.UML.uml import Package
-class Container(Package):
+from gaphor.UML.uml import Package as _Package
+class Container(_Package):
     description: _attribute[str] = _attribute("description", str)
     location: _attribute[str] = _attribute("location", str)
     ownerContainer: relation_one[Container]
@@ -43,8 +43,8 @@ class Dependency(_Dependency):
     technology: _attribute[str] = _attribute("technology", str)
 
 
-from gaphor.UML.uml import Diagram
-class C4Diagram(Diagram):
+from gaphor.UML.uml import Diagram as _Diagram
+class C4Diagram(_Diagram):
     diagramType: _attribute[str] = _attribute("diagramType", str, default="c4")
 
 

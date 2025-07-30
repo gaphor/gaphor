@@ -103,8 +103,8 @@ class VisibilityKind(enum.StrEnum):
     protected = "protected"
 
 
-from gaphor.core.modeling.base import Base
-class Element(Base):
+from gaphor.core.modeling.base import Base as _Base
+class Element(_Base):
     appliedStereotype: relation_many[InstanceSpecification]
     comment: relation_many[Comment]
     note: _attribute[str] = _attribute("note", str)
@@ -939,7 +939,7 @@ class Comment(Element):
 
 
 from gaphor.core.modeling.diagram import Diagram as _Diagram
-class Diagram(NamedElement, _Diagram):
+class Diagram(_Diagram, NamedElement):
     element: relation_one[Element]
 
 

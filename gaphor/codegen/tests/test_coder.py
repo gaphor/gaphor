@@ -296,8 +296,11 @@ def test_coder_write_association_opposite_not_navigable(
 def test_attribute_from_super_model(
     uml_metamodel: ElementFactory, core_metamodel: ElementFactory
 ):
+    package = UML.Package()
+    package.name = "UML"
     class_ = UML.Class()
     class_.name = "Package"
+    class_.owningPackage = package
 
     element_type, base = attribute(
         class_,

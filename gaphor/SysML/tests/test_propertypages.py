@@ -138,7 +138,7 @@ def test_compartment_property_page_show_values(diagram, element_factory, event_m
 
 
 def test_property_aggregation_page(element_factory, event_manager):
-    subject = element_factory.create(SysML.sysml.Property)
+    subject = element_factory.create(UML.Property)
     property_page = PropertyAggregationPropertyPage(subject, event_manager)
 
     widget = property_page.construct()
@@ -200,7 +200,7 @@ def test_connector_item_flow(connector, event_manager):
 
 
 def test_disable_item_flow(element_factory, event_manager):
-    subject = element_factory.create(SysML.sysml.Connector)
+    subject = element_factory.create(UML.Connector)
     property_page = ItemFlowPropertyPage(subject, event_manager)
 
     widget = property_page.construct()
