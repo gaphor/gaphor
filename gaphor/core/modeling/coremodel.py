@@ -24,6 +24,7 @@ class ChangeKind(enum.StrEnum):
     update = "update"
 
 
+
 # 1: override Base
 from gaphor.core.modeling.base import Base
 

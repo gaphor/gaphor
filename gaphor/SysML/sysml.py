@@ -39,6 +39,37 @@ class FlowDirectionKind(enum.StrEnum):
 
 
 from gaphor.UML.uml import NamedElement as _NamedElement
+from gaphor.UML.uml import Class as _Class
+from gaphor.UML.uml import DirectedRelationship as _DirectedRelationship
+from gaphor.UML.uml import Dependency as _Dependency
+from gaphor.UML.uml import Behavior as _Behavior
+from gaphor.UML.uml import Property as _Property
+from gaphor.UML.uml import DataType as _DataType
+from gaphor.UML.uml import InstanceSpecification as _InstanceSpecification
+from gaphor.UML.uml import Element as _Element
+from gaphor.UML.uml import Connector as _Connector
+from gaphor.UML.uml import ConnectorEnd as _ConnectorEnd
+from gaphor.UML.uml import Classifier as _Classifier
+from gaphor.UML.uml import Port as _Port
+from gaphor.UML.uml import InvocationAction as _InvocationAction
+from gaphor.UML.uml import Trigger as _Trigger
+from gaphor.UML.uml import AddStructuralFeatureValueAction as _AddStructuralFeatureValueAction
+from gaphor.UML.uml import ChangeEvent as _ChangeEvent
+from gaphor.UML.uml import StructuralFeature as _StructuralFeature
+from gaphor.UML.uml import AcceptEventAction as _AcceptEventAction
+from gaphor.UML.uml import Feature as _Feature
+from gaphor.UML.uml import Generalization as _Generalization
+from gaphor.UML.uml import Comment as _Comment
+from gaphor.UML.uml import Parameter as _Parameter
+from gaphor.UML.uml import ActivityEdge as _ActivityEdge
+from gaphor.UML.uml import ParameterSet as _ParameterSet
+from gaphor.UML.uml import Operation as _Operation
+from gaphor.UML.uml import ObjectNode as _ObjectNode
+from gaphor.UML.uml import Abstraction as _Abstraction
+from gaphor.UML.uml import ActivityPartition as _ActivityPartition
+from gaphor.UML.uml import InformationFlow as _InformationFlow
+from gaphor.UML.uml import Diagram as _Diagram
+
 class AbstractRequirement(_NamedElement):
     derived: derived[AbstractRequirement]
     derivedFrom: derived[AbstractRequirement]
@@ -51,20 +82,17 @@ class AbstractRequirement(_NamedElement):
     verifiedBy: derived[_NamedElement]
 
 
-from gaphor.UML.uml import Class as _Class
 class Requirement(AbstractRequirement, _Class):
     pass
 
 
-from gaphor.UML.uml import DirectedRelationship as _DirectedRelationship
 class DirectedRelationshipPropertyPath(_DirectedRelationship):
-    sourceContext: relation_one[Classifier]
-    sourcePropertyPath: relation_many[Property]
-    targetContext: relation_one[Classifier]
-    targetPropertyPath: relation_many[Property]
+    sourceContext: relation_one[_Classifier]
+    sourcePropertyPath: relation_many[_Property]
+    targetContext: relation_one[_Classifier]
+    targetPropertyPath: relation_many[_Property]
 
 
-from gaphor.UML.uml import Dependency as _Dependency
 class Trace(DirectedRelationshipPropertyPath, _Dependency):
     pass
 
@@ -85,7 +113,6 @@ class Satisfy(Trace):
     pass
 
 
-from gaphor.UML.uml import Behavior as _Behavior
 class TestCase(_Behavior):
     pass
 
@@ -94,9 +121,8 @@ class Block(_Class):
     isEncapsulated: _attribute[bool] = _attribute("isEncapsulated", bool, default=False)
 
 
-from gaphor.UML.uml import Property as _Property
 class ConnectorProperty(_Property):
-    connector: relation_one[Connector]
+    connector: relation_one[_Connector]
 
 
 class ParticipantProperty(_Property):
@@ -107,29 +133,23 @@ class DistributedProperty(_Property):
     pass
 
 
-from gaphor.UML.uml import DataType as _DataType
 class ValueType(_DataType):
-    quantityKind: relation_one[InstanceSpecification]
-    unit: relation_one[InstanceSpecification]
+    quantityKind: relation_one[_InstanceSpecification]
+    unit: relation_one[_InstanceSpecification]
 
 
-from gaphor.UML.uml import InstanceSpecification as _InstanceSpecification
-from gaphor.UML.uml import Element as _Element
 class ElementPropertyPath(_Element):
     propertyPath: relation_many[_Property]
 
 
-from gaphor.UML.uml import Connector as _Connector
 class BindingConnector(_Connector):
     pass
 
 
-from gaphor.UML.uml import ConnectorEnd as _ConnectorEnd
 class NestedConnectorEnd(ElementPropertyPath, _ConnectorEnd):
     pass
 
 
-from gaphor.UML.uml import Classifier as _Classifier
 class PropertySpecificType(_Classifier):
     pass
 
@@ -147,7 +167,6 @@ class AdjuntProperty(_Property):
     principal: relation_one[_Element]
 
 
-from gaphor.UML.uml import Port as _Port
 class ProxyPort(_Port):
     pass
 
@@ -164,9 +183,6 @@ class InterfaceBlock(Block):
     pass
 
 
-from gaphor.UML.uml import InvocationAction as _InvocationAction
-from gaphor.UML.uml import Trigger as _Trigger
-from gaphor.UML.uml import AddStructuralFeatureValueAction as _AddStructuralFeatureValueAction
 class InvocationOnNestedPortAction(ElementPropertyPath, _InvocationAction):
     onNestedPort: relation_many[_Port]
 
@@ -179,23 +195,18 @@ class AddFlowPropertyValueOnNestedPortAction(ElementPropertyPath, _AddStructural
     pass
 
 
-from gaphor.UML.uml import ChangeEvent as _ChangeEvent
 class ChangeSructuralFeatureEvent(_ChangeEvent):
-    structuralFeature: relation_one[StructuralFeature]
+    structuralFeature: relation_one[_StructuralFeature]
 
 
-from gaphor.UML.uml import StructuralFeature as _StructuralFeature
-from gaphor.UML.uml import AcceptEventAction as _AcceptEventAction
 class AcceptChangeStructuralFeatureEventAction(_AcceptEventAction):
     pass
 
 
-from gaphor.UML.uml import Feature as _Feature
 class DirectedFeature(_Feature):
     featureDirection = _enumeration("featureDirection", FeatureDirectionKind, FeatureDirectionKind.provided)
 
 
-from gaphor.UML.uml import Generalization as _Generalization
 class Conform(_Generalization):
     pass
 
@@ -206,7 +217,7 @@ class View(_Class):
 
 
 class Viewpoint(_Class):
-    concernList: relation_many[Comment]
+    concernList: relation_many[_Comment]
     language: _attribute[str] = _attribute("language", str)
     method: relation_many[_Behavior]
     presentation: _attribute[str] = _attribute("presentation", str)
@@ -215,14 +226,13 @@ class Viewpoint(_Class):
 
 
 class Stakeholder(_Classifier):
-    concernList: relation_many[Comment]
+    concernList: relation_many[_Comment]
 
 
 class Expose(_Dependency):
     pass
 
 
-from gaphor.UML.uml import Comment as _Comment
 class Rationale(_Comment):
     pass
 
@@ -241,9 +251,6 @@ class ConstraintBlock(Block):
     pass
 
 
-from gaphor.UML.uml import Parameter as _Parameter
-from gaphor.UML.uml import ActivityEdge as _ActivityEdge
-from gaphor.UML.uml import ParameterSet as _ParameterSet
 class Optional(_Parameter):
     pass
 
@@ -264,8 +271,6 @@ class Discrete(Rate):
     pass
 
 
-from gaphor.UML.uml import Operation as _Operation
-from gaphor.UML.uml import ObjectNode as _ObjectNode
 class ControlOperator(_Behavior):
     pass
 
@@ -278,12 +283,10 @@ class Overwrite(_ObjectNode):
     pass
 
 
-from gaphor.UML.uml import Abstraction as _Abstraction
 class Allocate(DirectedRelationshipPropertyPath, _Abstraction):
     pass
 
 
-from gaphor.UML.uml import ActivityPartition as _ActivityPartition
 class AllocateActivityPartition(_ActivityPartition):
     pass
 
@@ -302,12 +305,10 @@ class ClassifierBehaviorProperty(_Property):
     pass
 
 
-from gaphor.UML.uml import InformationFlow as _InformationFlow
 class ItemFlow(_InformationFlow):
     itemProperty: relation_one[_Property]
 
 
-from gaphor.UML.uml import Diagram as _Diagram
 class SysMLDiagram(_Diagram):
     pass
 
