@@ -82,7 +82,6 @@
 <ref refid="3f40e394-2141-11ea-ab0b-c72c0738acd2"/>
 <ref refid="3b0d35d4-2141-11ea-ab0b-c72c0738acd2"/>
 <ref refid="3165eeb9-2141-11ea-ab0b-c72c0738acd2"/>
-<ref refid="f6ed61ee-292a-11ee-aad9-e38f5215237c"/>
 </reflist>
 </ownedType>
 <owningPackage>
@@ -106,7 +105,6 @@
 <ref refid="3f40e394-2141-11ea-ab0b-c72c0738acd2"/>
 <ref refid="3b0d35d4-2141-11ea-ab0b-c72c0738acd2"/>
 <ref refid="3165eeb9-2141-11ea-ab0b-c72c0738acd2"/>
-<ref refid="f6ed61ee-292a-11ee-aad9-e38f5215237c"/>
 </reflist>
 </packagedElement>
 <presentation>
@@ -14215,17 +14213,6 @@ otherwise MRO can not be resolved.</val>
 <ref refid="19ddfa39-292b-11ee-aad9-e38f5215237c"/>
 </reflist>
 </specialization>
-</UML:Class>
-<UML:Class id="f6ed61ee-292a-11ee-aad9-e38f5215237c">
-<name>
-<val>Class</val>
-</name>
-<owningPackage>
-<ref refid="2b8d10da-20e1-11ea-9209-e76c3117c943"/>
-</owningPackage>
-<package>
-<ref refid="2b8d10da-20e1-11ea-9209-e76c3117c943"/>
-</package>
 </UML:Class>
 <UML:Package id="fd10d6be-292a-11ee-aad9-e38f5215237c">
 <name>
