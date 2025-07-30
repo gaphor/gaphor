@@ -202,7 +202,7 @@ class InterfaceBlockPage(PropertyPageBase):
             self.item.show_values = button.get_active()
 
 
-@PropertyPages.register(sysml.Property)
+@PropertyPages.register(UML.Property)
 class PropertyAggregationPropertyPage(PropertyPageBase):
     """An editor for Properties (a.k.a.
 
@@ -213,7 +213,7 @@ class PropertyAggregationPropertyPage(PropertyPageBase):
 
     AGGREGATION = ("none", "shared", "composite")
 
-    def __init__(self, subject: sysml.Property, event_manager):
+    def __init__(self, subject: UML.Property, event_manager):
         super().__init__()
         self.subject = subject
         self.event_manager = event_manager
@@ -240,13 +240,13 @@ class PropertyAggregationPropertyPage(PropertyPageBase):
 
 
 @PropertyPages.register(UML.Association)
-@PropertyPages.register(sysml.Connector)
+@PropertyPages.register(UML.Connector)
 class ItemFlowPropertyPage(PropertyPageBase):
     """Item Flow on Connectors."""
 
     order = 35
 
-    def __init__(self, subject: UML.Association | sysml.Connector, event_manager):
+    def __init__(self, subject: UML.Association | UML.Connector, event_manager):
         super().__init__()
         self.subject = subject
         self.event_manager = event_manager
@@ -254,7 +254,7 @@ class ItemFlowPropertyPage(PropertyPageBase):
     @property
     def information_flow(self):
         subject = self.subject
-        if isinstance(subject, sysml.Connector):
+        if isinstance(subject, UML.Connector):
             iflows = subject.informationFlow
         elif isinstance(subject, UML.Relationship):
             iflows = subject.abstraction
@@ -310,7 +310,7 @@ class ItemFlowPropertyPage(PropertyPageBase):
         iflow = self.information_flow
         with Transaction(self.event_manager):
             if active and not iflow:
-                if isinstance(subject, sysml.Connector):
+                if isinstance(subject, UML.Connector):
                     subject.informationFlow = create_item_flow(subject)
                 elif isinstance(subject, UML.Relationship):
                     subject.abstraction = create_item_flow(subject)
@@ -351,13 +351,13 @@ class ItemFlowPropertyPage(PropertyPageBase):
             )
 
 
-def create_item_flow(subject: UML.Association | sysml.Connector) -> sysml.ItemFlow:
+def create_item_flow(subject: UML.Association | UML.Connector) -> sysml.ItemFlow:
     iflow = subject.model.create(sysml.ItemFlow)
-    if isinstance(subject, sysml.Connector):
+    if isinstance(subject, UML.Connector):
         iflow.informationSource = subject.end[0].role
         iflow.informationTarget = subject.end[1].role
-    elif isinstance(subject, UML.Relationship):
+    elif isinstance(subject, UML.Association):
         iflow.informationSource = subject.memberEnd[0]
         iflow.informationTarget = subject.memberEnd[1]
-    iflow.itemProperty = subject.model.create(sysml.Property)
+    iflow.itemProperty = subject.model.create(UML.Property)
     return iflow

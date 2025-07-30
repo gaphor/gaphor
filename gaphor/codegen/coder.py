@@ -169,11 +169,9 @@ def coder(
         if not any(bases(c)):
             element_type, cls = in_super_model(c, super_models)
             if element_type and cls:
-                # always alias imported name
-                line = f"from {element_type.__module__} import {element_type.__name__}"
-                if len([t for t in classes if t.name == c.name]) > 1:
-                    line += f" as _{c.name}"
-                    c.name = f"_{c.name}"
+                # always alias imported names
+                c.name = f"_{c.name}"
+                line = f"from {element_type.__module__} import {element_type.__name__} as {c.name}"
                 yield line
                 already_imported.add(line)
                 continue
@@ -215,7 +213,11 @@ def enumeration(enum: UML.Enumeration):
 
 def class_declaration(class_: UML.Class):
     base_classes = ", ".join(
-        c.name for c in sorted(bases(class_), key=lambda c: c.name)
+        c.name
+        for c in sorted(
+            bases(class_),
+            key=lambda c: c.name[1:] if c.name.startswith("_") else c.name,
+        )
     )
     return f"class {class_.name}({base_classes}):"
 
@@ -478,7 +480,7 @@ def is_reassignment(a: UML.Property) -> bool:
     return any(test(base) for base in bases(a.owner))  # type:ignore[arg-type]
 
 
-def is_in_profile(c: UML.Class) -> bool:
+def is_in_profile(c: UML.Classifier) -> bool:
     def test(p: UML.Package):
         return isinstance(p, UML.Profile) or (p.owningPackage and test(p.owningPackage))
 
@@ -525,6 +527,7 @@ def attribute(
 
     element_type, super_class = in_super_model(c, super_models)
     if super_class and c is not super_class:
+        assert isinstance(super_class, UML.Class)
         _, a = attribute(super_class, name, super_models)
         return element_type, a
 
@@ -533,19 +536,27 @@ def attribute(
 
 def in_super_model(
     type: UML.Type, super_models: dict[str, tuple[ModelingLanguage, ElementFactory]]
-) -> tuple[type[Base], UML.Class] | tuple[None, None]:
-    for modeling_language, factory in super_models.values():
-        cls: UML.Class
-        for cls in factory.select(  # type: ignore[assignment]
-            lambda e: isinstance(e, UML.Class) and e.name == type.name
-        ):
-            if not is_in_profile(cls):
-                element_type = modeling_language.lookup_element(cls.name)
-                assert element_type, (
-                    f"Type {cls.name} found in model, but not in generated model"
-                )
-                return element_type, cls
-    return None, None
+) -> tuple[type[Base], UML.Classifier] | tuple[None, None]:
+    ns = ".".join(type.owningPackage.qualifiedName)
+    if ns not in super_models:
+        return None, None
+    modeling_language, factory = super_models[ns]
+
+    # type.name may have been prefixed by an underscore, if it's imported
+    name = type.name[1:] if type.name.startswith("_") else type.name
+    cls: UML.Classifier
+    for cls in factory.select(  # type: ignore[assignment]
+        lambda e: isinstance(e, UML.Classifier)
+        and e.name == name
+        and ".".join(e.owningPackage.qualifiedName) not in super_models
+    ):
+        element_type = modeling_language.lookup_element(cls.name, ns=ns)
+        assert element_type, (
+            f"Type {ns}.{name} found in model, but not in generated model"
+        )
+        return element_type, cls
+
+    raise AssertionError(f"Type {ns}.{name} found in model, but not in generated model")
 
 
 def resolve_attribute_type_values(element_factory: ElementFactory) -> None:

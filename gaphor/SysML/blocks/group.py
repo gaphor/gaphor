@@ -1,5 +1,6 @@
 from gaphor.diagram.group import group, ungroup
-from gaphor.SysML.sysml import Block, Property
+from gaphor.SysML.sysml import Block
+from gaphor.UML import Property
 
 
 @group.register(Block, Property)
