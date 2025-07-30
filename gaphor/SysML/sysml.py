@@ -65,7 +65,7 @@ class DirectedRelationshipPropertyPath(_DirectedRelationship):
 
 
 from gaphor.UML.uml import Dependency as _Dependency
-class Trace(_Dependency, DirectedRelationshipPropertyPath):
+class Trace(DirectedRelationshipPropertyPath, _Dependency):
     pass
 
 
@@ -125,7 +125,7 @@ class BindingConnector(_Connector):
 
 
 from gaphor.UML.uml import ConnectorEnd as _ConnectorEnd
-class NestedConnectorEnd(_ConnectorEnd, ElementPropertyPath):
+class NestedConnectorEnd(ElementPropertyPath, _ConnectorEnd):
     pass
 
 
@@ -175,7 +175,7 @@ class TriggerOnNestedPort(ElementPropertyPath, _Trigger):
     onNestedPort: relation_many[_Port]
 
 
-class AddFlowPropertyValueOnNestedPortAction(_AddStructuralFeatureValueAction, ElementPropertyPath):
+class AddFlowPropertyValueOnNestedPortAction(ElementPropertyPath, _AddStructuralFeatureValueAction):
     pass
 
 
@@ -279,7 +279,7 @@ class Overwrite(_ObjectNode):
 
 
 from gaphor.UML.uml import Abstraction as _Abstraction
-class Allocate(_Abstraction, DirectedRelationshipPropertyPath):
+class Allocate(DirectedRelationshipPropertyPath, _Abstraction):
     pass
 
 
@@ -288,7 +288,7 @@ class AllocateActivityPartition(_ActivityPartition):
     pass
 
 
-class Refine(_Dependency, DirectedRelationshipPropertyPath):
+class Refine(DirectedRelationshipPropertyPath, _Dependency):
     pass
 
 
@@ -308,10 +308,6 @@ class ItemFlow(_InformationFlow):
 
 
 from gaphor.UML.uml import Diagram as _Diagram
-class Class():
-    pass
-
-
 class SysMLDiagram(_Diagram):
     pass
 
