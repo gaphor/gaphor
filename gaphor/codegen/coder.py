@@ -216,7 +216,7 @@ def class_declaration(class_: UML.Class):
         c.name
         for c in sorted(
             bases(class_),
-            key=lambda c: c.name[1:] if c.name.startswith("_") else c.name,
+            key=lambda c: c.name,
         )
     )
     return f"class {class_.name}({base_classes}):"
