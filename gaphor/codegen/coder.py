@@ -146,9 +146,6 @@ def coder(
     if overrides and overrides.header:
         yield overrides.header
 
-    for enum in sorted((model.select(UML.Enumeration)), key=lambda e: e.name):
-        yield from enumeration(enum)
-
     classes = list(
         order_classes(
             c
@@ -173,6 +170,10 @@ def coder(
                 continue
 
     yield ""
+    yield ""
+
+    for enum in sorted((model.select(UML.Enumeration)), key=lambda e: e.name):
+        yield from enumeration(enum)
 
     for c in classes:
         if c.name.startswith("_"):

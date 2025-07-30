@@ -26,18 +26,6 @@ def _directed_relationship_property_path_target_source(type):
         if element.sourceContext is self and element.targetContext
     ]
 
-class FeatureDirectionKind(enum.StrEnum):
-    provided = "provided"
-    providedRequired = "providedRequired"
-    required = "required"
-
-
-class FlowDirectionKind(enum.StrEnum):
-    in_ = "in"
-    inout = "inout"
-    out = "out"
-
-
 from gaphor.UML.uml import NamedElement as _NamedElement
 from gaphor.UML.uml import Class as _Class
 from gaphor.UML.uml import DirectedRelationship as _DirectedRelationship
@@ -69,6 +57,19 @@ from gaphor.UML.uml import Abstraction as _Abstraction
 from gaphor.UML.uml import ActivityPartition as _ActivityPartition
 from gaphor.UML.uml import InformationFlow as _InformationFlow
 from gaphor.UML.uml import Diagram as _Diagram
+
+
+class FeatureDirectionKind(enum.StrEnum):
+    provided = "provided"
+    providedRequired = "providedRequired"
+    required = "required"
+
+
+class FlowDirectionKind(enum.StrEnum):
+    in_ = "in"
+    inout = "inout"
+    out = "out"
+
 
 class AbstractRequirement(_NamedElement):
     derived: derived[AbstractRequirement]
