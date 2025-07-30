@@ -162,10 +162,6 @@ def coder(
 
     already_imported = set()
     for c in classes:
-        if overrides and overrides.has_override(c.name):
-            yield overrides.get_override(c.name)
-            continue
-
         if not any(bases(c)):
             element_type, cls = in_super_model(c, super_models)
             if element_type and cls:
@@ -175,6 +171,17 @@ def coder(
                 yield line
                 already_imported.add(line)
                 continue
+
+    yield ""
+
+    for c in classes:
+        if c.name.startswith("_"):
+            # imported from super model
+            continue
+
+        if overrides and overrides.has_override(c.name):
+            yield overrides.get_override(c.name)
+            continue
 
         yield class_declaration(c)
         if properties := list(variables(c, overrides)):
