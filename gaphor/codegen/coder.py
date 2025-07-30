@@ -101,12 +101,12 @@ def main(
 
     model = load_model(modelfile, modeling_language)
     super_models = (
-        [
-            (load_modeling_language(lang), load_model(f, modeling_language))
+        {
+            lang: (load_modeling_language(lang), load_model(f, modeling_language))
             for lang, f in supermodelfiles
-        ]
+        }
         if supermodelfiles
-        else []
+        else {}
     )
     overrides = Overrides(overridesfile) if overridesfile else None
 
@@ -139,7 +139,7 @@ def load_modeling_language(lang) -> ModelingLanguage:
 
 def coder(
     model: ElementFactory,
-    super_models: list[tuple[ModelingLanguage, ElementFactory]],
+    super_models: dict[str, tuple[ModelingLanguage, ElementFactory]],
     overrides: Overrides | None,
 ) -> Iterable[str]:
     yield header
@@ -167,7 +167,7 @@ def coder(
             continue
 
         if not any(bases(c)):
-            element_type, cls = in_super_model(c.name, super_models)
+            element_type, cls = in_super_model(c, super_models)
             if element_type and cls:
                 # always alias imported name
                 line = f"from {element_type.__module__} import {element_type.__name__}"
@@ -300,7 +300,7 @@ def associations(
 
 def subsets(
     c: UML.Class,
-    super_models: list[tuple[ModelingLanguage, ElementFactory]],
+    super_models: dict[str, tuple[ModelingLanguage, ElementFactory]],
 ):
     for a in c.ownedAttribute:
         if (
@@ -509,7 +509,9 @@ def redefines(a: UML.Property) -> str | None:
 
 
 def attribute(
-    c: UML.Class, name: str, super_models: list[tuple[ModelingLanguage, ElementFactory]]
+    c: UML.Class,
+    name: str,
+    super_models: dict[str, tuple[ModelingLanguage, ElementFactory]],
 ) -> tuple[type[Base] | None, UML.Property | None]:
     a: UML.Property | None
     for a in c.ownedAttribute:
@@ -521,7 +523,7 @@ def attribute(
         if a:
             return element_type, a
 
-    element_type, super_class = in_super_model(c.name, super_models)
+    element_type, super_class = in_super_model(c, super_models)
     if super_class and c is not super_class:
         _, a = attribute(super_class, name, super_models)
         return element_type, a
@@ -530,12 +532,12 @@ def attribute(
 
 
 def in_super_model(
-    name: str, super_models: list[tuple[ModelingLanguage, ElementFactory]]
+    type: UML.Type, super_models: dict[str, tuple[ModelingLanguage, ElementFactory]]
 ) -> tuple[type[Base], UML.Class] | tuple[None, None]:
-    for modeling_language, factory in super_models:
+    for modeling_language, factory in super_models.values():
         cls: UML.Class
         for cls in factory.select(  # type: ignore[assignment]
-            lambda e: isinstance(e, UML.Class) and e.name == name
+            lambda e: isinstance(e, UML.Class) and e.name == type.name
         ):
             if not is_in_profile(cls):
                 element_type = modeling_language.lookup_element(cls.name)

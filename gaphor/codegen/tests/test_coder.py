@@ -302,11 +302,11 @@ def test_attribute_from_super_model(
     element_type, base = attribute(
         class_,
         "member",
-        [
+        {
             # Order matters! Base model first.
-            (CoreModelingLanguage(), core_metamodel),
-            (UMLModelingLanguage(), uml_metamodel),
-        ],
+            "Core": (CoreModelingLanguage(), core_metamodel),
+            "UML": (UMLModelingLanguage(), uml_metamodel),
+        },
     )
 
     assert element_type is UML.Package
