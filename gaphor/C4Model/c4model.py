@@ -23,6 +23,7 @@ from gaphor.UML.uml import Package as _Package
 from gaphor.UML.uml import Dependency as _Dependency
 from gaphor.UML.uml import Diagram as _Diagram
 
+
 class Person(_Actor):
     description: _attribute[str] = _attribute("description", str)
     location: _attribute[str] = _attribute("location", str)

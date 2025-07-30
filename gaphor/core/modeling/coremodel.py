@@ -18,11 +18,12 @@ from gaphor.core.modeling.properties import (
 )
 
 
+
+
 class ChangeKind(enum.StrEnum):
     add = "add"
     remove = "remove"
     update = "update"
-
 
 
 # 1: override Base

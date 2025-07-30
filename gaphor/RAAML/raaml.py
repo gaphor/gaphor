@@ -27,6 +27,7 @@ from gaphor.UML.uml import Property as _Property
 from gaphor.UML.uml import DataType as _DataType
 from gaphor.UML.uml import Diagram as _Diagram
 
+
 class Situation(_Block, _Class):
     pass
 
