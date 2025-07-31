@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from gi.repository import Gdk, Gio, GLib, GObject, Gtk
 
+from gaphor import UML
 from gaphor.abc import ActionProvider, TreeItem, TreeModel
 from gaphor.action import action
 from gaphor.core import event_handler
@@ -13,6 +14,7 @@ from gaphor.diagram.tools.dnd import ElementDragData
 from gaphor.event import Notification
 from gaphor.i18n import gettext
 from gaphor.services.modelinglanguage import ModelingLanguageChanged
+from gaphor.SysML.sysml import Constraint
 from gaphor.transaction import Transaction
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.actiongroup import apply_action_group
@@ -237,7 +239,10 @@ class ModelBrowser(UIComponent, ActionProvider):
     def tree_view_delete(self):
         with Transaction(self.event_manager):
             for element in self.get_selected_elements():
-                if deletable(element):
+                is_constraint_param = isinstance(element, UML.Property) and isinstance(
+                    element.owner, Constraint
+                )
+                if is_constraint_param or deletable(element):
                     element.unlink()
 
     @action(name="win.search", shortcut="<Primary>f")

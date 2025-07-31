@@ -125,6 +125,15 @@ class ConstraintParameterItem(Named, AttachedPresentation[UML.Property]):
         self.diagram.connections.connect_item(self, handle, port)
         return True
 
+    def unlink(self) -> None:
+        """
+        On deletion, we want to keep the underlying `UML.Property`.
+        It is owned by the `Constraint` and should not be deleted with its
+        presentation.
+        """
+        self.subject = None
+        super().unlink()
+
     def disconnect(self, handle):
         """
         Disconnect from the parent item.
