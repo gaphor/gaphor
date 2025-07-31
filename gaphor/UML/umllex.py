@@ -239,8 +239,8 @@ def parse_association_end(el: uml.Property, s: str) -> None:
                 recipes.set_multiplicity_upper_value(el, "*")
 
 
-@parse.register(uml.Element)
-def parse_namedelement(el: uml.Element, text: str) -> None:
+@parse.register(uml.NamedElement)
+def parse_namedelement(el: uml.NamedElement, text: str) -> None:
     """Parse element by simply assigning text to its name."""
     el.name = text
 

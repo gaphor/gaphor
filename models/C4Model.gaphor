@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<gaphor xmlns="https://gaphor.org/model" xmlns:Core="https://gaphor.org/modelinglanguage/Core" xmlns:UML="https://gaphor.org/modelinglanguage/UML" version="4" gaphor-version="3.0.0">
+<gaphor xmlns="https://gaphor.org/model" xmlns:Core="https://gaphor.org/modelinglanguage/Core" xmlns:UML="https://gaphor.org/modelinglanguage/UML" version="4" gaphor-version="3.1.0">
 <model>
 <Core:StyleSheet id="2e656716-6cae-11eb-aee1-750f3fed8beb"/>
 <UML:Package id="2e656717-6cae-11eb-aee1-750f3fed8beb">
@@ -354,6 +354,7 @@
 <ref refid="905056c0-6cae-11eb-aee1-750f3fed8beb"/>
 <ref refid="b680213a-6d81-11eb-bdd8-859c1b7b5447"/>
 <ref refid="33dce120-b7cc-11ef-b2d8-be7f4daace40"/>
+<ref refid="abb942dc-4932-11ef-8312-be7f4daace3f"/>
 </reflist>
 </ownedType>
 <packagedElement>
@@ -361,6 +362,7 @@
 <ref refid="905056c0-6cae-11eb-aee1-750f3fed8beb"/>
 <ref refid="b680213a-6d81-11eb-bdd8-859c1b7b5447"/>
 <ref refid="33dce120-b7cc-11ef-b2d8-be7f4daace40"/>
+<ref refid="abb942dc-4932-11ef-8312-be7f4daace3f"/>
 </reflist>
 </packagedElement>
 <presentation>
@@ -423,9 +425,6 @@
 </specialization>
 </UML:Stereotype>
 <UML:Property id="dff5b962-6d81-11eb-bdd8-859c1b7b5447">
-<class_>
-<ref refid="d7d28eb8-6d81-11eb-bdd8-859c1b7b5447"/>
-</class_>
 <name>
 <val>description</val>
 </name>
@@ -437,9 +436,6 @@
 </typeValue>
 </UML:Property>
 <UML:Property id="e3249522-6d81-11eb-bdd8-859c1b7b5447">
-<class_>
-<ref refid="d7d28eb8-6d81-11eb-bdd8-859c1b7b5447"/>
-</class_>
 <name>
 <val>location</val>
 </name>
@@ -451,9 +447,6 @@
 </typeValue>
 </UML:Property>
 <UML:Property id="e6f6ef88-6d81-11eb-bdd8-859c1b7b5447">
-<class_>
-<ref refid="d7d28eb8-6d81-11eb-bdd8-859c1b7b5447"/>
-</class_>
 <name>
 <val>technology</val>
 </name>
@@ -696,9 +689,6 @@
 <association>
 <ref refid="2daf9a4b-6dde-11eb-bdd8-859c1b7b5447"/>
 </association>
-<class_>
-<ref refid="d7d28eb8-6d81-11eb-bdd8-859c1b7b5447"/>
-</class_>
 <lowerValue>
 <ref refid="a45703bb-e403-11ef-992b-14abc554333b"/>
 </lowerValue>
@@ -738,9 +728,6 @@
 <association>
 <ref refid="2daf9a4b-6dde-11eb-bdd8-859c1b7b5447"/>
 </association>
-<class_>
-<ref refid="d7d28eb8-6d81-11eb-bdd8-859c1b7b5447"/>
-</class_>
 <name>
 <val>owningContainer</val>
 </name>
@@ -829,9 +816,6 @@
 <association>
 <ref refid="8fa07206-6dde-11eb-bdd8-859c1b7b5447"/>
 </association>
-<class_>
-<ref refid="86a99614-6dde-11eb-bdd8-859c1b7b5447"/>
-</class_>
 <name>
 <val>baseClass</val>
 </name>
@@ -849,9 +833,6 @@
 <association>
 <ref refid="8fa07206-6dde-11eb-bdd8-859c1b7b5447"/>
 </association>
-<class_>
-<ref refid="8b905b0e-6dde-11eb-bdd8-859c1b7b5447"/>
-</class_>
 <structuredClassifier>
 <ref refid="8b905b0e-6dde-11eb-bdd8-859c1b7b5447"/>
 </structuredClassifier>
@@ -860,9 +841,6 @@
 </type>
 </UML:ExtensionEnd>
 <UML:Property id="95b4032e-6dde-11eb-bdd8-859c1b7b5447">
-<class_>
-<ref refid="86a99614-6dde-11eb-bdd8-859c1b7b5447"/>
-</class_>
 <name>
 <val>subsets</val>
 </name>
@@ -958,9 +936,6 @@
 </value>
 </UML:Slot>
 <UML:Property id="db6499c8-6ddf-11eb-bdd8-859c1b7b5447">
-<class_>
-<ref refid="872907b8-6cae-11eb-aee1-750f3fed8beb"/>
-</class_>
 <name>
 <val>description</val>
 </name>
@@ -972,9 +947,6 @@
 </typeValue>
 </UML:Property>
 <UML:Property id="e17a5dac-6ddf-11eb-bdd8-859c1b7b5447">
-<class_>
-<ref refid="872907b8-6cae-11eb-aee1-750f3fed8beb"/>
-</class_>
 <name>
 <val>location</val>
 </name>
@@ -986,9 +958,6 @@
 </typeValue>
 </UML:Property>
 <UML:Property id="f1db5b42-6ddf-11eb-bdd8-859c1b7b5447">
-<class_>
-<ref refid="d7d28eb8-6d81-11eb-bdd8-859c1b7b5447"/>
-</class_>
 <name>
 <val>type</val>
 </name>
@@ -1046,9 +1015,6 @@
 <association>
 <ref refid="2b94e4ac-4bc0-11ec-aa3d-0456e5e540ed"/>
 </association>
-<class_>
-<ref refid="872907b8-6cae-11eb-aee1-750f3fed8beb"/>
-</class_>
 <name>
 <val>baseClass</val>
 </name>
@@ -1066,9 +1032,6 @@
 <association>
 <ref refid="2b94e4ac-4bc0-11ec-aa3d-0456e5e540ed"/>
 </association>
-<class_>
-<ref refid="905056c0-6cae-11eb-aee1-750f3fed8beb"/>
-</class_>
 <structuredClassifier>
 <ref refid="905056c0-6cae-11eb-aee1-750f3fed8beb"/>
 </structuredClassifier>
@@ -1102,9 +1065,6 @@
 <association>
 <ref refid="30f4593c-4bc0-11ec-aa3d-0456e5e540ed"/>
 </association>
-<class_>
-<ref refid="d7d28eb8-6d81-11eb-bdd8-859c1b7b5447"/>
-</class_>
 <name>
 <val>baseClass</val>
 </name>
@@ -1122,9 +1082,6 @@
 <association>
 <ref refid="30f4593c-4bc0-11ec-aa3d-0456e5e540ed"/>
 </association>
-<class_>
-<ref refid="b680213a-6d81-11eb-bdd8-859c1b7b5447"/>
-</class_>
 <structuredClassifier>
 <ref refid="b680213a-6d81-11eb-bdd8-859c1b7b5447"/>
 </structuredClassifier>
@@ -1155,10 +1112,10 @@
 </reflist>
 </ownedAttribute>
 <owningPackage>
-<ref refid="d7ed613e-899d-11ef-b9b9-be7f4daace40"/>
+<ref refid="336043b6-6caf-11eb-aee1-750f3fed8beb"/>
 </owningPackage>
 <package>
-<ref refid="d7ed613e-899d-11ef-b9b9-be7f4daace40"/>
+<ref refid="336043b6-6caf-11eb-aee1-750f3fed8beb"/>
 </package>
 <presentation>
 <reflist>
@@ -1264,9 +1221,6 @@
 </subject>
 </UML:ClassItem>
 <UML:Property id="dfc6da9e-4932-11ef-8312-be7f4daace3f">
-<class_>
-<ref refid="cfe5e55c-4932-11ef-8312-be7f4daace3f"/>
-</class_>
 <name>
 <val>technology</val>
 </name>
@@ -1303,9 +1257,6 @@
 <association>
 <ref refid="f3942770-4932-11ef-8312-be7f4daace3f"/>
 </association>
-<class_>
-<ref refid="cfe5e55c-4932-11ef-8312-be7f4daace3f"/>
-</class_>
 <name>
 <val>baseClass</val>
 </name>
@@ -1323,9 +1274,6 @@
 <association>
 <ref refid="f3942770-4932-11ef-8312-be7f4daace3f"/>
 </association>
-<class_>
-<ref refid="abb942dc-4932-11ef-8312-be7f4daace3f"/>
-</class_>
 <structuredClassifier>
 <ref refid="abb942dc-4932-11ef-8312-be7f4daace3f"/>
 </structuredClassifier>
@@ -1333,21 +1281,6 @@
 <ref refid="cfe5e55c-4932-11ef-8312-be7f4daace3f"/>
 </type>
 </UML:ExtensionEnd>
-<UML:Package id="d7ed613e-899d-11ef-b9b9-be7f4daace40">
-<name>
-<val>Core</val>
-</name>
-<ownedType>
-<reflist>
-<ref refid="abb942dc-4932-11ef-8312-be7f4daace3f"/>
-</reflist>
-</ownedType>
-<packagedElement>
-<reflist>
-<ref refid="abb942dc-4932-11ef-8312-be7f4daace3f"/>
-</reflist>
-</packagedElement>
-</UML:Package>
 <UML:Class id="33dce120-b7cc-11ef-b2d8-be7f4daace40">
 <name>
 <val>Diagram</val>
@@ -1484,9 +1417,6 @@
 </specific>
 </UML:Generalization>
 <UML:Property id="6b0eb420-b7cc-11ef-b2d8-be7f4daace40">
-<class_>
-<ref refid="447d659a-b7cc-11ef-b2d8-be7f4daace40"/>
-</class_>
 <defaultValue>
 <ref refid="df45331f-e403-11ef-bccf-14abc554333b"/>
 </defaultValue>

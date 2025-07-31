@@ -19,7 +19,7 @@ def block_item(diagram, element_factory):
 @pytest.fixture
 def property_item(diagram, element_factory):
     type = element_factory.create(sysml.Block)
-    prop = diagram.create(PropertyItem, subject=element_factory.create(sysml.Property))
+    prop = diagram.create(PropertyItem, subject=element_factory.create(UML.Property))
     prop.subject.type = type
     return prop
 

@@ -1,3 +1,5 @@
+from pathlib import Path
+
 import pytest
 
 from gaphor import UML
@@ -6,7 +8,6 @@ from gaphor.codegen.coder import (
     attribute,
     bases,
     class_declaration,
-    is_enumeration,
     is_in_profile,
     is_in_toplevel_package,
     is_simple_type,
@@ -29,7 +30,7 @@ from gaphor.UML.modelinglanguage import UMLModelingLanguage
 @pytest.fixture(scope="session")
 def core_metamodel():
     return load_model(
-        "models/Core.gaphor",
+        Path("models/Core.gaphor"),
         MockModelingLanguage(
             CoreModelingLanguage(), GeneralModelingLanguage(), UMLModelingLanguage()
         ),
@@ -39,7 +40,7 @@ def core_metamodel():
 @pytest.fixture(scope="session")
 def uml_metamodel():
     return load_model(
-        "models/UML.gaphor",
+        Path("models/UML.gaphor"),
         MockModelingLanguage(
             CoreModelingLanguage(), GeneralModelingLanguage(), UMLModelingLanguage()
         ),
@@ -78,6 +79,12 @@ def create_attribute(s: str, element_factory=None):
     return attr
 
 
+def create_literal(s: str, element_factory):
+    literal = UML.EnumerationLiteral()
+    parse(literal, s)
+    return literal
+
+
 def test_coder_write_class_with_attributes():
     class_ = UML.Class()
     class_.ownedAttribute = create_attribute("first: str")
@@ -95,16 +102,34 @@ def test_coder_write_class_with_enumeration(element_factory: ElementFactory):
     class_ = element_factory.create(UML.Class)
     class_.ownedAttribute = create_attribute("first: EnumKind", element_factory)
 
-    enum = element_factory.create(UML.Class)
+    enum = element_factory.create(UML.Enumeration)
     enum.name = "EnumKind"
-    enum.ownedAttribute = create_attribute("in", element_factory)
-    enum.ownedAttribute = create_attribute("out", element_factory)
+    enum.ownedLiteral = create_literal("in", element_factory)
+    enum.ownedLiteral = create_literal("out", element_factory)
 
     resolve_attribute_type_values(element_factory)
 
     attr_def = list(variables(class_))
 
-    assert attr_def == ['first = _enumeration("first", ("in", "out"), "in")']
+    assert attr_def == ['first = _enumeration("first", EnumKind, EnumKind.in_)']
+
+
+def test_coder_write_class_with_enumeration_and_default_value(
+    element_factory: ElementFactory,
+):
+    class_ = element_factory.create(UML.Class)
+    class_.ownedAttribute = create_attribute("first: EnumKind = out", element_factory)
+
+    enum = element_factory.create(UML.Enumeration)
+    enum.name = "EnumKind"
+    enum.ownedLiteral = create_literal("in", element_factory)
+    enum.ownedLiteral = create_literal("out", element_factory)
+
+    resolve_attribute_type_values(element_factory)
+
+    attr_def = list(variables(class_))
+
+    assert attr_def == ['first = _enumeration("first", EnumKind, EnumKind.out)']
 
 
 @pytest.fixture
@@ -144,17 +169,6 @@ def test_coder_write_class_with_1_n_association(navigable_association):
 
     assert class_a.name == "A"
     assert attr_def == ["b: relation_one[B]"]
-
-
-def class_with_name(name):
-    c = UML.Class()
-    c.name = name
-    return c
-
-
-def test_enumeration():
-    assert not is_enumeration(class_with_name("A"))
-    assert is_enumeration(class_with_name("AKind"))
 
 
 def test_in_profile():
@@ -284,17 +298,20 @@ def test_coder_write_association_opposite_not_navigable(
 def test_attribute_from_super_model(
     uml_metamodel: ElementFactory, core_metamodel: ElementFactory
 ):
+    package = UML.Package()
+    package.name = "UML"
     class_ = UML.Class()
     class_.name = "Package"
+    class_.owningPackage = package
 
     element_type, base = attribute(
         class_,
         "member",
-        [
+        {
             # Order matters! Base model first.
-            (CoreModelingLanguage(), core_metamodel),
-            (UMLModelingLanguage(), uml_metamodel),
-        ],
+            "Core": (CoreModelingLanguage(), core_metamodel),
+            "UML": (UMLModelingLanguage(), uml_metamodel),
+        },
     )
 
     assert element_type is UML.Package

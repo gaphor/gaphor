@@ -4,6 +4,8 @@
 
 from __future__ import annotations
 
+import enum
+
 from gaphor.core.modeling.properties import (
     association,
     attribute as _attribute,
@@ -16,14 +18,18 @@ from gaphor.core.modeling.properties import (
 )
 
 
-from gaphor.UML.uml import Actor
-class Person(Actor):
+from gaphor.UML.uml import Actor as _Actor
+from gaphor.UML.uml import Package as _Package
+from gaphor.UML.uml import Dependency as _Dependency
+from gaphor.UML.uml import Diagram as _Diagram
+
+
+class Person(_Actor):
     description: _attribute[str] = _attribute("description", str)
     location: _attribute[str] = _attribute("location", str)
 
 
-from gaphor.UML.uml import Package
-class Container(Package):
+class Container(_Package):
     description: _attribute[str] = _attribute("description", str)
     location: _attribute[str] = _attribute("location", str)
     ownerContainer: relation_one[Container]
@@ -36,13 +42,11 @@ class Database(Container):
     pass
 
 
-from gaphor.UML.uml import Dependency as _Dependency
 class Dependency(_Dependency):
     technology: _attribute[str] = _attribute("technology", str)
 
 
-from gaphor.UML.uml import Diagram
-class C4Diagram(Diagram):
+class C4Diagram(_Diagram):
     diagramType: _attribute[str] = _attribute("diagramType", str, default="c4")
 
 

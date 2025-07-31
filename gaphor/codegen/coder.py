@@ -24,6 +24,7 @@ from __future__ import annotations
 
 import argparse
 import contextlib
+import keyword
 import logging
 import sys
 import textwrap
@@ -33,6 +34,7 @@ from pathlib import Path
 import gaphor.storage as storage
 from gaphor import UML
 from gaphor.codegen.override import Overrides
+from gaphor.codegen.xmi import convert
 from gaphor.core.modeling import Base, ElementFactory
 from gaphor.core.modeling.modelinglanguage import (
     CoreModelingLanguage,
@@ -41,7 +43,6 @@ from gaphor.core.modeling.modelinglanguage import (
 )
 from gaphor.diagram.general.modelinglanguage import GeneralModelingLanguage
 from gaphor.entrypoint import initialize
-from gaphor.SysML.modelinglanguage import SysMLModelingLanguage
 from gaphor.UML.modelinglanguage import UMLModelingLanguage
 
 log = logging.getLogger(__name__)
@@ -53,6 +54,8 @@ header = textwrap.dedent(
     # fmt: off
 
     from __future__ import annotations
+
+    import enum
 
     from gaphor.core.modeling.properties import (
         association,
@@ -81,7 +84,7 @@ def main(
         [
             load_modeling_language(lang)
             for lang, _ in supermodelfiles
-            if lang not in ("Core", "UML", "SysML")
+            if lang not in ("Core", "general", "UML")
         ]
         if supermodelfiles
         else []
@@ -92,20 +95,19 @@ def main(
                 CoreModelingLanguage(),
                 GeneralModelingLanguage(),
                 UMLModelingLanguage(),
-                SysMLModelingLanguage(),
             ]
             + extra_langs
         )
     )
 
-    model = load_model(modelfile, modeling_language)
+    model = load_model(Path(modelfile), modeling_language)
     super_models = (
-        [
-            (load_modeling_language(lang), load_model(f, modeling_language))
+        {
+            lang: (load_modeling_language(lang), load_model(Path(f), modeling_language))
             for lang, f in supermodelfiles
-        ]
+        }
         if supermodelfiles
-        else []
+        else {}
     )
     overrides = Overrides(overridesfile) if overridesfile else None
 
@@ -118,14 +120,20 @@ def main(
             print(line, file=out)
 
 
-def load_model(modelfile: str, modeling_language: ModelingLanguage) -> ElementFactory:
-    element_factory = ElementFactory()
-    with open(modelfile, encoding="utf-8") as file_obj:
-        storage.load(
-            file_obj,
-            element_factory,
-            modeling_language,
+def load_model(modelfile: Path, modeling_language: ModelingLanguage) -> ElementFactory:
+    if modelfile.suffix == ".xmi":
+        element_factory = convert(modelfile)
+        assert not element_factory.lselect(
+            lambda e: isinstance(e, UML.Class) and not e.name
         )
+    else:
+        element_factory = ElementFactory()
+        with modelfile.open(encoding="utf-8") as file_obj:
+            storage.load(
+                file_obj,
+                element_factory,
+                modeling_language,
+            )
 
     resolve_attribute_type_values(element_factory)
 
@@ -138,9 +146,13 @@ def load_modeling_language(lang) -> ModelingLanguage:
 
 def coder(
     model: ElementFactory,
-    super_models: list[tuple[ModelingLanguage, ElementFactory]],
+    super_models: dict[str, tuple[ModelingLanguage, ElementFactory]],
     overrides: Overrides | None,
 ) -> Iterable[str]:
+    yield header
+    if overrides and overrides.header:
+        yield overrides.header
+
     classes = list(
         order_classes(
             c
@@ -152,27 +164,32 @@ def coder(
         )
     )
 
-    yield header
-    if overrides and overrides.header:
-        yield overrides.header
-
     already_imported = set()
     for c in classes:
-        if overrides and overrides.has_override(c.name):
-            yield overrides.get_override(c.name)
-            continue
-
         if not any(bases(c)):
-            element_type, cls = in_super_model(c.name, super_models)
+            element_type, cls = in_super_model(c, super_models)
             if element_type and cls:
-                # always alias imported name
-                line = f"from {element_type.__module__} import {element_type.__name__}"
-                if len([t for t in classes if t.name == c.name]) > 1:
-                    line += f" as _{c.name}"
-                    c.name = f"_{c.name}"
+                # always alias imported names
+                c.name = f"_{c.name}"
+                line = f"from {element_type.__module__} import {element_type.__name__} as {c.name}"
                 yield line
                 already_imported.add(line)
                 continue
+
+    yield ""
+    yield ""
+
+    for enum in sorted((model.select(UML.Enumeration)), key=lambda e: e.name):
+        yield from enumeration(enum)
+
+    for c in classes:
+        if c.name.startswith("_"):
+            # imported from super model
+            continue
+
+        if overrides and overrides.has_override(c.name):
+            yield overrides.get_override(c.name)
+            continue
 
         yield class_declaration(c)
         if properties := list(variables(c, overrides)):
@@ -198,14 +215,32 @@ def coder(
                 yield line
 
 
+def enumeration(enum: UML.Enumeration):
+    yield f"class {enum.name}(enum.StrEnum):"
+    for literal in enum.ownedLiteral:
+        name = literal.name
+        if keyword.iskeyword(name):
+            name = f"{name}_"
+        yield f'    {name} = "{literal.name}"'
+    yield ""
+    yield ""
+
+
 def class_declaration(class_: UML.Class):
     base_classes = ", ".join(
-        c.name for c in sorted(bases(class_), key=lambda c: c.name)
+        c.name
+        for c in sorted(
+            bases(class_),
+            key=lambda c: c.name,
+        )
     )
     return f"class {class_.name}({base_classes}):"
 
 
-def variables(class_: UML.Class, overrides: Overrides | None = None):
+def variables(
+    class_: UML.Class,
+    overrides: Overrides | None = None,
+):
     if class_.ownedAttribute:
         a: UML.Property
         for a in sorted(class_.ownedAttribute, key=lambda a: a.name or ""):
@@ -220,9 +255,23 @@ def variables(class_: UML.Class, overrides: Overrides | None = None):
             elif a.typeValue:
                 yield f'{a.name}: _attribute[{a.typeValue}] = _attribute("{a.name}", {a.typeValue}{default_value(a)})'
             elif is_enumeration(a.type):
-                assert isinstance(a.type, UML.Class)
-                enum_values = ", ".join(f'"{e.name}"' for e in a.type.ownedAttribute)
-                yield f'{a.name} = _enumeration("{a.name}", ({enum_values}), "{a.type.ownedAttribute[0].name}")'
+                assert isinstance(a.type, UML.Enumeration)
+                if (
+                    isinstance(a.defaultValue, UML.LiteralString)
+                    and a.defaultValue.value
+                ):
+                    default = a.defaultValue.value
+                elif (
+                    isinstance(a.defaultValue, UML.InstanceValue)
+                    and a.defaultValue.instance
+                ):
+                    default = a.defaultValue.instance.name
+                else:
+                    default = a.type.ownedLiteral[0].name
+
+                if keyword.iskeyword(default):
+                    default = f"{default}_"
+                yield f'{a.name} = _enumeration("{a.name}", {a.type.name}, {a.type.name}.{default})'
             elif a.type:
                 mult = (
                     "one"
@@ -278,7 +327,7 @@ def associations(
 
 def subsets(
     c: UML.Class,
-    super_models: list[tuple[ModelingLanguage, ElementFactory]],
+    super_models: dict[str, tuple[ModelingLanguage, ElementFactory]],
 ):
     for a in c.ownedAttribute:
         if (
@@ -288,11 +337,19 @@ def subsets(
             or is_extension_end(a)
         ):
             continue
+
+        full_name = f"{c.name}.{a.name}"
+
+        for prop in a.subsettedProperty:
+            if prop.class_:
+                yield f"{prop.class_.name}.{prop.name}.add({full_name})  # type: ignore[attr-defined]"
+            else:
+                log.warning(f"Subsetted property {prop} not owned by a class")
+
         for slot in a.appliedStereotype[:].slot:
             if slot.definingFeature.name != "subsets":
                 continue
 
-            full_name = f"{c.name}.{a.name}"
             raw_slot_value = UML.recipes.get_slot_value(slot)
             slotValue = raw_slot_value if isinstance(raw_slot_value, str) else ""
             for value in slotValue.split(","):
@@ -429,7 +486,8 @@ def bases(c: UML.Class) -> Iterable[UML.Class]:
 
 
 def is_enumeration(c: UML.Type) -> bool:
-    return c and c.name and (c.name.endswith("Kind") or c.name.endswith("Sort"))  # type: ignore[return-value]
+    # return c and c.name and (c.name.endswith("Kind") or c.name.endswith("Sort"))
+    return isinstance(c, UML.Enumeration)
 
 
 def is_simple_type(c: UML.Type) -> bool:
@@ -456,7 +514,7 @@ def is_reassignment(a: UML.Property) -> bool:
     return any(test(base) for base in bases(a.owner))  # type:ignore[arg-type]
 
 
-def is_in_profile(c: UML.Class) -> bool:
+def is_in_profile(c: UML.Classifier) -> bool:
     def test(p: UML.Package):
         return isinstance(p, UML.Profile) or (p.owningPackage and test(p.owningPackage))
 
@@ -475,7 +533,17 @@ def is_in_toplevel_package(c: UML.Class, package_name: str) -> bool:
 def redefines(a: UML.Property) -> str | None:
     # TODO: look up element name and add underscore if needed.
     # maybe resolve redefines before we start writing?
-    # Redefine is the only one where
+
+    if len(a.redefinedProperty) > 1:
+        redefs = ", ".join(f"{r.class_.name}.{r.name}" for r in a.redefinedProperty)
+        log.warning(
+            f"{a.class_.name}.{a.name} has multiple redefines: {redefs}. Picking the first."
+        )
+
+    for r in a.redefinedProperty:
+        return f"{r.class_.name}.{r.name}"
+
+    # UML metamodel style: with stereotype
     return next(
         (
             UML.recipes.get_slot_value(slot)
@@ -487,7 +555,9 @@ def redefines(a: UML.Property) -> str | None:
 
 
 def attribute(
-    c: UML.Class, name: str, super_models: list[tuple[ModelingLanguage, ElementFactory]]
+    c: UML.Class,
+    name: str,
+    super_models: dict[str, tuple[ModelingLanguage, ElementFactory]],
 ) -> tuple[type[Base] | None, UML.Property | None]:
     a: UML.Property | None
     for a in c.ownedAttribute:
@@ -499,8 +569,9 @@ def attribute(
         if a:
             return element_type, a
 
-    element_type, super_class = in_super_model(c.name, super_models)
+    element_type, super_class = in_super_model(c, super_models)
     if super_class and c is not super_class:
+        assert isinstance(super_class, UML.Class)
         _, a = attribute(super_class, name, super_models)
         return element_type, a
 
@@ -508,20 +579,28 @@ def attribute(
 
 
 def in_super_model(
-    name: str, super_models: list[tuple[ModelingLanguage, ElementFactory]]
-) -> tuple[type[Base], UML.Class] | tuple[None, None]:
-    for modeling_language, factory in super_models:
-        cls: UML.Class
-        for cls in factory.select(  # type: ignore[assignment]
-            lambda e: isinstance(e, UML.Class) and e.name == name
-        ):
-            if not (is_in_profile(cls) or is_enumeration(cls)):
-                element_type = modeling_language.lookup_element(cls.name)
-                assert element_type, (
-                    f"Type {cls.name} found in model, but not in generated model"
-                )
-                return element_type, cls
-    return None, None
+    type: UML.Type, super_models: dict[str, tuple[ModelingLanguage, ElementFactory]]
+) -> tuple[type[Base], UML.Classifier] | tuple[None, None]:
+    ns = ".".join(type.owningPackage.qualifiedName)
+    if ns not in super_models:
+        return None, None
+    modeling_language, factory = super_models[ns]
+
+    # type.name may have been prefixed by an underscore, if it's imported
+    name = type.name[1:] if type.name.startswith("_") else type.name
+    cls: UML.Classifier
+    for cls in factory.select(  # type: ignore[assignment]
+        lambda e: isinstance(e, UML.Classifier)
+        and e.name == name
+        and ".".join(e.owningPackage.qualifiedName) not in super_models
+    ):
+        element_type = modeling_language.lookup_element(cls.name, ns=ns)
+        assert element_type, (
+            f"Type {ns}.{name} found in model, but not in generated model"
+        )
+        return element_type, cls
+
+    raise AssertionError(f"Type {ns}.{name} found in model, but not in generated model")
 
 
 def resolve_attribute_type_values(element_factory: ElementFactory) -> None:
@@ -533,6 +612,7 @@ def resolve_attribute_type_values(element_factory: ElementFactory) -> None:
             prop.typeValue = "bool"
         elif prop.typeValue in (
             "Integer",
+            "Real",
             "int",
         ):
             prop.typeValue = "int"
@@ -540,7 +620,8 @@ def resolve_attribute_type_values(element_factory: ElementFactory) -> None:
             pass
         elif c := next(
             element_factory.select(
-                lambda e: isinstance(e, UML.Class) and e.name == prop.typeValue  # noqa: B023
+                lambda e: isinstance(e, UML.Class | UML.Enumeration)
+                and e.name == prop.typeValue  # noqa: B023
             ),
             None,
         ):
