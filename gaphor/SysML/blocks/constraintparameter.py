@@ -1,15 +1,36 @@
 """Constraint Parameter item."""
 
+from dataclasses import replace
+
 from gaphor import UML
+from gaphor.core.styling import TextAlign, VerticalAlign
 from gaphor.diagram.presentation import AttachedPresentation, Named
 from gaphor.diagram.shapes import (
     Box,
-    CssNode,
     IconBox,
     Text,
     draw_border,
 )
 from gaphor.UML.umlfmt import format_property
+
+
+class StyleInjector:
+    """A shape that injects style properties."""
+
+    def __init__(self, child, **style):
+        self.child = child
+        self.style = style
+
+    def size(self, context, bounding_box=None):
+        style = {**context.style, **self.style}
+        return self.child.size(replace(context, style=style), bounding_box)
+
+    def draw(self, context, bounding_box):
+        style = {**context.style, **self.style}
+        self.child.draw(replace(context, style=style), bounding_box)
+
+    def __iter__(self):
+        return iter((self.child,))
 
 
 class ConstraintParameterItem(Named, AttachedPresentation[UML.Property]):
@@ -28,19 +49,63 @@ class ConstraintParameterItem(Named, AttachedPresentation[UML.Property]):
         self.handles()[0].connectable = True
 
     def update_shapes(self, event=None):
-        self.shape = IconBox(
+        side = self.connected_side
+        spacing = 5  # Adjustable offset in pixels
+
+        if side == "left":
+            # Position text block to the RIGHT, but justify text lines to the LEFT
+            icon_box_style = {
+                "text-align": TextAlign.RIGHT,
+                "vertical-align": VerticalAlign.MIDDLE,
+                "vertical-spacing": spacing,
+            }
+            text_style = {"text-align": TextAlign.LEFT}
+        elif side == "right":
+            # Position text block to the LEFT, but justify text lines to the RIGHT
+            icon_box_style = {
+                "text-align": TextAlign.LEFT,
+                "vertical-align": VerticalAlign.MIDDLE,
+                "vertical-spacing": spacing,
+            }
+            text_style = {"text-align": TextAlign.RIGHT}
+        elif side == "top":
+            # Position text block BELOW, and justify text lines to the CENTER
+            icon_box_style = {
+                "text-align": TextAlign.CENTER,
+                "vertical-align": VerticalAlign.BOTTOM,
+                "vertical-spacing": spacing,
+            }
+            text_style = {"text-align": TextAlign.CENTER}
+        elif side == "bottom":
+            # Position text block ABOVE, and justify text lines to the CENTER
+            icon_box_style = {
+                "text-align": TextAlign.CENTER,
+                "vertical-align": VerticalAlign.TOP,
+                "vertical-spacing": spacing,
+            }
+            text_style = {"text-align": TextAlign.CENTER}
+        else:
+            # Default position when not connected
+            icon_box_style = {
+                "text-align": TextAlign.CENTER,
+                "vertical-align": VerticalAlign.BOTTOM,
+                "vertical-spacing": spacing,
+            }
+            text_style = {"text-align": TextAlign.CENTER}
+
+        shape = IconBox(
             Box(draw=draw_border),
-            CssNode(
-                "name",
-                self.subject,
+            StyleInjector(
                 Text(
                     text=lambda: format_property(
                         self.subject, type=True, multiplicity=True
                     )
                     or ""
                 ),
+                **text_style,
             ),
         )
+        self.shape = StyleInjector(shape, **icon_box_style)
 
     def connect(self, handle, port):
         """
