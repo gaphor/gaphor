@@ -43,7 +43,11 @@ class ConstraintPropertyParameterConnector:
         return True
 
     def disconnect(self, handle: Handle) -> None:
-        self.parameter.change_parent(None)
+        """
+        Do not allow disconnection of a ConstraintParameterItem from a
+        ConstraintPropertyItem.
+        """
+        pass
 
 
 @Connector.register(InterfaceBlockItem, ProxyPortItem)

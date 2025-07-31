@@ -2,6 +2,9 @@
 
 from dataclasses import replace
 
+from gaphas.handlemove import HandleMove
+from gaphas.move import Move
+
 from gaphor import UML
 from gaphor.core.styling import TextAlign, VerticalAlign
 from gaphor.diagram.presentation import AttachedPresentation, Named
@@ -10,6 +13,10 @@ from gaphor.diagram.shapes import (
     IconBox,
     Text,
     draw_border,
+)
+from gaphor.diagram.tools.handlemove import (
+    StickyAttachedHandleMove,
+    sticky_attached_move,
 )
 from gaphor.UML.umlfmt import format_property
 
@@ -136,8 +143,11 @@ class ConstraintParameterItem(Named, AttachedPresentation[UML.Property]):
 
     def disconnect(self, handle):
         """
-        Disconnect from the parent item.
+        Disconnection is not allowed to keep the parameter snapped to the property.
         """
-        if self.parent:
-            self.diagram.connections.disconnect_item(self, handle)
-            self.parent = None
+        pass
+
+
+# Register the "sticky" move handlers directly in this file
+HandleMove.register(ConstraintParameterItem, StickyAttachedHandleMove)
+Move.register(ConstraintParameterItem, sticky_attached_move)
