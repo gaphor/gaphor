@@ -30,7 +30,7 @@ classifiers = [
     "Topic :: Software Development :: Documentation",
 ]
 
-requires-python = ">=3.11,<3.14"
+requires-python = ">=3.12,<3.14"
 
 dependencies = [
     "pycairo>=1.22.0",
