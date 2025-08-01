@@ -1,6 +1,6 @@
 [project]
 name = "gaphor"
-version = "3.1.0"
+version = "3.2.0"
 description = "Gaphor is the simple modeling tool written in Python."
 authors = [
     { name = "Arjan Molenaar", email = "gaphor@gmail.com" },
