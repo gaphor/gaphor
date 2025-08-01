@@ -68,6 +68,7 @@ def load_elements_generator(
     )
     maybe_upgrade(upgrade_package_package_to_nesting_package, elements)
     maybe_upgrade(upgrade_parameter_owned_node_to_activity_parameter_node, elements)
+    maybe_upgrade(upgrade_enumeration_default_values, elements)
 
     yield from _load_attributes_and_references(
         elements, element_factory, update_status_queue
@@ -602,3 +603,18 @@ def upgrade_parameter_owned_node_to_activity_parameter_node(
             if "owningNode" in elem.references:
                 elem.references["activityParameterNode"] = elem.references["owningNode"]
                 del elem.references["owningNode"]
+
+
+@since(3, 2, 0)
+def upgrade_enumeration_default_values(
+    elements: dict[Id, element],
+) -> None:
+    for _id, elem in list(elements.items()):
+        if elem.type == "Parameter" and "direction" not in elem.values:
+            elem.values["direction"] = "inout"
+        if (
+            elem.type
+            in ("ObjectNode", "ActivityParameterNode", "Pin", "InputPin", "OutputPin")
+            and "ordering" not in elem.values
+        ):
+            elem.values["ordering"] = "unordered"

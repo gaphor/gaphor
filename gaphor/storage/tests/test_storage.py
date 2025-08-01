@@ -326,3 +326,15 @@ def test_save_and_load_with_invalid_reference(element_factory, saver, loader):
 
     assert not hasattr(package, "foobar")
     assert not package.name
+
+
+def test_save_and_load_with_enumeration(element_factory, saver, loader):
+    p1 = element_factory.create(UML.Package)
+    p1.visibility = UML.VisibilityKind.private
+
+    data = saver()
+    loader(data)
+
+    package = next(element_factory.select(UML.Package))
+
+    assert package.visibility == UML.VisibilityKind.private

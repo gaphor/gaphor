@@ -357,3 +357,42 @@ def test_do_not_update_value_for_literal_specification(
 
     assert type(p).__name__ == element_type
     assert str(p.value) == "1"
+
+
+def test_update_parameter_default_direction(element_factory, modeling_language):
+    e = element(id="2", type="Parameter")
+    e.values["direction"] = "out"
+
+    load_elements(
+        {"1": element(id="1", type="Parameter"), "2": e},
+        element_factory,
+        modeling_language,
+    )
+
+    p1 = element_factory.lookup("1")
+    p2 = element_factory.lookup("2")
+
+    assert p1.direction == "inout"
+    assert p2.direction == "out"
+
+
+@pytest.mark.parametrize(
+    "element_type",
+    [
+        "ObjectNode",
+        "ActivityParameterNode",
+        "Pin",
+        "InputPin",
+        "OutputPin",
+    ],
+)
+def test_update_object_node_default_ordering(
+    element_type, element_factory, modeling_language
+):
+    load_elements(
+        {"1": element(id="1", type=element_type)}, element_factory, modeling_language
+    )
+
+    p = element_factory.lookup("1")
+
+    assert p.ordering == "unordered"

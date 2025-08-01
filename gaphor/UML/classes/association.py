@@ -7,6 +7,7 @@ Plan:
    for line ends.
 """
 
+import enum
 from dataclasses import replace
 from math import pi
 
@@ -43,6 +44,11 @@ from gaphor.UML.informationflow import (
 from gaphor.UML.umlfmt import format_association_end
 
 half_pi = pi / 2
+
+
+class NavigabilityKind(enum.StrEnum):
+    none = "none"
+    navigable = "navigable"
 
 
 @represents(UML.Association)
@@ -110,11 +116,11 @@ class AssociationItem(Named, LinePresentation[UML.Association]):
     show_direction: attribute[int] = attribute("show_direction", int, default=False)
 
     preferred_aggregation = enumeration(
-        "preferred_aggregation", ("none", "shared", "composite"), "none"
+        "preferred_aggregation", UML.AggregationKind, UML.AggregationKind.none
     )
 
     preferred_tail_navigability = enumeration(
-        "preferred_tail_navigability", ("none", "navigable"), "none"
+        "preferred_tail_navigability", NavigabilityKind, NavigabilityKind.none
     )
 
     @property

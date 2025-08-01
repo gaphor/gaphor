@@ -4,6 +4,8 @@
 
 from __future__ import annotations
 
+import enum
+
 from gaphor.core.modeling.properties import (
     association,
     attribute as _attribute,
@@ -19,6 +21,86 @@ from gaphor.core.modeling.properties import (
 from typing import Callable
 
 from gaphor.core.modeling import UnlimitedNatural
+
+
+class AggregationKind(enum.StrEnum):
+    none = "none"
+    shared = "shared"
+    composite = "composite"
+
+
+class CallConcurrencyKind(enum.StrEnum):
+    sequential = "sequential"
+    guarded = "guarded"
+    concurrent = "concurrent"
+
+
+class ConnectorKind(enum.StrEnum):
+    assembly = "assembly"
+    delegation = "delegation"
+
+
+class MessageKind(enum.StrEnum):
+    complete = "complete"
+    lost = "lost"
+    found = "found"
+    unknown = "unknown"
+
+
+class MessageSort(enum.StrEnum):
+    synchCall = "synchCall"
+    asynchCall = "asynchCall"
+    asynchSignal = "asynchSignal"
+    createMessage = "createMessage"
+    deleteMessage = "deleteMessage"
+    reply = "reply"
+
+
+class ObjectOrderingKind(enum.StrEnum):
+    unordered = "unordered"
+    ordered = "ordered"
+    LIFO = "LIFO"
+    FIFO = "FIFO"
+
+
+class ParameterDirectionKind(enum.StrEnum):
+    inout = "inout"
+    in_ = "in"
+    out = "out"
+    return_ = "return"
+
+
+class ParameterEffectKind(enum.StrEnum):
+    create = "create"
+    read = "read"
+    update = "update"
+    delete = "delete"
+
+
+class PseudostateKind(enum.StrEnum):
+    initial = "initial"
+    deepHistory = "deepHistory"
+    shallowHistory = "shallowHistory"
+    join = "join"
+    fork = "fork"
+    junction = "junction"
+    choice = "choice"
+    entryPoint = "entryPoint"
+    exitPoint = "exitPoint"
+    terminate = "terminate"
+
+
+class TransitionKind(enum.StrEnum):
+    internal = "internal"
+    local = "local"
+    external = "external"
+
+
+class VisibilityKind(enum.StrEnum):
+    public = "public"
+    private = "private"
+    package = "package"
+    protected = "protected"
 
 
 from gaphor.core.modeling.base import Base
@@ -40,7 +122,7 @@ class NamedElement(Element):
     namespace: relation_one[Namespace]
     qualifiedName: property
     supplierDependency: relation_many[Dependency]
-    visibility = _enumeration("visibility", ("public", "private", "package", "protected"), "public")
+    visibility = _enumeration("visibility", VisibilityKind, VisibilityKind.public)
 
 
 class PackageableElement(NamedElement):
@@ -86,7 +168,7 @@ class RedefinableElement(NamedElement):
     isLeaf: _attribute[bool] = _attribute("isLeaf", bool, default=True)
     redefinedElement: relation_many[RedefinableElement]
     redefinitionContext: relation_many[Classifier]
-    visibility = _enumeration("visibility", ("public", "private", "package", "protected"), "public")
+    visibility = _enumeration("visibility", VisibilityKind, VisibilityKind.public)
 
 
 class Namespace(NamedElement):
@@ -231,7 +313,7 @@ class Realization(Abstraction):
 
 class ObjectNode(ActivityNode, TypedElement):
     isControlType: _attribute[bool] = _attribute("isControlType", bool, default=False)
-    ordering = _enumeration("ordering", ("unordered", "ordered", "LIFO", "FIFO"), "unordered")
+    ordering = _enumeration("ordering", ObjectOrderingKind, ObjectOrderingKind.FIFO)
     selection: relation_one[Behavior]
     upperBound: relation_one[ValueSpecification]
 
@@ -352,11 +434,11 @@ class ElementImport(DirectedRelationship):
     alias: _attribute[str] = _attribute("alias", str)
     importedElement: relation_one[PackageableElement]
     importingNamespace: relation_one[Namespace]
-    visibility = _enumeration("visibility", ("public", "private", "package", "protected"), "public")
+    visibility = _enumeration("visibility", VisibilityKind, VisibilityKind.public)
 
 
 class Property(ConnectableElement, StructuralFeature):
-    aggregation = _enumeration("aggregation", ("none", "shared", "composite"), "none")
+    aggregation = _enumeration("aggregation", AggregationKind, AggregationKind.none)
     artifact: relation_one[Artifact]
     association: relation_one[Association]
     association2: relation_one[Association]
@@ -481,7 +563,7 @@ class Parameter(ConnectableElement, MultiplicityElement):
     activityParameterNode: relation_many[ActivityParameterNode]
     behavior: relation_one[Behavior]
     defaultValue: relation_one[ValueSpecification]
-    direction = _enumeration("direction", ("inout", "in", "out", "return"), "inout")
+    direction = _enumeration("direction", ParameterDirectionKind, ParameterDirectionKind.in_)
     operation: relation_one[Operation]
     ownerFormalParam: relation_one[BehavioralFeature]
     parameterSet: relation_many[ParameterSet]
@@ -567,7 +649,7 @@ class Constraint(PackageableElement):
 class PackageImport(DirectedRelationship):
     importedPackage: relation_one[Package]
     importingNamespace: relation_one[Namespace]
-    visibility = _enumeration("visibility", ("public", "private", "package", "protected"), "public")
+    visibility = _enumeration("visibility", VisibilityKind, VisibilityKind.public)
 
 
 class InteractionFragment(NamedElement):
@@ -602,7 +684,7 @@ class Message(NamedElement):
     interaction: relation_one[Interaction]
     messageEnd: relation_many[MessageEnd]
     messageKind: property
-    messageSort = _enumeration("messageSort", ("synchCall", "asynchCall", "asynchSignal", "createMessage", "deleteMessage", "reply"), "synchCall")
+    messageSort = _enumeration("messageSort", MessageSort, MessageSort.synchCall)
     receiveEvent: relation_one[MessageEnd]
     sendEvent: relation_one[MessageEnd]
     signature: relation_one[NamedElement]
@@ -626,7 +708,7 @@ class Connector(Feature):
     contract: relation_many[Behavior]
     end: relation_many[ConnectorEnd]
     informationFlow: relation_many[InformationFlow]
-    kind = _enumeration("kind", ("assembly", "delegation"), "assembly")
+    kind = _enumeration("kind", ConnectorKind, ConnectorKind.assembly)
     redefinedConnector: relation_many[Connector]
     structuredClassifier: relation_one[StructuredClassifier]
     type: relation_one[Association]
@@ -666,7 +748,7 @@ class Transition(Namespace):
     container: relation_one[Region]
     effect: relation_one[Behavior]
     guard: relation_one[Constraint]
-    kind = _enumeration("kind", ("internal", "local", "external"), "internal")
+    kind = _enumeration("kind", TransitionKind, TransitionKind.internal)
     source: relation_one[Vertex]
     target: relation_one[Vertex]
     trigger: relation_one[Behavior]
@@ -679,7 +761,7 @@ class Vertex(NamedElement):
 
 
 class Pseudostate(Vertex):
-    kind = _enumeration("kind", ("initial", "deepHistory", "shallowHistory", "join", "fork", "junction", "choice", "entryPoint", "exitPoint", "terminate"), "initial")
+    kind = _enumeration("kind", PseudostateKind, PseudostateKind.initial)
     state: relation_one[State]
     stateMachine: relation_one[StateMachine]
 

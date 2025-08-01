@@ -4,6 +4,8 @@
 
 from __future__ import annotations
 
+import enum
+
 from gaphor.core.modeling.properties import (
     association,
     attribute as _attribute,
@@ -23,6 +25,18 @@ def _directed_relationship_property_path_target_source(type):
         for element in self.model.select(type)
         if element.sourceContext is self and element.targetContext
     ]
+
+class FeatureDirectionKind(enum.StrEnum):
+    provided = "provided"
+    providedRequired = "providedRequired"
+    required = "required"
+
+
+class FlowDirectionKind(enum.StrEnum):
+    in_ = "in"
+    inout = "inout"
+    out = "out"
+
 
 from gaphor.UML.uml import NamedElement
 class AbstractRequirement(NamedElement):
@@ -143,7 +157,7 @@ class FullPort(Port):
 
 
 class FlowProperty(Property):
-    direction = _enumeration("direction", ("in", "inout", "out"), "in")
+    direction = _enumeration("direction", FlowDirectionKind, FlowDirectionKind.inout)
 
 
 class InterfaceBlock(Block):
@@ -178,7 +192,7 @@ class AcceptChangeStructuralFeatureEventAction(AcceptEventAction):
 
 from gaphor.UML.uml import Feature
 class DirectedFeature(Feature):
-    featureDirection = _enumeration("featureDirection", ("provided", "providedRequired", "required"), "provided")
+    featureDirection = _enumeration("featureDirection", FeatureDirectionKind, FeatureDirectionKind.provided)
 
 
 from gaphor.UML.uml import Generalization

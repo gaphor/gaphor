@@ -39,14 +39,14 @@ def test_object_node_property_page_upper_bound(diagram, element_factory, event_m
 def test_object_node_property_page_ordering(diagram, element_factory, event_manager):
     subject = element_factory.create(UML.ObjectNode)
 
-    assert subject.ordering == "unordered"
+    assert subject.ordering == "FIFO"
     property_page = ObjectNodePropertyPage(subject, event_manager)
 
     widget = property_page.construct()
     ordering = find(widget, "ordering")
-    ordering.set_selected(3)
+    ordering.set_selected(0)
 
-    assert subject.ordering == "FIFO"
+    assert subject.ordering == "unordered"
 
 
 def test_decision_node_property_page_show_type(diagram, element_factory, event_manager):
