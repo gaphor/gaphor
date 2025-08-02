@@ -16,12 +16,12 @@ class PropertyItem(Named, ElementPresentation[UML.Property]):
         super().__init__(diagram, id)
 
         self.watch("show_stereotypes", self.update_shapes)
-        self.watch("subject[Property].name")
-        self.watch("subject[Property].type.name")
-        self.watch("subject[Property].typeValue")
-        self.watch("subject[Property].lowerValue")
-        self.watch("subject[Property].upperValue")
-        self.watch("subject[Property].aggregation", self.update_shapes)
+        self.watch("subject[UML:Property].name")
+        self.watch("subject[UML:Property].type.name")
+        self.watch("subject[UML:Property].typeValue")
+        self.watch("subject[UML:Property].lowerValue")
+        self.watch("subject[UML:Property].upperValue")
+        self.watch("subject[UML:Property].aggregation", self.update_shapes)
         stereotype_watches(self)
 
     show_stereotypes: attribute[int] = attribute("show_stereotypes", int)

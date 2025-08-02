@@ -18,6 +18,8 @@ from gaphor.core.modeling.properties import (
 )
 
 
+
+
 class ChangeKind(enum.StrEnum):
     add = "add"
     remove = "remove"

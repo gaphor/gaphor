@@ -18,20 +18,26 @@ from gaphor.core.modeling.properties import (
 )
 
 
-from gaphor.UML.uml import Class
-from gaphor.SysML.sysml import Block
-class Situation(Block, Class):
-    pass
-
-
-from gaphor.SysML.sysml import DirectedRelationshipPropertyPath
+from gaphor.UML.uml import Class as _Class
+from gaphor.SysML.sysml import Block as _Block
+from gaphor.SysML.sysml import DirectedRelationshipPropertyPath as _DirectedRelationshipPropertyPath
 from gaphor.UML.uml import Dependency as _Dependency
-class RelevantTo(DirectedRelationshipPropertyPath, _Dependency):
+from gaphor.UML.uml import State as _State
+from gaphor.UML.uml import Property as _Property
+from gaphor.UML.uml import DataType as _DataType
+from gaphor.UML.uml import Diagram as _Diagram
+
+
+class Situation(_Block, _Class):
     pass
 
 
-class ControllingMeasure(DirectedRelationshipPropertyPath, _Dependency):
-    affects: relation_many[Property]
+class RelevantTo(_Dependency, _DirectedRelationshipPropertyPath):
+    pass
+
+
+class ControllingMeasure(_Dependency, _DirectedRelationshipPropertyPath):
+    affects: relation_many[_Property]
 
 
 class Violates(_Dependency):
@@ -89,25 +95,23 @@ class AbstractRisk(Scenario):
     trigger: relation_many[AbstractEvent]
 
 
-from gaphor.UML.uml import Dependency
-class Detection(ControllingMeasure, Dependency):
+class Detection(ControllingMeasure, _Dependency):
     pass
 
 
-class Prevention(ControllingMeasure, Dependency):
+class Prevention(ControllingMeasure, _Dependency):
     pass
 
 
-class Mitigation(ControllingMeasure, Dependency):
+class Mitigation(ControllingMeasure, _Dependency):
     pass
 
 
-class Recommendation(ControllingMeasure, Dependency):
+class Recommendation(ControllingMeasure, _Dependency):
     pass
 
 
-from gaphor.UML.uml import State
-class FailureState(State):
+class FailureState(_State):
     pass
 
 
@@ -119,7 +123,7 @@ class FTATree(FTAElement, Scenario):
     topEvent: relation_one[EventDef]
 
 
-class Tree(Class):
+class Tree(_Class):
     pass
 
 
@@ -127,76 +131,75 @@ class EventDef(FTAElement):
     pass
 
 
-class Event(Class):
+class Event(_Class):
     pass
 
 
-class Gate(Class):
+class Gate(_Class):
     pass
 
 
-class DormantEvent(Class):
+class DormantEvent(_Class):
     pass
 
 
-class BasicEvent(Class):
+class BasicEvent(_Class):
     pass
 
 
-class ConditionalEvent(Class):
+class ConditionalEvent(_Class):
     pass
 
 
-class ZeroEvent(Class):
+class ZeroEvent(_Class):
     pass
 
 
-class HouseEvent(Class):
+class HouseEvent(_Class):
     pass
 
 
-class AND(Class):
+class AND(_Class):
     pass
 
 
-class OR(Class):
+class OR(_Class):
     pass
 
 
-class SEQ(Class):
+class SEQ(_Class):
     pass
 
 
-class XOR(Class):
+class XOR(_Class):
     pass
 
 
-class INHIBIT(Class):
+class INHIBIT(_Class):
     pass
 
 
-class MAJORITY_VOTE(Class):
+class MAJORITY_VOTE(_Class):
     pass
 
 
-class NOT(Class):
+class NOT(_Class):
     pass
 
 
-class IntermediateEvent(Class):
+class IntermediateEvent(_Class):
     pass
 
 
-class TopEvent(Class):
+class TopEvent(_Class):
     pass
 
 
-from gaphor.UML.uml import Property as _Property
 class TransferIn(_Property):
     pass
 
 
-class TransferOut(Class):
+class TransferOut(_Class):
     pass
 
 
@@ -232,7 +235,7 @@ class ZeroEventDef(EventDef):
     pass
 
 
-class Undeveloped(Class):
+class Undeveloped(_Class):
     pass
 
 
@@ -281,37 +284,35 @@ class UnsafeControlAction_Def(Situation):
     harmPotential: relation_many[HarmPotential]
 
 
-from gaphor.UML.uml import Property
-class Actuator(Property):
+class Actuator(_Property):
     pass
 
 
-from gaphor.UML.uml import DataType
 class Signal():
     pass
 
 
-class ControlAction(Class, DataType, Signal):
+class ControlAction(Signal, _Class, _DataType):
     pass
 
 
-class ControlStructure(Block, Class):
+class ControlStructure(_Block, _Class):
     pass
 
 
-class ControlledProcess(Property):
+class ControlledProcess(_Property):
     pass
 
 
-class Controller(Property):
+class Controller(_Property):
     pass
 
 
-class Feedback(Class, DataType, Signal):
+class Feedback(Signal, _Class, _DataType):
     pass
 
 
-class Sensor(Property):
+class Sensor(_Property):
     pass
 
 
@@ -323,11 +324,11 @@ class FailureMode():
     pass
 
 
-class UnsafeControlAction(Class, FailureMode):
+class UnsafeControlAction(FailureMode, _Class):
     pass
 
 
-class OperationalSituation(Class):
+class OperationalSituation(_Class):
     pass
 
 
@@ -405,7 +406,7 @@ class Less(AnyMalfunction):
     pass
 
 
-class MalfunctioningBehavior(Class, FailureMode):
+class MalfunctioningBehavior(FailureMode, _Class):
     pass
 
 
@@ -442,12 +443,11 @@ class Inverted(AnyMalfunction):
     pass
 
 
-from gaphor.UML.uml import Diagram
-class FTADiagram(Diagram):
+class FTADiagram(_Diagram):
     diagramType: _attribute[str] = _attribute("diagramType", str, default="fta")
 
 
-class STPADiagram(Diagram):
+class STPADiagram(_Diagram):
     diagramType: _attribute[str] = _attribute("diagramType", str, default="stpa")
 
 

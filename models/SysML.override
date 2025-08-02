@@ -38,22 +38,22 @@ override AbstractRequirement.master: derived[AbstractRequirement]
 AbstractRequirement.master = derived("master", AbstractRequirement, 0, "*",
     _directed_relationship_property_path_target_source(Copy))
 %%
-override AbstractRequirement.refinedBy: derived[NamedElement]
+override AbstractRequirement.refinedBy: derived[_NamedElement]
 
-AbstractRequirement.refinedBy = derived("refinedBy", NamedElement, 0, "*",
+AbstractRequirement.refinedBy = derived("refinedBy", _NamedElement, 0, "*",
     _directed_relationship_property_path_target_source(Refine))
 %%
-override AbstractRequirement.satisfiedBy: derived[NamedElement]
+override AbstractRequirement.satisfiedBy: derived[_NamedElement]
 
-AbstractRequirement.satisfiedBy = derived("satisfiedBy", NamedElement, 0, "*",
+AbstractRequirement.satisfiedBy = derived("satisfiedBy", _NamedElement, 0, "*",
     _directed_relationship_property_path_target_source(Satisfy))
 %%
-override AbstractRequirement.tracedTo: derived[NamedElement]
+override AbstractRequirement.tracedTo: derived[_NamedElement]
 
-AbstractRequirement.tracedTo = derived("tracedTo", NamedElement, 0, "*",
+AbstractRequirement.tracedTo = derived("tracedTo", _NamedElement, 0, "*",
     _directed_relationship_property_path_target_source(Trace))
 %%
-override AbstractRequirement.verifiedBy: derived[NamedElement]
+override AbstractRequirement.verifiedBy: derived[_NamedElement]
 
-AbstractRequirement.verifiedBy = derived("verifiedBy", NamedElement, 0, "*",
+AbstractRequirement.verifiedBy = derived("verifiedBy", _NamedElement, 0, "*",
     _directed_relationship_property_path_target_source(Verify))
