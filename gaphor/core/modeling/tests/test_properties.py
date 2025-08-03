@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import enum
+
 import pytest
 
 from gaphor.core import event_handler
@@ -654,10 +656,15 @@ def test_attributes_loading_failure():
 
 
 def test_enumerations():
+    class EnumKind(enum.StrEnum):
+        one = "one"
+        two = "two"
+        three = "three"
+
     class A(Base):
         a: enumeration
 
-    A.a = enumeration("a", ("one", "two", "three"), "one")
+    A.a = enumeration("a", EnumKind, EnumKind.one)
     a = A()
     assert a.a == "one"
     a.a = "two"
@@ -668,7 +675,7 @@ def test_enumerations():
     with pytest.raises(TypeError):
         a.a = "four"
 
-    assert a.a == "three"
+    assert a.a == EnumKind.three
 
     del a.a
     assert a.a == "one"

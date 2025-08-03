@@ -24,6 +24,7 @@ from __future__ import annotations
 
 import argparse
 import contextlib
+import keyword
 import logging
 import sys
 import textwrap
@@ -41,7 +42,6 @@ from gaphor.core.modeling.modelinglanguage import (
 )
 from gaphor.diagram.general.modelinglanguage import GeneralModelingLanguage
 from gaphor.entrypoint import initialize
-from gaphor.SysML.modelinglanguage import SysMLModelingLanguage
 from gaphor.UML.modelinglanguage import UMLModelingLanguage
 
 log = logging.getLogger(__name__)
@@ -53,6 +53,8 @@ header = textwrap.dedent(
     # fmt: off
 
     from __future__ import annotations
+
+    import enum
 
     from gaphor.core.modeling.properties import (
         association,
@@ -81,7 +83,7 @@ def main(
         [
             load_modeling_language(lang)
             for lang, _ in supermodelfiles
-            if lang not in ("Core", "UML", "SysML")
+            if lang not in ("Core", "general", "UML")
         ]
         if supermodelfiles
         else []
@@ -92,7 +94,6 @@ def main(
                 CoreModelingLanguage(),
                 GeneralModelingLanguage(),
                 UMLModelingLanguage(),
-                SysMLModelingLanguage(),
             ]
             + extra_langs
         )
@@ -141,6 +142,13 @@ def coder(
     super_models: list[tuple[ModelingLanguage, ElementFactory]],
     overrides: Overrides | None,
 ) -> Iterable[str]:
+    yield header
+    if overrides and overrides.header:
+        yield overrides.header
+
+    for enum in sorted((model.select(UML.Enumeration)), key=lambda e: e.name):
+        yield from enumeration(enum)
+
     classes = list(
         order_classes(
             c
@@ -151,10 +159,6 @@ def coder(
             and not is_tilde_type(c)
         )
     )
-
-    yield header
-    if overrides and overrides.header:
-        yield overrides.header
 
     already_imported = set()
     for c in classes:
@@ -198,6 +202,17 @@ def coder(
                 yield line
 
 
+def enumeration(enum: UML.Enumeration):
+    yield f"class {enum.name}(enum.StrEnum):"
+    for literal in enum.ownedLiteral:
+        name = literal.name
+        if keyword.iskeyword(name):
+            name = f"{name}_"
+        yield f'    {name} = "{literal.name}"'
+    yield ""
+    yield ""
+
+
 def class_declaration(class_: UML.Class):
     base_classes = ", ".join(
         c.name for c in sorted(bases(class_), key=lambda c: c.name)
@@ -220,9 +235,16 @@ def variables(class_: UML.Class, overrides: Overrides | None = None):
             elif a.typeValue:
                 yield f'{a.name}: _attribute[{a.typeValue}] = _attribute("{a.name}", {a.typeValue}{default_value(a)})'
             elif is_enumeration(a.type):
-                assert isinstance(a.type, UML.Class)
-                enum_values = ", ".join(f'"{e.name}"' for e in a.type.ownedAttribute)
-                yield f'{a.name} = _enumeration("{a.name}", ({enum_values}), "{a.type.ownedAttribute[0].name}")'
+                assert isinstance(a.type, UML.Enumeration)
+                default = (
+                    a.defaultValue.value
+                    if isinstance(a.defaultValue, UML.LiteralString)
+                    and a.defaultValue.value
+                    else a.type.ownedLiteral[0].name
+                )
+                if keyword.iskeyword(default):
+                    default = f"{default}_"
+                yield f'{a.name} = _enumeration("{a.name}", {a.type.name}, {a.type.name}.{default})'
             elif a.type:
                 mult = (
                     "one"
@@ -429,7 +451,7 @@ def bases(c: UML.Class) -> Iterable[UML.Class]:
 
 
 def is_enumeration(c: UML.Type) -> bool:
-    return c and c.name and (c.name.endswith("Kind") or c.name.endswith("Sort"))  # type: ignore[return-value]
+    return isinstance(c, UML.Enumeration)
 
 
 def is_simple_type(c: UML.Type) -> bool:
@@ -515,7 +537,7 @@ def in_super_model(
         for cls in factory.select(  # type: ignore[assignment]
             lambda e: isinstance(e, UML.Class) and e.name == name
         ):
-            if not (is_in_profile(cls) or is_enumeration(cls)):
+            if not is_in_profile(cls):
                 element_type = modeling_language.lookup_element(cls.name)
                 assert element_type, (
                     f"Type {cls.name} found in model, but not in generated model"
@@ -540,7 +562,8 @@ def resolve_attribute_type_values(element_factory: ElementFactory) -> None:
             pass
         elif c := next(
             element_factory.select(
-                lambda e: isinstance(e, UML.Class) and e.name == prop.typeValue  # noqa: B023
+                lambda e: isinstance(e, UML.Class | UML.Enumeration)
+                and e.name == prop.typeValue  # noqa: B023
             ),
             None,
         ):

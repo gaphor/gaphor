@@ -142,13 +142,13 @@ lifeline_pat = compile(f"^{name_subpat}{type_subpat}{mult_subpat}{garbage_subpat
 
 def _set_visibility(el: uml.Feature, vis: str):
     if vis == "#":
-        el.visibility = "protected"
+        el.visibility = uml.VisibilityKind.protected
     elif vis == "+":
-        el.visibility = "public"
+        el.visibility = uml.VisibilityKind.public
     elif vis == "-":
-        el.visibility = "private"
+        el.visibility = uml.VisibilityKind.private
     elif vis == "~":
-        el.visibility = "package"
+        el.visibility = uml.VisibilityKind.package
     else:
         with contextlib.suppress(AttributeError):
             del el.visibility
@@ -239,8 +239,8 @@ def parse_association_end(el: uml.Property, s: str) -> None:
                 recipes.set_multiplicity_upper_value(el, "*")
 
 
-@parse.register(uml.Element)
-def parse_namedelement(el: uml.Element, text: str) -> None:
+@parse.register(uml.NamedElement)
+def parse_namedelement(el: uml.NamedElement, text: str) -> None:
     """Parse element by simply assigning text to its name."""
     el.name = text
 
@@ -303,7 +303,7 @@ def parse_operation(el: uml.Operation, s: str) -> None:
                 p = el.ownedParameter[pindex]
             except IndexError:
                 p = create(uml.Parameter)
-            p.direction = g("dir") or "in"
+            p.direction = g("dir") or uml.ParameterDirectionKind.in_
             p.name = g("name")
             p.typeValue = g("type")
             recipes.set_multiplicity_lower_value(p, g("mult_l"))

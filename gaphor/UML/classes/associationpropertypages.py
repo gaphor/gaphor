@@ -41,7 +41,7 @@ def blockable(func):
 @PropertyPages.register(UML.Association)
 class AssociationPropertyPage(PropertyPageBase):
     NAVIGABILITY = (None, False, True)
-    AGGREGATION = UML.Property.aggregation.values
+    AGGREGATION = list(UML.Property.aggregation.type)
 
     order = 20
 

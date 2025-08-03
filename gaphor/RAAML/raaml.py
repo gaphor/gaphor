@@ -4,6 +4,8 @@
 
 from __future__ import annotations
 
+import enum
+
 from gaphor.core.modeling.properties import (
     association,
     attribute as _attribute,
