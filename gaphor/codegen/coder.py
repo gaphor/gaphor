@@ -328,12 +328,16 @@ def subsets(
             raw_slot_value = UML.recipes.get_slot_value(slot)
             slotValue = raw_slot_value if isinstance(raw_slot_value, str) else ""
             for value in slotValue.split(","):
-                element_type, d = attribute(c, value.strip(), super_models)
-                if d:  # and d.isDerived:
+                element_type, d = superset_attribute(c, value.strip(), super_models)
+                if d:
+                    assert isinstance(d.owner, UML.NamedElement)
                     if element_type:
-                        # TODO: Use aliasses
-                        yield f"from {element_type.__module__} import {d.owner.name}"  # type: ignore[attr-defined]
-                    yield f"{d.owner.name}.{d.name}.add({full_name})  # type: ignore[attr-defined]"  # type: ignore[attr-defined]
+                        owner_name = f"_{d.owner.name}"
+                        # Line will be filtered out if it's already imported.
+                        yield f"from {element_type.__module__} import {d.owner.name} as {owner_name}"
+                    else:
+                        owner_name = d.owner.name
+                    yield f"{owner_name}.{d.name}.add({full_name})  # type: ignore[attr-defined]"
                 elif not d:
                     log.warning(
                         f"{full_name} wants to subset {value.strip()}, but it is not defined"
@@ -518,25 +522,26 @@ def redefines(a: UML.Property) -> str | None:
     )
 
 
-def attribute(
+def superset_attribute(
     c: UML.Class,
     name: str,
     super_models: dict[str, tuple[ModelingLanguage, ElementFactory]],
 ) -> tuple[type[Base] | None, UML.Property | None]:
+    """Lookup an attribute from a super type."""
     a: UML.Property | None
     for a in c.ownedAttribute:
         if a.name == name:
             return None, a
 
     for base in bases(c):
-        element_type, a = attribute(base, name, super_models)
+        element_type, a = superset_attribute(base, name, super_models)
         if a:
             return element_type, a
 
     element_type, super_class = in_super_model(c, super_models)
     if super_class and c is not super_class:
         assert isinstance(super_class, UML.Class)
-        _, a = attribute(super_class, name, super_models)
+        _, a = superset_attribute(super_class, name, super_models)
         return element_type, a
 
     return None, None

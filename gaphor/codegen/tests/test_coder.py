@@ -3,7 +3,6 @@ import pytest
 from gaphor import UML
 from gaphor.codegen.coder import (
     associations,
-    attribute,
     bases,
     class_declaration,
     is_in_profile,
@@ -13,6 +12,7 @@ from gaphor.codegen.coder import (
     load_modeling_language,
     order_classes,
     resolve_attribute_type_values,
+    superset_attribute,
     variables,
 )
 from gaphor.core.format import parse
@@ -302,7 +302,7 @@ def test_attribute_from_super_model(
     class_.name = "Package"
     class_.owningPackage = package
 
-    element_type, base = attribute(
+    element_type, base = superset_attribute(
         class_,
         "member",
         {

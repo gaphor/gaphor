@@ -401,17 +401,16 @@ DirectedRelationshipPropertyPath.sourcePropertyPath = association("sourcePropert
 DirectedRelationshipPropertyPath.targetPropertyPath = association("targetPropertyPath", _Property)
 DirectedRelationshipPropertyPath.targetContext = association("targetContext", _Classifier, upper=1, opposite="targetDirectedRelationshipPropertyPath_")
 DirectedRelationshipPropertyPath.sourceContext = association("sourceContext", _Classifier, upper=1)
-from gaphor.UML.uml import Element
-Element.owner.add(DirectedRelationshipPropertyPath.targetContext)  # type: ignore[attr-defined]
+_Element.owner.add(DirectedRelationshipPropertyPath.targetContext)  # type: ignore[attr-defined]
 _Property.itemFlow = association("itemFlow", ItemFlow, upper=1, opposite="itemProperty")
-Element.owner.add(_Property.itemFlow)  # type: ignore[attr-defined]
+_Element.owner.add(_Property.itemFlow)  # type: ignore[attr-defined]
 ConnectorProperty.connector = association("connector", _Connector, upper=1, composite=True)
 ParticipantProperty.end_ = association("end_", _Property, upper=1, composite=True)
 ValueType.unit = association("unit", _InstanceSpecification, upper=1)
 ValueType.quantityKind = association("quantityKind", _InstanceSpecification, upper=1)
 ElementPropertyPath.propertyPath = association("propertyPath", _Property, lower=1)
 _Classifier.targetDirectedRelationshipPropertyPath_ = association("targetDirectedRelationshipPropertyPath_", DirectedRelationshipPropertyPath, composite=True, opposite="targetContext")
-Element.ownedElement.add(_Classifier.targetDirectedRelationshipPropertyPath_)  # type: ignore[attr-defined]
+_Element.ownedElement.add(_Classifier.targetDirectedRelationshipPropertyPath_)  # type: ignore[attr-defined]
 BoundReference.boundend = association("boundend", _ConnectorEnd, composite=True)
 BoundReference.bindingPath = derivedunion("bindingPath", _Property, lower=1)
 AdjuntProperty.principal = association("principal", _Element, upper=1)
@@ -428,4 +427,4 @@ ElementGroup.member = derivedunion("member", _Element)
 ElementGroup.orderedMember = association("orderedMember", _Element, composite=True)
 Rate.rate = association("rate", _InstanceSpecification, composite=True)
 ItemFlow.itemProperty = association("itemProperty", _Property, upper=1, composite=True, opposite="itemFlow")
-Element.ownedElement.add(ItemFlow.itemProperty)  # type: ignore[attr-defined]
+_Element.ownedElement.add(ItemFlow.itemProperty)  # type: ignore[attr-defined]
