@@ -106,6 +106,7 @@ documentation = "https://docs.gaphor.org/"
 "RAAML" = "gaphor.RAAML.modelinglanguage:RAAMLModelingLanguage"
 "general" = "gaphor.diagram.general.modelinglanguage:GeneralModelingLanguage"
 "KerML" = "gaphor.KerML.modelinglanguage:KerMLModelingLanguage"
+"SysML2" = "gaphor.SysML2.modelinglanguage:SysML2ModelingLanguage"
 
 [project.entry-points."gaphor.argparsers"]
 gui = "gaphor.main:gui_parser"
