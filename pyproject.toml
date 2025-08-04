@@ -160,7 +160,6 @@ optional=true
 pyinstaller = ">=6.13.0"
 pyinstaller-versionfile = "^2.0.0"
 semver = ">=2.13,<4.0"
-tomli = { version = ">=1.2,<3.0", python = "<3.11" }
 dmgbuild = {version = "^1.6.2", markers = "sys_platform == 'darwin'" }
 
 [tool.poe.tasks]
@@ -228,7 +227,7 @@ addopts = [
 junit_family = "xunit1"
 
 [tool.mypy]
-python_version = "3.11"
+python_version = "3.12"
 warn_return_any = true
 warn_unused_configs = true
 warn_redundant_casts = true
