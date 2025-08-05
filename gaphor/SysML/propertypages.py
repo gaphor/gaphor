@@ -280,7 +280,8 @@ class PropertyAggregationPropertyPage(PropertyPageBase):
         return builder.get_object("property-aggregation-editor")
 
     def _on_aggregation_change(self, combo, _pspec):
-        self.subject.aggregation = self.AGGREGATION[combo.get_selected()]
+        with Transaction(self.event_manager):
+            self.subject.aggregation = self.AGGREGATION[combo.get_selected()]
 
 
 @PropertyPages.register(UML.Association)
