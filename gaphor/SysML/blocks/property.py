@@ -69,16 +69,16 @@ class PropertyItem(Named, ElementPresentation[UML.Property]):
 def drop_property(element: UML.Property, diagram: Diagram, x: int, y: int):
     """Drop a property.
 
-    - If the property is a constraint parameter (owned by a constraint),
-      create a ConstraintParameterItem.
     - If the property is typed by a Constraint, create a
       ConstraintPropertyItem.
+    - If the property is a constraint parameter (owned by a constraint),
+      create a ConstraintParameterItem.
     - Otherwise, fall back to the default drop behavior.
     """
-    if isinstance(element.owner, Constraint):
-        item_class = ConstraintParameterItem
-    elif isinstance(element.type, Constraint):
+    if isinstance(element.type, Constraint):
         item_class = ConstraintPropertyItem
+    elif isinstance(element.owner, Constraint):
+        item_class = ConstraintParameterItem
     else:
         return drop_element(element, diagram, x, y)
 
