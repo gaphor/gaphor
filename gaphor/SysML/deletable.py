@@ -12,9 +12,14 @@ def deletable_diagram_frame_item(item: DiagramFrameItem):
 @deletable.register(UML.Property)
 def deletable_constraint_parameter(element: UML.Property):
     """
-    Prevent constraint parameters from being deleted automatically by the sanitizer.
+    Prevent constraint parameters and properties used in connectors from being
+    deleted automatically by the sanitizer.
     Deletion from the model browser is handled as a special case.
     """
     if isinstance(element.owner, Constraint):
         return False
+
+    if element.association:
+        return False
+
     return True
