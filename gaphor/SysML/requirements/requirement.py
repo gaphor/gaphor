@@ -34,7 +34,7 @@ class RequirementItem(Classified, ElementPresentation[Requirement]):
             "show_operations", self.update_shapes
         ).watch("subject[UML:NamedElement].name").watch(
             "subject[UML:NamedElement].namespace.name"
-        ).watch("subject[Classifier].isAbstract", self.update_shapes).watch(
+        ).watch("subject[UML:Classifier].isAbstract", self.update_shapes).watch(
             "subject[AbstractRequirement].externalId", self.update_shapes
         ).watch("subject[AbstractRequirement].text", self.update_shapes)
         attribute_watches(self, "Requirement")

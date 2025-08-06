@@ -26,6 +26,39 @@ def _directed_relationship_property_path_target_source(type):
         if element.sourceContext is self and element.targetContext
     ]
 
+from gaphor.UML.uml import NamedElement as _NamedElement
+from gaphor.UML.uml import Class as _Class
+from gaphor.UML.uml import DirectedRelationship as _DirectedRelationship
+from gaphor.UML.uml import Dependency as _Dependency
+from gaphor.UML.uml import Behavior as _Behavior
+from gaphor.UML.uml import Property as _Property
+from gaphor.UML.uml import DataType as _DataType
+from gaphor.UML.uml import InstanceSpecification as _InstanceSpecification
+from gaphor.UML.uml import Element as _Element
+from gaphor.UML.uml import Connector as _Connector
+from gaphor.UML.uml import ConnectorEnd as _ConnectorEnd
+from gaphor.UML.uml import Classifier as _Classifier
+from gaphor.UML.uml import Port as _Port
+from gaphor.UML.uml import InvocationAction as _InvocationAction
+from gaphor.UML.uml import Trigger as _Trigger
+from gaphor.UML.uml import AddStructuralFeatureValueAction as _AddStructuralFeatureValueAction
+from gaphor.UML.uml import ChangeEvent as _ChangeEvent
+from gaphor.UML.uml import StructuralFeature as _StructuralFeature
+from gaphor.UML.uml import AcceptEventAction as _AcceptEventAction
+from gaphor.UML.uml import Feature as _Feature
+from gaphor.UML.uml import Generalization as _Generalization
+from gaphor.UML.uml import Comment as _Comment
+from gaphor.UML.uml import Parameter as _Parameter
+from gaphor.UML.uml import ActivityEdge as _ActivityEdge
+from gaphor.UML.uml import ParameterSet as _ParameterSet
+from gaphor.UML.uml import Operation as _Operation
+from gaphor.UML.uml import ObjectNode as _ObjectNode
+from gaphor.UML.uml import Abstraction as _Abstraction
+from gaphor.UML.uml import ActivityPartition as _ActivityPartition
+from gaphor.UML.uml import InformationFlow as _InformationFlow
+from gaphor.UML.uml import Diagram as _Diagram
+
+
 class FeatureDirectionKind(enum.StrEnum):
     provided = "provided"
     providedRequired = "providedRequired"
@@ -38,34 +71,30 @@ class FlowDirectionKind(enum.StrEnum):
     out = "out"
 
 
-from gaphor.UML.uml import NamedElement
-class AbstractRequirement(NamedElement):
+class AbstractRequirement(_NamedElement):
     derived: derived[AbstractRequirement]
     derivedFrom: derived[AbstractRequirement]
     externalId: _attribute[str] = _attribute("externalId", str)
     master: derived[AbstractRequirement]
-    refinedBy: derived[NamedElement]
-    satisfiedBy: derived[NamedElement]
+    refinedBy: derived[_NamedElement]
+    satisfiedBy: derived[_NamedElement]
     text: _attribute[str] = _attribute("text", str)
-    tracedTo: derived[NamedElement]
-    verifiedBy: derived[NamedElement]
+    tracedTo: derived[_NamedElement]
+    verifiedBy: derived[_NamedElement]
 
 
-from gaphor.UML.uml import Class as _Class
 class Requirement(AbstractRequirement, _Class):
     pass
 
 
-from gaphor.UML.uml import DirectedRelationship
-class DirectedRelationshipPropertyPath(DirectedRelationship):
-    sourceContext: relation_one[Classifier]
-    sourcePropertyPath: relation_many[Property]
-    targetContext: relation_one[Classifier]
-    targetPropertyPath: relation_many[Property]
+class DirectedRelationshipPropertyPath(_DirectedRelationship):
+    sourceContext: relation_one[_Classifier]
+    sourcePropertyPath: relation_many[_Property]
+    targetContext: relation_one[_Classifier]
+    targetPropertyPath: relation_many[_Property]
 
 
-from gaphor.UML.uml import Dependency
-class Trace(Dependency, DirectedRelationshipPropertyPath):
+class Trace(DirectedRelationshipPropertyPath, _Dependency):
     pass
 
 
@@ -85,8 +114,7 @@ class Satisfy(Trace):
     pass
 
 
-from gaphor.UML.uml import Behavior
-class TestCase(Behavior):
+class TestCase(_Behavior):
     pass
 
 
@@ -94,69 +122,61 @@ class Block(_Class):
     isEncapsulated: _attribute[bool] = _attribute("isEncapsulated", bool, default=False)
 
 
-from gaphor.UML.uml import Property
-class ConnectorProperty(Property):
-    connector: relation_one[Connector]
+class ConnectorProperty(_Property):
+    connector: relation_one[_Connector]
 
 
-class ParticipantProperty(Property):
-    end_: relation_one[Property]
+class ParticipantProperty(_Property):
+    end_: relation_one[_Property]
 
 
-class DistributedProperty(Property):
+class DistributedProperty(_Property):
     pass
 
 
-from gaphor.UML.uml import DataType
-class ValueType(DataType):
-    quantityKind: relation_one[InstanceSpecification]
-    unit: relation_one[InstanceSpecification]
+class ValueType(_DataType):
+    quantityKind: relation_one[_InstanceSpecification]
+    unit: relation_one[_InstanceSpecification]
 
 
-from gaphor.UML.uml import InstanceSpecification
-from gaphor.UML.uml import Element
-class ElementPropertyPath(Element):
-    propertyPath: relation_many[Property]
+class ElementPropertyPath(_Element):
+    propertyPath: relation_many[_Property]
 
 
-from gaphor.UML.uml import Connector
-class BindingConnector(Connector):
+class BindingConnector(_Connector):
     pass
 
 
-from gaphor.UML.uml import ConnectorEnd
-class NestedConnectorEnd(ConnectorEnd, ElementPropertyPath):
+class NestedConnectorEnd(ElementPropertyPath, _ConnectorEnd):
     pass
 
 
-from gaphor.UML.uml import Classifier
-class PropertySpecificType(Classifier):
+class PropertySpecificType(_Classifier):
     pass
 
 
-class EndPathMultiplicity(Property):
+class EndPathMultiplicity(_Property):
     pass
 
 
 class BoundReference(EndPathMultiplicity):
-    bindingPath: relation_many[Property]
-    boundend: relation_many[ConnectorEnd]
+    bindingPath: relation_many[_Property]
+    boundend: relation_many[_ConnectorEnd]
 
 
-class AdjuntProperty(Property):
-    principal: relation_one[Element]
+class AdjuntProperty(_Property):
+    principal: relation_one[_Element]
 
 
-from gaphor.UML.uml import Port
-class ProxyPort(Port):
+class ProxyPort(_Port):
     pass
 
 
-class FullPort(Port):
+class FullPort(_Port):
     pass
 
 
-class FlowProperty(Property):
+class FlowProperty(_Property):
     direction = _enumeration("direction", FlowDirectionKind, FlowDirectionKind.inout)
 
 
@@ -164,39 +184,31 @@ class InterfaceBlock(Block):
     pass
 
 
-from gaphor.UML.uml import InvocationAction
-from gaphor.UML.uml import Trigger
-from gaphor.UML.uml import AddStructuralFeatureValueAction
-class InvocationOnNestedPortAction(ElementPropertyPath, InvocationAction):
-    onNestedPort: relation_many[Port]
+class InvocationOnNestedPortAction(ElementPropertyPath, _InvocationAction):
+    onNestedPort: relation_many[_Port]
 
 
-class TriggerOnNestedPort(ElementPropertyPath, Trigger):
-    onNestedPort: relation_many[Port]
+class TriggerOnNestedPort(ElementPropertyPath, _Trigger):
+    onNestedPort: relation_many[_Port]
 
 
-class AddFlowPropertyValueOnNestedPortAction(AddStructuralFeatureValueAction, ElementPropertyPath):
+class AddFlowPropertyValueOnNestedPortAction(ElementPropertyPath, _AddStructuralFeatureValueAction):
     pass
 
 
-from gaphor.UML.uml import ChangeEvent
-class ChangeSructuralFeatureEvent(ChangeEvent):
-    structuralFeature: relation_one[StructuralFeature]
+class ChangeSructuralFeatureEvent(_ChangeEvent):
+    structuralFeature: relation_one[_StructuralFeature]
 
 
-from gaphor.UML.uml import StructuralFeature
-from gaphor.UML.uml import AcceptEventAction
-class AcceptChangeStructuralFeatureEventAction(AcceptEventAction):
+class AcceptChangeStructuralFeatureEventAction(_AcceptEventAction):
     pass
 
 
-from gaphor.UML.uml import Feature
-class DirectedFeature(Feature):
+class DirectedFeature(_Feature):
     featureDirection = _enumeration("featureDirection", FeatureDirectionKind, FeatureDirectionKind.provided)
 
 
-from gaphor.UML.uml import Generalization
-class Conform(Generalization):
+class Conform(_Generalization):
     pass
 
 
@@ -206,53 +218,49 @@ class View(_Class):
 
 
 class Viewpoint(_Class):
-    concernList: relation_many[Comment]
+    concernList: relation_many[_Comment]
     language: _attribute[str] = _attribute("language", str)
-    method: relation_many[Behavior]
+    method: relation_many[_Behavior]
     presentation: _attribute[str] = _attribute("presentation", str)
     purpose: _attribute[str] = _attribute("purpose", str)
     stakeholder: relation_many[Stakeholder]
 
 
-class Stakeholder(Classifier):
-    concernList: relation_many[Comment]
+class Stakeholder(_Classifier):
+    concernList: relation_many[_Comment]
 
 
-class Expose(Dependency):
+class Expose(_Dependency):
     pass
 
 
-from gaphor.UML.uml import Comment
-class Rationale(Comment):
+class Rationale(_Comment):
     pass
 
 
-class Problem(Comment):
+class Problem(_Comment):
     pass
 
 
-class ElementGroup(Comment):
-    member: relation_many[Element]
+class ElementGroup(_Comment):
+    member: relation_many[_Element]
     name: _attribute[str] = _attribute("name", str)
-    orderedMember: relation_many[Element]
+    orderedMember: relation_many[_Element]
 
 
 class ConstraintBlock(Block):
     pass
 
 
-from gaphor.UML.uml import Parameter
-from gaphor.UML.uml import ActivityEdge
-from gaphor.UML.uml import ParameterSet
-class Optional(Parameter):
+class Optional(_Parameter):
     pass
 
 
-class Rate(ActivityEdge, Parameter):
-    rate: relation_many[InstanceSpecification]
+class Rate(_ActivityEdge, _Parameter):
+    rate: relation_many[_InstanceSpecification]
 
 
-class Probability(ActivityEdge, ParameterSet):
+class Probability(_ActivityEdge, _ParameterSet):
     probability: _attribute[str] = _attribute("probability", str)
 
 
@@ -264,52 +272,45 @@ class Discrete(Rate):
     pass
 
 
-from gaphor.UML.uml import Operation
-from gaphor.UML.uml import ObjectNode
-class ControlOperator(Behavior):
+class ControlOperator(_Behavior):
     pass
 
 
-class NoBuffer(ObjectNode):
+class NoBuffer(_ObjectNode):
     pass
 
 
-class Overwrite(ObjectNode):
+class Overwrite(_ObjectNode):
     pass
 
 
-from gaphor.UML.uml import Abstraction
-class Allocate(Abstraction, DirectedRelationshipPropertyPath):
+class Allocate(DirectedRelationshipPropertyPath, _Abstraction):
     pass
 
 
-from gaphor.UML.uml import ActivityPartition
-class AllocateActivityPartition(ActivityPartition):
+class AllocateActivityPartition(_ActivityPartition):
     pass
 
 
-class Refine(Dependency, DirectedRelationshipPropertyPath):
+class Refine(DirectedRelationshipPropertyPath, _Dependency):
     pass
 
 
-class Tagged(Property):
+class Tagged(_Property):
     nonunique: _attribute[bool] = _attribute("nonunique", bool)
     ordered: _attribute[bool] = _attribute("ordered", bool)
     subsets: _attribute[str] = _attribute("subsets", str)
 
 
-class ClassifierBehaviorProperty(Property):
+class ClassifierBehaviorProperty(_Property):
     pass
 
 
-from gaphor.UML.uml import InformationFlow
-class ItemFlow(InformationFlow):
-    itemProperty: relation_one[Property]
+class ItemFlow(_InformationFlow):
+    itemProperty: relation_one[_Property]
 
 
-from gaphor.UML.uml import Diagram
-from gaphor.UML.uml import Class
-class SysMLDiagram(Diagram):
+class SysMLDiagram(_Diagram):
     pass
 
 
@@ -376,54 +377,54 @@ AbstractRequirement.derivedFrom = derived("derivedFrom", AbstractRequirement, 0,
 AbstractRequirement.master = derived("master", AbstractRequirement, 0, "*",
     _directed_relationship_property_path_target_source(Copy))
 
-# 41: override AbstractRequirement.refinedBy: derived[NamedElement]
+# 41: override AbstractRequirement.refinedBy: derived[_NamedElement]
 
-AbstractRequirement.refinedBy = derived("refinedBy", NamedElement, 0, "*",
+AbstractRequirement.refinedBy = derived("refinedBy", _NamedElement, 0, "*",
     _directed_relationship_property_path_target_source(Refine))
 
-# 46: override AbstractRequirement.satisfiedBy: derived[NamedElement]
+# 46: override AbstractRequirement.satisfiedBy: derived[_NamedElement]
 
-AbstractRequirement.satisfiedBy = derived("satisfiedBy", NamedElement, 0, "*",
+AbstractRequirement.satisfiedBy = derived("satisfiedBy", _NamedElement, 0, "*",
     _directed_relationship_property_path_target_source(Satisfy))
 
-# 51: override AbstractRequirement.tracedTo: derived[NamedElement]
+# 51: override AbstractRequirement.tracedTo: derived[_NamedElement]
 
-AbstractRequirement.tracedTo = derived("tracedTo", NamedElement, 0, "*",
+AbstractRequirement.tracedTo = derived("tracedTo", _NamedElement, 0, "*",
     _directed_relationship_property_path_target_source(Trace))
 
-# 56: override AbstractRequirement.verifiedBy: derived[NamedElement]
+# 56: override AbstractRequirement.verifiedBy: derived[_NamedElement]
 
-AbstractRequirement.verifiedBy = derived("verifiedBy", NamedElement, 0, "*",
+AbstractRequirement.verifiedBy = derived("verifiedBy", _NamedElement, 0, "*",
     _directed_relationship_property_path_target_source(Verify))
 
-DirectedRelationshipPropertyPath.sourcePropertyPath = association("sourcePropertyPath", Property)
-DirectedRelationshipPropertyPath.targetPropertyPath = association("targetPropertyPath", Property)
-DirectedRelationshipPropertyPath.targetContext = association("targetContext", Classifier, upper=1, opposite="targetDirectedRelationshipPropertyPath_")
-DirectedRelationshipPropertyPath.sourceContext = association("sourceContext", Classifier, upper=1)
-Element.owner.add(DirectedRelationshipPropertyPath.targetContext)  # type: ignore[attr-defined]
-Property.itemFlow = association("itemFlow", ItemFlow, upper=1, opposite="itemProperty")
-Element.owner.add(Property.itemFlow)  # type: ignore[attr-defined]
-ConnectorProperty.connector = association("connector", Connector, upper=1, composite=True)
-ParticipantProperty.end_ = association("end_", Property, upper=1, composite=True)
-ValueType.unit = association("unit", InstanceSpecification, upper=1)
-ValueType.quantityKind = association("quantityKind", InstanceSpecification, upper=1)
-ElementPropertyPath.propertyPath = association("propertyPath", Property, lower=1)
-Classifier.targetDirectedRelationshipPropertyPath_ = association("targetDirectedRelationshipPropertyPath_", DirectedRelationshipPropertyPath, composite=True, opposite="targetContext")
-Element.ownedElement.add(Classifier.targetDirectedRelationshipPropertyPath_)  # type: ignore[attr-defined]
-BoundReference.boundend = association("boundend", ConnectorEnd, composite=True)
-BoundReference.bindingPath = derivedunion("bindingPath", Property, lower=1)
-AdjuntProperty.principal = association("principal", Element, upper=1)
-InvocationOnNestedPortAction.onNestedPort = association("onNestedPort", Port, lower=1)
-TriggerOnNestedPort.onNestedPort = association("onNestedPort", Port, lower=1)
-ChangeSructuralFeatureEvent.structuralFeature = association("structuralFeature", StructuralFeature, upper=1)
+DirectedRelationshipPropertyPath.sourcePropertyPath = association("sourcePropertyPath", _Property)
+DirectedRelationshipPropertyPath.targetPropertyPath = association("targetPropertyPath", _Property)
+DirectedRelationshipPropertyPath.targetContext = association("targetContext", _Classifier, upper=1, opposite="targetDirectedRelationshipPropertyPath_")
+DirectedRelationshipPropertyPath.sourceContext = association("sourceContext", _Classifier, upper=1)
+_Element.owner.add(DirectedRelationshipPropertyPath.targetContext)  # type: ignore[attr-defined]
+_Property.itemFlow = association("itemFlow", ItemFlow, upper=1, opposite="itemProperty")
+_Element.owner.add(_Property.itemFlow)  # type: ignore[attr-defined]
+ConnectorProperty.connector = association("connector", _Connector, upper=1, composite=True)
+ParticipantProperty.end_ = association("end_", _Property, upper=1, composite=True)
+ValueType.unit = association("unit", _InstanceSpecification, upper=1)
+ValueType.quantityKind = association("quantityKind", _InstanceSpecification, upper=1)
+ElementPropertyPath.propertyPath = association("propertyPath", _Property, lower=1)
+_Classifier.targetDirectedRelationshipPropertyPath_ = association("targetDirectedRelationshipPropertyPath_", DirectedRelationshipPropertyPath, composite=True, opposite="targetContext")
+_Element.ownedElement.add(_Classifier.targetDirectedRelationshipPropertyPath_)  # type: ignore[attr-defined]
+BoundReference.boundend = association("boundend", _ConnectorEnd, composite=True)
+BoundReference.bindingPath = derivedunion("bindingPath", _Property, lower=1)
+AdjuntProperty.principal = association("principal", _Element, upper=1)
+InvocationOnNestedPortAction.onNestedPort = association("onNestedPort", _Port, lower=1)
+TriggerOnNestedPort.onNestedPort = association("onNestedPort", _Port, lower=1)
+ChangeSructuralFeatureEvent.structuralFeature = association("structuralFeature", _StructuralFeature, upper=1)
 View.stakeholder = derivedunion("stakeholder", Stakeholder)
 View.viewpoint = derivedunion("viewpoint", Viewpoint, upper=1)
-Viewpoint.concernList = association("concernList", Comment, composite=True)
-Viewpoint.method = derivedunion("method", Behavior)
+Viewpoint.concernList = association("concernList", _Comment, composite=True)
+Viewpoint.method = derivedunion("method", _Behavior)
 Viewpoint.stakeholder = association("stakeholder", Stakeholder, composite=True)
-Stakeholder.concernList = association("concernList", Comment, composite=True)
-ElementGroup.member = derivedunion("member", Element)
-ElementGroup.orderedMember = association("orderedMember", Element, composite=True)
-Rate.rate = association("rate", InstanceSpecification, composite=True)
-ItemFlow.itemProperty = association("itemProperty", Property, upper=1, composite=True, opposite="itemFlow")
-Element.ownedElement.add(ItemFlow.itemProperty)  # type: ignore[attr-defined]
+Stakeholder.concernList = association("concernList", _Comment, composite=True)
+ElementGroup.member = derivedunion("member", _Element)
+ElementGroup.orderedMember = association("orderedMember", _Element, composite=True)
+Rate.rate = association("rate", _InstanceSpecification, composite=True)
+ItemFlow.itemProperty = association("itemProperty", _Property, upper=1, composite=True, opposite="itemFlow")
+_Element.ownedElement.add(ItemFlow.itemProperty)  # type: ignore[attr-defined]

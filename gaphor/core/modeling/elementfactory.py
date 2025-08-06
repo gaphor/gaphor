@@ -181,7 +181,7 @@ class ElementFactory(Service):
 
     def is_empty(self) -> bool:
         """Returns ``True`` if the factory holds no elements."""
-        return bool(self._elements)
+        return not bool(self._elements)
 
     @property
     def style_sheet(self) -> StyleSheet | None:

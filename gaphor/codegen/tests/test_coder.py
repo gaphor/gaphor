@@ -3,7 +3,6 @@ import pytest
 from gaphor import UML
 from gaphor.codegen.coder import (
     associations,
-    attribute,
     bases,
     class_declaration,
     is_in_profile,
@@ -13,6 +12,7 @@ from gaphor.codegen.coder import (
     load_modeling_language,
     order_classes,
     resolve_attribute_type_values,
+    superset_attribute,
     variables,
 )
 from gaphor.core.format import parse
@@ -296,17 +296,20 @@ def test_coder_write_association_opposite_not_navigable(
 def test_attribute_from_super_model(
     uml_metamodel: ElementFactory, core_metamodel: ElementFactory
 ):
+    package = UML.Package()
+    package.name = "UML"
     class_ = UML.Class()
     class_.name = "Package"
+    class_.owningPackage = package
 
-    element_type, base = attribute(
+    element_type, base = superset_attribute(
         class_,
         "member",
-        [
+        {
             # Order matters! Base model first.
-            (CoreModelingLanguage(), core_metamodel),
-            (UMLModelingLanguage(), uml_metamodel),
-        ],
+            "Core": (CoreModelingLanguage(), core_metamodel),
+            "UML": (UMLModelingLanguage(), uml_metamodel),
+        },
     )
 
     assert element_type is UML.Package
