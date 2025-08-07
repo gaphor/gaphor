@@ -113,7 +113,7 @@ class ConstraintPropertyItem(Named, ElementPresentation[UML.Property]):
             self.subject,
             Box(
                 CssNode(
-                    "specification",
+                    "constraintpropertyspecification",
                     constraint_element,
                     Text(text=get_text),
                 )

@@ -220,6 +220,10 @@ requirement text {
   white-space: normal;
 }
 
+constraintpropertyspecification {
+  text-align: center;
+}
+
 directedrelationshippropertypath {
   dash-style: 7 5;
 }
