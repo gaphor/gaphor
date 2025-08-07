@@ -10,6 +10,7 @@ from gaphor import UML
 from gaphor.core.modeling.properties import attribute
 from gaphor.diagram.presentation import ElementPresentation, Named
 from gaphor.diagram.shapes import Box, CssNode, Text, draw_border
+from gaphor.SysML import sysml
 from gaphor.UML.classes.stereotype import stereotype_compartments, stereotype_watches
 from gaphor.UML.umlfmt import format_property
 
@@ -17,6 +18,7 @@ from gaphor.UML.umlfmt import format_property
 class ConstraintPropertyItem(Named, ElementPresentation[UML.Property]):
     def __init__(self, diagram, id=None):
         super().__init__(diagram, id)
+        self._type_watcher = None
 
         # Create new Position variables for the inner ports
         self._inner_top_left = Position(0, 0)
@@ -58,11 +60,32 @@ class ConstraintPropertyItem(Named, ElementPresentation[UML.Property]):
         self.watch("show_stereotypes", self.update_shapes)
         self.watch("subject[Property].name")
         self.watch("subject[Property].type.name")
+        self.watch("subject[Property].type", self.on_type_change)
         self.watch("subject[Property].typeValue")
         self.watch("subject[Property].lowerValue")
         self.watch("subject[Property].upperValue")
         self.watch("subject[Property].aggregation", self.update_shapes)
         stereotype_watches(self)
+
+        self.on_type_change()
+
+    def disconnect(self):
+        if self._type_watcher:
+            self._type_watcher.unsubscribe_all()
+            self._type_watcher = None
+        super().disconnect()
+
+    def on_type_change(self, event=None):
+        if self._type_watcher:
+            self._type_watcher.unsubscribe_all()
+            self._type_watcher = None
+
+        prop = self.subject
+        if prop and prop.type and isinstance(prop.type, sysml.Constraint):
+            self._type_watcher = prop.type.watcher()
+            self._type_watcher.watch("specification", self.update_shapes)
+
+        self.update_shapes(event)
 
     show_stereotypes: attribute[int] = attribute("show_stereotypes", int)
 
@@ -71,6 +94,31 @@ class ConstraintPropertyItem(Named, ElementPresentation[UML.Property]):
         Return the list of consistent port objects.
         """
         return self._ports
+
+    def specification_compartment(self):
+        """Create a compartment to display the specification of the constraint."""
+        prop = self.subject
+        if not (prop and prop.type and isinstance(prop.type, sysml.Constraint)):
+            return Box()
+
+        constraint_element = prop.type
+
+        def get_text():
+            if constraint_element.specification:
+                return f"{{ {constraint_element.specification} }}"
+            return ""
+
+        return CssNode(
+            "compartment",
+            self.subject,
+            Box(
+                CssNode(
+                    "specification",
+                    constraint_element,
+                    Text(text=get_text),
+                )
+            ),
+        )
 
     def update_shapes(self, event=None):
         def draw_rounded_border(box, context, bounding_box):
@@ -97,7 +145,9 @@ class ConstraintPropertyItem(Named, ElementPresentation[UML.Property]):
                     ),
                 ),
             ),
-            # Second, invisible compartment to push the first to the top
+            # New compartment for the specification
+            self.specification_compartment(),
+            # Second, invisible compartment to push the content to the top
             CssNode(
                 "compartment",
                 self.subject,
