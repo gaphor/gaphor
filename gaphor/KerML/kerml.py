@@ -18,6 +18,8 @@ from gaphor.core.modeling.properties import (
 )
 
 
+
+
 from gaphor.core.modeling.base import Base as _Base
 
 
@@ -41,9 +43,9 @@ class Element(_Base):
     elementId: _attribute[str] = _attribute("elementId", str)
     isImpliedIncluded: _attribute[bool] = _attribute("isImpliedIncluded", bool, default=False)
     ownedAnnotation: relation_many[Annotation]
-    ownedElement: relation_many[Element]
+    ownedElement: derived[Element]
     ownedRelationship: relation_many[Relationship]
-    owner: relation_one[Element]
+    owner: derived[Element]
     owningMembership: relation_one[OwningMembership]
     owningNamespace: relation_one[Namespace]
     owningRelationship: relation_one[Relationship]
@@ -502,8 +504,16 @@ Element.owningMembership = derivedunion("owningMembership", OwningMembership, up
 Element.owningRelationship = association("owningRelationship", Relationship, upper=1, opposite="ownedRelatedElement")
 Element.owningNamespace = derivedunion("owningNamespace", Namespace, upper=1)
 Element.ownedRelationship = association("ownedRelationship", Relationship, opposite="owningRelatedElement")
-Element.owner = derivedunion("owner", Element, upper=1)
-Element.ownedElement = derivedunion("ownedElement", Element)
+# 17: override Element.owner: derived[Element]
+
+Element.owner = derived("owner", Element, 0, 1,
+    lambda e: e.owningRelationship and [e.owningRelationship.owningRelatedElement] or [None])
+
+# 22: override Element.ownedElement: derived[Element]
+
+Element.ownedElement = derived("ownedElement", Element, 0, "*",
+    lambda e: e.ownedRelationship and e.ownedRelationship[:].ownedRelatedElement)
+
 Element.documentation = derivedunion("documentation", Documentation)
 Element.ownedAnnotation = derivedunion("ownedAnnotation", Annotation)
 Element.textualRepresentation = derivedunion("textualRepresentation", TextualRepresentation)

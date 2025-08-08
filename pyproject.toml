@@ -201,6 +201,7 @@ c4model.script = """gaphor.codegen.coder:main(
     )"""
 kerml.script = """gaphor.codegen.coder:main(
     modelfile='models/KerML-25-04-04.xmi',
+    overridesfile='models/KerML.override',
     outfile='gaphor/KerML/kerml.py',
     supermodelfiles=[('Core', 'models/Core.gaphor')]
     )"""
