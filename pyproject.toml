@@ -201,16 +201,16 @@ lint = "pre-commit run --all-files"
 docs = { "cwd" = "docs", "shell" = "sphinx-build -W -b html . _build/html" }
 docs-gettext-pot = { "cwd" = "docs", "shell" = "sphinx-build -b gettext . locale" }
 clean = { "shell" = "rm -rf dist build _packaging/dist _packaging/build _packaging/windows/file_version_info.txt docs/_build" }
-appdata = { "shell" = "python data/update-appdata.py $(poetry version -s)"}
-package = { "cwd" = "_packaging", shell = "pyinstaller -y gaphor.spec"}
-win-installer = { "script" = "_packaging.windows.build-win-installer:main" }
-gettext-pot = "pybabel extract -o po/gaphor.pot -F po/babel.ini -k i18nize gaphor"
-gettext-po = { "script" = "po.build-babel:update_po_files" }
-gettext-mo-all = { "script" = "po.build-babel:compile_mo_all" }
-gettext-mo-release = { "script" = "po.build-babel:compile_mo_release" }
+appdata = { "script" = "scripts.update_appdata" }
+package = { "cwd" = "_packaging", shell = "pyinstaller -y gaphor.spec" }
+win-installer = { "script" = "scripts.build_win_installer:main" }
+gettext-pot = { "shell" = "pybabel extract -o po/gaphor.pot -F po/babel.ini -k i18nize gaphor" }
+gettext-po = { "script" = "scripts.build_babel:update_po_files" }
+gettext-mo-all = { "script" = "scripts.build_babel:compile_mo_all" }
+gettext-mo-release = { "script" = "scripts.build_babel:compile_mo_release" }
 gettext-docs-pot = { "cwd" = "docs", "shell" = "sphinx-build -b gettext . locale" }
 gettext-docs-po = { "cwd" = "docs", "shell" = "sphinx-intl update -p locale" }
-translations = ["gettext-pot", "gettext-po", "gettext-mo-all", "gettext-docs-pot", "gettext-docs-po"]
+translations = [ "gettext-pot", "gettext-po", "gettext-mo-all", "gettext-docs-pot", "gettext-docs-po" ]
 icons = { "shell" = "make -C gaphor/ui/icons" }
 
 [tool.pytest.ini_options]

@@ -2,6 +2,7 @@
 #
 # Update release info in appdata based  on Change log.
 
+import subprocess
 import sys
 import textwrap
 import time
@@ -100,8 +101,16 @@ def run_tests():
 
 
 if __name__ == "__main__":
-    if len(sys.argv) > 1:
-        version = sys.argv[1]
+    if len(sys.argv) > 1 and sys.argv[1] == "--test":
+        run_tests()
+    else:
+        version = subprocess.run(
+            ["poetry", "version", "-s"],
+            encoding="utf-8",
+            capture_output=True,
+            text=True,
+            check=True,
+        ).stdout.rstrip()
         today = time.strftime("%Y-%m-%d")
         changelog = parse_changelog(Path("CHANGELOG.md").read_text())
         update_release(
@@ -110,5 +119,3 @@ if __name__ == "__main__":
             today,
             changelog.get(version, ["Bug fixes."]),
         )
-    else:
-        run_tests()
