@@ -9,8 +9,10 @@ from gaphor.C4Model import c4model
 from gaphor.codegen import coder
 from gaphor.codegen.coder import main
 from gaphor.core.modeling import coremodel
+from gaphor.KerML import kerml
 from gaphor.RAAML import raaml
 from gaphor.SysML import sysml
+from gaphor.SysML2 import sysml2
 from gaphor.UML import uml
 
 
@@ -97,6 +99,37 @@ def test_raaml_model(tmp_path):
     )
 
     current_model = Path(raaml.__file__).read_text(encoding="utf-8")
+    generated_model = outfile.read_text(encoding="utf-8")
+
+    assert generated_model == current_model
+
+
+def test_kerml_model(tmp_path):
+    outfile = tmp_path / "kerml.py"
+    main(
+        modelfile="models/KerML-25-04-04.xmi",
+        supermodelfiles=[("Core", "models/Core.gaphor")],
+        outfile=outfile,
+    )
+
+    current_model = Path(kerml.__file__).read_text(encoding="utf-8")
+    generated_model = outfile.read_text(encoding="utf-8")
+
+    assert generated_model == current_model
+
+
+def test_sysml2_model(tmp_path):
+    outfile = tmp_path / "sysml2.py"
+    main(
+        modelfile="models/SysML2-25-02-15.xmi",
+        supermodelfiles=[
+            ("KerML", "models/KerML-25-04-04.xmi"),
+            ("Core", "models/Core.gaphor"),
+        ],
+        outfile=outfile,
+    )
+
+    current_model = Path(sysml2.__file__).read_text(encoding="utf-8")
     generated_model = outfile.read_text(encoding="utf-8")
 
     assert generated_model == current_model
