@@ -59,7 +59,7 @@ jobs:
       - name: Check REUSE compliance
         run: pip install --constraint=.github/github-requirements.txt reuse && python -m reuse lint
       - name: Check translations
-        run: pip install --constraint=.github/github-requirements.txt babel && python po/check-babel.py
+        run: pip install --constraint=.github/github-requirements.txt babel && python scripts/check_babel.py
       - name: Check Poetry lock file integrity
         run: |
           python${python_version} -m pip install --constraint=.github/github-requirements.txt poetry
