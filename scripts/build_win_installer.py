@@ -100,7 +100,7 @@ def build_portable_installer(
 
 
 def main():
-    working_dir: Path = Path(__file__).resolve().parents[1]
+    working_dir: Path = Path("_packaging").resolve()
     dist: Path = working_dir / "dist"
     Path(dist / "gaphor").mkdir(parents=True, exist_ok=True)
 
