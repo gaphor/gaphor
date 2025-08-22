@@ -127,7 +127,7 @@ class umlproperty:
     upper: Upper = 1
 
     def __init__(self, name: str):
-        self.dependent_properties: set[subsettable_umlproperty | redefine] = set()
+        self.dependent_properties: set[subsettable_property] = set()
         self.name = name
         self._name = f"_{name}"
 
@@ -172,8 +172,8 @@ class umlproperty:
             d.propagate(event)
 
 
-class subsettable_umlproperty(umlproperty):
-    """Base class for properties that can be subsetted"""
+class subsettable_property(umlproperty):
+    """Base class for properties that can be subsetted."""
 
     subsets: set[umlproperty]
 
@@ -323,7 +323,7 @@ class enumeration(umlproperty):
             self.handle(AttributeUpdated(obj, self, old, self.default))
 
 
-class association(subsettable_umlproperty):
+class association(subsettable_property):
     """Association, both uni- and bi-directional.
 
     Element.assoc = association('assoc', Element, opposite='other')
@@ -700,7 +700,7 @@ class unioncache:
     version: int
 
 
-class derived(subsettable_umlproperty, Generic[T]):
+class derived(subsettable_property, Generic[T]):
     """Base class for derived properties, both derived unions and custom
     properties.
 
@@ -922,7 +922,7 @@ class derivedunion(derived[T]):
             log.error(f"Don't know how to handle event {event} for derived union")
 
 
-class redefine(umlproperty):
+class redefine(subsettable_property):
     """Redefined association.
 
       Element.redefine = redefine(Element, 'redefine', Class, Element.assoc)
@@ -940,12 +940,12 @@ class redefine(umlproperty):
         opposite: str | None = None,
     ):
         super().__init__(name)
-        assert isinstance(original, association | derived), (
+        assert isinstance(original, association | derived | redefine), (
             f"expected association or derived, got {original}"
         )
         self.decl_class = decl_class
         self.type = type
-        self.original: association | derived = original
+        self.original: association | derived | redefine = original
         self.upper = original.upper
         self.lower = original.lower
         self._opposite = opposite
