@@ -154,7 +154,7 @@ jobs:
     needs: lint
     runs-on: ubuntu-24.04
     container:
-      image: bilelmoussaoui/flatpak-github-actions:gnome-45
+      image: ghcr.io/flathub-infra/flatpak-github-actions:gnome-49
       options: --privileged
     steps:
       - name: Harden Runner
@@ -171,7 +171,7 @@ jobs:
         with:
           path: ~/.cache/pip
           key: ${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}-22.04
-      - uses: flatpak/flatpak-github-actions/flatpak-builder@10a3c29f0162516f0f68006be14c92f34bd4fa6c # master
+      - uses: flatpak/flatpak-github-actions/flatpak-builder@92ae9851ad316786193b1fd3f40c4b51eb5cb101 # master
         with:
           bundle: gaphor.flatpak
           manifest-path: org.gaphor.Gaphor.json
