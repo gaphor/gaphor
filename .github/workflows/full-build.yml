@@ -153,7 +153,7 @@ jobs:
     needs: lint
     runs-on: ubuntu-24.04
     container:
-      image: bilelmoussaoui/flatpak-github-actions:gnome-45
+      image: ghcr.io/flathub-infra/actions-images:gnome-48
       options: --privileged
     steps:
       - name: Harden Runner
