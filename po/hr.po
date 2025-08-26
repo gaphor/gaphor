@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gaphor\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2025-04-23 21:47+0200\n"
-"PO-Revision-Date: 2025-08-25 23:27+0000\n"
+"PO-Revision-Date: 2025-08-27 00:59+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language-Team: Croatian <https://hosted.weblate.org/projects/gaphor/gaphor/"
 "hr/>\n"
@@ -1530,11 +1530,11 @@ msgstr "Pseudostanje izbora"
 
 #: gaphor/UML/states/statestoolbox.py:190
 msgid "Entry Point Pseudostate"
-msgstr "Pseudostanje točke ulaza"
+msgstr "Pseudostanje ulazne točke"
 
 #: gaphor/UML/states/statestoolbox.py:202
 msgid "Exit Point Pseudostate"
-msgstr "Pseudostanje točke izlaza"
+msgstr "Pseudostanje izlazne točke"
 
 #: gaphor/UML/states/statestoolbox.py:214
 msgid "Terminate Pseudostate"
