@@ -135,7 +135,10 @@ ICONS=diagram \
 	strategy \
 	context \
 	assumption \
-	justification
+	justification \
+	sysml-constraint \
+	sysml-constraint-property \
+	sysml-constraint-parameter
 
 
 ICON_THEME=hicolor/scalable/actions
