@@ -21,7 +21,7 @@ parametric_blocks = ToolSection(
         ToolDef(
             "toolbox-constraint-block",
             gettext("Constraint Block"),
-            "gaphor-constraint-block-symbolic",
+            "gaphor-sysml-constraint-symbolic",
             None,
             new_item_factory(
                 sysml_items.ConstraintItem,
@@ -32,7 +32,7 @@ parametric_blocks = ToolSection(
         ToolDef(
             "toolbox-constraint-property",
             gettext("Constraint Property"),
-            "gaphor-property-symbolic",
+            "gaphor-sysml-constraint-property-symbolic",
             None,
             new_item_factory(
                 sysml_items.ConstraintPropertyItem,
@@ -43,7 +43,7 @@ parametric_blocks = ToolSection(
         ToolDef(
             "toolbox-constraint-parameter",
             gettext("Constraint Parameter"),
-            "gaphor-property-symbolic",
+            "gaphor-sysml-constraint-parameter-symbolic",
             None,
             new_item_factory(
                 sysml_items.ConstraintParameterItem,
