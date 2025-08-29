@@ -4,6 +4,8 @@
 
 from __future__ import annotations
 
+import enum
+
 from gaphor.core.modeling.properties import (
     association,
     attribute as _attribute,
@@ -14,6 +16,14 @@ from gaphor.core.modeling.properties import (
     relation_many,
     relation_one,
 )
+
+
+
+
+class ChangeKind(enum.StrEnum):
+    add = "add"
+    remove = "remove"
+    update = "update"
 
 
 # 1: override Base
@@ -31,7 +41,7 @@ from gaphor.core.modeling.stylesheet import StyleSheet
 class PendingChange(Base):
     applied: _attribute[int] = _attribute("applied", int, default=0)
     element_id: _attribute[str] = _attribute("element_id", str)
-    op = _enumeration("op", ("add", "remove", "update"), "add")
+    op = _enumeration("op", ChangeKind, ChangeKind.add)
 
 
 class ElementChange(PendingChange):

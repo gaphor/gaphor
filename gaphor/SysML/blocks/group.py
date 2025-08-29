@@ -2,7 +2,8 @@ from gi.repository import GLib
 
 from gaphor import UML
 from gaphor.diagram.group import group, ungroup
-from gaphor.SysML.sysml import Block, Property
+from gaphor.SysML.sysml import Block
+from gaphor.UML import Property
 
 
 def _refresh_property_item(item):

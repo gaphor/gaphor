@@ -4,6 +4,8 @@
 
 from __future__ import annotations
 
+import enum
+
 from gaphor.core.modeling.properties import (
     association,
     attribute as _attribute,
@@ -16,14 +18,18 @@ from gaphor.core.modeling.properties import (
 )
 
 
-from gaphor.UML.uml import Actor
-class Person(Actor):
+from gaphor.UML.uml import Actor as _Actor
+from gaphor.UML.uml import Package as _Package
+from gaphor.UML.uml import Dependency as _Dependency
+from gaphor.UML.uml import Diagram as _Diagram
+
+
+class Person(_Actor):
     description: _attribute[str] = _attribute("description", str)
     location: _attribute[str] = _attribute("location", str)
 
 
-from gaphor.UML.uml import Package
-class Container(Package):
+class Container(_Package):
     description: _attribute[str] = _attribute("description", str)
     location: _attribute[str] = _attribute("location", str)
     ownerContainer: relation_one[Container]
@@ -36,20 +42,18 @@ class Database(Container):
     pass
 
 
-from gaphor.UML.uml import Dependency as _Dependency
 class Dependency(_Dependency):
     technology: _attribute[str] = _attribute("technology", str)
 
 
-from gaphor.UML.uml import Diagram
-class C4Diagram(Diagram):
+class C4Diagram(_Diagram):
     diagramType: _attribute[str] = _attribute("diagramType", str, default="c4")
 
 
 
 Container.ownerContainer = association("ownerContainer", Container, upper=1, opposite="owningContainer")
 Container.owningContainer = association("owningContainer", Container, composite=True, opposite="ownerContainer")
-from gaphor.UML.uml import NamedElement
-NamedElement.namespace.add(Container.ownerContainer)  # type: ignore[attr-defined]
-from gaphor.UML.uml import Namespace
-Namespace.ownedMember.add(Container.owningContainer)  # type: ignore[attr-defined]
+from gaphor.UML.uml import NamedElement as _NamedElement
+_NamedElement.namespace.add(Container.ownerContainer)  # type: ignore[attr-defined]
+from gaphor.UML.uml import Namespace as _Namespace
+_Namespace.ownedMember.add(Container.owningContainer)  # type: ignore[attr-defined]

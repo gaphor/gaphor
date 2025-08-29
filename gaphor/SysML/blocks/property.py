@@ -26,12 +26,12 @@ class PropertyItem(Named, ElementPresentation[UML.Property]):
         self._visual_children_count: int = 0
 
         self.watch("show_stereotypes", self.update_shapes)
-        self.watch("subject[Property].name")
-        self.watch("subject[Property].type.name")
-        self.watch("subject[Property].typeValue")
-        self.watch("subject[Property].lowerValue")
-        self.watch("subject[Property].upperValue")
-        self.watch("subject[Property].aggregation", self.update_shapes)
+        self.watch("subject[UML:Property].name")
+        self.watch("subject[UML:Property].type.name")
+        self.watch("subject[UML:Property].typeValue")
+        self.watch("subject[UML:Property].lowerValue")
+        self.watch("subject[UML:Property].upperValue")
+        self.watch("subject[UML:Property].aggregation", self.update_shapes)
         stereotype_watches(self)
         self.watch("subject[Property].type", self.update_shapes)
 

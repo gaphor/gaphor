@@ -1,6 +1,6 @@
 [project]
 name = "gaphor"
-version = "3.1.0"
+version = "3.2.0"
 description = "Gaphor is the simple modeling tool written in Python."
 authors = [
     { name = "Arjan Molenaar", email = "gaphor@gmail.com" },
@@ -30,7 +30,7 @@ classifiers = [
     "Topic :: Software Development :: Documentation",
 ]
 
-requires-python = ">=3.11,<3.14"
+requires-python = ">=3.12,<3.14"
 
 dependencies = [
     "pycairo>=1.22.0",
@@ -125,23 +125,23 @@ include = [
 exclude = ["**/tests", "gaphor/conftest.py" ]
 
 [tool.poetry.group.dev.dependencies]
-pytest = ">=7.1,<8.4"
+pytest = ">=7.1,<8.5"
 pytest-archon = "^0.0"
-pytest-cov = ">=4,<6"
+pytest-cov = ">=4,<7"
 pytest-randomly = "^3.12.0"
 xdoctest = "^1.1.0"
-hypothesis = "^6.54.5"
-ipython = "^8.5.0"
+hypothesis = "^6.138.3"
+ipython = "^9.4.0"
 sphinx = ">=6,<9"
 babelgladeextractor = "^0.7"
-pytest-asyncio = "^0.23.8"
+pytest-asyncio = "^1.1.0"
 markdown-it-py = ">=3.0,<4.0"
 
 [tool.poetry.group.lint.dependencies]
-pre-commit = ">=2.20,<4.0"
+pre-commit = ">=2.20,<5.0"
 
 [tool.poetry.group.automation.dependencies]
-poethepoet = ">=0.27.0,<0.29.0"
+poethepoet = ">=0.27.0,<0.38.0"
 
 [tool.poetry.group.docs]
 optional=true
@@ -149,18 +149,17 @@ optional=true
 [tool.poetry.group.docs.dependencies]
 sphinx = ">=6,<9"
 sphinx-copybutton = "^0.5.0"
-sphinx-intl = "^2.1.0"
-myst-nb = ">=0.17.1,<1.2.0"
-furo = ">=2022,<2025"
+sphinx-intl = "^2.3.2"
+myst-nb = ">=0.17.1,<1.4.0"
+furo = ">=2022,<2026"
 
 [tool.poetry.group.packaging]
 optional=true
 
 [tool.poetry.group.packaging.dependencies]
 pyinstaller = ">=6.13.0"
-pyinstaller-versionfile = "^2.0.0"
+pyinstaller-versionfile = "^3.0.1"
 semver = ">=2.13,<4.0"
-tomli = { version = ">=1.2,<3.0", python = "<3.11" }
 dmgbuild = {version = "^1.6.2", markers = "sys_platform == 'darwin'" }
 
 [tool.poe.tasks]
@@ -202,16 +201,16 @@ lint = "pre-commit run --all-files"
 docs = { "cwd" = "docs", "shell" = "sphinx-build -W -b html . _build/html" }
 docs-gettext-pot = { "cwd" = "docs", "shell" = "sphinx-build -b gettext . locale" }
 clean = { "shell" = "rm -rf dist build _packaging/dist _packaging/build _packaging/windows/file_version_info.txt docs/_build" }
-appdata = { "shell" = "python data/update-appdata.py $(poetry version -s)"}
-package = { "cwd" = "_packaging", shell = "pyinstaller -y gaphor.spec"}
-win-installer = { "script" = "_packaging.windows.build-win-installer:main" }
-gettext-pot = "pybabel extract -o po/gaphor.pot -F po/babel.ini -k i18nize gaphor"
-gettext-po = { "script" = "po.build-babel:update_po_files" }
-gettext-mo-all = { "script" = "po.build-babel:compile_mo_all" }
-gettext-mo-release = { "script" = "po.build-babel:compile_mo_release" }
+appdata = { "script" = "scripts.update_appdata" }
+package = { "cwd" = "_packaging", shell = "pyinstaller -y gaphor.spec" }
+win-installer = { "script" = "scripts.build_win_installer:main" }
+gettext-pot = { "shell" = "pybabel extract -o po/gaphor.pot -F po/babel.ini -k i18nize gaphor" }
+gettext-po = { "script" = "scripts.build_babel:update_po_files" }
+gettext-mo-all = { "script" = "scripts.build_babel:compile_mo_all" }
+gettext-mo-release = { "script" = "scripts.build_babel:compile_mo_release" }
 gettext-docs-pot = { "cwd" = "docs", "shell" = "sphinx-build -b gettext . locale" }
 gettext-docs-po = { "cwd" = "docs", "shell" = "sphinx-intl update -p locale" }
-translations = ["gettext-pot", "gettext-po", "gettext-mo-all", "gettext-docs-pot", "gettext-docs-po"]
+translations = [ "gettext-pot", "gettext-po", "gettext-mo-all", "gettext-docs-pot", "gettext-docs-po" ]
 icons = { "shell" = "make -C gaphor/ui/icons" }
 
 [tool.pytest.ini_options]
@@ -228,7 +227,7 @@ addopts = [
 junit_family = "xunit1"
 
 [tool.mypy]
-python_version = "3.11"
+python_version = "3.12"
 warn_return_any = true
 warn_unused_configs = true
 warn_redundant_casts = true

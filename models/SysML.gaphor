@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<gaphor xmlns="https://gaphor.org/model" xmlns:Core="https://gaphor.org/modelinglanguage/Core" xmlns:UML="https://gaphor.org/modelinglanguage/UML" version="4" gaphor-version="3.0.0">
+<gaphor xmlns="https://gaphor.org/model" xmlns:Core="https://gaphor.org/modelinglanguage/Core" xmlns:UML="https://gaphor.org/modelinglanguage/UML" version="4" gaphor-version="3.1.0">
 <model>
 <UML:Diagram id="7273ceab-20df-11ea-9209-e76c3117c943">
 <name>
@@ -82,7 +82,6 @@
 <ref refid="3f40e394-2141-11ea-ab0b-c72c0738acd2"/>
 <ref refid="3b0d35d4-2141-11ea-ab0b-c72c0738acd2"/>
 <ref refid="3165eeb9-2141-11ea-ab0b-c72c0738acd2"/>
-<ref refid="f6ed61ee-292a-11ee-aad9-e38f5215237c"/>
 </reflist>
 </ownedType>
 <owningPackage>
@@ -106,7 +105,6 @@
 <ref refid="3f40e394-2141-11ea-ab0b-c72c0738acd2"/>
 <ref refid="3b0d35d4-2141-11ea-ab0b-c72c0738acd2"/>
 <ref refid="3165eeb9-2141-11ea-ab0b-c72c0738acd2"/>
-<ref refid="f6ed61ee-292a-11ee-aad9-e38f5215237c"/>
 </reflist>
 </packagedElement>
 <presentation>
@@ -423,8 +421,6 @@
 <ref refid="0b62591a-2117-11ea-ab0b-c72c0738acd2"/>
 <ref refid="3682e682-2117-11ea-ab0b-c72c0738acd2"/>
 <ref refid="ab211964-2117-11ea-ab0b-c72c0738acd2"/>
-<ref refid="9fa4b790-970e-11ea-a9a3-73d6aeff039a"/>
-<ref refid="d151d128-970f-11ea-a9a3-73d6aeff039a"/>
 <ref refid="f70c44a2-2117-11ea-ab0b-c72c0738acd2"/>
 <ref refid="5b897d74-2117-11ea-ab0b-c72c0738acd2"/>
 <ref refid="f17fec93-2116-11ea-ab0b-c72c0738acd2"/>
@@ -437,6 +433,8 @@
 <ref refid="91156aa4-5921-11ec-befa-0456e5e540ed"/>
 <ref refid="996a85fe-5921-11ec-befa-0456e5e540ed"/>
 <ref refid="5a9cebd2-633a-11ec-ad85-0456e5e540ed"/>
+<ref refid="8e353f72-6c72-11f0-8871-be7f4daace3f"/>
+<ref refid="c1c1e5c0-6c72-11f0-8871-be7f4daace3f"/>
 </reflist>
 </ownedType>
 <owningPackage>
@@ -458,8 +456,6 @@
 <ref refid="0b62591a-2117-11ea-ab0b-c72c0738acd2"/>
 <ref refid="3682e682-2117-11ea-ab0b-c72c0738acd2"/>
 <ref refid="ab211964-2117-11ea-ab0b-c72c0738acd2"/>
-<ref refid="9fa4b790-970e-11ea-a9a3-73d6aeff039a"/>
-<ref refid="d151d128-970f-11ea-a9a3-73d6aeff039a"/>
 <ref refid="f70c44a2-2117-11ea-ab0b-c72c0738acd2"/>
 <ref refid="5b897d74-2117-11ea-ab0b-c72c0738acd2"/>
 <ref refid="f17fec93-2116-11ea-ab0b-c72c0738acd2"/>
@@ -472,6 +468,8 @@
 <ref refid="91156aa4-5921-11ec-befa-0456e5e540ed"/>
 <ref refid="996a85fe-5921-11ec-befa-0456e5e540ed"/>
 <ref refid="5a9cebd2-633a-11ec-ad85-0456e5e540ed"/>
+<ref refid="8e353f72-6c72-11f0-8871-be7f4daace3f"/>
+<ref refid="c1c1e5c0-6c72-11f0-8871-be7f4daace3f"/>
 </reflist>
 </packagedElement>
 <presentation>
@@ -1542,9 +1540,6 @@
 </value>
 </UML:LiteralUnlimitedNatural>
 <UML:Property id="6f61f5d4-20e4-11ea-9209-e76c3117c943">
-<class_>
-<ref refid="2d1ce65e-20e2-11ea-9209-e76c3117c943"/>
-</class_>
 <isDerived>
 <val>1</val>
 </isDerived>
@@ -1587,9 +1582,6 @@
 </value>
 </UML:LiteralUnlimitedNatural>
 <UML:Property id="9d23dc6c-20e4-11ea-9209-e76c3117c943">
-<class_>
-<ref refid="2d1ce65e-20e2-11ea-9209-e76c3117c943"/>
-</class_>
 <isDerived>
 <val>1</val>
 </isDerived>
@@ -1621,9 +1613,6 @@
 </value>
 </UML:LiteralUnlimitedNatural>
 <UML:Property id="aa3e55bc-20e4-11ea-9209-e76c3117c943">
-<class_>
-<ref refid="2d1ce65e-20e2-11ea-9209-e76c3117c943"/>
-</class_>
 <name>
 <val>externalId</val>
 </name>
@@ -1660,9 +1649,6 @@
 </value>
 </UML:LiteralUnlimitedNatural>
 <UML:Property id="b751a2f4-20e4-11ea-9209-e76c3117c943">
-<class_>
-<ref refid="2d1ce65e-20e2-11ea-9209-e76c3117c943"/>
-</class_>
 <isDerived>
 <val>1</val>
 </isDerived>
@@ -1705,9 +1691,6 @@
 </value>
 </UML:LiteralUnlimitedNatural>
 <UML:Property id="dc7813b0-20e4-11ea-9209-e76c3117c943">
-<class_>
-<ref refid="2d1ce65e-20e2-11ea-9209-e76c3117c943"/>
-</class_>
 <isDerived>
 <val>1</val>
 </isDerived>
@@ -1750,9 +1733,6 @@
 </value>
 </UML:LiteralUnlimitedNatural>
 <UML:Property id="e31b6276-20e4-11ea-9209-e76c3117c943">
-<class_>
-<ref refid="2d1ce65e-20e2-11ea-9209-e76c3117c943"/>
-</class_>
 <isDerived>
 <val>1</val>
 </isDerived>
@@ -1784,9 +1764,6 @@
 </value>
 </UML:LiteralUnlimitedNatural>
 <UML:Property id="ed597250-20e4-11ea-9209-e76c3117c943">
-<class_>
-<ref refid="2d1ce65e-20e2-11ea-9209-e76c3117c943"/>
-</class_>
 <name>
 <val>text</val>
 </name>
@@ -1823,9 +1800,6 @@
 </value>
 </UML:LiteralUnlimitedNatural>
 <UML:Property id="f63b8da4-20e4-11ea-9209-e76c3117c943">
-<class_>
-<ref refid="2d1ce65e-20e2-11ea-9209-e76c3117c943"/>
-</class_>
 <isDerived>
 <val>1</val>
 </isDerived>
@@ -2131,9 +2105,6 @@
 </specialization>
 </UML:Stereotype>
 <UML:Property id="6c2d7f8e-20e7-11ea-9209-e76c3117c943">
-<class_>
-<ref refid="635e0dce-20e7-11ea-9209-e76c3117c943"/>
-</class_>
 <defaultValue>
 <ref refid="0b2bc374-e405-11ef-8b16-14abc554333b"/>
 </defaultValue>
@@ -2478,9 +2449,6 @@
 <association>
 <ref refid="1b78fc3e-2101-11ea-ab0b-c72c0738acd2"/>
 </association>
-<class_>
-<ref refid="07a782c0-2101-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <name>
 <val>baseClass</val>
 </name>
@@ -2498,9 +2466,6 @@
 <association>
 <ref refid="1b78fc3e-2101-11ea-ab0b-c72c0738acd2"/>
 </association>
-<class_>
-<ref refid="1178a6b2-2101-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <structuredClassifier>
 <ref refid="1178a6b2-2101-11ea-ab0b-c72c0738acd2"/>
 </structuredClassifier>
@@ -2582,9 +2547,6 @@
 <association>
 <ref refid="5929428c-2101-11ea-ab0b-c72c0738acd2"/>
 </association>
-<class_>
-<ref refid="28a70a72-2101-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <name>
 <val>baseClass</val>
 </name>
@@ -2602,9 +2564,6 @@
 <association>
 <ref refid="5929428c-2101-11ea-ab0b-c72c0738acd2"/>
 </association>
-<class_>
-<ref refid="1178a6b2-2101-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <structuredClassifier>
 <ref refid="1178a6b2-2101-11ea-ab0b-c72c0738acd2"/>
 </structuredClassifier>
@@ -2641,9 +2600,6 @@
 <association>
 <ref refid="5f7df02e-2101-11ea-ab0b-c72c0738acd2"/>
 </association>
-<class_>
-<ref refid="1f09001a-2101-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <name>
 <val>baseClass</val>
 </name>
@@ -2661,9 +2617,6 @@
 <association>
 <ref refid="5f7df02e-2101-11ea-ab0b-c72c0738acd2"/>
 </association>
-<class_>
-<ref refid="1178a6b2-2101-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <structuredClassifier>
 <ref refid="1178a6b2-2101-11ea-ab0b-c72c0738acd2"/>
 </structuredClassifier>
@@ -2706,9 +2659,6 @@
 </value>
 </UML:LiteralUnlimitedNatural>
 <UML:Property id="8cfadb7a-2101-11ea-ab0b-c72c0738acd2">
-<class_>
-<ref refid="07a782c0-2101-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <name>
 <val>connector</val>
 </name>
@@ -2734,9 +2684,6 @@
 </value>
 </UML:LiteralUnlimitedNatural>
 <UML:Property id="94c1d354-2101-11ea-ab0b-c72c0738acd2">
-<class_>
-<ref refid="1f09001a-2101-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <name>
 <val>end_</val>
 </name>
@@ -2797,9 +2744,6 @@
 <association>
 <ref refid="c4e10aaa-2101-11ea-ab0b-c72c0738acd2"/>
 </association>
-<class_>
-<ref refid="7c3c3a9a-2101-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <name>
 <val>baseClass</val>
 </name>
@@ -2817,9 +2761,6 @@
 <association>
 <ref refid="c4e10aaa-2101-11ea-ab0b-c72c0738acd2"/>
 </association>
-<class_>
-<ref refid="bacfa8c8-2101-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <structuredClassifier>
 <ref refid="bacfa8c8-2101-11ea-ab0b-c72c0738acd2"/>
 </structuredClassifier>
@@ -3352,9 +3293,6 @@
 <association>
 <ref refid="a940fca8-2104-11ea-ab0b-c72c0738acd2"/>
 </association>
-<class_>
-<ref refid="7c3c3a9a-2101-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <lowerValue>
 <ref refid="df16f962-e3d8-11ef-a509-be7f4daace3f"/>
 </lowerValue>
@@ -3463,9 +3401,6 @@
 <association>
 <ref refid="cc0b4f19-2104-11ea-ab0b-c72c0738acd2"/>
 </association>
-<class_>
-<ref refid="7c3c3a9a-2101-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <lowerValue>
 <ref refid="df16fc28-e3d8-11ef-a509-be7f4daace3f"/>
 </lowerValue>
@@ -4066,9 +4001,6 @@
 <association>
 <ref refid="b6f05de8-2105-11ea-ab0b-c72c0738acd2"/>
 </association>
-<class_>
-<ref refid="9051c096-2105-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <lowerValue>
 <ref refid="df174b06-e3d8-11ef-a509-be7f4daace3f"/>
 </lowerValue>
@@ -4188,9 +4120,6 @@
 <association>
 <ref refid="863f06e6-2109-11ea-ab0b-c72c0738acd2"/>
 </association>
-<class_>
-<ref refid="79455f30-2109-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <name>
 <val>baseClass</val>
 </name>
@@ -4208,9 +4137,6 @@
 <association>
 <ref refid="863f06e6-2109-11ea-ab0b-c72c0738acd2"/>
 </association>
-<class_>
-<ref refid="6fbc48f2-2109-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <structuredClassifier>
 <ref refid="6fbc48f2-2109-11ea-ab0b-c72c0738acd2"/>
 </structuredClassifier>
@@ -4268,9 +4194,6 @@
 <association>
 <ref refid="b5026068-2109-11ea-ab0b-c72c0738acd2"/>
 </association>
-<class_>
-<ref refid="79455f30-2109-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <lowerValue>
 <ref refid="df17727a-e3d8-11ef-a509-be7f4daace3f"/>
 </lowerValue>
@@ -4348,9 +4271,6 @@
 <association>
 <ref refid="bb09a980-2109-11ea-ab0b-c72c0738acd2"/>
 </association>
-<class_>
-<ref refid="79455f30-2109-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <lowerValue>
 <ref refid="df177464-e3d8-11ef-a509-be7f4daace3f"/>
 </lowerValue>
@@ -4379,9 +4299,6 @@
 <association>
 <ref refid="bb09a980-2109-11ea-ab0b-c72c0738acd2"/>
 </association>
-<class_>
-<ref refid="b4b89072-210a-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <name>
 <val>targetDirectedRelationshipPropertyPath_</val>
 </name>
@@ -4926,9 +4843,6 @@
 <association>
 <ref refid="c261498b-210a-11ea-ab0b-c72c0738acd2"/>
 </association>
-<class_>
-<ref refid="b9597df8-210a-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <name>
 <val>baseClass</val>
 </name>
@@ -4946,9 +4860,6 @@
 <association>
 <ref refid="c261498b-210a-11ea-ab0b-c72c0738acd2"/>
 </association>
-<class_>
-<ref refid="b4b89072-210a-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <structuredClassifier>
 <ref refid="b4b89072-210a-11ea-ab0b-c72c0738acd2"/>
 </structuredClassifier>
@@ -5209,9 +5120,6 @@
 </presentation>
 </UML:Stereotype>
 <UML:Property id="3c3acf38-210b-11ea-ab0b-c72c0738acd2">
-<class_>
-<ref refid="f19164ec-210a-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <name>
 <val>boundend</val>
 </name>
@@ -5245,9 +5153,6 @@
 </value>
 </UML:LiteralUnlimitedNatural>
 <UML:Property id="4914ad1e-210b-11ea-ab0b-c72c0738acd2">
-<class_>
-<ref refid="f19164ec-210a-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <isDerived>
 <val>1</val>
 </isDerived>
@@ -5568,9 +5473,6 @@
 <association>
 <ref refid="fb188257-210b-11ea-ab0b-c72c0738acd2"/>
 </association>
-<class_>
-<ref refid="f28e6b64-210b-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <name>
 <val>baseClass</val>
 </name>
@@ -5588,9 +5490,6 @@
 <association>
 <ref refid="fb188257-210b-11ea-ab0b-c72c0738acd2"/>
 </association>
-<class_>
-<ref refid="1178a6b2-2101-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <structuredClassifier>
 <ref refid="1178a6b2-2101-11ea-ab0b-c72c0738acd2"/>
 </structuredClassifier>
@@ -5637,9 +5536,6 @@
 <association>
 <ref refid="4947e53f-210c-11ea-ab0b-c72c0738acd2"/>
 </association>
-<class_>
-<ref refid="f28e6b64-210b-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <name>
 <val>principal</val>
 </name>
@@ -5742,9 +5638,6 @@
 <association>
 <ref refid="e7945aae-210e-11ea-ab0b-c72c0738acd2"/>
 </association>
-<class_>
-<ref refid="79455f30-2109-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <lowerValue>
 <ref refid="df1aa04e-e3d8-11ef-a509-be7f4daace3f"/>
 </lowerValue>
@@ -5850,9 +5743,6 @@
 <association>
 <ref refid="0d347fdc-210f-11ea-ab0b-c72c0738acd2"/>
 </association>
-<class_>
-<ref refid="79455f30-2109-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <lowerValue>
 <ref refid="df1aa22e-e3d8-11ef-a509-be7f4daace3f"/>
 </lowerValue>
@@ -5926,7 +5816,7 @@
 <ref refid="6047ba93-2112-11ea-ab0b-c72c0738acd2"/>
 <ref refid="ebe90b97-2112-11ea-ab0b-c72c0738acd2"/>
 <ref refid="2c1dab98-85ce-11ea-9e67-15eb92d7f2b9"/>
-<ref refid="9fa60a32-970e-11ea-a9a3-73d6aeff039a"/>
+<ref refid="c1c24e66-6c72-11f0-8871-be7f4daace3f"/>
 <ref refid="61529a3e-2111-11ea-ab0b-c72c0738acd2"/>
 <ref refid="66ec91fc-2111-11ea-ab0b-c72c0738acd2"/>
 <ref refid="0bafd046-2112-11ea-ab0b-c72c0738acd2"/>
@@ -6287,29 +6177,6 @@
 <ref refid="1178a6b2-2101-11ea-ab0b-c72c0738acd2"/>
 </subject>
 </UML:ClassItem>
-<UML:ClassItem id="9fa60a32-970e-11ea-a9a3-73d6aeff039a">
-<matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 649.129638671875, 118.32058715820312)</val>
-</matrix>
-<top-left>
-<val>(0.0, 0.0)</val>
-</top-left>
-<width>
-<val>156.0</val>
-</width>
-<height>
-<val>108.0</val>
-</height>
-<diagram>
-<ref refid="d86faf8c-210f-11ea-ab0b-c72c0738acd2"/>
-</diagram>
-<show_operations>
-<val>0</val>
-</show_operations>
-<subject>
-<ref refid="9fa4b790-970e-11ea-a9a3-73d6aeff039a"/>
-</subject>
-</UML:ClassItem>
 <UML:Class id="f56eb3bc-210f-11ea-ab0b-c72c0738acd2">
 <name>
 <val>Port</val>
@@ -6461,9 +6328,6 @@
 </value>
 </UML:LiteralUnlimitedNatural>
 <UML:Property id="8f5a1bb8-2112-11ea-ab0b-c72c0738acd2">
-<class_>
-<ref refid="6047ba92-2112-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <name>
 <val>original</val>
 </name>
@@ -7133,9 +6997,6 @@
 <association>
 <ref refid="95b74bb0-2113-11ea-ab0b-c72c0738acd2"/>
 </association>
-<class_>
-<ref refid="263c05aa-2113-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <name>
 <val>baseClass</val>
 </name>
@@ -7153,9 +7014,6 @@
 <association>
 <ref refid="95b74bb0-2113-11ea-ab0b-c72c0738acd2"/>
 </association>
-<class_>
-<ref refid="e7e95cd0-2112-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <structuredClassifier>
 <ref refid="e7e95cd0-2112-11ea-ab0b-c72c0738acd2"/>
 </structuredClassifier>
@@ -7189,9 +7047,6 @@
 <association>
 <ref refid="027a1f98-2114-11ea-ab0b-c72c0738acd2"/>
 </association>
-<class_>
-<ref refid="4b59e0f0-2113-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <name>
 <val>baseClass</val>
 </name>
@@ -7209,9 +7064,6 @@
 <association>
 <ref refid="027a1f98-2114-11ea-ab0b-c72c0738acd2"/>
 </association>
-<class_>
-<ref refid="142bce54-2113-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <structuredClassifier>
 <ref refid="142bce54-2113-11ea-ab0b-c72c0738acd2"/>
 </structuredClassifier>
@@ -7269,9 +7121,6 @@
 <association>
 <ref refid="2bab4616-2115-11ea-ab0b-c72c0738acd2"/>
 </association>
-<class_>
-<ref refid="3640391c-2113-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <lowerValue>
 <ref refid="df1b3b94-e3d8-11ef-a509-be7f4daace3f"/>
 </lowerValue>
@@ -7377,9 +7226,6 @@
 <association>
 <ref refid="30fab908-2115-11ea-ab0b-c72c0738acd2"/>
 </association>
-<class_>
-<ref refid="263c05aa-2113-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <lowerValue>
 <ref refid="df1b3df6-e3d8-11ef-a509-be7f4daace3f"/>
 </lowerValue>
@@ -7769,9 +7615,6 @@
 <association>
 <ref refid="f17fec93-2116-11ea-ab0b-c72c0738acd2"/>
 </association>
-<class_>
-<ref refid="df6e927e-2116-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <name>
 <val>baseClass</val>
 </name>
@@ -7789,9 +7632,6 @@
 <association>
 <ref refid="f17fec93-2116-11ea-ab0b-c72c0738acd2"/>
 </association>
-<class_>
-<ref refid="d325da04-2116-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <structuredClassifier>
 <ref refid="d325da04-2116-11ea-ab0b-c72c0738acd2"/>
 </structuredClassifier>
@@ -7854,9 +7694,6 @@
 <association>
 <ref refid="0b62591a-2117-11ea-ab0b-c72c0738acd2"/>
 </association>
-<class_>
-<ref refid="df6e927e-2116-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <name>
 <val>structuralFeature</val>
 </name>
@@ -7949,9 +7786,6 @@
 <association>
 <ref refid="5b897d74-2117-11ea-ab0b-c72c0738acd2"/>
 </association>
-<class_>
-<ref refid="3682e682-2117-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <name>
 <val>baseClass</val>
 </name>
@@ -7969,9 +7803,6 @@
 <association>
 <ref refid="5b897d74-2117-11ea-ab0b-c72c0738acd2"/>
 </association>
-<class_>
-<ref refid="21e4d582-2117-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <structuredClassifier>
 <ref refid="21e4d582-2117-11ea-ab0b-c72c0738acd2"/>
 </structuredClassifier>
@@ -7991,7 +7822,7 @@
 <ref refid="a4bd0787-2117-11ea-ab0b-c72c0738acd2"/>
 <ref refid="ab211965-2117-11ea-ab0b-c72c0738acd2"/>
 <ref refid="175fa731-2118-11ea-ab0b-c72c0738acd2"/>
-<ref refid="d1528564-970f-11ea-a9a3-73d6aeff039a"/>
+<ref refid="8e3598f0-6c72-11f0-8871-be7f4daace3f"/>
 <ref refid="f1c4ec56-2117-11ea-ab0b-c72c0738acd2"/>
 </reflist>
 </ownedPresentation>
@@ -8091,29 +7922,6 @@
 <ref refid="175fa730-2118-11ea-ab0b-c72c0738acd2"/>
 </subject>
 </UML:CommentItem>
-<UML:ClassItem id="d1528564-970f-11ea-a9a3-73d6aeff039a">
-<matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 344.0592041015625, 137.92340087890625)</val>
-</matrix>
-<top-left>
-<val>(0.0, 0.0)</val>
-</top-left>
-<width>
-<val>180.0</val>
-</width>
-<height>
-<val>108.0</val>
-</height>
-<diagram>
-<ref refid="84aaf232-2117-11ea-ab0b-c72c0738acd2"/>
-</diagram>
-<show_operations>
-<val>0</val>
-</show_operations>
-<subject>
-<ref refid="d151d128-970f-11ea-a9a3-73d6aeff039a"/>
-</subject>
-</UML:ClassItem>
 <UML:Comment id="8e1e8d42-2117-11ea-ab0b-c72c0738acd2">
 <body>
 <val>SysML 1.6 Figure 9-3</val>
@@ -8179,9 +7987,6 @@
 </value>
 </UML:LiteralUnlimitedNatural>
 <UML:Property id="c046e878-2117-11ea-ab0b-c72c0738acd2">
-<class_>
-<ref refid="ab211964-2117-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <name>
 <val>featureDirection</val>
 </name>
@@ -8221,9 +8026,6 @@
 <association>
 <ref refid="f70c44a2-2117-11ea-ab0b-c72c0738acd2"/>
 </association>
-<class_>
-<ref refid="ab211964-2117-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <name>
 <val>baseClass</val>
 </name>
@@ -8241,9 +8043,6 @@
 <association>
 <ref refid="f70c44a2-2117-11ea-ab0b-c72c0738acd2"/>
 </association>
-<class_>
-<ref refid="a4bd0786-2117-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <structuredClassifier>
 <ref refid="a4bd0786-2117-11ea-ab0b-c72c0738acd2"/>
 </structuredClassifier>
@@ -9204,9 +9003,6 @@
 <association>
 <ref refid="dbef64d4-213e-11ea-ab0b-c72c0738acd2"/>
 </association>
-<class_>
-<ref refid="699a0f24-213e-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <name>
 <val>baseClass</val>
 </name>
@@ -9224,9 +9020,6 @@
 <association>
 <ref refid="dbef64d4-213e-11ea-ab0b-c72c0738acd2"/>
 </association>
-<class_>
-<ref refid="52422640-213e-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <structuredClassifier>
 <ref refid="52422640-213e-11ea-ab0b-c72c0738acd2"/>
 </structuredClassifier>
@@ -9260,9 +9053,6 @@
 <association>
 <ref refid="ec3ba2bc-213e-11ea-ab0b-c72c0738acd2"/>
 </association>
-<class_>
-<ref refid="7231364e-213e-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <name>
 <val>baseClass</val>
 </name>
@@ -9280,9 +9070,6 @@
 <association>
 <ref refid="ec3ba2bc-213e-11ea-ab0b-c72c0738acd2"/>
 </association>
-<class_>
-<ref refid="79adde5e-213e-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <structuredClassifier>
 <ref refid="79adde5e-213e-11ea-ab0b-c72c0738acd2"/>
 </structuredClassifier>
@@ -9316,9 +9103,6 @@
 <association>
 <ref refid="ee2bbfb3-213e-11ea-ab0b-c72c0738acd2"/>
 </association>
-<class_>
-<ref refid="730d6c40-213e-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <name>
 <val>baseClass</val>
 </name>
@@ -9336,9 +9120,6 @@
 <association>
 <ref refid="ee2bbfb3-213e-11ea-ab0b-c72c0738acd2"/>
 </association>
-<class_>
-<ref refid="79adde5e-213e-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <structuredClassifier>
 <ref refid="79adde5e-213e-11ea-ab0b-c72c0738acd2"/>
 </structuredClassifier>
@@ -9372,9 +9153,6 @@
 <association>
 <ref refid="f162d576-213e-11ea-ab0b-c72c0738acd2"/>
 </association>
-<class_>
-<ref refid="730d6c42-213e-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <name>
 <val>baseClass</val>
 </name>
@@ -9392,9 +9170,6 @@
 <association>
 <ref refid="f162d576-213e-11ea-ab0b-c72c0738acd2"/>
 </association>
-<class_>
-<ref refid="79adde5e-213e-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <structuredClassifier>
 <ref refid="79adde5e-213e-11ea-ab0b-c72c0738acd2"/>
 </structuredClassifier>
@@ -9425,9 +9200,6 @@
 </value>
 </UML:LiteralUnlimitedNatural>
 <UML:Property id="04f881d0-213f-11ea-ab0b-c72c0738acd2">
-<class_>
-<ref refid="699a0f26-213e-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <isDerived>
 <val>1</val>
 </isDerived>
@@ -9459,9 +9231,6 @@
 </value>
 </UML:LiteralUnlimitedNatural>
 <UML:Property id="12812c30-213f-11ea-ab0b-c72c0738acd2">
-<class_>
-<ref refid="699a0f26-213e-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <isDerived>
 <val>1</val>
 </isDerived>
@@ -9501,9 +9270,6 @@
 </value>
 </UML:LiteralUnlimitedNatural>
 <UML:Property id="30961ce4-213f-11ea-ab0b-c72c0738acd2">
-<class_>
-<ref refid="6c9bd1f8-213e-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <isDerived>
 <val>1</val>
 </isDerived>
@@ -9546,9 +9312,6 @@
 </value>
 </UML:LiteralUnlimitedNatural>
 <UML:Property id="39cb2674-213f-11ea-ab0b-c72c0738acd2">
-<class_>
-<ref refid="6c9bd1f8-213e-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <lowerValue>
 <ref refid="df1c0de4-e3d8-11ef-a509-be7f4daace3f"/>
 </lowerValue>
@@ -9588,9 +9351,6 @@
 </value>
 </UML:LiteralUnlimitedNatural>
 <UML:Property id="41ddcfd8-213f-11ea-ab0b-c72c0738acd2">
-<class_>
-<ref refid="6c9bd1f8-213e-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <lowerValue>
 <ref refid="df1c0eb6-e3d8-11ef-a509-be7f4daace3f"/>
 </lowerValue>
@@ -9630,9 +9390,6 @@
 </value>
 </UML:LiteralUnlimitedNatural>
 <UML:Property id="49900174-213f-11ea-ab0b-c72c0738acd2">
-<class_>
-<ref refid="6c9bd1f8-213e-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <isDerived>
 <val>1</val>
 </isDerived>
@@ -9675,9 +9432,6 @@
 </value>
 </UML:LiteralUnlimitedNatural>
 <UML:Property id="4fd19048-213f-11ea-ab0b-c72c0738acd2">
-<class_>
-<ref refid="6c9bd1f8-213e-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <lowerValue>
 <ref refid="df1c105a-e3d8-11ef-a509-be7f4daace3f"/>
 </lowerValue>
@@ -9706,9 +9460,6 @@
 </value>
 </UML:LiteralUnlimitedNatural>
 <UML:Property id="562f335a-213f-11ea-ab0b-c72c0738acd2">
-<class_>
-<ref refid="6c9bd1f8-213e-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <name>
 <val>purpose</val>
 </name>
@@ -9745,9 +9496,6 @@
 </value>
 </UML:LiteralUnlimitedNatural>
 <UML:Property id="5c43a212-213f-11ea-ab0b-c72c0738acd2">
-<class_>
-<ref refid="6c9bd1f8-213e-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <lowerValue>
 <ref refid="df1c11ae-e3d8-11ef-a509-be7f4daace3f"/>
 </lowerValue>
@@ -9787,9 +9535,6 @@
 </value>
 </UML:LiteralUnlimitedNatural>
 <UML:Property id="8653c4c4-213f-11ea-ab0b-c72c0738acd2">
-<class_>
-<ref refid="6e6c8086-213e-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <isDerived>
 <val>1</val>
 </isDerived>
@@ -9832,9 +9577,6 @@
 </value>
 </UML:LiteralUnlimitedNatural>
 <UML:Property id="8d2903fe-213f-11ea-ab0b-c72c0738acd2">
-<class_>
-<ref refid="6e6c8086-213e-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <lowerValue>
 <ref refid="df1c1348-e3d8-11ef-a509-be7f4daace3f"/>
 </lowerValue>
@@ -9863,9 +9605,6 @@
 </value>
 </UML:LiteralUnlimitedNatural>
 <UML:Property id="c5200e60-213f-11ea-ab0b-c72c0738acd2">
-<class_>
-<ref refid="730d6c42-213e-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <isDerived>
 <val>1</val>
 </isDerived>
@@ -9905,9 +9644,6 @@
 </value>
 </UML:LiteralUnlimitedNatural>
 <UML:Property id="cf28a624-213f-11ea-ab0b-c72c0738acd2">
-<class_>
-<ref refid="730d6c42-213e-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <isDerived>
 <val>1</val>
 </isDerived>
@@ -9939,9 +9675,6 @@
 </value>
 </UML:LiteralUnlimitedNatural>
 <UML:Property id="d611913a-213f-11ea-ab0b-c72c0738acd2">
-<class_>
-<ref refid="730d6c42-213e-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <name>
 <val>name</val>
 </name>
@@ -9978,9 +9711,6 @@
 </value>
 </UML:LiteralUnlimitedNatural>
 <UML:Property id="de26be9a-213f-11ea-ab0b-c72c0738acd2">
-<class_>
-<ref refid="730d6c42-213e-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <lowerValue>
 <ref refid="df1c15fa-e3d8-11ef-a509-be7f4daace3f"/>
 </lowerValue>
@@ -10009,9 +9739,6 @@
 </value>
 </UML:LiteralUnlimitedNatural>
 <UML:Property id="e536bfc8-213f-11ea-ab0b-c72c0738acd2">
-<class_>
-<ref refid="730d6c42-213e-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <isDerived>
 <val>1</val>
 </isDerived>
@@ -11263,9 +10990,6 @@
 <association>
 <ref refid="3165eeb9-2141-11ea-ab0b-c72c0738acd2"/>
 </association>
-<class_>
-<ref refid="e07fea94-2140-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <name>
 <val>baseClass</val>
 </name>
@@ -11283,9 +11007,6 @@
 <association>
 <ref refid="3165eeb9-2141-11ea-ab0b-c72c0738acd2"/>
 </association>
-<class_>
-<ref refid="c63a008e-2140-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <structuredClassifier>
 <ref refid="c63a008e-2140-11ea-ab0b-c72c0738acd2"/>
 </structuredClassifier>
@@ -11319,9 +11040,6 @@
 <association>
 <ref refid="3b0d35d4-2141-11ea-ab0b-c72c0738acd2"/>
 </association>
-<class_>
-<ref refid="e6b008c2-2140-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <name>
 <val>baseClass</val>
 </name>
@@ -11339,9 +11057,6 @@
 <association>
 <ref refid="3b0d35d4-2141-11ea-ab0b-c72c0738acd2"/>
 </association>
-<class_>
-<ref refid="cbdbee94-2140-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <structuredClassifier>
 <ref refid="cbdbee94-2140-11ea-ab0b-c72c0738acd2"/>
 </structuredClassifier>
@@ -11375,9 +11090,6 @@
 <association>
 <ref refid="3f40e394-2141-11ea-ab0b-c72c0738acd2"/>
 </association>
-<class_>
-<ref refid="ecd77fe6-2140-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <name>
 <val>baseClass</val>
 </name>
@@ -11395,9 +11107,6 @@
 <association>
 <ref refid="3f40e394-2141-11ea-ab0b-c72c0738acd2"/>
 </association>
-<class_>
-<ref refid="cbdbee94-2140-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <structuredClassifier>
 <ref refid="cbdbee94-2140-11ea-ab0b-c72c0738acd2"/>
 </structuredClassifier>
@@ -11431,9 +11140,6 @@
 <association>
 <ref refid="41841627-2141-11ea-ab0b-c72c0738acd2"/>
 </association>
-<class_>
-<ref refid="ecd77fe6-2140-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <name>
 <val>baseClass</val>
 </name>
@@ -11451,9 +11157,6 @@
 <association>
 <ref refid="41841627-2141-11ea-ab0b-c72c0738acd2"/>
 </association>
-<class_>
-<ref refid="d3594608-2140-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <structuredClassifier>
 <ref refid="d3594608-2140-11ea-ab0b-c72c0738acd2"/>
 </structuredClassifier>
@@ -11487,9 +11190,6 @@
 <association>
 <ref refid="494b1a3b-2141-11ea-ab0b-c72c0738acd2"/>
 </association>
-<class_>
-<ref refid="1a9d561c-2141-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <name>
 <val>baseClass</val>
 </name>
@@ -11507,9 +11207,6 @@
 <association>
 <ref refid="494b1a3b-2141-11ea-ab0b-c72c0738acd2"/>
 </association>
-<class_>
-<ref refid="0600ca0e-2141-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <structuredClassifier>
 <ref refid="0600ca0e-2141-11ea-ab0b-c72c0738acd2"/>
 </structuredClassifier>
@@ -11543,9 +11240,6 @@
 <association>
 <ref refid="4ff90e50-2141-11ea-ab0b-c72c0738acd2"/>
 </association>
-<class_>
-<ref refid="225427fa-2141-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <name>
 <val>baseClass</val>
 </name>
@@ -11563,9 +11257,6 @@
 <association>
 <ref refid="4ff90e50-2141-11ea-ab0b-c72c0738acd2"/>
 </association>
-<class_>
-<ref refid="12b95e1e-2141-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <structuredClassifier>
 <ref refid="12b95e1e-2141-11ea-ab0b-c72c0738acd2"/>
 </structuredClassifier>
@@ -11599,9 +11290,6 @@
 <association>
 <ref refid="535f930c-2141-11ea-ab0b-c72c0738acd2"/>
 </association>
-<class_>
-<ref refid="2794268e-2141-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <name>
 <val>baseClass</val>
 </name>
@@ -11619,9 +11307,6 @@
 <association>
 <ref refid="535f930c-2141-11ea-ab0b-c72c0738acd2"/>
 </association>
-<class_>
-<ref refid="12b95e1e-2141-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <structuredClassifier>
 <ref refid="12b95e1e-2141-11ea-ab0b-c72c0738acd2"/>
 </structuredClassifier>
@@ -11630,9 +11315,6 @@
 </type>
 </UML:ExtensionEnd>
 <UML:Property id="9473db82-2141-11ea-ab0b-c72c0738acd2">
-<class_>
-<ref refid="e6b008c2-2140-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <name>
 <val>rate</val>
 </name>
@@ -11644,9 +11326,6 @@
 </typeValue>
 </UML:Property>
 <UML:Property id="9c71ca10-2141-11ea-ab0b-c72c0738acd2">
-<class_>
-<ref refid="ecd77fe6-2140-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <name>
 <val>probability</val>
 </name>
@@ -11683,9 +11362,6 @@
 <association>
 <ref refid="c74c6baa-2141-11ea-ab0b-c72c0738acd2"/>
 </association>
-<class_>
-<ref refid="e6b008c2-2140-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <name>
 <val>baseClass</val>
 </name>
@@ -11703,9 +11379,6 @@
 <association>
 <ref refid="c74c6baa-2141-11ea-ab0b-c72c0738acd2"/>
 </association>
-<class_>
-<ref refid="c63a008e-2140-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <structuredClassifier>
 <ref refid="c63a008e-2140-11ea-ab0b-c72c0738acd2"/>
 </structuredClassifier>
@@ -12130,9 +11803,6 @@
 <association>
 <ref refid="16a80911-2143-11ea-ab0b-c72c0738acd2"/>
 </association>
-<class_>
-<ref refid="0c702d7e-2143-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <name>
 <val>baseClass</val>
 </name>
@@ -12150,9 +11820,6 @@
 <association>
 <ref refid="16a80911-2143-11ea-ab0b-c72c0738acd2"/>
 </association>
-<class_>
-<ref refid="043ed95c-2143-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <structuredClassifier>
 <ref refid="043ed95c-2143-11ea-ab0b-c72c0738acd2"/>
 </structuredClassifier>
@@ -12398,9 +12065,6 @@
 </value>
 </UML:LiteralUnlimitedNatural>
 <UML:Property id="79f994b8-2146-11ea-ab0b-c72c0738acd2">
-<class_>
-<ref refid="ff54a7c2-2111-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <defaultValue>
 <ref refid="df1d1798-e3d8-11ef-a509-be7f4daace3f"/>
 </defaultValue>
@@ -12540,9 +12204,6 @@
 </presentation>
 </UML:Stereotype>
 <UML:Property id="5b050d0c-2359-11ea-ab0b-c72c0738acd2">
-<class_>
-<ref refid="03bf0cd4-2357-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <name>
 <val>subsets</val>
 </name>
@@ -12562,9 +12223,6 @@
 </typeValue>
 </UML:Property>
 <UML:Property id="6154e2e0-2359-11ea-ab0b-c72c0738acd2">
-<class_>
-<ref refid="03bf0cd4-2357-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <name>
 <val>ordered</val>
 </name>
@@ -12581,9 +12239,6 @@
 </typeValue>
 </UML:Property>
 <UML:Property id="7630f05a-2359-11ea-ab0b-c72c0738acd2">
-<class_>
-<ref refid="03bf0cd4-2357-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <name>
 <val>nonunique</val>
 </name>
@@ -12660,9 +12315,6 @@
 <association>
 <ref refid="558d5840-235c-11ea-ab0b-c72c0738acd2"/>
 </association>
-<class_>
-<ref refid="4d61886c-235c-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <name>
 <val>baseClass</val>
 </name>
@@ -12680,9 +12332,6 @@
 <association>
 <ref refid="558d5840-235c-11ea-ab0b-c72c0738acd2"/>
 </association>
-<class_>
-<ref refid="1178a6b2-2101-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <structuredClassifier>
 <ref refid="1178a6b2-2101-11ea-ab0b-c72c0738acd2"/>
 </structuredClassifier>
@@ -12796,9 +12445,6 @@
 <association>
 <ref refid="8b7bc5bc-85cd-11ea-9e67-15eb92d7f2b9"/>
 </association>
-<class_>
-<ref refid="699a0f26-213e-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <name>
 <val>baseClass</val>
 </name>
@@ -12816,9 +12462,6 @@
 <association>
 <ref refid="8b7bc5bc-85cd-11ea-9e67-15eb92d7f2b9"/>
 </association>
-<class_>
-<ref refid="cd161a86-2100-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <structuredClassifier>
 <ref refid="cd161a86-2100-11ea-ab0b-c72c0738acd2"/>
 </structuredClassifier>
@@ -12852,9 +12495,6 @@
 <association>
 <ref refid="9a940028-85cd-11ea-9e67-15eb92d7f2b9"/>
 </association>
-<class_>
-<ref refid="6c9bd1f8-213e-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <name>
 <val>baseClass</val>
 </name>
@@ -12872,9 +12512,6 @@
 <association>
 <ref refid="9a940028-85cd-11ea-9e67-15eb92d7f2b9"/>
 </association>
-<class_>
-<ref refid="cd161a86-2100-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <structuredClassifier>
 <ref refid="cd161a86-2100-11ea-ab0b-c72c0738acd2"/>
 </structuredClassifier>
@@ -12908,9 +12545,6 @@
 <association>
 <ref refid="aae9fcc4-85ce-11ea-9e67-15eb92d7f2b9"/>
 </association>
-<class_>
-<ref refid="110053f2-20e7-11ea-9209-e76c3117c943"/>
-</class_>
 <name>
 <val>baseClass</val>
 </name>
@@ -12928,9 +12562,6 @@
 <association>
 <ref refid="aae9fcc4-85ce-11ea-9e67-15eb92d7f2b9"/>
 </association>
-<class_>
-<ref refid="0600ca0e-2141-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <structuredClassifier>
 <ref refid="0600ca0e-2141-11ea-ab0b-c72c0738acd2"/>
 </structuredClassifier>
@@ -13007,9 +12638,6 @@ otherwise MRO can not be resolved.</val>
 </value>
 </UML:LiteralUnlimitedNatural>
 <UML:Property id="71d9fb4a-94b1-11ea-880f-b1efd5008378">
-<class_>
-<ref refid="2d1ce65e-20e2-11ea-9209-e76c3117c943"/>
-</class_>
 <isDerived>
 <val>1</val>
 </isDerived>
@@ -13028,118 +12656,6 @@ otherwise MRO can not be resolved.</val>
 <upperValue>
 <ref refid="df1d302a-e3d8-11ef-a509-be7f4daace3f"/>
 </upperValue>
-</UML:Property>
-<UML:Class id="9fa4b790-970e-11ea-a9a3-73d6aeff039a">
-<name>
-<val>FlowDirectionKind</val>
-</name>
-<ownedAttribute>
-<reflist>
-<ref refid="063913c0-970f-11ea-a9a3-73d6aeff039a"/>
-<ref refid="0c4712c6-970f-11ea-a9a3-73d6aeff039a"/>
-<ref refid="0fd5259a-970f-11ea-a9a3-73d6aeff039a"/>
-</reflist>
-</ownedAttribute>
-<owningPackage>
-<ref refid="5e99006a-20e1-11ea-9209-e76c3117c943"/>
-</owningPackage>
-<package>
-<ref refid="5e99006a-20e1-11ea-9209-e76c3117c943"/>
-</package>
-<presentation>
-<reflist>
-<ref refid="9fa60a32-970e-11ea-a9a3-73d6aeff039a"/>
-</reflist>
-</presentation>
-</UML:Class>
-<UML:Property id="063913c0-970f-11ea-a9a3-73d6aeff039a">
-<class_>
-<ref refid="9fa4b790-970e-11ea-a9a3-73d6aeff039a"/>
-</class_>
-<name>
-<val>in</val>
-</name>
-<structuredClassifier>
-<ref refid="9fa4b790-970e-11ea-a9a3-73d6aeff039a"/>
-</structuredClassifier>
-</UML:Property>
-<UML:Property id="0c4712c6-970f-11ea-a9a3-73d6aeff039a">
-<class_>
-<ref refid="9fa4b790-970e-11ea-a9a3-73d6aeff039a"/>
-</class_>
-<name>
-<val>inout</val>
-</name>
-<structuredClassifier>
-<ref refid="9fa4b790-970e-11ea-a9a3-73d6aeff039a"/>
-</structuredClassifier>
-</UML:Property>
-<UML:Property id="0fd5259a-970f-11ea-a9a3-73d6aeff039a">
-<class_>
-<ref refid="9fa4b790-970e-11ea-a9a3-73d6aeff039a"/>
-</class_>
-<name>
-<val>out</val>
-</name>
-<structuredClassifier>
-<ref refid="9fa4b790-970e-11ea-a9a3-73d6aeff039a"/>
-</structuredClassifier>
-</UML:Property>
-<UML:Class id="d151d128-970f-11ea-a9a3-73d6aeff039a">
-<name>
-<val>FeatureDirectionKind</val>
-</name>
-<ownedAttribute>
-<reflist>
-<ref refid="dfabba18-970f-11ea-a9a3-73d6aeff039a"/>
-<ref refid="e5458a6c-970f-11ea-a9a3-73d6aeff039a"/>
-<ref refid="e94e02d8-970f-11ea-a9a3-73d6aeff039a"/>
-</reflist>
-</ownedAttribute>
-<owningPackage>
-<ref refid="5e99006a-20e1-11ea-9209-e76c3117c943"/>
-</owningPackage>
-<package>
-<ref refid="5e99006a-20e1-11ea-9209-e76c3117c943"/>
-</package>
-<presentation>
-<reflist>
-<ref refid="d1528564-970f-11ea-a9a3-73d6aeff039a"/>
-</reflist>
-</presentation>
-</UML:Class>
-<UML:Property id="dfabba18-970f-11ea-a9a3-73d6aeff039a">
-<class_>
-<ref refid="d151d128-970f-11ea-a9a3-73d6aeff039a"/>
-</class_>
-<name>
-<val>provided</val>
-</name>
-<structuredClassifier>
-<ref refid="d151d128-970f-11ea-a9a3-73d6aeff039a"/>
-</structuredClassifier>
-</UML:Property>
-<UML:Property id="e5458a6c-970f-11ea-a9a3-73d6aeff039a">
-<class_>
-<ref refid="d151d128-970f-11ea-a9a3-73d6aeff039a"/>
-</class_>
-<name>
-<val>providedRequired</val>
-</name>
-<structuredClassifier>
-<ref refid="d151d128-970f-11ea-a9a3-73d6aeff039a"/>
-</structuredClassifier>
-</UML:Property>
-<UML:Property id="e94e02d8-970f-11ea-a9a3-73d6aeff039a">
-<class_>
-<ref refid="d151d128-970f-11ea-a9a3-73d6aeff039a"/>
-</class_>
-<name>
-<val>required</val>
-</name>
-<structuredClassifier>
-<ref refid="d151d128-970f-11ea-a9a3-73d6aeff039a"/>
-</structuredClassifier>
 </UML:Property>
 <Core:StyleSheet id="7b071a10-ec8e-11ea-96dc-bf74f1f80424"/>
 <UML:Extension id="9345730a-ed52-11ea-96dc-bf74f1f80424">
@@ -13168,9 +12684,6 @@ otherwise MRO can not be resolved.</val>
 <association>
 <ref refid="9345730a-ed52-11ea-96dc-bf74f1f80424"/>
 </association>
-<class_>
-<ref refid="4b3c5148-20e6-11ea-9209-e76c3117c943"/>
-</class_>
 <name>
 <val>baseClass</val>
 </name>
@@ -13188,9 +12701,6 @@ otherwise MRO can not be resolved.</val>
 <association>
 <ref refid="9345730a-ed52-11ea-96dc-bf74f1f80424"/>
 </association>
-<class_>
-<ref refid="bf900258-213e-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <structuredClassifier>
 <ref refid="bf900258-213e-11ea-ab0b-c72c0738acd2"/>
 </structuredClassifier>
@@ -13224,9 +12734,6 @@ otherwise MRO can not be resolved.</val>
 <association>
 <ref refid="fce8ad18-ed52-11ea-96dc-bf74f1f80424"/>
 </association>
-<class_>
-<ref refid="caabb596-2144-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <name>
 <val>baseClass</val>
 </name>
@@ -13244,9 +12751,6 @@ otherwise MRO can not be resolved.</val>
 <association>
 <ref refid="fce8ad18-ed52-11ea-96dc-bf74f1f80424"/>
 </association>
-<class_>
-<ref refid="bf900258-213e-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <structuredClassifier>
 <ref refid="bf900258-213e-11ea-ab0b-c72c0738acd2"/>
 </structuredClassifier>
@@ -13319,9 +12823,6 @@ otherwise MRO can not be resolved.</val>
 <association>
 <ref refid="fd07205e-4bc0-11ec-8e7f-0456e5e540ed"/>
 </association>
-<class_>
-<ref refid="c5b60444-2142-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <name>
 <val>baseClass</val>
 </name>
@@ -13339,9 +12840,6 @@ otherwise MRO can not be resolved.</val>
 <association>
 <ref refid="fd07205e-4bc0-11ec-8e7f-0456e5e540ed"/>
 </association>
-<class_>
-<ref refid="bf422750-2142-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <structuredClassifier>
 <ref refid="bf422750-2142-11ea-ab0b-c72c0738acd2"/>
 </structuredClassifier>
@@ -13375,9 +12873,6 @@ otherwise MRO can not be resolved.</val>
 <association>
 <ref refid="0a7a178c-4bc1-11ec-8e7f-0456e5e540ed"/>
 </association>
-<class_>
-<ref refid="635e0dce-20e7-11ea-9209-e76c3117c943"/>
-</class_>
 <name>
 <val>baseClass</val>
 </name>
@@ -13395,9 +12890,6 @@ otherwise MRO can not be resolved.</val>
 <association>
 <ref refid="0a7a178c-4bc1-11ec-8e7f-0456e5e540ed"/>
 </association>
-<class_>
-<ref refid="cd161a86-2100-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <structuredClassifier>
 <ref refid="cd161a86-2100-11ea-ab0b-c72c0738acd2"/>
 </structuredClassifier>
@@ -13444,9 +12936,6 @@ otherwise MRO can not be resolved.</val>
 <association>
 <ref refid="30de1374-4bc1-11ec-8e7f-0456e5e540ed"/>
 </association>
-<class_>
-<ref refid="efc51366-210a-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <name>
 <val>baseClass</val>
 </name>
@@ -13464,9 +12953,6 @@ otherwise MRO can not be resolved.</val>
 <association>
 <ref refid="30de1374-4bc1-11ec-8e7f-0456e5e540ed"/>
 </association>
-<class_>
-<ref refid="1178a6b2-2101-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <structuredClassifier>
 <ref refid="1178a6b2-2101-11ea-ab0b-c72c0738acd2"/>
 </structuredClassifier>
@@ -13536,9 +13022,6 @@ otherwise MRO can not be resolved.</val>
 <association>
 <ref refid="62c15c3e-4bc1-11ec-8e7f-0456e5e540ed"/>
 </association>
-<class_>
-<ref refid="5b589180-210a-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <name>
 <val>baseClass</val>
 </name>
@@ -13556,9 +13039,6 @@ otherwise MRO can not be resolved.</val>
 <association>
 <ref refid="62c15c3e-4bc1-11ec-8e7f-0456e5e540ed"/>
 </association>
-<class_>
-<ref refid="552c11e2-210a-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <structuredClassifier>
 <ref refid="552c11e2-210a-11ea-ab0b-c72c0738acd2"/>
 </structuredClassifier>
@@ -13592,9 +13072,6 @@ otherwise MRO can not be resolved.</val>
 <association>
 <ref refid="6c690278-4bc1-11ec-8e7f-0456e5e540ed"/>
 </association>
-<class_>
-<ref refid="44c59c74-210a-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <name>
 <val>baseClass</val>
 </name>
@@ -13612,9 +13089,6 @@ otherwise MRO can not be resolved.</val>
 <association>
 <ref refid="6c690278-4bc1-11ec-8e7f-0456e5e540ed"/>
 </association>
-<class_>
-<ref refid="3edad25c-210a-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <structuredClassifier>
 <ref refid="3edad25c-210a-11ea-ab0b-c72c0738acd2"/>
 </structuredClassifier>
@@ -13648,9 +13122,6 @@ otherwise MRO can not be resolved.</val>
 <association>
 <ref refid="aeac47e4-4bc1-11ec-8e7f-0456e5e540ed"/>
 </association>
-<class_>
-<ref refid="9051c096-2105-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <name>
 <val>baseClass</val>
 </name>
@@ -13668,9 +13139,6 @@ otherwise MRO can not be resolved.</val>
 <association>
 <ref refid="aeac47e4-4bc1-11ec-8e7f-0456e5e540ed"/>
 </association>
-<class_>
-<ref refid="585f9b90-2105-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <structuredClassifier>
 <ref refid="585f9b90-2105-11ea-ab0b-c72c0738acd2"/>
 </structuredClassifier>
@@ -13704,9 +13172,6 @@ otherwise MRO can not be resolved.</val>
 <association>
 <ref refid="b6fde6c8-4bc1-11ec-8e7f-0456e5e540ed"/>
 </association>
-<class_>
-<ref refid="03bf0cd4-2357-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <name>
 <val>baseClass</val>
 </name>
@@ -13724,9 +13189,6 @@ otherwise MRO can not be resolved.</val>
 <association>
 <ref refid="b6fde6c8-4bc1-11ec-8e7f-0456e5e540ed"/>
 </association>
-<class_>
-<ref refid="1178a6b2-2101-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <structuredClassifier>
 <ref refid="1178a6b2-2101-11ea-ab0b-c72c0738acd2"/>
 </structuredClassifier>
@@ -13773,9 +13235,6 @@ otherwise MRO can not be resolved.</val>
 <association>
 <ref refid="206fd0c6-4bc2-11ec-8e7f-0456e5e540ed"/>
 </association>
-<class_>
-<ref refid="6e6c8088-213e-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <name>
 <val>baseClass</val>
 </name>
@@ -13793,9 +13252,6 @@ otherwise MRO can not be resolved.</val>
 <association>
 <ref refid="206fd0c6-4bc2-11ec-8e7f-0456e5e540ed"/>
 </association>
-<class_>
-<ref refid="bf900258-213e-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <structuredClassifier>
 <ref refid="bf900258-213e-11ea-ab0b-c72c0738acd2"/>
 </structuredClassifier>
@@ -13829,9 +13285,6 @@ otherwise MRO can not be resolved.</val>
 <association>
 <ref refid="2da459e2-4bc2-11ec-8e7f-0456e5e540ed"/>
 </association>
-<class_>
-<ref refid="6e6c8086-213e-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <name>
 <val>baseClass</val>
 </name>
@@ -13849,9 +13302,6 @@ otherwise MRO can not be resolved.</val>
 <association>
 <ref refid="2da459e2-4bc2-11ec-8e7f-0456e5e540ed"/>
 </association>
-<class_>
-<ref refid="b4b89072-210a-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <structuredClassifier>
 <ref refid="b4b89072-210a-11ea-ab0b-c72c0738acd2"/>
 </structuredClassifier>
@@ -13885,9 +13335,6 @@ otherwise MRO can not be resolved.</val>
 <association>
 <ref refid="52635eb8-4bc2-11ec-8e7f-0456e5e540ed"/>
 </association>
-<class_>
-<ref refid="3640391c-2113-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <name>
 <val>baseClass</val>
 </name>
@@ -13905,9 +13352,6 @@ otherwise MRO can not be resolved.</val>
 <association>
 <ref refid="52635eb8-4bc2-11ec-8e7f-0456e5e540ed"/>
 </association>
-<class_>
-<ref refid="02baad70-2113-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <structuredClassifier>
 <ref refid="02baad70-2113-11ea-ab0b-c72c0738acd2"/>
 </structuredClassifier>
@@ -14006,9 +13450,6 @@ otherwise MRO can not be resolved.</val>
 <association>
 <ref refid="c35886ac-4bc2-11ec-8e7f-0456e5e540ed"/>
 </association>
-<class_>
-<ref refid="ff54a7c2-2111-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <name>
 <val>baseClass</val>
 </name>
@@ -14026,9 +13467,6 @@ otherwise MRO can not be resolved.</val>
 <association>
 <ref refid="c35886ac-4bc2-11ec-8e7f-0456e5e540ed"/>
 </association>
-<class_>
-<ref refid="1178a6b2-2101-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <structuredClassifier>
 <ref refid="1178a6b2-2101-11ea-ab0b-c72c0738acd2"/>
 </structuredClassifier>
@@ -14062,9 +13500,6 @@ otherwise MRO can not be resolved.</val>
 <association>
 <ref refid="c89151e4-4bc2-11ec-8e7f-0456e5e540ed"/>
 </association>
-<class_>
-<ref refid="45478426-2111-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <name>
 <val>baseClass</val>
 </name>
@@ -14082,9 +13517,6 @@ otherwise MRO can not be resolved.</val>
 <association>
 <ref refid="c89151e4-4bc2-11ec-8e7f-0456e5e540ed"/>
 </association>
-<class_>
-<ref refid="f56eb3bc-210f-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <structuredClassifier>
 <ref refid="f56eb3bc-210f-11ea-ab0b-c72c0738acd2"/>
 </structuredClassifier>
@@ -14118,9 +13550,6 @@ otherwise MRO can not be resolved.</val>
 <association>
 <ref refid="cc3943a6-4bc2-11ec-8e7f-0456e5e540ed"/>
 </association>
-<class_>
-<ref refid="3ee29fb2-2111-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <name>
 <val>baseClass</val>
 </name>
@@ -14138,9 +13567,6 @@ otherwise MRO can not be resolved.</val>
 <association>
 <ref refid="cc3943a6-4bc2-11ec-8e7f-0456e5e540ed"/>
 </association>
-<class_>
-<ref refid="f56eb3bc-210f-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <structuredClassifier>
 <ref refid="f56eb3bc-210f-11ea-ab0b-c72c0738acd2"/>
 </structuredClassifier>
@@ -14252,9 +13678,6 @@ otherwise MRO can not be resolved.</val>
 <association>
 <ref refid="5e9ef218-4bc3-11ec-8e7f-0456e5e540ed"/>
 </association>
-<class_>
-<ref refid="252901b2-20e2-11ea-9209-e76c3117c943"/>
-</class_>
 <name>
 <val>baseClass</val>
 </name>
@@ -14272,9 +13695,6 @@ otherwise MRO can not be resolved.</val>
 <association>
 <ref refid="5e9ef218-4bc3-11ec-8e7f-0456e5e540ed"/>
 </association>
-<class_>
-<ref refid="cd161a86-2100-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <structuredClassifier>
 <ref refid="cd161a86-2100-11ea-ab0b-c72c0738acd2"/>
 </structuredClassifier>
@@ -14321,9 +13741,6 @@ otherwise MRO can not be resolved.</val>
 <association>
 <ref refid="71700a94-4bc3-11ec-8e7f-0456e5e540ed"/>
 </association>
-<class_>
-<ref refid="2d1ce65e-20e2-11ea-9209-e76c3117c943"/>
-</class_>
 <name>
 <val>baseClass</val>
 </name>
@@ -14341,9 +13758,6 @@ otherwise MRO can not be resolved.</val>
 <association>
 <ref refid="71700a94-4bc3-11ec-8e7f-0456e5e540ed"/>
 </association>
-<class_>
-<ref refid="515d800c-2144-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <structuredClassifier>
 <ref refid="515d800c-2144-11ea-ab0b-c72c0738acd2"/>
 </structuredClassifier>
@@ -14509,9 +13923,6 @@ otherwise MRO can not be resolved.</val>
 <association>
 <ref refid="996a85fe-5921-11ec-befa-0456e5e540ed"/>
 </association>
-<class_>
-<ref refid="91156aa4-5921-11ec-befa-0456e5e540ed"/>
-</class_>
 <name>
 <val>baseClass</val>
 </name>
@@ -14529,9 +13940,6 @@ otherwise MRO can not be resolved.</val>
 <association>
 <ref refid="996a85fe-5921-11ec-befa-0456e5e540ed"/>
 </association>
-<class_>
-<ref refid="8881f68c-5921-11ec-befa-0456e5e540ed"/>
-</class_>
 <structuredClassifier>
 <ref refid="8881f68c-5921-11ec-befa-0456e5e540ed"/>
 </structuredClassifier>
@@ -14641,9 +14049,6 @@ otherwise MRO can not be resolved.</val>
 <association>
 <ref refid="5a9cebd2-633a-11ec-ad85-0456e5e540ed"/>
 </association>
-<class_>
-<ref refid="1178a6b2-2101-11ea-ab0b-c72c0738acd2"/>
-</class_>
 <lowerValue>
 <ref refid="df1df4d8-e3d8-11ef-a509-be7f4daace3f"/>
 </lowerValue>
@@ -14694,9 +14099,6 @@ otherwise MRO can not be resolved.</val>
 <association>
 <ref refid="5a9cebd2-633a-11ec-ad85-0456e5e540ed"/>
 </association>
-<class_>
-<ref refid="91156aa4-5921-11ec-befa-0456e5e540ed"/>
-</class_>
 <lowerValue>
 <ref refid="df1df640-e3d8-11ef-a509-be7f4daace3f"/>
 </lowerValue>
@@ -14811,17 +14213,6 @@ otherwise MRO can not be resolved.</val>
 <ref refid="19ddfa39-292b-11ee-aad9-e38f5215237c"/>
 </reflist>
 </specialization>
-</UML:Class>
-<UML:Class id="f6ed61ee-292a-11ee-aad9-e38f5215237c">
-<name>
-<val>Class</val>
-</name>
-<owningPackage>
-<ref refid="2b8d10da-20e1-11ea-9209-e76c3117c943"/>
-</owningPackage>
-<package>
-<ref refid="2b8d10da-20e1-11ea-9209-e76c3117c943"/>
-</package>
 </UML:Class>
 <UML:Package id="fd10d6be-292a-11ee-aad9-e38f5215237c">
 <name>
@@ -15416,9 +14807,6 @@ otherwise MRO can not be resolved.</val>
 </subject>
 </UML:ClassItem>
 <UML:Property id="550e8a92-b7d6-11ef-8f23-be7f4daace40">
-<class_>
-<ref refid="2dca16ea-b7d6-11ef-8f23-be7f4daace40"/>
-</class_>
 <defaultValue>
 <ref refid="9240ebf8-e405-11ef-893f-14abc554333b"/>
 </defaultValue>
@@ -15433,9 +14821,6 @@ otherwise MRO can not be resolved.</val>
 </typeValue>
 </UML:Property>
 <UML:Property id="68beb4ea-b7d6-11ef-8f23-be7f4daace40">
-<class_>
-<ref refid="356a0ebe-b7d6-11ef-8f23-be7f4daace40"/>
-</class_>
 <defaultValue>
 <ref refid="acc53d81-e405-11ef-b08b-14abc554333b"/>
 </defaultValue>
@@ -15450,9 +14835,6 @@ otherwise MRO can not be resolved.</val>
 </typeValue>
 </UML:Property>
 <UML:Property id="737b0d3e-b7d6-11ef-8f23-be7f4daace40">
-<class_>
-<ref refid="49c21352-b7d6-11ef-8f23-be7f4daace40"/>
-</class_>
 <defaultValue>
 <ref refid="d0ba0957-e405-11ef-917d-14abc554333b"/>
 </defaultValue>
@@ -15467,9 +14849,6 @@ otherwise MRO can not be resolved.</val>
 </typeValue>
 </UML:Property>
 <UML:Property id="deccb650-b7d6-11ef-8f23-be7f4daace40">
-<class_>
-<ref refid="429d52a8-b7d6-11ef-8f23-be7f4daace40"/>
-</class_>
 <defaultValue>
 <ref refid="bf7c15a8-e405-11ef-b6f5-14abc554333b"/>
 </defaultValue>
@@ -15533,9 +14912,6 @@ otherwise MRO can not be resolved.</val>
 </subject>
 </UML:ClassItem>
 <UML:Property id="0dfe091a-b7d7-11ef-8f23-be7f4daace40">
-<class_>
-<ref refid="06b13a24-b7d7-11ef-8f23-be7f4daace40"/>
-</class_>
 <defaultValue>
 <ref refid="e653dad6-e405-11ef-b1df-14abc554333b"/>
 </defaultValue>
@@ -16019,9 +15395,6 @@ otherwise MRO can not be resolved.</val>
 </subject>
 </UML:ClassItem>
 <UML:Property id="9eb5fd46-b7d7-11ef-8f23-be7f4daace40">
-<class_>
-<ref refid="7311bdf6-b7d7-11ef-8f23-be7f4daace40"/>
-</class_>
 <defaultValue>
 <ref refid="f327149f-e405-11ef-8414-14abc554333b"/>
 </defaultValue>
@@ -16036,9 +15409,6 @@ otherwise MRO can not be resolved.</val>
 </typeValue>
 </UML:Property>
 <UML:Property id="a38ccffc-b7d7-11ef-8f23-be7f4daace40">
-<class_>
-<ref refid="8d3702cc-b7d7-11ef-8f23-be7f4daace40"/>
-</class_>
 <defaultValue>
 <ref refid="34253717-e406-11ef-94fb-14abc554333b"/>
 </defaultValue>
@@ -16053,9 +15423,6 @@ otherwise MRO can not be resolved.</val>
 </typeValue>
 </UML:Property>
 <UML:Property id="a7477c3c-b7d7-11ef-8f23-be7f4daace40">
-<class_>
-<ref refid="854432b0-b7d7-11ef-8f23-be7f4daace40"/>
-</class_>
 <defaultValue>
 <ref refid="2595737b-e406-11ef-bafa-14abc554333b"/>
 </defaultValue>
@@ -16070,9 +15437,6 @@ otherwise MRO can not be resolved.</val>
 </typeValue>
 </UML:Property>
 <UML:Property id="ac719b02-b7d7-11ef-8f23-be7f4daace40">
-<class_>
-<ref refid="7ebad41c-b7d7-11ef-8f23-be7f4daace40"/>
-</class_>
 <defaultValue>
 <ref refid="16e2997e-e406-11ef-b8a5-14abc554333b"/>
 </defaultValue>
@@ -16352,5 +15716,151 @@ otherwise MRO can not be resolved.</val>
 <val>"uc"</val>
 </value>
 </UML:LiteralString>
+<UML:Enumeration id="8e353f72-6c72-11f0-8871-be7f4daace3f">
+<name>
+<val>FeatureDirectionKind</val>
+</name>
+<ownedLiteral>
+<reflist>
+<ref refid="989cc0f2-6c72-11f0-8871-be7f4daace3f"/>
+<ref refid="9be527fe-6c72-11f0-8871-be7f4daace3f"/>
+<ref refid="9da95cc2-6c72-11f0-8871-be7f4daace3f"/>
+</reflist>
+</ownedLiteral>
+<owningPackage>
+<ref refid="5e99006a-20e1-11ea-9209-e76c3117c943"/>
+</owningPackage>
+<package>
+<ref refid="5e99006a-20e1-11ea-9209-e76c3117c943"/>
+</package>
+<presentation>
+<reflist>
+<ref refid="8e3598f0-6c72-11f0-8871-be7f4daace3f"/>
+</reflist>
+</presentation>
+</UML:Enumeration>
+<UML:EnumerationItem id="8e3598f0-6c72-11f0-8871-be7f4daace3f">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 388.0, 130.42340087890625)</val>
+</matrix>
+<top-left>
+<val>(0.0, 0.0)</val>
+</top-left>
+<width>
+<val>154.0</val>
+</width>
+<height>
+<val>107.0</val>
+</height>
+<diagram>
+<ref refid="84aaf232-2117-11ea-ab0b-c72c0738acd2"/>
+</diagram>
+<show_attributes>
+<val>0</val>
+</show_attributes>
+<show_operations>
+<val>0</val>
+</show_operations>
+<subject>
+<ref refid="8e353f72-6c72-11f0-8871-be7f4daace3f"/>
+</subject>
+</UML:EnumerationItem>
+<UML:EnumerationLiteral id="989cc0f2-6c72-11f0-8871-be7f4daace3f">
+<enumeration>
+<ref refid="8e353f72-6c72-11f0-8871-be7f4daace3f"/>
+</enumeration>
+<name>
+<val>provided</val>
+</name>
+</UML:EnumerationLiteral>
+<UML:EnumerationLiteral id="9be527fe-6c72-11f0-8871-be7f4daace3f">
+<enumeration>
+<ref refid="8e353f72-6c72-11f0-8871-be7f4daace3f"/>
+</enumeration>
+<name>
+<val>providedRequired</val>
+</name>
+</UML:EnumerationLiteral>
+<UML:EnumerationLiteral id="9da95cc2-6c72-11f0-8871-be7f4daace3f">
+<enumeration>
+<ref refid="8e353f72-6c72-11f0-8871-be7f4daace3f"/>
+</enumeration>
+<name>
+<val>required</val>
+</name>
+</UML:EnumerationLiteral>
+<UML:Enumeration id="c1c1e5c0-6c72-11f0-8871-be7f4daace3f">
+<name>
+<val>FlowDirectionKind</val>
+</name>
+<ownedLiteral>
+<reflist>
+<ref refid="c587d1b0-6c72-11f0-8871-be7f4daace3f"/>
+<ref refid="c7642bdc-6c72-11f0-8871-be7f4daace3f"/>
+<ref refid="c89f51de-6c72-11f0-8871-be7f4daace3f"/>
+</reflist>
+</ownedLiteral>
+<owningPackage>
+<ref refid="5e99006a-20e1-11ea-9209-e76c3117c943"/>
+</owningPackage>
+<package>
+<ref refid="5e99006a-20e1-11ea-9209-e76c3117c943"/>
+</package>
+<presentation>
+<reflist>
+<ref refid="c1c24e66-6c72-11f0-8871-be7f4daace3f"/>
+</reflist>
+</presentation>
+</UML:Enumeration>
+<UML:EnumerationItem id="c1c24e66-6c72-11f0-8871-be7f4daace3f">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 668.0, 155.0)</val>
+</matrix>
+<top-left>
+<val>(0.0, 0.0)</val>
+</top-left>
+<width>
+<val>135.0</val>
+</width>
+<height>
+<val>123.0</val>
+</height>
+<diagram>
+<ref refid="d86faf8c-210f-11ea-ab0b-c72c0738acd2"/>
+</diagram>
+<show_attributes>
+<val>0</val>
+</show_attributes>
+<show_operations>
+<val>0</val>
+</show_operations>
+<subject>
+<ref refid="c1c1e5c0-6c72-11f0-8871-be7f4daace3f"/>
+</subject>
+</UML:EnumerationItem>
+<UML:EnumerationLiteral id="c587d1b0-6c72-11f0-8871-be7f4daace3f">
+<enumeration>
+<ref refid="c1c1e5c0-6c72-11f0-8871-be7f4daace3f"/>
+</enumeration>
+<name>
+<val>in</val>
+</name>
+</UML:EnumerationLiteral>
+<UML:EnumerationLiteral id="c7642bdc-6c72-11f0-8871-be7f4daace3f">
+<enumeration>
+<ref refid="c1c1e5c0-6c72-11f0-8871-be7f4daace3f"/>
+</enumeration>
+<name>
+<val>inout</val>
+</name>
+</UML:EnumerationLiteral>
+<UML:EnumerationLiteral id="c89f51de-6c72-11f0-8871-be7f4daace3f">
+<enumeration>
+<ref refid="c1c1e5c0-6c72-11f0-8871-be7f4daace3f"/>
+</enumeration>
+<name>
+<val>out</val>
+</name>
+</UML:EnumerationLiteral>
 </model>
 </gaphor>

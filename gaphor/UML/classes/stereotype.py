@@ -7,11 +7,11 @@ from gaphor.diagram.shapes import Box, CssNode, Text, draw_top_separator
 
 def stereotype_watches(presentation: ElementPresentation) -> None:
     presentation.watch(
-        "subject[Element].appliedStereotype", presentation.update_shapes
-    ).watch("subject[Element].appliedStereotype.classifier.name").watch(
-        "subject[Element].appliedStereotype.slot", presentation.update_shapes
-    ).watch("subject[Element].appliedStereotype.slot.definingFeature.name").watch(
-        "subject[Element].appliedStereotype.slot.value", presentation.update_shapes
+        "subject[UML:Element].appliedStereotype", presentation.update_shapes
+    ).watch("subject[UML:Element].appliedStereotype.classifier.name").watch(
+        "subject[UML:Element].appliedStereotype.slot", presentation.update_shapes
+    ).watch("subject[UML:Element].appliedStereotype.slot.definingFeature.name").watch(
+        "subject[UML:Element].appliedStereotype.slot.value", presentation.update_shapes
     )
 
 

@@ -138,7 +138,8 @@ def models():
 @pytest_asyncio.fixture
 async def view(diagram):
     view = DiagramView(model=diagram)
-    return view
+    yield view
+    diagram.unregister_view(view)
 
 
 @pytest.fixture(autouse=True)

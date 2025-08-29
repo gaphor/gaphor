@@ -1,12 +1,12 @@
 repos:
 - repo: https://github.com/pre-commit/mirrors-mypy
-  rev: 0f86793af5ef5f6dc63c8d04a3cabfa3ea8f9c6a  # frozen: v1.16.1
+  rev: 412de98d50e846f31ea6f4b0ad036f2c24a7a024  # frozen: v1.17.1
   hooks:
   - id: mypy
     additional_dependencies:
     - types-docutils
 - repo: https://github.com/pre-commit/pre-commit-hooks
-  rev: cef0300fd0fc4d2a87a85fa2093c6b283ea36f4b  # frozen: v5.0.0
+  rev: 3e8a8703264a2f4a69428a0aa4dcb512790b2c8c  # frozen: v6.0.0
   hooks:
   - id: end-of-file-fixer
     exclude: '\.gaphor'
@@ -14,12 +14,12 @@ repos:
     exclude: '.\.gaphor'
   - id: trailing-whitespace
 - repo: https://github.com/shellcheck-py/shellcheck-py
-  rev: a23f6b85d0fdd5bb9d564e2579e678033debbdff  # frozen: v0.10.0.1
+  rev: 745eface02aef23e168a8afb6b5737818efbea95  # frozen: v0.11.0.1
   hooks:
   - id: shellcheck
     args: [--exclude, SC1017]
 - repo: https://github.com/astral-sh/ruff-pre-commit
-  rev: '0b19ef1fd6ad680ed7752d6daba883ce1265a6de'  # frozen: v0.12.2
+  rev: '455f64b32459518aa82ec33b63f799ed048d65a9'  # frozen: v0.12.8
   hooks:
   - id: ruff
     args: [--fix, --preview]

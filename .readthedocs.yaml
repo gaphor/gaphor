@@ -1,5 +1,7 @@
 version: 2
-formats: all
+formats:
+- htmlzip
+- epub
 build:
   os: ubuntu-24.04
   tools:

@@ -25,8 +25,9 @@ methods:
 
 from __future__ import annotations
 
+import enum
 import logging
-from collections.abc import Callable, Iterable, Sequence
+from collections.abc import Callable, Iterable
 from dataclasses import dataclass
 from typing import (
     Any,
@@ -276,22 +277,19 @@ class attribute(umlproperty, Generic[T]):
 class enumeration(umlproperty):
     """Enumeration.
 
-      Element.enum = enumeration('enum', ('one', 'two', 'three'), 'one')
+      Element.enum = enumeration('enum', EnumKind, 'one')
 
     An enumeration is a special kind of attribute that can only hold a
-    predefined set of values. Multiplicity is always `[0..1]`
+    predefined set of values. Multiplicity is always `[0..1]`.
     """
 
-    # All enumerations have a type 'str'
-    type = str
-
-    def __init__(self, name: str, values: Sequence[str], default: str):
+    def __init__(self, name: str, type: type[enum.StrEnum], default: enum.StrEnum):
         super().__init__(name)
-        self.values = values
+        self.type = type
         self.default = default
 
     def __str__(self):
-        return f"<enumeration {self.name}: {self.values} = {self.default}>"
+        return f"<enumeration {self.name}: {self.type.__name__} = {self.default}>"
 
     def get(self, obj):
         return getattr(obj, self._name, self.default)
@@ -303,8 +301,8 @@ class enumeration(umlproperty):
         self.set(obj, self.default)
 
     def set(self, obj, value):
-        if value not in self.values:
-            raise TypeError(f"Value should be one of {self.values}")
+        if value not in self.type:
+            raise TypeError(f"Value should be one of {list(self.type)}")
         old = self.get(obj)
         if value == old:
             return
