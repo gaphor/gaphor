@@ -49,7 +49,9 @@ class ConstraintParameterItem(Named, AttachedPresentation[UML.Property]):
         super().__init__(diagram, id, width=16, height=16)
         self.watch("subject[UML:NamedElement].name").watch(
             "subject[UML:TypedElement].type.name"
-        ).watch("subject[Property].lowerValue").watch("subject[Property].upperValue")
+        ).watch("subject[UML:Property].lowerValue").watch(
+            "subject[UML:Property].upperValue"
+        )
 
         # Make the handle connectable, so the connect tool can start a connection.
         # An AttachedPresentation has one handle, which we can access at index 0.

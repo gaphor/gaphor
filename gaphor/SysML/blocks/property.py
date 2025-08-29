@@ -33,7 +33,7 @@ class PropertyItem(Named, ElementPresentation[UML.Property]):
         self.watch("subject[UML:Property].upperValue")
         self.watch("subject[UML:Property].aggregation", self.update_shapes)
         stereotype_watches(self)
-        self.watch("subject[Property].type", self.update_shapes)
+        self.watch("subject[UML:Property].type", self.update_shapes)
 
     show_stereotypes: attribute[int] = attribute("show_stereotypes", int)
 

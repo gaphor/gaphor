@@ -51,7 +51,7 @@ class ConstraintItem(Classified, ElementPresentation[Constraint]):
             "show_parameters", self.update_shapes
         ).watch("subject[UML:NamedElement].name").watch(
             "subject[UML:NamedElement].namespace.name"
-        ).watch("subject[Classifier].isAbstract", self.update_shapes)
+        ).watch("subject[UML:Classifier].isAbstract", self.update_shapes)
         attribute_watches(self, "Constraint")
         stereotype_watches(self)
 
