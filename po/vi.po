@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2025-04-23 21:47+0200\n"
-"PO-Revision-Date: 2025-04-12 12:31+0000\n"
-"Last-Translator: Bế Trọng Nghĩa <benghia1st@gmail.com>\n"
+"PO-Revision-Date: 2025-09-01 05:02+0000\n"
+"Last-Translator: Flowerlywind <tuanhoangnguyen25019@gmail.com>\n"
+"Language-Team: Vietnamese <https://hosted.weblate.org/projects/gaphor/gaphor/"
+"vi/>\n"
 "Language: vi\n"
-"Language-Team: Vietnamese "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/vi/>\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.13.1-dev\n"
 "Generated-By: Babel 2.16.0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:28
@@ -26,7 +27,7 @@ msgstr ""
 #: gaphor/C4Model/propertypages.ui:11 gaphor/diagram/general/metadata.py:70
 #: gaphor/diagram/propertypages.ui:170
 msgid "Description"
-msgstr ""
+msgstr "Mô tả"
 
 #: gaphor/C4Model/propertypages.ui:38 gaphor/templates/sysml-example.gaphor
 #: gaphor/templates/sysml.gaphor
