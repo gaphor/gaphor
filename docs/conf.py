@@ -224,7 +224,7 @@ epub_exclude_files = ["search.html"]
 
 # Example configuration for intersphinx: refer to the Python standard library.
 intersphinx_mapping = {
-    "gnome": ("https://amolenaar.pages.gitlab.gnome.org/pygobject-docs", None),
+    "gnome": ("https://api.pygobject.gnome.org", None),
     "pygobject": ("https://pygobject.gnome.org", None),
     "gaphas": ("https://gaphas.readthedocs.io/en/stable", None),
     "python": ("https://docs.python.org/3", None),
