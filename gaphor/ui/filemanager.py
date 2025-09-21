@@ -322,7 +322,7 @@ class FileManager(Service, ActionProvider):
 
         filename = await save_file_dialog(
             gettext("Save Gaphor Model As"),
-            self.filename or Path(gettext("New Model")).with_suffix(".gaphor"),
+            self.filename or Path(gettext("New Model")).with_suffix(DEFAULT_EXT),
             parent=self.parent_window,
             filters=GAPHOR_FILTER,
         )
@@ -361,7 +361,7 @@ class FileManager(Service, ActionProvider):
                     filename = await save_file_dialog(
                         gettext("Save Gaphor Model As"),
                         self.filename
-                        or Path(gettext("New Model")).with_suffix(".gaphor"),
+                        or Path(gettext("New Model")).with_suffix(DEFAULT_EXT),
                         parent=self.parent_window,
                         filters=GAPHOR_FILTER,
                     )
