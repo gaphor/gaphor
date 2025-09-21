@@ -285,10 +285,10 @@ class Diagram(Base):
         if event and event.property is not Presentation.parent:
             return
 
-        ownedPresentation = self.ownedPresentation
+        owned_presentation = self.ownedPresentation
 
         def traverse_items(parent=None) -> Iterable[Presentation]:
-            for item in ownedPresentation:
+            for item in owned_presentation:
                 if item.parent is parent:
                     yield item
                     yield from traverse_items(item)
@@ -439,6 +439,7 @@ class Diagram(Base):
             self._update_dirty_items(dirty_items={item})
 
     def update_now(self, _dirty_items: Collection[Presentation]) -> None:
+        # We skip forced updates, since they happen outside of transactions
         pass
 
     def register_view(self, view: gaphas.model.View[Presentation]) -> None:
