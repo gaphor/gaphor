@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: Gaphor 2.23.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-12-30 14:25-0500\n"
-"PO-Revision-Date: 2024-12-13 03:00+0000\n"
-"Last-Translator: João Henrique <jhenriquelc@gmail.com>\n"
+"PO-Revision-Date: 2025-08-19 16:02+0000\n"
+"Last-Translator: Matheus Rossigalli <rossigalli.dev@gmail.com>\n"
+"Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/"
+"gaphor/docs-gaphor-org/pt_BR/>\n"
 "Language: pt_BR\n"
-"Language-Team: Portuguese (Brazil) "
-"<https://hosted.weblate.org/projects/gaphor/docs-gaphor-org/pt_BR/>\n"
-"Plural-Forms: nplurals=2; plural=n > 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 5.13\n"
 "Generated-By: Babel 2.16.0\n"
 
 #: ../changelog.rst:2
@@ -483,7 +484,7 @@ msgstr ""
 
 #: ../coffee_machine_concept.md:26
 msgid "Use Case Diagram"
-msgstr "Diagrama de Casos de Uso"
+msgstr "Diagrama de Caso de Uso"
 
 #: ../coffee_machine_concept.md:28
 msgid ""
