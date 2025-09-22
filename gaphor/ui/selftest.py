@@ -26,8 +26,8 @@ class Status:
     def passed(self):
         self.status = "passed"
 
-    def skip(self):
-        self.status = "skipped"
+    def failed(self):
+        self.status = "failed"
 
     @property
     def in_progress(self):
@@ -35,7 +35,7 @@ class Status:
 
     @property
     def completed(self):
-        return self.status in ("passed", "skipped")
+        return self.status in ("passed", "failed")
 
     def __repr__(self):
         return f"{self.name}: {self.status}"
@@ -51,7 +51,7 @@ def test(func):
             return func(self, status)
         except BaseException:
             log.exception("Test %s failed", func.__name__)
-            status.status = "failed"
+            status.failed()
 
     return wrapper
 
@@ -62,6 +62,9 @@ class SelfTest(Service):
         self.statuses: list[Status] = []
 
     def shutdown(self):
+        pass
+
+    def open(self):
         pass
 
     def init(self, gtk_app):
@@ -76,51 +79,52 @@ class SelfTest(Service):
         start = time.time()
 
         def callback():
-            if time.time() > start + timeout:
-                log.error("Tests timed out")
-                gtk_app.exit_code = 1
-            elif any(status.in_progress for status in self.statuses):
-                return GLib.SOURCE_CONTINUE
-            elif all(status.completed for status in self.statuses):
+            if all(status.completed for status in self.statuses):
                 log.info(
                     "All tests have been completed in %.1fs",
                     time.time() - start,
                 )
+            elif time.time() > start + timeout:
+                log.error("Tests timed out")
+            elif any(status.in_progress for status in self.statuses):
+                return GLib.SOURCE_CONTINUE
             else:
                 log.error("Not all tests have passed")
-                gtk_app.exit_code = 1
 
             for status in self.statuses:
                 log.log(logging.INFO if status.completed else logging.ERROR, status)
 
+            gtk_app.exit_code = (
+                0 if all(status.status == "passed" for status in self.statuses) else 1
+            )
             gtk_app.quit()
             return GLib.SOURCE_REMOVE
 
-        GLib.timeout_add(priority=GLib.PRIORITY_LOW, interval=100, function=callback)
+        GLib.timeout_add(
+            priority=GLib.PRIORITY_DEFAULT, interval=100, function=callback
+        )
 
     @test
-    def test_library_versions(self, status):
+    def test_library_versions(self, status: Status):
         log.info(
             "System information:\n\n%s", textwrap.indent(system_information(), "\t")
         )
         status.passed()
 
     @test
-    def test_new_session(self, status):
-        def check_new_session(session):
-            main_window = session.get_service("main_window")
-
-            if main_window.window and main_window.window.get_visible():
-                status.passed()
-                return GLib.SOURCE_REMOVE
-            return GLib.SOURCE_CONTINUE
-
+    def test_new_session(self, status: Status):
         template = importlib.resources.files("gaphor") / "templates" / "uml.gaphor"
         session = self.application.new_session(template=template)
-        GLib.idle_add(check_new_session, session, priority=GLib.PRIORITY_LOW)
+
+        main_window = session.get_service("main_window")
+
+        if main_window.window and main_window.window.get_visible():
+            status.passed()
+        else:
+            status.failed()
 
     @test
-    def test_gsettings_schemas(self, status):
+    def test_gsettings_schemas(self, status: Status):
         source = Gio.settings_schema_source_get_default()
         data_dirs = [GLib.get_user_data_dir(), *GLib.get_system_data_dirs()]
         for schema in ["org.gtk.gtk4.Settings.FileChooser", APPLICATION_ID]:
@@ -134,7 +138,7 @@ class SelfTest(Service):
         status.passed()
 
     @test
-    def test_auto_layout(self, status):
+    def test_auto_layout(self, status: Status):
         session = self.application.new_session()
         event_manager = session.get_service("event_manager")
         element_factory = session.get_service("element_factory")
