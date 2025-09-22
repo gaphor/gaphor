@@ -1596,7 +1596,7 @@ msgid ""
 "`EventManager` service. Gaphor is highly event driven:"
 msgstr ""
 "U Gaphoru upravljamo pretplatama za rukovanje događajima putem usluge "
-"`EventManager`(Upravljač događaja). Gaphor je izrazito vođen događajima:"
+"`EventManager` (Upravljač događaja). Gaphor je izrazito vođen događajima:"
 
 #: ../event_system.md:9
 msgid "Changes in the loaded model are emitted as events"
@@ -1985,7 +1985,7 @@ msgid ""
 "of elements."
 msgstr ""
 "Sam [model podataka](models/core) održava se u tvornici elemenata "
-"(`gaphor.core.modeling.ElementFactory`). Ova se usluga koristi za stvaranje "
+"({obj}`~gaphor.core.modeling.ElementFactory`). Ova se usluga koristi za stvaranje "
 "elemenata modela, kao i za pregledvanje elemenata ili za traženje skupa "
 "elemenata."
 
