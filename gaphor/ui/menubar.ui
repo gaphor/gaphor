@@ -100,6 +100,7 @@
     </submenu>
     <submenu>
       <attribute name="label" translatable="yes">_Window</attribute>
+      <attribute name="gtk-macos-special">window-submenu</attribute>
       <section>
         <item>
           <attribute name="label" translatable="yes">Maximize</attribute>
