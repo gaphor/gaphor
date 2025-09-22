@@ -183,7 +183,7 @@ jobs:
     strategy:
       matrix:
         target:
-          - runner: macos-13
+          - runner: macos-15-intel
             arch: intel
           - runner: macos-15
             arch: arm
@@ -217,9 +217,8 @@ jobs:
           install_name_tool -change @rpath/librsvg-2.2.dylib $(brew --prefix librsvg)/lib/librsvg-2.2.dylib $(brew --prefix librsvg)/lib/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader_svg.so
           codesign --sign - --force --preserve-metadata=entitlements,requirements,flags,runtime $(brew --prefix librsvg)/lib/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader_svg.so
           GDK_PIXBUF_MODULEDIR=$(brew --prefix)/lib/gdk-pixbuf-2.0/2.10.0/loaders gdk-pixbuf-query-loaders --update-cache
-      - name: Ensure Homebrew Library Path (ARM only)
-        if: matrix.target.arch == 'arm'
-        run: echo "DYLD_LIBRARY_PATH=/opt/homebrew/lib" >> $GITHUB_ENV
+      - name: Ensure Homebrew Library Path
+        run: echo "DYLD_LIBRARY_PATH=$(brew --prefix)/lib" >> $GITHUB_ENV
         shell: bash
       - name: Install Dependencies
         id: install
@@ -255,7 +254,7 @@ jobs:
     strategy:
       matrix:
         target:
-          - runner: macos-13
+          - runner: macos-15-intel
             artifact: ${{ needs.macos.outputs.artifact-intel }}
           - runner: macos-15
             artifact: ${{ needs.macos.outputs.artifact-arm }}
