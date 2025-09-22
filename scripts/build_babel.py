@@ -1,7 +1,7 @@
 import subprocess
 from pathlib import Path
 
-po_path: Path = Path(__file__).resolve().parent
+po_path: Path = Path(__file__).resolve().parent.parent / "po"
 
 
 def run_babel(command: str, input: Path, output_file: Path, locale: str):
