@@ -205,7 +205,6 @@ jobs:
         env:
           HOMEBREW_NO_INSTALL_CLEANUP: 1
         run: |
-          brew update
           # Pre-installed Python conflicts with Homebrew Python (Intel only)
           # https://github.com/actions/runner-images/issues/9966
           brew install --quiet --overwrite python@${python_version}
