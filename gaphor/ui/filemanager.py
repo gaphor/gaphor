@@ -313,16 +313,18 @@ class FileManager(Service, ActionProvider):
         if filename := self.filename:
             await self.save(filename)
         else:
-            await self.action_save_as()
+            await self._save_as()
 
     @action(name="file-save-as", shortcut="<Primary><Shift>s")
     async def action_save_as(self):
         """Save the model in the element_factory by allowing the user to select
         a file name."""
+        await self._save_as()
 
+    async def _save_as(self):
         filename = await save_file_dialog(
             gettext("Save Gaphor Model As"),
-            self.filename or Path(gettext("New Model")).with_suffix(".gaphor"),
+            self.filename or Path(gettext("New Model")).with_suffix(DEFAULT_EXT),
             parent=self.parent_window,
             filters=GAPHOR_FILTER,
         )
@@ -361,7 +363,7 @@ class FileManager(Service, ActionProvider):
                     filename = await save_file_dialog(
                         gettext("Save Gaphor Model As"),
                         self.filename
-                        or Path(gettext("New Model")).with_suffix(".gaphor"),
+                        or Path(gettext("New Model")).with_suffix(DEFAULT_EXT),
                         parent=self.parent_window,
                         filters=GAPHOR_FILTER,
                     )

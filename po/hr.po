@@ -4,24 +4,25 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version:  Gaphor\n"
+"Project-Id-Version: Gaphor\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2025-04-23 21:47+0200\n"
-"PO-Revision-Date: 2025-01-04 10:47+0000\n"
+"PO-Revision-Date: 2025-08-27 00:59+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
+"Language-Team: Croatian <https://hosted.weblate.org/projects/gaphor/gaphor/"
+"hr/>\n"
 "Language: hr\n"
-"Language-Team: Croatian "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/hr/>\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Weblate 5.13\n"
 "Generated-By: Babel 2.16.0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:28
 msgid "C4"
-msgstr ""
+msgstr "C4"
 
 #: gaphor/C4Model/propertypages.ui:11 gaphor/diagram/general/metadata.py:70
 #: gaphor/diagram/propertypages.ui:170
@@ -1529,11 +1530,11 @@ msgstr "Pseudostanje izbora"
 
 #: gaphor/UML/states/statestoolbox.py:190
 msgid "Entry Point Pseudostate"
-msgstr "Pseudostanje točke ulaza"
+msgstr "Pseudostanje ulazne točke"
 
 #: gaphor/UML/states/statestoolbox.py:202
 msgid "Exit Point Pseudostate"
-msgstr "Pseudostanje točke izlaza"
+msgstr "Pseudostanje izlazne točke"
 
 #: gaphor/UML/states/statestoolbox.py:214
 msgid "Terminate Pseudostate"
@@ -2555,7 +2556,7 @@ msgstr "Umanji"
 
 #: gaphor/ui/diagrampage.ui:44 gaphor/ui/help/shortcuts.ui:205
 msgid "Reset Zoom"
-msgstr "Stvarna veličina"
+msgstr "Resetiraj zumiranje"
 
 #: gaphor/ui/diagrampage.ui:59 gaphor/ui/help/shortcuts.ui:191
 #: gaphor/ui/menubar.ui:79
@@ -2622,11 +2623,13 @@ msgstr ""
 
 #: gaphor/ui/elementeditor.ui:87
 msgid "Help improve Gaphor"
-msgstr ""
+msgstr "Pomogni poboljšati Gaphor"
 
 #: gaphor/ui/elementeditor.ui:96
 msgid "Gaphor is free and open source software, written by devoted volunteers."
 msgstr ""
+"Gaphor je besplatan softver otvorenog koda, koji su napisali predani "
+"volonteri."
 
 #: gaphor/ui/elementeditor.ui:104
 msgid ""
@@ -2634,22 +2637,25 @@ msgid ""
 "translate Gaphor into your language, report bugs, or suggest new "
 "features. Join us in improving Gaphor!"
 msgstr ""
+"Postoji mnogo načina da pomogneš poboljšati Gaphor: napiši objavu na blogu, "
+"prevedi Gaphor na svoj jezik, prijavi greške ili predloži nove funkcije. "
+"Pridruži nam se kako bismo poboljšali Gaphor!"
 
 #: gaphor/ui/elementeditor.ui:112
 msgid ""
 "Visit <a href=\"https://gaphor.org/contribute/\">gaphor.org</a> for more "
 "information."
 msgstr ""
+"Za više informacija posjeti <a href=\"https://gaphor.org/contribute/\""
+">gaphor.org</a>."
 
 #: gaphor/ui/elementeditor.ui:151
-#, fuzzy
 msgid "Editor"
-msgstr "Uređivači"
+msgstr "Uređivač"
 
 #: gaphor/ui/elementeditor.ui:177
-#, fuzzy
 msgid "Styling"
-msgstr "Znakovni niz"
+msgstr "Stiliziranje"
 
 #: gaphor/ui/elementeditor.ui:189
 msgid "Style Sheet"
@@ -2951,9 +2957,8 @@ msgid "Press F11 to exit Fullscreen"
 msgstr "Pritisni F11 za napuštanje cjeloekranskog prikaza"
 
 #: gaphor/ui/mainwindow.ui:37
-#, fuzzy
 msgid "Change modeling profile"
-msgstr "Učitavanje modela iz {filename}"
+msgstr "Promijeni profil modeliranja"
 
 #: gaphor/ui/mainwindow.ui:47
 msgid "Open application menu"
@@ -2992,9 +2997,8 @@ msgid "Save As…"
 msgstr "Spremi kao …"
 
 #: gaphor/ui/mainwindow.ui:284
-#, fuzzy
 msgid "Preferences…"
-msgstr "Postavke"
+msgstr "Postavke …"
 
 #: gaphor/ui/mainwindow.ui:301
 msgid "Align Left"
@@ -3005,9 +3009,8 @@ msgid "Align Right"
 msgstr "Poravnaj desno"
 
 #: gaphor/ui/mainwindow.ui:311
-#, fuzzy
 msgid "Align Vertical Center"
-msgstr "Poravnaj centrirano vodoravno"
+msgstr "Poravnaj okomito centrirano"
 
 #: gaphor/ui/mainwindow.ui:318
 msgid "Align Top"
@@ -3019,7 +3022,7 @@ msgstr "Poravnaj dolje"
 
 #: gaphor/ui/mainwindow.ui:328
 msgid "Align Horizontal Center"
-msgstr "Poravnaj centrirano vodoravno"
+msgstr "Poravnaj vodoravno centrirano"
 
 #: gaphor/ui/mainwindow.ui:335
 msgid "Max Width"
@@ -3034,14 +3037,12 @@ msgid "Max Size"
 msgstr "Maks. veličina"
 
 #: gaphor/ui/menubar.ui:5
-#, fuzzy
 msgid "_File"
-msgstr "Datoteke"
+msgstr "_Datoteka"
 
 #: gaphor/ui/menubar.ui:31
-#, fuzzy
 msgid "_Edit"
-msgstr "Izlaz"
+msgstr "_Uredi"
 
 #: gaphor/ui/help/shortcuts.ui:162 gaphor/ui/menubar.ui:44
 msgid "Cut"
@@ -3052,9 +3053,8 @@ msgid "Copy"
 msgstr "Kopiraj"
 
 #: gaphor/ui/menubar.ui:52
-#, fuzzy
 msgid "Paste"
-msgstr "Datum"
+msgstr "Umetni"
 
 #: gaphor/ui/help/shortcuts.ui:176 gaphor/ui/menubar.ui:56
 msgid "Paste (copy defining elements)"
@@ -3065,42 +3065,36 @@ msgid "Select All"
 msgstr "Označi sve"
 
 #: gaphor/ui/menubar.ui:70
-#, fuzzy
 msgid "Unselect All"
-msgstr "Označi sve"
+msgstr "Odznači sve"
 
 #: gaphor/ui/menubar.ui:76
 msgid "_View"
-msgstr ""
+msgstr "_Prikaz"
 
 #: gaphor/ui/menubar.ui:87
-#, fuzzy
 msgid "Actual Size"
-msgstr "Maks. veličina"
+msgstr "Stvarna veličina"
 
 #: gaphor/ui/menubar.ui:102
 msgid "_Window"
-msgstr ""
+msgstr "P_rozor"
 
 #: gaphor/ui/menubar.ui:105
-#, fuzzy
 msgid "Maximize"
-msgstr "Maks. veličina"
+msgstr "Maks. rastvori prozor"
 
 #: gaphor/ui/menubar.ui:109
-#, fuzzy
 msgid "Full screen"
-msgstr "Uklj./Isklj. cjeloekranski prikaz"
+msgstr "Cjeloekranski prikaz"
 
 #: gaphor/ui/menubar.ui:115
-#, fuzzy
 msgid "_Help"
-msgstr "ⓘ Pomoć"
+msgstr "Po_moć"
 
 #: gaphor/ui/menubar.ui:118
-#, fuzzy
 msgid "Online Documentation"
-msgstr "Preokreni smjer"
+msgstr "Online dokumentacija"
 
 #: gaphor/ui/modelbrowser.py:404
 msgid "New _Package"
@@ -3229,9 +3223,8 @@ msgid "Automatically remove elements no longer in use in any diagram."
 msgstr "Automatski ukloni elemente koji se više ne koriste u nijednom dijagramu."
 
 #: gaphor/ui/help/shortcuts.ui:4 gaphor/ui/help/shortcuts.ui:11
-#, fuzzy
 msgid "Shortcuts"
-msgstr "Tipkovni prečaci"
+msgstr "Prečaci"
 
 #: gaphor/ui/help/shortcuts.ui:46
 msgid "Quit Gaphor"

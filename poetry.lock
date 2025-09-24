@@ -850,14 +850,14 @@ test = ["objgraph", "psutil", "setuptools"]
 
 [[package]]
 name = "hypothesis"
-version = "6.138.3"
+version = "6.138.15"
 description = "A library for property-based testing"
 optional = false
 python-versions = ">=3.9"
 groups = ["dev"]
 files = [
-    {file = "hypothesis-6.138.3-py3-none-any.whl", hash = "sha256:19291d3ba478527155c34704b038a21ba86b2f31d36673446f981a67f705b3f4"},
-    {file = "hypothesis-6.138.3.tar.gz", hash = "sha256:9bffd1382b99e67c46512dac45ec013bae4b39d3d0ef98f0d87535f06d8efc9e"},
+    {file = "hypothesis-6.138.15-py3-none-any.whl", hash = "sha256:b7cf743d461c319eb251a13c8e1dcf00f4ef7085e4ab5bf5abf102b2a5ffd694"},
+    {file = "hypothesis-6.138.15.tar.gz", hash = "sha256:6b0e1aa182eacde87110995a3543530d69ef411f642162a656efcd46c2823ad1"},
 ]
 
 [package.dependencies]
@@ -996,14 +996,14 @@ test = ["flaky", "ipyparallel", "pre-commit", "pytest (>=7.0,<9)", "pytest-async
 
 [[package]]
 name = "ipython"
-version = "9.4.0"
+version = "9.5.0"
 description = "IPython: Productive Interactive Computing"
 optional = false
 python-versions = ">=3.11"
 groups = ["dev", "docs"]
 files = [
-    {file = "ipython-9.4.0-py3-none-any.whl", hash = "sha256:25850f025a446d9b359e8d296ba175a36aedd32e83ca9b5060430fe16801f066"},
-    {file = "ipython-9.4.0.tar.gz", hash = "sha256:c033c6d4e7914c3d9768aabe76bbe87ba1dc66a92a05db6bfa1125d81f2ee270"},
+    {file = "ipython-9.5.0-py3-none-any.whl", hash = "sha256:88369ffa1d5817d609120daa523a6da06d02518e582347c29f8451732a9c5e72"},
+    {file = "ipython-9.5.0.tar.gz", hash = "sha256:129c44b941fe6d9b82d36fc7a7c18127ddb1d6f02f78f867f402e2e3adde3113"},
 ]
 
 [package.dependencies]
@@ -1023,7 +1023,7 @@ all = ["ipython[doc,matplotlib,test,test-extra]"]
 black = ["black"]
 doc = ["docrepr", "exceptiongroup", "intersphinx_registry", "ipykernel", "ipython[test]", "matplotlib", "setuptools (>=18.5)", "sphinx (>=1.3)", "sphinx-rtd-theme", "sphinx_toml (==0.0.4)", "typing_extensions"]
 matplotlib = ["matplotlib"]
-test = ["packaging", "pytest", "pytest-asyncio (<0.22)", "testpath"]
+test = ["packaging", "pytest", "pytest-asyncio", "testpath"]
 test-extra = ["curio", "ipykernel", "ipython[test]", "jupyter_ai", "matplotlib (!=3.2.0)", "nbclient", "nbformat", "numpy (>=1.23)", "pandas", "trio"]
 
 [[package]]
@@ -2040,14 +2040,14 @@ diagrams = ["jinja2", "railroad-diagrams"]
 
 [[package]]
 name = "pytest"
-version = "8.4.1"
+version = "8.4.2"
 description = "pytest: simple powerful testing with Python"
 optional = false
 python-versions = ">=3.9"
 groups = ["dev"]
 files = [
-    {file = "pytest-8.4.1-py3-none-any.whl", hash = "sha256:539c70ba6fcead8e78eebbf1115e8b589e7565830d7d006a8723f19ac8a0afb7"},
-    {file = "pytest-8.4.1.tar.gz", hash = "sha256:7c67fd69174877359ed9371ec3af8a3d2b04741818c51e5e99cc1742251fa93c"},
+    {file = "pytest-8.4.2-py3-none-any.whl", hash = "sha256:872f880de3fc3a5bdc88a11b39c9710c3497a547cfa9320bc3c5e62fbf272e79"},
+    {file = "pytest-8.4.2.tar.gz", hash = "sha256:86c0d0b93306b961d58d62a4db4879f27fe25513d4b969df351abdddb3c30e01"},
 ]
 
 [package.dependencies]
@@ -2099,14 +2099,14 @@ testing = ["coverage (>=6.2)", "hypothesis (>=5.7.1)"]
 
 [[package]]
 name = "pytest-cov"
-version = "6.2.1"
+version = "6.3.0"
 description = "Pytest plugin for measuring coverage."
 optional = false
 python-versions = ">=3.9"
 groups = ["dev"]
 files = [
-    {file = "pytest_cov-6.2.1-py3-none-any.whl", hash = "sha256:f5bc4c23f42f1cdd23c70b1dab1bbaef4fc505ba950d53e0081d0730dd7e86d5"},
-    {file = "pytest_cov-6.2.1.tar.gz", hash = "sha256:25cc6cc0a5358204b8108ecedc51a9b57b34cc6b8c967cc2c01a4e00d8a67da2"},
+    {file = "pytest_cov-6.3.0-py3-none-any.whl", hash = "sha256:440db28156d2468cafc0415b4f8e50856a0d11faefa38f30906048fe490f1749"},
+    {file = "pytest_cov-6.3.0.tar.gz", hash = "sha256:35c580e7800f87ce892e687461166e1ac2bcb8fb9e13aea79032518d6e503ff2"},
 ]
 
 [package.dependencies]
@@ -3118,31 +3118,31 @@ files = [
 
 [[package]]
 name = "xdoctest"
-version = "1.2.0"
+version = "1.3.0"
 description = "A rewrite of the builtin doctest module"
 optional = false
 python-versions = ">=3.8"
 groups = ["dev"]
 files = [
-    {file = "xdoctest-1.2.0-py3-none-any.whl", hash = "sha256:0f1ecf5939a687bd1fc8deefbff1743c65419cce26dff908f8b84c93fbe486bc"},
-    {file = "xdoctest-1.2.0.tar.gz", hash = "sha256:d8cfca6d8991e488d33f756e600d35b9fdf5efd5c3a249d644efcbbbd2ed5863"},
+    {file = "xdoctest-1.3.0-py3-none-any.whl", hash = "sha256:b546accaecae2fd0a14e8d8e125550832f3f11981629324519d057e218dd348f"},
+    {file = "xdoctest-1.3.0.tar.gz", hash = "sha256:f92cb99a3be6011c57bb94613a26b09a268e0095e926b4559132d135d8f6c9d4"},
 ]
 
 [package.extras]
-all = ["IPython (>=7.23.1)", "Pygments (>=2.0.0) ; python_version < \"3.5.0\" and python_version >= \"2.7.0\"", "Pygments (>=2.4.1) ; python_version >= \"3.5.0\"", "attrs (>=19.2.0)", "colorama (>=0.4.1) ; platform_system == \"Windows\"", "debugpy (>=1.0.0) ; python_version == \"3.8\"", "debugpy (>=1.3.0) ; python_version == \"3.9\"", "debugpy (>=1.6.0) ; python_version >= \"3.10\"", "ipykernel (>=6.0.0) ; python_version < \"3.12\" and python_version >= \"3.7\" and (platform_system != \"Windows\" or platform_python_implementation != \"PyPy\")", "ipykernel (>=6.11.0) ; python_version < \"4.0\" and python_version >= \"3.12\" and (platform_system != \"Windows\" or platform_python_implementation != \"PyPy\")", "ipython-genutils (>=0.2.0) ; python_version >= \"3.6\" and platform_python_implementation != \"PyPy\"", "jedi (>=0.16)", "jinja2 (>=3.0.0) ; python_version >= \"3.6\" and platform_python_implementation != \"PyPy\"", "jupyter-client (>=7.0.0)", "jupyter-core (>=4.7.0)", "nbconvert (>=6.0.0) ; python_version < \"3.7.0\" and python_version >= \"3.6.0\" and platform_python_implementation != \"PyPy\"", "nbconvert (>=6.1.0) ; python_version >= \"3.7.0\" and platform_python_implementation != \"PyPy\"", "pyflakes (>=2.2.0)", "pytest (>=4.6.0) ; python_version < \"3.10.0\" and python_version >= \"3.7.0\"", "pytest (>=6.2.5) ; python_version >= \"3.10.0\"", "pytest-cov (>=3.0.0) ; python_version >= \"3.6.0\"", "tomli (>=0.2.0) ; python_version < \"3.11.0\" and python_version >= \"3.6\""]
-all-strict = ["IPython (==7.23.1)", "Pygments (==2.0.0) ; python_version < \"3.5.0\" and python_version >= \"2.7.0\"", "Pygments (==2.4.1) ; python_version >= \"3.5.0\"", "attrs (==19.2.0)", "colorama (==0.4.1) ; platform_system == \"Windows\"", "debugpy (==1.0.0) ; python_version == \"3.8\"", "debugpy (==1.3.0) ; python_version == \"3.9\"", "debugpy (==1.6.0) ; python_version >= \"3.10\"", "ipykernel (==6.0.0) ; python_version < \"3.12\" and python_version >= \"3.7\" and (platform_system != \"Windows\" or platform_python_implementation != \"PyPy\")", "ipykernel (==6.11.0) ; python_version < \"4.0\" and python_version >= \"3.12\" and (platform_system != \"Windows\" or platform_python_implementation != \"PyPy\")", "ipython-genutils (==0.2.0) ; python_version >= \"3.6\" and platform_python_implementation != \"PyPy\"", "jedi (==0.16)", "jinja2 (==3.0.0) ; python_version >= \"3.6\" and platform_python_implementation != \"PyPy\"", "jupyter-client (==7.0.0)", "jupyter-core (==4.7.0)", "nbconvert (==6.0.0) ; python_version < \"3.7.0\" and python_version >= \"3.6.0\" and platform_python_implementation != \"PyPy\"", "nbconvert (==6.1.0) ; python_version >= \"3.7.0\" and platform_python_implementation != \"PyPy\"", "pyflakes (==2.2.0)", "pytest (==4.6.0) ; python_version < \"3.10.0\" and python_version >= \"3.7.0\"", "pytest (==6.2.5) ; python_version >= \"3.10.0\"", "pytest-cov (==3.0.0) ; python_version >= \"3.6.0\"", "tomli (==0.2.0) ; python_version < \"3.11.0\" and python_version >= \"3.6\""]
-colors = ["Pygments (>=2.0.0) ; python_version < \"3.5.0\" and python_version >= \"2.7.0\"", "Pygments (>=2.4.1) ; python_version >= \"3.5.0\"", "colorama (>=0.4.1) ; platform_system == \"Windows\""]
-colors-strict = ["Pygments (==2.0.0) ; python_version < \"3.5.0\" and python_version >= \"2.7.0\"", "Pygments (==2.4.1) ; python_version >= \"3.5.0\"", "colorama (==0.4.1) ; platform_system == \"Windows\""]
-docs = ["Pygments (>=2.9.0)", "myst-parser (>=0.18.0)", "sphinx (>=5.0.1)", "sphinx-autoapi (>=1.8.4)", "sphinx-autobuild (>=2021.3.14)", "sphinx-reredirects (>=0.0.1)", "sphinx-rtd-theme (>=1.0.0)", "sphinxcontrib-napoleon (>=0.7)"]
-docs-strict = ["Pygments (==2.9.0)", "myst-parser (==0.18.0)", "sphinx (==5.0.1)", "sphinx-autoapi (==1.8.4)", "sphinx-autobuild (==2021.3.14)", "sphinx-reredirects (==0.0.1)", "sphinx-rtd-theme (==1.0.0)", "sphinxcontrib-napoleon (==0.7)"]
-jupyter = ["IPython (>=7.23.1)", "attrs (>=19.2.0)", "debugpy (>=1.0.0) ; python_version == \"3.8\"", "debugpy (>=1.3.0) ; python_version == \"3.9\"", "debugpy (>=1.6.0) ; python_version >= \"3.10\"", "ipykernel (>=6.0.0) ; python_version < \"3.12\" and python_version >= \"3.7\" and (platform_system != \"Windows\" or platform_python_implementation != \"PyPy\")", "ipykernel (>=6.11.0) ; python_version < \"4.0\" and python_version >= \"3.12\" and (platform_system != \"Windows\" or platform_python_implementation != \"PyPy\")", "ipython-genutils (>=0.2.0) ; python_version >= \"3.6\" and platform_python_implementation != \"PyPy\"", "jedi (>=0.16)", "jinja2 (>=3.0.0) ; python_version >= \"3.6\" and platform_python_implementation != \"PyPy\"", "jupyter-client (>=7.0.0)", "jupyter-core (>=4.7.0)", "nbconvert (>=6.0.0) ; python_version < \"3.7.0\" and python_version >= \"3.6.0\" and platform_python_implementation != \"PyPy\"", "nbconvert (>=6.1.0) ; python_version >= \"3.7.0\" and platform_python_implementation != \"PyPy\""]
-jupyter-strict = ["IPython (==7.23.1)", "attrs (==19.2.0)", "debugpy (==1.0.0) ; python_version == \"3.8\"", "debugpy (==1.3.0) ; python_version == \"3.9\"", "debugpy (==1.6.0) ; python_version >= \"3.10\"", "ipykernel (==6.0.0) ; python_version < \"3.12\" and python_version >= \"3.7\" and (platform_system != \"Windows\" or platform_python_implementation != \"PyPy\")", "ipykernel (==6.11.0) ; python_version < \"4.0\" and python_version >= \"3.12\" and (platform_system != \"Windows\" or platform_python_implementation != \"PyPy\")", "ipython-genutils (==0.2.0) ; python_version >= \"3.6\" and platform_python_implementation != \"PyPy\"", "jedi (==0.16)", "jinja2 (==3.0.0) ; python_version >= \"3.6\" and platform_python_implementation != \"PyPy\"", "jupyter-client (==7.0.0)", "jupyter-core (==4.7.0)", "nbconvert (==6.0.0) ; python_version < \"3.7.0\" and python_version >= \"3.6.0\" and platform_python_implementation != \"PyPy\"", "nbconvert (==6.1.0) ; python_version >= \"3.7.0\" and platform_python_implementation != \"PyPy\""]
-optional = ["IPython (>=7.23.1)", "Pygments (>=2.0.0) ; python_version < \"3.5.0\" and python_version >= \"2.7.0\"", "Pygments (>=2.4.1) ; python_version >= \"3.5.0\"", "attrs (>=19.2.0)", "colorama (>=0.4.1) ; platform_system == \"Windows\"", "debugpy (>=1.0.0) ; python_version == \"3.8\"", "debugpy (>=1.3.0) ; python_version == \"3.9\"", "debugpy (>=1.6.0) ; python_version >= \"3.10\"", "ipykernel (>=6.0.0) ; python_version < \"3.12\" and python_version >= \"3.7\" and (platform_system != \"Windows\" or platform_python_implementation != \"PyPy\")", "ipykernel (>=6.11.0) ; python_version < \"4.0\" and python_version >= \"3.12\" and (platform_system != \"Windows\" or platform_python_implementation != \"PyPy\")", "ipython-genutils (>=0.2.0) ; python_version >= \"3.6\" and platform_python_implementation != \"PyPy\"", "jedi (>=0.16)", "jinja2 (>=3.0.0) ; python_version >= \"3.6\" and platform_python_implementation != \"PyPy\"", "jupyter-client (>=7.0.0)", "jupyter-core (>=4.7.0)", "nbconvert (>=6.0.0) ; python_version < \"3.7.0\" and python_version >= \"3.6.0\" and platform_python_implementation != \"PyPy\"", "nbconvert (>=6.1.0) ; python_version >= \"3.7.0\" and platform_python_implementation != \"PyPy\"", "pyflakes (>=2.2.0)", "tomli (>=0.2.0) ; python_version < \"3.11.0\" and python_version >= \"3.6\""]
-optional-strict = ["IPython (==7.23.1)", "Pygments (==2.0.0) ; python_version < \"3.5.0\" and python_version >= \"2.7.0\"", "Pygments (==2.4.1) ; python_version >= \"3.5.0\"", "attrs (==19.2.0)", "colorama (==0.4.1) ; platform_system == \"Windows\"", "debugpy (==1.0.0) ; python_version == \"3.8\"", "debugpy (==1.3.0) ; python_version == \"3.9\"", "debugpy (==1.6.0) ; python_version >= \"3.10\"", "ipykernel (==6.0.0) ; python_version < \"3.12\" and python_version >= \"3.7\" and (platform_system != \"Windows\" or platform_python_implementation != \"PyPy\")", "ipykernel (==6.11.0) ; python_version < \"4.0\" and python_version >= \"3.12\" and (platform_system != \"Windows\" or platform_python_implementation != \"PyPy\")", "ipython-genutils (==0.2.0) ; python_version >= \"3.6\" and platform_python_implementation != \"PyPy\"", "jedi (==0.16)", "jinja2 (==3.0.0) ; python_version >= \"3.6\" and platform_python_implementation != \"PyPy\"", "jupyter-client (==7.0.0)", "jupyter-core (==4.7.0)", "nbconvert (==6.0.0) ; python_version < \"3.7.0\" and python_version >= \"3.6.0\" and platform_python_implementation != \"PyPy\"", "nbconvert (==6.1.0) ; python_version >= \"3.7.0\" and platform_python_implementation != \"PyPy\"", "pyflakes (==2.2.0)", "tomli (==0.2.0) ; python_version < \"3.11.0\" and python_version >= \"3.6\""]
-tests = ["pytest (>=4.6.0) ; python_version < \"3.10.0\" and python_version >= \"3.7.0\"", "pytest (>=6.2.5) ; python_version >= \"3.10.0\"", "pytest-cov (>=3.0.0) ; python_version >= \"3.6.0\""]
+all = ["IPython (>=7.23.1)", "Pygments (>=2.15.1)", "attrs (>=19.2.0)", "colorama (>=0.4.1) ; platform_system == \"Windows\"", "debugpy (>=1.0.0) ; python_version == \"3.8\"", "debugpy (>=1.3.0) ; python_version == \"3.9\"", "debugpy (>=1.6.0) ; python_version >= \"3.10\"", "ipykernel (>=6.0.0) ; python_version < \"3.12\" and python_version >= \"3.7\" and (platform_system != \"Windows\" or platform_python_implementation != \"PyPy\")", "ipykernel (>=6.11.0) ; python_version < \"4.0\" and python_version >= \"3.12\" and (platform_system != \"Windows\" or platform_python_implementation != \"PyPy\")", "ipython_genutils (>=0.2.0) ; platform_python_implementation != \"PyPy\"", "jedi (>=0.16)", "jinja2 (>=3.0.0) ; platform_python_implementation != \"PyPy\"", "jupyter_client (>=7.0.0)", "jupyter_core (>=4.7.0)", "nbconvert (>=6.1.0) ; python_version >= \"3.7.0\" and platform_python_implementation != \"PyPy\"", "pyflakes (>=2.2.0)", "pytest (>=4.6.0) ; python_version < \"3.10.0\" and python_version >= \"3.7.0\"", "pytest (>=6.2.5) ; python_version >= \"3.10.0\"", "pytest-cov (>=3.0.0)", "tomli (>=0.2.0) ; python_version < \"3.11.0\" and python_version >= \"3.6\""]
+all-strict = ["IPython (==7.23.1)", "Pygments (==2.15.1)", "attrs (==19.2.0)", "colorama (==0.4.1) ; platform_system == \"Windows\"", "debugpy (==1.0.0) ; python_version == \"3.8\"", "debugpy (==1.3.0) ; python_version == \"3.9\"", "debugpy (==1.6.0) ; python_version >= \"3.10\"", "ipykernel (==6.0.0) ; python_version < \"3.12\" and python_version >= \"3.7\" and (platform_system != \"Windows\" or platform_python_implementation != \"PyPy\")", "ipykernel (==6.11.0) ; python_version < \"4.0\" and python_version >= \"3.12\" and (platform_system != \"Windows\" or platform_python_implementation != \"PyPy\")", "ipython_genutils (==0.2.0) ; platform_python_implementation != \"PyPy\"", "jedi (==0.16)", "jinja2 (==3.0.0) ; platform_python_implementation != \"PyPy\"", "jupyter_client (==7.0.0)", "jupyter_core (==4.7.0)", "nbconvert (==6.1.0) ; python_version >= \"3.7.0\" and platform_python_implementation != \"PyPy\"", "pyflakes (==2.2.0)", "pytest (==4.6.0) ; python_version < \"3.10.0\" and python_version >= \"3.7.0\"", "pytest (==6.2.5) ; python_version >= \"3.10.0\"", "pytest-cov (==3.0.0)", "tomli (==0.2.0) ; python_version < \"3.11.0\" and python_version >= \"3.6\""]
+colors = ["Pygments (>=2.15.1)", "colorama (>=0.4.1) ; platform_system == \"Windows\""]
+colors-strict = ["Pygments (==2.15.1)", "colorama (==0.4.1) ; platform_system == \"Windows\""]
+docs = ["Pygments (>=2.15.1)", "myst_parser (>=0.18.0)", "sphinx (>=5.0.1)", "sphinx-autoapi (>=1.8.4)", "sphinx-autobuild (>=2021.3.14)", "sphinx-reredirects (>=0.0.1)", "sphinx_rtd_theme (>=1.0.0)", "sphinxcontrib-napoleon (>=0.7)"]
+docs-strict = ["Pygments (==2.15.1)", "myst_parser (==0.18.0)", "sphinx (==5.0.1)", "sphinx-autoapi (==1.8.4)", "sphinx-autobuild (==2021.3.14)", "sphinx-reredirects (==0.0.1)", "sphinx_rtd_theme (==1.0.0)", "sphinxcontrib-napoleon (==0.7)"]
+jupyter = ["IPython (>=7.23.1)", "attrs (>=19.2.0)", "debugpy (>=1.0.0) ; python_version == \"3.8\"", "debugpy (>=1.3.0) ; python_version == \"3.9\"", "debugpy (>=1.6.0) ; python_version >= \"3.10\"", "ipykernel (>=6.0.0) ; python_version < \"3.12\" and python_version >= \"3.7\" and (platform_system != \"Windows\" or platform_python_implementation != \"PyPy\")", "ipykernel (>=6.11.0) ; python_version < \"4.0\" and python_version >= \"3.12\" and (platform_system != \"Windows\" or platform_python_implementation != \"PyPy\")", "ipython_genutils (>=0.2.0) ; platform_python_implementation != \"PyPy\"", "jedi (>=0.16)", "jinja2 (>=3.0.0) ; platform_python_implementation != \"PyPy\"", "jupyter_client (>=7.0.0)", "jupyter_core (>=4.7.0)", "nbconvert (>=6.1.0) ; python_version >= \"3.7.0\" and platform_python_implementation != \"PyPy\""]
+jupyter-strict = ["IPython (==7.23.1)", "attrs (==19.2.0)", "debugpy (==1.0.0) ; python_version == \"3.8\"", "debugpy (==1.3.0) ; python_version == \"3.9\"", "debugpy (==1.6.0) ; python_version >= \"3.10\"", "ipykernel (==6.0.0) ; python_version < \"3.12\" and python_version >= \"3.7\" and (platform_system != \"Windows\" or platform_python_implementation != \"PyPy\")", "ipykernel (==6.11.0) ; python_version < \"4.0\" and python_version >= \"3.12\" and (platform_system != \"Windows\" or platform_python_implementation != \"PyPy\")", "ipython_genutils (==0.2.0) ; platform_python_implementation != \"PyPy\"", "jedi (==0.16)", "jinja2 (==3.0.0) ; platform_python_implementation != \"PyPy\"", "jupyter_client (==7.0.0)", "jupyter_core (==4.7.0)", "nbconvert (==6.1.0) ; python_version >= \"3.7.0\" and platform_python_implementation != \"PyPy\""]
+optional = ["IPython (>=7.23.1)", "Pygments (>=2.15.1)", "attrs (>=19.2.0)", "colorama (>=0.4.1) ; platform_system == \"Windows\"", "debugpy (>=1.0.0) ; python_version == \"3.8\"", "debugpy (>=1.3.0) ; python_version == \"3.9\"", "debugpy (>=1.6.0) ; python_version >= \"3.10\"", "ipykernel (>=6.0.0) ; python_version < \"3.12\" and python_version >= \"3.7\" and (platform_system != \"Windows\" or platform_python_implementation != \"PyPy\")", "ipykernel (>=6.11.0) ; python_version < \"4.0\" and python_version >= \"3.12\" and (platform_system != \"Windows\" or platform_python_implementation != \"PyPy\")", "ipython_genutils (>=0.2.0) ; platform_python_implementation != \"PyPy\"", "jedi (>=0.16)", "jinja2 (>=3.0.0) ; platform_python_implementation != \"PyPy\"", "jupyter_client (>=7.0.0)", "jupyter_core (>=4.7.0)", "nbconvert (>=6.1.0) ; python_version >= \"3.7.0\" and platform_python_implementation != \"PyPy\"", "pyflakes (>=2.2.0)", "tomli (>=0.2.0) ; python_version < \"3.11.0\" and python_version >= \"3.6\""]
+optional-strict = ["IPython (==7.23.1)", "Pygments (==2.15.1)", "attrs (==19.2.0)", "colorama (==0.4.1) ; platform_system == \"Windows\"", "debugpy (==1.0.0) ; python_version == \"3.8\"", "debugpy (==1.3.0) ; python_version == \"3.9\"", "debugpy (==1.6.0) ; python_version >= \"3.10\"", "ipykernel (==6.0.0) ; python_version < \"3.12\" and python_version >= \"3.7\" and (platform_system != \"Windows\" or platform_python_implementation != \"PyPy\")", "ipykernel (==6.11.0) ; python_version < \"4.0\" and python_version >= \"3.12\" and (platform_system != \"Windows\" or platform_python_implementation != \"PyPy\")", "ipython_genutils (==0.2.0) ; platform_python_implementation != \"PyPy\"", "jedi (==0.16)", "jinja2 (==3.0.0) ; platform_python_implementation != \"PyPy\"", "jupyter_client (==7.0.0)", "jupyter_core (==4.7.0)", "nbconvert (==6.1.0) ; python_version >= \"3.7.0\" and platform_python_implementation != \"PyPy\"", "pyflakes (==2.2.0)", "tomli (==0.2.0) ; python_version < \"3.11.0\" and python_version >= \"3.6\""]
+tests = ["pytest (>=4.6.0) ; python_version < \"3.10.0\" and python_version >= \"3.7.0\"", "pytest (>=6.2.5) ; python_version >= \"3.10.0\"", "pytest-cov (>=3.0.0)"]
 tests-binary = ["cmake (>=3.21.2) ; python_version < \"3.11\"", "cmake (>=3.25.0) ; python_version < \"4.0\" and python_version >= \"3.11\"", "ninja (>=1.10.2) ; python_version < \"3.11\"", "ninja (>=1.11.1) ; python_version < \"4.0\" and python_version >= \"3.11\"", "pybind11 (>=2.10.3) ; python_version < \"4.0\" and python_version >= \"3.11\"", "pybind11 (>=2.7.1) ; python_version < \"3.11\"", "scikit-build (>=0.11.1) ; python_version < \"3.11\"", "scikit-build (>=0.16.1) ; python_version < \"4.0\" and python_version >= \"3.11\""]
 tests-binary-strict = ["cmake (==3.21.2) ; python_version < \"3.11\"", "cmake (==3.25.0) ; python_version < \"4.0\" and python_version >= \"3.11\"", "ninja (==1.10.2) ; python_version < \"3.11\"", "ninja (==1.11.1) ; python_version < \"4.0\" and python_version >= \"3.11\"", "pybind11 (==2.10.3) ; python_version < \"4.0\" and python_version >= \"3.11\"", "pybind11 (==2.7.1) ; python_version < \"3.11\"", "scikit-build (==0.11.1) ; python_version < \"3.11\"", "scikit-build (==0.16.1) ; python_version < \"4.0\" and python_version >= \"3.11\""]
-tests-strict = ["pytest (==4.6.0) ; python_version < \"3.10.0\" and python_version >= \"3.7.0\"", "pytest (==6.2.5) ; python_version >= \"3.10.0\"", "pytest-cov (==3.0.0) ; python_version >= \"3.6.0\""]
+tests-strict = ["pytest (==4.6.0) ; python_version < \"3.10.0\" and python_version >= \"3.7.0\"", "pytest (==6.2.5) ; python_version >= \"3.10.0\"", "pytest-cov (==3.0.0)"]
 
 [[package]]
 name = "zipp"
@@ -3167,4 +3167,4 @@ type = ["pytest-mypy"]
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.12,<3.14"
-content-hash = "09407db80d9847865904bae00b40ae442a60520088307a38c17f59019e603908"
+content-hash = "71fd008da145f2d84dbdc099764a127157941032d6debe5d8e0189f2ba3d1dac"

@@ -19,7 +19,7 @@ repos:
   - id: shellcheck
     args: [--exclude, SC1017]
 - repo: https://github.com/astral-sh/ruff-pre-commit
-  rev: '455f64b32459518aa82ec33b63f799ed048d65a9'  # frozen: v0.12.8
+  rev: '60ef368a6f48dfb4317651017f66dbb055241a6c'  # frozen: v0.12.12
   hooks:
   - id: ruff
     args: [--fix, --preview]

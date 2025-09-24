@@ -4,20 +4,21 @@ msgstr ""
 "Project-Id-Version: Gaphor 0.14.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-04-23 21:47+0200\n"
-"PO-Revision-Date: 2025-01-09 21:08+0000\n"
-"Last-Translator: aquila0101 <aquila.santos@ba.estudante.senai.br>\n"
+"PO-Revision-Date: 2025-08-19 16:01+0000\n"
+"Last-Translator: Matheus Rossigalli <rossigalli.dev@gmail.com>\n"
+"Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/"
+"gaphor/gaphor/pt_BR/>\n"
 "Language: pt_BR\n"
-"Language-Team: Portuguese (Brazil) "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/pt_BR/>\n"
-"Plural-Forms: nplurals=2; plural=n > 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 5.13\n"
 "Generated-By: Babel 2.16.0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:28
 msgid "C4"
-msgstr ""
+msgstr "C4"
 
 #: gaphor/C4Model/propertypages.ui:11 gaphor/diagram/general/metadata.py:70
 #: gaphor/diagram/propertypages.ui:170
@@ -87,7 +88,6 @@ msgid "C4 Diagram"
 msgstr "Novo Diagrama C4"
 
 #: gaphor/C4Model/toolbox.py:142 gaphor/UML/toolbox.py:32
-#, fuzzy
 msgid "Class Diagram"
 msgstr "Novo Diagrama de Classe"
 
@@ -487,9 +487,8 @@ msgid "New State Machine"
 msgstr "Nova Máquina de Estados"
 
 #: gaphor/SysML/toolbox.py:168 gaphor/UML/toolbox.py:42
-#, fuzzy
 msgid "Use Case Diagram"
-msgstr "Novo Diagrama de Caso de Uso"
+msgstr "Diagrama de Caso de Uso"
 
 #: gaphor/SysML/toolbox.py:184 gaphor/UML/toolbox.py:50
 #: gaphor/UML/usecases/usecasetoolbox.py:28 gaphor/templates/uml-example.gaphor
@@ -510,9 +509,8 @@ msgid "Requirement"
 msgstr "Requisito"
 
 #: gaphor/SysML/toolbox.py:203 gaphor/UML/toolbox.py:77
-#, fuzzy
 msgid "Use Case"
-msgstr "Caso de uso"
+msgstr "Caso de Uso"
 
 #: gaphor/SysML/toolbox.py:204
 #, fuzzy

@@ -169,9 +169,10 @@ class MainWindow(Service, ActionProvider):
             )
 
         window.set_default_size(*(self.properties.get("ui.window-size", (1024, 640))))
-        if self.properties.get("ui.window-mode", "") == "maximized":
+        window_mode = self.properties.get("ui.window-mode", "")
+        if window_mode == "maximized":
             window.maximize()
-        elif self.properties.get("ui.window-mode", "") == "fullscreened":
+        elif window_mode == "fullscreened":
             window.fullscreen()
 
         track_paned_position(
