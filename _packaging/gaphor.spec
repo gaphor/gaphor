@@ -137,6 +137,7 @@ app = BUNDLE(  # type: ignore
         "NSHumanReadableCopyright": COPYRIGHT,
         "LSMinimumSystemVersion": "10.15",
         "NSHighResolutionCapable": True,
+        "NSSupportsAutomaticGraphicsSwitching": True,
         "LSApplicationCategoryType": "public.app-category.developer-tools",
         "NSPrincipalClass": "NSApplication",
         "CFBundleDocumentTypes": [
