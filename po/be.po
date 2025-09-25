@@ -8,83 +8,85 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2025-04-23 21:47+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2025-09-26 21:01+0000\n"
+"Last-Translator: Yauheni Liavontsyeu <Evgeniy_Leontyev@proton.me>\n"
+"Language-Team: Belarusian <https://hosted.weblate.org/projects/gaphor/gaphor/"
+"be/>\n"
 "Language: be\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Weblate 5.14-dev\n"
 "Generated-By: Babel 2.16.0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:28
 msgid "C4"
-msgstr ""
+msgstr "C4"
 
 #: gaphor/C4Model/propertypages.ui:11 gaphor/diagram/general/metadata.py:70
 #: gaphor/diagram/propertypages.ui:170
 msgid "Description"
-msgstr ""
+msgstr "Апісанне"
 
 #: gaphor/C4Model/propertypages.ui:38 gaphor/templates/sysml-example.gaphor
 #: gaphor/templates/sysml.gaphor
 msgid "Technology"
-msgstr ""
+msgstr "Тэхналогія"
 
 #: gaphor/C4Model/toolbox.py:31
 msgid "New Software System"
-msgstr ""
+msgstr "Новая сістэма праграмнага забеспячэння"
 
 #: gaphor/C4Model/toolbox.py:38
 msgid "New Container"
-msgstr ""
+msgstr "Новы кантэйнер"
 
 #: gaphor/C4Model/toolbox.py:45 gaphor/C4Model/toolbox.py:169
 #: gaphor/templates/c4model-example.gaphor
 msgid "Database"
-msgstr ""
+msgstr "База даных"
 
 #: gaphor/C4Model/toolbox.py:46
 msgid "New Database"
-msgstr ""
+msgstr "Новая база даных"
 
 #: gaphor/C4Model/toolbox.py:53
 msgid "New Component"
-msgstr ""
+msgstr "Новы кампанент"
 
 #: gaphor/C4Model/toolbox.py:57 gaphor/ui/greeter.py:55
 msgid "C4 Model"
-msgstr ""
+msgstr "Мадэль С4"
 
 #: gaphor/C4Model/diagramitems/person.py:24 gaphor/C4Model/toolbox.py:61
 #: gaphor/C4Model/toolbox.py:67 gaphor/C4Model/toolbox.py:167
 msgid "Person"
-msgstr ""
+msgstr "Асоба"
 
 #: gaphor/C4Model/toolbox.py:73
 msgid "Software System"
-msgstr ""
+msgstr "Cістэма праграмнага забеспячэння"
 
 #: gaphor/C4Model/toolbox.py:85
 msgid "Container"
-msgstr ""
+msgstr "Кантэйнер"
 
 #: gaphor/C4Model/toolbox.py:97
 msgid "Container: Database"
-msgstr ""
+msgstr "Кантэйнер: база даных"
 
 #: gaphor/C4Model/toolbox.py:109 gaphor/C4Model/toolbox.py:159
 #: gaphor/UML/classes/classestoolbox.py:63 gaphor/UML/toolbox.py:53
 msgid "Component"
-msgstr ""
+msgstr "Кампанент"
 
 #: gaphor/C4Model/toolbox.py:121 gaphor/RAAML/fta/ftatoolbox.py:16
 #: gaphor/UML/classes/classestoolbox.py:119
 #: gaphor/UML/classes/propertypages.ui:533
 msgid "Dependency"
-msgstr ""
+msgstr "Залежнасць"
 
 #: gaphor/C4Model/toolbox.py:141
 msgid "C4 Diagram"
