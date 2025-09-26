@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2025-04-23 21:47+0200\n"
-"PO-Revision-Date: 2025-09-26 21:01+0000\n"
+"PO-Revision-Date: 2025-09-27 23:01+0000\n"
 "Last-Translator: Yauheni Liavontsyeu <Evgeniy_Leontyev@proton.me>\n"
 "Language-Team: Belarusian <https://hosted.weblate.org/projects/gaphor/gaphor/"
 "be/>\n"
@@ -114,20 +114,20 @@ msgstr ""
 #: gaphor/C4Model/toolbox.py:146 gaphor/RAAML/toolbox.py:32
 #: gaphor/SysML/toolbox.py:178 gaphor/UML/toolbox.py:44
 msgid "Generic Diagram"
-msgstr ""
+msgstr "Агульная дыяграма"
 
 #: gaphor/C4Model/toolbox.py:150 gaphor/RAAML/toolbox.py:36
 #: gaphor/SysML/blocks/blockstoolbox.py:51 gaphor/SysML/toolbox.py:182
 #: gaphor/UML/classes/classestoolbox.py:51 gaphor/UML/toolbox.py:48
 msgid "Package"
-msgstr ""
+msgstr "Пакет"
 
 #: gaphor/C4Model/toolbox.py:151 gaphor/SysML/toolbox.py:183
 #: gaphor/UML/actions/actionstoolbox.py:41
 #: gaphor/UML/actions/actionstoolbox.py:71 gaphor/UML/toolbox.py:49
 #: gaphor/templates/sysml-example.gaphor gaphor/templates/uml-example.gaphor
 msgid "Activity"
-msgstr ""
+msgstr "Дзейнасць"
 
 #: gaphor/C4Model/toolbox.py:153 gaphor/SysML/toolbox.py:187
 #: gaphor/UML/interactions/interactionstoolbox.py:36
@@ -135,116 +135,116 @@ msgstr ""
 #: gaphor/templates/sysml-example.gaphor gaphor/templates/uml-example.gaphor
 #: gaphor/templates/uml.gaphor
 msgid "Interaction"
-msgstr ""
+msgstr "Узаемадзеянне"
 
 #: gaphor/C4Model/toolbox.py:156 gaphor/SysML/toolbox.py:201
 #: gaphor/UML/states/statestoolbox.py:46 gaphor/UML/states/statestoolbox.py:63
 #: gaphor/UML/toolbox.py:72 gaphor/templates/sysml-example.gaphor
 msgid "State Machine"
-msgstr ""
+msgstr "Машына станаў"
 
 #: gaphor/C4Model/toolbox.py:158 gaphor/UML/classes/classestoolbox.py:29
 #: gaphor/UML/profiles/profilestoolbox.py:14 gaphor/UML/toolbox.py:52
 msgid "Class"
-msgstr ""
+msgstr "Клас"
 
 #: gaphor/C4Model/toolbox.py:160 gaphor/UML/toolbox.py:54
 msgid "Data Type"
-msgstr ""
+msgstr "Тып даных"
 
 #: gaphor/C4Model/toolbox.py:162 gaphor/SysML/blocks/blockstoolbox.py:118
 #: gaphor/SysML/toolbox.py:186 gaphor/UML/classes/classestoolbox.py:154
 #: gaphor/UML/toolbox.py:57
 msgid "Enumeration"
-msgstr ""
+msgstr "Пералік"
 
 #: gaphor/C4Model/toolbox.py:165
 msgid "Primitive Type"
-msgstr ""
+msgstr "Прымітыўны тып"
 
 #: gaphor/RAAML/modelinglanguage.py:30 gaphor/ui/greeter.py:48
 msgid "RAAML"
-msgstr ""
+msgstr "RAAML"
 
 #: gaphor/RAAML/toolbox.py:30
 msgid "FTA Diagram"
-msgstr ""
+msgstr "Дыяграма FTA"
 
 #: gaphor/RAAML/toolbox.py:31
 msgid "STPA Diagram"
-msgstr ""
+msgstr "Дыяграма STPA"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:195 gaphor/RAAML/fta/ftatoolbox.py:201
 #: gaphor/RAAML/fta/topevent.py:27 gaphor/RAAML/toolbox.py:37
 msgid "Top Event"
-msgstr ""
+msgstr "Галоўная падзея"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:17 gaphor/RAAML/stpa/stpatoolbox.py:43
 #: gaphor/RAAML/toolbox.py:38 gaphor/templates/raaml-example.gaphor
 msgid "Loss"
-msgstr ""
+msgstr "Страта"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:22 gaphor/RAAML/stpa/stpatoolbox.py:52
 #: gaphor/RAAML/toolbox.py:39 gaphor/templates/raaml-example.gaphor
 msgid "Hazard"
-msgstr ""
+msgstr "Небяспека"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:61 gaphor/RAAML/toolbox.py:40
 #: gaphor/SysML/blocks/block.py:57 gaphor/SysML/blocks/interfaceblock.py:56
 msgid "Situation"
-msgstr ""
+msgstr "Сітуацыя"
 
 #: gaphor/RAAML/fta/andgate.py:34 gaphor/RAAML/fta/ftatoolbox.py:24
 msgid "AND Gate"
-msgstr ""
+msgstr "Элемент AND"
 
 #: gaphor/RAAML/fta/basicevent.py:32 gaphor/RAAML/fta/ftatoolbox.py:125
 #: gaphor/RAAML/fta/ftatoolbox.py:131
 msgid "Basic Event"
-msgstr ""
+msgstr "Асноўная падзея"
 
 #: gaphor/RAAML/fta/conditionalevent.py:29 gaphor/RAAML/fta/ftatoolbox.py:136
 #: gaphor/RAAML/fta/ftatoolbox.py:143
 msgid "Conditional Event"
-msgstr ""
+msgstr "Умоўная падзея"
 
 #: gaphor/RAAML/fta/dormantevent.py:32 gaphor/RAAML/fta/ftatoolbox.py:162
 #: gaphor/RAAML/fta/ftatoolbox.py:168
 msgid "Dormant Event"
-msgstr ""
+msgstr "Спячая падзея"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:12 gaphor/templates/raaml-example.gaphor
 #: gaphor/templates/raaml.gaphor
 msgid "Fault Tree Analysis"
-msgstr ""
+msgstr "Аналіз дрэва адмоў"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:30
 msgid "AND"
-msgstr ""
+msgstr "AND"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:35 gaphor/RAAML/fta/orgate.py:34
 msgid "OR Gate"
-msgstr ""
+msgstr "Элемент OR"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:41 gaphor/templates/raaml-example.gaphor
 msgid "OR"
-msgstr ""
+msgstr "OR"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:46 gaphor/RAAML/fta/notgate.py:32
 msgid "NOT Gate"
-msgstr ""
+msgstr "Элемент NOT"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:52
 msgid "NOT"
-msgstr ""
+msgstr "NOT"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:57
 msgid "Sequence Enforcing (SEQ) Gate"
-msgstr ""
+msgstr "Элемент забеспячэння паслядоўнасці (SEQ)"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:63
 msgid "SEQ"
-msgstr ""
+msgstr "SEQ"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:68
 msgid "Exclusive OR Gate"
