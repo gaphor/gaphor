@@ -124,12 +124,12 @@ class collection(Generic[T]):
         except (IndexError, ValueError):
             return False
         else:
-            self.object.handle(AssociationUpdated(self.object, self.property))
+            self.property.handle(AssociationUpdated(self.object, self.property))
             return True
 
     def order(self, key):
         self.items.sort(key=key)
-        self.object.handle(AssociationUpdated(self.object, self.property))
+        self.property.handle(AssociationUpdated(self.object, self.property))
 
 
 _recurseproxy_trigger = slice(None, None, None)

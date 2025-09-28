@@ -120,6 +120,30 @@ def test_attribute_create_model(element_factory, event_manager):
     assert list_store[2].attr is attr3
 
 
+def test_attribute_change_order(element_factory, event_manager):
+    subject = element_factory.create(UML.Class)
+
+    attr1 = element_factory.create(UML.Property)
+    attr1.name = "attr1"
+    subject.ownedAttribute = attr1
+    attr2 = element_factory.create(UML.Property)
+    attr2.name = "attr2"
+    subject.ownedAttribute = attr2
+    attr3 = element_factory.create(UML.Property)
+    attr3.name = "attr3"
+    subject.ownedAttribute = attr3
+
+    property_page = AttributesPage(subject, event_manager)
+    widget = property_page.construct()
+    list_store = find(widget, "attributes-list").get_model()
+
+    subject.ownedAttribute.swap(attr1, attr2)
+
+    assert list_store[0].attr is attr2
+    assert list_store[1].attr is attr1
+    assert list_store[2].attr is attr3
+
+
 def test_show_operations_page(diagram, element_factory, event_manager):
     item = diagram.create(
         UML.classes.InterfaceItem, subject=element_factory.create(UML.Interface)
