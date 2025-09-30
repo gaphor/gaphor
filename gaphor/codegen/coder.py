@@ -34,6 +34,7 @@ from pathlib import Path
 import gaphor.storage as storage
 from gaphor import UML
 from gaphor.codegen.override import Overrides
+from gaphor.codegen.xmi import convert
 from gaphor.core.modeling import Base, ElementFactory
 from gaphor.core.modeling.modelinglanguage import (
     CoreModelingLanguage,
@@ -42,6 +43,7 @@ from gaphor.core.modeling.modelinglanguage import (
 )
 from gaphor.diagram.general.modelinglanguage import GeneralModelingLanguage
 from gaphor.entrypoint import initialize
+from gaphor.storage import save
 from gaphor.UML.modelinglanguage import UMLModelingLanguage
 
 log = logging.getLogger(__name__)
@@ -76,6 +78,7 @@ def main(
     supermodelfiles: list[tuple[str, str]] | None = None,
     overridesfile: str | None = None,
     outfile: str | None = None,
+    modeloutfile: str | None = None,
 ):
     logging.basicConfig()
 
@@ -99,16 +102,20 @@ def main(
         )
     )
 
-    model = load_model(modelfile, modeling_language)
+    model = load_model(Path(modelfile), modeling_language)
     super_models = (
         {
-            lang: (load_modeling_language(lang), load_model(f, modeling_language))
+            lang: (load_modeling_language(lang), load_model(Path(f), modeling_language))
             for lang, f in supermodelfiles
         }
         if supermodelfiles
         else {}
     )
     overrides = Overrides(overridesfile) if overridesfile else None
+
+    if modeloutfile:
+        with open(modeloutfile, "w", encoding="utf-8") as f:
+            save(f, model)
 
     with (
         open(outfile, "w", encoding="utf-8")
@@ -119,14 +126,20 @@ def main(
             print(line, file=out)
 
 
-def load_model(modelfile: str, modeling_language: ModelingLanguage) -> ElementFactory:
-    element_factory = ElementFactory()
-    with open(modelfile, encoding="utf-8") as file_obj:
-        storage.load(
-            file_obj,
-            element_factory,
-            modeling_language,
+def load_model(modelfile: Path, modeling_language: ModelingLanguage) -> ElementFactory:
+    if modelfile.suffix == ".xmi":
+        element_factory = convert(modelfile)
+        assert not element_factory.lselect(
+            lambda e: isinstance(e, UML.Class) and not e.name
         )
+    else:
+        element_factory = ElementFactory()
+        with modelfile.open(encoding="utf-8") as file_obj:
+            storage.load(
+                file_obj,
+                element_factory,
+                modeling_language,
+            )
 
     resolve_attribute_type_values(element_factory)
 
@@ -230,7 +243,10 @@ def class_declaration(class_: UML.Class):
     return f"class {class_.name}({base_classes}):"
 
 
-def variables(class_: UML.Class, overrides: Overrides | None = None):
+def variables(
+    class_: UML.Class,
+    overrides: Overrides | None = None,
+):
     if class_.ownedAttribute:
         a: UML.Property
         for a in sorted(class_.ownedAttribute, key=lambda a: a.name or ""):
@@ -246,12 +262,19 @@ def variables(class_: UML.Class, overrides: Overrides | None = None):
                 yield f'{a.name}: _attribute[{a.typeValue}] = _attribute("{a.name}", {a.typeValue}{default_value(a)})'
             elif is_enumeration(a.type):
                 assert isinstance(a.type, UML.Enumeration)
-                default = (
-                    a.defaultValue.value
-                    if isinstance(a.defaultValue, UML.LiteralString)
+                if (
+                    isinstance(a.defaultValue, UML.LiteralString)
                     and a.defaultValue.value
-                    else a.type.ownedLiteral[0].name
-                )
+                ):
+                    default = a.defaultValue.value
+                elif (
+                    isinstance(a.defaultValue, UML.InstanceValue)
+                    and a.defaultValue.instance
+                ):
+                    default = a.defaultValue.instance.name
+                else:
+                    default = a.type.ownedLiteral[0].name
+
                 if keyword.iskeyword(default):
                     default = f"{default}_"
                 yield f'{a.name} = _enumeration("{a.name}", {a.type.name}, {a.type.name}.{default})'
@@ -320,11 +343,19 @@ def subsets(
             or is_extension_end(a)
         ):
             continue
+
+        full_name = f"{c.name}.{a.name}"
+
+        for prop in a.subsettedProperty:
+            if prop.class_:
+                yield f"{prop.class_.name}.{prop.name}.add({full_name})  # type: ignore[attr-defined]"
+            else:
+                log.warning(f"Subsetted property {prop} not owned by a class")
+
         for slot in a.appliedStereotype[:].slot:
             if slot.definingFeature.name != "subsets":
                 continue
 
-            full_name = f"{c.name}.{a.name}"
             raw_slot_value = UML.recipes.get_slot_value(slot)
             slotValue = raw_slot_value if isinstance(raw_slot_value, str) else ""
             for value in slotValue.split(","):
@@ -511,7 +542,17 @@ def is_in_toplevel_package(c: UML.Class, package_name: str) -> bool:
 def redefines(a: UML.Property) -> str | None:
     # TODO: look up element name and add underscore if needed.
     # maybe resolve redefines before we start writing?
-    # Redefine is the only one where
+
+    if len(a.redefinedProperty) > 1:
+        redefs = ", ".join(f"{r.class_.name}.{r.name}" for r in a.redefinedProperty)
+        log.warning(
+            f"{a.class_.name}.{a.name} has multiple redefines: {redefs}. Picking the first."
+        )
+
+    for r in a.redefinedProperty:
+        return f"{r.class_.name}.{r.name}"
+
+    # UML metamodel style: with stereotype
     return next(
         (
             UML.recipes.get_slot_value(slot)
@@ -581,6 +622,7 @@ def resolve_attribute_type_values(element_factory: ElementFactory) -> None:
             prop.typeValue = "bool"
         elif prop.typeValue in (
             "Integer",
+            "Real",
             "int",
         ):
             prop.typeValue = "int"
