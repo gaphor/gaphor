@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2025-04-23 21:47+0200\n"
-"PO-Revision-Date: 2025-09-27 23:01+0000\n"
-"Last-Translator: Yauheni Liavontsyeu <Evgeniy_Leontyev@proton.me>\n"
+"PO-Revision-Date: 2025-10-01 14:01+0000\n"
+"Last-Translator: Jaŭhien Lavonćjeŭ <Evgeniy_Leontyev@proton.me>\n"
 "Language-Team: Belarusian <https://hosted.weblate.org/projects/gaphor/gaphor/"
 "be/>\n"
 "Language: be\n"
@@ -90,21 +90,21 @@ msgstr "Залежнасць"
 
 #: gaphor/C4Model/toolbox.py:141
 msgid "C4 Diagram"
-msgstr ""
+msgstr "Дыяграма C4"
 
 #: gaphor/C4Model/toolbox.py:142 gaphor/UML/toolbox.py:32
 msgid "Class Diagram"
-msgstr ""
+msgstr "Дыяграма класаў"
 
 #: gaphor/C4Model/toolbox.py:143 gaphor/SysML/toolbox.py:138
 #: gaphor/UML/toolbox.py:36
 msgid "Activity Diagram"
-msgstr ""
+msgstr "Даяграма дзейнасці"
 
 #: gaphor/C4Model/toolbox.py:144 gaphor/SysML/toolbox.py:148
 #: gaphor/UML/toolbox.py:37
 msgid "Sequence Diagram"
-msgstr ""
+msgstr "Даяграма паслядоўнасці"
 
 #: gaphor/C4Model/toolbox.py:145 gaphor/SysML/toolbox.py:158
 #: gaphor/UML/toolbox.py:41
@@ -248,11 +248,11 @@ msgstr "SEQ"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:68
 msgid "Exclusive OR Gate"
-msgstr ""
+msgstr "Элемент XOR"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:74
 msgid "XOR"
-msgstr ""
+msgstr "XOR"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:79 gaphor/RAAML/fta/ftatoolbox.py:86
 #: gaphor/RAAML/fta/majorityvotegate.py:37
@@ -262,7 +262,7 @@ msgstr ""
 #: gaphor/RAAML/fta/ftatoolbox.py:92 gaphor/RAAML/fta/ftatoolbox.py:98
 #: gaphor/RAAML/fta/inhibitgate.py:32
 msgid "Inhibit Gate"
-msgstr ""
+msgstr "Блакуючы элемент"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:103 gaphor/RAAML/fta/ftatoolbox.py:109
 #: gaphor/RAAML/fta/transferin.py:32
@@ -287,7 +287,7 @@ msgstr ""
 #: gaphor/RAAML/fta/ftatoolbox.py:184 gaphor/RAAML/fta/ftatoolbox.py:190
 #: gaphor/RAAML/fta/zeroevent.py:33
 msgid "Zero Event"
-msgstr ""
+msgstr "Нулявая падзея"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:206 gaphor/RAAML/fta/ftatoolbox.py:213
 #: gaphor/RAAML/fta/intermediateevent.py:28
