@@ -33,7 +33,7 @@ def invalid(messages):
 
 
 def check_po_files():
-    po_path: Path = Path(__file__).resolve().parent
+    po_path: Path = Path(__file__).resolve().parent.parent / "po"
     have_errors = False
     for path in (path for path in po_path.iterdir() if path.suffix == ".po"):
         with path.open(encoding="utf-8") as po:

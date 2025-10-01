@@ -137,6 +137,7 @@ app = BUNDLE(  # type: ignore
         "NSHumanReadableCopyright": COPYRIGHT,
         "LSMinimumSystemVersion": "10.15",
         "NSHighResolutionCapable": True,
+        "NSSupportsAutomaticGraphicsSwitching": True,
         "LSApplicationCategoryType": "public.app-category.developer-tools",
         "NSPrincipalClass": "NSApplication",
         "CFBundleDocumentTypes": [
@@ -168,7 +169,7 @@ app = BUNDLE(  # type: ignore
         "NSDesktopFolderUsageDescription": "Gaphor needs your permission to load models from disk.",
         "NSDocumentsFolderUsageDescription": "Gaphor needs your permission to load models from disk.",
         "NSDownloadsFolderUsageDescription": "Gaphor needs your permission to load models from disk.",
-        "NSRequiresAquaSystemAppearance": "No",
+        "NSRequiresAquaSystemAppearance": False,
         "NSAppleScriptEnabled": False,
     },
 )

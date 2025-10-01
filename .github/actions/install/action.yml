@@ -12,14 +12,9 @@ runs:
   using: composite
   steps:
     - name: Install Poetry
-      env:
-        PYTHON: ${{ inputs.python-command }}
       run: |
-        $PYTHON -m ensurepip
-        $PYTHON -m pip install --constraint=.github/github-requirements.txt poetry
-      shell: bash
-    - name: Configure Poetry
-      run: poetry config virtualenvs.in-project true
+        pipx install --pip-args=--constraint=.github/github-requirements.txt poetry
+        poetry config virtualenvs.in-project true
       shell: bash
     - name: Collect Project Data
       id: meta

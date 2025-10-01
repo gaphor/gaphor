@@ -92,9 +92,6 @@ class Application(Service, ActionProvider):
         """Initialize an application session."""
 
         filename = Path(filename) if filename else None
-        if filename is None is template:
-            return self._spawn_session(session=Session(services=services))
-
         if filename and not force:
             for session in self._sessions:
                 if session.filename == filename:
