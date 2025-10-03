@@ -1,3 +1,24 @@
+3.2.0
+-----
+
+- Troubleshooting info can now be found in the About dialog
+- Introduction of CSS classes: `.item` for all items you put on the diagram
+- Improved updates in Model Browser for attribute/parameter types a.o.
+- macOS: native window decorations and window menu
+
+Internal changes:
+
+- Model elements can not only be queried from their authoritive model
+- Gaphor requires Python 3.12 or newer (was 3.11)
+- Use Python native enumerations (`enum` module) in data models
+
+Bug fixes:
+
+- Fix save for new models
+- Fix message (sequence diagram) name placement
+- Windows: set English as the default installer language
+- Allow Rubberband selection in diagram frame
+
 3.1.0
 -----
 

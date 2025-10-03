@@ -99,6 +99,30 @@
     </p>
   </description>
   <releases>
+    <release version="3.2.0" date="2025-10-01">
+      <description>
+        <ul>
+          <li>Troubleshooting info can now be found in the About dialog</li>
+          <li>Introduction of CSS classes: <code>.item</code> for all items you put on the diagram</li>
+          <li>Improved updates in Model Browser for attribute/parameter types a.o.</li>
+          <li>macOS: native window decorations and window menu</li>
+        </ul>
+        <p>Internal changes:</p>
+        <ul>
+          <li>Model elements can not only be queried from their authoritive model</li>
+          <li>Gaphor requires Python 3.12 or newer (was 3.11)</li>
+          <li>Use Python native enumerations (<code>enum</code> module) in data models</li>
+        </ul>
+        <p>Bug fixes:</p>
+        <ul>
+          <li>Fix save for new models</li>
+          <li>Fix message (sequence diagram) name placement</li>
+          <li>Windows: set English as the default installer language</li>
+          <li>Allow Rubberband selection in diagram frame</li>
+        </ul>
+      </description>
+      <url>https://github.com/gaphor/gaphor/releases/tag/3.2.0</url>
+    </release>
     <release version="3.1.0" date="2025-05-21">
       <description>
         <ul>
