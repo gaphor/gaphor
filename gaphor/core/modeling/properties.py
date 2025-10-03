@@ -52,6 +52,7 @@ from gaphor.core.modeling.event import (
     RedefinedAdded,
     RedefinedDeleted,
     RedefinedSet,
+    RedefinedUpdated,
 )
 
 __all__ = ["attribute", "enumeration", "association", "derivedunion", "redefine"]
@@ -1015,6 +1016,8 @@ class redefine(umlproperty):
                 self.handle(
                     RedefinedDeleted(event.element, self, event.old_value, event.index)
                 )
+            elif isinstance(event, AssociationUpdated):
+                self.handle(RedefinedUpdated(event.element, self))
             else:
                 log.error(
                     "Don't know how to handle event "
