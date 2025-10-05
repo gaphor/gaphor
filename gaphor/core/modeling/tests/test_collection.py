@@ -20,6 +20,9 @@ class MockProperty:
     def set(self, object, value):
         self.values.append((object, value))
 
+    def handle(self, event):
+        event.element.handle(event)
+
 
 def test_append():
     p = MockProperty()
@@ -121,7 +124,8 @@ def test_not_empty():
 
 def test_swap():
     o = MockElement()
-    c: collection[str] = collection(None, o, str)
+    p = MockProperty()
+    c: collection[str] = collection(p, o, str)
     c.items = ["a", "b", "c"]  # type: ignore[assignment]
     c.swap("a", "c")
     assert c.items == ["c", "b", "a"]
