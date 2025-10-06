@@ -1,6 +1,6 @@
 repos:
 - repo: https://github.com/pre-commit/mirrors-mypy
-  rev: 412de98d50e846f31ea6f4b0ad036f2c24a7a024  # frozen: v1.17.1
+  rev: 9f70dc58c23dfcca1b97af99eaeee3140a807c7e  # frozen: v1.18.2
   hooks:
   - id: mypy
     additional_dependencies:
