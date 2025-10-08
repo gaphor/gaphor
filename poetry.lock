@@ -1927,6 +1927,20 @@ files = [
 pycairo = ">=1.16"
 
 [[package]]
+name = "pygobject-stubs"
+version = "2.13.0"
+description = "Typing stubs for PyGObject"
+optional = false
+python-versions = ">=3.9"
+groups = ["dev"]
+files = [
+    {file = "pygobject_stubs-2.13.0.tar.gz", hash = "sha256:4f608f5dfe10c3173f0a082416e22e27b693743c2a635de245c78a51458e2ab6"},
+]
+
+[package.extras]
+dev = ["PyGObject", "black (>=25.1.0)", "codespell (>=2.4.1)", "isort (>=6.0.1)", "pre-commit", "ruff (>=0.9.10)"]
+
+[[package]]
 name = "pyinstaller"
 version = "6.16.0"
 description = "PyInstaller bundles a Python application and all its dependencies into a single package."
@@ -3183,4 +3197,4 @@ type = ["pytest-mypy"]
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.12,<3.15"
-content-hash = "6ab341fd366587fbbc19ce9b00a6ea593b8acf8760262922fde144c6685715f1"
+content-hash = "4485432b35d3ef39d4eab2775f44ab6273bfef0cead0c3c667d942a8c7df5b62"

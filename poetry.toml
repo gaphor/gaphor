@@ -1,0 +1,2 @@
+[installer.build-config-settings.pygobject-stubs]
+"--config-settings=" = "config=Gtk3,Gdk3,Soup2"
