@@ -4,21 +4,21 @@ msgstr ""
 "Project-Id-Version: Gaphor 0.8.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2025-04-23 21:47+0200\n"
-"PO-Revision-Date: 2024-05-22 12:02+0000\n"
-"Last-Translator: Deivid Santiago Ordoñez Varela "
-"<deiord44santiagoov@gmail.com>\n"
+"PO-Revision-Date: 2025-10-07 17:02+0000\n"
+"Last-Translator: Pablo Mariño <pablo.marino.boga@gmail.com>\n"
+"Language-Team: Spanish <https://hosted.weblate.org/projects/gaphor/gaphor/es/"
+">\n"
 "Language: es\n"
-"Language-Team: Spanish "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/es/>\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.14-dev\n"
 "Generated-By: Babel 2.16.0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:28
 msgid "C4"
-msgstr ""
+msgstr "C4"
 
 #: gaphor/C4Model/propertypages.ui:11 gaphor/diagram/general/metadata.py:70
 #: gaphor/diagram/propertypages.ui:170
@@ -84,38 +84,32 @@ msgid "Dependency"
 msgstr "Dependencia"
 
 #: gaphor/C4Model/toolbox.py:141
-#, fuzzy
 msgid "C4 Diagram"
-msgstr "Diagrama C4 nuevo"
+msgstr "Diagrama C4"
 
 #: gaphor/C4Model/toolbox.py:142 gaphor/UML/toolbox.py:32
-#, fuzzy
 msgid "Class Diagram"
-msgstr "Diagrama de clase nuevo"
+msgstr "Diagrama de clase"
 
 #: gaphor/C4Model/toolbox.py:143 gaphor/SysML/toolbox.py:138
 #: gaphor/UML/toolbox.py:36
-#, fuzzy
 msgid "Activity Diagram"
-msgstr "Diagrama de actividad nuevo"
+msgstr "Diagrama de actividad"
 
 #: gaphor/C4Model/toolbox.py:144 gaphor/SysML/toolbox.py:148
 #: gaphor/UML/toolbox.py:37
-#, fuzzy
 msgid "Sequence Diagram"
-msgstr "Diagrama de secuencia nuevo"
+msgstr "Diagrama de secuencia"
 
 #: gaphor/C4Model/toolbox.py:145 gaphor/SysML/toolbox.py:158
 #: gaphor/UML/toolbox.py:41
-#, fuzzy
 msgid "State Machine Diagram"
-msgstr "Diagrama de la máquina de estado nuevo"
+msgstr "Diagrama de máquina de estado"
 
 #: gaphor/C4Model/toolbox.py:146 gaphor/RAAML/toolbox.py:32
 #: gaphor/SysML/toolbox.py:178 gaphor/UML/toolbox.py:44
-#, fuzzy
 msgid "Generic Diagram"
-msgstr "Diagrama genérico nuevo"
+msgstr "Diagrama genérico"
 
 #: gaphor/C4Model/toolbox.py:150 gaphor/RAAML/toolbox.py:36
 #: gaphor/SysML/blocks/blockstoolbox.py:51 gaphor/SysML/toolbox.py:182
@@ -150,9 +144,8 @@ msgid "Class"
 msgstr "Clase"
 
 #: gaphor/C4Model/toolbox.py:160 gaphor/UML/toolbox.py:54
-#, fuzzy
 msgid "Data Type"
-msgstr "tipo de Dato"
+msgstr "Tipo de Dato"
 
 #: gaphor/C4Model/toolbox.py:162 gaphor/SysML/blocks/blockstoolbox.py:118
 #: gaphor/SysML/toolbox.py:186 gaphor/UML/classes/classestoolbox.py:154
@@ -161,23 +154,20 @@ msgid "Enumeration"
 msgstr "Enumeración"
 
 #: gaphor/C4Model/toolbox.py:165
-#, fuzzy
 msgid "Primitive Type"
-msgstr "Nuevo tipo primitivo"
+msgstr "Tipo Básico"
 
 #: gaphor/RAAML/modelinglanguage.py:30 gaphor/ui/greeter.py:48
 msgid "RAAML"
 msgstr "RAAML"
 
 #: gaphor/RAAML/toolbox.py:30
-#, fuzzy
 msgid "FTA Diagram"
-msgstr "Diagrama FTA nuevo"
+msgstr "Diagrama FTA"
 
 #: gaphor/RAAML/toolbox.py:31
-#, fuzzy
 msgid "STPA Diagram"
-msgstr "Diagrama STPA nuevo"
+msgstr "Diagrama STPA"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:195 gaphor/RAAML/fta/ftatoolbox.py:201
 #: gaphor/RAAML/fta/topevent.py:27 gaphor/RAAML/toolbox.py:37
@@ -353,7 +343,7 @@ msgstr "Relevante para"
 
 #: gaphor/SysML/diagramtype.py:42
 msgid "Can’t create “{name}” nested under a “{elem}”"
-msgstr ""
+msgstr "No se puede crear “{name}” anidado bajo “{elem}”"
 
 #: gaphor/SysML/modelinglanguage.py:39 gaphor/ui/greeter.py:41
 msgid "SysML"
@@ -412,7 +402,7 @@ msgstr "Compartido"
 #: gaphor/SysML/propertypages.ui:197 gaphor/UML/classes/propertypages.ui:127
 #: gaphor/UML/classes/propertypages.ui:240
 msgid "Composite"
-msgstr "Compuesto"
+msgstr "Composición"
 
 #: gaphor/SysML/propertypages.ui:215
 msgid "Id"
@@ -423,9 +413,8 @@ msgid "Text"
 msgstr "Texto"
 
 #: gaphor/SysML/propertypages.ui:258
-#, fuzzy
 msgid "Show text"
-msgstr "Mostrar tipo"
+msgstr "Mostrar texto"
 
 #: gaphor/SysML/sysmlfmt.py:10
 #, fuzzy
