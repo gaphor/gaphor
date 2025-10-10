@@ -31,7 +31,6 @@ from collections.abc import Callable, Iterable
 from dataclasses import dataclass
 from typing import (
     Any,
-    Generic,
     Literal,
     Protocol,
     TypeVar,
@@ -199,7 +198,7 @@ class subsettable_umlproperty(umlproperty):
     def propagate(self, event): ...
 
 
-class attribute(umlproperty, Generic[T]):
+class attribute[T](umlproperty):
     """Attribute.
 
     Element.attr = attribute('attr', str, '')
@@ -701,7 +700,7 @@ class unioncache:
     version: int
 
 
-class derived(subsettable_umlproperty, Generic[T]):
+class derived[T](subsettable_umlproperty):
     """Base class for derived properties, both derived unions and custom
     properties.
 

@@ -31,7 +31,7 @@ def self_and_owners(element: Base | RootType | None) -> Iterator[Base]:
         e = owner(e)
 
 
-def owner_of_type(element: Base | None, owner_type: type[T]) -> T | None:
+def owner_of_type[T](element: Base | None, owner_type: type[T]) -> T | None:
     if element is None or isinstance(element, owner_type):
         return element
 
