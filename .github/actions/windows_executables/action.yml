@@ -39,18 +39,14 @@ runs:
         poetry run poe package
         poetry run poe win-installer
       shell: bash
-    - name: Create Zip for Signing
-      run: >
-        Compress-Archive -Path "_packaging/dist/gaphor-${{ inputs.version }}-installer.exe",
-        "_packaging/dist/gaphor-${{ inputs.version }}-portable.exe"
-        -DestinationPath "_packaging/dist/gaphor-unsigned.zip"
-      shell: pwsh
-
-    - name: upload-unsigned-artifact
-      id: upload-unsigned-artifact
+    - name: upload-unsigned-artifacts
+      id: upload-unsigned-artifacts
       uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4.3.3
       with:
-        path: "_packaging/dist/gaphor-unsigned.zip"
+        name: gaphor-unsigned-executables
+        path: |
+          _packaging/dist/gaphor-${{ inputs.version }}-installer.exe
+          _packaging/dist/gaphor-${{ inputs.version }}-portable.exe
     - name: Sign Executables
       uses: signpath/github-action-submit-signing-request@ced31329c0317e779dad2eec2a7c3bb46ea1343e # v1.3
       with:
@@ -60,7 +56,7 @@ runs:
         signing-policy-slug: ${{ github.event_name == 'release' && 'release-signing' || 'test-signing' }}
         wait-for-completion: true
         output-artifact-directory: _packaging/dist/
-        github-artifact-id: '${{ steps.upload-unsigned-artifact.outputs.artifact-id }}'
+        github-artifact-id: '${{ steps.upload-unsigned-artifacts.outputs.artifact-id }}'
     - name: Extract Signed Executables
       run: |
         Expand-Archive -Path "_packaging/dist/gaphor-signed.zip" -DestinationPath "_packaging/dist" -Force
