@@ -45,6 +45,12 @@ runs:
         "_packaging/dist/gaphor-${{ inputs.version }}-portable.exe"
         -DestinationPath "_packaging/dist/gaphor-unsigned.zip"
       shell: pwsh
+
+    - name: upload-unsigned-artifact
+      id: upload-unsigned-artifact
+      uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4.3.3
+      with:
+        path: "_packaging/dist/gaphor-unsigned.zip"
     - name: Sign Executables
       uses: signpath/github-action-submit-signing-request@ced31329c0317e779dad2eec2a7c3bb46ea1343e # v1.3
       with:
@@ -52,9 +58,9 @@ runs:
         organization-id: Gaphor [OSS]
         project-slug: gaphor
         signing-policy-slug: ${{ github.event_name == 'release' && 'release-signing' || 'test-signing' }}
-        artifact-path: _packaging/dist/gaphor-unsigned.zip
         wait-for-completion: true
-        output-artifact-path: _packaging/dist/gaphor-signed.zip
+        output-artifact-directory: _packaging/dist/
+        github-artifact-id: '${{ steps.upload-unsigned-artifact.outputs.artifact-id }}'
     - name: Extract Signed Executables
       run: |
         Expand-Archive -Path "_packaging/dist/gaphor-signed.zip" -DestinationPath "_packaging/dist" -Force
