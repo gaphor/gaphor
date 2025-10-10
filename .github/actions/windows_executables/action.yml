@@ -59,9 +59,8 @@ runs:
         github-artifact-id: '${{ steps.upload-unsigned-artifacts.outputs.artifact-id }}'
     - name: Extract Signed Executables
       run: |
-        Expand-Archive -Path "_packaging/dist/gaphor-signed.zip" -DestinationPath "_packaging/dist" -Force
-        Remove-Item "_packaging/dist/gaphor-unsigned.zip"
-        Remove-Item "_packaging/dist/gaphor-signed.zip"
+        Expand-Archive -Path "_packaging/dist/gaphor-unsigned-executables.zip" -DestinationPath "_packaging/dist" -Force
+        Remove-Item "_packaging/dist/gaphor-unsigned-executables.zip"
       shell: pwsh
     - name: Upload gaphor-${{ inputs.version }}-installer.exe
       uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4.3.3
