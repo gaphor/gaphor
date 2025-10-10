@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: Gaphor 2.18.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-12-30 14:25-0500\n"
-"PO-Revision-Date: 2025-09-02 01:27+0000\n"
-"Last-Translator: Dan Yeaw <dan@yeaw.me>\n"
+"PO-Revision-Date: 2025-10-01 10:02+0000\n"
+"Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language-Team: Croatian <https://hosted.weblate.org/projects/gaphor/"
 "docs-gaphor-org/hr/>\n"
 "Language: hr\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Weblate 5.13.1-dev\n"
+"X-Generator: Weblate 5.14-dev\n"
 "Generated-By: Babel 2.16.0\n"
 
 #: ../changelog.rst:2
@@ -264,7 +264,7 @@ msgid ""
 "SysML](https://youtu.be/998UznK9ogY)."
 msgstr ""
 "Ako želiš saznati više o ovim temeljima, pogledaj 30-minutni video Ricka "
-"Steinera [The Four Pillars of SysML] (https://youtu.be/998UznK9ogY)."
+"Steinera [The Four Pillars of SysML](https://youtu.be/998UznK9ogY)."
 
 #: ../coffee_machine.md:118
 msgid ""
@@ -1217,9 +1217,9 @@ msgid ""
 "Specify remote hostname as *localhost* and port as *5901* and connect "
 "VNC. The port number should be same as specified in attribute *vncPort*"
 msgstr ""
-"Navedi ime udaljenog hosta kao „localhost” i priključak kao „5901” te se "
+"Navedi ime udaljenog hosta kao *localhost* i priključak kao *5901* te se "
 "spoji na VNC. Broj priključka treba biti isti kao što je naveden u atributu "
-"„vncPort”"
+"*vncPort*"
 
 #: ../container.md:37
 msgid ""
@@ -1245,9 +1245,9 @@ msgid ""
 "*http://127.0.0.1:6080/*. The port number should be same as specified in "
 "attribute *webPort*"
 msgstr ""
-"Otvori preglednik na svom lokalnom računalu i unesi adresu „http://127.0.0.1:"
-"6080/”. Broj priključka (port) mora biti isti kao onaj navedeni u atributu "
-"„webPort”"
+"Otvori preglednik na svom lokalnom računalu i unesi adresu *http://127.0.0.1:"
+"6080/*. Broj priključka (port) mora biti isti kao onaj navedeni u atributu "
+"*webPort*"
 
 #: ../container.md:42
 msgid ""
@@ -1255,8 +1255,8 @@ msgid ""
 "*vscode*. The password should be same as specified in attribute "
 "*password*"
 msgstr ""
-"Otvorit će se noVNC prozor, klikni na „Poveži” i unesi lozinku kao „vscode”. "
-"Lozinka mora biti ista kao ona navedena u atributu „password”"
+"Otvorit će se noVNC prozor, klikni na „Poveži” i unesi lozinku kao *vscode*. "
+"Lozinka mora biti ista kao ona navedena u atributu *password*"
 
 #: ../container.md:43
 msgid ""
@@ -1753,15 +1753,13 @@ msgid ""
 msgstr ""
 
 #: ../first_model.md:40
-#, fuzzy
 msgid ""
 "Select Generalization (![Icon for generalization "
 "relationships.](../gaphor/ui/icons/hicolor/scalable/actions/gaphor-"
 "generalization-symbolic.svg))."
 msgstr ""
-"Odberi generaliziranje (![new "
-"generalization](../gaphor/ui/icons/hicolor/scalable/actions/gaphor-"
-"generalization-symbolic.svg))."
+"Odberi generaliziranje (![Ikona za generaliziranje odnosa.](../gaphor/ui/"
+"icons/hicolor/scalable/actions/gaphor-generalization-symbolic.svg))."
 
 #: ../first_model.md:40
 msgid "Icon for generalization relationships."
@@ -1803,26 +1801,25 @@ msgid "Creating New Diagrams"
 msgstr "Stvaranje novih dijagrama"
 
 #: ../first_model.md:55
-#, fuzzy
 msgid ""
 "To create a new diagram, use the Model Browser. Select the element that "
 "should contain the new diagram. For now, select _New Model_. Click the "
 "New Diagram menu (![Plus symbol of the New Diagram popup menu.](images"
 "/list-add-symbolic.svg)) in the header bar."
 msgstr ""
-"Za izradu novog dijagrama koristi „Preglednik modela”. Odaberi element "
-"koji bi trebao sadržavati novi dijagram. Za sada, odaberi _Novi model_. "
-"Pritisni izbornik „Novi dijagram” (![novi dijagram](images/list-add-"
-"symbolic.svg)) u traci zaglavlja."
+"Za izradu novog dijagrama koristi „Preglednik modela”. Odaberi element koji "
+"bi trebao sadržavati novi dijagram. Za sada, odaberi _Novi model_. Pritisni "
+"izbornik „Novi dijagram” (![Simbol plusa u skočnom izborniku Novi dijagram.]("
+"images/list-add-symbolic.svg)) u traci zaglavlja."
 
 #: ../first_model.md:55
 msgid "Plus symbol of the New Diagram popup menu."
 msgstr ""
 
 #: ../first_model.md:59
-#, fuzzy
 msgid "![The New Diagram popup window.](images/first-model-new-diagram-popup.png)"
-msgstr "![slika](/images/first-model-new-diagram-popup.png)"
+msgstr ""
+"![Skočni prozor Novi dijagram.](images/first-model-new-diagram-popup.png)"
 
 #: ../first_model.md:59
 msgid "The New Diagram popup window."
@@ -1922,7 +1919,6 @@ msgid "Transactional"
 msgstr "Transakcijski"
 
 #: ../framework.md:25
-#, fuzzy
 msgid ""
 "Gaphor is transactional, which means it keeps track of the functions it "
 "performs as a series of transactions. The transactions work by sending an"
@@ -1931,12 +1927,12 @@ msgid ""
 " the previous transactions so that a transaction can be reversed if the "
 "undo button is pressed."
 msgstr ""
-"Gaphor je [transakcijski](transaction.md), što znači da prati funkcije "
-"koje obavlja kao niz transakcija. Transakcije funkcioniraju tako da šalju"
-" događaj kada transakcija započne i šalju drugi događaj kada transakcija "
-"završi. To na primjer omogućuje upravljaču poništavanja da vodi dnevnik "
-"prethodnih transakcija tako da se transakcija može poništiti ako se "
-"pritisne gumb za poništavanje."
+"Gaphor je transakcijski, što znači da prati funkcije koje obavlja kao niz "
+"transakcija. Transakcije funkcioniraju tako da šalju događaj kada "
+"transakcija započne i šalju drugi događaj kada transakcija završi. To na "
+"primjer omogućuje upravljaču poništavanja da vodi dnevnik prethodnih "
+"transakcija tako da se transakcija može poništiti ako se pritisne gumb za "
+"poništavanje."
 
 #: ../framework.md:32
 msgid "Main Components"
@@ -2319,13 +2315,12 @@ msgid "Relations"
 msgstr "Veze"
 
 #: ../getting_started.md:107
-#, fuzzy
 msgid ""
 "Relations are line-like items that form relationships between elements in"
 " the diagram. Each end of a relation is in one of two states:"
 msgstr ""
-"Veze su linijski elementi koji tvore odnose između elemenata u dijagramu."
-" Svaki kraj veze se nalazi u jednom od dva stanja:"
+"Veze su linijski elementi koji tvore odnose između elemenata u dijagramu. "
+"Svaki kraj veze se nalazi u jednom od dva stanja:"
 
 #: ../getting_started.md:110
 msgid "Connected to an element and the handle turns red"
@@ -2355,7 +2350,6 @@ msgid ""
 msgstr ""
 
 #: ../getting_started.md:123
-#, fuzzy
 msgid "Copy and Paste"
 msgstr "Kopiraj i umetni"
 
@@ -2535,12 +2529,17 @@ msgid ""
 " a fully-compliant UML 2 data model, so it is much more than a picture "
 "drawing tool."
 msgstr ""
+"Gaphor je UML i SysML program za modeliranje napisana u Pythonu. Izrađen je "
+"kao jednostavan i moćan program. Gaphor implementira potpuno sukladan UML 2 "
+"model podataka, tako da je program više od običnog alata za crtanje slika."
 
 #: ../index.rst:13
 msgid ""
 "You can use Gaphor to quickly visualize different aspects of a system as "
 "well as create complete, highly complex models."
 msgstr ""
+"Koristi Gaphor za brzo vizualiziranje različitih aspekata sustava, kao i za "
+"stvaranje potpunih, vrlo složenih modela."
 
 #: ../index.rst:18
 msgid ""
@@ -2549,10 +2548,14 @@ msgid ""
 "The code and issue tracker can be found on `GitHub "
 "<https://github.com/gaphor/gaphor>`_."
 msgstr ""
+"Gaphor je 100 % otvorenog koda te je dostupan pod prijateljskom `Apache 2 "
+"license <https://github.com/gaphor/gaphor/blob/main/LICENSES/Apache-2.0.txt>`"
+"_. Kod i alat za praćenje problema mogu se pronaći na `GitHub <https://"
+"github.com/gaphor/gaphor>`_."
 
 #: ../index.rst:21
 msgid "What are you waiting for? :doc:`Let's get started <getting_started>`!"
-msgstr ""
+msgstr "Što čekaš? :doc:`Počnimo <getting_started>`!"
 
 #: ../index.rst:23
 msgid ""
@@ -2571,15 +2574,14 @@ msgid "Gaphor on Linux"
 msgstr "Gaphor na Linuxu"
 
 #: ../linux.md:3
-#, fuzzy
 msgid ""
 "Gaphor can be installed as Flatpak on Linux, some distributions provide "
 "packages. Check out the [Gaphor download "
 "page](https://gaphor.org/download/#linux) for details."
 msgstr ""
-"Gaphor se može instalirati kao s našim instalaterom. Za detalje pogledaj "
-"[stranicu za preuzimanje "
-"Gaphora](https://gaphor.org/download.html#windows)."
+"Gaphor se može instalirati kao Flatpak na Linuxu, neke distribucije pružaju "
+"pakete. Za detalje pogledaj [stranicu za preuzimanje Gaphora](https://"
+"gaphor.org/download/#linux)."
 
 #: ../linux.md:7 ../macos.md:5 ../windows.md:7
 msgid ""
@@ -5036,9 +5038,8 @@ msgid ""
 msgstr ""
 
 #: ../scripting.md:244
-#, fuzzy
 msgid "Then start up the services we will use:"
-msgstr "Najistaknutije usluge su:"
+msgstr "Zatim pokreni usluge koje ćemo koristiti:"
 
 #: ../scripting.md:263
 msgid "and load in the model to the session"
@@ -5824,9 +5825,8 @@ msgid "A diagram with a name is \"draft\" or starts with \"draft-\"."
 msgstr ""
 
 #: ../style_sheets.md:96
-#, fuzzy
 msgid "``:focus``"
-msgstr "``class``"
+msgstr "``:focus``"
 
 #: ../style_sheets.md:96
 msgid "The focused item. Other pseudo classes are:"
@@ -5849,9 +5849,8 @@ msgid "``:disabled`` if an element is grayed out during handle movement"
 msgstr ""
 
 #: ../style_sheets.md:102
-#, fuzzy
 msgid "``:empty``"
-msgstr "``opacity``"
+msgstr "``:empty``"
 
 #: ../style_sheets.md:102
 msgid "A node containing no child nodes in the diagram."
@@ -5914,9 +5913,8 @@ msgid "E.g. ``:not([subject])``: Any item that has no \"subject\"."
 msgstr ""
 
 #: ../style_sheets.md:116
-#, fuzzy
 msgid "``::after``"
-msgstr "``datatype``"
+msgstr "``::after``"
 
 #: ../style_sheets.md:116
 msgid ""
@@ -6821,9 +6819,8 @@ msgid ""
 msgstr ""
 
 #: ../undo.md:44
-#, fuzzy
 msgid "Transaction API"
-msgstr "Transakcijski"
+msgstr "API za transakcije"
 
 #: ../undo.md:47
 msgid "You only require transactions if the undo manager is active."
@@ -6955,14 +6952,13 @@ msgid "Gaphor on Windows"
 msgstr "Gaphor na Windowsu"
 
 #: ../windows.md:3
-#, fuzzy
 msgid ""
 "Gaphor can be installed as with our installer. Check out the [Gaphor "
 "download page](https://gaphor.org/download#windows) for details."
 msgstr ""
-"Gaphor se može instalirati kao s našim instalaterom. Za detalje pogledaj "
-"[stranicu za preuzimanje "
-"Gaphora](https://gaphor.org/download.html#windows)."
+"Gaphor se može instalirati pomoću našeg instalacijskog programa. Za detalje "
+"pogledaj [stranicu za preuzimanje Gaphora](https://gaphor.org/"
+"download.html#windows)."
 
 #: ../windows.md:13
 msgid "WinGet"
@@ -6989,18 +6985,16 @@ msgid "Git"
 msgstr "Git"
 
 #: ../windows.md:23
-#, fuzzy
 msgid ""
 "To set up a development environment in Windows first install "
 "[Git](https://gitforwindows.org) by executing as an administrator:"
 msgstr ""
-"Za postavljanje razvojnog okruženja u sustavu Windows najprije instaliraj"
-" [Git](https://gitforwindows.org) kao administrator:"
+"Za postavljanje razvojnog okruženja u sustavu Windows najprije instaliraj "
+"[Git](https://gitforwindows.org) kao administrator:"
 
 #: ../windows.md:30
-#, fuzzy
 msgid "GTK and Python with Gvsbuild"
-msgstr "GTK i Python s gvsbuild"
+msgstr "GTK i Python s Gvsbuild"
 
 #: ../windows.md:32
 msgid ""
@@ -7277,9 +7271,8 @@ msgid "Get the most recent packages using:"
 msgstr ""
 
 #: ../windows.md:254
-#, fuzzy
 msgid "Install dependencies"
-msgstr "Instaliraj Gaphor ovisnosti"
+msgstr "Instaliraj ovisnosti"
 
 #: ../windows.md:256
 msgid "The following Gaphor dependencies are installable from anaconda:"
@@ -7331,9 +7324,8 @@ msgid "Then, in spyder, set 'gaphor' as your python interpreter"
 msgstr ""
 
 #: ../windows.md:281
-#, fuzzy
 msgid "Install Gaphor"
-msgstr "Instaliraj Graphviz"
+msgstr "Instaliraj Gaphor"
 
 #: ../windows.md:283
 msgid ""

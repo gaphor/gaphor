@@ -10,6 +10,10 @@
         </child>
         <style>
           <class name="view"/>
+          <class name="undershoot-top"/>
+          <class name="undershoot-bottom"/>
+          <class name="undershoot-start"/>
+          <class name="undershoot-end"/>
         </style>
       </object>
     </child>

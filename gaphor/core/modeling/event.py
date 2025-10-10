@@ -156,7 +156,11 @@ class DerivedDeleted(AssociationDeleted, DerivedUpdated):
         super().__init__(element, association, old_value, index=-1)
 
 
-class RedefinedSet(AssociationSet):
+class RedefinedUpdated(AssociationUpdated):
+    """A derived property has changed."""
+
+
+class RedefinedSet(AssociationSet, RedefinedUpdated):
     """A redefined property has been set."""
 
     def __init__(self, element, association, old_value, new_value):
@@ -170,7 +174,7 @@ class RedefinedSet(AssociationSet):
         super().__init__(element, association, old_value, new_value)
 
 
-class RedefinedAdded(AssociationAdded):
+class RedefinedAdded(AssociationAdded, RedefinedUpdated):
     """A redefined property has been added."""
 
     def __init__(self, element, association, new_value):
@@ -184,7 +188,7 @@ class RedefinedAdded(AssociationAdded):
         super().__init__(element, association, new_value)
 
 
-class RedefinedDeleted(AssociationDeleted):
+class RedefinedDeleted(AssociationDeleted, RedefinedUpdated):
     """A redefined property has been deleted."""
 
     def __init__(self, element, association, old_value, index):
