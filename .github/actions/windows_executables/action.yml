@@ -24,7 +24,6 @@ runs:
     - name: Build PyInstaller Bootloader
       run: |
         # The pre-compiled bootloader is often flagged by virus scanners as a false positive, build our own
-        poetry shell
         $env:PYINSTALLER_VER=$(poetry run py -c "from importlib.metadata import version; print(version('pyinstaller'))")
         git clone --depth 1 --branch v$env:PYINSTALLER_VER https://github.com/pyinstaller/pyinstaller.git
         cd .\pyinstaller\bootloader
