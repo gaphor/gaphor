@@ -336,17 +336,6 @@ jobs:
           version: ${{ steps.install.outputs.version }}
           signpath_api_token: ${{ secrets.SIGNPATH_API_TOKEN }}
 
-  signpath_api_token:
-    description: 'SighPath API token'
-    required: true
-  signpath_org_id:
-    description: 'SignPath organization ID'
-    required: true
-  signpath_project_slug:
-    description: 'SignPath project slug'
-    required: true
-  signpath_signing_policy_slug:
-
   check-windows-installer:
     name: 🕵️ Check Windows Installer
     needs: windows
