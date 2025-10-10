@@ -55,7 +55,7 @@ runs:
       uses: signpath/github-action-submit-signing-request@ced31329c0317e779dad2eec2a7c3bb46ea1343e # v1.3
       with:
         api-token: ${{ inputs.signpath_api_token }}
-        organization-id: Gaphor [OSS]
+        organization-id: 794ffb00-6570-4400-9e4e-bf426bb0f482
         project-slug: gaphor
         signing-policy-slug: ${{ github.event_name == 'release' && 'release-signing' || 'test-signing' }}
         wait-for-completion: true
