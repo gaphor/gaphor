@@ -40,14 +40,12 @@ runs:
         poetry run poe win-installer
       shell: bash
     - name: Create Zip for Signing
-      if: inputs.mainline_build == 'true'
       run: >
         Compress-Archive -Path "_packaging/dist/gaphor-${{ inputs.version }}-installer.exe",
         "_packaging/dist/gaphor-${{ inputs.version }}-portable.exe"
         -DestinationPath "_packaging/dist/gaphor-unsigned.zip"
       shell: pwsh
     - name: Sign Executables
-      if: inputs.mainline_build == 'true'
       uses: signpath/github-action-submit-signing-request@ced31329c0317e779dad2eec2a7c3bb46ea1343e # v1.3
       with:
         api-token: ${{ inputs.signpath_api_token }}
@@ -58,7 +56,6 @@ runs:
         wait-for-completion: true
         output-artifact-path: _packaging/dist/gaphor-signed.zip
     - name: Extract Signed Executables
-      if: inputs.mainline_build == 'true'
       run: |
         Expand-Archive -Path "_packaging/dist/gaphor-signed.zip" -DestinationPath "_packaging/dist" -Force
         Remove-Item "_packaging/dist/gaphor-unsigned.zip"
