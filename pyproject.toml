@@ -105,6 +105,8 @@ documentation = "https://docs.gaphor.org/"
 "C4Model" = "gaphor.C4Model.modelinglanguage:C4ModelLanguage"
 "RAAML" = "gaphor.RAAML.modelinglanguage:RAAMLModelingLanguage"
 "general" = "gaphor.diagram.general.modelinglanguage:GeneralModelingLanguage"
+"KerML" = "gaphor.KerML.modelinglanguage:KerMLModelingLanguage"
+"SysML2" = "gaphor.SysML2.modelinglanguage:SysML2ModelingLanguage"
 
 [project.entry-points."gaphor.argparsers"]
 gui = "gaphor.main:gui_parser"
@@ -197,6 +199,19 @@ c4model.script = """gaphor.codegen.coder:main(
         ('UML', 'models/UML.gaphor'),
         ('Core', 'models/Core.gaphor')]
     )"""
+kerml.script = """gaphor.codegen.coder:main(
+    modelfile='models/KerML-25-04-04.xmi',
+    overridesfile='models/KerML.override',
+    outfile='gaphor/KerML/kerml.py',
+    supermodelfiles=[('Core', 'models/Core.gaphor')]
+    )"""
+sysml2.script = """gaphor.codegen.coder:main(
+    modelfile='models/SysML2-25-02-15.xmi',
+    outfile='gaphor/SysML2/sysml2.py',
+    supermodelfiles=[
+        ('KerML', 'models/KerML-25-04-04.xmi'),
+        ('Core', 'models/Core.gaphor')]
+    )"""
 lint = "pre-commit run --all-files"
 docs = { "cwd" = "docs", "shell" = "sphinx-build -W -b html . _build/html" }
 docs-gettext-pot = { "cwd" = "docs", "shell" = "sphinx-build -b gettext . locale" }
@@ -242,8 +257,10 @@ namespace_packages = true
 [[tool.mypy.overrides]]
 module = [
     "gaphor.core.modeling.coremodel",
+    "gaphor.KerML.kerml",
     "gaphor.UML.uml",
     "gaphor.SysML.sysml",
+    "gaphor.SysML2.sysml2",
 ]
 warn_unused_ignores = false
 ignore_errors = true
@@ -262,8 +279,10 @@ exclude = [
     "dist",
     "gaphor/core/modeling/coremodel.py",
     "gaphor/C4Model/c4model.py",
+    "gaphor/KerML/kerml.py",
     "gaphor/RAAML/raaml.py",
     "gaphor/SysML/sysml.py",
+    "gaphor/SysML2/sysml2.py",
     "gaphor/UML/uml.py",
 ]
 ignore = ["E501"]

@@ -143,6 +143,7 @@ class DeploymentTarget(NamedElement):
 class InstanceSpecification(DeployedArtifact, DeploymentTarget, PackageableElement):
     classifier: relation_many[Classifier]
     extended: relation_many[Element]
+    instanceValue: relation_many[InstanceValue]
     slot: relation_many[Slot]
     specification: relation_one[ValueSpecification]
 
@@ -1005,6 +1006,10 @@ class SequenceDiagram(InteractionDiagram):
     diagramType: _attribute[str] = _attribute("diagramType", str, default="sd")
 
 
+class InstanceValue(ValueSpecification):
+    instance: relation_one[InstanceSpecification]
+
+
 # 66: override Lifeline.parse: Callable[[Lifeline, str], None]
 # defined in umloverrides.py
 
@@ -1040,6 +1045,7 @@ InstanceSpecification.slot = association("slot", Slot, composite=True, opposite=
 InstanceSpecification.specification = association("specification", ValueSpecification, upper=1, composite=True)
 InstanceSpecification.classifier = association("classifier", Classifier, opposite="instanceSpecification")
 InstanceSpecification.extended = association("extended", Element, opposite="appliedStereotype")
+InstanceSpecification.instanceValue = association("instanceValue", InstanceValue, opposite="instance")
 Element.ownedElement.add(InstanceSpecification.slot)  # type: ignore[attr-defined]
 Element.ownedElement.add(InstanceSpecification.specification)  # type: ignore[attr-defined]
 EnumerationLiteral.enumeration = association("enumeration", Enumeration, upper=1, opposite="ownedLiteral")
@@ -1648,3 +1654,4 @@ Element.ownedElement.add(ValueSpecificationAction.value)  # type: ignore[attr-de
 Comment.annotatedElement = association("annotatedElement", Element, opposite="comment")
 Diagram.element = association("element", Element, upper=1, opposite="ownedDiagram")
 Element.owner.add(Diagram.element)  # type: ignore[attr-defined]
+InstanceValue.instance = association("instance", InstanceSpecification, upper=1, opposite="instanceValue")
