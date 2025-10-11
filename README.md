@@ -157,3 +157,8 @@ Licensed under the [Apache License v2](LICENSES/Apache-2.0.txt).
 Summary: You can do what you like with Gaphor, as long as you include the
 required notices. This permissive license contains a patent license from the
 contributors of the code.
+
+## 🤝 Sponsors
+
+- Free code signing provided by [SignPath.io](https://about.signpath.io),
+  certificate by [SignPath Foundation](signpath.org)
