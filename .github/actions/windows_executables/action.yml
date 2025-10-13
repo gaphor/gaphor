@@ -5,7 +5,7 @@ inputs:
     description: 'Gaphor version number'
     required: true
   signpath_api_token:
-    description: 'SighPath API token'
+    description: 'SignPath API token'
     required: true
   mainline_build:
     description: 'Build is performed on the main line'
