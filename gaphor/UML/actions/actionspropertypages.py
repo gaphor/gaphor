@@ -117,7 +117,7 @@ class ValueSpecificationActionPropertyPage(PropertyPageBase):
         builder = new_builder("value-specifiation-action-editor")
 
         value = builder.get_object("value")
-        value.set_text(self.subject.value or "")
+        value.set_text(self.subject.value.value or "")
         value.connect("changed", self._on_value_change)
 
         return builder.get_object("value-specifiation-action-editor")
@@ -125,7 +125,7 @@ class ValueSpecificationActionPropertyPage(PropertyPageBase):
     def _on_value_change(self, entry):
         with Transaction(self.event_manager, context="editing"):
             value = entry.get_text()
-            self.subject.value = value
+            self.subject.value.value = value
 
 
 @PropertyPages.register(UML.CallBehaviorAction)
