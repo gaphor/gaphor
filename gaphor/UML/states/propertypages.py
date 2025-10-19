@@ -51,7 +51,7 @@ class TransitionPropertyPage(PropertyPageBase):
         @handler_blocking(guard, "changed", self._on_guard_change)
         def guard_handler(event):
             if event.element is subject.guard and guard.get_text() != event.new_value:
-                guard.set_text(event.new_value or "")
+                guard.set_text(event.new_value.value or "")
 
         self.watcher.watch("guard[Constraint].specification", guard_handler)
 
