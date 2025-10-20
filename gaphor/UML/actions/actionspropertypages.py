@@ -257,7 +257,9 @@ class JoinNodePropertyPage(PropertyPageBase):
         )
 
         join_spec = builder.get_object("join-spec")
-        join_spec.set_text(subject.joinSpec or "")
+        join_spec.set_text(
+            UML.recipes.get_literal_value_as_string(subject.joinSpec) or ""
+        )
 
         return builder.get_object("join-node-editor")
 
