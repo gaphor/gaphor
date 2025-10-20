@@ -12,6 +12,7 @@ from gaphor.diagram.propertypages import (
     unsubscribe_all_on_destroy,
 )
 from gaphor.transaction import Transaction
+from gaphor.UML import LiteralString
 from gaphor.UML.actions.activitynodes import DecisionNodeItem, ForkNodeItem
 from gaphor.UML.actions.objectnode import ObjectNodeItem
 
@@ -366,10 +367,16 @@ class PinPropertyPage(PropertyPageBase):
         dropdown.connect("notify::selected", self._on_type_changed)
 
         multiplicity_lower = builder.get_object("multiplicity-lower")
-        multiplicity_lower.set_text(subject.lowerValue or "")
+        if isinstance(subject.lowerValue, LiteralString):
+            multiplicity_lower.set_text(subject.lowerValue.value or "")
+        else:
+            multiplicity_lower.set_text(subject.lowerValue or "")
 
         multiplicity_upper = builder.get_object("multiplicity-upper")
-        multiplicity_upper.set_text(subject.upperValue or "")
+        if isinstance(subject.upperValue, LiteralString):
+            multiplicity_upper.set_text(subject.upperValue.value or "")
+        else:
+            multiplicity_upper.set_text(subject.upperValue or "")
 
         return builder.get_object("pin-editor")
 
@@ -398,9 +405,15 @@ class PinPropertyPage(PropertyPageBase):
     def _on_multiplicity_lower_change(self, entry):
         value = entry.get_text().strip()
         with Transaction(self.event_manager, context="editing"):
-            self.subject.lowerValue = value
+            try:
+                self.subject.lowerValue.value = value
+            except AttributeError:
+                self.subject.lowerValue = LiteralString(value)
 
     def _on_multiplicity_upper_change(self, entry):
         value = entry.get_text().strip()
         with Transaction(self.event_manager, context="editing"):
-            self.subject.upperValue = value
+            try:
+                self.subject.upperValue.value = value
+            except AttributeError:
+                self.subject.upperValue = LiteralString(value)
