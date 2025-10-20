@@ -116,9 +116,9 @@ class ValueSpecificationActionPropertyPage(PropertyPageBase):
     def construct(self):
         builder = new_builder("value-specifiation-action-editor")
 
-        value = builder.get_object("value")
-        value.set_text(self.subject.value.value or "")
-        value.connect("changed", self._on_value_change)
+        gtObj = builder.get_object("value")
+        gtObj.set_text(self.subject.value.value or "")
+        gtObj.connect("changed", self._on_value_change)
 
         return builder.get_object("value-specifiation-action-editor")
 

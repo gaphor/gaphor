@@ -8,6 +8,7 @@ from gi.repository import Gdk, Gtk
 
 from gaphor.diagram.presentation import LinePresentation, Named, Valued
 from gaphor.transaction import Transaction
+from gaphor.UML import LiteralSpecification
 
 
 @singledispatch
@@ -67,12 +68,18 @@ def valued_item_editor(item, view, event_manager, pos=None) -> bool:
         box = Rectangle(x, y, w, h)
     else:
         box = view.get_item_bounding_box(item)
-    value = subject.value or ""
+    if isinstance(subject.value, LiteralSpecification):
+        value = subject.value.value or ""
+    else:
+        value = subject.value or ""
     entry = popup_entry(value)
 
     def update_text():
         with Transaction(event_manager, context="editing"):
-            item.subject.value = entry.get_buffer().get_text()
+            try:
+                item.subject.value = entry.get_buffer().get_text()
+            except TypeError:
+                item.subject.value.value = entry.get_buffer().get_text()
 
     show_popover(entry, view, box, update_text)
 
