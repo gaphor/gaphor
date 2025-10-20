@@ -8,6 +8,7 @@ from gaphas.tool.scroll import pan_tool
 import gaphor.diagram.tools.handlemove
 from gaphor.diagram.tools.dnd import drop_target_tool
 from gaphor.diagram.tools.dropzone import drop_zone_tool
+from gaphor.diagram.tools.itemmovetool import item_move_tool
 from gaphor.diagram.tools.itemtool import find_item_and_handle_at_point, item_tool
 from gaphor.diagram.tools.magnet import magnet_tool
 from gaphor.diagram.tools.placement import placement_tool
@@ -25,6 +26,7 @@ def apply_default_tool_set(view, modeling_language, event_manager, rubberband_st
     view.add_controller(
         *transactional_tool(item_tool(event_manager), event_manager=event_manager)
     )
+    view.add_controller(item_move_tool(event_manager))
     view.add_controller(rubberband_tool(rubberband_state))
     add_basic_tools(view, modeling_language, event_manager)
 
