@@ -300,11 +300,11 @@ class FlowPropertyPageAbstract(PropertyPageBase):
         )
 
         guard = builder.get_object("guard")
-        guard.set_text(subject.guard or "")
+        guard.set_text(subject.guard and str(subject.guard.value) or "")  # type: ignore[attr-defined]
 
         @handler_blocking(guard, "changed", self._on_guard_change)
         def handler(event):
-            v = event.new_value
+            v = event.new_value.value
             if v != guard.get_text():
                 guard.set_text(v or "")
 
