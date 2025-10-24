@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gaphor 2.18.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-12-30 14:25-0500\n"
-"PO-Revision-Date: 2025-10-01 10:02+0000\n"
+"PO-Revision-Date: 2025-10-25 16:02+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language-Team: Croatian <https://hosted.weblate.org/projects/gaphor/"
 "docs-gaphor-org/hr/>\n"
@@ -16,9 +16,10 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Weblate 5.14-dev\n"
+"Plural-Forms: nplurals=3; plural="
+"(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? "
+"1 : 2);\n"
+"X-Generator: Weblate 5.14.1-dev\n"
 "Generated-By: Babel 2.16.0\n"
 
 #: ../changelog.rst:2
@@ -433,6 +434,8 @@ msgid ""
 "Use case diagram showing an actor named Barista and a use case called "
 "Brew espresso"
 msgstr ""
+"Dijagram slučaja primjene koji prikazuje sudionika s imenom „Barista” i "
+"slučaj primjene pod imenom „Brew espresso”"
 
 #: ../coffee_machine_concept.md:70
 msgid ""
@@ -575,6 +578,8 @@ msgid ""
 "Block definition diagram showing context of the coffee shop with external"
 " entities"
 msgstr ""
+"Dijagram definicije blokova koji prikazuje kontekst prodavaonice kave s "
+"eksternim entitetima"
 
 #: ../coffee_machine_concept.md:143
 msgid ""
@@ -757,6 +762,8 @@ msgstr ""
 #: ../coffee_machine_logical.md:63
 msgid "State machine diagram showing logical states including on and off"
 msgstr ""
+"Dijagram automata konačnih stanja koji prikazuje logička stanja, uključujući "
+"uključeno i isključeno"
 
 #: ../coffee_machine_logical.md:68
 msgid ""
@@ -831,6 +838,8 @@ msgstr ""
 #: ../coffee_machine_logical.md:97
 msgid "Block definition diagram showing the coffee machine and its logical parts"
 msgstr ""
+"Dijagram definicije blokova koji prikazuje aparat za kavu i njegove logične "
+"dijelove"
 
 #: ../coffee_machine_logical.md:102
 msgid ""
@@ -927,6 +936,7 @@ msgstr ""
 #: ../coffee_machine_logical.md:158
 msgid "Internal block diagram showing the clear box view of the espresso machine"
 msgstr ""
+"Interni blok dijagram koji prikazuje prozirnu kutiju aparata za espresso"
 
 #: ../coffee_machine_logical.md:163
 msgid ""
@@ -1719,10 +1729,12 @@ msgid ""
 "![The Gaphor main window showing a single class added to the "
 "model.](images/first-model-class.png)"
 msgstr ""
+"![Glavni prozor Gaphora koji prikazuje jednu modelu dodanu klasu.]"
+"(images/first-model-class.png)"
 
 #: ../first_model.md:25
 msgid "The Gaphor main window showing a single class added to the model."
-msgstr ""
+msgstr "Glavni prozor Gaphora koji prikazuje jednu modelu dodanu klasu."
 
 #: ../first_model.md:27
 msgid "It's simple to add elements to a diagram."
@@ -1778,12 +1790,16 @@ msgid ""
 "![The Gaphor main window showing two classes connected by a "
 "generalization relationship.](images/first-model-generalization.png)"
 msgstr ""
+"![Glavni prozor Gaphora koji prikazuje dvije klase koje su povezane odnosom "
+"generalizacije.](images/first-model-generalization.png)"
 
 #: ../first_model.md:47
 msgid ""
 "The Gaphor main window showing two classes connected by a generalization "
 "relationship."
 msgstr ""
+"Glavni prozor Gaphora koji prikazuje dvije klase koje su povezane odnosom "
+"generalizacije."
 
 #: ../first_model.md:49
 msgid ""
@@ -2114,7 +2130,7 @@ msgid ""
 "![Gaphor's welcome screen showing recently opened models and model "
 "templates.](images/getting-started-greeter.png)"
 msgstr ""
-"![Uvodni ekran Gaphora prikazuje nedavno otvorene modele i predloške "
+"![Uvodni ekran Gaphora koji prikazuje nedavno otvorene modele i predloške "
 "modela.](images/getting-started-greeter.png)"
 
 #: ../getting_started.md:17
@@ -2122,7 +2138,8 @@ msgid ""
 "Gaphor's welcome screen showing recently opened models and model "
 "templates."
 msgstr ""
-"Uvodni ekran Gaphora prikazuje nedavno otvorene modele i predloške modela."
+"Uvodni ekran Gaphora koji prikazuje nedavno otvorene modele i predloške "
+"modela."
 
 #: ../getting_started.md:19
 msgid "You can select a template to get started."
@@ -2400,6 +2417,12 @@ msgid ""
 " the ![Icon for showing and hiding the Property Editor.](images/sidebar-"
 "show-right-symbolic.svg) icon in the header bar."
 msgstr ""
+"Uređivač svojstva se nalazi na desnoj strani dijagrama. Kada na dijagramu "
+"nije odabran nijedan element, prikazuje neke savjete i trikove. Kada je "
+"jedan element odabran na dijagramu, on sadrži detalje o elementu poput "
+"imena, atributa i stereotipa. Može se otvoriti pomoću <kbd>F9</kbd> i ikone !"
+"[Ikona za prikaz i skrivanje uređivača svojstva.]"
+"(images/sidebar-show-right-symbolic.svg) u traci zaglavlja."
 
 #: ../getting_started.md:145
 msgid "Icon for showing and hiding the Property Editor."
@@ -2407,7 +2430,7 @@ msgstr "Ikona za prikazivanje i skrivanje uređivača svojstva."
 
 #: ../getting_started.md:152
 msgid "The properties that are shown depend on the item that is selected."
-msgstr "Prikazana svojstva ovise o odabranoj stavci."
+msgstr "Prikazana svojstva ovise o odabranom elementu."
 
 #: ../getting_started.md:154
 msgid "Model Preferences"
@@ -2419,10 +2442,13 @@ msgid ""
 " with wrench icon for model specific configuration.](images/document-"
 "properties-symbolic.svg) button."
 msgstr ""
+"Uređivač svojstva također sadrži postavke modela: Klikni gumb !"
+"[Dokument s ikonom alata za konfiguraciju modela.]"
+"(images/document-properties-symbolic.svg)."
 
 #: ../getting_started.md:156
 msgid "Document with wrench icon for model specific configuration."
-msgstr ""
+msgstr "Dokument s ikonom alata za konfiguraciju modela."
 
 #: ../getting_started.md:159
 msgid "Reset Tool Automatically"
@@ -2457,6 +2483,9 @@ msgid ""
 "how it is shown in the diagram. The diagram language setting is saved as "
 "part of the model and defaults to English."
 msgstr ""
+"Modifikator jezika dijagrama primjenjiv je samo na učitani model i način na "
+"koji je prikazan u dijagramu. Postavka jezika dijagrama sprema se kao dio "
+"modela i standardno je postavljena na engleski jezik."
 
 #: ../getting_started.md:171
 msgid "The UI language of Gaphor is controlled by the operating system."
@@ -2887,10 +2916,14 @@ msgid ""
 "![A dialog showing options on how to deal with a merge conflict.](images"
 "/merge-dialog.png)"
 msgstr ""
+"![Dijalog koji prikazuje opcije za rješavanje konflikta sjedinjavanja "
+"(merge conflict).](images/merge-dialog.png)"
 
 #: ../merge_conflicts.md:15
 msgid "A dialog showing options on how to deal with a merge conflict."
 msgstr ""
+"Dijalog koji prikazuje opcije za rješavanje konflikta sjedinjavanja "
+"(merge conflict)."
 
 #: ../merge_conflicts.md:17
 msgid ""
@@ -2911,16 +2944,21 @@ msgid ""
 "The Merge Editor is shown on the right side, replacing the (normal) "
 "Property Editor."
 msgstr ""
+"Uređivač sjedinjavanja se prikazuje na desnoj strani i zamijenjuje (normalni)"
+" uređivač svojstva."
 
 #: ../merge_conflicts.md:26
 msgid ""
 "![The Gaphor main window, showing the merge editor on the right.](images"
 "/merge-conflict-window.png)"
 msgstr ""
+"![Glavni prozor Gaphora koji prikazuje uređivač sjedinjavanje na desnoj "
+"strani.](images/merge-conflict-window.png)"
 
 #: ../merge_conflicts.md:26
 msgid "The Gaphor main window, showing the merge editor on the right."
 msgstr ""
+"Glavni prozor Gaphora koji prikazuje uređivač sjedinjavanje na desnoj strani."
 
 #: ../merge_conflicts.md:28
 msgid ""
@@ -4262,15 +4300,15 @@ msgstr "Svojstva"
 
 #: ../models/sysml/Blocks.rst:32
 msgid "Property Paths"
-msgstr "Staze svojstava"
+msgstr "Staze svojstva"
 
 #: ../models/sysml/Blocks.rst:38
 msgid "Property-Specific Types"
-msgstr "Vrste svojstava"
+msgstr "Vrste specifičnih svojstva"
 
 #: ../models/sysml/Blocks.rst:44
 msgid "Property Strings"
-msgstr "Izrazi svojstava"
+msgstr "Izrazi svojstva"
 
 #: ../models/sysml/Blocks.rst:50
 msgid "Value Types"
@@ -5530,10 +5568,12 @@ msgid ""
 "![The Gaphor main window showing a stereotype usage example.](images"
 "/stereotype-usage.png)"
 msgstr ""
+"![Glavni prozor Gaphora koji prikazuje primjer korištenja stereotipa.]"
+"(images/stereotype-usage.png)"
 
 #: ../stereotypes.md:38
 msgid "The Gaphor main window showing a stereotype usage example."
-msgstr ""
+msgstr "Glavni prozor Gaphora koji prikazuje primjer korištenja stereotipa."
 
 #: ../stereotypes.md:40
 msgid "Creating a profile"
@@ -5962,7 +6002,7 @@ msgid ""
 "complex style declarations, like the `font` property in HTML/CSS which "
 "can contain font family, size, weight."
 msgstr ""
-"Gaphor podržava podskup CSS svojstava i neka Gaphor specifična svojstva. "
+"Gaphor podržava podskup CSS svojstva i neka Gaphor specifična svojstva. "
 "Tumač stilske tablice je relativno jednostavan. Sve širine, visine i "
 "veličine mjere se u pikselima. Ne možeš koristiti složene deklaracije "
 "stilova poput HTML/CSS svojstva `font`, koje može sadržavati obitelj "
