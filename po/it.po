@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2025-04-23 21:47+0200\n"
-"PO-Revision-Date: 2025-10-24 11:03+0000\n"
+"PO-Revision-Date: 2025-10-25 09:26+0000\n"
 "Last-Translator: Nekothegamer <nekotheggamer@gmail.com>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/gaphor/gaphor/it/"
 ">\n"
@@ -1875,55 +1875,51 @@ msgstr "Cliente bancario personale"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Internet Banking System"
-msgstr "System bancario su Internet"
+msgstr "Sistema bancario su Internet"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Mainframe Banking System"
-msgstr ""
+msgstr "Mainframe sistema bancario"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "View account balances, and make payments using"
-msgstr ""
+msgstr "Visualizza i bilanci dei conti, ed effettua pagamenti usando"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Get account information from, and makes payments using"
-msgstr ""
+msgstr "Prendi le informazioni dell'account da, ed effettua pagamenti usando"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "E-mail System"
-msgstr ""
+msgstr "Sistema di posta elettronica"
 
 #: gaphor/templates/c4model-example.gaphor
-#, fuzzy
 msgid "Sends e-mail to"
-msgstr "Invia segnale azione"
+msgstr "Invia email a"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Sends e-mail using"
-msgstr ""
+msgstr "Invia email usando"
 
 #: gaphor/templates/c4model-example.gaphor
-#, fuzzy
 msgid "Web Application"
-msgstr "Realizzazione"
+msgstr "Applicazione web"
 
 #: gaphor/templates/c4model-example.gaphor
-#, fuzzy
 msgid "API Application"
-msgstr "Realizzazione"
+msgstr "Applicazione API"
 
 #: gaphor/templates/c4model-example.gaphor
-#, fuzzy
 msgid "Single-Page Application"
-msgstr "Generalizzazione"
+msgstr "Applicazione a singola pagina"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Mobile App"
-msgstr ""
+msgstr "App per telefono"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Visit bigbank.com/lb using"
-msgstr ""
+msgstr "Visita bigbank.com/lb usando"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "View account balances and make payments using"
