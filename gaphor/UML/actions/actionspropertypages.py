@@ -12,6 +12,7 @@ from gaphor.diagram.propertypages import (
     unsubscribe_all_on_destroy,
 )
 from gaphor.transaction import Transaction
+from gaphor.UML import recipes
 from gaphor.UML.actions.activitynodes import DecisionNodeItem, ForkNodeItem
 from gaphor.UML.actions.objectnode import ObjectNodeItem
 
@@ -368,10 +369,14 @@ class PinPropertyPage(PropertyPageBase):
         dropdown.connect("notify::selected", self._on_type_changed)
 
         multiplicity_lower = builder.get_object("multiplicity-lower")
-        multiplicity_lower.set_text(subject.lowerValue or "")
+        multiplicity_lower.set_text(
+            recipes.get_multiplicity_lower_value_as_string(subject) or ""
+        )
 
         multiplicity_upper = builder.get_object("multiplicity-upper")
-        multiplicity_upper.set_text(subject.upperValue or "")
+        multiplicity_upper.set_text(
+            recipes.get_multiplicity_upper_value_as_string(subject) or ""
+        )
 
         return builder.get_object("pin-editor")
 
@@ -400,9 +405,9 @@ class PinPropertyPage(PropertyPageBase):
     def _on_multiplicity_lower_change(self, entry):
         value = entry.get_text().strip()
         with Transaction(self.event_manager, context="editing"):
-            self.subject.lowerValue = value
+            recipes.set_multiplicity_lower_value(self.subject, value)
 
     def _on_multiplicity_upper_change(self, entry):
         value = entry.get_text().strip()
         with Transaction(self.event_manager, context="editing"):
-            self.subject.upperValue = value
+            recipes.set_multiplicity_upper_value(self.subject, value)
