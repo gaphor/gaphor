@@ -866,14 +866,14 @@ test = ["objgraph", "psutil", "setuptools"]
 
 [[package]]
 name = "hypothesis"
-version = "6.142.2"
+version = "6.142.4"
 description = "A library for property-based testing"
 optional = false
 python-versions = ">=3.10"
 groups = ["dev"]
 files = [
-    {file = "hypothesis-6.142.2-py3-none-any.whl", hash = "sha256:cc6c6e66c06aff695dd255501a767b528e00d84ce3572160425a9ba5e4a47845"},
-    {file = "hypothesis-6.142.2.tar.gz", hash = "sha256:c4204a2ce327e45fbaf83a2b58142a285135698dc1d08e368ae9901f06b49e64"},
+    {file = "hypothesis-6.142.4-py3-none-any.whl", hash = "sha256:25eecc73fadecd8b491aed822204cfe4be9c98ff5c1e8e038d181136ffc54b5b"},
+    {file = "hypothesis-6.142.4.tar.gz", hash = "sha256:b3e71a84708994aa910ea47f1483ad892a7c390839959d689b2a2b07ebfd160e"},
 ]
 
 [package.dependencies]
@@ -3199,4 +3199,4 @@ type = ["pytest-mypy"]
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.12,<3.15"
-content-hash = "f637a5e647f5ff49364316772f42dc9e75b142116507de8b97b658ce072c35c0"
+content-hash = "41ac5090c130073a8c0a4f61812753c8a4f02df18564a4cb79f3ac18f6d1ef60"
