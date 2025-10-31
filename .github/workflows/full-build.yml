@@ -278,7 +278,7 @@ jobs:
   windows:
     name: 🪟 Windows
     needs: lint
-    runs-on: windows-2022
+    runs-on: windows-2025
     env:
       INCLUDE: C:\gtk\include;C:\gtk\include\cairo;C:\gtk\include\glib-2.0;C:\gtk\include\gobject-introspection-1.0;C:\gtk\lib\glib-2.0\include;
       LIB: C:\gtk\lib
@@ -340,7 +340,7 @@ jobs:
   check-windows-installer:
     name: 🕵️ Check Windows Installer
     needs: windows
-    runs-on: windows-latest
+    runs-on: windows-2025
     timeout-minutes: 15
     steps:
       - uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
@@ -365,7 +365,7 @@ jobs:
   scan-for-viruses:
     name: 🦠 Virus Check
     needs: windows
-    runs-on: windows-latest
+    runs-on: windows-2025
     continue-on-error: true
     timeout-minutes: 15
     permissions:
