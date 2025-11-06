@@ -5,7 +5,7 @@ from __future__ import annotations
 import ast
 import logging
 import re
-from typing import TYPE_CHECKING, Any, Generic, Self, TypeVar
+from typing import TYPE_CHECKING, Any, Self, TypeVar
 
 from gaphas.item import Matrices
 
@@ -25,7 +25,7 @@ def literal_eval(value: str) -> Any:  # type: ignore[explicit-any]
     return ast.literal_eval(re.sub("\r|\n", "", value))
 
 
-class Presentation(Matrices, Base, Generic[S]):
+class Presentation[S](Matrices, Base):
     """A special type of :obj:`Base` that can be displayed on a :obj:`Diagram`.
 
     Presentation instances can only be owned by diagrams.

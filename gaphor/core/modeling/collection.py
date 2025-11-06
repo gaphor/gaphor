@@ -4,14 +4,14 @@ from __future__ import annotations
 
 import contextlib
 from collections.abc import Iterator, Sequence
-from typing import Generic, TypeVar, overload
+from typing import TypeVar, overload
 
 from gaphor.core.modeling.event import AssociationUpdated
 
 T = TypeVar("T")
 
 
-class collection(Generic[T]):
+class collection[T]:
     """Collection (set-like) for model elements' 1:n and n:m relationships."""
 
     def __init__(self, property, object, type: type[T]):
@@ -135,7 +135,7 @@ class collection(Generic[T]):
 _recurseproxy_trigger = slice(None, None, None)
 
 
-class recurseproxy(Generic[T]):
+class recurseproxy[T]:
     """Proxy object (helper) for the recusemixin.
 
     The proxy has limited capabilities compared to a real list (or set):
