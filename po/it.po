@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2025-04-23 21:47+0200\n"
-"PO-Revision-Date: 2025-10-30 18:16+0000\n"
+"PO-Revision-Date: 2025-11-04 15:53+0000\n"
 "Last-Translator: Nekothegamer <nekotheggamer@gmail.com>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/gaphor/gaphor/it/"
 ">\n"
@@ -2648,7 +2648,7 @@ msgstr "Aiuta a migliorare Gaphor"
 
 #: gaphor/ui/elementeditor.ui:96
 msgid "Gaphor is free and open source software, written by devoted volunteers."
-msgstr "Gaphor e un software free e open source, scritto da volontari devoti."
+msgstr "Gaphor è un software free e open source, scritto da volontari devoti."
 
 #: gaphor/ui/elementeditor.ui:104
 msgid ""
