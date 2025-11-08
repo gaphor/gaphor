@@ -334,8 +334,7 @@ jobs:
         with:
           mainline_build: ${{ env.mainline_build }}
           version: ${{ steps.install.outputs.version }}
-          cert_password: ${{ secrets.CERTPASSWORD }}
-          base64_encoded_pfx: ${{ secrets.BASE64_ENCODED_PFX }}
+          signpath_api_token: ${{ secrets.SIGNPATH_API_TOKEN }}
 
   check-windows-installer:
     name: 🕵️ Check Windows Installer
