@@ -67,7 +67,9 @@ header = textwrap.dedent(
         relation_one,
     )
 
-    """.format("ruff")  # work around tooling triggers
+    """.format(
+        "ruff"
+    )  # work around tooling triggers
 )
 
 
@@ -113,8 +115,8 @@ def main(
     with (
         open(outfile, "w", encoding="utf-8")
         if outfile
-        else contextlib.nullcontext(sys.stdout) as out
-    ):
+        else contextlib.nullcontext(sys.stdout)
+    ) as out:
         for line in coder(model, super_models, overrides):
             print(line, file=out)
 
@@ -367,7 +369,9 @@ def default_value(a) -> str:
                     | UML.LiteralUnlimitedNatural
                     | UML.LiteralBoolean,
                 ):
-                    defaultValue = UML.recipes.get_literal_value_as_string(a.defaultValue)
+                    defaultValue = UML.recipes.get_literal_value_as_string(
+                        a.defaultValue
+                    )
                 else:
                     defaultValue = a.defaultValue.title()
 
@@ -379,13 +383,17 @@ def default_value(a) -> str:
                     | UML.LiteralUnlimitedNatural
                     | UML.LiteralBoolean,
                 ):
-                    defaultValue = UML.recipes.get_literal_value_as_string(a.defaultValue)
+                    defaultValue = UML.recipes.get_literal_value_as_string(
+                        a.defaultValue
+                    )
                 else:
                     defaultValue = f'"{a.defaultValue}"'
 
             case "bool":
                 if isinstance(a.defaultValue, UML.LiteralBoolean | UML.LiteralString):
-                    defaultValue = UML.recipes.get_literal_value_as_string(a.defaultValue)
+                    defaultValue = UML.recipes.get_literal_value_as_string(
+                        a.defaultValue
+                    )
                 else:
                     defaultValue = a.defaultValue
 
@@ -476,7 +484,9 @@ def is_enumeration(c: UML.Type) -> bool:
 def is_simple_type(c: UML.Type) -> bool:
     return any(
         s.name == "SimpleAttribute" for s in UML.recipes.get_applied_stereotypes(c)
-    ) or any(is_simple_type(g.general) for g in c.generalization)  # type: ignore[attr-defined]
+    ) or any(
+        is_simple_type(g.general) for g in c.generalization
+    )  # type: ignore[attr-defined]
 
 
 def is_tilde_type(c: UML.Type) -> bool:
@@ -569,9 +579,9 @@ def in_super_model(
         and ".".join(e.owningPackage.qualifiedName) not in super_models
     ):
         element_type = modeling_language.lookup_element(cls.name, ns=ns)
-        assert element_type, (
-            f"Type {ns}.{name} found in model, but not in generated model"
-        )
+        assert (
+            element_type
+        ), f"Type {ns}.{name} found in model, but not in generated model"
         return element_type, cls
 
     raise AssertionError(f"Type {ns}.{name} found in model, but not in generated model")
