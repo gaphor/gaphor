@@ -47,6 +47,7 @@ runs:
           _packaging/dist/gaphor-${{ inputs.version }}-installer.exe
           _packaging/dist/gaphor-${{ inputs.version }}-portable.exe
     - name: Sign Executables
+      if: inputs.mainline_build == 'true'
       uses: signpath/github-action-submit-signing-request@ced31329c0317e779dad2eec2a7c3bb46ea1343e # v1.3
       with:
         api-token: ${{ inputs.signpath_api_token }}
