@@ -386,8 +386,6 @@ jobs:
           files: |
             ${{ needs.windows.outputs.installer }}
 
-
-
   publish-to-pypi:
     name: 🧀 Publish to PyPI (release only)
     needs: [ linux-wheel, linux-flatpak-devel, check-macos-app, check-windows-installer ]
@@ -443,10 +441,16 @@ jobs:
         with:
           egress-policy: audit
 
+      - name: Create GitHub App Token
+        uses: actions/create-github-app-token@67018539274d69449ef7c02e8e71183d1719ab42 # v2.1.4
+        id: generate-token
+        with:
+          app-id: ${{ secrets.GAPHOR_UPDATER_APP_ID }}
+          private-key: ${{ secrets.GAPHOR_UPDATER_APP_PRIVATE_KEY }}
       - name: Repository Dispatch
         uses: peter-evans/repository-dispatch@5fc4efd1a4797ddb68ffd0714a238564e4cc0e6f # v4.0.0
         with:
-          token: ${{ secrets.WEBSITE_DISPATCH_TOKEN }} # Expires 2024-07-08
+          token: ${{ steps.generate-token.outputs.token }}
           repository: gaphor/gaphor.github.io
           event-type: version-update
           client-payload: '{ "version": "${{ needs.publish-to-pypi.outputs.version }}" }'
