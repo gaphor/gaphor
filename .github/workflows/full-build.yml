@@ -386,6 +386,8 @@ jobs:
           files: |
             ${{ needs.windows.outputs.installer }}
 
+
+
   publish-to-pypi:
     name: 🧀 Publish to PyPI (release only)
     needs: [ linux-wheel, linux-flatpak-devel, check-macos-app, check-windows-installer ]
@@ -411,6 +413,25 @@ jobs:
           path: dist
       - name: Publish package distributions to PyPI
         uses: pypa/gh-action-pypi-publish@ed0c53931b1dc9bd32cbe73a98c7f6766f8a527e # release/v1
+
+  submit-to-winget:
+    name: 📦 Submit to WinGet (release only)
+    needs: [ publish-to-pypi ]
+    runs-on: windows-latest
+    continue-on-error: true
+    timeout-minutes: 15
+    if: github.event_name == 'release'
+    steps:
+      - name: Download wingetcreate
+        run: |
+          Invoke-WebRequest -Uri "https://aka.ms/wingetcreate/latest" -OutFile "wingetcreate.exe"
+      - name: Submit package to WinGet
+        env:
+          WINGET_PAT: ${{ secrets.WINGET_PAT }}
+          VERSION: ${{ needs.publish-to-pypi.outputs.version }}
+        run: |
+          $installerUrl = "https://github.com/gaphor/gaphor/releases/download/$env:VERSION/gaphor-$env:VERSION-installer.exe"
+          .\wingetcreate.exe update Gaphor.Gaphor --version $env:VERSION --urls $installerUrl --submit --token $env:WINGET_PAT
 
   trigger-website-version-update:
     name: ⏩ gaphor.org version update
@@ -445,7 +466,7 @@ jobs:
       - name: Repository Dispatch
         uses: peter-evans/repository-dispatch@5fc4efd1a4797ddb68ffd0714a238564e4cc0e6f # v4.0.0
         with:
-          token: ${{ secrets.FLATHUB_DISPATCH_TOKEN }} # Expires 2024-07-08
+          token: ${{ secrets.FLATHUB_DISPATCH_TOKEN }} # Expires 2026-06-24
           repository: flathub/org.gaphor.Gaphor
           event-type: version-update
           client-payload: '{ "version": "${{ needs.publish-to-pypi.outputs.version }}" }'
