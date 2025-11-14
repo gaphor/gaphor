@@ -118,7 +118,7 @@ class ValueSpecificationActionPropertyPage(PropertyPageBase):
         builder = new_builder("value-specifiation-action-editor")
 
         gtObj = builder.get_object("value")
-        gtObj.set_text(self.subject.value.value or "")
+        gtObj.set_text(recipes.get_literal_value_as_string(self.subject) or "")
         gtObj.connect("changed", self._on_value_change)
 
         return builder.get_object("value-specifiation-action-editor")
