@@ -525,10 +525,15 @@ def set_multiplicity_lower_value(
     """Set lower value of a multiplicity."""
     if element.lowerValue:
         element.lowerValue.unlink()
-    if value is None:
+    if value is None or "":
         return
+    try:
+        value = int(value)
+    except ValueError:
+        return
+
     lower_value = element.model.create(LiteralInteger)
-    lower_value.value = int(value)
+    lower_value.value = value
     lower_value.name = str(value)
     element.lowerValue = lower_value
 
@@ -561,10 +566,15 @@ def set_multiplicity_upper_value(
     """Set upper value of a multiplicity."""
     if element.upperValue:
         element.upperValue.unlink()
-    if value is None:
+    if value is None or value == "":
+        return
+    try:
+        if value != "*":
+            value = int(value)
+    except ValueError:
         return
     upper_value = element.model.create(LiteralUnlimitedNatural)
-    upper_value.value = "*" if value == "*" else int(value)
+    upper_value.value = value
     upper_value.name = str(value)
     element.upperValue = upper_value
 

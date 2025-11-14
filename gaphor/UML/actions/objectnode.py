@@ -42,7 +42,7 @@ class ObjectNodeItem(Named, ElementPresentation):
                     Text(
                         text=lambda: self.subject.upperBound
                         not in (None, "", DEFAULT_UPPER_BOUND)
-                        and f"{{ {diagram.gettext('upperBound')} = {self.subject.upperBound} }}"
+                        and f"{{ {diagram.gettext('upperBound')} = {self.subject.upperBound.value} }}"
                         or ""
                     ),
                 ),

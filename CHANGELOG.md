@@ -8,9 +8,10 @@
 
 Internal changes:
 
-- Model elements can not only be queried from their authoritive model
+- Model elements can not only be queried from their authoritative model
 - Gaphor requires Python 3.12 or newer (was 3.11)
 - Use Python native enumerations (`enum` module) in data models
+- Improvements to setting modeling values to strings instead of literal strings
 
 Bug fixes:
 
