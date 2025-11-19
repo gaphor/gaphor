@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gaphor 2.18.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-12-30 14:25-0500\n"
-"PO-Revision-Date: 2025-11-18 19:51+0000\n"
+"PO-Revision-Date: 2025-11-20 16:51+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language-Team: Croatian <https://hosted.weblate.org/projects/gaphor/"
 "docs-gaphor-org/hr/>\n"
@@ -814,7 +814,7 @@ msgstr "Grijač za vodu"
 
 #: ../coffee_machine_logical.md:88
 msgid "Portafilter"
-msgstr "Portafilter"
+msgstr "Portafiltar"
 
 #: ../coffee_machine_logical.md:89
 msgid "Controller"
@@ -1828,12 +1828,13 @@ msgid ""
 msgstr ""
 "Za izradu novog dijagrama koristi „Preglednik modela”. Odaberi element koji "
 "bi trebao sadržavati novi dijagram. Za sada, odaberi _Novi model_. Pritisni "
-"izbornik „Novi dijagram” (![Simbol plusa u skočnom izborniku Novi dijagram.]("
-"images/list-add-symbolic.svg)) u traci zaglavlja."
+"u izborniku „Novi dijagram” (!"
+"[simbol plus u skočnom izborniku „Novi dijagram”.]"
+"(images/list-add-symbolic.svg)) u traci zaglavlja."
 
 #: ../first_model.md:55
 msgid "Plus symbol of the New Diagram popup menu."
-msgstr ""
+msgstr "Simbol plus u skočnom izborniku „Novi dijagram”."
 
 #: ../first_model.md:59
 msgid "![The New Diagram popup window.](images/first-model-new-diagram-popup.png)"
@@ -7008,7 +7009,7 @@ msgstr ""
 
 #: ../windows.md:13
 msgid "WinGet"
-msgstr ""
+msgstr "WinGet"
 
 #: ../windows.md:15
 msgid ""
