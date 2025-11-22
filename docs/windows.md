@@ -238,6 +238,8 @@ Then build your installer using:
 
 ```PowerShell
 poetry install --only main,packaging,automation
+poetry run pip install --force-reinstall (Resolve-Path C:\gtk\wheels\PyGObject*.whl)
+poetry run pip install --force-reinstall (Resolve-Path C:\gtk\wheels\pycairo*.whl)
 poetry build
 poetry run poe package
 poetry run poe win-installer

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gaphor 2.23.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-12-30 14:25-0500\n"
-"PO-Revision-Date: 2025-10-24 11:02+0000\n"
+"PO-Revision-Date: 2025-10-30 21:02+0000\n"
 "Last-Translator: Nekothegamer <nekotheggamer@gmail.com>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/gaphor/"
 "docs-gaphor-org/it/>\n"
@@ -2187,7 +2187,7 @@ msgstr ""
 
 #: ../getting_started.md:123
 msgid "Copy and Paste"
-msgstr ""
+msgstr "Copia e Incolla"
 
 #: ../getting_started.md:125
 msgid ""
@@ -2217,7 +2217,7 @@ msgstr ""
 
 #: ../getting_started.md:136
 msgid "Undo and Redo"
-msgstr ""
+msgstr "Annulla e Rifai"
 
 #: ../getting_started.md:138
 msgid ""
@@ -2262,7 +2262,7 @@ msgstr ""
 
 #: ../getting_started.md:159
 msgid "Reset Tool Automatically"
-msgstr ""
+msgstr "Reimposta strumento automaticamente"
 
 #: ../getting_started.md:161
 msgid ""
@@ -2274,7 +2274,7 @@ msgstr ""
 
 #: ../getting_started.md:163
 msgid "Remove Unused Elements"
-msgstr ""
+msgstr "Rimuovi elementi non utilizzati"
 
 #: ../getting_started.md:165
 msgid ""
@@ -2285,7 +2285,7 @@ msgstr ""
 
 #: ../getting_started.md:167
 msgid "Diagram Language"
-msgstr ""
+msgstr "Linguaggio diagramma"
 
 #: ../getting_started.md:169
 msgid ""
@@ -2312,7 +2312,7 @@ msgstr ""
 
 #: ../getting_started.md:178
 msgid "Style Sheet"
-msgstr ""
+msgstr "Foglio di stile"
 
 #: ../getting_started.md:180
 msgid ""
@@ -2346,7 +2346,7 @@ msgstr ""
 
 #: ../index.rst:2
 msgid "About Gaphor"
-msgstr ""
+msgstr "Informazioni su Gaphor"
 
 #: ../index.rst:6
 msgid "The documentation is up to date for Gaphor |version|"
@@ -5720,7 +5720,7 @@ msgstr ""
 
 #: ../style_sheets.md:140
 msgid "Colors"
-msgstr ""
+msgstr "Colori"
 
 #: ../style_sheets.md:144
 msgid "``background-color``"
@@ -6301,7 +6301,7 @@ msgstr "RAAML"
 
 #: ../style_sheets.md:332
 msgid "FTA"
-msgstr ""
+msgstr "FTA"
 
 #: ../style_sheets.md:332
 msgid "any AND/OR/… Gate"

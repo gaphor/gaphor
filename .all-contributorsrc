@@ -1706,6 +1706,24 @@
       "contributions": [
         "translation"
       ]
+    },
+    {
+      "login": "Nekothegamer",
+      "name": "Nekothegamer",
+      "avatar_url": "https://avatars.githubusercontent.com/u/112352776?v=4",
+      "profile": "https://github.com/Nekothegamer",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "FengZhe-ZYH",
+      "name": "FengZhe-ZYH",
+      "avatar_url": "https://avatars.githubusercontent.com/u/121104554?v=4",
+      "profile": "https://github.com/FengZhe-ZYH",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,
