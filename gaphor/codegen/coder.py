@@ -358,42 +358,48 @@ def operations(c: UML.Class, overrides: Overrides | None = None):
 
 def default_value(a) -> str:
     if a.defaultValue:
-        if a.typeValue == "int":
-            if isinstance(
-                a.defaultValue,
-                UML.LiteralString
-                | UML.LiteralInteger
-                | UML.LiteralUnlimitedNatural
-                | UML.LiteralBoolean,
-            ):
-                defaultValue = UML.recipes.get_literal_value_as_string(a.defaultValue)
-            else:
-                defaultValue = a.defaultValue.title()
-        elif a.typeValue == "str":
-            if isinstance(
-                a.defaultValue,
-                UML.LiteralString
-                | UML.LiteralInteger
-                | UML.LiteralUnlimitedNatural
-                | UML.LiteralBoolean,
-            ):
-                defaultValue = UML.recipes.get_literal_value_as_string(a.defaultValue)
-            else:
-                defaultValue = f'"{a.defaultValue}"'
-        elif a.typeValue == "bool":
-            if isinstance(a.defaultValue, UML.LiteralBoolean | UML.LiteralString):
-                defaultValue = UML.recipes.get_literal_value_as_string(a.defaultValue)
-            else:
-                defaultValue = a.defaultValue
-            if defaultValue == "true":
-                defaultValue = "True"
-            elif defaultValue == "false":
-                defaultValue = "False"
-        else:
-            raise ValueError(
-                f"Unknown default value type: {a.owner.name}.{a.name}: {a.typeValue} = {a.defaultValue}"
-            )
-
+        match a.typeValue:
+            case "int":
+                if isinstance(
+                    a.defaultValue,
+                    UML.LiteralString
+                    | UML.LiteralInteger
+                    | UML.LiteralUnlimitedNatural
+                    | UML.LiteralBoolean,
+                ):
+                    defaultValue = UML.recipes.get_literal_value_as_string(
+                        a.defaultValue
+                    )
+                else:
+                    defaultValue = a.defaultValue.title()
+            case "str":
+                if isinstance(
+                    a.defaultValue,
+                    UML.LiteralString
+                    | UML.LiteralInteger
+                    | UML.LiteralUnlimitedNatural
+                    | UML.LiteralBoolean,
+                ):
+                    defaultValue = UML.recipes.get_literal_value_as_string(
+                        a.defaultValue
+                    )
+                else:
+                    defaultValue = f'"{a.defaultValue}"'
+            case "bool":
+                if isinstance(a.defaultValue, UML.LiteralBoolean | UML.LiteralString):
+                    defaultValue = UML.recipes.get_literal_value_as_string(
+                        a.defaultValue
+                    )
+                else:
+                    defaultValue = a.defaultValue
+                if defaultValue == "true":
+                    defaultValue = "True"
+                elif defaultValue == "false":
+                    defaultValue = "False"
+            case _:
+                raise ValueError(
+                    f"Unknown default value type: {a.owner.name}.{a.name}: {a.typeValue} = {a.defaultValue}"
+                )
         return f", default={defaultValue}"
     return ""
 
