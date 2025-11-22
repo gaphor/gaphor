@@ -16,8 +16,25 @@ gi.require_version("Gdk", "4.0")
 gi.require_version("GtkSource", "5")
 gi.require_version("Adw", "1")
 
-from gi.events import GLibEventLoopPolicy
+import gi.events
+import gi.module
 from gi.repository import Adw, Gio, GLib, Gtk, GtkSource
+
+ADW_REQUIRED_VERSION = (1, 8)
+
+log = logging.getLogger(__name__)
+
+if (
+    isinstance(Adw, gi.module.IntrospectionModule)
+    and (Adw.MAJOR_VERSION, Adw.MINOR_VERSION) < ADW_REQUIRED_VERSION
+):
+    log.fatal(
+        "The libadwaita version should be at least %d.%d (found: %d.%d)",
+        *ADW_REQUIRED_VERSION,
+        Adw.MAJOR_VERSION,
+        Adw.MINOR_VERSION,
+    )
+    sys.exit(1)
 
 import gaphor.ui.diagramview  # noqa: F401
 import gaphor.ui.textfield  # noqa: F401
@@ -34,8 +51,6 @@ from gaphor.ui.actiongroup import (
 
 Adw.init()
 GtkSource.init()
-
-log = logging.getLogger(__name__)
 
 
 def run(argv: list[str], *, launch_service="greeter", recover=False) -> int:  # noqa: C901
@@ -135,7 +150,7 @@ def run(argv: list[str], *, launch_service="greeter", recover=False) -> int:  # 
     gtk_app.connect("activate", app_activate)
     gtk_app.connect("open", app_open)
 
-    with GLibEventLoopPolicy():
+    with gi.events.GLibEventLoopPolicy():
         gtk_app.run(argv)
 
     return int(gtk_app.exit_code)
