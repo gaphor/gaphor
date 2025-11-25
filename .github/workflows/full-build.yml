@@ -80,7 +80,7 @@ jobs:
     name:  🐧 Linux (Wheel) with Python ${{ matrix.python_version }}
     needs: lint
     runs-on: ubuntu-24.04
-    container: fedora:41
+    container: fedora:43
     timeout-minutes: 30
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     strategy:
@@ -125,7 +125,7 @@ jobs:
           XDG_RUNTIME_DIR: /tmp
         run: |
           eval $(dbus-launch --auto-syntax)
-          mutter --wayland --no-x11 --sm-disable --headless -- poetry run pytest --cov
+          mutter --wayland --no-x11 --headless -- poetry run pytest --cov
           poetry run coverage lcov
       - name: Upload Code Coverage to Qlty
         if: ${{ matrix.python_version == env.python_version }}
