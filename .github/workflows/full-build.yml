@@ -21,7 +21,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  python_version: '3.13'
+  python_version: '3.14'
   mainline_build: ${{ github.ref == 'refs/heads/main' || github.event.label.name == 'translation' || github.event_name == 'release' }}
 
 jobs:
@@ -282,7 +282,7 @@ jobs:
     env:
       INCLUDE: C:\gtk\include;C:\gtk\include\cairo;C:\gtk\include\glib-2.0;C:\gtk\include\gobject-introspection-1.0;C:\gtk\lib\glib-2.0\include;
       LIB: C:\gtk\lib
-      gvsbuild_version: 2025.9.0
+      gvsbuild_version: 2025.11.1
     permissions:
       contents: write
     timeout-minutes: 45
@@ -321,7 +321,6 @@ jobs:
         with:
           python-version: ${{ env.python_version }}
           cache: pip
-          check-latest: true  # Python 3.13.4 is broken on Windows
       - name: Install Dependencies
         id: install
         uses: ./.github/actions/install

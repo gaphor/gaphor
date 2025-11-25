@@ -6,7 +6,7 @@ on:
   pull_request:
     branches: [main]
 env:
-  python_version: '3.13'
+  python_version: '3.14'
 
 permissions:
   contents: read
