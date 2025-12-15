@@ -3,7 +3,6 @@ from __future__ import annotations
 from gi.repository import GLib
 
 from gaphor import UML
-from gaphor.diagram.group import group, ungroup
 
 
 def _par_pairs(parent_el: UML.Property, elem_el: UML.Property):
@@ -30,27 +29,17 @@ def _refresh(item):
     return False  # stop idle
 
 
-@group.register(UML.Property, UML.Property)
+# @group.register(UML.Property, UML.Property)  # Temporarily disabled due to issues with property nesting.
 def group_property_under_property(parent: UML.Property, element: UML.Property) -> bool:
     """
     Visual nesting of properties, but only on Parametric Diagrams.
     """
-    pairs = list(_par_pairs(parent, element))
-    if not pairs:
-        return False  # not a Parametric Diagram -> no nesting
-
-    # Reparenting is handled by the framework. After that, refresh new and old
-    # parents so spacers appear/disappear correctly.
-    for new_parent_item, child_item in pairs:
-        old_parent_item = getattr(child_item, "parent", None)
-        if isinstance(getattr(old_parent_item, "subject", None), UML.Property):
-            GLib.idle_add(_refresh, old_parent_item)
-        GLib.idle_add(_refresh, new_parent_item)
-
-    return True  # diagram-only reparenting
+    # TODO: property nesting currently removes properties from their original parents and we need to fix it.
+    # This functionality is temporarily disabled.
+    return False
 
 
-@group.register(UML.Diagram, UML.Property)
+# @group.register(UML.Diagram, UML.Property)  # Temporarily disabled due to issues with property nesting.
 def group_property_to_diagram_root(diagram: UML.Diagram, element: UML.Property) -> bool:
     """
     De-nesting by dropping a property to the diagram background (root).
@@ -69,7 +58,7 @@ def group_property_to_diagram_root(diagram: UML.Diagram, element: UML.Property) 
     return True
 
 
-@ungroup.register(UML.Property, UML.Property)
+# @ungroup.register(UML.Property, UML.Property)  # Temporarily disabled due to issues with property nesting.
 def ungroup_property_from_property(parent: UML.Property, element: UML.Property) -> bool:
     """
     If explicit ungroup is used, refresh parent(s) on Parametric Diagrams.

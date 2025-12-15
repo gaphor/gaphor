@@ -49,8 +49,9 @@ class PropertyItem(Named, ElementPresentation[UML.Property]):
         return count
 
     def _has_nested_properties(self) -> bool:
-        # Prefer cached counter; fall back to recount to catch de-nesting
-        return self._visual_children_count > 0 or self._recount_visual_children() > 0
+        # TODO: property nesting currently removes properties from their original parents and we need to fix it.
+        # This functionality is temporarily disabled.
+        return False
 
     def _spacer_compartment(self):
         # Spacer with visible height: draw SPACER_LINES empty text lines to
