@@ -55,7 +55,7 @@ jobs:
       - name: Check Github Actions workflows
         run: pipx run --pip-args='--constraint=.github/github-requirements.txt' zizmor --config .github/zizmor.yml .github/workflows/
       - name: Lint with Pre-commit
-        uses: pre-commit/action@2c7b3805fd2a0fd8c1884dcaebf91fc102a13ecd # v3.0.1
+        run: pipx run --pip-args='--constraint=.github/github-requirements.txt' pre-commit run --all-files
       - name: Check REUSE compliance
         run: pip install --constraint=.github/github-requirements.txt reuse && python -m reuse lint
       - name: Check translations

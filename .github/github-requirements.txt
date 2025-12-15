@@ -4,3 +4,4 @@ reuse==6.2.0
 Babel==2.17.0
 lastversion==3.5.12
 zizmor==1.18.0
+pre-commit==4.5.0
