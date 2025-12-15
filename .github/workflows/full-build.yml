@@ -349,16 +349,18 @@ jobs:
         timeout-minutes: 5
         env:
           INSTALLER: ${{ needs.windows.outputs.installer }}
-        run: start "" /WAIT "%INSTALLER%" /S
-        shell: cmd
+        run: |
+          Start-Process -FilePath $env:INSTALLER -ArgumentList '/S' -Wait
+
       - name: Perform self-test
         timeout-minutes: 5
-        run: start "" /WAIT "C:\Program Files\Gaphor\gaphor.exe" self-test
-        shell: cmd
+        run: |
+          Start-Process -FilePath 'C:\Program Files\Gaphor\gaphor.exe' -ArgumentList 'self-test' -Wait
+
       - name: Test output
         if: always()
-        run: type gaphor-self-test.txt
-        shell: cmd
+        run: |
+          Get-Content -Path 'gaphor-self-test.txt'
 
   scan-for-viruses:
     name: 🦠 Virus Check
