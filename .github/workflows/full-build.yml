@@ -55,7 +55,7 @@ jobs:
       - name: Check Github Actions workflows
         run: pipx run --pip-args='--constraint=.github/github-requirements.txt' zizmor --config .github/zizmor.yml .github/workflows/
       - name: Lint with Pre-commit
-        uses: pre-commit/action@2c7b3805fd2a0fd8c1884dcaebf91fc102a13ecd # v3.0.1
+        run: pipx run --pip-args='--constraint=.github/github-requirements.txt' pre-commit run --all-files
       - name: Check REUSE compliance
         run: pip install --constraint=.github/github-requirements.txt reuse && python -m reuse lint
       - name: Check translations
@@ -170,7 +170,7 @@ jobs:
         uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
         with:
           path: ~/.cache/pip
-          key: ${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}-22.04
+          key: ${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}-24.04
       - uses: flatpak/flatpak-github-actions/flatpak-builder@92ae9851ad316786193b1fd3f40c4b51eb5cb101 # master
         with:
           bundle: gaphor.flatpak
@@ -202,6 +202,11 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           persist-credentials: false
+      - name: Use Python Dependency Cache
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}-${{ matrix.target.runner }}
       - name: Install macOS Dependencies
         env:
           HOMEBREW_NO_INSTALL_CLEANUP: 1
@@ -320,7 +325,11 @@ jobs:
         uses: actions/setup-python@83679a892e2d95755f2dac6acb0bfd1e9ac5d548 # v6.1.0
         with:
           python-version: ${{ env.python_version }}
-          cache: pip
+      - name: Use Python Dependency Cache
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}
       - name: Install Dependencies
         id: install
         uses: ./.github/actions/install
@@ -349,16 +358,13 @@ jobs:
         timeout-minutes: 5
         env:
           INSTALLER: ${{ needs.windows.outputs.installer }}
-        run: start "" /WAIT "%INSTALLER%" /S
-        shell: cmd
+        run: Start-Process -FilePath $env:INSTALLER -ArgumentList '/S' -Wait
       - name: Perform self-test
         timeout-minutes: 5
-        run: start "" /WAIT "C:\Program Files\Gaphor\gaphor.exe" self-test
-        shell: cmd
+        run: Start-Process -FilePath 'C:\Program Files\Gaphor\gaphor.exe' -ArgumentList 'self-test' -Wait
       - name: Test output
         if: always()
-        run: type gaphor-self-test.txt
-        shell: cmd
+        run: Get-Content -Path 'gaphor-self-test.txt'
 
   scan-for-viruses:
     name: 🦠 Virus Check
