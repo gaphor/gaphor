@@ -2,6 +2,6 @@ poetry==2.2.1
 poetry-plugin-export==1.9.0
 reuse==6.2.0
 Babel==2.17.0
-lastversion==3.5.12
-zizmor==1.18.0
-pre-commit==4.5.0
+lastversion==3.6.3
+zizmor==1.19.0
+pre-commit==4.5.1
