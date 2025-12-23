@@ -741,7 +741,7 @@ version = "3.20.1"
 description = "A platform independent file lock."
 optional = false
 python-versions = ">=3.10"
-groups = ["dev", "lint"]
+groups = ["lint"]
 files = [
     {file = "filelock-3.20.1-py3-none-any.whl", hash = "sha256:15d9e9a67306188a44baa72f569d2bfd803076269365fdea0934385da4dc361a"},
     {file = "filelock-3.20.1.tar.gz", hash = "sha256:b8360948b351b80f420878d8516519a2204b07aefcdcfd24912a5d33127f188c"},
@@ -3215,4 +3215,4 @@ type = ["pytest-mypy"]
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.12,<3.15"
-content-hash = "8866b6aca40e489af0ba943a202342182da56fec425560876408f44ffd221a95"
+content-hash = "9f8bc67f5e373cabc724367f5f0e11141f0e9a00210e8ed95f547fba2f9bf749"
