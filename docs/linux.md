@@ -54,14 +54,15 @@ introspection and cairo build dependencies, for example, in Ubuntu
 execute:
 
 ```bash
-sudo apt-get install -y python3-dev python3-gi python3-gi-cairo
-gir1.2-gtk-4.0 libgirepository-2.0-dev libcairo2-dev libgtksourceview-5-dev
+sudo apt-get install -y python3-dev python3-gi python3-gi-cairo \
+gir1.2-gtk-4.0 libgirepository-2.0-dev libcairo2-dev libgtksourceview-5-dev \
+graphviz
 ```
 
 For Redhat/RPM/Fedora based systems:
 
 ```bash
-sudo dnf install python3-devel cairo-gobject-devel gobject-introspection-devel
+sudo dnf install python3-devel cairo-gobject-devel gobject-introspection-devel graphviz
 ```
 
 Install [Poetry](https://python-poetry.org) using [pipx](https://pypa.github.io/pipx/):
