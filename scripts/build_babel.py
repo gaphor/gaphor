@@ -46,6 +46,7 @@ def compile_mo_release():
         "hi",
         "hr",
         "hu",
+        "it",
         "nl",
         "pt_BR",
         "ru",
