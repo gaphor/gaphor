@@ -5,7 +5,7 @@
 
 import sys
 
-from gi.repository import Adw, Gtk
+from gi.repository import Adw, Gio, Gtk
 
 from gaphor.abc import ActionProvider, Service
 from gaphor.application import distribution
@@ -43,6 +43,10 @@ class HelpService(Service, ActionProvider):
         about.set_debug_info(self.debug_info.create_debug_info())
         about.present(self.window)
         return about
+
+    @action(name="app.documentation")
+    def documentation(self):
+        Gio.AppInfo.launch_default_for_uri("https://docs.gaphor.org", None)
 
     @action(name="app.shortcuts", shortcut="<Primary>question")
     def shortcuts(self):
