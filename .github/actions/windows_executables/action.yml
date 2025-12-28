@@ -44,8 +44,8 @@ runs:
       with:
         name: gaphor-unsigned-executables
         path: |
-          _packaging/dist/gaphor-${{ inputs.version }}-installer.exe
-          _packaging/dist/gaphor-${{ inputs.version }}-portable.exe
+          dist/gaphor-${{ inputs.version }}-installer.exe
+          dist/gaphor-${{ inputs.version }}-portable.exe
     - name: Sign Executables
       if: inputs.mainline_build == 'true'
       uses: signpath/github-action-submit-signing-request@ced31329c0317e779dad2eec2a7c3bb46ea1343e # v1.3
@@ -55,22 +55,22 @@ runs:
         project-slug: gaphor
         signing-policy-slug: ${{ github.event_name == 'release' && 'release-signing' || 'test-signing' }}
         wait-for-completion: true
-        output-artifact-directory: _packaging/dist/
+        output-artifact-directory: dist/
         github-artifact-id: '${{ steps.upload-unsigned-artifacts.outputs.artifact-id }}'
     - name: Upload gaphor-${{ inputs.version }}-installer.exe
       uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4.3.3
       with:
         name: gaphor-${{ inputs.version }}-installer.exe
-        path: _packaging/dist/gaphor-${{ inputs.version }}-installer.exe
+        path: dist/gaphor-${{ inputs.version }}-installer.exe
     - name: Upload gaphor-${{ inputs.version }}-portable.exe
       uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4.3.3
       with:
         name: gaphor-${{ inputs.version }}-portable.exe
-        path: _packaging/dist/gaphor-${{ inputs.version }}-portable.exe
+        path: dist/gaphor-${{ inputs.version }}-portable.exe
     - name: Upload Assets (release only)
       if: github.event_name == 'release'
       env:
         GH_TOKEN: ${{ github.token }}
         version: ${{ inputs.version }}
-      run: gh release upload ${env:version} (Resolve-Path _packaging\dist\*.exe)
+      run: gh release upload ${env:version} (Resolve-Path dist\*.exe)
       shell: pwsh

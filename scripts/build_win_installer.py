@@ -100,7 +100,7 @@ def build_portable_installer(
 
 
 def main():
-    working_dir: Path = Path("_packaging").resolve()
+    working_dir: Path = Path.cwd()
     dist: Path = working_dir / "dist"
     Path(dist / "gaphor").mkdir(parents=True, exist_ok=True)
 
@@ -109,15 +109,15 @@ def main():
 
     clean_files([portable, payload])
 
-    icon = working_dir / "windows" / "gaphor.ico"
-    nsi = working_dir / "windows" / "win_installer.nsi"
+    icon = working_dir / "_packaging" / "windows" / "gaphor.ico"
+    nsi = working_dir / "_packaging" / "windows" / "win_installer.nsi"
     gaphor_files: Path = dist / "gaphor"
     installer = dist / f"gaphor-{version}-installer.exe"
     build_installer(icon, nsi, gaphor_files, installer)
 
     portable.mkdir(parents=True)
-    symlink = working_dir / "windows" / "gaphor.lnk"
-    readme = working_dir / "windows" / "README-PORTABLE.txt"
+    symlink = working_dir / "_packaging" / "windows" / "gaphor.lnk"
+    readme = working_dir / "_packaging" / "windows" / "README-PORTABLE.txt"
     seven_zip: Path = Path("C:/Program Files/7-Zip/7z.exe")
     installer = dist / f"gaphor-{version}-portable.exe"
     build_portable_installer(
