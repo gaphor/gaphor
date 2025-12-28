@@ -3,7 +3,7 @@ symlinks = {"Applications": "/Applications"}
 hide_extensions = ["Gaphor.app"]
 
 window_rect = ((200, 120), (700, 400))
-background = "macos/background.png"
+background = "_packaging/macos/background.png"
 
 icon_size = 100
 icon_locations = {
