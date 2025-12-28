@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gaphor 2.18.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-12-30 14:25-0500\n"
-"PO-Revision-Date: 2025-10-25 16:02+0000\n"
+"PO-Revision-Date: 2025-11-20 16:51+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language-Team: Croatian <https://hosted.weblate.org/projects/gaphor/"
 "docs-gaphor-org/hr/>\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural="
 "(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? "
 "1 : 2);\n"
-"X-Generator: Weblate 5.14.1-dev\n"
+"X-Generator: Weblate 5.15-dev\n"
 "Generated-By: Babel 2.16.0\n"
 
 #: ../changelog.rst:2
@@ -300,7 +300,7 @@ msgstr "Sadržaj"
 
 #: ../coffee_machine_concept.md:5
 msgid "Coffee Machine: Concept Level"
-msgstr ""
+msgstr "Aparat za kavu: Konceptualna razina"
 
 #: ../coffee_machine_concept.md:9
 msgid ""
@@ -675,7 +675,7 @@ msgstr ""
 
 #: ../coffee_machine_logical.md:5
 msgid "Coffee Machine: Logical Level"
-msgstr ""
+msgstr "Aparat za kavu: Logička razina"
 
 #: ../coffee_machine_logical.md:9
 msgid ""
@@ -814,7 +814,7 @@ msgstr "Grijač za vodu"
 
 #: ../coffee_machine_logical.md:88
 msgid "Portafilter"
-msgstr "Portafilter"
+msgstr "Portafiltar"
 
 #: ../coffee_machine_logical.md:89
 msgid "Controller"
@@ -1714,7 +1714,7 @@ msgstr ""
 
 #: ../first_model.md:15
 msgid "Icon for Class."
-msgstr ""
+msgstr "Ikona za klasu."
 
 #: ../first_model.md:21
 msgid ""
@@ -1763,6 +1763,9 @@ msgid ""
 " and changing the name in the Property Editor, or by double-clicking the "
 "element."
 msgstr ""
+"Dodaj jednu drugu klasu. Promijeni imena u `Oblik` i `Krug`. Definirajmo da "
+"je `Krug` podvrsta `Oblika`. To možeš učiniti odabirom jednog elementa i "
+"mijenjanjem imena u uređivaču svojstava ili dvostrukim klikom na element."
 
 #: ../first_model.md:40
 msgid ""
@@ -1770,7 +1773,7 @@ msgid ""
 "relationships.](../gaphor/ui/icons/hicolor/scalable/actions/gaphor-"
 "generalization-symbolic.svg))."
 msgstr ""
-"Odberi generaliziranje (![Ikona za generaliziranje odnosa.](../gaphor/ui/"
+"Odaberi generaliziranje (![Ikona za generaliziranje odnosa.](../gaphor/ui/"
 "icons/hicolor/scalable/actions/gaphor-generalization-symbolic.svg))."
 
 #: ../first_model.md:40
@@ -1825,12 +1828,13 @@ msgid ""
 msgstr ""
 "Za izradu novog dijagrama koristi „Preglednik modela”. Odaberi element koji "
 "bi trebao sadržavati novi dijagram. Za sada, odaberi _Novi model_. Pritisni "
-"izbornik „Novi dijagram” (![Simbol plusa u skočnom izborniku Novi dijagram.]("
-"images/list-add-symbolic.svg)) u traci zaglavlja."
+"u izborniku „Novi dijagram” (!"
+"[simbol plus u skočnom izborniku „Novi dijagram”.]"
+"(images/list-add-symbolic.svg)) u traci zaglavlja."
 
 #: ../first_model.md:55
 msgid "Plus symbol of the New Diagram popup menu."
-msgstr ""
+msgstr "Simbol plus u skočnom izborniku „Novi dijagram”."
 
 #: ../first_model.md:59
 msgid "![The New Diagram popup window.](images/first-model-new-diagram-popup.png)"
@@ -2472,6 +2476,9 @@ msgid ""
 "be removed. If this option is turned off, elements remain in the model "
 "and may be found in the model browser."
 msgstr ""
+"Elementi koji nisu dio nijednog dijagrama u modelu će se standardno "
+"ukloniti. Ako je ova opcija isključena, elementi ostaju u modelu i mogu se "
+"pronaći u pregledniku modela."
 
 #: ../getting_started.md:167
 msgid "Diagram Language"
@@ -7002,7 +7009,7 @@ msgstr ""
 
 #: ../windows.md:13
 msgid "WinGet"
-msgstr ""
+msgstr "WinGet"
 
 #: ../windows.md:15
 msgid ""
