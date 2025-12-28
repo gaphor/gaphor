@@ -12,11 +12,14 @@ block_cipher = None
 
 COPYRIGHT = f"Copyright © 2001 The Gaphor Development Team."
 
+ROOT = Path("..")
+
 ui_files = [
-    (str(p), str(Path(*p.parts[1:-1]))) for p in Path("../gaphor").rglob("*.ui")
+    (str(p), str(Path(*p.parts[1:-1]))) for p in (ROOT / "gaphor").rglob("*.ui")
 ]
 mo_files = [
-    (str(p), str(Path(*p.parts[1:-1]))) for p in Path("../gaphor/locale").rglob("*.mo")
+    (str(p), str(Path(*p.parts[1:-1])))
+    for p in (ROOT / "gaphor" / "locale").rglob("*.mo")
 ]
 
 
@@ -35,30 +38,30 @@ def collect_entry_points(*names):
 
 
 a = Analysis(  # type: ignore
-    ["../gaphor/__main__.py"],
-    pathex=["../"],
+    [ROOT / "gaphor" / "__main__.py"],
+    pathex=[ROOT],
     binaries=[],
     datas=[
-        ("../gaphor/diagram.css", "gaphor"),
-        ("../gaphor/ui/styling*.css", "gaphor/ui"),
-        ("../gaphor/ui/placement-icon-base.png", "gaphor/ui"),
+        (ROOT / "gaphor/diagram.css", "gaphor"),
+        (ROOT / "gaphor/ui/styling*.css", "gaphor/ui"),
+        (ROOT / "gaphor/ui/placement-icon-base.png", "gaphor/ui"),
         (
-            "../gaphor/ui/icons/hicolor/scalable/actions/*.svg",
+            ROOT / "gaphor/ui/icons/hicolor/scalable/actions/*.svg",
             "gaphor/ui/icons/hicolor/scalable/actions",
         ),
         (
-            "../gaphor/ui/icons/hicolor/scalable/apps/*.svg",
+            ROOT / "gaphor/ui/icons/hicolor/scalable/apps/*.svg",
             "gaphor/ui/icons/hicolor/scalable/apps",
         ),
         (
-            "../gaphor/ui/icons/hicolor/scalable/emblems/*.svg",
+            ROOT / "gaphor/ui/icons/hicolor/scalable/emblems/*.svg",
             "gaphor/ui/icons/hicolor/scalable/emblems",
         ),
-        ("../gaphor/ui/language-specs/*.lang", "gaphor/ui/language-specs"),
-        ("../LICENSES/Apache-2.0.txt", "gaphor"),
-        ("../gaphor/templates/*.gaphor", "gaphor/templates"),
+        (ROOT / "gaphor/ui/language-specs/*.lang", "gaphor/ui/language-specs"),
+        (ROOT / "LICENSES/Apache-2.0.txt", "gaphor"),
+        (ROOT / "gaphor/templates/*.gaphor", "gaphor/templates"),
         (
-            "../gaphor/ui/installschemas/org.gaphor.Gaphor.gschema.xml",
+            ROOT / "gaphor/ui/installschemas/org.gaphor.Gaphor.gschema.xml",
             "share/glib-2.0/schemas",
         ),
     ]
@@ -83,8 +86,8 @@ a = Analysis(  # type: ignore
     },
     hookspath=["."],
     runtime_hooks=[
-        "fix_path.py",
-        "pydot_patch.py",
+        ROOT / "_packaging" / "fix_path.py",
+        ROOT / "_packaging" / "pydot_patch.py",
     ],
     excludes=["FixTk", "tcl", "tk", "_tkinter", "tkinter", "Tkinter"],
     win_no_prefer_redirects=False,
@@ -97,7 +100,7 @@ pyz = PYZ(a.pure, a.zipped_data, cipher=block_cipher)  # type: ignore
 
 ver = get_version()
 pyinstaller_versionfile.create_versionfile(
-    output_file="windows/file_version_info.txt",
+    output_file=ROOT / "build/windows_file_version_info.txt",
     version=f"{ver.major}.{ver.minor}.{ver.micro}.0",
     company_name="Gaphor",
     file_description="Gaphor",
@@ -117,11 +120,11 @@ exe = EXE(  # type: ignore
     bootloader_ignore_signals=False,
     strip=False,
     upx=True,
-    icon="windows/gaphor.ico",
-    version="windows/file_version_info.txt",
+    icon=ROOT / "_packaging/windows/gaphor.ico",
+    version=ROOT / "build/windows_file_version_info.txt",
     console=False,
     codesign_identity=os.getenv("CODESIGN_IDENTITY"),
-    entitlements_file="macos/entitlements.plist",
+    entitlements_file=ROOT / "_packaging/macos/entitlements.plist",
 )
 coll = COLLECT(  # type: ignore
     exe, a.binaries, a.zipfiles, a.datas, strip=False, upx=True, name="gaphor"
@@ -129,7 +132,7 @@ coll = COLLECT(  # type: ignore
 app = BUNDLE(  # type: ignore
     coll,
     name="Gaphor.app",
-    icon="macos/gaphor.icns",
+    icon=ROOT / "_packaging/macos/gaphor.icns",
     bundle_identifier="org.gaphor.gaphor",
     version=str(get_version()),
     info_plist={
