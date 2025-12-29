@@ -289,7 +289,7 @@
         <attribute name="action">app.shortcuts</attribute>
       </item>
       <item>
-        <attribute name="label" translatable="yes">Online Documentation</attribute>
+        <attribute name="label" translatable="yes">Help</attribute>
         <attribute name="action">app.documentation</attribute>
       </item>
       <item>

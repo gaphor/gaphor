@@ -44,7 +44,7 @@ class HelpService(Service, ActionProvider):
         about.present(self.window)
         return about
 
-    @action(name="app.documentation")
+    @action(name="app.documentation", shortcut="F1")
     def documentation(self):
         Gio.AppInfo.launch_default_for_uri("https://docs.gaphor.org", None)
 
