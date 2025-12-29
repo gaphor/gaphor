@@ -142,7 +142,7 @@ pygobject-stubs = "^2.16.0"
 pre-commit = ">=2.20,<5.0"
 
 [tool.poetry.group.automation.dependencies]
-poethepoet = ">=0.27.0,<0.39.0"
+poethepoet = ">=0.27.0,<0.40.0"
 
 [tool.poetry.group.docs]
 optional=true
