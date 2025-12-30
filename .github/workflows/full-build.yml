@@ -179,6 +179,19 @@ jobs:
           cache-key: flatpak-builder-${{ github.sha }}
           upload-artifact: false
 
+  linux-snapcraft-devel:
+    name: 📦 Linux (Devel Snapcraft)
+    needs: lint
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f # v2.10.2
+        with:
+          egress-policy: audit
+
+      - name: 🧪 Build snap on amd64
+        uses: snapcrafters/ci/test-snap-build@5d324dfd09955a81a018be6d7544d07770552644 # main
+
   macos:
     strategy:
       matrix:
@@ -392,7 +405,7 @@ jobs:
 
   publish-to-pypi:
     name: 🧀 Publish to PyPI (release only)
-    needs: [ linux-wheel, linux-flatpak-devel, check-macos-app, check-windows-installer ]
+    needs: [ linux-wheel, linux-flatpak-devel, linux-snapcraft-devel, check-macos-app, check-windows-installer ]
     runs-on: ubuntu-24.04
     permissions:
       id-token: write
@@ -478,3 +491,73 @@ jobs:
           repository: flathub/org.gaphor.Gaphor
           event-type: version-update
           client-payload: '{ "version": "${{ needs.publish-to-pypi.outputs.version }}" }'
+
+  get-architectures:
+    name: 🖥 Get snap architectures
+    runs-on: ubuntu-24.04
+    needs: [ publish-to-pypi ]
+    outputs:
+      architectures: ${{ steps.get-architectures.outputs.architectures }}
+      architectures-list: ${{ steps.get-architectures.outputs.architectures-list }}
+    steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f # v2.10.2
+        with:
+          egress-policy: audit
+
+      - name: 🖥 Get snap architectures
+        id: get-architectures
+        uses: snapcrafters/ci/get-architectures@5d324dfd09955a81a018be6d7544d07770552644 # main
+
+  release:
+    name: 🚢 Release to latest/edge
+    needs: [ get-architectures]
+    runs-on: ubuntu-24.04
+    strategy:
+      matrix:
+        architecture: ${{ fromJSON(needs.get-architectures.outputs.architectures-list) }}
+    steps:
+      - name: 🚢 Release to latest/edge
+        uses: snapcrafters/ci/release-to-candidate@5d324dfd09955a81a018be6d7544d07770552644 # main
+        with:
+          architecture: ${{ matrix.architecture }}
+          launchpad-token: ${{ secrets.LP_BUILD_SECRET }}
+          repo-token: ${{ secrets.SNAPCRAFTERS_BOT_COMMIT }}
+          store-token: ${{ secrets.SNAP_STORE }}
+
+  call-for-testing:
+    name: 📣 Create call for testing
+    needs: [release, get-architectures]
+    runs-on: ubuntu-24.04
+    outputs:
+      issue-number: ${{ steps.issue.outputs.issue-number }}
+    steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f # v2.10.2
+        with:
+          egress-policy: audit
+
+      - name: 📣 Create call for testing
+        id: issue
+        uses: snapcrafters/ci/call-for-testing@5d324dfd09955a81a018be6d7544d07770552644 # main
+        with:
+          architectures: ${{ needs.get-architectures.outputs.architectures }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+  screenshots:
+    name: 📸 Gather screenshots
+    needs: call-for-testing
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f # v2.10.2
+        with:
+          egress-policy: audit
+
+      - name: 📸 Gather screenshots
+        uses: snapcrafters/ci/get-screenshots@5d324dfd09955a81a018be6d7544d07770552644 # main
+        with:
+          issue-number: ${{ needs.call-for-testing.outputs.issue-number }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          screenshots-token: ${{ secrets.SNAPCRAFTERS_BOT_COMMIT }}
+          screenshots-repo: ${{ secrets.SCREENSHOTS_REPO }}

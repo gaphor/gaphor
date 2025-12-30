@@ -1,0 +1,66 @@
+name: gaphor
+summary: Gaphor is the simple modeling tool
+description: |
+  Gaphor is the simple modeling tool
+icon: snap/gui/gaphor.svg
+license: Apache-2.0
+
+base: core24
+grade: stable
+confinement: strict
+adopt-info: gaphor
+compression: lzo
+
+platforms:
+  amd64:
+  arm64:
+  armhf:
+
+apps:
+  gaphor:
+    extensions: [gnome]
+    command: bin/gaphor
+    environment:
+      TMPDIR: $XDG_RUNTIME_DIR
+      # Included temporarily until https://github.com/snapcore/snapcraft-desktop-integration/issues/28
+      # is resolved.
+      NOTIFY_IGNORE_PORTAL: 1
+    plugs:
+      - desktop
+      - desktop-legacy
+      - opengl
+      - x11
+      - wayland
+      - gsettings
+      - browser-support
+      - home
+      - network
+      - removable-media
+      - unity7
+
+parts:
+  gaphor:
+    plugin: python
+    source: .
+    source-type: git
+    build-packages:
+      - gcc
+      - git
+      - graphviz
+      - pkg-config
+      - upx
+      - mutter
+      - dbus-x11
+      - python3-poetry
+    override-pull: |
+      craftctl default
+      craftctl set version=$(poetry version -s)
+    override-build: |
+      poetry config virtualenvs.in-project true
+      poetry lock --no-update
+      poetry install --no-interaction
+      poetry run gaphor install-schemas
+      poetry run poe gettext-mo-release
+      poetry build
+      python3 -m pip install --target=$CRAFT_PART_INSTALL/usr dist/*.whl
+      craftctl default
