@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import importlib.resources
+import logging
 import sys
 from functools import cache
 from pathlib import Path
@@ -25,6 +26,8 @@ from gaphor.core.styling import (
 
 Size = tuple[Number, Number]
 
+log = logging.getLogger(__name__)
+
 
 @cache
 def load_adwaita_fonts() -> None:
@@ -32,6 +35,10 @@ def load_adwaita_fonts() -> None:
     font_map = PangoCairo.FontMap.get_default()
 
     if font_map.get_family("Adwaita Sans") and font_map.get_family("Adwaita Mono"):
+        return
+
+    if not hasattr(font_map, "add_font_file"):
+        log.warning("Could not add custom fonts: requires Pango 1.56 or newer.")
         return
 
     for font_file in importlib.resources.files("gaphor.fonts").iterdir():
