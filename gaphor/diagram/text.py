@@ -2,6 +2,11 @@
 
 from __future__ import annotations
 
+import importlib.resources
+import sys
+from functools import cache
+from pathlib import Path
+
 from cairo import Context as CairoContext
 from gaphas.canvas import instant_cairo_context
 from gaphas.painter.freehand import FreeHandCairoContext
@@ -21,6 +26,17 @@ from gaphor.core.styling import (
 Size = tuple[Number, Number]
 
 
+@cache
+def load_adwaita_fonts(font_map: Pango.FontMap) -> None:
+    """Register fonts with fontconfig/FreeType (Linux)."""
+    if font_map.get_family("Adwaita Sans") and font_map.get_family("Adwaita Mono"):
+        return
+
+    for font_file in importlib.resources.files("gaphor.fonts").iterdir():
+        if isinstance(font_file, Path) and font_file.suffix == ".ttf":
+            font_map.add_font_file(str(font_file))
+
+
 class Layout:
     def __init__(
         self,
@@ -31,6 +47,11 @@ class Layout:
         default_size: tuple[int, int] = (0, 0),
     ):
         self.layout = PangoCairo.create_layout(instant_cairo_context())
+
+        # macos fonts are loaded in gaphor.macosshim.
+        if sys.platform not in ("darwin", "win32"):
+            font_map = self.layout.get_context().get_font_map()
+            load_adwaita_fonts(font_map)
 
         self.font_id: (
             tuple[str, float | str, FontWeight | None, FontStyle | None] | None
