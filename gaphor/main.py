@@ -31,10 +31,11 @@ def run_profiler(args):
     import pstats
 
     with cProfile.Profile() as profile:
-        exit_code: int = profile.runcall(args.command, args)
+        exit_code: int = args.command(args)
 
-    profile_stats = pstats.Stats(profile)
-    profile_stats.strip_dirs().sort_stats("time").print_stats(50)
+        profile_stats = pstats.Stats(profile)
+        profile_stats.strip_dirs().sort_stats("time").print_stats(50)
+
     return exit_code
 
 
