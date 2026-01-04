@@ -1,4 +1,7 @@
+import sys
+
 import pytest
+from gi.repository import PangoCairo
 
 from gaphor.diagram.text import (
     FontStyle,
@@ -101,3 +104,18 @@ def test_text_with_just_font_as_dict():
     w, h = Layout("Example", {"font-family": "sans", "font-size": 10}).size()
     assert w
     assert h
+
+
+def test_load_adwaita_fonts():
+    layout = Layout("Example", {"font-family": "Adwaita Sans", "font-size": 10})
+
+    fd = layout.layout.get_font_description()
+
+    assert fd.get_family() == "Adwaita Sans"
+
+
+@pytest.mark.skipif(sys.platform == "win32", reason="Can't add custom fonts")
+def test_adwaita_font_family():
+    font_map = PangoCairo.FontMap.get_default()
+
+    assert font_map.get_family("Adwaita Sans")

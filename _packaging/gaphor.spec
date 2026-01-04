@@ -20,6 +20,9 @@ ui_files = [(p, p.relative_to(ROOT).parent) for p in (ROOT / "gaphor").rglob("*.
 mo_files = [
     (p, p.relative_to(ROOT).parent) for p in (ROOT / "gaphor" / "locale").rglob("*.mo")
 ]
+ttf_files = [
+    (p, p.relative_to(ROOT).parent) for p in (ROOT / "gaphor" / "fonts").rglob("*.ttf")
+]
 
 
 def get_version() -> Version:
@@ -54,6 +57,7 @@ a = Analysis(  # type: ignore
     + svg_files
     + ui_files
     + mo_files
+    + ttf_files
     + copy_metadata("gaphor"),
     hiddenimports=collect_entry_points(
         "gaphor.argparsers",
