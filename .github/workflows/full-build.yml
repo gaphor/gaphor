@@ -99,7 +99,8 @@ jobs:
         run: echo "$HOME/.local/bin" >> $GITHUB_PATH
       - name: Install Linux Dependencies
         run: >
-          dnf install -y gcc git pipx graphviz pkg-config python-launcher upx
+          dnf install -y --setopt=install_weak_deps=False
+          gcc git pipx graphviz pkg-config python-launcher upx
           mutter dbus-x11 gtksourceview5 libadwaita
           cairo-gobject-devel python${{ matrix.python_version }}-devel
       - name: Switch Primary Python to ${{ matrix.python_version }}
