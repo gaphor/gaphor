@@ -20,9 +20,8 @@
 import sys
 
 if sys.platform == "win32":
-    from gaphor.windowsshim import gi_init, register_fonts_windows
+    from gaphor.windowsshim import gi_init
 
-    register_fonts_windows()
     gi_init()
 
 elif sys.platform == "darwin":
