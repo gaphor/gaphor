@@ -1,3 +1,5 @@
+import sys
+
 import pytest
 from gi.repository import PangoCairo
 
@@ -112,6 +114,7 @@ def test_load_adwaita_fonts():
     assert fd.get_family() == "Adwaita Sans"
 
 
+@pytest.mark.skipif(sys.platform == "win32", reason="Can't add custom fonts")
 def test_adwaita_font_family():
     font_map = PangoCairo.FontMap.get_default()
 
