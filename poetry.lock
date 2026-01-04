@@ -2098,6 +2098,55 @@ files = [
 pyobjc-core = ">=10.3.2"
 
 [[package]]
+name = "pyobjc-framework-coretext"
+version = "10.3.2"
+description = "Wrappers for the framework CoreText on macOS"
+optional = false
+python-versions = ">=3.8"
+groups = ["main"]
+markers = "sys_platform == \"darwin\""
+files = [
+    {file = "pyobjc_framework_CoreText-10.3.2-cp310-cp310-macosx_10_9_universal2.whl", hash = "sha256:ead0b5b28031259d8874d641887fcbe106a8325773e142b054532859eb3d9ad3"},
+    {file = "pyobjc_framework_CoreText-10.3.2-cp311-cp311-macosx_10_9_universal2.whl", hash = "sha256:c3b3cdf462442294319472bdacb013ce57f63f99325fa885b4b4a54a25bce201"},
+    {file = "pyobjc_framework_CoreText-10.3.2-cp312-cp312-macosx_10_13_universal2.whl", hash = "sha256:6be644434ac69969cbf3cd4638ab0dfa5485da399d0e79e52b006658346d3881"},
+    {file = "pyobjc_framework_CoreText-10.3.2-cp313-cp313-macosx_10_13_universal2.whl", hash = "sha256:1721a16419dd75cedf87239fcb8e4739057d3b63d23378f4b38bda12acbe815b"},
+    {file = "pyobjc_framework_CoreText-10.3.2-cp313-cp313t-macosx_10_13_universal2.whl", hash = "sha256:685f3b3c2a65bf0f6709ea0e420ee1dac2610c939fe151a055feb8e7b477b845"},
+    {file = "pyobjc_framework_CoreText-10.3.2-cp38-cp38-macosx_10_9_x86_64.whl", hash = "sha256:d39bb096d27707f905f305b820fc29e3b5d55d704a6fd9520398e295d4a2cce6"},
+    {file = "pyobjc_framework_CoreText-10.3.2-cp38-cp38-macosx_11_0_universal2.whl", hash = "sha256:6834b003ffe652f0de92144a34b9ce2d4b000828df9c4d717be8bc955076b588"},
+    {file = "pyobjc_framework_CoreText-10.3.2-cp39-cp39-macosx_10_9_universal2.whl", hash = "sha256:e76bab8328a729939035962d0cbbd2a191b3c02fae85431ea77b4469aa0c491d"},
+    {file = "pyobjc_framework_coretext-10.3.2.tar.gz", hash = "sha256:b1184146c628ba59c21c59eaa8e12256118daf8823deb7fb12013ecdfbc7f578"},
+]
+
+[package.dependencies]
+pyobjc-core = ">=10.3.2"
+pyobjc-framework-Cocoa = ">=10.3.2"
+pyobjc-framework-Quartz = ">=10.3.2"
+
+[[package]]
+name = "pyobjc-framework-quartz"
+version = "10.3.2"
+description = "Wrappers for the Quartz frameworks on macOS"
+optional = false
+python-versions = ">=3.8"
+groups = ["main"]
+markers = "sys_platform == \"darwin\""
+files = [
+    {file = "pyobjc_framework_Quartz-10.3.2-cp310-cp310-macosx_10_9_universal2.whl", hash = "sha256:5574754c23895269751c2b78d2d2b33b6de415f562534a1432484558f0a5a293"},
+    {file = "pyobjc_framework_Quartz-10.3.2-cp311-cp311-macosx_10_9_universal2.whl", hash = "sha256:4697f3ef1991f7877c201778005dc4098ced3d19d938ebf916384c8f795488d3"},
+    {file = "pyobjc_framework_Quartz-10.3.2-cp312-cp312-macosx_10_13_universal2.whl", hash = "sha256:604188ee8ff051ffe74a12cb3274403fe9c3fa02b15fc4132685c0f74285ffe5"},
+    {file = "pyobjc_framework_Quartz-10.3.2-cp313-cp313-macosx_10_13_universal2.whl", hash = "sha256:9e27fb446e012c9571bc163cff5f3036e9e6fa5caca06b5d7882ad1c6b6aaf0c"},
+    {file = "pyobjc_framework_Quartz-10.3.2-cp313-cp313t-macosx_10_13_universal2.whl", hash = "sha256:d5bd6ef96a3d08c97cf2aca43a819113cdff494b5abebcedd7cf23b6d6e711f4"},
+    {file = "pyobjc_framework_Quartz-10.3.2-cp38-cp38-macosx_10_9_x86_64.whl", hash = "sha256:d3b55ec27cffff18d98d73694001a211ad4cdf717f7d8ad76235f845771d8b5d"},
+    {file = "pyobjc_framework_Quartz-10.3.2-cp38-cp38-macosx_11_0_universal2.whl", hash = "sha256:a58826db7e71de4654e5215b46f00f7825b17991078c9ba74ca729a4da024f82"},
+    {file = "pyobjc_framework_Quartz-10.3.2-cp39-cp39-macosx_10_9_universal2.whl", hash = "sha256:6ede1001c28d27fc76f89a3243b3127dbd7dd03f39a3324766ae895cdcd1ebf1"},
+    {file = "pyobjc_framework_quartz-10.3.2.tar.gz", hash = "sha256:193e7752c93e2d1304f914e3a8c069f4b66de237376c5285ba7c72e9ee0e3b15"},
+]
+
+[package.dependencies]
+pyobjc-core = ">=10.3.2"
+pyobjc-framework-Cocoa = ">=10.3.2"
+
+[[package]]
 name = "pyparsing"
 version = "3.3.1"
 description = "pyparsing - Classes and methods to define and execute parsing grammars"
@@ -3197,4 +3246,4 @@ type = ["pytest-mypy"]
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.12,<3.15"
-content-hash = "a61a5d1d686fa4f6fe166e210c5b363a0cf1bd755f311f100f67114d779cdb57"
+content-hash = "39158b3e4a9f7d6c4362efd36553d8604b1351fb2bc61da3483ab3c207cd77c7"
