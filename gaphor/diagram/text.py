@@ -28,7 +28,7 @@ Size = tuple[Number, Number]
 
 @cache
 def load_adwaita_fonts(font_map: Pango.FontMap) -> None:
-    """Register fonts with fontconfig/FreeType (Linux/Windows)."""
+    """Register fonts with fontconfig/FreeType (Linux)."""
     if font_map.get_family("Adwaita Sans") and font_map.get_family("Adwaita Mono"):
         return
 
@@ -49,7 +49,7 @@ class Layout:
         self.layout = PangoCairo.create_layout(instant_cairo_context())
 
         # macos fonts are loaded in gaphor.macosshim.
-        if sys.platform != "darwin":
+        if sys.platform not in ("darwin", "win32"):
             font_map = self.layout.get_context().get_font_map()
             load_adwaita_fonts(font_map)
 
