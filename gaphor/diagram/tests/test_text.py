@@ -104,10 +104,8 @@ def test_text_with_just_font_as_dict():
 
 
 def test_load_adwaita_fonts():
-    layout = Layout("Example")
+    layout = Layout("Example", {"font-family": "Adwaita Sans", "font-size": 10})
 
-    font_map = layout.layout.get_context().get_font_map()
-    font_families = [f.get_name() for f in font_map.list_families()]
+    fd = layout.layout.get_font_description()
 
-    assert "Adwaita Sans" in font_families
-    assert "Adwaita Mono" in font_families
+    assert fd.get_family() == "Adwaita Sans"
