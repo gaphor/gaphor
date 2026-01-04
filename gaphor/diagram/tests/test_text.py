@@ -1,4 +1,5 @@
 import pytest
+from gi.repository import PangoCairo
 
 from gaphor.diagram.text import (
     FontStyle,
@@ -109,3 +110,9 @@ def test_load_adwaita_fonts():
     fd = layout.layout.get_font_description()
 
     assert fd.get_family() == "Adwaita Sans"
+
+
+def test_adwaita_font_family():
+    font_map = PangoCairo.FontMap.get_default()
+
+    assert font_map.get_family("Adwaita Sans")
