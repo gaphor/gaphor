@@ -24,6 +24,11 @@ if sys.platform == "win32":
 
     gi_init()
 
+elif sys.platform == "darwin":
+    from gaphor.macosshim import register_fonts_coretext
+
+    register_fonts_coretext()
+
 
 def __getattr__(name: str):
     if name == "__version__":
