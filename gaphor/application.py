@@ -22,8 +22,6 @@ from gaphor.event import (
     ActiveSessionChanged,
     ApplicationShutdown,
     ModelSaved,
-    ServiceInitializedEvent,
-    ServiceShutdownEvent,
     SessionCreated,
     SessionShutdown,
     SessionShutdownRequested,
@@ -202,7 +200,6 @@ class Session(Service):
         for name, srv in services_by_name.items():
             logger.debug("Initializing service %s", name)
             self.component_registry.register(name, srv)
-            self.event_manager.handle(ServiceInitializedEvent(name, srv))
 
         self.event_manager.subscribe(self.on_filename_changed)
 
@@ -226,8 +223,6 @@ class Session(Service):
 
     def shutdown_service(self, name, srv):
         logger.debug("Shutting down service %s", name)
-
-        self.event_manager.handle(ServiceShutdownEvent(name, srv))
         self.component_registry.unregister(srv)
         srv.shutdown()
 
