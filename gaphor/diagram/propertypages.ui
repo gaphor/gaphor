@@ -60,6 +60,8 @@
     <child>
       <object class="GtkEntry" id="name-entry">
         <property name="focusable">1</property>
+        <property name="text" bind-source="subject" bind-property="name"
+                  bind-flags="bidirectional|sync-create"/>
       </object>
     </child>
     <style>
