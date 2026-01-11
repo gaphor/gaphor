@@ -11,13 +11,15 @@ from gaphor.UML.recipes import stereotypes_str
 def name_compartment(
     presentation: Presentation,
     additional_stereotypes: Callable[[], list[str]] | None = None,
+    *,
+    default_stereotype: str | None = None,
     draw_icon: Callable[[Box, DrawContext, Rectangle], None] | None = None,
 ):
     return CssNode(
         "compartment",
         None,
         Box(
-            text_stereotypes(presentation, additional_stereotypes),
+            text_stereotypes(presentation, additional_stereotypes, default_stereotype),
             text_name(presentation),
             text_from_package(presentation),
             draw=draw_icon,
@@ -26,7 +28,9 @@ def name_compartment(
 
 
 def text_stereotypes(
-    item: Presentation, additional_stereotypes: Callable[[], list[str]] | None = None
+    item: Presentation,
+    additional_stereotypes: Callable[[], list[str]] | None = None,
+    default_stereotype: str | None = None,
 ) -> Shape:
     return CssNode(
         "stereotypes",
@@ -34,7 +38,8 @@ def text_stereotypes(
         Text(
             text=lambda: stereotypes_str(
                 item.subject, additional_stereotypes() if additional_stereotypes else ()
-            ),
+            )
+            or (f"«{default_stereotype}»" if default_stereotype else ""),
         ),
     )
 
