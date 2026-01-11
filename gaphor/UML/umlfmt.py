@@ -6,6 +6,7 @@ from gaphor.core.format import format
 from gaphor.i18n import gettext
 from gaphor.UML import recipes
 from gaphor.UML import uml as UML
+from gaphor.UML.recipes import stereotypes_str
 
 
 @format.register(UML.NamedElement)
@@ -127,6 +128,7 @@ def format_operation(
     default=False,
     tags=False,
     direction=False,
+    stereotype=False,
     note=False,
 ):
     """Create an OCL representation of the operation, Returns the operation as
@@ -144,6 +146,10 @@ def format_operation(
     s = []
     if visibility:
         s.append(f"{vis_map[el.visibility]} ")
+
+    if stereotype:
+        if t := stereotypes_str(el):
+            s.append(f"{t} ")
 
     s.extend(
         (

@@ -104,6 +104,7 @@ def operation_watches(presentation, cast):
     ).watch(f"subject[{cast}].ownedOperation.ownedParameter.typeValue").watch(
         f"subject[{cast}].ownedOperation.ownedParameter.defaultValue"
     )
+    stereotype_watches(presentation, base=f"subject[{cast}].ownedOperation")
 
 
 def attributes_compartment(subject):
@@ -134,7 +135,12 @@ def attributes_compartment(subject):
 def operations_compartment(subject):
     def lazy_format(operation):
         return lambda: format(
-            operation, visibility=True, type=True, multiplicity=True, default=True
+            operation,
+            visibility=True,
+            type=True,
+            multiplicity=True,
+            default=True,
+            stereotype=True,
         )
 
     return CssNode(
