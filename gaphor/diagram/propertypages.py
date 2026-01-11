@@ -7,6 +7,7 @@ gaphor.adapter package.
 from __future__ import annotations
 
 import abc
+import html
 import textwrap
 from collections.abc import Iterator
 
@@ -313,11 +314,13 @@ class InternalsPropertyPage(PropertyPageBase):
         internals = builder.get_object("internals")
 
         if isinstance(subject, Presentation):
-            presentation_text = textwrap.dedent(
-                f"""\
+            presentation_text = html.escape(
+                textwrap.dedent(
+                    f"""\
                 {gettext("Presentation")}:
                   {gettext("class")}: {presentation_class(subject)}
                   {gettext("id")}: {subject.id}"""
+                )
             )
             element = subject.subject
         else:
@@ -325,12 +328,14 @@ class InternalsPropertyPage(PropertyPageBase):
             element = subject
 
         element_text = (
-            textwrap.dedent(
-                f"""\
+            html.escape(
+                textwrap.dedent(
+                    f"""\
                 {gettext("Model Element")}:
                   {gettext("qname")}: {".".join(map(str, getattr(element, "qualifiedName", ["-"])))}
                   {gettext("class")}: {model_element_class(element)}
                   {gettext("id")}: {element.id}"""
+                )
             )
             if element
             else ""
