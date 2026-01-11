@@ -34,7 +34,7 @@ room](https://app.element.io/#/room/#gaphor_Lobby:gitter.im).
  [PR Review Checklist](https://gist.github.com/audreyr/4feef90445b9680475f2).
  * Create issues for any major changes and enhancements that you wish to make.
  * Discuss things transparently and get community feedback.
- * Don't add any classes to the codebase unless absolutely needed. Error on the
+ * Don't add any classes to the codebase unless absolutely needed. Err on the
    side of using functions.
  * Keep feature versions as small as possible, preferably one new feature per
  version.
