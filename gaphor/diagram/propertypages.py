@@ -166,6 +166,27 @@ class TypeLabelPropertyPage(PropertyPageBase):
         return builder.get_object("type-label-editor")
 
 
+class NamePropertyBinding(GObject.Object):
+    def __init__(self, subject, event_manager):
+        super().__init__()
+        self.subject = subject
+        self.event_manager = event_manager
+        self.watcher = subject.watcher()
+        self.watcher.watch("name", lambda *_: self.notify("name"))
+
+    def do_dispose(self):
+        self.watcher.unsubscribe_all()
+
+    @GObject.Property(type=str)
+    def name(self) -> str:
+        return self.subject.name
+
+    @name.setter  # type: ignore[no-redef]
+    def name(self, name: str):
+        with Transaction(self.event_manager, context="editing"):
+            self.subject.name = name
+
+
 @PropertyPages.register(Diagram)
 class NamePropertyPage(PropertyPageBase):
     """An adapter which works for any named item view.
@@ -179,36 +200,17 @@ class NamePropertyPage(PropertyPageBase):
         super().__init__()
         self.subject = subject
         self.event_manager = event_manager
-        self.watcher = subject.watcher() if subject else None
 
     def construct(self):
         if not self.subject:
             return
 
-        assert self.watcher
         builder = new_builder(
             "name-editor",
+            binding=NamePropertyBinding(self.subject, self.event_manager),
         )
 
-        subject = self.subject
-
-        entry = builder.get_object("name-entry")
-        entry.set_text(subject and subject.name or "")
-
-        @handler_blocking(entry, "changed", self._on_name_changed)
-        def handler(event):
-            if event.element is subject and (event.new_value or "") != entry.get_text():
-                entry.set_text(event.new_value or "")
-
-        self.watcher.watch("name", handler)
-
-        return unsubscribe_all_on_destroy(
-            builder.get_object("name-editor"), self.watcher
-        )
-
-    def _on_name_changed(self, entry):
-        with Transaction(self.event_manager, context="editing"):
-            self.subject.name = entry.get_text()
+        return builder.get_object("name-editor")
 
 
 @PropertyPages.register(gaphas.item.Line)
