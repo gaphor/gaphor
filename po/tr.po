@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2025-11-12 21:36-0500\n"
 "PO-Revision-Date: 2026-01-14 21:34+0000\n"
-"Last-Translator: Deleted User <noreply+13144@weblate.org>\n"
+"Last-Translator: Anonymous <noreply@weblate.org>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/gaphor/gaphor/"
 "tr/>\n"
 "Language: tr\n"
@@ -1861,8 +1861,8 @@ msgstr ""
 #, fuzzy
 msgid "This model contains unsaved changes. The changes have been restored."
 msgstr ""
-"Açık model kaydedilmemiş değişiklikler içeriyor. Kaydedilmeyen "
-"değişiklikler kalıcı olarak yitirilecek."
+"Açık model kaydedilmemiş değişiklikler içeriyor. Kaydedilmeyen değişiklikler "
+"kalıcı olarak yitirilecek."
 
 #: gaphor/templates/blank.gaphor gaphor/ui/mainwindow.py:268
 #: gaphor/ui/mainwindow.py:273 gaphor/ui/mainwindow.ui:129
@@ -2730,8 +2730,7 @@ msgid ""
 "🔗 <a href=\"https://docs.gaphor.org/en/latest/style_sheets.html\">Style "
 "sheets in Gaphor</a>"
 msgstr ""
-"🔗 <a "
-"href=\"https://docs.gaphor.org/en/latest/style_sheets.html\">Gaphorʼda "
+"🔗 <a href=\"https://docs.gaphor.org/en/latest/style_sheets.html\">Gaphorʼda "
 "biçem sayfaları</a>"
 
 #: gaphor/ui/elementeditor.ui:286
