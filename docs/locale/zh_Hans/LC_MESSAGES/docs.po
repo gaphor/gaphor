@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gaphor 3.0.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-12-30 14:25-0500\n"
-"PO-Revision-Date: 2025-07-06 03:49+0000\n"
+"PO-Revision-Date: 2026-01-14 21:45+0000\n"
 "Last-Translator: Fabien Liang <zeyue.liang@gmail.com>\n"
 "Language-Team: Chinese (Simplified Han script) <https://hosted.weblate.org/"
 "projects/gaphor/docs-gaphor-org/zh_Hans/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.13-dev\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #: ../changelog.rst:2
 msgid "Change Log"
@@ -26,7 +26,8 @@ msgstr "变更履历"
 #: ../changelog.rst:4
 msgid "Our change log is with the project's source code on `GitHub <https://github.com/gaphor/gaphor/blob/main/CHANGELOG.md>`_."
 msgstr ""
-"变更履历随项目源代码管理在`GitHub<https://github.com/gaphor/gaphor/blob/main/CHANGELOG.md>`_ 。"
+"变更履历随项目源代码管理在`GitHub<https://github.com/gaphor/gaphor/blob/main/"
+"CHANGELOG.md>`_ 。"
 
 #: ../changelog.rst:8
 msgid "The latest version may not have been released yet."
@@ -41,8 +42,8 @@ msgstr "教程：咖啡机"
 msgid "In this tutorial we refer to the different parts of the gaphor interface: {ref}`Model Browser <getting_started:model browser>`, [Toolbox](getting_started:toolbox), {ref}`Property Editor <getting_started:property editor>`."
 msgstr ""
 "在本教程中，我们参考了Gaphor的不同部分界面：{ref}`Model Browser "
-"<getting_started:model browser>`, [Toolbox](getting_started:toolbox), {ref}`"
-"Property Editor <getting_started:property editor>`。"
+"<getting_started:model browser>`, [Toolbox](getting_started:toolbox), {ref}"
+"`Property Editor <getting_started:property editor>`。"
 
 #: ../coffee_machine.md:8
 msgid "Although the names should speak for themselves, you can check out the [Getting Started](getting_started) page for more information about those sections."
@@ -59,40 +60,39 @@ msgstr "介绍"
 #: ../coffee_machine.md:14
 msgid "In the bustling town of Antville, a colony of ants had formed a Systems Engineering consulting company called AntSource. They value collaboration, transparency, and community-driven engineering, and seeks to empower their employees and customers through open communication and participation in the systems engineering process."
 msgstr ""
-"在繁忙的蚂蚁镇（Antville），一群蚂蚁成立了一家名为\"蚁源（AntSource）"
-"\"的系统工程咨询公司"
-"。他们崇尚协作精神、透明化和社区驱动的工程理念，致力于通过开放式沟通及全员参"
-"与系统工程流程，赋能员工与客户。"
+"在繁忙的蚂蚁镇（Antville），一群蚂蚁成立了一家名为\"蚁源（AntSource）\"的系统"
+"工程咨询公司。他们崇尚协作精神、透明化和社区驱动的工程理念，致力于通过开放式"
+"沟通及全员参与系统工程流程，赋能员工与客户。"
 
 #: ../coffee_machine.md:20
 msgid "The engineers at AntSource all have nicknames that reflect the key principles and concepts of their craft: Qual-ant, Reli-ant, Safe-ant, Usa-ant, and Sust-ant. They were experts in designing and optimizing complex systems, and they took pride in their work."
 msgstr ""
-"AntSource的工程师们个个都有体现其专业核心准则与理念的绰号：质检蚁（Qual-"
-"ant）、可靠蚁（Reli-ant）、安全蚁（Safe-ant）、易用蚁（Usa-ant）和环保蚁"
-"（Sust-ant）。这些专家精于复杂系统的设计与优化，并以此为傲。"
+"AntSource的工程师们个个都有体现其专业核心准则与理念的绰号：质检蚁（Qual-ant）"
+"、可靠蚁（Reli-ant）、安全蚁（Safe-ant）、易用蚁（Usa-ant）和环保蚁（Sust-ant"
+"）。这些专家精于复杂系统的设计与优化，并以此为傲。"
 
 #: ../coffee_machine.md:25
 msgid "One day, a new client approached AntSource with an unusual request. Cappuccino, a cat who owned a popular coffee shop called Milk & Whiskers Café, needed a custom espresso machine designed specifically for felines. Cats just love their coffee strong, with a creamy and smooth body and topped with the perfect foamy layer of crema. The ants were intrigued by the challenge and immediately set to work."
 msgstr ""
 "有一天，一位新客户带着特殊需求找到蚁源（AntSource）公司。卡布奇诺（Cappuccino"
-"）是一只经营着网红咖啡馆\"牛奶与胡须（Milk & Whiskers Café）\"的猫咪"
-"，它需要一台专为猫科动物设计的特制意式咖啡机。毕竟猫咪们最爱的就是浓郁醇厚、"
-"丝滑绵密，还要顶着完美泡沫层（crema）的咖啡。这个新奇挑战让蚂蚁工程师们跃跃欲"
-"试，立刻投入了研发工作。"
+"）是一只经营着网红咖啡馆\"牛奶与胡须（Milk & Whiskers Café）\"的猫咪，它需要"
+"一台专为猫科动物设计的特制意式咖啡机。毕竟猫咪们最爱的就是浓郁醇厚、丝滑绵密"
+"，还要顶着完美泡沫层（crema）的咖啡。这个新奇挑战让蚂蚁工程师们跃跃欲试，立刻"
+"投入了研发工作。"
 
 #: ../coffee_machine.md:32
 msgid "Qual-ant was responsible for ensuring that the machine met all quality standards and specifications, while Reli-ant was tasked with making sure that the machine was dependable and would work correctly every time it was used. Safe-ant designed the machine with safety in mind, ensuring that it wouldn't cause harm to anyone who used it. Usa-ant designed the machine to be easy and intuitive to use, while Sust-ant ensured that the machine was environmentally friendly and sustainable. In this tutorial we follow the adventures of AntSource to create the perfect kittie espresso machine."
 msgstr ""
-"Qual-ant（质检蚁）负责确保机器符合所有质量标准和规格要求，Reli-"
-"ant（可靠蚁）则肩负保障机器性能可靠、每次使用都能正常运作的任务。Safe-"
-"ant（安全蚁）以安全为核心设计机器，确保使用者不会受到伤害。Usa-"
-"ant（易用蚁）致力于让机器操作简单直观，而Sust-"
-"ant（环保蚁）确保机器环保可持续。本教程将带您跟随AntSource的探索之旅，共同打"
-"造完美的猫咪咖啡机。"
+"Qual-ant（质检蚁）负责确保机器符合所有质量标准和规格要求，Reli-ant（可靠蚁）"
+"则肩负保障机器性能可靠、每次使用都能正常运作的任务。Safe-ant（安全蚁）以安全"
+"为核心设计机器，确保使用者不会受到伤害。Usa-ant（易用蚁）致力于让机器操作简单"
+"直观，而Sust-ant（环保蚁）确保机器环保可持续。本教程将带您跟随AntSource的探索"
+"之旅，共同打造完美的猫咪咖啡机。"
 
 #: ../coffee_machine.md:41
 msgid "![Two shots of espresso being pulled from an espresso machine.](images/coffee-machine-double-shot.jpg)"
-msgstr "![从意式浓缩咖啡机中萃取出的两杯意式浓缩咖啡。](images/coffee-machine-double-"
+msgstr ""
+"![从意式浓缩咖啡机中萃取出的两杯意式浓缩咖啡。](images/coffee-machine-double-"
 "shot.jpg)"
 
 #: ../coffee_machine.md:41
@@ -101,13 +101,15 @@ msgstr "从意式浓缩咖啡机中萃取出的两杯意式浓缩咖啡。"
 
 #: ../coffee_machine.md:44
 msgid "The first thing the ants did was to open Gaphor to the Greeter window and start a new model with the _SysML_ template. You can now decide to either:"
-msgstr "蚂蚁们做的第一件事是打开Gaphor进入欢迎窗口，并使用_SysML_模板创建新模型。现在"
+msgstr ""
+"蚂蚁们做的第一件事是打开Gaphor进入欢迎窗口，并使用_SysML_模板创建新模型。现在"
 "您可以选择："
 
 #: ../coffee_machine.md:46
 msgid "recreate their work as part of this tutorial. For this, open the SysML Example model shown at the bottom of the Greeter window"
-msgstr "作为本教程的一部分，重新创建他们的工作成果。为此，请打开欢迎窗口底部显示的Sys"
-"ML示例模型"
+msgstr ""
+"作为本教程的一部分，重新创建他们的工作成果。为此，请打开欢迎窗口底部显示的"
+"SysML示例模型"
 
 #: ../coffee_machine.md:48
 msgid "inspect the result of their work by opening the `coffee-machine` model located in the `examples` folder."
@@ -146,24 +148,23 @@ msgstr "系统工程中通常有三个抽象层次，这也是SysML模板中采�
 #: ../coffee_machine.md:75
 msgid "Concept Level: Sometimes also called Conceptual Level. Defines the problem being solved. This is the highest level of abstraction, where the system is described in terms of its overall purpose, goals, and functions. At this level, the focus is on understanding the system's requirements and how it will interact with other systems."
 msgstr ""
-"概念层级（Concept Level）：英文有时也称为Conceptual "
-"Level，用于定义待解决的问题。这是最高层级的抽象描述，系统在此层面会以其总体目"
-"的、目标和功能进行阐述。该层面的核心在于理解系统需求，以及系统与其他系统之间"
-"的交互方式。"
+"概念层级（Concept Level）：英文有时也称为Conceptual Level，用于定义待解决的问"
+"题。这是最高层级的抽象描述，系统在此层面会以其总体目的、目标和功能进行阐述。"
+"该层面的核心在于理解系统需求，以及系统与其他系统之间的交互方式。"
 
 #: ../coffee_machine.md:80
 msgid "Logical Level: Defines a technology-agnostic solution. This is the middle level of abstraction, where the system is described in terms of its structure and behavior. At this level, the focus is on how the system components are organized and how they interact with each other."
 msgstr ""
-"逻辑层级（Logical "
-"Level）：定义与技术无关的解决方案。这是中间层次的抽象，在此层面以系统结构和行"
-"为方式进行描述。该层面重点关注系统组件的组织方式及各组件间的交互关系。"
+"逻辑层级（Logical Level）：定义与技术无关的解决方案。这是中间层次的抽象，在此"
+"层面以系统结构和行为方式进行描述。该层面重点关注系统组件的组织方式及各组件间"
+"的交互关系。"
 
 #: ../coffee_machine.md:84
 msgid "Technology Level: Sometimes also called Physical level. Defines the detailed technical solution. This is the lowest level of abstraction, where the system is described in terms of its components and their properties. At this level, the focus is on the details of the system's implementation."
 msgstr ""
-"技术层级（Technology Level）：有时也被称为物理层级（Physical "
-"Level）。该层级定义了详细的技术解决方案，是抽象程度最低的一层，通过系统组件及"
-"其属性进行描述。在此层级中，重点关注的是系统实现的具体细节。"
+"技术层级（Technology Level）：有时也被称为物理层级（Physical Level）。该层级"
+"定义了详细的技术解决方案，是抽象程度最低的一层，通过系统组件及其属性进行描述"
+"。在此层级中，重点关注的是系统实现的具体细节。"
 
 #: ../coffee_machine.md:89
 msgid "Each level of abstraction provides a different perspective on the system, and each level is important for different aspects of system design and analysis. For example, the conceptual level is important for understanding the overall goals and requirements of the system, while the physical level is important for understanding how the system will be built and how it will interact with the environment."
@@ -174,8 +175,9 @@ msgstr ""
 
 #: ../coffee_machine.md:96
 msgid "There is a fourth abstraction level called the Implementation Level that isn't modeled, which is the concrete built system."
-msgstr "还有一个未被建模的第四抽象层级称为实现层（Implementation "
-"Level），即具体构建的系统。"
+msgstr ""
+"还有一个未被建模的第四抽象层级称为实现层（Implementation Level），即具体构建"
+"的系统。"
 
 #: ../coffee_machine.md:99
 msgid "In the upper left hand corner of Gaphor, the Model Browser shows the three top level packages, dividing up the model in to these three abstraction levels."
@@ -216,22 +218,21 @@ msgstr "参数化：在系统中对所有数值强制执行数学规则"
 #: ../coffee_machine.md:115
 msgid "If you want to learn more about these four pillars, there is a 30-minute video by Rick Steiner called [The Four Pillars of SysML](https://youtu.be/998UznK9ogY)."
 msgstr ""
-"如果你想深入了解这四大支柱，可以观看Rick "
-"Steiner制作的30分钟视频《SysML的四大支柱》(https://youtu.be/998UznK9ogY)。"
+"如果你想深入了解这四大支柱，可以观看Rick Steiner制作的30分钟视频《SysML的四大"
+"支柱》(https://youtu.be/998UznK9ogY)。"
 
 #: ../coffee_machine.md:118
 msgid "Since Parametric Diagrams are one of the least used diagram types in SysML, we are going to only focus on the first three. The power of SysML comes in being able to make relationships between these three pillars. For example, by allocating behavior like an activity to an element of the structure like a block."
 msgstr ""
-"由于参数图（Parametric "
-"Diagrams）是SysML中使用频率最低的图表类型之一，我们将仅重点介绍前三种图表。Sy"
-"sML的核心优势在于能够建立这三大支柱之间的关联关系。例如，通过将活动等行为要素"
-"分配到模块等结构要素中来实现行为与结构的映射。"
+"由于参数图（Parametric Diagrams）是SysML中使用频率最低的图表类型之一，我们将"
+"仅重点介绍前三种图表。SysML的核心优势在于能够建立这三大支柱之间的关联关系。例"
+"如，通过将活动等行为要素分配到模块等结构要素中来实现行为与结构的映射。"
 
 #: ../coffee_machine.md:123
 msgid "If you expand the top-level Abstraction Level packages in the Model Browser, each one contains three more packages, one for each pillar. It is in these packages that we will start to build up the design for the espresso machine."
-msgstr "如果在模型浏览器中展开顶层的\"抽象层\"包"
-"，每个顶层包下会包含三个子包（对应三大支柱模块）。我们将在这些子包中逐步构建"
-"咖啡机的设计模型。"
+msgstr ""
+"如果在模型浏览器中展开顶层的\"抽象层\"包，每个顶层包下会包含三个子包（对应三"
+"大支柱模块）。我们将在这些子包中逐步构建咖啡机的设计模型。"
 
 #: ../coffee_machine.md:127
 msgid "![Three pillar packages nested under each abstraction level package.](images/coffee-machine-pillars.png)"
@@ -251,7 +252,8 @@ msgstr "咖啡机：概念层"
 
 #: ../coffee_machine_concept.md:9
 msgid "The concept level defines the problem we are trying to solve. For the espresso machine, we are going to use diagrams at this abstraction level to answer questions like:"
-msgstr "概念层定义了我们要解决的问题。对于咖啡机，我们将利用这一抽象层次的图表来回答"
+msgstr ""
+"概念层定义了我们要解决的问题。对于咖啡机，我们将利用这一抽象层次的图表来回答"
 "诸如以下问题："
 
 #: ../coffee_machine_concept.md:12
@@ -276,7 +278,8 @@ msgstr "机器必须满足哪些关键性能指标才能被视为成功的作品
 
 #: ../coffee_machine_concept.md:17
 msgid "How will the machine fit into the larger context of the café, and how will it interact with other systems and components within the café?"
-msgstr "这台机器将如何融入咖啡店的整体环境？它将如何与咖啡店内的其他系统和组件进行交"
+msgstr ""
+"这台机器将如何融入咖啡店的整体环境？它将如何与咖啡店内的其他系统和组件进行交"
 "互？"
 
 #: ../coffee_machine_concept.md:19
@@ -285,7 +288,8 @@ msgstr "其他人（如市场营销人员、销售人员、制造商或购买机
 
 #: ../coffee_machine_concept.md:21
 msgid "At this level, the focus is on understanding the big picture of the espresso machine and its role within the café system. The answers to these questions will help guide the design and development of the machine at the logical and technology levels of abstraction."
-msgstr "在这一层级，重点在于理解浓缩咖啡机的整体架构及其在咖啡馆系统中的功能定位。对"
+msgstr ""
+"在这一层级，重点在于理解浓缩咖啡机的整体架构及其在咖啡馆系统中的功能定位。对"
 "这些问题的解答将指导机器在逻辑架构与技术架构的设计开发工作。"
 
 #: ../coffee_machine_concept.md:26
@@ -294,7 +298,8 @@ msgstr "用例图"
 
 #: ../coffee_machine_concept.md:28
 msgid "First the ants work on the behavior of the system. Expand the Behavior package in the Model Browser and double-click on the diagram named Use Cases."
-msgstr "首先，蚂蚁们对系统的行为进行研究。在模型浏览器中展开“行为”包，然后双击名为“用"
+msgstr ""
+"首先，蚂蚁们对系统的行为进行研究。在模型浏览器中展开“行为”包，然后双击名为“用"
 "例”的图表。"
 
 #: ../coffee_machine_concept.md:31
@@ -308,8 +313,8 @@ msgstr ""
 msgid "The diagram would typically include different actors or users, such as the barista, the customer, and possibly a manager or maintenance technician. It would also include different \"use cases\" or scenarios, which describe the different actions that the users can take with the machine, such as placing an order, making an espresso, or cleaning the machine."
 msgstr ""
 "该示意图通常会包含不同的参与者或用户角色，例如咖啡师、顾客，可能还有店长或设"
-"备维护技术员。图中还会展示各种\"用例\"或场景"
-"，用以描述用户与咖啡机的交互行为，比如下单点餐、制作浓缩咖啡或清洁机器。"
+"备维护技术员。图中还会展示各种\"用例\"或场景，用以描述用户与咖啡机的交互行为"
+"，比如下单点餐、制作浓缩咖啡或清洁机器。"
 
 #: ../coffee_machine_concept.md:43
 msgid "The use case diagram helps to ensure that all the necessary functional requirements of the espresso machine are identified and accounted for, and that the system is designed to meet the needs of its users. It can also be used as a communication tool between the different stakeholders involved in the development of the machine, such as the ants and Cappuccino the cat."
@@ -341,28 +346,28 @@ msgstr "一名咖啡师操作意式浓缩咖啡机。咖啡师使用的操作界
 #: ../coffee_machine_concept.md:59
 msgid "In this particular use case diagram, we have one actor named Barista and one use case called Brew espresso, which is allocated to a block called Espresso Machine. The actor, in this case, is a cat barista who interacts with the system (an espresso machine) to accomplish a particular task, which is brewing espresso."
 msgstr ""
-"在此特定用例图中，我们设定了一个名为\"咖啡师（Barista）\"的参与者和一个称为\""
-"制作意式浓缩咖啡（Brew espresso）\"的用例，该用例被分配到名为\"意式咖啡机（"
-"Espresso Machine）\"的模块中"
-"。本案例中的参与者是一位猫咪咖啡师，它通过操作意式咖啡机系统来完成冲泡浓缩咖"
-"啡的特定任务。"
+"在此特定用例图中，我们设定了一个名为\"咖啡师（Barista）\"的参与者和一个称"
+"为\"制作意式浓缩咖啡（Brew espresso）\"的用例，该用例被分配到名为\"意式咖啡机"
+"（Espresso Machine）\"的模块中。本案例中的参与者是一位猫咪咖啡师，它通过操作"
+"意式咖啡机系统来完成冲泡浓缩咖啡的特定任务。"
 
 #: ../coffee_machine_concept.md:65
 msgid "Use case diagram showing an actor named Barista and a use case called Brew espresso"
-msgstr "用例图展示了一个名为“咖啡师（Barista）”的参与者和一个名为“冲泡意式浓缩咖啡（"
+msgstr ""
+"用例图展示了一个名为“咖啡师（Barista）”的参与者和一个名为“冲泡意式浓缩咖啡（"
 "Brew espresso）”的用例"
 
 #: ../coffee_machine_concept.md:70
 msgid "The use case Brew espresso represents a specific functionality or action that the system (the Espresso Machine block) can perform. It describes the steps or interactions necessary to complete the task of brewing espresso, such as selecting the appropriate settings, starting the brewing process, and stopping the process once it's complete."
 msgstr ""
-"用例\"冲泡意式浓缩咖啡\"代表系统（\"意式咖啡机\"模块"
-"）能够执行的特定功能或操作。该用例描述了完成冲泡意式浓缩咖啡任务所需的步骤或"
-"交互流程，包括选择合适参数设置、启动冲泡程序以及在完成后终止冲泡过程等具体操"
-"作。"
+"用例\"冲泡意式浓缩咖啡\"代表系统（\"意式咖啡机\"模块）能够执行的特定功能或操"
+"作。该用例描述了完成冲泡意式浓缩咖啡任务所需的步骤或交互流程，包括选择合适参"
+"数设置、启动冲泡程序以及在完成后终止冲泡过程等具体操作。"
 
 #: ../coffee_machine_concept.md:76
 msgid "The use case diagram shows the relationship between the actor and the use case. It is represented by an oval shape with the use case name inside and an association with the actor. The association represents the interaction from the actor to the use case."
-msgstr "用例图展示了参与者与用例之间的关系。用例以椭圆形表示，内部标注用例名称，并通"
+msgstr ""
+"用例图展示了参与者与用例之间的关系。用例以椭圆形表示，内部标注用例名称，并通"
 "过连线与参与者关联。该连线表示从参与者到用例的交互过程。"
 
 #: ../coffee_machine_concept.md:81
@@ -371,7 +376,8 @@ msgstr "领域图"
 
 #: ../coffee_machine_concept.md:83
 msgid "A domain diagram is a graphical representation of the concepts, terms, and relationships within a specific domain. In the case of a coffee shop, a domain diagram could represent the key elements and relationships within the coffee shop domain."
-msgstr "领域图是对特定领域内概念、术语及关系的图形化表示。以咖啡店为例，领域图可呈现"
+msgstr ""
+"领域图是对特定领域内概念、术语及关系的图形化表示。以咖啡店为例，领域图可呈现"
 "咖啡店业务范畴中的核心要素及其关联关系。"
 
 #: ../coffee_machine_concept.md:88
@@ -404,7 +410,8 @@ msgstr "顾客"
 
 #: ../coffee_machine_concept.md:97
 msgid "Each block in the Block Definition Diagram (bdd) represents a key concept within the coffee shop domain, and the containment relationship is used between the domain and the blocks to show that they are part of the domain."
-msgstr "在块定义图（BDD）中，每个模块代表咖啡店领域中的一个核心概念，领域与模块之间通"
+msgstr ""
+"在块定义图（BDD）中，每个模块代表咖啡店领域中的一个核心概念，领域与模块之间通"
 "过包含关系表明这些模块属于该领域组成部分。"
 
 #: ../coffee_machine_concept.md:101
@@ -414,26 +421,25 @@ msgstr "展示咖啡店领域模块层次结构的块定义图（BDD）"
 #: ../coffee_machine_concept.md:106
 msgid "The Barista block is responsible for preparing and serving the coffee to the customers. The Roasted Coffee block contains the types of coffee available for the barista to use. The Coffee Grinder block grinds the roasted coffee beans to the desired consistency before brewing. The Water Supply block contains the water source for the coffee machine, and finally the Customer block represents the person who orders and receives the coffee."
 msgstr ""
-"咖啡师（Barista）模块负责为客户准备和提供咖啡。烘焙咖啡（Roasted "
-"Coffee）模块包含咖啡师可使用的各类咖啡豆。咖啡研磨机（Coffee "
-"Grinder）模块在冲泡前将烘焙好的咖啡豆研磨至所需粗细度。供水（Water "
-"Supply）模块为咖啡机提供水源，而顾客（Customer）模块则代表下单并接收咖啡的饮"
-"用者。"
+"咖啡师（Barista）模块负责为客户准备和提供咖啡。烘焙咖啡（Roasted Coffee）模块"
+"包含咖啡师可使用的各类咖啡豆。咖啡研磨机（Coffee Grinder）模块在冲泡前将烘焙"
+"好的咖啡豆研磨至所需粗细度。供水（Water Supply）模块为咖啡机提供水源，而顾客"
+"（Customer）模块则代表下单并接收咖啡的饮用者。"
 
 #: ../coffee_machine_concept.md:113
 msgid "The ants need more of your help to rename the Feature Domain diagram and update it so that it matches the one above. Make sure that \"Profile: SysML\" is selected in the top-left corner of the Gaphor user interface. The names of the blocks can be changed directly in the diagram, but the name of the bdd can only be changed in the Model Browser. In the Structure package, right-click on the Blocks with the B symbol and rename them from the context menu. Also remember that you can use [auto-layout](first_model.md#adding-relations) to align and distribute all elements."
 msgstr ""
-"蚂蚁们需要你更多的帮助来重命名特性领域图（Feature Domain "
-"diagram）并更新它，使其与上方的图表保持一致。"
-"请确保在Gaphor用户界面的左上角选择了\"Profile: SysML\"选项"
-"。模块的名称可以直接在图表中修改，但bdd图的名称只能在模型浏览器中更改。在结构"
-"（Structure）包中，右键点击带有B符号的模块，通过右键菜单进行重命名。另外请记"
-"住，你可以使用[自动布局](first_model.md#adding-relations) "
-"功能来对齐和分布所有元素。"
+"蚂蚁们需要你更多的帮助来重命名特性领域图（Feature Domain diagram）并更新它，"
+"使其与上方的图表保持一致。请确保在Gaphor用户界面的左上角选择了\"Profile: "
+"SysML\"选项。模块的名称可以直接在图表中修改，但bdd图的名称只能在模型浏览器中"
+"更改。在结构（Structure）包中，右键点击带有B符号的模块，通过右键菜单进行重命"
+"名。另外请记住，你可以使用[自动布局](first_model.md#adding-relations) 功能来"
+"对齐和分布所有元素。"
 
 #: ../coffee_machine_concept.md:121
 msgid "The domain diagram provides a high-level view of the coffee shop domain and the key concepts and relationships involved in it. It can be a useful tool for understanding the relationships between different elements of the domain and for communicating these relationships to others."
-msgstr "领域图提供了咖啡店领域的高层概览，以及其中涉及的关键概念与关系。该图表能有效"
+msgstr ""
+"领域图提供了咖啡店领域的高层概览，以及其中涉及的关键概念与关系。该图表能有效"
 "帮助理解领域内不同元素间的关联，并便于向他人传达这些关系。"
 
 #: ../coffee_machine_concept.md:126
@@ -443,13 +449,14 @@ msgstr "上下文关系图"
 #: ../coffee_machine_concept.md:128
 msgid "The context diagram is a high-level view of the system, and it shows its interaction with external entities. In the case of a coffee machine, a context diagram provides a clear and concise representation of the system and its interactions with the external environment."
 msgstr ""
-"上下文关系图（Context "
-"Diagram）是系统的高层视图，用于展示系统与外部实体的交互关系。以咖啡机为例，该"
-"图表能清晰简洁地呈现系统架构及其与外部环境之间的互动关系。"
+"上下文关系图（Context Diagram）是系统的高层视图，用于展示系统与外部实体的交互"
+"关系。以咖啡机为例，该图表能清晰简洁地呈现系统架构及其与外部环境之间的互动关"
+"系。"
 
 #: ../coffee_machine_concept.md:133
 msgid "The context diagram for a coffee machine shows the coffee machine as the system at the center, with all its external entities surrounding it. The external entities include the barista, the power source, the coffee grinder, and the water source."
-msgstr "咖啡机的上下文关系图将咖啡机作为中心系统展示，周围环绕其所有外部实体。这些外"
+msgstr ""
+"咖啡机的上下文关系图将咖啡机作为中心系统展示，周围环绕其所有外部实体。这些外"
 "部实体包括咖啡师、电源、咖啡研磨机和供水源。"
 
 #: ../coffee_machine_concept.md:138
@@ -459,15 +466,15 @@ msgstr "展示咖啡厅与外部实体关联关系的块定义图"
 #: ../coffee_machine_concept.md:143
 msgid "The ants need more of your help to rename the Feature Context diagram and update it so that it matches the one above. To create the specific arrows shown, use an Association entity, then toggle Enable Item Flow to on for that association and fill in the Item Property field."
 msgstr ""
-"蚂蚁需要您协助重新命名“特性上下文关系图（Feature Context "
-"diagram）”并更新内容，使其与上方的图表保持一致。如需创建图中特定箭头，请按以"
-"下步骤操作：使用\"关联（Association）\"实体，然后为该\"关联（Association）"
-"\"开启\"启用项目流（Enable Item Flow）\"选项，在\"项目属性（Item Property）"
-"\"字段中填写相应内容。"
+"蚂蚁需要您协助重新命名“特性上下文关系图（Feature Context diagram）”并更新内容"
+"，使其与上方的图表保持一致。如需创建图中特定箭头，请按以下步骤操作：使用\"关"
+"联（Association）\"实体，然后为该\"关联（Association）\"开启\"启用项目流（"
+"Enable Item Flow）\"选项，在\"项目属性（Item Property）\"字段中填写相应内容。"
 
 #: ../coffee_machine_concept.md:148
 msgid "Overall, the context diagram for a coffee machine provides a high-level view of the system and its interactions with external entities. It is a useful tool for understanding the system and its role in the broader environment."
-msgstr "总的来说，咖啡机的上下文关系图提供了该系统及其与外部实体间交互的顶层视角。这"
+msgstr ""
+"总的来说，咖啡机的上下文关系图提供了该系统及其与外部实体间交互的顶层视角。这"
 "种图表是理解系统及其在更广泛环境中所扮演角色的有效工具。"
 
 #: ../coffee_machine_concept.md:152
@@ -490,7 +497,8 @@ msgstr ""
 
 #: ../coffee_machine_concept.md:163
 msgid "Once the needs of the stakeholders have been gathered, they can be analyzed to identify common themes and requirements. This information can then be used to develop the concept requirements for the coffee machine, which serve as a starting point for the design process."
-msgstr "在收集完利益相关者的需求后，即可对其进行分析以确定共同主题和核心要求。这些信"
+msgstr ""
+"在收集完利益相关者的需求后，即可对其进行分析以确定共同主题和核心要求。这些信"
 "息将用于制定咖啡机的概念需求，从而为设计流程提供起点。"
 
 #: ../coffee_machine_concept.md:168
@@ -499,7 +507,8 @@ msgstr "以下是一台咖啡机在水箱、加热时间和人机界面（HMI）
 
 #: ../coffee_machine_concept.md:171
 msgid "Water Tank: The coffee machine shall have a water tank of sufficient size to make multiple cups of coffee before needing a refill. The water tank should be easy to access and fill."
-msgstr "水箱：咖啡机应配备容量足够的水箱，确保在多次冲泡咖啡后无需频繁加水。水箱设计"
+msgstr ""
+"水箱：咖啡机应配备容量足够的水箱，确保在多次冲泡咖啡后无需频繁加水。水箱设计"
 "须便于取放和注水。"
 
 #: ../coffee_machine_concept.md:175
@@ -508,7 +517,8 @@ msgstr "预热时间：从用户开启咖啡机到其可进行咖啡冲泡，预
 
 #: ../coffee_machine_concept.md:179
 msgid "1 Cup Button: The coffee machine shall have an HMI with a 1 cup brew button to make it easy for the user to select the amount of coffee they want to brew."
-msgstr "1杯量按钮：咖啡机应配备带有一键冲泡功能的人机界面（HMI），通过1杯量按钮使用户"
+msgstr ""
+"1杯量按钮：咖啡机应配备带有一键冲泡功能的人机界面（HMI），通过1杯量按钮使用户"
 "能便捷选择所需冲泡的咖啡量。"
 
 #: ../coffee_machine_concept.md:182
@@ -544,38 +554,35 @@ msgstr "功能边界行为"
 #: ../coffee_machine_logical.md:16
 msgid "A Functional Boundary Behavior diagram is a type of SysML Activity diagram used to show the interactions between different logical blocks. The swim lanes divide the diagram into different areas, each representing a different functional block or component."
 msgstr ""
-"功能边界行为图是一种SysML活动图（Activity "
-"diagram），用于展示不同逻辑模块之间的交互关系。泳道将图表划分为不同区域，每个"
-"区域代表一个独立的功能模块或组件。"
+"功能边界行为图是一种SysML活动图（Activity diagram），用于展示不同逻辑模块之间"
+"的交互关系。泳道将图表划分为不同区域，每个区域代表一个独立的功能模块或组件。"
 
 #: ../coffee_machine_logical.md:21
 msgid "In this case, the diagram includes swimlanes for the HMI, Controller, Water Pump, Water Heater, Group Head, and Portafilter. The HMI receives the button press from the barista and then sends a command to the Controller. The Controller then commands the Water Heater to start, and once the water has reached the correct temperature, the Controller commands the Pump to start. The water would then be pumped through the Group Head and into the Portafilter, brewing the coffee. The diagram shows the flow of information and actions between the different logical blocks, and help to ensure that the behavior that each block provides is properly connected and integrated into the system."
 msgstr ""
 "在本例中，该活动图包含了以下模块的泳道：人机界面（HMI）、控制器（Controller）"
-"、水泵（Water Pump）、加热器（Water Heater）、冲泡头（Group "
-"Head）及冲煮把手（Portafilter）。当咖啡师按下操作按钮时，人机界面接收指令并发"
-"送启动命令至控制器。控制器随即启动加热器工作，待水温达到设定值后，控制器将激"
-"活水泵运行。热水通过水泵输送至冲泡头，最终注入冲煮把手中的咖啡粉进行萃取。该"
-"活动图清晰展示了各逻辑模块间的信息传递与动作衔接，确保每个功能模块的行为能够"
-"正确连接并整合到系统中。"
+"、水泵（Water Pump）、加热器（Water Heater）、冲泡头（Group Head）及冲煮把手"
+"（Portafilter）。当咖啡师按下操作按钮时，人机界面接收指令并发送启动命令至控制"
+"器。控制器随即启动加热器工作，待水温达到设定值后，控制器将激活水泵运行。热水"
+"通过水泵输送至冲泡头，最终注入冲煮把手中的咖啡粉进行萃取。该活动图清晰展示了"
+"各逻辑模块间的信息传递与动作衔接，确保每个功能模块的行为能够正确连接并整合到"
+"系统中。"
 
 #: ../coffee_machine_logical.md:36
 msgid "From the Logical package, expand the Behavior package in the Model Browser and double-click on the diagram named Functional Boundary Behavior. Additional swimlanes can be added by clicking on the swimlanes and add additional partitions in the Property Editor. The name of the partition before the colon can also be changed in the Property Editor. The names of the Blocks can be changed in the Structure package, as was explained in the [Domain Diagram section](coffee_machine_concept.md#domain-diagram)."
 msgstr ""
-"从逻辑（Logical）包中，在模型浏览器内展开行为（Behavior）"
-"包并双击名为Functional Boundary "
-"Behavior的图表。可通过点击泳道并在属性编辑器（Property "
+"从逻辑（Logical）包中，在模型浏览器内展开行为（Behavior）包并双击名为"
+"Functional Boundary Behavior的图表。可通过点击泳道并在属性编辑器（Property "
 "Editor）中添加分区来增加更多泳道。冒号前的分区名称同样可在属性编辑器中修改。"
-"模块名称需在结构（Structure）包中更改，具体操作方式如领域图章节所述。"
-"[Domain Diagram section](coffee_machine_concept.md#domain-diagram)"
+"模块名称需在结构（Structure）包中更改，具体操作方式如领域图章节所述。[Domain "
+"Diagram section](coffee_machine_concept.md#domain-diagram)"
 
 #: ../coffee_machine_logical.md:43
 msgid "Additional Object Flows, pins (pay attention to inputs vs outputs), and actions can be created using the Toolbox. The Parameter Nodes which are attached to the Activity on the very left and right of the diagram are created and renamed created by clicking on the Activity and modifying them in the Property Editor."
 msgstr ""
-"可使用工具箱创建其他对象流（Object "
-"Flow）、引脚（pin，注意区分输入与输出）及动作（Action）。位于图表最左侧与最右"
-"侧、依附于活动的参数节点（Parameter "
-"Nodes），需通过点击活动（Activity）并在属性编辑器中修改来完成创建与重命名。"
+"可使用工具箱创建其他对象流（Object Flow）、引脚（pin，注意区分输入与输出）及"
+"动作（Action）。位于图表最左侧与最右侧、依附于活动的参数节点（Parameter Nodes"
+"），需通过点击活动（Activity）并在属性编辑器中修改来完成创建与重命名。"
 
 #: ../coffee_machine_logical.md:48
 msgid "Logical State Machine"
@@ -583,22 +590,22 @@ msgstr "逻辑状态机"
 
 #: ../coffee_machine_logical.md:50
 msgid "The logical state machine for the coffee machine is a diagram that shows the different states and transitions that the machine goes through to make coffee. In this case, there are two main states: On and Off."
-msgstr "咖啡机的逻辑状态机是一张展示机器在制作咖啡过程中所经历的不同状态及转换的示意"
+msgstr ""
+"咖啡机的逻辑状态机是一张展示机器在制作咖啡过程中所经历的不同状态及转换的示意"
 "图。在本例中，主要有两种状态：开机（On）和关机（Off）。"
 
 #: ../coffee_machine_logical.md:54
 msgid "When the coffee machine is turned on, it enters the On state. Inside the On state, there are some substates, starting with the heat water state. The machine will transition from the heat water state to the ready state when the temperature reaches the set point."
 msgstr ""
-"当咖啡机启动时，它将进入\"开机（On）\"状态。在\"开机（On）"
-"\"状态内部包含若干子状态，初始为\"加热水（Heat Water）"
-"\"状态。当水温达到设定值时，机器将从\"加热水（Heat Water）\"状态转换至\""
-"就绪（Ready）\"状态。"
+"当咖啡机启动时，它将进入\"开机（On）\"状态。在\"开机（On）\"状态内部包含若干"
+"子状态，初始为\"加热水（Heat Water）\"状态。当水温达到设定值时，机器将从\"加"
+"热水（Heat Water）\"状态转换至\"就绪（Ready）\"状态。"
 
 #: ../coffee_machine_logical.md:59
 msgid "Once the machine is in the ready state, the user can select one or two cup mode. Depending on the mode selected, the machine will transition to either the one cup mode or two cup mode."
 msgstr ""
-"机器进入就绪状态后，用户可选择单杯（one cup mode）或双杯模式（two cup "
-"mode）。根据所选模式，机器将相应切换至单杯模式或双杯模式工作状态。"
+"机器进入就绪状态后，用户可选择单杯（one cup mode）或双杯模式（two cup mode）"
+"。根据所选模式，机器将相应切换至单杯模式或双杯模式工作状态。"
 
 #: ../coffee_machine_logical.md:63
 msgid "State machine diagram showing logical states including on and off"
@@ -613,7 +620,8 @@ msgstr ""
 
 #: ../coffee_machine_logical.md:73
 msgid "The logical state machine diagram for the coffee machine shows these states, and the different conditions that trigger the transitions. This helps the ants designing the machine to understand how the coffee machine works and ensure that it functions properly."
-msgstr "咖啡机的逻辑状态机图展示了这些状态，以及触发状态转换的不同条件。这有助于设计"
+msgstr ""
+"咖啡机的逻辑状态机图展示了这些状态，以及触发状态转换的不同条件。这有助于设计"
 "机器的蚂蚁们理解咖啡机的工作原理，并确保其正常运行。"
 
 #: ../coffee_machine_logical.md:78
@@ -622,7 +630,8 @@ msgstr "逻辑结构"
 
 #: ../coffee_machine_logical.md:80
 msgid "The logical structure shows which logical blocks the espresso machine is made up of. Since we are at the logical level, these blocks should be agnostic to technical choices."
-msgstr "逻辑结构展示了该咖啡机由哪些逻辑模块组成。由于我们处于逻辑层，这些模块应不受"
+msgstr ""
+"逻辑结构展示了该咖啡机由哪些逻辑模块组成。由于我们处于逻辑层，这些模块应不受"
 "具体技术选型的影响。"
 
 #: ../coffee_machine_logical.md:84
@@ -659,7 +668,8 @@ msgstr "人机界面（HMI）"
 
 #: ../coffee_machine_logical.md:93
 msgid "Each block represents a key portion of the espresso machine, and the containment relationship is used between the espresso machine and its logical parts."
-msgstr "每个模块代表浓缩咖啡机的一个关键部分，而浓缩咖啡机与其逻辑部件之间采用了包含"
+msgstr ""
+"每个模块代表浓缩咖啡机的一个关键部分，而浓缩咖啡机与其逻辑部件之间采用了包含"
 "关系。"
 
 #: ../coffee_machine_logical.md:97
@@ -668,17 +678,20 @@ msgstr "展示咖啡机及其逻辑组成部分的块定义图"
 
 #: ../coffee_machine_logical.md:102
 msgid "Water tank: The water tank is a container that stores the water used in the espresso machine. It typically has a specific capacity and is designed for easy filling and cleaning. The water tank supplies water to the water pump when needed."
-msgstr "水箱：水箱是用于储存意式咖啡机所需用水的容器。通常具有特定容量，并设计为便于"
+msgstr ""
+"水箱：水箱是用于储存意式咖啡机所需用水的容器。通常具有特定容量，并设计为便于"
 "注水和清洁的结构。当需要时，水箱会将水供给至水泵。"
 
 #: ../coffee_machine_logical.md:107
 msgid "Water pump: The water pump is responsible for drawing water from the water tank and creating the necessary pressure to force the water through the coffee grounds in the portafilter. It plays a crucial role in the espresso extraction process by ensuring a consistent flow of water."
-msgstr "水泵：水泵负责从水箱中抽取水，并产生所需压力，迫使水流穿过手柄中的咖啡粉。通"
+msgstr ""
+"水泵：水泵负责从水箱中抽取水，并产生所需压力，迫使水流穿过手柄中的咖啡粉。通"
 "过确保稳定的水流，水泵在浓缩咖啡萃取过程中发挥着关键作用。"
 
 #: ../coffee_machine_logical.md:112
 msgid "Water heater: The water heater, also known as the boiler or heating element, is responsible for heating the water to the optimal temperature for brewing espresso. It maintains the water at the desired temperature to ensure proper extraction and flavor."
-msgstr "热水器：亦称锅炉或加热元件，其核心功能是将水温提升至冲泡意式浓缩咖啡的最佳温"
+msgstr ""
+"热水器：亦称锅炉或加热元件，其核心功能是将水温提升至冲泡意式浓缩咖啡的最佳温"
 "度，并持续保持恒温状态以确保理想的萃取效果与风味呈现。"
 
 #: ../coffee_machine_logical.md:117
@@ -712,13 +725,15 @@ msgstr ""
 
 #: ../coffee_machine_logical.md:142
 msgid "We didn't make any technical choices at this time, for example we didn't specify which type of controller, the pump capacity, or the model of the group head. These details will be defined once we get to the Technology level."
-msgstr "我们目前尚未做出任何技术选型，例如未明确控制器类型、泵的容量或冲泡头的具体型"
+msgstr ""
+"我们目前尚未做出任何技术选型，例如未明确控制器类型、泵的容量或冲泡头的具体型"
 "号。这些细节将在技术层面阶段进一步确定。"
 
 #: ../coffee_machine_logical.md:146
 msgid "The ants need more of your help to update the Logical Structure diagram so that it matches the one above."
-msgstr "蚂蚁们需要你更多的帮助来更新逻辑结构图（Logical Structure "
-"diagram），以使其与上方的图表保持一致。"
+msgstr ""
+"蚂蚁们需要你更多的帮助来更新逻辑结构图（Logical Structure diagram），以使其与"
+"上方的图表保持一致。"
 
 #: ../coffee_machine_logical.md:149
 msgid "Logical Boundary"
@@ -728,10 +743,9 @@ msgstr "逻辑边界"
 msgid "The Logical Boundary is a type of Internal Block Diagram that represents the internal structure of a system, illustrating the relationships between its internal components or blocks. It helps to visualize how these blocks interact and exchange information within the system. The term boundary used here means a clear box view inside the espresso machine at the logical boundary. It uses part properties of the blocks that were in the Logical Structure diagram above."
 msgstr ""
 "逻辑边界图是一种内部模块图（IBD），用于展现系统的内部结构，说明其内部组件或模"
-"块之间的关联关系。这种图表能直观呈现系统内部各模块如何交互及传递信息。"
-"此处使用的\"边界\"概念"
-"，特指在逻辑边界层面对咖啡机内部结构的透明盒视图。该图表沿用了上方逻辑结构图"
-"中各模块的部件属性。"
+"块之间的关联关系。这种图表能直观呈现系统内部各模块如何交互及传递信息。此处使"
+"用的\"边界\"概念，特指在逻辑边界层面对咖啡机内部结构的透明盒视图。该图表沿用"
+"了上方逻辑结构图中各模块的部件属性。"
 
 #: ../coffee_machine_logical.md:158
 msgid "Internal block diagram showing the clear box view of the espresso machine"
@@ -739,8 +753,9 @@ msgstr "内部模块图（IBD）展示浓缩咖啡机的透明盒视图"
 
 #: ../coffee_machine_logical.md:163
 msgid "The interactions between the part properties inside the espresso machine are shown as ItemFlows on the Connectors."
-msgstr "浓缩咖啡机内部部件属性间的交互作用通过连接器（Connector）上的项目流（ItemFlow"
-"s）呈现。"
+msgstr ""
+"浓缩咖啡机内部部件属性间的交互作用通过连接器（Connector）上的项目流（"
+"ItemFlows）呈现。"
 
 #: ../coffee_machine_logical.md:166
 msgid "Water: Represents the flow of water from the water tank to the water pump."
@@ -784,16 +799,16 @@ msgstr ""
 #: ../coffee_machine_logical.md:183
 msgid "These item flows capture the essential interactions and exchanges within the espresso machine. They represent the flow of water, control signals, temperature feedback, and the resulting coffee water mixture. The item flows illustrate the sequence and connections between the various components, allowing for a better understanding of how the machine functions as a whole."
 msgstr ""
-"这些项目流（Item "
-"Flows）捕捉了浓缩咖啡机内部的关键交互与交换过程。它们展现了水流、控制信号、温"
-"度反馈以及最终形成的咖啡水混合物的流动路径。通过描绘各组件之间的运作顺序与连"
-"接关系，这些项目流（Item "
-"Flows）使我们能够更清晰地理解整台机器作为一个系统是如何协同工作的。"
+"这些项目流（Item Flows）捕捉了浓缩咖啡机内部的关键交互与交换过程。它们展现了"
+"水流、控制信号、温度反馈以及最终形成的咖啡水混合物的流动路径。通过描绘各组件"
+"之间的运作顺序与连接关系，这些项目流（Item Flows）使我们能够更清晰地理解整台"
+"机器作为一个系统是如何协同工作的。"
 
 #: ../coffee_machine_logical.md:189
 msgid "Once again, help the ants by updating the Logical Boundary diagram so that it matches the one above."
-msgstr "请再次协助蚂蚁们，更新逻辑边界图（Logical Boundary "
-"diagram）以使其与上方的图示保持一致。"
+msgstr ""
+"请再次协助蚂蚁们，更新逻辑边界图（Logical Boundary diagram）以使其与上方的图"
+"示保持一致。"
 
 #: ../coffee_machine_logical.md:192
 msgid "Logical Requirements"
@@ -801,28 +816,30 @@ msgstr "逻辑需求"
 
 #: ../coffee_machine_logical.md:193
 msgid "Logical requirements refer to the high-level specifications and functionalities that describe what a system or product should accomplish without specifying how it will be implemented. These requirements focus on the desired outcomes and behavior of the system rather than the specific technical details."
-msgstr "逻辑需求是指描述系统或产品应实现的高层规范和功能，但不涉及具体实现方式。这类"
+msgstr ""
+"逻辑需求是指描述系统或产品应实现的高层规范和功能，但不涉及具体实现方式。这类"
 "需求聚焦于系统预期达成的目标与行为，而非具体技术细节。"
 
 #: ../coffee_machine_logical.md:198
 msgid "We have also already defined the behavior and the structure of the espresso machine at the logical level, so the main task now is to translate that information in to words as requirement statements."
-msgstr "我们已经完成了浓缩咖啡机在逻辑层面的行为和结构定义，因此当前的主要任务是将这"
+msgstr ""
+"我们已经完成了浓缩咖啡机在逻辑层面的行为和结构定义，因此当前的主要任务是将这"
 "些信息转化为文字形式的需求说明。"
 
 #: ../coffee_machine_logical.md:203
 msgid "If you need help writing good requirements, the [INCOSE Guide to Needs and Requirements](https://portal.incose.org/commerce/store?productId=INCOSE-GUIDENEEDSREQ) and the [Easy Approach to Requirements Syntax](https://alistairmavin.com/ears/) are recommended resources."
 msgstr ""
-"如果需要撰写优质需求的指导，推荐参考以下资源： "
-"[INCOSE Guide to Needs and Requirements](https://portal.incose.org/commerce/"
-"store?productId=INCOSE-GUIDENEEDSREQ)以及"
-"[Easy Approach to Requirements Syntax](https://alistairmavin.com/ears/)。"
+"如果需要撰写优质需求的指导，推荐参考以下资源： [INCOSE Guide to Needs and "
+"Requirements](https://portal.incose.org/commerce/store?productId=INCOSE-"
+"GUIDENEEDSREQ)以及[Easy Approach to Requirements Syntax](https://"
+"alistairmavin.com/ears/)。"
 
 #: ../coffee_machine_logical.md:209
 msgid "We use the Derive Requirement relation from the Logical Requirement to the Concept Requirements that we previously created. The direction of this relationship is in the derived from direction, which might be opposite to what you are used to where the higher level requirement points to the lower level requirement."
 msgstr ""
-"我们采用“派生关系”（Derive "
-"Requirement）将逻辑需求与先前创建的概念需求相关联。此关系的方向为\"派生自\"（"
-"derived from）方向——这可能与您习惯的上级需求指向下级需求的常规指向相反。"
+"我们采用“派生关系”（Derive Requirement）将逻辑需求与先前创建的概念需求相关联"
+"。此关系的方向为\"派生自\"（derived from）方向——这可能与您习惯的上级需求指向"
+"下级需求的常规指向相反。"
 
 #: ../coffee_machine_logical.md:215
 msgid "Here we derive two requirements:"
@@ -843,9 +860,8 @@ msgstr "派生自概念需求的控制器指令和水压逻辑需求"
 #: ../coffee_machine_logical.md:225
 msgid "Update the Logical Requirements diagram with these requirements. If you want, you can also develop additional requirements for all the logical behavior and structure that we specified in the other diagrams."
 msgstr ""
-"根据这些需求更新逻辑需求图（Logical Requirements "
-"diagram）。如果您愿意，也可以针对我们在其他图表中定义的所有逻辑行为和结构进一"
-"步开发额外的需求。"
+"根据这些需求更新逻辑需求图（Logical Requirements diagram）。如果您愿意，也可"
+"以针对我们在其他图表中定义的所有逻辑行为和结构进一步开发额外的需求。"
 
 #: ../coffee_machine_wrapup.md:1
 msgid "Coffee Machine: Summary"
@@ -854,10 +870,10 @@ msgstr "咖啡机：总结"
 #: ../coffee_machine_wrapup.md:3
 msgid "The Technology Level design uses a very similar approach as the Logical Level. Work on the behavior, structure, and then the requirements. At this level, you will now specify all the design details for how this specific espresso machine will work. We'll leave this exercise up to you to do, and we would be glad to have contributions of this design back in to this tutorial if you are interested in getting involved in Gaphor."
 msgstr ""
-"技术层（Technology Level）的设计与逻辑层（Logical "
-"Level）采用的方法非常相似。依次进行行为、结构及需求的设计。在此层级，您需要具"
-"体说明这款特定浓缩咖啡机运作的所有设计细节。我们将这个练习留给您来完成，如果"
-"您有兴趣参与Gaphor项目，我们非常乐意将您的设计贡献收录到本教程中。"
+"技术层（Technology Level）的设计与逻辑层（Logical Level）采用的方法非常相似。"
+"依次进行行为、结构及需求的设计。在此层级，您需要具体说明这款特定浓缩咖啡机运"
+"作的所有设计细节。我们将这个练习留给您来完成，如果您有兴趣参与Gaphor项目，我"
+"们非常乐意将您的设计贡献收录到本教程中。"
 
 #: ../coffee_machine_wrapup.md:10
 msgid "As they worked, the ants encountered numerous challenges. They had to ensure that the machine was safe, efficient, and easy to use, all while meeting the unique needs of their feline client. But with their deep understanding of systems engineering and their commitment to key principles and concepts, they were able to overcome these challenges and design an exceptional espresso machine."
@@ -887,7 +903,8 @@ msgstr ""
 
 #: ../connect.md:12
 msgid "The check if a connection is allowed should also check if it is valid to create a relation to/from the same element (like associations, but not generalizations)."
-msgstr "检查连接是否被允许时，还应验证在同一个元素上创建从自身/到自身的关系的有效性（"
+msgstr ""
+"检查连接是否被允许时，还应验证在同一个元素上创建从自身/到自身的关系的有效性（"
 "如关联关系允许，但泛化关系则不允许）。"
 
 #: ../container.md:1
@@ -912,8 +929,9 @@ msgstr "导航到 https://github.com/gaphor/gaphor"
 
 #: ../container.md:10
 msgid "Click the Code drop-down menu and select the **Open with Codespaces** option."
-msgstr "点击“Code”（代码）下拉菜单，选择 “Open with "
-"Codespaces”（使用Codespaces打开）选项。"
+msgstr ""
+"点击“Code”（代码）下拉菜单，选择 “Open with Codespaces”（使用Codespaces打开）"
+"选项。"
 
 #: ../container.md:11
 msgid "Select **+ New codespace** at the bottom on the pane."
@@ -923,8 +941,8 @@ msgstr "在窗格底部选择 **+ New codespace**（+ 新建代码空间）。"
 msgid "For more info, check out the [GitHub documentation](https://docs.github.com/en/free-pro-team@latest/github/developing-online-with-codespaces/creating-a-codespace#creating-a-codespace)."
 msgstr ""
 "如需了解更多信息，请查阅[GitHub 官方文档](https://docs.github.com/en/free-"
-"pro-team@latest/github/developing-online-with-codespaces/"
-"creating-a-codespace#creating-a-codespace)。"
+"pro-team@latest/github/developing-online-with-codespaces/creating-a-"
+"codespace#creating-a-codespace)。"
 
 #: ../container.md:15
 msgid "Remote access to Gaphor graphic window with Codespaces"
@@ -938,9 +956,9 @@ msgstr "使用Codespaces时，您可能还需要与Gaphor的图形界面进行�
 msgid "This is facilitated in Gaphor by use of container feature called [desktop-lite](https://github.com/devcontainers/features/tree/main/src/desktop-lite). This feature is activated by default in the Gaphor's [devcontainer.json](https://github.com/gaphor/gaphor/blob/main/.devcontainer/devcontainer.json) file."
 msgstr ""
 "在Gaphor中，这一功能通过名为[desktop-lite](https://github.com/devcontainers/"
-"features/tree/main/src/desktop-lite)的容器特性实现。该特性已在Gaphor的"
-"[devcontainer.json](https://github.com/gaphor/gaphor/blob/main/.devcontainer/"
-"devcontainer.json) 配置文件中默认启用。"
+"features/tree/main/src/desktop-lite)的容器特性实现。该特性已在Gaphor"
+"的[devcontainer.json](https://github.com/gaphor/gaphor/blob/main/"
+".devcontainer/devcontainer.json) 配置文件中默认启用。"
 
 #: ../container.md:22
 msgid "Notice the webPort/vncPort and password values. These are used in subsequent steps."
@@ -960,8 +978,9 @@ msgstr "下载并安装您选择的VNC查看器（例如RealVNC）"
 
 #: ../container.md:36
 msgid "Specify remote hostname as *localhost* and port as *5901* and connect VNC. The port number should be same as specified in attribute *vncPort*"
-msgstr "请将远程主机名指定为*localhost*，端口设为 *5901* 并连接 "
-"VNC。端口号需与属性*vncPort*中设定的数值保持一致"
+msgstr ""
+"请将远程主机名指定为*localhost*，端口设为 *5901* 并连接 VNC。端口号需与属"
+"性*vncPort*中设定的数值保持一致"
 
 #: ../container.md:37
 msgid "Upon [debugging/running](https://github.com/gaphor/gaphor/blob/main/.devcontainer/devcontainer.json) Gaphor the familiar Graphic window should be displayed in VNC view"
@@ -979,13 +998,15 @@ msgstr "基于[noVNC](https://novnc.com/info.html) 应用程序"
 
 #: ../container.md:41
 msgid "Open the browser on your local machine and give address as *http://127.0.0.1:6080/*. The port number should be same as specified in attribute *webPort*"
-msgstr "在本地计算机上打开浏览器，并输入地址 *http://127.0.0.1:6080/*。端口号需与 "
+msgstr ""
+"在本地计算机上打开浏览器，并输入地址 *http://127.0.0.1:6080/*。端口号需与 "
 "*webPort* 属性中指定的保持一致"
 
 #: ../container.md:42
 msgid "A noVNC window will open, click on Connect and provide password as *vscode*. The password should be same as specified in attribute *password*"
-msgstr "将打开一个noVNC窗口，点击\"连接（Connect）\"并输入密码"
-"*vscode*。该密码需与*password*属性中设定的密码一致"
+msgstr ""
+"将打开一个noVNC窗口，点击\"连接（Connect）\"并输入密码*vscode*。该密码需"
+"与*password*属性中设定的密码一致"
 
 #: ../container.md:43
 msgid "Upon [debugging/running](https://github.com/gaphor/gaphor/blob/main/.devcontainer/devcontainer.json) Gaphor the familiar Graphic window should be displayed in noVNC view on Browser"
@@ -1007,51 +1028,52 @@ msgstr ""
 msgid "You can help to support Gaphor in your language. You can do that on [Weblate](https://hosted.weblate.org/engage/gaphor/), directly from your browser. This service will periodically create [Pull Requests](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests) for Gaphor with updated translations."
 msgstr ""
 "您可以通过以下方式用您的语言支持 Gaphor：直接在浏览器中使用 [Weblate]"
-"(https://hosted.weblate.org/engage/gaphor/)进行翻译。"
-"该平台会定期将更新的翻译通过 [Pull Requests](https://docs.github.com/en/"
-"pull-requests/collaborating-with-pull-requests/"
-"proposing-changes-to-your-work-with-pull-requests/about-pull-requests) "
-"提交至 Gaphor 项目。"
+"(https://hosted.weblate.org/engage/gaphor/)进行翻译。该平台会定期将更新的翻译"
+"通过 [Pull Requests](https://docs.github.com/en/pull-requests/collaborating-"
+"with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-"
+"pull-requests) 提交至 Gaphor 项目。"
 
 #: ../contribute.md:13
 msgid "It is also very nice if you create your own content around Gaphor. Think about blog posts, videos, and conference talks. When you created something, please drop us a line, so we can add it to the [Tutorials](https://gaphor.org/tutorials) page on the website."
 msgstr ""
-"我们也非常欢迎您围绕 Gaphor "
-"创作自己的内容，比如博客文章、视频或会议演讲。如果您已经创作了相关内容，请告"
-"知我们，我们会将其添加到官网的[教程](https://gaphor.org/tutorials) 页面中。"
+"我们也非常欢迎您围绕 Gaphor 创作自己的内容，比如博客文章、视频或会议演讲。如"
+"果您已经创作了相关内容，请告知我们，我们会将其添加到官网的[教程](https://"
+"gaphor.org/tutorials) 页面中。"
 
 #: ../contribute.md:17
 msgid "If you want to contribute code, a good starting point is this site. It contains a lot of information on how Gaphor is build, especially in the *Concepts* section."
-msgstr "若您想贡献代码，当前这个网站是个很好的起点。它包含了大量关于Gaphor构建方式的"
+msgstr ""
+"若您想贡献代码，当前这个网站是个很好的起点。它包含了大量关于Gaphor构建方式的"
 "信息，特别是在*概念*章节中。"
 
 #: ../contribute.md:20
 msgid "Some issues are labeled with *first-timers-only*. Those issues are a good starting point to make yourself familiar with the code and code style."
-msgstr "部分标注了 *first-timers-"
-"only*（仅限新手）的议题（Issue）是熟悉代码和代码风格的理想切入点。"
+msgstr ""
+"部分标注了 *first-timers-only*（仅限新手）的议题（Issue）是熟悉代码和代码风格"
+"的理想切入点。"
 
 #: ../contribute.md:23
 msgid "It's always a good idea to create an [issue](https://github.com/gaphor/gaphor/issues) or start a [discussion](https://github.com/gaphor/gaphor/discussions) if you want to build something for which there is no issue yet. That way you can assure that your idea is implemented in a way consistent with the application, and it increases the chance your work will be accepted."
 msgstr ""
-"建议您在开发新功能前先创建[议题](https://github.com/gaphor/gaphor/"
-"issues)或发起[讨论](https://github.com/gaphor/gaphor/discussions) "
-"——特别是当相关功能尚无现有议题时。这样做既能确保您的实现方案与项目架构保持一"
-"致，也能大大提高代码被采纳的概率。"
+"建议您在开发新功能前先创建[议题](https://github.com/gaphor/gaphor/issues)或发"
+"起[讨论](https://github.com/gaphor/gaphor/discussions) ——特别是当相关功能尚无"
+"现有议题时。这样做既能确保您的实现方案与项目架构保持一致，也能大大提高代码被"
+"采纳的概率。"
 
 #: ../contribute.md:28
 msgid "You'll need to [fork](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo) Gaphor and set up a [development environment](linux.md) ([macOS](macos.md), [Windows](windows.md))."
 msgstr ""
-"您需要先 [fork](https://docs.github.com/en/pull-requests/"
-"collaborating-with-pull-requests/working-with-forks/fork-a-repo) "
-"Gaphor代码库，并搭建相应的[Linux开发环境](linux.md) （[macOS版]"
-"(macos.md)、[Windows版](windows.md)）。"
+"您需要先 [fork](https://docs.github.com/en/pull-requests/collaborating-with-"
+"pull-requests/working-with-forks/fork-a-repo) Gaphor代码库，并搭建相应"
+"的[Linux开发环境](linux.md) （[macOS版](macos.md)、[Windows版](windows.md)）"
+"。"
 
 #: ../contribute.md:33
 msgid "In our pipeline we do a couple of quality checks. We strongly recommend that you [install pre-commit](https://pre-commit.com/) and its git hook scripts, so your PR does build on our build environment."
 msgstr ""
-"在我们的自动化流水线中设有多项质量检查。我们强烈建议您[安装pre-commit](https"
-"://pre-commit.com/) "
-"及其git钩子脚本，这样可以确保您的PR能在我们的构建环境中顺利通过。"
+"在我们的自动化流水线中设有多项质量检查。我们强烈建议您[安装pre-commit]"
+"(https://pre-commit.com/) 及其git钩子脚本，这样可以确保您的PR能在我们的构建环"
+"境中顺利通过。"
 
 #: ../design_principles.md:1
 msgid "Design Principles"
@@ -1072,7 +1094,8 @@ msgstr ""
 
 #: ../design_principles.md:11
 msgid "Usability is very important. When you're new to Gaphor, it should be easy to find your way around. Minimal knowledge of UML should at least allow you to create a class diagram."
-msgstr "易用性至关重要。初次使用Gaphor时，用户应能轻松上手操作。即使仅掌握UML基础知识"
+msgstr ""
+"易用性至关重要。初次使用Gaphor时，用户应能轻松上手操作。即使仅掌握UML基础知识"
 "，也至少可以创建类图。"
 
 #: ../design_principles.md:19
@@ -1100,14 +1123,15 @@ msgstr "保持模型同步"
 
 #: ../design_principles.md:32
 msgid "An important part of modeling is to design a system in abstractions and be able to explain those to others. As systems become more complicated, it's important to have the design (model) layed out in diagrams."
-msgstr "建模的核心在于通过抽象化设计系统，并能向他人阐释这些设计。随着系统复杂度提升"
+msgstr ""
+"建模的核心在于通过抽象化设计系统，并能向他人阐释这些设计。随着系统复杂度提升"
 "，以图表形式呈现设计（模型）显得尤为重要。"
 
 #: ../design_principles.md:36
 msgid "Gaphor goes through great lengths to keep the model in sync with the diagrams. In doing so, unused elements can be automatically removed from the model if they're no longer shown in any diagram."
-msgstr "Gaphor "
-"不遗余力地确保模型与图表保持同步。在此过程中，未在任何图表中显示的元素将被自"
-"动从模型中移除。"
+msgstr ""
+"Gaphor 不遗余力地确保模型与图表保持同步。在此过程中，未在任何图表中显示的元素"
+"将被自动从模型中移除。"
 
 #: ../design_principles.md:40
 msgid "Out of your way"
@@ -1117,8 +1141,8 @@ msgstr "不干扰用户操作"
 msgid "When modeling, you should be busy with your problem or solution domain, not with the tool. Gaphor tries to stay out of your way as much as possible. It does not try to nag you with error messages, because the model is not \"correct\"."
 msgstr ""
 "在进行建模时，您应当专注于问题域或解决方案域，而非工具本身。Gaphor始终致力于"
-"最大程度减少对用户的干扰——它不会频繁弹出错误提示来打扰您，"
-"因为模型本身并无绝对\"正确\"可言。"
+"最大程度减少对用户的干扰——它不会频繁弹出错误提示来打扰您，因为模型本身并无绝"
+"对\"正确\"可言。"
 
 #: ../design_principles.md:46
 msgid "Avoid dialogs"
@@ -1130,9 +1154,9 @@ msgstr "为实现正确的设计理念并减少对用户操作的干扰，Gaphor
 
 #: ../design_principles.md:51
 msgid "Gaphor should allow you to do the sensible thing (see above) and not get you out of your flow with all sorts of questions."
-msgstr "Gaphor "
-"应当让用户能够执行合理操作（参见上述原则），而不会通过各类提问打断用户的工作"
-"流程。"
+msgstr ""
+"Gaphor 应当让用户能够执行合理操作（参见上述原则），而不会通过各类提问打断用户"
+"的工作流程。"
 
 #: ../design_principles.md:54
 msgid "Notify on changes"
@@ -1151,9 +1175,8 @@ msgstr "平衡设计"
 #: ../design_principles.md:63
 msgid "Although Gaphor implements quite a bit of the UML 2 model, it's not complete. We try to find the right balance in features to suite both expert and novice modellers."
 msgstr ""
-"尽管Gaphor实现了UML "
-"2规范中的大量建模功能，但并未涵盖全部内容。我们力求在功能设计上找到最佳平衡点"
-"，以同时满足资深建模师和初学者的需求。"
+"尽管Gaphor实现了UML 2规范中的大量建模功能，但并未涵盖全部内容。我们力求在功能"
+"设计上找到最佳平衡点，以同时满足资深建模师和初学者的需求。"
 
 #: ../design_principles.md:67
 msgid "Continuity"
@@ -1161,7 +1184,8 @@ msgstr "持续演进"
 
 #: ../design_principles.md:69
 msgid "A model that is created should be usable in the future. Gaphor does acknowledge that. We care about compatibility."
-msgstr "所创建的模型应当具备长期可用性——这正是Gaphor的核心承诺。我们高度重视版本兼容"
+msgstr ""
+"所创建的模型应当具备长期可用性——这正是Gaphor的核心承诺。我们高度重视版本兼容"
 "性。"
 
 #: ../design_principles.md:72
@@ -1170,7 +1194,8 @@ msgstr "向后兼容性"
 
 #: ../design_principles.md:74
 msgid "Gaphor is capable of loading models going back to Gaphor 1.0. It's important for a tool to always allow older models to be loaded."
-msgstr "Gaphor具备加载历史版本模型的能力，可向下兼容至1.0版本。对建模工具而言，确保始"
+msgstr ""
+"Gaphor具备加载历史版本模型的能力，可向下兼容至1.0版本。对建模工具而言，确保始"
 "终能够加载旧版模型至关重要。"
 
 #: ../design_principles.md:77
@@ -1186,7 +1211,8 @@ msgstr ""
 
 #: ../design_principles.md:84
 msgid "So far, we do not support the fourth major platform (web). Native applications provide a better user experience (once installed). But this may change."
-msgstr "目前，我们暂未支持第四大主流平台（Web端）。本地应用程序能提供更优质的用户体验"
+msgstr ""
+"目前，我们暂未支持第四大主流平台（Web端）。本地应用程序能提供更优质的用户体验"
 "（安装后即可）。不过这一情况未来可能会有所改变。"
 
 #: ../design_principles.md:87
@@ -1196,10 +1222,9 @@ msgstr "用户交互"
 #: ../design_principles.md:89
 msgid "Gaphor is originally written on Linux. It uses [GTK](https://gtk.org) as it's user interface toolkit. This sort of implies that Gaphor follows the [GNOME Human Interface Guidelines (HIG)](https://developer.gnome.org/hig/). Gaphor is also a multi-platform application. We try to stay close to the GNOME HIG, but try not to introduce concepts that are not available on Windows and macOS."
 msgstr ""
-"Gaphor最初是基于Linux平台开发的，采用 [GTK](https://gtk.org) "
-"作为其用户界面工具包。这意味着Gaphor遵循 "
-"[GNOME Human Interface Guidelines (HIG)](https://developer.gnome.org/hig/"
-")的设计规范。作为一款跨平台应用，我们虽力求贴近GNOME "
+"Gaphor最初是基于Linux平台开发的，采用 [GTK](https://gtk.org) 作为其用户界面工"
+"具包。这意味着Gaphor遵循 [GNOME Human Interface Guidelines (HIG)](https://"
+"developer.gnome.org/hig/)的设计规范。作为一款跨平台应用，我们虽力求贴近GNOME "
 "HIG标准，但会避免引入Windows和macOS平台不支持的设计概念。"
 
 #: ../design_principles.md:95
@@ -1233,14 +1258,15 @@ msgstr "事件系统"
 
 #: ../event_system.md:3
 msgid "The event system in Gaphor provides an API to *handle* events and to *subscribe* to events."
-msgstr "Gaphor的事件系统提供了一套API，用于*处理*（handle）和*订阅*（subscribe）各类"
+msgstr ""
+"Gaphor的事件系统提供了一套API，用于*处理*（handle）和*订阅*（subscribe）各类"
 "事件。"
 
 #: ../event_system.md:6
 msgid "In Gaphor we manage event handler subscriptions through the `EventManager` service. Gaphor is highly event driven:"
 msgstr ""
-"在Gaphor中，我们通过`EventManager`服务管理事件处理器（event "
-"handler）的订阅。Gaphor高度依赖事件驱动机制："
+"在Gaphor中，我们通过`EventManager`服务管理事件处理器（event handler）的订阅。"
+"Gaphor高度依赖事件驱动机制："
 
 #: ../event_system.md:9
 msgid "Changes in the loaded model are emitted as events"
@@ -1256,7 +1282,11 @@ msgstr "UI变更通过事件触发"
 
 #: ../event_system.md:13
 msgid "Although Gaphor depends heavily on GTK for its user interface, Gaphor is using its own event dispatcher. Events can be structured in hierarchies. For example, an `AttributeUpdated` event is a subtype of `ElementUpdated`. If we are interested in all changes to elements, we can also register `ElementUpdated` and receive all `AttributeUpdated` events as well."
-msgstr "尽管Gaphor的用户界面重度依赖GTK，但其事件分发器（event dispatcher）采用自主实现的方案。事件支持层级化结构——例如，`AttributeUpdated` 事件就是 `ElementUpdated` 事件的子类型。若需要监听元素的所有变更，只需注册`ElementUpdated`事件即可同时接收所有`AttributeUpdated`事件通知。"
+msgstr ""
+"尽管Gaphor的用户界面重度依赖GTK，但其事件分发器（event dispatcher）采用自主实"
+"现的方案。事件支持层级化结构——例如，`AttributeUpdated` 事件就是 "
+"`ElementUpdated` 事件的子类型。若需要监听元素的所有变更，只需注"
+"册`ElementUpdated`事件即可同时接收所有`AttributeUpdated`事件通知。"
 
 #: ../../gaphor/core/eventmanager.py:docstring of gaphor.core.eventmanager.EventManager:1
 msgid "The Event Manager provides a flexible way to dispatch events."
@@ -1264,7 +1294,8 @@ msgstr "事件管理器（Event Manager）提供了一种灵活的事件分发�
 
 #: ../../gaphor/core/eventmanager.py:docstring of gaphor.core.eventmanager.EventManager:3
 msgid "Event dispatching is a central component in Gaphor. It allows components in Gaphor to react to changes in the application."
-msgstr "事件分发是Gaphor的核心组件，它使Gaphor的各个组件能够响应应用程序中的状态变更"
+msgstr ""
+"事件分发是Gaphor的核心组件，它使Gaphor的各个组件能够响应应用程序中的状态变更"
 "。"
 
 #: ../../gaphor/core/eventmanager.py:docstring of gaphor.core.eventmanager.EventManager:6
@@ -1278,8 +1309,8 @@ msgstr "注册事件处理器（handler）。"
 #: ../../gaphor/core/eventmanager.py:docstring of gaphor.core.eventmanager.EventManager.subscribe:3
 msgid "Handlers are triggered (executed) when events are emitted through the :obj:`~gaphor.core.eventmanager.EventManager.handle` method."
 msgstr ""
-"当事件通过 :obj:`~gaphor.core.eventmanager.EventManager.handle` 方法触发时，相"
-"关处理器（handler）被执行。"
+"当事件通过 :obj:`~gaphor.core.eventmanager.EventManager.handle` 方法触发时，"
+"相关处理器（handler）被执行。"
 
 #: ../../gaphor/core/eventmanager.py:docstring of gaphor.core.eventmanager.EventManager.unsubscribe:1
 msgid "Unregister a previously registered handler."
@@ -1308,9 +1339,8 @@ msgstr "这将允许您通过事件管理器（Event Manager）处理该事件�
 #: ../event_system.md:31
 msgid "Under the hood events are handled by the Generics library. For more information about how the Generic library handles events see the [Generic documentation](https://generic.readthedocs.io)."
 msgstr ""
-"在底层实现中，事件处理由泛型库（Generics "
-"library）完成。如需了解该库处理事件的具体机制，请参阅[泛型库文档]"
-"(https://generic.readthedocs.io)。"
+"在底层实现中，事件处理由泛型库（Generics library）完成。如需了解该库处理事件"
+"的具体机制，请参阅[泛型库文档](https://generic.readthedocs.io)。"
 
 #: ../first_model.md:1
 msgid "Your First Model"
@@ -1318,8 +1348,9 @@ msgstr "您的第一个模型"
 
 #: ../first_model.md:8
 msgid "Although the names should speak for themselves, you can check out the [Getting Started](getting_started) page for more information."
-msgstr "虽然名称应该不言自明，但您仍可查阅[入门指南页面](getting_started) "
-"获取更多信息。"
+msgstr ""
+"虽然名称应该不言自明，但您仍可查阅[入门指南页面](getting_started) 获取更多信"
+"息。"
 
 #: ../first_model.md:12
 msgid "Once Gaphor is started, and you can start a new model with the _Generic_ template. The initial diagram is already open in the Diagram section."
@@ -1329,9 +1360,9 @@ msgstr "启动Gaphor后，您即可使用_通用_模板创建新模型，初始�
 msgid "Select an element you want to place, in this case a Class (![Icon for Class.](../gaphor/ui/icons/hicolor/scalable/actions/gaphor-class-symbolic.svg)) by clicking on the icon in the Toolbox and click on the diagram. This will place a new Class item instance on the diagram and add a new Class to the model -- it shows up in the Model Browser. The selected tool will reset itself to the Pointer tool after the element is placed on the diagram."
 msgstr ""
 "在工具箱中点击类（Class）元素图标(![Icon for Class.](../gaphor/ui/icons/"
-"hicolor/scalable/actions/gaphor-class-"
-"symbolic.svg))，在图表区域单击鼠标，此时将：在图表上创建新的类实例；在模型浏"
-"览器中添加对应的类元素；元素放置完成后，工具将自动切换回指针工具。"
+"hicolor/scalable/actions/gaphor-class-symbolic.svg))，在图表区域单击鼠标，此"
+"时将：在图表上创建新的类实例；在模型浏览器中添加对应的类元素；元素放置完成后"
+"，工具将自动切换回指针工具。"
 
 #: ../first_model.md:15
 msgid "Icon for Class."
@@ -1340,9 +1371,9 @@ msgstr "类图标。"
 #: ../first_model.md:21
 msgid "The Property Editor on the right side will show you details about the newly added class, such as its name (_New Class_), attributes and operations (methods). The Note field can contain any text you wish to associate with the element, (this will not show on a diagram)."
 msgstr ""
-"右侧的属性编辑器将显示新增类的详细信息，包括：名称（默认为_新建类_）、属性（A"
-"ttributes）列表、操作（Operations）方法。备注字段可添加任意相关文本（该内容不"
-"会显示在图表中）。"
+"右侧的属性编辑器将显示新增类的详细信息，包括：名称（默认为_新建类_）、属性（"
+"Attributes）列表、操作（Operations）方法。备注字段可添加任意相关文本（该内容"
+"不会显示在图表中）。"
 
 #: ../first_model.md:25
 msgid "![The Gaphor main window showing a single class added to the model.](images/first-model-class.png)"
@@ -1359,9 +1390,8 @@ msgstr "向图中添加元素非常简单。"
 #: ../first_model.md:29
 msgid "Gaphor does not make any assumptions about which elements should be placed on a diagram. A diagram is a diagram. UML defines all different kinds of diagrams, such as Class diagrams, Component diagrams, Action diagrams, Sequence diagrams. But Gaphor does not place any restrictions."
 msgstr ""
-"Gaphor 不会预设哪些元素应该放在图中。图就是图。UML "
-"定义了各种不同类型的图，比如类图、组件图、活动图、序列图等，但 Gaphor "
-"不会施加任何限制。"
+"Gaphor 不会预设哪些元素应该放在图中。图就是图。UML 定义了各种不同类型的图，比"
+"如类图、组件图、活动图、序列图等，但 Gaphor 不会施加任何限制。"
 
 #: ../first_model.md:34
 msgid "Adding Relations"
@@ -1371,16 +1401,15 @@ msgstr "添加关系"
 msgid "Add another Class. Change the names to `Shape` and `Circle`. Let's define that `Circle` is a sub-type of `Shape`. You can do this by selecting one and changing the name in the Property Editor, or by double-clicking the element."
 msgstr ""
 "添加另一个类（Class），将名称分别改为 `Shape` 和 `Circle`。我们要定义 "
-"`Circle` 是 `Shape` "
-"的子类型。你可以通过以下方式操作：选中元素，在属性编辑器（Property "
-"Editor）中修改名称；或直接双击元素进行编辑。"
+"`Circle` 是 `Shape` 的子类型。你可以通过以下方式操作：选中元素，在属性编辑器"
+"（Property Editor）中修改名称；或直接双击元素进行编辑。"
 
 #: ../first_model.md:40
 msgid "Select Generalization (![Icon for generalization relationships.](../gaphor/ui/icons/hicolor/scalable/actions/gaphor-generalization-symbolic.svg))."
 msgstr ""
 "选择泛化关系（Generalization）(![Icon for generalization relationships.](../"
-"gaphor/ui/icons/hicolor/scalable/actions/gaphor-generalization-"
-"symbolic.svg))。"
+"gaphor/ui/icons/hicolor/scalable/actions/gaphor-generalization-symbolic.svg))"
+"。"
 
 #: ../first_model.md:40
 msgid "Icon for generalization relationships."
@@ -1389,13 +1418,14 @@ msgstr "泛化关系图标。"
 #: ../first_model.md:42
 msgid "Move the mouse cursor over `Shape`. Click, hold and drag the line end over `Circle`. Release the mouse button, and you should have your relationship between `Shape` and `Circle`. You can see both ends of the relation are red, indicating they are connected to their class."
 msgstr ""
-"将鼠标光标移动到 `Shape` 上，点击并按住鼠标，拖动连线端点至 `Circle` "
-"上方后松开。此时 `Shape` 和 `Circle` "
-"之间就建立了关联关系。您会看到连线两端显示为红色，表示已成功连接到对应的类。"
+"将鼠标光标移动到 `Shape` 上，点击并按住鼠标，拖动连线端点至 `Circle` 上方后松"
+"开。此时 `Shape` 和 `Circle` 之间就建立了关联关系。您会看到连线两端显示为红色"
+"，表示已成功连接到对应的类。"
 
 #: ../first_model.md:47
 msgid "![The Gaphor main window showing two classes connected by a generalization relationship.](images/first-model-generalization.png)"
-msgstr "![Gaphor 主窗口显示两个通过泛化关系连接的类。](images/first-model-"
+msgstr ""
+"![Gaphor 主窗口显示两个通过泛化关系连接的类。](images/first-model-"
 "generalization.png)"
 
 #: ../first_model.md:47
@@ -1422,8 +1452,8 @@ msgstr "创建新图表"
 msgid "To create a new diagram, use the Model Browser. Select the element that should contain the new diagram. For now, select _New Model_. Click the New Diagram menu (![Plus symbol of the New Diagram popup menu.](images/list-add-symbolic.svg)) in the header bar."
 msgstr ""
 "要创建新图表，请使用模型浏览器。首先选择包含新图表的元素（当前，请选择_新建模"
-"型_），然后点击标题栏中的\"新建图表\"菜单 (!"
-"[Plus symbol of the New Diagram popup menu.](images/list-add-symbolic.svg))。"
+"型_），然后点击标题栏中的\"新建图表\"菜单 (![Plus symbol of the New Diagram "
+"popup menu.](images/list-add-symbolic.svg))。"
 
 #: ../first_model.md:55
 msgid "Plus symbol of the New Diagram popup menu."
@@ -1444,18 +1474,20 @@ msgstr "选择_新建通用图表_，系统将创建一张新图表。"
 #: ../first_model.md:63
 msgid "Now drag the elements from the Model Browser onto the new diagram. First the classes `Shape` and `Circle`. Add the generalization last. Drop it somewhere between the two classes. The relation will be created to the diagram."
 msgstr ""
-"现在将元素从模型浏览器拖拽至新图表中：首先拖入类` Shape` 和 "
-"`Circle`，最后添加泛化关系，将其放置在两个类之间的任意位置，系统会自动在图表"
-"中建立该关联关系。"
+"现在将元素从模型浏览器拖拽至新图表中：首先拖入类` Shape` 和 `Circle`，最后添"
+"加泛化关系，将其放置在两个类之间的任意位置，系统会自动在图表中建立该关联关系"
+"。"
 
 #: ../first_model.md:67
 msgid "Now change the name of class `Circle` to `Ellipse`. Check the other diagram. The name has been changed there as well."
-msgstr "现在将类 `Circle`的名称修改为 "
-"`Ellipse`，然后查看另一个图表——该类的名称也已同步更新。"
+msgstr ""
+"现在将类 `Circle`的名称修改为 `Ellipse`，然后查看另一个图表——该类的名称也已同"
+"步更新。"
 
 #: ../first_model.md:72
 msgid "Elements in a diagram are only a _representation_ of the elements in the underlying model. The model is what you see in the Model Browser."
-msgstr "图表中的元素只是底层模型元素的_表现形式_。您在模型浏览器中看到的才是模型本身"
+msgstr ""
+"图表中的元素只是底层模型元素的_表现形式_。您在模型浏览器中看到的才是模型本身"
 "。"
 
 #: ../first_model.md:75
@@ -1476,8 +1508,8 @@ msgstr ""
 "要了解更复杂的模型如何在Gaphor中构建，请参考[Gaphor精粹项目](https://"
 "github.com/mikekidner/gaphor_distilled))——该项目实现了作为[《SysML精粹》]"
 "(https://delligattiassociates.com/publications/"
-"?_gl=1*1tu6ekh*_ga*MTMwMTU4NjMyNC4xNzMyNTYyOTUw*_up*MQ..)基础模型的DELL-"
-"SAT-77模型，而《SysML精粹》正是SysML语言的标准参考著作之一。"
+"?_gl=1*1tu6ekh*_ga*MTMwMTU4NjMyNC4xNzMyNTYyOTUw*_up*MQ..)基础模型的DELL-SAT-"
+"77模型，而《SysML精粹》正是SysML语言的标准参考著作之一。"
 
 #: ../framework.md:1
 msgid "Framework"
@@ -1503,11 +1535,11 @@ msgstr "事件驱动"
 msgid "Parts of Gaphor communicate with each other through events. Whenever something important happens, for example, an attribute of a model element changes, an event is sent. When other parts of the application are interested in a change, they register an event handler for that event type. Events are emitted though a central broker so you do not have to register on every individual element that can send an event they are interested in. For example, a diagram item could register an event rule and then check if the element that sent the event is actually the event the item is representing. For more information see the full description of the [event system](event_system)."
 msgstr ""
 "Gaphor各组件通过事件机制进行通信。当发生重要变更时（例如模型元素的属性修改）"
-"，系统会自动触发事件通知。应用中的其他模块只需在中央事件代理（Central "
-"Broker）注册对应类型的事件处理器（Event "
-"Handler），即可监听相关变更——无需向每个可能触发事件的元素单独注册。例如，图表"
-"项可以注册事件规则，并通过验证事件源是否与其所代表的模型元素匹配来实现精准响"
-"应。完整实现细节请参阅[事件系统](event_system)专题文档。"
+"，系统会自动触发事件通知。应用中的其他模块只需在中央事件代理（Central Broker"
+"）注册对应类型的事件处理器（Event Handler），即可监听相关变更——无需向每个可能"
+"触发事件的元素单独注册。例如，图表项可以注册事件规则，并通过验证事件源是否与"
+"其所代表的模型元素匹配来实现精准响应。完整实现细节请参阅[事件系统]"
+"(event_system)专题文档。"
 
 #: ../framework.md:23
 msgid "Transactional"
@@ -1543,7 +1575,8 @@ msgstr "事件管理器（event_manager）"
 
 #: ../framework.md:44
 msgid "This is the central component used for event dispatching. Every service that does something with events (both sending and receiving) depends on this component."
-msgstr "该组件是事件调度的核心枢纽，所有涉及事件处理（包括发送与接收）的服务模块均依"
+msgstr ""
+"该组件是事件调度的核心枢纽，所有涉及事件处理（包括发送与接收）的服务模块均依"
 "赖于此组件。"
 
 #: ../framework.md:48
@@ -1553,9 +1586,9 @@ msgstr "元素工厂 (element_factory)"
 #: ../framework.md:50
 msgid "The [data model](models/core) itself is maintained in the element factory ({obj}`~gaphor.core.modeling.ElementFactory`). This service is used to create model elements, as well as to lookup elements or query for a set of elements."
 msgstr ""
-"[数据模型](models/"
-"core)本身由元素工厂（{obj}`~gaphor.core.modeling.ElementFactory`）维护，该服"
-"务组件主要提供三大功能：创建模型元素、元素检索、元素集合查询。"
+"[数据模型](models/core)本身由元素工厂（{obj}"
+"`~gaphor.core.modeling.ElementFactory`）维护，该服务组件主要提供三大功能：创"
+"建模型元素、元素检索、元素集合查询。"
 
 #: ../framework.md:54
 msgid "undo_manager"
@@ -1563,17 +1596,17 @@ msgstr "撤销管理器 (undo_manager)"
 
 #: ../framework.md:56
 msgid "One of the most appreciated services. It allows users to make a mistake every now and then!"
-msgstr "最受欢迎的服务组件之一：该管理器允许用户在执行操作时偶尔出错（毕竟谁能保证永"
+msgstr ""
+"最受欢迎的服务组件之一：该管理器允许用户在执行操作时偶尔出错（毕竟谁能保证永"
 "不失误呢）！"
 
 #: ../framework.md:59
 msgid "The undo manager is transactional. Actions performed by a user are only stored if a transaction is active. If a transaction is completed (committed) a new undo action is stored. Transactions can also be rolled back, in which case all changes are played back directly. For more information see the full description of the [undo manager](undo)."
 msgstr ""
 "撤销管理器采用事务处理机制，其运作规则如下：事务激活原则（仅当事务处于活动状"
-"态时，用户操作才会被记录）、 "
-"提交处理（事务完成（提交）后，系统将存储新的撤销操作项）、 "
-"回滚机制（事务回滚时将直接逆向执行所有变更）。完整实现细节请参阅"
-"[撤销管理器专题文档](undo)。"
+"态时，用户操作才会被记录）、 提交处理（事务完成（提交）后，系统将存储新的撤销"
+"操作项）、 回滚机制（事务回滚时将直接逆向执行所有变更）。完整实现细节请参"
+"阅[撤销管理器专题文档](undo)。"
 
 #: ../framework.md:65
 msgid "file_manager"
@@ -1591,9 +1624,9 @@ msgstr "示例：Gaphor服务"
 msgid "In this example we're doing something a little less trivial. In Gaphor, services are defined as [entry points](https://packaging.python.org/en/latest/specifications/entry-points/). Each service is a class, and takes parameters with names that match other services. This allows services to depend on other services."
 msgstr ""
 "在此示例中，我们将演示一个较为复杂的实现：Gaphor中的服务组件通过[入口点]"
-"(https://packaging.python.org/en/latest/specifications/entry-points/"
-")定义。每个服务均为独立类，其构造函数参数通过名称自动匹配其他服务实例，从而实"
-"现服务间的依赖注入。"
+"(https://packaging.python.org/en/latest/specifications/entry-points/)定义。每"
+"个服务均为独立类，其构造函数参数通过名称自动匹配其他服务实例，从而实现服务间"
+"的依赖注入。"
 
 #: ../gaphor-services.md:12
 msgid "It looks something like this:"
@@ -1613,12 +1646,14 @@ msgstr "当所有组件完成映射后，系统将根据构造函数参数名称
 
 #: ../gaphor-services.md:101
 msgid "With all elements in the model, we can create a diagram. Let's drop the components and dependencies on the diagram and let auto-layout do its magic."
-msgstr "当模型中所有元素就绪后，即可创建图表。将组件及其依赖关系拖放至图表中，系统将"
+msgstr ""
+"当模型中所有元素就绪后，即可创建图表。将组件及其依赖关系拖放至图表中，系统将"
 "通过自动布局功能智能排版。"
 
 #: ../gaphor-services.md:104
 msgid "To make the dependency look good, we have to add a style sheet. If you create a new diagram via the GUI, this element is automatically added."
-msgstr "为使依赖关系呈现更佳视觉效果，需添加样式表。若通过图形界面新建图表，该元素将"
+msgstr ""
+"为使依赖关系呈现更佳视觉效果，需添加样式表。若通过图形界面新建图表，该元素将"
 "自动加载。"
 
 #: ../gaphor-services.md:118
@@ -1636,11 +1671,10 @@ msgstr "Gaphor 入门指南"
 #: ../getting_started.md:3
 msgid "Gaphor is more than a diagram editor: it's a modeling environment. Where simple diagram editors such as Microsoft Visio and [draw.io](https://draw.io) allow you to create pictures, Gaphor actually keeps track of the elements you add to the model. In Gaphor you can create diagrams to track and visualize different aspects of the system you're developing."
 msgstr ""
-"Gaphor不仅是一款图表编辑器，更是一个完整的建模环境。相较于Microsoft Visio和"
-"[draw.io]"
-"(https://draw.io)等基础绘图工具仅能创建静态图示，Gaphor会持续追踪模型中所有元"
-"素的关联关系。通过Gaphor，您可以创建多种图表来追踪和可视化目标系统的不同维度"
-"特征。"
+"Gaphor不仅是一款图表编辑器，更是一个完整的建模环境。相较于Microsoft Visio"
+"和[draw.io](https://draw.io)等基础绘图工具仅能创建静态图示，Gaphor会持续追踪"
+"模型中所有元素的关联关系。通过Gaphor，您可以创建多种图表来追踪和可视化目标系"
+"统的不同维度特征。"
 
 #: ../getting_started.md:9
 msgid "Enough talk, let's get started."
@@ -1649,18 +1683,19 @@ msgstr "实战开始。"
 #: ../getting_started.md:11
 msgid "You can find installers for Gaphor on the [Gaphor Website](https://gaphor.org/download). Gaphor can be installed on Linux (Flatpak), Windows, and macOS."
 msgstr ""
-"您可访问[Gaphor官网](https://gaphor.org/"
-"download)下载安装程序、跨平台支持Linux系统（Flatpak格式）、Windows系统、macOS"
-"系统。"
+"您可访问[Gaphor官网](https://gaphor.org/download)下载安装程序、跨平台支持"
+"Linux系统（Flatpak格式）、Windows系统、macOS系统。"
 
 #: ../getting_started.md:14
 msgid "Once Gaphor is launched, it provides you a welcome screen. It shows you previously opened models and model templates."
-msgstr "当启动Gaphor时，系统会呈现欢迎界面，该界面会显示您最近打开的模型文件以及可用"
+msgstr ""
+"当启动Gaphor时，系统会呈现欢迎界面，该界面会显示您最近打开的模型文件以及可用"
 "的模型模板库。"
 
 #: ../getting_started.md:17
 msgid "![Gaphor's welcome screen showing recently opened models and model templates.](images/getting-started-greeter.png)"
-msgstr "![Gaphor欢迎界面展示（含最近打开的模型文件与模型模板库）。](images/getting-"
+msgstr ""
+"![Gaphor欢迎界面展示（含最近打开的模型文件与模型模板库）。](images/getting-"
 "started-greeter.png)"
 
 #: ../getting_started.md:17
@@ -1692,9 +1727,8 @@ msgstr ""
 #: ../getting_started.md:25
 msgid "**C4 Model:** A template for *Context, Containers, Components, and Code* which is for lean modeling of software architecture"
 msgstr ""
-"**C4模型模板**： "
-"一套适用于软件架构精简建模的模板，包含*上下文（Context）、容器（Containers）"
-"、组件（Components）和代码（Code）*四个层级"
+"**C4模型模板**： 一套适用于软件架构精简建模的模板，包含*上下文（Context）、容"
+"器（Containers）、组件（Components）和代码（Code）*四个层级"
 
 #: ../getting_started.md:27
 msgid "Once the model interface is loaded you'll see the modeling interface."
@@ -1702,7 +1736,8 @@ msgstr "当模型界面加载完成后，您将看到建模操作界面。"
 
 #: ../getting_started.md:29
 msgid "![The Gaphor main window, with numbers refering to parts of the UI.](images/getting-started-new-model.png)"
-msgstr "![Gaphor 主窗口示意图，图中数字对应界面各组成部分。](images/getting-started-"
+msgstr ""
+"![Gaphor 主窗口示意图，图中数字对应界面各组成部分。](images/getting-started-"
 "new-model.png)"
 
 #: ../getting_started.md:29
@@ -1749,10 +1784,9 @@ msgstr ""
 #: ../getting_started.md:51
 msgid "In the figure above, you will see that there are two elements in the Model Browser. The root element, _New Model_ is a package. Notice the small arrow beside _New Model_ that is pointing downward. This indicates that the element is expanded. You will also notice the two sub-elements are slightly indented in relation to _New Model_. The _main_ element is a diagram."
 msgstr ""
-"在上图中可见，模型浏览器内包含两个元素。根元素 _New Model_ "
-"是一个包（package）。注意 _New Model_ "
-"旁的小箭头朝下，表示该元素处于展开状态。另可见两个子元素相对 _New Model_ "
-"有轻微缩进，其中 _main_ 元素为图表（diagram）。"
+"在上图中可见，模型浏览器内包含两个元素。根元素 _New Model_ 是一个包（package"
+"）。注意 _New Model_ 旁的小箭头朝下，表示该元素处于展开状态。另可见两个子元素"
+"相对 _New Model_ 有轻微缩进，其中 _main_ 元素为图表（diagram）。"
 
 #: ../getting_started.md:58
 msgid "In the Model Browser view, you can also right-click the model elements to get a context menu. This context menu allows you to find out in which diagram model elements are shown, add new diagrams and packages, and delete an element."
@@ -1762,7 +1796,8 @@ msgstr ""
 
 #: ../getting_started.md:63
 msgid "Double-clicking on a diagram element will show it in the Diagram section. Elements such as classes and packages can be dragged from the tree view on the diagrams."
-msgstr "双击图表元素即可在【图表编辑区】显示该元素。您可以将类（Class）、包（Package"
+msgstr ""
+"双击图表元素即可在【图表编辑区】显示该元素。您可以将类（Class）、包（Package"
 "）等元素从树状视图直接拖拽至图表中。"
 
 #: ../getting_started.md:67
@@ -1771,20 +1806,22 @@ msgstr "工具箱"
 
 #: ../getting_started.md:69
 msgid "The toolbox is used to add new items to a diagram. Select the element you want to add by clicking on it. When you click on the diagram, the selected element is created. The arrow is selected again, so the element can be manipulated."
-msgstr "该工具箱用于向图表添加新元素，点击所需元素进行选择，然后在图表上点击即可创建"
+msgstr ""
+"该工具箱用于向图表添加新元素，点击所需元素进行选择，然后在图表上点击即可创建"
 "所选元素。箭头工具将自动重新选中，以便对元素进行操作。"
 
 #: ../getting_started.md:73
 msgid "Tools can be selected by simply left-clicking on them. By default, the pointer tool is selected after every item placement. This can be changed by disabling the \"Reset tool\" option in the Preferences window. Tools can also be selected by keyboard shortcuts. The keyboard shortcut can be displayed as a tooltip by hovering over the tool button in the toolbox. Finally, it is also possible to drag elements on the Diagram from the toolbox."
 msgstr ""
 "工具选择只需左键点击相应图标即可。默认情况下，每次放置元素后指针工具会自动重"
-"新激活，该行为可通过偏好设置窗口禁用\"重置工具\"选项进行调整"
-"。工具还支持键盘快捷键选择：将鼠标悬停在工具箱按钮上可显示对应的快捷键提示。"
-"此外，用户还可直接从工具箱拖拽元素至图表区域进行创建。"
+"新激活，该行为可通过偏好设置窗口禁用\"重置工具\"选项进行调整。工具还支持键盘"
+"快捷键选择：将鼠标悬停在工具箱按钮上可显示对应的快捷键提示。此外，用户还可直"
+"接从工具箱拖拽元素至图表区域进行创建。"
 
 #: ../getting_started.md:82
 msgid "The diagram section contains diagrams of the model and takes up the most space in the UI because it is where most of the modeling is done. Diagrams consist of items placed on the diagram. There are two main types of items:"
-msgstr "图表区域包含模型的各类图表，由于是主要建模操作界面，因此在用户界面中占据最大"
+msgstr ""
+"图表区域包含模型的各类图表，由于是主要建模操作界面，因此在用户界面中占据最大"
 "空间。图表由置于其上的元素构成，这些元素主要分为两种类型："
 
 #: ../getting_started.md:86
@@ -1799,8 +1836,8 @@ msgstr "关系"
 #: ../getting_started.md:89
 msgid "Multiple diagrams can be opened at once: they are shown in tabs. Tabs can be closed by pressing <kbd>Ctrl</kbd>+<kbd>w</kbd> or left-clicking on the x in the diagram tab."
 msgstr ""
-"可同时打开多个图表，并以标签页形式显示。关闭标签页的方式包括：按下 "
-"<kbd>Ctrl</kbd>+<kbd>W</kbd> 快捷键 或者 左键点击图表标签页上的×按钮。"
+"可同时打开多个图表，并以标签页形式显示。关闭标签页的方式包括：按下 <kbd>"
+"Ctrl</kbd>+<kbd>W</kbd> 快捷键 或者 左键点击图表标签页上的×按钮。"
 
 #: ../getting_started.md:95
 msgid "Elements are the shapes that you add to a diagram, and together with Relations, allow you to build up a model."
@@ -1808,12 +1845,14 @@ msgstr "元素是指添加到图表中的各种图形，它们与关系共同构
 
 #: ../getting_started.md:98
 msgid "To resize an element on the diagram, left-click on the element to select it and then drag the resize handles that appear at each corner."
-msgstr "调整图表中元素大小的操作步骤：首先左键点击需要调整的元素进行选中，然后拖动元"
+msgstr ""
+"调整图表中元素大小的操作步骤：首先左键点击需要调整的元素进行选中，然后拖动元"
 "素四周出现的缩放控制点即可调整大小。"
 
 #: ../getting_started.md:101
 msgid "To move an element on the diagram, drag the element where you want to place it by pressing and holding the left mouse button, and moving the mouse before releasing the button."
-msgstr "移动图表中元素的操作方法：将鼠标指针悬停在目标元素上，按住鼠标左键不放，拖动"
+msgstr ""
+"移动图表中元素的操作方法：将鼠标指针悬停在目标元素上，按住鼠标左键不放，拖动"
 "至目标位置后释放左键。"
 
 #: ../getting_started.md:105
@@ -1822,7 +1861,8 @@ msgstr "关系"
 
 #: ../getting_started.md:107
 msgid "Relations are line-like items that form relationships between elements in the diagram. Each end of a relation is in one of two states:"
-msgstr "关系是图表中连接元素的线状组件，用于建立元素间的关联。每条关系的两端可处于以"
+msgstr ""
+"关系是图表中连接元素的线状组件，用于建立元素间的关联。每条关系的两端可处于以"
 "下两种状态之一："
 
 #: ../getting_started.md:110
@@ -1861,14 +1901,15 @@ msgstr "<kbd>Ctrl</kbd>+<kbd>V</kbd> 快捷键_仅_用于粘贴表现层元素�
 
 #: ../getting_started.md:130
 msgid "<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>v</kbd> is used to paste a new presentation with a new model element."
-msgstr "<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>V</kbd> "
-"用于粘贴包含新模型元素的新表现层对象。"
+msgstr ""
+"<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>V</kbd> 用于粘贴包含新模型元素的新表现"
+"层对象。"
 
 #: ../getting_started.md:133
 msgid "<kbd>Ctrl</kbd>+<kbd>v</kbd> does a \"shallow\" paste. <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>v</kbd> does a \"deep\" paste."
 msgstr ""
-"<kbd>Ctrl</kbd>+<kbd>V</kbd> 执行\"浅层粘贴"
-"\"，而 <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>V</kbd> 执行\"深层粘贴\"。"
+"<kbd>Ctrl</kbd>+<kbd>V</kbd> 执行\"浅层粘贴\"，而 <kbd>Ctrl</kbd>+<kbd>"
+"Shift</kbd>+<kbd>V</kbd> 执行\"深层粘贴\"。"
 
 #: ../getting_started.md:136
 msgid "Undo and Redo"
@@ -1877,17 +1918,17 @@ msgstr "撤销与重做"
 #: ../getting_started.md:138
 msgid "Undo a change press <kbd>Ctrl</kbd>+<kbd>z</kbd> or left-click on the back arrow at the top of the Property Editor. To re-do a change, hit <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>z</kbd> or press the forward arrow at the top of the Property Editor."
 msgstr ""
-"撤销（Undo）操作请按 <kbd>Ctrl</kbd>+<kbd>Z</kbd> "
-"或左键点击属性编辑器顶部的后退箭头；重做（Redo）操作请按 "
-"<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Z</kbd> 或点击前进箭头。"
+"撤销（Undo）操作请按 <kbd>Ctrl</kbd>+<kbd>Z</kbd> 或左键点击属性编辑器顶部的"
+"后退箭头；重做（Redo）操作请按 <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Z</kbd> "
+"或点击前进箭头。"
 
 #: ../getting_started.md:145
 msgid "The Property Editor is present on the right side of the diagrams. When no item is selected in the diagram, it shows you some tips and tricks. When an item is selected on the diagram, it contains the item details like name, attributes and stereotypes. It can be opened with <kbd>F9</kbd> and the ![Icon for showing and hiding the Property Editor.](images/sidebar-show-right-symbolic.svg) icon in the header bar."
 msgstr ""
 "属性编辑器位于图表右侧区域。当未选中任何元素时，该区域显示操作提示与技巧；当"
 "选中图表元素时，则展示元素详细信息（包括名称、属性和构造型）。可通过以下方式"
-"打开：按<kbd>F9</kbd>快捷键，或点击标题栏中的 ![属性编辑器显示/隐藏图标。]("
-"images/sidebar-show-right-symbolic.svg)图标。"
+"打开：按<kbd>F9</kbd>快捷键，或点击标题栏中的 ![属性编辑器显示/隐藏图标。]"
+"(images/sidebar-show-right-symbolic.svg)图标。"
 
 #: ../getting_started.md:145
 msgid "Icon for showing and hiding the Property Editor."
@@ -1904,8 +1945,8 @@ msgstr "模型首选项"
 #: ../getting_started.md:156
 msgid "The Property Editor also contains model preferences: Click the ![Document with wrench icon for model specific configuration.](images/document-properties-symbolic.svg) button."
 msgstr ""
-"属性编辑器还包含模型首选项功能：点击![用于模型配置的文档与扳手组合图标。]("
-"images/document-properties-symbolic.svg)按钮即可访问。"
+"属性编辑器还包含模型首选项功能：点击![用于模型配置的文档与扳手组合图标。]"
+"(images/document-properties-symbolic.svg)按钮即可访问。"
 
 #: ../getting_started.md:156
 msgid "Document with wrench icon for model specific configuration."
@@ -1928,7 +1969,8 @@ msgstr "清理未使用元素"
 
 #: ../getting_started.md:165
 msgid "By default, elements that are not part of any diagram in the model will be removed. If this option is turned off, elements remain in the model and may be found in the model browser."
-msgstr "默认情况下，模型中未被任何图表引用的元素将被清理。若关闭此选项，这些元素会保"
+msgstr ""
+"默认情况下，模型中未被任何图表引用的元素将被清理。若关闭此选项，这些元素会保"
 "留在模型中，仍可通过模型浏览器查看。"
 
 #: ../getting_started.md:167
@@ -1937,7 +1979,8 @@ msgstr "图表语言"
 
 #: ../getting_started.md:169
 msgid "The diagram language modifier is only applicable to the loaded model and how it is shown in the diagram. The diagram language setting is saved as part of the model and defaults to English."
-msgstr "图表语言设置仅对当前加载的模型有效，且仅影响其在图表中的呈现方式。该设置将作"
+msgstr ""
+"图表语言设置仅对当前加载的模型有效，且仅影响其在图表中的呈现方式。该设置将作"
 "为模型组成部分保存，默认语言为英语。"
 
 #: ../getting_started.md:171
@@ -1950,8 +1993,9 @@ msgstr "Gaphor 在 Linux、Windows 和 macOS 系统中均会读取 ``LANG`` 环�
 
 #: ../getting_started.md:176
 msgid "On Windows and macOS it can be set independently of the operating system's language settings to a different language."
-msgstr "在 Windows 和 macOS "
-"系统上，该语言设置可独立于操作系统语言，单独指定为其他语言。"
+msgstr ""
+"在 Windows 和 macOS 系统上，该语言设置可独立于操作系统语言，单独指定为其他语"
+"言。"
 
 #: ../getting_started.md:178
 msgid "Style Sheet"
@@ -1996,9 +2040,8 @@ msgstr "该文档版本与 Gaphor |version| 保持同步更新"
 #: ../index.rst:8
 msgid "Gaphor is a UML and SysML modeling application written in Python. It is designed to be easy to use, while still being powerful. Gaphor implements a fully-compliant UML 2 data model, so it is much more than a picture drawing tool."
 msgstr ""
-"Gaphor 是一款基于 Python 开发的 UML 和 SysML "
-"建模应用，其设计兼顾易用性与强大功能。作为完全符合 UML 2 数据规范的建模工具，"
-"Gaphor 远不止于普通的绘图工具。"
+"Gaphor 是一款基于 Python 开发的 UML 和 SysML 建模应用，其设计兼顾易用性与强大"
+"功能。作为完全符合 UML 2 数据规范的建模工具，Gaphor 远不止于普通的绘图工具。"
 
 #: ../index.rst:13
 msgid "You can use Gaphor to quickly visualize different aspects of a system as well as create complete, highly complex models."
@@ -2006,7 +2049,10 @@ msgstr "您可以使用 Gaphor 快速构建系统的可视化视图，并创建�
 
 #: ../index.rst:18
 msgid "Gaphor is 100% Open source, available under a friendly `Apache 2 license <https://github.com/gaphor/gaphor/blob/main/LICENSES/Apache-2.0.txt>`_. The code and issue tracker can be found on `GitHub <https://github.com/gaphor/gaphor>`_."
-msgstr "Gaphor 是 100% 开源软件，采用友好的` Apache 2 许可证 <https://github.com/gaphor/gaphor/blob/main/LICENSES/Apache-2.0.txt>`_。_您可以在 `GitHub <https://github.com/gaphor/gaphor>`_ 上查看源代码和提交问题。"
+msgstr ""
+"Gaphor 是 100% 开源软件，采用友好的` Apache 2 许可证 <https://github.com/"
+"gaphor/gaphor/blob/main/LICENSES/Apache-2.0.txt>`_。_您可以在 `GitHub "
+"<https://github.com/gaphor/gaphor>`_ 上查看源代码和提交问题。"
 
 #: ../index.rst:21
 msgid "What are you waiting for? :doc:`Let's get started <getting_started>`!"
@@ -2029,8 +2075,8 @@ msgstr "Linux 版 Gaphor"
 #: ../linux.md:3
 msgid "Gaphor can be installed as Flatpak on Linux, some distributions provide packages. Check out the [Gaphor download page](https://gaphor.org/download/#linux) for details."
 msgstr ""
-"Gaphor可在Linux系统中以Flatpak形式安装，部分发行版还提供了软件包。详情请查看"
-"[Gaphor下载页面](https://gaphor.org/download/#linux) 。"
+"Gaphor可在Linux系统中以Flatpak形式安装，部分发行版还提供了软件包。详情请查"
+"看[Gaphor下载页面](https://gaphor.org/download/#linux) 。"
 
 #: ../linux.md:7
 #: ../macos.md:5
@@ -2072,10 +2118,10 @@ msgstr "GNOME Builder（GNOME 集成开发环境）"
 msgid "Open [GNOME Builder](https://flathub.org/apps/details/org.gnome.Builder) 43 or newer, [clone the repository](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository). Check if the _Build Profile_ is set to `org.gaphor.Gaphor.json`. If so, hit the _Run_ button to start the application."
 msgstr ""
 "请打开 [GNOME Builder](https://flathub.org/apps/details/org.gnome.Builder) "
-"43 或更高版本，并[克隆代码仓库](https://help.github.com/en/github/"
-"creating-cloning-and-archiving-repositories/cloning-a-repository)。检查 "
-"_Build Profile_ 是否设置为 `org.gaphor.Gaphor.json`。如果是，点击 "
-"_Run_按钮即可启动应用程序。"
+"43 或更高版本，并[克隆代码仓库](https://help.github.com/en/github/creating-"
+"cloning-and-archiving-repositories/cloning-a-repository)。检查 _Build "
+"Profile_ 是否设置为 `org.gaphor.Gaphor.json`。如果是，点击 _Run_按钮即可启动"
+"应用程序。"
 
 #: ../linux.md:25
 msgid "A Local Environment"
@@ -2086,9 +2132,9 @@ msgid "To set up a development environment with Linux, you first need a fairly n
 msgstr ""
 "要在 Linux 上搭建开发环境，首先需要一个较新的 Linux 发行版版本。例如最新的 "
 "Ubuntu LTS 或更新版本、Arch、Debian Testing、SUSE Tumbleweed 或类似发行版。"
-"Gaphor 依赖于较新版本的 GTK，且我们不保证向后兼容性。"
-"您还需要安装最新稳定版的 Python。为了避免影响系统自带的 Python 版本，"
-"我们建议您使用 [pyenv](https://github.com/pyenv/pyenv)来安装最新稳定版本。"
+"Gaphor 依赖于较新版本的 GTK，且我们不保证向后兼容性。您还需要安装最新稳定版"
+"的 Python。为了避免影响系统自带的 Python 版本，我们建议您使用 [pyenv]"
+"(https://github.com/pyenv/pyenv)来安装最新稳定版本。"
 
 #: ../linux.md:35
 msgid "Install the pyenv [prerequisites](https://github.com/pyenv/pyenv/wiki/Common-build-problems) first, and then install pyenv:"
@@ -2098,19 +2144,21 @@ msgstr ""
 
 #: ../linux.md:42
 msgid "Make sure you follow the instruction at the end of the installation script to install the commands in your shell's rc file. Next install the latest version of Python by executing:"
-msgstr "请确保按照安装脚本末尾的说明，将相关命令添加至您Shell终端的 rc 配置文件中。"
-"接着执行以下命令安装最新版 Python："
+msgstr ""
+"请确保按照安装脚本末尾的说明，将相关命令添加至您Shell终端的 rc 配置文件中。接"
+"着执行以下命令安装最新版 Python："
 
 #: ../linux.md:50
 msgid "Where 3.x.x is replaced by the latest stable version of Python (pyenv should let you tab-complete available versions)."
-msgstr "其中 3.x.x 应替换为 Python 的最新稳定版本（pyenv 支持通过 Tab "
-"键自动补全可用的版本号）。"
+msgstr ""
+"其中 3.x.x 应替换为 Python 的最新稳定版本（pyenv 支持通过 Tab 键自动补全可用"
+"的版本号）。"
 
 #: ../linux.md:52
 msgid "Next install the Gaphor prerequisites by installing the gobject introspection and cairo build dependencies, for example, in Ubuntu execute:"
-msgstr "接下来通过安装GObject "
-"Introspection和Cairo的构建依赖项来安装Gaphor的先决条件，例如，在Ubuntu系统中"
-"执行："
+msgstr ""
+"接下来通过安装GObject Introspection和Cairo的构建依赖项来安装Gaphor的先决条件"
+"，例如，在Ubuntu系统中执行："
 
 #: ../linux.md:61
 msgid "For Redhat/RPM/Fedora based systems:"
@@ -2126,9 +2174,8 @@ msgstr ""
 #: ../linux.md:72
 msgid "Next, [clone the repository](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository), after which you need to execute the following consecutive commands:"
 msgstr ""
-"接下来，[克隆代码仓库](https://help.github.com/en/github/"
-"creating-cloning-and-archiving-repositories/"
-"cloning-a-repository)，然后依次执行以下命令："
+"接下来，[克隆代码仓库](https://help.github.com/en/github/creating-cloning-"
+"and-archiving-repositories/cloning-a-repository)，然后依次执行以下命令："
 
 #: ../linux.md:83
 #: ../macos.md:30
@@ -2137,8 +2184,9 @@ msgstr "现在，您可以运行 Gaphor，方法是："
 
 #: ../linux.md:88
 msgid "NOTE: Gaphor requires GTK 4. It works best with GTK >=4.8 and libadwaita >=1.2."
-msgstr "注意：Gaphor 需要 GTK 4 环境，推荐使用 GTK ≥4.8 及 libadwaita ≥1.2 "
-"版本以获得最佳运行效果。"
+msgstr ""
+"注意：Gaphor 需要 GTK 4 环境，推荐使用 GTK ≥4.8 及 libadwaita ≥1.2 版本以获得"
+"最佳运行效果。"
 
 #: ../linux.md:90
 #: ../macos.md:44
@@ -2149,8 +2197,8 @@ msgstr "使用 Visual Studio Code 进行调试"
 #: ../linux.md:92
 msgid "Before you start debugging you'll need to open Gaphor in vscode (the folder containing `pyproject.toml`). You'll need to have the Python extension installed."
 msgstr ""
-"开始调试前，需在 VS Code 中打开 Gaphor 项目目录（包含 `pyproject.toml` "
-"文件的文件夹），并确保已安装 Python 扩展插件。"
+"开始调试前，需在 VS Code 中打开 Gaphor 项目目录（包含 `pyproject.toml` 文件的"
+"文件夹），并确保已安装 Python 扩展插件。"
 
 #: ../linux.md:95
 #: ../macos.md:49
@@ -2168,17 +2216,16 @@ msgstr "创建 Flatpak 软件包"
 #: ../linux.md:119
 msgid "The main method that Gaphor is packaged for Linux is with a Flatpak package. [Flatpak](https://flatpak.org) is a software utility for software deployment and package management for Linux. It offers a sandbox environment in which users can run application software in isolation from the rest of the system."
 msgstr ""
-"Gaphor 在 Linux 系统上的主要打包方式是 Flatpak 软件包。 [Flatpak]"
-"(https://flatpak.org) 是一款面向 Linux "
-"的软件部署与包管理工具，它能提供沙箱运行环境，使应用程序与系统其他部分隔离运"
-"行。"
+"Gaphor 在 Linux 系统上的主要打包方式是 Flatpak 软件包。 [Flatpak](https://"
+"flatpak.org) 是一款面向 Linux 的软件部署与包管理工具，它能提供沙箱运行环境，"
+"使应用程序与系统其他部分隔离运行。"
 
 #: ../linux.md:124
 msgid "We distribute the official Flatpak using [Flathub](https://flathub.org), and building of the image is done at the [Gaphor Flathub repository](https://github.com/flathub/org.gaphor.Gaphor)."
 msgstr ""
-"我们通过 [Flathub](https://flathub.org)分发官方 Flatpak "
-"软件包，镜像构建工作则在[Gaphor Flathub 仓库](https://github.com/flathub/"
-"org.gaphor.Gaphor) 完成。"
+"我们通过 [Flathub](https://flathub.org)分发官方 Flatpak 软件包，镜像构建工作"
+"则在[Gaphor Flathub 仓库](https://github.com/flathub/org.gaphor.Gaphor) 完成"
+"。"
 
 #: ../linux.md:128
 msgid "[Install Flatpak](https://flatpak.org/setup)"
@@ -2257,9 +2304,9 @@ msgstr "打开终端并执行："
 #: ../macos.md:23
 msgid "Next, [clone the repository](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository), after which you can execute the following consecutive commands to install the poetry environment:"
 msgstr ""
-"接下来，[克隆代码仓库](https://help.github.com/en/github/"
-"creating-cloning-and-archiving-repositories/"
-"cloning-a-repository)，之后可依次执行以下命令来安装Poetry环境："
+"接下来，[克隆代码仓库](https://help.github.com/en/github/creating-cloning-"
+"and-archiving-repositories/cloning-a-repository)，之后可依次执行以下命令来安"
+"装Poetry环境："
 
 #: ../macos.md:35
 msgid "If PyGObject does not compile and complains about a missing `ffi.h` file, you may want to install libffi from Homebrew, and set the following environment variable and run `poetry install` again:"
@@ -2269,7 +2316,8 @@ msgstr ""
 
 #: ../macos.md:46
 msgid "Before you start debugging you'll need to open Gaphor in VSCode (the folder containing `pyproject.toml`). You'll need to have the Python extension installed."
-msgstr "在开始调试之前，你需要在VSCode中打开Gaphor（包含`pyproject.toml`的文件夹）。"
+msgstr ""
+"在开始调试之前，你需要在VSCode中打开Gaphor（包含`pyproject.toml`的文件夹）。"
 "你需要安装Python扩展。"
 
 #: ../macos.md:66
@@ -2279,9 +2327,9 @@ msgstr "macOS 平台打包指南"
 #: ../macos.md:68
 msgid "In order to create an exe installation package for macOS, we utilize [PyInstaller](https://pyinstaller.org) which analyzes Gaphor to find all the dependencies and bundle them in to a single folder."
 msgstr ""
-"为创建适用于 macOS 的 exe 安装包，我们采用 [PyInstaller]"
-"(https://pyinstaller.org) 工具。该工具会分析 Gaphor "
-"的所有依赖项，并将其打包至单个文件夹中。"
+"为创建适用于 macOS 的 exe 安装包，我们采用 [PyInstaller](https://"
+"pyinstaller.org) 工具。该工具会分析 Gaphor 的所有依赖项，并将其打包至单个文件"
+"夹中。"
 
 #: ../macos.md:72
 msgid "Follow the instructions for settings up a development environment above"
@@ -2297,22 +2345,22 @@ msgstr "解决合并冲突"
 
 #: ../merge_conflicts.md:3
 msgid "Suppose you’re working on a model. If you create a change, while someone else has also made changes, there’s a fair chance you'll end up with a merge conflict."
-msgstr "假设您正在处理某个模型。如果您修改了模型内容，而其他协作者也做了改动，就很可"
+msgstr ""
+"假设您正在处理某个模型。如果您修改了模型内容，而其他协作者也做了改动，就很可"
 "能遇到合并冲突。"
 
 #: ../merge_conflicts.md:6
 msgid "Gaphor tries to make the changes to a model as small as possible: all elements are stored in the same order. However, since a Gaphor model is a persisted graph of objects, merging changes is not as simple as opening a text editor."
 msgstr ""
-"Gaphor 会尽可能精简模型变更：所有元素均按相同顺序存储。但由于 Gaphor "
-"模型本质上是持久化的对象图（Graph of "
-"objects），其合并操作远比文本编辑器复杂。"
+"Gaphor 会尽可能精简模型变更：所有元素均按相同顺序存储。但由于 Gaphor 模型本质"
+"上是持久化的对象图（Graph of objects），其合并操作远比文本编辑器复杂。"
 
 #: ../merge_conflicts.md:10
 msgid "From Gaphor 2.18 onwards Gaphor is also capable of merging models. Once a merge conflict has been detected (i.e., when the model file contains git conflict-resolution markers `<<<<<<<`, `=======`, and `>>>>>>>`), Gaphor will offer the option to open the current model, the incoming model or merge changes manually via the Merge Editor."
 msgstr ""
-"自 Gaphor 2.18 版本起，该软件已支持模型合并功能。当检测到合并冲突时（"
-"即模型文件中出现 Git 冲突标记 `<<<<<<<`、`=======` 和 `>>>>>>>`），Gaphor "
-"将提供以下处理选项：通过合并编辑器打开当前模型、接收的模型或手动合并变更。"
+"自 Gaphor 2.18 版本起，该软件已支持模型合并功能。当检测到合并冲突时（即模型文"
+"件中出现 Git 冲突标记 `<<<<<<<`、`=======` 和 `>>>>>>>`），Gaphor 将提供以下"
+"处理选项：通过合并编辑器打开当前模型、接收的模型或手动合并变更。"
 
 #: ../merge_conflicts.md:15
 msgid "![A dialog showing options on how to deal with a merge conflict.](images/merge-dialog.png)"
@@ -2326,8 +2374,8 @@ msgstr "显示合并冲突处理选项的对话框。"
 msgid "If you choose *Open Merge Editor*, both models will be loaded. The current model remains as is. In addition, the changes made to the incoming model are calculated. Those changes are stored as _pending change_ objects in the model."
 msgstr ""
 "若选择*打开合并编辑器*，系统将同时加载两个模型：当前模型保持原状，同时会计算"
-"接收模型的变更内容。这些变更将以_待定变更（Pending "
-"change）_对象的形式存储在模型中。"
+"接收模型的变更内容。这些变更将以_待定变更（Pending change）_对象的形式存储在"
+"模型中。"
 
 #: ../merge_conflicts.md:21
 msgid "Pending changes are part of the model, you can save the model with changes and resolve those at a later point."
@@ -2369,7 +2417,8 @@ msgstr "建模语言"
 
 #: ../modeling_language.md:3
 msgid "Since version 2.0, Gaphor supports the concept of Modeling languages. This allows for development of separate modeling languages separate from the Gaphor core application."
-msgstr "自2.0版本起，Gaphor开始支持建模语言概念。这一特性使得建模语言的开发能够独立于"
+msgstr ""
+"自2.0版本起，Gaphor开始支持建模语言概念。这一特性使得建模语言的开发能够独立于"
 "Gaphor核心应用程序进行。"
 
 #: ../modeling_language.md:7
@@ -2438,8 +2487,9 @@ msgstr "[自动清理规则](#automated-model-cleanup) 保持模型一致性"
 
 #: ../modeling_language.md:41
 msgid "Modeling languages can also provide new UI components. Those components are not loaded directly when you import a modeling language package. Instead, they should be imported via the `gaphor.modules` entrypoint."
-msgstr "建模语言还可以提供新的 UI 组件。这些组件不会在导入建模语言包时直接加载，"
-"而应通过 `gaphor.modules` 入口点导入。"
+msgstr ""
+"建模语言还可以提供新的 UI 组件。这些组件不会在导入建模语言包时直接加载，而应"
+"通过 `gaphor.modules` 入口点导入。"
 
 #: ../modeling_language.md:45
 msgid "[Editor pages](#property-editor-pages), shown in the collapsible pane on the right side"
@@ -2459,8 +2509,9 @@ msgstr "建模语言"
 
 #: ../../gaphor/abc.py:docstring of gaphor.abc.ModelingLanguage:1
 msgid "A model provider is a special service that provides an entrypoint to a model implementation, such as UML, SysML, RAAML."
-msgstr "模型提供者（Model "
-"Provider）是一种特殊服务，它为UML、SysML、RAAML等模型实现提供入口点。"
+msgstr ""
+"模型提供者（Model Provider）是一种特殊服务，它为UML、SysML、RAAML等模型实现提"
+"供入口点。"
 
 #: ../../gaphor/abc.py:docstring of gaphor.abc.ModelingLanguage.diagram_types:1
 msgid "Iterate diagram types."
@@ -2492,7 +2543,8 @@ msgstr "获取工具箱结构。"
 
 #: ../modeling_language.md:57
 msgid "As a convention, the package containing the modeling language should have an attribute `__modeling_language__` that has the same value as the modeling language name in the entry point."
-msgstr "根据约定，包含建模语言的包应设置`__modeling_language__`属性，其属性值需与入口"
+msgstr ""
+"根据约定，包含建模语言的包应设置`__modeling_language__`属性，其属性值需与入口"
 "点中的建模语言名称保持一致。"
 
 #: ../modeling_language.md:60
@@ -2517,7 +2569,8 @@ msgstr "连接器用于实现元素间的相互连接。"
 
 #: ../modeling_language.md:79
 msgid "Connectors should adhere to the `ConnectorProtocol`. Normally you would inherit from `BaseConnector`."
-msgstr "连接器应遵循`ConnectorProtocol`协议规范。通常建议继承`BaseConnector`基类实现"
+msgstr ""
+"连接器应遵循`ConnectorProtocol`协议规范。通常建议继承`BaseConnector`基类实现"
 "。"
 
 #: ../../gaphor/diagram/connectors.py:docstring of gaphor.diagram.connectors.BaseConnector:1
@@ -2562,12 +2615,14 @@ msgstr "连接至元素。"
 
 #: ../../gaphor/diagram/connectors.py:docstring of gaphor.diagram.connectors.BaseConnector.connect:3
 msgid "Establish a connection between element and line. Also takes care of disconnects, if required (e.g. 1:1 relationships)."
-msgstr "建立元素与线段之间的连接关系。该操作还会根据需求（如1:1关系）处理断开连接的情"
+msgstr ""
+"建立元素与线段之间的连接关系。该操作还会根据需求（如1:1关系）处理断开连接的情"
 "况。"
 
 #: ../../gaphor/diagram/connectors.py:docstring of gaphor.diagram.connectors.BaseConnector.connect:6
 msgid "Note that at this point the line may be connected to some other, or the same element. The connection at model level also still exists."
-msgstr "请注意：此时线段可能已连接至其他元素或同一元素，且模型层级的连接关系仍然存在"
+msgstr ""
+"请注意：此时线段可能已连接至其他元素或同一元素，且模型层级的连接关系仍然存在"
 "。"
 
 #: ../../gaphor/diagram/connectors.py:docstring of gaphor.diagram.connectors.BaseConnector.connect:10
@@ -2592,7 +2647,8 @@ msgstr "格式化与解析"
 
 #: ../modeling_language.md:89
 msgid "Model elements can be formatted to a simple text representation. For example, This is used in the Model Browser. It isn't a full serialization of the model element."
-msgstr "模型元素可格式化为简单文本表示形式（例如在模型浏览器中使用）。请注意，此非模"
+msgstr ""
+"模型元素可格式化为简单文本表示形式（例如在模型浏览器中使用）。请注意，此非模"
 "型元素的完整序列化。"
 
 #: ../modeling_language.md:92
@@ -2605,14 +2661,15 @@ msgstr "并非所有``format()``方法都需要对应的``parse()``函数。"
 
 #: ../modeling_language.md:100
 msgid "Returns a human readable representation of the model element. In most cases this is just the name, however, properties (attributes) and operations are formatted more extensively:"
-msgstr "返回模型元素的人类可读表示形式。多数情况下仅显示名称，但属性(attribute)和操作"
+msgstr ""
+"返回模型元素的人类可读表示形式。多数情况下仅显示名称，但属性(attribute)和操作"
 "(operation)会以更详细的格式呈现："
 
 #: ../modeling_language.md:110
 msgid "Parse ``text`` and populate ``element``. The element is populated with elements from the text. This may mean that new model elements are created as part of the parse process."
-msgstr "解析 ``text`` 并填充 "
-"``element``。该元素将被文本中的内容填充，这可能意味着在解析过程中会创建新的模"
-"型元素。"
+msgstr ""
+"解析 ``text`` 并填充 ``element``。该元素将被文本中的内容填充，这可能意味着在"
+"解析过程中会创建新的模型元素。"
 
 #: ../modeling_language.md:114
 msgid "Copy and paste"
@@ -2632,7 +2689,8 @@ msgstr ""
 
 #: ../modeling_language.md:121
 msgid "In those specific cases you need to implement your own copy and paste functions. To create such a thing you'll need to create two functions: one for copying and one for pasting."
-msgstr "针对这些特定情况，您需要自行实现复制粘贴功能。具体需要创建两个函数：一个处理"
+msgstr ""
+"针对这些特定情况，您需要自行实现复制粘贴功能。具体需要创建两个函数：一个处理"
 "复制操作，另一个处理粘贴操作。"
 
 #: ../modeling_language.md:126
@@ -2644,7 +2702,8 @@ msgstr ""
 
 #: ../modeling_language.md:134
 msgid "Paste previously copied data. Based on the data type created in the ``copy()`` function, try to duplicate the copied elements. Returns the newly created item or element."
-msgstr "粘贴先前复制的数据。根据``copy()``函数中创建的数据类型，尝试复制被拷贝的元素"
+msgstr ""
+"粘贴先前复制的数据。根据``copy()``函数中创建的数据类型，尝试复制被拷贝的元素"
 "。返回新创建的项或元素。"
 
 #: ../modeling_language.md:139
@@ -2653,18 +2712,21 @@ msgstr "Gaphor 提供以下便捷功能："
 
 #: ../modeling_language.md:143
 msgid "Copy ``items``. The ``lookup`` function is used to look up owned elements (shown as child nodes in the Model Browser)."
-msgstr "复制 ``items``。该操作使用 ``lookup`` "
-"函数查询所属元素（这些元素在模型浏览器中显示为子节点）。"
+msgstr ""
+"复制 ``items``。该操作使用 ``lookup`` 函数查询所属元素（这些元素在模型浏览器"
+"中显示为子节点）。"
 
 #: ../modeling_language.md:148
 msgid "Paste a copy of the Presentation element to the diagram, but try to link the underlying model element. A shallow copy."
-msgstr "将呈现元素(Presentation "
-"element)的副本粘贴到图表中，同时尝试关联底层模型元素。（该操作为浅拷贝）。"
+msgstr ""
+"将呈现元素(Presentation element)的副本粘贴到图表中，同时尝试关联底层模型元素"
+"。（该操作为浅拷贝）。"
 
 #: ../modeling_language.md:154
 msgid "Paste a copy of both Presentation and model element. A deep copy."
-msgstr "粘贴呈现元素(Presentation element)及模型元素(model "
-"element)的副本。（该操作为深拷贝）。"
+msgstr ""
+"粘贴呈现元素(Presentation element)及模型元素(model element)的副本。（该操作为"
+"深拷贝）。"
 
 #: ../modeling_language.md:157
 msgid "Grouping"
@@ -2677,9 +2739,8 @@ msgstr "分组操作通过将一个元素拖拽到另一个元素上来实现，
 #: ../modeling_language.md:163
 msgid "Return the owner for `element`. The owner may be `Root`, denoting the element should be placed in the root of the ownership hierarchy. If `None` is returned, there is no owner."
 msgstr ""
-"返回 `element` 的所有者。所有者可能为 "
-"`Root`（表示该元素应置于所属关系层级的根节点）。若返回 "
-"`None`，则表示该元素没有所有者。"
+"返回 `element` 的所有者。所有者可能为 `Root`（表示该元素应置于所属关系层级的"
+"根节点）。若返回 `None`，则表示该元素没有所有者。"
 
 #: ../modeling_language.md:169
 msgid "Returns all elements owned by `element"
@@ -2687,7 +2748,8 @@ msgstr "返回 `element` 所拥有的所有元素"
 
 #: ../modeling_language.md:174
 msgid "Group an element in a parent element. The grouping can be based on ownership, but other types of grouping are also possible."
-msgstr "将元素归组到父元素中。分组可基于所属关系（Ownership）实现，但也支持其他分组类"
+msgstr ""
+"将元素归组到父元素中。分组可基于所属关系（Ownership）实现，但也支持其他分组类"
 "型。"
 
 #: ../modeling_language.md:180
@@ -2696,8 +2758,9 @@ msgstr "移除元素的分组关系。该功能需要检查所指定的 `parent`
 
 #: ../modeling_language.md:186
 msgid "This function tries to determine if grouping is possible, without actually performing a group operation. This is not 100% accurate."
-msgstr "该功能会尝试判断是否可以进行分组操作（但不会实际执行分组），其判断结果并非100"
-"%准确。"
+msgstr ""
+"该功能会尝试判断是否可以进行分组操作（但不会实际执行分组），其判断结果并非"
+"100%准确。"
 
 #: ../modeling_language.md:191
 msgid "Dropping"
@@ -2705,7 +2768,8 @@ msgstr "拖放"
 
 #: ../modeling_language.md:193
 msgid "Dropping is performed by dragging an element from the tree view and drop it on a diagram. This is an easy way to extend a diagram with already existing model elements."
-msgstr "拖放操作通过将元素从树状视图拖拽至图表中完成。这是使用现有模型元素快速扩展图"
+msgstr ""
+"拖放操作通过将元素从树状视图拖拽至图表中完成。这是使用现有模型元素快速扩展图"
 "表的便捷方式。"
 
 #: ../modeling_language.md:196
@@ -2714,13 +2778,15 @@ msgstr "此外，也可将展示项（Presentation item）拖放至其他元素�
 
 #: ../modeling_language.md:200
 msgid "The drop function creates a new presentation for an element on the diagram, if the element is not a presentation yet. For relationships, a drop only works if both connected elements are present in the same diagram."
-msgstr "拖放功能会为元素在图表中创建新的展示项（若该元素尚未被展示）。对于关联关系，"
+msgstr ""
+"拖放功能会为元素在图表中创建新的展示项（若该元素尚未被展示）。对于关联关系，"
 "只有当被连接的两个元素都存在于同一图表中时，拖放操作才会生效。"
 
 #: ../modeling_language.md:205
 msgid "While grouping deals with connecting model elements, dropping deals with creating and placing presentation elements on the right item in a diagram."
-msgstr "分组（Grouping） 用于关联模型元素，而 拖放（Dropping） "
-"则用于在图表中的目标项上创建和定位展示元素。"
+msgstr ""
+"分组（Grouping） 用于关联模型元素，而 拖放（Dropping） 则用于在图表中的目标项"
+"上创建和定位展示元素。"
 
 #: ../modeling_language.md:209
 msgid "Automated model cleanup"
@@ -2744,7 +2810,8 @@ msgstr "属性编辑器页面"
 
 #: ../modeling_language.md:222
 msgid "The editor page is constructed from snippets. For example: almost each element has a name, so there is a UI snippet that allows you to edit a name."
-msgstr "编辑器页面由多个代码片段构建而成。例如：几乎每个元素都包含名称属性，因此会有"
+msgstr ""
+"编辑器页面由多个代码片段构建而成。例如：几乎每个元素都包含名称属性，因此会有"
 "一个专门的UI片段供用户编辑名称。"
 
 #: ../modeling_language.md:225
@@ -2773,7 +2840,8 @@ msgstr "在图表中双击某一元素时，会弹出编辑窗口，此时可快
 
 #: ../modeling_language.md:236
 msgid "By default, this works for any named element. You can register your own inline editor function if you need to."
-msgstr "默认情况下，此功能适用于所有带名称的元素。如需扩展功能，可注册自定义的行内编"
+msgstr ""
+"默认情况下，此功能适用于所有带名称的元素。如需扩展功能，可注册自定义的行内编"
 "辑器函数。"
 
 #: ../modeling_language.md:240
@@ -2790,8 +2858,9 @@ msgstr "C4模型"
 
 #: ../models/c4model.md:3
 msgid "The [C4 model](https://c4model.com/) is a simple visual language to describe the static structure of a software system."
-msgstr "[C4模型](https://c4model.com/) "
-"是一种用于描述软件系统静态结构的简洁可视化建模语言。"
+msgstr ""
+"[C4模型](https://c4model.com/) 是一种用于描述软件系统静态结构的简洁可视化建模"
+"语言。"
 
 #: ../models/c4model.md:5
 msgid "It’s based on the [UML](uml.md) language."
@@ -2808,14 +2877,15 @@ msgstr "核心建模语言（Core Modeling Language）是所有其他建模语�
 #: ../models/core.rst:6
 msgid "The :obj:`~gaphor.core.modeling.Base` class acts as the root for all gaphor domain classes. :obj:`~gaphor.core.modeling.Diagram` and :obj:`~gaphor.core.modeling.Presentation` form the basis for everything you see in a diagram."
 msgstr ""
-":obj:`~gaphor.core.modeling.Base` 类作为所有 Gaphor "
-"领域类的根类。:obj:`~gaphor.core.modeling.Diagram` 和 "
+":obj:`~gaphor.core.modeling.Base` 类作为所有 Gaphor 领域类的根类"
+"。:obj:`~gaphor.core.modeling.Diagram` 和 "
 ":obj:`~gaphor.core.modeling.Presentation` 则构成了图表中所有可见内容的基础。"
 
 #: ../models/core.rst:10
 msgid "All data models in Gaphor are generated from actual Gaphor model files. This allows us to provide you nice diagrams of Gaphor’s internal model."
-msgstr "Gaphor中的所有数据模型均从其实际的模型文件生成，这一机制使我们能够为您提供Gap"
-"hor内部模型的清晰图表展示。"
+msgstr ""
+"Gaphor中的所有数据模型均从其实际的模型文件生成，这一机制使我们能够为您提供"
+"Gaphor内部模型的清晰图表展示。"
 
 #: ../models/core.rst:16
 msgid "The core model with presentation classes"
@@ -2837,8 +2907,8 @@ msgstr ""
 msgid "The :obj:`~gaphor.core.modeling.base.RepositoryProtocol`, and :obj:`~gaphor.core.modeling.base.EventWatcherProtocol` protocols are important to connect the model to the repository and event handling mechanisms."
 msgstr ""
 ":obj:`~gaphor.core.modeling.base.RepositoryProtocol` 和 "
-":obj:`~gaphor.core.modeling.base.EventWatcherProtocol` "
-"协议对于将模型连接到仓库及事件处理机制至关重要。"
+":obj:`~gaphor.core.modeling.base.EventWatcherProtocol` 协议对于将模型连接到仓"
+"库及事件处理机制至关重要。"
 
 #: ../models/core.rst:33
 msgid "The class ``Base`` is the core of Gaphor’s data model."
@@ -2862,8 +2932,9 @@ msgstr "解链元素。"
 
 #: ../../gaphor/core/modeling/base.py:docstring of gaphor.core.modeling.base.Base.unlink:3
 msgid "All the elements references are destroyed. For composite associations, the associated elements are also unlinked."
-msgstr "所有元素引用均被销毁。对于组合关联（composite "
-"associations），其关联元素也将被解链。"
+msgstr ""
+"所有元素引用均被销毁。对于组合关联（composite associations），其关联元素也将"
+"被解链。"
 
 #: ../../gaphor/core/modeling/base.py:docstring of gaphor.core.modeling.base.Base.unlink:6
 msgid "The unlink lock is acquired while unlinking this element's properties to avoid recursion problems."
@@ -2887,8 +2958,9 @@ msgstr "为此元素创建一个新的监视器。"
 
 #: ../../gaphor/core/modeling/base.py:docstring of gaphor.core.modeling.base.Base.watcher:3
 msgid "Watchers provide a convenient way to get signalled when a property relative to ``self`` has been changed."
-msgstr "当与 ``self`` "
-"相关的属性发生更改时，监视器（Watchers）提供了一种便捷的方式来接收通知。"
+msgstr ""
+"当与 ``self`` 相关的属性发生更改时，监视器（Watchers）提供了一种便捷的方式来"
+"接收通知。"
 
 #: ../../gaphor/core/modeling/base.py:docstring of gaphor.core.modeling.base.Base.watcher:6
 msgid "To use a watcher, the element should be created by a properly wired up :class:`~gaphor.core.modeling.ElementFactory``."
@@ -2990,8 +3062,9 @@ msgstr "图表（Diagram）可以包含 :obj:`Presentation` 呈现元素。"
 
 #: ../../gaphor/core/modeling/diagram.py:docstring of gaphor.core.modeling.diagram.Diagram:3
 msgid "If diagrams need to be owned, the modeling language (e.g. UML) should subclass ``Diagram`` and add ownership relationships and rules."
-msgstr "若需为图表（Diagram）设置所有权关系，建模语言（如UML）应继承`` Diagram`` "
-"类，并添加所有权关联规则。"
+msgstr ""
+"若需为图表（Diagram）设置所有权关系，建模语言（如UML）应继承`` Diagram`` 类，"
+"并添加所有权关联规则。"
 
 #: ../../gaphor/core/modeling/diagram.py:docstring of gaphor.core.modeling.diagram.Diagram.create:1
 msgid "Create a new diagram item on the diagram."
@@ -3000,9 +3073,8 @@ msgstr "在图表上创建新的图表项。"
 #: ../../gaphor/core/modeling/diagram.py:docstring of gaphor.core.modeling.diagram.Diagram.create:3
 msgid "It is created with a unique ID, and it is attached to the diagram's root item.  The type parameter is the element class to create.  The new element also has an optional parent and subject."
 msgstr ""
-"该元素创建时将分配唯一ID，并挂载至图表根项（root "
-"item）。参数type指定要创建的元素类，新元素还可选包含父级关联（parent）和主题"
-"对象（subject）。"
+"该元素创建时将分配唯一ID，并挂载至图表根项（root item）。参数type指定要创建的"
+"元素类，新元素还可选包含父级关联（parent）和主题对象（subject）。"
 
 #: ../../gaphor/core/modeling/diagram.py:docstring of gaphor.core.modeling.diagram.Diagram.lookup:1
 msgid "Find a presentation item by id."
