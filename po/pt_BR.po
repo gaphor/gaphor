@@ -5,7 +5,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-12 21:36-0500\n"
 "PO-Revision-Date: 2026-01-14 21:32+0000\n"
-"Last-Translator: Rafael Fontenelle <rafaelff@gnome.org>\n"
+"Last-Translator: JonnathanRiquelmo <jonnathan.riquelmo@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/"
 "gaphor/gaphor/pt_BR/>\n"
 "Language: pt_BR\n"
@@ -89,31 +89,27 @@ msgstr "Novo Diagrama C4"
 
 #: gaphor/C4Model/toolbox.py:142 gaphor/UML/toolbox.py:32
 msgid "Class Diagram"
-msgstr "Novo Diagrama de Classe"
+msgstr "Diagrama de Classe"
 
 #: gaphor/C4Model/toolbox.py:143 gaphor/SysML/toolbox.py:138
 #: gaphor/UML/toolbox.py:36
-#, fuzzy
 msgid "Activity Diagram"
-msgstr "Novo Diagrama de Atividade"
+msgstr "Diagrama de Atividade"
 
 #: gaphor/C4Model/toolbox.py:144 gaphor/SysML/toolbox.py:148
 #: gaphor/UML/toolbox.py:37
-#, fuzzy
 msgid "Sequence Diagram"
-msgstr "Novo Diagrama de Sequência"
+msgstr "Diagrama de Sequência"
 
 #: gaphor/C4Model/toolbox.py:145 gaphor/SysML/toolbox.py:158
 #: gaphor/UML/toolbox.py:41
-#, fuzzy
 msgid "State Machine Diagram"
-msgstr "Novo Diagrama de Máquina de Estados"
+msgstr "Diagrama de Máquina de Estados"
 
 #: gaphor/C4Model/toolbox.py:146 gaphor/RAAML/toolbox.py:32
 #: gaphor/SysML/toolbox.py:178 gaphor/UML/toolbox.py:44
-#, fuzzy
 msgid "Generic Diagram"
-msgstr "Novo Diagrama Genérico"
+msgstr "Diagrama Genérico"
 
 #: gaphor/C4Model/toolbox.py:150 gaphor/RAAML/toolbox.py:36
 #: gaphor/SysML/blocks/blockstoolbox.py:51 gaphor/SysML/toolbox.py:182
@@ -160,9 +156,8 @@ msgid "Enumeration"
 msgstr "Enumeração"
 
 #: gaphor/C4Model/toolbox.py:165
-#, fuzzy
 msgid "Primitive Type"
-msgstr "Novo Tipo Primitivo"
+msgstr "Tipo Primitivo"
 
 #: gaphor/RAAML/modelinglanguage.py:30 gaphor/ui/greeter.py:48
 msgid "RAAML"
@@ -2806,8 +2801,7 @@ msgid ""
 "Please free up some disk space and try again or save it in a different "
 "location."
 msgstr ""
-"Você não tem espaço livre suficiente no dispositivo para salvar o modelo."
-"\n"
+"Você não tem espaço livre suficiente no dispositivo para salvar o modelo.\n"
 "Libere espaço em disco e tente novamente ou salve-o em um local diferente."
 
 #: gaphor/ui/filemanager.py:52
