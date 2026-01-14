@@ -5,7 +5,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2025-11-12 21:36-0500\n"
 "PO-Revision-Date: 2026-01-14 21:32+0000\n"
-"Last-Translator: Petr <pasabanov@murena.io>\n"
+"Last-Translator: Сергей <asvmail.as@gmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/gaphor/gaphor/"
 "ru/>\n"
 "Language: ru\n"
@@ -1809,7 +1809,8 @@ msgstr "Экспортировать все диаграммы в формате
 
 #: gaphor/storage/recovery.py:155
 msgid "This model contains unsaved changes. The changes have been restored."
-msgstr "Эта модель содержит несохраненные изменения. Изменения были восстановлены."
+msgstr ""
+"Эта модель содержит несохраненные изменения. Изменения были восстановлены."
 
 #: gaphor/templates/blank.gaphor gaphor/ui/mainwindow.py:268
 #: gaphor/ui/mainwindow.py:273 gaphor/ui/mainwindow.ui:129
@@ -2466,8 +2467,8 @@ msgid ""
 " and avoid design flaws such as cyclic dependencies or dependencies on "
 "unstable parts"
 msgstr ""
-"Подготовьте диаграмму зависимостей пакетов, чтобы соответствующим образом"
-" сгруппировать классы реализации. Это поможет поддерживать хорошо "
+"Подготовьте диаграмму зависимостей пакетов, чтобы соответствующим образом "
+"сгруппировать классы реализации. Это поможет поддерживать хорошо "
 "структурированный код и избегать недостатков проектирования, таких как "
 "циклические зависимости или зависимости от нестабильных частей"
 
@@ -2481,8 +2482,8 @@ msgstr ""
 #: gaphor/templates/uml-example.gaphor gaphor/templates/uml.gaphor
 msgid "Create detailed class diagrams to capture your object-oriented data model."
 msgstr ""
-"Создавайте подробные диаграммы классов, чтобы охватить свою "
-"объектно-ориентированную модель данных."
+"Создавайте подробные диаграммы классов, чтобы охватить свою объектно-"
+"ориентированную модель данных."
 
 #: gaphor/templates/uml-example.gaphor gaphor/templates/uml.gaphor
 msgid ""
@@ -2579,8 +2580,8 @@ msgid ""
 "Add a model element from the tool box (bottom left) to the diagram. Here "
 "you will see its properties appear."
 msgstr ""
-"Добавьте элемент модели из панели инструментов (внизу слева) на "
-"диаграмму. Здесь вы увидите его свойства."
+"Добавьте элемент модели из панели инструментов (внизу слева) на диаграмму. "
+"Здесь вы увидите его свойства."
 
 #: gaphor/ui/elementeditor.ui:57
 msgid "This pane can be hidden by clicking the pane icon in the header."
@@ -2604,9 +2605,8 @@ msgid ""
 "select an element in the model browser and start typing. A search box "
 "will automatically appear."
 msgstr ""
-"<b>Совет:</b> Чтобы найти элемент на панели обзора моделей (вверху "
-"слева), выберите элемент и начните вводить текст. Поле поиска появится "
-"автоматически."
+"<b>Совет:</b> Чтобы найти элемент на панели обзора моделей (вверху слева), "
+"выберите элемент и начните вводить текст. Поле поиска появится автоматически."
 
 #: gaphor/ui/elementeditor.ui:86
 msgid "Help improve Gaphor"
@@ -2615,8 +2615,8 @@ msgstr "Помочь улучшить Gaphor"
 #: gaphor/ui/elementeditor.ui:95
 msgid "Gaphor is free and open source software, written by devoted volunteers."
 msgstr ""
-"Gaphor — это бесплатное программное обеспечение с открытым исходным "
-"кодом, написанное преданными своему делу добровольцами."
+"Gaphor — это бесплатное программное обеспечение с открытым исходным кодом, "
+"написанное преданными своему делу добровольцами."
 
 #: gaphor/ui/elementeditor.ui:103
 msgid ""
@@ -2624,17 +2624,17 @@ msgid ""
 "translate Gaphor into your language, report bugs, or suggest new "
 "features. Join us in improving Gaphor!"
 msgstr ""
-"Есть много способов помочь сделать Gaphor лучше: написать сообщение в "
-"блоге, перевести Gaphor на свой язык, сообщить об ошибках или предложить "
-"новые функции. Присоединяйтесь к нам в улучшении Gaphor!"
+"Есть много способов помочь сделать Gaphor лучше: написать сообщение в блоге, "
+"перевести Gaphor на свой язык, сообщить об ошибках или предложить новые "
+"функции. Присоединяйтесь к нам в улучшении Gaphor!"
 
 #: gaphor/ui/elementeditor.ui:111
 msgid ""
 "Visit <a href=\"https://gaphor.org/contribute/\">gaphor.org</a> for more "
 "information."
 msgstr ""
-"Для получения дополнительной информации посетите <a "
-"href=\"https://gaphor.org/contribute/\">gaphor.org</a>."
+"Для получения дополнительной информации посетите <a href=\"https://"
+"gaphor.org/contribute/\">gaphor.org</a>."
 
 #: gaphor/ui/elementeditor.ui:150
 msgid "Editor"
@@ -2685,8 +2685,8 @@ msgid ""
 "Apply incoming changes from the conflicting model. Use Undo to revert "
 "changes."
 msgstr ""
-"Применить входящие изменения из конфликтующей модели. Используйте "
-"«Отменить», чтобы отменить изменения."
+"Применить входящие изменения из конфликтующей модели. Используйте «Отменить"
+"», чтобы отменить изменения."
 
 #: gaphor/ui/elementeditor.ui:330
 msgid "Resolve"
