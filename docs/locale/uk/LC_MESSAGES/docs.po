@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: Gaphor 3.0.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-12-30 14:25-0500\n"
-"PO-Revision-Date: 2025-05-23 17:01+0000\n"
-"Last-Translator: Максим Горпиніч <maksimgorpinic4@gmail.com>\n"
-"Language-Team: Ukrainian <https://hosted.weblate.org/projects/gaphor/"
-"docs-gaphor-org/uk/>\n"
+"PO-Revision-Date: 2026-01-14 21:49+0000\n"
+"Last-Translator: Anonymous <noreply@weblate.org>\n"
+"Language-Team: Ukrainian <https://hosted.weblate.org/projects/gaphor/docs-"
+"gaphor-org/uk/>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Weblate 5.12-dev\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #: ../changelog.rst:2
 msgid "Change Log"
@@ -42,8 +42,8 @@ msgstr "Підручник: Кавоварка"
 #: ../first_model.md:4
 msgid "In this tutorial we refer to the different parts of the gaphor interface: {ref}`Model Browser <getting_started:model browser>`, [Toolbox](getting_started:toolbox), {ref}`Property Editor <getting_started:property editor>`."
 msgstr ""
-"У цьому підручнику ми посилаємося на різні частини інтерфейсу gaphor: {ref}`"
-"Model Browser <getting_started:model browser>`, [Toolbox]"
+"У цьому підручнику ми посилаємося на різні частини інтерфейсу gaphor: {ref}"
+"`Model Browser <getting_started:model browser>`, [Toolbox]"
 "(getting_started:toolbox), {ref}`Property Editor <getting_started:property "
 "editor>`."
 
@@ -511,8 +511,9 @@ msgstr ""
 "SysML». Назви блоків можна змінити безпосередньо на схемі, але ім’я bdd "
 "можна змінити лише в браузері моделей. У пакеті Structure клацніть правою "
 "кнопкою миші на блоках із символом B і перейменуйте їх у контекстному меню. "
-"Також пам’ятайте, що ви можете використовувати [auto-layout](first_model.md"
-"#adding-relations) для вирівнювання та розподілу всіх елементів."
+"Також пам’ятайте, що ви можете використовувати [auto-layout]"
+"(first_model.md#adding-relations) для вирівнювання та розподілу всіх "
+"елементів."
 
 #: ../coffee_machine_concept.md:121
 msgid "The domain diagram provides a high-level view of the coffee shop domain and the key concepts and relationships involved in it. It can be a useful tool for understanding the relationships between different elements of the domain and for communicating these relationships to others."
@@ -629,8 +630,8 @@ msgstr "Допоможіть мурахам оновити діаграму ко
 msgid "Throughout the design process, the concept requirements will be refined and expanded upon as more information becomes available and the needs of the stakeholders become clearer. This iterative process ensures that the final design of the coffee machine meets the needs of all stakeholders and delivers a high-quality product."
 msgstr ""
 "Протягом усього процесу проектування вимоги до концепції будуть уточнюватися "
-"та розширюватися в міру того, як стане доступною більше інформації та з’"
-"ясуються потреби зацікавлених сторін. Цей ітеративний процес гарантує, що "
+"та розширюватися в міру того, як стане доступною більше інформації та "
+"з’ясуються потреби зацікавлених сторін. Цей ітеративний процес гарантує, що "
 "остаточний дизайн кавоварки відповідає потребам усіх зацікавлених сторін і "
 "забезпечує високоякісний продукт."
 
@@ -704,8 +705,8 @@ msgstr ""
 #: ../coffee_machine_logical.md:54
 msgid "When the coffee machine is turned on, it enters the On state. Inside the On state, there are some substates, starting with the heat water state. The machine will transition from the heat water state to the ready state when the temperature reaches the set point."
 msgstr ""
-"Коли кавова машина вмикається, вона переходить у стан On. Усередині стану "
-"«Ввімкнуто» є кілька підстанів, починаючи зі стану тепла, води. Машина "
+"Коли кавова машина вмикається, вона переходить у стан On. Усередині стану «"
+"Ввімкнуто» є кілька підстанів, починаючи зі стану тепла, води. Машина "
 "перейде зі стану нагріву води в стан готовності, коли температура досягне "
 "заданої точки."
 
@@ -980,8 +981,8 @@ msgid "If you need help writing good requirements, the [INCOSE Guide to Needs an
 msgstr ""
 "Якщо вам потрібна допомога у написанні хороших вимог, рекомендуємо "
 "скористатися [INCOSE Guide to Needs and Requirements] (https://"
-"portal.incose.org/commerce/store?productId=INCOSE-GUIDENEEDSREQ) та "
-"[Easy Approach to Requirements Syntax] (https://alistairmavin.com/ears/)."
+"portal.incose.org/commerce/store?productId=INCOSE-GUIDENEEDSREQ) та [Easy "
+"Approach to Requirements Syntax] (https://alistairmavin.com/ears/)."
 
 #: ../coffee_machine_logical.md:209
 msgid "We use the Derive Requirement relation from the Logical Requirement to the Concept Requirements that we previously created. The direction of this relationship is in the derived from direction, which might be opposite to what you are used to where the higher level requirement points to the lower level requirement."
@@ -1037,8 +1038,8 @@ msgstr ""
 "забезпечити безпеку, ефективність і простоту використання кавомашини, і при "
 "цьому задовольнити унікальні потреби їхнього котячого клієнта. Але завдяки "
 "глибокому розумінню системної інженерії та відданості ключовим принципам і "
-"концепціям, вони змогли подолати ці виклики і розробити виняткову "
-"еспресо-машину."
+"концепціям, вони змогли подолати ці виклики і розробити виняткову еспресо-"
+"машину."
 
 #: ../coffee_machine_wrapup.md:17
 msgid "In the end, Cappuccino was thrilled with the machine, which worked flawlessly and was a big hit with his customers. He was so impressed with the ants' work that he offered them a long-term contract to design all of his café's systems. The ants were proud of their success, knowing that it was all thanks to their expertise and deep understanding of systems engineering principles. They had proven that, with the right tools and approach, anything is possible."
@@ -1104,8 +1105,8 @@ msgstr "Виберіть **+ Новий кодовий простір** у ни�
 msgid "For more info, check out the [GitHub documentation](https://docs.github.com/en/free-pro-team@latest/github/developing-online-with-codespaces/creating-a-codespace#creating-a-codespace)."
 msgstr ""
 "Щоб дізнатися більше, перегляньте [документацію GitHub](https://"
-"docs.github.com/en/free-pro-team@latest/github/"
-"developing-online-with-codespaces/creating-a-codespace#creating-a-codespace)."
+"docs.github.com/en/free-pro-team@latest/github/developing-online-with-"
+"codespaces/creating-a-codespace#creating-a-codespace)."
 
 #: ../container.md:15
 msgid "Remote access to Gaphor graphic window with Codespaces"
@@ -1170,9 +1171,9 @@ msgstr "Це базується на програмі [noVNC](https://novnc.com/
 #: ../container.md:41
 msgid "Open the browser on your local machine and give address as *http://127.0.0.1:6080/*. The port number should be same as specified in attribute *webPort*"
 msgstr ""
-"Відкрийте браузер на локальному комп’ютері та введіть адресу "
-"*http://127.0.0.1:6080/*. Номер порту має бути таким же, як указано в "
-"атрибуті *webPort*"
+"Відкрийте браузер на локальному комп’ютері та введіть адресу *http://"
+"127.0.0.1:6080/*. Номер порту має бути таким же, як указано в атрибуті "
+"*webPort*"
 
 #: ../container.md:42
 msgid "A noVNC window will open, click on Connect and provide password as *vscode*. The password should be same as specified in attribute *password*"
@@ -1205,9 +1206,9 @@ msgstr ""
 "Ви можете допомогти підтримати Gaphor своєю мовою. Ви можете зробити це на "
 "[Weblate](https://hosted.weblate.org/engage/gaphor/), безпосередньо з вашого "
 "браузера. Цей сервіс періодично створює [Pull Requests](https://"
-"docs.github.com/en/pull-requests/collaborating-with-pull-requests/"
-"proposing-changes-to-your-work-with-pull-requests/about-pull-requests) для "
-"Gaphor з оновленими перекладами."
+"docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-"
+"changes-to-your-work-with-pull-requests/about-pull-requests) для Gaphor з "
+"оновленими перекладами."
 
 #: ../contribute.md:13
 msgid "It is also very nice if you create your own content around Gaphor. Think about blog posts, videos, and conference talks. When you created something, please drop us a line, so we can add it to the [Tutorials](https://gaphor.org/tutorials) page on the website."
@@ -1542,8 +1543,8 @@ msgstr "Це дозволить вам дозволити керування п�
 msgid "Under the hood events are handled by the Generics library. For more information about how the Generic library handles events see the [Generic documentation](https://generic.readthedocs.io)."
 msgstr ""
 "Події під капотом обробляються бібліотекою Generics. Щоб дізнатися більше "
-"про те, як загальна бібліотека обробляє події, перегляньте "
-"[загальну документацію](https://generic.readthedocs.io)."
+"про те, як загальна бібліотека обробляє події, перегляньте [загальну "
+"документацію](https://generic.readthedocs.io)."
 
 #: ../first_model.md:1
 msgid "Your First Model"
@@ -1564,8 +1565,8 @@ msgstr ""
 #: ../first_model.md:15
 msgid "Select an element you want to place, in this case a Class (![Icon for Class.](../gaphor/ui/icons/hicolor/scalable/actions/gaphor-class-symbolic.svg)) by clicking on the icon in the Toolbox and click on the diagram. This will place a new Class item instance on the diagram and add a new Class to the model -- it shows up in the Model Browser. The selected tool will reset itself to the Pointer tool after the element is placed on the diagram."
 msgstr ""
-"Виберіть елемент, який ви хочете розмістити, у цьому випадку клас (!"
-"[Іконка для класу.](../gaphor/ui/icons/hicolor/scalable/actions/gaphor-class-"
+"Виберіть елемент, який ви хочете розмістити, у цьому випадку клас (![Іконка "
+"для класу.](../gaphor/ui/icons/hicolor/scalable/actions/gaphor-class-"
 "symbolic.svg)), натиснувши на іконку на панелі інструментів, і клацніть на "
 "діаграмі. Це розмістить новий екземпляр класу на діаграмі і додасть новий "
 "клас до моделі - він з'явиться у Браузері моделей. Після розміщення елемента "
@@ -1586,8 +1587,8 @@ msgstr ""
 #: ../first_model.md:25
 msgid "![The Gaphor main window showing a single class added to the model.](images/first-model-class.png)"
 msgstr ""
-"![Головне вікно Gaphor, у якому показано один клас, доданий до моделі.]("
-"images/first-model-class.png)"
+"![Головне вікно Gaphor, у якому показано один клас, доданий до моделі.]"
+"(images/first-model-class.png)"
 
 #: ../first_model.md:25
 msgid "The Gaphor main window showing a single class added to the model."
@@ -1630,9 +1631,9 @@ msgstr "Піктограма для зв'язків узагальнення."
 msgid "Move the mouse cursor over `Shape`. Click, hold and drag the line end over `Circle`. Release the mouse button, and you should have your relationship between `Shape` and `Circle`. You can see both ends of the relation are red, indicating they are connected to their class."
 msgstr ""
 "Наведіть курсор миші на `Фігуру`. Клацніть, утримуючи, і перетягніть кінець "
-"лінії на `Circle`. Відпустіть кнопку миші, і ви отримаєте зв'язок між `Shape`"
-" та `Circle`. Ви можете бачити, що обидва кінці зв'язку червоні, що вказує "
-"на те, що вони з'єднані зі своїми класами."
+"лінії на `Circle`. Відпустіть кнопку миші, і ви отримаєте зв'язок між "
+"`Shape` та `Circle`. Ви можете бачити, що обидва кінці зв'язку червоні, що "
+"вказує на те, що вони з'єднані зі своїми класами."
 
 #: ../first_model.md:47
 msgid "![The Gaphor main window showing two classes connected by a generalization relationship.](images/first-model-generalization.png)"
@@ -1649,8 +1650,8 @@ msgstr ""
 #: ../first_model.md:49
 msgid "Optionally you can run the auto-layout (![Menu icon](images/open-menu-symbolic.svg) → Tools → Auto Layout) to align the elements on the diagram."
 msgstr ""
-"За бажанням ви можете запустити автоматичний макет (![Піктограма меню]("
-"images/open-menu-symbolic.svg) → Інструменти → Автоматичний макет), щоб "
+"За бажанням ви можете запустити автоматичний макет (![Піктограма меню]"
+"(images/open-menu-symbolic.svg) → Інструменти → Автоматичний макет), щоб "
 "вирівняти елементи на діаграмі."
 
 #: ../first_model.md:49
@@ -1668,8 +1669,8 @@ msgid "To create a new diagram, use the Model Browser. Select the element that s
 msgstr ""
 "Щоб створити нову діаграму, скористайтеся браузером моделей. Виберіть "
 "елемент, який має містити нову діаграму. Наразі виберіть _Нова модель_. "
-"Клацніть меню Нова діаграма (![Символ плюса спливного меню Нова діаграма.]("
-"images/list-add-symbolic.svg)) у рядку заголовка."
+"Клацніть меню Нова діаграма (![Символ плюса спливного меню Нова діаграма.]"
+"(images/list-add-symbolic.svg)) у рядку заголовка."
 
 #: ../first_model.md:55
 msgid "Plus symbol of the New Diagram popup menu."
@@ -1725,10 +1726,10 @@ msgstr "Моделі SysML"
 #: ../first_model.md:81
 msgid "To see how a larger model comes together in Gaphor check out [Gaphor Distilled](https://github.com/mikekidner/gaphor_distilled) which implements the DELL-SAT-77 model used as the basis for [SysML Distilled](https://delligattiassociates.com/publications/?_gl=1*1tu6ekh*_ga*MTMwMTU4NjMyNC4xNzMyNTYyOTUw*_up*MQ..) one of the standard references for the SysML language."
 msgstr ""
-"Щоб побачити, як більша модель збирається в Gaphor, перегляньте "
-"[Gaphor Distilled](https://github.com/mikekidner/gaphor_distilled), який "
-"реалізує модель DELL-SAT-77, що використовується як основа для "
-"[SysML Distilled](https://delligattiassociates.com/publications/"
+"Щоб побачити, як більша модель збирається в Gaphor, перегляньте [Gaphor "
+"Distilled](https://github.com/mikekidner/gaphor_distilled), який реалізує "
+"модель DELL-SAT-77, що використовується як основа для [SysML Distilled]"
+"(https://delligattiassociates.com/publications/"
 "?_gl=1*1tu6ekh*_ga*MTMwMTU4NjMyNC4xNzMyNTYyOTUw*_up*MQ..), одного зі "
 "стандартних посилань для мови SysML."
 
@@ -1746,8 +1747,8 @@ msgstr ""
 "Gaphor побудований у легкій, сервіс-орієнтованій манері. Додаток розділено "
 "на низку сервісів, таких як менеджери файлів, подій та скасувань. Ці сервіси "
 "завантажуються на основі точок входу, визначених у файлі `pyproject.toml`. "
-"Щоб дізнатися більше про архітектуру, будь ласка, перегляньте опис "
-"[Сервісно-орієнтованої архітектури](service_oriented.md)."
+"Щоб дізнатися більше про архітектуру, будь ласка, перегляньте опис [Сервісно-"
+"орієнтованої архітектури](service_oriented.md)."
 
 #: ../framework.md:11
 msgid "Event driven"
@@ -1815,10 +1816,10 @@ msgstr "element_factory"
 #: ../framework.md:50
 msgid "The [data model](models/core) itself is maintained in the element factory ({obj}`~gaphor.core.modeling.ElementFactory`). This service is used to create model elements, as well as to lookup elements or query for a set of elements."
 msgstr ""
-"Сама [модель даних](models/core) зберігається у фабриці елементів "
-"({obj}`~gaphor.core.modeling.ElementFactory`). Цей сервіс використовується "
-"для створення елементів моделі, а також для пошуку елементів або запиту "
-"набору елементів."
+"Сама [модель даних](models/core) зберігається у фабриці елементів ({obj}"
+"`~gaphor.core.modeling.ElementFactory`). Цей сервіс використовується для "
+"створення елементів моделі, а також для пошуку елементів або запиту набору "
+"елементів."
 
 #: ../framework.md:54
 msgid "undo_manager"
@@ -1909,11 +1910,10 @@ msgstr "Почніть роботу з Gaphor"
 msgid "Gaphor is more than a diagram editor: it's a modeling environment. Where simple diagram editors such as Microsoft Visio and [draw.io](https://draw.io) allow you to create pictures, Gaphor actually keeps track of the elements you add to the model. In Gaphor you can create diagrams to track and visualize different aspects of the system you're developing."
 msgstr ""
 "Gaphor - це більше, ніж редактор діаграм: це середовище для моделювання. "
-"Якщо прості редактори діаграм, такі як Microsoft Visio та [draw.io] "
-"(https://draw.io), дозволяють створювати малюнки, то Gaphor фактично "
-"відстежує елементи, які ви додаєте до моделі. У Gaphor ви можете створювати "
-"діаграми для відстеження та візуалізації різних аспектів системи, яку ви "
-"розробляєте."
+"Якщо прості редактори діаграм, такі як Microsoft Visio та [draw.io] (https://"
+"draw.io), дозволяють створювати малюнки, то Gaphor фактично відстежує "
+"елементи, які ви додаєте до моделі. У Gaphor ви можете створювати діаграми "
+"для відстеження та візуалізації різних аспектів системи, яку ви розробляєте."
 
 #: ../getting_started.md:9
 msgid "Enough talk, let's get started."
@@ -2110,8 +2110,8 @@ msgstr ""
 msgid "To resize an element on the diagram, left-click on the element to select it and then drag the resize handles that appear at each corner."
 msgstr ""
 "Щоб змінити розмір елемента на діаграмі, клацніть елемент лівою кнопкою "
-"миші, щоб вибрати його, а потім перетягніть маркери зміни розміру, які з’"
-"являються в кожному куті."
+"миші, щоб вибрати його, а потім перетягніть маркери зміни розміру, які "
+"з’являються в кожному куті."
 
 #: ../getting_started.md:101
 msgid "To move an element on the diagram, drag the element where you want to place it by pressing and holding the left mouse button, and moving the mouse before releasing the button."
@@ -2181,8 +2181,8 @@ msgstr ""
 #: ../getting_started.md:133
 msgid "<kbd>Ctrl</kbd>+<kbd>v</kbd> does a \"shallow\" paste. <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>v</kbd> does a \"deep\" paste."
 msgstr ""
-"<kbd>Ctrl</kbd>+<kbd>v</kbd> виконує «глибоке» вставлення. "
-"<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>v</kbd> виконує «глибоке» вставлення."
+"<kbd>Ctrl</kbd>+<kbd>v</kbd> виконує «глибоке» вставлення. <kbd>Ctrl</kbd>"
+"+<kbd>Shift</kbd>+<kbd>v</kbd> виконує «глибоке» вставлення."
 
 #: ../getting_started.md:136
 msgid "Undo and Redo"
@@ -2193,9 +2193,9 @@ msgid "Undo a change press <kbd>Ctrl</kbd>+<kbd>z</kbd> or left-click on the bac
 msgstr ""
 "Щоб скасувати зміну, натисніть <kbd>Ctrl</kbd>+<kbd>z</kbd> або клацніть "
 "лівою кнопкою миші стрілку назад у верхній частині редактора властивостей. "
-"Щоб повторно внести зміни, натисніть "
-"<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>z</kbd> або натисніть стрілку вперед у "
-"верхній частині редактора властивостей."
+"Щоб повторно внести зміни, натисніть <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>"
+"z</kbd> або натисніть стрілку вперед у верхній частині редактора "
+"властивостей."
 
 #: ../getting_started.md:145
 msgid "The Property Editor is present on the right side of the diagrams. When no item is selected in the diagram, it shows you some tips and tricks. When an item is selected on the diagram, it contains the item details like name, attributes and stereotypes. It can be opened with <kbd>F9</kbd> and the ![Icon for showing and hiding the Property Editor.](images/sidebar-show-right-symbolic.svg) icon in the header bar."
@@ -2204,9 +2204,8 @@ msgstr ""
 "діаграмі не вибрано жодного елемента, ви побачите кілька порад і підказок. "
 "Коли елемент вибрано на діаграмі, він містить такі деталі елемента, як "
 "назва, атрибути та стереотипи. Його можна відкрити за допомогою <kbd>F9</"
-"kbd> і піктограми !"
-"[Піктограма для показу та приховування редактора властивостей.](images/"
-"sidebar-show-right-symbolic.svg) на панелі заголовка."
+"kbd> і піктограми ![Піктограма для показу та приховування редактора "
+"властивостей.](images/sidebar-show-right-symbolic.svg) на панелі заголовка."
 
 #: ../getting_started.md:145
 msgid "Icon for showing and hiding the Property Editor."
@@ -2223,9 +2222,9 @@ msgstr "Параметри моделі"
 #: ../getting_started.md:156
 msgid "The Property Editor also contains model preferences: Click the ![Document with wrench icon for model specific configuration.](images/document-properties-symbolic.svg) button."
 msgstr ""
-"Редактор властивостей також містить параметри моделі: натисніть кнопку !["
-"Документ із піктограмою гайкового ключа для конкретної конфігурації моделі.]("
-"images/document-properties-symbolic.svg)."
+"Редактор властивостей також містить параметри моделі: натисніть кнопку "
+"![Документ із піктограмою гайкового ключа для конкретної конфігурації "
+"моделі.](images/document-properties-symbolic.svg)."
 
 #: ../getting_started.md:156
 msgid "Document with wrench icon for model specific configuration."
@@ -2338,9 +2337,9 @@ msgstr ""
 #: ../index.rst:18
 msgid "Gaphor is 100% Open source, available under a friendly `Apache 2 license <https://github.com/gaphor/gaphor/blob/main/LICENSES/Apache-2.0.txt>`_. The code and issue tracker can be found on `GitHub <https://github.com/gaphor/gaphor>`_."
 msgstr ""
-"Gaphor має 100% відкритий вихідний код, доступний під дружньою ліцензією `"
-"Apache 2 <https://github.com/gaphor/gaphor/blob/main/LICENSES/"
-"Apache-2.0.txt>`_. Код і трекер випусків можна знайти на `GitHub <https://"
+"Gaphor має 100% відкритий вихідний код, доступний під дружньою ліцензією "
+"`Apache 2 <https://github.com/gaphor/gaphor/blob/main/LICENSES/Apache-"
+"2.0.txt>`_. Код і трекер випусків можна знайти на `GitHub <https://"
 "github.com/gaphor/gaphor>`_."
 
 #: ../index.rst:21
@@ -2412,11 +2411,12 @@ msgstr "GNOME Збірник"
 #: ../linux.md:20
 msgid "Open [GNOME Builder](https://flathub.org/apps/details/org.gnome.Builder) 43 or newer, [clone the repository](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository). Check if the _Build Profile_ is set to `org.gaphor.Gaphor.json`. If so, hit the _Run_ button to start the application."
 msgstr ""
-"Відкрийте [GNOME Builder](https://flathub.org/apps/details/org.gnome.Builder)"
-" 43 або новішої версії, [клонуйте сховище](https://help.github.com/en/github/"
-"creating-cloning-and-archiving-repositories/cloning-a-repository). "
-"Перевірте, чи встановлено _Профіль збірки_ на `org.gaphor.Gaphor.json`. Якщо "
-"так, натисніть кнопку _Run_, щоб запустити програму."
+"Відкрийте [GNOME Builder](https://flathub.org/apps/details/"
+"org.gnome.Builder) 43 або новішої версії, [клонуйте сховище](https://"
+"help.github.com/en/github/creating-cloning-and-archiving-repositories/"
+"cloning-a-repository). Перевірте, чи встановлено _Профіль збірки_ на "
+"`org.gaphor.Gaphor.json`. Якщо так, натисніть кнопку _Run_, щоб запустити "
+"програму."
 
 #: ../linux.md:25
 msgid "A Local Environment"
@@ -2472,9 +2472,9 @@ msgstr ""
 #: ../linux.md:72
 msgid "Next, [clone the repository](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository), after which you need to execute the following consecutive commands:"
 msgstr ""
-"Далі [клонуємо сховище](https://help.github.com/en/github/"
-"creating-cloning-and-archiving-repositories/cloning-a-repository), після "
-"чого потрібно виконати наступні послідовні команди:"
+"Далі [клонуємо сховище](https://help.github.com/en/github/creating-cloning-"
+"and-archiving-repositories/cloning-a-repository), після чого потрібно "
+"виконати наступні послідовні команди:"
 
 #: ../linux.md:83
 #: ../macos.md:30
@@ -2484,8 +2484,8 @@ msgstr "Тепер ви можете запустити gaphor як"
 #: ../linux.md:88
 msgid "NOTE: Gaphor requires GTK 4. It works best with GTK >=4.8 and libadwaita >=1.2."
 msgstr ""
-"ПРИМІТКА: Gaphor вимагає GTK 4. Він найкраще працює з GTK >=4.8 і libadwaita "
-">=1.2."
+"ПРИМІТКА: Gaphor вимагає GTK 4. Він найкраще працює з GTK >=4.8 і "
+"libadwaita >=1.2."
 
 #: ../linux.md:90
 #: ../macos.md:44
@@ -2496,8 +2496,8 @@ msgstr "Налагодження за допомогою Visual Studio Code"
 #: ../linux.md:92
 msgid "Before you start debugging you'll need to open Gaphor in vscode (the folder containing `pyproject.toml`). You'll need to have the Python extension installed."
 msgstr ""
-"Перш ніж розпочати налагодження, вам потрібно відкрити Gaphor у vscode ("
-"тека, що містить `pyproject.toml`). Вам потрібно буде встановити розширення "
+"Перш ніж розпочати налагодження, вам потрібно відкрити Gaphor у vscode "
+"(тека, що містить `pyproject.toml`). Вам потрібно буде встановити розширення "
 "Python."
 
 #: ../linux.md:95
@@ -2527,9 +2527,9 @@ msgstr ""
 #: ../linux.md:124
 msgid "We distribute the official Flatpak using [Flathub](https://flathub.org), and building of the image is done at the [Gaphor Flathub repository](https://github.com/flathub/org.gaphor.Gaphor)."
 msgstr ""
-"Ми розповсюджуємо офіційний Flatpak за допомогою [Flathub]"
-"(https://flathub.org), а створення образу виконується в "
-"[репозиторії Gaphor Flathub](https://github.com/flathub/org.gaphor.Gaphor)."
+"Ми розповсюджуємо офіційний Flatpak за допомогою [Flathub](https://"
+"flathub.org), а створення образу виконується в [репозиторії Gaphor Flathub]"
+"(https://github.com/flathub/org.gaphor.Gaphor)."
 
 #: ../linux.md:128
 msgid "[Install Flatpak](https://flatpak.org/setup)"
@@ -2611,10 +2611,9 @@ msgstr "Відкрийте термінал і виконайте:"
 #: ../macos.md:23
 msgid "Next, [clone the repository](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository), after which you can execute the following consecutive commands to install the poetry environment:"
 msgstr ""
-"Далі, [клонуйте сховище](https://help.github.com/en/github/"
-"creating-cloning-and-archiving-repositories/cloning-a-repository), після "
-"чого ви можете виконати наступні послідовні команди для встановлення "
-"поетичного середовища:"
+"Далі, [клонуйте сховище](https://help.github.com/en/github/creating-cloning-"
+"and-archiving-repositories/cloning-a-repository), після чого ви можете "
+"виконати наступні послідовні команди для встановлення поетичного середовища:"
 
 #: ../macos.md:35
 msgid "If PyGObject does not compile and complains about a missing `ffi.h` file, you may want to install libffi from Homebrew, and set the following environment variable and run `poetry install` again:"
@@ -2626,8 +2625,8 @@ msgstr ""
 #: ../macos.md:46
 msgid "Before you start debugging you'll need to open Gaphor in VSCode (the folder containing `pyproject.toml`). You'll need to have the Python extension installed."
 msgstr ""
-"Перш ніж розпочати налагодження, вам потрібно відкрити Gaphor у VSCode ("
-"тека, що містить `pyproject.toml`). Вам потрібно буде встановити розширення "
+"Перш ніж розпочати налагодження, вам потрібно відкрити Gaphor у VSCode "
+"(тека, що містить `pyproject.toml`). Вам потрібно буде встановити розширення "
 "Python."
 
 #: ../macos.md:66
@@ -3063,8 +3062,8 @@ msgstr ""
 msgid "In those specific cases you need to implement your own copy and paste functions. To create such a thing you'll need to create two functions: one for copying and one for pasting."
 msgstr ""
 "У цих конкретних випадках вам потрібно реалізувати власні функції копіювання "
-"та вставлення. Щоб створити таку річ, вам потрібно буде створити дві функції:"
-" одну для копіювання та одну для вставки."
+"та вставлення. Щоб створити таку річ, вам потрібно буде створити дві "
+"функції: одну для копіювання та одну для вставки."
 
 #: ../modeling_language.md:126
 msgid "Create a copy of an element (or list of elements). The returned type should be distinct, so the `paste()` function can properly dispatch. A copy function normally copies only the element and mandatory related elements. E.g. an Association needs two association ends."
@@ -3115,8 +3114,8 @@ msgstr ""
 msgid "Return the owner for `element`. The owner may be `Root`, denoting the element should be placed in the root of the ownership hierarchy. If `None` is returned, there is no owner."
 msgstr ""
 "Повернути власника для `element`. Власником може бути `Root`, що означає, що "
-"елемент має бути розміщено в корені ієрархії власності. Якщо повернено `None`"
-", власника немає."
+"елемент має бути розміщено в корені ієрархії власності. Якщо повернено "
+"`None`, власника немає."
 
 #: ../modeling_language.md:169
 msgid "Returns all elements owned by `element"
@@ -3383,8 +3382,8 @@ msgstr "Завантажує значення в назві."
 #: ../../gaphor/core/modeling/base.py:docstring of gaphor.core.modeling.base.Base.load:3
 msgid "Make sure that after all elements are loaded, postload() should be called."
 msgstr ""
-"Переконайтеся, що після завантаження всіх елементів слід викликати "
-"postload()."
+"Переконайтеся, що після завантаження всіх елементів слід викликати postload()"
+"."
 
 #: ../../gaphor/core/modeling/base.py:docstring of gaphor.core.modeling.base.Base.postload:1
 msgid "Fix up the odds and ends."
@@ -3577,8 +3576,8 @@ msgstr "Зміна наборів"
 msgid "The core model has support for change sets, which are sets of pending changes. Normally you end up with a change set when you [resolve a merge conflict](../merge_conflicts) in your model."
 msgstr ""
 "Основна модель підтримує набори змін, які є наборами змін, що очікують на "
-"розгляд. Зазвичай ви отримуєте набір змін, коли [вирішуєте конфлікт злиття]("
-"../merge_conflicts) у своїй моделі."
+"розгляд. Зазвичай ви отримуєте набір змін, коли [вирішуєте конфлікт злиття]"
+"(../merge_conflicts) у своїй моделі."
 
 #: ../models/core_services.rst:2
 msgid "Core Services"
@@ -4382,8 +4381,8 @@ msgid "Plugins allow you to extend the functionality of Gaphor beyond the featur
 msgstr ""
 "Плагіни дозволяють розширити функціональність Gaphor за межі можливостей, "
 "наданих у стандартних дистрибутивах. Зокрема, плагіни можуть бути корисними, "
-"якщо ви встановлюєте бінарні дистрибутиви, доступні на "
-"[сторінці завантаження](https://gaphor.org/download/)."
+"якщо ви встановлюєте бінарні дистрибутиви, доступні на [сторінці "
+"завантаження](https://gaphor.org/download/)."
 
 #: ../plugins.md:12
 msgid "Gaphor can be extended via entry points in several ways:"
@@ -4468,9 +4467,9 @@ msgstr "Створіть власний плагін"
 msgid "If you want to write a plugin yourself, you can familiarize yourself with Gaphor's [design principles](design_principles), [service oriented architecture](service_oriented), and [event driven framework](framework)."
 msgstr ""
 "Якщо ви хочете написати плагін самостійно, ви можете ознайомитися з "
-"[принципами проектування](design_principles), "
-"[сервісно-орієнтованою архітектурою](service_oriented) та "
-"[фреймворком, керованим подіями](framework) Gaphor."
+"[принципами проектування](design_principles), [сервісно-орієнтованою "
+"архітектурою](service_oriented) та [фреймворком, керованим подіями]"
+"(framework) Gaphor."
 
 #: ../plugins.md:54
 msgid "Example plugin"
@@ -4528,8 +4527,8 @@ msgstr ""
 #: ../plugins.md:105
 msgid "The action that can be invoked. The action is defined and will be picked up by `add_actions()` method (see 3.)"
 msgstr ""
-"Дія, яку можна викликати. Дія визначена та буде підібрана методом "
-"add_actions() (див. 3.)"
+"Дія, яку можна викликати. Дія визначена та буде підібрана методом add_actions"
+"() (див. 3.)"
 
 #: ../plugins.md:108
 msgid "Plugin Development FAQ"
@@ -4549,9 +4548,8 @@ msgstr ""
 #: ../plugins.md:115
 msgid "A more complete description of this approach can be found in the [Service Oriented Architecture documentation page](service_oriented.md)."
 msgstr ""
-"Більш повний опис цього підходу можна знайти на "
-"[сторінці документації щодо сервісно-орієнтованої архітектури]"
-"(service_oriented.md)."
+"Більш повний опис цього підходу можна знайти на [сторінці документації щодо "
+"сервісно-орієнтованої архітектури](service_oriented.md)."
 
 #: ../plugins.md:118
 msgid "Community Developed Plugins"
@@ -4592,8 +4590,8 @@ msgid "One way to work with models is through the GUI. However, you may also be 
 msgstr ""
 "Одним із способів роботи з моделями є використання графічного інтерфейсу. "
 "Однак ви також можете бути зацікавлені в тому, щоб отримати більше від ваших "
-"моделей, взаємодіючи з ними за допомогою скриптів Python та "
-"[блокнотів Jupyter](https://jupyter.org/)."
+"моделей, взаємодіючи з ними за допомогою скриптів Python та [блокнотів "
+"Jupyter](https://jupyter.org/)."
 
 #: ../scripting.md:11
 msgid "You can use scripts to:"
@@ -4634,8 +4632,8 @@ msgstr "Запит моделі"
 #: ../scripting.md:27
 msgid "The first step is to load a model. For this you’ll need an {obj}`gaphor.core.modeling.ElementFactory`. The `ElementFactory` is responsible to creating and maintaining the model. It acts as a repository for the model while you’re working on it."
 msgstr ""
-"Першим кроком є завантаження моделі. Для цього вам знадобиться "
-"{obj}`gaphor.core.modeling.ElementFactory`. `ElementFactory` відповідає за "
+"Першим кроком є завантаження моделі. Для цього вам знадобиться {obj}"
+"`gaphor.core.modeling.ElementFactory`. `ElementFactory` відповідає за "
 "створення та підтримку моделі. Вона діє як репозиторій для моделі, поки ви "
 "над нею працюєте."
 
@@ -4663,8 +4661,8 @@ msgstr ""
 msgid "A modeling language consists of the model elements, and diagram items. Graphical components are loaded separately. For the most basic manupilations, GTK (the GUI toolkit we use) is not required, but you may run into situations where Gaphor tries to load the GTK library."
 msgstr ""
 "Мова моделювання складається з елементів моделі та елементів діаграми. "
-"Графічні компоненти завантажуються окремо. Для найпростіших маніпуляцій GTK ("
-"інструментарій графічного інтерфейсу, який ми використовуємо) не потрібен, "
+"Графічні компоненти завантажуються окремо. Для найпростіших маніпуляцій GTK "
+"(інструментарій графічного інтерфейсу, який ми використовуємо) не потрібен, "
 "але ви можете зіткнутися з ситуаціями, коли Gaphor намагається завантажити "
 "бібліотеку GTK."
 
@@ -4843,10 +4841,10 @@ msgstr ""
 #: ../scripting.md:304
 msgid "If you want a comprehensive example of a code generator, have a look at [Gaphor’s `coder` module](https://github.com/gaphor/gaphor/blob/main/gaphor/codegen/coder.py). This module is used to generate the code for the data models used by Gaphor."
 msgstr ""
-"Якщо вам потрібен повний приклад генератора коду, погляньте на "
-"[Gaphor's `coder` module] (https://github.com/gaphor/gaphor/blob/main/gaphor/"
-"codegen/coder.py). Цей модуль використовується для генерації коду для "
-"моделей даних, що використовуються у Gaphor."
+"Якщо вам потрібен повний приклад генератора коду, погляньте на [Gaphor's "
+"`coder` module] (https://github.com/gaphor/gaphor/blob/main/gaphor/codegen/"
+"coder.py). Цей модуль використовується для генерації коду для моделей даних, "
+"що використовуються у Gaphor."
 
 #: ../scripting.md:305
 msgid "This page is rendered with [MyST-NB](https://myst-nb.readthedocs.io/). It’s actually a Jupyter Notebook!"
@@ -4968,8 +4966,8 @@ msgstr "Приклад: ElementFactory"
 #: ../service_oriented.md:64
 msgid "A nice example of a service in use is the {obj}`~gaphor.core.modeling.ElementFactory`. It is one of the core services."
 msgstr ""
-"Гарним прикладом використовуваної служби є "
-"{obj}`~gaphor.core.modeling.ElementFactory`. Це одна з основних послуг."
+"Гарним прикладом використовуваної служби є {obj}"
+"`~gaphor.core.modeling.ElementFactory`. Це одна з основних послуг."
 
 #: ../service_oriented.md:67
 msgid "When an important events occurs, like an element is created or destroyed, that event is emitted. We then use an event handler for `ElementFactory` that stores the add/remove signals in the undo system. Another example of events that are emitted are with {obj}`~gaphor.core.modeling.Element`'s. Those classes, or more specifically, the properties, send notifications every time their state changes."
@@ -4977,8 +4975,8 @@ msgstr ""
 "Коли відбувається важлива подія, наприклад, створюється або знищується "
 "елемент, ця подія випромінюється. Потім ми використовуємо обробник подій для "
 "`ElementFactory`, який зберігає сигнали додавання/видалення у системі "
-"скасування. Іншим прикладом подій, які генеруються, є події для "
-"{obj}`~gaphor.core.modeling.Element``. Ці класи, або, точніше, властивості, "
+"скасування. Іншим прикладом подій, які генеруються, є події для {obj}"
+"`~gaphor.core.modeling.Element``. Ці класи, або, точніше, властивості, "
 "надсилають сповіщення щоразу, коли змінюється їхній стан."
 
 #: ../service_oriented.md:74
@@ -5081,16 +5079,16 @@ msgstr "Розширення Сфінкса"
 msgid "What's more awesome than to use Gaphor diagrams directly in your `Sphinx`_ documentation. Whether you write your docs in `reStructured Text`_ or `Markdown`_, we've got you covered."
 msgstr ""
 "Що є чудовішим, ніж використовувати діаграми Gaphor безпосередньо у вашій "
-"документації `Sphinx`_. Незалежно від того, чи пишете ви свої документи у `"
-"reStructured Text`_ або `Markdown`_, ми допоможемо вам."
+"документації `Sphinx`_. Незалежно від того, чи пишете ви свої документи у "
+"`reStructured Text`_ або `Markdown`_, ми допоможемо вам."
 
 #: ../sphinx.rst:9
 msgid "Here we cover the reStructured Text syntax. If you prefer markdown, we suggest you have a look at the `MyST-parser <https://myst-parser.readthedocs.io/>`_, as it `supports Sphinx directives <https://myst-parser.readthedocs.io/en/latest/syntax/roles-and-directives.html>`_."
 msgstr ""
 "Тут ми розглянемо синтаксис reStructured Text. Якщо ви віддаєте перевагу "
 "розмітці, радимо вам поглянути на `MyST-парсер <https://myst-"
-"parser.readthedocs.io/>`_, оскільки він підтримує директиви Sphinx <https"
-"://myst-parser.readthedocs.io/en/latest/syntax/roles-and-directives.html>`_."
+"parser.readthedocs.io/>`_, оскільки він підтримує директиви Sphinx <https://"
+"myst-parser.readthedocs.io/en/latest/syntax/roles-and-directives.html>`_."
 
 #: ../sphinx.rst:13
 msgid "It requires `minimal effort to set up <#configuration>`_. Adding a diagram is as simple as:"
@@ -5341,8 +5339,8 @@ msgstr "Стереотипи стилю"
 #: ../stereotypes.md:62
 msgid "You can apply styling to stereotypes. For example here the base element `requirement` has a stereotype `system requirement`"
 msgstr ""
-"До стереотипів можна застосувати стилізацію. Наприклад, базовий елемент "
-"«вимога» має стереотип «системна вимога»"
+"До стереотипів можна застосувати стилізацію. Наприклад, базовий елемент «"
+"вимога» має стереотип «системна вимога»"
 
 #: ../stereotypes.md:77
 msgid "[Style Sheets](style_sheets) has more detail on how CSS works in Gaphor"
@@ -5386,8 +5384,8 @@ msgstr ""
 "Починаючи з Gaphor 2.0, діаграми можуть мати інший вигляд за допомогою "
 "таблиць стилів. Таблиці стилів використовують синтаксис каскадних таблиць "
 "стилів (CSS). CSS використовується для опису представлення документа, "
-"написаного мовою розмітки, і найчастіше використовується з HTML для "
-"веб-сторінок."
+"написаного мовою розмітки, і найчастіше використовується з HTML для веб-"
+"сторінок."
 
 #: ../style_sheets.md:8
 msgid "On the [W3C CSS home page](https://www.w3.org/Style/CSS/Overview.en.html), CSS is described as:"
@@ -5398,8 +5396,8 @@ msgstr ""
 #: ../style_sheets.md:11
 msgid "Cascading Style Sheets (CSS) is a simple mechanism for adding style (e.g., fonts, colors, spacing) to Web documents."
 msgstr ""
-"Каскадні таблиці стилів (CSS) — це простий механізм додавання стилю ("
-"наприклад, шрифтів, кольорів, інтервалів) до веб-документів."
+"Каскадні таблиці стилів (CSS) — це простий механізм додавання стилю "
+"(наприклад, шрифтів, кольорів, інтервалів) до веб-документів."
 
 #: ../style_sheets.md:14
 msgid "Its application goes well beyond web documents, though. Gaphor uses CSS to provide style elements to items in diagrams. CSS allows us, users of Gaphor, to change the visual appearance of our diagrams. Color and line styles can be changed to make it easier to read the diagrams."
@@ -5768,8 +5766,8 @@ msgstr "``font-family``"
 #: ../style_sheets.md:168
 msgid "A single font name (e.g. ``sans``, ``serif``, ``courier``). *(inherited)*"
 msgstr ""
-"Одна назва шрифту (наприклад, ``sans``, ``serif``, ``courier``). "
-"*(успадковано)*"
+"Одна назва шрифту (наприклад, ``sans``, ``serif``, ``courier``). *"
+"(успадковано)*"
 
 #: ../style_sheets.md:169
 msgid "``font-size``"
@@ -6069,8 +6067,8 @@ msgstr ""
 "Якщо ви наведете вказівник миші на кнопку панелі інструментів (нижня ліва "
 "частина), з'явиться спливаюче вікно з назвою елемента та його ярликом. Як "
 "правило, ви можете використовувати назву компонента, склеєну з назвою у "
-"таблиці стилів. До *компонента* можна звертатися як до `component`, до *"
-"використовуваного регістру* - як до `usecase`. Відповідність імен не "
+"таблиці стилів. До *компонента* можна звертатися як до `component`, до "
+"*використовуваного регістру* - як до `usecase`. Відповідність імен не "
 "залежить від регістру. За замовчуванням імена CSS пишуться у нижньому "
 "регістрі."
 
@@ -6325,8 +6323,8 @@ msgstr ""
 #: ../style_sheets.md:343
 msgid "To create your own expression you may want to use the Console (![Menu icon](images/open-menu-symbolic.svg) → Tools → Console). Drop us a line on [Gitter](https://gitter.im/gaphor/Lobby) and we would be happy to help you."
 msgstr ""
-"Щоб створити власний вираз, ви можете скористатися консоллю (![Іконка меню]("
-"images/open-menu-symbolic.svg) → Інструменти → Консоль). Напишіть нам на "
+"Щоб створити власний вираз, ви можете скористатися консоллю (![Іконка меню]"
+"(images/open-menu-symbolic.svg) → Інструменти → Консоль). Напишіть нам на "
 "[Gitter](https://gitter.im/gaphor/Lobby), і ми будемо раді допомогти вам."
 
 #: ../style_sheets.md:346
@@ -6575,9 +6573,9 @@ msgstr "Зафіксуйте транзакцію."
 #: ../../gaphor/transaction.py:docstring of gaphor.transaction.Transaction.commit:3
 msgid "The transaction is closed. A :obj:`~gaphor.event.TransactionCommit` event is emitted. If the transaction needs to be rolled back, a :obj:`~gaphor.event.TransactionRollback` event is emitted instead."
 msgstr ""
-"Транзакцію закрито. Випускається подія :obj:`~gaphor.event.TransactionCommit`"
-". Якщо транзакцію потрібно відкотити, натомість створюється подія "
-":obj:`~gaphor.event.TransactionRollback`."
+"Транзакцію закрито. Випускається подія "
+":obj:`~gaphor.event.TransactionCommit`. Якщо транзакцію потрібно відкотити, "
+"натомість створюється подія :obj:`~gaphor.event.TransactionRollback`."
 
 #: ../../gaphor/transaction.py:docstring of gaphor.transaction.Transaction.in_transaction:1
 msgid "Are you running inside a transaction?"
@@ -6826,9 +6824,8 @@ msgstr ""
 "Якщо у вашому проекті ще немає файлу pyproject.toml, створіть його. За "
 "деталями зверніться до [Документації по поезії] (https://python-poetry.org/"
 "docs/basic-usage/). Якщо у вас вже є файл .toml, переконайтеся, що у вас є "
-"gaphor як залежність розробки. Докладні відомості наведено у "
-"[Плагін Gaphor Hello World](https://github.com/gaphor/"
-"gaphor_plugin_helloworld)."
+"gaphor як залежність розробки. Докладні відомості наведено у [Плагін Gaphor "
+"Hello World](https://github.com/gaphor/gaphor_plugin_helloworld)."
 
 #: ../windows.md:149
 msgid "Install your project's dependencies. If you have made your project dependent upon Gaphor, this will pull in Gaphor."
