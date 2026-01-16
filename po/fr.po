@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: Gaphor 0.13.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2025-11-12 21:36-0500\n"
-"PO-Revision-Date: 2026-01-14 21:34+0000\n"
-"Last-Translator: Pierre Flanet <pierre.flanet@protonmail.com>\n"
+"PO-Revision-Date: 2026-01-16 09:01+0000\n"
+"Last-Translator: Stan SZLAPKA <stansz@free.fr>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/gaphor/gaphor/fr/>"
 "\n"
 "Language: fr\n"
@@ -3194,15 +3194,14 @@ msgid "Errors:"
 msgstr "Erreurs :"
 
 #: gaphor/ui/help/debuginfo.py:85
-#, fuzzy
 msgid ""
 "An unexpected error occurred.\n"
 "Please file an issue on GitHub and include information from About Gaphor "
 "→ Troubleshooting → Debugging Information."
 msgstr ""
 "Une erreur inattendue s'est produite.\n"
-"Veuillez déposer un problème sur GitHub et inclure les informations "
-"provenant de Outils → Rapports d'erreur."
+"Veuillez créer un ticket sur GitHub et inclure les informations disponibles "
+"dans À propos de Gaphor → Dépannage → Informations de débogage."
 
 #: gaphor/ui/help/preferences.ui:9
 msgid "Appearance"
