@@ -273,7 +273,9 @@ class InterfaceItem(Classified, ElementPresentation):
 
     def class_shape(self):
         return Box(
-            name_compartment(self, lambda: [self.diagram.gettext("interface")]),
+            name_compartment(
+                self, default_stereotype=self.diagram.gettext("interface")
+            ),
             *(
                 self.show_attributes
                 and self.subject

@@ -7,6 +7,7 @@ from gaphor.core.format import format, parse
 from gaphor.core.modeling import ElementFactory
 from gaphor.UML import recipes
 from gaphor.UML import uml as UML
+from gaphor.UML.recipes import apply_stereotype
 from gaphor.UML.umlfmt import format_association_end
 
 
@@ -132,6 +133,16 @@ def test_operation(factory, text, formatted_text):
     parse(o, text)
 
     assert formatted_text == format(o, note=True)
+
+
+def test_operation_with_stereotype(factory):
+    o = factory.create(UML.Operation)
+    st = factory.create(UML.Stereotype)
+    st.name = "Stereotype"
+    parse(o, "oper()")
+    apply_stereotype(o, st)
+
+    assert "+ «stereotype» oper()" == format(o, stereotype=True)
 
 
 @pytest.mark.parametrize(

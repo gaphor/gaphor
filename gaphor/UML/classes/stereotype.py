@@ -5,14 +5,14 @@ from gaphor.diagram.presentation import ElementPresentation
 from gaphor.diagram.shapes import Box, CssNode, Text, draw_top_separator
 
 
-def stereotype_watches(presentation: ElementPresentation) -> None:
-    presentation.watch(
-        "subject[UML:Element].appliedStereotype", presentation.update_shapes
-    ).watch("subject[UML:Element].appliedStereotype.classifier.name").watch(
-        "subject[UML:Element].appliedStereotype.slot", presentation.update_shapes
-    ).watch("subject[UML:Element].appliedStereotype.slot.definingFeature.name").watch(
-        "subject[UML:Element].appliedStereotype.slot.value", presentation.update_shapes
-    )
+def stereotype_watches(
+    presentation: ElementPresentation, base="subject[UML:Element]"
+) -> None:
+    presentation.watch(f"{base}.appliedStereotype", presentation.update_shapes).watch(
+        f"{base}.appliedStereotype.classifier.name"
+    ).watch(f"{base}.appliedStereotype.slot", presentation.update_shapes).watch(
+        f"{base}.appliedStereotype.slot.definingFeature.name"
+    ).watch(f"{base}.appliedStereotype.slot.value", presentation.update_shapes)
 
 
 def stereotype_compartments(subject):

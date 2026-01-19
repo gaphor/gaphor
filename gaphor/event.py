@@ -13,22 +13,6 @@ if TYPE_CHECKING:
 
 
 @dataclass
-class ServiceInitializedEvent:
-    """This event is emitted every time a new service has been initialized."""
-
-    name: str
-    service: Service
-
-
-@dataclass
-class ServiceShutdownEvent:
-    """This event is emitted every time a service has been shut down."""
-
-    name: str
-    service: Service
-
-
-@dataclass
 class ApplicationShutdown:
     """This event is emitted from the application when it has been shut
     down."""
