@@ -267,10 +267,11 @@ class Box:
         return min_width, min_height
 
     def draw(self, context: DrawContext, bounding_box: Rectangle):
-        if self._orientation == Orientation.VERTICAL:
-            self.draw_vertical(context, bounding_box)
-        else:
-            self.draw_horizontal(context, bounding_box)
+        with cairo_state(context.cairo):
+            if self._orientation == Orientation.VERTICAL:
+                self.draw_vertical(context, bounding_box)
+            else:
+                self.draw_horizontal(context, bounding_box)
 
     def draw_vertical(self, context: DrawContext, bounding_box: Rectangle):
         style = context.style
