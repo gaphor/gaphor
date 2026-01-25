@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2025-11-12 21:36-0500\n"
-"PO-Revision-Date: 2026-01-14 21:36+0000\n"
+"PO-Revision-Date: 2026-01-25 08:23+0000\n"
 "Last-Translator: Flowerlywind <tuanhoangnguyen25019@gmail.com>\n"
 "Language-Team: Vietnamese <https://hosted.weblate.org/projects/gaphor/gaphor/"
 "vi/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.15.2\n"
+"X-Generator: Weblate 5.16-dev\n"
 "Generated-By: Babel 2.17.0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:28
@@ -62,7 +62,7 @@ msgstr "Mô hình C4"
 #: gaphor/C4Model/diagramitems/person.py:24 gaphor/C4Model/toolbox.py:61
 #: gaphor/C4Model/toolbox.py:67 gaphor/C4Model/toolbox.py:167
 msgid "Person"
-msgstr ""
+msgstr "Người"
 
 #: gaphor/C4Model/toolbox.py:73
 msgid "Software System"
@@ -113,7 +113,7 @@ msgstr "Biểu đồ máy trạng thái"
 #: gaphor/C4Model/toolbox.py:146 gaphor/RAAML/toolbox.py:32
 #: gaphor/SysML/toolbox.py:178 gaphor/UML/toolbox.py:44
 msgid "Generic Diagram"
-msgstr ""
+msgstr "Biểu đồ khái quát"
 
 #: gaphor/C4Model/toolbox.py:150 gaphor/RAAML/toolbox.py:36
 #: gaphor/SysML/blocks/blockstoolbox.py:51 gaphor/SysML/toolbox.py:182
@@ -196,7 +196,7 @@ msgstr ""
 
 #: gaphor/RAAML/fta/andgate.py:34 gaphor/RAAML/fta/ftatoolbox.py:24
 msgid "AND Gate"
-msgstr ""
+msgstr "Cổng AND"
 
 #: gaphor/RAAML/fta/basicevent.py:32 gaphor/RAAML/fta/ftatoolbox.py:125
 #: gaphor/RAAML/fta/ftatoolbox.py:131
@@ -220,23 +220,23 @@ msgstr ""
 
 #: gaphor/RAAML/fta/ftatoolbox.py:30
 msgid "AND"
-msgstr ""
+msgstr "AND"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:35 gaphor/RAAML/fta/orgate.py:34
 msgid "OR Gate"
-msgstr ""
+msgstr "Cổng OR"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:41 gaphor/templates/raaml-example.gaphor
 msgid "OR"
-msgstr ""
+msgstr "OR"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:46 gaphor/RAAML/fta/notgate.py:32
 msgid "NOT Gate"
-msgstr ""
+msgstr "Cổng NOT"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:52
 msgid "NOT"
-msgstr ""
+msgstr "NOT"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:57
 msgid "Sequence Enforcing (SEQ) Gate"
@@ -252,7 +252,7 @@ msgstr ""
 
 #: gaphor/RAAML/fta/ftatoolbox.py:74
 msgid "XOR"
-msgstr ""
+msgstr "XOR"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:79 gaphor/RAAML/fta/ftatoolbox.py:86
 #: gaphor/RAAML/fta/majorityvotegate.py:37
@@ -300,7 +300,7 @@ msgstr ""
 
 #: gaphor/RAAML/fta/xorgate.py:33
 msgid "XOR Gate"
-msgstr ""
+msgstr "Cổng XOR"
 
 #: gaphor/RAAML/stpa/controlaction.py:27 gaphor/RAAML/stpa/stpatoolbox.py:158
 msgid "Control Action"
@@ -344,7 +344,7 @@ msgstr ""
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:149
 msgid "Relevant To"
-msgstr ""
+msgstr "Liên Quan Tới"
 
 #: gaphor/SysML/diagramtype.py:42
 #, python-brace-format
@@ -381,15 +381,15 @@ msgstr ""
 
 #: gaphor/SysML/propertypages.ui:97
 msgid "Show Parts"
-msgstr ""
+msgstr "Hiển thị các Bộ phận"
 
 #: gaphor/SysML/propertypages.ui:113
 msgid "Show References"
-msgstr ""
+msgstr "Hiển thị Trích Dẫn"
 
 #: gaphor/SysML/propertypages.ui:129 gaphor/SysML/propertypages.ui:161
 msgid "Show Values"
-msgstr ""
+msgstr "Hiển thị Giá trị"
 
 #: gaphor/SysML/propertypages.ui:183
 msgid "Aggregation"
@@ -416,11 +416,11 @@ msgstr "Id"
 
 #: gaphor/SysML/propertypages.ui:229
 msgid "Text"
-msgstr ""
+msgstr "Văn bản"
 
 #: gaphor/SysML/propertypages.ui:258
 msgid "Show text"
-msgstr ""
+msgstr "Hiển thị văn bản"
 
 #: gaphor/SysML/sysmlfmt.py:10
 #, python-brace-format
@@ -663,11 +663,11 @@ msgstr "UML"
 
 #: gaphor/UML/actions/propertypages.ui:445 gaphor/UML/propertypages.ui:9
 msgid "Type"
-msgstr ""
+msgstr "Loại"
 
 #: gaphor/UML/propertypages.ui:35
 msgid "Show Type"
-msgstr ""
+msgstr "Hiển thị Loại"
 
 #: gaphor/UML/sanitizerservice.py:114
 msgid ""
@@ -693,7 +693,7 @@ msgstr ""
 
 #: gaphor/UML/deployments/deploymentstoolbox.py:16 gaphor/UML/toolbox.py:51
 msgid "Artifact"
-msgstr ""
+msgstr "Chế tác"
 
 #: gaphor/UML/deployments/deploymentstoolbox.py:40 gaphor/UML/toolbox.py:55
 msgid "Device"
