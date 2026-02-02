@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-04-23 21:47+0200\n"
-"PO-Revision-Date: 2025-05-21 12:03+0000\n"
+"POT-Creation-Date: 2025-11-12 21:36-0500\n"
+"PO-Revision-Date: 2026-01-14 21:31+0000\n"
 "Last-Translator: Сергей <asvmail.as@gmail.com>\n"
 "Language-Team: Hindi <https://hosted.weblate.org/projects/gaphor/gaphor/hi/>"
 "\n"
@@ -17,8 +17,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.12-dev\n"
-"Generated-By: Babel 2.16.0\n"
+"X-Generator: Weblate 5.15.2\n"
+"Generated-By: Babel 2.17.0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:28
 msgid "C4"
@@ -124,12 +124,13 @@ msgstr "नया जेनेरिक आरेख"
 #: gaphor/C4Model/toolbox.py:150 gaphor/RAAML/toolbox.py:36
 #: gaphor/SysML/blocks/blockstoolbox.py:51 gaphor/SysML/toolbox.py:182
 #: gaphor/UML/classes/classestoolbox.py:51 gaphor/UML/toolbox.py:48
+#: gaphor/ui/modelbrowser.py:403
 msgid "Package"
 msgstr "पैकेज"
 
 #: gaphor/C4Model/toolbox.py:151 gaphor/SysML/toolbox.py:183
-#: gaphor/UML/actions/actionstoolbox.py:41
-#: gaphor/UML/actions/actionstoolbox.py:71 gaphor/UML/toolbox.py:49
+#: gaphor/UML/actions/actionstoolbox.py:42
+#: gaphor/UML/actions/actionstoolbox.py:72 gaphor/UML/toolbox.py:49
 #: gaphor/templates/sysml-example.gaphor gaphor/templates/uml-example.gaphor
 msgid "Activity"
 msgstr "गतिविधि"
@@ -356,6 +357,7 @@ msgid "Relevant To"
 msgstr "इसके प्रासंगिक"
 
 #: gaphor/SysML/diagramtype.py:42
+#, python-brace-format
 msgid "Can’t create “{name}” nested under a “{elem}”"
 msgstr ""
 
@@ -432,6 +434,7 @@ msgid "Show text"
 msgstr "प्रकार दिखाएं"
 
 #: gaphor/SysML/sysmlfmt.py:10
+#, python-brace-format
 msgid "sourceContext: {name}"
 msgstr "स्रोत संदर्भ: {name}"
 
@@ -562,9 +565,9 @@ msgstr "मान"
 msgid "operations"
 msgstr "अभियान"
 
-#: gaphor/SysML/blocks/block.py:131 gaphor/SysML/blocks/block.py:149
+#: gaphor/SysML/blocks/block.py:131 gaphor/SysML/blocks/block.py:150
 #: gaphor/SysML/blocks/interfaceblock.py:114
-#: gaphor/SysML/blocks/interfaceblock.py:136
+#: gaphor/SysML/blocks/interfaceblock.py:137
 msgid "unnamed"
 msgstr "अनाम"
 
@@ -669,6 +672,7 @@ msgid "Containment"
 msgstr "रोकथाम"
 
 #: gaphor/UML/compartments.py:62
+#, python-brace-format
 msgid "(from {namespace})"
 msgstr "({namespace} से)"
 
@@ -684,13 +688,12 @@ msgstr "प्रकार"
 msgid "Show Type"
 msgstr "प्रकार दिखाएं"
 
-#: gaphor/UML/sanitizerservice.py:106
+#: gaphor/UML/sanitizerservice.py:114
 msgid ""
 "Removed unused elements from the model: they are not used in any other "
 "diagram."
 msgstr ""
-"मॉडल से अप्रयुक्त तत्वों को हटा दिया गया: उनका उपयोग किसी अन्य आरेख में "
-"नहीं किया गया।"
+"मॉडल से अप्रयुक्त तत्वों को हटा दिया गया: उनका उपयोग किसी अन्य आरेख में नहीं किया गया।"
 
 #: gaphor/UML/toolbox.py:34
 #, fuzzy
@@ -741,13 +744,14 @@ msgstr "प्रोफाइल"
 msgid "Stereotype"
 msgstr "टकसाली"
 
-#: gaphor/UML/actions/actionstoolbox.py:18
+#: gaphor/UML/actions/actionstoolbox.py:19
 #: gaphor/UML/interactions/interactionstoolbox.py:16
 #: gaphor/UML/states/statestoolbox.py:27 gaphor/UML/toolboxconfig.py:6
+#, python-brace-format
 msgid "New {name}"
 msgstr "नया {name}"
 
-#: gaphor/UML/treemodel.py:57 gaphor/ui/diagrampage.py:106
+#: gaphor/UML/treemodel.py:57 gaphor/ui/diagrampage.py:109
 #: gaphor/ui/mainwindow.py:287 gaphor/ui/modelmerge/organize.py:138
 msgid "<None>"
 msgstr "<None>"
@@ -757,6 +761,7 @@ msgid "<Relationships>"
 msgstr "<Relationships>"
 
 #: gaphor/UML/umlfmt.py:23
+#, python-brace-format
 msgid "supplier: {name}"
 msgstr "प्रदायक: {name}"
 
@@ -766,109 +771,112 @@ msgid "readOnly"
 msgstr "पुनः करें"
 
 #: gaphor/UML/umlfmt.py:241
+#, python-brace-format
 msgid "general: {name}"
 msgstr "सामान्य: {name}"
 
 #: gaphor/UML/umlfmt.py:246
+#, python-brace-format
 msgid "extend: {name}"
 msgstr "विस्तार करें: {name}"
 
 #: gaphor/UML/umlfmt.py:253
+#, python-brace-format
 msgid "include: {name}"
 msgstr "शामिल करें: {name}"
 
-#: gaphor/UML/actions/actionstoolbox.py:49
+#: gaphor/UML/actions/actionstoolbox.py:50
 msgid "Swimlane One"
 msgstr "स्विमलेन एक"
 
-#: gaphor/UML/actions/actionstoolbox.py:53
+#: gaphor/UML/actions/actionstoolbox.py:54
 msgid "Swimlane Two"
 msgstr "स्विमलेन दो"
 
-#: gaphor/UML/actions/actionstoolbox.py:59
+#: gaphor/UML/actions/actionstoolbox.py:60
 msgid "ValueSpecificationAction"
 msgstr "मूल्यविनिर्देशकार्रवाई"
 
-#: gaphor/UML/actions/actionstoolbox.py:67
+#: gaphor/UML/actions/actionstoolbox.py:68
 msgid "Actions"
 msgstr "कार्रवाइयां"
 
-#: gaphor/UML/actions/actionstoolbox.py:83
-#: gaphor/UML/actions/actionstoolbox.py:89
+#: gaphor/UML/actions/actionstoolbox.py:84
+#: gaphor/UML/actions/actionstoolbox.py:90
 #: gaphor/UML/states/propertypages.ui:103
 msgid "Action"
 msgstr "कार्रवाई"
 
-#: gaphor/UML/actions/actionstoolbox.py:95
+#: gaphor/UML/actions/actionstoolbox.py:96
 msgid "Call behavior action"
 msgstr "कॉल व्यवहार कार्रवाई"
 
-#: gaphor/UML/actions/actionstoolbox.py:102
+#: gaphor/UML/actions/actionstoolbox.py:103
 msgid "CallBehaviorAction"
 msgstr "कॉलव्यवहारकार्रवाई"
 
-#: gaphor/UML/actions/actionstoolbox.py:109
+#: gaphor/UML/actions/actionstoolbox.py:110
 msgid "Value specification action"
 msgstr "मान विनिर्देशन कार्रवाई"
 
-#: gaphor/UML/actions/actionstoolbox.py:121
+#: gaphor/UML/actions/actionstoolbox.py:122
 msgid "Initial node"
 msgstr "प्रारंभिक नोड"
 
-#: gaphor/UML/actions/actionstoolbox.py:133
+#: gaphor/UML/actions/actionstoolbox.py:134
 msgid "Activity final node"
 msgstr "गतिविधि अंतिम नोड"
 
-#: gaphor/UML/actions/actionstoolbox.py:145
+#: gaphor/UML/actions/actionstoolbox.py:146
 msgid "Flow final node"
 msgstr "प्रवाह अंतिम नोड"
 
-#: gaphor/UML/actions/actionstoolbox.py:157
+#: gaphor/UML/actions/actionstoolbox.py:158
 msgid "Decision/merge node"
 msgstr "निर्णय/मर्ज नोड"
 
-#: gaphor/UML/actions/actionstoolbox.py:169
+#: gaphor/UML/actions/actionstoolbox.py:170
 msgid "Fork/join node"
 msgstr "फ़ॉर्क/जुड़ाव नोड"
 
-#: gaphor/UML/actions/actionstoolbox.py:181
-#: gaphor/UML/actions/actionstoolbox.py:187
+#: gaphor/UML/actions/actionstoolbox.py:182
+#: gaphor/UML/actions/actionstoolbox.py:188
 msgid "Object node"
 msgstr "वस्तु नोड"
 
-#: gaphor/UML/actions/actionstoolbox.py:193
+#: gaphor/UML/actions/actionstoolbox.py:194
 msgid "Swimlane"
 msgstr "स्विमलेन"
 
-#: gaphor/UML/actions/actionstoolbox.py:205
+#: gaphor/UML/actions/actionstoolbox.py:206
 msgid "Control flow"
 msgstr "प्रवाह नियंत्रण"
 
-#: gaphor/UML/actions/actionstoolbox.py:212
+#: gaphor/UML/actions/actionstoolbox.py:213
 msgid "Object flow"
 msgstr "वस्तु प्रवाह"
 
-#: gaphor/UML/actions/actionstoolbox.py:219
+#: gaphor/UML/actions/actionstoolbox.py:220
 msgid "Send signal action"
 msgstr "संकेत कार्रवाई भेजें"
 
-#: gaphor/UML/actions/actionstoolbox.py:225
+#: gaphor/UML/actions/actionstoolbox.py:226
 msgid "Send signal"
 msgstr "संकेत भेजें"
 
-#: gaphor/UML/actions/actionstoolbox.py:231
+#: gaphor/UML/actions/actionstoolbox.py:232
 msgid "Accept event action"
 msgstr "घटना कार्रवाई स्वीकारें"
 
-#: gaphor/UML/actions/actionstoolbox.py:237
+#: gaphor/UML/actions/actionstoolbox.py:238
 msgid "Accept event"
 msgstr "घटना स्वीकारें"
 
-#: gaphor/UML/actions/actionstoolbox.py:243
+#: gaphor/UML/actions/actionstoolbox.py:244
 msgid "Input pin"
 msgstr "इनपुट पिन"
 
-#: gaphor/UML/actions/actionstoolbox.py:250
+#: gaphor/UML/actions/actionstoolbox.py:251
 msgid "Output pin"
 msgstr "आउटपुट पिन"
 
@@ -1020,11 +1028,10 @@ msgstr ""
 "  • <tt>+ attr: int</tt> (प्रकार के साथ सार्वजनिक)\n"
 "  • <tt>+ attr: int[0..1]</tt> (सार्वजनिक, प्रकार, और बहुलता)\n"
 "  • <tt>+ attr: int | bool</tt> (सार्वजनिक, संघ प्रकार)\n"
-"  • <tt># /attr: int # a note</tt> (संरक्षित, व्युत्पन्न, टिप्पणी के साथ)"
+"  • <tt># /attr: int # a note</tt> (संरक्षित, व्युत्पन्न, टिप्पणी के साथ)\n"
 "\n"
-"\n"
-"संपादित करने के लिए <b>Enter</b> दबाएं, आइटम हटाने के लिए "
-"<b>Backspace</b>/<b>Delete</b> दबाएं।\n"
+"संपादित करने के लिए <b>Enter</b> दबाएं, आइटम हटाने के लिए <b>Backspace</b>/<b>"
+"Delete</b> दबाएं।\n"
 "आइटम को ऊपर या नीचे ले जाने के लिए <b>-</b>/<b>=</b> का उपयोग करें।"
 
 #: gaphor/UML/actions/propertypages.ui:391
@@ -1152,8 +1159,8 @@ msgstr ""
 "  • <tt>1..2</tt>\n"
 "  • <tt>- [1..2]</tt>\n"
 "\n"
-"संपादित करने के लिए <b>Enter</b> दबाएं, आइटम हटाने के लिए "
-"<b>Backspace</b>/<b>Delete</b> दबाएं।\n"
+"संपादित करने के लिए <b>Enter</b> दबाएं, आइटम हटाने के लिए <b>Backspace</b>/<b>"
+"Delete</b> दबाएं।\n"
 "आइटम को ऊपर या नीचे ले जाने के लिए <b>-</b>/<b>=</b> का उपयोग करें।"
 
 #: gaphor/UML/classes/propertypages.ui:111
@@ -1213,11 +1220,10 @@ msgstr ""
 "  • <tt>+ attr: int</tt> (प्रकार के साथ सार्वजनिक)\n"
 "  • <tt>+ attr: int[0..1]</tt> (सार्वजनिक, प्रकार, और बहुलता)\n"
 "  • <tt>+ attr: int | bool</tt> (सार्वजनिक, संघ प्रकार)\n"
-"  • <tt># /attr: int # a note</tt> (संरक्षित, व्युत्पन्न, टिप्पणी के साथ)"
+"  • <tt># /attr: int # a note</tt> (संरक्षित, व्युत्पन्न, टिप्पणी के साथ)\n"
 "\n"
-"\n"
-"संपादित करने के लिए <b>Enter</b> दबाएं, आइटम हटाने के लिए "
-"<b>Backspace</b>/<b>Delete</b> दबाएं।\n"
+"संपादित करने के लिए <b>Enter</b> दबाएं, आइटम हटाने के लिए <b>Backspace</b>/<b>"
+"Delete</b> दबाएं।\n"
 "आइटम को ऊपर या नीचे ले जाने के लिए <b>-</b>/<b>=</b> का उपयोग करें।"
 
 #: gaphor/UML/classes/propertypages.ui:349
@@ -1298,11 +1304,10 @@ msgstr ""
 "\n"
 "  • <tt>call()</tt>\n"
 "  • <tt>+ call(a: int[*], b: str): bool</tt> (सार्वजनिक, पैरामीटर)\n"
-"  • <tt># call(a: int, b: str) # एक टिप्पणी</tt> (संरक्षित, टिप्पणी के "
-"साथ)\n"
+"  • <tt># call(a: int, b: str) # एक टिप्पणी</tt> (संरक्षित, टिप्पणी के साथ)\n"
 "\n"
-"संपादित करने के लिए <b>Enter</b> दबाएं, आइटम हटाने के लिए "
-"<b>Backspace</b>/<b>Delete</b> दबाएं।\n"
+"संपादित करने के लिए <b>Enter</b> दबाएं, आइटम हटाने के लिए <b>Backspace</b>/<b>"
+"Delete</b> दबाएं।\n"
 "आइटम को ऊपर या नीचे ले जाने के लिए <b>-</b>/<b>=</b> का उपयोग करें।"
 
 #: gaphor/UML/classes/propertypages.ui:668
@@ -1328,8 +1333,8 @@ msgstr ""
 "\n"
 "  • <tt>enum</tt>\n"
 "\n"
-"संपादित करने के लिए <b>Enter</b> दबाएं, आइटम हटाने के लिए "
-"<b>Backspace</b>/<b>Delete</b> दबाएं।\n"
+"संपादित करने के लिए <b>Enter</b> दबाएं, आइटम हटाने के लिए <b>Backspace</b>/<b>"
+"Delete</b> दबाएं।\n"
 "आइटम को ऊपर या नीचे ले जाने के लिए <b>-</b>/<b>=</b> का उपयोग करें।"
 
 #: gaphor/UML/classes/propertypages.ui:768
@@ -1399,6 +1404,7 @@ msgid "Select a picture..."
 msgstr "एक चित्र चुनें…"
 
 #: gaphor/UML/general/imagepropertypage.py:72
+#, python-brace-format
 msgid "Unable to parse picture “{filename}”."
 msgstr "चित्र “{filename}” विश्लेषित करने में असमर्थ।"
 
@@ -1682,7 +1688,7 @@ msgid "Internals of focused item"
 msgstr "फ़ोकस किए गए आइटम के CSS नोड्स"
 
 #: gaphor/diagram/propertypages.ui:297 gaphor/ui/elementeditor.py:410
-#: gaphor/ui/elementeditor.ui:262
+#: gaphor/ui/elementeditor.ui:261
 msgid "No focused item."
 msgstr "कोई केंद्रित आइटम नहीं।"
 
@@ -1724,11 +1730,13 @@ msgstr "स्टाइल शीट"
 msgid "Element can’t be represented on a diagram."
 msgstr "तत्व को आरेख पर प्रदर्शित नहीं किया जा सकता।"
 
-#: gaphor/extensions/sphinx.py:66
+#: gaphor/extensions/sphinx.py:67
+#, python-brace-format
 msgid "No model file configured for model '{model_name}'."
 msgstr "मॉडल '{model_name}' के लिए कोई मॉडल फाइल विन्यस्त नहीं की गई।"
 
-#: gaphor/extensions/sphinx.py:93
+#: gaphor/extensions/sphinx.py:95
+#, python-brace-format
 msgid "No diagram '{name}' in model '{model_name}' ({model_file})."
 msgstr "मॉडल '{model_name}' ({model_file}) में कोई आरेख '{name}' नहीं है।"
 
@@ -1740,7 +1748,8 @@ msgstr "स्वचालित अभिन्यास"
 msgid "Auto Layout (orthogonal)"
 msgstr "स्वचालित अभिन्यास (ऑर्थोगोनल)"
 
-#: gaphor/plugins/console/console.py:23
+#: gaphor/plugins/console/console.py:24
+#, python-brace-format
 msgid ""
 "Gaphor Interactive Python Console\n"
 "{version}\n"
@@ -1759,6 +1768,7 @@ msgid "Gaphor Console"
 msgstr "गैफोर कंसोल"
 
 #: gaphor/plugins/diagramexport/export.py:61
+#, python-brace-format
 msgid "All {ext} Files"
 msgstr "सभी {ext} फाइलें"
 
@@ -1845,50 +1855,19 @@ msgstr "आरेख को EPS के रूप में निर्यात
 msgid "Export all diagrams as EPS diagrams in a specifieddirectory"
 msgstr ""
 
-#: gaphor/plugins/errorreports/errorreports.py:60
-#: gaphor/plugins/errorreports/errorreports.ui:6
-msgid "Error Reports"
-msgstr "त्रुटि रिपोर्ट"
-
-#: gaphor/plugins/errorreports/errorreports.py:95
-msgid "No errors have been intercepted. We’re good."
-msgstr "कोई भी त्रुटि नहीं पकड़ी गई है। हम ठीक हैं।"
-
-#: gaphor/plugins/errorreports/errorreports.py:99
-msgid "Errors:"
-msgstr "त्रुटियां:"
-
-#: gaphor/plugins/errorreports/errorreports.py:148
-msgid ""
-"An unexpected error occurred.\n"
-"Please file an issue on GitHub and include information from Tools → Error"
-" Reports."
-msgstr ""
-"एक अप्रत्याशित त्रुटि हुई।\n"
-"कृपया GitHub पर एक समस्या दर्ज करें और टूल्स → त्रुटि रिपोर्ट से जानकारी "
-"शामिल करें।"
-
-#: gaphor/plugins/errorreports/errorreports.ui:23
-msgid ""
-"Any unhandled errors are shown here. You can use these to provide extra "
-"information when you create an issue on GitHub."
-msgstr ""
-"कोई भी अनहैंडल की गई त्रुटियां यहाँ दिखाई गई हैं। GitHub पर कोई समस्या "
-"बनाते समय आप इनका उपयोग अतिरिक्त जानकारी प्रदान करने के लिए कर सकते हैं।"
-
-#: gaphor/storage/recovery.py:154
+#: gaphor/storage/recovery.py:155
 #, fuzzy
 msgid "This model contains unsaved changes. The changes have been restored."
 msgstr ""
-"खुले मॉडल में बिना सहेजे गए परिवर्तन शामिल हैं। जो परिवर्तन सहेजे नहीं गए"
-" हैं, वे स्थायी रूप से खो जाएंगे।"
+"खुले मॉडल में बिना सहेजे गए परिवर्तन शामिल हैं। जो परिवर्तन सहेजे नहीं गए हैं, वे स्थायी रूप से "
+"खो जाएंगे।"
 
 #: gaphor/templates/blank.gaphor gaphor/ui/mainwindow.py:268
 #: gaphor/ui/mainwindow.py:273 gaphor/ui/mainwindow.ui:129
 msgid "New model"
 msgstr "नए मॉडल"
 
-#: gaphor/templates/blank.gaphor gaphor/ui/modelbrowser.py:208
+#: gaphor/templates/blank.gaphor gaphor/ui/modelbrowser.py:207
 msgid "New Diagram"
 msgstr "नया आरेख"
 
@@ -2118,8 +2097,8 @@ msgid ""
 "The fault tree analysis shows which causes for the failure of a system "
 "have been considered."
 msgstr ""
-"दोष वृक्ष विश्लेषण से पता चलता है कि किसी प्रणाली की विफलता के लिए किन "
-"कारणों पर विचार किया गया है।"
+"दोष वृक्ष विश्लेषण से पता चलता है कि किसी प्रणाली की विफलता के लिए किन कारणों पर "
+"विचार किया गया है।"
 
 #: gaphor/templates/sysml-example.gaphor gaphor/templates/sysml.gaphor
 msgid "1. Concept Level"
@@ -2520,9 +2499,8 @@ msgid ""
 "Model abstract use case implementation by creating activity diagrams "
 "visualizing activity flows for primary and secondary use case scenarios."
 msgstr ""
-"प्राथमिक और द्वितीयक उपयोग केस परिदृश्यों के लिए गतिविधि प्रवाह को "
-"दर्शाने वाले गतिविधि आरेख बनाकर अमूर्त उपयोग केस कार्यान्वयन का मॉडल "
-"तैयार करें।"
+"प्राथमिक और द्वितीयक उपयोग केस परिदृश्यों के लिए गतिविधि प्रवाह को दर्शाने वाले गतिविधि "
+"आरेख बनाकर अमूर्त उपयोग केस कार्यान्वयन का मॉडल तैयार करें।"
 
 #: gaphor/templates/uml-example.gaphor gaphor/templates/uml.gaphor
 msgid ""
@@ -2531,10 +2509,9 @@ msgid ""
 "a visual dictionary of concepts. It will also be a starting point for "
 "your design-level data model."
 msgstr ""
-"सरलीकृत वर्ग आरेख का उपयोग करके डोमेन इकाइयों और उनके संबंधों को मॉडलिंग "
-"करके डोमेन विश्लेषण करें। यह आरेख अवधारणाओं के दृश्य शब्दकोश के रूप में "
-"काम करेगा। यह आपके डिज़ाइन-स्तरीय डेटा मॉडल के लिए एक प्रारंभिक बिंदु भी "
-"होगा।"
+"सरलीकृत वर्ग आरेख का उपयोग करके डोमेन इकाइयों और उनके संबंधों को मॉडलिंग करके डोमेन "
+"विश्लेषण करें। यह आरेख अवधारणाओं के दृश्य शब्दकोश के रूप में काम करेगा। यह आपके डिज़ाइन-स्तरीय "
+"डेटा मॉडल के लिए एक प्रारंभिक बिंदु भी होगा।"
 
 #: gaphor/templates/uml-example.gaphor gaphor/templates/uml.gaphor
 msgid ""
@@ -2543,10 +2520,9 @@ msgid ""
 " and avoid design flaws such as cyclic dependencies or dependencies on "
 "unstable parts"
 msgstr ""
-"अपने कार्यान्वयन वर्गों को उचित तरीके से समूहीकृत करने के लिए पैकेज "
-"निर्भरता आरेख तैयार करें। इससे आपको कोड को अच्छी तरह से संरचित बनाए रखने "
-"और चक्रीय निर्भरता या अस्थिर भागों पर निर्भरता जैसी डिज़ाइन खामियों से "
-"बचने में मदद मिलेगी"
+"अपने कार्यान्वयन वर्गों को उचित तरीके से समूहीकृत करने के लिए पैकेज निर्भरता आरेख तैयार करें। "
+"इससे आपको कोड को अच्छी तरह से संरचित बनाए रखने और चक्रीय निर्भरता या अस्थिर भागों पर "
+"निर्भरता जैसी डिज़ाइन खामियों से बचने में मदद मिलेगी"
 
 #: gaphor/templates/uml-example.gaphor gaphor/templates/uml.gaphor
 msgid ""
@@ -2554,15 +2530,14 @@ msgid ""
 "new methods in\n"
 "existing classes or even new classes with specific responsibilities."
 msgstr ""
-"मौजूदा कक्षाओं में नई विधियों या विशिष्ट जिम्मेदारियों के साथ नई कक्षाओं "
-"का पता लगाने के लिए उपयोग केस\n"
+"मौजूदा कक्षाओं में नई विधियों या विशिष्ट जिम्मेदारियों के साथ नई कक्षाओं का पता लगाने के "
+"लिए उपयोग केस\n"
 "परिदृश्यों के लिए मॉडल घटक इंटरैक्शन।"
 
 #: gaphor/templates/uml-example.gaphor gaphor/templates/uml.gaphor
 msgid "Create detailed class diagrams to capture your object-oriented data model."
 msgstr ""
-"अपने वस्तु-उन्मुख डेटा मॉडल को कैप्चर करने के लिए विस्तृत क्लास आरेख "
-"बनाएं।"
+"अपने वस्तु-उन्मुख डेटा मॉडल को कैप्चर करने के लिए विस्तृत क्लास आरेख बनाएं।"
 
 #: gaphor/templates/uml-example.gaphor gaphor/templates/uml.gaphor
 msgid ""
@@ -2570,9 +2545,8 @@ msgid ""
 "components. Indicate how they are deployed on hardware nodes, their "
 "inter-dependencies and communication protocols."
 msgstr ""
-"अपने घटकों के कार्यान्वयन को दर्शाने वाले प्रमुख विरूपण-साक्ष्य को "
-"परिभाषित करें। संकेत दें कि उन्हें हार्डवेयर नोड्स, उनकी अंतर-निर्भरता और"
-" संचार प्रोटोकॉल पर कैसे तैनात किया जाता है।"
+"अपने घटकों के कार्यान्वयन को दर्शाने वाले प्रमुख विरूपण-साक्ष्य को परिभाषित करें। संकेत दें कि "
+"उन्हें हार्डवेयर नोड्स, उनकी अंतर-निर्भरता और संचार प्रोटोकॉल पर कैसे तैनात किया जाता है।"
 
 #: gaphor/templates/uml-example.gaphor
 msgid "String"
@@ -2582,11 +2556,11 @@ msgstr "स्ट्रिंग"
 msgid "Date"
 msgstr "तिथि"
 
-#: gaphor/ui/__init__.py:187 gaphor/ui/mainwindow.py:166
+#: gaphor/ui/__init__.py:187 gaphor/ui/mainwindow.py:165
 msgid "Export"
 msgstr "निर्यात"
 
-#: gaphor/ui/__init__.py:188 gaphor/ui/mainwindow.py:169
+#: gaphor/ui/__init__.py:188 gaphor/ui/mainwindow.py:168
 msgid "Tools"
 msgstr "औजार"
 
@@ -2595,16 +2569,17 @@ msgid "Open a Model"
 msgstr "मॉडल खोलें"
 
 #: gaphor/ui/appfilemanager.py:49
+#, python-brace-format
 msgid "Switch to {name}?"
 msgstr "{name} पर जाएं?"
 
-#: gaphor/ui/appfilemanager.py:50
+#: gaphor/ui/appfilemanager.py:51
+#, python-brace-format
 msgid ""
 "{name} is already opened. Do you want to switch to the opened window "
 "instead?"
 msgstr ""
-"{name} पहले से ही खुली हुई है। क्या आप इसके बजाय खुली हुई विंडो पर जाना "
-"चाहते हैं?"
+"{name} पहले से ही खुली हुई है। क्या आप इसके बजाय खुली हुई विंडो पर जाना चाहते हैं?"
 
 #: gaphor/ui/appfilemanager.py:61
 msgid "Open Again"
@@ -2614,25 +2589,25 @@ msgstr "पुनः खोलें"
 msgid "Switch"
 msgstr "बदले"
 
-#: gaphor/ui/diagrampage.py:355
+#: gaphor/ui/diagrampage.py:377
 msgid "Show in Model Browser"
 msgstr "मॉडल ब्राउज़र में दिखाएं"
 
-#: gaphor/ui/diagrampage.ui:29 gaphor/ui/help/shortcuts.ui:198
+#: gaphor/ui/diagrampage.ui:33 gaphor/ui/help/shortcuts.ui:198
 #: gaphor/ui/menubar.ui:83
 msgid "Zoom Out"
 msgstr "छोटा करें"
 
-#: gaphor/ui/diagrampage.ui:44 gaphor/ui/help/shortcuts.ui:205
+#: gaphor/ui/diagrampage.ui:48 gaphor/ui/help/shortcuts.ui:205
 msgid "Reset Zoom"
 msgstr "जूम रीसेट करें"
 
-#: gaphor/ui/diagrampage.ui:59 gaphor/ui/help/shortcuts.ui:191
+#: gaphor/ui/diagrampage.ui:63 gaphor/ui/help/shortcuts.ui:191
 #: gaphor/ui/menubar.ui:79
 msgid "Zoom In"
 msgstr "बड़ा करें"
 
-#: gaphor/ui/diagrams.py:301
+#: gaphor/ui/diagrams.py:300
 #, fuzzy
 msgid "Selected element is not in present in this diagram."
 msgstr "तत्व को आरेख पर प्रदर्शित नहीं किया जा सकता।"
@@ -2657,127 +2632,124 @@ msgstr "कोई आइटम चयनित नहीं"
 msgid "Show Tips"
 msgstr "सुझाव दिखाएं"
 
-#: gaphor/ui/elementeditor.ui:50
+#: gaphor/ui/elementeditor.ui:49
 msgid ""
 "Add a model element from the tool box (bottom left) to the diagram. Here "
 "you will see its properties appear."
 msgstr ""
-"टूल बॉक्स (नीचे बाएं) से मॉडल तत्व को आरेख में जोड़ें। यहाँ आप इसके गुण "
-"देखेंगे।"
+"टूल बॉक्स (नीचे बाएं) से मॉडल तत्व को आरेख में जोड़ें। यहाँ आप इसके गुण देखेंगे।"
 
-#: gaphor/ui/elementeditor.ui:58
+#: gaphor/ui/elementeditor.ui:57
 msgid "This pane can be hidden by clicking the pane icon in the header."
 msgstr "इस फलक को शीर्षलेख में फलक आइकन पर क्लिक करके छुपाया जा सकता है।"
 
-#: gaphor/ui/elementeditor.ui:66
+#: gaphor/ui/elementeditor.ui:65
 msgid ""
 "<b>Tip:</b> Most elements in the toolbox have a keyboard shortcut (e.g. "
 "\"c\" for Class). Tool selection only works from the diagram. If a tool "
 "does not get selected, click on the diagram once (so it's focused) and "
 "then hit the shortcut key."
 msgstr ""
-"<b>सुझाव:</b> टूलबॉक्स में अधिकांश तत्वों के लिए कीबोर्ड शॉर्टकट होता है "
-"(उदाहरण के लिए क्लास के लिए \"c\")। टूल चयन केवल आरेख से ही काम करता है। "
-"यदि कोई टूल चयनित नहीं होता है, तो आरेख पर एक बार क्लिक करें (ताकि वह "
-"फ़ोकस हो जाए) और फिर शॉर्टकट कुंजी दबाएं।"
+"<b>सुझाव:</b> टूलबॉक्स में अधिकांश तत्वों के लिए कीबोर्ड शॉर्टकट होता है (उदाहरण के लिए "
+"क्लास के लिए \"c\")। टूल चयन केवल आरेख से ही काम करता है। यदि कोई टूल चयनित नहीं होता "
+"है, तो आरेख पर एक बार क्लिक करें (ताकि वह फ़ोकस हो जाए) और फिर शॉर्टकट कुंजी दबाएं।"
 
-#: gaphor/ui/elementeditor.ui:74
+#: gaphor/ui/elementeditor.ui:73
 msgid ""
 "<b>Tip:</b> To search for an element in the model browser (top left), "
 "select an element in the model browser and start typing. A search box "
 "will automatically appear."
 msgstr ""
-"<b>सुझाव:</b> मॉडल ब्राउज़र (ऊपर बाईं ओर) में किसी तत्व को खोजने के लिए, "
-"मॉडल ब्राउज़र में किसी तत्व का चयन करें और टाइप करना शुरू करें। एक खोज "
-"बॉक्स अपने आप दिखाई देगा।"
+"<b>सुझाव:</b> मॉडल ब्राउज़र (ऊपर बाईं ओर) में किसी तत्व को खोजने के लिए, मॉडल ब्राउज़र "
+"में किसी तत्व का चयन करें और टाइप करना शुरू करें। एक खोज बॉक्स अपने आप दिखाई देगा।"
 
-#: gaphor/ui/elementeditor.ui:87
+#: gaphor/ui/elementeditor.ui:86
 msgid "Help improve Gaphor"
 msgstr ""
 
-#: gaphor/ui/elementeditor.ui:96
+#: gaphor/ui/elementeditor.ui:95
 msgid "Gaphor is free and open source software, written by devoted volunteers."
 msgstr ""
 
-#: gaphor/ui/elementeditor.ui:104
+#: gaphor/ui/elementeditor.ui:103
 msgid ""
 "There are many ways to help make Gaphor better: write a blog post, "
 "translate Gaphor into your language, report bugs, or suggest new "
 "features. Join us in improving Gaphor!"
 msgstr ""
 
-#: gaphor/ui/elementeditor.ui:112
+#: gaphor/ui/elementeditor.ui:111
 msgid ""
 "Visit <a href=\"https://gaphor.org/contribute/\">gaphor.org</a> for more "
 "information."
 msgstr ""
 
-#: gaphor/ui/elementeditor.ui:151
+#: gaphor/ui/elementeditor.ui:150
 #, fuzzy
 msgid "Editor"
 msgstr "संपादक"
 
-#: gaphor/ui/elementeditor.ui:177
+#: gaphor/ui/elementeditor.ui:176
 #, fuzzy
 msgid "Styling"
 msgstr "स्ट्रिंग"
 
-#: gaphor/ui/elementeditor.ui:189
+#: gaphor/ui/elementeditor.ui:188
 msgid "Style Sheet"
 msgstr "स्टाइल शीट"
 
-#: gaphor/ui/elementeditor.ui:202
+#: gaphor/ui/elementeditor.ui:201
 msgid "Diagram Language"
 msgstr "आरेख भाषा"
 
-#: gaphor/ui/elementeditor.ui:204 gaphor/ui/elementeditor.ui:212
+#: gaphor/ui/elementeditor.ui:203 gaphor/ui/elementeditor.ui:211
 msgid "The (natural) language used in this model."
 msgstr "इस मॉडल में प्रयुक्त (प्राकृतिक) भाषा।"
 
-#: gaphor/ui/elementeditor.ui:220
+#: gaphor/ui/elementeditor.ui:219
 #, fuzzy
 msgid "CSS Editor"
 msgstr "स्टाइल शीट"
 
-#: gaphor/ui/elementeditor.ui:248
+#: gaphor/ui/elementeditor.ui:247
 msgid "CSS nodes of focused item"
 msgstr "फ़ोकस किए गए आइटम के CSS नोड्स"
 
-#: gaphor/ui/elementeditor.ui:273
+#: gaphor/ui/elementeditor.ui:272
 msgid ""
 "🔗 <a href=\"https://docs.gaphor.org/en/latest/style_sheets.html\">Style "
 "sheets in Gaphor</a>"
 msgstr ""
-"🔗 <a href=\"https://docs.gaphor.org/en/latest/style_sheets.html\">गैफोर "
-"में स्टाइल शीट</a>"
+"🔗 <a href=\"https://docs.gaphor.org/en/latest/style_sheets.html\">गैफोर में "
+"स्टाइल शीट</a>"
 
-#: gaphor/ui/elementeditor.ui:287
+#: gaphor/ui/elementeditor.ui:286
 msgid "Merge Models"
 msgstr "मॉडल मर्ज करें"
 
-#: gaphor/ui/elementeditor.ui:300
+#: gaphor/ui/elementeditor.ui:299
 msgid "Merge Model Changes"
 msgstr "मॉडल परिवर्तन मर्ज करें"
 
-#: gaphor/ui/elementeditor.ui:311
+#: gaphor/ui/elementeditor.ui:310
 msgid ""
 "Apply incoming changes from the conflicting model. Use Undo to revert "
 "changes."
 msgstr ""
-"विरोधाभासी मॉडल से आने वाले परिवर्तनों को लागू करें। परिवर्तनों को "
-"पूर्ववत करने के लिए पूर्ववत करें का उपयोग करें।"
+"विरोधाभासी मॉडल से आने वाले परिवर्तनों को लागू करें। परिवर्तनों को पूर्ववत करने के लिए "
+"पूर्ववत करें का उपयोग करें।"
 
-#: gaphor/ui/elementeditor.ui:331
+#: gaphor/ui/elementeditor.ui:330
 msgid "Resolve"
 msgstr "समाधान करें"
 
-#: gaphor/ui/errordialog.py:20
+#: gaphor/ui/errordialog.py:21
 msgid ""
 "It looks like Gaphor is started from the command line. Do you want to "
 "open a debug session?"
 msgstr ""
-"ऐसा लगता है कि गैफोर को कमांड लाइन से शुरू किया गया है। क्या आप डिबग सत्र"
-" खोलना चाहते हैं?"
+"ऐसा लगता है कि गैफोर को कमांड लाइन से शुरू किया गया है। क्या आप डिबग सत्र खोलना चाहते "
+"हैं?"
 
 #: gaphor/ui/errordialog.py:27 gaphor/ui/menubar.ui:93
 msgid "Close"
@@ -2804,14 +2776,14 @@ msgid "Flatpak Document Portal"
 msgstr ""
 
 #: gaphor/ui/filemanager.py:41
+#, python-brace-format
 msgid ""
 "Gaphor was not able to store the model, probably due to an internal "
 "error:\n"
 "{exc}\n"
 "If you think this is a bug, please contact the developers."
 msgstr ""
-"गैफोर मॉडल को संग्रहीत करने में सक्षम नहीं था, संभवतः एक आंतरिक त्रुटि के"
-" कारण:\n"
+"गैफोर मॉडल को संग्रहीत करने में सक्षम नहीं था, संभवतः एक आंतरिक त्रुटि के कारण:\n"
 "{exc}\n"
 "यदि आपको लगता है कि यह एक बग है, तो कृपया डेवलपर्स से संपर्क करें।"
 
@@ -2830,10 +2802,10 @@ msgid ""
 "location."
 msgstr ""
 "आपके उपकरण पर मॉडल को सहेजने के लिए पर्याप्त खाली स्थान नहीं है।\n"
-"कृपया कुछ डिस्क स्थान खाली करें और पुनः प्रयास करें या इसे किसी अन्य "
-"स्थान पर सहेजें।"
+"कृपया कुछ डिस्क स्थान खाली करें और पुनः प्रयास करें या इसे किसी अन्य स्थान पर सहेजें।"
 
 #: gaphor/ui/filemanager.py:52
+#, python-brace-format
 msgid ""
 "The model cannot be stored at this location:\n"
 "{exc}\n"
@@ -2843,51 +2815,55 @@ msgstr ""
 "{exc}\n"
 "कृपया जाँच लें कि आपने स्थान सही टाइप किया है और पुनः प्रयास करें।"
 
-#: gaphor/ui/filemanager.py:116 gaphor/ui/filemanager.py:142
+#: gaphor/ui/filemanager.py:115 gaphor/ui/filemanager.py:141
 msgid "Loading…"
 msgstr "लोड हो रहा है…"
 
-#: gaphor/ui/filemanager.py:117
+#: gaphor/ui/filemanager.py:116
+#, python-brace-format
 msgid "Loading model from {filename}"
 msgstr "{filename} से मॉडल लोड हो रहा है"
 
-#: gaphor/ui/filemanager.py:143
+#: gaphor/ui/filemanager.py:142
 msgid "Loading current and incoming model"
 msgstr "वर्तमान और आने वाले मॉडल लोड हो रहे हैं"
 
-#: gaphor/ui/filemanager.py:205 gaphor/ui/filemanager.py:249
+#: gaphor/ui/filemanager.py:203 gaphor/ui/filemanager.py:247
+#, python-brace-format
 msgid "Unable to open model “{filename}”."
 msgstr "मॉडल “{filename}” खोलने में असमर्थ।"
 
-#: gaphor/ui/filemanager.py:208 gaphor/ui/filemanager.py:252
+#: gaphor/ui/filemanager.py:207 gaphor/ui/filemanager.py:251
 msgid "This file does not contain a valid Gaphor model."
 msgstr "इस फाइल में मान्य गैफ़ोर मॉडल नहीं है।"
 
-#: gaphor/ui/filemanager.py:273
+#: gaphor/ui/filemanager.py:271
 msgid "Saving…"
 msgstr "सहेजा जा रहा है…"
 
-#: gaphor/ui/filemanager.py:274
+#: gaphor/ui/filemanager.py:272
+#, python-brace-format
 msgid "Saving model to {filename}"
 msgstr "मॉडल को {filename} में सहेजा जा रहा है"
 
-#: gaphor/ui/filemanager.py:290
+#: gaphor/ui/filemanager.py:287
+#, python-brace-format
 msgid "Unable to save model “{filename}”."
 msgstr "मॉडल “{filename}” को सहेजने में असमर्थ।"
 
-#: gaphor/ui/filemanager.py:302
+#: gaphor/ui/filemanager.py:299
 msgid "Model has been saved."
 msgstr ""
 
-#: gaphor/ui/filemanager.py:327 gaphor/ui/filemanager.py:365
+#: gaphor/ui/filemanager.py:326 gaphor/ui/filemanager.py:364
 msgid "Save Gaphor Model As"
 msgstr "गैफोर मॉडल ऐसे सहेजें"
 
-#: gaphor/ui/filemanager.py:328 gaphor/ui/filemanager.py:367
+#: gaphor/ui/filemanager.py:327 gaphor/ui/filemanager.py:366
 msgid "New Model"
 msgstr "नए मॉडल"
 
-#: gaphor/ui/filemanager.py:382
+#: gaphor/ui/filemanager.py:381
 msgid "Resolve Merge Conflict?"
 msgstr "मर्ज विवाद का समाधान करें?"
 
@@ -2896,26 +2872,26 @@ msgid ""
 "The model you are opening contains a merge conflict. Do you want to open "
 "the current model or the incoming change to the model?"
 msgstr ""
-"आप जिस मॉडल को खोल रहे हैं, उसमें मर्ज विवाद है। क्या आप मौजूदा मॉडल या "
-"मॉडल में आने वाले बदलाव को खोलना चाहते हैं?"
+"आप जिस मॉडल को खोल रहे हैं, उसमें मर्ज विवाद है। क्या आप मौजूदा मॉडल या मॉडल में आने वाले "
+"बदलाव को खोलना चाहते हैं?"
 
-#: gaphor/ui/filemanager.py:387 gaphor/ui/filemanager.py:402
+#: gaphor/ui/filemanager.py:386 gaphor/ui/filemanager.py:401
 msgid "Cancel"
 msgstr "रद्द करें"
 
-#: gaphor/ui/filemanager.py:388
+#: gaphor/ui/filemanager.py:387
 msgid "Open Merge Editor"
 msgstr "मर्ज संपादक खोलें"
 
-#: gaphor/ui/filemanager.py:389
+#: gaphor/ui/filemanager.py:388
 msgid "Open Current"
 msgstr "वर्तमान खोलें"
 
-#: gaphor/ui/filemanager.py:390
+#: gaphor/ui/filemanager.py:389
 msgid "Open Incoming"
 msgstr "आवक खोलें"
 
-#: gaphor/ui/filemanager.py:397
+#: gaphor/ui/filemanager.py:396
 msgid "Save Changes?"
 msgstr "परिवर्तन सहेजें?"
 
@@ -2924,14 +2900,14 @@ msgid ""
 "The open model contains unsaved changes. Changes which are not saved will"
 " be permanently lost."
 msgstr ""
-"खुले मॉडल में बिना सहेजे गए परिवर्तन शामिल हैं। जो परिवर्तन सहेजे नहीं गए"
-" हैं, वे स्थायी रूप से खो जाएंगे।"
+"खुले मॉडल में बिना सहेजे गए परिवर्तन शामिल हैं। जो परिवर्तन सहेजे नहीं गए हैं, वे स्थायी रूप से "
+"खो जाएंगे।"
 
-#: gaphor/ui/filemanager.py:403
+#: gaphor/ui/filemanager.py:402
 msgid "Discard"
 msgstr "त्यागें"
 
-#: gaphor/ui/filemanager.py:404 gaphor/ui/help/shortcuts.ui:233
+#: gaphor/ui/filemanager.py:403 gaphor/ui/help/shortcuts.ui:233
 #: gaphor/ui/mainwindow.ui:266 gaphor/ui/menubar.ui:18
 msgid "Save"
 msgstr "सहेजें"
@@ -3003,7 +2979,7 @@ msgstr "मॉडल खोलें…"
 msgid "Preferences"
 msgstr "प्राथमिकताएं"
 
-#: gaphor/ui/greeter.ui:18 gaphor/ui/mainwindow.ui:288 gaphor/ui/menubar.ui:122
+#: gaphor/ui/greeter.ui:18 gaphor/ui/mainwindow.ui:288 gaphor/ui/menubar.ui:123
 msgid "Keyboard Shortcuts"
 msgstr "कीबोर्ड शॉर्टकट"
 
@@ -3157,55 +3133,52 @@ msgstr "अधि आकार"
 msgid "_Window"
 msgstr ""
 
-#: gaphor/ui/menubar.ui:105
+#: gaphor/ui/menubar.ui:106
 #, fuzzy
 msgid "Maximize"
 msgstr "अधि आकार"
 
-#: gaphor/ui/menubar.ui:109
+#: gaphor/ui/menubar.ui:110
 #, fuzzy
 msgid "Full screen"
 msgstr "पूर्णस्क्रीन टॉगल करें"
 
-#: gaphor/ui/menubar.ui:115
+#: gaphor/ui/menubar.ui:116
 #, fuzzy
 msgid "_Help"
 msgstr "ⓘ सहायता"
 
-#: gaphor/ui/menubar.ui:118
+#: gaphor/ui/menubar.ui:119
 #, fuzzy
 msgid "Online Documentation"
 msgstr "अभिविन्यास पलटें"
 
-#: gaphor/ui/modelbrowser.py:404
-msgid "New _Package"
-msgstr "नया पैकेज (_P)"
-
-#: gaphor/ui/modelbrowser.py:573
+#: gaphor/ui/modelbrowser.py:574
 msgid "_Open"
 msgstr "खोलें (_O)"
 
-#: gaphor/ui/modelbrowser.py:573
+#: gaphor/ui/modelbrowser.py:574
 msgid "Add to diagram"
 msgstr "आरेख में जोड़ें"
 
-#: gaphor/ui/modelbrowser.py:576
+#: gaphor/ui/modelbrowser.py:577
 msgid "_Rename"
 msgstr "नाम बदलें (_R)"
 
-#: gaphor/ui/modelbrowser.py:582
+#: gaphor/ui/modelbrowser.py:583
 msgid "New _Diagram"
 msgstr "नया आरेख (_D)"
 
-#: gaphor/ui/modelbrowser.py:589
+#: gaphor/ui/modelbrowser.py:590
 msgid "New _Element"
 msgstr "नया तत्व (_E)"
 
-#: gaphor/ui/modelbrowser.py:595
+#: gaphor/ui/modelbrowser.py:596
 msgid "De_lete"
 msgstr "मिटाएं (_e)"
 
-#: gaphor/ui/modelbrowser.py:605
+#: gaphor/ui/modelbrowser.py:606
+#, python-brace-format
 msgid "Show in “{diagram}”"
 msgstr "“{diagram}” में दिखाएं"
 
@@ -3217,7 +3190,7 @@ msgstr "डिस्क पर मॉडल बदला गया"
 msgid "Discard Changes and Reload"
 msgstr "परिवर्तन त्यागें और पुनः लोड करें"
 
-#: gaphor/ui/help/__init__.py:73
+#: gaphor/ui/help/__init__.py:74
 msgid "Restart Gaphor to enable language changes"
 msgstr "भाषा परिवर्तन सक्षम करने के लिए गैफोर को पुनः आरंभ करें"
 
@@ -3231,8 +3204,8 @@ msgid ""
 msgstr ""
 "कॉपीराइट © 2001 गैफोर डेवलपमेंट टीम।\n"
 "\n"
-"UML, SysML, और RAAML संयुक्त राज्य अमेरिका और/या अन्य देशों में ऑब्जेक्ट "
-"मैनेजमेंट ग्रुप, इंक. के पंजीकृत ट्रेडमार्क या ट्रेडमार्क हैं।"
+"UML, SysML, और RAAML संयुक्त राज्य अमेरिका और/या अन्य देशों में ऑब्जेक्ट मैनेजमेंट ग्रुप, इंक. के "
+"पंजीकृत ट्रेडमार्क या ट्रेडमार्क हैं।"
 
 #: gaphor/ui/help/about.ui:20
 msgid ""
@@ -3248,17 +3221,35 @@ msgid ""
 "See the License for the specific language governing permissions and "
 "limitations under the License."
 msgstr ""
-"अपाचे लाइसेंस, संस्करण 2.0 (\"लाइसेंस\") के अंतर्गत लाइसेंस प्राप्त; आप "
-"लाइसेंस के अनुपालन के अलावा इस अनुप्रयोग का उपयोग नहीं कर सकते। आप "
-"लाइसेंस की एक प्रति यहाँ से प्राप्त कर सकते हैं\n"
+"अपाचे लाइसेंस, संस्करण 2.0 (\"लाइसेंस\") के अंतर्गत लाइसेंस प्राप्त; आप लाइसेंस के अनुपालन के "
+"अलावा इस अनुप्रयोग का उपयोग नहीं कर सकते। आप लाइसेंस की एक प्रति यहाँ से प्राप्त कर सकते "
+"हैं\n"
 "\n"
 "    http://www.apache.org/licenses/LICENSE-2.0\n"
 "\n"
-"जब तक लागू कानून द्वारा आवश्यक न हो या लिखित रूप में सहमति न हो, लाइसेंस "
-"के तहत वितरित सॉफ़्टवेयर \"जैसा है\" आधार पर वितरित किया जाता है, बिना "
-"किसी प्रकार की वारंटी या शर्तों के, चाहे वह व्यक्त हो या निहित। लाइसेंस "
-"के तहत अनुमतियों और सीमाओं को नियंत्रित करने वाली विशिष्ट भाषा के लिए "
-"लाइसेंस देखें।"
+"जब तक लागू कानून द्वारा आवश्यक न हो या लिखित रूप में सहमति न हो, लाइसेंस के तहत वितरित "
+"सॉफ़्टवेयर \"जैसा है\" आधार पर वितरित किया जाता है, बिना किसी प्रकार की वारंटी या "
+"शर्तों के, चाहे वह व्यक्त हो या निहित। लाइसेंस के तहत अनुमतियों और सीमाओं को नियंत्रित करने "
+"वाली विशिष्ट भाषा के लिए लाइसेंस देखें।"
+
+#: gaphor/ui/help/debuginfo.py:40
+msgid "No errors have been intercepted. We’re good."
+msgstr "कोई भी त्रुटि नहीं पकड़ी गई है। हम ठीक हैं।"
+
+#: gaphor/ui/help/debuginfo.py:43
+msgid "Errors:"
+msgstr "त्रुटियां:"
+
+#: gaphor/ui/help/debuginfo.py:85
+#, fuzzy
+msgid ""
+"An unexpected error occurred.\n"
+"Please file an issue on GitHub and include information from About Gaphor "
+"→ Troubleshooting → Debugging Information."
+msgstr ""
+"एक अप्रत्याशित त्रुटि हुई।\n"
+"कृपया GitHub पर एक समस्या दर्ज करें और टूल्स → त्रुटि रिपोर्ट से जानकारी "
+"शामिल करें।"
 
 #: gaphor/ui/help/preferences.ui:9
 msgid "Appearance"
@@ -3303,7 +3294,8 @@ msgstr "अप्रयुक्त तत्वों को हटाएं"
 
 #: gaphor/ui/help/preferences.ui:52
 msgid "Automatically remove elements no longer in use in any diagram."
-msgstr "किसी भी आरेख में अब उपयोग में न आने वाले तत्वों को स्वचालित रूप से हटाएं।"
+msgstr ""
+"किसी भी आरेख में अब उपयोग में न आने वाले तत्वों को स्वचालित रूप से हटाएं।"
 
 #: gaphor/ui/help/shortcuts.ui:4 gaphor/ui/help/shortcuts.ui:11
 #, fuzzy
@@ -3373,78 +3365,97 @@ msgid "Open a Model…"
 msgstr "एक मॉडल खोलें…"
 
 #: gaphor/ui/modelmerge/organize.py:137
+#, python-brace-format
 msgid "Update diagram “{name}”"
 msgstr "आरेख “{name}” अपडेट करें"
 
 #: gaphor/ui/modelmerge/organize.py:177 gaphor/ui/modelmerge/organize.py:317
+#, python-brace-format
 msgid "Update element “{name}”"
 msgstr "तत्व “{name}” अपडेट करें"
 
 #: gaphor/ui/modelmerge/organize.py:182
+#, python-brace-format
 msgid "Update element of type “{type}”"
 msgstr "“{type}” प्रकार का तत्व अपडेट करें"
 
 #: gaphor/ui/modelmerge/organize.py:255
+#, python-brace-format
 msgid "Update presentation “{type}”"
 msgstr "प्रस्तुतिकरण “{type}” अपडेट करें"
 
 #: gaphor/ui/modelmerge/organize.py:281
+#, python-brace-format
 msgid "Add presentation of type {type}"
 msgstr "{type} प्रकार की प्रस्तुति जोड़ें"
 
 #: gaphor/ui/modelmerge/organize.py:285
+#, python-brace-format
 msgid "Remove presentation of type {type}"
 msgstr "{type} प्रकार की प्रस्तुति हटाएं"
 
 #: gaphor/ui/modelmerge/organize.py:290
+#, python-brace-format
 msgid "Update presentation “{name}”"
 msgstr "प्रस्तुतिकरण “{name}” अपडेट करें"
 
 #: gaphor/ui/modelmerge/organize.py:292
+#, python-brace-format
 msgid "Update presentation of type {type}"
 msgstr "{type} प्रकार की प्रस्तुति अपडेट करें"
 
 #: gaphor/ui/modelmerge/organize.py:299
+#, python-brace-format
 msgid "Add {type} “{name}”"
 msgstr "{type} “{name}” जोड़ें"
 
 #: gaphor/ui/modelmerge/organize.py:303
+#, python-brace-format
 msgid "Add element of type {type}"
 msgstr "{type} प्रकार का तत्व जोड़ें"
 
 #: gaphor/ui/modelmerge/organize.py:309
+#, python-brace-format
 msgid "Remove element “{name}”"
 msgstr "तत्व “{name}” निकालें"
 
 #: gaphor/ui/modelmerge/organize.py:311
+#, python-brace-format
 msgid "Remove element of type {type}"
 msgstr "{type} प्रकार का तत्व हटाएं"
 
 #: gaphor/ui/modelmerge/organize.py:319
+#, python-brace-format
 msgid "Update element of type {type}"
 msgstr "{type} प्रकार का तत्व अपडेट करें"
 
 #: gaphor/ui/modelmerge/organize.py:326
+#, python-brace-format
 msgid "Add relation “{name}” to “{ref_name}”"
 msgstr "संबंध “{name}” को “{ref_name}” में जोड़ें"
 
 #: gaphor/ui/modelmerge/organize.py:328
+#, python-brace-format
 msgid "Remove relation “{name}” to “{ref_name}”"
 msgstr "“{name}” से “{ref_name}” का संबंध हटाएं"
 
 #: gaphor/ui/modelmerge/organize.py:330
+#, python-brace-format
 msgid "Update relation “{name}” to “{ref_name}”"
 msgstr "संबंध “{name}” को “{ref_name}” में अपडेट करें"
 
 #: gaphor/ui/modelmerge/organize.py:337
+#, python-brace-format
 msgid "Add relation “{name}”"
 msgstr "संबंध “{name}” जोड़ें"
 
 #: gaphor/ui/modelmerge/organize.py:339
+#, python-brace-format
 msgid "Remove relation “{name}”"
 msgstr "संबंध “{name}” हटाएं"
 
 #: gaphor/ui/modelmerge/organize.py:341
+#, python-brace-format
 msgid "Update relation “{name}”"
 msgstr "संबंध “{name}” अपडेट करें"
 
@@ -3539,3 +3550,21 @@ msgstr "सामान्य: {name}"
 
 #~ msgid "Profile: {name}"
 #~ msgstr "प्रोफाइलः {name}"
+
+#~ msgid "Error Reports"
+#~ msgstr "त्रुटि रिपोर्ट"
+
+#~ msgid ""
+#~ "Any unhandled errors are shown here. "
+#~ "You can use these to provide extra"
+#~ " information when you create an issue"
+#~ " on GitHub."
+#~ msgstr ""
+#~ "कोई भी अनहैंडल की गई त्रुटियां "
+#~ "यहाँ दिखाई गई हैं। GitHub पर कोई"
+#~ " समस्या बनाते समय आप इनका उपयोग "
+#~ "अतिरिक्त जानकारी प्रदान करने के लिए "
+#~ "कर सकते हैं।"
+
+#~ msgid "New _Package"
+#~ msgstr "नया पैकेज (_P)"

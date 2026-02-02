@@ -47,16 +47,6 @@ htmlcov
 # Schemas
 data/gschemas.compiled
 
-# Windows Install
-_packaging/windows/gaphor-script.py
-_packaging/windows/_build_root
-_packaging/windows/file_version_info.txt
-_packaging/windows/output
-
-# MacOS
-package/gaphor.iconset/
-.DS_Store
-
 # Vagrant
 .vagrant
 

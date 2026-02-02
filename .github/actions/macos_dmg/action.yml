@@ -51,11 +51,16 @@ runs:
         P12FILE=$(mktemp)
         PASSWORD=$(openssl rand -base64 24)
         security create-keychain -p "$PASSWORD" temp.keychain
+        security default-keychain -s temp.keychain
+        security unlock-keychain -p "$PASSWORD" temp.keychain
         echo "$P12BASE64" | base64 -D -o "$P12FILE"
         security import "$P12FILE" -k temp.keychain -f pkcs12 -T /usr/bin/codesign -T /usr/bin/security -P "$P12PASSWORD"
         rm -f "$P12FILE"
         security set-key-partition-list -S "apple-tool:,apple:" -k "$PASSWORD" temp.keychain
         security list-keychains -d user -s temp.keychain login.keychain
+        security set-keychain-settings -lut 21600 temp.keychain
+        echo "Available signing identities:"
+        security find-identity -v -p codesigning temp.keychain
       shell: bash
     - name: Create Signed macOS Application
       if: inputs.sign_app == 'true'
@@ -78,7 +83,7 @@ runs:
     - name: Notarize app
       if: inputs.sign_app == 'true'
       env:
-        PRODUCT_PATH: "_packaging/dist/Gaphor.app"
+        PRODUCT_PATH: "dist/Gaphor.app"
       run: |
         ditto -c -k --keepParent "${PRODUCT_PATH}" "notarization.zip"
         xcrun notarytool submit "notarization.zip" --keychain-profile "notarytool-profile" --wait
@@ -86,7 +91,7 @@ runs:
     - name: Staple app
       if: inputs.sign_app == 'true'
       env:
-        PRODUCT_PATH: "_packaging/dist/Gaphor.app"
+        PRODUCT_PATH: "dist/Gaphor.app"
       run: xcrun stapler staple ${PRODUCT_PATH}
       shell: bash
     - name: Create dmg
@@ -95,8 +100,7 @@ runs:
         VERSION: ${{ inputs.version }}
         ARCH: ${{ inputs.arch }}
       run: |
-        cd _packaging
-        poetry run dmgbuild --settings dmgbuild-settings.py --detach-retries 30 \
+        poetry run dmgbuild --settings _packaging/dmgbuild-settings.py --detach-retries 30 \
           "Gaphor ${VERSION}-${ARCH}" \
           "dist/Gaphor-${VERSION}-${ARCH}.dmg"
         echo "artifact=Gaphor-${VERSION}-${ARCH}.dmg" >> $GITHUB_OUTPUT
@@ -104,7 +108,7 @@ runs:
     - name: Notarize dmg
       if: inputs.sign_app == 'true'
       env:
-        PRODUCT_PATH: "_packaging/dist/Gaphor-${{ inputs.version }}-${{ inputs.arch }}.dmg"
+        PRODUCT_PATH: "dist/Gaphor-${{ inputs.version }}-${{ inputs.arch }}.dmg"
       run: |
         ditto -c -k --keepParent "${PRODUCT_PATH}" "notarization.zip"
         xcrun notarytool submit "notarization.zip" --keychain-profile "notarytool-profile" --wait
@@ -112,7 +116,7 @@ runs:
     - name: Staple .dmg
       if: inputs.sign_app == 'true'
       env:
-        PRODUCT_PATH: "_packaging/dist/Gaphor-${{ inputs.version }}-${{ inputs.arch }}.dmg"
+        PRODUCT_PATH: "dist/Gaphor-${{ inputs.version }}-${{ inputs.arch }}.dmg"
       run: xcrun stapler staple ${PRODUCT_PATH}
       shell: bash
     - name: Delete temporary keychain
@@ -123,12 +127,12 @@ runs:
       uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4.3.3
       with:
         name: Gaphor-${{ inputs.version }}-${{ inputs.arch }}.dmg
-        path: _packaging/dist/Gaphor-${{ inputs.version }}-${{ inputs.arch }}.dmg
+        path: dist/Gaphor-${{ inputs.version }}-${{ inputs.arch }}.dmg
     - name: Upload Assets (release only)
       if: github.event_name == 'release'
       env:
         GH_TOKEN: ${{ github.token }}
         VERSION: ${{ inputs.version }}
         ARCH: ${{ inputs.arch }}
-      run: gh release upload ${VERSION} "_packaging/dist/Gaphor-${VERSION}-${ARCH}.dmg"
+      run: gh release upload ${VERSION} "dist/Gaphor-${VERSION}-${ARCH}.dmg"
       shell: bash

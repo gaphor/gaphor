@@ -4,11 +4,8 @@ inputs:
   version:
     description: 'Gaphor version number'
     required: true
-  cert_password:
-    description: 'The password for the Windows signing certificate'
-    required: true
-  base64_encoded_pfx:
-    description: 'The base 64 encoded Windows signing certificate'
+  signpath_api_token:
+    description: 'SignPath API token'
     required: true
   mainline_build:
     description: 'Build is performed on the main line'
@@ -27,7 +24,6 @@ runs:
     - name: Build PyInstaller Bootloader
       run: |
         # The pre-compiled bootloader is often flagged by virus scanners as a false positive, build our own
-        poetry shell
         $env:PYINSTALLER_VER=$(poetry run py -c "from importlib.metadata import version; print(version('pyinstaller'))")
         git clone --depth 1 --branch v$env:PYINSTALLER_VER https://github.com/pyinstaller/pyinstaller.git
         cd .\pyinstaller\bootloader
@@ -42,42 +38,39 @@ runs:
         poetry run poe package
         poetry run poe win-installer
       shell: bash
+    - name: upload-unsigned-artifacts
+      id: upload-unsigned-artifacts
+      uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4.3.3
+      with:
+        name: gaphor-unsigned-executables
+        path: |
+          dist/gaphor-${{ inputs.version }}-installer.exe
+          dist/gaphor-${{ inputs.version }}-portable.exe
     - name: Sign Executables
       if: inputs.mainline_build == 'true'
-      env:
-        timestampUrl: http://timestamp.digicert.com
-        installer: "_packaging/dist/gaphor-${{ inputs.version }}-installer.exe"
-        portable: "_packaging/dist/gaphor-${{ inputs.version }}-portable.exe"
-        password: "${{ inputs.cert_password }}"
-        encoded_pfx: ${{ inputs.base64_encoded_pfx }}
-      run: |
-        $pfx_cert_byte = [System.Convert]::FromBase64String("${env:encoded_pfx}")
-        $currentDirectory = Get-Location
-        $certificatePath = Join-Path -Path $currentDirectory -ChildPath 'certificate.pfx'
-        [IO.File]::WriteAllBytes("$certificatePath", $pfx_cert_byte)
-        & 'C:\Program Files (x86)\Windows Kits\10\bin\10.0.17763.0\x86\signtool.exe' sign /f 'certificate.pfx' /tr $env:timestampUrl /td sha256 /fd sha256 /p $env:password $env:installer $env:portable
-        if (0 -eq $LASTEXITCODE) {
-          Remove-Item 'certificate.pfx'
-        } else {
-          Remove-Item 'certificate.pfx'
-          "Signing failed"
-          Exit 1
-        }
-      shell: PowerShell
+      uses: signpath/github-action-submit-signing-request@ced31329c0317e779dad2eec2a7c3bb46ea1343e # v1.3
+      with:
+        api-token: ${{ inputs.signpath_api_token }}
+        organization-id: 794ffb00-6570-4400-9e4e-bf426bb0f482
+        project-slug: gaphor
+        signing-policy-slug: ${{ github.event_name == 'release' && 'release-signing' || 'test-signing' }}
+        wait-for-completion: true
+        output-artifact-directory: dist/
+        github-artifact-id: '${{ steps.upload-unsigned-artifacts.outputs.artifact-id }}'
     - name: Upload gaphor-${{ inputs.version }}-installer.exe
       uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4.3.3
       with:
         name: gaphor-${{ inputs.version }}-installer.exe
-        path: _packaging/dist/gaphor-${{ inputs.version }}-installer.exe
+        path: dist/gaphor-${{ inputs.version }}-installer.exe
     - name: Upload gaphor-${{ inputs.version }}-portable.exe
       uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4.3.3
       with:
         name: gaphor-${{ inputs.version }}-portable.exe
-        path: _packaging/dist/gaphor-${{ inputs.version }}-portable.exe
+        path: dist/gaphor-${{ inputs.version }}-portable.exe
     - name: Upload Assets (release only)
       if: github.event_name == 'release'
       env:
         GH_TOKEN: ${{ github.token }}
         version: ${{ inputs.version }}
-      run: gh release upload ${env:version} (Resolve-Path _packaging\dist\*.exe)
+      run: gh release upload ${env:version} (Resolve-Path dist\*.exe)
       shell: pwsh
