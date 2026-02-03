@@ -86,14 +86,14 @@ files = [
 
 [[package]]
 name = "babel"
-version = "2.17.0"
+version = "2.18.0"
 description = "Internationalization utilities"
 optional = false
 python-versions = ">=3.8"
 groups = ["main", "dev", "docs"]
 files = [
-    {file = "babel-2.17.0-py3-none-any.whl", hash = "sha256:4d0b53093fdfb4b21c92b5213dba5a1b23885afa8383709427046b21c366e5f2"},
-    {file = "babel-2.17.0.tar.gz", hash = "sha256:0c54cffb19f690cdcc52a3b50bcbf71e07a808d1c80d549f2459b9d2cf0afb9d"},
+    {file = "babel-2.18.0-py3-none-any.whl", hash = "sha256:e2b422b277c2b9a9630c1d7903c2a00d0830c409c59ac8cae9081c92f1aeba35"},
+    {file = "babel-2.18.0.tar.gz", hash = "sha256:b80b99a14bd085fcacfa15c9165f651fbb3406e66cc603abf11c5750937c992d"},
 ]
 
 [package.extras]
@@ -771,7 +771,7 @@ version = "3.20.3"
 description = "A platform independent file lock."
 optional = false
 python-versions = ">=3.10"
-groups = ["dev", "lint"]
+groups = ["lint"]
 files = [
     {file = "filelock-3.20.3-py3-none-any.whl", hash = "sha256:4b0dda527ee31078689fc205ec4f1c1bf7d56cf88b6dc9426c4f230e46c2dce1"},
     {file = "filelock-3.20.3.tar.gz", hash = "sha256:18c57ee915c7ec61cff0ecf7f0f869936c7c30191bb0cf406f1341778d0834e1"},
@@ -889,14 +889,14 @@ test = ["objgraph", "psutil", "setuptools"]
 
 [[package]]
 name = "hypothesis"
-version = "6.151.2"
+version = "6.151.4"
 description = "The property-based testing library for Python"
 optional = false
 python-versions = ">=3.10"
 groups = ["dev"]
 files = [
-    {file = "hypothesis-6.151.2-py3-none-any.whl", hash = "sha256:909d2b5f0dc80640561bb2c3859f3c56a52ed8d1cc589e5e6450362ced8c31a0"},
-    {file = "hypothesis-6.151.2.tar.gz", hash = "sha256:fc91f88a77074b31c7ab871eebab3d2e0210fd3095f1d1ecbd9440c1c6bc06d9"},
+    {file = "hypothesis-6.151.4-py3-none-any.whl", hash = "sha256:a1cf7e0fdaa296d697a68ff3c0b3912c0050f07aa37e7d2ff33a966749d1d9b4"},
+    {file = "hypothesis-6.151.4.tar.gz", hash = "sha256:658a62da1c3ccb36746ac2f7dc4bb1a6e76bd314e0dc54c4e1aaba2503d5545c"},
 ]
 
 [package.dependencies]
@@ -1034,14 +1034,14 @@ test = ["flaky", "ipyparallel", "pre-commit", "pytest (>=7.0,<9)", "pytest-async
 
 [[package]]
 name = "ipython"
-version = "9.9.0"
+version = "9.10.0"
 description = "IPython: Productive Interactive Computing"
 optional = false
 python-versions = ">=3.11"
 groups = ["dev", "docs"]
 files = [
-    {file = "ipython-9.9.0-py3-none-any.whl", hash = "sha256:b457fe9165df2b84e8ec909a97abcf2ed88f565970efba16b1f7229c283d252b"},
-    {file = "ipython-9.9.0.tar.gz", hash = "sha256:48fbed1b2de5e2c7177eefa144aba7fcb82dac514f09b57e2ac9da34ddb54220"},
+    {file = "ipython-9.10.0-py3-none-any.whl", hash = "sha256:c6ab68cc23bba8c7e18e9b932797014cc61ea7fd6f19de180ab9ba73e65ee58d"},
+    {file = "ipython-9.10.0.tar.gz", hash = "sha256:cd9e656be97618a0676d058134cd44e6dc7012c0e5cb36a9ce96a8c904adaf77"},
 ]
 
 [package.dependencies]
@@ -3176,4 +3176,4 @@ type = ["pytest-mypy"]
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.12,<3.15"
-content-hash = "9be33ad39541b6f513780068b828548ea7912e351ed0f533181d2797eaa65fbc"
+content-hash = "67528ecd96e04b4330d6b46d535f05f20a28aea1c737123e769cf188c442be11"
