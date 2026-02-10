@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2025-11-12 21:36-0500\n"
-"PO-Revision-Date: 2026-01-14 21:35+0000\n"
-"Last-Translator: Maciej Błędkowski <mble@tuta.io>\n"
+"PO-Revision-Date: 2026-02-11 09:11+0000\n"
+"Last-Translator: Michał Dominik <fancy0duck@duck.com>\n"
 "Language-Team: Polish <https://hosted.weblate.org/projects/gaphor/gaphor/pl/>"
 "\n"
 "Language: pl\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
-"X-Generator: Weblate 5.15.2\n"
+"X-Generator: Weblate 5.16-dev\n"
 "Generated-By: Babel 2.17.0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:28
@@ -1434,9 +1434,8 @@ msgid "Create"
 msgstr "Utworzono"
 
 #: gaphor/UML/interactions/propertypages.ui:26 gaphor/ui/menubar.ui:60
-#, fuzzy
 msgid "Delete"
-msgstr "_Usuń"
+msgstr "Usuń"
 
 #: gaphor/UML/interactions/propertypages.ui:42
 #, fuzzy
@@ -1804,9 +1803,8 @@ msgstr "Wyeksportuj wszystkie diagramy w formacie SVG do określonego fodleru"
 #: gaphor/plugins/diagramexport/export.py:148
 #: gaphor/plugins/diagramexport/export.py:166
 #: gaphor/plugins/diagramexport/export.py:184
-#, fuzzy
 msgid "Export all diagrams"
-msgstr "Eksportuj diagram jako SVG"
+msgstr "Eksportuj wszystkie diagramy"
 
 #: gaphor/plugins/diagramexport/export.py:143
 #, fuzzy
