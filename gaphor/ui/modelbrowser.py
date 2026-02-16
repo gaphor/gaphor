@@ -37,6 +37,7 @@ class ModelBrowser(UIComponent, ActionProvider):
         self.model: TreeModel | None = None
         self.search_bar = None
         self._selection_changed_id = 0
+        self._sync_pending_id = None
         self.sorter = None
         self.selection = None
         self.tree_view = None
@@ -124,6 +125,9 @@ class ModelBrowser(UIComponent, ActionProvider):
         self.model = None
         self.search_bar = None
         self._selection_changed_id = 0
+        if self._sync_pending_id is not None:
+            GLib.source_remove(self._sync_pending_id)
+            self._sync_pending_id = None
         self.sorter = None
         self.selection = None
         self.tree_view = None
@@ -170,8 +174,18 @@ class ModelBrowser(UIComponent, ActionProvider):
         self.select_element_quietly(element)
 
     def _on_sync(self):
+        """Notify sorter that items changed with debouncing."""
+        if not self.sorter:
+            return
+        if self._sync_pending_id is not None:
+            return
+        self._sync_pending_id = GLib.idle_add(self._flush_sync)
+
+    def _flush_sync(self):
+        self._sync_pending_id = None
         if self.sorter:
             self.sorter.changed(Gtk.SorterChange.DIFFERENT)
+        return False
 
     @action(name="selection.open")
     def tree_view_open_selected(self):

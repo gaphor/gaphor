@@ -166,8 +166,9 @@ class CompiledStyleSheet:
             if selector != "error"
         ]
         # Use this trick to bind a cache per instance, instead of globally.
-        # This avoids recalculating (parent) styles.
-        self.compute_style = functools.lru_cache(maxsize=1000)(
+        # This avoids recalculating (parent) styles. Large models (4k+ elements)
+        # have many style nodes; 8k reduces cache thrashing during load/redraw.
+        self.compute_style = functools.lru_cache(maxsize=8192)(
             self._compute_style_uncached
         )
 
