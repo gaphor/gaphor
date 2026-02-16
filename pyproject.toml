@@ -124,6 +124,11 @@ include = [
 ]
 exclude = ["**/tests", "gaphor/conftest.py" ]
 
+# When building these from source, use setuptools<82 (pkg_resources removed in 82)
+[tool.poetry.build-constraints]
+pyobjc-framework-cocoa = { setuptools = "<82" }
+pyobjc-core = { setuptools = "<82" }
+
 [tool.poetry.group.dev.dependencies]
 pytest = ">=7.1,<9.1"
 pytest-archon = "^0.0"
