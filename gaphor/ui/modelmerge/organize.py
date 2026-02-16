@@ -225,18 +225,19 @@ def _ref_change_nodes(
     for change in element_factory.select(
         lambda e: isinstance(e, RefChange) and e.element_id == element_id
     ):
-        if nesting_rule(change) and (
-            element_change := next(
-                element_factory.select(
-                    lambda e: isinstance(e, ElementChange)
-                    and e.element_id == change.property_ref  # noqa: B023
-                ),
+        if nesting_rule(change):
+
+            def match_element_change(e, property_ref=change.property_ref):
+                return isinstance(e, ElementChange) and e.element_id == property_ref
+
+            element_change = next(
+                element_factory.select(match_element_change),
                 None,
             )
-        ):
-            yield _element_change_node(
-                element_change, element_factory, *(nesting_rules or [nesting_rule])
-            )
+            if element_change:
+                yield _element_change_node(
+                    element_change, element_factory, *(nesting_rules or [nesting_rule])
+                )
         yield Node([change], [], _create_label(change, element_factory))
 
 
@@ -265,9 +266,11 @@ def _create_label(change, element_factory):
         if (
             v := next(
                 element_factory.select(
-                    lambda e: isinstance(e, ValueChange)
-                    and e.element_id == change.element_id
-                    and e.property_name == "name"
+                    lambda e: (
+                        isinstance(e, ValueChange)
+                        and e.element_id == change.element_id
+                        and e.property_name == "name"
+                    )
                 ),
                 None,
             )
@@ -350,9 +353,11 @@ def _resolve_ref(ref, element_factory):
         return element.name
     if value_changed := next(
         element_factory.select(
-            lambda e: isinstance(e, ValueChange)
-            and e.element_id == ref
-            and e.property_name == "name"
+            lambda e: (
+                isinstance(e, ValueChange)
+                and e.element_id == ref
+                and e.property_name == "name"
+            )
         ),
         None,
     ):

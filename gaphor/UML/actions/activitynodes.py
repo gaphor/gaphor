@@ -223,10 +223,12 @@ class ForkNodeItem(Named, Presentation[UML.ForkNode], HandlePositionUpdate):
                 "joinspec",
                 None,
                 Text(
-                    text=lambda: isinstance(self.subject, UML.JoinNode)
-                    and self.subject.joinSpec not in (None, DEFAULT_JOIN_SPEC)
-                    and f"{{ joinSpec = {self.subject.joinSpec} }}"
-                    or ""
+                    text=lambda: (
+                        isinstance(self.subject, UML.JoinNode)
+                        and self.subject.joinSpec not in (None, DEFAULT_JOIN_SPEC)
+                        and f"{{ joinSpec = {self.subject.joinSpec} }}"
+                        or ""
+                    )
                 ),
             ),
         )

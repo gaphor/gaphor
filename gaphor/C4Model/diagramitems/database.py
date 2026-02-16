@@ -23,9 +23,11 @@ class C4DatabaseItem(Named, ElementPresentation):
                 "technology",
                 self.subject,
                 Text(
-                    text=lambda: self.subject.technology
-                    and f"[{diagram.gettext(self.subject.type)}: {self.subject.technology}]"
-                    or f"[{diagram.gettext(self.subject.type)}]",
+                    text=lambda: (
+                        self.subject.technology
+                        and f"[{diagram.gettext(self.subject.type)}: {self.subject.technology}]"
+                        or f"[{diagram.gettext(self.subject.type)}]"
+                    ),
                 ),
             ),
             *(
