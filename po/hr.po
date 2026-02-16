@@ -7,8 +7,8 @@ msgstr ""
 "Project-Id-Version: Gaphor\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2025-04-23 21:47+0200\n"
-"PO-Revision-Date: 2026-01-14 21:35+0000\n"
-"Last-Translator: Anonymous <noreply@weblate.org>\n"
+"PO-Revision-Date: 2026-01-16 09:01+0000\n"
+"Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language-Team: Croatian <https://hosted.weblate.org/projects/gaphor/gaphor/"
 "hr/>\n"
 "Language: hr\n"
@@ -2582,7 +2582,7 @@ msgstr ""
 
 #: gaphor/ui/elementeditor.ui:57
 msgid "This pane can be hidden by clicking the pane icon in the header."
-msgstr "Ova se ploča može se sakriti pritiskom ikone ploče u zaglavlju."
+msgstr "Ova se ploča može sakriti pritiskom ikone ploče u zaglavlju."
 
 #: gaphor/ui/elementeditor.ui:65
 msgid ""
@@ -3175,15 +3175,14 @@ msgid "Errors:"
 msgstr "Greške:"
 
 #: gaphor/ui/help/debuginfo.py:85
-#, fuzzy
 msgid ""
 "An unexpected error occurred.\n"
 "Please file an issue on GitHub and include information from About Gaphor "
 "→ Troubleshooting → Debugging Information."
 msgstr ""
 "Dogodila se neočekivana greška.\n"
-"Prijavi problem na GitHubu i uključi informacije iz Alati → Izvješjtaji o"
-" greškama."
+"Prijavi problem na GitHubu i uključi podatke iz izbornika Gaphor → O "
+"programu Gaphor → Rješavanje problema → Otklanjanje grešaka."
 
 #: gaphor/ui/help/preferences.ui:9
 msgid "Appearance"
