@@ -27,10 +27,12 @@ class ControlFlowItem(Named, LinePresentation):
                 "guard",
                 None,
                 Text(
-                    text=lambda: self.subject
-                    and self.subject.guard
-                    and f"[{self.subject.guard.value}]"
-                    or ""
+                    text=lambda: (
+                        self.subject
+                        and self.subject.guard
+                        and f"[{self.subject.guard.value}]"
+                        or ""
+                    )
                 ),
             ),
             shape_tail=Box(text_stereotypes(self), text_name(self)),
@@ -60,10 +62,12 @@ class ObjectFlowItem(Named, LinePresentation):
                 "guard",
                 None,
                 Text(
-                    text=lambda: self.subject
-                    and self.subject.guard
-                    and f"[{self.subject.guard.value}]"
-                    or ""
+                    text=lambda: (
+                        self.subject
+                        and self.subject.guard
+                        and f"[{self.subject.guard.value}]"
+                        or ""
+                    )
                 ),
             ),
             shape_tail=Box(text_stereotypes(self), text_name(self)),

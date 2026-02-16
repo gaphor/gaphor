@@ -91,10 +91,12 @@ def _(change: RefChange, element_factory, modeling_factory):
     if prop and prop.opposite:
         if other := next(
             element_factory.select(
-                lambda e: isinstance(e, RefChange)
-                and e.element_id == change.property_ref
-                and e.property_ref == change.element_id
-                and e.property_name == prop.opposite
+                lambda e: (
+                    isinstance(e, RefChange)
+                    and e.element_id == change.property_ref
+                    and e.property_ref == change.element_id
+                    and e.property_name == prop.opposite
+                )
             ),
             None,
         ):

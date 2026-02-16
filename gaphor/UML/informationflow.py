@@ -26,21 +26,25 @@ def shape_information_flow(presentation: Presentation, attribute: str) -> list[S
                     "stereotypes",
                     None,
                     Text(
-                        text=lambda: stereotypes_str(
-                            iflow[0].itemProperty.type,
-                            raaml_stereotype_workaround(iflow[0].itemProperty.type),
+                        text=lambda: (
+                            stereotypes_str(
+                                iflow[0].itemProperty.type,
+                                raaml_stereotype_workaround(iflow[0].itemProperty.type),
+                            )
+                            if (iflow := getattr(presentation.subject, attribute))
+                            else ""
                         )
-                        if (iflow := getattr(presentation.subject, attribute))
-                        else ""
                     ),
                 ),
                 CssNode(
                     "property",
                     None,
                     Text(
-                        text=lambda: format(iflow[0].itemProperty, type=True)
-                        if (iflow := getattr(presentation.subject, attribute))
-                        else ""
+                        text=lambda: (
+                            format(iflow[0].itemProperty, type=True)
+                            if (iflow := getattr(presentation.subject, attribute))
+                            else ""
+                        )
                     ),
                 ),
             ),
