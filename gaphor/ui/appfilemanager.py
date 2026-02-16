@@ -26,7 +26,7 @@ class AppFileManager(Service, ActionProvider):
     def window(self):
         return self.application.active_window
 
-    @action(name="app.file-open")
+    @action(name="app.file-open", shortcut="<Primary>o")
     async def action_open(self):
         """This menu action opens the standard model open dialog."""
 
