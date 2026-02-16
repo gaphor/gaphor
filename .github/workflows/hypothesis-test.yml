@@ -32,13 +32,13 @@ jobs:
       - name: Set ownership of checkout directory
         run: chown -R $(id -u):$(id -g) $PWD
       - name: Use Python Dependency Cache
-        uses: actions/cache@8b402f58fbc84540c8b491a91e594a4576fec3d7 # v5.0.2
+        uses: actions/cache@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v5.0.3
         with:
           path: ~/.cache/pip
           key: ${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}-39
       - name: Use Hypothesis Cache
         id: restore-cache
-        uses: actions/cache/restore@8b402f58fbc84540c8b491a91e594a4576fec3d7 # v5.0.2
+        uses: actions/cache/restore@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v5.0.3
         with:
           path: .hypothesis
           key: ${{ runner.os }}-hypothesis
@@ -61,7 +61,7 @@ jobs:
           filename: .github/hypothesis-test-failed.md
           update_existing: true
       - name: Save cache
-        uses: actions/cache/save@8b402f58fbc84540c8b491a91e594a4576fec3d7 # v5.0.2
+        uses: actions/cache/save@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v5.0.3
         if: always()
         with:
           path: .hypothesis
