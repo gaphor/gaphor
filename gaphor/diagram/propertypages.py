@@ -37,8 +37,10 @@ class LabelValue(GObject.Object):
 
 
 def new_resource_builder(package, property_pages="propertypages"):
-    def new_builder(*object_ids, signals=None):
+    def new_builder(*object_ids, signals=None, subject=None):
         builder = Gtk.Builder(signals)
+        if subject:
+            builder.expose_object("subject", subject)
         builder.add_objects_from_string(
             translated_ui_string(package, f"{property_pages}.ui"), object_ids
         )
@@ -157,6 +159,27 @@ class TypeLabelPropertyPage(PropertyPageBase):
         return builder.get_object("type-label-editor")
 
 
+class NamePropertyBinding(GObject.Object):
+    def __init__(self, subject, event_manager):
+        super().__init__()
+        self.subject = subject
+        self.event_manager = event_manager
+        self.watcher = subject.watcher()
+        self.watcher.watch("name", lambda *_: self.notify("name"))
+
+    def do_dispose(self):
+        self.watcher.unsubscribe_all()
+
+    @GObject.Property(type=str)
+    def name(self) -> str:
+        return self.subject.name or ""
+
+    @name.setter  # type: ignore[no-redef]
+    def name(self, name: str):
+        with Transaction(self.event_manager, context="editing"):
+            self.subject.name = name
+
+
 @PropertyPages.register(Diagram)
 class NamePropertyPage(PropertyPageBase):
     """An adapter which works for any named item view.
@@ -170,36 +193,17 @@ class NamePropertyPage(PropertyPageBase):
         super().__init__()
         self.subject = subject
         self.event_manager = event_manager
-        self.watcher = subject.watcher() if subject else None
 
     def construct(self):
         if not self.subject:
             return
 
-        assert self.watcher
         builder = new_builder(
             "name-editor",
+            subject=NamePropertyBinding(self.subject, self.event_manager),
         )
 
-        subject = self.subject
-
-        entry = builder.get_object("name-entry")
-        entry.set_text(subject and subject.name or "")
-
-        @handler_blocking(entry, "changed", self._on_name_changed)
-        def handler(event):
-            if event.element is subject and (event.new_value or "") != entry.get_text():
-                entry.set_text(event.new_value or "")
-
-        self.watcher.watch("name", handler)
-
-        return unsubscribe_all_on_destroy(
-            builder.get_object("name-editor"), self.watcher
-        )
-
-    def _on_name_changed(self, entry):
-        with Transaction(self.event_manager, context="editing"):
-            self.subject.name = entry.get_text()
+        return builder.get_object("name-editor")
 
 
 @PropertyPages.register(gaphas.item.Line)
@@ -250,6 +254,27 @@ class LineStylePage(PropertyPageBase):
             self.item.request_update()
 
 
+class NotePropertyBinding(GObject.Object):
+    def __init__(self, subject, event_manager):
+        super().__init__()
+        self.subject = subject
+        self.event_manager = event_manager
+        self.watcher = subject.watcher()
+        self.watcher.watch("note", lambda *_: self.notify("note"))
+
+    def do_dispose(self):
+        self.watcher.unsubscribe_all()
+
+    @GObject.Property(type=str)
+    def note(self) -> str:
+        return self.subject.note or ""
+
+    @note.setter  # type: ignore[no-redef]
+    def note(self, note: str):
+        with Transaction(self.event_manager, context="editing"):
+            self.subject.note = note
+
+
 class NotePropertyPage(PropertyPageBase):
     """A facility to add a little note/remark."""
 
@@ -258,37 +283,17 @@ class NotePropertyPage(PropertyPageBase):
     def __init__(self, subject, event_manager):
         self.subject = subject.subject if isinstance(subject, Presentation) else subject
         self.event_manager = event_manager
-        self.watcher = self.subject and self.subject.watcher()
 
     def construct(self):
-        subject = self.subject
-
-        if not subject:
+        if not self.subject:
             return
 
-        builder = new_builder("note-editor")
-        text_view = builder.get_object("note")
-
-        buffer = Gtk.TextBuffer()
-        if subject.note:
-            buffer.set_text(subject.note)
-        text_view.set_buffer(buffer)
-
-        @handler_blocking(buffer, "changed", self._on_body_change)
-        def handler(event):
-            if not text_view.props.has_focus:
-                buffer.set_text(event.new_value or "")
-
-        self.watcher.watch("note", handler)
-        text_view.connect("destroy", self.watcher.unsubscribe_all)
+        builder = new_builder(
+            "note-editor",
+            subject=NotePropertyBinding(self.subject, self.event_manager),
+        )
 
         return builder.get_object("note-editor")
-
-    def _on_body_change(self, buffer):
-        with Transaction(self.event_manager, context="editing"):
-            self.subject.note = buffer.get_text(
-                buffer.get_start_iter(), buffer.get_end_iter(), False
-            )
 
 
 @PropertyPages.register(Base)
