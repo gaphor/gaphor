@@ -18,9 +18,7 @@ from gaphor.core.modeling import (
     ElementDeleted,
     ElementTypeUpdated,
     ModelReady,
-    RedefinedAdded,
-    RedefinedDeleted,
-    RedefinedSet,
+    RedefinedUpdated,
     swap_element_type,
 )
 from gaphor.core.modeling.presentation import MatrixUpdated
@@ -344,7 +342,7 @@ class Recorder:
 
     @event_handler(AssociationAdded, AssociationSet)
     def on_association_set_event(self, event: AssociationSet | AssociationAdded):
-        if isinstance(event, DerivedUpdated | RedefinedAdded | RedefinedSet):
+        if isinstance(event, DerivedUpdated | RedefinedUpdated):
             return
         self.events.append(
             (
@@ -357,7 +355,7 @@ class Recorder:
 
     @event_handler(AssociationDeleted)
     def on_association_delete_event(self, event: AssociationDeleted):
-        if isinstance(event, DerivedUpdated | RedefinedDeleted):
+        if isinstance(event, DerivedUpdated | RedefinedUpdated):
             return
         self.events.append(
             (

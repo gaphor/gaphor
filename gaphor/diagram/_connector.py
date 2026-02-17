@@ -6,6 +6,7 @@ level connectors (gaphor.connectors).
 
 import logging
 
+from gaphas.connections import ConnectionError
 from gaphas.connector import Connector as ConnectorAspect
 from gaphas.connector import ItemConnector, LineConnector
 
@@ -58,9 +59,14 @@ class PresentationConnector(ItemConnector):
         adapter.connect(handle, sink.port)
 
     def connect_handle(self, sink):
-        super().connect_handle(sink, callback=DisconnectHandle())
-        item = self.item
-        item.handle(ItemConnected(item, self.handle, sink.item, sink.port))
+        try:
+            super().connect_handle(sink, callback=DisconnectHandle())
+        except ConnectionError:
+            log.warning("Item %s is already connected to %s", self, sink.item)
+        else:
+            self.item.handle(
+                ItemConnected(self.item, self.handle, sink.item, sink.port)
+            )
 
     def disconnect(self):
         # Model level disconnect and event is handled in callback
