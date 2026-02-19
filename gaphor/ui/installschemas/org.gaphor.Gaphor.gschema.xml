@@ -16,6 +16,11 @@
             <summary>Use English</summary>
             <description>Override language to English.</description>
         </key>
+        <key name="ui-language" type="s">
+            <default>''</default>
+            <summary>Display language</summary>
+            <description>Language for the interface. Empty for system default.</description>
+        </key>
         <key name="reset-tool-after-create" type="b">
             <default>true</default>
             <summary>Reset Tool Automatically</summary>

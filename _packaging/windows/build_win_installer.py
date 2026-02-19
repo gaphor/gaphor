@@ -6,7 +6,6 @@ import os
 import platform
 import shutil
 import subprocess
-import tempfile
 from pathlib import Path
 
 version = subprocess.run(
@@ -39,25 +38,9 @@ def build_installer(
             "Run 'poe package' first to build the application."
         )
     shutil.copy(icon, files_to_package / "gaphor.ico")
+    # Pass absolute path to NSIS - File /r uses script dir by default, not cwd
     source_dir = files_to_package.resolve()
-
-    # NSIS often fails with UNC paths (e.g. \\vmware-host\...). Use a local temp copy.
-    use_temp = str(source_dir).startswith("\\\\")
-    if use_temp:
-        tmp = Path(tempfile.mkdtemp(prefix="gaphor_nsis_"))
-        try:
-            tmp_source = tmp / "gaphor"
-            shutil.copytree(source_dir, tmp_source)
-            _run_makensis(nsi, tmp_source, output_file)
-        finally:
-            shutil.rmtree(tmp, ignore_errors=True)
-    else:
-        _run_makensis(nsi, source_dir, output_file)
-
-
-def _run_makensis(nsi: Path, source_dir: Path, output_file: Path) -> None:
-    source_dir = source_dir.resolve()
-    result = subprocess.run(
+    subprocess.run(
         [
             "makensis",
             "-NOCD",
@@ -68,17 +51,11 @@ def _run_makensis(nsi: Path, source_dir: Path, output_file: Path) -> None:
         encoding="utf-8",
         capture_output=True,
         text=True,
+        check=True,
         cwd=source_dir,
     )
-    if result.returncode != 0:
-        if result.stderr:
-            print(result.stderr, end="")
-        if result.stdout:
-            print(result.stdout, end="")
-        raise subprocess.CalledProcessError(result.returncode, result.args)
-    out_exe = source_dir / "gaphor-LATEST.exe"
-    if out_exe.exists():
-        shutil.move(str(out_exe), output_file)
+
+    shutil.move(str(files_to_package / "gaphor-LATEST.exe"), output_file)
 
 
 def concatenate_files(input_files: list[Path], output_file: Path) -> None:

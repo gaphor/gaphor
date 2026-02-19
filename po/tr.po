@@ -3286,6 +3286,14 @@ msgid "Language"
 msgstr "Dil"
 
 #: gaphor/ui/help/preferences.ui:35
+msgid "Display Language"
+msgstr ""
+
+#: gaphor/ui/help/preferences.ui:36
+msgid "Restart Gaphor for the change to take effect."
+msgstr ""
+
+#: gaphor/ui/help/preferences.ui:44
 msgid "Change from System Language to English"
 msgstr "Sistem Dilinden İngilizceye değiştir"
 

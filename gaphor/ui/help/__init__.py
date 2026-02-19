@@ -10,7 +10,7 @@ from gi.repository import Adw, Gtk
 from gaphor.abc import ActionProvider, Service
 from gaphor.application import distribution
 from gaphor.core import action
-from gaphor.i18n import gettext, translated_ui_string
+from gaphor.i18n import get_available_ui_languages, gettext, translated_ui_string
 from gaphor.settings import StyleVariant, settings
 from gaphor.ui.help.debuginfo import DebugInfo
 
@@ -75,6 +75,20 @@ class HelpService(Service, ActionProvider):
                 )
             )
 
+    def _on_display_language_selected(self, combo_row: Adw.ComboRow, param) -> None:
+        codes = getattr(self, "_display_language_codes", [])
+        if not codes:
+            return
+        idx = combo_row.get_selected()
+        if 0 <= idx < len(codes):
+            settings.ui_language = codes[idx]
+        if self.preferences_dialog:
+            self.preferences_dialog.add_toast(
+                Adw.Toast(
+                    title=gettext("Restart Gaphor to enable language changes"),
+                )
+            )
+
     @action(name="app.preferences", shortcut="<Primary>comma")
     def preferences(self):
         builder = Gtk.Builder()
@@ -85,12 +99,27 @@ class HelpService(Service, ActionProvider):
         self.preferences_dialog = builder.get_object("preferences")
 
         style_variant: Adw.ComboRow = builder.get_object("style_variant")
+        display_language: Adw.ComboRow = builder.get_object("display_language")
         use_english: Adw.SwitchRow = builder.get_object("use_english")
         reset_tool_after_create: Adw.SwitchRow = builder.get_object(
             "reset_tool_after_create"
         )
         remove_unused_elements: Adw.SwitchRow = builder.get_object(
             "remove_unused_elements"
+        )
+
+        # Populate display language combo from available locales
+        ui_languages = get_available_ui_languages()
+        self._display_language_codes = [code for code, _ in ui_languages]
+        model = Gtk.StringList.new([name for _, name in ui_languages])
+        display_language.set_model(model)
+        try:
+            selected_idx = self._display_language_codes.index(settings.ui_language)
+        except ValueError:
+            selected_idx = 0
+        display_language.set_selected(selected_idx)
+        display_language.connect(
+            "notify::selected", self._on_display_language_selected
         )
 
         settings.bind_use_english(use_english, "active")

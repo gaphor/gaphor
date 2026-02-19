@@ -31,6 +31,15 @@
                     <object class="AdwPreferencesGroup">
                         <property name="title" translatable="yes">Language</property>
                         <child>
+                            <object class="AdwComboRow" id="display_language">
+                                <property name="title" translatable="yes">Display Language</property>
+                                <property name="subtitle" translatable="yes">Restart Gaphor for the change to take effect.</property>
+                                <property name="model">
+                                    <object class="GtkStringList" id="display_language_model"/>
+                                </property>
+                            </object>
+                        </child>
+                        <child>
                             <object class="AdwSwitchRow" id="use_english">
                                 <property name="title" translatable="yes">Change from System Language to English</property>
                             </object>

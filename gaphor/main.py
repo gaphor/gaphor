@@ -180,7 +180,9 @@ def i18n_config():
     import gaphor.i18n
     from gaphor.settings import settings
 
-    if settings.use_english:
+    if settings.ui_language:
+        gaphor.i18n.set_ui_language(settings.ui_language)
+    elif settings.use_english:
         gaphor.i18n.force_english_locale()
 
 

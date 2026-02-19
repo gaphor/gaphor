@@ -52,6 +52,7 @@ class Settings:
 
     _required_keys = [
         "use-english",
+        "ui-language",
         "style-variant",
         "reset-tool-after-create",
         "remove-unused-elements",
@@ -113,6 +114,22 @@ class Settings:
 
     def bind_use_english(self, target, prop):
         self._bind_propery("use-english", target, prop)
+
+    @property
+    def ui_language(self) -> str:
+        return (
+            self._gio_settings.get_string("ui-language")
+            if self._gio_settings
+            else ""
+        )
+
+    @ui_language.setter
+    def ui_language(self, value: str):
+        if self._gio_settings:
+            self._gio_settings.set_string("ui-language", value or "")
+
+    def bind_ui_language(self, target, prop):
+        self._bind_propery("ui-language", target, prop)
 
     @property
     def reset_tool_after_create(self):

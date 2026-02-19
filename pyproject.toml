@@ -115,6 +115,7 @@ install-schemas = "gaphor.ui.installschemas:install_schemas_parser"
 
 [project.entry-points."babel.extractors"]
 "gaphor" = "gaphor.babel:extract_gaphor"
+"gaphor_ui" = "gaphor.babel:extract_ui"
 
 [tool.poetry]
 requires-poetry = ">=2.0"
@@ -204,7 +205,7 @@ docs-gettext-pot = { "cwd" = "docs", "shell" = "sphinx-build -b gettext . locale
 clean = { "shell" = "rm -rf dist build docs/_build" }
 appdata = { "script" = "scripts.update_appdata" }
 package = { shell = "pyinstaller -y _packaging/gaphor.spec" }
-win-installer = { "script" = "scripts.build_win_installer:main" }
+win-installer = [ "package", { "script" = "scripts.build_win_installer:main" } ]
 gettext-pot = { "shell" = "pybabel extract -o po/gaphor.pot -F po/babel.ini -k i18nize gaphor" }
 gettext-po = { "script" = "scripts.build_babel:update_po_files" }
 gettext-mo-all = { "script" = "scripts.build_babel:compile_mo_all" }

@@ -115,11 +115,16 @@ Var UNINST_BIN
 ;--------------------------------
 ;Installer Sections
 
+; GAPHOR_SOURCE is passed by build script - path to dist/gaphor (PyInstaller output)
+!ifndef GAPHOR_SOURCE
+!define GAPHOR_SOURCE "."
+!endif
+
 Section "Install"
     SetShellVarContext all
 
     SetOutPath "$INSTDIR"
-    File /r "*.*"
+    File /r "${GAPHOR_SOURCE}\*.*"
 
     StrCpy $INST_BIN "$INSTDIR\gaphor.exe"
     StrCpy $UNINST_BIN "$INSTDIR\uninstall.exe"

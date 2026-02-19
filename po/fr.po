@@ -3230,6 +3230,14 @@ msgid "Language"
 msgstr "Langage"
 
 #: gaphor/ui/help/preferences.ui:35
+msgid "Display Language"
+msgstr "Langue d'affichage"
+
+#: gaphor/ui/help/preferences.ui:36
+msgid "Restart Gaphor for the change to take effect."
+msgstr "Redémarrer Gaphor pour que le changement prenne effet."
+
+#: gaphor/ui/help/preferences.ui:44
 msgid "Change from System Language to English"
 msgstr "Passer de la langue du système à l'anglais"
 

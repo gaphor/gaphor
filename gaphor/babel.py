@@ -44,6 +44,20 @@ def translate_model(fileobj):
     return io.StringIO(etree.tostring(tree.getroot(), encoding="unicode", method="xml"))
 
 
+def extract_ui(fileobj, keywords, comment_tags, options):
+    """Extract translatable strings from GTK UI (.ui) files.
+
+    Yields (lineno, funcname, message, comments) for every element
+    with translatable="yes" and non-empty text content.
+    """
+    funcname = "gettext"
+    comments: list[str] = []
+    tree = etree.parse(fileobj)
+    for node in tree.findall(".//*[@translatable='yes']"):
+        if node.text and node.text.strip():
+            yield (getattr(node, "sourceline", None), funcname, node.text, comments)
+
+
 def translatable_nodes(tree):
     NS = {"g": "http://gaphor.sourceforge.net/model"}
 

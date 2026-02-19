@@ -38,30 +38,36 @@ def required_plugin(binary):
 if is_win:
     # For Windows, we move the minimal number of graphviz binaries to a separate folder.
     # This way the GV binaries do not interfere with Gaphor.
-    files = [
-        "dot.exe",
-        "cdt.dll",
-        "cgraph++.dll",
-        "cgraph.dll",
-        "getopt.dll",
-        "gvc++.dll",
-        "gvc.dll",
-        "gvplugin_core.dll",
-        "gvplugin_dot_layout.dll",
-        "gvplugin_neato_layout.dll",
-        "pathplan.dll",
-        "vcruntime140.dll",
-        "vcruntime140_1.dll",
-    ]
+    graphviz_bin = os.environ.get("GRAPHVIZ_BIN", "C:/Program Files/Graphviz/bin")
+    dot_exe = os.path.join(graphviz_bin, "dot.exe")
 
-    binaries.extend((f"C:/Program Files/Graphviz/bin/{f}", "graphviz") for f in files)
+    if os.path.isfile(dot_exe):
+        files = [
+            "dot.exe",
+            "cdt.dll",
+            "cgraph++.dll",
+            "cgraph.dll",
+            "getopt.dll",
+            "gvc++.dll",
+            "gvc.dll",
+            "gvplugin_core.dll",
+            "gvplugin_dot_layout.dll",
+            "gvplugin_neato_layout.dll",
+            "pathplan.dll",
+            "vcruntime140.dll",
+            "vcruntime140_1.dll",
+        ]
 
-    # Instead of copying the config file, what we should really do
-    # is call `dot -c` on our new plugins folder.
-    datas.extend(
-        (data, "graphviz")
-        for data in glob.glob("C:/Program Files/Graphviz/bin/config*")
-    )
+        for f in files:
+            path = os.path.join(graphviz_bin, f)
+            if os.path.isfile(path):
+                binaries.append((path, "graphviz"))
+
+        # Instead of copying the config file, what we should really do
+        # is call `dot -c` on our new plugins folder.
+        for data in glob.glob(os.path.join(graphviz_bin, "config*")):
+            datas.append((data, "graphviz"))
+    # If Graphviz is not installed, skip bundling (auto-layout will be unavailable in the built app)
 
 else:
     if is_darwin:

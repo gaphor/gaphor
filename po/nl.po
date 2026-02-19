@@ -3219,6 +3219,14 @@ msgid "Language"
 msgstr "Taal"
 
 #: gaphor/ui/help/preferences.ui:35
+msgid "Display Language"
+msgstr "Weergavetaal"
+
+#: gaphor/ui/help/preferences.ui:36
+msgid "Restart Gaphor for the change to take effect."
+msgstr "Herstart Gaphor om de wijziging door te voeren."
+
+#: gaphor/ui/help/preferences.ui:44
 msgid "Change from System Language to English"
 msgstr "Van systeem­taal naar Engels wijzigen"
 
