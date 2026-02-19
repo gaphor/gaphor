@@ -565,9 +565,11 @@ def in_super_model(
     name = type.name[1:] if type.name.startswith("_") else type.name
     cls: UML.Classifier
     for cls in factory.select(  # type: ignore[assignment]
-        lambda e: isinstance(e, UML.Classifier)
-        and e.name == name
-        and ".".join(e.owningPackage.qualifiedName) not in super_models
+        lambda e: (
+            isinstance(e, UML.Classifier)
+            and e.name == name
+            and ".".join(e.owningPackage.qualifiedName) not in super_models
+        )
     ):
         element_type = modeling_language.lookup_element(cls.name, ns=ns)
         assert element_type, (
@@ -592,16 +594,18 @@ def resolve_attribute_type_values(element_factory: ElementFactory) -> None:
             prop.typeValue = "int"
         elif prop.typeValue == "UnlimitedNatural":
             pass
-        elif c := next(
-            element_factory.select(
-                lambda e: isinstance(e, UML.Class | UML.Enumeration)
-                and e.name == prop.typeValue  # noqa: B023
-            ),
-            None,
-        ):
-            prop.type = c  # type: ignore[assignment]
-            del prop.typeValue
-            prop.aggregation = "composite"
+        else:
+
+            def match_type(e, type_value=prop.typeValue):
+                return (
+                    isinstance(e, UML.Class | UML.Enumeration) and e.name == type_value
+                )
+
+            c = next(element_factory.select(match_type), None)
+            if c:
+                prop.type = c  # type: ignore[assignment]
+                del prop.typeValue
+                prop.aggregation = "composite"
 
         if prop.type and is_simple_type(prop.type):
             prop.typeValue = "str"

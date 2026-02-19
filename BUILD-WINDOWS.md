@@ -96,12 +96,12 @@ Vous n’avez pas encore installé GTK (gvsbuild). À faire **une seule fois** :
 ### Erreur: "Unable to create process using ... Python311\python.exe" ou "Fatal error in launcher"
 Poetry a été installé avec Python 3.11, alors que Gaphor demande **Python 3.12 ou 3.13**. Il faut utiliser Poetry avec Python 3.12/3.13 :
 1. Installez Python 3.12 ou 3.13 depuis https://www.python.org/downloads/windows/
-2. Installez **pipx** avec ce Python :  
+2. Installez **pipx** avec ce Python :
    `py -3.13 -m pip install --user pipx` puis `py -3.13 -m pipx ensurepath`
-3. Fermez et rouvrez PowerShell, puis installez Poetry avec pipx :  
+3. Fermez et rouvrez PowerShell, puis installez Poetry avec pipx :
    `pipx install poetry`
-4. Dans le dossier du projet, indiquez à Poetry d’utiliser Python 3.13 :  
-   `poetry env use "C:\Users\VOTRE_UTILISATEUR\AppData\Local\Programs\Python\Python313\python.exe"`  
+4. Dans le dossier du projet, indiquez à Poetry d’utiliser Python 3.13 :
+   `poetry env use "C:\Users\VOTRE_UTILISATEUR\AppData\Local\Programs\Python\Python313\python.exe"`
    (adapter le chemin si Python 3.13 est ailleurs, ou utiliser `py -3.13` pour le trouver)
 5. Relancez : `poetry install --only main,packaging,automation`
 

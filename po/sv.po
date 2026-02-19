@@ -1,18 +1,19 @@
 # Swedish Gaphor Translation
 msgid ""
 msgstr ""
-"Project-Id-Version:  gaphor\n"
+"Project-Id-Version: gaphor\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2025-11-12 21:36-0500\n"
-"PO-Revision-Date: 2023-01-01 05:51+0000\n"
+"PO-Revision-Date: 2026-01-14 21:33+0000\n"
 "Last-Translator: Jonathan <jonathan@foreningshuset.se>\n"
+"Language-Team: Swedish <https://hosted.weblate.org/projects/gaphor/gaphor/"
+"sv/>\n"
 "Language: sv\n"
-"Language-Team: Swedish "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/sv/>\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.15.2\n"
 "Generated-By: Babel 2.17.0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:28
@@ -159,7 +160,6 @@ msgstr "Ny Databas"
 #: gaphor/C4Model/toolbox.py:162 gaphor/SysML/blocks/blockstoolbox.py:118
 #: gaphor/SysML/toolbox.py:186 gaphor/UML/classes/classestoolbox.py:154
 #: gaphor/UML/toolbox.py:57
-#, fuzzy
 msgid "Enumeration"
 msgstr ""
 
@@ -188,7 +188,6 @@ msgstr ""
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:17 gaphor/RAAML/stpa/stpatoolbox.py:43
 #: gaphor/RAAML/toolbox.py:38 gaphor/templates/raaml-example.gaphor
-#, fuzzy
 msgid "Loss"
 msgstr ""
 
@@ -199,7 +198,6 @@ msgstr ""
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:61 gaphor/RAAML/toolbox.py:40
 #: gaphor/SysML/blocks/block.py:57 gaphor/SysML/blocks/interfaceblock.py:56
-#, fuzzy
 msgid "Situation"
 msgstr ""
 
@@ -312,7 +310,6 @@ msgid "XOR Gate"
 msgstr ""
 
 #: gaphor/RAAML/stpa/controlaction.py:27 gaphor/RAAML/stpa/stpatoolbox.py:158
-#, fuzzy
 msgid "Control Action"
 msgstr ""
 
@@ -328,7 +325,6 @@ msgstr ""
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:35 gaphor/SysML/blocks/blockstoolbox.py:100
 #: gaphor/UML/classes/classestoolbox.py:127
-#, fuzzy
 msgid "Generalization"
 msgstr ""
 
@@ -341,7 +337,6 @@ msgid "Controller"
 msgstr "Kontroller"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:94 gaphor/templates/sysml-example.gaphor
-#, fuzzy
 msgid "Actuator"
 msgstr ""
 
@@ -388,7 +383,6 @@ msgid "Allocated Type"
 msgstr "Allokerad Typ"
 
 #: gaphor/SysML/propertypages.ui:86 gaphor/SysML/propertypages.ui:150
-#, fuzzy
 msgid "Compartments"
 msgstr ""
 
@@ -510,7 +504,6 @@ msgstr "Nytt Use Case _Diagram"
 
 #: gaphor/SysML/toolbox.py:184 gaphor/UML/toolbox.py:50
 #: gaphor/UML/usecases/usecasetoolbox.py:28 gaphor/templates/uml-example.gaphor
-#, fuzzy
 msgid "Actor"
 msgstr ""
 
@@ -595,20 +588,17 @@ msgstr "Gränssnitt"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:63
 #: gaphor/UML/classes/classestoolbox.py:82
-#, fuzzy
 msgid "Composite Association"
 msgstr ""
 
 #: gaphor/SysML/blocks/blockstoolbox.py:73
 #: gaphor/UML/classes/classestoolbox.py:92
-#, fuzzy
 msgid "Shared Association"
 msgstr ""
 
 #: gaphor/SysML/blocks/blockstoolbox.py:83
 #: gaphor/UML/classes/classestoolbox.py:102
 #: gaphor/UML/usecases/usecasetoolbox.py:40
-#, fuzzy
 msgid "Association"
 msgstr ""
 
@@ -645,7 +635,6 @@ msgid "deriveReqt"
 msgstr ""
 
 #: gaphor/SysML/requirements/relationships.py:30
-#, fuzzy
 msgid "trace"
 msgstr ""
 
@@ -654,7 +643,6 @@ msgid "verify"
 msgstr "verifiera"
 
 #: gaphor/SysML/requirements/relationships.py:48
-#, fuzzy
 msgid "refine"
 msgstr ""
 
@@ -892,12 +880,10 @@ msgid "Send signal"
 msgstr ""
 
 #: gaphor/UML/actions/actionstoolbox.py:232
-#, fuzzy
 msgid "Accept event action"
 msgstr ""
 
 #: gaphor/UML/actions/actionstoolbox.py:238
-#, fuzzy
 msgid "Accept event"
 msgstr ""
 
@@ -1128,12 +1114,10 @@ msgid "realize"
 msgstr ""
 
 #: gaphor/UML/classes/dependency.py:45
-#, fuzzy
 msgid "implements"
 msgstr ""
 
 #: gaphor/UML/classes/enumeration.py:68
-#, fuzzy
 msgid "enumeration"
 msgstr ""
 
@@ -1142,7 +1126,6 @@ msgid "New Enumeration…"
 msgstr ""
 
 #: gaphor/UML/classes/interface.py:276
-#, fuzzy
 msgid "interface"
 msgstr ""
 
@@ -1281,7 +1264,6 @@ msgid "Realization"
 msgstr ""
 
 #: gaphor/UML/classes/propertypages.ui:536
-#, fuzzy
 msgid "Implementation"
 msgstr ""
 
@@ -1336,7 +1318,6 @@ msgid "Indirectly Instantiated"
 msgstr ""
 
 #: gaphor/UML/deployments/deploymentstoolbox.py:12
-#, fuzzy
 msgid "Deployments"
 msgstr ""
 
@@ -1503,7 +1484,6 @@ msgid "Entry"
 msgstr ""
 
 #: gaphor/UML/states/propertypages.ui:35
-#, fuzzy
 msgid "Exit"
 msgstr ""
 
@@ -1604,7 +1584,6 @@ msgstr ""
 
 # Osäker på denna
 #: gaphor/UML/usecases/usecasetoolbox.py:16
-#, fuzzy
 msgid "Use case"
 msgstr ""
 
@@ -2107,7 +2086,6 @@ msgid ""
 msgstr ""
 
 #: gaphor/templates/sysml-example.gaphor gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "1. Concept Level"
 msgstr ""
 
@@ -2125,7 +2103,6 @@ msgstr "Användare"
 
 # Osäker på denna
 #: gaphor/templates/sysml-example.gaphor
-#, fuzzy
 msgid "Use Case #1"
 msgstr ""
 
@@ -2184,12 +2161,10 @@ msgid "Technology Structure"
 msgstr ""
 
 #: gaphor/templates/sysml-example.gaphor gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Technology Boundary"
 msgstr ""
 
 #: gaphor/templates/sysml-example.gaphor gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Technology Requirements"
 msgstr ""
 
@@ -2218,7 +2193,6 @@ msgid "On"
 msgstr "På"
 
 #: gaphor/templates/sysml-example.gaphor
-#, fuzzy
 msgid "actuator"
 msgstr ""
 
@@ -2227,7 +2201,6 @@ msgid "Use Case Function #1"
 msgstr ""
 
 #: gaphor/templates/sysml-example.gaphor
-#, fuzzy
 msgid "First Action"
 msgstr ""
 
@@ -2260,7 +2233,6 @@ msgid "Actuate Actuator"
 msgstr ""
 
 #: gaphor/templates/sysml-example.gaphor
-#, fuzzy
 msgid "Example Technology Requirement"
 msgstr ""
 
@@ -2273,7 +2245,6 @@ msgid "ECU"
 msgstr ""
 
 #: gaphor/templates/sysml-example.gaphor
-#, fuzzy
 msgid "DC Motor"
 msgstr ""
 
@@ -2286,7 +2257,6 @@ msgid "ecu"
 msgstr ""
 
 #: gaphor/templates/sysml-example.gaphor
-#, fuzzy
 msgid "dc Motor"
 msgstr ""
 
@@ -2361,7 +2331,6 @@ msgstr "Abstrakt"
 
 # Osäker på denna
 #: gaphor/templates/uml-example.gaphor gaphor/templates/uml.gaphor
-#, fuzzy
 msgid "1. Use Cases"
 msgstr ""
 
@@ -2383,7 +2352,6 @@ msgstr ""
 
 # Osäker på denna
 #: gaphor/templates/uml-example.gaphor
-#, fuzzy
 msgid "Main Use Case"
 msgstr ""
 
@@ -2486,7 +2454,6 @@ msgstr ""
 
 # Osäker på denna
 #: gaphor/templates/uml-example.gaphor
-#, fuzzy
 msgid "Second Class"
 msgstr ""
 
@@ -2495,7 +2462,6 @@ msgid "released"
 msgstr ""
 
 #: gaphor/templates/uml-example.gaphor gaphor/templates/uml.gaphor
-#, fuzzy
 msgid "Implementation Architecture"
 msgstr ""
 
@@ -2827,7 +2793,7 @@ msgid "Loading current and incoming model"
 msgstr ""
 
 #: gaphor/ui/filemanager.py:203 gaphor/ui/filemanager.py:247
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Unable to open model “{filename}”."
 msgstr ""
 
@@ -3156,7 +3122,6 @@ msgid "_Open"
 msgstr ""
 
 #: gaphor/ui/modelbrowser.py:574
-#, fuzzy
 msgid "Add to diagram"
 msgstr ""
 
@@ -3328,7 +3293,6 @@ msgid "Undo and Redo"
 msgstr ""
 
 #: gaphor/ui/help/shortcuts.ui:128
-#, fuzzy
 msgid "Selections"
 msgstr ""
 

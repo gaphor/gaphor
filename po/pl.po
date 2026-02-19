@@ -8,16 +8,17 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2025-11-12 21:36-0500\n"
-"PO-Revision-Date: 2025-04-02 21:58+0000\n"
+"PO-Revision-Date: 2026-02-11 09:11+0000\n"
 "Last-Translator: RadekJedrzejczyk <radoslaw.jedrzejczyk.rj@gmail.com>\n"
+"Language-Team: Polish <https://hosted.weblate.org/projects/gaphor/gaphor/pl/>"
+"\n"
 "Language: pl\n"
-"Language-Team: Polish "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/pl/>\n"
-"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && "
-"(n%100<10 || n%100>=20) ? 1 : 2);\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2);\n"
+"X-Generator: Weblate 5.16-dev\n"
 "Generated-By: Babel 2.17.0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:28
@@ -88,14 +89,12 @@ msgid "Dependency"
 msgstr "Zależność"
 
 #: gaphor/C4Model/toolbox.py:141
-#, fuzzy
 msgid "C4 Diagram"
-msgstr "Nowy diagram C4"
+msgstr "Diagram C4"
 
 #: gaphor/C4Model/toolbox.py:142 gaphor/UML/toolbox.py:32
-#, fuzzy
 msgid "Class Diagram"
-msgstr "Nowy diagram klasy"
+msgstr "Diagram klas"
 
 #: gaphor/C4Model/toolbox.py:143 gaphor/SysML/toolbox.py:138
 #: gaphor/UML/toolbox.py:36
@@ -676,7 +675,8 @@ msgstr "Pokazuj Typ"
 msgid ""
 "Removed unused elements from the model: they are not used in any other "
 "diagram."
-msgstr "Usunięto nieużywane elementy z modelu: nie są używane w żadnym diagramie."
+msgstr ""
+"Usunięto nieużywane elementy z modelu: nie są używane w żadnym diagramie."
 
 #: gaphor/UML/toolbox.py:34
 msgid "Component Diagram"
@@ -1196,8 +1196,8 @@ msgstr ""
 "  • <tt>+ attr: int | bool</tt> (publiczne, z unią typów)\n"
 "  • <tt># /attr: int # a note</tt> (chronione, pochodne, z adnotacją)\n"
 "\n"
-"Wciśnij <b>Enter</b> aby edytować, <b>Backspace</b>/<b>Delete</b> aby "
-"usuwać elementy.\n"
+"Wciśnij <b>Enter</b> aby edytować, <b>Backspace</b>/<b>Delete</b> aby usuwać "
+"elementy.\n"
 "Użyj <b>-</b>/<b>=</b> aby przesuwać elementy w górę bądź w dół."
 
 #: gaphor/UML/classes/propertypages.ui:349
@@ -1278,8 +1278,8 @@ msgstr ""
 "  • <tt>+ call(a: int[*], b: str): bool</tt> (publiczne, parametry)\n"
 "  • <tt># call(a: int, b: str) # a note</tt> (chronione, z adnotacją)\n"
 "\n"
-"Wciśnij <b>Enter</b> aby edytować, <b>Backspace</b>/<b>Delete</b> aby "
-"usuwać elementy.\n"
+"Wciśnij <b>Enter</b> aby edytować, <b>Backspace</b>/<b>Delete</b> aby usuwać "
+"elementy.\n"
 "Użyj <b>-</b>/<b>=</b> aby przesuwać elementy w górę bądź w dół."
 
 #: gaphor/UML/classes/propertypages.ui:668
@@ -1432,9 +1432,8 @@ msgid "Create"
 msgstr "Utworzono"
 
 #: gaphor/UML/interactions/propertypages.ui:26 gaphor/ui/menubar.ui:60
-#, fuzzy
 msgid "Delete"
-msgstr "_Usuń"
+msgstr "Usuń"
 
 #: gaphor/UML/interactions/propertypages.ui:42
 #, fuzzy
@@ -1802,9 +1801,8 @@ msgstr "Wyeksportuj wszystkie diagramy w formacie SVG do określonego fodleru"
 #: gaphor/plugins/diagramexport/export.py:148
 #: gaphor/plugins/diagramexport/export.py:166
 #: gaphor/plugins/diagramexport/export.py:184
-#, fuzzy
 msgid "Export all diagrams"
-msgstr "Eksportuj diagram jako SVG"
+msgstr "Eksportuj wszystkie diagramy"
 
 #: gaphor/plugins/diagramexport/export.py:143
 #, fuzzy
@@ -2482,8 +2480,8 @@ msgid ""
 "visualizing activity flows for primary and secondary use case scenarios."
 msgstr ""
 "Modeluj abstrakcyjną implementację przypadków użycia poprzez tworzenie "
-"diagramów czynności wizualizujących przepływy czynności dla pierwotnych i"
-" wtórnych scenariuszy przypadków użycia."
+"diagramów czynności wizualizujących przepływy czynności dla pierwotnych i "
+"wtórnych scenariuszy przypadków użycia."
 
 #: gaphor/templates/uml-example.gaphor gaphor/templates/uml.gaphor
 msgid ""
@@ -2494,8 +2492,7 @@ msgid ""
 msgstr ""
 "Wykonaj analizę domeny, modelując byty domeny i ich relacje za pomocą "
 "uproszczonego diagramu klas. Diagram będzie służył jako wizualny słownik "
-"pojęć. Będzie również punktem wyjścia dla modelu danych na poziomie "
-"projektu."
+"pojęć. Będzie również punktem wyjścia dla modelu danych na poziomie projektu."
 
 #: gaphor/templates/uml-example.gaphor gaphor/templates/uml.gaphor
 msgid ""
@@ -2505,9 +2502,9 @@ msgid ""
 "unstable parts"
 msgstr ""
 "Przygotuj diagram zależności pakietów, aby pogrupować swoje klasy "
-"implementacyjne w odpowiedni sposób. Pomaga to utrzymać dobrą strukturę "
-"kodu i uniknąć wad projektowych, takich jak cykliczne zależności lub "
-"zależności od niestabilnych części"
+"implementacyjne w odpowiedni sposób. Pomaga to utrzymać dobrą strukturę kodu "
+"i uniknąć wad projektowych, takich jak cykliczne zależności lub zależności "
+"od niestabilnych części"
 
 #: gaphor/templates/uml-example.gaphor gaphor/templates/uml.gaphor
 msgid ""
@@ -2517,8 +2514,7 @@ msgid ""
 msgstr ""
 "Modeluj interakcje komponentów dla scenariuszy przypadków użycia, aby "
 "znaleźć \n"
-"nowe metody w istniejących klasach lub nowe klasy z określonymi "
-"obowiązkami."
+"nowe metody w istniejących klasach lub nowe klasy z określonymi obowiązkami."
 
 #: gaphor/templates/uml-example.gaphor gaphor/templates/uml.gaphor
 msgid "Create detailed class diagrams to capture your object-oriented data model."
@@ -2530,9 +2526,9 @@ msgid ""
 "components. Indicate how they are deployed on hardware nodes, their "
 "inter-dependencies and communication protocols."
 msgstr ""
-"Zdefiniuj główne artefakty, które pokazują implementację twoich "
-"komponentów. Określ jak są rozmieszczone na węzłach sprzętowych, ich "
-"wzajemne zależności i protokoły komunikacyjne."
+"Zdefiniuj główne artefakty, które pokazują implementację twoich komponentów. "
+"Określ jak są rozmieszczone na węzłach sprzętowych, ich wzajemne zależności "
+"i protokoły komunikacyjne."
 
 #: gaphor/templates/uml-example.gaphor
 msgid "String"
@@ -2623,8 +2619,8 @@ msgid ""
 "Add a model element from the tool box (bottom left) to the diagram. Here "
 "you will see its properties appear."
 msgstr ""
-"Dodaj element modelu z dostępnych po lewej na dole. Tu pojawią się "
-"własności wybranego elementu."
+"Dodaj element modelu z dostępnych po lewej na dole. Tu pojawią się własności "
+"wybranego elementu."
 
 #: gaphor/ui/elementeditor.ui:57
 msgid "This pane can be hidden by clicking the pane icon in the header."
@@ -2637,10 +2633,10 @@ msgid ""
 "does not get selected, click on the diagram once (so it's focused) and "
 "then hit the shortcut key."
 msgstr ""
-"<b>Rada:</b> Większość narzędzi ma swój skrót klawiszowy (np. \"c\" "
-"wybiera Klasy). Wybór narzędzi działa wyłącznie dla diagramu. Gdy "
-"narzędzie nie zostanie aktywowane, kliknij na diagram (aby go aktywować) "
-"i wciśnij skrót klawiszowy narzędzia."
+"<b>Rada:</b> Większość narzędzi ma swój skrót klawiszowy (np. \"c\" wybiera "
+"Klasy). Wybór narzędzi działa wyłącznie dla diagramu. Gdy narzędzie nie "
+"zostanie aktywowane, kliknij na diagram (aby go aktywować) i wciśnij skrót "
+"klawiszowy narzędzia."
 
 #: gaphor/ui/elementeditor.ui:73
 msgid ""
@@ -2648,8 +2644,8 @@ msgid ""
 "select an element in the model browser and start typing. A search box "
 "will automatically appear."
 msgstr ""
-"<b>Rada:</b> Aby wyszukać obiekt w przeglądarce modelu (u góry po lewej),"
-" wybierz element i zacznij pisać. Wyszukiwarka pojawi się automatycznie."
+"<b>Rada:</b> Aby wyszukać obiekt w przeglądarce modelu (u góry po lewej), "
+"wybierz element i zacznij pisać. Wyszukiwarka pojawi się automatycznie."
 
 #: gaphor/ui/elementeditor.ui:86
 msgid "Help improve Gaphor"
@@ -2709,8 +2705,8 @@ msgid ""
 "🔗 <a href=\"https://docs.gaphor.org/en/latest/style_sheets.html\">Style "
 "sheets in Gaphor</a>"
 msgstr ""
-"🔗 <a href=\"https://docs.gaphor.org/en/latest/style_sheets.html\">Arkusze"
-" stylów w Gaphorze</a>"
+"🔗 <a href=\"https://docs.gaphor.org/en/latest/style_sheets.html\">Arkusze "
+"stylów w Gaphorze</a>"
 
 #: gaphor/ui/elementeditor.ui:286
 msgid "Merge Models"
@@ -2789,8 +2785,7 @@ msgid ""
 "location."
 msgstr ""
 "Nie masz wystarczająco wolnego miejsca na dysku, aby zapisać ten model.\n"
-"Zwolnij miejsce na dysku i spróbuj ponownie, lub zapisz w innej "
-"lokalizacji."
+"Zwolnij miejsce na dysku i spróbuj ponownie, lub zapisz w innej lokalizacji."
 
 #: gaphor/ui/filemanager.py:52
 #, python-brace-format
@@ -3196,8 +3191,8 @@ msgstr ""
 "Prawa autorskie © 2001-2023 Arjan Molenaar i Dan Yeaw.\n"
 "\n"
 "UML, SysML, i RAAML są zastrzeżonymi znakami towarowymi lub znakami "
-"towarowymi Object Management Group Inc. w Stanach Zjednoczonych i/lub "
-"innych krajach."
+"towarowymi Object Management Group Inc. w Stanach Zjednoczonych i/lub innych "
+"krajach."
 
 #: gaphor/ui/help/about.ui:20
 msgid ""
@@ -3213,14 +3208,14 @@ msgid ""
 "See the License for the specific language governing permissions and "
 "limitations under the License."
 msgstr ""
-"Licencjonowanie na podstawie Apache License, Version 2.0 (dalej "
-"\"Licencja\"); zabrania się wykorzystywania aplikacji inaczej niż zgodnie"
-" z Licencją. Kopię Licencji można uzyskać pod adresem\n"
+"Licencjonowanie na podstawie Apache License, Version 2.0 (dalej \"Licencja\")"
+"; zabrania się wykorzystywania aplikacji inaczej niż zgodnie z Licencją. "
+"Kopię Licencji można uzyskać pod adresem\n"
 "\n"
 "    http://www.apache.org/licenses/LICENSE-2.0\n"
 "\n"
-"Jeśli niewymagane prawnie bądź uzgodnione na piśmie, oprogramowanie na "
-"mocy Licencji jest rozpowszechniane na zasadzie AS IS, BEZ JAKIEJKOLWIEK "
+"Jeśli niewymagane prawnie bądź uzgodnione na piśmie, oprogramowanie na mocy "
+"Licencji jest rozpowszechniane na zasadzie AS IS, BEZ JAKIEJKOLWIEK "
 "GWARANCJI CZY WARUNKÓW, zarówno jawnych jak i domniemanych. Sprawdź "
 "Licencję, aby uzyskać konkrety dotyczące sformułowań regulujących "
 "uprawnienia i ograniczenia."

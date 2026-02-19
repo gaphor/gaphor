@@ -118,9 +118,7 @@ class Settings:
     @property
     def ui_language(self) -> str:
         return (
-            self._gio_settings.get_string("ui-language")
-            if self._gio_settings
-            else ""
+            self._gio_settings.get_string("ui-language") if self._gio_settings else ""
         )
 
     @ui_language.setter

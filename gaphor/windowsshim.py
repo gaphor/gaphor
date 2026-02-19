@@ -12,8 +12,9 @@ def gi_init():
     env_path = os.environ.get("PATH", "").split(os.pathsep)
     if first_gtk_path := next(
         filter(
-            lambda path: path is not None
-            and Path.is_file(Path(path) / "girepository-2.0-0.dll"),
+            lambda path: (
+                path is not None and Path.is_file(Path(path) / "girepository-2.0-0.dll")
+            ),
             env_path,
         ),
         None,

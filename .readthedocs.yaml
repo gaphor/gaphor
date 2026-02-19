@@ -8,12 +8,16 @@ build:
     python: "3.13"
   apt_packages:
   - libgirepository-2.0-dev
+  - libcairo2-dev
+  - pkg-config
+  - python3-dev
   - gir1.2-pango-1.0
   - graphviz
   jobs:
     pre_install:
     - pip install --constraint=.github/github-requirements.txt poetry
     - poetry config virtualenvs.create false
+    - poetry config installer.no-binary pycairo,pygobject
     post_install:
     - VIRTUAL_ENV=$READTHEDOCS_VIRTUALENV_PATH poetry install --with docs --no-interaction
 sphinx:

@@ -5,6 +5,7 @@ repos:
   - id: mypy
     additional_dependencies:
     - types-docutils
+    exclude: ^_packaging/windows/build_win_installer\.py$
 - repo: https://github.com/pre-commit/pre-commit-hooks
   rev: 3e8a8703264a2f4a69428a0aa4dcb512790b2c8c  # frozen: v6.0.0
   hooks:
@@ -19,7 +20,7 @@ repos:
   - id: shellcheck
     args: [--exclude, SC1017]
 - repo: https://github.com/astral-sh/ruff-pre-commit
-  rev: '5ba58aca0bd5bc7c0e1c0fc45af2e88d6a2bde83'  # frozen: v0.14.10
+  rev: 'fa93bc3224c614a0e9786d3e2d3d48edcca246eb'  # frozen: v0.15.1
   hooks:
   - id: ruff
     args: [--fix, --preview]

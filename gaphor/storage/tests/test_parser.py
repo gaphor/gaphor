@@ -1,8 +1,8 @@
 from io import StringIO
 
 import pytest
-from defusedxml import EntitiesForbidden
 
+from defusedxml import EntitiesForbidden
 from gaphor.storage.parser import parse
 
 

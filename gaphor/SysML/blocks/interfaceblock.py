@@ -81,8 +81,10 @@ class InterfaceBlockItem(Classified, ElementPresentation[InterfaceBlock]):
                 and [
                     self.block_compartment(
                         self.diagram.gettext("values"),
-                        lambda a: isinstance(a.type, ValueType)
-                        and a.aggregation == "composite",
+                        lambda a: (
+                            isinstance(a.type, ValueType)
+                            and a.aggregation == "composite"
+                        ),
                         "value",
                     )
                 ]
@@ -133,8 +135,8 @@ class InterfaceBlockItem(Classified, ElementPresentation[InterfaceBlock]):
 
     def operations_compartment(self, name, predicate):
         def lazy_format(operation):
-            return lambda: format_operation(operation) or self.diagram.gettext(
-                "unnamed"
+            return lambda: (
+                format_operation(operation) or self.diagram.gettext("unnamed")
             )
 
         return CssNode(

@@ -86,10 +86,10 @@ if ($LASTEXITCODE -ne 0) {
 $gtkWheelsPath = "C:\gtk\wheels"
 if (Test-Path $gtkWheelsPath) {
     Write-Host "`n2. Installation des wheels GTK pour Windows..." -ForegroundColor Yellow
-    
+
     $pygobjectWheel = Get-ChildItem -Path "$gtkWheelsPath\PyGObject*.whl" -ErrorAction SilentlyContinue | Select-Object -First 1
     $pycairoWheel = Get-ChildItem -Path "$gtkWheelsPath\pycairo*.whl" -ErrorAction SilentlyContinue | Select-Object -First 1
-    
+
     if ($pygobjectWheel -and $pycairoWheel) {
         poetry run pip install --force-reinstall $pygobjectWheel.FullName
         poetry run pip install --force-reinstall $pycairoWheel.FullName

@@ -60,7 +60,7 @@ def force_english_locale():
     """Force English locale, instead of OS language."""
     global gettext
     gettext = translation("en_US.UTF-8").gettext
-    translated_ui_string._current_lang = "en"
+    translated_ui_string._current_lang = "en"  # noqa: SLF001
     _translated_ui_string_cached.cache_clear()
 
 
@@ -70,13 +70,13 @@ def set_ui_language(lang: str) -> None:
     if not lang:
         lang_env = os.getenv("LANG") or _get_os_language()
         gettext = translation(lang_env).gettext
-        translated_ui_string._current_lang = lang_env or ""
+        translated_ui_string._current_lang = lang_env or ""  # noqa: SLF001
     elif lang.lower() in ("c", "en", "en_us", "en_us.utf-8"):
         gettext = translation("en_US.UTF-8").gettext
-        translated_ui_string._current_lang = "en"
+        translated_ui_string._current_lang = "en"  # noqa: SLF001
     else:
         gettext = translation(lang).gettext
-        translated_ui_string._current_lang = lang
+        translated_ui_string._current_lang = lang  # noqa: SLF001
     _translated_ui_string_cached.cache_clear()
 
 
@@ -95,7 +95,8 @@ def get_available_ui_languages() -> list[tuple[str, str]]:
             if not path.is_dir():
                 continue
             lc_messages = path / "LC_MESSAGES" / "gaphor.mo"
-            if not lc_messages.exists():
+            # Traversable has exists() method, but mypy doesn't recognize it
+            if not getattr(lc_messages, "exists", lambda: False)():
                 continue
             code = path.name
             try:
@@ -122,9 +123,7 @@ def i18nize(message):
     return message
 
 
-def _translated_ui_string_impl(
-    package: str, ui_filename: str, lang: str
-) -> str:
+def _translated_ui_string_impl(package: str, ui_filename: str, lang: str) -> str:
     """Load UI XML and translate all translatable nodes. Cached per (package, filename, lang)."""
     with (importlib.resources.files(package) / ui_filename).open(
         encoding="utf-8"
@@ -147,8 +146,8 @@ def translated_ui_string(package: str, ui_filename: str) -> str:
     """Return UI XML string with all translatable strings in the current UI language.
     Used for menu, preferences, and all .ui files so they are internationalized.
     """
-    lang = getattr(translated_ui_string, "_current_lang", None)
+    lang = getattr(translated_ui_string, "_current_lang", None)  # noqa: SLF001
     if lang is None:
-        translated_ui_string._current_lang = _initial_lang
+        translated_ui_string._current_lang = _initial_lang  # noqa: SLF001
         lang = _initial_lang
     return _translated_ui_string_cached(package, ui_filename, lang)

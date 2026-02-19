@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import os
 import platform
 import shutil
 import subprocess
@@ -30,9 +29,10 @@ def build_installer(
     icon: Path, nsi: Path, files_to_package: Path, output_file: Path
 ) -> None:
     print("Building Installer")
-    if not (files_to_package / "gaphor.exe").exists() and not (
-        files_to_package / "gaphor"
-    ).exists():
+    if (
+        not (files_to_package / "gaphor.exe").exists()
+        and not (files_to_package / "gaphor").exists()
+    ):
         raise SystemExit(
             "dist/gaphor does not contain PyInstaller output. "
             "Run 'poe package' first to build the application."

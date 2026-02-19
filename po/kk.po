@@ -1,4 +1,4 @@
-# Ukrainian translations for PROJECT.
+# Translations template for PROJECT.
 # Copyright (C) 2025 ORGANIZATION
 # This file is distributed under the same license as the PROJECT project.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
@@ -8,127 +8,124 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2025-11-12 21:36-0500\n"
-"PO-Revision-Date: 2026-01-14 21:35+0000\n"
-"Last-Translator: Dan Yeaw <dan@yeaw.me>\n"
-"Language-Team: Ukrainian <https://hosted.weblate.org/projects/gaphor/gaphor/"
-"uk/>\n"
-"Language: uk\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: kk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Weblate 5.15.2\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "Generated-By: Babel 2.17.0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:28
 msgid "C4"
-msgstr "C4"
+msgstr ""
 
 #: gaphor/C4Model/propertypages.ui:11 gaphor/diagram/general/metadata.py:70
 #: gaphor/diagram/propertypages.ui:170
 msgid "Description"
-msgstr "Опис"
+msgstr ""
 
 #: gaphor/C4Model/propertypages.ui:38 gaphor/templates/sysml-example.gaphor
 #: gaphor/templates/sysml.gaphor
 msgid "Technology"
-msgstr "Технології"
+msgstr ""
 
 #: gaphor/C4Model/toolbox.py:31
 msgid "New Software System"
-msgstr "Нова система програмного забезпечення"
+msgstr ""
 
 #: gaphor/C4Model/toolbox.py:38
 msgid "New Container"
-msgstr "Новий контейнер"
+msgstr ""
 
 #: gaphor/C4Model/toolbox.py:45 gaphor/C4Model/toolbox.py:169
 #: gaphor/templates/c4model-example.gaphor
 msgid "Database"
-msgstr "База даних"
+msgstr ""
 
 #: gaphor/C4Model/toolbox.py:46
 msgid "New Database"
-msgstr "Нова база даних"
+msgstr ""
 
 #: gaphor/C4Model/toolbox.py:53
 msgid "New Component"
-msgstr "Новий компонент"
+msgstr ""
 
 #: gaphor/C4Model/toolbox.py:57 gaphor/ui/greeter.py:55
 msgid "C4 Model"
-msgstr "Модель C4"
+msgstr ""
 
 #: gaphor/C4Model/diagramitems/person.py:24 gaphor/C4Model/toolbox.py:61
 #: gaphor/C4Model/toolbox.py:67 gaphor/C4Model/toolbox.py:167
 msgid "Person"
-msgstr "Особа"
+msgstr ""
 
 #: gaphor/C4Model/toolbox.py:73
 msgid "Software System"
-msgstr "Програмна система"
+msgstr ""
 
 #: gaphor/C4Model/toolbox.py:85
 msgid "Container"
-msgstr "Контейнер"
+msgstr ""
 
 #: gaphor/C4Model/toolbox.py:97
 msgid "Container: Database"
-msgstr "Контейнер: база даних"
+msgstr ""
 
 #: gaphor/C4Model/toolbox.py:109 gaphor/C4Model/toolbox.py:159
 #: gaphor/UML/classes/classestoolbox.py:63 gaphor/UML/toolbox.py:53
 msgid "Component"
-msgstr "Компонент"
+msgstr ""
 
 #: gaphor/C4Model/toolbox.py:121 gaphor/RAAML/fta/ftatoolbox.py:16
 #: gaphor/UML/classes/classestoolbox.py:119
 #: gaphor/UML/classes/propertypages.ui:533
 msgid "Dependency"
-msgstr "Залежність"
+msgstr ""
 
 #: gaphor/C4Model/toolbox.py:141
 msgid "C4 Diagram"
-msgstr "Діаграма C4"
+msgstr ""
 
 #: gaphor/C4Model/toolbox.py:142 gaphor/UML/toolbox.py:32
 msgid "Class Diagram"
-msgstr "Діаграма класів"
+msgstr ""
 
 #: gaphor/C4Model/toolbox.py:143 gaphor/SysML/toolbox.py:138
 #: gaphor/UML/toolbox.py:36
 msgid "Activity Diagram"
-msgstr "Діаграма діяльності"
+msgstr ""
 
 #: gaphor/C4Model/toolbox.py:144 gaphor/SysML/toolbox.py:148
 #: gaphor/UML/toolbox.py:37
 msgid "Sequence Diagram"
-msgstr "Діаграма послідовності"
+msgstr ""
 
 #: gaphor/C4Model/toolbox.py:145 gaphor/SysML/toolbox.py:158
 #: gaphor/UML/toolbox.py:41
 msgid "State Machine Diagram"
-msgstr "Діаграма державного автомата"
+msgstr ""
 
 #: gaphor/C4Model/toolbox.py:146 gaphor/RAAML/toolbox.py:32
 #: gaphor/SysML/toolbox.py:178 gaphor/UML/toolbox.py:44
 msgid "Generic Diagram"
-msgstr "Загальна діаграма"
+msgstr ""
 
 #: gaphor/C4Model/toolbox.py:150 gaphor/RAAML/toolbox.py:36
 #: gaphor/SysML/blocks/blockstoolbox.py:51 gaphor/SysML/toolbox.py:182
 #: gaphor/UML/classes/classestoolbox.py:51 gaphor/UML/toolbox.py:48
 #: gaphor/ui/modelbrowser.py:403
 msgid "Package"
-msgstr "Пакет"
+msgstr ""
 
 #: gaphor/C4Model/toolbox.py:151 gaphor/SysML/toolbox.py:183
 #: gaphor/UML/actions/actionstoolbox.py:42
 #: gaphor/UML/actions/actionstoolbox.py:72 gaphor/UML/toolbox.py:49
 #: gaphor/templates/sysml-example.gaphor gaphor/templates/uml-example.gaphor
 msgid "Activity"
-msgstr "Діяльність"
+msgstr ""
 
 #: gaphor/C4Model/toolbox.py:153 gaphor/SysML/toolbox.py:187
 #: gaphor/UML/interactions/interactionstoolbox.py:36
@@ -136,842 +133,840 @@ msgstr "Діяльність"
 #: gaphor/templates/sysml-example.gaphor gaphor/templates/uml-example.gaphor
 #: gaphor/templates/uml.gaphor
 msgid "Interaction"
-msgstr "Взаємодія"
+msgstr ""
 
 #: gaphor/C4Model/toolbox.py:156 gaphor/SysML/toolbox.py:201
 #: gaphor/UML/states/statestoolbox.py:46 gaphor/UML/states/statestoolbox.py:63
 #: gaphor/UML/toolbox.py:72 gaphor/templates/sysml-example.gaphor
 msgid "State Machine"
-msgstr "Державна машина"
+msgstr ""
 
 #: gaphor/C4Model/toolbox.py:158 gaphor/UML/classes/classestoolbox.py:29
 #: gaphor/UML/profiles/profilestoolbox.py:14 gaphor/UML/toolbox.py:52
 msgid "Class"
-msgstr "Клас"
+msgstr ""
 
 #: gaphor/C4Model/toolbox.py:160 gaphor/UML/toolbox.py:54
 msgid "Data Type"
-msgstr "Тип даних"
+msgstr ""
 
 #: gaphor/C4Model/toolbox.py:162 gaphor/SysML/blocks/blockstoolbox.py:118
 #: gaphor/SysML/toolbox.py:186 gaphor/UML/classes/classestoolbox.py:154
 #: gaphor/UML/toolbox.py:57
 msgid "Enumeration"
-msgstr "Перерахування"
+msgstr ""
 
 #: gaphor/C4Model/toolbox.py:165
 msgid "Primitive Type"
-msgstr "Примітивний тип"
+msgstr ""
 
 #: gaphor/RAAML/modelinglanguage.py:30 gaphor/ui/greeter.py:48
 msgid "RAAML"
-msgstr "RAAML"
+msgstr ""
 
 #: gaphor/RAAML/toolbox.py:30
 msgid "FTA Diagram"
-msgstr "Діаграма ЗВТ"
+msgstr ""
 
 #: gaphor/RAAML/toolbox.py:31
 msgid "STPA Diagram"
-msgstr "Діаграма STPA"
+msgstr ""
 
 #: gaphor/RAAML/fta/ftatoolbox.py:195 gaphor/RAAML/fta/ftatoolbox.py:201
 #: gaphor/RAAML/fta/topevent.py:27 gaphor/RAAML/toolbox.py:37
 msgid "Top Event"
-msgstr "Головна подія"
+msgstr ""
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:17 gaphor/RAAML/stpa/stpatoolbox.py:43
 #: gaphor/RAAML/toolbox.py:38 gaphor/templates/raaml-example.gaphor
 msgid "Loss"
-msgstr "Втрата"
+msgstr ""
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:22 gaphor/RAAML/stpa/stpatoolbox.py:52
 #: gaphor/RAAML/toolbox.py:39 gaphor/templates/raaml-example.gaphor
 msgid "Hazard"
-msgstr "Небезпека"
+msgstr ""
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:61 gaphor/RAAML/toolbox.py:40
 #: gaphor/SysML/blocks/block.py:57 gaphor/SysML/blocks/interfaceblock.py:56
 msgid "Situation"
-msgstr "Ситуація"
+msgstr ""
 
 #: gaphor/RAAML/fta/andgate.py:34 gaphor/RAAML/fta/ftatoolbox.py:24
 msgid "AND Gate"
-msgstr "І Ворота"
+msgstr ""
 
 #: gaphor/RAAML/fta/basicevent.py:32 gaphor/RAAML/fta/ftatoolbox.py:125
 #: gaphor/RAAML/fta/ftatoolbox.py:131
 msgid "Basic Event"
-msgstr "Основна подія"
+msgstr ""
 
 #: gaphor/RAAML/fta/conditionalevent.py:29 gaphor/RAAML/fta/ftatoolbox.py:136
 #: gaphor/RAAML/fta/ftatoolbox.py:143
 msgid "Conditional Event"
-msgstr "Умовна подія"
+msgstr ""
 
 #: gaphor/RAAML/fta/dormantevent.py:32 gaphor/RAAML/fta/ftatoolbox.py:162
 #: gaphor/RAAML/fta/ftatoolbox.py:168
 msgid "Dormant Event"
-msgstr "Спляча подія"
+msgstr ""
 
 #: gaphor/RAAML/fta/ftatoolbox.py:12 gaphor/templates/raaml-example.gaphor
 #: gaphor/templates/raaml.gaphor
 msgid "Fault Tree Analysis"
-msgstr "Аналіз дерева несправностей"
+msgstr ""
 
 #: gaphor/RAAML/fta/ftatoolbox.py:30
 msgid "AND"
-msgstr "І"
+msgstr ""
 
 #: gaphor/RAAML/fta/ftatoolbox.py:35 gaphor/RAAML/fta/orgate.py:34
 msgid "OR Gate"
-msgstr "АБО ворота"
+msgstr ""
 
 #: gaphor/RAAML/fta/ftatoolbox.py:41 gaphor/templates/raaml-example.gaphor
 msgid "OR"
-msgstr "Або"
+msgstr ""
 
 #: gaphor/RAAML/fta/ftatoolbox.py:46 gaphor/RAAML/fta/notgate.py:32
 msgid "NOT Gate"
-msgstr "НЕ ворота"
+msgstr ""
 
 #: gaphor/RAAML/fta/ftatoolbox.py:52
 msgid "NOT"
-msgstr "НЕ"
+msgstr ""
 
 #: gaphor/RAAML/fta/ftatoolbox.py:57
 msgid "Sequence Enforcing (SEQ) Gate"
-msgstr "Шлюз забезпечення послідовності (SEQ)"
+msgstr ""
 
 #: gaphor/RAAML/fta/ftatoolbox.py:63
 msgid "SEQ"
-msgstr "SEQ"
+msgstr ""
 
 #: gaphor/RAAML/fta/ftatoolbox.py:68
 msgid "Exclusive OR Gate"
-msgstr "Ексклюзивні ворота"
+msgstr ""
 
 #: gaphor/RAAML/fta/ftatoolbox.py:74
 msgid "XOR"
-msgstr "XOR"
+msgstr ""
 
 #: gaphor/RAAML/fta/ftatoolbox.py:79 gaphor/RAAML/fta/ftatoolbox.py:86
 #: gaphor/RAAML/fta/majorityvotegate.py:37
 msgid "Majority Vote Gate"
-msgstr "Ворота більшості голосів"
+msgstr ""
 
 #: gaphor/RAAML/fta/ftatoolbox.py:92 gaphor/RAAML/fta/ftatoolbox.py:98
 #: gaphor/RAAML/fta/inhibitgate.py:32
 msgid "Inhibit Gate"
-msgstr "Заборонити ворота"
+msgstr ""
 
 #: gaphor/RAAML/fta/ftatoolbox.py:103 gaphor/RAAML/fta/ftatoolbox.py:109
 #: gaphor/RAAML/fta/transferin.py:32
 msgid "Transfer In"
-msgstr "Трансфер в"
+msgstr ""
 
 #: gaphor/RAAML/fta/ftatoolbox.py:114 gaphor/RAAML/fta/ftatoolbox.py:120
 #: gaphor/RAAML/fta/transferout.py:33
 msgid "Transfer Out"
-msgstr "Перенесіть вихід"
+msgstr ""
 
 #: gaphor/RAAML/fta/ftatoolbox.py:149 gaphor/RAAML/fta/ftatoolbox.py:156
 #: gaphor/RAAML/fta/undevelopedevent.py:32
 msgid "Undeveloped Event"
-msgstr "Нерозвинена подія"
+msgstr ""
 
 #: gaphor/RAAML/fta/ftatoolbox.py:173 gaphor/RAAML/fta/ftatoolbox.py:179
 #: gaphor/RAAML/fta/houseevent.py:32
 msgid "House Event"
-msgstr "Домашня подія"
+msgstr ""
 
 #: gaphor/RAAML/fta/ftatoolbox.py:184 gaphor/RAAML/fta/ftatoolbox.py:190
 #: gaphor/RAAML/fta/zeroevent.py:33
 msgid "Zero Event"
-msgstr "Нульова подія"
+msgstr ""
 
 #: gaphor/RAAML/fta/ftatoolbox.py:206 gaphor/RAAML/fta/ftatoolbox.py:213
 #: gaphor/RAAML/fta/intermediateevent.py:28
 msgid "Intermediate Event"
-msgstr "Проміжна подія"
+msgstr ""
 
 #: gaphor/RAAML/fta/seqgate.py:34
 msgid "Sequence Enforcing Gate"
-msgstr "Ворота забезпечення послідовності"
+msgstr ""
 
 #: gaphor/RAAML/fta/xorgate.py:33
 msgid "XOR Gate"
-msgstr "Ворота XOR"
+msgstr ""
 
 #: gaphor/RAAML/stpa/controlaction.py:27 gaphor/RAAML/stpa/stpatoolbox.py:158
 msgid "Control Action"
-msgstr "Контрольна дія"
+msgstr ""
 
 #: gaphor/RAAML/stpa/operationalsituation.py:29
 #: gaphor/RAAML/stpa/stpatoolbox.py:127
 msgid "Operational Situation"
-msgstr "Оперативна обстановка"
+msgstr ""
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:27 gaphor/RAAML/stpa/stpatoolbox.py:116
 #: gaphor/templates/raaml-example.gaphor
 msgid "Abstract Operational Situation"
-msgstr "Абстрактна оперативна ситуація"
+msgstr ""
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:35 gaphor/SysML/blocks/blockstoolbox.py:100
 #: gaphor/UML/classes/classestoolbox.py:127
 msgid "Generalization"
-msgstr "Узагальнення"
+msgstr ""
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:72
 msgid "Control Structure"
-msgstr "Структура контролю"
+msgstr ""
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:83 gaphor/templates/sysml-example.gaphor
 msgid "Controller"
-msgstr "Контролер"
+msgstr ""
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:94 gaphor/templates/sysml-example.gaphor
 msgid "Actuator"
-msgstr "Актуатор"
+msgstr ""
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:105
 msgid "Controlled Process"
-msgstr "Контрольований процес"
+msgstr ""
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:138
 #: gaphor/RAAML/stpa/unsafecontrolaction.py:28
 msgid "Unsafe Control Action"
-msgstr "Небезпечна контрольна дія"
+msgstr ""
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:149
 msgid "Relevant To"
-msgstr "Що стосується"
+msgstr ""
 
 #: gaphor/SysML/diagramtype.py:42
 #, python-brace-format
 msgid "Can’t create “{name}” nested under a “{elem}”"
-msgstr "Неможливо створити «{name}», вкладений у «{elem}»"
+msgstr ""
 
 #: gaphor/SysML/modelinglanguage.py:39 gaphor/ui/greeter.py:41
 msgid "SysML"
-msgstr "SysML"
+msgstr ""
 
 #: gaphor/SysML/propertypages.ui:9
 msgid "Item Flow"
-msgstr "Потік предметів"
+msgstr ""
 
 #: gaphor/SysML/propertypages.ui:20
 msgid "Enable Item Flow"
-msgstr "Увімкнути потік елементів"
+msgstr ""
 
 #: gaphor/SysML/propertypages.ui:34
 msgid "Item Property"
-msgstr "Властивість елемента"
+msgstr ""
 
 #: gaphor/SysML/propertypages.ui:49 gaphor/UML/classes/propertypages.ui:21
 msgid "Invert direction"
-msgstr "Інвертувати напрямок"
+msgstr ""
 
 #: gaphor/SysML/propertypages.ui:65 gaphor/UML/actions/propertypages.ui:221
 msgid "Allocated Type"
-msgstr "Виділений тип"
+msgstr ""
 
 #: gaphor/SysML/propertypages.ui:86 gaphor/SysML/propertypages.ui:150
 msgid "Compartments"
-msgstr "Відсіки"
+msgstr ""
 
 #: gaphor/SysML/propertypages.ui:97
 msgid "Show Parts"
-msgstr "Показати частини"
+msgstr ""
 
 #: gaphor/SysML/propertypages.ui:113
 msgid "Show References"
-msgstr "Показати літературу"
+msgstr ""
 
 #: gaphor/SysML/propertypages.ui:129 gaphor/SysML/propertypages.ui:161
 msgid "Show Values"
-msgstr "Показати значення"
+msgstr ""
 
 #: gaphor/SysML/propertypages.ui:183
 msgid "Aggregation"
-msgstr "Агрегація"
+msgstr ""
 
 #: gaphor/SysML/propertypages.ui:195 gaphor/UML/classes/propertypages.ui:125
 #: gaphor/UML/classes/propertypages.ui:238
 msgid "No aggregation"
-msgstr "Немає агрегації"
+msgstr ""
 
 #: gaphor/SysML/propertypages.ui:196 gaphor/UML/classes/propertypages.ui:126
 #: gaphor/UML/classes/propertypages.ui:239
 msgid "Shared"
-msgstr "Спільний доступ"
+msgstr ""
 
 #: gaphor/SysML/propertypages.ui:197 gaphor/UML/classes/propertypages.ui:127
 #: gaphor/UML/classes/propertypages.ui:240
 msgid "Composite"
-msgstr "Композитний"
+msgstr ""
 
 #: gaphor/SysML/propertypages.ui:215
 msgid "Id"
-msgstr "Id"
+msgstr ""
 
 #: gaphor/SysML/propertypages.ui:229
 msgid "Text"
-msgstr "Текст"
+msgstr ""
 
 #: gaphor/SysML/propertypages.ui:258
 msgid "Show text"
-msgstr "Показати текст"
+msgstr ""
 
 #: gaphor/SysML/sysmlfmt.py:10
 #, python-brace-format
 msgid "sourceContext: {name}"
-msgstr "джерело контексту: {name}"
+msgstr ""
 
 #: gaphor/SysML/toolbox.py:52
 msgid "Internal Blocks"
-msgstr "Внутрішні блоки"
+msgstr ""
 
 #: gaphor/SysML/toolbox.py:56
 msgid "Connector"
-msgstr "Роз'єм"
+msgstr ""
 
 #: gaphor/SysML/toolbox.py:63
 msgid "Property"
-msgstr "Власність"
+msgstr ""
 
 #: gaphor/SysML/toolbox.py:72
 msgid "Proxy Port"
-msgstr "Порт проксі"
+msgstr ""
 
 #: gaphor/SysML/toolbox.py:99
 msgid "Block Definition Diagram"
-msgstr "Діаграма визначення блоку"
+msgstr ""
 
 #: gaphor/SysML/toolbox.py:102 gaphor/SysML/toolbox.py:122
 #: gaphor/SysML/toolbox.py:134 gaphor/SysML/toolbox.py:176
 msgid "New Package"
-msgstr "Новий пакет"
+msgstr ""
 
 #: gaphor/SysML/toolbox.py:106
 msgid "Internal Block Diagram"
-msgstr "Внутрішня блок-схема"
+msgstr ""
 
 #: gaphor/SysML/toolbox.py:113 gaphor/SysML/toolbox.py:114
 msgid "New Block"
-msgstr "Новий блок"
+msgstr ""
 
 #: gaphor/SysML/toolbox.py:119 gaphor/UML/toolbox.py:33
 msgid "Package Diagram"
-msgstr "Діаграма упаковки"
+msgstr ""
 
 #: gaphor/SysML/toolbox.py:126
 msgid "Requirement Diagram"
-msgstr "Діаграма вимог"
+msgstr ""
 
 #: gaphor/SysML/toolbox.py:142 gaphor/SysML/toolbox.py:143
 msgid "New Activity"
-msgstr "Нова діяльність"
+msgstr ""
 
 #: gaphor/SysML/toolbox.py:152 gaphor/SysML/toolbox.py:153
 msgid "New Interaction"
-msgstr "Нова взаємодія"
+msgstr ""
 
 #: gaphor/SysML/toolbox.py:162 gaphor/SysML/toolbox.py:163
 msgid "New State Machine"
-msgstr "Нова державна машина"
+msgstr ""
 
 #: gaphor/SysML/toolbox.py:168 gaphor/UML/toolbox.py:42
 msgid "Use Case Diagram"
-msgstr "Діаграма варіантів використання"
+msgstr ""
 
 #: gaphor/SysML/toolbox.py:184 gaphor/UML/toolbox.py:50
 #: gaphor/UML/usecases/usecasetoolbox.py:28 gaphor/templates/uml-example.gaphor
 msgid "Actor"
-msgstr "Актор"
+msgstr ""
 
 #: gaphor/SysML/blocks/blockstoolbox.py:29 gaphor/SysML/toolbox.py:185
 msgid "Block"
-msgstr "Блокувати"
+msgstr ""
 
 #: gaphor/SysML/toolbox.py:189
 msgid "Interface Block"
-msgstr "Інтерфейсний Блок"
+msgstr ""
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:17
 #: gaphor/SysML/toolbox.py:193
 msgid "Requirement"
-msgstr "Вимога"
+msgstr ""
 
 #: gaphor/SysML/toolbox.py:203 gaphor/UML/toolbox.py:77
 msgid "Use Case"
-msgstr "Випадок Використання"
+msgstr ""
 
 #: gaphor/SysML/toolbox.py:204
 msgid "Value Type"
-msgstr "Тип значення"
+msgstr ""
 
 #: gaphor/SysML/allocations/allocationstoolbox.py:6
 msgid "Allocations"
-msgstr "Виділення"
+msgstr ""
 
 #: gaphor/SysML/allocations/allocationstoolbox.py:10
 msgid "Allocate"
-msgstr "Виділити"
+msgstr ""
 
 #: gaphor/SysML/allocations/relationships.py:10
 msgid "allocate"
-msgstr "виділяти"
+msgstr ""
 
 #: gaphor/SysML/blocks/block.py:59 gaphor/SysML/blocks/interfaceblock.py:58
 msgid "ControlStructure"
-msgstr "ControlStructure"
+msgstr ""
 
 #: gaphor/SysML/blocks/block.py:63
 msgid "block"
-msgstr "блок"
+msgstr ""
 
 #: gaphor/SysML/blocks/block.py:74
 msgid "parts"
-msgstr "частин"
+msgstr ""
 
 #: gaphor/SysML/blocks/block.py:88 gaphor/SysML/blocks/interfaceblock.py:71
 msgid "references"
-msgstr "властивість"
+msgstr ""
 
 #: gaphor/SysML/blocks/block.py:100 gaphor/SysML/blocks/interfaceblock.py:83
 msgid "values"
-msgstr "значення"
+msgstr ""
 
 #: gaphor/SysML/blocks/block.py:119 gaphor/SysML/blocks/interfaceblock.py:102
 msgid "operations"
-msgstr "операції"
+msgstr ""
 
 #: gaphor/SysML/blocks/block.py:131 gaphor/SysML/blocks/block.py:150
 #: gaphor/SysML/blocks/interfaceblock.py:114
 #: gaphor/SysML/blocks/interfaceblock.py:137
 msgid "unnamed"
-msgstr "безіменний"
+msgstr ""
 
 #: gaphor/SysML/blocks/blockstoolbox.py:25
 msgid "Blocks"
-msgstr "Блоки"
+msgstr ""
 
 #: gaphor/SysML/blocks/blockstoolbox.py:39
 msgid "InterfaceBlock"
-msgstr "Інтерфейсний блок"
+msgstr ""
 
 #: gaphor/SysML/blocks/blockstoolbox.py:63
 #: gaphor/UML/classes/classestoolbox.py:82
 msgid "Composite Association"
-msgstr "Композитна асоціація"
+msgstr ""
 
 #: gaphor/SysML/blocks/blockstoolbox.py:73
 #: gaphor/UML/classes/classestoolbox.py:92
 msgid "Shared Association"
-msgstr "Спільна асоціація"
+msgstr ""
 
 #: gaphor/SysML/blocks/blockstoolbox.py:83
 #: gaphor/UML/classes/classestoolbox.py:102
 #: gaphor/UML/usecases/usecasetoolbox.py:40
 msgid "Association"
-msgstr "Асоціація"
+msgstr ""
 
 #: gaphor/SysML/blocks/blockstoolbox.py:90
 #: gaphor/UML/classes/classestoolbox.py:109
 msgid "Direct Association"
-msgstr "Пряма асоціація"
+msgstr ""
 
 #: gaphor/SysML/blocks/blockstoolbox.py:107
 msgid "ValueType"
-msgstr "ValueType"
+msgstr ""
 
 #: gaphor/SysML/blocks/blockstoolbox.py:130
 #: gaphor/UML/classes/classestoolbox.py:166
 msgid "Primitive"
-msgstr "Примітивний"
+msgstr ""
 
 #: gaphor/SysML/blocks/interfaceblock.py:60
 msgid "interfaceblock"
-msgstr "інтерфейсний блок"
+msgstr ""
 
 #: gaphor/SysML/blocks/proxyport.py:39
 msgid "proxy"
-msgstr "проксі"
+msgstr ""
 
 #: gaphor/SysML/requirements/relationships.py:12
 msgid "satisfy"
-msgstr "задовольнити"
+msgstr ""
 
 #: gaphor/SysML/requirements/relationships.py:23
 msgid "deriveReqt"
-msgstr "deriveReqt"
+msgstr ""
 
 #: gaphor/SysML/requirements/relationships.py:30
 msgid "trace"
-msgstr "слід"
+msgstr ""
 
 #: gaphor/SysML/requirements/relationships.py:39
 msgid "verify"
-msgstr "перевірити"
+msgstr ""
 
 #: gaphor/SysML/requirements/relationships.py:48
 msgid "refine"
-msgstr "доопрацювати"
+msgstr ""
 
 #: gaphor/SysML/requirements/requirement.py:56
 msgid "requirement"
-msgstr "вимога"
+msgstr ""
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:13
 #: gaphor/templates/sysml-example.gaphor gaphor/templates/sysml.gaphor
 msgid "Requirements"
-msgstr "Вимоги"
+msgstr ""
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:29
 msgid "Satisfy"
-msgstr "Задовольнити"
+msgstr ""
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:36
 msgid "Derive Requirement"
-msgstr "Вивести вимогу"
+msgstr ""
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:43
 msgid "Trace"
-msgstr "Слід"
+msgstr ""
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:50
 msgid "Refine"
-msgstr "Уточніть"
+msgstr ""
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:57
 msgid "Verify"
-msgstr "Підтвердити"
+msgstr ""
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:64
 #: gaphor/UML/classes/classestoolbox.py:75
 msgid "Containment"
-msgstr "Стримування"
+msgstr ""
 
 #: gaphor/UML/compartments.py:62
 #, python-brace-format
 msgid "(from {namespace})"
-msgstr "(з {namespace})"
+msgstr ""
 
 #: gaphor/UML/modelinglanguage.py:21 gaphor/ui/greeter.py:34
 msgid "UML"
-msgstr "UML"
+msgstr ""
 
 #: gaphor/UML/actions/propertypages.ui:445 gaphor/UML/propertypages.ui:9
 msgid "Type"
-msgstr "Тип"
+msgstr ""
 
 #: gaphor/UML/propertypages.ui:35
 msgid "Show Type"
-msgstr "Показати тип"
+msgstr ""
 
 #: gaphor/UML/sanitizerservice.py:114
 msgid ""
 "Removed unused elements from the model: they are not used in any other "
 "diagram."
 msgstr ""
-"Видалені невикористані елементи з моделі: вони не використовуються в жодній "
-"іншій діаграмі."
 
 #: gaphor/UML/toolbox.py:34
 msgid "Component Diagram"
-msgstr "Діаграма Компонентів"
+msgstr ""
 
 #: gaphor/UML/toolbox.py:35
 msgid "Deployment Diagram"
-msgstr "Схема розгортання"
+msgstr ""
 
 #: gaphor/UML/toolbox.py:39
 msgid "Communication Diagram"
-msgstr "Діаграма зв'язку"
+msgstr ""
 
 #: gaphor/UML/toolbox.py:43
 msgid "Profile Diagram"
-msgstr "Схема профілю"
+msgstr ""
 
 #: gaphor/UML/deployments/deploymentstoolbox.py:16 gaphor/UML/toolbox.py:51
 msgid "Artifact"
-msgstr "Артефакт"
+msgstr ""
 
 #: gaphor/UML/deployments/deploymentstoolbox.py:40 gaphor/UML/toolbox.py:55
 msgid "Device"
-msgstr "Пристрій"
+msgstr ""
 
 #: gaphor/UML/toolbox.py:61
 msgid "Instance Specification"
-msgstr "Специфікація екземпляра"
+msgstr ""
 
 #: gaphor/UML/classes/classestoolbox.py:39 gaphor/UML/toolbox.py:68
 msgid "Interface"
-msgstr "Інтерфейс"
+msgstr ""
 
 #: gaphor/UML/deployments/deploymentstoolbox.py:28 gaphor/UML/toolbox.py:69
 msgid "Node"
-msgstr "Вузол"
+msgstr ""
 
 #: gaphor/UML/profiles/profilestoolbox.py:22 gaphor/UML/toolbox.py:70
 msgid "Profile"
-msgstr "Профіль"
+msgstr ""
 
 #: gaphor/UML/profiles/profilestoolbox.py:44 gaphor/UML/toolbox.py:75
 msgid "Stereotype"
-msgstr "Стереотип"
+msgstr ""
 
 #: gaphor/UML/actions/actionstoolbox.py:19
 #: gaphor/UML/interactions/interactionstoolbox.py:16
 #: gaphor/UML/states/statestoolbox.py:27 gaphor/UML/toolboxconfig.py:6
 #, python-brace-format
 msgid "New {name}"
-msgstr "Новий {name}"
+msgstr ""
 
 #: gaphor/UML/treemodel.py:57 gaphor/ui/diagrampage.py:109
 #: gaphor/ui/mainwindow.py:287 gaphor/ui/modelmerge/organize.py:138
 msgid "<None>"
-msgstr "<жодного>"
+msgstr ""
 
 #: gaphor/UML/tests/test_treemodel.py:199 gaphor/UML/treemodel.py:76
 msgid "<Relationships>"
-msgstr "<стосунки>"
+msgstr ""
 
 #: gaphor/UML/umlfmt.py:23
 #, python-brace-format
 msgid "supplier: {name}"
-msgstr "постачальник: {name}"
+msgstr ""
 
 #: gaphor/UML/umlfmt.py:89
 msgid "readOnly"
-msgstr "тільки для читання"
+msgstr ""
 
 #: gaphor/UML/umlfmt.py:241
 #, python-brace-format
 msgid "general: {name}"
-msgstr "загальний: {name}"
+msgstr ""
 
 #: gaphor/UML/umlfmt.py:246
 #, python-brace-format
 msgid "extend: {name}"
-msgstr "розширити: {name}"
+msgstr ""
 
 #: gaphor/UML/umlfmt.py:253
 #, python-brace-format
 msgid "include: {name}"
-msgstr "включити: {name}"
+msgstr ""
 
 #: gaphor/UML/actions/actionstoolbox.py:50
 msgid "Swimlane One"
-msgstr "Свімлане Один"
+msgstr ""
 
 #: gaphor/UML/actions/actionstoolbox.py:54
 msgid "Swimlane Two"
-msgstr "Swimlane два"
+msgstr ""
 
 #: gaphor/UML/actions/actionstoolbox.py:60
 msgid "ValueSpecificationAction"
-msgstr "ЗначенняВизначення"
+msgstr ""
 
 #: gaphor/UML/actions/actionstoolbox.py:68
 msgid "Actions"
-msgstr "Дії"
+msgstr ""
 
 #: gaphor/UML/actions/actionstoolbox.py:84
 #: gaphor/UML/actions/actionstoolbox.py:90
 #: gaphor/UML/states/propertypages.ui:103
 msgid "Action"
-msgstr "Дія"
+msgstr ""
 
 #: gaphor/UML/actions/actionstoolbox.py:96
 msgid "Call behavior action"
-msgstr "Виклик поведінки дії"
+msgstr ""
 
 #: gaphor/UML/actions/actionstoolbox.py:103
 msgid "CallBehaviorAction"
-msgstr "CallBehaviorAction"
+msgstr ""
 
 #: gaphor/UML/actions/actionstoolbox.py:110
 msgid "Value specification action"
-msgstr "Дія визначення значення"
+msgstr ""
 
 #: gaphor/UML/actions/actionstoolbox.py:122
 msgid "Initial node"
-msgstr "Початковий вузол"
+msgstr ""
 
 #: gaphor/UML/actions/actionstoolbox.py:134
 msgid "Activity final node"
-msgstr "Кінцевий вузол діяльності"
+msgstr ""
 
 #: gaphor/UML/actions/actionstoolbox.py:146
 msgid "Flow final node"
-msgstr "Кінцевий вузол потоку"
+msgstr ""
 
 #: gaphor/UML/actions/actionstoolbox.py:158
 msgid "Decision/merge node"
-msgstr "Вузол рішення/злиття"
+msgstr ""
 
 #: gaphor/UML/actions/actionstoolbox.py:170
 msgid "Fork/join node"
-msgstr "Розгалуження/вузол приєднання"
+msgstr ""
 
 #: gaphor/UML/actions/actionstoolbox.py:182
 #: gaphor/UML/actions/actionstoolbox.py:188
 msgid "Object node"
-msgstr "Вузол об'єкта"
+msgstr ""
 
 #: gaphor/UML/actions/actionstoolbox.py:194
 msgid "Swimlane"
-msgstr "Свімлане"
+msgstr ""
 
 #: gaphor/UML/actions/actionstoolbox.py:206
 msgid "Control flow"
-msgstr "Контроль потоку"
+msgstr ""
 
 #: gaphor/UML/actions/actionstoolbox.py:213
 msgid "Object flow"
-msgstr "Потік об'єктів"
+msgstr ""
 
 #: gaphor/UML/actions/actionstoolbox.py:220
 msgid "Send signal action"
-msgstr "Надіслати дії сигнал"
+msgstr ""
 
 #: gaphor/UML/actions/actionstoolbox.py:226
 msgid "Send signal"
-msgstr "Надіслати сигнал"
+msgstr ""
 
 #: gaphor/UML/actions/actionstoolbox.py:232
 msgid "Accept event action"
-msgstr "Прийняти дію події"
+msgstr ""
 
 #: gaphor/UML/actions/actionstoolbox.py:238
 msgid "Accept event"
-msgstr "Прийняти подію"
+msgstr ""
 
 #: gaphor/UML/actions/actionstoolbox.py:244
 msgid "Input pin"
-msgstr "Вхідний штифт"
+msgstr ""
 
 #: gaphor/UML/actions/actionstoolbox.py:251
 msgid "Output pin"
-msgstr "Вихідний штифт"
+msgstr ""
 
 #: gaphor/UML/actions/activitynodes.py:182
 msgid "merge/decision"
-msgstr "злиття/рішення"
+msgstr ""
 
 #: gaphor/UML/actions/activitynodes.py:184
 msgid "merge"
-msgstr "злиття"
+msgstr ""
 
 #: gaphor/UML/actions/activitynodes.py:186
 msgid "decision"
-msgstr "рішення"
+msgstr ""
 
 #: gaphor/UML/actions/activitypropertypage.py:149
 msgid "New Parameter…"
-msgstr "Новий параметр…"
+msgstr ""
 
 #: gaphor/UML/actions/objectnode.py:14 gaphor/UML/actions/propertypages.ui:157
 msgid "unordered"
-msgstr "невпорядкований"
+msgstr ""
 
 #: gaphor/UML/actions/objectnode.py:15 gaphor/UML/actions/propertypages.ui:158
 msgid "ordered"
-msgstr "замовив"
+msgstr ""
 
 #: gaphor/UML/actions/objectnode.py:16
 msgid "LIFO"
-msgstr "LIFO"
+msgstr ""
 
 #: gaphor/UML/actions/objectnode.py:17
 msgid "FIFO"
-msgstr "FIFO"
+msgstr ""
 
 #: gaphor/UML/actions/objectnode.py:45
 msgid "upperBound"
-msgstr "верхня межа"
+msgstr ""
 
 #: gaphor/UML/actions/objectnode.py:55
 msgid "ordering"
-msgstr "замовлення"
+msgstr ""
 
 #: gaphor/UML/actions/partitionpage.py:115
 msgid "New Swimlane"
-msgstr "Новий Swimlane"
+msgstr ""
 
 #: gaphor/UML/actions/pin.py:58
 msgid "input pin"
-msgstr "вхідний контакт"
+msgstr ""
 
 #: gaphor/UML/actions/pin.py:64
 msgid "output pin"
-msgstr "вихідний штифт"
+msgstr ""
 
 #: gaphor/UML/actions/propertypages.ui:11
 msgid "Show type"
-msgstr "Тип шоу"
+msgstr ""
 
 #: gaphor/UML/actions/propertypages.ui:37
 msgid "Horizontal"
-msgstr "Горизонтальний"
+msgstr ""
 
 #: gaphor/UML/actions/propertypages.ui:59
 msgid "Join Specification"
-msgstr "Специфікація приєднання"
+msgstr ""
 
 #: gaphor/UML/actions/propertypages.ui:89
 msgid "Swimlanes"
-msgstr "Плавальні доріжки"
+msgstr ""
 
 #: gaphor/UML/actions/propertypages.ui:100
 msgid "Partitions"
-msgstr "Перегородки"
+msgstr ""
 
 #: gaphor/UML/actions/propertypages.ui:130
 msgid "Upper Bound"
-msgstr "Верхня межа"
+msgstr ""
 
 #: gaphor/UML/actions/propertypages.ui:145
 msgid "Ordering"
-msgstr "Замовлення"
+msgstr ""
 
 #: gaphor/UML/actions/propertypages.ui:159
 msgid "Last In First Out (LIFO)"
-msgstr "Останній прийшов, перший вийшов (LIFO)"
+msgstr ""
 
 #: gaphor/UML/actions/propertypages.ui:160
 msgid "First In First Out (FIFO)"
-msgstr "Перший прийшов, перший вийшов (FIFO)"
+msgstr ""
 
 #: gaphor/UML/actions/propertypages.ui:178
 msgid "Show Ordering"
-msgstr "Показати замовлення"
+msgstr ""
 
 #: gaphor/UML/actions/propertypages.ui:209
 #: gaphor/UML/profiles/propertypages.ui:9 gaphor/diagram/propertypages.ui:53
 msgid "Name"
-msgstr "Ім'я"
+msgstr ""
 
 #: gaphor/UML/actions/propertypages.ui:244
 #: gaphor/templates/sysml-example.gaphor gaphor/templates/sysml.gaphor
 msgid "Behavior"
-msgstr "Поведінка"
+msgstr ""
 
 #: gaphor/UML/actions/propertypages.ui:268
 msgid "Value"
-msgstr "Значення"
+msgstr ""
 
 #: gaphor/UML/actions/propertypages.ui:289
 #: gaphor/UML/states/propertypages.ui:90
 msgid "Guard"
-msgstr "Охоронець"
+msgstr ""
 
 #: gaphor/UML/actions/propertypages.ui:312
 #: gaphor/UML/actions/propertypages.ui:368
 msgid "Parameter Nodes"
-msgstr "Вузли параметрів"
+msgstr ""
 
 #: gaphor/UML/actions/propertypages.ui:324
 #: gaphor/UML/classes/propertypages.ui:67
@@ -980,7 +975,7 @@ msgstr "Вузли параметрів"
 #: gaphor/UML/classes/propertypages.ui:591
 #: gaphor/UML/classes/propertypages.ui:704
 msgid "ⓘ Help"
-msgstr "ⓘ Довідка"
+msgstr ""
 
 #: gaphor/UML/actions/propertypages.ui:341
 msgid ""
@@ -996,118 +991,107 @@ msgid ""
 "items.\n"
 "Use <b>-</b>/<b>=</b> to move items up or down."
 msgstr ""
-"Додавати та редагувати діяльність класу відповідно до синтаксису UML. \n"
-"\n"
-"  • <tt>attr</tt> (ім'я, за замовчуванням загальнодоступний) \n"
-"  • <tt>+ attr: int</tt> (публічний із типом) \n"
-"  • <tt>+ attr: int[0..1]</tt> (публічний, тип і множинність) \n"
-"  • <tt>+ attr: int | bool</tt> (публічний, тип об'єднання) \n"
-"  • <tt># /attr: int # примітка</tt> (захищена, похідна, із зауваженням) \n"
-"\n"
-"Натисніть <b>Enter</b>, щоб редагувати, <b>Backspace</b>/<b>Delete</b>, щоб "
-"видалити елементи. \n"
-"Використовуйте <b>-</b>/<b>=</b>, щоб перемістити елементи вгору або вниз."
 
 #: gaphor/UML/actions/propertypages.ui:391
 msgid "Direction"
-msgstr "Напрямок"
+msgstr ""
 
 #: gaphor/UML/actions/propertypages.ui:403
 msgid "In/Out"
-msgstr "Вхід/Вихід"
+msgstr ""
 
 #: gaphor/UML/actions/propertypages.ui:404
 msgid "In"
-msgstr "В"
+msgstr ""
 
 #: gaphor/UML/actions/propertypages.ui:405
 msgid "Out"
-msgstr "Вийти"
+msgstr ""
 
 #: gaphor/UML/actions/propertypages.ui:406
 msgid "Return"
-msgstr "Повернення"
+msgstr ""
 
 #: gaphor/UML/actions/propertypages.ui:424
 #: gaphor/UML/classes/propertypages.ui:11
 msgid "Show Direction"
-msgstr "Показати напрямок"
+msgstr ""
 
 #: gaphor/UML/actions/propertypages.ui:462
 msgid "Multiplicity"
-msgstr "Кратність"
+msgstr ""
 
 #: gaphor/UML/classes/classespropertypages.py:275
 msgid "New Attribute…"
-msgstr "Новий атрибут…"
+msgstr ""
 
 #: gaphor/UML/classes/classespropertypages.py:466
 msgid "New Operation…"
-msgstr "Нова операція…"
+msgstr ""
 
 #: gaphor/UML/classes/classestoolbox.py:25
 msgid "Classes"
-msgstr "Заняття"
+msgstr ""
 
 #: gaphor/UML/classes/classestoolbox.py:135
 msgid "Interface Realization"
-msgstr "Реалізація інтерфейсу"
+msgstr ""
 
 #: gaphor/UML/classes/classestoolbox.py:142
 msgid "DataType"
-msgstr "DataType"
+msgstr ""
 
 #: gaphor/UML/classes/datatype.py:55
 msgid "primitive"
-msgstr "примітивний"
+msgstr ""
 
 #: gaphor/UML/classes/datatype.py:57 gaphor/UML/classes/enumeration.py:66
 msgid "valueType"
-msgstr "valueType"
+msgstr ""
 
 #: gaphor/UML/classes/datatype.py:59
 msgid "dataType"
-msgstr "dataType"
+msgstr ""
 
 #: gaphor/UML/classes/dependency.py:43
 msgid "use"
-msgstr "використовувати"
+msgstr ""
 
 #: gaphor/UML/classes/dependency.py:44
 msgid "realize"
-msgstr "усвідомити"
+msgstr ""
 
 #: gaphor/UML/classes/dependency.py:45
 msgid "implements"
-msgstr "інвентар"
+msgstr ""
 
 #: gaphor/UML/classes/enumeration.py:68
 msgid "enumeration"
-msgstr "перерахування"
+msgstr ""
 
 #: gaphor/UML/classes/enumerationpropertypages.py:129
 msgid "New Enumeration…"
-msgstr "Новий перелік…"
+msgstr ""
 
 #: gaphor/UML/classes/interface.py:276
 msgid "interface"
-msgstr "інтерфейс"
+msgstr ""
 
 #: gaphor/UML/classes/klass.py:48
 msgid "stereotype"
-msgstr "стереотип"
+msgstr ""
 
 #: gaphor/UML/classes/klass.py:50
 msgid "metaclass"
-msgstr "метаклас"
+msgstr ""
 
 #: gaphor/UML/classes/package.py:30
 msgid "profile"
-msgstr "профіль"
+msgstr ""
 
 #: gaphor/UML/classes/propertypages.ui:54
 msgid "Head:"
-msgstr "Голова:"
+msgstr ""
 
 #: gaphor/UML/classes/propertypages.ui:84
 #: gaphor/UML/classes/propertypages.ui:197
@@ -1124,54 +1108,43 @@ msgid ""
 "items.\n"
 "Use <b>-</b>/<b>=</b> to move items up or down."
 msgstr ""
-"Додавання та редагування кінців асоціації відповідно до синтаксису UML.\n"
-"\n"
-"   • <tt>+ ім'я</tt>\n"
-"   • <tt>+ ім'я[1]</tt>\n"
-"   • <tt>- назва[1..2]</tt>\n"
-"   • <tt>1..2</tt>\n"
-"   • <tt>- [1..2]</tt>\n"
-"\n"
-" Натисніть <b>Enter</b>, щоб редагувати, <b>Backspace</b>/<b>Delete</b>, щоб "
-"видалити елементи.\n"
-" Використовуйте <b>-</b>/<b>=</b>, щоб перемістити елементи вгору або вниз."
 
 #: gaphor/UML/classes/propertypages.ui:111
 #: gaphor/UML/classes/propertypages.ui:224
 msgid "Unknown navigation"
-msgstr "Невідома навігація"
+msgstr ""
 
 #: gaphor/UML/classes/propertypages.ui:112
 #: gaphor/UML/classes/propertypages.ui:225
 msgid "Not navigable"
-msgstr "Не судноплавний"
+msgstr ""
 
 #: gaphor/UML/classes/propertypages.ui:113
 #: gaphor/UML/classes/propertypages.ui:226
 msgid "Navigable"
-msgstr "Судноплавний"
+msgstr ""
 
 #: gaphor/UML/classes/propertypages.ui:145
 #: gaphor/UML/classes/propertypages.ui:258
 #: gaphor/UML/profiles/propertypages.ui:33
 #: gaphor/UML/profiles/propertypages.ui:51
 msgid "Stereotypes"
-msgstr "Стереотипи"
+msgstr ""
 
 #: gaphor/UML/classes/propertypages.ui:150
 #: gaphor/UML/classes/propertypages.ui:263
 #: gaphor/UML/profiles/propertypages.ui:56
 msgid "Values"
-msgstr "Цінності"
+msgstr ""
 
 #: gaphor/UML/classes/propertypages.ui:167
 msgid "Tail:"
-msgstr "Хвіст:"
+msgstr ""
 
 #: gaphor/UML/classes/propertypages.ui:287
 #: gaphor/UML/classes/propertypages.ui:343
 msgid "Attributes"
-msgstr "Атрибути"
+msgstr ""
 
 #: gaphor/UML/classes/propertypages.ui:316
 msgid ""
@@ -1187,76 +1160,65 @@ msgid ""
 "items.\n"
 "Use <b>-</b>/<b>=</b> to move items up or down."
 msgstr ""
-"Додавайте та редагуйте атрибути класу відповідно до синтаксису UML.\n"
-"\n"
-"   • <tt>attr</tt> (ім'я, за замовчуванням загальнодоступний)\n"
-"   • <tt>+ attr: int</tt> (публічний із типом)\n"
-"   • <tt>+ attr: int[0..1]</tt> (публічний, тип і множинність)\n"
-"   • <tt>+ attr: int |  bool</tt> (публічний, тип об'єднання)\n"
-"   • <tt># /attr: int # примітка</tt> (захищена, похідна, із зауваженням)\n"
-"\n"
-" Натисніть <b>Enter</b>, щоб редагувати, <b>Backspace</b>/<b>Delete</b>, щоб "
-"видалити елементи.\n"
-" Використовуйте <b>-</b>/<b>=</b>, щоб перемістити елементи вгору або вниз."
 
 #: gaphor/UML/classes/propertypages.ui:349
 msgid "ReadOnly"
-msgstr "Тільки для читання"
+msgstr ""
 
 #: gaphor/UML/classes/propertypages.ui:354
 #: gaphor/UML/classes/propertypages.ui:644
 msgid "Static"
-msgstr "Статичний"
+msgstr ""
 
 #: gaphor/UML/classes/propertypages.ui:378
 msgid "Show Attributes"
-msgstr "Показати атрибути"
+msgstr ""
 
 #: gaphor/UML/classes/propertypages.ui:402
 #: gaphor/UML/classes/propertypages.ui:639
 msgid "Abstract"
-msgstr "Анотація"
+msgstr ""
 
 #: gaphor/UML/classes/propertypages.ui:419
 msgid "Final specialization"
-msgstr "Підсумкова спеціалізація"
+msgstr ""
 
 #: gaphor/UML/classes/propertypages.ui:444
 msgid "Source:"
-msgstr "Джерело:"
+msgstr ""
 
 #: gaphor/UML/classes/propertypages.ui:468
 msgid "Target:"
-msgstr "Цільова:"
+msgstr ""
 
 #: gaphor/UML/classes/propertypages.ui:504
 msgid "Dependency type"
-msgstr "Тип залежності"
+msgstr ""
 
 #: gaphor/UML/classes/propertypages.ui:515
 msgid "Automatic"
-msgstr "Автоматичний"
+msgstr ""
 
 #: gaphor/UML/classes/propertypages.ui:534
 msgid "Usage"
-msgstr "Використання"
+msgstr ""
 
 #: gaphor/UML/classes/propertypages.ui:535
 msgid "Realization"
-msgstr "Реалізація"
+msgstr ""
 
 #: gaphor/UML/classes/propertypages.ui:536
 msgid "Implementation"
-msgstr "Імплементація"
+msgstr ""
 
 #: gaphor/UML/classes/propertypages.ui:555
 msgid "Folded"
-msgstr "Складений"
+msgstr ""
 
 #: gaphor/UML/classes/propertypages.ui:579
 #: gaphor/UML/classes/propertypages.ui:633
 msgid "Operations"
-msgstr "Операції"
+msgstr ""
 
 #: gaphor/UML/classes/propertypages.ui:606
 msgid ""
@@ -1270,25 +1232,15 @@ msgid ""
 "items.\n"
 "Use <b>-</b>/<b>=</b> to move items up or down."
 msgstr ""
-"Додавати та редагувати операції класу відповідно до синтаксису UML.\n"
-"\n"
-"   • <tt>call()</tt>\n"
-"   • <tt>+ call(a: int[*], b: str): bool</tt> (публічний, параметри)\n"
-"   • <tt># виклик(a: int, b: str) # примітка</tt> (захищена, із зауваженням)"
-"\n"
-"\n"
-" Натисніть <b>Enter</b>, щоб редагувати, <b>Backspace</b>/<b>Delete</b>, щоб "
-"видалити елементи.\n"
-" Використовуйте <b>-</b>/<b>=</b>, щоб перемістити елементи вгору або вниз."
 
 #: gaphor/UML/classes/propertypages.ui:668
 msgid "Show Operations"
-msgstr "Показати операції"
+msgstr ""
 
 #: gaphor/UML/classes/propertypages.ui:692
 #: gaphor/UML/classes/propertypages.ui:743
 msgid "Enumeration Literals"
-msgstr "Літерали перерахування"
+msgstr ""
 
 #: gaphor/UML/classes/propertypages.ui:716
 msgid ""
@@ -1300,410 +1252,403 @@ msgid ""
 "items.\n"
 "Use <b>-</b>/<b>=</b> to move items up or down."
 msgstr ""
-"Додавайте та редагуйте літерали перерахування відповідно до синтаксису UML.\n"
-"\n"
-"   • <tt>enum</tt>\n"
-"\n"
-" Натисніть <b>Enter</b>, щоб редагувати, <b>Backspace</b>/<b>Delete</b>, щоб "
-"видалити елементи.\n"
-" Використовуйте <b>-</b>/<b>=</b>, щоб перемістити елементи вгору або вниз."
 
 #: gaphor/UML/classes/propertypages.ui:768
 msgid "Show Enumeration Literals"
-msgstr "Показати літерали перерахування"
+msgstr ""
 
 #: gaphor/UML/classes/propertypages.ui:793
 msgid "Indirectly Instantiated"
-msgstr "Опосередковано створений"
+msgstr ""
 
 #: gaphor/UML/deployments/deploymentstoolbox.py:12
 msgid "Deployments"
-msgstr "Розгортання"
+msgstr ""
 
 #: gaphor/UML/deployments/node.py:47
 msgid "device"
-msgstr "пристрій"
+msgstr ""
 
 #: gaphor/UML/general/generaltoolbox.py:21
 #: gaphor/UML/general/imagepropertypage.py:67
 msgid "New Image"
-msgstr "Нове зображення"
+msgstr ""
 
 #: gaphor/UML/general/generaltoolbox.py:25 gaphor/ui/help/shortcuts.ui:34
 msgid "General"
-msgstr "Загальний"
+msgstr ""
 
 #: gaphor/UML/general/generaltoolbox.py:29
 msgid "Pointer"
-msgstr "Покажчик"
+msgstr ""
 
 #: gaphor/UML/general/generaltoolbox.py:36
 msgid "Magnet"
-msgstr "Магніт"
+msgstr ""
 
 #: gaphor/UML/general/generaltoolbox.py:43
 msgid "Line"
-msgstr "Лінія"
+msgstr ""
 
 #: gaphor/UML/general/generaltoolbox.py:50
 msgid "Box"
-msgstr "Коробка"
+msgstr ""
 
 #: gaphor/UML/general/generaltoolbox.py:58
 msgid "Ellipse"
-msgstr "Еліпс"
+msgstr ""
 
 #: gaphor/UML/general/generaltoolbox.py:66 gaphor/diagram/propertypages.ui:9
 msgid "Comment"
-msgstr "Коментар"
+msgstr ""
 
 #: gaphor/UML/general/generaltoolbox.py:74
 msgid "Comment line"
-msgstr "Рядок коментаря"
+msgstr ""
 
 #: gaphor/UML/general/generaltoolbox.py:81
 msgid "Diagram metadata"
-msgstr "Метадані діаграми"
+msgstr ""
 
 #: gaphor/UML/general/generaltoolbox.py:88
 msgid "Picture"
-msgstr "Малюнок"
+msgstr ""
 
 #: gaphor/UML/general/imagepropertypage.py:44
 msgid "Select a picture..."
-msgstr "Виберіть картинку..."
+msgstr ""
 
 #: gaphor/UML/general/imagepropertypage.py:72
 #, python-brace-format
 msgid "Unable to parse picture “{filename}”."
-msgstr "Неможливо проаналізувати зображення “{filename}”."
+msgstr ""
 
 #: gaphor/UML/interactions/interactionsconnect.py:76
 msgid "call()"
-msgstr "call()"
+msgstr ""
 
 #: gaphor/UML/interactions/interactionstoolbox.py:53
 #: gaphor/templates/uml-example.gaphor gaphor/templates/uml.gaphor
 msgid "Interactions"
-msgstr "Взаємодії"
+msgstr ""
 
 #: gaphor/UML/interactions/interactionstoolbox.py:69
 msgid "Lifeline"
-msgstr "Лінійка життя"
+msgstr ""
 
 #: gaphor/UML/interactions/interactionstoolbox.py:81
 msgid "Execution Specification"
-msgstr "Специфікація виконання"
+msgstr ""
 
 #: gaphor/UML/interactions/interactionstoolbox.py:89
 msgid "Message"
-msgstr "Повідомлення"
+msgstr ""
 
 #: gaphor/UML/interactions/interactionstoolbox.py:96
 msgid "Reflexive message"
-msgstr "Рефлексивне повідомлення"
+msgstr ""
 
 #: gaphor/UML/interactions/propertypages.ui:9
 msgid "Message Sort"
-msgstr "Сортування повідомлень"
+msgstr ""
 
 #: gaphor/UML/interactions/propertypages.ui:21
 msgid "Call"
-msgstr "Телефонуйте"
+msgstr ""
 
 #: gaphor/UML/interactions/propertypages.ui:22
 msgid "Asynchronous"
-msgstr "Асинхронний"
+msgstr ""
 
 #: gaphor/UML/interactions/propertypages.ui:23
 msgid "Signal"
-msgstr "Сигнал"
+msgstr ""
 
 #: gaphor/UML/interactions/propertypages.ui:24
 msgid "Reply"
-msgstr "Відповісти"
+msgstr ""
 
 #: gaphor/UML/interactions/propertypages.ui:25
 msgid "Create"
-msgstr "Створити"
+msgstr ""
 
 #: gaphor/UML/interactions/propertypages.ui:26 gaphor/ui/menubar.ui:60
 msgid "Delete"
-msgstr "Видалити"
+msgstr ""
 
 #: gaphor/UML/interactions/propertypages.ui:42
 msgid "Connectable Element"
-msgstr "Підключається елемент"
+msgstr ""
 
 #: gaphor/UML/profiles/packageimport.py:23
 msgid "import"
-msgstr "імпорт"
+msgstr ""
 
 #: gaphor/UML/profiles/profilestoolbox.py:18
 msgid "Profiles"
-msgstr "Профілі"
+msgstr ""
 
 #: gaphor/UML/profiles/profilestoolbox.py:34
 msgid "Metaclass"
-msgstr "Метаклас"
+msgstr ""
 
 #: gaphor/UML/profiles/profilestoolbox.py:56
 msgid "Extension"
-msgstr "Розширення"
+msgstr ""
 
 #: gaphor/UML/profiles/profilestoolbox.py:63
 msgid "Import"
-msgstr "Імпорт"
+msgstr ""
 
 #: gaphor/UML/profiles/propertypages.ui:80
 msgid "Show Stereotypes"
-msgstr "Показати стереотипи"
+msgstr ""
 
 #: gaphor/UML/profiles/stereotypepropertypages.py:172
 msgid "New Slot Value…"
-msgstr "Нове значення слота…"
+msgstr ""
 
 #: gaphor/UML/states/propertypages.ui:9
 msgid "Activities"
-msgstr "Діяльністі"
+msgstr ""
 
 #: gaphor/UML/states/propertypages.ui:18
 msgid "Entry"
-msgstr "Вхід"
+msgstr ""
 
 #: gaphor/UML/states/propertypages.ui:35
 msgid "Exit"
-msgstr "Вихід"
+msgstr ""
 
 #: gaphor/UML/states/propertypages.ui:52
 msgid "Do activity"
-msgstr "Виконуйте дії"
+msgstr ""
 
 #: gaphor/UML/states/propertypages.ui:77
 msgid "Trigger"
-msgstr "Тригер"
+msgstr ""
 
 #: gaphor/UML/states/propertypages.ui:129
 #: gaphor/UML/states/propertypages.ui:140
 msgid "Regions"
-msgstr "Регіони"
+msgstr ""
 
 #: gaphor/UML/states/propertypages.ui:157
 msgid "Show Regions"
-msgstr "Показати регіони"
+msgstr ""
 
 #: gaphor/UML/states/statemachine.py:41
 msgid "statemachine"
-msgstr "державна машина"
+msgstr ""
 
 #: gaphor/UML/states/statestoolbox.py:16 gaphor/UML/states/statestoolbox.py:75
 msgid "State"
-msgstr "Держава"
+msgstr ""
 
 #: gaphor/UML/states/statestoolbox.py:59
 msgid "States"
-msgstr "Держави"
+msgstr ""
 
 #: gaphor/UML/states/statestoolbox.py:87
 msgid "Initial Pseudostate"
-msgstr "Початковий псевдостан"
+msgstr ""
 
 #: gaphor/UML/states/statestoolbox.py:99
 msgid "Final State"
-msgstr "Кінцевий стан"
+msgstr ""
 
 #: gaphor/UML/states/statestoolbox.py:111
 msgid "Transition"
-msgstr "Перехід"
+msgstr ""
 
 #: gaphor/UML/states/statestoolbox.py:118
 msgid "Shallow History Pseudostate"
-msgstr "Дрібна історія Псевдодержава"
+msgstr ""
 
 #: gaphor/UML/states/statestoolbox.py:130
 msgid "Deep History Pseudostate"
-msgstr "Глибока історія Псевдодержава"
+msgstr ""
 
 #: gaphor/UML/states/statestoolbox.py:142
 msgid "Join Pseudostate"
-msgstr "Приєднуйтесь до Псевдодержави"
+msgstr ""
 
 #: gaphor/UML/states/statestoolbox.py:154
 msgid "Fork Pseudostate"
-msgstr "Вилка Псевдостан"
+msgstr ""
 
 #: gaphor/UML/states/statestoolbox.py:166
 msgid "Junction Pseudostate"
-msgstr "Псевдостан з'єднання"
+msgstr ""
 
 #: gaphor/UML/states/statestoolbox.py:178
 msgid "Choice Pseudostate"
-msgstr "Псевдостан вибору"
+msgstr ""
 
 #: gaphor/UML/states/statestoolbox.py:190
 msgid "Entry Point Pseudostate"
-msgstr "Псевдостан точки входу"
+msgstr ""
 
 #: gaphor/UML/states/statestoolbox.py:202
 msgid "Exit Point Pseudostate"
-msgstr "Псевдостан точки виходу"
+msgstr ""
 
 #: gaphor/UML/states/statestoolbox.py:214
 msgid "Terminate Pseudostate"
-msgstr "Припинити Псевдостан"
+msgstr ""
 
 #: gaphor/UML/usecases/extend.py:19
 msgid "extend"
-msgstr "розширити"
+msgstr ""
 
 #: gaphor/UML/usecases/include.py:19
 msgid "include"
-msgstr "включити"
+msgstr ""
 
 #: gaphor/UML/usecases/usecasetoolbox.py:12
 #: gaphor/templates/sysml-example.gaphor gaphor/templates/sysml.gaphor
 #: gaphor/templates/uml-example.gaphor gaphor/templates/uml.gaphor
 msgid "Use Cases"
-msgstr "Випадки використання"
+msgstr ""
 
 #: gaphor/UML/usecases/usecasetoolbox.py:16
 msgid "Use case"
-msgstr "Випадок використання"
+msgstr ""
 
 #: gaphor/UML/usecases/usecasetoolbox.py:47
 msgid "Include"
-msgstr "Включати"
+msgstr ""
 
 #: gaphor/UML/usecases/usecasetoolbox.py:55
 msgid "Extend"
-msgstr "Розширити"
+msgstr ""
 
 #: gaphor/diagram/propertypages.py:318
 msgid "Presentation"
-msgstr "Презентація"
+msgstr ""
 
 #: gaphor/diagram/propertypages.py:319 gaphor/diagram/propertypages.py:332
 msgid "class"
-msgstr "клас"
+msgstr ""
 
 #: gaphor/diagram/propertypages.py:320 gaphor/diagram/propertypages.py:333
 msgid "id"
-msgstr "id"
+msgstr ""
 
 #: gaphor/diagram/propertypages.py:330
 msgid "Model Element"
-msgstr "Елемент моделі"
+msgstr ""
 
 #: gaphor/diagram/propertypages.py:331
 msgid "qname"
-msgstr "qname"
+msgstr ""
 
 #: gaphor/diagram/propertypages.ui:74
 msgid "Style"
-msgstr "Стиль"
+msgstr ""
 
 #: gaphor/diagram/propertypages.ui:87
 msgid "Rectilinear"
-msgstr "Прямолінійний"
+msgstr ""
 
 #: gaphor/diagram/propertypages.ui:107
 msgid "Flip orientation"
-msgstr "Перевернути орієнтацію"
+msgstr ""
 
 #: gaphor/diagram/propertypages.ui:130
 msgid "Note"
-msgstr "Примітка"
+msgstr ""
 
 #: gaphor/diagram/general/metadata.py:43 gaphor/diagram/propertypages.ui:156
 msgid "Created By"
-msgstr "Створено"
+msgstr ""
 
 #: gaphor/diagram/general/metadata.py:53 gaphor/diagram/propertypages.ui:184
 msgid "Website"
-msgstr "Веб-сайт"
+msgstr ""
 
 #: gaphor/diagram/general/metadata.py:84 gaphor/diagram/propertypages.ui:198
 msgid "Revision"
-msgstr "Ревізія"
+msgstr ""
 
 #: gaphor/diagram/general/metadata.py:94 gaphor/diagram/propertypages.ui:212
 msgid "License"
-msgstr "Ліцензія"
+msgstr ""
 
 #: gaphor/diagram/general/metadata.py:105 gaphor/diagram/propertypages.ui:226
 msgid "Created On"
-msgstr "Дата створення"
+msgstr ""
 
 #: gaphor/diagram/general/metadata.py:116 gaphor/diagram/propertypages.ui:240
 msgid "Updated On"
-msgstr "Оновлений на"
+msgstr ""
 
 #: gaphor/diagram/propertypages.ui:261
 msgid "Select picture..."
-msgstr "Виберіть зображення..."
+msgstr ""
 
 #: gaphor/diagram/propertypages.ui:267
 msgid "Set default size"
-msgstr "Установити розмір за замовчуванням"
+msgstr ""
 
 #: gaphor/diagram/propertypages.ui:280
 msgid "Internals of focused item"
-msgstr "Внутрішні елементи вибраного елемента"
+msgstr ""
 
 #: gaphor/diagram/propertypages.ui:297 gaphor/ui/elementeditor.py:410
 #: gaphor/ui/elementeditor.ui:261
 msgid "No focused item."
-msgstr "Немає виділеного елемента."
+msgstr ""
 
 #: gaphor/diagram/propertypages.ui:319 gaphor/diagram/styleeditor.ui:5
 msgid "Style Editor"
-msgstr "Редактор стилів"
+msgstr ""
 
 #: gaphor/diagram/propertypages.ui:328
 msgid "Open Style Editor"
-msgstr "Відкрийте редактор стилів"
+msgstr ""
 
 #: gaphor/diagram/styleeditor.ui:27
 msgid "Border Radius"
-msgstr "Радіус кордону"
+msgstr ""
 
 #: gaphor/diagram/styleeditor.ui:51
 msgid "Color"
-msgstr "Колір"
+msgstr ""
 
 #: gaphor/diagram/styleeditor.ui:68
 msgid "Background Color"
-msgstr "Колір фону"
+msgstr ""
 
 #: gaphor/diagram/styleeditor.ui:85
 msgid "Text Color"
-msgstr "Колір тексту"
+msgstr ""
 
 #: gaphor/diagram/styleeditor.ui:99
 msgid "Add to Style Sheet"
-msgstr "Додати до таблиці стилів"
+msgstr ""
 
 #: gaphor/diagram/tools/dnd.py:91
 msgid "Element can’t be represented on a diagram."
-msgstr "Елемент не може бути представлений на діаграмі."
+msgstr ""
 
 #: gaphor/extensions/sphinx.py:67
 #, python-brace-format
 msgid "No model file configured for model '{model_name}'."
-msgstr "Для моделі не налаштовано файл моделі '{model_name}'."
+msgstr ""
 
 #: gaphor/extensions/sphinx.py:95
 #, python-brace-format
 msgid "No diagram '{name}' in model '{model_name}' ({model_file})."
-msgstr "Немає діаграми \"{name}\" у моделі \"{model_name}\" ({model_file})."
+msgstr ""
 
 #: gaphor/plugins/autolayout/pydot.py:50
 msgid "Auto Layout"
-msgstr "Автоматичний макет"
+msgstr ""
 
 #: gaphor/plugins/autolayout/pydot.py:58
 msgid "Auto Layout (orthogonal)"
-msgstr "Автоматичний макет (ортогональний)"
+msgstr ""
 
 #: gaphor/plugins/console/console.py:24
 #, python-brace-format
@@ -1712,719 +1657,711 @@ msgid ""
 "{version}\n"
 "Type \"help\" for more information.\n"
 msgstr ""
-"Інтерактивна консоль Gaphor Python\n"
-"{version}\n"
-"Щоб отримати додаткову інформацію, введіть «допомога».\n"
 
 #: gaphor/plugins/console/consolewindow.py:38
 msgid "Console"
-msgstr "Консоль"
+msgstr ""
 
 #: gaphor/plugins/console/consolewindow.py:57
 msgid "Gaphor Console"
-msgstr "Консоль Gaphor"
+msgstr ""
 
 #: gaphor/plugins/diagramexport/export.py:61
 #, python-brace-format
 msgid "All {ext} Files"
-msgstr "Усі {ext} файли"
+msgstr ""
 
 #: gaphor/plugins/diagramexport/export.py:73
 msgid "Export as SVG"
-msgstr "Експортувати як SVG"
+msgstr ""
 
 #: gaphor/plugins/diagramexport/export.py:74
 #: gaphor/plugins/diagramexport/export.py:79
 msgid "Export diagram as SVG"
-msgstr "Експорт діаграми як SVG"
+msgstr ""
 
 #: gaphor/plugins/diagramexport/export.py:84
 msgid "Export as PNG"
-msgstr "Експортувати як PNG"
+msgstr ""
 
 #: gaphor/plugins/diagramexport/export.py:85
 #: gaphor/plugins/diagramexport/export.py:90
 msgid "Export diagram as PNG"
-msgstr "Експорт діаграми як PNG"
+msgstr ""
 
 #: gaphor/plugins/diagramexport/export.py:95
 msgid "Export as PDF"
-msgstr "Експорт як PDF"
+msgstr ""
 
 #: gaphor/plugins/diagramexport/export.py:96
 #: gaphor/plugins/diagramexport/export.py:102
 msgid "Export diagram as PDF"
-msgstr "Експорт діаграми як PDF"
+msgstr ""
 
 #: gaphor/plugins/diagramexport/export.py:110
 msgid "Export as EPS"
-msgstr "Експорт як EPS"
+msgstr ""
 
 #: gaphor/plugins/diagramexport/export.py:111
 msgid "Export diagram as Encapsulated PostScript"
-msgstr "Експорт діаграми як інкапсульований PostScript"
+msgstr ""
 
 #: gaphor/plugins/diagramexport/export.py:117
 msgid "Export diagram as EPS"
-msgstr "Експорт діаграми як EPS"
+msgstr ""
 
 #: gaphor/plugins/diagramexport/export.py:125
 msgid "Export all diagrams as SVG"
-msgstr "Експортуйте всі діаграми як SVG"
+msgstr ""
 
 #: gaphor/plugins/diagramexport/export.py:126
 msgid "Export all diagrams as SVG diagrams in a specifieddirectory"
-msgstr "Експортуйте всі діаграми як діаграми SVG у вказаний каталог"
+msgstr ""
 
 #: gaphor/plugins/diagramexport/export.py:130
 #: gaphor/plugins/diagramexport/export.py:148
 #: gaphor/plugins/diagramexport/export.py:166
 #: gaphor/plugins/diagramexport/export.py:184
 msgid "Export all diagrams"
-msgstr "Експортувати всі діаграми"
+msgstr ""
 
 #: gaphor/plugins/diagramexport/export.py:143
 msgid "Export all diagrams as PNG"
-msgstr "Експортувати всі діаграми у форматі PNG"
+msgstr ""
 
 #: gaphor/plugins/diagramexport/export.py:144
 msgid "Export all diagrams as PNG diagrams in a specifieddirectory"
-msgstr "Експортуйте всі діаграми як діаграми PNG у вказаний каталог"
+msgstr ""
 
 #: gaphor/plugins/diagramexport/export.py:161
 msgid "Export all diagrams as PDF"
-msgstr "Експортуйте всі діаграми як PDF"
+msgstr ""
 
 #: gaphor/plugins/diagramexport/export.py:162
 msgid "Export all diagrams as PDF diagrams in a specifieddirectory"
-msgstr "Експортуйте всі діаграми як діаграми PDF у вказаний каталог"
+msgstr ""
 
 #: gaphor/plugins/diagramexport/export.py:179
 msgid "Export all diagrams as EPS"
-msgstr "Експортуйте всі діаграми як EPS"
+msgstr ""
 
 #: gaphor/plugins/diagramexport/export.py:180
 msgid "Export all diagrams as EPS diagrams in a specifieddirectory"
-msgstr "Експортуйте всі діаграми як діаграми EPS у вказаний каталог"
+msgstr ""
 
 #: gaphor/storage/recovery.py:155
 msgid "This model contains unsaved changes. The changes have been restored."
-msgstr "Ця модель містить незбережені зміни. Зміни відновлено."
+msgstr ""
 
 #: gaphor/templates/blank.gaphor gaphor/ui/mainwindow.py:268
 #: gaphor/ui/mainwindow.py:273 gaphor/ui/mainwindow.ui:129
 msgid "New model"
-msgstr "Нова модель"
+msgstr ""
 
 #: gaphor/templates/blank.gaphor gaphor/ui/modelbrowser.py:207
 msgid "New Diagram"
-msgstr "Нова діаграма"
+msgstr ""
 
 #: gaphor/templates/c4model-example.gaphor gaphor/templates/c4model.gaphor
 msgid "1. Context diagrams"
-msgstr "1. Контекстні діаграми"
+msgstr ""
 
 #: gaphor/templates/c4model-example.gaphor gaphor/templates/c4model.gaphor
 msgid "2. Container diagrams"
-msgstr "2. Схеми контейнерів"
+msgstr ""
 
 #: gaphor/templates/c4model-example.gaphor gaphor/templates/c4model.gaphor
 msgid "4. Code diagrams"
-msgstr "4. Кодові діаграми"
+msgstr ""
 
 #: gaphor/templates/c4model-example.gaphor gaphor/templates/c4model.gaphor
 msgid "3. Component diagrams"
-msgstr "3. Діаграми компонентів"
+msgstr ""
 
 #: gaphor/templates/c4model-example.gaphor gaphor/templates/c4model.gaphor
 msgid "Context diagram"
-msgstr "Контекстна діаграма"
+msgstr ""
 
 #: gaphor/templates/c4model-example.gaphor gaphor/templates/c4model.gaphor
 msgid "Container diagram"
-msgstr "Діаграма контейнера"
+msgstr ""
 
 #: gaphor/templates/c4model-example.gaphor gaphor/templates/c4model.gaphor
 msgid "Component diagram"
-msgstr "Діаграма компонентів"
+msgstr ""
 
 #: gaphor/templates/c4model-example.gaphor gaphor/templates/c4model.gaphor
 msgid "Code diagram"
-msgstr "Діаграма коду"
+msgstr ""
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Personal Banking Customer"
-msgstr "Клієнт персонального банку"
+msgstr ""
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Internet Banking System"
-msgstr "Система Інтернет-банкінгу"
+msgstr ""
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Mainframe Banking System"
-msgstr "Мейнфрейм Банківська система"
+msgstr ""
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "View account balances, and make payments using"
-msgstr "Переглядати залишки на рахунку та здійснювати платежів за допомогою"
+msgstr ""
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Get account information from, and makes payments using"
 msgstr ""
-"Отримувати інформацію про обліковий запис і здійснювати платежі за допомогою"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "E-mail System"
-msgstr "Система електронної пошти"
+msgstr ""
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Sends e-mail to"
-msgstr "Надсилає електронний лист до"
+msgstr ""
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Sends e-mail using"
-msgstr "Надсилає електронну пошту за допомогою"
+msgstr ""
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Web Application"
-msgstr "Веб-додаток"
+msgstr ""
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "API Application"
-msgstr "Програма API"
+msgstr ""
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Single-Page Application"
-msgstr "Односторінкова програма"
+msgstr ""
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Mobile App"
-msgstr "Мобільний додаток"
+msgstr ""
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Visit bigbank.com/lb using"
-msgstr "Відвідайте bigbank.com/lb за допомогою"
+msgstr ""
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "View account balances and make payments using"
-msgstr "Переглядати залишки на рахунку та здійснювати платежі за допомогою"
+msgstr ""
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Makes API calls to"
-msgstr "Здійснює виклики API до"
+msgstr ""
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Reads from, writes to"
-msgstr "Читає з, пише"
+msgstr ""
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Delivers"
-msgstr "Доставляє"
+msgstr ""
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Sign In Controller"
-msgstr "Контролер входу"
+msgstr ""
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Security Component"
-msgstr "Компонент Безпеки"
+msgstr ""
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Reset Password Controller"
-msgstr "Скидання контролера пароля"
+msgstr ""
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "E-mail Component"
-msgstr "Компонент електронної пошти"
+msgstr ""
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Account Summary Controller"
-msgstr "Контролер підсумків облікового запису"
+msgstr ""
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Mainframe Banking System Facade"
-msgstr "Фасад банківської системи мейнфрейму"
+msgstr ""
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Uses"
-msgstr "Використанні"
+msgstr ""
 
 #: gaphor/templates/c4model-example.gaphor
 msgid ""
 "Makes API calls to\n"
 "[JSON/HTTPS]"
 msgstr ""
-"Здійснює виклики API до\n"
-"[JSON/HTTPS]"
 
 #: gaphor/templates/raaml-example.gaphor gaphor/templates/raaml.gaphor
 #: gaphor/templates/uml-example.gaphor gaphor/templates/uml.gaphor
 msgid "Model Name Here"
-msgstr "Назва моделі тут"
+msgstr ""
 
 #: gaphor/templates/raaml-example.gaphor gaphor/templates/raaml.gaphor
 msgid "STPA"
-msgstr "STPA"
+msgstr ""
 
 #: gaphor/templates/raaml-example.gaphor gaphor/templates/raaml.gaphor
 msgid "Loss Definition"
-msgstr "Визначення втрати"
+msgstr ""
 
 #: gaphor/templates/raaml-example.gaphor gaphor/templates/raaml.gaphor
 msgid "FTA"
-msgstr "FTA"
+msgstr ""
 
 #: gaphor/templates/raaml-example.gaphor
 msgid "Loss of System"
-msgstr "Втрата системи"
+msgstr ""
 
 #: gaphor/templates/raaml-example.gaphor
 msgid "Loss of Subsystem 1"
-msgstr "Втрата підсистеми 1"
+msgstr ""
 
 #: gaphor/templates/raaml-example.gaphor
 msgid "Loss of Subsystem 2"
-msgstr "Втрата підсистеми 2"
+msgstr ""
 
 #: gaphor/templates/raaml-example.gaphor gaphor/templates/raaml.gaphor
 msgid "Hazard Definition"
-msgstr "Визначення небезпеки"
+msgstr ""
 
 #: gaphor/templates/raaml-example.gaphor
 msgid "Loss of Life or Injury of People"
-msgstr "Загибель або поранення людей"
+msgstr ""
 
 #: gaphor/templates/raaml-example.gaphor
 msgid "Loss of Mission"
-msgstr "Втрата місії"
+msgstr ""
 
 #: gaphor/templates/raaml-example.gaphor
 msgid "Loss of Customer Satisfaction"
-msgstr "Втрата задоволеності клієнтів"
+msgstr ""
 
 #: gaphor/templates/raaml-example.gaphor
 msgid "Hazard 2"
-msgstr "Небезпека 2"
+msgstr ""
 
 #: gaphor/templates/raaml-example.gaphor
 msgid "Hazard 1"
-msgstr "Небезпека 1"
+msgstr ""
 
 #: gaphor/templates/raaml-example.gaphor gaphor/templates/raaml.gaphor
 msgid "Mapping of Losses and Hazards"
-msgstr "Картування втрат і небезпек"
+msgstr ""
 
 #: gaphor/templates/raaml-example.gaphor gaphor/templates/raaml.gaphor
 msgid "Operational Situations"
-msgstr "Оперативні ситуації"
+msgstr ""
 
 #: gaphor/templates/raaml-example.gaphor
 msgid "Operational Situation 1"
-msgstr "Оперативна ситуація 1"
+msgstr ""
 
 #: gaphor/templates/raaml-example.gaphor gaphor/templates/raaml.gaphor
 msgid "Context of UCAs"
-msgstr "Контекст UCA"
+msgstr ""
 
 #: gaphor/templates/raaml-example.gaphor gaphor/templates/raaml.gaphor
 msgid "Situational Context"
-msgstr "Ситуаційний контекст"
+msgstr ""
 
 #: gaphor/templates/raaml-example.gaphor gaphor/templates/raaml.gaphor
 msgid "Situation Hierarchy"
-msgstr "Ієрархія ситуації"
+msgstr ""
 
 #: gaphor/templates/raaml-example.gaphor gaphor/templates/raaml.gaphor
 msgid ""
 "The fault tree analysis shows which causes for the failure of a system "
 "have been considered."
 msgstr ""
-"Аналіз дерева несправностей показує, які причини збою системи були "
-"розглянуті."
 
 #: gaphor/templates/sysml-example.gaphor gaphor/templates/sysml.gaphor
 msgid "1. Concept Level"
-msgstr "1. Рівень концепції"
+msgstr ""
 
 #: gaphor/templates/sysml-example.gaphor gaphor/templates/sysml.gaphor
 msgid "2. Logical Level"
-msgstr "2. Логічний рівень"
+msgstr ""
 
 #: gaphor/templates/sysml-example.gaphor gaphor/templates/sysml.gaphor
 msgid "3. Technology Level"
-msgstr "3. Технологічний рівень"
+msgstr ""
 
 #: gaphor/templates/sysml-example.gaphor
 msgid "User"
-msgstr "Користувач"
+msgstr ""
 
 #: gaphor/templates/sysml-example.gaphor
 msgid "Use Case #1"
-msgstr "Випадок використання #1"
+msgstr ""
 
 #: gaphor/templates/sysml-example.gaphor gaphor/templates/sysml.gaphor
 msgid "Structure"
-msgstr "Структура"
+msgstr ""
 
 #: gaphor/templates/sysml-example.gaphor gaphor/templates/sysml.gaphor
 msgid "Feature Domain"
-msgstr "Функціональний домен"
+msgstr ""
 
 #: gaphor/templates/sysml-example.gaphor
 msgid "Operator"
-msgstr "Оператор"
+msgstr ""
 
 #: gaphor/templates/sysml-example.gaphor
 msgid "Feature"
-msgstr "Особливість"
+msgstr ""
 
 #: gaphor/templates/sysml-example.gaphor
 msgid "External Element"
-msgstr "Зовнішній елемент"
+msgstr ""
 
 #: gaphor/templates/sysml-example.gaphor gaphor/templates/sysml.gaphor
 msgid "Concept Requirements"
-msgstr "Вимоги до концепції"
+msgstr ""
 
 #: gaphor/templates/sysml-example.gaphor
 msgid "Feature User Need"
-msgstr "Потреба користувача в функції"
+msgstr ""
 
 #: gaphor/templates/sysml-example.gaphor gaphor/templates/sysml.gaphor
 msgid "Logical Structure"
-msgstr "Логічна структура"
+msgstr ""
 
 #: gaphor/templates/sysml-example.gaphor
 msgid "Sensor"
-msgstr "Датчик"
+msgstr ""
 
 #: gaphor/templates/sysml-example.gaphor
 msgid "sensor"
-msgstr "датчик"
+msgstr ""
 
 #: gaphor/templates/sysml-example.gaphor
 msgid "controller"
-msgstr "контролер"
+msgstr ""
 
 #: gaphor/templates/sysml-example.gaphor gaphor/templates/sysml.gaphor
 msgid "Logical Boundary"
-msgstr "Логічна межа"
+msgstr ""
 
 #: gaphor/templates/sysml-example.gaphor gaphor/templates/sysml.gaphor
 msgid "Technology Structure"
-msgstr "Структура Технології"
+msgstr ""
 
 #: gaphor/templates/sysml-example.gaphor gaphor/templates/sysml.gaphor
 msgid "Technology Boundary"
-msgstr "Кордон Технології"
+msgstr ""
 
 #: gaphor/templates/sysml-example.gaphor gaphor/templates/sysml.gaphor
 msgid "Technology Requirements"
-msgstr "Технологічні Вимоги"
+msgstr ""
 
 #: gaphor/templates/sysml-example.gaphor gaphor/templates/sysml.gaphor
 msgid "Detailed Behavior"
-msgstr "Детальна поведінка"
+msgstr ""
 
 #: gaphor/templates/sysml-example.gaphor gaphor/templates/sysml.gaphor
 msgid "Logical Requirements"
-msgstr "Логічні вимоги"
+msgstr ""
 
 #: gaphor/templates/sysml-example.gaphor gaphor/templates/sysml.gaphor
 msgid "Logical States"
-msgstr "Логічні стани"
+msgstr ""
 
 #: gaphor/templates/sysml-example.gaphor gaphor/templates/sysml.gaphor
 msgid "Feature Event Flow"
-msgstr "Функція потоку подій"
+msgstr ""
 
 #: gaphor/templates/sysml-example.gaphor
 msgid "Off"
-msgstr "Вимк"
+msgstr ""
 
 #: gaphor/templates/sysml-example.gaphor
 msgid "On"
-msgstr "Увімк"
+msgstr ""
 
 #: gaphor/templates/sysml-example.gaphor
 msgid "actuator"
-msgstr "привід"
+msgstr ""
 
 #: gaphor/templates/sysml-example.gaphor
 msgid "Use Case Function #1"
-msgstr "Випадок використання функції #1"
+msgstr ""
 
 #: gaphor/templates/sysml-example.gaphor
 msgid "First Action"
-msgstr "Перша дія"
+msgstr ""
 
 #: gaphor/templates/sysml-example.gaphor
 msgid "Second Action"
-msgstr "Друга дія"
+msgstr ""
 
 #: gaphor/templates/sysml-example.gaphor
 msgid "Example System Requirement"
-msgstr "Приклад системних вимог"
+msgstr ""
 
 #: gaphor/templates/sysml-example.gaphor
 msgid "Sensed Data"
-msgstr "Дані датчиків"
+msgstr ""
 
 #: gaphor/templates/sysml-example.gaphor
 msgid "Command"
-msgstr "Команда"
+msgstr ""
 
 #: gaphor/templates/sysml-example.gaphor gaphor/templates/sysml.gaphor
 msgid "Functional Boundary Behavior"
-msgstr "Функціональна гранична поведінка"
+msgstr ""
 
 #: gaphor/templates/sysml-example.gaphor
 msgid "Determine Actuator Command"
-msgstr "Визначити команду приводу"
+msgstr ""
 
 #: gaphor/templates/sysml-example.gaphor
 msgid "Actuate Actuator"
-msgstr "Активуйте привод"
+msgstr ""
 
 #: gaphor/templates/sysml-example.gaphor
 msgid "Example Technology Requirement"
-msgstr "Приклад технологічних вимог"
+msgstr ""
 
 #: gaphor/templates/sysml-example.gaphor gaphor/ui/help/preferences.ui:20
 msgid "System"
-msgstr "Система"
+msgstr ""
 
 #: gaphor/templates/sysml-example.gaphor
 msgid "ECU"
-msgstr "ECU"
+msgstr ""
 
 #: gaphor/templates/sysml-example.gaphor
 msgid "DC Motor"
-msgstr "Двигун постійного струму"
+msgstr ""
 
 #: gaphor/templates/sysml-example.gaphor
 msgid "IR Transceiver"
-msgstr "ІЧ трансивер"
+msgstr ""
 
 #: gaphor/templates/sysml-example.gaphor
 msgid "ecu"
-msgstr "ecu"
+msgstr ""
 
 #: gaphor/templates/sysml-example.gaphor
 msgid "dc Motor"
-msgstr "двигун постійного струму"
+msgstr ""
 
 #: gaphor/templates/sysml-example.gaphor
 msgid "ir Transceiver"
-msgstr "є трансивером"
+msgstr ""
 
 #: gaphor/templates/sysml-example.gaphor
 msgid "Detect Obstacle"
-msgstr "Виявлення перешкоди"
+msgstr ""
 
 #: gaphor/templates/sysml-example.gaphor
 msgid "Command Reverse"
-msgstr "Команда Реверс"
+msgstr ""
 
 #: gaphor/templates/sysml-example.gaphor
 msgid "Reverse Motor"
-msgstr "Двигун заднього ходу"
+msgstr ""
 
 #: gaphor/templates/sysml-example.gaphor
 msgid "Detect Object"
-msgstr "Виявлення об'єкта"
+msgstr ""
 
 #: gaphor/templates/sysml-example.gaphor
 msgid "Detection Event"
-msgstr "Подія виявлення"
+msgstr ""
 
 #: gaphor/templates/sysml-example.gaphor gaphor/templates/sysml.gaphor
 msgid "Feature Context"
-msgstr "Контекст функції"
+msgstr ""
 
 #: gaphor/templates/sysml-example.gaphor
 msgid "Read Input"
-msgstr "Прочитати введені дані"
+msgstr ""
 
 #: gaphor/templates/sysml-example.gaphor
 msgid "FeatureInput"
-msgstr "ФункціяВедення"
+msgstr ""
 
 #: gaphor/templates/sysml-example.gaphor
 msgid "Request Actuation"
-msgstr "Запит на активацію"
+msgstr ""
 
 #: gaphor/templates/sysml-example.gaphor
 msgid "Actuation Command"
-msgstr "Команда активації"
+msgstr ""
 
 #: gaphor/templates/sysml-example.gaphor gaphor/templates/sysml.gaphor
 msgid "Model Navigation"
-msgstr "Модель навігації"
+msgstr ""
 
 #: gaphor/templates/sysml-example.gaphor gaphor/templates/sysml.gaphor
 msgid "Concept"
-msgstr "Концепція"
+msgstr ""
 
 #: gaphor/templates/sysml-example.gaphor gaphor/templates/sysml.gaphor
 msgid "Logical"
-msgstr "Логічно"
+msgstr ""
 
 #: gaphor/templates/sysml-example.gaphor gaphor/templates/sysml.gaphor
 msgid "Pillar"
-msgstr "Стовпа"
+msgstr ""
 
 #: gaphor/templates/sysml-example.gaphor gaphor/templates/sysml.gaphor
 msgid "Abstraction Level"
-msgstr "Рівень абстракції"
+msgstr ""
 
 #: gaphor/templates/uml-example.gaphor gaphor/templates/uml.gaphor
 msgid "1. Use Cases"
-msgstr "1. Випадки використання"
+msgstr ""
 
 #: gaphor/templates/uml-example.gaphor gaphor/templates/uml.gaphor
 msgid "2. Domain Analysis"
-msgstr "2. Аналіз домену"
+msgstr ""
 
 #: gaphor/templates/uml-example.gaphor gaphor/templates/uml.gaphor
 msgid "3. Architectural Design"
-msgstr "3. Архітектурне проектування"
+msgstr ""
 
 #: gaphor/templates/uml-example.gaphor gaphor/templates/uml.gaphor
 msgid "4. Detailed Design"
-msgstr "4. Детальний проект"
+msgstr ""
 
 #: gaphor/templates/uml-example.gaphor
 msgid "Main Actor"
-msgstr "Головний актор"
+msgstr ""
 
 #: gaphor/templates/uml-example.gaphor
 msgid "Main Use Case"
-msgstr "Основний варіант використання"
+msgstr ""
 
 #: gaphor/templates/uml-example.gaphor
 msgid "Included Use Case"
-msgstr "Включений варіант використання"
+msgstr ""
 
 #: gaphor/templates/uml-example.gaphor
 msgid "Secondary Actor"
-msgstr "Другорядний актор"
+msgstr ""
 
 #: gaphor/templates/uml-example.gaphor
 msgid "Secondary Use Case"
-msgstr "Вторинний варіант використання"
+msgstr ""
 
 #: gaphor/templates/uml-example.gaphor gaphor/templates/uml.gaphor
 msgid "Use Case Scenarios"
-msgstr "Сценарії використання"
+msgstr ""
 
 #: gaphor/templates/uml-example.gaphor
 msgid "Scenario 1"
-msgstr "Сценарій 1"
+msgstr ""
 
 #: gaphor/templates/uml-example.gaphor
 msgid "Scenario 2"
-msgstr "Сценарій 2"
+msgstr ""
 
 #: gaphor/templates/uml-example.gaphor gaphor/templates/uml.gaphor
 msgid "Domain Entities"
-msgstr "Сутності домену"
+msgstr ""
 
 #: gaphor/templates/uml-example.gaphor
 msgid "Software Task"
-msgstr "Програмне завдання"
+msgstr ""
 
 #: gaphor/templates/uml-example.gaphor
 msgid "performs"
-msgstr "виконує"
+msgstr ""
 
 #: gaphor/templates/uml-example.gaphor gaphor/templates/uml.gaphor
 msgid "Package Dependencies"
-msgstr "Залежності пакетів"
+msgstr ""
 
 #: gaphor/templates/uml-example.gaphor
 msgid "SW Component 1"
-msgstr "Компонент SW 1"
+msgstr ""
 
 #: gaphor/templates/uml-example.gaphor
 msgid "SW Component 4"
-msgstr "Компонент SW 4"
+msgstr ""
 
 #: gaphor/templates/uml-example.gaphor
 msgid "SW Component 3"
-msgstr "Компонент SW 3"
+msgstr ""
 
 #: gaphor/templates/uml-example.gaphor
 msgid "SW Component 2"
-msgstr "Компонент SW 2"
+msgstr ""
 
 #: gaphor/templates/uml-example.gaphor
 msgid "Primary Actor"
-msgstr "Основний актор"
+msgstr ""
 
 #: gaphor/templates/uml-example.gaphor
 msgid "Actor Profile"
-msgstr "Профіль актора"
+msgstr ""
 
 #: gaphor/templates/uml-example.gaphor
 msgid "login"
-msgstr "Логіни"
+msgstr ""
 
 #: gaphor/templates/uml-example.gaphor gaphor/templates/uml.gaphor
 msgid "Detailed Class Design"
-msgstr "Детальний дизайн класу"
+msgstr ""
 
 #: gaphor/templates/uml-example.gaphor
 msgid "First Class"
-msgstr "Перший клас"
+msgstr ""
 
 #: gaphor/templates/uml-example.gaphor
 msgid "firstName"
-msgstr "ім'я та прізвище"
+msgstr ""
 
 #: gaphor/templates/uml-example.gaphor
 msgid "lastName"
-msgstr "Прізвище"
+msgstr ""
 
 #: gaphor/templates/uml-example.gaphor
 msgid "Login"
-msgstr "Логін"
+msgstr ""
 
 #: gaphor/templates/uml-example.gaphor
 msgid "lastLogin"
-msgstr "Останній Логін"
+msgstr ""
 
 #: gaphor/templates/uml-example.gaphor
 msgid "Second Class"
-msgstr "Другий клас"
+msgstr ""
 
 #: gaphor/templates/uml-example.gaphor
 msgid "released"
-msgstr "звільнений"
+msgstr ""
 
 #: gaphor/templates/uml-example.gaphor gaphor/templates/uml.gaphor
 msgid "Implementation Architecture"
-msgstr "Архітектура реалізації"
+msgstr ""
 
 #: gaphor/templates/uml-example.gaphor
 msgid "Node 1"
-msgstr "Вузол 1"
+msgstr ""
 
 #: gaphor/templates/uml-example.gaphor
 msgid "Artifact 1"
-msgstr "Артефакт 1"
+msgstr ""
 
 #: gaphor/templates/uml-example.gaphor
 msgid "Node 2"
-msgstr "Вузол 2"
+msgstr ""
 
 #: gaphor/templates/uml-example.gaphor
 msgid "protocol"
-msgstr "протокол"
+msgstr ""
 
 #: gaphor/templates/uml-example.gaphor
 msgid "Artifact 2"
-msgstr "Артефакт 2"
+msgstr ""
 
 #: gaphor/templates/uml-example.gaphor gaphor/templates/uml.gaphor
 msgid ""
@@ -2432,18 +2369,12 @@ msgid ""
 "identifying user roles – actors – and\n"
 "associating them to their use cases."
 msgstr ""
-"Проаналізуйте функціональні вимоги\n"
-"визначення ролей користувачів – акторів – і\n"
-"пов’язуючи їх із варіантами використання."
 
 #: gaphor/templates/uml-example.gaphor gaphor/templates/uml.gaphor
 msgid ""
 "Model abstract use case implementation by creating activity diagrams "
 "visualizing activity flows for primary and secondary use case scenarios."
 msgstr ""
-"Змоделюйте реалізацію абстрактного варіанту використання, створивши діаграми "
-"діяльності, що візуалізують потоки дій для основних і вторинних сценаріїв "
-"використання."
 
 #: gaphor/templates/uml-example.gaphor gaphor/templates/uml.gaphor
 msgid ""
@@ -2452,10 +2383,6 @@ msgid ""
 "a visual dictionary of concepts. It will also be a starting point for "
 "your design-level data model."
 msgstr ""
-"Виконуйте аналіз домену, моделюючи сутності домену та їхні зв’язки за "
-"допомогою спрощеної діаграми класів. Ця діаграма слугуватиме візуальним "
-"словником понять. Це також буде відправною точкою для вашої моделі даних на "
-"рівні проектування."
 
 #: gaphor/templates/uml-example.gaphor gaphor/templates/uml.gaphor
 msgid ""
@@ -2464,10 +2391,6 @@ msgid ""
 " and avoid design flaws such as cyclic dependencies or dependencies on "
 "unstable parts"
 msgstr ""
-"Підготуйте діаграму залежностей пакетів, щоб належним чином згрупувати ваші "
-"класи реалізації. Це допоможе вам підтримувати добре структурований код і "
-"уникнути недоліків дизайну, таких як циклічні залежності або залежності від "
-"нестабільних частин"
 
 #: gaphor/templates/uml-example.gaphor gaphor/templates/uml.gaphor
 msgid ""
@@ -2475,15 +2398,10 @@ msgid ""
 "new methods in\n"
 "existing classes or even new classes with specific responsibilities."
 msgstr ""
-"Змоделюйте взаємодію компонентів для сценаріїв використання, щоб знайти нові "
-"методи\n"
-"існуючі класи або навіть нові класи з конкретними обов'язками."
 
 #: gaphor/templates/uml-example.gaphor gaphor/templates/uml.gaphor
 msgid "Create detailed class diagrams to capture your object-oriented data model."
 msgstr ""
-"Створюйте детальні діаграми класів, щоб охопити свою об’єктно-орієнтовану "
-"модель даних."
 
 #: gaphor/templates/uml-example.gaphor gaphor/templates/uml.gaphor
 msgid ""
@@ -2491,103 +2409,96 @@ msgid ""
 "components. Indicate how they are deployed on hardware nodes, their "
 "inter-dependencies and communication protocols."
 msgstr ""
-"Визначте основні артефакти, які демонструють реалізацію ваших компонентів. "
-"Вкажіть, як вони розгортаються на апаратних вузлах, їх взаємозалежності та "
-"протоколи зв’язку."
 
 #: gaphor/templates/uml-example.gaphor
 msgid "String"
-msgstr "Рядок"
+msgstr ""
 
 #: gaphor/templates/uml-example.gaphor
 msgid "Date"
-msgstr "Дата"
+msgstr ""
 
 #: gaphor/ui/__init__.py:187 gaphor/ui/mainwindow.py:165
 msgid "Export"
-msgstr "Експорт"
+msgstr ""
 
 #: gaphor/ui/__init__.py:188 gaphor/ui/mainwindow.py:168
 msgid "Tools"
-msgstr "Інструменти"
+msgstr ""
 
 #: gaphor/ui/appfilemanager.py:34
 msgid "Open a Model"
-msgstr "Відкрийте модель"
+msgstr ""
 
 #: gaphor/ui/appfilemanager.py:49
 #, python-brace-format
 msgid "Switch to {name}?"
-msgstr "Перейти на {name}?"
+msgstr ""
 
 #: gaphor/ui/appfilemanager.py:51
 #, python-brace-format
 msgid ""
 "{name} is already opened. Do you want to switch to the opened window "
 "instead?"
-msgstr "{name} уже відкрито. Бажаєте замість цього перейти до відкритого вікна?"
+msgstr ""
 
 #: gaphor/ui/appfilemanager.py:61
 msgid "Open Again"
-msgstr "Знову відкрити"
+msgstr ""
 
 #: gaphor/ui/appfilemanager.py:62
 msgid "Switch"
-msgstr "Перейти"
+msgstr ""
 
 #: gaphor/ui/diagrampage.py:377
 msgid "Show in Model Browser"
-msgstr "Показати в браузері моделей"
+msgstr ""
 
 #: gaphor/ui/diagrampage.ui:33 gaphor/ui/help/shortcuts.ui:198
 #: gaphor/ui/menubar.ui:83
 msgid "Zoom Out"
-msgstr "Зменшити Масштаб"
+msgstr ""
 
 #: gaphor/ui/diagrampage.ui:48 gaphor/ui/help/shortcuts.ui:205
 msgid "Reset Zoom"
-msgstr "Скинути масштаб"
+msgstr ""
 
 #: gaphor/ui/diagrampage.ui:63 gaphor/ui/help/shortcuts.ui:191
 #: gaphor/ui/menubar.ui:79
 msgid "Zoom In"
-msgstr "Збільшити Масштаб"
+msgstr ""
 
 #: gaphor/ui/diagrams.py:300
 msgid "Selected element is not in present in this diagram."
-msgstr "Вибраний елемент відсутній на цій діаграмі."
+msgstr ""
 
 #: gaphor/ui/diagrams.ui:12
 msgid "Open a Diagram"
-msgstr "Відкрийте діаграму"
+msgstr ""
 
 #: gaphor/ui/diagrams.ui:14
 msgid ""
 "Open a diagram from the model browser, or\n"
 "create a new diagram from the New diagram menu."
 msgstr ""
-"Відкрийте діаграму в браузері моделей або\n"
-"створити нову діаграму з меню Нова діаграма."
 
 #: gaphor/ui/elementeditor.ui:12
 msgid "No item selected"
-msgstr "Елемент не вибрано"
+msgstr ""
 
 #: gaphor/ui/elementeditor.ui:24
 msgid "Show Tips"
-msgstr "Показати поради"
+msgstr ""
 
 #: gaphor/ui/elementeditor.ui:49
 msgid ""
 "Add a model element from the tool box (bottom left) to the diagram. Here "
 "you will see its properties appear."
 msgstr ""
-"Додайте до діаграми елемент моделі з панелі інструментів (унизу ліворуч). "
-"Тут ви побачите його властивості."
 
 #: gaphor/ui/elementeditor.ui:57
 msgid "This pane can be hidden by clicking the pane icon in the header."
-msgstr "Цю панель можна приховати, клацнувши піктограму панелі в заголовку."
+msgstr ""
 
 #: gaphor/ui/elementeditor.ui:65
 msgid ""
@@ -2596,10 +2507,6 @@ msgid ""
 "does not get selected, click on the diagram once (so it's focused) and "
 "then hit the shortcut key."
 msgstr ""
-"<b>Порада:</b> більшість елементів на панелі інструментів мають комбінацію "
-"клавіш (наприклад, \"c\" для Class). Вибір інструменту працює лише за "
-"схемою. Якщо інструмент не вибрано, клацніть діаграму один раз (щоб вона "
-"була в фокусі), а потім натисніть клавішу швидкого доступу."
 
 #: gaphor/ui/elementeditor.ui:73
 msgid ""
@@ -2607,19 +2514,14 @@ msgid ""
 "select an element in the model browser and start typing. A search box "
 "will automatically appear."
 msgstr ""
-"<b>Порада:</b> щоб шукати елемент у браузері моделі (верхній лівий кут), "
-"виберіть елемент у браузері моделі та почніть вводити текст. Автоматично "
-"з’явиться вікно пошуку."
 
 #: gaphor/ui/elementeditor.ui:86
 msgid "Help improve Gaphor"
-msgstr "Допоможіть покращити Gaphor"
+msgstr ""
 
 #: gaphor/ui/elementeditor.ui:95
 msgid "Gaphor is free and open source software, written by devoted volunteers."
 msgstr ""
-"Gaphor — це безкоштовне програмне забезпечення з відкритим кодом, створене "
-"відданими волонтерами."
 
 #: gaphor/ui/elementeditor.ui:103
 msgid ""
@@ -2627,105 +2529,94 @@ msgid ""
 "translate Gaphor into your language, report bugs, or suggest new "
 "features. Join us in improving Gaphor!"
 msgstr ""
-"Є багато способів допомогти покращити Gaphor: написати допис у блозі, "
-"перекласти Gaphor на вашу мову, повідомити про помилки або запропонувати "
-"нові функції. Приєднуйтесь до нас у вдосконаленні Gaphor!"
 
 #: gaphor/ui/elementeditor.ui:111
 msgid ""
 "Visit <a href=\"https://gaphor.org/contribute/\">gaphor.org</a> for more "
 "information."
 msgstr ""
-"Для отримання додаткової інформації відвідайте <a href=\"https://gaphor.org/"
-"contribute/\">gaphor.org</a>."
 
 #: gaphor/ui/elementeditor.ui:150
 msgid "Editor"
-msgstr "Редактор"
+msgstr ""
 
 #: gaphor/ui/elementeditor.ui:176
 msgid "Styling"
-msgstr "Стайлінг"
+msgstr ""
 
 #: gaphor/ui/elementeditor.ui:188
 msgid "Style Sheet"
-msgstr "Таблиця стилів"
+msgstr ""
 
 #: gaphor/ui/elementeditor.ui:201
 msgid "Diagram Language"
-msgstr "Мова діаграм"
+msgstr ""
 
 #: gaphor/ui/elementeditor.ui:203 gaphor/ui/elementeditor.ui:211
 msgid "The (natural) language used in this model."
-msgstr "(Природна) мова, яка використовується в цій моделі."
+msgstr ""
 
 #: gaphor/ui/elementeditor.ui:219
 msgid "CSS Editor"
-msgstr "Редактор CSS"
+msgstr ""
 
 #: gaphor/ui/elementeditor.ui:247
 msgid "CSS nodes of focused item"
-msgstr "Вузли CSS виділеного елемента"
+msgstr ""
 
 #: gaphor/ui/elementeditor.ui:272
 msgid ""
 "🔗 <a href=\"https://docs.gaphor.org/en/latest/style_sheets.html\">Style "
 "sheets in Gaphor</a>"
 msgstr ""
-"🔗 <a href=\"https://docs.gaphor.org/en/latest/style_sheets.html\">Таблиці "
-"стилів у Gaphor</a>"
 
 #: gaphor/ui/elementeditor.ui:286
 msgid "Merge Models"
-msgstr "Злиття моделей"
+msgstr ""
 
 #: gaphor/ui/elementeditor.ui:299
 msgid "Merge Model Changes"
-msgstr "Злиття змін моделі"
+msgstr ""
 
 #: gaphor/ui/elementeditor.ui:310
 msgid ""
 "Apply incoming changes from the conflicting model. Use Undo to revert "
 "changes."
 msgstr ""
-"Застосувати вхідні зміни з конфліктуючої моделі. Щоб скасувати зміни, "
-"скористайтеся «Скасувати»."
 
 #: gaphor/ui/elementeditor.ui:330
 msgid "Resolve"
-msgstr "Вирішити"
+msgstr ""
 
 #: gaphor/ui/errordialog.py:21
 msgid ""
 "It looks like Gaphor is started from the command line. Do you want to "
 "open a debug session?"
 msgstr ""
-"Схоже, Gaphor запускається з командного рядка. Хочете відкрити сеанс "
-"налагодження?"
 
 #: gaphor/ui/errordialog.py:27 gaphor/ui/menubar.ui:93
 msgid "Close"
-msgstr "Закрити"
+msgstr ""
 
 #: gaphor/ui/errordialog.py:29
 msgid "Start Debug Session"
-msgstr "Почати сеанс налагодження"
+msgstr ""
 
 #: gaphor/ui/filedialog.py:14
 msgid "Gaphor Models"
-msgstr "Моделі Gaphor"
+msgstr ""
 
 #: gaphor/ui/filedialog.py:28
 msgid "Images"
-msgstr "Зображення"
+msgstr ""
 
 #: gaphor/ui/filedialog.py:40
 msgid "All Files"
-msgstr "Усі файли"
+msgstr ""
 
 #: gaphor/ui/filedialog.py:100
 msgid "Flatpak Document Portal"
-msgstr "Портал документів Flatpak"
+msgstr ""
 
 #: gaphor/ui/filemanager.py:41
 #, python-brace-format
@@ -2735,18 +2626,12 @@ msgid ""
 "{exc}\n"
 "If you think this is a bug, please contact the developers."
 msgstr ""
-"Gaphor не зміг зберегти модель, ймовірно, через внутрішню помилку:\n"
-"{exc}\n"
-"Якщо ви вважаєте, що це помилка, зверніться до розробників."
 
 #: gaphor/ui/filemanager.py:45
 msgid ""
 "You do not have the permissions necessary to save the model.\n"
 "Please check that you typed the location correctly and try again."
 msgstr ""
-"У вас немає прав, необхідних для збереження моделі.\n"
-"Будь ласка, перевірте, чи правильно ви ввели місцезнаходження, і повторіть "
-"спробу."
 
 #: gaphor/ui/filemanager.py:49
 msgid ""
@@ -2754,9 +2639,6 @@ msgid ""
 "Please free up some disk space and try again or save it in a different "
 "location."
 msgstr ""
-"У вас недостатньо вільного місця на пристрої для збереження моделі.\n"
-"Звільніть місце на диску та спробуйте ще раз або збережіть його в іншому "
-"місці."
 
 #: gaphor/ui/filemanager.py:52
 #, python-brace-format
@@ -2765,375 +2647,367 @@ msgid ""
 "{exc}\n"
 "Please check that you typed the location correctly and try again."
 msgstr ""
-"Модель не можна зберігати в цьому місці:\n"
-"{exc}\n"
-"Будь ласка, перевірте, чи правильно ви ввели місцезнаходження, і повторіть "
-"спробу."
 
 #: gaphor/ui/filemanager.py:115 gaphor/ui/filemanager.py:141
 msgid "Loading…"
-msgstr "Завантаження…"
+msgstr ""
 
 #: gaphor/ui/filemanager.py:116
 #, python-brace-format
 msgid "Loading model from {filename}"
-msgstr "Завантаження моделі з {filename}"
+msgstr ""
 
 #: gaphor/ui/filemanager.py:142
 msgid "Loading current and incoming model"
-msgstr "Завантаження поточної та вхідної моделі"
+msgstr ""
 
 #: gaphor/ui/filemanager.py:203 gaphor/ui/filemanager.py:247
 #, python-brace-format
 msgid "Unable to open model “{filename}”."
-msgstr "Неможливо відкрити модель “{filename}”."
+msgstr ""
 
 #: gaphor/ui/filemanager.py:207 gaphor/ui/filemanager.py:251
 msgid "This file does not contain a valid Gaphor model."
-msgstr "Цей файл не містить дійсної моделі Gaphor."
+msgstr ""
 
 #: gaphor/ui/filemanager.py:271
 msgid "Saving…"
-msgstr "Збереження…"
+msgstr ""
 
 #: gaphor/ui/filemanager.py:272
 #, python-brace-format
 msgid "Saving model to {filename}"
-msgstr "Збереження моделі в {filename}"
+msgstr ""
 
 #: gaphor/ui/filemanager.py:287
 #, python-brace-format
 msgid "Unable to save model “{filename}”."
-msgstr "Не вдалося зберегти модель “{filename}”."
+msgstr ""
 
 #: gaphor/ui/filemanager.py:299
 msgid "Model has been saved."
-msgstr "Модель збережено."
+msgstr ""
 
 #: gaphor/ui/filemanager.py:326 gaphor/ui/filemanager.py:364
 msgid "Save Gaphor Model As"
-msgstr "Зберегти модель Гафора як"
+msgstr ""
 
 #: gaphor/ui/filemanager.py:327 gaphor/ui/filemanager.py:366
 msgid "New Model"
-msgstr "Нова Модель"
+msgstr ""
 
 #: gaphor/ui/filemanager.py:381
 msgid "Resolve Merge Conflict?"
-msgstr "Вирішити конфлікт злиття?"
+msgstr ""
 
 #: gaphor/ui/filemanager.py:383
 msgid ""
 "The model you are opening contains a merge conflict. Do you want to open "
 "the current model or the incoming change to the model?"
 msgstr ""
-"Модель, яку ви відкриваєте, містить конфлікт злиття. Бажаєте відкрити "
-"поточну модель чи вхідну зміну моделі?"
 
 #: gaphor/ui/filemanager.py:386 gaphor/ui/filemanager.py:401
 msgid "Cancel"
-msgstr "Скасувати"
+msgstr ""
 
 #: gaphor/ui/filemanager.py:387
 msgid "Open Merge Editor"
-msgstr "Відкрийте редактор злиття"
+msgstr ""
 
 #: gaphor/ui/filemanager.py:388
 msgid "Open Current"
-msgstr "Відкрийте Current"
+msgstr ""
 
 #: gaphor/ui/filemanager.py:389
 msgid "Open Incoming"
-msgstr "Відкрийте Вхідні"
+msgstr ""
 
 #: gaphor/ui/filemanager.py:396
 msgid "Save Changes?"
-msgstr "Зберегти зміни?"
+msgstr ""
 
 #: gaphor/ui/filemanager.py:398
 msgid ""
 "The open model contains unsaved changes. Changes which are not saved will"
 " be permanently lost."
 msgstr ""
-"Відкрита модель містить незбережені зміни. Незбережені зміни буде остаточно "
-"втрачено."
 
 #: gaphor/ui/filemanager.py:402
 msgid "Discard"
-msgstr "Відкинути"
+msgstr ""
 
 #: gaphor/ui/filemanager.py:403 gaphor/ui/help/shortcuts.ui:233
 #: gaphor/ui/mainwindow.ui:266 gaphor/ui/menubar.ui:18
 msgid "Save"
-msgstr "Зберегти"
+msgstr ""
 
 #: gaphor/ui/greeter.py:27
 msgid "Generic"
-msgstr "Загальні"
+msgstr ""
 
 #: gaphor/ui/greeter.py:28
 msgid "An empty model"
-msgstr "Порожня модель"
+msgstr ""
 
 #: gaphor/ui/greeter.py:35
 msgid "Unified Modeling Language template"
-msgstr "Шаблон уніфікованої мови моделювання"
+msgstr ""
 
 #: gaphor/ui/greeter.py:42
 msgid "Systems Modeling Language template"
-msgstr "Шаблон мови моделювання систем"
+msgstr ""
 
 #: gaphor/ui/greeter.py:49
 msgid "Risk Analysis and Assessment Modeling Language template"
-msgstr "Шаблон мови моделювання аналізу та оцінки ризиків"
+msgstr ""
 
 #: gaphor/ui/greeter.py:56
 msgid "Layered C4 Model template"
-msgstr "Багатошаровий шаблон моделі C4"
+msgstr ""
 
 #: gaphor/ui/greeter.py:65
 msgid "UML Example"
-msgstr "Приклад UML"
+msgstr ""
 
 #: gaphor/ui/greeter.py:66
 msgid "Unified Modeling Language example model"
-msgstr "Приклад моделі Unified Modeling Language"
+msgstr ""
 
 #: gaphor/ui/greeter.py:72
 msgid "SysML Example"
-msgstr "Приклад SysML"
+msgstr ""
 
 #: gaphor/ui/greeter.py:73
 msgid "Systems Modeling Language example model"
-msgstr "Приклад моделі мови моделювання систем"
+msgstr ""
 
 #: gaphor/ui/greeter.py:79
 msgid "RAAML Example"
-msgstr "Приклад RAAML"
+msgstr ""
 
 #: gaphor/ui/greeter.py:80
 msgid "Risk Analysis and Assessment Modeling Language example model"
-msgstr "Приклад моделі мови аналізу та оцінки моделювання"
+msgstr ""
 
 #: gaphor/ui/greeter.py:86
 msgid "C4 Model Example"
-msgstr "Приклад моделі C4"
+msgstr ""
 
 #: gaphor/ui/greeter.py:87
 msgid "C4 Model example of a banking system"
-msgstr "C4 Приклад моделі банківської системи"
+msgstr ""
 
 #: gaphor/ui/greeter.ui:8 gaphor/ui/greeter.ui:56 gaphor/ui/mainwindow.ui:260
 #: gaphor/ui/menubar.ui:12
 msgid "Open Model…"
-msgstr "Відкрити модель…"
+msgstr ""
 
 #: gaphor/ui/greeter.ui:14 gaphor/ui/help/preferences.ui:6
 #: gaphor/ui/help/shortcuts.ui:39
 msgid "Preferences"
-msgstr "Уподобання"
+msgstr ""
 
 #: gaphor/ui/greeter.ui:18 gaphor/ui/mainwindow.ui:288 gaphor/ui/menubar.ui:123
 msgid "Keyboard Shortcuts"
-msgstr "Комбінації клавіш"
+msgstr ""
 
 #: gaphor/ui/greeter.ui:22 gaphor/ui/help/about.ui:9
 #: gaphor/ui/mainwindow.ui:292
 msgid "About Gaphor"
-msgstr "Про Gaphor"
+msgstr ""
 
 #: gaphor/ui/greeter.ui:87
 msgid "Recently Opened"
-msgstr "Нещодавно відкрито"
+msgstr ""
 
 #: gaphor/ui/greeter.ui:104
 msgid "Create New Model"
-msgstr "Створити нову модель"
+msgstr ""
 
 #: gaphor/ui/mainwindow.py:250
 msgid "Press F11 to exit Fullscreen"
-msgstr "Натисніть F11, щоб вийти з повноекранного режиму"
+msgstr ""
 
 #: gaphor/ui/mainwindow.ui:37
 msgid "Change modeling profile"
-msgstr "Змінити профіль моделювання"
+msgstr ""
 
 #: gaphor/ui/mainwindow.ui:47
 msgid "Open application menu"
-msgstr "Відкрити меню програми"
+msgstr ""
 
 #: gaphor/ui/mainwindow.ui:54
 msgid "New diagram menu"
-msgstr "Меню нової діаграми"
+msgstr ""
 
 #: gaphor/ui/help/shortcuts.ui:111 gaphor/ui/mainwindow.ui:142
 #: gaphor/ui/menubar.ui:34
 msgid "Undo"
-msgstr "Відмінити"
+msgstr ""
 
 #: gaphor/ui/help/shortcuts.ui:118 gaphor/ui/mainwindow.ui:157
 #: gaphor/ui/menubar.ui:38
 msgid "Redo"
-msgstr "Повторити"
+msgstr ""
 
 #: gaphor/ui/mainwindow.ui:173
 msgid "Align selected elements"
-msgstr "Вирівняти виділені елементи"
+msgstr ""
 
 #: gaphor/ui/help/shortcuts.ui:75 gaphor/ui/mainwindow.ui:181
 msgid "Toggle Property Editor"
-msgstr "Перемкнути редактор властивостей"
+msgstr ""
 
 #: gaphor/ui/help/shortcuts.ui:219 gaphor/ui/mainwindow.ui:256
 #: gaphor/ui/menubar.ui:8
 msgid "New Model…"
-msgstr "Нова модель…"
+msgstr ""
 
 #: gaphor/ui/help/shortcuts.ui:240 gaphor/ui/mainwindow.ui:270
 #: gaphor/ui/menubar.ui:22
 msgid "Save As…"
-msgstr "Зберегти як…"
+msgstr ""
 
 #: gaphor/ui/mainwindow.ui:284
 msgid "Preferences…"
-msgstr "Уподобання…"
+msgstr ""
 
 #: gaphor/ui/mainwindow.ui:301
 msgid "Align Left"
-msgstr "Вирівняти по лівому краю"
+msgstr ""
 
 #: gaphor/ui/mainwindow.ui:306
 msgid "Align Right"
-msgstr "Вирівняти праворуч"
+msgstr ""
 
 #: gaphor/ui/mainwindow.ui:311
 msgid "Align Vertical Center"
-msgstr "Вирівняти вертикально по центру"
+msgstr ""
 
 #: gaphor/ui/mainwindow.ui:318
 msgid "Align Top"
-msgstr "Вирівняти зверху"
+msgstr ""
 
 #: gaphor/ui/mainwindow.ui:323
 msgid "Align Bottom"
-msgstr "Вирівняти нижню частину"
+msgstr ""
 
 #: gaphor/ui/mainwindow.ui:328
 msgid "Align Horizontal Center"
-msgstr "Вирівняти по центру по горизонталі"
+msgstr ""
 
 #: gaphor/ui/mainwindow.ui:335
 msgid "Max Width"
-msgstr "Максимальна ширина"
+msgstr ""
 
 #: gaphor/ui/mainwindow.ui:340
 msgid "Max Height"
-msgstr "Максимальна висота"
+msgstr ""
 
 #: gaphor/ui/mainwindow.ui:345
 msgid "Max Size"
-msgstr "Максимальний розмір"
+msgstr ""
 
 #: gaphor/ui/menubar.ui:5
 msgid "_File"
-msgstr "_Файл"
+msgstr ""
 
 #: gaphor/ui/menubar.ui:31
 msgid "_Edit"
-msgstr "_Редагувати"
+msgstr ""
 
 #: gaphor/ui/help/shortcuts.ui:162 gaphor/ui/menubar.ui:44
 msgid "Cut"
-msgstr "Вирізати"
+msgstr ""
 
 #: gaphor/ui/help/shortcuts.ui:155 gaphor/ui/menubar.ui:48
 msgid "Copy"
-msgstr "Копіювати"
+msgstr ""
 
 #: gaphor/ui/menubar.ui:52
 msgid "Paste"
-msgstr "Вставити"
+msgstr ""
 
 #: gaphor/ui/help/shortcuts.ui:176 gaphor/ui/menubar.ui:56
 msgid "Paste (copy defining elements)"
-msgstr "Вставити (копіювати визначальні елементи)"
+msgstr ""
 
 #: gaphor/ui/help/shortcuts.ui:133 gaphor/ui/menubar.ui:66
 msgid "Select All"
-msgstr "Виберіть усі"
+msgstr ""
 
 #: gaphor/ui/menubar.ui:70
 msgid "Unselect All"
-msgstr "Скасувати вибір усіх"
+msgstr ""
 
 #: gaphor/ui/menubar.ui:76
 msgid "_View"
-msgstr "_Перегляд"
+msgstr ""
 
 #: gaphor/ui/menubar.ui:87
 msgid "Actual Size"
-msgstr "Фактичний розмір"
+msgstr ""
 
 #: gaphor/ui/menubar.ui:102
 msgid "_Window"
-msgstr "_Вікно"
+msgstr ""
 
 #: gaphor/ui/menubar.ui:106
 msgid "Maximize"
-msgstr "Максимізувати"
+msgstr ""
 
 #: gaphor/ui/menubar.ui:110
 msgid "Full screen"
-msgstr "Повний екран"
+msgstr ""
 
 #: gaphor/ui/menubar.ui:116
 msgid "_Help"
-msgstr "_Допомога"
+msgstr ""
 
 #: gaphor/ui/menubar.ui:119
 msgid "Online Documentation"
-msgstr "Онлайн-документація"
+msgstr ""
 
 #: gaphor/ui/modelbrowser.py:574
 msgid "_Open"
-msgstr "_Відчинено"
+msgstr ""
 
 #: gaphor/ui/modelbrowser.py:574
 msgid "Add to diagram"
-msgstr "Додайте до діаграми"
+msgstr ""
 
 #: gaphor/ui/modelbrowser.py:577
 msgid "_Rename"
-msgstr "_Перейменувати"
+msgstr ""
 
 #: gaphor/ui/modelbrowser.py:583
 msgid "New _Diagram"
-msgstr "Нова _діаграма"
+msgstr ""
 
 #: gaphor/ui/modelbrowser.py:590
 msgid "New _Element"
-msgstr "Новий _елемент"
+msgstr ""
 
 #: gaphor/ui/modelbrowser.py:596
 msgid "De_lete"
-msgstr "Видалити"
+msgstr ""
 
 #: gaphor/ui/modelbrowser.py:606
 #, python-brace-format
 msgid "Show in “{diagram}”"
-msgstr "Показати в “{diagram}”"
+msgstr ""
 
 #: gaphor/ui/modelchanged.ui:6
 msgid "Model Changed on Disk"
-msgstr "Модель змінена на диску"
+msgstr ""
 
 #: gaphor/ui/modelchanged.ui:7
 msgid "Discard Changes and Reload"
-msgstr "Скасувати зміни та перезавантажити"
+msgstr ""
 
 #: gaphor/ui/help/__init__.py:74
 msgid "Restart Gaphor to enable language changes"
-msgstr "Перезапустіть Gaphor, щоб увімкнути зміни мови"
+msgstr ""
 
 #: gaphor/ui/help/about.ui:12
 msgid ""
@@ -3143,10 +3017,6 @@ msgid ""
 "Object Management Group, Inc. in the United States and/or other "
 "countries."
 msgstr ""
-"Copyright © 2001 Команда розробки Gaphor.\n"
-"\n"
-"UML, SysML і RAAML є зареєстрованими товарними знаками або товарними знаками "
-"Object Management Group, Inc. у Сполучених Штатах та/або інших країнах."
 
 #: gaphor/ui/help/about.ui:20
 msgid ""
@@ -3162,269 +3032,225 @@ msgid ""
 "See the License for the specific language governing permissions and "
 "limitations under the License."
 msgstr ""
-"Ліцензовано згідно з ліцензією Apache, версія 2.0 («Ліцензія»); ви не можете "
-"використовувати цю програму, окрім як відповідно до Ліцензії. Ви можете "
-"отримати копію Ліцензії за адресою\n"
-"\n"
-"     http://www.apache.org/licenses/LICENSE-2.0\n"
-"\n"
-" Якщо цього не вимагає застосовне законодавство чи письмово не погоджено, "
-"програмне забезпечення, що розповсюджується за Ліцензією, розповсюджується "
-"на ОСНОВІ «ЯК Є», БЕЗ БУДЬ-ЯКИХ ГАРАНТІЙ АБО УМОВ, явних чи непрямих. Див. "
-"Ліцензію, щоб дізнатися про дозволи й обмеження, що регулюють конкретну мову."
 
 #: gaphor/ui/help/debuginfo.py:40
 msgid "No errors have been intercepted. We’re good."
-msgstr "Жодної помилки не виявлено. Ми в порядку."
+msgstr ""
 
 #: gaphor/ui/help/debuginfo.py:43
 msgid "Errors:"
-msgstr "Помилки:"
+msgstr ""
 
 #: gaphor/ui/help/debuginfo.py:85
-#, fuzzy
 msgid ""
 "An unexpected error occurred.\n"
 "Please file an issue on GitHub and include information from About Gaphor "
 "→ Troubleshooting → Debugging Information."
 msgstr ""
-"Сталася неочікувана помилка.\n"
-"Надішліть повідомлення про проблему на GitHub і додайте інформацію з "
-"Інструменти → Звіти про помилки."
 
 #: gaphor/ui/help/preferences.ui:9
 msgid "Appearance"
-msgstr "Зовнішній вигляд"
+msgstr ""
 
 #: gaphor/ui/help/preferences.ui:13
 msgid "Colors"
-msgstr "Кольори"
+msgstr ""
 
 #: gaphor/ui/help/preferences.ui:21
 msgid "Dark"
-msgstr "Темний"
+msgstr ""
 
 #: gaphor/ui/help/preferences.ui:22
 msgid "Light"
-msgstr "Світло"
+msgstr ""
 
 #: gaphor/ui/help/preferences.ui:32
 msgid "Language"
-msgstr "Мова"
+msgstr ""
 
 #: gaphor/ui/help/preferences.ui:35
-msgid "Display Language"
-msgstr ""
-
-#: gaphor/ui/help/preferences.ui:36
-msgid "Restart Gaphor for the change to take effect."
-msgstr ""
-
-#: gaphor/ui/help/preferences.ui:44
 msgid "Change from System Language to English"
-msgstr "Змінити мову системи на англійську"
+msgstr ""
 
 #: gaphor/ui/help/preferences.ui:42
 msgid "Editing"
-msgstr "Редагування"
+msgstr ""
 
 #: gaphor/ui/help/preferences.ui:45
 msgid "Reset Tool Automatically"
-msgstr "Скинути інструмент автоматично"
+msgstr ""
 
 #: gaphor/ui/help/preferences.ui:46
 msgid "After an element is created, switch back to the pointer tool."
-msgstr "Після створення елемента поверніться до інструменту вказівника."
+msgstr ""
 
 #: gaphor/ui/help/preferences.ui:51
 msgid "Remove Unused Elements"
-msgstr "Видалити невикористані елементи"
+msgstr ""
 
 #: gaphor/ui/help/preferences.ui:52
 msgid "Automatically remove elements no longer in use in any diagram."
 msgstr ""
-"Автоматично видаляйте елементи, які більше не використовуються на будь-якій "
-"схемі."
 
 #: gaphor/ui/help/shortcuts.ui:4 gaphor/ui/help/shortcuts.ui:11
 msgid "Shortcuts"
-msgstr "Ярлики"
+msgstr ""
 
 #: gaphor/ui/help/shortcuts.ui:46
 msgid "Quit Gaphor"
-msgstr "Вийти з Гафора"
+msgstr ""
 
 #: gaphor/ui/help/shortcuts.ui:56
 msgid "Model"
-msgstr "Модель"
+msgstr ""
 
 #: gaphor/ui/help/shortcuts.ui:61
 msgid "Rename"
-msgstr "Перейменувати"
+msgstr ""
 
 #: gaphor/ui/help/shortcuts.ui:68
 msgid "Search"
-msgstr "Пошук"
+msgstr ""
 
 #: gaphor/ui/help/shortcuts.ui:82
 msgid "Toggle Model Preferences"
-msgstr "Перемкнути параметри моделі"
+msgstr ""
 
 #: gaphor/ui/help/shortcuts.ui:89
 msgid "Close Diagram"
-msgstr "Закрити діаграму"
+msgstr ""
 
 #: gaphor/ui/help/shortcuts.ui:96
 msgid "Toggle Fullscreen"
-msgstr "Перемкнути повноекранний режим"
+msgstr ""
 
 #: gaphor/ui/help/shortcuts.ui:106
 msgid "Undo and Redo"
-msgstr "Скасувати та повторити"
+msgstr ""
 
 #: gaphor/ui/help/shortcuts.ui:128
 msgid "Selections"
-msgstr "Вибірки"
+msgstr ""
 
 #: gaphor/ui/help/shortcuts.ui:140
 msgid "Deselect All"
-msgstr "Зняти вибір із усіх"
+msgstr ""
 
 #: gaphor/ui/help/shortcuts.ui:150
 msgid "Copy and Paste"
-msgstr "Копіювати та вставляти"
+msgstr ""
 
 #: gaphor/ui/help/shortcuts.ui:169
 msgid "Paste (link defining elements)"
-msgstr "Вставити (елементи визначення посилання)"
+msgstr ""
 
 #: gaphor/ui/help/shortcuts.ui:186
 msgid "Zoom"
-msgstr "Зум"
+msgstr ""
 
 #: gaphor/ui/help/shortcuts.ui:214
 msgid "Files"
-msgstr "Файли"
+msgstr ""
 
 #: gaphor/ui/help/shortcuts.ui:226
 msgid "Open a Model…"
-msgstr "Відкрийте модель…"
+msgstr ""
 
 #: gaphor/ui/modelmerge/organize.py:137
 #, python-brace-format
 msgid "Update diagram “{name}”"
-msgstr "Діаграма оновлення “{name}”"
+msgstr ""
 
 #: gaphor/ui/modelmerge/organize.py:177 gaphor/ui/modelmerge/organize.py:317
 #, python-brace-format
 msgid "Update element “{name}”"
-msgstr "Елемент оновлення “{name}”"
+msgstr ""
 
 #: gaphor/ui/modelmerge/organize.py:182
 #, python-brace-format
 msgid "Update element of type “{type}”"
-msgstr "Оновити елемент типу “{type}”"
+msgstr ""
 
 #: gaphor/ui/modelmerge/organize.py:255
 #, python-brace-format
 msgid "Update presentation “{type}”"
-msgstr "Оновити презентацію “{type}”"
+msgstr ""
 
 #: gaphor/ui/modelmerge/organize.py:281
 #, python-brace-format
 msgid "Add presentation of type {type}"
-msgstr "Додати презентацію типу {type}"
+msgstr ""
 
 #: gaphor/ui/modelmerge/organize.py:285
 #, python-brace-format
 msgid "Remove presentation of type {type}"
-msgstr "Видалення презентації типу {type}"
+msgstr ""
 
 #: gaphor/ui/modelmerge/organize.py:290
 #, python-brace-format
 msgid "Update presentation “{name}”"
-msgstr "Оновити презентацію “{name}”"
+msgstr ""
 
 #: gaphor/ui/modelmerge/organize.py:292
 #, python-brace-format
 msgid "Update presentation of type {type}"
-msgstr "Оновити презентацію типу {type}"
+msgstr ""
 
 #: gaphor/ui/modelmerge/organize.py:299
 #, python-brace-format
 msgid "Add {type} “{name}”"
-msgstr "Додати {type} “{name}”"
+msgstr ""
 
 #: gaphor/ui/modelmerge/organize.py:303
 #, python-brace-format
 msgid "Add element of type {type}"
-msgstr "Додайте елемент типу {type}"
+msgstr ""
 
 #: gaphor/ui/modelmerge/organize.py:309
 #, python-brace-format
 msgid "Remove element “{name}”"
-msgstr "Видалити елемент “{name}”"
+msgstr ""
 
 #: gaphor/ui/modelmerge/organize.py:311
 #, python-brace-format
 msgid "Remove element of type {type}"
-msgstr "Видалити елемент типу {type}"
+msgstr ""
 
 #: gaphor/ui/modelmerge/organize.py:319
 #, python-brace-format
 msgid "Update element of type {type}"
-msgstr "Оновити елемент типу {type}"
+msgstr ""
 
 #: gaphor/ui/modelmerge/organize.py:326
 #, python-brace-format
 msgid "Add relation “{name}” to “{ref_name}”"
-msgstr "Додайте відношення “{name}” до “{ref_name}”"
+msgstr ""
 
 #: gaphor/ui/modelmerge/organize.py:328
 #, python-brace-format
 msgid "Remove relation “{name}” to “{ref_name}”"
-msgstr "Видалити зв’язок “{name}” з “{ref_name}”"
+msgstr ""
 
 #: gaphor/ui/modelmerge/organize.py:330
 #, python-brace-format
 msgid "Update relation “{name}” to “{ref_name}”"
-msgstr "Оновити відношення “{name}” до “{ref_name}”"
+msgstr ""
 
 #: gaphor/ui/modelmerge/organize.py:337
 #, python-brace-format
 msgid "Add relation “{name}”"
-msgstr "Додайте відношення “{name}”"
+msgstr ""
 
 #: gaphor/ui/modelmerge/organize.py:339
 #, python-brace-format
 msgid "Remove relation “{name}”"
-msgstr "Видалити зв'язок “{name}”"
+msgstr ""
 
 #: gaphor/ui/modelmerge/organize.py:341
 #, python-brace-format
 msgid "Update relation “{name}”"
-msgstr "Відношення оновлення “{name}”"
+msgstr ""
 
 #: gaphor/ui/tests/test_modelbrowser.py:330
 msgid "general: General"
-msgstr "загальний: загальний"
-
-#~ msgid "Profile: {name}"
-#~ msgstr "Профіль: {name}"
-
-#~ msgid "Error Reports"
-#~ msgstr "Звіти про помилки"
-
-#~ msgid ""
-#~ "Any unhandled errors are shown here. "
-#~ "You can use these to provide extra"
-#~ " information when you create an issue"
-#~ " on GitHub."
-#~ msgstr ""
-#~ "Тут відображаються всі необроблені помилки."
-#~ " Ви можете використовувати їх, щоб "
-#~ "надати додаткову інформацію під час "
-#~ "створення проблеми на GitHub."
-
-#~ msgid "New _Package"
-#~ msgstr "Новий _пакет"
+msgstr ""

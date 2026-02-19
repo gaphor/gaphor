@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import os
 import platform
 import shutil
 import subprocess
@@ -31,9 +30,10 @@ def build_installer(
     icon: Path, nsi: Path, files_to_package: Path, output_file: Path
 ) -> None:
     print("Building Installer")
-    if not (files_to_package / "gaphor.exe").exists() and not (
-        files_to_package / "gaphor"
-    ).exists():
+    if (
+        not (files_to_package / "gaphor.exe").exists()
+        and not (files_to_package / "gaphor").exists()
+    ):
         raise SystemExit(
             "dist/gaphor does not contain PyInstaller output. "
             "Run 'poe package' first to build the application."
@@ -68,6 +68,7 @@ def _run_makensis(nsi: Path, source_dir: Path, output_file: Path) -> None:
         encoding="utf-8",
         capture_output=True,
         text=True,
+        check=False,
         cwd=source_dir,
     )
     if result.returncode != 0:
@@ -105,7 +106,7 @@ def find_7zip() -> tuple[Path, Path]:
     """Find 7-Zip executable and SFX module for the current platform."""
     if platform.system() == "Windows":
         seven_zip = Path("C:/Program Files/7-Zip/7z.exe")
-        sfx = seven_zip.parent / "7z.sfx"
+        sfx: Path | None = seven_zip.parent / "7z.sfx"
     else:
         # Linux/macOS: use p7zip (apt install p7zip-full)
         seven_zip_path = shutil.which("7z")
@@ -140,6 +141,7 @@ def find_7zip() -> tuple[Path, Path]:
             raise SystemExit(
                 "7z.sfx / 7zCon.sfx not found. Install p7zip-full (apt install p7zip-full)."
             )
+    assert sfx is not None  # mypy: ensure sfx is not None
     return seven_zip, sfx
 
 

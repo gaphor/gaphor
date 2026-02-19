@@ -5,7 +5,7 @@
 
 import sys
 
-from gi.repository import Adw, Gtk
+from gi.repository import Adw, Gio, Gtk
 
 from gaphor.abc import ActionProvider, Service
 from gaphor.application import distribution
@@ -43,6 +43,10 @@ class HelpService(Service, ActionProvider):
         about.set_debug_info(self.debug_info.create_debug_info())
         about.present(self.window)
         return about
+
+    @action(name="app.documentation", shortcut="F1")
+    def documentation(self):
+        Gio.AppInfo.launch_default_for_uri("https://docs.gaphor.org", None)
 
     @action(name="app.shortcuts", shortcut="<Primary>question")
     def shortcuts(self):
@@ -118,9 +122,7 @@ class HelpService(Service, ActionProvider):
         except ValueError:
             selected_idx = 0
         display_language.set_selected(selected_idx)
-        display_language.connect(
-            "notify::selected", self._on_display_language_selected
-        )
+        display_language.connect("notify::selected", self._on_display_language_selected)
 
         settings.bind_use_english(use_english, "active")
         use_english.connect("notify::active", self._on_use_english_selected)
