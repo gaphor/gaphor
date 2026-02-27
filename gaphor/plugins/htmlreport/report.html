@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gaphor Model Report</title>
+<style>
+{css}
+</style>
+</head>
+<body>
+<div id="sidebar">
+  <div id="sidebar-header">
+    <h2>Model Browser</h2>
+    <input type="text" id="search" placeholder="Search..." autocomplete="off">
+  </div>
+  <div id="tree-container"></div>
+</div>
+<div id="main">
+  <div id="welcome-view">
+    <h1>Model Report</h1>
+    <p>Select a diagram or element from the sidebar, or choose a diagram below.</p>
+    <div id="diagram-list"></div>
+  </div>
+  <div id="diagram-view" style="display:none;">
+    <div id="diagram-header"><h2 id="diagram-title"></h2></div>
+    <div id="diagram-content"></div>
+  </div>
+  <div id="element-view" style="display:none;">
+    <h2 id="element-title"></h2>
+    <div id="element-type"></div>
+    <div id="element-details"></div>
+    <div id="element-diagrams"></div>
+  </div>
+  <div id="element-panel" class="panel-hidden">
+    <div id="panel-header">
+      <h3 id="panel-title"></h3>
+      <span id="panel-type"></span>
+      <button id="panel-close" title="Close">&times;</button>
+    </div>
+    <div id="panel-body"></div>
+  </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/svg-pan-zoom/3.6.1/svg-pan-zoom.min.js" integrity="sha512-RMVMJFuwWpeLofafxeCbauPAjE8rrkLmqJHcw39yjKr4RGMFxbNKmU6mnaE2wCYlGiDLclnvLiIU0YNDdHx3ew==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+var MODEL_DATA = {model_data};
+{js}
+</script>
+</body>
+</html>
