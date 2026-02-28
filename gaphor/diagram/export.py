@@ -2,6 +2,7 @@
 
 import contextlib
 import re
+from typing import NamedTuple
 
 import cairo
 from gaphas.geometry import Rectangle
@@ -12,13 +13,34 @@ from gaphor.core.modeling.diagram import Diagram, StyledDiagram
 from gaphor.diagram.painter import DiagramTypePainter, ItemPainter
 
 
+class RenderContext(NamedTuple):
+    """Pre-computed rendering state for a diagram."""
+
+    items: list
+    painter: PainterChain
+    style_sheet: StyleSheet
+    bounding_box: Rectangle
+    type_padding: float
+
+    def get_offsets(self, padding) -> tuple[float, float]:
+        return (
+            -self.bounding_box.x + padding,
+            -self.bounding_box.y + padding + self.type_padding,
+        )
+
+
 def escape_filename(diagram_name):
     return re.sub("\\W+", "_", diagram_name)
 
 
-def render(
-    diagram: Diagram, new_surface, items=None, with_diagram_type=True, padding=8
-) -> None:
+def _prepare_render(
+    diagram: Diagram, items=None, with_diagram_type: bool = True
+) -> RenderContext:
+    """Set up painter chain and compute bounding box for a diagram.
+
+    Shared preparation logic used by both render() and
+    diagram_render_offsets().
+    """
     if items is None:
         items = list(diagram.get_all_items())
 
@@ -43,15 +65,29 @@ def render(
     # (used for stuff like calculating font metrics)
     bounding_box = calc_bounding_box(items, painter)
 
+    return RenderContext(
+        items=items,
+        painter=painter,
+        style_sheet=style_sheet,
+        bounding_box=bounding_box,
+        type_padding=type_padding,
+    )
+
+
+def render(
+    diagram: Diagram, new_surface, items=None, with_diagram_type=True, padding=8
+) -> None:
+    ctx = _prepare_render(diagram, items, with_diagram_type)
+
     w, h = (
-        bounding_box.width + 2 * padding,
-        bounding_box.height + 2 * padding + type_padding,
+        ctx.bounding_box.width + 2 * padding,
+        ctx.bounding_box.height + 2 * padding + ctx.type_padding,
     )
 
     with new_surface(w, h) as surface:
         cr = cairo.Context(surface)
 
-        bg_color = style_sheet.compute_style(StyledDiagram(diagram)).get(
+        bg_color = ctx.style_sheet.compute_style(StyledDiagram(diagram)).get(
             "background-color"
         )
         if bg_color and bg_color[3]:
@@ -59,12 +95,20 @@ def render(
             cr.set_source_rgba(*bg_color)
             cr.fill()
 
-        cr.translate(
-            -bounding_box.x + padding, -bounding_box.y + padding + type_padding
-        )
-        painter.paint(items, cr)
+        cr.translate(*ctx.get_offsets(padding))
+        ctx.painter.paint(ctx.items, cr)
         cr.show_page()
         surface.flush()
+
+
+def diagram_render_offsets(diagram: Diagram, padding: int = 8) -> tuple[float, float]:
+    """Return the (tx, ty) translation offset applied during diagram export.
+
+    Useful for post-processing exported files, e.g. injecting clickable
+    overlay regions whose coordinates must match the exported SVG.
+    """
+    ctx = _prepare_render(diagram)
+    return ctx.get_offsets(padding)
 
 
 def diagram_type_height(diagram):
