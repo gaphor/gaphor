@@ -4,6 +4,8 @@ import pytest
 
 from gaphor import UML
 from gaphor.plugins.htmlreport.generator import (
+    _ICON_FA_CLASSES,
+    _icon_fa_class,
     build_model_data,
     build_tree,
     extract_element_info,
@@ -147,3 +149,42 @@ def test_build_tree_nested_packages(element_factory):
     tree = build_tree(element_factory)
     pkg_node = next(n for n in tree if n["name"] == "MyPackage")
     assert any(c["name"] == "Inner" for c in pkg_node["children"])
+
+
+def test_build_tree_node_has_icon(element_factory):
+    cls = element_factory.create(UML.Class)
+    cls.name = "Foo"
+    tree = build_tree(element_factory)
+    node = next(n for n in tree if n["name"] == "Foo")
+    assert node["icon"] == "fa-solid fa-c"
+
+
+def test_icon_mapping_covers_common_types(element_factory):
+    for element_type in (
+        UML.Class,
+        UML.Package,
+        UML.Interface,
+        UML.Component,
+        UML.Enumeration,
+        UML.Actor,
+        UML.UseCase,
+        UML.Activity,
+        UML.StateMachine,
+        UML.Artifact,
+    ):
+        el = element_factory.create(element_type)
+        assert _icon_fa_class(el) != "fa-solid fa-circle", (
+            f"{element_type.__name__} should have a specific icon mapping"
+        )
+
+
+def test_icon_fa_classes_values_are_valid():
+    for icon_name, fa_class in _ICON_FA_CLASSES.items():
+        parts = fa_class.split()
+        assert len(parts) == 2, f"{icon_name}: expected 2 parts, got {parts}"
+        assert parts[0] in ("fa-solid", "fa-regular", "fa-brands"), (
+            f"{icon_name}: unexpected prefix {parts[0]}"
+        )
+        assert parts[1].startswith("fa-"), (
+            f"{icon_name}: icon name should start with fa-"
+        )

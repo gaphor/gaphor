@@ -44,6 +44,10 @@
       }
       div.appendChild(toggle);
 
+      var icon = document.createElement("i");
+      icon.className = "tree-icon " + node.icon;
+      div.appendChild(icon);
+
       var label = document.createElement("span");
       label.className = "tree-label";
       label.textContent = node.name || "(unnamed)";

@@ -224,6 +224,72 @@ def _extract_stereotypes(element) -> list[str]:
     return [st.name or "" for st in get_applied_stereotypes(element)]
 
 
+_ICON_FA_CLASSES = {
+    # Diagrams
+    "gaphor-diagram-symbolic": "fa-solid fa-image",
+    # Structure
+    "gaphor-package-symbolic": "fa-solid fa-box",
+    "gaphor-profile-symbolic": "fa-solid fa-box",
+    "gaphor-class-symbolic": "fa-solid fa-c",
+    "gaphor-metaclass-symbolic": "fa-solid fa-m",
+    "gaphor-interface-symbolic": "fa-regular fa-circle",
+    "gaphor-component-symbolic": "fa-solid fa-puzzle-piece",
+    "gaphor-enumeration-symbolic": "fa-solid fa-list-ol",
+    "gaphor-data-type-symbolic": "fa-solid fa-hashtag",
+    "gaphor-primitive-type-symbolic": "fa-solid fa-hashtag",
+    "gaphor-artifact-symbolic": "fa-regular fa-file",
+    "gaphor-node-symbolic": "fa-solid fa-server",
+    "gaphor-device-symbolic": "fa-solid fa-desktop",
+    # Behavior
+    "gaphor-actor-symbolic": "fa-solid fa-user",
+    "gaphor-use-case-symbolic": "fa-regular fa-circle-dot",
+    "gaphor-activity-symbolic": "fa-solid fa-play",
+    "gaphor-state-machine-symbolic": "fa-solid fa-diagram-project",
+    "gaphor-state-symbolic": "fa-regular fa-circle",
+    "gaphor-region-symbolic": "fa-solid fa-layer-group",
+    "gaphor-transition-symbolic": "fa-solid fa-arrow-right",
+    "gaphor-interaction-symbolic": "fa-solid fa-arrows-left-right",
+    "gaphor-signal-symbolic": "fa-solid fa-bolt",
+    # Relationships
+    "gaphor-association-symbolic": "fa-solid fa-link",
+    "gaphor-dependency-symbolic": "fa-solid fa-arrow-right",
+    "gaphor-generalization-symbolic": "fa-solid fa-arrow-up",
+    "gaphor-realization-symbolic": "fa-solid fa-arrow-up",
+    # Properties and features
+    "gaphor-property-symbolic": "fa-solid fa-circle-info",
+    "gaphor-operation-symbolic": "fa-solid fa-gear",
+    "gaphor-port-symbolic": "fa-solid fa-plug",
+    "gaphor-connector-symbolic": "fa-solid fa-minus",
+    # Profiles and constraints
+    "gaphor-stereotype-symbolic": "fa-solid fa-tag",
+    "gaphor-constraint-symbolic": "fa-solid fa-code",
+    "gaphor-comment-symbolic": "fa-regular fa-comment",
+    "gaphor-collaboration-symbolic": "fa-solid fa-people-group",
+    "gaphor-information-flow-symbolic": "fa-solid fa-right-long",
+    # SysML
+    "gaphor-block-symbolic": "fa-solid fa-square",
+    "gaphor-requirement-symbolic": "fa-solid fa-check",
+    "gaphor-value-type-symbolic": "fa-solid fa-hashtag",
+    "gaphor-constraint-block-symbolic": "fa-solid fa-code",
+    "gaphor-interface-block-symbolic": "fa-regular fa-circle",
+    # C4 Model
+    "gaphor-c4-software-system-symbolic": "fa-solid fa-building",
+    "gaphor-c4-container-symbolic": "fa-solid fa-box",
+    "gaphor-c4-component-symbolic": "fa-solid fa-puzzle-piece",
+    "gaphor-c4-database-symbolic": "fa-solid fa-database",
+    "gaphor-c4-person-symbolic": "fa-solid fa-user",
+    # Virtual group node
+    "gaphor-relationship": "fa-solid fa-folder",
+}
+
+_DEFAULT_ICON_FA_CLASS = "fa-solid fa-circle"
+
+
+def _icon_fa_class(element) -> str:
+    """Map a Gaphor element to its Font Awesome icon class."""
+    return _ICON_FA_CLASSES.get(icon_name(element), _DEFAULT_ICON_FA_CLASS)
+
+
 def build_tree(factory) -> list[dict]:
     """Build a hierarchical tree structure for the sidebar."""
     roots = [
@@ -261,7 +327,9 @@ def _build_tree_node(element) -> dict:
                 "id": f"_rels_{element.id}",
                 "name": "Relationships",
                 "node_type": "group",
-                "icon": "gaphor-relationship",
+                "icon": _ICON_FA_CLASSES.get(
+                    "gaphor-relationship", _DEFAULT_ICON_FA_CLASS
+                ),
                 "children": rel_children,
             }
         )
@@ -270,7 +338,7 @@ def _build_tree_node(element) -> dict:
         "id": element.id,
         "name": name,
         "node_type": node_type,
-        "icon": icon_name(element),
+        "icon": _icon_fa_class(element),
         "children": children,
     }
 

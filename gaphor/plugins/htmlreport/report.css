@@ -91,13 +91,19 @@ body {
 .tree-node.active {
   background: #d2e3fc;
 }
-.tree-toggle {
+.tree-toggle,
+.tree-icon {
   display: inline-block;
   width: 16px;
   text-align: center;
   font-size: 10px;
-  color: #888;
   flex-shrink: 0;
+}
+.tree-toggle {
+  color: #888;
+}
+.tree-icon {
+  color: #666;
 }
 .tree-label {
   margin-left: 4px;
