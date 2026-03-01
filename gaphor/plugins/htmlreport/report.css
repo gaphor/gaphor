@@ -1,0 +1,329 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+  color: #333;
+}
+#sidebar {
+  width: 300px;
+  min-width: 200px;
+  background: #f5f5f5;
+  border-right: 1px solid #ddd;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+#sidebar-header {
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+}
+#sidebar-header h2 {
+  font-size: 14px;
+  margin-bottom: 8px;
+  color: #555;
+}
+#search {
+  width: 100%;
+  padding: 6px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 13px;
+}
+#tree-container {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px 0;
+}
+#main {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px;
+  position: relative;
+}
+#welcome-view h1 {
+  margin-bottom: 12px;
+}
+#welcome-view p {
+  color: #666;
+  margin-bottom: 20px;
+}
+.diagram-card {
+  display: inline-block;
+  padding: 10px 16px;
+  margin: 4px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  cursor: pointer;
+  text-decoration: none;
+  color: #333;
+  background: #fff;
+}
+.diagram-card:hover {
+  background: #e8f0fe;
+  border-color: #4285f4;
+}
+.tree-list {
+  list-style: none;
+  padding-left: 16px;
+}
+.tree-list.root {
+  padding-left: 4px;
+}
+.tree-node {
+  cursor: pointer;
+  padding: 3px 8px;
+  font-size: 13px;
+  border-radius: 3px;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+}
+.tree-node:hover {
+  background: #e0e0e0;
+}
+.tree-node.active {
+  background: #d2e3fc;
+}
+.tree-toggle {
+  display: inline-block;
+  width: 16px;
+  text-align: center;
+  font-size: 10px;
+  color: #888;
+  flex-shrink: 0;
+}
+.tree-icon {
+  display: inline-block;
+  width: 16px;
+  text-align: center;
+  font-size: 10px;
+  color: #666;
+  flex-shrink: 0;
+}
+.tree-label {
+  margin-left: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.tree-children {
+  display: none;
+}
+.tree-children.open {
+  display: block;
+}
+.tree-group {
+  font-style: italic;
+  color: #888;
+}
+.hidden {
+  display: none !important;
+}
+#diagram-header {
+  margin-bottom: 16px;
+}
+#diagram-header h2 {
+  font-size: 18px;
+}
+#diagram-content {
+  overflow: hidden;
+  background: #fafafa;
+  border: 1px solid #eee;
+  border-radius: 4px;
+  position: relative;
+  height: calc(100vh - 120px);
+}
+#diagram-content svg {
+  width: 100%;
+  height: 100%;
+}
+.zoom-controls {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  z-index: 10;
+}
+.zoom-controls button {
+  width: 32px;
+  height: 32px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: #fff;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #555;
+}
+.zoom-controls button:hover {
+  background: #e8f0fe;
+  border-color: #4285f4;
+}
+#element-view h2 {
+  margin-bottom: 4px;
+}
+#element-type {
+  color: #888;
+  font-size: 13px;
+  margin-bottom: 16px;
+}
+#element-details {
+  margin-bottom: 20px;
+}
+.props-table {
+  border-collapse: collapse;
+  width: 100%;
+  max-width: 600px;
+}
+.props-table th,
+.props-table td {
+  text-align: left;
+  padding: 6px 12px;
+  border-bottom: 1px solid #eee;
+  font-size: 13px;
+}
+.props-table th {
+  color: #666;
+  width: 160px;
+}
+#element-diagrams h3 {
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+#element-diagrams a {
+  display: inline-block;
+  margin: 2px 6px;
+  color: #4285f4;
+  text-decoration: none;
+}
+#element-diagrams a:hover {
+  text-decoration: underline;
+}
+.element-section {
+  margin-bottom: 16px;
+}
+.element-section h3 {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 6px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 4px;
+}
+.element-section ul {
+  list-style: none;
+  padding: 0;
+}
+.element-section li {
+  padding: 3px 0;
+  font-size: 13px;
+}
+.element-section code {
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 12px;
+  background: #f5f5f5;
+  padding: 2px 6px;
+  border-radius: 3px;
+}
+.stereotype-tag {
+  display: inline-block;
+  background: #e8f0fe;
+  color: #1a73e8;
+  font-size: 12px;
+  padding: 2px 8px;
+  border-radius: 10px;
+  margin: 2px 4px 2px 0;
+}
+.element-section a {
+  color: #4285f4;
+  text-decoration: none;
+}
+.element-section a:hover {
+  text-decoration: underline;
+}
+.assoc-table {
+  border-collapse: collapse;
+  width: 100%;
+  max-width: 700px;
+}
+.assoc-table th,
+.assoc-table td {
+  text-align: left;
+  padding: 6px 12px;
+  border-bottom: 1px solid #eee;
+  font-size: 13px;
+}
+.assoc-table th {
+  color: #666;
+  font-weight: 600;
+}
+#element-panel {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  max-height: 45%;
+  background: #fff;
+  border-top: 2px solid #ccc;
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+}
+#element-panel.panel-hidden {
+  transform: translateY(100%);
+}
+#panel-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 16px;
+  border-bottom: 1px solid #eee;
+  flex-shrink: 0;
+}
+#panel-header h3 {
+  font-size: 14px;
+  margin: 0;
+}
+#panel-type {
+  color: #888;
+  font-size: 12px;
+}
+#panel-close {
+  margin-left: auto;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #888;
+  padding: 0 4px;
+  line-height: 1;
+}
+#panel-close:hover {
+  color: #333;
+}
+#panel-body {
+  overflow-y: auto;
+  padding: 12px 16px;
+  flex: 1;
+}
+#panel-body .element-section {
+  margin-bottom: 12px;
+}
+#panel-body .element-section h3 {
+  font-size: 13px;
+}
+#panel-body .props-table th,
+#panel-body .props-table td {
+  padding: 4px 10px;
+}
