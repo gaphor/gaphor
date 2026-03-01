@@ -99,6 +99,14 @@ body {
   color: #888;
   flex-shrink: 0;
 }
+.tree-icon {
+  display: inline-block;
+  width: 16px;
+  text-align: center;
+  font-size: 10px;
+  color: #666;
+  flex-shrink: 0;
+}
 .tree-label {
   margin-left: 4px;
   overflow: hidden;

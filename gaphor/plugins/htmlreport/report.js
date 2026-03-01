@@ -15,6 +15,52 @@
   function $(sel) { return document.querySelector(sel); }
   function $$(sel) { return document.querySelectorAll(sel); }
 
+  // Map icon names (from gaphor.diagram.iconname) to Font Awesome classes
+  // for visual type distinction in the sidebar tree.
+  var ICON_CLASSES = {
+    "gaphor-diagram-symbolic":          "fa-solid fa-image",
+    "gaphor-package-symbolic":          "fa-solid fa-box",
+    "gaphor-profile-symbolic":          "fa-solid fa-box",
+    "gaphor-class-symbolic":            "fa-solid fa-c",
+    "gaphor-interface-symbolic":        "fa-regular fa-circle",
+    "gaphor-component-symbolic":        "fa-solid fa-puzzle-piece",
+    "gaphor-block-symbolic":            "fa-solid fa-square",
+    "gaphor-enumeration-symbolic":      "fa-solid fa-list-ol",
+    "gaphor-data-type-symbolic":        "fa-solid fa-hashtag",
+    "gaphor-primitive-type-symbolic":   "fa-solid fa-hashtag",
+    "gaphor-actor-symbolic":            "fa-solid fa-user",
+    "gaphor-use-case-symbolic":         "fa-regular fa-circle-dot",
+    "gaphor-activity-symbolic":         "fa-solid fa-play",
+    "gaphor-state-machine-symbolic":    "fa-solid fa-diagram-project",
+    "gaphor-interaction-symbolic":      "fa-solid fa-arrows-left-right",
+    "gaphor-artifact-symbolic":         "fa-regular fa-file",
+    "gaphor-node-symbolic":             "fa-solid fa-server",
+    "gaphor-device-symbolic":           "fa-solid fa-desktop",
+    "gaphor-association-symbolic":      "fa-solid fa-link",
+    "gaphor-dependency-symbolic":       "fa-solid fa-arrow-right",
+    "gaphor-generalization-symbolic":   "fa-solid fa-arrow-up",
+    "gaphor-realization-symbolic":      "fa-solid fa-arrow-up",
+    "gaphor-requirement-symbolic":      "fa-solid fa-check",
+    "gaphor-constraint-symbolic":       "fa-solid fa-code",
+    "gaphor-comment-symbolic":          "fa-regular fa-comment",
+    "gaphor-property-symbolic":         "fa-solid fa-circle-info",
+    "gaphor-operation-symbolic":        "fa-solid fa-gear",
+    "gaphor-port-symbolic":             "fa-solid fa-plug",
+    "gaphor-connector-symbolic":        "fa-solid fa-minus",
+    "gaphor-stereotype-symbolic":       "fa-solid fa-tag",
+    "gaphor-collaboration-symbolic":    "fa-solid fa-people-group",
+    "gaphor-information-flow-symbolic": "fa-solid fa-right-long",
+    "gaphor-signal-symbolic":           "fa-solid fa-bolt",
+    "gaphor-value-type-symbolic":       "fa-solid fa-hashtag",
+    "gaphor-constraint-block-symbolic": "fa-solid fa-code",
+    "gaphor-interface-block-symbolic":  "fa-regular fa-circle",
+    "gaphor-relationship":              "fa-solid fa-folder"
+  };
+
+  function iconClass(node) {
+    return ICON_CLASSES[node.icon] || "fa-solid fa-circle";
+  }
+
   /*
    * Recursively build the sidebar tree from the nested node structure.
    * "group" nodes act as non-navigable folders (packages, namespaces);
@@ -43,6 +89,10 @@
         toggle.textContent = "\u25b6";
       }
       div.appendChild(toggle);
+
+      var icon = document.createElement("i");
+      icon.className = "tree-icon " + iconClass(node);
+      div.appendChild(icon);
 
       var label = document.createElement("span");
       label.className = "tree-label";
