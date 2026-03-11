@@ -19,7 +19,6 @@ from gaphor.core.modeling.event import (
 )
 from gaphor.core.styling import PrefersColorScheme
 from gaphor.diagram.diagramtoolbox import get_tool_def, tooliter
-from gaphor.diagram.event import DiagramSelectionChanged
 from gaphor.diagram.painter import DiagramTypePainter, ItemPainter
 from gaphor.diagram.tools import (
     apply_default_tool_set,
@@ -129,7 +128,6 @@ class DiagramPage:
         view.connect("copy-clipboard", self.clipboard.copy)
         view.connect("paste-clipboard", self.clipboard.paste_link)
         view.connect("paste-full-clipboard", self.clipboard.paste_full)
-        view.selection.add_handler(self._selection_changed)
         self.clipboard.clipboard.connect(
             "notify::content", self._clipboard_content_changed
         )
@@ -213,16 +211,6 @@ class DiagramPage:
 
     def _css_class(self):
         return f"diagram-{id(self)}"
-
-    def _selection_changed(self, _item):
-        view = self.view
-        assert view
-        selection = view.selection
-        self.event_manager.handle(
-            DiagramSelectionChanged(
-                view, selection.focused_item, selection.selected_items
-            )
-        )
 
     @event_handler(ToolSelected)
     def _on_tool_selected(self, event: ToolSelected):
