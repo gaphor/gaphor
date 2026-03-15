@@ -36,10 +36,13 @@ def text_stereotypes(
         "stereotypes",
         item.subject,
         Text(
-            text=lambda: stereotypes_str(
-                item.subject, additional_stereotypes() if additional_stereotypes else ()
-            )
-            or (f"«{default_stereotype}»" if default_stereotype else ""),
+            text=lambda: (
+                stereotypes_str(
+                    item.subject,
+                    additional_stereotypes() if additional_stereotypes else (),
+                )
+                or (f"«{default_stereotype}»" if default_stereotype else "")
+            ),
         ),
     )
 
