@@ -38,8 +38,10 @@ class LabelValue(GObject.Object):
 
 
 def new_resource_builder(package, property_pages="propertypages"):
-    def new_builder(*object_ids, signals=None):
+    def new_builder(*object_ids, signals=None, binding=None):
         builder = Gtk.Builder(signals)
+        if binding:
+            builder.expose_object("binding", binding)
         builder.add_objects_from_string(
             translated_ui_string(package, f"{property_pages}.ui"), object_ids
         )
