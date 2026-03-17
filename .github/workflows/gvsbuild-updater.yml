@@ -53,6 +53,8 @@ jobs:
     runs-on: ubuntu-24.04
     needs: [ check-version ]
     if: ${{ needs.check-version.outputs.current_version != needs.check-version.outputs.latest_version }}
+    environment:
+      name: release
     permissions:
       pull-requests: write
       contents: write
