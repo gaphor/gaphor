@@ -19,6 +19,7 @@ from gaphor.core.modeling.event import (
 )
 from gaphor.core.styling import PrefersColorScheme
 from gaphor.diagram.diagramtoolbox import get_tool_def, tooliter
+from gaphor.diagram.iconname import icon_path
 from gaphor.diagram.painter import DiagramTypePainter, ItemPainter
 from gaphor.diagram.tools import (
     apply_default_tool_set,
@@ -56,17 +57,8 @@ def get_placement_icon(display, icon_name):
     if display is None:
         display = Gdk.Display.get_default()
     pixbuf = placement_icon_base().copy()
-    theme_icon = Gtk.IconTheme.get_for_display(display).lookup_icon(
-        icon_name,
-        None,
-        24,
-        1,
-        Gtk.TextDirection.NONE,
-        Gtk.IconLookupFlags.FORCE_SYMBOLIC,
-    )
-    icon = GdkPixbuf.Pixbuf.new_from_file_at_scale(
-        theme_icon.get_file().get_path(), 32, 32, True
-    )
+    icon_file = (icon_path / icon_name).with_suffix(".svg")
+    icon = GdkPixbuf.Pixbuf.new_from_file_at_scale(str(icon_file), 32, 32, True)
     icon.copy_area(
         0,
         0,

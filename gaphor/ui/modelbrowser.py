@@ -9,6 +9,7 @@ from gaphor.core.modeling import Base, Diagram
 from gaphor.diagram.deletable import deletable
 from gaphor.diagram.event import DiagramOpened, DiagramSelectionChanged
 from gaphor.diagram.group import Root, RootType, change_owner, owner
+from gaphor.diagram.iconname import icon_path
 from gaphor.diagram.tools.dnd import ElementDragData
 from gaphor.event import Notification
 from gaphor.i18n import gettext
@@ -498,16 +499,9 @@ def list_item_drag_begin(
     list_item: Gtk.ListItem,
 ) -> None:
     tree_item = list_item.get_item().get_item()
-    display = Gdk.Display.get_default()
-    theme_icon = Gtk.IconTheme.get_for_display(display).lookup_icon(
-        tree_item.icon,
-        None,
-        24,
-        1,
-        Gtk.TextDirection.NONE,
-        Gtk.IconLookupFlags.FORCE_SYMBOLIC,
-    )
-    source.set_icon(theme_icon, 0, 0)
+    icon_file = (icon_path / tree_item.icon).with_suffix(".svg")
+    image = Gtk.Image.new_from_file(str(icon_file))
+    source.set_icon(image.get_paintable(), 0, 0)
 
 
 def list_item_drop_accept(

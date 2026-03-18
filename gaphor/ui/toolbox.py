@@ -11,6 +11,7 @@ from gi.repository import Gdk, GLib, GObject, Gtk
 from gaphor.core.eventmanager import EventManager, event_handler
 from gaphor.diagram.diagramtoolbox import ToolboxDefinition
 from gaphor.diagram.event import ToolCompleted
+from gaphor.diagram.iconname import icon_path
 from gaphor.diagram.tools.dnd import ToolboxActionDragData
 from gaphor.services.modelinglanguage import (
     ModelingLanguageChanged,
@@ -206,7 +207,8 @@ def create_toolbox_button(
 ) -> Gtk.Button:
     """Creates a tool button for the toolbox."""
     button = Gtk.FlowBoxChild.new()
-    icon = Gtk.Image.new_from_icon_name(icon_name)
+    icon_file = str((icon_path / icon_name).with_suffix(".svg"))
+    icon = Gtk.Image.new_from_file(icon_file)
     button.set_child(icon)
     button.action_name = action_name
     button.icon_name = icon_name
@@ -233,16 +235,9 @@ def _flowbox_drag_prepare(source: Gtk.DragSource, x: int, y: int):
     if not child.draggable:
         return None
 
-    display = Gdk.Display.get_default()
-    theme_icon = Gtk.IconTheme.get_for_display(display).lookup_icon(
-        child.icon_name,
-        None,
-        24,
-        1,
-        Gtk.TextDirection.NONE,
-        Gtk.IconLookupFlags.FORCE_SYMBOLIC,
-    )
-    source.set_icon(theme_icon, 0, 0)
+    icon_file = (icon_path / child.icon_name).with_suffix(".svg")
+    image = Gtk.Image.new_from_file(str(icon_file))
+    source.set_icon(image.get_paintable(), 0, 0)
 
     v = GObject.Value(
         ToolboxActionDragData.__gtype__,

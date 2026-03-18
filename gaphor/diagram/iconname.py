@@ -1,9 +1,19 @@
 """With `icon_name` you can retrieve an icon name for a model element."""
 
+import pathlib
 import re
 from functools import singledispatch
 
 from gaphor.core.modeling import Diagram
+
+icon_path = (
+    pathlib.Path(__file__).parent.parent
+    / "ui"
+    / "icons"
+    / "hicolor"
+    / "scalable"
+    / "actions"
+)
 
 TO_KEBAB = re.compile(r"([a-z0-9])([A-Z]+)")
 

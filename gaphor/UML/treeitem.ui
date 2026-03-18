@@ -16,7 +16,7 @@
             <property name="spacing">6</property>
             <child>
               <object class="GtkImage">
-                <binding name="icon-name">
+                <binding name="file">
                   <lookup name="icon" type="gaphor+UML+treemodel+TreeItem">
                     <lookup name="item">expander</lookup>
                   </lookup>

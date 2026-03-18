@@ -21,7 +21,7 @@ from gaphor.core.modeling import (
     ModelReady,
 )
 from gaphor.diagram.group import Root, RootType, owner, owns
-from gaphor.diagram.iconname import icon_name
+from gaphor.diagram.iconname import icon_name, icon_path
 from gaphor.i18n import gettext
 
 
@@ -56,7 +56,7 @@ class TreeItem(GObject.Object):
         if element := self.element:
             self.readonly_text = format(element) or gettext("<None>")
             self.notify("editable-text")
-            self.icon = icon_name(element)
+            self.icon = str((icon_path / icon_name(element)).with_suffix(".svg"))
             self.icon_visible = bool(
                 self.icon
                 and not isinstance(
