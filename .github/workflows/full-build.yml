@@ -80,6 +80,8 @@ jobs:
     name:  🐧 Linux (Wheel) with Python ${{ matrix.python_version }}
     needs: lint
     runs-on: ubuntu-24.04
+    environment:
+      name: build
     container: fedora:43
     timeout-minutes: 30
     if: "!contains(github.event.head_commit.message, 'skip ci')"
@@ -190,6 +192,8 @@ jobs:
     name: 🍏 macOS
     needs: lint
     runs-on: ${{ matrix.target.runner }}
+    environment:
+      name: build
     permissions:
       contents: write
     timeout-minutes: 45
@@ -284,6 +288,8 @@ jobs:
     name: 🪟 Windows
     needs: lint
     runs-on: windows-2022
+    environment:
+      name: build
     env:
       INCLUDE: C:\gtk\include;C:\gtk\include\cairo;C:\gtk\include\glib-2.0;C:\gtk\include\gobject-introspection-1.0;C:\gtk\lib\glib-2.0\include;
       LIB: C:\gtk\lib
@@ -370,6 +376,8 @@ jobs:
     name: 🦠 Virus Check
     needs: windows
     runs-on: windows-latest
+    environment:
+      name: build
     continue-on-error: true
     timeout-minutes: 15
     permissions:
@@ -420,6 +428,8 @@ jobs:
     name: 📦 Submit to WinGet (release only)
     needs: [ publish-to-pypi ]
     runs-on: windows-latest
+    environment:
+      name: release
     continue-on-error: true
     timeout-minutes: 15
     if: github.event_name == 'release'
@@ -439,6 +449,8 @@ jobs:
     name: ⏩ gaphor.org version update
     needs: [ publish-to-pypi ]
     runs-on: ubuntu-24.04
+    environment:
+      name: release
     steps:
       - name: Harden Runner
         uses: step-security/harden-runner@fa2e9d605c4eeb9fcad4c99c224cee0c6c7f3594 # v2.16.0
@@ -463,6 +475,8 @@ jobs:
     name: ⏩ Flathub version update
     needs: [ publish-to-pypi ]
     runs-on: ubuntu-24.04
+    environment:
+      name: release
     steps:
       - name: Harden Runner
         uses: step-security/harden-runner@fa2e9d605c4eeb9fcad4c99c224cee0c6c7f3594 # v2.16.0
