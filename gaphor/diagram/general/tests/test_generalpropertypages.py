@@ -4,8 +4,10 @@ from gaphor.core.modeling import Diagram
 from gaphor.diagram.general import Box, Diamond, Ellipse, Line, MetadataItem
 from gaphor.diagram.general.generalpropertypages import (
     LabelPropertyPage,
+    LineEndPropertyPage,
     MetadataPropertyPage,
 )
+from gaphor.diagram.general.simpleitem import LineEndStyle
 from gaphor.diagram.tests.fixtures import find
 
 
@@ -44,3 +46,39 @@ def test_metadata_property_page(diagram, event_manager):
     description.set_text("my text")
 
     assert metadata.description == "my text"
+
+
+def test_line_end_property_page_head_and_tail(element_factory, event_manager):
+    diagram = element_factory.create(Diagram)
+    line = diagram.create(Line)
+
+    property_page = LineEndPropertyPage(line, event_manager)
+    widget = property_page.construct()
+
+    head = find(widget, "line-head-end")
+    tail = find(widget, "line-tail-end")
+
+    head.set_selected(2)
+    tail.set_selected(3)
+
+    assert line.head_end == LineEndStyle.triangle
+    assert line.tail_end == LineEndStyle.diamond
+
+
+def test_line_end_property_page_allows_independent_values(
+    element_factory, event_manager
+):
+    diagram = element_factory.create(Diagram)
+    line = diagram.create(Line)
+
+    property_page = LineEndPropertyPage(line, event_manager)
+    widget = property_page.construct()
+
+    head = find(widget, "line-head-end")
+    tail = find(widget, "line-tail-end")
+
+    head.set_selected(1)
+    tail.set_selected(0)
+
+    assert line.head_end == LineEndStyle.arrow
+    assert line.tail_end == LineEndStyle.none

@@ -1,10 +1,14 @@
 """Unit tests for simple items."""
 
-from gaphor.diagram.general.simpleitem import Box, Ellipse, Line
+from gaphor.diagram.general.simpleitem import Box, Ellipse, Line, LineEndStyle
 
 
 def test_line(diagram):
-    assert diagram.create(Line)
+    line = diagram.create(Line)
+
+    assert line
+    assert line.head_end == LineEndStyle.none
+    assert line.tail_end == LineEndStyle.none
 
 
 def test_box(diagram):
