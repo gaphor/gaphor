@@ -4,6 +4,7 @@ ICONS=diagram \
 	pointer \
 	magnet \
 	box \
+	diamond \
 	line \
 	ellipse \
 	comment \
@@ -145,7 +146,7 @@ ICON_FILES=$(patsubst %,$(ICON_THEME)/gaphor-%-symbolic.svg,$(ICONS))
 UNAME := $(shell uname)
 
 ifeq ($(UNAME),Darwin)
-  INKSCAPE=inkscape
+  INKSCAPE=/Applications/Inkscape.app/Contents/MacOS/inkscape
 else
   INKSCAPE=flatpak run org.inkscape.Inkscape
 endif

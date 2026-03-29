@@ -172,7 +172,7 @@ def draw_diamond(
     cr.line_to(center_x, y2)
     cr.line_to(x2, center_y)
     cr.line_to(center_x, y1)
-    cr.line_to(x1, center_y)
+    cr.close_path()
     stroke(context, fill=True)
 
 
