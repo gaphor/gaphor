@@ -60,6 +60,8 @@
     <child>
       <object class="GtkEntry" id="name-entry">
         <property name="focusable">1</property>
+        <property name="text" bind-source="subject" bind-property="name"
+                  bind-flags="bidirectional|sync-create"/>
       </object>
     </child>
     <style>
@@ -140,6 +142,12 @@
           <object class="GtkTextView" id="note">
             <property name="wrap-mode">word</property>
             <property name="height-request">96</property>
+            <property name="buffer">
+              <object class="GtkTextBuffer">
+                <property name="text" bind-source="subject" bind-property="note"
+                          bind-flags="bidirectional|sync-create"/>
+              </object>
+            </property>
           </object>
         </property>
       </object>
