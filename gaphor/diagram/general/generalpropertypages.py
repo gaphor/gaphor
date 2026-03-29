@@ -1,7 +1,7 @@
 from gi.repository import GObject
 
 from gaphor.diagram.general.metadata import MetadataItem
-from gaphor.diagram.general.simpleitem import Box, Ellipse, Line
+from gaphor.diagram.general.simpleitem import Box, Diamond, Ellipse, Line
 from gaphor.diagram.iconname import to_kebab_case
 from gaphor.diagram.propertypages import (
     PropertyPageBase,
@@ -33,6 +33,7 @@ class LabelPropertyBinding(GObject.Object):
 
 
 @PropertyPages.register(Box)
+@PropertyPages.register(Diamond)
 @PropertyPages.register(Ellipse)
 @PropertyPages.register(Line)
 class LabelPropertyPage(PropertyPageBase):

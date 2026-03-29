@@ -1,7 +1,7 @@
 import pytest
 
 from gaphor.core.modeling import Diagram
-from gaphor.diagram.general import Box, Ellipse, Line, MetadataItem
+from gaphor.diagram.general import Box, Diamond, Ellipse, Line, MetadataItem
 from gaphor.diagram.general.generalpropertypages import (
     LabelPropertyPage,
     MetadataPropertyPage,
@@ -9,7 +9,7 @@ from gaphor.diagram.general.generalpropertypages import (
 from gaphor.diagram.tests.fixtures import find
 
 
-@pytest.mark.parametrize("item_type", [Box, Ellipse, Line])
+@pytest.mark.parametrize("item_type", [Box, Diamond, Ellipse, Line])
 def test_name_page(element_factory, event_manager, item_type):
     diagram = element_factory.create(Diagram)
     item = diagram.create(item_type)
