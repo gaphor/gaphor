@@ -12,8 +12,6 @@ from gaphor.diagram.shapes import CssNode, Text, draw_border, draw_ellipse, stro
 class Line(LinePresentation):
     def __init__(self, diagram, id=None):
         super().__init__(diagram=diagram, id=id, shape_middle=text_label(self))
-        self._handles[0].connectable = False
-        self._handles[-1].connectable = False
         self.watch("label")
 
     label: attribute[str] = attribute("label", str)

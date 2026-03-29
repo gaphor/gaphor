@@ -1,5 +1,6 @@
 # ruff: noqa: F401
 
+from gaphor.diagram.general import generalconnectors
 from gaphor.diagram.general.diagramitems import (
     Box,
     Diamond,
