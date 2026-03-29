@@ -101,6 +101,12 @@ class PropertyPageBase(abc.ABC):
         Returns the page's toplevel widget (Gtk.Widget).
         """
 
+    def close(self) -> None:  # noqa: B027
+        """Called when a property page is removed.
+
+        This allows us to clean up.
+        """
+
 
 def help_link(builder, help_widget, popover):
     """Show the help popover for a `Help` link in the property page."""

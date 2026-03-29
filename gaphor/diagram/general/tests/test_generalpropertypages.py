@@ -21,6 +21,19 @@ def test_name_page(element_factory, event_manager, item_type):
     assert item.label == "A new label"
 
 
+def test_name_page_disposal(element_factory, event_manager):
+    diagram = element_factory.create(Diagram)
+    item = diagram.create(Box)
+    property_page = LabelPropertyPage(item, event_manager)
+    binding_ref = property_page.binding.weak_ref()
+    widget_ref = property_page.construct().weak_ref()
+    property_page.close()
+    del property_page
+
+    assert widget_ref() is None
+    assert binding_ref() is None
+
+
 def test_metadata_property_page(diagram, event_manager):
     metadata = diagram.create(MetadataItem)
 

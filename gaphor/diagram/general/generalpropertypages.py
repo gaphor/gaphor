@@ -11,10 +11,6 @@ from gaphor.diagram.propertypages import (
 from gaphor.transaction import Transaction
 
 
-class DisposeWarning(RuntimeWarning):
-    pass
-
-
 class LabelPropertyBinding(GObject.Object):
     def __init__(self, item, event_manager):
         super().__init__()
@@ -44,19 +40,22 @@ class LabelPropertyPage(PropertyPageBase):
 
     def __init__(self, item, event_manager):
         super().__init__()
-        self.item = item
-        self.event_manager = event_manager
+        self.binding = LabelPropertyBinding(item, event_manager) if item else None
 
     def construct(self):
-        if not self.item:
+        if not self.binding:
             return
 
         builder = new_builder(
             "label-editor",
-            binding=LabelPropertyBinding(self.item, self.event_manager),
+            binding=self.binding,
         )
 
         return builder.get_object("label-editor")
+
+    def close(self):
+        if self.binding:
+            self.binding.run_dispose()
 
 
 @PropertyPages.register(MetadataItem)
