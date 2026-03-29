@@ -1,6 +1,7 @@
 import pytest
 
 from gaphor.diagram.export import (
+    diagram_render_offsets,
     escape_filename,
     save_eps,
     save_pdf,
@@ -50,6 +51,13 @@ def test_export_to_eps(diagram_with_box, tmp_path):
     content = f.read_bytes()
 
     assert b"%!PS-Adobe-3.0 EPSF-3.0" in content
+
+
+def test_diagram_render_offsets_respects_padding(diagram_with_box):
+    tx8, ty8 = diagram_render_offsets(diagram_with_box, padding=8)
+    tx20, ty20 = diagram_render_offsets(diagram_with_box, padding=20)
+    assert (tx20 - tx8) == pytest.approx(12.0)
+    assert (ty20 - ty8) == pytest.approx(12.0)
 
 
 def test_escape_filename():
