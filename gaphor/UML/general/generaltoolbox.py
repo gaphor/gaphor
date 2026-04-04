@@ -54,6 +54,14 @@ general_tools = ToolSection(
             SE,
         ),
         ToolDef(
+            "toolbox-diamond",
+            gettext("Diamond"),
+            "gaphor-diamond-symbolic",
+            None,
+            new_item_factory(general.Diamond),
+            SE,
+        ),
+        ToolDef(
             "toolbox-ellipse",
             gettext("Ellipse"),
             "gaphor-ellipse-symbolic",

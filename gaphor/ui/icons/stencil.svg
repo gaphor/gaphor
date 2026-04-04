@@ -6,7 +6,7 @@
    version="1.1"
    id="svg4268"
    sodipodi:docname="stencil.svg"
-   inkscape:version="1.4 (e7c3feb100, 2024-10-09)"
+   inkscape:version="1.4.3 (0d15f75, 2025-12-25)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -61,17 +61,17 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="5.1088097"
-     inkscape:cx="444.72199"
-     inkscape:cy="91.997946"
+     inkscape:zoom="33.863456"
+     inkscape:cx="94.187079"
+     inkscape:cy="-47.676764"
      inkscape:document-units="px"
-     inkscape:current-layer="justification"
+     inkscape:current-layer="diamond"
      showgrid="true"
      units="px"
-     inkscape:window-width="2256"
-     inkscape:window-height="1435"
+     inkscape:window-width="1638"
+     inkscape:window-height="1040"
      inkscape:window-x="0"
-     inkscape:window-y="0"
+     inkscape:window-y="39"
      inkscape:window-maximized="1"
      showborder="false"
      inkscape:document-rotation="0"
@@ -244,14 +244,14 @@
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:1.41111px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
-       x="1.2756696"
-       y="-11.487638"
+       x="1.1489037"
+       y="-16.304739"
        id="text882"
        inkscape:label="general-label"><tspan
          sodipodi:role="line"
          id="tspan880"
-         x="1.2756696"
-         y="-11.487638"
+         x="1.1489037"
+         y="-16.304739"
          style="stroke-width:0.264583">General</tspan></text>
     <rect
        inkscape:label="512x512"
@@ -260,6 +260,14 @@
        height="4.2333331"
        width="4.2333331"
        id="rect884"
+       style="display:inline;overflow:visible;visibility:visible;fill:#f0f0f0;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.132292;marker:none;enable-background:accumulate" />
+    <rect
+       inkscape:label="512x512"
+       y="-14.904422"
+       x="24.976448"
+       height="4.2333331"
+       width="4.2333331"
+       id="rect884-0"
        style="display:inline;overflow:visible;visibility:visible;fill:#f0f0f0;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.132292;marker:none;enable-background:accumulate" />
     <rect
        style="display:inline;overflow:visible;visibility:visible;fill:#000000;fill-opacity:0;fill-rule:nonzero;stroke:none;stroke-width:0.132292;marker:none;enable-background:accumulate"
@@ -3041,9 +3049,9 @@
        transform="matrix(0.8766316,0,0,0.8766316,3.2020685,7.3785495)"><tspan
          x="26.549852"
          y="53.38855"
-         id="tspan5"><tspan
+         id="tspan2"><tspan
            style="font-weight:bold"
-           id="tspan4">V</tspan></tspan></text>
+           id="tspan1">V</tspan></tspan></text>
   </g>
   <g
      inkscape:groupmode="layer"
@@ -3274,6 +3282,21 @@
          d="m 17.462891,-9.3867188 a 0.26460996,0.26460996 0 0 0 -0.265625,0.2636719 v 2.6464844 a 0.26460996,0.26460996 0 0 0 0.265625,0.2636719 h 3.703125 a 0.26460996,0.26460996 0 0 0 0.265625,-0.2636719 v -2.6464844 a 0.26460996,0.26460996 0 0 0 -0.265625,-0.2636719 z m 0.263671,0.5292969 h 3.175782 v 2.1152344 h -3.175782 z"
          id="path3482" />
     </g>
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="diamond"
+     inkscape:label="diamond">
+    <rect
+       style="fill:none;stroke:#000000;stroke-width:0.493291;stroke-linejoin:round"
+       id="rect2"
+       width="2.422616"
+       height="2.4224157"
+       x="9.1106987"
+       y="-29.549212"
+       ry="0"
+       transform="matrix(0.69893891,0.71518138,-0.7021287,0.71205006,0,0)"
+       inkscape:label="rect1" />
   </g>
   <g
      inkscape:groupmode="layer"
@@ -4740,12 +4763,6 @@
            id="path7" />
       </g>
     </g>
-    <circle
-       style="fill:#000000;stroke-width:0.571206;stroke-miterlimit:0"
-       id="path5366"
-       cx="1.4552084"
-       cy="1.4552084"
-       r="0.39687499" />
   </g>
   <g
      inkscape:groupmode="layer"
