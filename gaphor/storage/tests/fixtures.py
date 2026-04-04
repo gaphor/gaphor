@@ -20,9 +20,7 @@ def create_merge_conflict(repo: Repo, filename, initial_text, our_text, their_te
     filename.write_text(their_text, encoding="utf-8")
     branch_oid = commit_all("Branch commit")
 
-    # OID + detach=True: works when default branch is not "main" (e.g. older
-    # Dulwich uses "master"); "git merge" still runs on HEAD.
-    porcelain.switch(repo, main_ref, detach=True)
+    porcelain.switch(repo, main_ref, detach=True, force=True)
     filename.write_text(our_text, encoding="utf-8")
     commit_all("Second commit")
 
