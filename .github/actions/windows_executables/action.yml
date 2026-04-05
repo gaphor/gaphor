@@ -28,11 +28,11 @@ runs:
         # git clone --depth 1 --branch v$env:PYINSTALLER_VER https://github.com/pyinstaller/pyinstaller.git
         # Using pre-release version of pyinstaller for https://github.com/pyinstaller/pyinstaller/issues/9410
         git clone https://github.com/pyinstaller/pyinstaller.git
-        git reset --hard ffd0154d4a04254a8e121e293f22f30072b6dec2
+        git -C pyinstaller reset --hard ffd0154d4a04254a8e121e293f22f30072b6dec2
         cd .\pyinstaller\bootloader
         py .\waf all --gcc --target-arch=64bit
         cd ..\..
-        py -m pip --disable-pip-version-check install .\pyinstaller
+        poetry run pip --disable-pip-version-check install .\pyinstaller
         rm -r -fo .\pyinstaller
       shell: pwsh
     - name: Create Windows Installers
