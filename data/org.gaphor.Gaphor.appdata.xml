@@ -99,6 +99,30 @@
     </p>
   </description>
   <releases>
+    <release version="3.3.0" date="2026-04-05">
+      <description>
+        <ul>
+          <li>Add HTML report generator</li>
+          <li>Add an initial doodling language with simple shapes</li>
+          <li>Add help menu for documentation</li>
+          <li>Update styling of shortcuts menu</li>
+          <li>Stereotype updates for interfaces and operations</li>
+          <li>Automatically update new releases on winget</li>
+        </ul>
+        <p>Internal changes:</p>
+        <ul>
+          <li>Improvements to simplify packaging</li>
+          <li>Fix codespaces by updating the base image</li>
+        </ul>
+        <p>Bug fixes:</p>
+        <ul>
+          <li>macOS: Fix Gaphor crashes when dragging elements to a diagram</li>
+          <li>Ensure Italian translations are built</li>
+          <li>Fix crash when running gaphor with the <code>--profile</code> option</li>
+        </ul>
+      </description>
+      <url>https://github.com/gaphor/gaphor/releases/tag/3.3.0</url>
+    </release>
     <release version="3.2.0" date="2025-10-01">
       <description>
         <ul>
