@@ -16,11 +16,11 @@ def create_merge_conflict(repo: Repo, filename, initial_text, our_text, their_te
     main_ref = commit_all("Initial commit")
 
     porcelain.branch_create(repo, "branch")
-    porcelain.checkout_branch(repo, "branch")
+    porcelain.switch(repo, "branch")
     filename.write_text(their_text, encoding="utf-8")
     branch_oid = commit_all("Branch commit")
 
-    porcelain.checkout_branch(repo, main_ref)
+    porcelain.switch(repo, main_ref, detach=True, force=True)
     filename.write_text(our_text, encoding="utf-8")
     commit_all("Second commit")
 
