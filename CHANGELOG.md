@@ -1,3 +1,24 @@
+3.3.0
+-----
+
+- Add HTML report generator
+- Add an initial doodling language with simple shapes
+- Add help menu for documentation
+- Update styling of shortcuts menu
+- Stereotype updates for interfaces and operations
+- Automatically update new releases on winget
+
+Internal changes:
+
+- Improvements to simplify packaging
+- Fix codespaces by updating the base image
+
+Bug fixes:
+
+- macOS: Fix Gaphor crashes when dragging elements to a diagram
+- Ensure Italian translations are built
+- Fix crash when running gaphor with the `--profile` option
+
 3.2.0
 -----
 
