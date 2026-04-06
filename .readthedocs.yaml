@@ -18,6 +18,9 @@ build:
     - python3 -m pip install --upgrade pip
     - python3 -m pip install --constraint=.github/github-requirements.txt poetry
     - poetry config virtualenvs.create false
+    - python3 -m sysconfig
+    - poetry --version
+    - poetry config --list
     post_install:
     - VIRTUAL_ENV=$READTHEDOCS_VIRTUALENV_PATH poetry install -vv --with docs --no-interaction
 sphinx:
