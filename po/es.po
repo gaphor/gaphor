@@ -3,25 +3,24 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gaphor 0.8.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-11-12 21:36-0500\n"
+"POT-Creation-Date: 2026-04-05 21:23-0400\n"
 "PO-Revision-Date: 2026-04-05 20:03+0000\n"
 "Last-Translator: Antonio Mejia <wave.i5.edm@gmail.com>\n"
-"Language-Team: Spanish <https://hosted.weblate.org/projects/gaphor/gaphor/"
-"es/>\n"
 "Language: es\n"
+"Language-Team: Spanish "
+"<https://hosted.weblate.org/projects/gaphor/gaphor/es/>\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.17-dev\n"
-"Generated-By: Babel 2.17.0\n"
+"Generated-By: Babel 2.18.0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:28
 msgid "C4"
 msgstr "C4"
 
 #: gaphor/C4Model/propertypages.ui:11 gaphor/diagram/general/metadata.py:70
-#: gaphor/diagram/propertypages.ui:170
+#: gaphor/diagram/propertypages.ui:268
 msgid "Description"
 msgstr "Descripción"
 
@@ -542,21 +541,21 @@ msgstr "bloque"
 msgid "parts"
 msgstr "partes"
 
-#: gaphor/SysML/blocks/block.py:88 gaphor/SysML/blocks/interfaceblock.py:71
+#: gaphor/SysML/blocks/block.py:90 gaphor/SysML/blocks/interfaceblock.py:71
 msgid "references"
 msgstr "referencias"
 
-#: gaphor/SysML/blocks/block.py:100 gaphor/SysML/blocks/interfaceblock.py:83
+#: gaphor/SysML/blocks/block.py:102 gaphor/SysML/blocks/interfaceblock.py:83
 msgid "values"
 msgstr "valores"
 
-#: gaphor/SysML/blocks/block.py:119 gaphor/SysML/blocks/interfaceblock.py:102
+#: gaphor/SysML/blocks/block.py:123 gaphor/SysML/blocks/interfaceblock.py:104
 msgid "operations"
 msgstr "Operaciones"
 
-#: gaphor/SysML/blocks/block.py:131 gaphor/SysML/blocks/block.py:150
-#: gaphor/SysML/blocks/interfaceblock.py:114
-#: gaphor/SysML/blocks/interfaceblock.py:137
+#: gaphor/SysML/blocks/block.py:135 gaphor/SysML/blocks/block.py:154
+#: gaphor/SysML/blocks/interfaceblock.py:116
+#: gaphor/SysML/blocks/interfaceblock.py:139
 msgid "unnamed"
 msgstr "sin nombre"
 
@@ -663,7 +662,7 @@ msgstr "Verificar"
 msgid "Containment"
 msgstr "Contención"
 
-#: gaphor/UML/compartments.py:62
+#: gaphor/UML/compartments.py:70
 #, python-brace-format
 msgid "(from {namespace})"
 msgstr "(de {namespace})"
@@ -686,8 +685,8 @@ msgid ""
 "Removed unused elements from the model: they are not used in any other "
 "diagram."
 msgstr ""
-"Se han eliminado los elementos no usados del modelo: no se usan en ningún "
-"otro diagrama."
+"Se han eliminado los elementos no usados del modelo: no se usan en ningún"
+" otro diagrama."
 
 #: gaphor/UML/toolbox.py:34
 #, fuzzy
@@ -745,7 +744,7 @@ msgstr "Estereotipo"
 msgid "New {name}"
 msgstr "Nuevo {name}"
 
-#: gaphor/UML/treemodel.py:57 gaphor/ui/diagrampage.py:109
+#: gaphor/UML/treemodel.py:57 gaphor/ui/diagrampage.py:108
 #: gaphor/ui/mainwindow.py:287 gaphor/ui/modelmerge/organize.py:138
 msgid "<None>"
 msgstr "<none></none>"
@@ -754,27 +753,27 @@ msgstr "<none></none>"
 msgid "<Relationships>"
 msgstr "<Relationships>"
 
-#: gaphor/UML/umlfmt.py:23
+#: gaphor/UML/umlfmt.py:24
 #, python-brace-format
 msgid "supplier: {name}"
 msgstr "proveedor: {name}"
 
-#: gaphor/UML/umlfmt.py:89
+#: gaphor/UML/umlfmt.py:90
 #, fuzzy
 msgid "readOnly"
 msgstr "Rehacer"
 
-#: gaphor/UML/umlfmt.py:241
+#: gaphor/UML/umlfmt.py:247
 #, python-brace-format
 msgid "general: {name}"
 msgstr "general: {name}"
 
-#: gaphor/UML/umlfmt.py:246
+#: gaphor/UML/umlfmt.py:252
 #, python-brace-format
 msgid "extend: {name}"
 msgstr "extender: {name}"
 
-#: gaphor/UML/umlfmt.py:253
+#: gaphor/UML/umlfmt.py:259
 #, python-brace-format
 msgid "include: {name}"
 msgstr "incluir: {name}"
@@ -909,12 +908,12 @@ msgstr "LIFO"
 msgid "FIFO"
 msgstr "FIFO"
 
-#: gaphor/UML/actions/objectnode.py:45
+#: gaphor/UML/actions/objectnode.py:46
 #, fuzzy
 msgid "upperBound"
 msgstr "Límite superior"
 
-#: gaphor/UML/actions/objectnode.py:55
+#: gaphor/UML/actions/objectnode.py:58
 #, fuzzy
 msgid "ordering"
 msgstr "Mostrar orden"
@@ -1116,7 +1115,7 @@ msgstr "enumeración"
 msgid "New Enumeration…"
 msgstr "Nueva enumeración…"
 
-#: gaphor/UML/classes/interface.py:276
+#: gaphor/UML/classes/interface.py:277
 msgid "interface"
 msgstr "interfaz"
 
@@ -1151,7 +1150,8 @@ msgid ""
 "items.\n"
 "Use <b>-</b>/<b>=</b> to move items up or down."
 msgstr ""
-"Añada y edite los extremos de la asociación de acuerdo con la sintaxis UML.\n"
+"Añada y edite los extremos de la asociación de acuerdo con la sintaxis "
+"UML.\n"
 "\n"
 "  • <tt>+ nombre</tt>\n"
 "  • <tt>+ nombre[1]</tt>\n"
@@ -1221,8 +1221,8 @@ msgstr ""
 "  • <tt>+ attr: int</tt> (público con tipo)\n"
 "  • <tt>+ attr: int[0..1]</tt> (público, tipo, y multiplicidad)\n"
 "  • <tt>+ attr: int | bool</tt> (público, tipo de unión)\n"
-"  • <tt># /attr: int # una nota</tt> (protegidas, derivadas, con observación)"
-"\n"
+"  • <tt># /attr: int # una nota</tt> (protegidas, derivadas, con "
+"observación)\n"
 "\n"
 "Pulse <b>Intro</b> para editar, <b>Retroceso</b>/<b>Eliminar</b> para "
 "eliminar elementos.\n"
@@ -1306,10 +1306,11 @@ msgstr ""
 "\n"
 "  • <tt>call()</tt>\n"
 "  • <tt>+ call(a: int[*], b: str): bool</tt> (público, parámetros)\n"
-"  • <tt># call(a: int, b: str) # a note</tt> (protegido, con observación)\n"
+"  • <tt># call(a: int, b: str) # a note</tt> (protegido, con observación)"
 "\n"
-"Pulse <b>Enter</b> to edit, <b>Retroceso</b>/<b>Eliminar</b> para eliminar "
-"elementos.\n"
+"\n"
+"Pulse <b>Enter</b> to edit, <b>Retroceso</b>/<b>Eliminar</b> para "
+"eliminar elementos.\n"
 "Use <b>-</b>/<b>=</b> para mover elementos arriba o abajo."
 
 #: gaphor/UML/classes/propertypages.ui:668
@@ -1335,8 +1336,8 @@ msgstr ""
 "\n"
 "  • <tt>enum</tt>\n"
 "\n"
-"Pulse <b>Enter</b> to edit, <b>Retroceso</b>/<b>Eliminar</b> para eliminar "
-"elementos.\n"
+"Pulse <b>Enter</b> to edit, <b>Retroceso</b>/<b>Eliminar</b> para "
+"eliminar elementos.\n"
 "Use <b>-</b>/<b>=</b> para mover elementos arriba o abajo."
 
 #: gaphor/UML/classes/propertypages.ui:768
@@ -1361,7 +1362,7 @@ msgstr "dispositivo"
 msgid "New Image"
 msgstr "Nuevo carril"
 
-#: gaphor/UML/general/generaltoolbox.py:25 gaphor/ui/help/shortcuts.ui:34
+#: gaphor/UML/general/generaltoolbox.py:25 gaphor/ui/help/shortcuts.ui:8
 msgid "General"
 msgstr "General"
 
@@ -1381,23 +1382,29 @@ msgstr "Línea"
 msgid "Box"
 msgstr "Caja"
 
-#: gaphor/UML/general/generaltoolbox.py:58
+#: gaphor/UML/general/generaltoolbox.py:58 gaphor/diagram/propertypages.ui:124
+#: gaphor/diagram/propertypages.ui:153
+#, fuzzy
+msgid "Diamond"
+msgstr "AND"
+
+#: gaphor/UML/general/generaltoolbox.py:66
 msgid "Ellipse"
 msgstr "Elipse"
 
-#: gaphor/UML/general/generaltoolbox.py:66 gaphor/diagram/propertypages.ui:9
+#: gaphor/UML/general/generaltoolbox.py:74 gaphor/diagram/propertypages.ui:9
 msgid "Comment"
 msgstr "Comentario"
 
-#: gaphor/UML/general/generaltoolbox.py:74
+#: gaphor/UML/general/generaltoolbox.py:82
 msgid "Comment line"
 msgstr "Línea de comentario"
 
-#: gaphor/UML/general/generaltoolbox.py:81
+#: gaphor/UML/general/generaltoolbox.py:89
 msgid "Diagram metadata"
 msgstr "Metadatos del diagrama"
 
-#: gaphor/UML/general/generaltoolbox.py:88
+#: gaphor/UML/general/generaltoolbox.py:96
 #, fuzzy
 msgid "Picture"
 msgstr "Estructura"
@@ -1615,96 +1622,129 @@ msgstr "Incluir"
 msgid "Extend"
 msgstr "Extender"
 
-#: gaphor/diagram/propertypages.py:318
+#: gaphor/diagram/propertypages.py:328
 #, fuzzy
 msgid "Presentation"
 msgstr "Implementación"
 
-#: gaphor/diagram/propertypages.py:319 gaphor/diagram/propertypages.py:332
+#: gaphor/diagram/propertypages.py:329 gaphor/diagram/propertypages.py:344
 #, fuzzy
 msgid "class"
 msgstr "Clase"
 
-#: gaphor/diagram/propertypages.py:320 gaphor/diagram/propertypages.py:333
+#: gaphor/diagram/propertypages.py:330 gaphor/diagram/propertypages.py:345
 #, fuzzy
 msgid "id"
 msgstr "Id"
 
-#: gaphor/diagram/propertypages.py:330
+#: gaphor/diagram/propertypages.py:342
 #, fuzzy
 msgid "Model Element"
 msgstr "Elemento externo"
 
-#: gaphor/diagram/propertypages.py:331
+#: gaphor/diagram/propertypages.py:343
 #, fuzzy
 msgid "qname"
 msgstr "Nombre"
 
-#: gaphor/diagram/propertypages.ui:74
+#: gaphor/diagram/propertypages.ui:75
+msgid "Label"
+msgstr ""
+
+#: gaphor/diagram/propertypages.ui:98
+#, fuzzy
+msgid "Line Ends"
+msgstr "Licencia"
+
+#: gaphor/diagram/propertypages.ui:111
+#, fuzzy
+msgid "Head"
+msgstr "Cabeza:"
+
+#: gaphor/diagram/propertypages.ui:121 gaphor/diagram/propertypages.ui:150
+#, fuzzy
+msgid "Nothing"
+msgstr "Cadena"
+
+#: gaphor/diagram/propertypages.ui:122 gaphor/diagram/propertypages.ui:151
+msgid "Arrow"
+msgstr ""
+
+#: gaphor/diagram/propertypages.ui:123 gaphor/diagram/propertypages.ui:152
+#, fuzzy
+msgid "Triangle"
+msgstr "Cadena"
+
+#: gaphor/diagram/propertypages.ui:140
+#, fuzzy
+msgid "Tail"
+msgstr "Cola:"
+
+#: gaphor/diagram/propertypages.ui:172
 msgid "Style"
 msgstr "Estilo"
 
-#: gaphor/diagram/propertypages.ui:87
+#: gaphor/diagram/propertypages.ui:185
 msgid "Rectilinear"
 msgstr "Rectilínea"
 
-#: gaphor/diagram/propertypages.ui:107
+#: gaphor/diagram/propertypages.ui:205
 msgid "Flip orientation"
 msgstr "Orientación del giro"
 
-#: gaphor/diagram/propertypages.ui:130
+#: gaphor/diagram/propertypages.ui:228
 #, fuzzy
 msgid "Note"
 msgstr "NOT"
 
-#: gaphor/diagram/general/metadata.py:43 gaphor/diagram/propertypages.ui:156
+#: gaphor/diagram/general/metadata.py:43 gaphor/diagram/propertypages.ui:254
 msgid "Created By"
 msgstr "Creado por"
 
-#: gaphor/diagram/general/metadata.py:53 gaphor/diagram/propertypages.ui:184
+#: gaphor/diagram/general/metadata.py:53 gaphor/diagram/propertypages.ui:282
 msgid "Website"
 msgstr "Página web"
 
-#: gaphor/diagram/general/metadata.py:84 gaphor/diagram/propertypages.ui:198
+#: gaphor/diagram/general/metadata.py:84 gaphor/diagram/propertypages.ui:296
 msgid "Revision"
 msgstr "Revisión"
 
-#: gaphor/diagram/general/metadata.py:94 gaphor/diagram/propertypages.ui:212
+#: gaphor/diagram/general/metadata.py:94 gaphor/diagram/propertypages.ui:310
 msgid "License"
 msgstr "Licencia"
 
-#: gaphor/diagram/general/metadata.py:105 gaphor/diagram/propertypages.ui:226
+#: gaphor/diagram/general/metadata.py:105 gaphor/diagram/propertypages.ui:324
 msgid "Created On"
 msgstr "Creado el"
 
-#: gaphor/diagram/general/metadata.py:116 gaphor/diagram/propertypages.ui:240
+#: gaphor/diagram/general/metadata.py:116 gaphor/diagram/propertypages.ui:338
 msgid "Updated On"
 msgstr "Actualizado el"
 
-#: gaphor/diagram/propertypages.ui:261
+#: gaphor/diagram/propertypages.ui:359
 msgid "Select picture..."
 msgstr ""
 
-#: gaphor/diagram/propertypages.ui:267
+#: gaphor/diagram/propertypages.ui:365
 msgid "Set default size"
 msgstr ""
 
-#: gaphor/diagram/propertypages.ui:280
+#: gaphor/diagram/propertypages.ui:378
 #, fuzzy
 msgid "Internals of focused item"
 msgstr "Bloques internos"
 
-#: gaphor/diagram/propertypages.ui:297 gaphor/ui/elementeditor.py:410
+#: gaphor/diagram/propertypages.ui:395 gaphor/ui/elementeditor.py:414
 #: gaphor/ui/elementeditor.ui:261
 msgid "No focused item."
 msgstr ""
 
-#: gaphor/diagram/propertypages.ui:319 gaphor/diagram/styleeditor.ui:5
+#: gaphor/diagram/propertypages.ui:417 gaphor/diagram/styleeditor.ui:5
 #, fuzzy
 msgid "Style Editor"
 msgstr "Hoja de estilo"
 
-#: gaphor/diagram/propertypages.ui:328
+#: gaphor/diagram/propertypages.ui:426
 #, fuzzy
 msgid "Open Style Editor"
 msgstr "Abrir el editor de combinación"
@@ -1742,7 +1782,7 @@ msgstr "El elemento no se puede representar en un diagrama."
 msgid "No model file configured for model '{model_name}'."
 msgstr "No hay archivo de modelo configurado para el modelo '{model_name}'."
 
-#: gaphor/extensions/sphinx.py:95
+#: gaphor/extensions/sphinx.py:97
 #, python-brace-format
 msgid "No diagram '{name}' in model '{model_name}' ({model_file})."
 msgstr "No hay diagrama '{name}' en el modelo '{model_name}' ({model_file})."
@@ -1862,7 +1902,21 @@ msgstr "Exportar diagrama como EPS"
 msgid "Export all diagrams as EPS diagrams in a specifieddirectory"
 msgstr ""
 
-#: gaphor/storage/recovery.py:155
+#: gaphor/plugins/htmlreport/report.py:28
+#, fuzzy
+msgid "Export as HTML Report"
+msgstr "Exportar como EPS"
+
+#: gaphor/plugins/htmlreport/report.py:29
+msgid "Export model as a navigable HTML report"
+msgstr ""
+
+#: gaphor/plugins/htmlreport/report.py:33
+#, fuzzy
+msgid "Export HTML Report"
+msgstr "Exportar como EPS"
+
+#: gaphor/storage/recovery.py:153
 #, fuzzy
 msgid "This model contains unsaved changes. The changes have been restored."
 msgstr ""
@@ -2105,8 +2159,8 @@ msgid ""
 "The fault tree analysis shows which causes for the failure of a system "
 "have been considered."
 msgstr ""
-"El análisis del árbol de fallos muestra qué causas de fallo de un sistema se "
-"han tenido en cuenta."
+"El análisis del árbol de fallos muestra qué causas de fallo de un sistema"
+" se han tenido en cuenta."
 
 #: gaphor/templates/sysml-example.gaphor gaphor/templates/sysml.gaphor
 msgid "1. Concept Level"
@@ -2507,9 +2561,9 @@ msgid ""
 "Model abstract use case implementation by creating activity diagrams "
 "visualizing activity flows for primary and secondary use case scenarios."
 msgstr ""
-"Modelar la implementación de casos de uso abstractos mediante la creación de "
-"diagramas de actividad que visualicen los flujos de actividad para los "
-"escenarios de casos de uso primarios y secundarios."
+"Modelar la implementación de casos de uso abstractos mediante la creación"
+" de diagramas de actividad que visualicen los flujos de actividad para "
+"los escenarios de casos de uso primarios y secundarios."
 
 #: gaphor/templates/uml-example.gaphor gaphor/templates/uml.gaphor
 msgid ""
@@ -2518,9 +2572,9 @@ msgid ""
 "a visual dictionary of concepts. It will also be a starting point for "
 "your design-level data model."
 msgstr ""
-"Realizar el análisis del dominio modelando las entidades del dominio y sus "
-"relaciones mediante un diagrama de clases simplificado. Este diagrama "
-"servirá como diccionario visual de conceptos. También será un punto de "
+"Realizar el análisis del dominio modelando las entidades del dominio y "
+"sus relaciones mediante un diagrama de clases simplificado. Este diagrama"
+" servirá como diccionario visual de conceptos. También será un punto de "
 "partida para su modelo de datos a nivel de diseño."
 
 #: gaphor/templates/uml-example.gaphor gaphor/templates/uml.gaphor
@@ -2530,10 +2584,10 @@ msgid ""
 " and avoid design flaws such as cyclic dependencies or dependencies on "
 "unstable parts"
 msgstr ""
-"Prepare el diagrama de dependencias del paquete para agrupar sus clases de "
-"implementación de forma adecuada. Esto le ayudará a mantener el código bien "
-"estructurado y a evitar fallos de diseño como dependencias cíclicas o "
-"dependencias de partes inestables"
+"Prepare el diagrama de dependencias del paquete para agrupar sus clases "
+"de implementación de forma adecuada. Esto le ayudará a mantener el código"
+" bien estructurado y a evitar fallos de diseño como dependencias cíclicas"
+" o dependencias de partes inestables"
 
 #: gaphor/templates/uml-example.gaphor gaphor/templates/uml.gaphor
 msgid ""
@@ -2541,9 +2595,10 @@ msgid ""
 "new methods in\n"
 "existing classes or even new classes with specific responsibilities."
 msgstr ""
-"Modelar las interacciones de los componentes para los escenarios de casos de "
-"uso con el fin de encontrar métodos nuevos en\n"
-"clases existentes o incluso clases nuevas con responsabilidades específicas."
+"Modelar las interacciones de los componentes para los escenarios de casos"
+" de uso con el fin de encontrar métodos nuevos en\n"
+"clases existentes o incluso clases nuevas con responsabilidades "
+"específicas."
 
 #: gaphor/templates/uml-example.gaphor gaphor/templates/uml.gaphor
 msgid "Create detailed class diagrams to capture your object-oriented data model."
@@ -2557,9 +2612,9 @@ msgid ""
 "components. Indicate how they are deployed on hardware nodes, their "
 "inter-dependencies and communication protocols."
 msgstr ""
-"Defina los principales artefactos que manifiestan la implementación de sus "
-"componentes. Indique cómo se despliegan en los nodos de hardware, sus "
-"interdependencias y los protocolos de comunicación."
+"Defina los principales artefactos que manifiestan la implementación de "
+"sus componentes. Indique cómo se despliegan en los nodos de hardware, sus"
+" interdependencias y los protocolos de comunicación."
 
 #: gaphor/templates/uml-example.gaphor
 msgid "String"
@@ -2569,11 +2624,11 @@ msgstr "Cadena"
 msgid "Date"
 msgstr "Fecha"
 
-#: gaphor/ui/__init__.py:187 gaphor/ui/mainwindow.py:165
+#: gaphor/ui/__init__.py:202 gaphor/ui/mainwindow.py:165
 msgid "Export"
 msgstr "Exportar"
 
-#: gaphor/ui/__init__.py:188 gaphor/ui/mainwindow.py:168
+#: gaphor/ui/__init__.py:203 gaphor/ui/mainwindow.py:168
 msgid "Tools"
 msgstr "Herramientas"
 
@@ -2591,8 +2646,7 @@ msgstr "¿Cambiar a {name}?"
 msgid ""
 "{name} is already opened. Do you want to switch to the opened window "
 "instead?"
-msgstr ""
-"{name} ya está abierto. ¿Quiere cambiar a la ventana abierta en su lugar?"
+msgstr "{name} ya está abierto. ¿Quiere cambiar a la ventana abierta en su lugar?"
 
 #: gaphor/ui/appfilemanager.py:61
 msgid "Open Again"
@@ -2602,20 +2656,20 @@ msgstr "Abrir de nuevo"
 msgid "Switch"
 msgstr "Cambiar"
 
-#: gaphor/ui/diagrampage.py:377
+#: gaphor/ui/diagrampage.py:365
 msgid "Show in Model Browser"
 msgstr ""
 
-#: gaphor/ui/diagrampage.ui:33 gaphor/ui/help/shortcuts.ui:198
+#: gaphor/ui/diagrampage.ui:33 gaphor/ui/help/shortcuts.ui:232
 #: gaphor/ui/menubar.ui:83
 msgid "Zoom Out"
 msgstr "Alejar"
 
-#: gaphor/ui/diagrampage.ui:48 gaphor/ui/help/shortcuts.ui:205
+#: gaphor/ui/diagrampage.ui:48 gaphor/ui/help/shortcuts.ui:239
 msgid "Reset Zoom"
 msgstr "Tamaño real"
 
-#: gaphor/ui/diagrampage.ui:63 gaphor/ui/help/shortcuts.ui:191
+#: gaphor/ui/diagrampage.ui:63 gaphor/ui/help/shortcuts.ui:225
 #: gaphor/ui/menubar.ui:79
 msgid "Zoom In"
 msgstr "Ampliar"
@@ -2656,7 +2710,8 @@ msgstr ""
 #: gaphor/ui/elementeditor.ui:57
 msgid "This pane can be hidden by clicking the pane icon in the header."
 msgstr ""
-"Este panel puede ocultarse haciendo clic en el icono de panel de la cabecera."
+"Este panel puede ocultarse haciendo clic en el icono de panel de la "
+"cabecera."
 
 #: gaphor/ui/elementeditor.ui:65
 msgid ""
@@ -2666,10 +2721,10 @@ msgid ""
 "then hit the shortcut key."
 msgstr ""
 "<b>Consejo:</b> La mayoría de los elementos de la caja de herramientas "
-"tienen un atajo del teclado (por ejemplo, \"c\" para Clase). La selección de "
-"herramientas sólo funciona desde el diagrama. Si una herramienta no se "
-"selecciona, haga clic en el diagrama una vez (para que esté enfocado) y "
-"luego pulse la tecla de acceso directo."
+"tienen un atajo del teclado (por ejemplo, \"c\" para Clase). La selección"
+" de herramientas sólo funciona desde el diagrama. Si una herramienta no "
+"se selecciona, haga clic en el diagrama una vez (para que esté enfocado) "
+"y luego pulse la tecla de acceso directo."
 
 #: gaphor/ui/elementeditor.ui:73
 msgid ""
@@ -2677,9 +2732,10 @@ msgid ""
 "select an element in the model browser and start typing. A search box "
 "will automatically appear."
 msgstr ""
-"<b>Consejo:</b> Para buscar un elemento en el navegador de modelos (arriba a "
-"la izquierda), seleccione un elemento en el navegador de modelos y empiece a "
-"escribir. Aparecerá automáticamente un cuadro de búsqueda."
+"<b>Consejo:</b> Para buscar un elemento en el navegador de modelos "
+"(arriba a la izquierda), seleccione un elemento en el navegador de "
+"modelos y empiece a escribir. Aparecerá automáticamente un cuadro de "
+"búsqueda."
 
 #: gaphor/ui/elementeditor.ui:86
 msgid "Help improve Gaphor"
@@ -2740,8 +2796,8 @@ msgid ""
 "🔗 <a href=\"https://docs.gaphor.org/en/latest/style_sheets.html\">Style "
 "sheets in Gaphor</a>"
 msgstr ""
-"🔗 <a href=\"https://docs.gaphor.org/en/latest/style_sheets.html\">Hojas de "
-"estilo en Gaphor</a>"
+"🔗 <a href=\"https://docs.gaphor.org/en/latest/style_sheets.html\">Hojas "
+"de estilo en Gaphor</a>"
 
 #: gaphor/ui/elementeditor.ui:286
 msgid "Merge Models"
@@ -2768,8 +2824,8 @@ msgid ""
 "It looks like Gaphor is started from the command line. Do you want to "
 "open a debug session?"
 msgstr ""
-"Parece que Gaphor se inicia desde la línea de comandos. ¿Quiere abrir una "
-"sesión de depuración?"
+"Parece que Gaphor se inicia desde la línea de comandos. ¿Quiere abrir una"
+" sesión de depuración?"
 
 #: gaphor/ui/errordialog.py:27 gaphor/ui/menubar.ui:93
 msgid "Close"
@@ -2816,8 +2872,8 @@ msgid ""
 "Please check that you typed the location correctly and try again."
 msgstr ""
 "No tiene los permisos necesarios para guardar el modelo.\n"
-"Por favor, compruebe que ha escrito la ubicación correctamente y vuelva a "
-"intentarlo."
+"Por favor, compruebe que ha escrito la ubicación correctamente y vuelva a"
+" intentarlo."
 
 #: gaphor/ui/filemanager.py:49
 msgid ""
@@ -2825,7 +2881,8 @@ msgid ""
 "Please free up some disk space and try again or save it in a different "
 "location."
 msgstr ""
-"No tiene suficiente espacio libre en el dispositivo para guardar el modelo.\n"
+"No tiene suficiente espacio libre en el dispositivo para guardar el "
+"modelo.\n"
 "Por favor, libere algo de espacio en el disco y vuelva a intentarlo o "
 "guárdelo en una ubicación diferente."
 
@@ -2838,8 +2895,8 @@ msgid ""
 msgstr ""
 "El modelo no puede ser almacenado en esta ubicación:\n"
 "{exc}\n"
-"Por favor, compruebe que ha introducido la ubicación correctamente y vuelva "
-"a intentarlo."
+"Por favor, compruebe que ha introducido la ubicación correctamente y "
+"vuelva a intentarlo."
 
 #: gaphor/ui/filemanager.py:115 gaphor/ui/filemanager.py:141
 msgid "Loading…"
@@ -2899,8 +2956,8 @@ msgid ""
 "The model you are opening contains a merge conflict. Do you want to open "
 "the current model or the incoming change to the model?"
 msgstr ""
-"El modelo que está abriendo contiene un conflicto de fusión. ¿Desea abrir el "
-"modelo actual o el cambio entrante en el modelo?"
+"El modelo que está abriendo contiene un conflicto de fusión. ¿Desea abrir"
+" el modelo actual o el cambio entrante en el modelo?"
 
 #: gaphor/ui/filemanager.py:386 gaphor/ui/filemanager.py:401
 msgid "Cancel"
@@ -2934,7 +2991,7 @@ msgstr ""
 msgid "Discard"
 msgstr "Descartar"
 
-#: gaphor/ui/filemanager.py:403 gaphor/ui/help/shortcuts.ui:233
+#: gaphor/ui/filemanager.py:403 gaphor/ui/help/shortcuts.ui:70
 #: gaphor/ui/mainwindow.ui:266 gaphor/ui/menubar.ui:18
 msgid "Save"
 msgstr "Guardar"
@@ -2999,13 +3056,13 @@ msgstr "Plantilla de modelo C4 por capas"
 msgid "C4 Model example of a banking system"
 msgstr ""
 
-#: gaphor/ui/greeter.ui:8 gaphor/ui/greeter.ui:56 gaphor/ui/mainwindow.ui:260
+#: gaphor/ui/greeter.ui:8 gaphor/ui/greeter.ui:60 gaphor/ui/mainwindow.ui:260
 #: gaphor/ui/menubar.ui:12
 msgid "Open Model…"
 msgstr "Abrir modelo…"
 
 #: gaphor/ui/greeter.ui:14 gaphor/ui/help/preferences.ui:6
-#: gaphor/ui/help/shortcuts.ui:39
+#: gaphor/ui/help/shortcuts.ui:13
 msgid "Preferences"
 msgstr "Preferencias"
 
@@ -3013,16 +3070,21 @@ msgstr "Preferencias"
 msgid "Keyboard Shortcuts"
 msgstr "Atajos del teclado"
 
-#: gaphor/ui/greeter.ui:22 gaphor/ui/help/about.ui:9
-#: gaphor/ui/mainwindow.ui:292
+#: gaphor/ui/greeter.ui:22 gaphor/ui/mainwindow.ui:292
+#, fuzzy
+msgid "Help"
+msgstr "ⓘ Ayuda"
+
+#: gaphor/ui/greeter.ui:26 gaphor/ui/help/about.ui:9
+#: gaphor/ui/mainwindow.ui:296
 msgid "About Gaphor"
 msgstr "Acerca de Gaphor"
 
-#: gaphor/ui/greeter.ui:87
+#: gaphor/ui/greeter.ui:91
 msgid "Recently Opened"
 msgstr ""
 
-#: gaphor/ui/greeter.ui:104
+#: gaphor/ui/greeter.ui:108
 msgid "Create New Model"
 msgstr "Crear modelo nuevo"
 
@@ -3043,12 +3105,12 @@ msgstr "Abrir el menú de la aplicación"
 msgid "New diagram menu"
 msgstr "Menú del diagrama nuevo"
 
-#: gaphor/ui/help/shortcuts.ui:111 gaphor/ui/mainwindow.ui:142
+#: gaphor/ui/help/shortcuts.ui:148 gaphor/ui/mainwindow.ui:142
 #: gaphor/ui/menubar.ui:34
 msgid "Undo"
 msgstr "Deshacer"
 
-#: gaphor/ui/help/shortcuts.ui:118 gaphor/ui/mainwindow.ui:157
+#: gaphor/ui/help/shortcuts.ui:155 gaphor/ui/mainwindow.ui:157
 #: gaphor/ui/menubar.ui:38
 msgid "Redo"
 msgstr "Rehacer"
@@ -3058,16 +3120,16 @@ msgstr "Rehacer"
 msgid "Align selected elements"
 msgstr "Elemento externo"
 
-#: gaphor/ui/help/shortcuts.ui:75 gaphor/ui/mainwindow.ui:181
+#: gaphor/ui/help/shortcuts.ui:20 gaphor/ui/mainwindow.ui:181
 msgid "Toggle Property Editor"
 msgstr "Conmutar el editor de propiedades"
 
-#: gaphor/ui/help/shortcuts.ui:219 gaphor/ui/mainwindow.ui:256
+#: gaphor/ui/help/shortcuts.ui:56 gaphor/ui/mainwindow.ui:256
 #: gaphor/ui/menubar.ui:8
 msgid "New Model…"
 msgstr "Modelo nuevo…"
 
-#: gaphor/ui/help/shortcuts.ui:240 gaphor/ui/mainwindow.ui:270
+#: gaphor/ui/help/shortcuts.ui:77 gaphor/ui/mainwindow.ui:270
 #: gaphor/ui/menubar.ui:22
 msgid "Save As…"
 msgstr "Guardar como…"
@@ -3077,43 +3139,43 @@ msgstr "Guardar como…"
 msgid "Preferences…"
 msgstr "Preferencias"
 
-#: gaphor/ui/mainwindow.ui:301
+#: gaphor/ui/mainwindow.ui:305
 #, fuzzy
 msgid "Align Left"
 msgstr "Magnet"
 
-#: gaphor/ui/mainwindow.ui:306
+#: gaphor/ui/mainwindow.ui:310
 msgid "Align Right"
 msgstr ""
 
-#: gaphor/ui/mainwindow.ui:311
+#: gaphor/ui/mainwindow.ui:315
 #, fuzzy
 msgid "Align Vertical Center"
 msgstr "Horizontal"
 
-#: gaphor/ui/mainwindow.ui:318
+#: gaphor/ui/mainwindow.ui:322
 #, fuzzy
 msgid "Align Top"
 msgstr "Actor protagonista"
 
-#: gaphor/ui/mainwindow.ui:323
+#: gaphor/ui/mainwindow.ui:327
 msgid "Align Bottom"
 msgstr ""
 
-#: gaphor/ui/mainwindow.ui:328
+#: gaphor/ui/mainwindow.ui:332
 #, fuzzy
 msgid "Align Horizontal Center"
 msgstr "Horizontal"
 
-#: gaphor/ui/mainwindow.ui:335
+#: gaphor/ui/mainwindow.ui:339
 msgid "Max Width"
 msgstr ""
 
-#: gaphor/ui/mainwindow.ui:340
+#: gaphor/ui/mainwindow.ui:344
 msgid "Max Height"
 msgstr ""
 
-#: gaphor/ui/mainwindow.ui:345
+#: gaphor/ui/mainwindow.ui:349
 msgid "Max Size"
 msgstr ""
 
@@ -3127,11 +3189,11 @@ msgstr "Archivos"
 msgid "_Edit"
 msgstr "Salida"
 
-#: gaphor/ui/help/shortcuts.ui:162 gaphor/ui/menubar.ui:44
+#: gaphor/ui/help/shortcuts.ui:176 gaphor/ui/menubar.ui:44
 msgid "Cut"
 msgstr "Cortar"
 
-#: gaphor/ui/help/shortcuts.ui:155 gaphor/ui/menubar.ui:48
+#: gaphor/ui/help/shortcuts.ui:169 gaphor/ui/menubar.ui:48
 msgid "Copy"
 msgstr "Copiar"
 
@@ -3140,11 +3202,11 @@ msgstr "Copiar"
 msgid "Paste"
 msgstr "Fecha"
 
-#: gaphor/ui/help/shortcuts.ui:176 gaphor/ui/menubar.ui:56
+#: gaphor/ui/help/shortcuts.ui:190 gaphor/ui/menubar.ui:56
 msgid "Paste (copy defining elements)"
 msgstr "Pegar (copiar elementos de definición)"
 
-#: gaphor/ui/help/shortcuts.ui:133 gaphor/ui/menubar.ui:66
+#: gaphor/ui/help/shortcuts.ui:204 gaphor/ui/menubar.ui:66
 msgid "Select All"
 msgstr "Seleccionar todo"
 
@@ -3223,7 +3285,7 @@ msgstr "Combinar cambios de modelo"
 msgid "Discard Changes and Reload"
 msgstr ""
 
-#: gaphor/ui/help/__init__.py:74
+#: gaphor/ui/help/__init__.py:78
 msgid "Restart Gaphor to enable language changes"
 msgstr ""
 
@@ -3256,16 +3318,16 @@ msgid ""
 "limitations under the License."
 msgstr ""
 "Licencia bajo la Apache License, Versión 2.0 (la \"Licencia\"); no puede "
-"usar esta aplicación si no es de conformidad con la Licencia. Puede obtener "
-"una copia de la Licencia en\n"
+"usar esta aplicación si no es de conformidad con la Licencia. Puede "
+"obtener una copia de la Licencia en\n"
 "\n"
 "    http://www.apache.org/licenses/LICENSE-2.0\n"
 "\n"
-"A menos que lo exija la ley aplicable o se acuerde por escrito, el software "
-"distribuido bajo la Licencia se distribuye \"TAL CUAL\", SIN GARANTÍAS NI "
-"CONDICIONES DE NINGÚN TIPO, ni expresas ni implícitas. Consulte la Licencia "
-"para conocer el lenguaje específico que rige los permisos y limitaciones "
-"bajo la Licencia."
+"A menos que lo exija la ley aplicable o se acuerde por escrito, el "
+"software distribuido bajo la Licencia se distribuye \"TAL CUAL\", SIN "
+"GARANTÍAS NI CONDICIONES DE NINGÚN TIPO, ni expresas ni implícitas. "
+"Consulte la Licencia para conocer el lenguaje específico que rige los "
+"permisos y limitaciones bajo la Licencia."
 
 #: gaphor/ui/help/debuginfo.py:40
 msgid "No errors have been intercepted. We’re good."
@@ -3283,8 +3345,8 @@ msgid ""
 "→ Troubleshooting → Debugging Information."
 msgstr ""
 "Se ha producido un error inesperado.\n"
-"Presente una incidencia en GitHub e incluya la información de Herramientas → "
-"Informes de error."
+"Presente una incidencia en GitHub e incluya la información de "
+"Herramientas → Informes de error."
 
 #: gaphor/ui/help/preferences.ui:9
 msgid "Appearance"
@@ -3334,79 +3396,84 @@ msgstr ""
 "Eliminar automáticamente los elementos que ya no se usan en cualquier "
 "diagrama."
 
-#: gaphor/ui/help/shortcuts.ui:4 gaphor/ui/help/shortcuts.ui:11
+#: gaphor/ui/help/shortcuts.ui:27
 #, fuzzy
-msgid "Shortcuts"
-msgstr "Atajos del teclado"
+msgid "Toggle Style Editor"
+msgstr "Abrir el editor de combinación"
 
-#: gaphor/ui/help/shortcuts.ui:46
-msgid "Quit Gaphor"
-msgstr "Salir de Gaphor"
-
-#: gaphor/ui/help/shortcuts.ui:56
-#, fuzzy
-msgid "Model"
-msgstr "Modelo C4"
-
-#: gaphor/ui/help/shortcuts.ui:61
-msgid "Rename"
-msgstr "Renombrar"
-
-#: gaphor/ui/help/shortcuts.ui:68
-msgid "Search"
-msgstr "Buscar"
-
-#: gaphor/ui/help/shortcuts.ui:82
-#, fuzzy
-msgid "Toggle Model Preferences"
-msgstr "Preferencias"
-
-#: gaphor/ui/help/shortcuts.ui:89
-msgid "Close Diagram"
-msgstr "Cerrar diagrama"
-
-#: gaphor/ui/help/shortcuts.ui:96
+#: gaphor/ui/help/shortcuts.ui:34
 msgid "Toggle Fullscreen"
 msgstr "Conmutar pantalla completa"
 
-#: gaphor/ui/help/shortcuts.ui:106
-msgid "Undo and Redo"
-msgstr "Deshacer y rehacer"
+#: gaphor/ui/help/shortcuts.ui:41
+msgid "Quit Gaphor"
+msgstr "Salir de Gaphor"
 
-#: gaphor/ui/help/shortcuts.ui:128
-msgid "Selections"
-msgstr "Selecciones"
-
-#: gaphor/ui/help/shortcuts.ui:140
-msgid "Deselect All"
-msgstr "Deseleccionar todo"
-
-#: gaphor/ui/help/shortcuts.ui:150
-msgid "Copy and Paste"
-msgstr "Copiar y pegar"
-
-#: gaphor/ui/help/shortcuts.ui:169
-msgid "Paste (link defining elements)"
-msgstr "Pegar (enlaces de elementos de definición)"
-
-#: gaphor/ui/help/shortcuts.ui:186
-msgid "Zoom"
-msgstr "Zoom"
-
-#: gaphor/ui/help/shortcuts.ui:214
+#: gaphor/ui/help/shortcuts.ui:51
 msgid "Files"
 msgstr "Archivos"
 
-#: gaphor/ui/help/shortcuts.ui:226
+#: gaphor/ui/help/shortcuts.ui:63
 msgid "Open a Model…"
 msgstr "Abrir un modelo…"
+
+#: gaphor/ui/help/shortcuts.ui:87
+msgid "Model Browser"
+msgstr ""
+
+#: gaphor/ui/help/shortcuts.ui:92
+msgid "Rename"
+msgstr "Renombrar"
+
+#: gaphor/ui/help/shortcuts.ui:99
+msgid "Search"
+msgstr "Buscar"
+
+#: gaphor/ui/help/shortcuts.ui:112
+msgid "Expand Node"
+msgstr ""
+
+#: gaphor/ui/help/shortcuts.ui:119
+msgid "Collapse Node"
+msgstr ""
+
+#: gaphor/ui/help/shortcuts.ui:129
+#, fuzzy
+msgid "Diagram"
+msgstr "Diagrama C4"
+
+#: gaphor/ui/help/shortcuts.ui:134
+msgid "Close Diagram"
+msgstr "Cerrar diagrama"
+
+#: gaphor/ui/help/shortcuts.ui:183
+msgid "Paste (link defining elements)"
+msgstr "Pegar (enlaces de elementos de definición)"
+
+#: gaphor/ui/help/shortcuts.ui:211
+msgid "Deselect All"
+msgstr "Deseleccionar todo"
+
+#: gaphor/ui/help/shortcuts.ui:253
+#, fuzzy
+msgid "Move selected items"
+msgstr "Ningún elemento seleccionado"
+
+#: gaphor/ui/help/shortcuts.ui:254 gaphor/ui/help/shortcuts.ui:262
+#, fuzzy
+msgid "Works in any direction"
+msgstr "Invertir dirección"
+
+#: gaphor/ui/help/shortcuts.ui:261
+msgid "Move selected items right big steps"
+msgstr ""
 
 #: gaphor/ui/modelmerge/organize.py:137
 #, python-brace-format
 msgid "Update diagram “{name}”"
 msgstr "Actualizar diagrama “{name}”"
 
-#: gaphor/ui/modelmerge/organize.py:177 gaphor/ui/modelmerge/organize.py:317
+#: gaphor/ui/modelmerge/organize.py:177 gaphor/ui/modelmerge/organize.py:320
 #, python-brace-format
 msgid "Update element “{name}”"
 msgstr "Actualizar elemento “{name}”"
@@ -3416,82 +3483,82 @@ msgstr "Actualizar elemento “{name}”"
 msgid "Update element of type “{type}”"
 msgstr "Actualizar elemento de tipo “{type}”"
 
-#: gaphor/ui/modelmerge/organize.py:255
+#: gaphor/ui/modelmerge/organize.py:256
 #, python-brace-format
 msgid "Update presentation “{type}”"
 msgstr "Actualizar presentación “{type}”"
 
-#: gaphor/ui/modelmerge/organize.py:281
+#: gaphor/ui/modelmerge/organize.py:284
 #, python-brace-format
 msgid "Add presentation of type {type}"
 msgstr "Añadir presentación de tipo {type}"
 
-#: gaphor/ui/modelmerge/organize.py:285
+#: gaphor/ui/modelmerge/organize.py:288
 #, python-brace-format
 msgid "Remove presentation of type {type}"
 msgstr "Eliminar presentación de tipo {type}"
 
-#: gaphor/ui/modelmerge/organize.py:290
+#: gaphor/ui/modelmerge/organize.py:293
 #, python-brace-format
 msgid "Update presentation “{name}”"
 msgstr "Actualizar presentación “{name}”"
 
-#: gaphor/ui/modelmerge/organize.py:292
+#: gaphor/ui/modelmerge/organize.py:295
 #, python-brace-format
 msgid "Update presentation of type {type}"
 msgstr "Actualizar presentación de tipo {type}"
 
-#: gaphor/ui/modelmerge/organize.py:299
+#: gaphor/ui/modelmerge/organize.py:302
 #, python-brace-format
 msgid "Add {type} “{name}”"
 msgstr "Añadir {type} “{name}”"
 
-#: gaphor/ui/modelmerge/organize.py:303
+#: gaphor/ui/modelmerge/organize.py:306
 #, python-brace-format
 msgid "Add element of type {type}"
 msgstr "Añadir elemento de tipo {type}"
 
-#: gaphor/ui/modelmerge/organize.py:309
+#: gaphor/ui/modelmerge/organize.py:312
 #, python-brace-format
 msgid "Remove element “{name}”"
 msgstr "Eliminar elemento “{name}”"
 
-#: gaphor/ui/modelmerge/organize.py:311
+#: gaphor/ui/modelmerge/organize.py:314
 #, python-brace-format
 msgid "Remove element of type {type}"
 msgstr "Eliminar elemento de tipo {type}"
 
-#: gaphor/ui/modelmerge/organize.py:319
+#: gaphor/ui/modelmerge/organize.py:322
 #, python-brace-format
 msgid "Update element of type {type}"
 msgstr "Actualizar elemento de tipo {type}"
 
-#: gaphor/ui/modelmerge/organize.py:326
+#: gaphor/ui/modelmerge/organize.py:329
 #, python-brace-format
 msgid "Add relation “{name}” to “{ref_name}”"
 msgstr "Añadir relación “{name}” a “{ref_name}”"
 
-#: gaphor/ui/modelmerge/organize.py:328
+#: gaphor/ui/modelmerge/organize.py:331
 #, python-brace-format
 msgid "Remove relation “{name}” to “{ref_name}”"
 msgstr "Eliminar relación “{name}” a “{ref_name}”"
 
-#: gaphor/ui/modelmerge/organize.py:330
+#: gaphor/ui/modelmerge/organize.py:333
 #, python-brace-format
 msgid "Update relation “{name}” to “{ref_name}”"
 msgstr "Actualizar relación “{name}” a “{ref_name}”"
 
-#: gaphor/ui/modelmerge/organize.py:337
+#: gaphor/ui/modelmerge/organize.py:340
 #, python-brace-format
 msgid "Add relation “{name}”"
 msgstr "Añadir relación “{name}”"
 
-#: gaphor/ui/modelmerge/organize.py:339
+#: gaphor/ui/modelmerge/organize.py:342
 #, python-brace-format
 msgid "Remove relation “{name}”"
 msgstr "Eliminar relación “{name}”"
 
-#: gaphor/ui/modelmerge/organize.py:341
+#: gaphor/ui/modelmerge/organize.py:344
 #, python-brace-format
 msgid "Update relation “{name}”"
 msgstr "Actualizar relación “{name}”"
@@ -3625,3 +3692,24 @@ msgstr "general: {name}"
 
 #~ msgid "New _Package"
 #~ msgstr "_Paquete nuevo"
+
+#~ msgid "Shortcuts"
+#~ msgstr "Atajos del teclado"
+
+#~ msgid "Model"
+#~ msgstr "Modelo C4"
+
+#~ msgid "Toggle Model Preferences"
+#~ msgstr "Preferencias"
+
+#~ msgid "Undo and Redo"
+#~ msgstr "Deshacer y rehacer"
+
+#~ msgid "Selections"
+#~ msgstr "Selecciones"
+
+#~ msgid "Copy and Paste"
+#~ msgstr "Copiar y pegar"
+
+#~ msgid "Zoom"
+#~ msgstr "Zoom"
