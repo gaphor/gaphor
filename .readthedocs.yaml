@@ -14,13 +14,8 @@ build:
   - gir1.2-pango-1.0
   - graphviz
   jobs:
-    pre_install:
-    - python3 -m pip install --upgrade pip
+    post_create_environment:
     - python3 -m pip install --constraint=.github/github-requirements.txt poetry
-    - poetry config virtualenvs.create false
-    - python3 -m sysconfig
-    - poetry --version
-    - poetry config --list
     post_install:
     - VIRTUAL_ENV=$READTHEDOCS_VIRTUALENV_PATH poetry install -vv --with docs --no-interaction
 sphinx:
