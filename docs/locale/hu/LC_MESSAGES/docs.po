@@ -7,18 +7,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gaphor 2.18.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-30 14:25-0500\n"
+"POT-Creation-Date: 2026-04-05 21:26-0400\n"
 "PO-Revision-Date: 2026-04-05 20:10+0000\n"
 "Last-Translator: ovari <ovari123@zoho.com>\n"
-"Language-Team: Hungarian <https://hosted.weblate.org/projects/gaphor/docs-"
-"gaphor-org/hu/>\n"
 "Language: hu\n"
+"Language-Team: Hungarian <https://hosted.weblate.org/projects/gaphor"
+"/docs-gaphor-org/hu/>\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.17-dev\n"
-"Generated-By: Babel 2.16.0\n"
+"Generated-By: Babel 2.18.0\n"
 
 #: ../changelog.rst:2
 msgid "Change Log"
@@ -29,8 +28,9 @@ msgid ""
 "Our change log is with the project's source code on `GitHub "
 "<https://github.com/gaphor/gaphor/blob/main/CHANGELOG.md>`_."
 msgstr ""
-"Változásnaplónk a projekt forráskódjával a `GitHub <https://github.com/"
-"gaphor/gaphor/blob/main/CHANGELOG.md>`_ oldalon található."
+"Változásnaplónk a projekt forráskódjával a `GitHub "
+"<https://github.com/gaphor/gaphor/blob/main/CHANGELOG.md>`_ oldalon "
+"található."
 
 #: ../changelog.rst:8
 msgid "The latest version may not have been released yet."
@@ -41,6 +41,7 @@ msgid "Tutorial: Coffee Machine"
 msgstr "Oktatóanyag: Kávéfőző"
 
 #: ../coffee_machine.md:4 ../first_model.md:4
+#, python-brace-format
 msgid ""
 "In this tutorial we refer to the different parts of the gaphor interface:"
 " {ref}`Model Browser <getting_started:model browser>`, "
@@ -48,8 +49,8 @@ msgid ""
 "<getting_started:property editor>`."
 msgstr ""
 "Ebben az oktatóanyagban a gaphor felület különböző részeire hivatkozunk: "
-"{ref}`Modell böngésző <getting_started:model browser>`, [Eszköztár]"
-"(getting_started:toolbox), {ref}`Tulajdonságszerkesztő "
+"{ref}`Modell böngésző <getting_started:model browser>`, "
+"[Eszköztár](getting_started:toolbox), {ref}`Tulajdonságszerkesztő "
 "<getting_started:property editor>`."
 
 #: ../coffee_machine.md:8
@@ -58,8 +59,8 @@ msgid ""
 "[Getting Started](getting_started) page for more information about those "
 "sections."
 msgstr ""
-"Bár a nevek önmagukért beszélnek, a [Kezdő lépések](getting_started) oldalon "
-"további információkat találhat ezekről a szakaszokról."
+"Bár a nevek önmagukért beszélnek, a [Kezdő lépések](getting_started) "
+"oldalon további információkat találhat ezekről a szakaszokról."
 
 #: ../coffee_machine.md:12 ../coffee_machine_concept.md:7
 #: ../coffee_machine_logical.md:7
@@ -74,11 +75,12 @@ msgid ""
 "to empower their employees and customers through open communication and "
 "participation in the systems engineering process."
 msgstr ""
-"Hangyafalu nyüzsgő városában egy hangyakolónia létrehozta a rendszermérnöki "
-"tanácsadó céget, Hangyaforrás néven. Nagyra értékelik az együttműködést, az "
-"átláthatóságot és a közösség által vezérelt tervezést, és arra törekszenek, "
-"hogy alkalmazottaik és ügyfeleik képességeit nyílt kommunikációval és a "
-"rendszertervezési folyamatban való részvétellel növeljék."
+"Hangyafalu nyüzsgő városában egy hangyakolónia létrehozta a "
+"rendszermérnöki tanácsadó céget, Hangyaforrás néven. Nagyra értékelik az "
+"együttműködést, az átláthatóságot és a közösség által vezérelt tervezést,"
+" és arra törekszenek, hogy alkalmazottaik és ügyfeleik képességeit nyílt "
+"kommunikációval és a rendszertervezési folyamatban való részvétellel "
+"növeljék."
 
 #: ../coffee_machine.md:20
 msgid ""
@@ -87,11 +89,11 @@ msgid ""
 "Usa-ant, and Sust-ant. They were experts in designing and optimizing "
 "complex systems, and they took pride in their work."
 msgstr ""
-"A Hangyaforrás mérnökei mindannyian rendelkeznek olyan becenevekkel, amelyek "
-"tükrözik mesterségük alapelveit és koncepcióit: Minőség-hangya, Megbízható-"
-"hangya, Biztonság-hangya, Használhatóság-hangya és Fenntarthatóság-hangya. A "
-"komplex rendszerek tervezésének és optimalizálásának szakértői voltak, és "
-"büszkék voltak munkájukra."
+"A Hangyaforrás mérnökei mindannyian rendelkeznek olyan becenevekkel, "
+"amelyek tükrözik mesterségük alapelveit és koncepcióit: Minőség-hangya, "
+"Megbízható-hangya, Biztonság-hangya, Használhatóság-hangya és "
+"Fenntarthatóság-hangya. A komplex rendszerek tervezésének és "
+"optimalizálásának szakértői voltak, és büszkék voltak munkájukra."
 
 #: ../coffee_machine.md:25
 msgid ""
@@ -102,11 +104,11 @@ msgid ""
 "topped with the perfect foamy layer of crema. The ants were intrigued by "
 "the challenge and immediately set to work."
 msgstr ""
-"A Hangyaforrás mérnökei mindannyian rendelkeznek olyan becenevekkel, amelyek "
-"tükrözik mesterségük alapelveit és koncepcióit: Minőség-hangya, Megbízható-"
-"hangya, Biztonság-hangya, Használhatóság-hangya és Fenntarthatóság-hangya. A "
-"komplex rendszerek tervezésének és optimalizálásának szakértői voltak, és "
-"büszkék voltak munkájukra."
+"A Hangyaforrás mérnökei mindannyian rendelkeznek olyan becenevekkel, "
+"amelyek tükrözik mesterségük alapelveit és koncepcióit: Minőség-hangya, "
+"Megbízható-hangya, Biztonság-hangya, Használhatóság-hangya és "
+"Fenntarthatóság-hangya. A komplex rendszerek tervezésének és "
+"optimalizálásának szakértői voltak, és büszkék voltak munkájukra."
 
 #: ../coffee_machine.md:32
 msgid ""
@@ -123,20 +125,21 @@ msgstr ""
 "A Minőség-hangya felelt azért, hogy a gép minden minőségi előírásnak és "
 "előírásnak megfeleljen, a Megbízható-hangya pedig az volt, hogy a gép "
 "megbízható legyen, és minden használat során megfelelően működjön. A "
-"Biztonság-hangya a biztonságot szem előtt tartva tervezte a gépet, ügyelve "
-"arra, hogy ne okozzon kárt annak, aki használja. A Használhatóság-hangya úgy "
-"tervezte a gépet, hogy könnyen és intuitívan használható legyen, míg a "
-"Fenntarthatóság-hangya gondoskodott arról, hogy a gép környezetbarát és "
-"fenntartható legyen. Ebben az oktatóanyagban a Hangyaforrás kalandjait "
-"követjük nyomon, hogy megalkossuk a tökéletes cica presszógépet."
+"Biztonság-hangya a biztonságot szem előtt tartva tervezte a gépet, "
+"ügyelve arra, hogy ne okozzon kárt annak, aki használja. A "
+"Használhatóság-hangya úgy tervezte a gépet, hogy könnyen és intuitívan "
+"használható legyen, míg a Fenntarthatóság-hangya gondoskodott arról, hogy"
+" a gép környezetbarát és fenntartható legyen. Ebben az oktatóanyagban a "
+"Hangyaforrás kalandjait követjük nyomon, hogy megalkossuk a tökéletes "
+"cica presszógépet."
 
 #: ../coffee_machine.md:41
 msgid ""
 "![Two shots of espresso being pulled from an espresso machine.](images"
 "/coffee-machine-double-shot.jpg)"
 msgstr ""
-"![Két csésze eszpresszót húznak ki egy kávéfőzőből.](images/coffee-machine-"
-"double-shot.jpg)"
+"![Két csésze eszpresszót húznak ki egy kávéfőzőből.](images/coffee-"
+"machine-double-shot.jpg)"
 
 #: ../coffee_machine.md:41
 msgid "Two shots of espresso being pulled from an espressomachine."
@@ -148,25 +151,25 @@ msgid ""
 " start a new model with the _SysML_ template. You can now decide to "
 "either:"
 msgstr ""
-"Az első dolog, amit a hangyák tettek, az volt, hogy megnyitották a Gaphort "
-"az üdvözlőablakba, és elindítottak egy új modellt a _SysML_ sablonnal. Most "
-"dönthet a következők közül:"
+"Az első dolog, amit a hangyák tettek, az volt, hogy megnyitották a "
+"Gaphort az üdvözlőablakba, és elindítottak egy új modellt a _SysML_ "
+"sablonnal. Most dönthet a következők közül:"
 
 #: ../coffee_machine.md:46
 msgid ""
 "recreate their work as part of this tutorial. For this, open the SysML "
 "Example model shown at the bottom of the Greeter window"
 msgstr ""
-"készítsék újra munkájukat ennek az oktatóanyagnak a részeként. Ehhez nyissa "
-"meg az üdvözlőablak alján látható SysML példa modellt"
+"készítsék újra munkájukat ennek az oktatóanyagnak a részeként. Ehhez "
+"nyissa meg az üdvözlőablak alján látható SysML példa modellt"
 
 #: ../coffee_machine.md:48
 msgid ""
 "inspect the result of their work by opening the `coffee-machine` model "
 "located in the `examples` folder."
 msgstr ""
-"a `examples` (példák) mappában található `coffee-machine` (kávégép) modell "
-"megnyitásával ellenőrizheti munkájuk eredményét."
+"a `examples` (példák) mappában található `coffee-machine` (kávégép) "
+"modell megnyitásával ellenőrizheti munkájuk eredményét."
 
 #: ../coffee_machine.md:51
 msgid "Abstraction Levels"
@@ -181,11 +184,11 @@ msgid ""
 " is the key to rigorous analysis of a system."
 msgstr ""
 "Az absztrakció az összetett rendszerek egyszerűsítésének egyik módja "
-"azáltal, hogy csak a legfontosabb részletekre koncentrál, a többi figyelmen "
-"kívül hagyásával. Ez egy folyamat a bonyolultság csökkentésére a "
-"szükségtelen részletek eltávolításával és a rendszer kulcsfontosságú "
-"szempontjainak kiemelésével, hogy a megoldandó problémára összpontosítson. "
-"Ez a kulcs a rendszer szigorú elemzéséhez."
+"azáltal, hogy csak a legfontosabb részletekre koncentrál, a többi "
+"figyelmen kívül hagyásával. Ez egy folyamat a bonyolultság csökkentésére "
+"a szükségtelen részletek eltávolításával és a rendszer kulcsfontosságú "
+"szempontjainak kiemelésével, hogy a megoldandó problémára "
+"összpontosítson. Ez a kulcs a rendszer szigorú elemzéséhez."
 
 #: ../coffee_machine.md:58
 msgid ""
@@ -198,13 +201,14 @@ msgid ""
 "breaking them down into their essential components and highlighting the "
 "most important aspects."
 msgstr ""
-"Az absztrakció megértéséhez gondoljon egy festményre. Amikor egy festményre "
-"nézel, valaminek a reprezentációját látod – talán egy személyt, egy tájat "
-"vagy egy tárgyat. A művész a valós világot olyan vonalakba, formákba és "
-"színekbe egyszerűsítette, amelyek a téma legfontosabb részleteit képviselik. "
-"Ugyanígy a rendszermérnökök, mint barátaink, a hangyák, az absztrakciót "
-"használják az összetett rendszerek ábrázolására, lényeges összetevőikre "
-"bontva és kiemelve a legfontosabb szempontokat."
+"Az absztrakció megértéséhez gondoljon egy festményre. Amikor egy "
+"festményre nézel, valaminek a reprezentációját látod – talán egy "
+"személyt, egy tájat vagy egy tárgyat. A művész a valós világot olyan "
+"vonalakba, formákba és színekbe egyszerűsítette, amelyek a téma "
+"legfontosabb részleteit képviselik. Ugyanígy a rendszermérnökök, mint "
+"barátaink, a hangyák, az absztrakciót használják az összetett rendszerek "
+"ábrázolására, lényeges összetevőikre bontva és kiemelve a legfontosabb "
+"szempontokat."
 
 #: ../coffee_machine.md:66
 msgid ""
@@ -215,18 +219,19 @@ msgid ""
 "design where similar types of questions are answered."
 msgstr ""
 "Az absztrakciós szintek a részletezettség különböző szintjeit jelentik, "
-"amelyeken egy rendszer ábrázolható. Ezek a szintek az összetett rendszerek "
-"kisebb, jobban kezelhető részekre bontására szolgálnak, amelyek elemezhetők "
-"és optimalizálhatók. Másképpen mondva, az absztrakciós szintek egy terv "
-"részeit csoportosítják, ahol hasonló típusú kérdésekre kapnak választ."
+"amelyeken egy rendszer ábrázolható. Ezek a szintek az összetett "
+"rendszerek kisebb, jobban kezelhető részekre bontására szolgálnak, "
+"amelyek elemezhetők és optimalizálhatók. Másképpen mondva, az "
+"absztrakciós szintek egy terv részeit csoportosítják, ahol hasonló típusú"
+" kérdésekre kapnak választ."
 
 #: ../coffee_machine.md:72
 msgid ""
 "There are typically three levels of abstraction in systems engineering "
 "and these are the three levels used in the SysML template:"
 msgstr ""
-"Az absztrakciónak általában három szintje van a rendszertervezésben, és ez a "
-"három szint, amelyet a SysML-sablon használ:"
+"Az absztrakciónak általában három szintje van a rendszertervezésben, és "
+"ez a három szint, amelyet a SysML-sablon használ:"
 
 #: ../coffee_machine.md:75
 msgid ""
@@ -236,11 +241,11 @@ msgid ""
 "functions. At this level, the focus is on understanding the system's "
 "requirements and how it will interact with other systems."
 msgstr ""
-"Koncepció szint: Néha fogalmi szintnek is nevezik. Meghatározza a megoldandó "
-"problémát. Ez az absztrakció legmagasabb szintje, ahol a rendszert általános "
-"célja, céljai és funkciói alapján írják le. Ezen a szinten a hangsúly a "
-"rendszer követelményeinek és más rendszerekkel való interakciójának "
-"megértésében van."
+"Koncepció szint: Néha fogalmi szintnek is nevezik. Meghatározza a "
+"megoldandó problémát. Ez az absztrakció legmagasabb szintje, ahol a "
+"rendszert általános célja, céljai és funkciói alapján írják le. Ezen a "
+"szinten a hangsúly a rendszer követelményeinek és más rendszerekkel való "
+"interakciójának megértésében van."
 
 #: ../coffee_machine.md:80
 msgid ""
@@ -251,8 +256,8 @@ msgid ""
 msgstr ""
 "Logikai szint: Technológiai agnosztikus megoldást határoz meg. Ez az "
 "absztrakció középső szintje, ahol a rendszert szerkezete és viselkedése "
-"alapján írják le. Ezen a szinten a hangsúly azon van, hogy a rendszerelemek "
-"hogyan vannak elrendezve, és hogyan hatnak egymásra."
+"alapján írják le. Ezen a szinten a hangsúly azon van, hogy a "
+"rendszerelemek hogyan vannak elrendezve, és hogyan hatnak egymásra."
 
 #: ../coffee_machine.md:84
 msgid ""
@@ -263,9 +268,9 @@ msgid ""
 "implementation."
 msgstr ""
 "Technológiai szint: Néha fizikai szintnek is nevezik. Meghatározza a "
-"részletes műszaki megoldást. Ez az absztrakció legalacsonyabb szintje, ahol "
-"a rendszert összetevői és tulajdonságaik alapján írják le. Ezen a szinten a "
-"hangsúly a rendszer megvalósításának részletein van."
+"részletes műszaki megoldást. Ez az absztrakció legalacsonyabb szintje, "
+"ahol a rendszert összetevői és tulajdonságaik alapján írják le. Ezen a "
+"szinten a hangsúly a rendszer megvalósításának részletein van."
 
 #: ../coffee_machine.md:89
 msgid ""
@@ -277,18 +282,19 @@ msgid ""
 "built and how it will interact with the environment."
 msgstr ""
 "Az absztrakció minden szintje más-más perspektívát ad a rendszerről, és "
-"minden szint fontos a rendszertervezés és -elemzés különböző aspektusaihoz. "
-"Például a fogalmi szint fontos a rendszer általános céljainak és "
-"követelményeinek megértéséhez, míg a fizikai szint a rendszer felépítésének "
-"és a környezettel való interakciójának megértéséhez."
+"minden szint fontos a rendszertervezés és -elemzés különböző "
+"aspektusaihoz. Például a fogalmi szint fontos a rendszer általános "
+"céljainak és követelményeinek megértéséhez, míg a fizikai szint a "
+"rendszer felépítésének és a környezettel való interakciójának "
+"megértéséhez."
 
 #: ../coffee_machine.md:96
 msgid ""
 "There is a fourth abstraction level called the Implementation Level that "
 "isn't modeled, which is the concrete built system."
 msgstr ""
-"Létezik egy negyedik absztrakciós szint, a megvalósítási szint, amely nem "
-"modellezett, ez a konkrétan felépített rendszer."
+"Létezik egy negyedik absztrakciós szint, a megvalósítási szint, amely nem"
+" modellezett, ez a konkrétan felépített rendszer."
 
 #: ../coffee_machine.md:99
 msgid ""
@@ -304,8 +310,8 @@ msgid ""
 "![Top level packages of the SysML template.](images/coffee-machine-top-"
 "level-packages.png)"
 msgstr ""
-"![A SysML-sablon legfelső szintű csomagjai.](images/coffee-machine-top-level-"
-"packages.png)"
+"![A SysML-sablon legfelső szintű csomagjai.](images/coffee-machine-top-"
+"level-packages.png)"
 
 #: ../coffee_machine.md:102
 msgid "Top level packages of the SysMLtemplate."
@@ -330,7 +336,8 @@ msgstr "Viselkedés: Egy rendszer funkcionalitása"
 #: ../coffee_machine.md:111
 msgid "Structure: How a system is formed using parts and connections"
 msgstr ""
-"Felépítés: Hogyan jön létre a rendszer részek és kapcsolatok felhasználásával"
+"Felépítés: Hogyan jön létre a rendszer részek és kapcsolatok "
+"felhasználásával"
 
 #: ../coffee_machine.md:112
 msgid "Requirements: Written statements that constrain the system"
@@ -339,8 +346,8 @@ msgstr "Követelmények: Írott utasítások, amelyek korlátozzák a rendszert"
 #: ../coffee_machine.md:113
 msgid "Parametric: Enforces mathematical rules across values in the system"
 msgstr ""
-"Parametrikus: A matematikai szabályokat kényszeríti ki a rendszer értékei "
-"között"
+"Parametrikus: A matematikai szabályokat kényszeríti ki a rendszer értékei"
+" között"
 
 #: ../coffee_machine.md:115
 msgid ""
@@ -348,9 +355,9 @@ msgid ""
 "video by Rick Steiner called [The Four Pillars of "
 "SysML](https://youtu.be/998UznK9ogY)."
 msgstr ""
-"Ha többet szeretne megtudni erről a négy oszlopról, itt található Steiner "
-"Rick 30 perces videója [The Four Pillars of SysML (A SysML négy oszlopa)] "
-"(https://youtu.be/998UznK9ogY)."
+"Ha többet szeretne megtudni erről a négy oszlopról, itt található Steiner"
+" Rick 30 perces videója [The Four Pillars of SysML (A SysML négy "
+"oszlopa)] (https://youtu.be/998UznK9ogY)."
 
 #: ../coffee_machine.md:118
 msgid ""
@@ -360,11 +367,11 @@ msgid ""
 "For example, by allocating behavior like an activity to an element of the"
 " structure like a block."
 msgstr ""
-"Mivel a paraméteres ábrák az egyik legkevésbé használt diagramtípus a SysML-"
-"ben, csak az első háromra fogunk összpontosítani. A SysML ereje abban "
-"rejlik, hogy képes kapcsolatokat létrehozni e három oszlop között. Például "
-"úgy, hogy egy tevékenységhez hasonló viselkedést rendelünk hozzá a struktúra "
-"egy eleméhez, például egy tömbhöz."
+"Mivel a paraméteres ábrák az egyik legkevésbé használt diagramtípus a "
+"SysML-ben, csak az első háromra fogunk összpontosítani. A SysML ereje "
+"abban rejlik, hogy képes kapcsolatokat létrehozni e három oszlop között. "
+"Például úgy, hogy egy tevékenységhez hasonló viselkedést rendelünk hozzá "
+"a struktúra egy eleméhez, például egy tömbhöz."
 
 #: ../coffee_machine.md:123
 msgid ""
@@ -383,8 +390,8 @@ msgid ""
 "![Three pillar packages nested under each abstraction level "
 "package.](images/coffee-machine-pillars.png)"
 msgstr ""
-"![Három oszlopcsomag van beágyazva minden absztrakciós szintű csomag alá.]"
-"(images/coffee-machine-pillars.png)"
+"![Három oszlopcsomag van beágyazva minden absztrakciós szintű csomag "
+"alá.](images/coffee-machine-pillars.png)"
 
 #: ../coffee_machine.md:127
 msgid "Three pillar packages nested under each abstraction levelpackage."
@@ -415,47 +422,49 @@ msgstr "Ki fogja használni a gépet, és mi a célja a használat során?"
 #: ../coffee_machine_concept.md:13
 msgid "What sequence of events will a person take while operating the machine?"
 msgstr ""
-"Milyen eseménysorozatot fog végrehajtani egy személy a gép kezelése közben?"
+"Milyen eseménysorozatot fog végrehajtani egy személy a gép kezelése "
+"közben?"
 
 #: ../coffee_machine_concept.md:14
 msgid ""
 "What are the key features and capabilities required for the machine to "
 "perform its intended function?"
 msgstr ""
-"Melyek azok a kulcsfontosságú jellemzők és képességek, amelyek szükségesek "
-"ahhoz, hogy a gép teljesítse a rendeltetésszerű funkcióját?"
+"Melyek azok a kulcsfontosságú jellemzők és képességek, amelyek "
+"szükségesek ahhoz, hogy a gép teljesítse a rendeltetésszerű funkcióját?"
 
 #: ../coffee_machine_concept.md:15
 msgid ""
 "What are the design constraints and requirements that must be considered "
 "when designing the machine?"
 msgstr ""
-"Melyek azok a tervezési korlátok és követelmények, amelyeket figyelembe kell "
-"venni a gép tervezésekor?"
+"Melyek azok a tervezési korlátok és követelmények, amelyeket figyelembe "
+"kell venni a gép tervezésekor?"
 
 #: ../coffee_machine_concept.md:16
 msgid ""
 "What are the key performance metrics that the machine must meet in order "
 "to be considered successful?"
 msgstr ""
-"Melyek azok a kulcsfontosságú teljesítménymutatók, amelyeknek a gépnek meg "
-"kell felelnie ahhoz, hogy sikeres legyen?"
+"Melyek azok a kulcsfontosságú teljesítménymutatók, amelyeknek a gépnek "
+"meg kell felelnie ahhoz, hogy sikeres legyen?"
 
 #: ../coffee_machine_concept.md:17
 msgid ""
 "How will the machine fit into the larger context of the café, and how "
 "will it interact with other systems and components within the café?"
 msgstr ""
-"Hogyan illeszkedik majd a gép a kávézó tágabb környezetébe, és hogyan fog "
-"kölcsönhatásba lépni a kávézón belüli más rendszerekkel és összetevőkkel?"
+"Hogyan illeszkedik majd a gép a kávézó tágabb környezetébe, és hogyan fog"
+" kölcsönhatásba lépni a kávézón belüli más rendszerekkel és "
+"összetevőkkel?"
 
 #: ../coffee_machine_concept.md:19
 msgid ""
 "What are the needs of others like those marketing, selling, "
 "manufacturing, or buying the machine?"
 msgstr ""
-"Mire van szüksége másoknak, például a gépet forgalmazóknak, értékesítőknek, "
-"gyártóknak vagy a gépet vásárlóknak?"
+"Mire van szüksége másoknak, például a gépet forgalmazóknak, "
+"értékesítőknek, gyártóknak vagy a gépet vásárlóknak?"
 
 #: ../coffee_machine_concept.md:21
 msgid ""
@@ -465,9 +474,9 @@ msgid ""
 " at the logical and technology levels of abstraction."
 msgstr ""
 "Ezen a szinten a hangsúly az eszpresszógép átfogó képének és a "
-"kávézórendszeren belüli szerepének megértésében van. Az ezekre a kérdésekre "
-"adott válaszok segítik a gép tervezését és fejlesztését az absztrakció "
-"logikai és technológiai szintjén."
+"kávézórendszeren belüli szerepének megértésében van. Az ezekre a "
+"kérdésekre adott válaszok segítik a gép tervezését és fejlesztését az "
+"absztrakció logikai és technológiai szintjén."
 
 #: ../coffee_machine_concept.md:26
 msgid "Use Case Diagram"
@@ -479,9 +488,9 @@ msgid ""
 "package in the Model Browser and double-click on the diagram named Use "
 "Cases."
 msgstr ""
-"Először a hangyák dolgoznak a rendszer viselkedésén. Bontsa ki a viselkedési "
-"csomagot a Modellböngészőben, és kattintson duplán a Használati esetek "
-"ábrára."
+"Először a hangyák dolgoznak a rendszer viselkedésén. Bontsa ki a "
+"viselkedési csomagot a Modellböngészőben, és kattintson duplán a "
+"Használati esetek ábrára."
 
 #: ../coffee_machine_concept.md:31
 msgid ""
@@ -496,8 +505,8 @@ msgstr ""
 "egyik típusa egy rendszer, például egy eszpresszógép funkcionális "
 "követelményeinek leírására. Az eszpresszógép kapcsán egy használati eset "
 "ábra segítségével azonosítható és meghatározható, hogy a gépet a "
-"felhasználók – például a kávézó személyzete és az ügyfelek – milyen módon "
-"fogják használni."
+"felhasználók – például a kávézó személyzete és az ügyfelek – milyen módon"
+" fogják használni."
 
 #: ../coffee_machine_concept.md:37
 msgid ""
@@ -508,12 +517,12 @@ msgid ""
 "machine, such as placing an order, making an espresso, or cleaning the "
 "machine."
 msgstr ""
-"Az ábra jellemzően különböző szereplőket vagy felhasználókat tartalmaz, mint "
-"például a barista, az ügyfél és esetleg egy menedzser vagy karbantartó "
-"technikus. Különféle „használati eseteket” vagy forgatókönyveket is "
-"tartalmazna, amelyek leírják a felhasználók által a géppel végrehajtható "
-"különféle műveleteket, például rendelés leadását, eszpresszó elkészítését "
-"vagy a gép tisztítását."
+"Az ábra jellemzően különböző szereplőket vagy felhasználókat tartalmaz, "
+"mint például a barista, az ügyfél és esetleg egy menedzser vagy "
+"karbantartó technikus. Különféle „használati eseteket” vagy "
+"forgatókönyveket is tartalmazna, amelyek leírják a felhasználók által a "
+"géppel végrehajtható különféle műveleteket, például rendelés leadását, "
+"eszpresszó elkészítését vagy a gép tisztítását."
 
 #: ../coffee_machine_concept.md:43
 msgid ""
@@ -524,11 +533,12 @@ msgid ""
 "involved in the development of the machine, such as the ants and "
 "Cappuccino the cat."
 msgstr ""
-"A használati eset ábra segít abban, hogy az eszpresszógép minden szükséges "
-"funkcionális követelményét azonosítsák és figyelembe vegyék, és a rendszert "
-"úgy alakítsák ki, hogy megfeleljen a felhasználók igényeinek. Kommunikációs "
-"eszközként is használható a gép fejlesztésében részt vevő különböző "
-"érdekeltek, például a hangyák és Cappuccino, a macska között."
+"A használati eset ábra segít abban, hogy az eszpresszógép minden "
+"szükséges funkcionális követelményét azonosítsák és figyelembe vegyék, és"
+" a rendszert úgy alakítsák ki, hogy megfeleljen a felhasználók "
+"igényeinek. Kommunikációs eszközként is használható a gép fejlesztésében "
+"részt vevő különböző érdekeltek, például a hangyák és Cappuccino, a "
+"macska között."
 
 #: ../coffee_machine_concept.md:49
 msgid "The ants need your help updating the diagrams, so let's get started:"
@@ -1240,10 +1250,10 @@ msgid ""
 "From a GUI point of view, a button release event is what kicks of the "
 "decision whether the connection is allowed."
 msgstr ""
-"A Gaphorban, ha egy ábrán kapcsolatot hozunk létre egy elem és egy kapcsolat "
-"között, a kapcsolat szemantikai szinten is létrejön (a modell). A grafikus "
-"felhasználói felület szempontjából a gomb felszabadítási eseménye dönti el, "
-"hogy a kapcsolat engedélyezett-e."
+"A Gaphorban, ha egy ábrán kapcsolatot hozunk létre egy elem és egy "
+"kapcsolat között, a kapcsolat szemantikai szinten is létrejön (a modell)."
+" A grafikus felhasználói felület szempontjából a gomb felszabadítási "
+"eseménye dönti el, hogy a kapcsolat engedélyezett-e."
 
 #: ../connect.md:12
 msgid ""
@@ -1251,9 +1261,9 @@ msgid ""
 "create a relation to/from the same element (like associations, but not "
 "generalizations)."
 msgstr ""
-"A kapcsolat engedélyezett-e az ellenőrzésnek azt is ellenőriznie kell, hogy "
-"érvényes-e reláció létrehozása ugyanabból az elemből (például asszociációk, "
-"de nem általánosítások)."
+"A kapcsolat engedélyezett-e az ellenőrzésnek azt is ellenőriznie kell, "
+"hogy érvényes-e reláció létrehozása ugyanabból az elemből (például "
+"asszociációk, de nem általánosítások)."
 
 #: ../container.md:1
 msgid "Gaphor in a Container"
@@ -1264,8 +1274,9 @@ msgid ""
 "Instead of setting up a development environment locally, the easiest way "
 "to contribute to the project is using GitHub Codespaces."
 msgstr ""
-"A fejlesztői környezet helyben történő létrehozása helyett a GitHub Kódterek "
-"használata a legegyszerűbb módja a projekthez való hozzájárulásnak."
+"A fejlesztői környezet helyben történő létrehozása helyett a GitHub "
+"Kódterek használata a legegyszerűbb módja a projekthez való "
+"hozzájárulásnak."
 
 #: ../container.md:6
 msgid "GitHub Codespaces"
@@ -1298,8 +1309,9 @@ msgid ""
 "/developing-online-with-"
 "codespaces/creating-a-codespace#creating-a-codespace)."
 msgstr ""
-"További információért tekintse meg a [GitHub dokumentációját](https://"
-"docs.github.com/en/free-pro-team@latest/github/developing-online-with-"
+"További információért tekintse meg a [GitHub "
+"dokumentációját](https://docs.github.com/en/free-pro-team@latest/github"
+"/developing-online-with-"
 "codespaces/creating-a-codespace#creating-a-codespace)."
 
 #: ../container.md:15
@@ -1463,9 +1475,9 @@ msgid ""
 "more experienced users."
 msgstr ""
 "A Gaphor már jó néhány éve létezik. Azokban az években mi (a Gaphor "
-"fejlesztői) megtanultunk néhány dolgot az elkészítéséhez. A Gaphor igyekszik "
-"könnyen elérhetővé tenni a kezdő felhasználók számára, valamint hasznos "
-"eszközt nyújtani a tapasztaltabb felhasználók számára."
+"fejlesztői) megtanultunk néhány dolgot az elkészítéséhez. A Gaphor "
+"igyekszik könnyen elérhetővé tenni a kezdő felhasználók számára, valamint"
+" hasznos eszközt nyújtani a tapasztaltabb felhasználók számára."
 
 #: ../design_principles.md:7
 msgid ""
@@ -1483,9 +1495,9 @@ msgid ""
 " to find your way around. Minimal knowledge of UML should at least allow "
 "you to create a class diagram."
 msgstr ""
-"A használhatóság nagyon fontos. Ha új a Gaphorban, könnyen eligazodhat. Az "
-"UML minimális ismeretének lehetővé kell tennie legalább egy osztálydiagram "
-"létrehozását."
+"A használhatóság nagyon fontos. Ha új a Gaphorban, könnyen eligazodhat. "
+"Az UML minimális ismeretének lehetővé kell tennie legalább egy "
+"osztálydiagram létrehozását."
 
 #: ../design_principles.md:19
 msgid "Guidance"
@@ -1509,9 +1521,10 @@ msgid ""
 "simple as possible to make consistent models."
 msgstr ""
 "Az ábra olyan tulajdonsággal rendelkezik, hogy kiszürkít minden olyan "
-"elemet, amelyhez egy kapcsolat nem tud kapcsolódni. Ez segít eldönteni, hogy "
-"egy kapcsolat hova kapcsolódhat. Továbbra is keverhet különböző elemeket, de "
-"igyekszünk a lehető legegyszerűbbé tenni az egységes modellek elkészítését."
+"elemet, amelyhez egy kapcsolat nem tud kapcsolódni. Ez segít eldönteni, "
+"hogy egy kapcsolat hova kapcsolódhat. Továbbra is keverhet különböző "
+"elemeket, de igyekszünk a lehető legegyszerűbbé tenni az egységes "
+"modellek elkészítését."
 
 #: ../design_principles.md:30
 msgid "Keep the model in sync"
@@ -1523,9 +1536,9 @@ msgid ""
 "be able to explain those to others. As systems become more complicated, "
 "it's important to have the design (model) layed out in diagrams."
 msgstr ""
-"A modellezés fontos része, hogy egy absztrakciós rendszert tervezzünk, és "
-"ezeket el tudjuk magyarázni másoknak. A rendszerek bonyolultabbá válásával "
-"fontos, hogy a tervezés (modell) ábrákon legyen feltüntetve."
+"A modellezés fontos része, hogy egy absztrakciós rendszert tervezzünk, és"
+" ezeket el tudjuk magyarázni másoknak. A rendszerek bonyolultabbá "
+"válásával fontos, hogy a tervezés (modell) ábrákon legyen feltüntetve."
 
 #: ../design_principles.md:36
 msgid ""
@@ -1535,7 +1548,8 @@ msgid ""
 msgstr ""
 "A Gaphor nagy erőfeszítéseket tesz annak érdekében, hogy a modell "
 "szinkronban legyen az ábrákkal. Ennek során a fel nem használt elemek "
-"automatikusan eltávolíthatók a modellből, ha már nem szerepelnek az ábrán."
+"automatikusan eltávolíthatók a modellből, ha már nem szerepelnek az "
+"ábrán."
 
 #: ../design_principles.md:40
 msgid "Out of your way"
@@ -1548,9 +1562,10 @@ msgid ""
 "possible. It does not try to nag you with error messages, because the "
 "model is not \"correct\"."
 msgstr ""
-"A modellezés során a probléma- vagy megoldási területtel kell elfoglalnia, "
-"nem az eszközzel. Gaphor igyekszik távol maradni az utadból, amennyire csak "
-"lehetséges. Nem próbál hibaüzenetekkel nyaggatni, mert a modell nem „helyes”."
+"A modellezés során a probléma- vagy megoldási területtel kell "
+"elfoglalnia, nem az eszközzel. Gaphor igyekszik távol maradni az utadból,"
+" amennyire csak lehetséges. Nem próbál hibaüzenetekkel nyaggatni, mert a "
+"modell nem „helyes”."
 
 #: ../design_principles.md:46
 msgid "Avoid dialogs"
@@ -1562,7 +1577,8 @@ msgid ""
 "avoids the use of dialogs as much as possible."
 msgstr ""
 "Ha helyesen cselekszik, és távol tartja magát a felhasználók útjából, a "
-"Gaphor a lehető legnagyobb mértékben kerüli a párbeszédpanelek használatát."
+"Gaphor a lehető legnagyobb mértékben kerüli a párbeszédpanelek "
+"használatát."
 
 #: ../design_principles.md:51
 msgid ""
@@ -1583,11 +1599,11 @@ msgid ""
 " model. It will not interrupt you with dialogs, but only provide a small "
 "in-app notification. If the change is undesired, hit `undo`."
 msgstr ""
-"Amikor a Gaphor olyasmit csinál, ami közvetlenül nem látható, értesítést fog "
-"látni, például egy olyan elemet, amelyet közvetve eltávolítottak a "
-"modellből. Nem szakítja meg a párbeszédpaneleket, csak egy kis alkalmazáson "
-"belüli értesítést ad. Ha a változtatás nem kívánatos, nyomja meg a "
-"`Visszavonás` gombot."
+"Amikor a Gaphor olyasmit csinál, ami közvetlenül nem látható, értesítést "
+"fog látni, például egy olyan elemet, amelyet közvetve eltávolítottak a "
+"modellből. Nem szakítja meg a párbeszédpaneleket, csak egy kis "
+"alkalmazáson belüli értesítést ad. Ha a változtatás nem kívánatos, nyomja"
+" meg a `Visszavonás` gombot."
 
 #: ../design_principles.md:61
 msgid "Balanced"
@@ -1600,8 +1616,8 @@ msgid ""
 "expert and novice modellers."
 msgstr ""
 "Bár a Gaphor az UML 2 modell egy részét implementálja, mégsem teljes. "
-"Igyekszünk megtalálni a megfelelő egyensúlyt a funkciók között, hogy mind a "
-"szakértő, mind a kezdő modellezőknek megfeleljenek."
+"Igyekszünk megtalálni a megfelelő egyensúlyt a funkciók között, hogy mind"
+" a szakértő, mind a kezdő modellezőknek megfeleljenek."
 
 #: ../design_principles.md:67
 msgid "Continuity"
@@ -1612,8 +1628,8 @@ msgid ""
 "A model that is created should be usable in the future. Gaphor does "
 "acknowledge that. We care about compatibility."
 msgstr ""
-"A létrehozott modellnek a jövőben is használhatónak kell lennie. Gaphor ezt "
-"elismeri. A kompatibilitás fontos számunkra."
+"A létrehozott modellnek a jövőben is használhatónak kell lennie. Gaphor "
+"ezt elismeri. A kompatibilitás fontos számunkra."
 
 #: ../design_principles.md:72
 msgid "Backwards compatibility"
@@ -1624,8 +1640,9 @@ msgid ""
 "Gaphor is capable of loading models going back to Gaphor 1.0. It's "
 "important for a tool to always allow older models to be loaded."
 msgstr ""
-"A Gaphor képes a Gaphor 1.0-s verziójára visszamenő modellek betöltésére. "
-"Fontos, hogy egy eszköz mindig lehetővé tegye a régebbi modellek betöltését."
+"A Gaphor képes a Gaphor 1.0-s verziójára visszamenő modellek betöltésére."
+" Fontos, hogy egy eszköz mindig lehetővé tegye a régebbi modellek "
+"betöltését."
 
 #: ../design_principles.md:77
 msgid "Multi-platform"
@@ -1638,11 +1655,11 @@ msgid ""
 "essential if the model needs to be shared. It would be awful if you need "
 "to run one specific operating system in order to open a model."
 msgstr ""
-"Nagy erőfeszítéseket teszünk annak érdekében, hogy a Gaphor minden nagyobb "
-"platformon fusson: Windowson, macOS-en és Linuxon. A Gaphor elérhetősége "
-"minden platformon elengedhetetlen, ha a modellt meg kell osztani. Szörnyű "
-"lenne, ha egy adott operációs rendszert kellene futtatnia egy modell "
-"megnyitásához."
+"Nagy erőfeszítéseket teszünk annak érdekében, hogy a Gaphor minden "
+"nagyobb platformon fusson: Windowson, macOS-en és Linuxon. A Gaphor "
+"elérhetősége minden platformon elengedhetetlen, ha a modellt meg kell "
+"osztani. Szörnyű lenne, ha egy adott operációs rendszert kellene "
+"futtatnia egy modell megnyitásához."
 
 #: ../design_principles.md:84
 msgid ""
@@ -1651,8 +1668,8 @@ msgid ""
 "may change."
 msgstr ""
 "Egyelőre nem támogatjuk a negyedik nagy platformot (web). A natív "
-"alkalmazások jobb felhasználói élményt biztosítanak (a telepítést követően). "
-"De ez változhat."
+"alkalmazások jobb felhasználói élményt biztosítanak (a telepítést "
+"követően). De ez változhat."
 
 #: ../design_principles.md:87
 msgid "User interaction"
@@ -1667,13 +1684,13 @@ msgid ""
 " application. We try to stay close to the GNOME HIG, but try not to "
 "introduce concepts that are not available on Windows and macOS."
 msgstr ""
-"A Gaphor eredetileg Linuxra íródott. A [GTK](https://gtk.org)-t használja "
-"felhasználói felületként. Ez azt jelenti, hogy a Gaphor követi a [GNOME HIG "
-"(Human Interface Guidelines – emberi interfész irányelvei)](https://"
-"developer.gnome.org/hig/) előírásait. A Gaphor egy többplatformos alkalmazás "
-"is. Igyekszünk a GNOME HIG közelében maradni, de igyekezzünk ne olyan "
-"koncepciókat bevezetni, amelyek nem érhetők el Windows és macOS operációs "
-"rendszereken."
+"A Gaphor eredetileg Linuxra íródott. A [GTK](https://gtk.org)-t használja"
+" felhasználói felületként. Ez azt jelenti, hogy a Gaphor követi a [GNOME "
+"HIG (Human Interface Guidelines – emberi interfész "
+"irányelvei)](https://developer.gnome.org/hig/) előírásait. A Gaphor egy "
+"többplatformos alkalmazás is. Igyekszünk a GNOME HIG közelében maradni, "
+"de igyekezzünk ne olyan koncepciókat bevezetni, amelyek nem érhetők el "
+"Windows és macOS operációs rendszereken."
 
 #: ../design_principles.md:95
 msgid ""
@@ -1685,8 +1702,8 @@ msgstr ""
 "A felhasználói felület összetevői nem jönnek létre. Azt találtuk, hogy a "
 "felhasználói felület generálása (mint sok vállalati modellező eszköz) "
 "borzasztó felhasználói élményt nyújt. Szeretnénk, ha a felhasználók "
-"rendszeresen használnák a Gaphort, ezért arra törekszünk, hogy olyan eszköz "
-"legyen, amelyet kellemes nézni és könnyű vele dolgozni."
+"rendszeresen használnák a Gaphort, ezért arra törekszünk, hogy olyan "
+"eszköz legyen, amelyet kellemes nézni és könnyű vele dolgozni."
 
 #: ../design_principles.md:101
 msgid "What else?"
@@ -1712,15 +1729,15 @@ msgid ""
 "listen to events."
 msgstr ""
 "**Eseményvezérelt** A Gaphor egy felhasználói alkalmazás. A felhasználói "
-"eseményekre hat. Az alkalmazás belső eseményküldést (eseménybusz) használ az "
-"eseményeknek az érdekelt felekhez való eljuttatására. Mindenkinek képesnek "
-"kell lennie az események meghallgatására."
+"eseményekre hat. Az alkalmazás belső eseményküldést (eseménybusz) használ"
+" az eseményeknek az érdekelt felekhez való eljuttatására. Mindenkinek "
+"képesnek kell lennie az események meghallgatására."
 
-#: ../event_system.md:1
+#: ../event_system.rst:2
 msgid "Event System"
 msgstr "Eseményrendszer"
 
-#: ../event_system.md:3
+#: ../event_system.rst:4
 msgid ""
 "The event system in Gaphor provides an API to *handle* events and to "
 "*subscribe* to events."
@@ -1728,7 +1745,7 @@ msgstr ""
 "A Gaphor eseményrendszere API-t biztosít az események *kezeléséhez* és "
 "*feliratkozásához* az eseményekhez."
 
-#: ../event_system.md:6
+#: ../event_system.rst:7
 msgid ""
 "In Gaphor we manage event handler subscriptions through the "
 "`EventManager` service. Gaphor is highly event driven:"
@@ -1737,19 +1754,19 @@ msgstr ""
 "(Eseménykezelő) szolgáltatáson keresztül kezeljük. A Gaphor erősen "
 "eseményvezérelt:"
 
-#: ../event_system.md:9
+#: ../event_system.rst:10
 msgid "Changes in the loaded model are emitted as events"
 msgstr "A betöltött modell változásai eseményként kerülnek kiadásra"
 
-#: ../event_system.md:10
+#: ../event_system.rst:11
 msgid "Changes on diagrams are emitted as events"
 msgstr "Az ábrákon a változások eseményként jelennek meg"
 
-#: ../event_system.md:11
+#: ../event_system.rst:12
 msgid "Changes in the UI are emitted as events"
 msgstr "A felhasználói felület változásai eseményként jelennek meg"
 
-#: ../event_system.md:13
+#: ../event_system.rst:14
 msgid ""
 "Although Gaphor depends heavily on GTK for its user interface, Gaphor is "
 "using its own event dispatcher. Events can be structured in hierarchies. "
@@ -1758,12 +1775,12 @@ msgid ""
 " also register `ElementUpdated` and receive all `AttributeUpdated` events"
 " as well."
 msgstr ""
-"Bár a Gaphor felhasználói felülete nagymértékben függ a GTK-tól, a Gaphor "
-"saját esemény diszpécserét használja. Az események hierarchiába "
+"Bár a Gaphor felhasználói felülete nagymértékben függ a GTK-tól, a Gaphor"
+" saját esemény diszpécserét használja. Az események hierarchiába "
 "strukturálhatók. Például egy `AttributeUpdated` (AttribútumFrissítve) "
-"esemény az `ElementUpdated` (ElemFrissítve) altípusa. Ha az elemek minden "
-"változása érdekel minket, akkor regisztrálhatjuk az `ElementUpdated`-et is, "
-"és megkaphatjuk az összes `AttributeUpdated` eseményt is."
+"esemény az `ElementUpdated` (ElemFrissítve) altípusa. Ha az elemek minden"
+" változása érdekel minket, akkor regisztrálhatjuk az `ElementUpdated`-et "
+"is, és megkaphatjuk az összes `AttributeUpdated` eseményt is."
 
 #: gaphor.core.eventmanager.EventManager:1 of
 msgid "The Event Manager provides a flexible way to dispatch events."
@@ -1816,15 +1833,185 @@ msgstr ""
 msgid "This will allow you to let the even be handled by an event manager:"
 msgstr ""
 
-#: ../event_system.md:31
+#: ../event_system.rst:30
 msgid ""
 "Under the hood events are handled by the Generics library. For more "
 "information about how the Generic library handles events see the `Generic"
 " documentation <https://generic.readthedocs.io>`_."
 msgstr ""
-"A háttérben az eseményeket a Generics könyvtár kezeli. További információért "
-"arról, hogy az Általános könyvtár hogyan kezeli az eseményeket, tekintse meg "
-"az `Általános dokumentációt <https://generic.readthedocs.io>`_."
+"A háttérben az eseményeket a Generics könyvtár kezeli. További "
+"információért arról, hogy az Általános könyvtár hogyan kezeli az "
+"eseményeket, tekintse meg az `Általános dokumentációt "
+"<https://generic.readthedocs.io>`_."
+
+#: ../exporting.md:1
+msgid "Exporting"
+msgstr ""
+
+#: ../exporting.md:3
+msgid ""
+"Gaphor can export diagrams and models in several formats, from individual"
+" diagram images to full interactive HTML reports."
+msgstr ""
+
+#: ../exporting.md:6
+msgid "Diagram Image Export"
+msgstr ""
+
+#: ../exporting.md:8
+msgid "Gaphor supports exporting diagrams as SVG, PNG, PDF, and EPS images."
+msgstr ""
+
+#: ../exporting.md:11
+msgid "From the GUI"
+msgstr ""
+
+#: ../exporting.md:13
+msgid "Open the hamburger menu and choose one of:"
+msgstr ""
+
+#: ../exporting.md:15
+msgid "Export as SVG/PNG/PDF — exports the currently active diagram"
+msgstr ""
+
+#: ../exporting.md:16
+msgid "Export all diagrams — batch-exports every diagram in the model"
+msgstr ""
+
+#: ../exporting.md:18
+msgid ""
+"Batch export preserves the package directory structure, so diagrams "
+"inside nested packages end up in matching subdirectories."
+msgstr ""
+
+#: ../exporting.md:21
+msgid "From the command line"
+msgstr ""
+
+#: ../exporting.md:27
+msgid ""
+"This exports all diagrams to PDF (the default format) in the current "
+"directory."
+msgstr ""
+
+#: ../exporting.md:29
+msgid "Common options:"
+msgstr ""
+
+#: ../exporting.md ../exporting.md:57
+msgid "Option"
+msgstr ""
+
+#: ../exporting.md ../exporting.md:57
+msgid "Description"
+msgstr ""
+
+#: ../exporting.md
+msgid "`-f`, `--format` _format_"
+msgstr ""
+
+#: ../exporting.md
+msgid "Output format: `svg`, `png`, `pdf` (default), or `eps`"
+msgstr ""
+
+#: ../exporting.md ../exporting.md:57
+msgid "`-o`, `--dir` _directory_"
+msgstr ""
+
+#: ../exporting.md
+msgid "Output directory"
+msgstr ""
+
+#: ../exporting.md
+msgid "`-r`, `--regex` _pattern_"
+msgstr ""
+
+#: ../exporting.md
+msgid ""
+"Only export diagrams whose name matches the pattern (case-insensitive, "
+"includes package name)"
+msgstr ""
+
+#: ../exporting.md
+msgid "`-u`, `--use-underscores`"
+msgstr ""
+
+#: ../exporting.md
+msgid "Use underscores instead of spaces in output filenames"
+msgstr ""
+
+#: ../exporting.md:38
+msgid "For example, to export only diagrams with \"Class\" in their name as SVG:"
+msgstr ""
+
+#: ../exporting.md:44
+msgid "HTML Report"
+msgstr ""
+
+#: ../exporting.md:46
+msgid ""
+"The HTML report is a self-contained, single-page report that gives an "
+"interactive, read-only overview of your entire model — ideal for sharing "
+"with stakeholders or publishing on a static site (GitHub Pages, etc.)."
+msgstr ""
+
+#: ../exporting.md:50
+msgid "Features:"
+msgstr ""
+
+#: ../exporting.md:52
+msgid "Sidebar tree with search for quick navigation"
+msgstr ""
+
+#: ../exporting.md:53
+msgid "Interactive SVG diagrams with pan and zoom"
+msgstr ""
+
+#: ../exporting.md:54
+msgid "Clickable elements — click any element in a diagram to see its details"
+msgstr ""
+
+#: ../exporting.md:55
+msgid "Detail panels showing element properties and relationships"
+msgstr ""
+
+#: ../exporting.md:58
+msgid ""
+"The generated report is fully static. No server or backend is required to"
+" view it."
+msgstr ""
+
+#: ../exporting.md:61
+msgid "Generating via the GUI"
+msgstr ""
+
+#: ../exporting.md:63
+msgid "Open the hamburger menu and choose `Export as HTML Report`."
+msgstr ""
+
+#: ../exporting.md:65
+msgid "![Export menu showing the HTML Report option](images/export-menu.png)"
+msgstr ""
+
+#: ../exporting.md:65
+msgid "Export menu showing the HTML Report option"
+msgstr ""
+
+#: ../exporting.md:67
+msgid "Generating via the command line"
+msgstr ""
+
+#: ../exporting.md:57
+msgid "Output directory for the report"
+msgstr ""
+
+#: ../exporting.md:77
+msgid "![Generated HTML report in a browser](images/html-report.png)"
+msgstr ""
+
+#: ../exporting.md:77
+msgid "Generated HTML report in a browser"
+msgstr ""
 
 #: ../first_model.md:1
 msgid "Your First Model"
@@ -1836,16 +2023,16 @@ msgid ""
 "Although the names should speak for themselves, you can check out the "
 "[Getting Started](getting_started) page for more information."
 msgstr ""
-"Bár a nevek önmagukért beszélnek, a [Kezdő lépések](getting_started) oldalon "
-"további információkat találhat ezekről a szakaszokról."
+"Bár a nevek önmagukért beszélnek, a [Kezdő lépések](getting_started) "
+"oldalon további információkat találhat ezekről a szakaszokról."
 
 #: ../first_model.md:12
 msgid ""
 "Once Gaphor is started, and you can start a new model with the _Generic_ "
 "template. The initial diagram is already open in the Diagram section."
 msgstr ""
-"A Gaphor elindítása után elindíthat egy új modellt az _Általános_ sablonnal. "
-"A kezdeti diagram már nyitva van az Ábra részben."
+"A Gaphor elindítása után elindíthat egy új modellt az _Általános_ "
+"sablonnal. A kezdeti diagram már nyitva van az Ábra részben."
 
 #: ../first_model.md:15
 #, fuzzy
@@ -1858,13 +2045,13 @@ msgid ""
 "selected tool will reset itself to the Pointer tool after the element is "
 "placed on the diagram."
 msgstr ""
-"Válassza ki az elhelyezni kívánt elemet, jelen esetben egy osztályt (![új "
-"osztály](../gaphor/ui/icons/hicolor/scalable/actions/gaphor-class-"
+"Válassza ki az elhelyezni kívánt elemet, jelen esetben egy osztályt (![új"
+" osztály](../gaphor/ui/icons/hicolor/scalable/actions/gaphor-class-"
 "symbolic.svg)) az ikonra kattintva az Eszköztárat, és kattintson a "
-"diagramra. Ezzel egy új osztályelem példányt helyez el a diagramon, és egy "
-"új osztályt ad a modellhez – ez megjelenik a Modellböngészőben. A "
-"kiválasztott eszköz visszaáll a Mutató eszközre, miután az elemet az ábrára "
-"helyezte."
+"diagramra. Ezzel egy új osztályelem példányt helyez el a diagramon, és "
+"egy új osztályt ad a modellhez – ez megjelenik a Modellböngészőben. A "
+"kiválasztott eszköz visszaáll a Mutató eszközre, miután az elemet az "
+"ábrára helyezte."
 
 #: ../first_model.md:15
 msgid "Icon for Class."
@@ -1878,8 +2065,8 @@ msgid ""
 "operations (methods). The Note field can contain any text you wish to "
 "associate with the element, (this will not show on a diagram)."
 msgstr ""
-"A jobb oldalon található Tulajdonságszerkesztő részleteket jelenít meg az "
-"újonnan hozzáadott osztályról, például a nevét (_Új osztály_), az "
+"A jobb oldalon található Tulajdonságszerkesztő részleteket jelenít meg az"
+" újonnan hozzáadott osztályról, például a nevét (_Új osztály_), az "
 "attribútumokat és a műveleteket (metódusokat)."
 
 #: ../first_model.md:25
@@ -1903,10 +2090,10 @@ msgid ""
 "kinds of diagrams, such as Class diagrams, Component diagrams, Action "
 "diagrams, Sequence diagrams. But Gaphor does not place any restrictions."
 msgstr ""
-"A Gaphor nem tesz feltevéseket arról, hogy mely elemeket kell elhelyezni egy "
-"ábrán. Az ábra egy ábra. Az UML mindenféle ábrát meghatároz, például "
-"osztályábrákat, komponens ábrákat, műveleti ábrákat, szekvenciaábrákat. De a "
-"Gaphor nem szab semmilyen korlátozást."
+"A Gaphor nem tesz feltevéseket arról, hogy mely elemeket kell elhelyezni "
+"egy ábrán. Az ábra egy ábra. Az UML mindenféle ábrát meghatároz, például "
+"osztályábrákat, komponens ábrákat, műveleti ábrákat, szekvenciaábrákat. "
+"De a Gaphor nem szab semmilyen korlátozást."
 
 #: ../first_model.md:34
 msgid "Adding Relations"
@@ -1919,10 +2106,10 @@ msgid ""
 " and changing the name in the Property Editor, or by double-clicking the "
 "element."
 msgstr ""
-"Adjon hozzá egy másik osztályt. Módosítsa a neveket `Alakzat`-ra és `Kör`-"
-"re. Határozzuk meg, hogy a `Kör` az `Alakzat` altípusa. Ezt úgy teheti meg, "
-"hogy kiválaszt egyet, és megváltoztatja a nevet a Tulajdonságszerkesztőben, "
-"vagy kattintson duplán az elemre."
+"Adjon hozzá egy másik osztályt. Módosítsa a neveket `Alakzat`-ra és "
+"`Kör`-re. Határozzuk meg, hogy a `Kör` az `Alakzat` altípusa. Ezt úgy "
+"teheti meg, hogy kiválaszt egyet, és megváltoztatja a nevet a "
+"Tulajdonságszerkesztőben, vagy kattintson duplán az elemre."
 
 #: ../first_model.md:40
 #, fuzzy
@@ -1931,8 +2118,9 @@ msgid ""
 "relationships.](../gaphor/ui/icons/hicolor/scalable/actions/gaphor-"
 "generalization-symbolic.svg))."
 msgstr ""
-"Általánosítás kijelölése (![Új általánosítás](../gaphor/ui/icons/hicolor/"
-"scalable/actions/gaphor-generalization-symbolic.svg))."
+"Általánosítás kijelölése (![Új "
+"általánosítás](../gaphor/ui/icons/hicolor/scalable/actions/gaphor-"
+"generalization-symbolic.svg))."
 
 #: ../first_model.md:40
 msgid "Icon for generalization relationships."
@@ -1945,10 +2133,11 @@ msgid ""
 "relationship between `Shape` and `Circle`. You can see both ends of the "
 "relation are red, indicating they are connected to their class."
 msgstr ""
-"Vigye az egeret az `Alakzat` fölé. Kattintson, tartsa lenyomva, és húzza a "
-"vonal végét a `Kör` fölé. Engedje el az egérgombot, és meg kell teremtenie a "
-"kapcsolatot az `Alak` és a `Kör` között. Láthatja, hogy a reláció mindkét "
-"vége piros, ami azt jelzi, hogy az osztályukhoz kapcsolódnak."
+"Vigye az egeret az `Alakzat` fölé. Kattintson, tartsa lenyomva, és húzza "
+"a vonal végét a `Kör` fölé. Engedje el az egérgombot, és meg kell "
+"teremtenie a kapcsolatot az `Alak` és a `Kör` között. Láthatja, hogy a "
+"reláció mindkét vége piros, ami azt jelzi, hogy az osztályukhoz "
+"kapcsolódnak."
 
 #: ../first_model.md:47
 msgid ""
@@ -1969,11 +2158,11 @@ msgid ""
 "symbolic.svg) → Tools → Auto Layout) to align the elements on the "
 "diagram."
 msgstr ""
-"Opcionálisan futtathatja az automatikus elrendezést (![menü megnyitása]"
-"(images/open-menu-symbolic.svg) → Eszközök → Automatikus elrendezés) az "
-"elemek igazításához az ábrán."
+"Opcionálisan futtathatja az automatikus elrendezést (![menü "
+"megnyitása](images/open-menu-symbolic.svg) → Eszközök → Automatikus "
+"elrendezés) az elemek igazításához az ábrán."
 
-#: ../first_model.md:49 ../plugins.md:45 ../style_sheets.md:343
+#: ../first_model.md:49 ../plugins.md:45 ../style_sheets.md:345
 msgid "Menu icon"
 msgstr ""
 
@@ -1991,8 +2180,8 @@ msgid ""
 msgstr ""
 "Új ábra létrehozásához használja a Modellböngészőt. Jelölje ki azt az "
 "elemet, amelynek tartalmaznia kell az új ábrát. Egyelőre válassza az _Új "
-"modell_ lehetőséget. Kattintson az Új diagram menüre (![új ábra](images/list-"
-"add-symbolic.svg)) a fejlécsorban."
+"modell_ lehetőséget. Kattintson az Új diagram menüre (![új ábra](images"
+"/list-add-symbolic.svg)) a fejlécsorban."
 
 #: ../first_model.md:55
 msgid "Plus symbol of the New Diagram popup menu."
@@ -2019,8 +2208,8 @@ msgid ""
 "diagram."
 msgstr ""
 "Most húzza át az elemeket a Modellböngészőből az új ábrára. Először az "
-"`Alak` és a `Kör` osztályok. Utoljára adja hozzá az általánosítást. Dobja el "
-"valahova a két osztály közé. A kapcsolat létrejön az ábrához."
+"`Alak` és a `Kör` osztályok. Utoljára adja hozzá az általánosítást. Dobja"
+" el valahova a két osztály közé. A kapcsolat létrejön az ábrához."
 
 #: ../first_model.md:67
 msgid ""
@@ -2043,8 +2232,8 @@ msgid ""
 "Elements in the model are automatically removed when there are no more "
 "representations in any of the diagrams."
 msgstr ""
-"A modell elemei automatikusan eltávolításra kerülnek, ha egyik diagramon sem "
-"szerepel több ábrázolás."
+"A modell elemei automatikusan eltávolításra kerülnek, ha egyik diagramon "
+"sem szerepel több ábrázolás."
 
 #: ../first_model.md:78
 #, fuzzy
@@ -2081,12 +2270,12 @@ msgid ""
 "the description about the [Service Oriented "
 "Architecture](service_oriented.md)."
 msgstr ""
-"A Gaphor könnyed, szolgáltatás-orientált módon épül fel. Az alkalmazás egy "
-"sor szolgáltatásra van felosztva, például fájl-, esemény- és "
+"A Gaphor könnyed, szolgáltatás-orientált módon épül fel. Az alkalmazás "
+"egy sor szolgáltatásra van felosztva, például fájl-, esemény- és "
 "visszavonáskezelőkre. Ezek a szolgáltatások a `pyproject.toml`-fájlban "
 "meghatározott belépési pontok alapján töltődnek be. Ha többet szeretne "
-"megtudni az építészetről, tekintse meg a [szolgáltatásorientált építészet]"
-"(service_oriented.md) leírását."
+"megtudni az építészetről, tekintse meg a [szolgáltatásorientált "
+"építészet](service_oriented.md) leírását."
 
 #: ../framework.md:11
 msgid "Event driven"
@@ -2105,16 +2294,16 @@ msgid ""
 "the item is representing. For more information see the full description "
 "of the [event system](event_system)."
 msgstr ""
-"A Gaphor részei eseményeken keresztül kommunikálnak egymással. Amikor valami "
-"fontos történik, például egy modellelem attribútuma megváltozik, a rendszer "
-"egy eseményt küld. Amikor az alkalmazás más részei érdeklődnek a változás "
-"iránt, regisztrálnak egy eseménykezelőt az adott eseménytípushoz. Az "
-"eseményeket egy központi közvetítő bocsátja ki, így nem kell minden egyes "
-"elemre regisztrálnia, amely elküldheti az őket érdeklő eseményt. Például egy "
-"ábra elem regisztrálhat egy eseményszabályt, majd ellenőrizheti, hogy az "
-"eseményt küldő elem valójában az az esemény, amelyet az elem képvisel. "
-"További információért tekintse meg az [eseményrendszer](event_system) teljes "
-"leírását."
+"A Gaphor részei eseményeken keresztül kommunikálnak egymással. Amikor "
+"valami fontos történik, például egy modellelem attribútuma megváltozik, a"
+" rendszer egy eseményt küld. Amikor az alkalmazás más részei érdeklődnek "
+"a változás iránt, regisztrálnak egy eseménykezelőt az adott "
+"eseménytípushoz. Az eseményeket egy központi közvetítő bocsátja ki, így "
+"nem kell minden egyes elemre regisztrálnia, amely elküldheti az őket "
+"érdeklő eseményt. Például egy ábra elem regisztrálhat egy "
+"eseményszabályt, majd ellenőrizheti, hogy az eseményt küldő elem "
+"valójában az az esemény, amelyet az elem képvisel. További információért "
+"tekintse meg az [eseményrendszer](event_system) teljes leírását."
 
 #: ../framework.md:23
 msgid "Transactional"
@@ -2130,12 +2319,13 @@ msgid ""
 " the previous transactions so that a transaction can be reversed if the "
 "undo button is pressed."
 msgstr ""
-"A Gaphor [tranzakciós](transaction.md), ami azt jelenti, hogy nyomon követi "
-"az általa végrehajtott funkciókat tranzakciók sorozataként. A tranzakciók "
-"úgy működnek, hogy egy eseményt küldenek, amikor egy tranzakció kezdődik, és "
-"egy másikat, amikor egy tranzakció véget ér. Ez lehetővé teszi például, hogy "
-"a visszavonáskezelő naplót vezessen az előző tranzakciókról, így a "
-"tranzakció visszavonható a visszavonás gomb megnyomásával."
+"A Gaphor [tranzakciós](transaction.md), ami azt jelenti, hogy nyomon "
+"követi az általa végrehajtott funkciókat tranzakciók sorozataként. A "
+"tranzakciók úgy működnek, hogy egy eseményt küldenek, amikor egy "
+"tranzakció kezdődik, és egy másikat, amikor egy tranzakció véget ér. Ez "
+"lehetővé teszi például, hogy a visszavonáskezelő naplót vezessen az előző"
+" tranzakciókról, így a tranzakció visszavonható a visszavonás gomb "
+"megnyomásával."
 
 #: ../framework.md:32
 msgid "Main Components"
@@ -2170,15 +2360,15 @@ msgid ""
 "this component."
 msgstr ""
 "Ez az eseményküldéshez használt központi komponens. Minden olyan "
-"szolgáltatás, amely az eseményekkel foglalkozik (mind küldés, mind fogadás), "
-"ettől az összetevőtől függ."
+"szolgáltatás, amely az eseményekkel foglalkozik (mind küldés, mind "
+"fogadás), ettől az összetevőtől függ."
 
 #: ../framework.md:48
 msgid "element_factory"
 msgstr "element_factory (elemgyár)"
 
 #: ../framework.md:50
-#, fuzzy
+#, fuzzy, python-brace-format
 msgid ""
 "The [data model](models/core) itself is maintained in the element factory"
 " ({obj}`~gaphor.core.modeling.ElementFactory`). This service is used to "
@@ -2187,8 +2377,8 @@ msgid ""
 msgstr ""
 "Maga az [adatmodell](models/core.md) az elemgyárban van karbantartva "
 "(`gaphor.core.modeling.elementfactory`). Ez a szolgáltatás modellelemek "
-"létrehozására, valamint elemek kikeresésére vagy elemkészletek lekérdezésére "
-"szolgál."
+"létrehozására, valamint elemek kikeresésére vagy elemkészletek "
+"lekérdezésére szolgál."
 
 #: ../framework.md:54
 msgid "undo_manager"
@@ -2199,8 +2389,8 @@ msgid ""
 "One of the most appreciated services. It allows users to make a mistake "
 "every now and then!"
 msgstr ""
-"Az egyik legértékesebb szolgáltatás. Lehetővé teszi a felhasználók számára, "
-"hogy időnként hibát kövessenek el!"
+"Az egyik legértékesebb szolgáltatás. Lehetővé teszi a felhasználók "
+"számára, hogy időnként hibát kövessenek el!"
 
 #: ../framework.md:59
 msgid ""
@@ -2210,12 +2400,12 @@ msgid ""
 "back, in which case all changes are played back directly. For more "
 "information see the full description of the [undo manager](undo)."
 msgstr ""
-"A visszavonáskezelő tranzakciós. A felhasználó által végrehajtott műveletek "
-"csak akkor tárolódnak, ha a tranzakció aktív. Ha egy tranzakció befejeződött "
-"(elvégeztetett), egy új visszavonási művelet kerül tárolásra. A "
-"tranzakciókat vissza is lehet görgetni, ebben az esetben az összes változás "
-"közvetlenül lejátszásra kerül. További információkért tekintse meg a "
-"[visszavonáskezelő](undo) teljes leírását."
+"A visszavonáskezelő tranzakciós. A felhasználó által végrehajtott "
+"műveletek csak akkor tárolódnak, ha a tranzakció aktív. Ha egy tranzakció"
+" befejeződött (elvégeztetett), egy új visszavonási művelet kerül "
+"tárolásra. A tranzakciókat vissza is lehet görgetni, ebben az esetben az "
+"összes változás közvetlenül lejátszásra kerül. További információkért "
+"tekintse meg a [visszavonáskezelő](undo) teljes leírását."
 
 #: ../framework.md:65
 msgid "file_manager"
@@ -2238,11 +2428,11 @@ msgid ""
 "points/). Each service is a class, and takes parameters with names that "
 "match other services. This allows services to depend on other services."
 msgstr ""
-"Ebben a példában valami kevésbé jelentéktelen dolgot csinálunk. A Gaphorban "
-"a szolgáltatások belépési pontként vannak definiálva. Minden szolgáltatás "
-"egy osztály, és olyan paramétereket vesz fel, amelyek neve megegyezik a "
-"többi szolgáltatással. Ez lehetővé teszi, hogy a szolgáltatások más "
-"szolgáltatásoktól függjenek."
+"Ebben a példában valami kevésbé jelentéktelen dolgot csinálunk. A "
+"Gaphorban a szolgáltatások belépési pontként vannak definiálva. Minden "
+"szolgáltatás egy osztály, és olyan paramétereket vesz fel, amelyek neve "
+"megegyezik a többi szolgáltatással. Ez lehetővé teszi, hogy a "
+"szolgáltatások más szolgáltatásoktól függjenek."
 
 #: ../gaphor-services.md:12
 msgid "It looks something like this:"
@@ -2254,16 +2444,15 @@ msgstr "Először töltsük be a belépési pontokat."
 
 #: ../gaphor-services.md:68
 msgid "Now let's create a component in our model for every service."
-msgstr ""
-"Most hozzunk létre egy komponenst a modellünkben minden szolgáltatáshoz."
+msgstr "Most hozzunk létre egy komponenst a modellünkben minden szolgáltatáshoz."
 
 #: ../gaphor-services.md:85
 msgid ""
 "With all components mapped, we can create dependencies between those "
 "components, based on the constructor parameter names."
 msgstr ""
-"Az összes komponens leképezése esetén a konstruktor paraméterek neve alapján "
-"függőséget hozhatunk létre az összetevők között."
+"Az összes komponens leképezése esetén a konstruktor paraméterek neve "
+"alapján függőséget hozhatunk létre az összetevők között."
 
 #: ../gaphor-services.md:101
 msgid ""
@@ -2271,18 +2460,18 @@ msgid ""
 "components and dependencies on the diagram and let auto-layout do its "
 "magic."
 msgstr ""
-"A modell összes elemével ábrát készíthetünk. Hagyjuk a komponenseket és a "
-"függőségeket az ábrán, és hagyjuk, hogy az automatikus elrendezés megtegye a "
-"varázsát."
+"A modell összes elemével ábrát készíthetünk. Hagyjuk a komponenseket és a"
+" függőségeket az ábrán, és hagyjuk, hogy az automatikus elrendezés "
+"megtegye a varázsát."
 
 #: ../gaphor-services.md:104
 msgid ""
 "To make the dependency look good, we have to add a style sheet. If you "
 "create a new diagram via the GUI, this element is automatically added."
 msgstr ""
-"Ahhoz, hogy a függőség jól nézzen ki, hozzá kell adnunk egy stíluslapot. Ha "
-"új ábrát hoz létre a grafikus felhasználói felületen keresztül, ez az elem "
-"automatikusan hozzáadódik."
+"Ahhoz, hogy a függőség jól nézzen ki, hozzá kell adnunk egy stíluslapot. "
+"Ha új ábrát hoz létre a grafikus felhasználói felületen keresztül, ez az "
+"elem automatikusan hozzáadódik."
 
 #: ../gaphor-services.md:118
 msgid "Last step is to layout and draw the diagram."
@@ -2293,8 +2482,8 @@ msgid ""
 "That's all. As you can see from the diagram, a lot of services rely on "
 "`EventManager`."
 msgstr ""
-"Ez minden. Amint az az ábrán látható, sok szolgáltatás az `EventManager\" "
-"(eseménykezelőre) támaszkodik."
+"Ez minden. Amint az az ábrán látható, sok szolgáltatás az `EventManager\""
+" (eseménykezelőre) támaszkodik."
 
 #: ../getting_started.md:1
 msgid "Get Started with Gaphor"
@@ -2309,12 +2498,12 @@ msgid ""
 "create diagrams to track and visualize different aspects of the system "
 "you're developing."
 msgstr ""
-"A Gaphor több, mint egy ábraszerkesztő: ez egy modellező környezet. Ahol az "
-"egyszerű ábraszerkesztők, például a Microsoft Visio és a [draw.io](https://"
-"draw.io) lehetővé teszik képek készítését, a Gaphor valójában nyomon követi "
-"a modellhez hozzáadott elemeket. A Gaphorban ábrákat hozhat létre, amelyek "
-"nyomon követhetik és megjeleníthetik a fejlesztendő rendszer különböző "
-"szempontjait."
+"A Gaphor több, mint egy ábraszerkesztő: ez egy modellező környezet. Ahol "
+"az egyszerű ábraszerkesztők, például a Microsoft Visio és a "
+"[draw.io](https://draw.io) lehetővé teszik képek készítését, a Gaphor "
+"valójában nyomon követi a modellhez hozzáadott elemeket. A Gaphorban "
+"ábrákat hozhat létre, amelyek nyomon követhetik és megjeleníthetik a "
+"fejlesztendő rendszer különböző szempontjait."
 
 #: ../getting_started.md:9
 msgid "Enough talk, let's get started."
@@ -2328,16 +2517,16 @@ msgid ""
 "(Flatpak), Windows, and macOS."
 msgstr ""
 "A Gaphor telepítőit a [Gaphor webhelyén](https://gaphor.org/download) "
-"találja. A Gaphor telepíthető Linux (Flatpak, AppImage), macOS és Windows "
-"operációs rendszerekre."
+"találja. A Gaphor telepíthető Linux (Flatpak, AppImage), macOS és Windows"
+" operációs rendszerekre."
 
 #: ../getting_started.md:14
 msgid ""
 "Once Gaphor is launched, it provides you a welcome screen. It shows you "
 "previously opened models and model templates."
 msgstr ""
-"A Gaphor elindítása után üdvözlőképernyőt biztosít. Megmutatja a korábban "
-"megnyitott modelleket és modellsablonokat."
+"A Gaphor elindítása után üdvözlőképernyőt biztosít. Megmutatja a korábban"
+" megnyitott modelleket és modellsablonokat."
 
 #: ../getting_started.md:17
 #, fuzzy
@@ -2352,8 +2541,8 @@ msgid ""
 "Gaphor's welcome screen showing recently opened models and model "
 "templates."
 msgstr ""
-"A Gaphor elindítása után üdvözlőképernyőt biztosít. Megmutatja a korábban "
-"megnyitott modelleket és modellsablonokat."
+"A Gaphor elindítása után üdvözlőképernyőt biztosít. Megmutatja a korábban"
+" megnyitott modelleket és modellsablonokat."
 
 #: ../getting_started.md:19
 msgid "You can select a template to get started."
@@ -2376,16 +2565,16 @@ msgid ""
 "**SysML:** A template for the *Systems Modeling Language* for modeling a "
 "wide range of systems and systems-of-systems"
 msgstr ""
-"**SysML:** A *Systems Modeling Language (rendszermodellező nyelv)* sablonja "
-"számos rendszerek és rendszerrendszerek modellezéséhez"
+"**SysML:** A *Systems Modeling Language (rendszermodellező nyelv)* "
+"sablonja számos rendszerek és rendszerrendszerek modellezéséhez"
 
 #: ../getting_started.md:24
 msgid ""
 "**RAAML:** A template for the *Risk Analysis and Assessment Modeling "
 "language* for safety and reliability analysis"
 msgstr ""
-"**RAAML:** Sablon a *Kockázatelemzési és -értékelési modellezési nyelvhez "
-"(kockázatelemzés és -értékelés modellezési nyelv)* a biztonsági és "
+"**RAAML:** Sablon a *Kockázatelemzési és -értékelési modellezési nyelvhez"
+" (kockázatelemzés és -értékelés modellezési nyelv)* a biztonsági és "
 "megbízhatósági elemzéshez"
 
 #: ../getting_started.md:25
@@ -2711,23 +2900,23 @@ msgstr ""
 msgid "Getting Started"
 msgstr ""
 
-#: ../index.rst:38
+#: ../index.rst:39
 msgid "Features"
 msgstr ""
 
-#: ../index.rst:49
+#: ../index.rst:51
 msgid "Development"
 msgstr ""
 
-#: ../index.rst:59
+#: ../index.rst:61
 msgid "Modeling languages"
 msgstr ""
 
-#: ../index.rst:69
+#: ../index.rst:71
 msgid "Concepts"
 msgstr ""
 
-#: ../index.rst:79
+#: ../index.rst:81
 msgid "Internals"
 msgstr ""
 
@@ -2871,59 +3060,59 @@ msgid ""
 "execute:"
 msgstr ""
 
-#: ../linux.md:61
+#: ../linux.md:62
 msgid "For Redhat/RPM/Fedora based systems:"
 msgstr ""
 
-#: ../linux.md:67 ../macos.md:18
+#: ../linux.md:68 ../macos.md:18
 msgid ""
 "Install [Poetry](https://python-poetry.org) using "
 "[pipx](https://pypa.github.io/pipx/):"
 msgstr ""
 
-#: ../linux.md:72
+#: ../linux.md:73
 msgid ""
 "Next, [clone the repository](https://help.github.com/en/github/creating-"
 "cloning-and-archiving-repositories/cloning-a-repository), after which you"
 " need to execute the following consecutive commands:"
 msgstr ""
 
-#: ../linux.md:83 ../macos.md:30
+#: ../linux.md:84 ../macos.md:30
 msgid "Now, you can run gaphor as"
 msgstr ""
 
-#: ../linux.md:88
+#: ../linux.md:89
 msgid ""
 "NOTE: Gaphor requires GTK 4. It works best with GTK >=4.8 and libadwaita "
 ">=1.2."
 msgstr ""
 
-#: ../linux.md:90 ../macos.md:44 ../windows.md:169
+#: ../linux.md:91 ../macos.md:44 ../windows.md:181
 msgid "Debugging using Visual Studio Code"
 msgstr ""
 
-#: ../linux.md:92
+#: ../linux.md:93
 msgid ""
 "Before you start debugging you'll need to open Gaphor in vscode (the "
 "folder containing `pyproject.toml`). You'll need to have the Python "
 "extension installed."
 msgstr ""
 
-#: ../linux.md:95 ../macos.md:49
+#: ../linux.md:96 ../macos.md:49
 msgid "Create a file `.vscode/launch.json` with the following content:"
 msgstr ""
 
-#: ../linux.md:115
+#: ../linux.md:116
 msgid ""
 "`GDK_BACKEND` is added since VSCode by default uses XWayland (the X11 "
 "emulator)."
 msgstr ""
 
-#: ../linux.md:117
+#: ../linux.md:118
 msgid "Create a Flatpak Package"
 msgstr ""
 
-#: ../linux.md:119
+#: ../linux.md:120
 msgid ""
 "The main method that Gaphor is packaged for Linux is with a Flatpak "
 "package. [Flatpak](https://flatpak.org) is a software utility for "
@@ -2932,64 +3121,64 @@ msgid ""
 "from the rest of the system."
 msgstr ""
 
-#: ../linux.md:124
+#: ../linux.md:125
 msgid ""
 "We distribute the official Flatpak using [Flathub](https://flathub.org), "
 "and building of the image is done at the [Gaphor Flathub "
 "repository](https://github.com/flathub/org.gaphor.Gaphor)."
 msgstr ""
 
-#: ../linux.md:128
+#: ../linux.md:129
 msgid "[Install Flatpak](https://flatpak.org/setup)"
 msgstr ""
 
-#: ../linux.md:130
+#: ../linux.md:131
 msgid "Install flatpak-builder"
 msgstr ""
 
-#: ../linux.md:134
+#: ../linux.md:135
 msgid "Install the GNOME SDK"
 msgstr ""
 
-#: ../linux.md:138
+#: ../linux.md:139
 msgid "Clone the Flathub repository and install the necessary SDK:"
 msgstr ""
 
-#: ../linux.md:144
+#: ../linux.md:145
 msgid "Build Gaphor Flatpak"
 msgstr ""
 
-#: ../linux.md:148
+#: ../linux.md:149
 msgid "Install the Flatpak"
 msgstr ""
 
-#: ../linux.md:152
+#: ../linux.md:153
 msgid "Linux Distribution Packages"
 msgstr ""
 
-#: ../linux.md:154
+#: ../linux.md:155
 msgid ""
 "Examples of Gaphor and Gaphas RPM spec files can be found in [PLD "
 "Linux](https://www.pld-linux.org/) [repository](https://github.com/pld-"
 "linux/):"
 msgstr ""
 
-#: ../linux.md:158
+#: ../linux.md:159
 msgid "https://github.com/pld-linux/python-gaphas"
 msgstr ""
 
-#: ../linux.md:159
+#: ../linux.md:160
 msgid "https://github.com/pld-linux/gaphor"
 msgstr ""
 
-#: ../linux.md:161
+#: ../linux.md:162
 msgid ""
 "There is also an [Arch User Repository (AUR) for "
 "Gaphor](https://aur.archlinux.org/packages/python-gaphor) available for "
 "Arch users."
 msgstr ""
 
-#: ../linux.md:165
+#: ../linux.md:166
 msgid ""
 "Please, do not hesitate to contact us if you need help to create a Linux "
 "package for Gaphor or Gaphas."
@@ -3616,6 +3805,14 @@ msgstr ""
 
 #: gaphor.diagram.propertypages.PropertyPageBase:1 of
 msgid "A property page which can display itself in a notebook."
+msgstr ""
+
+#: gaphor.diagram.propertypages.PropertyPageBase.close:1 of
+msgid "Called when a property page is removed."
+msgstr ""
+
+#: gaphor.diagram.propertypages.PropertyPageBase.close:3 of
+msgid "This allows us to clean up."
 msgstr ""
 
 #: gaphor.diagram.propertypages.PropertyPageBase.construct:1 of
@@ -4430,7 +4627,7 @@ msgstr ""
 msgid "Allocation"
 msgstr ""
 
-#: ../models/sysml/Blocks.rst:2 ../style_sheets.md:329 ../style_sheets.md:330
+#: ../models/sysml/Blocks.rst:2 ../style_sheets.md:331 ../style_sheets.md:332
 msgid "Blocks"
 msgstr ""
 
@@ -4502,7 +4699,7 @@ msgstr ""
 msgid "Item Flow"
 msgstr ""
 
-#: ../models/sysml/Requirements.rst:2 ../style_sheets.md:331
+#: ../models/sysml/Requirements.rst:2 ../style_sheets.md:333
 msgid "Requirements"
 msgstr ""
 
@@ -5045,6 +5242,7 @@ msgid "Query a model"
 msgstr ""
 
 #: ../scripting.md:27
+#, python-brace-format
 msgid ""
 "The first step is to load a model. For this you’ll need an "
 "{obj}`gaphor.core.modeling.ElementFactory`. The `ElementFactory` is "
@@ -5384,6 +5582,7 @@ msgid "Example: ElementFactory"
 msgstr ""
 
 #: ../service_oriented.md:64
+#, python-brace-format
 msgid ""
 "A nice example of a service in use is the "
 "{obj}`~gaphor.core.modeling.ElementFactory`. It is one of the core "
@@ -5391,6 +5590,7 @@ msgid ""
 msgstr ""
 
 #: ../service_oriented.md:67
+#, python-brace-format
 msgid ""
 "When an important events occurs, like an element is created or destroyed,"
 " that event is emitted. We then use an event handler for `ElementFactory`"
@@ -5921,185 +6121,195 @@ msgid "A component item which is a child of a node."
 msgstr ""
 
 #: ../style_sheets.md:89
+msgid "``.item``"
+msgstr ""
+
+#: ../style_sheets.md:89
+msgid ""
+"Each diagram item has a class \"item\" assigned. This makes it easy to "
+"differentiate them from e.g. name elements."
+msgstr ""
+
+#: ../style_sheets.md:91
 #, fuzzy
 msgid "``generalization[subject]``"
 msgstr "új általánosítás"
 
-#: ../style_sheets.md:89
+#: ../style_sheets.md:91
 msgid "A generalization item with a subject present."
 msgstr ""
 
-#: ../style_sheets.md:90
+#: ../style_sheets.md:92
 msgid "``class[name=Foo]``"
 msgstr ""
 
-#: ../style_sheets.md:90
+#: ../style_sheets.md:92
 msgid "A class with name \"Foo\"."
 msgstr ""
 
-#: ../style_sheets.md:91
+#: ../style_sheets.md:93
 msgid "``diagram[name^=draft]``"
 msgstr ""
 
-#: ../style_sheets.md:91
+#: ../style_sheets.md:93
 msgid "A diagram with a name starting with \"draft\"."
 msgstr ""
 
-#: ../style_sheets.md:92
+#: ../style_sheets.md:94
 msgid "``diagram[name$=draft]``"
 msgstr ""
 
-#: ../style_sheets.md:92
+#: ../style_sheets.md:94
 msgid "A diagram with a name ends with \"draft\"."
 msgstr ""
 
-#: ../style_sheets.md:93
+#: ../style_sheets.md:95
 msgid "``diagram[name*=draft]``"
 msgstr ""
 
-#: ../style_sheets.md:93
+#: ../style_sheets.md:95
 msgid "A diagram with a name containing the text \"draft\"."
 msgstr ""
 
-#: ../style_sheets.md:94
+#: ../style_sheets.md:96
 msgid "``diagram[name~=draft item]``"
 msgstr ""
 
-#: ../style_sheets.md:94
+#: ../style_sheets.md:96
 msgid "A diagram with a name of \"draft\" or \"item\"."
 msgstr ""
 
-#: ../style_sheets.md:95
+#: ../style_sheets.md:97
 msgid "``diagram[name|=draft]``"
 msgstr ""
 
-#: ../style_sheets.md:95
+#: ../style_sheets.md:97
 msgid "A diagram with a name is \"draft\" or starts with \"draft-\"."
 msgstr ""
 
-#: ../style_sheets.md:96
+#: ../style_sheets.md:98
 msgid "``:focus``"
 msgstr ""
 
-#: ../style_sheets.md:96
+#: ../style_sheets.md:98
 msgid "The focused item. Other pseudo classes are:"
 msgstr ""
 
-#: ../style_sheets.md:98
+#: ../style_sheets.md:100
 msgid "``:active`` selected items"
 msgstr ""
 
-#: ../style_sheets.md:99
+#: ../style_sheets.md:101
 msgid "``:hover`` for the item under the mouse"
 msgstr ""
 
-#: ../style_sheets.md:100
+#: ../style_sheets.md:102
 msgid "``:drop`` if an item is dragged and can be dropped on this item"
 msgstr ""
 
-#: ../style_sheets.md:101
+#: ../style_sheets.md:103
 msgid "``:disabled`` if an element is grayed out during handle movement"
 msgstr ""
 
-#: ../style_sheets.md:102
+#: ../style_sheets.md:104
 msgid "``:empty``"
 msgstr ""
 
-#: ../style_sheets.md:102
+#: ../style_sheets.md:104
 msgid "A node containing no child nodes in the diagram."
 msgstr ""
 
-#: ../style_sheets.md:103
+#: ../style_sheets.md:105
 msgid "``:root``"
 msgstr ""
 
-#: ../style_sheets.md:103
+#: ../style_sheets.md:105
 msgid "Refers to the diagram itself."
 msgstr ""
 
-#: ../style_sheets.md:105
+#: ../style_sheets.md:107
 msgid "This is only applicable for the diagram"
 msgstr ""
 
-#: ../style_sheets.md:106
+#: ../style_sheets.md:108
 msgid "``:first-child``"
 msgstr ""
 
-#: ../style_sheets.md:106
+#: ../style_sheets.md:108
 msgid "A node is the first element among a group of sibling."
 msgstr ""
 
-#: ../style_sheets.md:107
+#: ../style_sheets.md:109
 msgid "``:has()``"
 msgstr ""
 
-#: ../style_sheets.md:107
+#: ../style_sheets.md:109
 msgid "The item contains any of the provided selectors."
 msgstr ""
 
-#: ../style_sheets.md:109
+#: ../style_sheets.md:111
 msgid "E.g. ``node:has(component)``: a node containing a component item."
 msgstr ""
 
-#: ../style_sheets.md:110
+#: ../style_sheets.md:112
 msgid "``:is()``"
 msgstr ""
 
-#: ../style_sheets.md:110
+#: ../style_sheets.md:112
 msgid "Match any of the provided selectors."
 msgstr ""
 
-#: ../style_sheets.md:112
+#: ../style_sheets.md:114
 msgid "E.g. ``:is(node, subsystem) > component``: a node or subsystem."
 msgstr ""
 
-#: ../style_sheets.md:113
+#: ../style_sheets.md:115
 msgid "``:not()``"
 msgstr ""
 
-#: ../style_sheets.md:113
+#: ../style_sheets.md:115
 msgid "Negate the selector."
 msgstr ""
 
-#: ../style_sheets.md:115
+#: ../style_sheets.md:117
 msgid "E.g. ``:not([subject])``: Any item that has no \"subject\"."
 msgstr ""
 
-#: ../style_sheets.md:116
+#: ../style_sheets.md:118
 msgid "``::after``"
 msgstr ""
 
-#: ../style_sheets.md:116
+#: ../style_sheets.md:118
 msgid ""
 "Provide extra content after a text. Only the ``content`` property is "
 "supported."
 msgstr ""
 
-#: ../style_sheets.md:121
+#: ../style_sheets.md:123
 msgid ""
 "The official specification of [CSS3 attribute "
 "selectors](https://www.w3.org/TR/2018/REC-selectors-3-20181106"
 "/#attribute-selectors)."
 msgstr ""
 
-#: ../style_sheets.md:122
+#: ../style_sheets.md:124
 msgid ""
 "Gaphor provides the `|=` attribute selector for the sake of completeness."
 " It's probably not very useful in this context, though."
 msgstr ""
 
-#: ../style_sheets.md:124
+#: ../style_sheets.md:126
 msgid ""
 "Please note that Gaphor CSS does not support IDs for diagram items, so "
 "the CSS syntax for IDs (`#some-id`) is not used. Also, class syntax "
 "(`.some-class`) is not supported currently."
 msgstr ""
 
-#: ../style_sheets.md:128
+#: ../style_sheets.md:130
 msgid "Style properties"
 msgstr ""
 
-#: ../style_sheets.md:130
+#: ../style_sheets.md:132
 msgid ""
 "Gaphor supports a subset of CSS properties and some Gaphor specific "
 "properties. The style sheet interpreter is relatively straight forward. "
@@ -6108,66 +6318,66 @@ msgid ""
 "can contain font family, size, weight."
 msgstr ""
 
-#: ../style_sheets.md:136
+#: ../style_sheets.md:138
 msgid ""
 "Some properties are inherited from the parent style. The parent often is "
 "a diagram. When you set a `color`` or a `font-family` on `diagram`, it "
 "will propagate down to the items contained in the diagram."
 msgstr ""
 
-#: ../style_sheets.md:140
+#: ../style_sheets.md:142
 msgid "Colors"
 msgstr ""
 
-#: ../style_sheets.md:144
+#: ../style_sheets.md:146
 msgid "``background-color``"
 msgstr ""
 
-#: ../style_sheets.md:144
+#: ../style_sheets.md:146
 msgid "Examples:"
 msgstr ""
 
-#: ../style_sheets.md:146
+#: ../style_sheets.md:148
 msgid "``background-color: azure;``"
 msgstr ""
 
-#: ../style_sheets.md:148
+#: ../style_sheets.md:150
 msgid "``background-color: rgb(255, 255, 255);``"
 msgstr ""
 
-#: ../style_sheets.md:150
+#: ../style_sheets.md:152
 msgid "``background-color: hsl(130, 95%, 10%);``"
 msgstr ""
 
-#: ../style_sheets.md:151
+#: ../style_sheets.md:153
 msgid "``color``"
 msgstr ""
 
-#: ../style_sheets.md:151
+#: ../style_sheets.md:153
 msgid "Color used for lines. *(inherited)*"
 msgstr ""
 
-#: ../style_sheets.md:152
+#: ../style_sheets.md:154
 msgid "``text-color``"
 msgstr ""
 
-#: ../style_sheets.md:152
+#: ../style_sheets.md:154
 msgid "Color for text. *(inherited)*"
 msgstr ""
 
-#: ../style_sheets.md:154
+#: ../style_sheets.md:156
 msgid "Use color if possible."
 msgstr ""
 
-#: ../style_sheets.md:155
+#: ../style_sheets.md:157
 msgid "``opacity``"
 msgstr ""
 
-#: ../style_sheets.md:155
+#: ../style_sheets.md:157
 msgid "Color opacity factor (``0.0`` - ``1.0``), applied to all colors."
 msgstr ""
 
-#: ../style_sheets.md:160
+#: ../style_sheets.md:162
 msgid ""
 "A color can be any [CSS3 color code](https://www.w3.org/TR/2018/REC-css-"
 "color-3-20180619/), as described in the CSS documentation. Gaphor "
@@ -6175,265 +6385,265 @@ msgid ""
 "code (`#ffffff`) and color names."
 msgstr ""
 
-#: ../style_sheets.md:164
+#: ../style_sheets.md:166
 msgid "Text and fonts"
 msgstr ""
 
-#: ../style_sheets.md:168
+#: ../style_sheets.md:170
 msgid "``font-family``"
 msgstr ""
 
-#: ../style_sheets.md:168
+#: ../style_sheets.md:170
 msgid "A single font name (e.g. ``sans``, ``serif``, ``courier``). *(inherited)*"
 msgstr ""
 
-#: ../style_sheets.md:169
+#: ../style_sheets.md:171
 msgid "``font-size``"
 msgstr ""
 
-#: ../style_sheets.md:169
+#: ../style_sheets.md:171
 msgid ""
 "An absolute size (e.g. ``14``) or a size value (e.g. ``small``). "
 "*(inherited)*"
 msgstr ""
 
-#: ../style_sheets.md:170
+#: ../style_sheets.md:172
 msgid "``font-style``"
 msgstr ""
 
-#: ../style_sheets.md:170
+#: ../style_sheets.md:172
 msgid "Either ``normal`` or ``italic``. *(inherited)*"
 msgstr ""
 
-#: ../style_sheets.md:171
+#: ../style_sheets.md:173
 msgid "``font-weight``"
 msgstr ""
 
-#: ../style_sheets.md:171
+#: ../style_sheets.md:173
 msgid "Either ``normal`` or ``bold``. *(inherited)*"
 msgstr ""
 
-#: ../style_sheets.md:172
+#: ../style_sheets.md:174
 msgid "``text-align``"
 msgstr ""
 
-#: ../style_sheets.md:172
+#: ../style_sheets.md:174
 msgid "Either ``left``, ``center``, ``right``. *(inherited)*"
 msgstr ""
 
-#: ../style_sheets.md:173
+#: ../style_sheets.md:175
 msgid "``text-decoration``"
 msgstr ""
 
-#: ../style_sheets.md:173
+#: ../style_sheets.md:175
 msgid "Either ``none`` or ``underline``."
 msgstr ""
 
-#: ../style_sheets.md:174
+#: ../style_sheets.md:176
 msgid "``vertical-align``"
 msgstr ""
 
-#: ../style_sheets.md:174
+#: ../style_sheets.md:176
 msgid "Vertical alignment for text."
 msgstr ""
 
-#: ../style_sheets.md:176
+#: ../style_sheets.md:178
 msgid "Either ``top``, ``middle`` or ``bottom``."
 msgstr ""
 
-#: ../style_sheets.md:177
+#: ../style_sheets.md:179
 msgid "``vertical-spacing``"
 msgstr ""
 
-#: ../style_sheets.md:177
+#: ../style_sheets.md:179
 msgid "Set vertical spacing for icon-like items (actors, start state)."
 msgstr ""
 
-#: ../style_sheets.md:179
+#: ../style_sheets.md:181
 msgid "Example: ``vertical-spacing: 4``."
 msgstr ""
 
-#: ../style_sheets.md:180
+#: ../style_sheets.md:182
 msgid "``white-space``"
 msgstr ""
 
-#: ../style_sheets.md:180
+#: ../style_sheets.md:182
 msgid "Change the line wrapping behavior for text. *(inherited)*"
 msgstr ""
 
-#: ../style_sheets.md:184
+#: ../style_sheets.md:186
 msgid ""
 "`font-family` can be only one font name, not a list of (fallback) names, "
 "as is used for HTML."
 msgstr ""
 
-#: ../style_sheets.md:186
+#: ../style_sheets.md:188
 msgid ""
 "`font-size` can be a number or [CSS absolute-size "
 "values](https://drafts.csswg.org/css-fonts-3/#font-size-prop). Only the "
 "values `x-small`, `small`, `medium`, `large` and `x-large` are supported."
 msgstr ""
 
-#: ../style_sheets.md:189
+#: ../style_sheets.md:191
 msgid "Drawing and spacing"
 msgstr ""
 
-#: ../style_sheets.md:193
+#: ../style_sheets.md:195
 msgid "``border-radius``"
 msgstr ""
 
-#: ../style_sheets.md:193
+#: ../style_sheets.md:195
 msgid "Radius for rectangles: ``border-radius: 4``."
 msgstr ""
 
-#: ../style_sheets.md:194
+#: ../style_sheets.md:196
 msgid "``dash-style``"
 msgstr ""
 
-#: ../style_sheets.md:194
+#: ../style_sheets.md:196
 msgid "Style for dashed lines: ``dash-style: 7 5``."
 msgstr ""
 
-#: ../style_sheets.md:195
+#: ../style_sheets.md:197
 msgid "``justify-content``"
 msgstr ""
 
-#: ../style_sheets.md:195
+#: ../style_sheets.md:197
 msgid "Content alignment for boxes."
 msgstr ""
 
-#: ../style_sheets.md:197
+#: ../style_sheets.md:199
 msgid "Either ``start``, ``end``, ``center`` or ``stretch``."
 msgstr ""
 
-#: ../style_sheets.md:198
+#: ../style_sheets.md:200
 msgid "``line-style``"
 msgstr ""
 
-#: ../style_sheets.md:198
+#: ../style_sheets.md:200
 msgid "Either ``normal`` or ``sloppy [factor]``."
 msgstr ""
 
-#: ../style_sheets.md:199
+#: ../style_sheets.md:201
 msgid "``line-width``"
 msgstr ""
 
-#: ../style_sheets.md:199
+#: ../style_sheets.md:201
 msgid "Set the width for lines: ``line-width: 2``. *(inherited)*"
 msgstr ""
 
-#: ../style_sheets.md:200
+#: ../style_sheets.md:202
 msgid "``min-height``"
 msgstr ""
 
-#: ../style_sheets.md:200
+#: ../style_sheets.md:202
 msgid "Set minimal height for an item: ``min-height: 50``."
 msgstr ""
 
-#: ../style_sheets.md:201
+#: ../style_sheets.md:203
 msgid "``min-width``"
 msgstr ""
 
-#: ../style_sheets.md:201
+#: ../style_sheets.md:203
 msgid "Set minimal width for an item: ``min-width: 100``."
 msgstr ""
 
-#: ../style_sheets.md:202
+#: ../style_sheets.md:204
 msgid "``max-width``"
 msgstr ""
 
-#: ../style_sheets.md:202
+#: ../style_sheets.md:204
 msgid "Set maximum width (text fields only): ``max-width: 100``."
 msgstr ""
 
-#: ../style_sheets.md:203
+#: ../style_sheets.md:205
 msgid "``padding``"
 msgstr ""
 
-#: ../style_sheets.md:203
+#: ../style_sheets.md:205
 msgid "CSS style padding (top, right, bottom, left)."
 msgstr ""
 
-#: ../style_sheets.md:205
+#: ../style_sheets.md:207
 msgid "Example: ``padding: 3 4``."
 msgstr ""
 
-#: ../style_sheets.md:209
+#: ../style_sheets.md:211
 msgid ""
 "`padding` is defined by integers in the range of 1 to 4. No unit (px, pt,"
 " em) needs to be used. All values are in pixel distance."
 msgstr ""
 
-#: ../style_sheets.md:211
+#: ../style_sheets.md:213
 msgid "`dash-style` is a list of numbers (line, gap, line, gap, …)"
 msgstr ""
 
-#: ../style_sheets.md:212
+#: ../style_sheets.md:214
 msgid ""
 "`line-style` only has an effect when defined on a `diagram`. A sloppiness"
 " factor can be provided in the range of -2 to 2."
 msgstr ""
 
-#: ../style_sheets.md:215
+#: ../style_sheets.md:217
 msgid "Pseudo elements"
 msgstr ""
 
-#: ../style_sheets.md:217
+#: ../style_sheets.md:219
 msgid "Currently, only the `::after` pseudo element is supported."
 msgstr ""
 
-#: ../style_sheets.md:221
+#: ../style_sheets.md:223
 msgid "``content``"
 msgstr ""
 
-#: ../style_sheets.md:221
+#: ../style_sheets.md:223
 msgid "Extra content to be shown after a text."
 msgstr ""
 
-#: ../style_sheets.md:225
+#: ../style_sheets.md:227
 msgid "Variables"
 msgstr ""
 
-#: ../style_sheets.md:227
+#: ../style_sheets.md:229
 msgid ""
 "Since Gaphor 2.16.0 you can use [CSS "
 "variables](https://developer.mozilla.org/en-"
 "US/docs/Web/CSS/Using_CSS_custom_properties) in your style sheets."
 msgstr ""
 
-#: ../style_sheets.md:229
+#: ../style_sheets.md:231
 msgid ""
 "This allows you to define often used values in a more generic way. Think "
 "of things like line dash style and colors."
 msgstr ""
 
-#: ../style_sheets.md:232
+#: ../style_sheets.md:234
 msgid "The `var()` function has some limitations:"
 msgstr ""
 
-#: ../style_sheets.md:234
+#: ../style_sheets.md:236
 msgid "Values can’t have a default value."
 msgstr ""
 
-#: ../style_sheets.md:235
+#: ../style_sheets.md:237
 msgid "Variables can’t have a variable as their value."
 msgstr ""
 
-#: ../style_sheets.md:237
+#: ../style_sheets.md:239 ../troubleshooting.md:16
 msgid "Example:"
 msgstr ""
 
-#: ../style_sheets.md:250
+#: ../style_sheets.md:252
 msgid ""
 "All diagrams have a white background. Sequence diagrams get a blue-ish "
 "background."
 msgstr ""
 
-#: ../style_sheets.md:252
+#: ../style_sheets.md:254
 msgid "Media queries"
 msgstr ""
 
-#: ../style_sheets.md:254
+#: ../style_sheets.md:256
 msgid ""
 "Gaphor supports dark and light mode since 2.16.0. Dark and light color "
 "schemes are exclusively used for on-screen editing. When exporting "
@@ -6442,11 +6652,11 @@ msgid ""
 " query is supported, as well as a more convenient `dark-mode`."
 msgstr ""
 
-#: ../style_sheets.md:280
+#: ../style_sheets.md:282
 msgid "Diagram styles"
 msgstr ""
 
-#: ../style_sheets.md:282
+#: ../style_sheets.md:284
 msgid ""
 "Only a few properties can be defined on a diagram, namely `background-"
 "color` and `line-style`. You define the diagram style separately from the"
@@ -6459,17 +6669,17 @@ msgid ""
 "effect."
 msgstr ""
 
-#: ../style_sheets.md:291
+#: ../style_sheets.md:293
 msgid "CSS model elements"
 msgstr ""
 
-#: ../style_sheets.md:293
+#: ../style_sheets.md:295
 msgid ""
 "Gaphor has many model elements. How can you find out which item should be"
 " styled?"
 msgstr ""
 
-#: ../style_sheets.md:295
+#: ../style_sheets.md:297
 msgid ""
 "Gaphor only styles the elements that are in the model, so you should be "
 "explicit on their names. For example: `Component` inherits from `Class` "
@@ -6477,7 +6687,7 @@ msgid ""
 " `Component`."
 msgstr ""
 
-#: ../style_sheets.md:299
+#: ../style_sheets.md:301
 msgid ""
 "If you hover over a button the toolbox (bottom-left section), a popup "
 "will appear with the item's name and a shortcut. As a general rule, you "
@@ -6487,239 +6697,239 @@ msgid ""
 "case by default."
 msgstr ""
 
-#: ../style_sheets.md:306
+#: ../style_sheets.md:308
 msgid ""
 "However, since the CSS element names are derived from names used within "
 "Gaphor, there are a few exceptions."
 msgstr ""
 
-#: ../style_sheets.md:310
+#: ../style_sheets.md:312
 msgid "Profile"
 msgstr ""
 
-#: ../style_sheets.md:310
+#: ../style_sheets.md:312
 msgid "Group"
 msgstr ""
 
-#: ../style_sheets.md:310
+#: ../style_sheets.md:312
 msgid "Element"
 msgstr ""
 
-#: ../style_sheets.md:310
+#: ../style_sheets.md:312
 msgid "CSS element"
 msgstr ""
 
-#: ../style_sheets.md:312
+#: ../style_sheets.md:314
 msgid "\\*"
 msgstr ""
 
-#: ../style_sheets.md:312
+#: ../style_sheets.md:314
 msgid "*element name*"
 msgstr ""
 
-#: ../style_sheets.md:312
+#: ../style_sheets.md:314
 msgid "element name without spaces"
 msgstr ""
 
-#: ../style_sheets.md:314
+#: ../style_sheets.md:316
 msgid "E.g. ``class``, ``usecase``."
 msgstr ""
 
-#: ../style_sheets.md:315 ../style_sheets.md:316 ../style_sheets.md:317
-#: ../style_sheets.md:318 ../style_sheets.md:319 ../style_sheets.md:320
-#: ../style_sheets.md:321 ../style_sheets.md:322 ../style_sheets.md:323
+#: ../style_sheets.md:317 ../style_sheets.md:318 ../style_sheets.md:319
+#: ../style_sheets.md:320 ../style_sheets.md:321 ../style_sheets.md:322
+#: ../style_sheets.md:323 ../style_sheets.md:324 ../style_sheets.md:325
 msgid "UML"
 msgstr ""
 
-#: ../style_sheets.md:315
+#: ../style_sheets.md:317
 msgid "Classes"
 msgstr ""
 
-#: ../style_sheets.md:315
+#: ../style_sheets.md:317
 msgid "all Association's"
 msgstr ""
 
-#: ../style_sheets.md:315
+#: ../style_sheets.md:317
 msgid "``association``"
 msgstr ""
 
-#: ../style_sheets.md:316
+#: ../style_sheets.md:318
 msgid "Components"
 msgstr ""
 
-#: ../style_sheets.md:316
+#: ../style_sheets.md:318
 msgid "Device/Node"
 msgstr ""
 
-#: ../style_sheets.md:316
+#: ../style_sheets.md:318
 msgid "``node``"
 msgstr ""
 
-#: ../style_sheets.md:317 ../style_sheets.md:318 ../style_sheets.md:319
+#: ../style_sheets.md:319 ../style_sheets.md:320 ../style_sheets.md:321
 msgid "Actions"
 msgstr ""
 
-#: ../style_sheets.md:317
+#: ../style_sheets.md:319
 msgid "Decision/Merge Node"
 msgstr ""
 
-#: ../style_sheets.md:317
+#: ../style_sheets.md:319
 msgid "``decisionnode``"
 msgstr ""
 
-#: ../style_sheets.md:318
+#: ../style_sheets.md:320
 msgid "Fork/Join Node"
 msgstr ""
 
-#: ../style_sheets.md:318
+#: ../style_sheets.md:320
 msgid "``forknode``"
 msgstr ""
 
-#: ../style_sheets.md:319
+#: ../style_sheets.md:321
 msgid "Swimlane"
 msgstr ""
 
-#: ../style_sheets.md:319
+#: ../style_sheets.md:321
 msgid "``partition``"
 msgstr ""
 
-#: ../style_sheets.md:320
+#: ../style_sheets.md:322
 msgid "Interactions"
 msgstr ""
 
-#: ../style_sheets.md:320
+#: ../style_sheets.md:322
 msgid "Reflexive message"
 msgstr ""
 
-#: ../style_sheets.md:320
+#: ../style_sheets.md:322
 msgid "``message``"
 msgstr ""
 
-#: ../style_sheets.md:321 ../style_sheets.md:322
+#: ../style_sheets.md:323 ../style_sheets.md:324
 msgid "States"
 msgstr ""
 
-#: ../style_sheets.md:321
+#: ../style_sheets.md:323
 msgid "Initial Pseudostate"
 msgstr ""
 
-#: ../style_sheets.md:321 ../style_sheets.md:322
+#: ../style_sheets.md:323 ../style_sheets.md:324
 msgid "``pseudostate``"
 msgstr ""
 
-#: ../style_sheets.md:322
+#: ../style_sheets.md:324
 msgid "History Pseudostate"
 msgstr ""
 
-#: ../style_sheets.md:323
+#: ../style_sheets.md:325
 msgid "Profiles"
 msgstr ""
 
-#: ../style_sheets.md:323
+#: ../style_sheets.md:325
 msgid "Metaclass"
 msgstr ""
 
-#: ../style_sheets.md:323
+#: ../style_sheets.md:325
 msgid "``class``"
 msgstr ""
 
-#: ../style_sheets.md:324 ../style_sheets.md:325 ../style_sheets.md:326
-#: ../style_sheets.md:327 ../style_sheets.md:328
+#: ../style_sheets.md:326 ../style_sheets.md:327 ../style_sheets.md:328
+#: ../style_sheets.md:329 ../style_sheets.md:330
 msgid "C4 Model"
 msgstr ""
 
-#: ../style_sheets.md:324
+#: ../style_sheets.md:326
 msgid "Person"
 msgstr ""
 
-#: ../style_sheets.md:324
+#: ../style_sheets.md:326
 msgid "``c4person``"
 msgstr ""
 
-#: ../style_sheets.md:325
+#: ../style_sheets.md:327
 msgid "Software System"
 msgstr ""
 
-#: ../style_sheets.md:325
+#: ../style_sheets.md:327
 msgid "``c4container[type=\"Software System\"]``"
 msgstr ""
 
-#: ../style_sheets.md:326
+#: ../style_sheets.md:328
 msgid "Component"
 msgstr ""
 
-#: ../style_sheets.md:326
+#: ../style_sheets.md:328
 msgid "``c4container[type=\"Component\"]``"
 msgstr ""
 
-#: ../style_sheets.md:327
+#: ../style_sheets.md:329
 msgid "Container"
 msgstr ""
 
-#: ../style_sheets.md:327
+#: ../style_sheets.md:329
 msgid "``c4container[type=\"Container\"]``"
 msgstr ""
 
-#: ../style_sheets.md:328
+#: ../style_sheets.md:330
 msgid "Container: Database"
 msgstr ""
 
-#: ../style_sheets.md:328
+#: ../style_sheets.md:330
 msgid "``c4database``"
 msgstr ""
 
-#: ../style_sheets.md:329 ../style_sheets.md:330 ../style_sheets.md:331
+#: ../style_sheets.md:331 ../style_sheets.md:332 ../style_sheets.md:333
 msgid "SysML"
 msgstr ""
 
-#: ../style_sheets.md:329
+#: ../style_sheets.md:331
 msgid "ValueType"
 msgstr ""
 
-#: ../style_sheets.md:329 ../style_sheets.md:330
+#: ../style_sheets.md:331 ../style_sheets.md:332
 msgid "``datatype``"
 msgstr ""
 
-#: ../style_sheets.md:330
+#: ../style_sheets.md:332
 msgid "Primitive"
 msgstr ""
 
-#: ../style_sheets.md:331
+#: ../style_sheets.md:333
 msgid "Derive Requirement"
 msgstr ""
 
-#: ../style_sheets.md:331
+#: ../style_sheets.md:333
 msgid "``derivedreq``"
 msgstr ""
 
-#: ../style_sheets.md:332
+#: ../style_sheets.md:334
 msgid "RAAML"
 msgstr ""
 
-#: ../style_sheets.md:332
+#: ../style_sheets.md:334
 msgid "FTA"
 msgstr ""
 
-#: ../style_sheets.md:332
+#: ../style_sheets.md:334
 msgid "any AND/OR/… Gate"
 msgstr ""
 
-#: ../style_sheets.md:332
+#: ../style_sheets.md:334
 msgid "``and``, ``or``, etc."
 msgstr ""
 
-#: ../style_sheets.md:337
+#: ../style_sheets.md:339
 msgid "Ideas"
 msgstr ""
 
-#: ../style_sheets.md:339
+#: ../style_sheets.md:341
 msgid ""
 "Here are some ideas that go just beyond changing a color or a font. With "
 "the following examples we dig in to Gaphor's model structure to reveal "
 "more information to the users."
 msgstr ""
 
-#: ../style_sheets.md:343
+#: ../style_sheets.md:345
 msgid ""
 "To create your own expression you may want to use the Console (![Menu "
 "icon](images/open-menu-symbolic.svg) → Tools → Console). Drop us a line "
@@ -6727,23 +6937,23 @@ msgid ""
 " you."
 msgstr ""
 
-#: ../style_sheets.md:346
+#: ../style_sheets.md:348
 msgid "The drafts package"
 msgstr ""
 
-#: ../style_sheets.md:348
+#: ../style_sheets.md:350
 msgid "All diagrams in the package \"Drafts\" should be drawn using sloppy lines:"
 msgstr ""
 
-#: ../style_sheets.md:360
+#: ../style_sheets.md:362
 msgid "draft style"
 msgstr ""
 
-#: ../style_sheets.md:365
+#: ../style_sheets.md:367
 msgid "Wrap long attributes, operations, and stereotype values"
 msgstr ""
 
-#: ../style_sheets.md:367
+#: ../style_sheets.md:369
 msgid ""
 "Sometimes attribute values get a bit lengthy. By default, Gaphor will not"
 " wrap text. If you want to, you can add this little snippet to wrap text "
@@ -6751,15 +6961,15 @@ msgid ""
 "types, of course."
 msgstr ""
 
-#: ../style_sheets.md:377
+#: ../style_sheets.md:379
 msgid "wrap long attribute"
 msgstr ""
 
-#: ../style_sheets.md:382
+#: ../style_sheets.md:384
 msgid "Unconnected relationships"
 msgstr ""
 
-#: ../style_sheets.md:384
+#: ../style_sheets.md:386
 msgid ""
 "All items on a diagram that are not backed by a model element, should be "
 "drawn in a dark red color. This can be used to spot not-so-well connected"
@@ -6769,15 +6979,15 @@ msgid ""
 "which will never have a backing model element."
 msgstr ""
 
-#: ../style_sheets.md:397
+#: ../style_sheets.md:399
 msgid "unconnected relationship"
 msgstr ""
 
-#: ../style_sheets.md:402
+#: ../style_sheets.md:404
 msgid "Navigable associations"
 msgstr ""
 
-#: ../style_sheets.md:404
+#: ../style_sheets.md:406
 msgid ""
 "An example of how to apply a style to a navigable association is to color"
 " an association blue if neither of the ends are navigable. This color "
@@ -6786,45 +6996,45 @@ msgid ""
 " file used to create Gaphor's data model."
 msgstr ""
 
-#: ../style_sheets.md:416
+#: ../style_sheets.md:418
 msgid "navigable association"
 msgstr ""
 
-#: ../style_sheets.md:421
+#: ../style_sheets.md:423
 msgid "Solid Control Flow lines"
 msgstr ""
 
-#: ../style_sheets.md:423
+#: ../style_sheets.md:425
 msgid ""
 "In Gaphor, Control Flow lines follow the SysML styling: dashed. If you "
 "want, or need to strictly follow the official UML specifications, you can"
 " simply make those solid lines."
 msgstr ""
 
-#: ../style_sheets.md:433
+#: ../style_sheets.md:435
 msgid "control flow"
 msgstr ""
 
-#: ../style_sheets.md:438
+#: ../style_sheets.md:440
 msgid "Todo note highlight"
 msgstr ""
 
-#: ../style_sheets.md:440
+#: ../style_sheets.md:442
 msgid ""
 "All comments beginning with the phrase \"todo\" can be highlighted in a "
 "different user-specific colour. This can be used to make yourself aware "
 "that you have to do some additional work to finalize the diagram."
 msgstr ""
 
-#: ../style_sheets.md:450
+#: ../style_sheets.md:452
 msgid "highlighted todo note"
 msgstr ""
 
-#: ../style_sheets.md:455
+#: ../style_sheets.md:457
 msgid "Emphesize abstract classes and operations"
 msgstr ""
 
-#: ../style_sheets.md:457
+#: ../style_sheets.md:459
 msgid ""
 "It may be that the italic font used is not distinguishable enough to "
 "differentiate between concrete and abstract classes or operations. To "
@@ -6832,40 +7042,196 @@ msgid ""
 "element:"
 msgstr ""
 
-#: ../style_sheets.md:467
+#: ../style_sheets.md:469
 msgid "emphasize abstract elements"
 msgstr ""
 
-#: ../style_sheets.md:472
+#: ../style_sheets.md:474
 msgid "System Style Sheet"
 msgstr ""
 
-#: ../undo.md:1
+#: ../troubleshooting.md:1
+msgid "Troubleshooting"
+msgstr ""
+
+#: ../troubleshooting.md:3
+msgid "This page covers common issues and their solutions when using Gaphor."
+msgstr ""
+
+#: ../troubleshooting.md:7
+msgid "Invisible UI on Windows 10 (Intel + NVIDIA Graphics)"
+msgstr ""
+
+#: ../troubleshooting.md:9
+msgid "**Problem:**"
+msgstr ""
+
+#: ../troubleshooting.md:11
+msgid ""
+"Some Windows 10 users with Intel integrated graphics (especially older "
+"GPUs like the Intel HD 4000 / 4600 series) — often in systems that also "
+"have NVIDIA GPUs — may experience an **invisible UI** when launching "
+"Gaphor. The window appears, and UI elements are clickable (buttons, "
+"menus), but nothing is visible."
+msgstr ""
+
+#: ../troubleshooting.md:13
+msgid ""
+"This issue is tracked upstream in GTK: 👉 "
+"[GNOME/gtk#7283](https://gitlab.gnome.org/GNOME/gtk/-/issues/7283)"
+msgstr ""
+
+#: ../troubleshooting.md:18
+msgid ""
+"*In the images below, the Gaphor window is open but the UI is not "
+"visible.*"
+msgstr ""
+
+#: ../troubleshooting.md:20
+msgid "![Invisible UI Example 1](./images/invisible-ui-example1.png)"
+msgstr ""
+
+#: ../troubleshooting.md:20
+msgid "Invisible UI Example 1"
+msgstr ""
+
+#: ../troubleshooting.md:22
+msgid "![Invisible UI Example 2](./images/invisible-ui-example2.png)"
+msgstr ""
+
+#: ../troubleshooting.md:22
+msgid "Invisible UI Example 2"
+msgstr ""
+
+#: ../troubleshooting.md:26
+msgid "Solution: Set the `GSK_RENDERER=gl` Environment Variable"
+msgstr ""
+
+#: ../troubleshooting.md:28
+msgid ""
+"To fix this issue, you can force GTK to use the OpenGL-based renderer by "
+"setting the environment variable `GSK_RENDERER=gl`."
+msgstr ""
+
+#: ../troubleshooting.md:30
+msgid "Option 1️⃣: Update the Gaphor Shortcut"
+msgstr ""
+
+#: ../troubleshooting.md:32
+msgid ""
+"**Right-click the Gaphor shortcut** (Desktop or Start Menu) and select "
+"**Properties**."
+msgstr ""
+
+#: ../troubleshooting.md:33
+msgid "In the **Shortcut** tab, locate the **Target** field."
+msgstr ""
+
+#: ../troubleshooting.md:34
+msgid "Replace the existing target with the following PowerShell command:"
+msgstr ""
+
+#: ../troubleshooting.md:40
+msgid ""
+"*Note: Adjust the path if your Gaphor installation is in a different "
+"folder.*"
+msgstr ""
+
+#: ../troubleshooting.md:42
+msgid "Click **Apply** and then **OK**."
+msgstr ""
+
+#: ../troubleshooting.md:44
+msgid ""
+"✅ Now, whenever you launch Gaphor via this shortcut, it will apply the "
+"fix automatically."
+msgstr ""
+
+#: ../troubleshooting.md:48
+msgid "Option 2️⃣: Set a Permanent Environment Variable"
+msgstr ""
+
+#: ../troubleshooting.md:50
+msgid "Press `Win + S` and search for **Environment Variables**."
+msgstr ""
+
+#: ../troubleshooting.md:51
+msgid ""
+"Select **“Edit the system environment variables” → Environment "
+"Variables**."
+msgstr ""
+
+#: ../troubleshooting.md:52
+msgid "Under **User variables**, click **New**:"
+msgstr ""
+
+#: ../troubleshooting.md:53
+msgid "**Variable name:** `GSK_RENDERER`"
+msgstr ""
+
+#: ../troubleshooting.md:54
+msgid "**Variable value:** `gl`"
+msgstr ""
+
+#: ../troubleshooting.md:55
+msgid "Save and restart your computer."
+msgstr ""
+
+#: ../troubleshooting.md:57
+msgid ""
+"✅ This will apply the fix globally for Gaphor (and any other GTK-based "
+"apps)."
+msgstr ""
+
+#: ../troubleshooting.md:61
+#, fuzzy
+msgid "Affected Systems"
+msgstr "Eseményrendszer"
+
+#: ../troubleshooting.md:63
+msgid "**Windows 10**"
+msgstr ""
+
+#: ../troubleshooting.md:64
+msgid "Intel HD 4000 / 4600 series graphics (or similar)"
+msgstr ""
+
+#: ../troubleshooting.md:65
+msgid "Often combined with NVIDIA GPU setups"
+msgstr ""
+
+#: ../troubleshooting.md:69
+msgid ""
+"*Thanks to the Gaphor community and contributors for identifying and "
+"confirming this workaround!*"
+msgstr ""
+
+#: ../undo.rst:2
 msgid "Undo Manager"
 msgstr ""
 
-#: ../undo.md:3
+#: ../undo.rst:4
 msgid ""
 "Undo is a required feature in modern applications. Gaphor is no "
 "exception. Having an undo function in place means you can change the "
 "model and easily revert to an older state."
 msgstr ""
 
-#: ../undo.md:7
+#: ../undo.rst:9
 msgid "Overview of Transactions"
 msgstr ""
 
-#: ../undo.md:9
+#: ../undo.rst:11
 msgid ""
 "The recording and playback of changes in Gaphor is handled by the the "
 "Undo Manager. The Undo Manager works transactionally. A transaction must "
 "succeed or fail as a complete unit. If the transaction fails in the "
 "middle, it is rolled back. In Gaphor this is achieved by the "
-"{mod}`~gaphor.transaction` module, which provides a context manager "
-"{obj}`~gaphor.transaction.Transaction`."
+":mod:`~gaphor.transaction` module, which provides a context manager "
+":obj:`~gaphor.transaction.Transaction`."
 msgstr ""
 
-#: ../undo.md:16
+#: ../undo.rst:18
 msgid ""
 "When transactions take place, they emit events when the top-most "
 "transaction begins and is finished. The event notifications are for the "
@@ -6873,68 +7239,68 @@ msgid ""
 "successful or the rollback of the transaction if it fails."
 msgstr ""
 
-#: ../undo.md:20
+#: ../undo.rst:22
 msgid ""
 "The Undo Manager only allows changes to be made in a transaction. If a "
 "change is made outside a transaction, an exception is raised."
 msgstr ""
 
-#: ../undo.md:23
+#: ../undo.rst:26
 msgid "Start of a Transaction"
 msgstr ""
 
-#: ../undo.md:25
-msgid "A `Transaction` object is created."
+#: ../undo.rst:28
+msgid "A ``Transaction`` object is created."
 msgstr ""
 
-#: ../undo.md:26
-msgid "`TransactionBegin` event is emitted."
+#: ../undo.rst:29
+msgid "``TransactionBegin`` event is emitted."
 msgstr ""
 
-#: ../undo.md:27
+#: ../undo.rst:30
 msgid ""
-"The `UndoManager` instantiates a new `ActionStack` which is the "
+"The ``UndoManager`` instantiates a new ``ActionStack`` which is the "
 "transaction object, and adds the undo action to the stack."
 msgstr ""
 
-#: ../undo.md:30
+#: ../undo.rst:33
 msgid ""
 "Nested transactions are supported to allow a transaction to be added "
 "inside of another transaction that is already in progress."
 msgstr ""
 
-#: ../undo.md:33
+#: ../undo.rst:37
 msgid "Successful Transaction"
 msgstr ""
 
-#: ../undo.md:35
-msgid "A `TransactionCommit` event is emitted"
+#: ../undo.rst:39
+msgid "A ``TransactionCommit`` event is emitted"
 msgstr ""
 
-#: ../undo.md:36
-msgid "The `UndoManager` closes and stores the transaction."
+#: ../undo.rst:40
+msgid "The ``UndoManager`` closes and stores the transaction."
 msgstr ""
 
-#: ../undo.md:38
+#: ../undo.rst:43
 msgid "Failed Transaction"
 msgstr ""
 
-#: ../undo.md:40
-msgid "A `TransactionRollback` event is emitted."
+#: ../undo.rst:45
+msgid "A ``TransactionRollback`` event is emitted."
 msgstr ""
 
-#: ../undo.md:41
+#: ../undo.rst:46
 msgid ""
-"The `UndoManager` plays back all the recorded actions, but does not store"
-" it."
+"The ``UndoManager`` plays back all the recorded actions, but does not "
+"store it."
 msgstr ""
 
-#: ../undo.md:44
+#: ../undo.rst:50
 #, fuzzy
 msgid "Transaction API"
 msgstr "Tranzakciós"
 
-#: ../undo.md:47
+#: ../undo.rst:54
 msgid "You only require transactions if the undo manager is active."
 msgstr ""
 
@@ -7028,27 +7394,26 @@ msgid ""
 "should be marked for rollback."
 msgstr ""
 
-#: ../undo.md:61
+#: ../undo.rst:67
 msgid "References"
 msgstr ""
 
-#: ../undo.md:63
+#: ../undo.rst:69
 msgid ""
-"[A Framework for Undoing Actions in Collaborative "
-"Systems](http://web.eecs.umich.edu/~aprakash/papers/undo-tochi94.pdf)"
+"`A Framework for Undoing Actions in Collaborative Systems "
+"<http://web.eecs.umich.edu/~aprakash/papers/undo-tochi94.pdf>`_"
 msgstr ""
 
-#: ../undo.md:65
+#: ../undo.rst:70
 msgid ""
-"[Undoing Actions in Collaborative Work: Framework and "
-"Experience](https://www.eecs.umich.edu/techreports/cse/94/CSE-"
-"TR-196-94.pdf)"
+"`Undoing Actions in Collaborative Work: Framework and Experience "
+"<https://www.eecs.umich.edu/techreports/cse/94/CSE-TR-196-94.pdf>`_"
 msgstr ""
 
-#: ../undo.md:67
+#: ../undo.rst:71
 msgid ""
-"[Implementing a Selective Undo Framework in "
-"Python](https://legacy.python.org/workshops/1997-10/proceedings/zukowski.html)"
+"`Implementing a Selective Undo Framework in Python "
+"<https://legacy.python.org/workshops/1997-10/proceedings/zukowski.html>`_"
 msgstr ""
 
 #: ../windows.md:1
@@ -7149,77 +7514,73 @@ msgstr ""
 msgid "From the regular user PowerShell terminal execute:"
 msgstr ""
 
-#: ../windows.md:71
+#: ../windows.md:72
 msgid "Download GTK"
 msgstr ""
 
-#: ../windows.md:73
+#: ../windows.md:74
 msgid ""
 "Download the latest release asset at "
-"https://github.com/wingtk/gvsbuild/releases. The file will be called "
-"`GTK4_Gvsbuild_VERSION_x64.zip`, where `VERSION` is the latest released "
-"version."
+"[https://github.com/wingtk/gvsbuild/releases](https://github.com/wingtk/gvsbuild/releases)."
+" The file will be called `GTK4_Gvsbuild_VERSION_x64.zip`, where `VERSION`"
+" is the latest released version."
 msgstr ""
 
-#: ../windows.md:76
+#: ../windows.md:77
 msgid ""
 "Unzip the `GTK4_Gvsbuild_VERSION_x64.zip` file to `C:\\gtk`. For example "
 "with 7Zip:"
 msgstr ""
 
-#: ../windows.md:82
+#: ../windows.md:83
 msgid "The resulting directory structure should look like:"
 msgstr ""
 
-#: ../windows.md:94
+#: ../windows.md:95
 msgid "Setup Gaphor"
 msgstr ""
 
-#: ../windows.md:96
+#: ../windows.md:97
 msgid "In the same PowerShell terminal, clone the repository:"
 msgstr ""
 
-#: ../windows.md:103
-msgid "Install Poetry"
+#: ../windows.md:105
+msgid "Install Poetry:"
 msgstr ""
 
-#: ../windows.md:108
+#: ../windows.md:111
 msgid "Add GTK to your environmental variables:"
 msgstr ""
 
-#: ../windows.md:116
+#: ../windows.md:121
 msgid ""
 "You can also edit your account's Environmental Variables to persist "
 "across PowerShell sessions."
 msgstr ""
 
-#: ../windows.md:119
-msgid "Install Gaphor's dependencies"
+#: ../windows.md:124
+msgid "Install Gaphor's dependencies:"
 msgstr ""
 
-#: ../windows.md:124 ../windows.md:155
-msgid "Reinstall PyGObject and pycairo using gvsbuild wheels"
+#: ../windows.md:130 ../windows.md:165
+msgid "Reinstall PyGObject and pycairo using gvsbuild wheels:"
 msgstr ""
 
-#: ../windows.md:130 ../windows.md:164
+#: ../windows.md:137 ../windows.md:175
 msgid "Launch Gaphor!"
 msgstr ""
 
-#: ../windows.md:135
+#: ../windows.md:143
 msgid "Setting Up A Plugin Workspace for Gaphor"
 msgstr ""
 
-#: ../windows.md:137
+#: ../windows.md:145
 msgid ""
 "When setting up a plugin workspace you need to perform the following "
 "steps:"
 msgstr ""
 
-#: ../windows.md:139 ../windows.md:197
-msgid "cd (your project's workspace)"
-msgstr ""
-
-#: ../windows.md:141
+#: ../windows.md:151
 msgid ""
 "If your project does not already have a pyproject.toml file, create one. "
 "For details see the [Poetry documentation](https://python-poetry.org/docs"
@@ -7228,85 +7589,85 @@ msgid ""
 "World Plugin](https://github.com/gaphor/gaphor_plugin_helloworld)."
 msgstr ""
 
-#: ../windows.md:149
+#: ../windows.md:159
 msgid ""
 "Install your project's dependencies. If you have made your project "
 "dependent upon Gaphor, this will pull in Gaphor."
 msgstr ""
 
-#: ../windows.md:161
+#: ../windows.md:172
 msgid ""
 "Note that if you have forgotten to reinstall PyGObject and pycairo, the "
 "first time you add an element to a diagram that has text, gaphor will "
 "crash!"
 msgstr ""
 
-#: ../windows.md:171
+#: ../windows.md:183
 msgid ""
 "Start a new PowerShell terminal, and set current directory to the project"
 " folder:"
 msgstr ""
 
-#: ../windows.md:176
+#: ../windows.md:189
 msgid "Ensure that path environment variable is set:"
 msgstr ""
 
-#: ../windows.md:181
+#: ../windows.md:195
 msgid "Start Visual Studio Code:"
 msgstr ""
 
-#: ../windows.md:186
+#: ../windows.md:201
 msgid "To start the debugger, execute the following steps:"
 msgstr ""
 
-#: ../windows.md:187
+#: ../windows.md:202
 msgid "Open `__main__.py` file from `gaphor` folder"
 msgstr ""
 
-#: ../windows.md:188
+#: ../windows.md:203
 msgid "Add a breakpoint on line `main(sys.argv)`"
 msgstr ""
 
-#: ../windows.md:189
+#: ../windows.md:204
 msgid "In the menu, select Run → Start debugging"
 msgstr ""
 
-#: ../windows.md:190 ../windows.md:201
+#: ../windows.md:205 ../windows.md:218
 msgid "Choose Select module from the list"
 msgstr ""
 
-#: ../windows.md:191 ../windows.md:202
+#: ../windows.md:206 ../windows.md:219
 msgid "Enter `gaphor` as module name"
 msgstr ""
 
-#: ../windows.md:193
+#: ../windows.md:208
 msgid ""
 "Visual Studio Code will start the application in debug mode, and will "
 "stop at main."
 msgstr ""
 
-#: ../windows.md:195
+#: ../windows.md:210
 msgid "Debugging Your Plugin Using Visual Studio Code"
 msgstr ""
 
-#: ../windows.md:199
+#: ../windows.md:216
 #, fuzzy
 msgid "Start gaphor:"
 msgstr "Kezdje el a Gaphor használatát"
 
-#: ../windows.md:200
+#: ../windows.md:217
 msgid "In the VSCode menu, select Run → Start debugging"
 msgstr ""
 
-#: ../windows.md:204
+#: ../windows.md:221
 msgid "Your plugin should appear under the Tools menu."
 msgstr ""
 
-#: ../windows.md:206
+#: ../windows.md:223
 msgid "Packaging for Windows"
 msgstr ""
 
-#: ../windows.md:208
+#: ../windows.md:225
 msgid ""
 "In order to create an exe installation package for Windows, we utilize "
 "[PyInstaller](https://pyinstaller.org) which analyzes Gaphor to find all "
@@ -7317,15 +7678,15 @@ msgid ""
 " an administrator, then execute:"
 msgstr ""
 
-#: ../windows.md:220
+#: ../windows.md:237
 msgid "Then build your installer using:"
 msgstr ""
 
-#: ../windows.md:229
+#: ../windows.md:248
 msgid "Limited Anaconda Install"
 msgstr ""
 
-#: ../windows.md:231
+#: ../windows.md:250
 msgid ""
 "Sometimes, it may be helpful to call Gaphor functionality from a python "
 "console on computers without the ability for a full development install "
@@ -7336,7 +7697,7 @@ msgid ""
 "`Application` and `Session`."
 msgstr ""
 
-#: ../windows.md:233
+#: ../windows.md:252
 msgid ""
 "However, this setup can still be helpful if you want to use or call "
 "Gaphor as a library in the context of a larger project. In these cases, "
@@ -7344,11 +7705,11 @@ msgid ""
 " following process:"
 msgstr ""
 
-#: ../windows.md:236
+#: ../windows.md:255
 msgid "Create new anaconda environment"
 msgstr ""
 
-#: ../windows.md:238
+#: ../windows.md:257
 msgid ""
 "If you use anaconda for other projects, it's a good idea to create a new "
 "environment for Gaphor, so that its dependencies don't end up conflicting"
@@ -7356,76 +7717,76 @@ msgid ""
 "following command from anaconda prompt:"
 msgstr ""
 
-#: ../windows.md:244
-msgid "where  ``gaphor`` can be any name desired for the environment."
+#: ../windows.md:264
+msgid "where ``gaphor`` can be any name desired for the environment."
 msgstr ""
 
-#: ../windows.md:246
+#: ../windows.md:266
 msgid "Update packages in the new environment"
 msgstr ""
 
-#: ../windows.md:248
+#: ../windows.md:268
 msgid "Get the most recent packages using:"
 msgstr ""
 
-#: ../windows.md:254
+#: ../windows.md:274
 msgid "Install dependencies"
 msgstr ""
 
-#: ../windows.md:256
+#: ../windows.md:276
 msgid "The following Gaphor dependencies are installable from anaconda:"
 msgstr ""
 
-#: ../windows.md:261
+#: ../windows.md:283
 msgid ""
 "Unfortunately, the `gtksourceview5` and `libadwaita` dependencies are not"
 " available as anaconda packages. So you may not be able to fully "
 "build/run the program in this environment."
 msgstr ""
 
-#: ../windows.md:263
+#: ../windows.md:285
 msgid "Set up your development environment"
 msgstr ""
 
-#: ../windows.md:265
+#: ../windows.md:287
 msgid ""
 "Now, to develop with Gaphor, you will want to set it up with your "
 "development. If you want to work with `ipython`, install it below:"
 msgstr ""
 
-#: ../windows.md:269
+#: ../windows.md:293
 msgid "VSCode Tips"
 msgstr ""
 
-#: ../windows.md:270
+#: ../windows.md:294
 msgid ""
 "VSCode should work out-of-the box if it is already installed. Just set "
 "'gaphor' as the kernel in your VSCode Profile or notebook."
 msgstr ""
 
-#: ../windows.md:272
+#: ../windows.md:296
 msgid "Spyder Tips"
 msgstr ""
 
-#: ../windows.md:273
+#: ../windows.md:297
 msgid "You can install spyder in this environment using `conda install spyder`."
 msgstr ""
 
-#: ../windows.md:275
+#: ../windows.md:299
 msgid ""
 "If this does not work, (i.e., if `conda install spyder` reveals "
 "conflicts), you can instead use the following workaround:"
 msgstr ""
 
-#: ../windows.md:279
+#: ../windows.md:305
 msgid "Then, in spyder, set 'gaphor' as your python interpreter"
 msgstr ""
 
-#: ../windows.md:281
+#: ../windows.md:307
 msgid "Install Gaphor"
 msgstr ""
 
-#: ../windows.md:283
+#: ../windows.md:309
 msgid ""
 "From a python console running within your new anaconda environment, you "
 "may then install Gaphor using pip:"
@@ -8100,4 +8461,89 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "`Image properties`_ can also be applied:"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The recording and playback of changes"
+#~ " in Gaphor is handled by the "
+#~ "the Undo Manager. The Undo Manager "
+#~ "works transactionally. A transaction must "
+#~ "succeed or fail as a complete "
+#~ "unit. If the transaction fails in "
+#~ "the middle, it is rolled back. In"
+#~ " Gaphor this is achieved by the "
+#~ "{mod}`~gaphor.transaction` module, which provides"
+#~ " a context manager "
+#~ "{obj}`~gaphor.transaction.Transaction`."
+#~ msgstr ""
+
+#~ msgid "A `Transaction` object is created."
+#~ msgstr ""
+
+#~ msgid "`TransactionBegin` event is emitted."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The `UndoManager` instantiates a new "
+#~ "`ActionStack` which is the transaction "
+#~ "object, and adds the undo action "
+#~ "to the stack."
+#~ msgstr ""
+
+#~ msgid "A `TransactionCommit` event is emitted"
+#~ msgstr ""
+
+#~ msgid "The `UndoManager` closes and stores the transaction."
+#~ msgstr ""
+
+#~ msgid "A `TransactionRollback` event is emitted."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The `UndoManager` plays back all the "
+#~ "recorded actions, but does not store "
+#~ "it."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "[A Framework for Undoing Actions in "
+#~ "Collaborative "
+#~ "Systems](http://web.eecs.umich.edu/~aprakash/papers/undo-"
+#~ "tochi94.pdf)"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "[Undoing Actions in Collaborative Work: "
+#~ "Framework and "
+#~ "Experience](https://www.eecs.umich.edu/techreports/cse/94/CSE-"
+#~ "TR-196-94.pdf)"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "[Implementing a Selective Undo Framework "
+#~ "in "
+#~ "Python](https://legacy.python.org/workshops/1997-10/proceedings/zukowski.html)"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Download the latest release asset at "
+#~ "https://github.com/wingtk/gvsbuild/releases. The file "
+#~ "will be called `GTK4_Gvsbuild_VERSION_x64.zip`, "
+#~ "where `VERSION` is the latest released"
+#~ " version."
+#~ msgstr ""
+
+#~ msgid "Install Poetry"
+#~ msgstr ""
+
+#~ msgid "Install Gaphor's dependencies"
+#~ msgstr ""
+
+#~ msgid "Reinstall PyGObject and pycairo using gvsbuild wheels"
+#~ msgstr ""
+
+#~ msgid "cd (your project's workspace)"
+#~ msgstr ""
+
+#~ msgid "where  ``gaphor`` can be any name desired for the environment."
 #~ msgstr ""

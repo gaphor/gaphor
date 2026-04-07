@@ -7,25 +7,24 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-11-12 21:36-0500\n"
+"POT-Creation-Date: 2026-04-05 21:23-0400\n"
 "PO-Revision-Date: 2026-04-05 20:03+0000\n"
 "Last-Translator: Anonymous <noreply@weblate.org>\n"
-"Language-Team: Hungarian <https://hosted.weblate.org/projects/gaphor/gaphor/"
-"hu/>\n"
 "Language: hu\n"
+"Language-Team: Hungarian "
+"<https://hosted.weblate.org/projects/gaphor/gaphor/hu/>\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.17-dev\n"
-"Generated-By: Babel 2.17.0\n"
+"Generated-By: Babel 2.18.0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:28
 msgid "C4"
 msgstr "C4"
 
 #: gaphor/C4Model/propertypages.ui:11 gaphor/diagram/general/metadata.py:70
-#: gaphor/diagram/propertypages.ui:170
+#: gaphor/diagram/propertypages.ui:268
 msgid "Description"
 msgstr "Leírás"
 
@@ -534,21 +533,21 @@ msgstr "blokkelem"
 msgid "parts"
 msgstr "alkatrészek"
 
-#: gaphor/SysML/blocks/block.py:88 gaphor/SysML/blocks/interfaceblock.py:71
+#: gaphor/SysML/blocks/block.py:90 gaphor/SysML/blocks/interfaceblock.py:71
 msgid "references"
 msgstr "hivatkozások"
 
-#: gaphor/SysML/blocks/block.py:100 gaphor/SysML/blocks/interfaceblock.py:83
+#: gaphor/SysML/blocks/block.py:102 gaphor/SysML/blocks/interfaceblock.py:83
 msgid "values"
 msgstr "értékek"
 
-#: gaphor/SysML/blocks/block.py:119 gaphor/SysML/blocks/interfaceblock.py:102
+#: gaphor/SysML/blocks/block.py:123 gaphor/SysML/blocks/interfaceblock.py:104
 msgid "operations"
 msgstr "műveletek"
 
-#: gaphor/SysML/blocks/block.py:131 gaphor/SysML/blocks/block.py:150
-#: gaphor/SysML/blocks/interfaceblock.py:114
-#: gaphor/SysML/blocks/interfaceblock.py:137
+#: gaphor/SysML/blocks/block.py:135 gaphor/SysML/blocks/block.py:154
+#: gaphor/SysML/blocks/interfaceblock.py:116
+#: gaphor/SysML/blocks/interfaceblock.py:139
 msgid "unnamed"
 msgstr "névtelen"
 
@@ -652,7 +651,7 @@ msgstr "Ellenőrzés"
 msgid "Containment"
 msgstr "Tartalmazás"
 
-#: gaphor/UML/compartments.py:62
+#: gaphor/UML/compartments.py:70
 #, python-brace-format
 msgid "(from {namespace})"
 msgstr "(forrás: {namespace})"
@@ -728,7 +727,7 @@ msgstr "Sztereotípus"
 msgid "New {name}"
 msgstr "Új {name}"
 
-#: gaphor/UML/treemodel.py:57 gaphor/ui/diagrampage.py:109
+#: gaphor/UML/treemodel.py:57 gaphor/ui/diagrampage.py:108
 #: gaphor/ui/mainwindow.py:287 gaphor/ui/modelmerge/organize.py:138
 msgid "<None>"
 msgstr "<Nincs>"
@@ -737,26 +736,26 @@ msgstr "<Nincs>"
 msgid "<Relationships>"
 msgstr "<Kapcsolatok>"
 
-#: gaphor/UML/umlfmt.py:23
+#: gaphor/UML/umlfmt.py:24
 #, python-brace-format
 msgid "supplier: {name}"
 msgstr "szállító: {name}"
 
-#: gaphor/UML/umlfmt.py:89
+#: gaphor/UML/umlfmt.py:90
 msgid "readOnly"
 msgstr "csak olvasható"
 
-#: gaphor/UML/umlfmt.py:241
+#: gaphor/UML/umlfmt.py:247
 #, python-brace-format
 msgid "general: {name}"
 msgstr "általános: {name}"
 
-#: gaphor/UML/umlfmt.py:246
+#: gaphor/UML/umlfmt.py:252
 #, python-brace-format
 msgid "extend: {name}"
 msgstr "kiterjesztés: {name}"
 
-#: gaphor/UML/umlfmt.py:253
+#: gaphor/UML/umlfmt.py:259
 #, python-brace-format
 msgid "include: {name}"
 msgstr "belefoglalás: {name}"
@@ -888,11 +887,11 @@ msgstr "Fordított érkezési sorrendben (Last In First Out - LIFO)"
 msgid "FIFO"
 msgstr "Érkezési sorrendben (First In First Out - FIFO)"
 
-#: gaphor/UML/actions/objectnode.py:45
+#: gaphor/UML/actions/objectnode.py:46
 msgid "upperBound"
 msgstr "felső határérték"
 
-#: gaphor/UML/actions/objectnode.py:55
+#: gaphor/UML/actions/objectnode.py:58
 msgid "ordering"
 msgstr "sorrend"
 
@@ -1004,8 +1003,9 @@ msgstr ""
 "  • <tt># /attr: int # egy megjegyzés</tt> (védett, származtatott, "
 "megjegyzéssel)\n"
 "\n"
-"Nyomja meg az <b>Enter</b> billentyűt a szerkesztéshez, a <b>Visszatörlés "
-"(Backspace)</b>/<b>Törlés (Delete)</b> gombot az elemek eltávolításához.\n"
+"Nyomja meg az <b>Enter</b> billentyűt a szerkesztéshez, a <b>Visszatörlés"
+" (Backspace)</b>/<b>Törlés (Delete)</b> gombot az elemek eltávolításához."
+"\n"
 "A <b>-</b>/<b>=</b> gombbal mozgathatja az elemeket felfelé vagy lefelé."
 
 #: gaphor/UML/actions/propertypages.ui:391
@@ -1089,7 +1089,7 @@ msgstr "felsorolás"
 msgid "New Enumeration…"
 msgstr "Új felsorolás…"
 
-#: gaphor/UML/classes/interface.py:276
+#: gaphor/UML/classes/interface.py:277
 msgid "interface"
 msgstr "felület"
 
@@ -1132,8 +1132,9 @@ msgstr ""
 "  • <tt>1..2</tt>\n"
 "  • <tt>- [1..2]</tt>\n"
 "\n"
-"Nyomja meg az <b>Enter</b> billentyűt a szerkesztéshez, a <b>Visszatörlés "
-"(Backspace)</b>/<b>Törlés (Delete)</b> gombot az elemek eltávolításához.\n"
+"Nyomja meg az <b>Enter</b> billentyűt a szerkesztéshez, a <b>Visszatörlés"
+" (Backspace)</b>/<b>Törlés (Delete)</b> gombot az elemek eltávolításához."
+"\n"
 "A <b>-</b>/<b>=</b> gombbal mozgathatja az elemeket felfelé vagy lefelé."
 
 #: gaphor/UML/classes/propertypages.ui:111
@@ -1198,8 +1199,9 @@ msgstr ""
 "  • <tt># /attr: int # egy megjegyzés</tt> (védett és származtatott "
 "attribútum megjegyzéssel)\n"
 "\n"
-"Nyomja meg az <b>Enter</b> billentyűt a szerkesztéshez, a <b>Visszatörlés "
-"(Backspace)</b>/<b>Törlés (Delete)</b> gombot az elemek eltávolításához.\n"
+"Nyomja meg az <b>Enter</b> billentyűt a szerkesztéshez, a <b>Visszatörlés"
+" (Backspace)</b>/<b>Törlés (Delete)</b> gombot az elemek eltávolításához."
+"\n"
 "A <b>-</b>/<b>=</b> gombbal mozgathatja az elemeket felfelé vagy lefelé."
 
 #: gaphor/UML/classes/propertypages.ui:349
@@ -1278,11 +1280,12 @@ msgstr ""
 "  • <tt>call()</tt>\n"
 "  • <tt>+ call(a: int[*], b: str): bool</tt> (nyilvános felhívás, "
 "paraméterek)\n"
-"  • <tt># call(a: int, b: str) # a note</tt> (védett felhívás, megjegyzéssel)"
+"  • <tt># call(a: int, b: str) # a note</tt> (védett felhívás, "
+"megjegyzéssel)\n"
 "\n"
+"Nyomja meg az <b>Enter</b> billentyűt a szerkesztéshez, a <b>Visszatörlés"
+" (Backspace)</b>/<b>Törlés (Delete)</b> gombot az elemek eltávolításához."
 "\n"
-"Nyomja meg az <b>Enter</b> billentyűt a szerkesztéshez, a <b>Visszatörlés "
-"(Backspace)</b>/<b>Törlés (Delete)</b> gombot az elemek eltávolításához.\n"
 "A <b>-</b>/<b>=</b> gombbal mozgathatja az elemeket felfelé vagy lefelé."
 
 #: gaphor/UML/classes/propertypages.ui:668
@@ -1304,12 +1307,14 @@ msgid ""
 "items.\n"
 "Use <b>-</b>/<b>=</b> to move items up or down."
 msgstr ""
-"Felsorolási literálok hozzáadása és szerkesztése az UML-szintaxis szerint.\n"
+"Felsorolási literálok hozzáadása és szerkesztése az UML-szintaxis "
+"szerint.\n"
 "\n"
 "  • <tt>enum</tt>\n"
 "\n"
-"Nyomja meg az <b>Enter</b> billentyűt a szerkesztéshez, a <b>Visszatörlés "
-"(Backspace)</b>/<b>Törlés (Delete)</b> gombot az elemek eltávolításához.\n"
+"Nyomja meg az <b>Enter</b> billentyűt a szerkesztéshez, a <b>Visszatörlés"
+" (Backspace)</b>/<b>Törlés (Delete)</b> gombot az elemek eltávolításához."
+"\n"
 "A <b>-</b>/<b>=</b> gombbal mozgathatja az elemeket felfelé vagy lefelé."
 
 #: gaphor/UML/classes/propertypages.ui:768
@@ -1333,7 +1338,7 @@ msgstr "eszköz"
 msgid "New Image"
 msgstr "Új kép"
 
-#: gaphor/UML/general/generaltoolbox.py:25 gaphor/ui/help/shortcuts.ui:34
+#: gaphor/UML/general/generaltoolbox.py:25 gaphor/ui/help/shortcuts.ui:8
 msgid "General"
 msgstr "Általános"
 
@@ -1353,23 +1358,29 @@ msgstr "Vonal"
 msgid "Box"
 msgstr "Téglalap"
 
-#: gaphor/UML/general/generaltoolbox.py:58
+#: gaphor/UML/general/generaltoolbox.py:58 gaphor/diagram/propertypages.ui:124
+#: gaphor/diagram/propertypages.ui:153
+#, fuzzy
+msgid "Diamond"
+msgstr "ÉS kapu"
+
+#: gaphor/UML/general/generaltoolbox.py:66
 msgid "Ellipse"
 msgstr "Ellipszis"
 
-#: gaphor/UML/general/generaltoolbox.py:66 gaphor/diagram/propertypages.ui:9
+#: gaphor/UML/general/generaltoolbox.py:74 gaphor/diagram/propertypages.ui:9
 msgid "Comment"
 msgstr "Megjegyzés"
 
-#: gaphor/UML/general/generaltoolbox.py:74
+#: gaphor/UML/general/generaltoolbox.py:82
 msgid "Comment line"
 msgstr "Megjegyzési sor"
 
-#: gaphor/UML/general/generaltoolbox.py:81
+#: gaphor/UML/general/generaltoolbox.py:89
 msgid "Diagram metadata"
 msgstr "Ábra metaadatai"
 
-#: gaphor/UML/general/generaltoolbox.py:88
+#: gaphor/UML/general/generaltoolbox.py:96
 msgid "Picture"
 msgstr "Kép"
 
@@ -1582,88 +1593,121 @@ msgstr "Belefoglalás"
 msgid "Extend"
 msgstr "Kiterjesztés"
 
-#: gaphor/diagram/propertypages.py:318
+#: gaphor/diagram/propertypages.py:328
 msgid "Presentation"
 msgstr "Bemutató"
 
-#: gaphor/diagram/propertypages.py:319 gaphor/diagram/propertypages.py:332
+#: gaphor/diagram/propertypages.py:329 gaphor/diagram/propertypages.py:344
 msgid "class"
 msgstr "osztály"
 
-#: gaphor/diagram/propertypages.py:320 gaphor/diagram/propertypages.py:333
+#: gaphor/diagram/propertypages.py:330 gaphor/diagram/propertypages.py:345
 msgid "id"
 msgstr "azonosító"
 
-#: gaphor/diagram/propertypages.py:330
+#: gaphor/diagram/propertypages.py:342
 msgid "Model Element"
 msgstr "Modellelem"
 
-#: gaphor/diagram/propertypages.py:331
+#: gaphor/diagram/propertypages.py:343
 msgid "qname"
 msgstr "qnév"
 
-#: gaphor/diagram/propertypages.ui:74
+#: gaphor/diagram/propertypages.ui:75
+msgid "Label"
+msgstr ""
+
+#: gaphor/diagram/propertypages.ui:98
+#, fuzzy
+msgid "Line Ends"
+msgstr "Engedély"
+
+#: gaphor/diagram/propertypages.ui:111
+#, fuzzy
+msgid "Head"
+msgstr "Fej:"
+
+#: gaphor/diagram/propertypages.ui:121 gaphor/diagram/propertypages.ui:150
+#, fuzzy
+msgid "Nothing"
+msgstr "Karakterlánc"
+
+#: gaphor/diagram/propertypages.ui:122 gaphor/diagram/propertypages.ui:151
+msgid "Arrow"
+msgstr ""
+
+#: gaphor/diagram/propertypages.ui:123 gaphor/diagram/propertypages.ui:152
+#, fuzzy
+msgid "Triangle"
+msgstr "Karakterlánc"
+
+#: gaphor/diagram/propertypages.ui:140
+#, fuzzy
+msgid "Tail"
+msgstr "Farok:"
+
+#: gaphor/diagram/propertypages.ui:172
 msgid "Style"
 msgstr "Stílus"
 
-#: gaphor/diagram/propertypages.ui:87
+#: gaphor/diagram/propertypages.ui:185
 msgid "Rectilinear"
 msgstr "Egyenes vonalú"
 
-#: gaphor/diagram/propertypages.ui:107
+#: gaphor/diagram/propertypages.ui:205
 msgid "Flip orientation"
 msgstr "Tájolás váltása"
 
-#: gaphor/diagram/propertypages.ui:130
+#: gaphor/diagram/propertypages.ui:228
 msgid "Note"
 msgstr "Jegyzet"
 
-#: gaphor/diagram/general/metadata.py:43 gaphor/diagram/propertypages.ui:156
+#: gaphor/diagram/general/metadata.py:43 gaphor/diagram/propertypages.ui:254
 msgid "Created By"
 msgstr "Készítette"
 
-#: gaphor/diagram/general/metadata.py:53 gaphor/diagram/propertypages.ui:184
+#: gaphor/diagram/general/metadata.py:53 gaphor/diagram/propertypages.ui:282
 msgid "Website"
 msgstr "Honlap"
 
-#: gaphor/diagram/general/metadata.py:84 gaphor/diagram/propertypages.ui:198
+#: gaphor/diagram/general/metadata.py:84 gaphor/diagram/propertypages.ui:296
 msgid "Revision"
 msgstr "Felülvizsgálat"
 
-#: gaphor/diagram/general/metadata.py:94 gaphor/diagram/propertypages.ui:212
+#: gaphor/diagram/general/metadata.py:94 gaphor/diagram/propertypages.ui:310
 msgid "License"
 msgstr "Engedély"
 
-#: gaphor/diagram/general/metadata.py:105 gaphor/diagram/propertypages.ui:226
+#: gaphor/diagram/general/metadata.py:105 gaphor/diagram/propertypages.ui:324
 msgid "Created On"
 msgstr "Létrehozva"
 
-#: gaphor/diagram/general/metadata.py:116 gaphor/diagram/propertypages.ui:240
+#: gaphor/diagram/general/metadata.py:116 gaphor/diagram/propertypages.ui:338
 msgid "Updated On"
 msgstr "Frissítve"
 
-#: gaphor/diagram/propertypages.ui:261
+#: gaphor/diagram/propertypages.ui:359
 msgid "Select picture..."
 msgstr "Kép kijelölése…"
 
-#: gaphor/diagram/propertypages.ui:267
+#: gaphor/diagram/propertypages.ui:365
 msgid "Set default size"
 msgstr "Alapértelmezett méret beállítása"
 
-#: gaphor/diagram/propertypages.ui:280
+#: gaphor/diagram/propertypages.ui:378
 msgid "Internals of focused item"
 msgstr "Fókuszált elem belső részei"
 
-#: gaphor/diagram/propertypages.ui:297 gaphor/ui/elementeditor.py:410
+#: gaphor/diagram/propertypages.ui:395 gaphor/ui/elementeditor.py:414
 #: gaphor/ui/elementeditor.ui:261
 msgid "No focused item."
 msgstr "Nincs fókuszált tétel."
 
-#: gaphor/diagram/propertypages.ui:319 gaphor/diagram/styleeditor.ui:5
+#: gaphor/diagram/propertypages.ui:417 gaphor/diagram/styleeditor.ui:5
 msgid "Style Editor"
 msgstr "Stílusszerkesztő"
 
-#: gaphor/diagram/propertypages.ui:328
+#: gaphor/diagram/propertypages.ui:426
 msgid "Open Style Editor"
 msgstr "Stílusszerkesztő megnyitása"
 
@@ -1696,7 +1740,7 @@ msgstr "Az elem nem ábrázolható egy ábrán."
 msgid "No model file configured for model '{model_name}'."
 msgstr "Nincs beállítva modellfájl a(z) „{model_name}”-modellhez."
 
-#: gaphor/extensions/sphinx.py:95
+#: gaphor/extensions/sphinx.py:97
 #, python-brace-format
 msgid "No diagram '{name}' in model '{model_name}' ({model_file})."
 msgstr "Nincs ábra „{name}” a(z) „{model_name}”-modellben ({model_file})."
@@ -1811,7 +1855,21 @@ msgstr "Összes ábra exportálása EPS-fájlként"
 msgid "Export all diagrams as EPS diagrams in a specifieddirectory"
 msgstr "Összes ábra exportálása EPS-fájlként egy megadott könyvtárba"
 
-#: gaphor/storage/recovery.py:155
+#: gaphor/plugins/htmlreport/report.py:28
+#, fuzzy
+msgid "Export as HTML Report"
+msgstr "Exportálás EPS-fájlként"
+
+#: gaphor/plugins/htmlreport/report.py:29
+msgid "Export model as a navigable HTML report"
+msgstr ""
+
+#: gaphor/plugins/htmlreport/report.py:33
+#, fuzzy
+msgid "Export HTML Report"
+msgstr "Exportálás EPS-fájlként"
+
+#: gaphor/storage/recovery.py:153
 msgid "This model contains unsaved changes. The changes have been restored."
 msgstr ""
 "Ez a modell nem mentett módosításokat tartalmaz. A változásokat "
@@ -2044,8 +2102,8 @@ msgid ""
 "The fault tree analysis shows which causes for the failure of a system "
 "have been considered."
 msgstr ""
-"A hibafa elemzés megmutatja, hogy a rendszer meghibásodásának mely okokat "
-"vették figyelembe."
+"A hibafa elemzés megmutatja, hogy a rendszer meghibásodásának mely okokat"
+" vették figyelembe."
 
 #: gaphor/templates/sysml-example.gaphor gaphor/templates/sysml.gaphor
 msgid "1. Concept Level"
@@ -2445,9 +2503,9 @@ msgid ""
 "Model abstract use case implementation by creating activity diagrams "
 "visualizing activity flows for primary and secondary use case scenarios."
 msgstr ""
-"Modellezze az absztrakt használati eset megvalósítását tevékenységi ábrák "
-"létrehozásával, amely tevékenységfolyamatokat vizualizál az elsődleges és "
-"másodlagos használati esetek forgatókönyveihez."
+"Modellezze az absztrakt használati eset megvalósítását tevékenységi ábrák"
+" létrehozásával, amely tevékenységfolyamatokat vizualizál az elsődleges "
+"és másodlagos használati esetek forgatókönyveihez."
 
 #: gaphor/templates/uml-example.gaphor gaphor/templates/uml.gaphor
 msgid ""
@@ -2456,10 +2514,10 @@ msgid ""
 "a visual dictionary of concepts. It will also be a starting point for "
 "your design-level data model."
 msgstr ""
-"Végezzen tartományelemzést a tartományegyedek és kapcsolataik modellezésével "
-"egyszerűsített osztályábrák segítségével. Ez a ábra a fogalmak vizuális "
-"szótáraként fog szolgálni. Ez egyben a tervezési szintű adatmodell "
-"kiindulópontja is lesz."
+"Végezzen tartományelemzést a tartományegyedek és kapcsolataik "
+"modellezésével egyszerűsített osztályábrák segítségével. Ez a ábra a "
+"fogalmak vizuális szótáraként fog szolgálni. Ez egyben a tervezési szintű"
+" adatmodell kiindulópontja is lesz."
 
 #: gaphor/templates/uml-example.gaphor gaphor/templates/uml.gaphor
 msgid ""
@@ -2469,9 +2527,9 @@ msgid ""
 "unstable parts"
 msgstr ""
 "Készítsen csomagfüggőségi ábrát a megvalósítási osztályok megfelelő "
-"csoportosításához. Ez segít a kód jól strukturált megőrzésében, és elkerüli "
-"a tervezési hibákat, például a körkörös függőséget vagy a bizonytalan "
-"részektől való függőséget."
+"csoportosításához. Ez segít a kód jól strukturált megőrzésében, és "
+"elkerüli a tervezési hibákat, például a körkörös függőséget vagy a "
+"bizonytalan részektől való függőséget."
 
 #: gaphor/templates/uml-example.gaphor gaphor/templates/uml.gaphor
 msgid ""
@@ -2479,8 +2537,8 @@ msgid ""
 "new methods in\n"
 "existing classes or even new classes with specific responsibilities."
 msgstr ""
-"Összetevő interakciók modellezése használati eseti forgatókönyvekhez, hogy "
-"új metódusokat\n"
+"Összetevő interakciók modellezése használati eseti forgatókönyvekhez, "
+"hogy új metódusokat\n"
 "találjon a meglévő osztályokban, vagy akár új, különleges felelősséggel "
 "rendelkező osztályokat."
 
@@ -2508,11 +2566,11 @@ msgstr "Karakterlánc"
 msgid "Date"
 msgstr "Dátum"
 
-#: gaphor/ui/__init__.py:187 gaphor/ui/mainwindow.py:165
+#: gaphor/ui/__init__.py:202 gaphor/ui/mainwindow.py:165
 msgid "Export"
 msgstr "Exportálás"
 
-#: gaphor/ui/__init__.py:188 gaphor/ui/mainwindow.py:168
+#: gaphor/ui/__init__.py:203 gaphor/ui/mainwindow.py:168
 msgid "Tools"
 msgstr "Eszközök"
 
@@ -2542,20 +2600,20 @@ msgstr "Újra megnyitása"
 msgid "Switch"
 msgstr "Váltás"
 
-#: gaphor/ui/diagrampage.py:377
+#: gaphor/ui/diagrampage.py:365
 msgid "Show in Model Browser"
 msgstr "Megjelenítés a Modellböngészőben"
 
-#: gaphor/ui/diagrampage.ui:33 gaphor/ui/help/shortcuts.ui:198
+#: gaphor/ui/diagrampage.ui:33 gaphor/ui/help/shortcuts.ui:232
 #: gaphor/ui/menubar.ui:83
 msgid "Zoom Out"
 msgstr "Kicsinyítés"
 
-#: gaphor/ui/diagrampage.ui:48 gaphor/ui/help/shortcuts.ui:205
+#: gaphor/ui/diagrampage.ui:48 gaphor/ui/help/shortcuts.ui:239
 msgid "Reset Zoom"
 msgstr "Tényleges méret"
 
-#: gaphor/ui/diagrampage.ui:63 gaphor/ui/help/shortcuts.ui:191
+#: gaphor/ui/diagrampage.ui:63 gaphor/ui/help/shortcuts.ui:225
 #: gaphor/ui/menubar.ui:79
 msgid "Zoom In"
 msgstr "Nagyítás"
@@ -2595,7 +2653,8 @@ msgstr ""
 #: gaphor/ui/elementeditor.ui:57
 msgid "This pane can be hidden by clicking the pane icon in the header."
 msgstr ""
-"Ablaktábla elrejtéséhez kattintson a fejlécben található ablaktábla ikonra."
+"Ablaktábla elrejtéséhez kattintson a fejlécben található ablaktábla "
+"ikonra."
 
 #: gaphor/ui/elementeditor.ui:65
 msgid ""
@@ -2604,10 +2663,10 @@ msgid ""
 "does not get selected, click on the diagram once (so it's focused) and "
 "then hit the shortcut key."
 msgstr ""
-"<b>Tipp:</b> Az eszköztár legtöbb eleme rendelkezik billentyűkóddal (pl. „c” "
-"az osztályhoz). Az eszközválasztás csak az ábrából működik. Ha egy eszköz "
-"nem kerül kiválasztásra, kattintson egyszer az ábrára (hogy fókuszba "
-"kerüljön), majd nyomja meg a gyorsbillentyűt."
+"<b>Tipp:</b> Az eszköztár legtöbb eleme rendelkezik billentyűkóddal (pl. "
+"„c” az osztályhoz). Az eszközválasztás csak az ábrából működik. Ha egy "
+"eszköz nem kerül kiválasztásra, kattintson egyszer az ábrára (hogy "
+"fókuszba kerüljön), majd nyomja meg a gyorsbillentyűt."
 
 #: gaphor/ui/elementeditor.ui:73
 msgid ""
@@ -2615,9 +2674,9 @@ msgid ""
 "select an element in the model browser and start typing. A search box "
 "will automatically appear."
 msgstr ""
-"<b>Tipp:</b> Ha egy elemet keres a modellböngészőben (bal felső sarokban), "
-"válasszon ki egy elemet a modellböngészőben, és kezdje el a gépelést. Egy "
-"keresőmező önműködően megjelenik."
+"<b>Tipp:</b> Ha egy elemet keres a modellböngészőben (bal felső "
+"sarokban), válasszon ki egy elemet a modellböngészőben, és kezdje el a "
+"gépelést. Egy keresőmező önműködően megjelenik."
 
 #: gaphor/ui/elementeditor.ui:86
 msgid "Help improve Gaphor"
@@ -2635,8 +2694,8 @@ msgid ""
 "translate Gaphor into your language, report bugs, or suggest new "
 "features. Join us in improving Gaphor!"
 msgstr ""
-"Sokféleképpen segíthetsz a Gaphor fejlesztésében: blogbejegyzések írása, a "
-"Gaphor fordítása a saját nyelvedre, hibák bejelentése vagy új funkciók "
+"Sokféleképpen segíthetsz a Gaphor fejlesztésében: blogbejegyzések írása, "
+"a Gaphor fordítása a saját nyelvedre, hibák bejelentése vagy új funkciók "
 "javaslata. Csatlakozzon hozzánk a Gaphor fejlesztéséhez!"
 
 #: gaphor/ui/elementeditor.ui:111
@@ -2644,8 +2703,8 @@ msgid ""
 "Visit <a href=\"https://gaphor.org/contribute/\">gaphor.org</a> for more "
 "information."
 msgstr ""
-"További tájékoztatásért látogasson el a <a href=\"https://gaphor.org/"
-"contribute/\">gaphor.org</a> webhelyre."
+"További tájékoztatásért látogasson el a <a "
+"href=\"https://gaphor.org/contribute/\">gaphor.org</a> webhelyre."
 
 #: gaphor/ui/elementeditor.ui:150
 msgid "Editor"
@@ -2762,8 +2821,8 @@ msgid ""
 "location."
 msgstr ""
 "Nincs elég szabad hely az eszközön a modell mentéséhez.\n"
-"Kérjük, szabadítson fel lemezterületet, és próbálja újra, vagy mentse egy "
-"másik helyre."
+"Kérjük, szabadítson fel lemezterületet, és próbálja újra, vagy mentse egy"
+" másik helyre."
 
 #: gaphor/ui/filemanager.py:52
 #, python-brace-format
@@ -2868,7 +2927,7 @@ msgstr ""
 msgid "Discard"
 msgstr "Elvetés"
 
-#: gaphor/ui/filemanager.py:403 gaphor/ui/help/shortcuts.ui:233
+#: gaphor/ui/filemanager.py:403 gaphor/ui/help/shortcuts.ui:70
 #: gaphor/ui/mainwindow.ui:266 gaphor/ui/menubar.ui:18
 msgid "Save"
 msgstr "Mentés"
@@ -2905,8 +2964,7 @@ msgstr "UML példa"
 
 #: gaphor/ui/greeter.py:66
 msgid "Unified Modeling Language example model"
-msgstr ""
-"UML-példamodell (Unified Modeling Language - Egységes modellezési nyelv)"
+msgstr "UML-példamodell (Unified Modeling Language - Egységes modellezési nyelv)"
 
 #: gaphor/ui/greeter.py:72
 msgid "SysML Example"
@@ -2936,13 +2994,13 @@ msgstr "C4-modell példa"
 msgid "C4 Model example of a banking system"
 msgstr "C4-modell példa egy bankrendszerre"
 
-#: gaphor/ui/greeter.ui:8 gaphor/ui/greeter.ui:56 gaphor/ui/mainwindow.ui:260
+#: gaphor/ui/greeter.ui:8 gaphor/ui/greeter.ui:60 gaphor/ui/mainwindow.ui:260
 #: gaphor/ui/menubar.ui:12
 msgid "Open Model…"
 msgstr "Modell megnyitása…"
 
 #: gaphor/ui/greeter.ui:14 gaphor/ui/help/preferences.ui:6
-#: gaphor/ui/help/shortcuts.ui:39
+#: gaphor/ui/help/shortcuts.ui:13
 msgid "Preferences"
 msgstr "Beállítások"
 
@@ -2950,16 +3008,21 @@ msgstr "Beállítások"
 msgid "Keyboard Shortcuts"
 msgstr "Billentyűparancsok"
 
-#: gaphor/ui/greeter.ui:22 gaphor/ui/help/about.ui:9
-#: gaphor/ui/mainwindow.ui:292
+#: gaphor/ui/greeter.ui:22 gaphor/ui/mainwindow.ui:292
+#, fuzzy
+msgid "Help"
+msgstr "_Súgó"
+
+#: gaphor/ui/greeter.ui:26 gaphor/ui/help/about.ui:9
+#: gaphor/ui/mainwindow.ui:296
 msgid "About Gaphor"
 msgstr "A Gaphor névjegye"
 
-#: gaphor/ui/greeter.ui:87
+#: gaphor/ui/greeter.ui:91
 msgid "Recently Opened"
 msgstr "Legutóbb megnyitott"
 
-#: gaphor/ui/greeter.ui:104
+#: gaphor/ui/greeter.ui:108
 msgid "Create New Model"
 msgstr "Új modell létrehozása"
 
@@ -2979,12 +3042,12 @@ msgstr "Alkalmazásmenü megnyitása"
 msgid "New diagram menu"
 msgstr "Új ábra menü"
 
-#: gaphor/ui/help/shortcuts.ui:111 gaphor/ui/mainwindow.ui:142
+#: gaphor/ui/help/shortcuts.ui:148 gaphor/ui/mainwindow.ui:142
 #: gaphor/ui/menubar.ui:34
 msgid "Undo"
 msgstr "Visszavonás"
 
-#: gaphor/ui/help/shortcuts.ui:118 gaphor/ui/mainwindow.ui:157
+#: gaphor/ui/help/shortcuts.ui:155 gaphor/ui/mainwindow.ui:157
 #: gaphor/ui/menubar.ui:38
 msgid "Redo"
 msgstr "Ismét"
@@ -2993,16 +3056,16 @@ msgstr "Ismét"
 msgid "Align selected elements"
 msgstr "Kijelölt elemek igazítása"
 
-#: gaphor/ui/help/shortcuts.ui:75 gaphor/ui/mainwindow.ui:181
+#: gaphor/ui/help/shortcuts.ui:20 gaphor/ui/mainwindow.ui:181
 msgid "Toggle Property Editor"
 msgstr "Tulajdonságszerkesztő kapcsoló"
 
-#: gaphor/ui/help/shortcuts.ui:219 gaphor/ui/mainwindow.ui:256
+#: gaphor/ui/help/shortcuts.ui:56 gaphor/ui/mainwindow.ui:256
 #: gaphor/ui/menubar.ui:8
 msgid "New Model…"
 msgstr "Új modell…"
 
-#: gaphor/ui/help/shortcuts.ui:240 gaphor/ui/mainwindow.ui:270
+#: gaphor/ui/help/shortcuts.ui:77 gaphor/ui/mainwindow.ui:270
 #: gaphor/ui/menubar.ui:22
 msgid "Save As…"
 msgstr "Mentés másként…"
@@ -3011,39 +3074,39 @@ msgstr "Mentés másként…"
 msgid "Preferences…"
 msgstr "Beállítások…"
 
-#: gaphor/ui/mainwindow.ui:301
+#: gaphor/ui/mainwindow.ui:305
 msgid "Align Left"
 msgstr "Balra igazítás"
 
-#: gaphor/ui/mainwindow.ui:306
+#: gaphor/ui/mainwindow.ui:310
 msgid "Align Right"
 msgstr "Jobbra igazítás"
 
-#: gaphor/ui/mainwindow.ui:311
+#: gaphor/ui/mainwindow.ui:315
 msgid "Align Vertical Center"
 msgstr "Függőleges középre igazítás"
 
-#: gaphor/ui/mainwindow.ui:318
+#: gaphor/ui/mainwindow.ui:322
 msgid "Align Top"
 msgstr "Felülre igazítás"
 
-#: gaphor/ui/mainwindow.ui:323
+#: gaphor/ui/mainwindow.ui:327
 msgid "Align Bottom"
 msgstr "Alulra igazítás"
 
-#: gaphor/ui/mainwindow.ui:328
+#: gaphor/ui/mainwindow.ui:332
 msgid "Align Horizontal Center"
 msgstr "Vízszintes középre igazítás"
 
-#: gaphor/ui/mainwindow.ui:335
+#: gaphor/ui/mainwindow.ui:339
 msgid "Max Width"
 msgstr "Maximális szélesség"
 
-#: gaphor/ui/mainwindow.ui:340
+#: gaphor/ui/mainwindow.ui:344
 msgid "Max Height"
 msgstr "Maximális magasság"
 
-#: gaphor/ui/mainwindow.ui:345
+#: gaphor/ui/mainwindow.ui:349
 msgid "Max Size"
 msgstr "Maximális méret"
 
@@ -3055,11 +3118,11 @@ msgstr "_Fájl"
 msgid "_Edit"
 msgstr "S_zerkesztés"
 
-#: gaphor/ui/help/shortcuts.ui:162 gaphor/ui/menubar.ui:44
+#: gaphor/ui/help/shortcuts.ui:176 gaphor/ui/menubar.ui:44
 msgid "Cut"
 msgstr "Kivágás"
 
-#: gaphor/ui/help/shortcuts.ui:155 gaphor/ui/menubar.ui:48
+#: gaphor/ui/help/shortcuts.ui:169 gaphor/ui/menubar.ui:48
 msgid "Copy"
 msgstr "Másolás"
 
@@ -3067,11 +3130,11 @@ msgstr "Másolás"
 msgid "Paste"
 msgstr "Beillesztés"
 
-#: gaphor/ui/help/shortcuts.ui:176 gaphor/ui/menubar.ui:56
+#: gaphor/ui/help/shortcuts.ui:190 gaphor/ui/menubar.ui:56
 msgid "Paste (copy defining elements)"
 msgstr "Beillesztés (meghatározó elemek másolása)"
 
-#: gaphor/ui/help/shortcuts.ui:133 gaphor/ui/menubar.ui:66
+#: gaphor/ui/help/shortcuts.ui:204 gaphor/ui/menubar.ui:66
 msgid "Select All"
 msgstr "Összes kijelölése"
 
@@ -3144,7 +3207,7 @@ msgstr "Modell módosított a lemezen"
 msgid "Discard Changes and Reload"
 msgstr "Módosítások elvetése és újratöltés"
 
-#: gaphor/ui/help/__init__.py:74
+#: gaphor/ui/help/__init__.py:78
 msgid "Restart Gaphor to enable language changes"
 msgstr "Indítsa újra a Gaphort a nyelvi módosítások engedélyezéséhez"
 
@@ -3158,8 +3221,8 @@ msgid ""
 msgstr ""
 "Szerzői jog © 2001 A Gaphor-fejlesztőcsapat.\n"
 "\n"
-"Az UML, SysML és RAAML az Object Management Group, Inc. bejegyzett védjegyei "
-"vagy védjegyei az Egyesült Államokban és/vagy más országokban."
+"Az UML, SysML és RAAML az Object Management Group, Inc. bejegyzett "
+"védjegyei vagy védjegyei az Egyesült Államokban és/vagy más országokban."
 
 #: gaphor/ui/help/about.ui:20
 msgid ""
@@ -3176,16 +3239,16 @@ msgid ""
 "limitations under the License."
 msgstr ""
 "Licenc az Apache Licenc 2.0-s verziója alatt (a „Licenc”); ezt az "
-"alkalmazást csak a Licencnek megfelelően használhatja. A Licenc másolatát a "
-"következő címen szerezheti be:\n"
+"alkalmazást csak a Licencnek megfelelően használhatja. A Licenc másolatát"
+" a következő címen szerezheti be:\n"
 "\n"
 "    http://www.apache.org/licenses/LICENSE-2.0\n"
 "\n"
-"Hacsak a vonatkozó jogszabályok nem írják elő, vagy írásos megállapodást nem "
-"írnak elő, a Licenc alapján terjesztett szoftvereket „AHOGY VAN” ALAPJÁN "
-"terjesztik, BÁRMILYEN, akár kifejezett, akár hallgatólagos GARANCIA VAGY "
-"FELTÉTEL NÉLKÜL. Tekintse meg a Licencben az adott nyelvi engedélyeket és "
-"korlátozásokat a Licenc alatt."
+"Hacsak a vonatkozó jogszabályok nem írják elő, vagy írásos megállapodást "
+"nem írnak elő, a Licenc alapján terjesztett szoftvereket „AHOGY VAN” "
+"ALAPJÁN terjesztik, BÁRMILYEN, akár kifejezett, akár hallgatólagos "
+"GARANCIA VAGY FELTÉTEL NÉLKÜL. Tekintse meg a Licencben az adott nyelvi "
+"engedélyeket és korlátozásokat a Licenc alatt."
 
 #: gaphor/ui/help/debuginfo.py:40
 msgid "No errors have been intercepted. We’re good."
@@ -3249,79 +3312,88 @@ msgstr "Nem használt elemek eltávolítása"
 #: gaphor/ui/help/preferences.ui:52
 msgid "Automatically remove elements no longer in use in any diagram."
 msgstr ""
-"Önműködően távolítsa el azokat az elemeket, amelyeket már nem használnak az "
-"ábrákban."
+"Önműködően távolítsa el azokat az elemeket, amelyeket már nem használnak "
+"az ábrákban."
 
-#: gaphor/ui/help/shortcuts.ui:4 gaphor/ui/help/shortcuts.ui:11
-msgid "Shortcuts"
-msgstr "Billentyűparancsok"
+#: gaphor/ui/help/shortcuts.ui:27
+#, fuzzy
+msgid "Toggle Style Editor"
+msgstr "Stílusszerkesztő megnyitása"
 
-#: gaphor/ui/help/shortcuts.ui:46
-msgid "Quit Gaphor"
-msgstr "A Gaphor bezárása"
-
-#: gaphor/ui/help/shortcuts.ui:56
-msgid "Model"
-msgstr "Modell"
-
-#: gaphor/ui/help/shortcuts.ui:61
-msgid "Rename"
-msgstr "Átnevezés"
-
-#: gaphor/ui/help/shortcuts.ui:68
-msgid "Search"
-msgstr "Keresés"
-
-#: gaphor/ui/help/shortcuts.ui:82
-msgid "Toggle Model Preferences"
-msgstr "Modellbeállítások kapcsoló"
-
-#: gaphor/ui/help/shortcuts.ui:89
-msgid "Close Diagram"
-msgstr "Ábra bezárása"
-
-#: gaphor/ui/help/shortcuts.ui:96
+#: gaphor/ui/help/shortcuts.ui:34
 msgid "Toggle Fullscreen"
 msgstr "Teljes képernyős nézet ki-/bekapcsolása"
 
-#: gaphor/ui/help/shortcuts.ui:106
-msgid "Undo and Redo"
-msgstr "Visszavonás és ismét"
+#: gaphor/ui/help/shortcuts.ui:41
+msgid "Quit Gaphor"
+msgstr "A Gaphor bezárása"
 
-#: gaphor/ui/help/shortcuts.ui:128
-msgid "Selections"
-msgstr "Kijelölések"
-
-#: gaphor/ui/help/shortcuts.ui:140
-msgid "Deselect All"
-msgstr "Minden kijelölés megszüntetése"
-
-#: gaphor/ui/help/shortcuts.ui:150
-msgid "Copy and Paste"
-msgstr "Másolás és beillesztés"
-
-#: gaphor/ui/help/shortcuts.ui:169
-msgid "Paste (link defining elements)"
-msgstr "Beillesztés (meghatározó elemek összekapcsolása)"
-
-#: gaphor/ui/help/shortcuts.ui:186
-msgid "Zoom"
-msgstr "Nagyítás"
-
-#: gaphor/ui/help/shortcuts.ui:214
+#: gaphor/ui/help/shortcuts.ui:51
 msgid "Files"
 msgstr "Fájlok"
 
-#: gaphor/ui/help/shortcuts.ui:226
+#: gaphor/ui/help/shortcuts.ui:63
 msgid "Open a Model…"
 msgstr "Modell megnyitása…"
+
+#: gaphor/ui/help/shortcuts.ui:87
+#, fuzzy
+msgid "Model Browser"
+msgstr "Megjelenítés a Modellböngészőben"
+
+#: gaphor/ui/help/shortcuts.ui:92
+msgid "Rename"
+msgstr "Átnevezés"
+
+#: gaphor/ui/help/shortcuts.ui:99
+msgid "Search"
+msgstr "Keresés"
+
+#: gaphor/ui/help/shortcuts.ui:112
+msgid "Expand Node"
+msgstr ""
+
+#: gaphor/ui/help/shortcuts.ui:119
+msgid "Collapse Node"
+msgstr ""
+
+#: gaphor/ui/help/shortcuts.ui:129
+#, fuzzy
+msgid "Diagram"
+msgstr "C4-ábra"
+
+#: gaphor/ui/help/shortcuts.ui:134
+msgid "Close Diagram"
+msgstr "Ábra bezárása"
+
+#: gaphor/ui/help/shortcuts.ui:183
+msgid "Paste (link defining elements)"
+msgstr "Beillesztés (meghatározó elemek összekapcsolása)"
+
+#: gaphor/ui/help/shortcuts.ui:211
+msgid "Deselect All"
+msgstr "Minden kijelölés megszüntetése"
+
+#: gaphor/ui/help/shortcuts.ui:253
+#, fuzzy
+msgid "Move selected items"
+msgstr "Nincs kijelölt elem"
+
+#: gaphor/ui/help/shortcuts.ui:254 gaphor/ui/help/shortcuts.ui:262
+#, fuzzy
+msgid "Works in any direction"
+msgstr "Fordított irány"
+
+#: gaphor/ui/help/shortcuts.ui:261
+msgid "Move selected items right big steps"
+msgstr ""
 
 #: gaphor/ui/modelmerge/organize.py:137
 #, python-brace-format
 msgid "Update diagram “{name}”"
 msgstr "„{name}”-ábra frissítése"
 
-#: gaphor/ui/modelmerge/organize.py:177 gaphor/ui/modelmerge/organize.py:317
+#: gaphor/ui/modelmerge/organize.py:177 gaphor/ui/modelmerge/organize.py:320
 #, python-brace-format
 msgid "Update element “{name}”"
 msgstr "„{name}”-elem frissítése"
@@ -3331,82 +3403,82 @@ msgstr "„{name}”-elem frissítése"
 msgid "Update element of type “{type}”"
 msgstr "„{type}”-típusú elem frissítése"
 
-#: gaphor/ui/modelmerge/organize.py:255
+#: gaphor/ui/modelmerge/organize.py:256
 #, python-brace-format
 msgid "Update presentation “{type}”"
 msgstr "„{type}”-bemutató frissítése"
 
-#: gaphor/ui/modelmerge/organize.py:281
+#: gaphor/ui/modelmerge/organize.py:284
 #, python-brace-format
 msgid "Add presentation of type {type}"
 msgstr "{type}-típusú bemutató hozzáadása"
 
-#: gaphor/ui/modelmerge/organize.py:285
+#: gaphor/ui/modelmerge/organize.py:288
 #, python-brace-format
 msgid "Remove presentation of type {type}"
 msgstr "{type}-típusú bemutató eltávolítása"
 
-#: gaphor/ui/modelmerge/organize.py:290
+#: gaphor/ui/modelmerge/organize.py:293
 #, python-brace-format
 msgid "Update presentation “{name}”"
 msgstr "„{name}”-bemutató frissítése"
 
-#: gaphor/ui/modelmerge/organize.py:292
+#: gaphor/ui/modelmerge/organize.py:295
 #, python-brace-format
 msgid "Update presentation of type {type}"
 msgstr "{type}-típusú bemutató frissítése"
 
-#: gaphor/ui/modelmerge/organize.py:299
+#: gaphor/ui/modelmerge/organize.py:302
 #, python-brace-format
 msgid "Add {type} “{name}”"
 msgstr "„{name}”-{type} hozzáadása"
 
-#: gaphor/ui/modelmerge/organize.py:303
+#: gaphor/ui/modelmerge/organize.py:306
 #, python-brace-format
 msgid "Add element of type {type}"
 msgstr "{type}-típusú elem hozzáadása"
 
-#: gaphor/ui/modelmerge/organize.py:309
+#: gaphor/ui/modelmerge/organize.py:312
 #, python-brace-format
 msgid "Remove element “{name}”"
 msgstr "„{name}”-elem eltávolítása"
 
-#: gaphor/ui/modelmerge/organize.py:311
+#: gaphor/ui/modelmerge/organize.py:314
 #, python-brace-format
 msgid "Remove element of type {type}"
 msgstr "{type}-típusú elem eltávolítása"
 
-#: gaphor/ui/modelmerge/organize.py:319
+#: gaphor/ui/modelmerge/organize.py:322
 #, python-brace-format
 msgid "Update element of type {type}"
 msgstr "{type}-típusú elem frissítése"
 
-#: gaphor/ui/modelmerge/organize.py:326
+#: gaphor/ui/modelmerge/organize.py:329
 #, python-brace-format
 msgid "Add relation “{name}” to “{ref_name}”"
 msgstr "„{name}”-kapcsolat hozzáadása a(z) „{ref_name}”-értékhez"
 
-#: gaphor/ui/modelmerge/organize.py:328
+#: gaphor/ui/modelmerge/organize.py:331
 #, python-brace-format
 msgid "Remove relation “{name}” to “{ref_name}”"
 msgstr "„{name}” kapcsolat eltávolítása innen: „{ref_name}”"
 
-#: gaphor/ui/modelmerge/organize.py:330
+#: gaphor/ui/modelmerge/organize.py:333
 #, python-brace-format
 msgid "Update relation “{name}” to “{ref_name}”"
 msgstr "„{name}”-kapcsolat frissítése a következővel: „{ref_name}”"
 
-#: gaphor/ui/modelmerge/organize.py:337
+#: gaphor/ui/modelmerge/organize.py:340
 #, python-brace-format
 msgid "Add relation “{name}”"
 msgstr "„{name}”-kapcsolat hozzáadása"
 
-#: gaphor/ui/modelmerge/organize.py:339
+#: gaphor/ui/modelmerge/organize.py:342
 #, python-brace-format
 msgid "Remove relation “{name}”"
 msgstr "„{name}”-kapcsolat eltávolítása"
 
-#: gaphor/ui/modelmerge/organize.py:341
+#: gaphor/ui/modelmerge/organize.py:344
 #, python-brace-format
 msgid "Update relation “{name}”"
 msgstr "„{name}”-kapcsolat frissítése"
@@ -3480,3 +3552,24 @@ msgstr "általános: Általános"
 
 #~ msgid "New _Package"
 #~ msgstr "Új _csomag"
+
+#~ msgid "Shortcuts"
+#~ msgstr "Billentyűparancsok"
+
+#~ msgid "Model"
+#~ msgstr "Modell"
+
+#~ msgid "Toggle Model Preferences"
+#~ msgstr "Modellbeállítások kapcsoló"
+
+#~ msgid "Undo and Redo"
+#~ msgstr "Visszavonás és ismét"
+
+#~ msgid "Selections"
+#~ msgstr "Kijelölések"
+
+#~ msgid "Copy and Paste"
+#~ msgstr "Másolás és beillesztés"
+
+#~ msgid "Zoom"
+#~ msgstr "Nagyítás"
