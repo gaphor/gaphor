@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gaphor 3.0.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-05 21:26-0400\n"
-"PO-Revision-Date: 2026-04-09 17:10+0000\n"
+"PO-Revision-Date: 2026-04-11 00:09+0000\n"
 "Last-Translator: Geeson Wan <wang14240@gmail.com>\n"
 "Language-Team: Chinese (Simplified Han script) <https://hosted.weblate.org/"
 "projects/gaphor/docs-gaphor-org/zh_Hans/>\n"
@@ -1697,17 +1697,16 @@ msgid ""
 msgstr ""
 
 #: ../exporting.md:6
-#, fuzzy
 msgid "Diagram Image Export"
-msgstr "图表语言"
+msgstr "图表导出"
 
 #: ../exporting.md:8
 msgid "Gaphor supports exporting diagrams as SVG, PNG, PDF, and EPS images."
-msgstr ""
+msgstr "Gaphor支持导出图表为SVG，PNG，PDF和EPS图片格式。"
 
 #: ../exporting.md:11
 msgid "From the GUI"
-msgstr ""
+msgstr "从图形用户界面"
 
 #: ../exporting.md:13
 msgid "Open the hamburger menu and choose one of:"
@@ -4162,7 +4161,7 @@ msgstr ""
 
 #: ../models/raaml/General.rst:5
 msgid "Basic Event"
-msgstr ""
+msgstr "基本事件"
 
 #: ../models/raaml/General.rst:11
 msgid "General Concepts Library/Abstract Cause"
@@ -4440,7 +4439,7 @@ msgstr ""
 
 #: ../models/sysml/Blocks.rst:2 ../style_sheets.md:331 ../style_sheets.md:332
 msgid "Blocks"
-msgstr ""
+msgstr "方块"
 
 #: ../models/sysml/Blocks.rst:8
 msgid "Adjunt and Classifier Behavior Properties"
@@ -5633,7 +5632,7 @@ msgstr ""
 
 #: ../stereotypes.md:1
 msgid "Stereotypes"
-msgstr ""
+msgstr "立体型"
 
 #: ../stereotypes.md:3
 msgid ""
@@ -6546,7 +6545,7 @@ msgstr ""
 #: ../style_sheets.md:320 ../style_sheets.md:321 ../style_sheets.md:322
 #: ../style_sheets.md:323 ../style_sheets.md:324 ../style_sheets.md:325
 msgid "UML"
-msgstr ""
+msgstr "UML"
 
 #: ../style_sheets.md:317
 msgid "Classes"
@@ -6574,7 +6573,7 @@ msgstr ""
 
 #: ../style_sheets.md:319 ../style_sheets.md:320 ../style_sheets.md:321
 msgid "Actions"
-msgstr ""
+msgstr "活动"
 
 #: ../style_sheets.md:319
 msgid "Decision/Merge Node"
@@ -6618,7 +6617,7 @@ msgstr ""
 
 #: ../style_sheets.md:323
 msgid "Initial Pseudostate"
-msgstr ""
+msgstr "初始伪状态"
 
 #: ../style_sheets.md:323 ../style_sheets.md:324
 msgid "``pseudostate``"
@@ -6630,7 +6629,7 @@ msgstr ""
 
 #: ../style_sheets.md:325
 msgid "Profiles"
-msgstr ""
+msgstr "配置"
 
 #: ../style_sheets.md:325
 msgid "Metaclass"
@@ -6663,7 +6662,7 @@ msgstr ""
 
 #: ../style_sheets.md:328
 msgid "Component"
-msgstr ""
+msgstr "组件"
 
 #: ../style_sheets.md:328
 msgid "``c4container[type=\"Component\"]``"
@@ -6687,11 +6686,11 @@ msgstr ""
 
 #: ../style_sheets.md:331 ../style_sheets.md:332 ../style_sheets.md:333
 msgid "SysML"
-msgstr ""
+msgstr "SysML（系统建模语言）"
 
 #: ../style_sheets.md:331
 msgid "ValueType"
-msgstr ""
+msgstr "值类型"
 
 #: ../style_sheets.md:331 ../style_sheets.md:332
 msgid "``datatype``"
@@ -6711,11 +6710,11 @@ msgstr ""
 
 #: ../style_sheets.md:334
 msgid "RAAML"
-msgstr ""
+msgstr "RAAML"
 
 #: ../style_sheets.md:334
 msgid "FTA"
-msgstr ""
+msgstr "FTA（故障树分析法）"
 
 #: ../style_sheets.md:334
 msgid "any AND/OR/… Gate"
@@ -6859,7 +6858,7 @@ msgstr ""
 
 #: ../troubleshooting.md:1
 msgid "Troubleshooting"
-msgstr ""
+msgstr "故障排"
 
 #: ../troubleshooting.md:3
 msgid "This page covers common issues and their solutions when using Gaphor."
