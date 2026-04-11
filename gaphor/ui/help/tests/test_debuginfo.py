@@ -56,4 +56,4 @@ def test_format_exception_group(debug_info):
     debug_info.excepthook(*exc_group_info())
     text = debug_info.create_debug_info()
 
-    assert 'ValueError("Internal Error")' in text
+    assert "ValueError: Internal Error" in text
