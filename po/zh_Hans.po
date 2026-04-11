@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2026-04-05 21:23-0400\n"
-"PO-Revision-Date: 2026-04-10 00:09+0000\n"
+"PO-Revision-Date: 2026-04-12 20:10+0000\n"
 "Last-Translator: Geeson Wan <wang14240@gmail.com>\n"
 "Language-Team: Chinese (Simplified Han script) <https://hosted.weblate.org/"
 "projects/gaphor/gaphor/zh_Hans/>\n"
@@ -74,7 +74,7 @@ msgstr "容器"
 
 #: gaphor/C4Model/toolbox.py:97
 msgid "Container: Database"
-msgstr "容器: 数据库"
+msgstr "容器：数据库"
 
 #: gaphor/C4Model/toolbox.py:109 gaphor/C4Model/toolbox.py:159
 #: gaphor/UML/classes/classestoolbox.py:63 gaphor/UML/toolbox.py:53
@@ -349,7 +349,7 @@ msgstr "相关"
 #: gaphor/SysML/diagramtype.py:42
 #, python-brace-format
 msgid "Can’t create “{name}” nested under a “{elem}”"
-msgstr "无法在“{elem}”下创建“{name}”"
+msgstr "无法在 “{elem}” 下创建 “{name}”"
 
 #: gaphor/SysML/modelinglanguage.py:39 gaphor/ui/greeter.py:41
 msgid "SysML"
@@ -425,7 +425,7 @@ msgstr "显示文本"
 #: gaphor/SysML/sysmlfmt.py:10
 #, python-brace-format
 msgid "sourceContext: {name}"
-msgstr "源上下文: {name}"
+msgstr "源上下文：{name}"
 
 #: gaphor/SysML/toolbox.py:52
 msgid "Internal Blocks"
@@ -747,17 +747,17 @@ msgstr "只读"
 #: gaphor/UML/umlfmt.py:247
 #, python-brace-format
 msgid "general: {name}"
-msgstr "通用: {name}"
+msgstr "通用：{name}"
 
 #: gaphor/UML/umlfmt.py:252
 #, python-brace-format
 msgid "extend: {name}"
-msgstr "扩展: {name}"
+msgstr "扩展：{name}"
 
 #: gaphor/UML/umlfmt.py:259
 #, python-brace-format
 msgid "include: {name}"
-msgstr "包含: {name}"
+msgstr "包含：{name}"
 
 #: gaphor/UML/actions/actionstoolbox.py:50
 msgid "Swimlane One"
@@ -1103,7 +1103,7 @@ msgstr "配置"
 
 #: gaphor/UML/classes/propertypages.ui:54
 msgid "Head:"
-msgstr "头:"
+msgstr "头："
 
 #: gaphor/UML/classes/propertypages.ui:84
 #: gaphor/UML/classes/propertypages.ui:197
@@ -1161,7 +1161,7 @@ msgstr "值"
 
 #: gaphor/UML/classes/propertypages.ui:167
 msgid "Tail:"
-msgstr "尾:"
+msgstr "尾："
 
 #: gaphor/UML/classes/propertypages.ui:287
 #: gaphor/UML/classes/propertypages.ui:343
@@ -1217,11 +1217,11 @@ msgstr "最终特化"
 
 #: gaphor/UML/classes/propertypages.ui:444
 msgid "Source:"
-msgstr "源:"
+msgstr "源："
 
 #: gaphor/UML/classes/propertypages.ui:468
 msgid "Target:"
-msgstr "目标:"
+msgstr "目标："
 
 #: gaphor/UML/classes/propertypages.ui:504
 msgid "Dependency type"
@@ -1372,7 +1372,7 @@ msgstr "选择一张图片..."
 #: gaphor/UML/general/imagepropertypage.py:72
 #, python-brace-format
 msgid "Unable to parse picture “{filename}”."
-msgstr "无法解析图片“{filename}”。"
+msgstr "无法解析图片 “{filename}”。"
 
 #: gaphor/UML/interactions/interactionsconnect.py:76
 msgid "call()"
@@ -1604,7 +1604,7 @@ msgstr "线尾"
 
 #: gaphor/diagram/propertypages.ui:111
 msgid "Head"
-msgstr "头:"
+msgstr "头"
 
 #: gaphor/diagram/propertypages.ui:121 gaphor/diagram/propertypages.ui:150
 msgid "Nothing"
@@ -1620,7 +1620,7 @@ msgstr "三角形"
 
 #: gaphor/diagram/propertypages.ui:140
 msgid "Tail"
-msgstr "尾:"
+msgstr "尾"
 
 #: gaphor/diagram/propertypages.ui:172
 msgid "Style"
@@ -1677,7 +1677,7 @@ msgstr "聚焦项的内部构造"
 #: gaphor/diagram/propertypages.ui:395 gaphor/ui/elementeditor.py:414
 #: gaphor/ui/elementeditor.ui:261
 msgid "No focused item."
-msgstr "没有聚焦的节点."
+msgstr "没有聚焦的节点。"
 
 #: gaphor/diagram/propertypages.ui:417 gaphor/diagram/styleeditor.ui:5
 msgid "Style Editor"
@@ -1719,7 +1719,7 @@ msgstr "没有为模型 '{model_name}' 配置模型文件。"
 #: gaphor/extensions/sphinx.py:97
 #, python-brace-format
 msgid "No diagram '{name}' in model '{model_name}' ({model_file})."
-msgstr "模型 '{model_name}' ({model_file}) 中没有关系图 '{name}'。"
+msgstr "模型 '{model_name}'（{model_file}）中没有关系图 '{name}'。"
 
 #: gaphor/plugins/autolayout/pydot.py:50
 msgid "Auto Layout"
@@ -1736,7 +1736,7 @@ msgid ""
 "{version}\n"
 "Type \"help\" for more information.\n"
 msgstr ""
-"Gaphor交互式Python控制台\n"
+"Gaphor 交互式 Python 控制台\n"
 "{version}\n"
 "键入“help”以获取更多信息\n"
 
@@ -1786,7 +1786,7 @@ msgstr "导出为 EPS 文件"
 
 #: gaphor/plugins/diagramexport/export.py:111
 msgid "Export diagram as Encapsulated PostScript"
-msgstr "将图表导出为封装的PostScript"
+msgstr "将图表导出为封装的 PostScript"
 
 #: gaphor/plugins/diagramexport/export.py:117
 msgid "Export diagram as EPS"
@@ -1798,7 +1798,7 @@ msgstr "导出全部图表为 SVG 文件"
 
 #: gaphor/plugins/diagramexport/export.py:126
 msgid "Export all diagrams as SVG diagrams in a specifieddirectory"
-msgstr "导出指定目录下的全部图表为SVG文件"
+msgstr "导出指定目录下的全部图表为 SVG 文件"
 
 #: gaphor/plugins/diagramexport/export.py:130
 #: gaphor/plugins/diagramexport/export.py:148
@@ -1813,7 +1813,7 @@ msgstr "导出全部图表为 PNG 文件"
 
 #: gaphor/plugins/diagramexport/export.py:144
 msgid "Export all diagrams as PNG diagrams in a specifieddirectory"
-msgstr "导出指定目录下的全部图表为PNG图片"
+msgstr "导出指定目录下的全部图表为 PNG 图片"
 
 #: gaphor/plugins/diagramexport/export.py:161
 msgid "Export all diagrams as PDF"
@@ -1821,7 +1821,7 @@ msgstr "导出全部图表为 PDF 文件"
 
 #: gaphor/plugins/diagramexport/export.py:162
 msgid "Export all diagrams as PDF diagrams in a specifieddirectory"
-msgstr "导出指定目录下的全部图表为PDF文件"
+msgstr "导出指定目录下的全部图表为 PDF 文件"
 
 #: gaphor/plugins/diagramexport/export.py:179
 msgid "Export all diagrams as EPS"
@@ -1829,7 +1829,7 @@ msgstr "导出全部图表为 EPS 文件"
 
 #: gaphor/plugins/diagramexport/export.py:180
 msgid "Export all diagrams as EPS diagrams in a specifieddirectory"
-msgstr "导出指定目录下的全部图表为EPS文件"
+msgstr "导出指定目录下的全部图表为 EPS 文件"
 
 #: gaphor/plugins/htmlreport/report.py:28
 msgid "Export as HTML Report"
@@ -1910,7 +1910,7 @@ msgstr "获取账户信息，并且支付"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "E-mail System"
-msgstr "E-mail系统"
+msgstr "电子邮件系统"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Sends e-mail to"
@@ -1922,11 +1922,11 @@ msgstr "使用...发送邮件"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Web Application"
-msgstr "Web应用"
+msgstr "网络应用"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "API Application"
-msgstr "API应用"
+msgstr "API 应用"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Single-Page Application"
@@ -1938,7 +1938,7 @@ msgstr "移动应用"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Visit bigbank.com/lb using"
-msgstr "使用...访问bigbank.com/lb"
+msgstr "使用...访问 bigbank.com/lb"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "View account balances and make payments using"
@@ -1970,7 +1970,7 @@ msgstr "重置密码控制器"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "E-mail Component"
-msgstr "E-mail组件"
+msgstr "电子邮件组件"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Account Summary Controller"
@@ -1989,7 +1989,7 @@ msgid ""
 "Makes API calls to\n"
 "[JSON/HTTPS]"
 msgstr ""
-"调用API\n"
+"调用 API\n"
 "[JSON/HTTPS]"
 
 #: gaphor/templates/raaml-example.gaphor gaphor/templates/raaml.gaphor
@@ -2015,11 +2015,11 @@ msgstr "系统损失"
 
 #: gaphor/templates/raaml-example.gaphor
 msgid "Loss of Subsystem 1"
-msgstr "子系统1损失"
+msgstr "子系统 1 损失"
 
 #: gaphor/templates/raaml-example.gaphor
 msgid "Loss of Subsystem 2"
-msgstr "子系统2损失"
+msgstr "子系统 2 损失"
 
 #: gaphor/templates/raaml-example.gaphor gaphor/templates/raaml.gaphor
 msgid "Hazard Definition"
@@ -2609,7 +2609,10 @@ msgid ""
 "\"c\" for Class). Tool selection only works from the diagram. If a tool "
 "does not get selected, click on the diagram once (so it's focused) and "
 "then hit the shortcut key."
-msgstr "<b>提示：</b>工具箱中的大多数元素都有键盘快捷键（例如“c”表示Class）。工具选择仅适用于图表。如果没有选择工具，请单击图表一次（使其聚焦），然后按快捷键。"
+msgstr ""
+"<b>提示：</b>工具箱中的大多数元素都有键盘快捷键（例如 “c” 表示 Class）。工具"
+"选择仅适用于图表。如果没有选择工具，请单击图表一次（使其聚焦），然后按快捷键"
+"。"
 
 #: gaphor/ui/elementeditor.ui:73
 msgid ""
@@ -2624,14 +2627,16 @@ msgstr "协助改进Gaphor"
 
 #: gaphor/ui/elementeditor.ui:95
 msgid "Gaphor is free and open source software, written by devoted volunteers."
-msgstr "Gaphor是一个免费的开源软件，有忠诚的志愿者们编写。"
+msgstr "Gaphor 是一个免费的开源软件，有忠诚的志愿者们编写。"
 
 #: gaphor/ui/elementeditor.ui:103
 msgid ""
 "There are many ways to help make Gaphor better: write a blog post, "
 "translate Gaphor into your language, report bugs, or suggest new "
 "features. Join us in improving Gaphor!"
-msgstr "多种方式可以帮助Gaphor做的更好：编写博文、翻译Gaphor、提报缺陷、或建议新功能。加入一起改进Gaphor！"
+msgstr ""
+"有多种方式可以帮助 Gaphor 改进：编写博文、翻译 Gaphor、提报缺陷、或建议新功能"
+"。加入一起改进 Gaphor！"
 
 #: gaphor/ui/elementeditor.ui:111
 msgid ""
@@ -2661,11 +2666,11 @@ msgstr "此模型中使用的（自然）语言。"
 
 #: gaphor/ui/elementeditor.ui:219
 msgid "CSS Editor"
-msgstr "CSS样式表编辑器"
+msgstr "CSS 样式表编辑器"
 
 #: gaphor/ui/elementeditor.ui:247
 msgid "CSS nodes of focused item"
-msgstr "聚焦的item的CSS节点"
+msgstr "聚焦的项目的 CSS 节点"
 
 #: gaphor/ui/elementeditor.ui:272
 msgid ""
@@ -2697,7 +2702,7 @@ msgstr "解决"
 msgid ""
 "It looks like Gaphor is started from the command line. Do you want to "
 "open a debug session?"
-msgstr "好像Gaphor是从命令行启动的。是否要打开调试会话？"
+msgstr "Gaphor 似乎是从命令行启动的。是否要打开调试会话？"
 
 #: gaphor/ui/errordialog.py:27 gaphor/ui/menubar.ui:93
 msgid "Close"
@@ -2721,7 +2726,7 @@ msgstr "所有文件"
 
 #: gaphor/ui/filedialog.py:100
 msgid "Flatpak Document Portal"
-msgstr "Flatpak文档首页"
+msgstr "Flatpak 文档首页"
 
 #: gaphor/ui/filemanager.py:41
 #, python-brace-format
@@ -2731,9 +2736,9 @@ msgid ""
 "{exc}\n"
 "If you think this is a bug, please contact the developers."
 msgstr ""
-"Gaphor无法存储模型，可能是由于内部错误：\n"
+"Gaphor 无法存储模型，可能是由于内部错误：\n"
 "{exc}\n"
-"如果您认为这是一个bug，请联系开发人员。"
+"如果您认为这是一个错误，请联系开发人员。"
 
 #: gaphor/ui/filemanager.py:45
 msgid ""
@@ -2770,7 +2775,7 @@ msgstr "加载中…"
 #: gaphor/ui/filemanager.py:116
 #, python-brace-format
 msgid "Loading model from {filename}"
-msgstr "正在从{filename}加载模型"
+msgstr "正在从 {filename} 加载模型"
 
 #: gaphor/ui/filemanager.py:142
 msgid "Loading current and incoming model"
@@ -2779,11 +2784,11 @@ msgstr "加载当前和传入的模型"
 #: gaphor/ui/filemanager.py:203 gaphor/ui/filemanager.py:247
 #, python-brace-format
 msgid "Unable to open model “{filename}”."
-msgstr "无法打开模型“{filename}”。"
+msgstr "无法打开模型 “{filename}”。"
 
 #: gaphor/ui/filemanager.py:207 gaphor/ui/filemanager.py:251
 msgid "This file does not contain a valid Gaphor model."
-msgstr "此文件不包含有效的Gaphor模型。"
+msgstr "此文件不包含有效的 Gaphor 模型。"
 
 #: gaphor/ui/filemanager.py:271
 msgid "Saving…"
@@ -2797,11 +2802,11 @@ msgstr "正在将模型保存到{filename}"
 #: gaphor/ui/filemanager.py:287
 #, python-brace-format
 msgid "Unable to save model “{filename}”."
-msgstr "无法保存模型“{filename}”。"
+msgstr "无法保存模型 “{filename}”。"
 
 #: gaphor/ui/filemanager.py:299
 msgid "Model has been saved."
-msgstr "模型已保存."
+msgstr "模型已保存。"
 
 #: gaphor/ui/filemanager.py:326 gaphor/ui/filemanager.py:364
 msgid "Save Gaphor Model As"
@@ -2878,11 +2883,11 @@ msgstr "风险分析与评估建模语言模板"
 
 #: gaphor/ui/greeter.py:56
 msgid "Layered C4 Model template"
-msgstr "分层C4模型模板"
+msgstr "分层 C4 模型模板"
 
 #: gaphor/ui/greeter.py:65
 msgid "UML Example"
-msgstr "UML示例"
+msgstr "UML 示例"
 
 #: gaphor/ui/greeter.py:66
 msgid "Unified Modeling Language example model"
@@ -2890,7 +2895,7 @@ msgstr "统一建模语言示例模型"
 
 #: gaphor/ui/greeter.py:72
 msgid "SysML Example"
-msgstr "SysML示例"
+msgstr "SysML 示例"
 
 #: gaphor/ui/greeter.py:73
 msgid "Systems Modeling Language example model"
@@ -2898,7 +2903,7 @@ msgstr "系统建模语言示例模型"
 
 #: gaphor/ui/greeter.py:79
 msgid "RAAML Example"
-msgstr "RAAML示例"
+msgstr "RAAML 示例"
 
 #: gaphor/ui/greeter.py:80
 msgid "Risk Analysis and Assessment Modeling Language example model"
@@ -2906,16 +2911,16 @@ msgstr "风险分析与评估建模语言示例模型"
 
 #: gaphor/ui/greeter.py:86
 msgid "C4 Model Example"
-msgstr "C4模型样例"
+msgstr "C4 模型样例"
 
 #: gaphor/ui/greeter.py:87
 msgid "C4 Model example of a banking system"
-msgstr "银行系统C4模型样例"
+msgstr "银行系统 C4 模型样例"
 
 #: gaphor/ui/greeter.ui:8 gaphor/ui/greeter.ui:60 gaphor/ui/mainwindow.ui:260
 #: gaphor/ui/menubar.ui:12
 msgid "Open Model…"
-msgstr "打开模型 …"
+msgstr "打开模型…"
 
 #: gaphor/ui/greeter.ui:14 gaphor/ui/help/preferences.ui:6
 #: gaphor/ui/help/shortcuts.ui:13
@@ -2933,7 +2938,7 @@ msgstr "帮助"
 #: gaphor/ui/greeter.ui:26 gaphor/ui/help/about.ui:9
 #: gaphor/ui/mainwindow.ui:296
 msgid "About Gaphor"
-msgstr "关于Gaphor"
+msgstr "关于 Gaphor"
 
 #: gaphor/ui/greeter.ui:91
 msgid "Recently Opened"
@@ -2945,7 +2950,7 @@ msgstr "创建新模型"
 
 #: gaphor/ui/mainwindow.py:250
 msgid "Press F11 to exit Fullscreen"
-msgstr "按F11退出全屏"
+msgstr "按 F11 退出全屏"
 
 #: gaphor/ui/mainwindow.ui:37
 msgid "Change modeling profile"
@@ -2980,7 +2985,7 @@ msgstr "切换属性编辑器"
 #: gaphor/ui/help/shortcuts.ui:56 gaphor/ui/mainwindow.ui:256
 #: gaphor/ui/menubar.ui:8
 msgid "New Model…"
-msgstr "新建模型 …"
+msgstr "新建模型…"
 
 #: gaphor/ui/help/shortcuts.ui:77 gaphor/ui/mainwindow.ui:270
 #: gaphor/ui/menubar.ui:22
@@ -3114,7 +3119,7 @@ msgstr "删除（_l）"
 #: gaphor/ui/modelbrowser.py:606
 #, python-brace-format
 msgid "Show in “{diagram}”"
-msgstr "显示在“{diagram}”中"
+msgstr "显示在 “{diagram}” 中"
 
 #: gaphor/ui/modelchanged.ui:6
 msgid "Model Changed on Disk"
@@ -3126,7 +3131,7 @@ msgstr "放弃更改并重新加载"
 
 #: gaphor/ui/help/__init__.py:78
 msgid "Restart Gaphor to enable language changes"
-msgstr "重新启动Gaphor以启用语言更改"
+msgstr "重新启动 Gaphor 以启用语言更改"
 
 #: gaphor/ui/help/about.ui:12
 msgid ""
@@ -3136,9 +3141,10 @@ msgid ""
 "Object Management Group, Inc. in the United States and/or other "
 "countries."
 msgstr ""
-"版权所有©2001 The Gaphor Development Team。\n"
+"版权所有 © 2001 The Gaphor Development Team。\n"
 "\n"
-"UML、SysML和RAAML是Object Management Group，股份有限公司在美国和/或其他国家的注册商标或商标。"
+"UML、SysML 和 RAAML 是 Object Management Group，股份有限公司在美国和/或其他国"
+"家的注册商标或商标。"
 
 #: gaphor/ui/help/about.ui:20
 msgid ""
@@ -3154,11 +3160,14 @@ msgid ""
 "See the License for the specific language governing permissions and "
 "limitations under the License."
 msgstr ""
-"根据Apache许可证2.0版许可（“许可证”）；除非符合许可证的规定，否则您不得使用此应用程序。您可以在获取许可证副本\n"
+"根据 Apache 许可证 2.0 版（“许可证”）；除非符合许可证的规定，否则您不得使用此"
+"应用程序。您可以在获取许可证副本\n"
 "\n"
-"http://www.apache.org/licenses/license-2.0\n"
+"    http://www.apache.org/licenses/LICENSE-2.0\n"
 "\n"
-"除非适用法律要求或书面同意，否则根据许可证分发的软件是在“原样”的基础上分发的，不存在任何明示或暗示的担保或条件。请参阅许可证，了解管理许可证下的权限和限制的特定语言。"
+"除非适用法律要求或书面同意，否则根据许可证分发的软件是在“原样”的基础上分发的"
+"，不存在任何明示或暗示的担保或条件。请参阅许可证，了解管理许可证下的权限和限"
+"制的特定语言。"
 
 #: gaphor/ui/help/debuginfo.py:40
 msgid "No errors have been intercepted. We’re good."
@@ -3175,8 +3184,8 @@ msgid ""
 "→ Troubleshooting → Debugging Information."
 msgstr ""
 "错误意外发生\n"
-"请在GitHub上提交故障修复请求（issue），并包含来自“关于Graphor→故障排→调试信息"
-"” 的信息。"
+"请在 GitHub 上提交故障修复请求（issue），并包含来自“关于 Graphor→故障排→调试"
+"信息” 的信息。"
 
 #: gaphor/ui/help/preferences.ui:9
 msgid "Appearance"
@@ -3240,7 +3249,7 @@ msgstr "文件"
 
 #: gaphor/ui/help/shortcuts.ui:63
 msgid "Open a Model…"
-msgstr "打开模型 …"
+msgstr "打开模型…"
 
 #: gaphor/ui/help/shortcuts.ui:87
 msgid "Model Browser"
@@ -3293,22 +3302,22 @@ msgstr "将选中项目大幅度向右移动"
 #: gaphor/ui/modelmerge/organize.py:137
 #, python-brace-format
 msgid "Update diagram “{name}”"
-msgstr "更新图表“{name}”"
+msgstr "更新图表 “{name}”"
 
 #: gaphor/ui/modelmerge/organize.py:177 gaphor/ui/modelmerge/organize.py:320
 #, python-brace-format
 msgid "Update element “{name}”"
-msgstr "更新元素“{name}”"
+msgstr "更新元素 “{name}”"
 
 #: gaphor/ui/modelmerge/organize.py:182
 #, python-brace-format
 msgid "Update element of type “{type}”"
-msgstr "更新类型为“{type}”的元素"
+msgstr "更新类型为 “{type}” 的元素"
 
 #: gaphor/ui/modelmerge/organize.py:256
 #, python-brace-format
 msgid "Update presentation “{type}”"
-msgstr "更新演示文稿“{type}”"
+msgstr "更新演示文稿 “{type}”"
 
 #: gaphor/ui/modelmerge/organize.py:284
 #, python-brace-format
@@ -3323,7 +3332,7 @@ msgstr "删除类型为{type}的演示文稿"
 #: gaphor/ui/modelmerge/organize.py:293
 #, python-brace-format
 msgid "Update presentation “{name}”"
-msgstr "更新演示文稿“{name}”"
+msgstr "更新演示文稿 “{name}”"
 
 #: gaphor/ui/modelmerge/organize.py:295
 #, python-brace-format
@@ -3333,7 +3342,7 @@ msgstr "更新类型为{type}的演示文稿"
 #: gaphor/ui/modelmerge/organize.py:302
 #, python-brace-format
 msgid "Add {type} “{name}”"
-msgstr "添加{type}“{name}”"
+msgstr "添加{type} “{name}”"
 
 #: gaphor/ui/modelmerge/organize.py:306
 #, python-brace-format
@@ -3343,7 +3352,7 @@ msgstr "添加类型为{type}的元素"
 #: gaphor/ui/modelmerge/organize.py:312
 #, python-brace-format
 msgid "Remove element “{name}”"
-msgstr "删除元素“{name}”"
+msgstr "删除元素 “{name}”"
 
 #: gaphor/ui/modelmerge/organize.py:314
 #, python-brace-format
@@ -3358,17 +3367,17 @@ msgstr "更新类型为{type}的元素"
 #: gaphor/ui/modelmerge/organize.py:329
 #, python-brace-format
 msgid "Add relation “{name}” to “{ref_name}”"
-msgstr "将关系“{name}”添加到“{ref_name}”"
+msgstr "将关系 “{name}” 添加到 “{ref_name}”"
 
 #: gaphor/ui/modelmerge/organize.py:331
 #, python-brace-format
 msgid "Remove relation “{name}” to “{ref_name}”"
-msgstr "删除“{name}”与“{ref_name}”的关系"
+msgstr "删除 “{name}” 与 “{ref_name}” 的关系"
 
 #: gaphor/ui/modelmerge/organize.py:333
 #, python-brace-format
 msgid "Update relation “{name}” to “{ref_name}”"
-msgstr "更新 “{name}”与 “{ref_name}”的关系"
+msgstr "更新 “{name}”与 “{ref_name}” 的关系"
 
 #: gaphor/ui/modelmerge/organize.py:340
 #, python-brace-format
@@ -3387,7 +3396,7 @@ msgstr "更新关系“{name}”"
 
 #: gaphor/ui/tests/test_modelbrowser.py:330
 msgid "general: General"
-msgstr "通用: 通用"
+msgstr "通用：通用"
 
 #~ msgid "A."
 #~ msgstr "A."
