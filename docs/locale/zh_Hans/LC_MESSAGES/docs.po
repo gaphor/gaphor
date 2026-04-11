@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gaphor 3.0.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-05 21:26-0400\n"
-"PO-Revision-Date: 2026-04-11 18:46+0000\n"
+"PO-Revision-Date: 2026-04-12 07:57+0000\n"
 "Last-Translator: Geeson Wan <wang14240@gmail.com>\n"
 "Language-Team: Chinese (Simplified Han script) <https://hosted.weblate.org/"
 "projects/gaphor/docs-gaphor-org/zh_Hans/>\n"
@@ -2671,7 +2671,7 @@ msgstr "内部机制"
 
 #: ../index.rst:2
 msgid "About Gaphor"
-msgstr "关于Gaphor"
+msgstr "关于 Gaphor"
 
 #: ../index.rst:6
 msgid "The documentation is up to date for Gaphor |version|"
@@ -4157,7 +4157,7 @@ msgstr ""
 
 #: ../models/raaml/General.rst:2
 msgid "General"
-msgstr ""
+msgstr "通用"
 
 #: ../models/raaml/General.rst:5
 msgid "Basic Event"
@@ -4511,7 +4511,7 @@ msgstr ""
 
 #: ../models/sysml/Requirements.rst:2 ../style_sheets.md:333
 msgid "Requirements"
-msgstr ""
+msgstr "需求"
 
 #: ../models/uml.md:1
 msgid "Unified Modeling Language"
@@ -6593,7 +6593,7 @@ msgstr ""
 
 #: ../style_sheets.md:321
 msgid "Swimlane"
-msgstr ""
+msgstr "泳道"
 
 #: ../style_sheets.md:321
 msgid "``partition``"
@@ -6605,7 +6605,7 @@ msgstr ""
 
 #: ../style_sheets.md:322
 msgid "Reflexive message"
-msgstr ""
+msgstr "自反消息"
 
 #: ../style_sheets.md:322
 msgid "``message``"
@@ -6678,7 +6678,7 @@ msgstr ""
 
 #: ../style_sheets.md:330
 msgid "Container: Database"
-msgstr ""
+msgstr "容器：数据库"
 
 #: ../style_sheets.md:330
 msgid "``c4database``"
