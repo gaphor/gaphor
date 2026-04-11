@@ -16,10 +16,8 @@ build:
   jobs:
     post_create_environment:
     - python3 -m pip install --constraint=.github/github-requirements.txt poetry
-    - python3 -m pip list
     post_install:
-    - VIRTUAL_ENV=$READTHEDOCS_VIRTUALENV_PATH pip list
-    - VIRTUAL_ENV=$READTHEDOCS_VIRTUALENV_PATH poetry install -vvv --with docs --no-interaction
+    - VIRTUAL_ENV=$READTHEDOCS_VIRTUALENV_PATH poetry install -vv --with docs --no-interaction
 sphinx:
   configuration: docs/conf.py
   fail_on_warning: true
