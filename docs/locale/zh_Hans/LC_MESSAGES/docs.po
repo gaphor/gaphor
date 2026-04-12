@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gaphor 3.0.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-05 21:26-0400\n"
-"PO-Revision-Date: 2026-04-12 07:57+0000\n"
+"PO-Revision-Date: 2026-04-13 17:09+0000\n"
 "Last-Translator: Geeson Wan <wang14240@gmail.com>\n"
 "Language-Team: Chinese (Simplified Han script) <https://hosted.weblate.org/"
 "projects/gaphor/docs-gaphor-org/zh_Hans/>\n"
@@ -2700,9 +2700,9 @@ msgid ""
 "The code and issue tracker can be found on `GitHub "
 "<https://github.com/gaphor/gaphor>`_."
 msgstr ""
-"Gaphor 是 100% 开源软件，采用友好的` Apache 2 许可证 "
-"<https://github.com/gaphor/gaphor/blob/main/LICENSES/Apache-2.0.txt>`_。_您可以在"
-" `GitHub <https://github.com/gaphor/gaphor>`_ 上查看源代码和提交问题。"
+"Gaphor 是 100% 开源软件，采用友好的 `Apache 2 许可证 <https://github.com/"
+"gaphor/gaphor/blob/main/LICENSES/Apache-2.0.txt>`_。您可以在 `GitHub "
+"<https://github.com/gaphor/gaphor>`_ 上查看源代码和提交问题。"
 
 #: ../index.rst:21
 msgid "What are you waiting for? :doc:`Let's get started <getting_started>`!"
@@ -4787,7 +4787,7 @@ msgstr ""
 
 #: ../plugins.md:1
 msgid "Plugins"
-msgstr ""
+msgstr "插件"
 
 #: ../plugins.md:4
 msgid "Plugins is an experimental feature! The API may change."
