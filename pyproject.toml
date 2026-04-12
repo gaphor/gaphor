@@ -41,11 +41,11 @@ dependencies = [
     "babel>=2.10.3",
     "jedi (>=0.18.1,<0.20.0)",
     "better-exceptions>=0.3.3",
-    "pydot>=1.4.2",
+    "pydot (>=1.4.2,<4.0.0)",
     "pillow>=10.0.0",
     "defusedxml>=0.7.1",
-    "pyobjc-framework-cocoa (>=9.0.1) ; sys_platform == 'darwin'",
-    "dulwich>=0.25.0",
+    "pyobjc-framework-cocoa (>=9.0.1,<11.0.0) ; sys_platform == 'darwin'",
+    "dulwich (>=0.21.7,<0.23.0)",
 ]
 
 [project.scripts]
@@ -97,7 +97,6 @@ documentation = "https://docs.gaphor.org/"
 "console_window" = "gaphor.plugins.console.consolewindow:ConsoleWindow"
 "diagram_export" = "gaphor.plugins.diagramexport.export:DiagramExport"
 "auto_layout" = "gaphor.plugins.autolayout:AutoLayoutService"
-"html_report" = "gaphor.plugins.htmlreport.report:HtmlReportExport"
 
 [project.entry-points."gaphor.modelinglanguages"]
 "Core" = "gaphor.core.modeling.modelinglanguage:CoreModelingLanguage"
@@ -112,7 +111,6 @@ gui = "gaphor.main:gui_parser"
 self-test = "gaphor.main:self_test_parser"
 exec = "gaphor.main:exec_parser"
 export = "gaphor.plugins.diagramexport.exportcli:export_parser"
-html-report = "gaphor.plugins.htmlreport.reportcli:html_report_parser"
 install-schemas = "gaphor.ui.installschemas:install_schemas_parser"
 
 [project.entry-points."babel.extractors"]
@@ -125,11 +123,6 @@ include = [
     { path = "data/org.gaphor.Gaphor*", format = "sdist" },
 ]
 exclude = ["**/tests", "gaphor/conftest.py" ]
-
-# When building these from source, use setuptools<82 (pkg_resources removed in 82)
-[tool.poetry.build-constraints]
-pyobjc-framework-cocoa = { setuptools = "<82" }
-pyobjc-core = { setuptools = "<82" }
 
 [tool.poetry.group.dev.dependencies]
 pytest = ">=7.1,<9.1"
@@ -149,7 +142,7 @@ pygobject-stubs = "^2.16.0"
 pre-commit = ">=2.20,<5.0"
 
 [tool.poetry.group.automation.dependencies]
-poethepoet = "^0.43.0"
+poethepoet = ">=0.27.0,<0.41.0"
 
 [tool.poetry.group.docs]
 optional=true
@@ -158,7 +151,7 @@ optional=true
 sphinx = ">=6,<10"
 sphinx-copybutton = "^0.5.0"
 sphinx-intl = "^2.3.2"
-myst-nb = "^1.4.0"
+myst-nb = ">=0.17.1,<1.4.0"
 furo = ">=2022,<2026"
 
 [tool.poetry.group.packaging]
@@ -295,3 +288,54 @@ max-complexity = 18
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.pixi.workspace]
+channels = ["conda-forge"]
+platforms = ["linux-64", "win-64", "osx-arm64"]
+
+[tool.pixi.dependencies]
+pycairo = ">=1.22.0"
+pygobject = ">=3.52"
+gtk4 = "*"
+libadwaita = "*"
+adwaita-icon-theme = "*"
+gtksourceview = "*"
+
+[target.osx-arm64.dependencies]
+pyobjc-framework-cocoa = ">=9.0.1,<11.0.0"
+
+[target.osx-64.dependencies]
+pyobjc-framework-cocoa = ">=9.0.1,<11.0.0"
+
+[tool.pixi.pypi-dependencies]
+gaphor = { path = ".", editable = true }
+
+# Read the Docs and local doc builds: `pixi install -e docs` / `pixi run -e docs -- ...`
+[tool.pixi.feature.docs.dependencies]
+graphviz = "*"
+
+[tool.pixi.feature.docs.pypi-dependencies]
+sphinx = ">=6,<10"
+sphinx-copybutton = ">=0.5.0"
+sphinx-intl = ">=2.3.2"
+myst-nb = ">=1.4.0"
+furo = ">=2022,<2026"
+ipython = ">=9.0.0"
+
+[tool.pixi.environments]
+docs = { features = ["docs"], solve-group = "default" }
+
+[tool.pixi.tasks]
+build-docs = { cmd = "sphinx-build -W --keep-going -T -b html -d _build/doctrees . _build/html", cwd = "docs", default-environment = "docs" }
+rtd-html = { cmd = [
+  "bash", "-ec",
+  "sphinx-build -W --keep-going -T -b html -d _build/doctrees -D language=${READTHEDOCS_LANGUAGE:-en} . \"${READTHEDOCS_OUTPUT}/html\"",
+], cwd = "docs", default-environment = "docs" }
+rtd-epub = { cmd = [
+  "bash", "-ec",
+  "sphinx-build -W --keep-going -T -b epub -d _build/doctrees -D language=${READTHEDOCS_LANGUAGE:-en} . \"${READTHEDOCS_OUTPUT}/epub\" && shopt -s nullglob && for f in \"${READTHEDOCS_OUTPUT}/epub\"/*.epub; do mv \"$f\" \"${READTHEDOCS_OUTPUT}/epub/gaphor.epub\"; break; done",
+], cwd = "docs", default-environment = "docs" }
+rtd-htmlzip = { cmd = [
+  "bash", "-ec",
+  "mkdir -p \"${READTHEDOCS_OUTPUT}/htmlzip\" && TMP=$(mktemp -d) && sphinx-build -W --keep-going -T -b singlehtml -d _build/doctrees-singlehtml -D language=${READTHEDOCS_LANGUAGE:-en} . \"$TMP/gaphor\" && (cd \"$TMP\" && zip -r \"${READTHEDOCS_OUTPUT}/htmlzip/gaphor.zip\" gaphor)",
+], cwd = "docs", default-environment = "docs" }
