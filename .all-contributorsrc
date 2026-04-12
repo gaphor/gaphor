@@ -1752,6 +1752,15 @@
       "contributions": [
         "translation"
       ]
+    },
+    {
+      "login": "Gerseneck",
+      "name": "Geeson Wan",
+      "avatar_url": "https://avatars.githubusercontent.com/u/67175218?v=4",
+      "profile": "https://gerseneck.github.io",
+      "contributions": [
+        "translation"
+      ]
     }
   ],
   "contributorsPerLine": 7,
