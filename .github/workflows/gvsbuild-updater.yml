@@ -21,7 +21,7 @@ jobs:
       latest_version: ${{ steps.latest-version.outputs.latest_version }}
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@fe104658747b27e96e4f7e80cd0a94068e53901d # v2.16.1
+        uses: step-security/harden-runner@f808768d1510423e83855289c910610ca9b43176 # v2.17.0
         with:
           disable-sudo: true
           egress-policy: block
@@ -63,7 +63,7 @@ jobs:
       LATEST: ${{ needs.check-version.outputs.latest_version }}
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@fe104658747b27e96e4f7e80cd0a94068e53901d # v2.16.1
+        uses: step-security/harden-runner@f808768d1510423e83855289c910610ca9b43176 # v2.17.0
         with:
           disable-sudo: true
           egress-policy: block
@@ -79,13 +79,13 @@ jobs:
       - name: Update version
         run: sed -i "$(yq '${yaml_key} | line' "${file}")s/$CURRENT/$LATEST/" "${file}"
       - name: Create GitHub App Token
-        uses: actions/create-github-app-token@f8d387b68d61c58ab83c6c016672934102569859 # v3.0.0
+        uses: actions/create-github-app-token@1b10c78c7865c340bc4f6099eb2f838309f1e8c3 # v3.1.1
         id: generate-token
         with:
           app-id: ${{ secrets.GAPHOR_UPDATER_APP_ID }}
           private-key: ${{ secrets.GAPHOR_UPDATER_APP_PRIVATE_KEY }}
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@c0f553fe549906ede9cf27b5156039d195d2ece0 # v8.1.0
+        uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8.1.1
         with:
           token: ${{ steps.generate-token.outputs.token }}
           commit-message: Bump Gvsbuild to version ${{ env.LATEST }}
