@@ -447,7 +447,7 @@ jobs:
           VERSION: ${{ needs.publish-to-pypi.outputs.version }}
         run: |
           $installerUrl = "https://github.com/gaphor/gaphor/releases/download/$env:VERSION/gaphor-$env:VERSION-installer.exe"
-          .\wingetcreate.exe update Gaphor.Gaphor --version $env:VERSION --urls $installerUrl --submit --token $env:WINGET_PAT
+          .\wingetcreate.exe update Gaphor.Gaphor --version $env:VERSION --urls "${installerUrl}|x64" --submit --token $env:WINGET_PAT
 
   trigger-website-version-update:
     name: ⏩ gaphor.org version update
