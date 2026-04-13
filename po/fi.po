@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2026-04-05 21:23-0400\n"
-"PO-Revision-Date: 2026-04-05 20:07+0000\n"
-"Last-Translator: Anonymous <noreply@weblate.org>\n"
+"PO-Revision-Date: 2026-04-13 19:56+0000\n"
+"Last-Translator: Jiri Grönroos <jiri.gronroos@iki.fi>\n"
+"Language-Team: Finnish <https://hosted.weblate.org/projects/gaphor/gaphor/"
+"fi/>\n"
 "Language: fi\n"
-"Language-Team: Finnish "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/fi/>\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.17-dev\n"
 "Generated-By: Babel 2.18.0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:28
@@ -1847,18 +1848,16 @@ msgid "Export all diagrams as EPS diagrams in a specifieddirectory"
 msgstr "Vie kaikki kaaviot EPS-kaavioina määritettyyn hakemistoon"
 
 #: gaphor/plugins/htmlreport/report.py:28
-#, fuzzy
 msgid "Export as HTML Report"
-msgstr "Vie EPS-muotoon"
+msgstr "Vie HTML-raporttina"
 
 #: gaphor/plugins/htmlreport/report.py:29
 msgid "Export model as a navigable HTML report"
 msgstr ""
 
 #: gaphor/plugins/htmlreport/report.py:33
-#, fuzzy
 msgid "Export HTML Report"
-msgstr "Vie EPS-muotoon"
+msgstr "Vie HTML-raportti"
 
 #: gaphor/storage/recovery.py:153
 msgid "This model contains unsaved changes. The changes have been restored."
@@ -2988,9 +2987,8 @@ msgid "Keyboard Shortcuts"
 msgstr "Pikanäppäimet"
 
 #: gaphor/ui/greeter.ui:22 gaphor/ui/mainwindow.ui:292
-#, fuzzy
 msgid "Help"
-msgstr "_Ohje"
+msgstr "Ohje"
 
 #: gaphor/ui/greeter.ui:26 gaphor/ui/help/about.ui:9
 #: gaphor/ui/mainwindow.ui:296
@@ -3315,9 +3313,8 @@ msgid "Open a Model…"
 msgstr "Avaa malli…"
 
 #: gaphor/ui/help/shortcuts.ui:87
-#, fuzzy
 msgid "Model Browser"
-msgstr "Näytä malliselaimessa"
+msgstr "Malliselain"
 
 #: gaphor/ui/help/shortcuts.ui:92
 msgid "Rename"
@@ -3329,16 +3326,15 @@ msgstr "Etsi"
 
 #: gaphor/ui/help/shortcuts.ui:112
 msgid "Expand Node"
-msgstr ""
+msgstr "Laajenna solmua"
 
 #: gaphor/ui/help/shortcuts.ui:119
 msgid "Collapse Node"
-msgstr ""
+msgstr "Supista solmua"
 
 #: gaphor/ui/help/shortcuts.ui:129
-#, fuzzy
 msgid "Diagram"
-msgstr "C4-kaavio"
+msgstr "Kaavio"
 
 #: gaphor/ui/help/shortcuts.ui:134
 msgid "Close Diagram"
