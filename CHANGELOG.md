@@ -1,3 +1,10 @@
+3.3.1
+-----
+
+Bug fixes:
+
+- Windows: fix toolbox icons missing
+
 3.3.0
 -----
 
