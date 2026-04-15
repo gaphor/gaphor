@@ -66,7 +66,7 @@ class DebugInfo:
             )
             print_exception(tp, v, tb)
 
-            return "".join(buffer)
+        return "".join(buffer)
 
     def excepthook(
         self,

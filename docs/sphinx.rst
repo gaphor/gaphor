@@ -91,21 +91,21 @@ Read the Docs
 ~~~~~~~~~~~~~
 
 The diagram directive plays nice with `Read the docs`_.
-To make diagrams render, it's best to use a `.readthedocs.yaml`_ file in your project.
-Make sure to include the extra ``apt_packages`` as shown below.
+We use a `.readthedocs.yaml`_ file that installs `Pixi`_, resolves the ``docs`` environment from ``pyproject.toml`` (GTK, PyGObject, Graphviz, Sphinx, etc.), and runs the ``rtd-html``, ``rtd-epub``, and ``rtd-htmlzip`` tasks defined under ``[tool.pixi.tasks]``.
+
+Locally, install the same environment and build HTML with:
+
+.. code-block:: console
+
+   $ pixi install -e docs
+   $ pixi run build-docs
 
 This is the ``.readthedocs.yaml`` file we use for Gaphor:
 
 .. literalinclude :: ../.readthedocs.yaml
    :language: yaml
 
-* ``libgirepository-2.0-dev`` is required to build PyGObject.
-* ``gir1.2-pango-1.0`` is required for text rendering.
-
-.. note::
-
-   For Gaphor 2.7.0, ``gir1.2-gtk-3.0`` and ``gir1.2-gtksource-4`` are required ``apt_packages``, although we do not use the GUI.
-   From Gaphor 2.7.1 onwards all you need is GI-repository and Pango.
+.. _Pixi: https://pixi.sh/
 
 
 Errors
