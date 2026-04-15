@@ -99,6 +99,15 @@
     </p>
   </description>
   <releases>
+    <release version="3.3.1" date="2026-04-15">
+      <description>
+        <p>Bug fixes:</p>
+        <ul>
+          <li>Windows: fix toolbox icons missing</li>
+        </ul>
+      </description>
+      <url>https://github.com/gaphor/gaphor/releases/tag/3.3.1</url>
+    </release>
     <release version="3.3.0" date="2026-04-05">
       <description>
         <ul>
