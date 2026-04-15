@@ -4,15 +4,16 @@ msgstr ""
 "Project-Id-Version: Gaphor 0.13.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2026-04-05 21:23-0400\n"
-"PO-Revision-Date: 2026-04-05 20:02+0000\n"
-"Last-Translator: Pierre Flanet <pierre.flanet@protonmail.com>\n"
+"PO-Revision-Date: 2026-04-15 11:32+0000\n"
+"Last-Translator: Stan SZLAPKA <stansz@free.fr>\n"
+"Language-Team: French <https://hosted.weblate.org/projects/gaphor/gaphor/fr/>"
+"\n"
 "Language: fr\n"
-"Language-Team: French "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/fr/>\n"
-"Plural-Forms: nplurals=2; plural=n > 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 5.17.1-dev\n"
 "Generated-By: Babel 2.18.0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:28
@@ -1119,19 +1120,18 @@ msgid ""
 "items.\n"
 "Use <b>-</b>/<b>=</b> to move items up or down."
 msgstr ""
-"Ajouter et modifier les fins d'association conformément à la syntaxe UML."
+"Ajoutez et modifiez les extrémités d'association selon la syntaxe UML.\n"
 "\n"
-"\n"
-"  • <tt>+ name</tt>\n"
-"  • <tt>+ name[1]</tt>\n"
-"  • <tt>- name[1..2]</tt>\n"
+"  • <tt>+ nom</tt>\n"
+"  • <tt>+ nom[1]</tt>\n"
+"  • <tt>- nom[1..2]</tt>\n"
 "  • <tt>1..2</tt>\n"
 "  • <tt>- [1..2]</tt>\n"
 "\n"
-"Appuyer sur <b>Entrée</b> pour modifier, <b>Retour "
-"arrière</b>/<b>Suppr.</b> pour supprimer des éléments.\n"
-"Utiliser <b>-</b>/<b>=</b> pour déplacer les éléments plus haut ou plus "
-"bas."
+"Appuyez sur <b>Entrée</b> pour modifier, <b>Retour arrière</b>/<b>Supprimer</"
+"b> pour supprimer des éléments.\n"
+"Utilisez <b>-</b>/<b>=</b> pour déplacer les éléments vers le haut ou vers "
+"le bas."
 
 #: gaphor/UML/classes/propertypages.ui:111
 #: gaphor/UML/classes/propertypages.ui:224
@@ -1184,19 +1184,18 @@ msgid ""
 "items.\n"
 "Use <b>-</b>/<b>=</b> to move items up or down."
 msgstr ""
-"Ajouter et modifier les attributs de la classe conformément à la syntaxe "
-"UML.\n"
+"Ajoutez et modifiez les attributs de classe conformément à la syntaxe UML.\n"
 "\n"
-"  • <tt>attr</tt> (nom, par défaut en visibilité publique)\n"
-"  • <tt>+ attr: int</tt> (publique avec un type)\n"
-"  • <tt>+ attr: int[0..1]</tt> (publique, type, et multiplicité)\n"
-"  • <tt>+ attr: int | bool</tt> (public, union type)\n"
-"  • <tt># /attr: int # a note</tt> (protégé, dérivé, avec remarques)\n"
+"  • <tt>attr</tt> (nom, visibilité par défaut : public)\n"
+"  • <tt>+ attr: int</tt> (public avec type)\n"
+"  • <tt>+ attr: int[0..1]</tt> (public, type et multiplicité)\n"
+"  • <tt>+ attr: int | bool</tt> (public, type union)\n"
+"  • <tt># /attr: int # une note</tt> (protégé, dérivé, avec remarque)\n"
 "\n"
-"Appuyer sur <b>Entrée</b> pour modifier, <b>Retour "
-"arrière</b>/<b>Suppr.</b> pour supprimer des éléments.\n"
-"Utiliser <b>-</b>/<b>=</b> pour déplacer les éléments plus haut ou plus "
-"bas."
+"Appuyez sur <b>Entrée</b> pour modifier, <b>Retour arrière</b>/<b>Supprimer</"
+"b> pour supprimer des éléments.\n"
+"Utilisez <b>-</b>/<b>=</b> pour déplacer les éléments vers le haut ou vers "
+"le bas."
 
 #: gaphor/UML/classes/propertypages.ui:349
 msgid "ReadOnly"
@@ -1269,17 +1268,16 @@ msgid ""
 "items.\n"
 "Use <b>-</b>/<b>=</b> to move items up or down."
 msgstr ""
-"Ajouter et modifier les opérations de classe conformément à la syntaxe "
-"UML.\n"
+"Ajoutez et modifiez les opérations de classe selon la syntaxe UML.\n"
 "\n"
 "  • <tt>call()</tt>\n"
-"  • <tt>+ call(a: int[*], b : str) : bool</tt> (publique, paramètres)\n"
-"  • <tt># call(a: int, b : str) # a note</tt> (protégé, avec remarques)\n"
+"  • <tt>+ call(a: int[*], b: str): bool</tt> (public, paramètres)\n"
+"  • <tt># call(a: int, b: str) # une note</tt> (protégé, avec remarque)\n"
 "\n"
-"Appuyer sur <b>Entrée</b> pour modifier, <b>Retour "
-"arrière</b>/<b>Suppr.</b> pour supprimer des éléments.\n"
-"Utiliser <b>-</b>/<b>=</b> pour déplacer les éléments plus haut ou plus "
-"bas."
+"Appuyez sur <b>Entrée</b> pour modifier, <b>Retour arrière</b>/<b>Supprimer</"
+"b> pour supprimer des éléments.\n"
+"Utilisez <b>-</b>/<b>=</b> pour déplacer les éléments vers le haut ou vers "
+"le bas."
 
 #: gaphor/UML/classes/propertypages.ui:668
 msgid "Show Operations"
@@ -1352,9 +1350,8 @@ msgstr "Boîte"
 
 #: gaphor/UML/general/generaltoolbox.py:58 gaphor/diagram/propertypages.ui:124
 #: gaphor/diagram/propertypages.ui:153
-#, fuzzy
 msgid "Diamond"
-msgstr "ET"
+msgstr "Diamant"
 
 #: gaphor/UML/general/generaltoolbox.py:66
 msgid "Ellipse"
@@ -1607,36 +1604,31 @@ msgstr "nom de famille"
 
 #: gaphor/diagram/propertypages.ui:75
 msgid "Label"
-msgstr ""
+msgstr "Label"
 
 #: gaphor/diagram/propertypages.ui:98
-#, fuzzy
 msgid "Line Ends"
-msgstr "Licence"
+msgstr "Extrémités de ligne"
 
 #: gaphor/diagram/propertypages.ui:111
-#, fuzzy
 msgid "Head"
-msgstr "Entête :"
+msgstr "Entête"
 
 #: gaphor/diagram/propertypages.ui:121 gaphor/diagram/propertypages.ui:150
-#, fuzzy
 msgid "Nothing"
-msgstr "Chaîne de caractères"
+msgstr "Rien"
 
 #: gaphor/diagram/propertypages.ui:122 gaphor/diagram/propertypages.ui:151
 msgid "Arrow"
-msgstr ""
+msgstr "Flèche"
 
 #: gaphor/diagram/propertypages.ui:123 gaphor/diagram/propertypages.ui:152
-#, fuzzy
 msgid "Triangle"
-msgstr "Chaîne de caractères"
+msgstr "Triangle"
 
 #: gaphor/diagram/propertypages.ui:140
-#, fuzzy
 msgid "Tail"
-msgstr "Queue :"
+msgstr "Queue"
 
 #: gaphor/diagram/propertypages.ui:172
 msgid "Style"
@@ -1850,18 +1842,16 @@ msgid "Export all diagrams as EPS diagrams in a specifieddirectory"
 msgstr "Exporter tous les diagrammes au format EPS dans un répertoire spécifié"
 
 #: gaphor/plugins/htmlreport/report.py:28
-#, fuzzy
 msgid "Export as HTML Report"
-msgstr "Exporter en EPS"
+msgstr "Exporter sous forme de rapport HTML"
 
 #: gaphor/plugins/htmlreport/report.py:29
 msgid "Export model as a navigable HTML report"
-msgstr ""
+msgstr "Exporter le modèle sous forme de rapport HTML parcourable"
 
 #: gaphor/plugins/htmlreport/report.py:33
-#, fuzzy
 msgid "Export HTML Report"
-msgstr "Exporter en EPS"
+msgstr "Exporter le rapport au format HTML"
 
 #: gaphor/storage/recovery.py:153
 msgid "This model contains unsaved changes. The changes have been restored."
@@ -3007,9 +2997,8 @@ msgid "Keyboard Shortcuts"
 msgstr "Raccourcis clavier"
 
 #: gaphor/ui/greeter.ui:22 gaphor/ui/mainwindow.ui:292
-#, fuzzy
 msgid "Help"
-msgstr "_Aide"
+msgstr "Aide"
 
 #: gaphor/ui/greeter.ui:26 gaphor/ui/help/about.ui:9
 #: gaphor/ui/mainwindow.ui:296
@@ -3314,9 +3303,8 @@ msgstr ""
 "aucun diagramme."
 
 #: gaphor/ui/help/shortcuts.ui:27
-#, fuzzy
 msgid "Toggle Style Editor"
-msgstr "Ouvrir l'Éditeur de Style"
+msgstr "Activer/désactiver l'éditeur de style"
 
 #: gaphor/ui/help/shortcuts.ui:34
 msgid "Toggle Fullscreen"
@@ -3335,9 +3323,8 @@ msgid "Open a Model…"
 msgstr "Ouvrir un modèle …"
 
 #: gaphor/ui/help/shortcuts.ui:87
-#, fuzzy
 msgid "Model Browser"
-msgstr "Afficher dans le navigateur de modèles"
+msgstr "Navigateur de modèles"
 
 #: gaphor/ui/help/shortcuts.ui:92
 msgid "Rename"
@@ -3349,16 +3336,15 @@ msgstr "Rechercher"
 
 #: gaphor/ui/help/shortcuts.ui:112
 msgid "Expand Node"
-msgstr ""
+msgstr "Développer le nœud"
 
 #: gaphor/ui/help/shortcuts.ui:119
 msgid "Collapse Node"
-msgstr ""
+msgstr "Réduire le nœud"
 
 #: gaphor/ui/help/shortcuts.ui:129
-#, fuzzy
 msgid "Diagram"
-msgstr "Diagramme C4"
+msgstr "Diagramme"
 
 #: gaphor/ui/help/shortcuts.ui:134
 msgid "Close Diagram"
@@ -3373,18 +3359,16 @@ msgid "Deselect All"
 msgstr "Tout Désélectionner"
 
 #: gaphor/ui/help/shortcuts.ui:253
-#, fuzzy
 msgid "Move selected items"
-msgstr "Aucun élément sélectionné"
+msgstr "Déplacer les éléments sélectionnés"
 
 #: gaphor/ui/help/shortcuts.ui:254 gaphor/ui/help/shortcuts.ui:262
-#, fuzzy
 msgid "Works in any direction"
-msgstr "Inverser la direction"
+msgstr "Fonctionne dans toutes les directions"
 
 #: gaphor/ui/help/shortcuts.ui:261
 msgid "Move selected items right big steps"
-msgstr ""
+msgstr "Déplacer les éléments sélectionnés par grands pas vers la droite"
 
 #: gaphor/ui/modelmerge/organize.py:137
 #, python-brace-format
