@@ -190,15 +190,16 @@
     // layout and the SVG has real dimensions for getScreenCTM()
     requestAnimationFrame(function() {
       if (typeof svgPanZoom === "function") {
-        currentPanZoom = svgPanZoom(svg, {
+        var zoomScaleSensitivity = 0.3;
+        var currentPanZoom = svgPanZoom(svg, {
           zoomEnabled: true,
           panEnabled: true,
           controlIconsEnabled: false,
           fit: true,
-          center: true,
+          center: false,
           minZoom: 0.1,
           maxZoom: 20,
-          zoomScaleSensitivity: 0.3
+          zoomScaleSensitivity: zoomScaleSensitivity
         });
 
         // Prevent small diagrams from being scaled up beyond 100%
@@ -206,17 +207,21 @@
         var cappedZoom = realZoom > 1 ? currentPanZoom.getZoom() / realZoom : null;
         if (cappedZoom !== null) {
           currentPanZoom.zoom(cappedZoom);
-          currentPanZoom.center();
+          currentPanZoom.pan({ x: 0, y: 0 });
         }
 
-        $("#zoom-in").addEventListener("click", function() { currentPanZoom.zoomIn(); });
-        $("#zoom-out").addEventListener("click", function() { currentPanZoom.zoomOut(); });
+        function zoomFromTopLeft(zoomIn) {
+          var zoomFactor = 1 + zoomScaleSensitivity;
+          var factor = zoomIn ? zoomFactor : 1 / zoomFactor;
+          currentPanZoom.zoomAtPointBy(factor, { x: 0, y: 0 });
+        }
+
+        $("#zoom-in").addEventListener("click", function() { zoomFromTopLeft(true); });
+        $("#zoom-out").addEventListener("click", function() { zoomFromTopLeft(false); });
         $("#zoom-reset").addEventListener("click", function() {
           currentPanZoom.reset();
-          if (cappedZoom !== null) {
-            currentPanZoom.zoom(cappedZoom);
-            currentPanZoom.center();
-          }
+          currentPanZoom.zoom(cappedZoom);
+          currentPanZoom.pan({ x: 0, y: 0 });
         });
       }
     });
