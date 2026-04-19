@@ -50,6 +50,9 @@ a = Analysis(  # type: ignore
             ROOT / "gaphor/ui/installschemas/org.gaphor.Gaphor.gschema.xml",
             "share/glib-2.0/schemas",
         ),
+        (ROOT / "gaphor/plugins/htmlreport/report.css", "gaphor/plugins/htmlreport"),
+        (ROOT / "gaphor/plugins/htmlreport/report.html", "gaphor/plugins/htmlreport"),
+        (ROOT / "gaphor/plugins/htmlreport/report.js", "gaphor/plugins/htmlreport"),
     ]
     + svg_files
     + ui_files
