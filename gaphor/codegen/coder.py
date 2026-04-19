@@ -67,6 +67,7 @@ header = textwrap.dedent(
         redefine,
         relation_many,
         relation_one,
+        subset,
     )
 
     """.format("ruff")  # work around tooling triggers
@@ -305,11 +306,15 @@ def associations(
     c: UML.Class,
     overrides: Overrides | None = None,
 ):
-    redefinitions = []
+    redefinitions: list[tuple[str, str]] = []
+    subsets: list[tuple[str, str, set[str]]] = []
+    emitted: set[str] = set()
     for a in c.ownedAttribute:
         full_name = f"{c.name}.{a.name}"
         if overrides and overrides.has_override(full_name):
             yield overrides.get_override(full_name)
+            if a.name:
+                emitted.add(a.name)
         elif (
             not a.type
             or is_simple_type(a.type)
@@ -319,16 +324,79 @@ def associations(
             continue
         elif redefines(a):
             redefinitions.append(
-                f'{full_name} = redefine({c.name}, "{a.name}", {a.type.name}, {redefines(a)}{opposite(a)})'
+                (
+                    f'{full_name} = redefine({c.name}, "{a.name}", {a.type.name}, {redefines(a)}{opposite(a)})',
+                    a.name or "",
+                )
             )
+        elif a.isDerived and a.subsettedProperty:
+            subsetted_properties = [
+                f"{prop.class_.name}.{prop.name}"
+                for prop in a.subsettedProperty
+                if prop.class_
+            ]
+            if subsetted_properties:
+                lower_value = UML.recipes.get_multiplicity_lower_value(a)
+                upper_value = UML.recipes.get_multiplicity_upper_value(a)
+                lower_arg = lower_value if isinstance(lower_value, int) else 0
+                upper_arg = upper_value if upper_value in ("*", 1, 2) else "*"
+                same_class_dependencies = {
+                    prop.name
+                    for prop in a.subsettedProperty
+                    if prop.class_ is c and prop.name
+                }
+                subsets.append(
+                    (
+                        f'{full_name} = subset("{a.name}", {a.type.name}, '
+                        f"{lower_arg}, {repr(upper_arg)}, None, {', '.join(subsetted_properties)})",
+                        a.name or "",
+                        same_class_dependencies,
+                    )
+                )
+            else:
+                log.warning(
+                    f"Derived attribute {full_name} has no subset owner classes"
+                )
+                yield f'{full_name} = derivedunion("{a.name}", {a.type.name}{lower(a)}{upper(a)})'
+                if a.name:
+                    emitted.add(a.name)
         elif a.isDerived:
             yield f'{full_name} = derivedunion("{a.name}", {a.type.name}{lower(a)}{upper(a)})'
+            if a.name:
+                emitted.add(a.name)
         elif not a.name:
             raise ValueError(f"Unnamed attribute: {full_name} ({a.association})")
         else:
             yield f'{full_name} = association("{a.name}", {a.type.name}{lower(a)}{upper(a)}{composite(a)}{opposite(a)})'
+            emitted.add(a.name)
 
-    yield from redefinitions
+    for line, name in redefinitions:
+        yield line
+        if name:
+            emitted.add(name)
+
+    pending_subsets = list(subsets)
+    while pending_subsets:
+        ready_indexes = [
+            i
+            for i, (_line, _name, dependencies) in enumerate(pending_subsets)
+            if dependencies.issubset(emitted)
+        ]
+        if not ready_indexes:
+            ready_indexes = [0]
+
+        ready_set = set(ready_indexes)
+        ready_subsets = [pending_subsets[i] for i in ready_indexes]
+        pending_subsets = [
+            subset_line
+            for i, subset_line in enumerate(pending_subsets)
+            if i not in ready_set
+        ]
+
+        for line, name, _dependencies in ready_subsets:
+            yield line
+            if name:
+                emitted.add(name)
 
 
 def subsets(
@@ -345,12 +413,6 @@ def subsets(
             continue
 
         full_name = f"{c.name}.{a.name}"
-
-        for prop in a.subsettedProperty:
-            if prop.class_:
-                yield f"{prop.class_.name}.{prop.name}.add({full_name})  # type: ignore[attr-defined]"
-            else:
-                log.warning(f"Subsetted property {prop} not owned by a class")
 
         for slot in a.appliedStereotype[:].slot:
             if slot.definingFeature.name != "subsets":

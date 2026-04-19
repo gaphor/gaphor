@@ -14,9 +14,11 @@ from gaphor.codegen.coder import (
     load_modeling_language,
     order_classes,
     resolve_attribute_type_values,
+    subsets,
     superset_attribute,
     variables,
 )
+from gaphor.codegen.xmi import convert
 from gaphor.core.format import parse
 from gaphor.core.modeling import ElementFactory
 from gaphor.core.modeling.modelinglanguage import (
@@ -45,6 +47,11 @@ def uml_metamodel():
             CoreModelingLanguage(), GeneralModelingLanguage(), UMLModelingLanguage()
         ),
     )
+
+
+@pytest.fixture(scope="session")
+def kerml_xmi():
+    return convert("models/KerML-25-04-04.xmi")
 
 
 def test_load_modeling_language():
@@ -281,6 +288,117 @@ def test_coder_write_association_not_navigable(navigable_association: UML.Associ
     a = list(associations(navigable_association.memberEnd[0].type))
 
     assert not a
+
+
+def test_coder_write_subset_for_derived_subsetted_property():
+    class_type = UML.Class()
+    class_type.name = "Type"
+    class_step = UML.Class()
+    class_step.name = "Step"
+    class_behavior = UML.Class()
+    class_behavior.name = "Behavior"
+
+    feature = UML.Property()
+    feature.name = "feature"
+    feature.type = class_step
+    class_type.ownedAttribute = feature
+
+    step = UML.Property()
+    step.name = "step"
+    step.type = class_step
+    step.isDerived = True
+    step.subsettedProperty = feature
+    class_behavior.ownedAttribute = step
+
+    a = list(associations(class_behavior))
+
+    assert a == ["Behavior.step = subset(\"step\", Step, 0, '*', None, Type.feature)"]
+
+
+def test_coder_emits_subset_after_referenced_superset_in_same_class():
+    class_element = UML.Class()
+    class_element.name = "Element"
+    class_relationship = UML.Class()
+    class_relationship.name = "Relationship"
+    class_owning_membership = UML.Class()
+    class_owning_membership.name = "OwningMembership"
+
+    owning_membership = UML.Property()
+    owning_membership.name = "owningMembership"
+    owning_membership.type = class_owning_membership
+    owning_membership.isDerived = True
+
+    owning_relationship = UML.Property()
+    owning_relationship.name = "owningRelationship"
+    owning_relationship.type = class_relationship
+
+    owning_membership.subsettedProperty = owning_relationship
+    class_element.ownedAttribute = owning_membership
+    class_element.ownedAttribute = owning_relationship
+
+    a = list(associations(class_element))
+
+    assert a == [
+        'Element.owningRelationship = association("owningRelationship", Relationship)',
+        "Element.owningMembership = subset(\"owningMembership\", OwningMembership, 0, '*', None, Element.owningRelationship)",
+    ]
+
+
+def test_coder_write_derivedunion_for_non_subsetted_derived_property():
+    class_step = UML.Class()
+    class_step.name = "Step"
+    class_behavior = UML.Class()
+    class_behavior.name = "Behavior"
+
+    step = UML.Property()
+    step.name = "step"
+    step.type = class_step
+    step.isDerived = True
+    class_behavior.ownedAttribute = step
+
+    a = list(associations(class_behavior))
+
+    assert a == ['Behavior.step = derivedunion("step", Step)']
+
+
+def test_coder_does_not_emit_legacy_subset_wiring_for_derived_subset():
+    class_type = UML.Class()
+    class_type.name = "Type"
+    class_step = UML.Class()
+    class_step.name = "Step"
+    class_behavior = UML.Class()
+    class_behavior.name = "Behavior"
+
+    feature = UML.Property()
+    feature.name = "feature"
+    feature.type = class_step
+    class_type.ownedAttribute = feature
+
+    step = UML.Property()
+    step.name = "step"
+    step.type = class_step
+    step.isDerived = True
+    step.subsettedProperty = feature
+    class_behavior.ownedAttribute = step
+
+    generated = list(subsets(class_behavior, {}))
+
+    assert generated == []
+
+
+def test_coder_writes_real_kerml_subset_without_legacy_wiring(kerml_xmi):
+    behavior = next(
+        kerml_xmi.select(lambda e: isinstance(e, UML.Class) and e.name == "Behavior")
+    )
+
+    association_lines = list(associations(behavior))
+    subset_lines = [line for line in subsets(behavior, {}) if "Behavior.step" in line]
+
+    assert (
+        "Behavior.step = subset(\"step\", Step, 0, '*', None, Type.feature)"
+        in association_lines
+    )
+    assert subset_lines == []
 
 
 def test_coder_write_association_opposite_not_navigable(
