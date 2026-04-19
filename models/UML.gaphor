@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<gaphor xmlns="https://gaphor.org/model" xmlns:Core="https://gaphor.org/modelinglanguage/Core" xmlns:UML="https://gaphor.org/modelinglanguage/UML" version="4" gaphor-version="3.1.0">
+<gaphor xmlns="https://gaphor.org/model" xmlns:Core="https://gaphor.org/modelinglanguage/Core" xmlns:UML="https://gaphor.org/modelinglanguage/UML" version="4" gaphor-version="3.3.0">
 <model>
 <UML:Association id="DCE:12A2B620-4B3C-11D7-B391-02BBFE4396CE">
 <memberEnd>
@@ -7549,11 +7549,6 @@
 </upperValue>
 </UML:Property>
 <UML:Class id="DCE:9F22364E-83DA-11D7-ADE2-4B1972AF3391">
-<appliedStereotype>
-<reflist>
-<ref refid="b2d601cc-ec89-11ea-96dc-bf74f1f80424"/>
-</reflist>
-</appliedStereotype>
 <generalization>
 <reflist>
 <ref refid="DCE:B6163F08-83DA-11D7-ADE2-4B1972AF3391"/>
@@ -10473,16 +10468,16 @@
 </UML:GeneralizationItem>
 <UML:ClassItem id="DCE:9F21A454-83DA-11D7-ADE2-4B1972AF3391">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 441.0, 332.07142857142844)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 439.0234375, 332.07142857142844)</val>
 </matrix>
 <top-left>
 <val>(0.0, 0.0)</val>
 </top-left>
 <width>
-<val>341.5</val>
+<val>187.9765625</val>
 </width>
 <height>
-<val>112.0</val>
+<val>92.0</val>
 </height>
 <diagram>
 <ref refid="DCE:33061A3A-4A88-11D7-B08B-133D836EF880"/>
@@ -19259,7 +19254,7 @@
 </reflist>
 </generalization>
 <isAbstract>
-<val>1</val>
+<val>True</val>
 </isAbstract>
 <name>
 <val>ValueSpecification</val>
@@ -30395,6 +30390,9 @@
 <ref refid="1775e5e0-fa90-11de-bd51-00224128e79d"/>
 </reflist>
 </appliedStereotype>
+<direction>
+<val>inout</val>
+</direction>
 <name>
 <val>s</val>
 </name>
@@ -36686,7 +36684,6 @@
 <UML:Stereotype id="a38a6700-3fe1-11de-8375-00224128e79d">
 <instanceSpecification>
 <reflist>
-<ref refid="b2d601cc-ec89-11ea-96dc-bf74f1f80424"/>
 <ref refid="bdd2b5de-ec89-11ea-96dc-bf74f1f80424"/>
 <ref refid="e6034f62-8e17-11ef-9861-be7f4daace40"/>
 </reflist>
@@ -56764,18 +56761,6 @@
 <ref refid="4fe09932-cdff-11ef-9fc8-14abc554333b"/>
 </value>
 </UML:Slot>
-<UML:InstanceSpecification id="b2d601cc-ec89-11ea-96dc-bf74f1f80424">
-<classifier>
-<reflist>
-<ref refid="a38a6700-3fe1-11de-8375-00224128e79d"/>
-</reflist>
-</classifier>
-<extended>
-<reflist>
-<ref refid="DCE:9F22364E-83DA-11D7-ADE2-4B1972AF3391"/>
-</reflist>
-</extended>
-</UML:InstanceSpecification>
 <UML:InstanceSpecification id="bdd2b5de-ec89-11ea-96dc-bf74f1f80424">
 <classifier>
 <reflist>
