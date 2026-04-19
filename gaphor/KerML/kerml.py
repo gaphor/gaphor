@@ -15,6 +15,7 @@ from gaphor.core.modeling.properties import (
     redefine,
     relation_many,
     relation_one,
+    subset,
 )
 
 
@@ -500,7 +501,6 @@ class MembershipImport(Import):
 
 
 
-Element.owningMembership = derivedunion("owningMembership", OwningMembership, upper=1)
 Element.owningRelationship = association("owningRelationship", Relationship, upper=1, opposite="ownedRelatedElement")
 Element.owningNamespace = derivedunion("owningNamespace", Namespace, upper=1)
 Element.ownedRelationship = association("ownedRelationship", Relationship, opposite="owningRelatedElement")
@@ -514,135 +514,78 @@ Element.owner = derived("owner", Element, 0, 1,
 Element.ownedElement = derived("ownedElement", Element, 0, "*",
     lambda e: e.ownedRelationship and e.ownedRelationship[:].ownedRelatedElement)
 
-Element.documentation = derivedunion("documentation", Documentation)
-Element.ownedAnnotation = derivedunion("ownedAnnotation", Annotation)
-Element.textualRepresentation = derivedunion("textualRepresentation", TextualRepresentation)
-Element.owningRelationship.add(Element.owningMembership)  # type: ignore[attr-defined]
-Element.ownedElement.add(Element.documentation)  # type: ignore[attr-defined]
-Element.ownedRelationship.add(Element.ownedAnnotation)  # type: ignore[attr-defined]
-Element.ownedElement.add(Element.textualRepresentation)  # type: ignore[attr-defined]
+Element.owningMembership = subset("owningMembership", OwningMembership, 0, 1, None, Element.owningRelationship)
+Element.documentation = subset("documentation", Documentation, 0, '*', None, Element.ownedElement)
+Element.ownedAnnotation = subset("ownedAnnotation", Annotation, 0, '*', None, Element.ownedRelationship)
+Element.textualRepresentation = subset("textualRepresentation", TextualRepresentation, 0, '*', None, Element.ownedElement)
 Namespace.membership = derivedunion("membership", Membership)
-Namespace.ownedImport = derivedunion("ownedImport", Import)
 Namespace.member = derivedunion("member", Element)
-Namespace.ownedMember = derivedunion("ownedMember", Element)
-Namespace.ownedMembership = derivedunion("ownedMembership", Membership)
-Namespace.importedMembership = derivedunion("importedMembership", Membership)
-Element.ownedRelationship.add(Namespace.ownedImport)  # type: ignore[attr-defined]
-Namespace.member.add(Namespace.ownedMember)  # type: ignore[attr-defined]
-Namespace.membership.add(Namespace.ownedMembership)  # type: ignore[attr-defined]
-Element.ownedRelationship.add(Namespace.ownedMembership)  # type: ignore[attr-defined]
-Namespace.membership.add(Namespace.importedMembership)  # type: ignore[attr-defined]
-Type.ownedSpecialization = derivedunion("ownedSpecialization", Specialization)
-Type.ownedFeatureMembership = derivedunion("ownedFeatureMembership", FeatureMembership)
-Type.feature = derivedunion("feature", Feature)
-Type.ownedFeature = derivedunion("ownedFeature", Feature)
-Type.input = derivedunion("input", Feature)
-Type.output = derivedunion("output", Feature)
-Type.inheritedMembership = derivedunion("inheritedMembership", Membership)
-Type.endFeature = derivedunion("endFeature", Feature)
-Type.ownedEndFeature = derivedunion("ownedEndFeature", Feature)
-Type.ownedConjugator = derivedunion("ownedConjugator", Conjugation, upper=1)
-Type.inheritedFeature = derivedunion("inheritedFeature", Feature)
-Type.multiplicity = derivedunion("multiplicity", Multiplicity, upper=1)
+Namespace.ownedImport = subset("ownedImport", Import, 0, '*', None, Element.ownedRelationship)
+Namespace.ownedMember = subset("ownedMember", Element, 0, '*', None, Namespace.member)
+Namespace.ownedMembership = subset("ownedMembership", Membership, 0, '*', None, Namespace.membership, Element.ownedRelationship)
+Namespace.importedMembership = subset("importedMembership", Membership, 0, '*', None, Namespace.membership)
 Type.unioningType = derivedunion("unioningType", Type)
-Type.ownedIntersecting = derivedunion("ownedIntersecting", Intersecting)
 Type.intersectingType = derivedunion("intersectingType", Type)
-Type.ownedUnioning = derivedunion("ownedUnioning", Unioning)
-Type.ownedDisjoining = derivedunion("ownedDisjoining", Disjoining)
 Type.featureMembership = derivedunion("featureMembership", FeatureMembership)
 Type.differencingType = derivedunion("differencingType", Type)
-Type.ownedDifferencing = derivedunion("ownedDifferencing", Differencing)
-Type.directedFeature = derivedunion("directedFeature", Feature)
-Element.ownedRelationship.add(Type.ownedSpecialization)  # type: ignore[attr-defined]
-Namespace.ownedMembership.add(Type.ownedFeatureMembership)  # type: ignore[attr-defined]
-Type.featureMembership.add(Type.ownedFeatureMembership)  # type: ignore[attr-defined]
-Namespace.member.add(Type.feature)  # type: ignore[attr-defined]
-Namespace.ownedMember.add(Type.ownedFeature)  # type: ignore[attr-defined]
-Type.directedFeature.add(Type.input)  # type: ignore[attr-defined]
-Type.directedFeature.add(Type.output)  # type: ignore[attr-defined]
-Namespace.membership.add(Type.inheritedMembership)  # type: ignore[attr-defined]
-Type.feature.add(Type.endFeature)  # type: ignore[attr-defined]
-Type.endFeature.add(Type.ownedEndFeature)  # type: ignore[attr-defined]
-Type.ownedFeature.add(Type.ownedEndFeature)  # type: ignore[attr-defined]
-Element.ownedRelationship.add(Type.ownedConjugator)  # type: ignore[attr-defined]
-Type.feature.add(Type.inheritedFeature)  # type: ignore[attr-defined]
-Namespace.ownedMember.add(Type.multiplicity)  # type: ignore[attr-defined]
-Element.ownedRelationship.add(Type.ownedIntersecting)  # type: ignore[attr-defined]
-Element.ownedRelationship.add(Type.ownedUnioning)  # type: ignore[attr-defined]
-Element.ownedRelationship.add(Type.ownedDisjoining)  # type: ignore[attr-defined]
-Element.ownedRelationship.add(Type.ownedDifferencing)  # type: ignore[attr-defined]
-Type.feature.add(Type.directedFeature)  # type: ignore[attr-defined]
-Classifier.ownedSubclassification = derivedunion("ownedSubclassification", Subclassification)
-Type.ownedSpecialization.add(Classifier.ownedSubclassification)  # type: ignore[attr-defined]
-Behavior.step = derivedunion("step", Step)
+Type.ownedSpecialization = subset("ownedSpecialization", Specialization, 0, '*', None, Element.ownedRelationship)
+Type.ownedFeatureMembership = subset("ownedFeatureMembership", FeatureMembership, 0, '*', None, Namespace.ownedMembership, Type.featureMembership)
+Type.feature = subset("feature", Feature, 0, '*', None, Namespace.member)
+Type.ownedFeature = subset("ownedFeature", Feature, 0, '*', None, Namespace.ownedMember)
+Type.inheritedMembership = subset("inheritedMembership", Membership, 0, '*', None, Namespace.membership)
+Type.ownedConjugator = subset("ownedConjugator", Conjugation, 0, 1, None, Element.ownedRelationship)
+Type.multiplicity = subset("multiplicity", Multiplicity, 0, 1, None, Namespace.ownedMember)
+Type.ownedIntersecting = subset("ownedIntersecting", Intersecting, 0, '*', None, Element.ownedRelationship)
+Type.ownedUnioning = subset("ownedUnioning", Unioning, 0, '*', None, Element.ownedRelationship)
+Type.ownedDisjoining = subset("ownedDisjoining", Disjoining, 0, '*', None, Element.ownedRelationship)
+Type.ownedDifferencing = subset("ownedDifferencing", Differencing, 0, '*', None, Element.ownedRelationship)
+Type.endFeature = subset("endFeature", Feature, 0, '*', None, Type.feature)
+Type.inheritedFeature = subset("inheritedFeature", Feature, 0, '*', None, Type.feature)
+Type.directedFeature = subset("directedFeature", Feature, 0, '*', None, Type.feature)
+Type.input = subset("input", Feature, 0, '*', None, Type.directedFeature)
+Type.output = subset("output", Feature, 0, '*', None, Type.directedFeature)
+Type.ownedEndFeature = subset("ownedEndFeature", Feature, 0, '*', None, Type.endFeature, Type.ownedFeature)
+Classifier.ownedSubclassification = subset("ownedSubclassification", Subclassification, 0, '*', None, Type.ownedSpecialization)
 Behavior.parameter = redefine(Behavior, "parameter", Feature, Type.directedFeature)
-Type.feature.add(Behavior.step)  # type: ignore[attr-defined]
+Behavior.step = subset("step", Step, 0, '*', None, Type.feature)
 Relationship.relatedElement = derivedunion("relatedElement", Element)
 Relationship.target = association("target", Element)
 Relationship.source = association("source", Element)
 Relationship.owningRelatedElement = association("owningRelatedElement", Element, upper=1, opposite="ownedRelationship")
 Relationship.ownedRelatedElement = association("ownedRelatedElement", Element, opposite="owningRelationship")
-Relationship.relatedElement.add(Relationship.target)  # type: ignore[attr-defined]
-Relationship.relatedElement.add(Relationship.source)  # type: ignore[attr-defined]
-Relationship.relatedElement.add(Relationship.owningRelatedElement)  # type: ignore[attr-defined]
-Relationship.relatedElement.add(Relationship.ownedRelatedElement)  # type: ignore[attr-defined]
 Membership.membershipOwningNamespace = redefine(Membership, "membershipOwningNamespace", Namespace, Relationship.source, opposite="ownedMembership")
 Membership.memberElement = redefine(Membership, "memberElement", Element, Relationship.target)
-Relationship.owningRelatedElement.add(Membership.membershipOwningNamespace)  # type: ignore[attr-defined]
 OwningMembership.ownedMemberElement = redefine(OwningMembership, "ownedMemberElement", Element, Membership.memberElement, opposite="owningMembership")
-Relationship.ownedRelatedElement.add(OwningMembership.ownedMemberElement)  # type: ignore[attr-defined]
 FeatureMembership.owningType = redefine(FeatureMembership, "owningType", Type, Membership.membershipOwningNamespace, opposite="ownedFeatureMembership")
 FeatureMembership.ownedMemberFeature = redefine(FeatureMembership, "ownedMemberFeature", Feature, OwningMembership.ownedMemberElement, opposite="owningFeatureMembership")
 ParameterMembership.ownedMemberParameter = redefine(ParameterMembership, "ownedMemberParameter", Feature, FeatureMembership.ownedMemberFeature)
-Feature.owningType = derivedunion("owningType", Type, upper=1)
 Feature.type = derivedunion("type", Type)
-Feature.ownedRedefinition = derivedunion("ownedRedefinition", Redefinition)
-Feature.ownedSubsetting = derivedunion("ownedSubsetting", Subsetting)
-Feature.owningFeatureMembership = derivedunion("owningFeatureMembership", FeatureMembership, upper=1)
-Feature.endOwningType = derivedunion("endOwningType", Type, upper=1)
-Feature.ownedTyping = derivedunion("ownedTyping", FeatureTyping)
 Feature.featuringType = derivedunion("featuringType", Type)
-Feature.ownedTypeFeaturing = derivedunion("ownedTypeFeaturing", TypeFeaturing)
 Feature.chainingFeature = derivedunion("chainingFeature", Feature)
-Feature.ownedFeatureInverting = derivedunion("ownedFeatureInverting", FeatureInverting)
-Feature.ownedFeatureChaining = derivedunion("ownedFeatureChaining", FeatureChaining)
-Feature.ownedReferenceSubsetting = derivedunion("ownedReferenceSubsetting", ReferenceSubsetting, upper=1)
 Feature.featureTarget = derivedunion("featureTarget", Feature, lower=1, upper=1)
 Feature.crossFeature = derivedunion("crossFeature", Feature, upper=1)
-Feature.ownedCrossSubsetting = derivedunion("ownedCrossSubsetting", CrossSubsetting, upper=1)
-Feature.featuringType.add(Feature.owningType)  # type: ignore[attr-defined]
-Element.owningNamespace.add(Feature.owningType)  # type: ignore[attr-defined]
-Feature.ownedSubsetting.add(Feature.ownedRedefinition)  # type: ignore[attr-defined]
-Type.ownedSpecialization.add(Feature.ownedSubsetting)  # type: ignore[attr-defined]
-Element.owningMembership.add(Feature.owningFeatureMembership)  # type: ignore[attr-defined]
-Feature.owningType.add(Feature.endOwningType)  # type: ignore[attr-defined]
-Type.ownedSpecialization.add(Feature.ownedTyping)  # type: ignore[attr-defined]
-Element.ownedRelationship.add(Feature.ownedTypeFeaturing)  # type: ignore[attr-defined]
-Element.ownedRelationship.add(Feature.ownedFeatureInverting)  # type: ignore[attr-defined]
-Element.ownedRelationship.add(Feature.ownedFeatureChaining)  # type: ignore[attr-defined]
-Feature.ownedSubsetting.add(Feature.ownedReferenceSubsetting)  # type: ignore[attr-defined]
-Feature.ownedSubsetting.add(Feature.ownedCrossSubsetting)  # type: ignore[attr-defined]
-Step.behavior = derivedunion("behavior", Behavior)
+Feature.owningType = subset("owningType", Type, 0, 1, None, Feature.featuringType, Element.owningNamespace)
+Feature.ownedSubsetting = subset("ownedSubsetting", Subsetting, 0, '*', None, Type.ownedSpecialization)
+Feature.owningFeatureMembership = subset("owningFeatureMembership", FeatureMembership, 0, 1, None, Element.owningMembership)
+Feature.ownedTyping = subset("ownedTyping", FeatureTyping, 0, '*', None, Type.ownedSpecialization)
+Feature.ownedTypeFeaturing = subset("ownedTypeFeaturing", TypeFeaturing, 0, '*', None, Element.ownedRelationship)
+Feature.ownedFeatureInverting = subset("ownedFeatureInverting", FeatureInverting, 0, '*', None, Element.ownedRelationship)
+Feature.ownedFeatureChaining = subset("ownedFeatureChaining", FeatureChaining, 0, '*', None, Element.ownedRelationship)
+Feature.ownedRedefinition = subset("ownedRedefinition", Redefinition, 0, '*', None, Feature.ownedSubsetting)
+Feature.endOwningType = subset("endOwningType", Type, 0, 1, None, Feature.owningType)
+Feature.ownedReferenceSubsetting = subset("ownedReferenceSubsetting", ReferenceSubsetting, 0, 1, None, Feature.ownedSubsetting)
+Feature.ownedCrossSubsetting = subset("ownedCrossSubsetting", CrossSubsetting, 0, 1, None, Feature.ownedSubsetting)
 Step.parameter = redefine(Step, "parameter", Feature, Type.directedFeature)
-Feature.type.add(Step.behavior)  # type: ignore[attr-defined]
-Expression.result = derivedunion("result", Feature, lower=1, upper=1)
+Step.behavior = subset("behavior", Behavior, 0, '*', None, Feature.type)
 Expression.function = redefine(Expression, "function", Function, Step.behavior)
-Type.output.add(Expression.result)  # type: ignore[attr-defined]
-Step.parameter.add(Expression.result)  # type: ignore[attr-defined]
+Expression.result = subset("result", Feature, 1, 1, None, Type.output, Step.parameter)
 InstantiationExpression.argument = derivedunion("argument", Expression)
-InstantiationExpression.instantiatedType = derivedunion("instantiatedType", Type, lower=1, upper=1)
-Namespace.member.add(InstantiationExpression.instantiatedType)  # type: ignore[attr-defined]
-FeatureChainExpression.targetFeature = derivedunion("targetFeature", Feature, lower=1, upper=1)
-Namespace.member.add(FeatureChainExpression.targetFeature)  # type: ignore[attr-defined]
-MetadataAccessExpression.referencedElement = derivedunion("referencedElement", Element, lower=1, upper=1)
-Namespace.member.add(MetadataAccessExpression.referencedElement)  # type: ignore[attr-defined]
-FeatureReferenceExpression.referent = derivedunion("referent", Feature, lower=1, upper=1)
-Namespace.member.add(FeatureReferenceExpression.referent)  # type: ignore[attr-defined]
-Function.expression = derivedunion("expression", Expression)
-Function.result = derivedunion("result", Feature, lower=1, upper=1)
-Behavior.step.add(Function.expression)  # type: ignore[attr-defined]
-Type.output.add(Function.result)  # type: ignore[attr-defined]
-Behavior.parameter.add(Function.result)  # type: ignore[attr-defined]
+InstantiationExpression.instantiatedType = subset("instantiatedType", Type, 1, 1, None, Namespace.member)
+FeatureChainExpression.targetFeature = subset("targetFeature", Feature, 1, 1, None, Namespace.member)
+MetadataAccessExpression.referencedElement = subset("referencedElement", Element, 1, 1, None, Namespace.member)
+FeatureReferenceExpression.referent = subset("referent", Feature, 1, 1, None, Namespace.member)
+Function.expression = subset("expression", Expression, 0, '*', None, Behavior.step)
+Function.result = subset("result", Feature, 1, 1, None, Type.output, Behavior.parameter)
 ResultExpressionMembership.ownedResultExpression = redefine(ResultExpressionMembership, "ownedResultExpression", Expression, FeatureMembership.ownedMemberFeature)
 BooleanExpression.predicate = redefine(BooleanExpression, "predicate", Predicate, Expression.function)
 Connector.defaultFeaturingType = derivedunion("defaultFeaturingType", Type, upper=1)
@@ -651,118 +594,77 @@ Connector.association = redefine(Connector, "association", Association, Feature.
 Connector.connectorEnd = redefine(Connector, "connectorEnd", Feature, Type.endFeature)
 Connector.sourceFeature = redefine(Connector, "sourceFeature", Feature, Relationship.source)
 Connector.targetFeature = redefine(Connector, "targetFeature", Feature, Relationship.target)
-Connector.relatedFeature.add(Connector.sourceFeature)  # type: ignore[attr-defined]
-Connector.relatedFeature.add(Connector.targetFeature)  # type: ignore[attr-defined]
 Flow.payloadType = derivedunion("payloadType", Classifier)
 Flow.targetInputFeature = derivedunion("targetInputFeature", Feature, upper=1)
 Flow.sourceOutputFeature = derivedunion("sourceOutputFeature", Feature, upper=1)
-Flow.flowEnd = derivedunion("flowEnd", FlowEnd, upper=2)
-Flow.payloadFeature = derivedunion("payloadFeature", PayloadFeature, upper=1)
 Flow.interaction = redefine(Flow, "interaction", Interaction, Connector.association)
-Connector.connectorEnd.add(Flow.flowEnd)  # type: ignore[attr-defined]
-Type.ownedFeature.add(Flow.payloadFeature)  # type: ignore[attr-defined]
+Flow.flowEnd = subset("flowEnd", FlowEnd, 0, 2, None, Connector.connectorEnd)
+Flow.payloadFeature = subset("payloadFeature", PayloadFeature, 0, 1, None, Type.ownedFeature)
 Association.relatedType = redefine(Association, "relatedType", Type, Relationship.relatedElement)
 Association.sourceType = redefine(Association, "sourceType", Type, Relationship.source)
 Association.targetType = redefine(Association, "targetType", Type, Relationship.target)
 Association.associationEnd = redefine(Association, "associationEnd", Feature, Type.endFeature)
-Association.relatedType.add(Association.sourceType)  # type: ignore[attr-defined]
-Association.relatedType.add(Association.targetType)  # type: ignore[attr-defined]
-FeatureValue.featureWithValue = derivedunion("featureWithValue", Feature, lower=1, upper=1)
 FeatureValue.value = redefine(FeatureValue, "value", Expression, OwningMembership.ownedMemberElement)
-Membership.membershipOwningNamespace.add(FeatureValue.featureWithValue)  # type: ignore[attr-defined]
+FeatureValue.featureWithValue = subset("featureWithValue", Feature, 1, 1, None, Membership.membershipOwningNamespace)
 ElementFilterMembership.condition = redefine(ElementFilterMembership, "condition", Expression, OwningMembership.ownedMemberElement)
-Package.filterCondition = derivedunion("filterCondition", Expression)
-Namespace.ownedMember.add(Package.filterCondition)  # type: ignore[attr-defined]
-MultiplicityRange.lowerBound = derivedunion("lowerBound", Expression, upper=1)
-MultiplicityRange.upperBound = derivedunion("upperBound", Expression, lower=1, upper=1)
-MultiplicityRange.bound = derivedunion("bound", Expression, lower=1, upper=2)
-MultiplicityRange.bound.add(MultiplicityRange.lowerBound)  # type: ignore[attr-defined]
-MultiplicityRange.bound.add(MultiplicityRange.upperBound)  # type: ignore[attr-defined]
-Namespace.ownedMember.add(MultiplicityRange.bound)  # type: ignore[attr-defined]
+Package.filterCondition = subset("filterCondition", Expression, 0, '*', None, Namespace.ownedMember)
+MultiplicityRange.bound = subset("bound", Expression, 1, 2, None, Namespace.ownedMember)
+MultiplicityRange.lowerBound = subset("lowerBound", Expression, 0, 1, None, MultiplicityRange.bound)
+MultiplicityRange.upperBound = subset("upperBound", Expression, 1, 1, None, MultiplicityRange.bound)
 AnnotatingElement.annotatedElement = derivedunion("annotatedElement", Element, lower=1)
-AnnotatingElement.ownedAnnotatingRelationship = derivedunion("ownedAnnotatingRelationship", Annotation)
-AnnotatingElement.owningAnnotatingRelationship = derivedunion("owningAnnotatingRelationship", Annotation, upper=1)
 AnnotatingElement.annotation = derivedunion("annotation", Annotation)
-AnnotatingElement.annotation.add(AnnotatingElement.ownedAnnotatingRelationship)  # type: ignore[attr-defined]
-Element.ownedRelationship.add(AnnotatingElement.ownedAnnotatingRelationship)  # type: ignore[attr-defined]
-Element.owningRelationship.add(AnnotatingElement.owningAnnotatingRelationship)  # type: ignore[attr-defined]
-AnnotatingElement.annotation.add(AnnotatingElement.owningAnnotatingRelationship)  # type: ignore[attr-defined]
-MetadataFeature.metaclass = derivedunion("metaclass", Metaclass, upper=1)
-Feature.type.add(MetadataFeature.metaclass)  # type: ignore[attr-defined]
-Disjoining.owningType = derivedunion("owningType", Type, upper=1)
+AnnotatingElement.ownedAnnotatingRelationship = subset("ownedAnnotatingRelationship", Annotation, 0, '*', None, AnnotatingElement.annotation, Element.ownedRelationship)
+AnnotatingElement.owningAnnotatingRelationship = subset("owningAnnotatingRelationship", Annotation, 0, 1, None, Element.owningRelationship, AnnotatingElement.annotation)
+MetadataFeature.metaclass = subset("metaclass", Metaclass, 0, 1, None, Feature.type)
 Disjoining.typeDisjoined = redefine(Disjoining, "typeDisjoined", Type, Relationship.source)
 Disjoining.disjoiningType = redefine(Disjoining, "disjoiningType", Type, Relationship.target)
-Relationship.owningRelatedElement.add(Disjoining.owningType)  # type: ignore[attr-defined]
-Disjoining.typeDisjoined.add(Disjoining.owningType)  # type: ignore[attr-defined]
+Disjoining.owningType = subset("owningType", Type, 0, 1, None, Relationship.owningRelatedElement, Disjoining.typeDisjoined)
 Differencing.typeDifferenced = redefine(Differencing, "typeDifferenced", Type, Relationship.source, opposite="ownedDifferencing")
 Differencing.differencingType = redefine(Differencing, "differencingType", Type, Relationship.target)
-Relationship.owningRelatedElement.add(Differencing.typeDifferenced)  # type: ignore[attr-defined]
 Intersecting.typeIntersected = redefine(Intersecting, "typeIntersected", Type, Relationship.source, opposite="ownedIntersecting")
 Intersecting.intersectingType = redefine(Intersecting, "intersectingType", Type, Relationship.target)
-Relationship.owningRelatedElement.add(Intersecting.typeIntersected)  # type: ignore[attr-defined]
 Unioning.typeUnioned = redefine(Unioning, "typeUnioned", Type, Relationship.source, opposite="ownedUnioning")
 Unioning.unioningType = redefine(Unioning, "unioningType", Type, Relationship.target)
-Relationship.owningRelatedElement.add(Unioning.typeUnioned)  # type: ignore[attr-defined]
-Conjugation.owningType = derivedunion("owningType", Type, upper=1)
 Conjugation.originalType = redefine(Conjugation, "originalType", Type, Relationship.target)
 Conjugation.conjugatedType = redefine(Conjugation, "conjugatedType", Type, Relationship.source)
-Conjugation.conjugatedType.add(Conjugation.owningType)  # type: ignore[attr-defined]
-Relationship.owningRelatedElement.add(Conjugation.owningType)  # type: ignore[attr-defined]
-Specialization.owningType = derivedunion("owningType", Type, upper=1)
+Conjugation.owningType = subset("owningType", Type, 0, 1, None, Conjugation.conjugatedType, Relationship.owningRelatedElement)
 Specialization.general = redefine(Specialization, "general", Type, Relationship.target)
 Specialization.specific = redefine(Specialization, "specific", Type, Relationship.source)
-Relationship.owningRelatedElement.add(Specialization.owningType)  # type: ignore[attr-defined]
-Specialization.specific.add(Specialization.owningType)  # type: ignore[attr-defined]
+Specialization.owningType = subset("owningType", Type, 0, 1, None, Relationship.owningRelatedElement, Specialization.specific)
 Subclassification.superclassifier = redefine(Subclassification, "superclassifier", Classifier, Specialization.general)
 Subclassification.subclassifier = redefine(Subclassification, "subclassifier", Classifier, Specialization.specific)
 Subclassification.owningClassifier = redefine(Subclassification, "owningClassifier", Classifier, Specialization.owningType, opposite="ownedSubclassification")
-FeatureInverting.owningFeature = derivedunion("owningFeature", Feature, upper=1)
 FeatureInverting.featureInverted = redefine(FeatureInverting, "featureInverted", Feature, Relationship.source)
 FeatureInverting.invertingFeature = redefine(FeatureInverting, "invertingFeature", Feature, Relationship.target)
-FeatureInverting.featureInverted.add(FeatureInverting.owningFeature)  # type: ignore[attr-defined]
-Relationship.owningRelatedElement.add(FeatureInverting.owningFeature)  # type: ignore[attr-defined]
+FeatureInverting.owningFeature = subset("owningFeature", Feature, 0, 1, None, FeatureInverting.featureInverted, Relationship.owningRelatedElement)
 FeatureChaining.chainingFeature = redefine(FeatureChaining, "chainingFeature", Feature, Relationship.target)
 FeatureChaining.featureChained = redefine(FeatureChaining, "featureChained", Feature, Relationship.source, opposite="ownedFeatureChaining")
-Relationship.owningRelatedElement.add(FeatureChaining.featureChained)  # type: ignore[attr-defined]
 Subsetting.subsettedFeature = redefine(Subsetting, "subsettedFeature", Feature, Specialization.general)
 Subsetting.subsettingFeature = redefine(Subsetting, "subsettingFeature", Feature, Specialization.specific)
 Subsetting.owningFeature = redefine(Subsetting, "owningFeature", Feature, Specialization.owningType, opposite="ownedSubsetting")
-Subsetting.subsettingFeature.add(Subsetting.owningFeature)  # type: ignore[attr-defined]
 Redefinition.redefiningFeature = redefine(Redefinition, "redefiningFeature", Feature, Subsetting.subsettingFeature)
 Redefinition.redefinedFeature = redefine(Redefinition, "redefinedFeature", Feature, Subsetting.subsettedFeature)
 ReferenceSubsetting.referencedFeature = redefine(ReferenceSubsetting, "referencedFeature", Feature, Subsetting.subsettedFeature)
 ReferenceSubsetting.referencingFeature = redefine(ReferenceSubsetting, "referencingFeature", Feature, Subsetting.owningFeature, opposite="ownedReferenceSubsetting")
-TypeFeaturing.owningFeatureOfType = derivedunion("owningFeatureOfType", Feature, upper=1)
 TypeFeaturing.featureOfType = redefine(TypeFeaturing, "featureOfType", Feature, Relationship.source)
 TypeFeaturing.featuringType = redefine(TypeFeaturing, "featuringType", Type, Relationship.target)
-Relationship.owningRelatedElement.add(TypeFeaturing.owningFeatureOfType)  # type: ignore[attr-defined]
-TypeFeaturing.featureOfType.add(TypeFeaturing.owningFeatureOfType)  # type: ignore[attr-defined]
+TypeFeaturing.owningFeatureOfType = subset("owningFeatureOfType", Feature, 0, 1, None, Relationship.owningRelatedElement, TypeFeaturing.featureOfType)
 FeatureTyping.typedFeature = redefine(FeatureTyping, "typedFeature", Feature, Specialization.specific)
 FeatureTyping.type = redefine(FeatureTyping, "type", Type, Specialization.general)
 FeatureTyping.owningFeature = redefine(FeatureTyping, "owningFeature", Feature, Specialization.owningType, opposite="ownedTyping")
-FeatureTyping.typedFeature.add(FeatureTyping.owningFeature)  # type: ignore[attr-defined]
 EndFeatureMembership.ownedMemberFeature = redefine(EndFeatureMembership, "ownedMemberFeature", Feature, FeatureMembership.ownedMemberFeature)
 CrossSubsetting.crossedFeature = redefine(CrossSubsetting, "crossedFeature", Feature, Subsetting.subsettedFeature)
 CrossSubsetting.crossingFeature = redefine(CrossSubsetting, "crossingFeature", Feature, Subsetting.owningFeature, opposite="ownedCrossSubsetting")
 Dependency.client = redefine(Dependency, "client", Element, Relationship.source)
 Dependency.supplier = redefine(Dependency, "supplier", Element, Relationship.target)
 TextualRepresentation.representedElement = redefine(TextualRepresentation, "representedElement", Element, AnnotatingElement.annotatedElement, opposite="textualRepresentation")
-Element.owner.add(TextualRepresentation.representedElement)  # type: ignore[attr-defined]
 Documentation.documentedElement = redefine(Documentation, "documentedElement", Element, AnnotatingElement.annotatedElement, opposite="documentation")
-Element.owner.add(Documentation.documentedElement)  # type: ignore[attr-defined]
-Annotation.owningAnnotatedElement = derivedunion("owningAnnotatedElement", Element, upper=1)
-Annotation.owningAnnotatingElement = derivedunion("owningAnnotatingElement", AnnotatingElement, upper=1)
-Annotation.ownedAnnotatingElement = derivedunion("ownedAnnotatingElement", AnnotatingElement, upper=1)
 Annotation.annotatingElement = redefine(Annotation, "annotatingElement", AnnotatingElement, Relationship.source, opposite="annotation")
 Annotation.annotatedElement = redefine(Annotation, "annotatedElement", Element, Relationship.target)
-Annotation.annotatedElement.add(Annotation.owningAnnotatedElement)  # type: ignore[attr-defined]
-Relationship.owningRelatedElement.add(Annotation.owningAnnotatedElement)  # type: ignore[attr-defined]
-Annotation.annotatingElement.add(Annotation.owningAnnotatingElement)  # type: ignore[attr-defined]
-Relationship.owningRelatedElement.add(Annotation.owningAnnotatingElement)  # type: ignore[attr-defined]
-Annotation.annotatingElement.add(Annotation.ownedAnnotatingElement)  # type: ignore[attr-defined]
-Relationship.ownedRelatedElement.add(Annotation.ownedAnnotatingElement)  # type: ignore[attr-defined]
+Annotation.owningAnnotatedElement = subset("owningAnnotatedElement", Element, 0, 1, None, Annotation.annotatedElement, Relationship.owningRelatedElement)
+Annotation.owningAnnotatingElement = subset("owningAnnotatingElement", AnnotatingElement, 0, 1, None, Annotation.annotatingElement, Relationship.owningRelatedElement)
+Annotation.ownedAnnotatingElement = subset("ownedAnnotatingElement", AnnotatingElement, 0, 1, None, Annotation.annotatingElement, Relationship.ownedRelatedElement)
 Import.importedElement = derivedunion("importedElement", Element, lower=1, upper=1)
 Import.importOwningNamespace = redefine(Import, "importOwningNamespace", Namespace, Relationship.source, opposite="ownedImport")
-Relationship.owningRelatedElement.add(Import.importOwningNamespace)  # type: ignore[attr-defined]
 NamespaceImport.importedNamespace = redefine(NamespaceImport, "importedNamespace", Namespace, Relationship.target)
 MembershipImport.importedMembership = redefine(MembershipImport, "importedMembership", Membership, Relationship.target)

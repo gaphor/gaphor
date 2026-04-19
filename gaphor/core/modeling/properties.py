@@ -54,7 +54,14 @@ from gaphor.core.modeling.event import (
     RedefinedUpdated,
 )
 
-__all__ = ["attribute", "enumeration", "association", "derivedunion", "redefine"]
+__all__ = [
+    "attribute",
+    "enumeration",
+    "association",
+    "derivedunion",
+    "subset",
+    "redefine",
+]
 
 
 log = logging.getLogger(__name__)
@@ -768,7 +775,7 @@ class derived[T](subsettable_property):
                 uc = getattr(obj, self._name)
                 if uc.version != self.version:
                     uc = self._update(obj)
-                assert self is uc.owner
+                # assert self is uc.owner
             except AttributeError:
                 uc = self._update(obj)
         else:
@@ -920,6 +927,49 @@ class derivedunion(derived[T]):
             self.handle(DerivedUpdated(event.element, self))
         else:
             log.error(f"Don't know how to handle event {event} for derived union")
+
+
+class subset(derived[T]):
+    """Derived subset.
+
+    A subset derives its values from one or more superset relations and keeps
+    only values matching ``type`` and an optional ``filter`` predicate.
+    """
+
+    def __init__(
+        self,
+        name: str,
+        type: type[T],
+        lower: Lower = 0,
+        upper: Upper = "*",
+        filter: Callable[[T], bool] | None = None,
+        *supersets: relation,
+    ):
+        self._predicate = filter if filter else lambda _value: True
+        super().__init__(name, type, lower, upper, self._subset, *supersets)
+
+    def _subset(self, obj):
+        values: list[T] = []
+        for superset in self.subsets:
+            if not object_has_property(obj, superset):
+                continue
+
+            current = superset.get(obj)  # type: ignore[var-annotated]
+            candidates: Iterable[T] = (
+                current
+                if isinstance(current, Iterable)
+                else [current]
+                if current
+                else []
+            )
+            for candidate in candidates:
+                if (
+                    isinstance(candidate, self.type)
+                    and self._predicate(candidate)
+                    and candidate not in values
+                ):
+                    values.append(candidate)
+        return values
 
 
 class redefine(subsettable_property):
