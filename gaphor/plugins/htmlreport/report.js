@@ -176,10 +176,6 @@
     var svg = doc.documentElement;
     if (!svg || svg.nodeName !== "svg") return;
 
-    // Let the SVG scale to fill its container via CSS; the viewBox
-    // attribute (preserved) handles the internal coordinate mapping
-    svg.removeAttribute("width");
-    svg.removeAttribute("height");
     // adoptNode transfers ownership from the parsed document to ours,
     // avoiding a cross-document insertion error
     content.appendChild(document.adoptNode(svg));
@@ -194,20 +190,39 @@
     // layout and the SVG has real dimensions for getScreenCTM()
     requestAnimationFrame(function() {
       if (typeof svgPanZoom === "function") {
-        currentPanZoom = svgPanZoom(svg, {
+        var zoomScaleSensitivity = 0.3;
+        var currentPanZoom = svgPanZoom(svg, {
           zoomEnabled: true,
           panEnabled: true,
           controlIconsEnabled: false,
           fit: true,
-          center: true,
+          center: false,
           minZoom: 0.1,
           maxZoom: 20,
-          zoomScaleSensitivity: 0.3
+          zoomScaleSensitivity: zoomScaleSensitivity
         });
 
-        $("#zoom-in").addEventListener("click", function() { currentPanZoom.zoomIn(); });
-        $("#zoom-out").addEventListener("click", function() { currentPanZoom.zoomOut(); });
-        $("#zoom-reset").addEventListener("click", function() { currentPanZoom.reset(); });
+        // Prevent small diagrams from being scaled up beyond 100%
+        var realZoom = currentPanZoom.getSizes().realZoom;
+        var cappedZoom = realZoom > 1 ? currentPanZoom.getZoom() / realZoom : null;
+        if (cappedZoom !== null) {
+          currentPanZoom.zoom(cappedZoom);
+          currentPanZoom.pan({ x: 0, y: 0 });
+        }
+
+        function zoomFromTopLeft(zoomIn) {
+          var zoomFactor = 1 + zoomScaleSensitivity;
+          var factor = zoomIn ? zoomFactor : 1 / zoomFactor;
+          currentPanZoom.zoomAtPointBy(factor, { x: 0, y: 0 });
+        }
+
+        $("#zoom-in").addEventListener("click", function() { zoomFromTopLeft(true); });
+        $("#zoom-out").addEventListener("click", function() { zoomFromTopLeft(false); });
+        $("#zoom-reset").addEventListener("click", function() {
+          currentPanZoom.reset();
+          currentPanZoom.zoom(cappedZoom);
+          currentPanZoom.pan({ x: 0, y: 0 });
+        });
       }
     });
 
