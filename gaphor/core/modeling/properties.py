@@ -775,7 +775,7 @@ class derived[T](subsettable_property):
                 uc = getattr(obj, self._name)
                 if uc.version != self.version:
                     uc = self._update(obj)
-                # assert self is uc.owner
+                assert self is uc.owner
             except AttributeError:
                 uc = self._update(obj)
         else:

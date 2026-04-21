@@ -15,6 +15,7 @@ from gaphor.core.modeling.properties import (
     redefine,
     relation_many,
     relation_one,
+    subset,
 )
 
 
