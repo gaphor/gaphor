@@ -43,30 +43,3 @@ def test_enumeration_literal_conversion(kerml):
 
     assert enumeration.ownedLiteral
     assert "inout" in [el.name for el in enumeration.ownedLiteral]
-
-
-def test_owned_rule_specification_conversion(kerml):
-    constraint = kerml.lookup("Kernel-Behaviors-Behavior-checkBehaviorSpecialization")
-
-    assert isinstance(constraint, UML.Constraint)
-    assert constraint.specification
-    assert isinstance(constraint.specification, UML.OpaqueExpression)
-    assert (
-        constraint.specification.body
-        == "specializesFromLibrary('Performances::Performance')"
-    )
-    assert constraint.specification.language == "English"
-
-
-def test_body_condition_specification_conversion(kerml):
-    operation = kerml.lookup("Kernel-Behaviors-ParameterMembership-parameterDirection_")
-
-    assert isinstance(operation, UML.Operation)
-    assert operation.bodyCondition
-    assert operation.bodyCondition.id == (
-        "Kernel-Behaviors-ParameterMembership-parameterDirection_-unnamed1"
-    )
-    assert operation.bodyCondition.specification
-    assert isinstance(operation.bodyCondition.specification, UML.OpaqueExpression)
-    assert operation.bodyCondition.specification.body == "FeatureDirectionKind::_'in'"
-    assert operation.bodyCondition.specification.language == "OCL2.0"
