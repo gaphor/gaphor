@@ -108,6 +108,7 @@ def test_kerml_model(tmp_path):
     outfile = tmp_path / "kerml.py"
     main(
         modelfile="models/KerML-25-04-04.xmi",
+        overridesfile="models/KerML.override",
         supermodelfiles=[("Core", "models/Core.gaphor")],
         outfile=outfile,
     )
