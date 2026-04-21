@@ -65,10 +65,6 @@ def create_element(elem: etree.Element, element_factory: ElementFactory):
 
 def create(elem: etree.Element, element_factory: ElementFactory) -> UML.Element:
     id = elem.attrib[f"{xmlns.xmi}id"]
-    if existing := element_factory.lookup(id):
-        assert isinstance(existing, UML.Element)
-        return existing
-
     type_name = elem.attrib[f"{xmlns.xmi}type"]
     assert type_name.startswith("uml:")
     type = modeling_language.lookup_element(type_name.replace("uml:", ""))
@@ -77,33 +73,6 @@ def create(elem: etree.Element, element_factory: ElementFactory) -> UML.Element:
     if "name" in elem.attrib:
         element.name = elem.attrib["name"]
     return element
-
-
-def link_constraint(
-    elem: etree.Element, element_factory: ElementFactory
-) -> UML.Constraint:
-    constraint = create(elem, element_factory)
-    assert isinstance(constraint, UML.Constraint)
-
-    for child in elem:
-        match child.tag:
-            case "constrainedElement":
-                if idref := child.attrib.get(f"{xmlns.xmi}idref"):
-                    constraint.constrainedElement = element_factory[idref]  # type: ignore[assignment]
-            case "ownedComment":
-                pass
-            case "specification":
-                specification = create(child, element_factory)
-                assert isinstance(specification, UML.OpaqueExpression)
-                if "body" in child.attrib:
-                    specification.body = child.attrib["body"]
-                if "language" in child.attrib:
-                    specification.language = child.attrib["language"]
-                constraint.specification = specification
-            case unsupported:
-                raise ValueError(f"Unhandled tag {unsupported}")
-
-    return constraint
 
 
 # These functions relies on the URL and id consistency of KerML identifiers.
@@ -178,16 +147,14 @@ def link_element(elem: etree.Element, element_factory: ElementFactory):
                 element.navigableOwnedEnd = element_factory[
                     child.attrib[f"{xmlns.xmi}idref"]
                 ]
-            case "ownedAttribute" | "ownedEnd" | "ownedOperation" | "ownedParameter":
+            case "ownedAttribute":
+                if not any(c.tag in ("bodyCondition", "ownedRule") for c in child):
+                    link_feature(child, element_factory)
+            case "ownedEnd" | "ownedOperation" | "ownedParameter":
                 link_feature(child, element_factory)
-            case "ownedRule":
-                if f"{xmlns.xmi}idref" in child.attrib:
-                    continue
-                assert isinstance(element, UML.Namespace)
-                element.ownedRule = link_constraint(child, element_factory)
             case "packagedElement":
                 link_element(child, element_factory)
-            case "ownedComment" | "ownedLiteral" | "packageImport":
+            case "ownedComment" | "ownedLiteral" | "ownedRule" | "packageImport":
                 pass
             case unsupported:
                 raise ValueError(f"Unhandled tag {unsupported}")
@@ -197,10 +164,7 @@ def link_feature(elem: etree.Element, element_factory: ElementFactory):  # noqa:
     element = element_factory[elem.attrib[f"{xmlns.xmi}id"]]
     for child in elem:
         match child.tag:
-            case "bodyCondition":
-                assert isinstance(element, UML.Operation)
-                element.bodyCondition = link_constraint(child, element_factory)
-            case "ownedComment" | "ownedRule" | "precondition":
+            case "bodyCondition" | "ownedComment" | "ownedRule" | "precondition":
                 pass
             case "association":
                 element.association = element_factory[child.attrib[f"{xmlns.xmi}idref"]]
