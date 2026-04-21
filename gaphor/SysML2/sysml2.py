@@ -15,6 +15,7 @@ from gaphor.core.modeling.properties import (
     redefine,
     relation_many,
     relation_one,
+    subset,
 )
 
 
@@ -593,168 +594,88 @@ class VerificationCaseUsage(CaseUsage):
 
 
 
-Definition.variant = derivedunion("variant", Usage)
-Definition.variantMembership = derivedunion("variantMembership", VariantMembership)
-Definition.usage = derivedunion("usage", Usage)
-Definition.directedUsage = derivedunion("directedUsage", Usage)
-Definition.ownedUsage = derivedunion("ownedUsage", Usage)
-Definition.ownedReference = derivedunion("ownedReference", ReferenceUsage)
-Definition.ownedAttribute = derivedunion("ownedAttribute", AttributeUsage)
-Definition.ownedEnumeration = derivedunion("ownedEnumeration", EnumerationUsage)
-Definition.ownedOccurrence = derivedunion("ownedOccurrence", OccurrenceUsage)
-Definition.ownedItem = derivedunion("ownedItem", ItemUsage)
-Definition.ownedPart = derivedunion("ownedPart", PartUsage)
-Definition.ownedPort = derivedunion("ownedPort", PortUsage)
-Definition.ownedConnection = derivedunion("ownedConnection", ConnectorAsUsage)
-Definition.ownedFlow = derivedunion("ownedFlow", FlowUsage)
-Definition.ownedInterface = derivedunion("ownedInterface", InterfaceUsage)
-Definition.ownedAllocation = derivedunion("ownedAllocation", AllocationUsage)
-Definition.ownedAction = derivedunion("ownedAction", ActionUsage)
-Definition.ownedState = derivedunion("ownedState", StateUsage)
-Definition.ownedTransition = derivedunion("ownedTransition", TransitionUsage)
-Definition.ownedCalculation = derivedunion("ownedCalculation", CalculationUsage)
-Definition.ownedConstraint = derivedunion("ownedConstraint", ConstraintUsage)
-Definition.ownedRequirement = derivedunion("ownedRequirement", RequirementUsage)
-Definition.ownedConcern = derivedunion("ownedConcern", ConcernUsage)
-Definition.ownedCase = derivedunion("ownedCase", CaseUsage)
-Definition.ownedAnalysisCase = derivedunion("ownedAnalysisCase", AnalysisCaseUsage)
-Definition.ownedVerificationCase = derivedunion("ownedVerificationCase", VerificationCaseUsage)
-Definition.ownedUseCase = derivedunion("ownedUseCase", UseCaseUsage)
-Definition.ownedView = derivedunion("ownedView", ViewUsage)
-Definition.ownedViewpoint = derivedunion("ownedViewpoint", ViewpointUsage)
-Definition.ownedRendering = derivedunion("ownedRendering", RenderingUsage)
-Definition.ownedMetadata = derivedunion("ownedMetadata", MetadataUsage)
-_Namespace.ownedMember.add(Definition.variant)  # type: ignore[attr-defined]
-_Namespace.ownedMembership.add(Definition.variantMembership)  # type: ignore[attr-defined]
-_Type.feature.add(Definition.usage)  # type: ignore[attr-defined]
-_Type.directedFeature.add(Definition.directedUsage)  # type: ignore[attr-defined]
-Definition.usage.add(Definition.directedUsage)  # type: ignore[attr-defined]
-_Type.ownedFeature.add(Definition.ownedUsage)  # type: ignore[attr-defined]
-Definition.usage.add(Definition.ownedUsage)  # type: ignore[attr-defined]
-Definition.ownedUsage.add(Definition.ownedReference)  # type: ignore[attr-defined]
-Definition.ownedUsage.add(Definition.ownedAttribute)  # type: ignore[attr-defined]
-Definition.ownedAttribute.add(Definition.ownedEnumeration)  # type: ignore[attr-defined]
-Definition.ownedUsage.add(Definition.ownedOccurrence)  # type: ignore[attr-defined]
-Definition.ownedOccurrence.add(Definition.ownedItem)  # type: ignore[attr-defined]
-Definition.ownedItem.add(Definition.ownedPart)  # type: ignore[attr-defined]
-Definition.ownedUsage.add(Definition.ownedPort)  # type: ignore[attr-defined]
-Definition.ownedUsage.add(Definition.ownedConnection)  # type: ignore[attr-defined]
-Definition.ownedConnection.add(Definition.ownedFlow)  # type: ignore[attr-defined]
-Definition.ownedConnection.add(Definition.ownedInterface)  # type: ignore[attr-defined]
-Definition.ownedConnection.add(Definition.ownedAllocation)  # type: ignore[attr-defined]
-Definition.ownedOccurrence.add(Definition.ownedAction)  # type: ignore[attr-defined]
-Definition.ownedAction.add(Definition.ownedState)  # type: ignore[attr-defined]
-Definition.ownedUsage.add(Definition.ownedTransition)  # type: ignore[attr-defined]
-Definition.ownedAction.add(Definition.ownedCalculation)  # type: ignore[attr-defined]
-Definition.ownedOccurrence.add(Definition.ownedConstraint)  # type: ignore[attr-defined]
-Definition.ownedConstraint.add(Definition.ownedRequirement)  # type: ignore[attr-defined]
-Definition.ownedRequirement.add(Definition.ownedConcern)  # type: ignore[attr-defined]
-Definition.ownedCalculation.add(Definition.ownedCase)  # type: ignore[attr-defined]
-Definition.ownedCase.add(Definition.ownedAnalysisCase)  # type: ignore[attr-defined]
-Definition.ownedCase.add(Definition.ownedVerificationCase)  # type: ignore[attr-defined]
-Definition.ownedCase.add(Definition.ownedUseCase)  # type: ignore[attr-defined]
-Definition.ownedPart.add(Definition.ownedView)  # type: ignore[attr-defined]
-Definition.ownedRequirement.add(Definition.ownedViewpoint)  # type: ignore[attr-defined]
-Definition.ownedPart.add(Definition.ownedRendering)  # type: ignore[attr-defined]
-Definition.ownedItem.add(Definition.ownedMetadata)  # type: ignore[attr-defined]
-ActionDefinition.action = derivedunion("action", ActionUsage)
-_Behavior.step.add(ActionDefinition.action)  # type: ignore[attr-defined]
-Definition.usage.add(ActionDefinition.action)  # type: ignore[attr-defined]
+Definition.variant = subset("variant", Usage, 0, '*', None, _Namespace.ownedMember)
+Definition.variantMembership = subset("variantMembership", VariantMembership, 0, '*', None, _Namespace.ownedMembership)
+Definition.usage = subset("usage", Usage, 0, '*', None, _Type.feature)
+Definition.directedUsage = subset("directedUsage", Usage, 0, '*', None, _Type.directedFeature, Definition.usage)
+Definition.ownedUsage = subset("ownedUsage", Usage, 0, '*', None, _Type.ownedFeature, Definition.usage)
+Definition.ownedReference = subset("ownedReference", ReferenceUsage, 0, '*', None, Definition.ownedUsage)
+Definition.ownedAttribute = subset("ownedAttribute", AttributeUsage, 0, '*', None, Definition.ownedUsage)
+Definition.ownedOccurrence = subset("ownedOccurrence", OccurrenceUsage, 0, '*', None, Definition.ownedUsage)
+Definition.ownedPort = subset("ownedPort", PortUsage, 0, '*', None, Definition.ownedUsage)
+Definition.ownedConnection = subset("ownedConnection", ConnectorAsUsage, 0, '*', None, Definition.ownedUsage)
+Definition.ownedTransition = subset("ownedTransition", TransitionUsage, 0, '*', None, Definition.ownedUsage)
+Definition.ownedEnumeration = subset("ownedEnumeration", EnumerationUsage, 0, '*', None, Definition.ownedAttribute)
+Definition.ownedItem = subset("ownedItem", ItemUsage, 0, '*', None, Definition.ownedOccurrence)
+Definition.ownedFlow = subset("ownedFlow", FlowUsage, 0, '*', None, Definition.ownedConnection)
+Definition.ownedInterface = subset("ownedInterface", InterfaceUsage, 0, '*', None, Definition.ownedConnection)
+Definition.ownedAllocation = subset("ownedAllocation", AllocationUsage, 0, '*', None, Definition.ownedConnection)
+Definition.ownedAction = subset("ownedAction", ActionUsage, 0, '*', None, Definition.ownedOccurrence)
+Definition.ownedConstraint = subset("ownedConstraint", ConstraintUsage, 0, '*', None, Definition.ownedOccurrence)
+Definition.ownedPart = subset("ownedPart", PartUsage, 0, '*', None, Definition.ownedItem)
+Definition.ownedState = subset("ownedState", StateUsage, 0, '*', None, Definition.ownedAction)
+Definition.ownedCalculation = subset("ownedCalculation", CalculationUsage, 0, '*', None, Definition.ownedAction)
+Definition.ownedRequirement = subset("ownedRequirement", RequirementUsage, 0, '*', None, Definition.ownedConstraint)
+Definition.ownedMetadata = subset("ownedMetadata", MetadataUsage, 0, '*', None, Definition.ownedItem)
+Definition.ownedConcern = subset("ownedConcern", ConcernUsage, 0, '*', None, Definition.ownedRequirement)
+Definition.ownedCase = subset("ownedCase", CaseUsage, 0, '*', None, Definition.ownedCalculation)
+Definition.ownedView = subset("ownedView", ViewUsage, 0, '*', None, Definition.ownedPart)
+Definition.ownedViewpoint = subset("ownedViewpoint", ViewpointUsage, 0, '*', None, Definition.ownedRequirement)
+Definition.ownedRendering = subset("ownedRendering", RenderingUsage, 0, '*', None, Definition.ownedPart)
+Definition.ownedAnalysisCase = subset("ownedAnalysisCase", AnalysisCaseUsage, 0, '*', None, Definition.ownedCase)
+Definition.ownedVerificationCase = subset("ownedVerificationCase", VerificationCaseUsage, 0, '*', None, Definition.ownedCase)
+Definition.ownedUseCase = subset("ownedUseCase", UseCaseUsage, 0, '*', None, Definition.ownedCase)
+ActionDefinition.action = subset("action", ActionUsage, 0, '*', None, _Behavior.step, Definition.usage)
 FlowDefinition.flowEnd = redefine(FlowDefinition, "flowEnd", Usage, _Association.associationEnd)
-Usage.variant = derivedunion("variant", Usage)
-Usage.variantMembership = derivedunion("variantMembership", VariantMembership)
-Usage.owningDefinition = derivedunion("owningDefinition", Definition, upper=1)
-Usage.owningUsage = derivedunion("owningUsage", Usage, upper=1)
-Usage.usage = derivedunion("usage", Usage)
-Usage.directedUsage = derivedunion("directedUsage", Usage)
-Usage.nestedUsage = derivedunion("nestedUsage", Usage)
-Usage.nestedReference = derivedunion("nestedReference", ReferenceUsage)
-Usage.nestedAttribute = derivedunion("nestedAttribute", AttributeUsage)
-Usage.nestedEnumeration = derivedunion("nestedEnumeration", EnumerationUsage)
-Usage.nestedOccurrence = derivedunion("nestedOccurrence", OccurrenceUsage)
-Usage.nestedItem = derivedunion("nestedItem", ItemUsage)
-Usage.nestedPart = derivedunion("nestedPart", PartUsage)
-Usage.nestedPort = derivedunion("nestedPort", PortUsage)
-Usage.nestedConnection = derivedunion("nestedConnection", ConnectorAsUsage)
-Usage.nestedFlow = derivedunion("nestedFlow", FlowUsage)
-Usage.nestedInterface = derivedunion("nestedInterface", InterfaceUsage)
-Usage.nestedAllocation = derivedunion("nestedAllocation", AllocationUsage)
-Usage.nestedAction = derivedunion("nestedAction", ActionUsage)
-Usage.nestedState = derivedunion("nestedState", StateUsage)
-Usage.nestedTransition = derivedunion("nestedTransition", TransitionUsage)
-Usage.nestedCalculation = derivedunion("nestedCalculation", CalculationUsage)
-Usage.nestedConstraint = derivedunion("nestedConstraint", ConstraintUsage)
-Usage.nestedRequirement = derivedunion("nestedRequirement", RequirementUsage)
-Usage.nestedConcern = derivedunion("nestedConcern", ConcernUsage)
-Usage.nestedCase = derivedunion("nestedCase", CaseUsage)
-Usage.nestedAnalysisCase = derivedunion("nestedAnalysisCase", AnalysisCaseUsage)
-Usage.nestedVerificationCase = derivedunion("nestedVerificationCase", VerificationCaseUsage)
-Usage.nestedUseCase = derivedunion("nestedUseCase", UseCaseUsage)
-Usage.nestedView = derivedunion("nestedView", ViewUsage)
-Usage.nestedViewpoint = derivedunion("nestedViewpoint", ViewpointUsage)
-Usage.nestedRendering = derivedunion("nestedRendering", RenderingUsage)
-Usage.nestedMetadata = derivedunion("nestedMetadata", MetadataUsage)
 Usage.definition = redefine(Usage, "definition", _Classifier, _Feature.type)
-_Namespace.ownedMember.add(Usage.variant)  # type: ignore[attr-defined]
-_Namespace.ownedMembership.add(Usage.variantMembership)  # type: ignore[attr-defined]
-_Feature.owningType.add(Usage.owningDefinition)  # type: ignore[attr-defined]
-_Feature.owningType.add(Usage.owningUsage)  # type: ignore[attr-defined]
-_Type.feature.add(Usage.usage)  # type: ignore[attr-defined]
-_Type.directedFeature.add(Usage.directedUsage)  # type: ignore[attr-defined]
-Usage.usage.add(Usage.directedUsage)  # type: ignore[attr-defined]
-_Type.ownedFeature.add(Usage.nestedUsage)  # type: ignore[attr-defined]
-Usage.usage.add(Usage.nestedUsage)  # type: ignore[attr-defined]
-Usage.nestedUsage.add(Usage.nestedReference)  # type: ignore[attr-defined]
-Usage.nestedUsage.add(Usage.nestedAttribute)  # type: ignore[attr-defined]
-Usage.nestedAttribute.add(Usage.nestedEnumeration)  # type: ignore[attr-defined]
-Usage.nestedUsage.add(Usage.nestedOccurrence)  # type: ignore[attr-defined]
-Usage.nestedOccurrence.add(Usage.nestedItem)  # type: ignore[attr-defined]
-Usage.nestedItem.add(Usage.nestedPart)  # type: ignore[attr-defined]
-Usage.nestedUsage.add(Usage.nestedPort)  # type: ignore[attr-defined]
-Usage.nestedUsage.add(Usage.nestedConnection)  # type: ignore[attr-defined]
-Usage.nestedConnection.add(Usage.nestedFlow)  # type: ignore[attr-defined]
-Usage.nestedConnection.add(Usage.nestedInterface)  # type: ignore[attr-defined]
-Usage.nestedConnection.add(Usage.nestedAllocation)  # type: ignore[attr-defined]
-Usage.nestedOccurrence.add(Usage.nestedAction)  # type: ignore[attr-defined]
-Usage.nestedAction.add(Usage.nestedState)  # type: ignore[attr-defined]
-Usage.nestedUsage.add(Usage.nestedTransition)  # type: ignore[attr-defined]
-Usage.nestedAction.add(Usage.nestedCalculation)  # type: ignore[attr-defined]
-Usage.nestedOccurrence.add(Usage.nestedConstraint)  # type: ignore[attr-defined]
-Usage.nestedConstraint.add(Usage.nestedRequirement)  # type: ignore[attr-defined]
-Usage.nestedRequirement.add(Usage.nestedConcern)  # type: ignore[attr-defined]
-Usage.nestedCalculation.add(Usage.nestedCase)  # type: ignore[attr-defined]
-Usage.nestedCase.add(Usage.nestedAnalysisCase)  # type: ignore[attr-defined]
-Usage.nestedCase.add(Usage.nestedVerificationCase)  # type: ignore[attr-defined]
-Usage.nestedCase.add(Usage.nestedUseCase)  # type: ignore[attr-defined]
-Usage.nestedPart.add(Usage.nestedView)  # type: ignore[attr-defined]
-Usage.nestedRequirement.add(Usage.nestedViewpoint)  # type: ignore[attr-defined]
-Usage.nestedPart.add(Usage.nestedRendering)  # type: ignore[attr-defined]
-Usage.nestedItem.add(Usage.nestedMetadata)  # type: ignore[attr-defined]
-OccurrenceUsage.individualDefinition = derivedunion("individualDefinition", OccurrenceDefinition, upper=1)
+Usage.variant = subset("variant", Usage, 0, '*', None, _Namespace.ownedMember)
+Usage.variantMembership = subset("variantMembership", VariantMembership, 0, '*', None, _Namespace.ownedMembership)
+Usage.owningDefinition = subset("owningDefinition", Definition, 0, 1, None, _Feature.owningType)
+Usage.owningUsage = subset("owningUsage", Usage, 0, 1, None, _Feature.owningType)
+Usage.usage = subset("usage", Usage, 0, '*', None, _Type.feature)
+Usage.directedUsage = subset("directedUsage", Usage, 0, '*', None, _Type.directedFeature, Usage.usage)
+Usage.nestedUsage = subset("nestedUsage", Usage, 0, '*', None, _Type.ownedFeature, Usage.usage)
+Usage.nestedReference = subset("nestedReference", ReferenceUsage, 0, '*', None, Usage.nestedUsage)
+Usage.nestedAttribute = subset("nestedAttribute", AttributeUsage, 0, '*', None, Usage.nestedUsage)
+Usage.nestedOccurrence = subset("nestedOccurrence", OccurrenceUsage, 0, '*', None, Usage.nestedUsage)
+Usage.nestedPort = subset("nestedPort", PortUsage, 0, '*', None, Usage.nestedUsage)
+Usage.nestedConnection = subset("nestedConnection", ConnectorAsUsage, 0, '*', None, Usage.nestedUsage)
+Usage.nestedTransition = subset("nestedTransition", TransitionUsage, 0, '*', None, Usage.nestedUsage)
+Usage.nestedEnumeration = subset("nestedEnumeration", EnumerationUsage, 0, '*', None, Usage.nestedAttribute)
+Usage.nestedItem = subset("nestedItem", ItemUsage, 0, '*', None, Usage.nestedOccurrence)
+Usage.nestedFlow = subset("nestedFlow", FlowUsage, 0, '*', None, Usage.nestedConnection)
+Usage.nestedInterface = subset("nestedInterface", InterfaceUsage, 0, '*', None, Usage.nestedConnection)
+Usage.nestedAllocation = subset("nestedAllocation", AllocationUsage, 0, '*', None, Usage.nestedConnection)
+Usage.nestedAction = subset("nestedAction", ActionUsage, 0, '*', None, Usage.nestedOccurrence)
+Usage.nestedConstraint = subset("nestedConstraint", ConstraintUsage, 0, '*', None, Usage.nestedOccurrence)
+Usage.nestedPart = subset("nestedPart", PartUsage, 0, '*', None, Usage.nestedItem)
+Usage.nestedState = subset("nestedState", StateUsage, 0, '*', None, Usage.nestedAction)
+Usage.nestedCalculation = subset("nestedCalculation", CalculationUsage, 0, '*', None, Usage.nestedAction)
+Usage.nestedRequirement = subset("nestedRequirement", RequirementUsage, 0, '*', None, Usage.nestedConstraint)
+Usage.nestedMetadata = subset("nestedMetadata", MetadataUsage, 0, '*', None, Usage.nestedItem)
+Usage.nestedConcern = subset("nestedConcern", ConcernUsage, 0, '*', None, Usage.nestedRequirement)
+Usage.nestedCase = subset("nestedCase", CaseUsage, 0, '*', None, Usage.nestedCalculation)
+Usage.nestedView = subset("nestedView", ViewUsage, 0, '*', None, Usage.nestedPart)
+Usage.nestedViewpoint = subset("nestedViewpoint", ViewpointUsage, 0, '*', None, Usage.nestedRequirement)
+Usage.nestedRendering = subset("nestedRendering", RenderingUsage, 0, '*', None, Usage.nestedPart)
+Usage.nestedAnalysisCase = subset("nestedAnalysisCase", AnalysisCaseUsage, 0, '*', None, Usage.nestedCase)
+Usage.nestedVerificationCase = subset("nestedVerificationCase", VerificationCaseUsage, 0, '*', None, Usage.nestedCase)
+Usage.nestedUseCase = subset("nestedUseCase", UseCaseUsage, 0, '*', None, Usage.nestedCase)
 OccurrenceUsage.occurrenceDefinition = redefine(OccurrenceUsage, "occurrenceDefinition", _Class, Usage.definition)
-OccurrenceUsage.occurrenceDefinition.add(OccurrenceUsage.individualDefinition)  # type: ignore[attr-defined]
+OccurrenceUsage.individualDefinition = subset("individualDefinition", OccurrenceDefinition, 0, 1, None, OccurrenceUsage.occurrenceDefinition)
 ActionUsage.actionDefinition = redefine(ActionUsage, "actionDefinition", _Behavior, _Step.behavior)
 FlowUsage.flowDefinition = redefine(FlowUsage, "flowDefinition", _Interaction, ActionUsage.actionDefinition)
 EnumerationDefinition.enumeratedValue = redefine(EnumerationDefinition, "enumeratedValue", EnumerationUsage, Definition.variant)
 AttributeUsage.attributeDefinition = redefine(AttributeUsage, "attributeDefinition", _DataType, Usage.definition)
 EnumerationUsage.enumerationDefinition = redefine(EnumerationUsage, "enumerationDefinition", EnumerationDefinition, AttributeUsage.attributeDefinition)
 ConstraintUsage.constraintDefinition = redefine(ConstraintUsage, "constraintDefinition", _Predicate, _BooleanExpression.predicate)
-RequirementUsage.requiredConstraint = derivedunion("requiredConstraint", ConstraintUsage)
-RequirementUsage.assumedConstraint = derivedunion("assumedConstraint", ConstraintUsage)
-RequirementUsage.subjectParameter = derivedunion("subjectParameter", Usage, lower=1, upper=1)
-RequirementUsage.framedConcern = derivedunion("framedConcern", ConcernUsage)
-RequirementUsage.actorParameter = derivedunion("actorParameter", PartUsage)
-RequirementUsage.stakeholderParameter = derivedunion("stakeholderParameter", PartUsage)
 RequirementUsage.requirementDefinition = redefine(RequirementUsage, "requirementDefinition", RequirementDefinition, ConstraintUsage.constraintDefinition)
-_Type.ownedFeature.add(RequirementUsage.requiredConstraint)  # type: ignore[attr-defined]
-_Type.ownedFeature.add(RequirementUsage.assumedConstraint)  # type: ignore[attr-defined]
-_Step.parameter.add(RequirementUsage.subjectParameter)  # type: ignore[attr-defined]
-Usage.usage.add(RequirementUsage.subjectParameter)  # type: ignore[attr-defined]
-RequirementUsage.requiredConstraint.add(RequirementUsage.framedConcern)  # type: ignore[attr-defined]
-_Step.parameter.add(RequirementUsage.actorParameter)  # type: ignore[attr-defined]
-Usage.usage.add(RequirementUsage.actorParameter)  # type: ignore[attr-defined]
-_Step.parameter.add(RequirementUsage.stakeholderParameter)  # type: ignore[attr-defined]
-Usage.usage.add(RequirementUsage.stakeholderParameter)  # type: ignore[attr-defined]
+RequirementUsage.requiredConstraint = subset("requiredConstraint", ConstraintUsage, 0, '*', None, _Type.ownedFeature)
+RequirementUsage.assumedConstraint = subset("assumedConstraint", ConstraintUsage, 0, '*', None, _Type.ownedFeature)
+RequirementUsage.subjectParameter = subset("subjectParameter", Usage, 1, 1, None, _Step.parameter, Usage.usage)
+RequirementUsage.actorParameter = subset("actorParameter", PartUsage, 0, '*', None, _Step.parameter, Usage.usage)
+RequirementUsage.stakeholderParameter = subset("stakeholderParameter", PartUsage, 0, '*', None, _Step.parameter, Usage.usage)
+RequirementUsage.framedConcern = subset("framedConcern", ConcernUsage, 0, '*', None, RequirementUsage.requiredConstraint)
 ConcernUsage.concernDefinition = redefine(ConcernUsage, "concernDefinition", ConcernDefinition, RequirementUsage.requirementDefinition)
 RequirementConstraintMembership.referencedConstraint = derivedunion("referencedConstraint", ConstraintUsage, lower=1, upper=1)
 RequirementConstraintMembership.ownedConstraint = redefine(RequirementConstraintMembership, "ownedConstraint", ConstraintUsage, _FeatureMembership.ownedMemberFeature)
@@ -763,48 +684,26 @@ FramedConcernMembership.referencedConcern = redefine(FramedConcernMembership, "r
 ActorMembership.ownedActorParameter = redefine(ActorMembership, "ownedActorParameter", PartUsage, _ParameterMembership.ownedMemberParameter)
 StakeholderMembership.ownedStakeholderParameter = redefine(StakeholderMembership, "ownedStakeholderParameter", PartUsage, _ParameterMembership.ownedMemberParameter)
 SubjectMembership.ownedSubjectParameter = redefine(SubjectMembership, "ownedSubjectParameter", Usage, _ParameterMembership.ownedMemberParameter)
-RequirementDefinition.subjectParameter = derivedunion("subjectParameter", Usage, lower=1, upper=1)
-RequirementDefinition.actorParameter = derivedunion("actorParameter", PartUsage)
-RequirementDefinition.stakeholderParameter = derivedunion("stakeholderParameter", PartUsage)
-RequirementDefinition.assumedConstraint = derivedunion("assumedConstraint", ConstraintUsage)
-RequirementDefinition.requiredConstraint = derivedunion("requiredConstraint", ConstraintUsage)
-RequirementDefinition.framedConcern = derivedunion("framedConcern", ConcernUsage)
-_Behavior.parameter.add(RequirementDefinition.subjectParameter)  # type: ignore[attr-defined]
-Definition.usage.add(RequirementDefinition.subjectParameter)  # type: ignore[attr-defined]
-_Behavior.parameter.add(RequirementDefinition.actorParameter)  # type: ignore[attr-defined]
-Definition.usage.add(RequirementDefinition.actorParameter)  # type: ignore[attr-defined]
-_Behavior.parameter.add(RequirementDefinition.stakeholderParameter)  # type: ignore[attr-defined]
-Definition.usage.add(RequirementDefinition.stakeholderParameter)  # type: ignore[attr-defined]
-_Type.ownedFeature.add(RequirementDefinition.assumedConstraint)  # type: ignore[attr-defined]
-_Type.ownedFeature.add(RequirementDefinition.requiredConstraint)  # type: ignore[attr-defined]
-RequirementDefinition.requiredConstraint.add(RequirementDefinition.framedConcern)  # type: ignore[attr-defined]
+RequirementDefinition.subjectParameter = subset("subjectParameter", Usage, 1, 1, None, _Behavior.parameter, Definition.usage)
+RequirementDefinition.actorParameter = subset("actorParameter", PartUsage, 0, '*', None, _Behavior.parameter, Definition.usage)
+RequirementDefinition.stakeholderParameter = subset("stakeholderParameter", PartUsage, 0, '*', None, _Behavior.parameter, Definition.usage)
+RequirementDefinition.assumedConstraint = subset("assumedConstraint", ConstraintUsage, 0, '*', None, _Type.ownedFeature)
+RequirementDefinition.requiredConstraint = subset("requiredConstraint", ConstraintUsage, 0, '*', None, _Type.ownedFeature)
+RequirementDefinition.framedConcern = subset("framedConcern", ConcernUsage, 0, '*', None, RequirementDefinition.requiredConstraint)
 AssertConstraintUsage.assertedConstraint = derivedunion("assertedConstraint", ConstraintUsage, lower=1, upper=1)
 SatisfyRequirementUsage.satisfyingFeature = derivedunion("satisfyingFeature", _Feature, lower=1, upper=1)
 SatisfyRequirementUsage.satisfiedRequirement = redefine(SatisfyRequirementUsage, "satisfiedRequirement", RequirementUsage, AssertConstraintUsage.assertedConstraint)
-CalculationDefinition.calculation = derivedunion("calculation", CalculationUsage)
-ActionDefinition.action.add(CalculationDefinition.calculation)  # type: ignore[attr-defined]
-_Function.expression.add(CalculationDefinition.calculation)  # type: ignore[attr-defined]
+CalculationDefinition.calculation = subset("calculation", CalculationUsage, 0, '*', None, ActionDefinition.action, _Function.expression)
 CalculationUsage.calculationDefinition = redefine(CalculationUsage, "calculationDefinition", _Function, _Expression.function)
-ItemUsage.itemDefinition = derivedunion("itemDefinition", _Structure)
-OccurrenceUsage.occurrenceDefinition.add(ItemUsage.itemDefinition)  # type: ignore[attr-defined]
+ItemUsage.itemDefinition = subset("itemDefinition", _Structure, 0, '*', None, OccurrenceUsage.occurrenceDefinition)
 MetadataUsage.metadataDefinition = redefine(MetadataUsage, "metadataDefinition", _Metaclass, ItemUsage.itemDefinition)
-CaseUsage.objectiveRequirement = derivedunion("objectiveRequirement", RequirementUsage, upper=1)
-CaseUsage.subjectParameter = derivedunion("subjectParameter", Usage, lower=1, upper=1)
-CaseUsage.actorParameter = derivedunion("actorParameter", PartUsage)
 CaseUsage.caseDefinition = redefine(CaseUsage, "caseDefinition", CaseDefinition, CalculationUsage.calculationDefinition)
-Usage.usage.add(CaseUsage.objectiveRequirement)  # type: ignore[attr-defined]
-_Step.parameter.add(CaseUsage.subjectParameter)  # type: ignore[attr-defined]
-Usage.usage.add(CaseUsage.subjectParameter)  # type: ignore[attr-defined]
-_Step.parameter.add(CaseUsage.actorParameter)  # type: ignore[attr-defined]
-Usage.usage.add(CaseUsage.actorParameter)  # type: ignore[attr-defined]
-CaseDefinition.objectiveRequirement = derivedunion("objectiveRequirement", RequirementUsage, upper=1)
-CaseDefinition.subjectParameter = derivedunion("subjectParameter", Usage, lower=1, upper=1)
-CaseDefinition.actorParameter = derivedunion("actorParameter", PartUsage)
-Definition.usage.add(CaseDefinition.objectiveRequirement)  # type: ignore[attr-defined]
-_Behavior.parameter.add(CaseDefinition.subjectParameter)  # type: ignore[attr-defined]
-Definition.usage.add(CaseDefinition.subjectParameter)  # type: ignore[attr-defined]
-_Behavior.parameter.add(CaseDefinition.actorParameter)  # type: ignore[attr-defined]
-Definition.usage.add(CaseDefinition.actorParameter)  # type: ignore[attr-defined]
+CaseUsage.objectiveRequirement = subset("objectiveRequirement", RequirementUsage, 0, 1, None, Usage.usage)
+CaseUsage.subjectParameter = subset("subjectParameter", Usage, 1, 1, None, _Step.parameter, Usage.usage)
+CaseUsage.actorParameter = subset("actorParameter", PartUsage, 0, '*', None, _Step.parameter, Usage.usage)
+CaseDefinition.objectiveRequirement = subset("objectiveRequirement", RequirementUsage, 0, 1, None, Definition.usage)
+CaseDefinition.subjectParameter = subset("subjectParameter", Usage, 1, 1, None, _Behavior.parameter, Definition.usage)
+CaseDefinition.actorParameter = subset("actorParameter", PartUsage, 0, '*', None, _Behavior.parameter, Definition.usage)
 ObjectiveMembership.ownedObjectiveRequirement = redefine(ObjectiveMembership, "ownedObjectiveRequirement", RequirementUsage, _FeatureMembership.ownedMemberFeature)
 TransitionFeatureMembership.transitionFeature = redefine(TransitionFeatureMembership, "transitionFeature", _Step, _FeatureMembership.ownedMemberFeature)
 EventOccurrenceUsage.eventOccurrence = derivedunion("eventOccurrence", OccurrenceUsage, lower=1, upper=1)
@@ -815,38 +714,30 @@ StateUsage.exitAction = derivedunion("exitAction", ActionUsage, upper=1)
 StateUsage.stateDefinition = redefine(StateUsage, "stateDefinition", _Behavior, ActionUsage.actionDefinition)
 ExhibitStateUsage.exhibitedState = redefine(ExhibitStateUsage, "exhibitedState", StateUsage, PerformActionUsage.performedAction)
 StateSubactionMembership.action = redefine(StateSubactionMembership, "action", ActionUsage, _FeatureMembership.ownedMemberFeature)
-StateDefinition.state = derivedunion("state", StateUsage)
 StateDefinition.entryAction = derivedunion("entryAction", ActionUsage, upper=1)
 StateDefinition.doAction = derivedunion("doAction", ActionUsage, upper=1)
 StateDefinition.exitAction = derivedunion("exitAction", ActionUsage, upper=1)
-ActionDefinition.action.add(StateDefinition.state)  # type: ignore[attr-defined]
+StateDefinition.state = subset("state", StateUsage, 0, '*', None, ActionDefinition.action)
 TransitionUsage.source = derivedunion("source", ActionUsage, lower=1, upper=1)
 TransitionUsage.target = derivedunion("target", ActionUsage, lower=1, upper=1)
-TransitionUsage.triggerAction = derivedunion("triggerAction", AcceptActionUsage)
-TransitionUsage.guardExpression = derivedunion("guardExpression", _Expression)
-TransitionUsage.effectAction = derivedunion("effectAction", ActionUsage)
-TransitionUsage.succession = derivedunion("succession", _Succession, lower=1, upper=1)
-_Type.ownedFeature.add(TransitionUsage.triggerAction)  # type: ignore[attr-defined]
-_Type.ownedFeature.add(TransitionUsage.guardExpression)  # type: ignore[attr-defined]
-_Type.feature.add(TransitionUsage.effectAction)  # type: ignore[attr-defined]
-_Namespace.ownedMember.add(TransitionUsage.succession)  # type: ignore[attr-defined]
+TransitionUsage.triggerAction = subset("triggerAction", AcceptActionUsage, 0, '*', None, _Type.ownedFeature)
+TransitionUsage.guardExpression = subset("guardExpression", _Expression, 0, '*', None, _Type.ownedFeature)
+TransitionUsage.effectAction = subset("effectAction", ActionUsage, 0, '*', None, _Type.feature)
+TransitionUsage.succession = subset("succession", _Succession, 1, 1, None, _Namespace.ownedMember)
 UseCaseUsage.includedUseCase = derivedunion("includedUseCase", UseCaseUsage)
 UseCaseUsage.useCaseDefinition = redefine(UseCaseUsage, "useCaseDefinition", UseCaseDefinition, CaseUsage.caseDefinition)
 IncludeUseCaseUsage.useCaseIncluded = redefine(IncludeUseCaseUsage, "useCaseIncluded", UseCaseUsage, PerformActionUsage.performedAction)
 UseCaseDefinition.includedUseCase = derivedunion("includedUseCase", UseCaseUsage)
 AssignmentActionUsage.targetArgument = derivedunion("targetArgument", _Expression, upper=1)
 AssignmentActionUsage.valueExpression = derivedunion("valueExpression", _Expression, upper=1)
-AssignmentActionUsage.referent = derivedunion("referent", _Feature, lower=1, upper=1)
-_Namespace.member.add(AssignmentActionUsage.referent)  # type: ignore[attr-defined]
+AssignmentActionUsage.referent = subset("referent", _Feature, 1, 1, None, _Namespace.member)
 LoopActionUsage.bodyAction = derivedunion("bodyAction", ActionUsage, lower=1, upper=1)
 ForLoopActionUsage.seqArgument = derivedunion("seqArgument", _Expression, lower=1, upper=1)
 ForLoopActionUsage.loopVariable = derivedunion("loopVariable", ReferenceUsage, lower=1, upper=1)
 TerminateActionUsage.terminatedOccurrenceArgument = derivedunion("terminatedOccurrenceArgument", _Expression, upper=1)
 AcceptActionUsage.receiverArgument = derivedunion("receiverArgument", _Expression, upper=1)
-AcceptActionUsage.payloadParameter = derivedunion("payloadParameter", ReferenceUsage, lower=1, upper=1)
 AcceptActionUsage.payloadArgument = derivedunion("payloadArgument", _Expression, upper=1)
-Usage.nestedReference.add(AcceptActionUsage.payloadParameter)  # type: ignore[attr-defined]
-_Step.parameter.add(AcceptActionUsage.payloadParameter)  # type: ignore[attr-defined]
+AcceptActionUsage.payloadParameter = subset("payloadParameter", ReferenceUsage, 1, 1, None, Usage.nestedReference, _Step.parameter)
 WhileLoopActionUsage.whileArgument = derivedunion("whileArgument", _Expression, lower=1, upper=1)
 WhileLoopActionUsage.untilArgument = derivedunion("untilArgument", _Expression, upper=1)
 SendActionUsage.receiverArgument = derivedunion("receiverArgument", _Expression, upper=1)
@@ -856,57 +747,42 @@ IfActionUsage.elseAction = derivedunion("elseAction", ActionUsage, upper=1)
 IfActionUsage.thenAction = derivedunion("thenAction", ActionUsage, lower=1, upper=1)
 IfActionUsage.ifArgument = derivedunion("ifArgument", _Expression, lower=1, upper=1)
 VariantMembership.ownedVariantUsage = redefine(VariantMembership, "ownedVariantUsage", Usage, _OwningMembership.ownedMemberElement)
-PartUsage.partDefinition = derivedunion("partDefinition", PartDefinition)
-ItemUsage.itemDefinition.add(PartUsage.partDefinition)  # type: ignore[attr-defined]
-AnalysisCaseUsage.resultExpression = derivedunion("resultExpression", _Expression, upper=1)
+PartUsage.partDefinition = subset("partDefinition", PartDefinition, 0, '*', None, ItemUsage.itemDefinition)
 AnalysisCaseUsage.analysisCaseDefinition = redefine(AnalysisCaseUsage, "analysisCaseDefinition", AnalysisCaseDefinition, CaseUsage.caseDefinition)
-_Type.ownedFeature.add(AnalysisCaseUsage.resultExpression)  # type: ignore[attr-defined]
-AnalysisCaseDefinition.resultExpression = derivedunion("resultExpression", _Expression, upper=1)
-_Function.expression.add(AnalysisCaseDefinition.resultExpression)  # type: ignore[attr-defined]
-_Type.ownedFeature.add(AnalysisCaseDefinition.resultExpression)  # type: ignore[attr-defined]
+AnalysisCaseUsage.resultExpression = subset("resultExpression", _Expression, 0, 1, None, _Type.ownedFeature)
+AnalysisCaseDefinition.resultExpression = subset("resultExpression", _Expression, 0, 1, None, _Function.expression, _Type.ownedFeature)
 PortConjugation.originalPortDefinition = redefine(PortConjugation, "originalPortDefinition", PortDefinition, _Conjugation.originalType)
 PortConjugation.conjugatedPortDefinition = redefine(PortConjugation, "conjugatedPortDefinition", ConjugatedPortDefinition, _Conjugation.owningType, opposite="ownedPortConjugator")
-PortDefinition.conjugatedPortDefinition = derivedunion("conjugatedPortDefinition", ConjugatedPortDefinition, upper=1)
-_Namespace.ownedMember.add(PortDefinition.conjugatedPortDefinition)  # type: ignore[attr-defined]
+PortDefinition.conjugatedPortDefinition = subset("conjugatedPortDefinition", ConjugatedPortDefinition, 0, 1, None, _Namespace.ownedMember)
 ConjugatedPortDefinition.originalPortDefinition = redefine(ConjugatedPortDefinition, "originalPortDefinition", PortDefinition, _Element.owningNamespace, opposite="conjugatedPortDefinition")
 ConjugatedPortDefinition.ownedPortConjugator = redefine(ConjugatedPortDefinition, "ownedPortConjugator", PortConjugation, _Type.ownedConjugator, opposite="conjugatedPortDefinition")
 ConjugatedPortTyping.portDefinition = derivedunion("portDefinition", PortDefinition, lower=1, upper=1)
 ConjugatedPortTyping.conjugatedPortDefinition = redefine(ConjugatedPortTyping, "conjugatedPortDefinition", ConjugatedPortDefinition, _FeatureTyping.type)
 PortUsage.portDefinition = redefine(PortUsage, "portDefinition", PortDefinition, OccurrenceUsage.occurrenceDefinition)
-ViewUsage.satisfiedViewpoint = derivedunion("satisfiedViewpoint", ViewpointUsage)
-ViewUsage.exposedElement = derivedunion("exposedElement", _Element)
 ViewUsage.viewRendering = derivedunion("viewRendering", RenderingUsage, upper=1)
-ViewUsage.viewCondition = derivedunion("viewCondition", _Expression)
 ViewUsage.viewDefinition = redefine(ViewUsage, "viewDefinition", ViewDefinition, PartUsage.partDefinition)
-Usage.nestedRequirement.add(ViewUsage.satisfiedViewpoint)  # type: ignore[attr-defined]
-_Namespace.member.add(ViewUsage.exposedElement)  # type: ignore[attr-defined]
-_Namespace.ownedMember.add(ViewUsage.viewCondition)  # type: ignore[attr-defined]
-ViewDefinition.view = derivedunion("view", ViewUsage)
-ViewDefinition.satisfiedViewpoint = derivedunion("satisfiedViewpoint", ViewpointUsage)
+ViewUsage.satisfiedViewpoint = subset("satisfiedViewpoint", ViewpointUsage, 0, '*', None, Usage.nestedRequirement)
+ViewUsage.exposedElement = subset("exposedElement", _Element, 0, '*', None, _Namespace.member)
+ViewUsage.viewCondition = subset("viewCondition", _Expression, 0, '*', None, _Namespace.ownedMember)
 ViewDefinition.viewRendering = derivedunion("viewRendering", RenderingUsage, upper=1)
-ViewDefinition.viewCondition = derivedunion("viewCondition", _Expression)
-Definition.usage.add(ViewDefinition.view)  # type: ignore[attr-defined]
-Definition.ownedRequirement.add(ViewDefinition.satisfiedViewpoint)  # type: ignore[attr-defined]
-_Namespace.ownedMember.add(ViewDefinition.viewCondition)  # type: ignore[attr-defined]
+ViewDefinition.view = subset("view", ViewUsage, 0, '*', None, Definition.usage)
+ViewDefinition.satisfiedViewpoint = subset("satisfiedViewpoint", ViewpointUsage, 0, '*', None, Definition.ownedRequirement)
+ViewDefinition.viewCondition = subset("viewCondition", _Expression, 0, '*', None, _Namespace.ownedMember)
 RenderingUsage.renderingDefinition = redefine(RenderingUsage, "renderingDefinition", RenderingDefinition, PartUsage.partDefinition)
 ViewpointDefinition.viewpointStakeholder = derivedunion("viewpointStakeholder", PartUsage)
-RenderingDefinition.rendering = derivedunion("rendering", RenderingUsage)
-Definition.usage.add(RenderingDefinition.rendering)  # type: ignore[attr-defined]
+RenderingDefinition.rendering = subset("rendering", RenderingUsage, 0, '*', None, Definition.usage)
 ViewRenderingMembership.referencedRendering = derivedunion("referencedRendering", RenderingUsage, lower=1, upper=1)
 ViewRenderingMembership.ownedRendering = redefine(ViewRenderingMembership, "ownedRendering", RenderingUsage, _FeatureMembership.ownedMemberFeature)
 ViewpointUsage.viewpointStakeholder = derivedunion("viewpointStakeholder", PartUsage)
 ViewpointUsage.viewpointDefinition = redefine(ViewpointUsage, "viewpointDefinition", ViewpointDefinition, RequirementUsage.requirementDefinition)
 ConnectionUsage.connectionDefinition = redefine(ConnectionUsage, "connectionDefinition", _AssociationStructure, _Connector.association)
-ItemUsage.itemDefinition.add(ConnectionUsage.connectionDefinition)  # type: ignore[attr-defined]
 ConnectionDefinition.connectionEnd = redefine(ConnectionDefinition, "connectionEnd", Usage, _Association.associationEnd)
 InterfaceUsage.interfaceDefinition = redefine(InterfaceUsage, "interfaceDefinition", InterfaceDefinition, ConnectionUsage.connectionDefinition)
 InterfaceDefinition.interfaceEnd = redefine(InterfaceDefinition, "interfaceEnd", PortUsage, ConnectionDefinition.connectionEnd)
-AllocationDefinition.allocation = derivedunion("allocation", AllocationUsage)
-Definition.usage.add(AllocationDefinition.allocation)  # type: ignore[attr-defined]
+AllocationDefinition.allocation = subset("allocation", AllocationUsage, 0, '*', None, Definition.usage)
 AllocationUsage.allocationDefinition = redefine(AllocationUsage, "allocationDefinition", AllocationDefinition, ConnectionUsage.connectionDefinition)
 RequirementVerificationMembership.ownedRequirement = redefine(RequirementVerificationMembership, "ownedRequirement", RequirementUsage, RequirementConstraintMembership.ownedConstraint)
 RequirementVerificationMembership.verifiedRequirement = redefine(RequirementVerificationMembership, "verifiedRequirement", RequirementUsage, RequirementConstraintMembership.referencedConstraint)
 VerificationCaseDefinition.verifiedRequirement = derivedunion("verifiedRequirement", RequirementUsage)
-VerificationCaseUsage.verificationCaseDefinition = derivedunion("verificationCaseDefinition", VerificationCaseDefinition, upper=1)
 VerificationCaseUsage.verifiedRequirement = derivedunion("verifiedRequirement", RequirementUsage)
-CaseUsage.caseDefinition.add(VerificationCaseUsage.verificationCaseDefinition)  # type: ignore[attr-defined]
+VerificationCaseUsage.verificationCaseDefinition = subset("verificationCaseDefinition", VerificationCaseDefinition, 0, 1, None, CaseUsage.caseDefinition)
