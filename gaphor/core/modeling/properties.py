@@ -136,7 +136,7 @@ class umlproperty:
     def __init__(self, name: str):
         self.dependent_properties: set[subsettable_property] = set()
         self.name = name
-        self._name = f"_{name}"
+        self._name = f"_{name}_{id(self)}"
 
     def __get__(self, obj, class_=None):
         return self.get(obj) if obj else self
