@@ -31,7 +31,7 @@ def load_entry_points(scope, services=None) -> dict[str, type]:
     return uninitialized_services
 
 
-def init_entry_points(
+def init_entry_points[T](
     uninitialized_services: dict[str, type[T]], **known_services: T
 ) -> dict[str, T]:
     """Instantiate service definitions, taking into account dependencies

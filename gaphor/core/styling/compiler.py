@@ -213,25 +213,21 @@ def compile_attribute_selector(selector: selectors.AttributeSelector):
         return lambda el: el.attribute(name) == value
     elif operator == "~=":
         return lambda el: (
-            attr := el.attribute(name)
-        ) is not None and value in split_whitespace(attr)
+            (attr := el.attribute(name)) is not None and value in split_whitespace(attr)
+        )
     elif operator == "^=":
-        return (
-            lambda el: value
+        return lambda el: (
+            value
             and (attr := el.attribute(name)) is not None
             and attr.startswith(value)
         )
     elif operator == "$=":
-        return (
-            lambda el: value
-            and (attr := el.attribute(name)) is not None
-            and attr.endswith(value)
+        return lambda el: (
+            value and (attr := el.attribute(name)) is not None and attr.endswith(value)
         )
     elif operator == "*=":
-        return (
-            lambda el: value
-            and (attr := el.attribute(name)) is not None
-            and value in attr
+        return lambda el: (
+            value and (attr := el.attribute(name)) is not None and value in attr
         )
     elif operator == "|=":
 

@@ -72,9 +72,11 @@ class BlockItem(Classified, ElementPresentation[Block]):
                 and [
                     self.block_compartment(
                         self.diagram.gettext("parts"),
-                        lambda a: isinstance(a.type, Block)
-                        and a.aggregation
-                        and a.aggregation == "composite",
+                        lambda a: (
+                            isinstance(a.type, Block)
+                            and a.aggregation
+                            and a.aggregation == "composite"
+                        ),
                         "part",
                     )
                 ]
@@ -98,8 +100,10 @@ class BlockItem(Classified, ElementPresentation[Block]):
                 and [
                     self.block_compartment(
                         self.diagram.gettext("values"),
-                        lambda a: isinstance(a.type, ValueType)
-                        and a.aggregation == "composite",
+                        lambda a: (
+                            isinstance(a.type, ValueType)
+                            and a.aggregation == "composite"
+                        ),
                         "value",
                     )
                 ]
@@ -146,8 +150,8 @@ class BlockItem(Classified, ElementPresentation[Block]):
 
     def operations_compartment(self, name, predicate):
         def lazy_format(operation):
-            return lambda: format_operation(operation) or self.diagram.gettext(
-                "unnamed"
+            return lambda: (
+                format_operation(operation) or self.diagram.gettext("unnamed")
             )
 
         return CssNode(

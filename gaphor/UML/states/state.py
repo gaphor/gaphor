@@ -35,19 +35,23 @@ class StateItem(ElementPresentation[UML.State], Named):
         )
         compartment = Box(
             Text(
-                text=lambda: self.subject.entry.name
-                and f"entry / {self.subject.entry.name}"
-                or "",
+                text=lambda: (
+                    self.subject.entry.name
+                    and f"entry / {self.subject.entry.name}"
+                    or ""
+                ),
             ),
             Text(
-                text=lambda: self.subject.exit.name
-                and f"exit / {self.subject.exit.name}"
-                or "",
+                text=lambda: (
+                    self.subject.exit.name and f"exit / {self.subject.exit.name}" or ""
+                ),
             ),
             Text(
-                text=lambda: self.subject.doActivity.name
-                and f"do / {self.subject.doActivity.name}"
-                or "",
+                text=lambda: (
+                    self.subject.doActivity.name
+                    and f"do / {self.subject.doActivity.name}"
+                    or ""
+                ),
             ),
             draw=draw_top_separator,
         )

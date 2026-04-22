@@ -173,7 +173,7 @@ class EditorStack:
         self.vbox = None
         self._current_item = None
 
-    def _get_adapters(self, item):
+    def _get_property_pages(self, item):
         """Return an ordered list of (order, name, adapter)."""
         page_map = {}
         partial = self.component_registry.partial
@@ -190,13 +190,14 @@ class EditorStack:
     def create_pages(self, item):
         """Load all tabs that can operate on the given item."""
         assert self.vbox
-        adapters = self._get_adapters(item)
+        property_pages = self._get_property_pages(item)
 
-        for (_, name), adapter in adapters:
+        for (_, name), property_page in property_pages:
             try:
-                page = adapter.construct()
+                page = property_page.construct()
                 if not page:
                     continue
+                page.property_page = property_page
                 self.vbox.append(page)
             except Exception:
                 log.error(
@@ -207,6 +208,9 @@ class EditorStack:
         """Remove all tabs from the notebook."""
         assert self.vbox
         while page := self.vbox.get_first_child():
+            if hasattr(page, "property_page"):
+                page.property_page.close()
+                del page.property_page
             self.vbox.remove(page)
 
     def _selection_changed(self, item):

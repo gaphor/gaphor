@@ -37,10 +37,12 @@ class PropertyItem(Named, ElementPresentation[UML.Property]):
                         "name",
                         self.subject,
                         Text(
-                            text=lambda: format_property(
-                                self.subject, type=True, multiplicity=True
-                            )
-                            or "",
+                            text=lambda: (
+                                format_property(
+                                    self.subject, type=True, multiplicity=True
+                                )
+                                or ""
+                            ),
                         ),
                     ),
                 ),

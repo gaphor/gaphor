@@ -111,9 +111,11 @@ class AutoLayouting(RuleBasedStateMachine):
 
     def targets(self, relation, handle):
         return self.select(
-            lambda e: isinstance(e, diagramitems.ClassItem)
-            and e.diagram is relation.diagram
-            and allow(relation, handle, e)
+            lambda e: (
+                isinstance(e, diagramitems.ClassItem)
+                and e.diagram is relation.diagram
+                and allow(relation, handle, e)
+            )
         )
 
     @initialize()

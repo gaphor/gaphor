@@ -38,9 +38,11 @@ def text_technology(item: C4DependencyItem):
         "technology",
         item.subject,
         Text(
-            text=lambda: item.subject
-            and item.subject.technology
-            and f"[{item.subject.technology}]"
-            or ""
+            text=lambda: (
+                item.subject
+                and item.subject.technology
+                and f"[{item.subject.technology}]"
+                or ""
+            )
         ),
     )

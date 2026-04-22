@@ -77,9 +77,11 @@ class DiagramDirective(sphinx.util.docutils.SphinxDirective):
 
         diagram = next(
             model.select(
-                lambda e: isinstance(e, Diagram)
-                and hasattr(e, "qualifiedName")
-                and ".".join(e.qualifiedName) == name
+                lambda e: (
+                    isinstance(e, Diagram)
+                    and hasattr(e, "qualifiedName")
+                    and ".".join(e.qualifiedName) == name
+                )
             ),
             None,
         )

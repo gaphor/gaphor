@@ -1713,7 +1713,8 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/112352776?v=4",
       "profile": "https://github.com/Nekothegamer",
       "contributions": [
-        "translation"
+        "translation",
+        "bug"
       ]
     },
     {
@@ -1723,6 +1724,42 @@
       "profile": "https://github.com/FengZhe-ZYH",
       "contributions": [
         "doc"
+      ]
+    },
+    {
+      "login": "cjmayo",
+      "name": "Chris Mayo",
+      "avatar_url": "https://avatars.githubusercontent.com/u/921089?v=4",
+      "profile": "https://github.com/cjmayo",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "RadekJedrzejczyk",
+      "name": "RadekJedrzejczyk",
+      "avatar_url": "https://avatars.githubusercontent.com/u/101389133?v=4",
+      "profile": "https://github.com/RadekJedrzejczyk",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "DisconnectedPowerCable",
+      "name": "DisconnectedPowerCable",
+      "avatar_url": "https://avatars.githubusercontent.com/u/199244183?v=4",
+      "profile": "https://github.com/DisconnectedPowerCable",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "Gerseneck",
+      "name": "Geeson Wan",
+      "avatar_url": "https://avatars.githubusercontent.com/u/67175218?v=4",
+      "profile": "https://gerseneck.github.io",
+      "contributions": [
+        "translation"
       ]
     }
   ],

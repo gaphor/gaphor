@@ -1,7 +1,9 @@
 # ruff: noqa: F401
 
+from gaphor.diagram.general import generalconnectors
 from gaphor.diagram.general.diagramitems import (
     Box,
+    Diamond,
     Ellipse,
     Line,
     MetadataItem,
@@ -9,6 +11,7 @@ from gaphor.diagram.general.diagramitems import (
 
 __all__ = [
     "Box",
+    "Diamond",
     "Ellipse",
     "Line",
     "MetadataItem",

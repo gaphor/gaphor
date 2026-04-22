@@ -7,18 +7,18 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gaphor 2.23.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-30 14:25-0500\n"
-"PO-Revision-Date: 2025-06-13 04:01+0000\n"
+"POT-Creation-Date: 2026-04-05 21:26-0400\n"
+"PO-Revision-Date: 2026-04-15 10:10+0000\n"
 "Last-Translator: Stan SZLAPKA <stansz@free.fr>\n"
-"Language-Team: French <https://hosted.weblate.org/projects/gaphor/"
-"docs-gaphor-org/fr/>\n"
+"Language-Team: French <https://hosted.weblate.org/projects/gaphor/docs-"
+"gaphor-org/fr/>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.12-dev\n"
-"Generated-By: Babel 2.16.0\n"
+"X-Generator: Weblate 5.17.1-dev\n"
+"Generated-By: Babel 2.18.0\n"
 
 #: ../changelog.rst:2
 msgid "Change Log"
@@ -41,6 +41,7 @@ msgid "Tutorial: Coffee Machine"
 msgstr "Tutoriel : Machine à café"
 
 #: ../coffee_machine.md:4 ../first_model.md:4
+#, python-brace-format
 msgid ""
 "In this tutorial we refer to the different parts of the gaphor interface:"
 " {ref}`Model Browser <getting_started:model browser>`, "
@@ -140,8 +141,8 @@ msgid ""
 "![Two shots of espresso being pulled from an espresso machine.](images"
 "/coffee-machine-double-shot.jpg)"
 msgstr ""
-"![Deux doses d'expresso tiré d'une machine à expresso] (images/coffee-"
-"machine-double-shot.jpg)"
+"![Deux doses d'expresso tiré d'une machine à expresso](images/coffee-machine-"
+"double-shot.jpg)"
 
 #: ../coffee_machine.md:41
 msgid "Two shots of espresso being pulled from an espressomachine."
@@ -153,8 +154,9 @@ msgid ""
 " start a new model with the _SysML_ template. You can now decide to "
 "either:"
 msgstr ""
-"La première chose que les fourmis ont faite a été d'ouvrir Gaphor dans la "
-"fenêtre du Greeter et de démarrer un nouveau modèle avec le modèle _SysML_ :"
+"La première chose que les fourmis ont faite a été d'ouvrir Gaphor dans la"
+" fenêtre du Greeter et de démarrer un nouveau modèle avec le modèle "
+"_SysML_ :"
 
 #: ../coffee_machine.md:46
 msgid ""
@@ -362,7 +364,7 @@ msgid ""
 "SysML](https://youtu.be/998UznK9ogY)."
 msgstr ""
 "Si vous souhaitez en savoir plus sur ces quatre piliers, Rick Steiner a "
-"réalisé une vidéo de 30 minutes intitulée [The Four Pillars of SysML] "
+"réalisé une vidéo de 30 minutes intitulée [The Four Pillars of SysML]"
 "(https://youtu.be/998UznK9ogY)."
 
 #: ../coffee_machine.md:118
@@ -528,13 +530,12 @@ msgid ""
 "machine, such as placing an order, making an espresso, or cleaning the "
 "machine."
 msgstr ""
-"Le diagramme inclut généralement différents acteurs ou utilisateurs, tels"
-" que le barman (barista), le client (customer), et éventuellement un "
-"directeur (manager) ou un technicien de maintenance (maintenance "
-"technician). Il comprend également différents « cas d'utilisation » ou "
+"En général, le diagramme inclut différents acteurs ou utilisateurs, tels que "
+"le barista, le client et, éventuellement, un responsable ou un technicien de "
+"maintenance. Il comprend également différents \"cas d'utilisation\" ou "
 "scénarios, qui décrivent les différentes actions que les utilisateurs "
-"peuvent effectuer avec la machine, comme passer une commande, préparer un"
-" espresso ou nettoyer la machine."
+"peuvent effectuer avec la machine, comme passer une commande, préparer un "
+"espresso ou nettoyer la machine."
 
 #: ../coffee_machine_concept.md:43
 msgid ""
@@ -1048,8 +1049,8 @@ msgid ""
 "make coffee. In this case, there are two main states: On and Off."
 msgstr ""
 "L' état logique de la machine à café est un diagramme qui montre les "
-"différents états et transitions par lesquels la machine passe pour faire du "
-"café. Dans ce cas, il y a deux états principaux : On et Off."
+"différents états et transitions par lesquels la machine passe pour faire "
+"du café. Dans ce cas, il y a deux états principaux : On et Off."
 
 #: ../coffee_machine_logical.md:54
 msgid ""
@@ -1175,10 +1176,10 @@ msgid ""
 "designed for easy filling and cleaning. The water tank supplies water to "
 "the water pump when needed."
 msgstr ""
-"Water tank : Le réservoir d'eau est un récipient qui stocke l'eau utilisée "
-"dans la machine à espresso. Il a généralement une capacité spécifique et est "
-"conçu pour être facilement rempli et nettoyé. Le réservoir d'eau alimente la "
-"pompe à eau en cas de besoin."
+"Water tank : Le réservoir d'eau est un récipient qui stocke l'eau "
+"utilisée dans la machine à espresso. Il a généralement une capacité "
+"spécifique et est conçu pour être facilement rempli et nettoyé. Le "
+"réservoir d'eau alimente la pompe à eau en cas de besoin."
 
 #: ../coffee_machine_logical.md:107
 msgid ""
@@ -1187,10 +1188,11 @@ msgid ""
 " the coffee grounds in the portafilter. It plays a crucial role in the "
 "espresso extraction process by ensuring a consistent flow of water."
 msgstr ""
-"Water pump : La pompe à eau est chargée de puiser l'eau dans le réservoir "
-"d'eau et de créer la pression nécessaire pour faire passer l'eau à travers "
-"le marc de café dans le filtre à café. Elle joue un rôle crucial dans le "
-"processus d'extraction de l'espresso en assurant un débit d'eau constant."
+"Water pump : La pompe à eau est chargée de puiser l'eau dans le réservoir"
+" d'eau et de créer la pression nécessaire pour faire passer l'eau à "
+"travers le marc de café dans le filtre à café. Elle joue un rôle crucial "
+"dans le processus d'extraction de l'espresso en assurant un débit d'eau "
+"constant."
 
 #: ../coffee_machine_logical.md:112
 msgid ""
@@ -1199,10 +1201,10 @@ msgid ""
 "for brewing espresso. It maintains the water at the desired temperature "
 "to ensure proper extraction and flavor."
 msgstr ""
-"Water heater : Le chauffe-eau, également appelé boiler ou élément chauffant, "
-"est chargé de chauffer l'eau à la température optimale pour la préparation "
-"de l'espresso. Il maintient l'eau à la température souhaitée pour garantir "
-"une extraction et une saveur adéquates."
+"Water heater : Le chauffe-eau, également appelé boiler ou élément "
+"chauffant, est chargé de chauffer l'eau à la température optimale pour la"
+" préparation de l'espresso. Il maintient l'eau à la température souhaitée"
+" pour garantir une extraction et une saveur adéquates."
 
 #: ../coffee_machine_logical.md:117
 msgid ""
@@ -1212,10 +1214,10 @@ msgid ""
 " grounds in the portafilter to extract the flavors and create the "
 "espresso."
 msgstr ""
-"Portafilter : C'est un dispositif amovible en forme de poignée qui contient "
-"le marc de café. Il est fixé à la machine à espresso et sert de porte-"
-"filtre. L'eau de la pompe est forcée à travers le marc de café dans le porte-"
-"filtre pour extraire les arômes et créer l'espresso."
+"Portafilter : C'est un dispositif amovible en forme de poignée qui "
+"contient le marc de café. Il est fixé à la machine à espresso et sert de "
+"porte-filtre. L'eau de la pompe est forcée à travers le marc de café dans"
+" le porte-filtre pour extraire les arômes et créer l'espresso."
 
 #: ../coffee_machine_logical.md:122
 msgid ""
@@ -1227,11 +1229,12 @@ msgid ""
 "consistency and deliver the desired results."
 msgstr ""
 "Controller : C'est très souvent un microcontrôleur ou un circuit imprimé "
-"dédié, c'est le cerveau de la machine à espresso. Il gère et coordonne le "
-"fonctionnement de divers composants, tels que la pompe à eau, le chauffe-eau "
-"et l'IHM, afin de garantir un processus d'infusion correct. Il surveille et "
-"contrôle la température, la pression et d'autres paramètres afin de "
-"maintenir la cohérence et d'obtenir les résultats souhaités."
+"dédié, c'est le cerveau de la machine à espresso. Il gère et coordonne le"
+" fonctionnement de divers composants, tels que la pompe à eau, le "
+"chauffe-eau et l'IHM, afin de garantir un processus d'infusion correct. "
+"Il surveille et contrôle la température, la pression et d'autres "
+"paramètres afin de maintenir la cohérence et d'obtenir les résultats "
+"souhaités."
 
 #: ../coffee_machine_logical.md:129
 msgid ""
@@ -1241,11 +1244,12 @@ msgid ""
 "the portafilter and into the cup. The group head also helps to maintain "
 "proper temperature and pressure during the brewing process."
 msgstr ""
-"Group head : La tête de groupe est une partie de la machine à espresso où se "
-"fixe le porte-filtre. Elle assure une liaison sûre entre le portafiltre et "
-"la machine, ce qui permet à l'espresso de s'écouler du portafiltre et de se "
-"déverser dans la tasse. La tête de groupe permet également de maintenir une "
-"température et une pression adéquates pendant le processus d'infusion."
+"Group head : La tête de groupe est une partie de la machine à espresso où"
+" se fixe le porte-filtre. Elle assure une liaison sûre entre le "
+"portafiltre et la machine, ce qui permet à l'espresso de s'écouler du "
+"portafiltre et de se déverser dans la tasse. La tête de groupe permet "
+"également de maintenir une température et une pression adéquates pendant "
+"le processus d'infusion."
 
 #: ../coffee_machine_logical.md:135
 msgid ""
@@ -1258,13 +1262,13 @@ msgid ""
 "temperature, and cup size selection."
 msgstr ""
 "HMI : L'Interface Homme-Machine (IHM) est interface utilisateur de la "
-"machine à espresso. Elle permet à l'utilisateur d'interagir avec la machine, "
-"généralement au moyen de boutons, d'interrupteurs ou d'un écran tactile. "
-"L'IHM permet à l'utilisateur de sélectionner différentes options d'infusion, "
-"d'ajuster les réglages et de contrôler l'état de la machine. Elle fournit "
-"des informations en retour et affiche des informations relatives au "
-"processus de préparation, telles que le temps de préparation, la température "
-"et la sélection de la taille de la tasse."
+"machine à espresso. Elle permet à l'utilisateur d'interagir avec la "
+"machine, généralement au moyen de boutons, d'interrupteurs ou d'un écran "
+"tactile. L'IHM permet à l'utilisateur de sélectionner différentes options"
+" d'infusion, d'ajuster les réglages et de contrôler l'état de la machine."
+" Elle fournit des informations en retour et affiche des informations "
+"relatives au processus de préparation, telles que le temps de "
+"préparation, la température et la sélection de la taille de la tasse."
 
 #: ../coffee_machine_logical.md:142
 msgid ""
@@ -1328,24 +1332,24 @@ msgstr ""
 #: ../coffee_machine_logical.md:166
 msgid "Water: Represents the flow of water from the water tank to the water pump."
 msgstr ""
-"Water : Représente le flux d'eau depuis le réservoir d'eau jusqu'à la pompe "
-"à eau."
+"Water : Représente le flux d'eau depuis le réservoir d'eau jusqu'à la "
+"pompe à eau."
 
 #: ../coffee_machine_logical.md:167
 msgid ""
 "On/Off: Represents the command or signal to turn the espresso machine on "
 "or off."
 msgstr ""
-"On/Off : Représente la commande ou le signal de mise en marche ou d'arrêt de "
-"la machine à espresso."
+"On/Off : Représente la commande ou le signal de mise en marche ou d'arrêt"
+" de la machine à espresso."
 
 #: ../coffee_machine_logical.md:168
 msgid ""
 "Volume Adjustment: Represents the user-selected volume adjustment for the"
 " coffee output."
 msgstr ""
-"Volume Adjustment : (Ajustement du volume) Représente le réglage du volume "
-"sélectionné par l'utilisateur pour la sortie du café."
+"Volume Adjustment : (Ajustement du volume) Représente le réglage du "
+"volume sélectionné par l'utilisateur pour la sortie du café."
 
 #: ../coffee_machine_logical.md:169
 msgid ""
@@ -1360,8 +1364,9 @@ msgid ""
 "Heat Command: Represents the command or signal to activate the water "
 "heater and initiate the heating process."
 msgstr ""
-"Heat Command :(Commande de chauffage) Représente la commande ou le signal "
-"permettant d'activer le chauffe-eau et de lancer le processus de chauffage."
+"Heat Command :(Commande de chauffage) Représente la commande ou le signal"
+" permettant d'activer le chauffe-eau et de lancer le processus de "
+"chauffage."
 
 #: ../coffee_machine_logical.md:171
 msgid ""
@@ -1460,11 +1465,11 @@ msgid ""
 "=INCOSE-GUIDENEEDSREQ) and the [Easy Approach to Requirements "
 "Syntax](https://alistairmavin.com/ears/) are recommended resources."
 msgstr ""
-"Si vous avez besoin d'aide pour rédiger de bonnes exigences, le [INCOSE "
-"Guide to Needs and Requirements] "
-"(https://portal.incose.org/commerce/store?productId=INCOSE-GUIDENEEDSREQ)"
-" et le [Easy Approach to Requirements Syntax] "
-"(https://alistairmavin.com/ears/) sont des ressources recommandées."
+"Si vous avez besoin d'aide pour rédiger des spécifications de qualité, nous "
+"vous recommandons le [Guide INCOSE sur les besoins et les spécifications]"
+"(https://portal.incose.org/commerce/store?productId=INCOSE-GUIDENEEDSREQ) et "
+"le [Guide pratique de la syntaxe des spécifications](https://"
+"alistairmavin.com/ears/)."
 
 #: ../coffee_machine_logical.md:209
 msgid ""
@@ -1641,9 +1646,9 @@ msgid ""
 "/developing-online-with-"
 "codespaces/creating-a-codespace#creating-a-codespace)."
 msgstr ""
-"Pour plus d'informations, consultez la [documentation GitHub] "
-"(https://docs.github.com/en/free-pro-team@latest/github/developing-"
-"online-with-codespaces/creating-a-codespace#creating-a-codespace)."
+"Pour plus d'informations, consultez la [documentation GitHub](https://"
+"docs.github.com/en/free-pro-team@latest/github/developing-online-with-"
+"codespaces/creating-a-codespace#creating-a-codespace)."
 
 #: ../container.md:15
 msgid "Remote access to Gaphor graphic window with Codespaces"
@@ -1665,13 +1670,11 @@ msgid ""
 "[devcontainer.json](https://github.com/gaphor/gaphor/blob/main/.devcontainer/devcontainer.json)"
 " file."
 msgstr ""
-"Cette opération est facilitée dans Gaphor par l'utilisation d'un "
-"conteneur appelé [desktop-lite] "
-"(https://github.com/devcontainers/features/tree/main/src/desktop-lite). "
-"Cette fonctionnalité est activée par défaut dans le fichier "
-"[devcontainer.json] "
-"(https://github.com/gaphor/gaphor/blob/main/.devcontainer/devcontainer.json)"
-" de Gaphor."
+"Cette opération est facilitée dans Gaphor par l'utilisation d'un conteneur "
+"appelé [desktop-lite](https://github.com/devcontainers/features/tree/main/"
+"src/desktop-lite). Cette fonctionnalité est activée par défaut dans le "
+"fichier [devcontainer.json](https://github.com/gaphor/gaphor/blob/main/"
+".devcontainer/devcontainer.json) de Gaphor."
 
 #: ../container.md:22
 msgid ""
@@ -1750,10 +1753,9 @@ msgid ""
 " Gaphor the familiar Graphic window should be displayed in noVNC view on "
 "Browser"
 msgstr ""
-"Lors du [débogage/exécution] "
-"(https://github.com/gaphor/gaphor/blob/main/.devcontainer/devcontainer.json)"
-" Gaphor, la fenêtre graphique familière devrait être affichée dans la vue"
-" noVNC sur le navigateur"
+"Lors du [débogage/exécution](https://github.com/gaphor/gaphor/blob/main/"
+".devcontainer/devcontainer.json) Gaphor, la fenêtre graphique familière "
+"devrait être affichée dans la vue noVNC sur le navigateur"
 
 #: ../contribute.md:1
 msgid "Contribute to Gaphor"
@@ -1828,11 +1830,12 @@ msgid ""
 " that your idea is implemented in a way consistent with the application, "
 "and it increases the chance your work will be accepted."
 msgstr ""
-"C'est toujours une bonne idée de créer un issue ou de commencer une "
-"discussion si vous souhaitez développer quelque chose qui n'existe pas "
-"encore. De cette façon, vous pouvez vous assurer que votre idée est mise "
-"en œuvre de manière cohérente avec l'application, et augmenter les "
-"chances que votre travail soit accepté."
+"C'est toujours une bonne idée de créer un [ticket](https://github.com/gaphor/"
+"gaphor/issues) ou de lancer une [discussion](https://github.com/gaphor/"
+"gaphor/discussions) si vous souhaitez développer quelque chose pour lequel "
+"il n'existe pas encore de ticket. Vous vous assurez ainsi que votre idée "
+"sera mise en œuvre de manière cohérente avec l'application, ce qui augmente "
+"les chances que votre travail soit accepté."
 
 #: ../contribute.md:28
 msgid ""
@@ -2136,11 +2139,11 @@ msgstr ""
 "pour les acheminer aux parties intéressées. Tout le monde peut écouter "
 "les événements."
 
-#: ../event_system.md:1
+#: ../event_system.rst:2
 msgid "Event System"
 msgstr "Système d'événements"
 
-#: ../event_system.md:3
+#: ../event_system.rst:4
 msgid ""
 "The event system in Gaphor provides an API to *handle* events and to "
 "*subscribe* to events."
@@ -2148,7 +2151,7 @@ msgstr ""
 "Le système d'événements de Gaphor fournit une API pour *gérer* les "
 "événements et pour *s'abonner* aux événements."
 
-#: ../event_system.md:6
+#: ../event_system.rst:7
 msgid ""
 "In Gaphor we manage event handler subscriptions through the "
 "`EventManager` service. Gaphor is highly event driven:"
@@ -2157,23 +2160,23 @@ msgstr ""
 "via le service `EventManager`. Gaphor est fortement axé sur les "
 "événements :"
 
-#: ../event_system.md:9
+#: ../event_system.rst:10
 msgid "Changes in the loaded model are emitted as events"
 msgstr "Les modifications du modèle chargé sont émises sous forme d'événements"
 
-#: ../event_system.md:10
+#: ../event_system.rst:11
 msgid "Changes on diagrams are emitted as events"
 msgstr ""
 "Les modifications apportées aux diagrammes sont émises sous forme "
 "d'événements"
 
-#: ../event_system.md:11
+#: ../event_system.rst:12
 msgid "Changes in the UI are emitted as events"
 msgstr ""
 "Les modifications de l'interface utilisateur sont émises sous forme "
 "d'événements"
 
-#: ../event_system.md:13
+#: ../event_system.rst:14
 msgid ""
 "Although Gaphor depends heavily on GTK for its user interface, Gaphor is "
 "using its own event dispatcher. Events can be structured in hierarchies. "
@@ -2248,16 +2251,218 @@ msgstr ""
 "Cela vous permettra de laisser un gestionnaire d'événements s'occuper de "
 "l'événement :"
 
-#: ../event_system.md:31
+#: ../event_system.rst:30
 msgid ""
 "Under the hood events are handled by the Generics library. For more "
 "information about how the Generic library handles events see the `Generic"
-" documentation` <https://generic.readthedocs.io>`_."
+" documentation <https://generic.readthedocs.io>`_."
 msgstr ""
-"Sous le capot, les événements sont gérés par la bibliothèque Generics. "
-"Pour plus d'informations sur la façon dont la bibliothèque Generic gère "
-"les événements, voir la `documentation Generic "
-"<https://generic.readthedocs.io>`_."
+"Sous le capot, les événements sont gérés par la bibliothèque Generics. Pour "
+"plus d'informations sur la façon dont la bibliothèque Generic gère les "
+"événements, voir la `documentation Generic <https://generic.readthedocs.io>"
+"`_."
+
+#: ../exporting.md:1
+msgid "Exporting"
+msgstr "Exportation"
+
+#: ../exporting.md:3
+msgid ""
+"Gaphor can export diagrams and models in several formats, from individual"
+" diagram images to full interactive HTML reports."
+msgstr ""
+"Gaphor permet d'exporter des diagrammes et des modèles dans plusieurs "
+"formats, allant de simples images de diagrammes à des rapports HTML "
+"interactifs complets."
+
+#: ../exporting.md:6
+msgid "Diagram Image Export"
+msgstr "Exportation d'images de schémas"
+
+#: ../exporting.md:8
+msgid "Gaphor supports exporting diagrams as SVG, PNG, PDF, and EPS images."
+msgstr "Gaphor permet d'exporter des diagrammes au format SVG, PNG, PDF et EPS."
+
+#: ../exporting.md:11
+msgid "From the GUI"
+msgstr "Depuis l'interface graphique"
+
+#: ../exporting.md:13
+msgid "Open the hamburger menu and choose one of:"
+msgstr ""
+"Ouvrez le menu « hamburger » et sélectionnez l'une des options suivantes :"
+
+#: ../exporting.md:15
+msgid "Export as SVG/PNG/PDF — exports the currently active diagram"
+msgstr ""
+"Exporter au format SVG/PNG/PDF — exporte le diagramme actuellement "
+"sélectionné"
+
+#: ../exporting.md:16
+msgid "Export all diagrams — batch-exports every diagram in the model"
+msgstr ""
+"Exporter tous les diagrammes — exporte en une seule fois tous les diagrammes "
+"du modèle"
+
+#: ../exporting.md:18
+msgid ""
+"Batch export preserves the package directory structure, so diagrams "
+"inside nested packages end up in matching subdirectories."
+msgstr ""
+"L'export par lots conserve la structure des répertoires des paquets ; ainsi, "
+"les diagrammes contenus dans des paquets imbriqués se retrouvent dans les "
+"sous-répertoires correspondants."
+
+#: ../exporting.md:21
+msgid "From the command line"
+msgstr "Depuis la ligne de commande"
+
+#: ../exporting.md:27
+msgid ""
+"This exports all diagrams to PDF (the default format) in the current "
+"directory."
+msgstr ""
+"Cette commande exporte tous les diagrammes au format PDF (format par défaut) "
+"dans le répertoire actuel."
+
+#: ../exporting.md:29
+msgid "Common options:"
+msgstr "Options courantes :"
+
+#: ../exporting.md ../exporting.md:57
+msgid "Option"
+msgstr "Option"
+
+#: ../exporting.md ../exporting.md:57
+msgid "Description"
+msgstr "Description"
+
+#: ../exporting.md
+msgid "`-f`, `--format` _format_"
+msgstr "`-f`,`--format`_format_"
+
+#: ../exporting.md
+msgid "Output format: `svg`, `png`, `pdf` (default), or `eps`"
+msgstr "Format de sortie : `svg`, `png`, `pdf` (par défaut) ou `eps`"
+
+#: ../exporting.md ../exporting.md:57
+msgid "`-o`, `--dir` _directory_"
+msgstr "`-o`, `--dir` _directory_"
+
+#: ../exporting.md
+msgid "Output directory"
+msgstr "Répertoire de sortie"
+
+#: ../exporting.md
+msgid "`-r`, `--regex` _pattern_"
+msgstr "`-r`, `--regex` _pattern_"
+
+#: ../exporting.md
+msgid ""
+"Only export diagrams whose name matches the pattern (case-insensitive, "
+"includes package name)"
+msgstr ""
+"N'exporter que les diagrammes dont le nom correspond au modèle (sans "
+"distinction de majuscules/minuscules, nom du package inclus)"
+
+#: ../exporting.md
+msgid "`-u`, `--use-underscores`"
+msgstr "`-u`, `--use-underscores`"
+
+#: ../exporting.md
+msgid "Use underscores instead of spaces in output filenames"
+msgstr ""
+"Utilisez des traits de soulignement à la place des espaces dans les noms de "
+"fichiers de sortie"
+
+#: ../exporting.md:38
+msgid "For example, to export only diagrams with \"Class\" in their name as SVG:"
+msgstr ""
+"Par exemple, pour exporter uniquement les diagrammes dont le nom contient le "
+"mot « Class » au format SVG :"
+
+#: ../exporting.md:44
+msgid "HTML Report"
+msgstr "Rapport HTML"
+
+#: ../exporting.md:46
+msgid ""
+"The HTML report is a self-contained, single-page report that gives an "
+"interactive, read-only overview of your entire model — ideal for sharing "
+"with stakeholders or publishing on a static site (GitHub Pages, etc.)."
+msgstr ""
+"Le rapport HTML est un document autonome d'une seule page qui offre un "
+"aperçu interactif et en lecture seule de l'ensemble de votre modèle — idéal "
+"pour être partagé avec les parties prenantes ou publié sur un site statique "
+"(GitHub Pages, etc.)."
+
+#: ../exporting.md:50
+msgid "Features:"
+msgstr "Caractéristiques :"
+
+#: ../exporting.md:52
+msgid "Sidebar tree with search for quick navigation"
+msgstr ""
+"Arborescence latérale avec fonction de recherche pour une navigation rapide"
+
+#: ../exporting.md:53
+msgid "Interactive SVG diagrams with pan and zoom"
+msgstr "Diagrammes SVG interactifs avec défilement et zoom"
+
+#: ../exporting.md:54
+msgid "Clickable elements — click any element in a diagram to see its details"
+msgstr ""
+"Éléments cliquables — cliquez sur n'importe quel élément d'un diagramme pour "
+"afficher ses détails"
+
+#: ../exporting.md:55
+msgid "Detail panels showing element properties and relationships"
+msgstr ""
+"Panneaux détaillés présentant les propriétés et les relations entre les "
+"éléments"
+
+#: ../exporting.md:58
+msgid ""
+"The generated report is fully static. No server or backend is required to"
+" view it."
+msgstr ""
+"Le rapport généré est entièrement statique. Aucun serveur ni infrastructure "
+"n'est nécessaire pour le consulter."
+
+#: ../exporting.md:61
+msgid "Generating via the GUI"
+msgstr "Génération via l'interface graphique"
+
+#: ../exporting.md:63
+msgid "Open the hamburger menu and choose `Export as HTML Report`."
+msgstr ""
+"Ouvrez le menu hamburger et sélectionnez `Exporter sous forme de rapport "
+"HTML`."
+
+#: ../exporting.md:65
+msgid "![Export menu showing the HTML Report option](images/export-menu.png)"
+msgstr ""
+"![Menu d'exportation affichant l'option Rapport HTML](images/export-menu.png)"
+
+#: ../exporting.md:65
+msgid "Export menu showing the HTML Report option"
+msgstr "Menu d'exportation affichant l'option Rapport HTML"
+
+#: ../exporting.md:67
+msgid "Generating via the command line"
+msgstr "Génération via la ligne de commande"
+
+#: ../exporting.md:57
+msgid "Output directory for the report"
+msgstr "Répertoire de sortie du rapport"
+
+#: ../exporting.md:77
+msgid "![Generated HTML report in a browser](images/html-report.png)"
+msgstr "![Rapport HTML généré dans un navigateur](images/html-report.png)"
+
+#: ../exporting.md:77
+msgid "Generated HTML report in a browser"
+msgstr "Rapport HTML généré dans un navigateur"
 
 #: ../first_model.md:1
 msgid "Your First Model"
@@ -2415,7 +2620,7 @@ msgstr ""
 "icon](images/open-menu-symbolic.svg) → Tools (Outils) → Auto Layout(Mise "
 "en page automatique)) pour aligner les éléments sur le diagramme."
 
-#: ../first_model.md:49 ../plugins.md:45 ../style_sheets.md:343
+#: ../first_model.md:49 ../plugins.md:45 ../style_sheets.md:345
 msgid "Menu icon"
 msgstr "Icône de menu"
 
@@ -2511,12 +2716,12 @@ msgid ""
 "Distilled](https://delligattiassociates.com/publications/?_gl=1*1tu6ekh*_ga*MTMwMTU4NjMyNC4xNzMyNTYyOTUw*_up*MQ..)"
 " one of the standard references for the SysML language."
 msgstr ""
-"Pour voir comment un modèle plus large est assemblé dans Gaphor, consultez "
-"[Gaphor Distilled](https://github.com/mikekidner/gaphor_distilled) qui met "
-"en œuvre le modèle DELL-SAT-77 utilisé comme base pour [SysML Distilled]"
-"(https://delligattiassociates.com/publications/"
-"?_gl=1*1tu6ekh*_ga*MTMwMTU4NjMyNC4xNzMyNTYyOTUw*_up*MQ..) l'une des "
-"références standard pour le langage SysML."
+"Pour voir comment un modèle plus large est assemblé dans Gaphor, "
+"consultez [Gaphor "
+"Distilled](https://github.com/mikekidner/gaphor_distilled) qui met en "
+"œuvre le modèle DELL-SAT-77 utilisé comme base pour [SysML "
+"Distilled](https://delligattiassociates.com/publications/?_gl=1*1tu6ekh*_ga*MTMwMTU4NjMyNC4xNzMyNTYyOTUw*_up*MQ..)"
+" l'une des références standard pour le langage SysML."
 
 #: ../framework.md:1
 msgid "Framework"
@@ -2635,6 +2840,7 @@ msgid "element_factory"
 msgstr "element_factory (fabrique d'éléments)"
 
 #: ../framework.md:50
+#, python-brace-format
 msgid ""
 "The [data model](models/core) itself is maintained in the element factory"
 " ({obj}`~gaphor.core.modeling.ElementFactory`). This service is used to "
@@ -2769,11 +2975,11 @@ msgid ""
 "create diagrams to track and visualize different aspects of the system "
 "you're developing."
 msgstr ""
-"Gaphor est plus qu'un éditeur de diagrammes : c'est un environnement de "
+"Gaphor est plus qu'un éditeur de diagrammes : c'est un environnement de "
 "modélisation. Alors que les éditeurs de diagrammes simples tels que "
-"Microsoft Visio et [draw.io] (https://draw.io) vous permettent de créer "
-"des images, Gaphor garde en fait la trace des éléments que vous ajoutez "
-"au modèle. Dans Gaphor, vous pouvez créer des diagrammes pour suivre et "
+"Microsoft Visio et [draw.io](https://draw.io) vous permettent de créer des "
+"images, Gaphor garde en fait la trace des éléments que vous ajoutez au "
+"modèle. Dans Gaphor, vous pouvez créer des diagrammes pour suivre et "
 "visualiser les différents aspects du système que vous développez."
 
 #: ../getting_started.md:9
@@ -2787,8 +2993,8 @@ msgid ""
 "(Flatpak), Windows, and macOS."
 msgstr ""
 "Vous pouvez trouver des installateurs pour Gaphor sur le site Web de "
-"[Gaphor Website](https://gaphor.org/download). Gaphor peut être installé sur "
-"Linux (Flatpak), Windows et macOS."
+"[Gaphor Website](https://gaphor.org/download). Gaphor peut être installé "
+"sur Linux (Flatpak), Windows et macOS."
 
 #: ../getting_started.md:14
 msgid ""
@@ -2883,7 +3089,7 @@ msgstr ""
 
 #: ../getting_started.md:34 ../getting_started.md:41
 msgid "Model Browser"
-msgstr "Modèle de navigateur"
+msgstr "Navigateur de modèles"
 
 #: ../getting_started.md:35
 msgid "Diagram Element Toolbox"
@@ -3290,23 +3496,23 @@ msgstr ""
 msgid "Getting Started"
 msgstr "Pour commencer"
 
-#: ../index.rst:38
+#: ../index.rst:39
 msgid "Features"
 msgstr "Caractéristiques"
 
-#: ../index.rst:49
+#: ../index.rst:51
 msgid "Development"
 msgstr "Développement"
 
-#: ../index.rst:59
+#: ../index.rst:61
 msgid "Modeling languages"
 msgstr "Langages de modélisation"
 
-#: ../index.rst:69
+#: ../index.rst:71
 msgid "Concepts"
 msgstr "Concepts"
 
-#: ../index.rst:79
+#: ../index.rst:81
 msgid "Internals"
 msgstr "Ressources internes"
 
@@ -3361,8 +3567,8 @@ msgid ""
 "For download instructions, and the blog, please visit the `Gaphor Website"
 " <https://gaphor.org>`_."
 msgstr ""
-"Pour les instructions de téléchargement et le blog, veuillez visiter le `le "
-"site web de Gaphor <https://gaphor.org>`_."
+"Pour les instructions de téléchargement et le blog, veuillez visiter le "
+"`le site web de Gaphor <https://gaphor.org>`_."
 
 #: ../index.rst:26
 msgid ""
@@ -3383,24 +3589,23 @@ msgid ""
 "page](https://gaphor.org/download/#linux) for details."
 msgstr ""
 "Gaphor peut être installé sous forme de Flatpak sous Linux, certaines "
-"distributions fournissent des paquets. Consultez la [page de "
-"téléchargement de Gaphor] (https://gaphor.org/download/#linux) pour plus "
-"de détails."
+"distributions fournissent des paquets. Consultez la [page de téléchargement "
+"de Gaphor](https://gaphor.org/download/#linux) pour plus de détails."
 
 #: ../linux.md:7 ../macos.md:5 ../windows.md:7
 msgid ""
 "Older releases are available from "
 "[GitHub](https://github.com/gaphor/gaphor/releases)."
 msgstr ""
-"Les versions antérieures sont disponibles sur [GitHub] "
-"(https://github.com/gaphor/gaphor/releases)."
+"Les versions antérieures sont disponibles sur [GitHub](https://github.com/"
+"gaphor/gaphor/releases)."
 
 #: ../linux.md:9 ../macos.md:7 ../windows.md:9
 msgid ""
 "[CI builds](https://github.com/gaphor/gaphor/actions/workflows/full-"
 "build.yml) are also available."
 msgstr ""
-"[CI builds] (https://github.com/gaphor/gaphor/actions/workflows/full-"
+"[CI builds](https://github.com/gaphor/gaphor/actions/workflows/full-"
 "build.yml) sont également disponibles."
 
 #: ../linux.md:11 ../macos.md:10 ../windows.md:11
@@ -3419,7 +3624,7 @@ msgstr "[GNOME Builder](#gnome-builder), idéal pour «engager des» contributio
 
 #: ../linux.md:16
 msgid "[A local environment](#a-local-environment)."
-msgstr "[Un environnement local] (#a-local-environment)."
+msgstr "[Un environnement local](#a-local-environment)."
 
 #: ../linux.md:18
 msgid "GNOME Builder"
@@ -3458,22 +3663,21 @@ msgid ""
 msgstr ""
 "Pour mettre en place un environnement de développement sous Linux, vous "
 "devez disposer d'une version assez récente de la distribution Linux. Par "
-"exemple, la dernière version LTS d'Ubuntu, une version plus récente "
-"d'Arch, de Debian Testing ou de SUSE Tumbleweed, ou une version "
-"similaire. Gaphor dépend de versions plus récentes de GTK, et nous ne "
-"testons pas la compatibilité ascendante. Vous aurez également besoin de "
-"la dernière version stable de Python. Afin d'obtenir la dernière version "
-"stable sans interférer avec la version de Python de votre système, nous "
-"vous recommandons d'installer [pyenv] (https://github.com/pyenv/pyenv)."
+"exemple, la dernière version LTS d'Ubuntu, une version plus récente d'Arch, "
+"de Debian Testing ou de SUSE Tumbleweed, ou une version similaire. Gaphor "
+"dépend de versions plus récentes de GTK, et nous ne testons pas la "
+"compatibilité ascendante. Vous aurez également besoin de la dernière version "
+"stable de Python. Afin d'obtenir la dernière version stable sans interférer "
+"avec la version de Python de votre système, nous vous recommandons "
+"d'installer [pyenv](https://github.com/pyenv/pyenv)."
 
 #: ../linux.md:35
 msgid ""
 "Install the pyenv [prerequisites](https://github.com/pyenv/pyenv/wiki"
 "/Common-build-problems) first, and then install pyenv:"
 msgstr ""
-"Installez d'abord les [prérequis] de pyenv "
-"(https://github.com/pyenv/pyenv/wiki/Common-build-problems), puis "
-"installez pyenv :"
+"Installez d'abord les [prérequis de pyenv](https://github.com/pyenv/pyenv/"
+"wiki/Common-build-problems), puis installez pyenv :"
 
 #: ../linux.md:42
 msgid ""
@@ -3503,11 +3707,11 @@ msgstr ""
 "Installez ensuite les prérequis de Gaphor en installant les dépendances "
 "gobject introspection et cairo build, par exemple, dans Ubuntu execute :"
 
-#: ../linux.md:61
+#: ../linux.md:62
 msgid "For Redhat/RPM/Fedora based systems:"
 msgstr "Pour les systèmes basés sur Redhat/RPM/Fedora :"
 
-#: ../linux.md:67 ../macos.md:18
+#: ../linux.md:68 ../macos.md:18
 msgid ""
 "Install [Poetry](https://python-poetry.org) using "
 "[pipx](https://pypa.github.io/pipx/):"
@@ -3515,21 +3719,21 @@ msgstr ""
 "Installer [Poetry](https://python-poetry.org) en utilisant "
 "[pipx](https://pypa.github.io/pipx/) :"
 
-#: ../linux.md:72
+#: ../linux.md:73
 msgid ""
 "Next, [clone the repository](https://help.github.com/en/github/creating-"
 "cloning-and-archiving-repositories/cloning-a-repository), after which you"
 " need to execute the following consecutive commands:"
 msgstr ""
-"Ensuite, [clonez le dépôt] (https://help.github.com/en/github/creating-"
-"cloning-and-archiving-repositories/cloning-a-repository), après quoi vous"
-" devez exécuter les commandes suivantes :"
+"Ensuite, [clonez le dépôt](https://help.github.com/en/github/creating-"
+"cloning-and-archiving-repositories/cloning-a-repository), après quoi vous "
+"devez exécuter les commandes suivantes :"
 
-#: ../linux.md:83 ../macos.md:30
+#: ../linux.md:84 ../macos.md:30
 msgid "Now, you can run gaphor as"
 msgstr "Maintenant, vous pouvez exécuter gaphor en tant que"
 
-#: ../linux.md:88
+#: ../linux.md:89
 msgid ""
 "NOTE: Gaphor requires GTK 4. It works best with GTK >=4.8 and libadwaita "
 ">=1.2."
@@ -3537,11 +3741,11 @@ msgstr ""
 "NOTE : Gaphor nécessite GTK 4. Il fonctionne mieux avec GTK >=4.8 et "
 "libadwaita >=1.2."
 
-#: ../linux.md:90 ../macos.md:44 ../windows.md:169
+#: ../linux.md:91 ../macos.md:44 ../windows.md:181
 msgid "Debugging using Visual Studio Code"
 msgstr "Débogage à l'aide de Visual Studio Code"
 
-#: ../linux.md:92
+#: ../linux.md:93
 msgid ""
 "Before you start debugging you'll need to open Gaphor in vscode (the "
 "folder containing `pyproject.toml`). You'll need to have the Python "
@@ -3551,11 +3755,11 @@ msgstr ""
 "dossier contenant `pyproject.toml`). Vous devez avoir installé "
 "l'extension Python."
 
-#: ../linux.md:95 ../macos.md:49
+#: ../linux.md:96 ../macos.md:49
 msgid "Create a file `.vscode/launch.json` with the following content:"
 msgstr "Créez un fichier `.vscode/launch.json` avec le contenu suivant :"
 
-#: ../linux.md:115
+#: ../linux.md:116
 msgid ""
 "`GDK_BACKEND` is added since VSCode by default uses XWayland (the X11 "
 "emulator)."
@@ -3563,11 +3767,11 @@ msgstr ""
 "`GDK_BACKEND` est ajouté car VSCode utilise par défaut XWayland "
 "(l'émulateur X11)."
 
-#: ../linux.md:117
+#: ../linux.md:118
 msgid "Create a Flatpak Package"
 msgstr "Créer un paquet Flatpak"
 
-#: ../linux.md:119
+#: ../linux.md:120
 msgid ""
 "The main method that Gaphor is packaged for Linux is with a Flatpak "
 "package. [Flatpak](https://flatpak.org) is a software utility for "
@@ -3581,7 +3785,7 @@ msgstr ""
 "un environnement sandbox dans lequel les utilisateurs peuvent exécuter "
 "des logiciels d'application indépendamment du reste du système."
 
-#: ../linux.md:124
+#: ../linux.md:125
 msgid ""
 "We distribute the official Flatpak using [Flathub](https://flathub.org), "
 "and building of the image is done at the [Gaphor Flathub "
@@ -3592,35 +3796,35 @@ msgstr ""
 "effectuée dans le [dépôt Gaphor "
 "Flathub](https://github.com/flathub/org.gaphor.Gaphor)."
 
-#: ../linux.md:128
+#: ../linux.md:129
 msgid "[Install Flatpak](https://flatpak.org/setup)"
 msgstr "[Installer Flatpak](https://flatpak.org/setup)"
 
-#: ../linux.md:130
+#: ../linux.md:131
 msgid "Install flatpak-builder"
 msgstr "Installer flatpak-builder"
 
-#: ../linux.md:134
+#: ../linux.md:135
 msgid "Install the GNOME SDK"
 msgstr "Installer le SDK GNOME"
 
-#: ../linux.md:138
+#: ../linux.md:139
 msgid "Clone the Flathub repository and install the necessary SDK:"
 msgstr "Clonez le dépot Flathub et installez le SDK nécessaire :"
 
-#: ../linux.md:144
+#: ../linux.md:145
 msgid "Build Gaphor Flatpak"
 msgstr "Construire Gaphor Flatpak"
 
-#: ../linux.md:148
+#: ../linux.md:149
 msgid "Install the Flatpak"
 msgstr "Installer le Flatpak"
 
-#: ../linux.md:152
+#: ../linux.md:153
 msgid "Linux Distribution Packages"
 msgstr "Paquets de distribution Linux"
 
-#: ../linux.md:154
+#: ../linux.md:155
 msgid ""
 "Examples of Gaphor and Gaphas RPM spec files can be found in [PLD "
 "Linux](https://www.pld-linux.org/) [repository](https://github.com/pld-"
@@ -3630,25 +3834,25 @@ msgstr ""
 "être trouvés dans [PLD Linux](https://www.pld-linux.org/) "
 "[dépôt](https://github.com/pld-linux/) :"
 
-#: ../linux.md:158
+#: ../linux.md:159
 msgid "https://github.com/pld-linux/python-gaphas"
 msgstr "https://github.com/pld-linux/python-gaphas"
 
-#: ../linux.md:159
+#: ../linux.md:160
 msgid "https://github.com/pld-linux/gaphor"
 msgstr "https://github.com/pld-linux/gaphor"
 
-#: ../linux.md:161
+#: ../linux.md:162
 msgid ""
 "There is also an [Arch User Repository (AUR) for "
 "Gaphor](https://aur.archlinux.org/packages/python-gaphor) available for "
 "Arch users."
 msgstr ""
-"Il existe également un [Arch User Repository (AUR) for Gaphor] "
-"(https://aur.archlinux.org/packages/python-gaphor) disponible pour les "
-"utilisateurs d'Arch."
+"Il existe également un [Arch User Repository (AUR) for Gaphor](https://"
+"aur.archlinux.org/packages/python-gaphor) disponible pour les utilisateurs "
+"d'Arch."
 
-#: ../linux.md:165
+#: ../linux.md:166
 msgid ""
 "Please, do not hesitate to contact us if you need help to create a Linux "
 "package for Gaphor or Gaphas."
@@ -3666,10 +3870,10 @@ msgid ""
 "page](https://gaphor.org/download#macos). Gaphor can also be installed as"
 " a [Homebrew cask](https://formulae.brew.sh/cask/gaphor)."
 msgstr ""
-"La dernière version de Gaphor peut être téléchargée à partir de la [page "
-"de téléchargement de Gaphor] (https://gaphor.org/download#macos). Gaphor "
-"peut également être installé en tant que [Homebrew cask] "
-"(https://formulae.brew.sh/cask/gaphor)."
+"La dernière version de Gaphor peut être téléchargée à partir de la [page de "
+"téléchargement de Gaphor](https://gaphor.org/download#macos). Gaphor peut "
+"également être installé en tant que [Homebrew cask](https://formulae.brew.sh/"
+"cask/gaphor)."
 
 #: ../macos.md:12
 msgid "To set up a development environment with macOS:"
@@ -3692,10 +3896,10 @@ msgid ""
 " can execute the following consecutive commands to install the poetry "
 "environment:"
 msgstr ""
-"Ensuite, [clonez le dépôt] (https://help.github.com/en/github/creating-"
-"cloning-and-archiving-repositories/cloning-a-repository), après quoi vous"
-" pouvez exécuter les commandes suivantes pour installer l'environnement "
-"de poésie :"
+"Ensuite, [clonez le dépôt](https://help.github.com/en/github/creating-"
+"cloning-and-archiving-repositories/cloning-a-repository), après quoi vous "
+"pouvez exécuter les commandes suivantes pour installer l'environnement de "
+"poésie :"
 
 #: ../macos.md:35
 msgid ""
@@ -3728,7 +3932,7 @@ msgid ""
 "the dependencies and bundle them in to a single folder."
 msgstr ""
 "Afin de créer un paquet d'installation exe pour macOS, nous utilisons "
-"[PyInstaller] (https://pyinstaller.org) qui analyse Gaphor pour trouver "
+"[PyInstaller](https://pyinstaller.org) qui analyse Gaphor pour trouver "
 "toutes les dépendances et les regrouper dans un seul dossier."
 
 #: ../macos.md:72
@@ -3939,8 +4143,8 @@ msgid ""
 "Three functionalities are exposed by a [`ModelingLanguage` instance"
 "](#modeling-language):"
 msgstr ""
-"Trois fonctionnalités sont exposées par une instance de "
-"[`ModelingLanguage`] (#modeling-language) :"
+"Trois fonctionnalités sont exposées par une instance de [`ModelingLanguage`]"
+"(#modeling-language) :"
 
 #: ../modeling_language.md:25
 msgid "A data model (elements) and diagram items"
@@ -4354,9 +4558,9 @@ msgid ""
 "element should be placed in the root of the ownership hierarchy. If "
 "`None` is returned, there is no owner."
 msgstr ""
-"Retourne le propriétaire de l'élément. Il peut s'agir de `Root`, indiquant "
-"que l'élément doit être placé à la racine de la hiérarchie de propriété. Si "
-"None est retourné, il n'y a pas de propriétaire."
+"Retourne le propriétaire de l'élément. Il peut s'agir de `Root`, "
+"indiquant que l'élément doit être placé à la racine de la hiérarchie de "
+"propriété. Si None est retourné, il n'y a pas de propriétaire."
 
 #: ../modeling_language.md:169
 msgid "Returns all elements owned by `element"
@@ -4474,6 +4678,14 @@ msgstr "Chaque page de propriété (snippet) doit hériter de `PropertyPageBase`
 msgid "A property page which can display itself in a notebook."
 msgstr "Une page de propriété qui peut s'afficher dans un bloc-notes."
 
+#: gaphor.diagram.propertypages.PropertyPageBase.close:1 of
+msgid "Called when a property page is removed."
+msgstr "Appelée lorsqu'une page de propriétés est supprimée."
+
+#: gaphor.diagram.propertypages.PropertyPageBase.close:3 of
+msgid "This allows us to clean up."
+msgstr "Cela nous permet de faire le ménage."
+
 #: gaphor.diagram.propertypages.PropertyPageBase.construct:1 of
 msgid "Create the page (Gtk.Widget) that belongs to the Property page."
 msgstr "Créer la page (Gtk.Widget) qui appartient à la page de propriété."
@@ -4528,8 +4740,8 @@ msgid ""
 "The [C4 model](https://c4model.com/) is a simple visual language to "
 "describe the static structure of a software system."
 msgstr ""
-"Le [modèle C4] (https://c4model.com/) est un langage visuel simple "
-"permettant de décrire la structure statique d'un système logiciel."
+"Le [modèle C4](https://c4model.com/) est un langage visuel simple permettant "
+"de décrire la structure statique d'un système logiciel."
 
 #: ../models/c4model.md:5
 msgid "It’s based on the [UML](uml.md) language."
@@ -5070,7 +5282,7 @@ msgid ""
 "Gaphor implements parts of the [RAAML 1.0 "
 "specification](https://www.omg.org/spec/RAAML)."
 msgstr ""
-"Gaphor met en œuvre certaines parties de la [spécification RAAML 1.0] "
+"Gaphor met en œuvre certaines parties de la [spécification RAAML 1.0]"
 "(https://www.omg.org/spec/RAAML)."
 
 #: ../models/raaml/Core.rst:2
@@ -5381,7 +5593,7 @@ msgstr "RépartitionActivitésAllouées"
 msgid "Allocation"
 msgstr "Allocation"
 
-#: ../models/sysml/Blocks.rst:2 ../style_sheets.md:329 ../style_sheets.md:330
+#: ../models/sysml/Blocks.rst:2 ../style_sheets.md:331 ../style_sheets.md:332
 msgid "Blocks"
 msgstr "Blocs"
 
@@ -5453,7 +5665,7 @@ msgstr "Caractéristiques Fournies et Requises"
 msgid "Item Flow"
 msgstr "Flux de l'article"
 
-#: ../models/sysml/Requirements.rst:2 ../style_sheets.md:331
+#: ../models/sysml/Requirements.rst:2 ../style_sheets.md:333
 msgid "Requirements"
 msgstr "Exigences"
 
@@ -5758,11 +5970,11 @@ msgid ""
 "can be helpful if you install the binary distributions available on the "
 "[download page](https://gaphor.org/download/)."
 msgstr ""
-"Les plugins vous permettent d'étendre les fonctionnalités de Gaphor au-"
-"delà des fonctionnalités fournies dans les distributions standard. En "
+"Les plugins vous permettent d'étendre les fonctionnalités de Gaphor au-delà "
+"des fonctionnalités fournies dans les distributions standard. En "
 "particulier, les plugins peuvent être utiles si vous installez les "
-"distributions binaires disponibles sur la [page de téléchargement] "
-"(https://gaphor.org/download/)."
+"distributions binaires disponibles sur la [page de téléchargement](https://"
+"gaphor.org/download/)."
 
 #: ../plugins.md:12
 msgid "Gaphor can be extended via entry points in several ways:"
@@ -5778,9 +5990,7 @@ msgstr "Services spécifiques à la session (`gaphor.services`)"
 
 #: ../plugins.md:16
 msgid "[Modeling languages](modeling_language) (`gaphor.modelinglanguages`)"
-msgstr ""
-"[Langues de modélisation](modeling_language) "
-"(`gaphor.modelinglanguages`)"
+msgstr "[Langues de modélisation](modeling_language) (`gaphor.modelinglanguages`)"
 
 #: ../plugins.md:17
 msgid "(Sub)command line parsers (`gaphor.argparsers`)"
@@ -5816,12 +6026,12 @@ msgid ""
 "on Windows you may need to install Python separately from "
 "[python.org](https://python.org) or the Windows Store."
 msgstr ""
-"Pour l'instant, Gaphor ne dispose pas de fonctionnalité intégrée pour "
-"installer et maintenir les plugins. Pour installer un plugin, utilisez "
-"`pip` depuis une installation de Python sur votre ordinateur. Sur macOS "
-"et Linux, cela devrait être facile, mais sur Windows, vous devrez peut-"
-"être installer Python séparément depuis le site python.org ou le Windows "
-"Store."
+"Pour l'instant, Gaphor ne dispose pas de fonctionnalités intégrées "
+"permettant d'installer et de gérer des extensions. Pour installer une "
+"extension, utilisez `pip` à partir d'une installation Python sur votre "
+"ordinateur. Sous macOS et Linux, cela devrait être simple ; sous Windows, "
+"vous devrez peut-être installer Python séparément depuis [python.org]"
+"(https://python.org) ou le Windows Store."
 
 #: ../plugins.md:32
 msgid ""
@@ -5841,11 +6051,11 @@ msgid ""
 "[FlatSeal](https://flathub.org/apps/com.github.tchx84.Flatseal) to change"
 " permissions of Flatpaks."
 msgstr ""
-"Si vous utilisez Gaphor installé en tant que Flatpak, vous devez accorder"
-" à Gaphor l'accès aux fichiers de l'utilisateur (`filesystem=home`), afin"
-" que Gaphor puisse trouver les fichiers dans votre dossier `.local`. Pour"
-" changer les permissions des Flatpaks, vous pouvez utiliser FlatSeal "
-"(https://flathub.org/apps/com.github.tchx84.Flatseal)."
+"Si vous utilisez Gaphor installé via Flatpak, vous devez lui accorder "
+"l'accès aux fichiers utilisateur (`filesystem=home`) afin qu'il puisse "
+"trouver les fichiers dans votre dossier `.local`. Vous pouvez utiliser "
+"[FlatSeal](https://flathub.org/apps/com.github.tchx84.Flatseal) pour "
+"modifier les droits d'accès des applications Flatpak."
 
 #: ../plugins.md:39
 msgid ""
@@ -5853,9 +6063,8 @@ msgid ""
 "plugin](https://github.com/gaphor/gaphor_plugin_helloworld) on Linux and "
 "macOS, enter:"
 msgstr ""
-"Par exemple : pour installer le [plugin Hello World] "
-"(https://github.com/gaphor/gaphor_plugin_helloworld) sur Linux et macOS, "
-"entrez :"
+"Par exemple : pour installer le [plugin Hello World](https://github.com/"
+"gaphor/gaphor_plugin_helloworld) sur Linux et macOS, entrez :"
 
 #: ../plugins.md:45
 msgid ""
@@ -5913,8 +6122,8 @@ msgid ""
 "[gaphor_plugins_helloworld](https://github.com/gaphor/gaphor_plugin_helloworld/blob/main/gaphor_helloworld_plugin/__init__.py)."
 msgstr ""
 "Ceci fait référence à la classe `HelloWorldPlugin` dans le paquet/module "
-"[gaphor_plugins_helloworld] "
-"(https://github.com/gaphor/gaphor_plugin_helloworld/blob/main/gaphor_helloworld_plugin/__init__.py)."
+"[gaphor_plugins_helloworld](https://github.com/gaphor/"
+"gaphor_plugin_helloworld/blob/main/gaphor_helloworld_plugin/__init__.py)."
 
 #: ../plugins.md:70
 msgid "Here is a stripped version of the hello world plugin:"
@@ -6012,11 +6221,11 @@ msgid ""
 "imported bringing in all the changes to the model, similarly for element "
 "notes."
 msgstr ""
-"Il permet l'importation et l'exportation d'exigences et de notes SysML vers "
-"Excel et Confluence. Il en est actuellement au stade de la preuve de "
-"concept, mais il permet d'exporter un tableau d'exigences, puis de l'éditer "
-"et de l'importer en apportant toutes les modifications au modèle, de la même "
-"manière pour les notes sur les éléments."
+"Il permet l'importation et l'exportation d'exigences et de notes SysML "
+"vers Excel et Confluence. Il en est actuellement au stade de la preuve de"
+" concept, mais il permet d'exporter un tableau d'exigences, puis de "
+"l'éditer et de l'importer en apportant toutes les modifications au "
+"modèle, de la même manière pour les notes sur les éléments."
 
 #: ../plugins.md:123
 msgid "Where can I get it?"
@@ -6027,7 +6236,7 @@ msgid ""
 "From this [BitBucket "
 "Repo](https://bitbucket.org/resonatesystems/gaphor_tools/src/main/)"
 msgstr ""
-"De ce [BitBucket Repo] (https://bitbucket.org/resonatesystems/gaphor_tools/"
+"De ce [BitBucket Repo](https://bitbucket.org/resonatesystems/gaphor_tools/"
 "src/main/)"
 
 #: ../scripting.md:5
@@ -6040,11 +6249,10 @@ msgid ""
 "interested in getting more out of your models by interacting with them "
 "through Python scripts and [Jupyter notebooks](https://jupyter.org/)."
 msgstr ""
-"L'une des façons de travailler avec les modèles est d'utiliser "
-"l'interface graphique. Cependant, vous pouvez également être intéressé "
-"par une meilleure exploitation de vos modèles en interagissant avec eux "
-"par le biais de scripts Python et de [carnets Jupyter] "
-"(https://jupyter.org/)."
+"L'une des façons de travailler avec les modèles est d'utiliser l'interface "
+"graphique. Cependant, vous pouvez également être intéressé par une meilleure "
+"exploitation de vos modèles en interagissant avec eux par le biais de "
+"scripts Python et de [carnets Jupyter](https://jupyter.org/)."
 
 #: ../scripting.md:11
 msgid "You can use scripts to:"
@@ -6088,6 +6296,7 @@ msgid "Query a model"
 msgstr "Interroger un modèle"
 
 #: ../scripting.md:27
+#, python-brace-format
 msgid ""
 "The first step is to load a model. For this you’ll need an "
 "{obj}`gaphor.core.modeling.ElementFactory`. The `ElementFactory` is "
@@ -6350,16 +6559,17 @@ msgid ""
 "The module `gaphor.UML.recipes` contains several functions for "
 "manipulating elements and their associations."
 msgstr ""
-"Le module `gaphor.UML.recipes` contient plusieurs fonctions pour manipuler "
-"les éléments et leurs associations."
+"Le module `gaphor.UML.recipes` contient plusieurs fonctions pour "
+"manipuler les éléments et leurs associations."
 
 #: ../scripting.md:301
 msgid ""
 "The tests for a given modelling language are a good place to find "
 "reference examples of element creation and modification."
 msgstr ""
-"Les tests d'un langage de modélisation donné sont un bon moyen de trouver "
-"des exemples de référence pour la création et la modification d'éléments."
+"Les tests d'un langage de modélisation donné sont un bon moyen de trouver"
+" des exemples de référence pour la création et la modification "
+"d'éléments."
 
 #: ../scripting.md:302
 msgid ""
@@ -6385,11 +6595,10 @@ msgid ""
 " This module is used to generate the code for the data models used by "
 "Gaphor."
 msgstr ""
-"Si vous voulez un exemple complet de générateur de code, jetez un coup "
-"d'œil au [module `coder` de Gaphor] "
-"(https://github.com/gaphor/gaphor/blob/main/gaphor/codegen/coder.py). Ce "
-"module est utilisé pour générer le code des modèles de données utilisés "
-"par Gaphor."
+"Si vous voulez un exemple complet de générateur de code, jetez un coup d'œil "
+"au [module `coder` de Gaphor](https://github.com/gaphor/gaphor/blob/main/"
+"gaphor/codegen/coder.py). Ce module est utilisé pour générer le code des "
+"modèles de données utilisés par Gaphor."
 
 #: ../scripting.md:305
 msgid ""
@@ -6461,12 +6670,12 @@ msgid ""
 "the console_scripts entry point group to start an application from the "
 "command line."
 msgstr ""
-"Nous définissons les services comme des points d'entrée dans le fichier "
-"`pyproject.toml`. Grâce à ces points d'entrée, les applications peuvent "
-"enregistrer des fonctionnalités à des fins spécifiques. Nous les "
-"regroupons également en groupes de points d'entrée. Par exemple, nous "
-"utilisons le groupe e points d'entrée 'console_scripts 'pour démarrer une"
-" application à partir de la ligne de commande."
+"Dans le fichier `pyproject.toml`, nous définissons les services comme des "
+"points d'entrée. Grâce à ces points d'entrée, les applications peuvent "
+"enregistrer des fonctionnalités destinées à des usages spécifiques. Nous "
+"regroupons également ces points d'entrée en *groupes de points d'entrée*. "
+"Par exemple, nous utilisons le groupe de points d'entrée `console_scripts` "
+"pour lancer une application depuis la ligne de commande."
 
 #: ../service_oriented.md:15
 msgid "Services"
@@ -6547,6 +6756,7 @@ msgid "Example: ElementFactory"
 msgstr "Exemple : ElementFactory"
 
 #: ../service_oriented.md:64
+#, python-brace-format
 msgid ""
 "A nice example of a service in use is the "
 "{obj}`~gaphor.core.modeling.ElementFactory`. It is one of the core "
@@ -6557,6 +6767,7 @@ msgstr ""
 "base."
 
 #: ../service_oriented.md:67
+#, python-brace-format
 msgid ""
 "When an important events occurs, like an element is created or destroyed,"
 " that event is emitted. We then use an event handler for `ElementFactory`"
@@ -6716,11 +6927,11 @@ msgid ""
 "://myst-parser.readthedocs.io/en/latest/syntax/roles-and-"
 "directives.html>`_."
 msgstr ""
-"Nous couvrons ici la syntaxe du texte «reStructured Text». Si vous "
-"préférez le markdown, nous vous suggérons de jeter un coup d'œil à `MyST-"
-"parser <https://myst-parser.readthedocs.io/>`, car il prend en `charge "
-"les directives Sphinx <https://myst-"
-"parser.readthedocs.io/en/latest/syntax/roles-and-directives.html>`."
+"Nous abordons ici la syntaxe de reStructured Text. Si vous préférez "
+"Markdown, nous vous suggérons de jeter un œil au `MyST-parser <https://myst-"
+"parser.readthedocs.io/>`_, car il `prend en charge les directives Sphinx "
+"<https://myst-parser.readthedocs.io/en/latest/syntax/roles-and-"
+"directives.html>`_."
 
 #: ../sphinx.rst:13
 msgid ""
@@ -6751,8 +6962,8 @@ msgstr ""
 #: ../sphinx.rst:36
 msgid "`Figure`_, and `Image properties`_ can also be applied:"
 msgstr ""
-"`Figure`_, et `Image properties`_ (propriétés de l'image) peuvent également "
-"être appliquées :"
+"`Figure`_, et `Image properties`_ (propriétés de l'image) peuvent "
+"également être appliquées :"
 
 #: ../sphinx.rst:47
 msgid "A description suitable for an example"
@@ -6804,8 +7015,8 @@ msgid ""
 "render, it's best to use a `.readthedocs.yaml`_ file in your project. "
 "Make sure to include the extra ``apt_packages`` as shown below."
 msgstr ""
-"La directive diagramme est compatible avec le module `Read the docs`_. Pour "
-"rendre les diagrammes, il est préférable d'utiliser un fichier "
+"La directive diagramme est compatible avec le module `Read the docs`_. "
+"Pour rendre les diagrammes, il est préférable d'utiliser un fichier "
 "`.readthedocs.yaml`_ dans votre projet. Assurez-vous d'inclure l'élément "
 "supplémentaire ``apt_packages``, comme indiqué ci-dessous."
 
@@ -6874,8 +7085,8 @@ msgid ""
 "Gaphor supports stereotypes too. They're *the* way for you to adapt your "
 "models to your specific needs."
 msgstr ""
-"Gaphor prend également en charge les stéréotypes. Ils vous permettent "
-"d'adapter vos modèles à vos besoins spécifiques."
+"Gaphor prend également en charge les stéréotypes. C'est *le* moyen idéal "
+"pour adapter vos modèles à vos besoins spécifiques."
 
 #: ../stereotypes.md:9
 msgid ""
@@ -6943,7 +7154,7 @@ msgid ""
 "/stereotype-usage.png)"
 msgstr ""
 "![La fenêtre principale de Gaphor illustre l'utilisation d'un stéréotype]"
-" (images/stereotype-usage.png)"
+"(images/stereotype-usage.png)"
 
 #: ../stereotypes.md:38
 msgid "The Gaphor main window showing a stereotype usage example."
@@ -7116,9 +7327,8 @@ msgid ""
 "page](https://www.w3.org/Style/CSS/Overview.en.html), CSS is described "
 "as:"
 msgstr ""
-"Sur la [page d'accueil CSS du W3C] "
-"(https://www.w3.org/Style/CSS/Overview.en.html), CSS est décrit comme "
-"suit :"
+"Sur la [page d'accueil CSS du W3C](https://www.w3.org/Style/CSS/"
+"Overview.en.html), CSS est décrit comme suit :"
 
 #: ../style_sheets.md:11
 msgid ""
@@ -7251,164 +7461,176 @@ msgid "A component item which is a child of a node."
 msgstr "Un élément de composant qui est un enfant d'un nœud."
 
 #: ../style_sheets.md:89
+msgid "``.item``"
+msgstr "``.item``"
+
+#: ../style_sheets.md:89
+msgid ""
+"Each diagram item has a class \"item\" assigned. This makes it easy to "
+"differentiate them from e.g. name elements."
+msgstr ""
+"Chaque élément du diagramme se voit attribuer la classe \"item\". Cela "
+"permet de les distinguer facilement, par exemple, des éléments de nom."
+
+#: ../style_sheets.md:91
 msgid "``generalization[subject]``"
 msgstr "``generalization[subject]``"
 
-#: ../style_sheets.md:89
+#: ../style_sheets.md:91
 msgid "A generalization item with a subject present."
 msgstr "Un élément de généralisation avec un sujet présent."
 
-#: ../style_sheets.md:90
+#: ../style_sheets.md:92
 msgid "``class[name=Foo]``"
 msgstr "``class[name=Foo]``"
 
-#: ../style_sheets.md:90
+#: ../style_sheets.md:92
 msgid "A class with name \"Foo\"."
 msgstr "Une classe portant le nom \"Foo\"."
 
-#: ../style_sheets.md:91
+#: ../style_sheets.md:93
 msgid "``diagram[name^=draft]``"
 msgstr "``diagram[name^=draft]``"
 
-#: ../style_sheets.md:91
+#: ../style_sheets.md:93
 msgid "A diagram with a name starting with \"draft\"."
 msgstr "Un diagramme dont le nom commence par \"draft\"."
 
-#: ../style_sheets.md:92
+#: ../style_sheets.md:94
 msgid "``diagram[name$=draft]``"
 msgstr "``diagram[name$=draft]``"
 
-#: ../style_sheets.md:92
+#: ../style_sheets.md:94
 msgid "A diagram with a name ends with \"draft\"."
 msgstr "Un diagramme avec un nom se termine par \"draft\"."
 
-#: ../style_sheets.md:93
+#: ../style_sheets.md:95
 msgid "``diagram[name*=draft]``"
 msgstr "``diagram[name*=draft]``"
 
-#: ../style_sheets.md:93
+#: ../style_sheets.md:95
 msgid "A diagram with a name containing the text \"draft\"."
 msgstr "Un diagramme dont le nom contient le texte « draft »."
 
-#: ../style_sheets.md:94
+#: ../style_sheets.md:96
 msgid "``diagram[name~=draft item]``"
 msgstr "``diagram[name~=draft item]``"
 
-#: ../style_sheets.md:94
+#: ../style_sheets.md:96
 msgid "A diagram with a name of \"draft\" or \"item\"."
 msgstr "Un diagramme dont le nom est \"draft\" (brouillon) ou \"item\" (élément)."
 
-#: ../style_sheets.md:95
+#: ../style_sheets.md:97
 msgid "``diagram[name|=draft]``"
 msgstr "``diagram[name|=draft]``"
 
-#: ../style_sheets.md:95
+#: ../style_sheets.md:97
 msgid "A diagram with a name is \"draft\" or starts with \"draft-\"."
 msgstr ""
 "Un diagramme dont le nom est \"draft\" (brouillon) ou commence par "
 "\"draft-\"."
 
-#: ../style_sheets.md:96
+#: ../style_sheets.md:98
 msgid "``:focus``"
 msgstr "``:focus``"
 
-#: ../style_sheets.md:96
+#: ../style_sheets.md:98
 msgid "The focused item. Other pseudo classes are:"
 msgstr "L'élément focalisé. D'autres pseudo classes sont :"
 
-#: ../style_sheets.md:98
+#: ../style_sheets.md:100
 msgid "``:active`` selected items"
 msgstr "``:active`` éléments sélectionnés"
 
-#: ../style_sheets.md:99
+#: ../style_sheets.md:101
 msgid "``:hover`` for the item under the mouse"
 msgstr "``:hover`` (survol) pour l'élément sous la souris"
 
-#: ../style_sheets.md:100
+#: ../style_sheets.md:102
 msgid "``:drop`` if an item is dragged and can be dropped on this item"
 msgstr ""
 "``:drop`` (déposé) si un élément est déplacé et peut être déposé sur cet "
 "élément"
 
-#: ../style_sheets.md:101
+#: ../style_sheets.md:103
 msgid "``:disabled`` if an element is grayed out during handle movement"
 msgstr ""
 "``:disabled`` (désactivé) si un élément est grisé lors du déplacement de "
 "la poignée"
 
-#: ../style_sheets.md:102
+#: ../style_sheets.md:104
 msgid "``:empty``"
 msgstr "``:empty`` (vide)"
 
-#: ../style_sheets.md:102
+#: ../style_sheets.md:104
 msgid "A node containing no child nodes in the diagram."
 msgstr "Un nœud ne contenant aucun nœud enfant dans le diagramme."
 
-#: ../style_sheets.md:103
+#: ../style_sheets.md:105
 msgid "``:root``"
 msgstr "``:root`` (racine)"
 
-#: ../style_sheets.md:103
+#: ../style_sheets.md:105
 msgid "Refers to the diagram itself."
 msgstr "Se réfère au diagramme lui-même."
 
-#: ../style_sheets.md:105
+#: ../style_sheets.md:107
 msgid "This is only applicable for the diagram"
 msgstr "Ceci ne s'applique qu'au diagramme"
 
-#: ../style_sheets.md:106
+#: ../style_sheets.md:108
 msgid "``:first-child``"
 msgstr "``:first-child`` (premier enfant)"
 
-#: ../style_sheets.md:106
+#: ../style_sheets.md:108
 msgid "A node is the first element among a group of sibling."
 msgstr "Un nœud est le premier élément d'un groupe de frères et sœurs."
 
-#: ../style_sheets.md:107
+#: ../style_sheets.md:109
 msgid "``:has()``"
 msgstr "``:has()``"
 
-#: ../style_sheets.md:107
+#: ../style_sheets.md:109
 msgid "The item contains any of the provided selectors."
 msgstr "L'élément contient l'un des sélecteurs fournis."
 
-#: ../style_sheets.md:109
+#: ../style_sheets.md:111
 msgid "E.g. ``node:has(component)``: a node containing a component item."
 msgstr ""
 "Par exemple, ``node:has(component)`` : un noeud contenant un élément de "
 "composant."
 
-#: ../style_sheets.md:110
+#: ../style_sheets.md:112
 msgid "``:is()``"
 msgstr "``:is()``"
 
-#: ../style_sheets.md:110
+#: ../style_sheets.md:112
 msgid "Match any of the provided selectors."
 msgstr "Correspond à l'un des sélecteurs fournis."
 
-#: ../style_sheets.md:112
+#: ../style_sheets.md:114
 msgid "E.g. ``:is(node, subsystem) > component``: a node or subsystem."
 msgstr ""
 "Par exemple, ``:is(node, subsystem) > component`` : un nœud ou un sous-"
 "système."
 
-#: ../style_sheets.md:113
+#: ../style_sheets.md:115
 msgid "``:not()``"
 msgstr "``:not()``"
 
-#: ../style_sheets.md:113
+#: ../style_sheets.md:115
 msgid "Negate the selector."
 msgstr "Négation du sélecteur."
 
-#: ../style_sheets.md:115
+#: ../style_sheets.md:117
 msgid "E.g. ``:not([subject])``: Any item that has no \"subject\"."
 msgstr "Par exemple, ``:not([subject])`` : Tout élément qui n'a pas de \"sujet \"."
 
-#: ../style_sheets.md:116
+#: ../style_sheets.md:118
 msgid "``::after``"
 msgstr "``::after``"
 
-#: ../style_sheets.md:116
+#: ../style_sheets.md:118
 msgid ""
 "Provide extra content after a text. Only the ``content`` property is "
 "supported."
@@ -7416,17 +7638,16 @@ msgstr ""
 "Fournit un contenu supplémentaire après un texte. Seule la propriété "
 "``content`` est supportée."
 
-#: ../style_sheets.md:121
+#: ../style_sheets.md:123
 msgid ""
 "The official specification of [CSS3 attribute "
 "selectors](https://www.w3.org/TR/2018/REC-selectors-3-20181106"
 "/#attribute-selectors)."
 msgstr ""
-"La spécification officielle des [sélecteurs d'attributs CSS3] "
-"(https://www.w3.org/TR/2018/REC-selectors-3-20181106/#attribute-"
-"selectors)."
+"La spécification officielle des [sélecteurs d'attributs CSS3](https://"
+"www.w3.org/TR/2018/REC-selectors-3-20181106/#attribute-selectors)."
 
-#: ../style_sheets.md:122
+#: ../style_sheets.md:124
 msgid ""
 "Gaphor provides the `|=` attribute selector for the sake of completeness."
 " It's probably not very useful in this context, though."
@@ -7434,7 +7655,7 @@ msgstr ""
 "Gaphor fournit le sélecteur d'attribut `|=` par souci d'exhaustivité. Il "
 "n'est probablement pas très utile dans ce contexte."
 
-#: ../style_sheets.md:124
+#: ../style_sheets.md:126
 msgid ""
 "Please note that Gaphor CSS does not support IDs for diagram items, so "
 "the CSS syntax for IDs (`#some-id`) is not used. Also, class syntax "
@@ -7445,11 +7666,11 @@ msgstr ""
 "identifiants (`#some-id`) n'est pas utilisée. De même, la syntaxe de "
 "classe (`.some-class`) n'est actuellement pas prise en charge."
 
-#: ../style_sheets.md:128
+#: ../style_sheets.md:130
 msgid "Style properties"
 msgstr "Propriétés de style"
 
-#: ../style_sheets.md:130
+#: ../style_sheets.md:132
 msgid ""
 "Gaphor supports a subset of CSS properties and some Gaphor specific "
 "properties. The style sheet interpreter is relatively straight forward. "
@@ -7464,7 +7685,7 @@ msgstr ""
 "déclarations de style complexes, comme la propriété `font` en HTML/CSS "
 "qui peut contenir la famille, la taille et le poids de la police."
 
-#: ../style_sheets.md:136
+#: ../style_sheets.md:138
 msgid ""
 "Some properties are inherited from the parent style. The parent often is "
 "a diagram. When you set a `color`` or a `font-family` on `diagram`, it "
@@ -7475,92 +7696,91 @@ msgstr ""
 " sur `diagram`, cela se propagera aux éléments contenus dans le "
 "diagramme."
 
-#: ../style_sheets.md:140
+#: ../style_sheets.md:142
 msgid "Colors"
 msgstr "Couleurs"
 
-#: ../style_sheets.md:144
+#: ../style_sheets.md:146
 msgid "``background-color``"
 msgstr "``background-color``"
 
-#: ../style_sheets.md:144
+#: ../style_sheets.md:146
 msgid "Examples:"
 msgstr "Exemples :"
 
-#: ../style_sheets.md:146
+#: ../style_sheets.md:148
 msgid "``background-color: azure;``"
 msgstr "``background-color: azure;``"
 
-#: ../style_sheets.md:148
+#: ../style_sheets.md:150
 msgid "``background-color: rgb(255, 255, 255);``"
 msgstr "``background-color: rgb(255, 255, 255) ;``"
 
-#: ../style_sheets.md:150
+#: ../style_sheets.md:152
 msgid "``background-color: hsl(130, 95%, 10%);``"
 msgstr "``background-color: hsl(130, 95%, 10%) ;``"
 
-#: ../style_sheets.md:151
+#: ../style_sheets.md:153
 msgid "``color``"
 msgstr "``color``"
 
-#: ../style_sheets.md:151
+#: ../style_sheets.md:153
 msgid "Color used for lines. *(inherited)*"
 msgstr "Couleur utilisée pour les lignes. *(hérité)*"
 
-#: ../style_sheets.md:152
+#: ../style_sheets.md:154
 msgid "``text-color``"
 msgstr "``text-color``"
 
-#: ../style_sheets.md:152
+#: ../style_sheets.md:154
 msgid "Color for text. *(inherited)*"
 msgstr "Couleur du texte. *(hérité)*"
 
-#: ../style_sheets.md:154
+#: ../style_sheets.md:156
 msgid "Use color if possible."
 msgstr "Utilisez la couleur si possible."
 
-#: ../style_sheets.md:155
+#: ../style_sheets.md:157
 msgid "``opacity``"
 msgstr "``opacity``"
 
-#: ../style_sheets.md:155
+#: ../style_sheets.md:157
 msgid "Color opacity factor (``0.0`` - ``1.0``), applied to all colors."
 msgstr ""
 "Facteur d'opacité de la couleur (``0.0`` - ``1.0``), appliqué à toutes "
 "les couleurs."
 
-#: ../style_sheets.md:160
+#: ../style_sheets.md:162
 msgid ""
 "A color can be any [CSS3 color code](https://www.w3.org/TR/2018/REC-css-"
 "color-3-20180619/), as described in the CSS documentation. Gaphor "
 "supports all color notations: `rgb()`, `rgba()`, `hsl()`, `hsla()`, Hex "
 "code (`#ffffff`) and color names."
 msgstr ""
-"Une couleur peut être n'importe quel [code couleur CSS3] "
-"(https://www.w3.org/TR/2018/REC-css-color-3-20180619/), comme décrit dans"
-" la documentation CSS. Gaphor supporte toutes les notations de couleur : "
-"`rgb()`, `rgba()`, `hsl()`, `hsla()`, le code hexagonal (`#ffffff`) et "
-"les noms de couleurs."
+"Une couleur peut être n'importe quel [code couleur CSS3](https://www.w3.org/"
+"TR/2018/REC-css-color-3-20180619/), comme décrit dans la documentation CSS. "
+"Gaphor supporte toutes les notations de couleur : `rgb()`, `rgba()`, `hsl()"
+"`, `hsla()`, le code hexagonal (`#ffffff`) et les noms de couleurs."
 
-#: ../style_sheets.md:164
+#: ../style_sheets.md:166
 msgid "Text and fonts"
 msgstr "Texte et polices"
 
-#: ../style_sheets.md:168
+#: ../style_sheets.md:170
 msgid "``font-family``"
 msgstr "``font-family``"
 
-#: ../style_sheets.md:168
+#: ../style_sheets.md:170
 msgid "A single font name (e.g. ``sans``, ``serif``, ``courier``). *(inherited)*"
 msgstr ""
 "Un nom de police unique (par exemple ``sans``, ``serif``, ``courier``). "
 "*(hérité)*"
 
-#: ../style_sheets.md:169
+#: ../style_sheets.md:171
 msgid "``font-size``"
 msgstr "``font-size``"
 
-#: ../style_sheets.md:169
+#: ../style_sheets.md:171
 msgid ""
 "An absolute size (e.g. ``14``) or a size value (e.g. ``small``). "
 "*(inherited)*"
@@ -7568,73 +7788,73 @@ msgstr ""
 "Une taille absolue (par exemple ``14``) ou une valeur de taille (par "
 "exemple ``small``). *(inherited)*"
 
-#: ../style_sheets.md:170
+#: ../style_sheets.md:172
 msgid "``font-style``"
 msgstr "``font-style``"
 
-#: ../style_sheets.md:170
+#: ../style_sheets.md:172
 msgid "Either ``normal`` or ``italic``. *(inherited)*"
 msgstr "Soit ``normal`` ou ``italic``. *(inherited)*"
 
-#: ../style_sheets.md:171
+#: ../style_sheets.md:173
 msgid "``font-weight``"
 msgstr "``font-weight``"
 
-#: ../style_sheets.md:171
+#: ../style_sheets.md:173
 msgid "Either ``normal`` or ``bold``. *(inherited)*"
 msgstr "Soit ``normal`` ou ``bold``. *(inherited)*"
 
-#: ../style_sheets.md:172
+#: ../style_sheets.md:174
 msgid "``text-align``"
 msgstr "``text-align``"
 
-#: ../style_sheets.md:172
+#: ../style_sheets.md:174
 msgid "Either ``left``, ``center``, ``right``. *(inherited)*"
 msgstr "Soit ``left``, ``center``, ``right``. *(inherited)*"
 
-#: ../style_sheets.md:173
+#: ../style_sheets.md:175
 msgid "``text-decoration``"
 msgstr "``text-decoration``"
 
-#: ../style_sheets.md:173
+#: ../style_sheets.md:175
 msgid "Either ``none`` or ``underline``."
 msgstr "Soit ``non`` ou ``souligné``."
 
-#: ../style_sheets.md:174
+#: ../style_sheets.md:176
 msgid "``vertical-align``"
 msgstr "``vertical-align``"
 
-#: ../style_sheets.md:174
+#: ../style_sheets.md:176
 msgid "Vertical alignment for text."
 msgstr "Alignement vertical du texte."
 
-#: ../style_sheets.md:176
+#: ../style_sheets.md:178
 msgid "Either ``top``, ``middle`` or ``bottom``."
 msgstr "Soit ``top``, ``middle`` ou ``bottom``."
 
-#: ../style_sheets.md:177
+#: ../style_sheets.md:179
 msgid "``vertical-spacing``"
 msgstr "``vertical-spacing``"
 
-#: ../style_sheets.md:177
+#: ../style_sheets.md:179
 msgid "Set vertical spacing for icon-like items (actors, start state)."
 msgstr ""
 "Définir l'espacement vertical pour les éléments de type icône (acteurs, "
 "état de départ)."
 
-#: ../style_sheets.md:179
+#: ../style_sheets.md:181
 msgid "Example: ``vertical-spacing: 4``."
 msgstr "Exemple : ``vertical-spacing : 4``."
 
-#: ../style_sheets.md:180
+#: ../style_sheets.md:182
 msgid "``white-space``"
 msgstr "``white-space``"
 
-#: ../style_sheets.md:180
+#: ../style_sheets.md:182
 msgid "Change the line wrapping behavior for text. *(inherited)*"
 msgstr "Modifie le comportement de retour à la ligne du texte. *(hérité)*"
 
-#: ../style_sheets.md:184
+#: ../style_sheets.md:186
 msgid ""
 "`font-family` can be only one font name, not a list of (fallback) names, "
 "as is used for HTML."
@@ -7642,117 +7862,116 @@ msgstr ""
 "`font-family` ne peut être qu'un seul nom de police, et non une liste de "
 "noms (de repli), comme c'est le cas pour HTML."
 
-#: ../style_sheets.md:186
+#: ../style_sheets.md:188
 msgid ""
 "`font-size` can be a number or [CSS absolute-size "
 "values](https://drafts.csswg.org/css-fonts-3/#font-size-prop). Only the "
 "values `x-small`, `small`, `medium`, `large` and `x-large` are supported."
 msgstr ""
-"`font-size` peut être un nombre ou [CSS absolute-size values] "
-"(https://drafts.csswg.org/css-fonts-3/#font-size-prop). Seules les "
-"valeurs `x-small`, `small`, `medium`, `large` et `x-large` sont "
-"supportées."
+"`font-size` peut être un nombre ou [CSS absolute-size values](https://"
+"drafts.csswg.org/css-fonts-3/#font-size-prop). Seules les valeurs `x-small`, "
+"`small`, `medium`, `large` et `x-large` sont supportées."
 
-#: ../style_sheets.md:189
+#: ../style_sheets.md:191
 msgid "Drawing and spacing"
 msgstr "Dessin et espacement"
 
-#: ../style_sheets.md:193
+#: ../style_sheets.md:195
 msgid "``border-radius``"
 msgstr "``border-radius``"
 
-#: ../style_sheets.md:193
+#: ../style_sheets.md:195
 msgid "Radius for rectangles: ``border-radius: 4``."
 msgstr "Rayon pour les rectangles : ``border-radius : 4``."
 
-#: ../style_sheets.md:194
+#: ../style_sheets.md:196
 msgid "``dash-style``"
 msgstr "``dash-style``"
 
-#: ../style_sheets.md:194
+#: ../style_sheets.md:196
 msgid "Style for dashed lines: ``dash-style: 7 5``."
 msgstr "Style pour les lignes en pointillés : ``dash-style : 7 5``."
 
-#: ../style_sheets.md:195
+#: ../style_sheets.md:197
 msgid "``justify-content``"
 msgstr "``justify-content``"
 
-#: ../style_sheets.md:195
+#: ../style_sheets.md:197
 msgid "Content alignment for boxes."
 msgstr "Alignement du contenu des boîtes."
 
-#: ../style_sheets.md:197
+#: ../style_sheets.md:199
 msgid "Either ``start``, ``end``, ``center`` or ``stretch``."
 msgstr "Soit ``début``, ``fin``, ``centre`` ou ``étiré``."
 
-#: ../style_sheets.md:198
+#: ../style_sheets.md:200
 msgid "``line-style``"
 msgstr "``line-style``"
 
-#: ../style_sheets.md:198
+#: ../style_sheets.md:200
 msgid "Either ``normal`` or ``sloppy [factor]``."
 msgstr "Soit ``normal``, soit ``sloppy [factor]``."
 
-#: ../style_sheets.md:199
+#: ../style_sheets.md:201
 msgid "``line-width``"
 msgstr "``line-width``"
 
-#: ../style_sheets.md:199
+#: ../style_sheets.md:201
 msgid "Set the width for lines: ``line-width: 2``. *(inherited)*"
 msgstr "Définir la largeur des lignes : ``largeur ligne : 2``. *(hérité)*"
 
-#: ../style_sheets.md:200
+#: ../style_sheets.md:202
 msgid "``min-height``"
 msgstr "``min-height``"
 
-#: ../style_sheets.md:200
+#: ../style_sheets.md:202
 msgid "Set minimal height for an item: ``min-height: 50``."
 msgstr "Fixe la hauteur minimale d'un élément : ``min-height : 50``."
 
-#: ../style_sheets.md:201
+#: ../style_sheets.md:203
 msgid "``min-width``"
 msgstr "``min-width``"
 
-#: ../style_sheets.md:201
+#: ../style_sheets.md:203
 msgid "Set minimal width for an item: ``min-width: 100``."
 msgstr "Fixe la largeur minimale d'un élément : ``min-width : 100``."
 
-#: ../style_sheets.md:202
+#: ../style_sheets.md:204
 msgid "``max-width``"
 msgstr "``max-width``"
 
-#: ../style_sheets.md:202
+#: ../style_sheets.md:204
 msgid "Set maximum width (text fields only): ``max-width: 100``."
 msgstr ""
 "Définir la largeur maximale (champs de texte uniquement) : ``max-width : "
 "100``."
 
-#: ../style_sheets.md:203
+#: ../style_sheets.md:205
 msgid "``padding``"
 msgstr "``padding``"
 
-#: ../style_sheets.md:203
+#: ../style_sheets.md:205
 msgid "CSS style padding (top, right, bottom, left)."
 msgstr "Style CSS d'espacement de chaque coté (top, right, bottom, left)."
 
-#: ../style_sheets.md:205
+#: ../style_sheets.md:207
 msgid "Example: ``padding: 3 4``."
 msgstr "Exemple: ``padding: 3 4``."
 
-#: ../style_sheets.md:209
+#: ../style_sheets.md:211
 msgid ""
 "`padding` is defined by integers in the range of 1 to 4. No unit (px, pt,"
 " em) needs to be used. All values are in pixel distance."
 msgstr ""
-"Le 'padding' (espacement de chaque coté) est défini par des nombres "
-"entiers compris entre 1 et 4. Aucune unité (px, pt, em) n'a besoin d'être"
-" utilisée. Toutes les valeurs sont exprimées en distance en pixels."
+"La propriété `padding` est définie par des nombres entiers compris entre 1 "
+"et 4. Il n'est pas nécessaire d'utiliser d'unité (px, pt, em). Toutes les "
+"valeurs sont exprimées en pixels."
 
-#: ../style_sheets.md:211
+#: ../style_sheets.md:213
 msgid "`dash-style` is a list of numbers (line, gap, line, gap, …)"
 msgstr "`dash-style` est une liste de nombres (ligne, espace, ligne, espace, ...)"
 
-#: ../style_sheets.md:212
+#: ../style_sheets.md:214
 msgid ""
 "`line-style` only has an effect when defined on a `diagram`. A sloppiness"
 " factor can be provided in the range of -2 to 2."
@@ -7760,37 +7979,37 @@ msgstr ""
 "`line-style` n'a d'effet que lorsqu'il est défini sur un `diagramme`. Un "
 "facteur de négligence peut être fourni entre -2 et 2."
 
-#: ../style_sheets.md:215
+#: ../style_sheets.md:217
 msgid "Pseudo elements"
 msgstr "Pseudo-éléments"
 
-#: ../style_sheets.md:217
+#: ../style_sheets.md:219
 msgid "Currently, only the `::after` pseudo element is supported."
 msgstr "Actuellement, seul le pseudo-élément `::after` est pris en charge."
 
-#: ../style_sheets.md:221
+#: ../style_sheets.md:223
 msgid "``content``"
 msgstr "``content``"
 
-#: ../style_sheets.md:221
+#: ../style_sheets.md:223
 msgid "Extra content to be shown after a text."
 msgstr "Contenu supplémentaire à afficher après un texte."
 
-#: ../style_sheets.md:225
+#: ../style_sheets.md:227
 msgid "Variables"
 msgstr "Variables"
 
-#: ../style_sheets.md:227
+#: ../style_sheets.md:229
 msgid ""
 "Since Gaphor 2.16.0 you can use [CSS "
 "variables](https://developer.mozilla.org/en-"
 "US/docs/Web/CSS/Using_CSS_custom_properties) in your style sheets."
 msgstr ""
-"Depuis Gaphor 2.16.0, vous pouvez utiliser des [variables CSS] "
-"(https://developer.mozilla.org/en-"
-"US/docs/Web/CSS/Using_CSS_custom_properties) dans vos feuilles de style."
+"Depuis Gaphor 2.16.0, vous pouvez utiliser des [variables CSS](https://"
+"developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties) dans "
+"vos feuilles de style."
 
-#: ../style_sheets.md:229
+#: ../style_sheets.md:231
 msgid ""
 "This allows you to define often used values in a more generic way. Think "
 "of things like line dash style and colors."
@@ -7799,23 +8018,23 @@ msgstr ""
 " générique. Pensez à des choses comme le style des tirets et les "
 "couleurs."
 
-#: ../style_sheets.md:232
+#: ../style_sheets.md:234
 msgid "The `var()` function has some limitations:"
 msgstr "La fonction `var()` a quelques limitations :"
 
-#: ../style_sheets.md:234
+#: ../style_sheets.md:236
 msgid "Values can’t have a default value."
 msgstr "Les valeurs ne peuvent pas avoir de valeur par défaut."
 
-#: ../style_sheets.md:235
+#: ../style_sheets.md:237
 msgid "Variables can’t have a variable as their value."
 msgstr "Les variables ne peuvent pas avoir une variable comme valeur."
 
-#: ../style_sheets.md:237
+#: ../style_sheets.md:239 ../troubleshooting.md:16
 msgid "Example:"
 msgstr "Exemples :"
 
-#: ../style_sheets.md:250
+#: ../style_sheets.md:252
 msgid ""
 "All diagrams have a white background. Sequence diagrams get a blue-ish "
 "background."
@@ -7823,11 +8042,11 @@ msgstr ""
 "Tous les diagrammes ont un fond blanc. Les diagrammes de séquence ont un "
 "fond bleu."
 
-#: ../style_sheets.md:252
+#: ../style_sheets.md:254
 msgid "Media queries"
 msgstr "Questions sur les médias"
 
-#: ../style_sheets.md:254
+#: ../style_sheets.md:256
 msgid ""
 "Gaphor supports dark and light mode since 2.16.0. Dark and light color "
 "schemes are exclusively used for on-screen editing. When exporting "
@@ -7843,11 +8062,11 @@ msgstr ""
 "color-scheme = dark` est prise en charge, ainsi qu'un mode sombre plus "
 "pratique."
 
-#: ../style_sheets.md:280
+#: ../style_sheets.md:282
 msgid "Diagram styles"
 msgstr "Styles de diagramme"
 
-#: ../style_sheets.md:282
+#: ../style_sheets.md:284
 msgid ""
 "Only a few properties can be defined on a diagram, namely `background-"
 "color` and `line-style`. You define the diagram style separately from the"
@@ -7871,11 +8090,11 @@ msgstr ""
 "-2,0 et 2,0. Les valeurs comprises entre 0,0 et 0,5 produisent un effet "
 "subtil."
 
-#: ../style_sheets.md:291
+#: ../style_sheets.md:293
 msgid "CSS model elements"
 msgstr "Éléments du modèle CSS"
 
-#: ../style_sheets.md:293
+#: ../style_sheets.md:295
 msgid ""
 "Gaphor has many model elements. How can you find out which item should be"
 " styled?"
@@ -7883,7 +8102,7 @@ msgstr ""
 "Gaphor possède de nombreux éléments de modèle. Comment savoir quel "
 "élément doit être stylisé ?"
 
-#: ../style_sheets.md:295
+#: ../style_sheets.md:297
 msgid ""
 "Gaphor only styles the elements that are in the model, so you should be "
 "explicit on their names. For example: `Component` inherits from `Class` "
@@ -7895,7 +8114,7 @@ msgstr ""
 "`Class` dans le modèle UML, mais changer la couleur d'une classe ne la "
 "change pas pour un `Component`."
 
-#: ../style_sheets.md:299
+#: ../style_sheets.md:301
 msgid ""
 "If you hover over a button the toolbox (bottom-left section), a popup "
 "will appear with the item's name and a shortcut. As a general rule, you "
@@ -7912,7 +8131,7 @@ msgstr ""
 " d'utilisation* comme `usecase`. La correspondance des noms est "
 "insensible à la casse. Les noms CSS sont écrits en minuscules par défaut."
 
-#: ../style_sheets.md:306
+#: ../style_sheets.md:308
 msgid ""
 "However, since the CSS element names are derived from names used within "
 "Gaphor, there are a few exceptions."
@@ -7920,226 +8139,226 @@ msgstr ""
 "Cependant, comme les noms des éléments CSS sont dérivés des noms utilisés"
 " dans Gaphor, il y a quelques exceptions."
 
-#: ../style_sheets.md:310
+#: ../style_sheets.md:312
 msgid "Profile"
 msgstr "Profile"
 
-#: ../style_sheets.md:310
+#: ../style_sheets.md:312
 msgid "Group"
 msgstr "Groupe"
 
-#: ../style_sheets.md:310
+#: ../style_sheets.md:312
 msgid "Element"
 msgstr "Élément"
 
-#: ../style_sheets.md:310
+#: ../style_sheets.md:312
 msgid "CSS element"
 msgstr "Élément CSS"
 
-#: ../style_sheets.md:312
+#: ../style_sheets.md:314
 msgid "\\*"
 msgstr "\\*"
 
-#: ../style_sheets.md:312
+#: ../style_sheets.md:314
 msgid "*element name*"
 msgstr "*nom de l'élément*"
 
-#: ../style_sheets.md:312
+#: ../style_sheets.md:314
 msgid "element name without spaces"
 msgstr "nom de l'élément sans espace"
 
-#: ../style_sheets.md:314
+#: ../style_sheets.md:316
 msgid "E.g. ``class``, ``usecase``."
 msgstr "Par exemple, ``class``, ``usecase``."
 
-#: ../style_sheets.md:315 ../style_sheets.md:316 ../style_sheets.md:317
-#: ../style_sheets.md:318 ../style_sheets.md:319 ../style_sheets.md:320
-#: ../style_sheets.md:321 ../style_sheets.md:322 ../style_sheets.md:323
+#: ../style_sheets.md:317 ../style_sheets.md:318 ../style_sheets.md:319
+#: ../style_sheets.md:320 ../style_sheets.md:321 ../style_sheets.md:322
+#: ../style_sheets.md:323 ../style_sheets.md:324 ../style_sheets.md:325
 msgid "UML"
 msgstr "UML"
 
-#: ../style_sheets.md:315
+#: ../style_sheets.md:317
 msgid "Classes"
 msgstr "Classes"
 
-#: ../style_sheets.md:315
+#: ../style_sheets.md:317
 msgid "all Association's"
 msgstr "toutes les associations"
 
-#: ../style_sheets.md:315
+#: ../style_sheets.md:317
 msgid "``association``"
 msgstr "``association``"
 
-#: ../style_sheets.md:316
+#: ../style_sheets.md:318
 msgid "Components"
 msgstr "Composants"
 
-#: ../style_sheets.md:316
+#: ../style_sheets.md:318
 msgid "Device/Node"
 msgstr "Dispositif/Nœud"
 
-#: ../style_sheets.md:316
+#: ../style_sheets.md:318
 msgid "``node``"
 msgstr "``node``"
 
-#: ../style_sheets.md:317 ../style_sheets.md:318 ../style_sheets.md:319
+#: ../style_sheets.md:319 ../style_sheets.md:320 ../style_sheets.md:321
 msgid "Actions"
 msgstr "Actions"
 
-#: ../style_sheets.md:317
+#: ../style_sheets.md:319
 msgid "Decision/Merge Node"
 msgstr "Décision/Fusion de Nœud"
 
-#: ../style_sheets.md:317
+#: ../style_sheets.md:319
 msgid "``decisionnode``"
 msgstr "``decisionnode``"
 
-#: ../style_sheets.md:318
+#: ../style_sheets.md:320
 msgid "Fork/Join Node"
 msgstr "Fork/Joindre Nœud"
 
-#: ../style_sheets.md:318
+#: ../style_sheets.md:320
 msgid "``forknode``"
 msgstr "``forknode``"
 
-#: ../style_sheets.md:319
+#: ../style_sheets.md:321
 msgid "Swimlane"
 msgstr "Couloir d'activité (Swimlane)"
 
-#: ../style_sheets.md:319
+#: ../style_sheets.md:321
 msgid "``partition``"
 msgstr "``partition``"
 
-#: ../style_sheets.md:320
+#: ../style_sheets.md:322
 msgid "Interactions"
 msgstr "Interactions"
 
-#: ../style_sheets.md:320
+#: ../style_sheets.md:322
 msgid "Reflexive message"
 msgstr "Message réflexif"
 
-#: ../style_sheets.md:320
+#: ../style_sheets.md:322
 msgid "``message``"
 msgstr "``message``"
 
-#: ../style_sheets.md:321 ../style_sheets.md:322
+#: ../style_sheets.md:323 ../style_sheets.md:324
 msgid "States"
 msgstr "États"
 
-#: ../style_sheets.md:321
+#: ../style_sheets.md:323
 msgid "Initial Pseudostate"
 msgstr "Pseudo-état initial"
 
-#: ../style_sheets.md:321 ../style_sheets.md:322
+#: ../style_sheets.md:323 ../style_sheets.md:324
 msgid "``pseudostate``"
 msgstr "``pseudostate``"
 
-#: ../style_sheets.md:322
+#: ../style_sheets.md:324
 msgid "History Pseudostate"
 msgstr "Histoique Pseudo-État"
 
-#: ../style_sheets.md:323
+#: ../style_sheets.md:325
 msgid "Profiles"
 msgstr "Profiles"
 
-#: ../style_sheets.md:323
+#: ../style_sheets.md:325
 msgid "Metaclass"
 msgstr "Métaclasse"
 
-#: ../style_sheets.md:323
+#: ../style_sheets.md:325
 msgid "``class``"
 msgstr "``class``"
 
-#: ../style_sheets.md:324 ../style_sheets.md:325 ../style_sheets.md:326
-#: ../style_sheets.md:327 ../style_sheets.md:328
+#: ../style_sheets.md:326 ../style_sheets.md:327 ../style_sheets.md:328
+#: ../style_sheets.md:329 ../style_sheets.md:330
 msgid "C4 Model"
 msgstr "Modèle C4"
 
-#: ../style_sheets.md:324
+#: ../style_sheets.md:326
 msgid "Person"
 msgstr "Personne"
 
-#: ../style_sheets.md:324
+#: ../style_sheets.md:326
 msgid "``c4person``"
 msgstr "``c4person``"
 
-#: ../style_sheets.md:325
+#: ../style_sheets.md:327
 msgid "Software System"
 msgstr "Système logiciel"
 
-#: ../style_sheets.md:325
+#: ../style_sheets.md:327
 msgid "``c4container[type=\"Software System\"]``"
 msgstr "``c4container[type=\"Software System\"]``"
 
-#: ../style_sheets.md:326
+#: ../style_sheets.md:328
 msgid "Component"
 msgstr "Composant"
 
-#: ../style_sheets.md:326
+#: ../style_sheets.md:328
 msgid "``c4container[type=\"Component\"]``"
 msgstr "``c4container[type=\"Component\"]``"
 
-#: ../style_sheets.md:327
+#: ../style_sheets.md:329
 msgid "Container"
 msgstr "Conteneur"
 
-#: ../style_sheets.md:327
+#: ../style_sheets.md:329
 msgid "``c4container[type=\"Container\"]``"
 msgstr "``c4container[type=\"Container\"]``"
 
-#: ../style_sheets.md:328
+#: ../style_sheets.md:330
 msgid "Container: Database"
 msgstr "Conteneur : Base de données"
 
-#: ../style_sheets.md:328
+#: ../style_sheets.md:330
 msgid "``c4database``"
 msgstr "``c4database``"
 
-#: ../style_sheets.md:329 ../style_sheets.md:330 ../style_sheets.md:331
+#: ../style_sheets.md:331 ../style_sheets.md:332 ../style_sheets.md:333
 msgid "SysML"
 msgstr "SysML"
 
-#: ../style_sheets.md:329
+#: ../style_sheets.md:331
 msgid "ValueType"
 msgstr "TypeValeur"
 
-#: ../style_sheets.md:329 ../style_sheets.md:330
+#: ../style_sheets.md:331 ../style_sheets.md:332
 msgid "``datatype``"
 msgstr "``datatype``"
 
-#: ../style_sheets.md:330
+#: ../style_sheets.md:332
 msgid "Primitive"
 msgstr "Primitive"
 
-#: ../style_sheets.md:331
+#: ../style_sheets.md:333
 msgid "Derive Requirement"
 msgstr "Exigence dérivée"
 
-#: ../style_sheets.md:331
+#: ../style_sheets.md:333
 msgid "``derivedreq``"
 msgstr "``derivedreq``"
 
-#: ../style_sheets.md:332
+#: ../style_sheets.md:334
 msgid "RAAML"
 msgstr "RAAML"
 
-#: ../style_sheets.md:332
+#: ../style_sheets.md:334
 msgid "FTA"
 msgstr "FTA"
 
-#: ../style_sheets.md:332
+#: ../style_sheets.md:334
 msgid "any AND/OR/… Gate"
 msgstr "Porte...toute/ET/OU"
 
-#: ../style_sheets.md:332
+#: ../style_sheets.md:334
 msgid "``and``, ``or``, etc."
 msgstr "``and``, ``or``, etc."
 
-#: ../style_sheets.md:337
+#: ../style_sheets.md:339
 msgid "Ideas"
 msgstr "Idées"
 
-#: ../style_sheets.md:339
+#: ../style_sheets.md:341
 msgid ""
 "Here are some ideas that go just beyond changing a color or a font. With "
 "the following examples we dig in to Gaphor's model structure to reveal "
@@ -8150,7 +8369,7 @@ msgstr ""
 "du modèle de Gaphor afin de révéler davantage d'informations aux "
 "utilisateurs."
 
-#: ../style_sheets.md:343
+#: ../style_sheets.md:345
 msgid ""
 "To create your own expression you may want to use the Console (![Menu "
 "icon](images/open-menu-symbolic.svg) → Tools → Console). Drop us a line "
@@ -8162,27 +8381,27 @@ msgstr ""
 "nous un message sur [Gitter](https://gitter.im/gaphor/Lobby) et nous "
 "serons heureux de vous aider."
 
-#: ../style_sheets.md:346
+#: ../style_sheets.md:348
 msgid "The drafts package"
 msgstr "Le paquet de projets"
 
-#: ../style_sheets.md:348
+#: ../style_sheets.md:350
 msgid "All diagrams in the package \"Drafts\" should be drawn using sloppy lines:"
 msgstr ""
 "Tous les diagrammes du paquet « Drafts » doivent être dessinés en "
 "utilisant des lignes négligées :"
 
-#: ../style_sheets.md:360
+#: ../style_sheets.md:362
 msgid "draft style"
 msgstr "style brouillon"
 
-#: ../style_sheets.md:365
+#: ../style_sheets.md:367
 msgid "Wrap long attributes, operations, and stereotype values"
 msgstr ""
 "Envelopper les attributs longs, les opérations et les valeurs des "
 "stéréotypes"
 
-#: ../style_sheets.md:367
+#: ../style_sheets.md:369
 msgid ""
 "Sometimes attribute values get a bit lengthy. By default, Gaphor will not"
 " wrap text. If you want to, you can add this little snippet to wrap text "
@@ -8194,15 +8413,15 @@ msgstr ""
 "petit extrait pour envelopper le texte des attributs longs des classes. "
 "Vous pouvez bien sûr également l'appliquer à d'autres types."
 
-#: ../style_sheets.md:377
+#: ../style_sheets.md:379
 msgid "wrap long attribute"
 msgstr "attribut long enveloppant"
 
-#: ../style_sheets.md:382
+#: ../style_sheets.md:384
 msgid "Unconnected relationships"
 msgstr "Relations non connectées"
 
-#: ../style_sheets.md:384
+#: ../style_sheets.md:386
 msgid ""
 "All items on a diagram that are not backed by a model element, should be "
 "drawn in a dark red color. This can be used to spot not-so-well connected"
@@ -8219,15 +8438,15 @@ msgstr ""
 "connectées. Cette règle exclut les éléments simples, tels que les lignes "
 "et les boîtes, qui ne sont jamais soutenus par un élément de modèle."
 
-#: ../style_sheets.md:397
+#: ../style_sheets.md:399
 msgid "unconnected relationship"
 msgstr "relation sans lien"
 
-#: ../style_sheets.md:402
+#: ../style_sheets.md:404
 msgid "Navigable associations"
 msgstr "Associations navigables"
 
-#: ../style_sheets.md:404
+#: ../style_sheets.md:406
 msgid ""
 "An example of how to apply a style to a navigable association is to color"
 " an association blue if neither of the ends are navigable. This color "
@@ -8242,15 +8461,15 @@ msgstr ""
 "d'ailleurs le cas pour le fichier de modèle utilisé pour créer le modèle "
 "de données de Gaphor."
 
-#: ../style_sheets.md:416
+#: ../style_sheets.md:418
 msgid "navigable association"
 msgstr "association navigable"
 
-#: ../style_sheets.md:421
+#: ../style_sheets.md:423
 msgid "Solid Control Flow lines"
 msgstr "lignes Flux de Contrôle Solide"
 
-#: ../style_sheets.md:423
+#: ../style_sheets.md:425
 msgid ""
 "In Gaphor, Control Flow lines follow the SysML styling: dashed. If you "
 "want, or need to strictly follow the official UML specifications, you can"
@@ -8260,15 +8479,15 @@ msgstr ""
 "pointillés. Si vous voulez ou devez suivre strictement les spécifications"
 " officielles d'UML, vous pouvez simplement créer des lignes pleines."
 
-#: ../style_sheets.md:433
+#: ../style_sheets.md:435
 msgid "control flow"
 msgstr "flux de contrôle"
 
-#: ../style_sheets.md:438
+#: ../style_sheets.md:440
 msgid "Todo note highlight"
 msgstr "Mise en évidence de la note de service"
 
-#: ../style_sheets.md:440
+#: ../style_sheets.md:442
 msgid ""
 "All comments beginning with the phrase \"todo\" can be highlighted in a "
 "different user-specific colour. This can be used to make yourself aware "
@@ -8279,15 +8498,15 @@ msgstr ""
 "utilisateur. Cela peut vous permettre de prendre conscience qu'il vous "
 "reste du travail à effectuer pour finaliser le diagramme."
 
-#: ../style_sheets.md:450
+#: ../style_sheets.md:452
 msgid "highlighted todo note"
 msgstr "note de tâche surlignée"
 
-#: ../style_sheets.md:455
+#: ../style_sheets.md:457
 msgid "Emphesize abstract classes and operations"
 msgstr "Mettre l'accent sur les classes et les opérations abstraites"
 
-#: ../style_sheets.md:457
+#: ../style_sheets.md:459
 msgid ""
 "It may be that the italic font used is not distinguishable enough to "
 "differentiate between concrete and abstract classes or operations. To "
@@ -8299,19 +8518,208 @@ msgstr ""
 "ce faire, nous vérifions si l'attribut `isAbstract` est défini sur "
 "l'élément en question :"
 
-#: ../style_sheets.md:467
+#: ../style_sheets.md:469
 msgid "emphasize abstract elements"
 msgstr "Mettre l'accent sur les éléments abstraits"
 
-#: ../style_sheets.md:472
+#: ../style_sheets.md:474
 msgid "System Style Sheet"
 msgstr "Feuille de Style du Système"
 
-#: ../undo.md:1
+#: ../troubleshooting.md:1
+msgid "Troubleshooting"
+msgstr "Dépannage"
+
+#: ../troubleshooting.md:3
+msgid "This page covers common issues and their solutions when using Gaphor."
+msgstr ""
+"Cette page présente les problèmes courants rencontrés lors de l'utilisation "
+"de Gaphor ainsi que leurs solutions."
+
+#: ../troubleshooting.md:7
+msgid "Invisible UI on Windows 10 (Intel + NVIDIA Graphics)"
+msgstr ""
+"Interface utilisateur invisible sous Windows 10 (processeur Intel + carte "
+"graphique NVIDIA)"
+
+#: ../troubleshooting.md:9
+msgid "**Problem:**"
+msgstr "**Problème :**"
+
+#: ../troubleshooting.md:11
+msgid ""
+"Some Windows 10 users with Intel integrated graphics (especially older "
+"GPUs like the Intel HD 4000 / 4600 series) — often in systems that also "
+"have NVIDIA GPUs — may experience an **invisible UI** when launching "
+"Gaphor. The window appears, and UI elements are clickable (buttons, "
+"menus), but nothing is visible."
+msgstr ""
+"Certains utilisateurs de Windows 10 équipés d'une carte graphique intégrée "
+"Intel (en particulier les anciens modèles tels que les séries Intel HD "
+"4000 / 4600) — souvent sur des systèmes équipés également d'une carte "
+"graphique NVIDIA — peuvent rencontrer un problème d'**interface utilisateur "
+"invisible** lors du lancement de Gaphor. La fenêtre s'affiche et les "
+"éléments de l'interface (boutons, menus) sont cliquables, mais rien n'est "
+"visible."
+
+#: ../troubleshooting.md:13
+msgid ""
+"This issue is tracked upstream in GTK: 👉 "
+"[GNOME/gtk#7283](https://gitlab.gnome.org/GNOME/gtk/-/issues/7283)"
+msgstr ""
+"Ce problème est suivi en amont dans GTK : 👉 [GNOME/gtk#7283](https://"
+"gitlab.gnome.org/GNOME/gtk/-/issues/7283)"
+
+#: ../troubleshooting.md:18
+msgid ""
+"*In the images below, the Gaphor window is open but the UI is not "
+"visible.*"
+msgstr ""
+"*Sur les images ci-dessous, la fenêtre Gaphor est ouverte, mais l'interface "
+"utilisateur n'est pas visible.*"
+
+#: ../troubleshooting.md:20
+msgid "![Invisible UI Example 1](./images/invisible-ui-example1.png)"
+msgstr ""
+"![Exemple 1 d'interface utilisateur invisible](./images/invisible-ui-"
+"example1.png)"
+
+#: ../troubleshooting.md:20
+msgid "Invisible UI Example 1"
+msgstr "Exemple n°1 d'interface utilisateur invisible"
+
+#: ../troubleshooting.md:22
+msgid "![Invisible UI Example 2](./images/invisible-ui-example2.png)"
+msgstr ""
+"![Exemple 2 d'interface utilisateur invisible](./images/invisible-ui-"
+"example2.png)"
+
+#: ../troubleshooting.md:22
+msgid "Invisible UI Example 2"
+msgstr "Exemple 2 d'interface utilisateur invisible"
+
+#: ../troubleshooting.md:26
+msgid "Solution: Set the `GSK_RENDERER=gl` Environment Variable"
+msgstr "Solution : Définissez la variable d'environnement `GSK_RENDERER=gl`"
+
+#: ../troubleshooting.md:28
+msgid ""
+"To fix this issue, you can force GTK to use the OpenGL-based renderer by "
+"setting the environment variable `GSK_RENDERER=gl`."
+msgstr ""
+"Pour résoudre ce problème, vous pouvez forcer GTK à utiliser le moteur de "
+"rendu basé sur OpenGL en définissant la variable d'environnement "
+"`GSK_RENDERER=gl`."
+
+#: ../troubleshooting.md:30
+msgid "Option 1️⃣: Update the Gaphor Shortcut"
+msgstr "Option 1️⃣ : Mettre à jour le raccourci Gaphor"
+
+#: ../troubleshooting.md:32
+msgid ""
+"**Right-click the Gaphor shortcut** (Desktop or Start Menu) and select "
+"**Properties**."
+msgstr ""
+"**Cliquez avec le bouton droit de la souris sur le raccourci Gaphor** (sur "
+"le Bureau ou dans le menu Démarrer) et sélectionnez **Propriétés**."
+
+#: ../troubleshooting.md:33
+msgid "In the **Shortcut** tab, locate the **Target** field."
+msgstr "Dans l'onglet **Raccourci**, repérez le champ **Cible**."
+
+#: ../troubleshooting.md:34
+msgid "Replace the existing target with the following PowerShell command:"
+msgstr "Remplacez la cible actuelle par la commande PowerShell suivante :"
+
+#: ../troubleshooting.md:40
+msgid ""
+"*Note: Adjust the path if your Gaphor installation is in a different "
+"folder.*"
+msgstr ""
+"*Remarque : modifiez le chemin d'accès si votre installation de Gaphor se "
+"trouve dans un autre dossier.*"
+
+#: ../troubleshooting.md:42
+msgid "Click **Apply** and then **OK**."
+msgstr "Cliquez sur **Appliquer**, puis sur **OK**."
+
+#: ../troubleshooting.md:44
+msgid ""
+"✅ Now, whenever you launch Gaphor via this shortcut, it will apply the "
+"fix automatically."
+msgstr ""
+"✅ Désormais, chaque fois que vous lancerez Gaphor via ce raccourci, la "
+"correction s'appliquera automatiquement."
+
+#: ../troubleshooting.md:48
+msgid "Option 2️⃣: Set a Permanent Environment Variable"
+msgstr "Option 2️⃣ : Définir une variable d'environnement permanente"
+
+#: ../troubleshooting.md:50
+msgid "Press `Win + S` and search for **Environment Variables**."
+msgstr "Appuyez sur `Win + S` et recherchez **Variables d'environnement**."
+
+#: ../troubleshooting.md:51
+msgid ""
+"Select **“Edit the system environment variables” → Environment "
+"Variables**."
+msgstr ""
+"Sélectionnez **\"Modifier les variables d'environnement système\" → "
+"Variables d'environnement**."
+
+#: ../troubleshooting.md:52
+msgid "Under **User variables**, click **New**:"
+msgstr "Dans la section **Variables utilisateur**, cliquez sur **Nouveau** :"
+
+#: ../troubleshooting.md:53
+msgid "**Variable name:** `GSK_RENDERER`"
+msgstr "**Nom de la variable :** `GSK_RENDERER`"
+
+#: ../troubleshooting.md:54
+msgid "**Variable value:** `gl`"
+msgstr "**Valeur de la variable :** `gl`"
+
+#: ../troubleshooting.md:55
+msgid "Save and restart your computer."
+msgstr "Enregistrez et redémarrez votre ordinateur."
+
+#: ../troubleshooting.md:57
+msgid ""
+"✅ This will apply the fix globally for Gaphor (and any other GTK-based "
+"apps)."
+msgstr ""
+"✅ Cela permettra d'appliquer la correction à l'ensemble de Gaphor (et de "
+"toutes les autres applications basées sur GTK)."
+
+#: ../troubleshooting.md:61
+msgid "Affected Systems"
+msgstr "Systèmes concernés"
+
+#: ../troubleshooting.md:63
+msgid "**Windows 10**"
+msgstr "**Windows 10**"
+
+#: ../troubleshooting.md:64
+msgid "Intel HD 4000 / 4600 series graphics (or similar)"
+msgstr "Intel HD 4000 / 4600 series graphics (or similaire)"
+
+#: ../troubleshooting.md:65
+msgid "Often combined with NVIDIA GPU setups"
+msgstr "Souvent associé à des configurations avec des GPU NVIDIA"
+
+#: ../troubleshooting.md:69
+msgid ""
+"*Thanks to the Gaphor community and contributors for identifying and "
+"confirming this workaround!*"
+msgstr ""
+"*Merci à la communauté Gaphor et à ses contributeurs d'avoir identifié et "
+"confirmé cette solution de contournement !*"
+
+#: ../undo.rst:2
 msgid "Undo Manager"
 msgstr "Gestionnaire d'annulation"
 
-#: ../undo.md:3
+#: ../undo.rst:4
 msgid ""
 "Undo is a required feature in modern applications. Gaphor is no "
 "exception. Having an undo function in place means you can change the "
@@ -8322,11 +8730,11 @@ msgstr ""
 "d'annulation permet de modifier le modèle et de revenir facilement à un "
 "état antérieur."
 
-#: ../undo.md:7
+#: ../undo.rst:9
 msgid "Overview of Transactions"
 msgstr "Aperçu des transactions"
 
-#: ../undo.md:9
+#: ../undo.rst:11
 msgid ""
 "The recording and playback of changes in Gaphor is handled by the the "
 "Undo Manager. The Undo Manager works transactionally. A transaction must "
@@ -8342,7 +8750,7 @@ msgstr ""
 "module :mod:`~gaphor.transaction`, qui fournit un gestionnaire de "
 "contexte :obj:`~gaphor.transaction.Transaction`."
 
-#: ../undo.md:16
+#: ../undo.rst:18
 msgid ""
 "When transactions take place, they emit events when the top-most "
 "transaction begins and is finished. The event notifications are for the "
@@ -8354,7 +8762,7 @@ msgstr ""
 "d'événements concernent le début de la transaction, sa validation en cas "
 "de succès ou le retour en arrière en cas d'échec."
 
-#: ../undo.md:20
+#: ../undo.rst:22
 msgid ""
 "The Undo Manager only allows changes to be made in a transaction. If a "
 "change is made outside a transaction, an exception is raised."
@@ -8363,27 +8771,27 @@ msgstr ""
 "dans le cadre d'une transaction. Si une modification est effectuée en "
 "dehors d'une transaction, une exception est levée."
 
-#: ../undo.md:23
+#: ../undo.rst:26
 msgid "Start of a Transaction"
 msgstr "Début d'une transaction"
 
-#: ../undo.md:25
+#: ../undo.rst:28
 msgid "A ``Transaction`` object is created."
 msgstr "Un objet ``Transaction`` est créé."
 
-#: ../undo.md:26
+#: ../undo.rst:29
 msgid "``TransactionBegin`` event is emitted."
 msgstr "L'événement ``TransactionBegin`` est émis."
 
-#: ../undo.md:27
+#: ../undo.rst:30
 msgid ""
 "The ``UndoManager`` instantiates a new ``ActionStack`` which is the "
 "transaction object, and adds the undo action to the stack."
 msgstr ""
-"Le ``UndoManager`` instancie une nouvelle ``ActionStack`` qui est l'objet de "
-"la transaction, et ajoute l'action d'annulation à la pile."
+"Le ``UndoManager`` instancie une nouvelle ``ActionStack`` qui est l'objet"
+" de la transaction, et ajoute l'action d'annulation à la pile."
 
-#: ../undo.md:30
+#: ../undo.rst:33
 msgid ""
 "Nested transactions are supported to allow a transaction to be added "
 "inside of another transaction that is already in progress."
@@ -8391,45 +8799,45 @@ msgstr ""
 "Les transactions imbriquées sont prises en charge pour permettre l'ajout "
 "d'une transaction à l'intérieur d'une autre transaction déjà en cours."
 
-#: ../undo.md:33
+#: ../undo.rst:37
 msgid "Successful Transaction"
 msgstr "Transaction réussie"
 
-#: ../undo.md:35
+#: ../undo.rst:39
 msgid "A ``TransactionCommit`` event is emitted"
 msgstr ""
-"Un événement ``TransactionCommit`` (Enregistrement de la transaction) est "
-"émis"
+"Un événement ``TransactionCommit`` (Enregistrement de la transaction) est"
+" émis"
 
-#: ../undo.md:36
+#: ../undo.rst:40
 msgid "The ``UndoManager`` closes and stores the transaction."
 msgstr ""
 "Le ``UndoManager`` (Gestionnaire d'annulation) ferme et enregistre la "
 "transaction."
 
-#: ../undo.md:38
+#: ../undo.rst:43
 msgid "Failed Transaction"
 msgstr "Échec de la transaction"
 
-#: ../undo.md:40
+#: ../undo.rst:45
 msgid "A ``TransactionRollback`` event is emitted."
 msgstr ""
 "Un ``TransactionRollback`` événement (Annulation de la transaction) est "
 "émis."
 
-#: ../undo.md:41
+#: ../undo.rst:46
 msgid ""
-"The ``UndoManager`` plays back all the recorded actions, but does not store"
-" it."
+"The ``UndoManager`` plays back all the recorded actions, but does not "
+"store it."
 msgstr ""
 "Le ``UndoManager`` ( Gestionnaire d'annulation) lit toutes les actions "
 "enregistrées, mais ne les stocke pas."
 
-#: ../undo.md:44
+#: ../undo.rst:50
 msgid "Transaction API"
 msgstr "API de transaction"
 
-#: ../undo.md:47
+#: ../undo.rst:54
 msgid "You only require transactions if the undo manager is active."
 msgstr ""
 "Les transactions ne sont nécessaires que si le gestionnaire d'annulation "
@@ -8484,9 +8892,9 @@ msgid ""
 ":obj:`~gaphor.event.TransactionRollback` event is emitted instead."
 msgstr ""
 "La transaction est clôturée. Un événement "
-":obj:`~gaphor.event.TransactionCommit` est émis. Si la transaction doit être "
-"annulée, un événement :obj:`~gaphor.event.TransactionRollback` est émis à la "
-"place."
+":obj:`~gaphor.event.TransactionCommit` est émis. Si la transaction doit "
+"être annulée, un événement :obj:`~gaphor.event.TransactionRollback` est "
+"émis à la place."
 
 #: gaphor.transaction.Transaction.in_transaction:1 of
 msgid "Are you running inside a transaction?"
@@ -8544,33 +8952,32 @@ msgstr ""
 "Si un ensemble d'opérations échoue (par exemple en raison d'une "
 "exception), la transaction doit être marquée pour un retour en arrière."
 
-#: ../undo.md:61
+#: ../undo.rst:67
 msgid "References"
 msgstr "Références"
 
-#: ../undo.md:63
+#: ../undo.rst:69
 msgid ""
-"`A Framework for Undoing Actions in Collaborative "
-"Systems <http://web.eecs.umich.edu/~aprakash/papers/undo-tochi94.pdf>`_"
+"`A Framework for Undoing Actions in Collaborative Systems "
+"<http://web.eecs.umich.edu/~aprakash/papers/undo-tochi94.pdf>`_"
 msgstr ""
 "`Un «Framework» pour l'annulation d'actions dans les Systèmes "
 "Collaboratifs <http://web.eecs.umich.edu/~aprakash/papers/undo-"
 "tochi94.pdf>`_"
 
-#: ../undo.md:65
+#: ../undo.rst:70
 msgid ""
-"`Undoing Actions in Collaborative Work: Framework and "
-"Experience <https://www.eecs.umich.edu/techreports/cse/94/CSE-"
-"TR-196-94.pdf>`_"
+"`Undoing Actions in Collaborative Work: Framework and Experience "
+"<https://www.eecs.umich.edu/techreports/cse/94/CSE-TR-196-94.pdf>`_"
 msgstr ""
 "`Défaire les actions dans le Travail Collaboratif : «Framework » et "
 "Expérience <https://www.eecs.umich.edu/techreports/cse/94/CSE-"
 "TR-196-94.pdf>`_"
 
-#: ../undo.md:67
+#: ../undo.rst:71
 msgid ""
-"`Implementing a Selective Undo Framework in "
-"Python <https://legacy.python.org/workshops/1997-10/proceedings/zukowski.html>`_"
+"`Implementing a Selective Undo Framework in Python "
+"<https://legacy.python.org/workshops/1997-10/proceedings/zukowski.html>`_"
 msgstr ""
 "`Implémentation d'un «Framework » d'Annulation Sélective en Python "
 "<https://legacy.python.org/workshops/1997-10/proceedings/zukowski.html>`_"
@@ -8584,9 +8991,9 @@ msgid ""
 "Gaphor can be installed as with our installer. Check out the [Gaphor "
 "download page](https://gaphor.org/download#windows) for details."
 msgstr ""
-"Gaphor peut être installé avec notre programme d'installation. Consultez "
-"la [page de téléchargement de Gaphor] "
-"(https://gaphor.org/download#windows) pour plus de détails."
+"Gaphor peut être installé avec notre programme d'installation. Consultez la "
+"[page de téléchargement de Gaphor](https://gaphor.org/download#windows) pour "
+"plus de détails."
 
 #: ../windows.md:13
 msgid "WinGet"
@@ -8599,10 +9006,10 @@ msgid ""
 " on Windows 11 and modern versions of Windows 10 as a part of the App "
 "Installer."
 msgstr ""
-"Nous recommandons d'utiliser [WinGet] (https://learn.microsoft.com/en-"
-"us/windows/package-manager/winget) comme gestionnaire de paquets sous "
-"Windows. Il est disponible sur Windows 11 et les versions modernes de "
-"Windows 10 en tant qu'élément de l'App Installer."
+"Nous recommandons d'utiliser [WinGet](https://learn.microsoft.com/en-us/"
+"windows/package-manager/winget) comme gestionnaire de paquets sous Windows. "
+"Il est disponible sur Windows 11 et les versions modernes de Windows 10 en "
+"tant qu'élément de l'App Installer."
 
 #: ../windows.md:18
 msgid ""
@@ -8626,8 +9033,8 @@ msgid ""
 "[Git](https://gitforwindows.org) by executing as an administrator:"
 msgstr ""
 "Pour mettre en place un environnement de développement sous Windows, "
-"installez d'abord [Git] (https://gitforwindows.org) en vous exécutant en "
-"tant qu'administrateur :"
+"installez d'abord [Git](https://gitforwindows.org) en vous exécutant en tant "
+"qu'administrateur :"
 
 #: ../windows.md:30
 msgid "GTK and Python with Gvsbuild"
@@ -8662,8 +9069,8 @@ msgid ""
 " The default installation options should be fine for use with Gaphor."
 msgstr ""
 "Pour plus d'informations sur l'utilisation de l'installateur officiel, "
-"veuillez consulter les [instructions complètes de l'installateur] "
-"(https://docs.python.org/3/using/windows.html#windows-full). Les options "
+"veuillez consulter les [instructions complètes de l'installateur](https://"
+"docs.python.org/3/using/windows.html#windows-full). Les options "
 "d'installation par défaut devraient convenir à Gaphor."
 
 #: ../windows.md:44
@@ -8671,8 +9078,8 @@ msgid ""
 "Install the latest Python version using the [official "
 "installer](https://www.python.org/downloads/windows/)."
 msgstr ""
-"Installez la dernière version de Python à l'aide de l'[installateur "
-"officiel] (https://www.python.org/downloads/windows/)."
+"Installez la dernière version de Python à l'aide de l'[installateur officiel]"
+"(https://www.python.org/downloads/windows/)."
 
 #: ../windows.md:47
 msgid "Open a PowerShell terminal as a normal user and check the python version:"
@@ -8702,23 +9109,23 @@ msgstr "Installer pipx"
 msgid "From the regular user PowerShell terminal execute:"
 msgstr "À partir du terminal PowerShell de l'utilisateur normal, exécutez :"
 
-#: ../windows.md:71
+#: ../windows.md:72
 msgid "Download GTK"
 msgstr "Télécharger GTK"
 
-#: ../windows.md:73
+#: ../windows.md:74
 msgid ""
 "Download the latest release asset at "
-"https://github.com/wingtk/gvsbuild/releases. The file will be called "
-"`GTK4_Gvsbuild_VERSION_x64.zip`, where `VERSION` is the latest released "
-"version."
+"[https://github.com/wingtk/gvsbuild/releases](https://github.com/wingtk/gvsbuild/releases)."
+" The file will be called `GTK4_Gvsbuild_VERSION_x64.zip`, where `VERSION`"
+" is the latest released version."
 msgstr ""
-"Téléchargez la dernière version à l'adresse "
-"https://github.com/wingtk/gvsbuild/releases. Le fichier sera appelé "
-"`GTK4_Gvsbuild_VERSION_x64.zip`, où `VERSION` est la dernière version "
-"publiée."
+"Téléchargez le fichier de la dernière version à l'adresse [https://"
+"github.com/wingtk/gvsbuild/releases](https://github.com/wingtk/gvsbuild/"
+"releases). Le fichier s'intitulera `GTK4_Gvsbuild_VERSION_x64.zip`, où "
+"`VERSION` correspond à la dernière version publiée."
 
-#: ../windows.md:76
+#: ../windows.md:77
 msgid ""
 "Unzip the `GTK4_Gvsbuild_VERSION_x64.zip` file to `C:\\gtk`. For example "
 "with 7Zip:"
@@ -8726,27 +9133,27 @@ msgstr ""
 "Décompressez le fichier `GTK4_Gvsbuild_VERSION_x64.zip` dans `C:\\gtk`. "
 "Par exemple avec 7Zip :"
 
-#: ../windows.md:82
+#: ../windows.md:83
 msgid "The resulting directory structure should look like:"
 msgstr "La structure de répertoire résultante devrait ressembler à ce qui suit :"
 
-#: ../windows.md:94
+#: ../windows.md:95
 msgid "Setup Gaphor"
 msgstr "Mise en place Gaphor"
 
-#: ../windows.md:96
+#: ../windows.md:97
 msgid "In the same PowerShell terminal, clone the repository:"
 msgstr "Dans le même terminal PowerShell, clonez le dépôt :"
 
-#: ../windows.md:103
-msgid "Install Poetry"
-msgstr "Installer Poetry"
+#: ../windows.md:105
+msgid "Install Poetry:"
+msgstr "Installer Poetry :"
 
-#: ../windows.md:108
+#: ../windows.md:111
 msgid "Add GTK to your environmental variables:"
 msgstr "Ajoutez GTK à vos variables d'environnement :"
 
-#: ../windows.md:116
+#: ../windows.md:121
 msgid ""
 "You can also edit your account's Environmental Variables to persist "
 "across PowerShell sessions."
@@ -8754,23 +9161,23 @@ msgstr ""
 "Vous pouvez également modifier les «Variables d'Environnement» de votre "
 "compte pour qu'elles persistent entre les sessions PowerShell."
 
-#: ../windows.md:119
-msgid "Install Gaphor's dependencies"
-msgstr "Installer les dépendances de Gaphor"
+#: ../windows.md:124
+msgid "Install Gaphor's dependencies:"
+msgstr "Installer les dépendances de Gaphor :"
 
-#: ../windows.md:124 ../windows.md:155
-msgid "Reinstall PyGObject and pycairo using gvsbuild wheels"
-msgstr "Réinstaller PyGObject et pycairo en utilisant gvsbuild wheels"
+#: ../windows.md:130 ../windows.md:165
+msgid "Reinstall PyGObject and pycairo using gvsbuild wheels:"
+msgstr "Réinstaller PyGObject et pycairo en utilisant gvsbuild wheels :"
 
-#: ../windows.md:130 ../windows.md:164
+#: ../windows.md:137 ../windows.md:175
 msgid "Launch Gaphor!"
 msgstr "Lancer Gaphor !"
 
-#: ../windows.md:135
+#: ../windows.md:143
 msgid "Setting Up A Plugin Workspace for Gaphor"
 msgstr "Mise en place d'un espace de travail de plugin pour Gaphor"
 
-#: ../windows.md:137
+#: ../windows.md:145
 msgid ""
 "When setting up a plugin workspace you need to perform the following "
 "steps:"
@@ -8778,11 +9185,7 @@ msgstr ""
 "Lors de la mise en place d'un espace de travail pour un plugin, vous "
 "devez effectuer les étapes suivantes :"
 
-#: ../windows.md:139 ../windows.md:197
-msgid "cd (your project's workspace)"
-msgstr "cd (espace de travail de votre projet)"
-
-#: ../windows.md:141
+#: ../windows.md:151
 msgid ""
 "If your project does not already have a pyproject.toml file, create one. "
 "For details see the [Poetry documentation](https://python-poetry.org/docs"
@@ -8790,14 +9193,14 @@ msgid ""
 "gaphor as a development dependency. For details see the [Gaphor Hello "
 "World Plugin](https://github.com/gaphor/gaphor_plugin_helloworld)."
 msgstr ""
-"Si votre projet n'a pas encore de fichier pyproject.toml, créez-en un. "
-"Pour plus de détails, voir la documentation de Poetry (https://python-"
-"poetry.org/docs/basic-usage/). Si vous avez déjà un fichier .toml, "
-"assurez-vous que gaphor est la dépendance de développement. Pour plus de "
-"détails, consultez le plugin [Gaphor Hello World] "
+"Si votre projet ne dispose pas encore d'un fichier pyproject.toml, créez-en "
+"un. Pour plus de détails, consultez la [documentation de Poetry](https://"
+"python-poetry.org/docs/basic-usage/). Si vous disposez déjà d'un fichier "
+".toml, assurez-vous que gaphor figure parmi vos dépendances de "
+"développement. Pour plus de détails, consultez le [plugin Gaphor Hello World]"
 "(https://github.com/gaphor/gaphor_plugin_helloworld)."
 
-#: ../windows.md:149
+#: ../windows.md:159
 msgid ""
 "Install your project's dependencies. If you have made your project "
 "dependent upon Gaphor, this will pull in Gaphor."
@@ -8805,7 +9208,7 @@ msgstr ""
 "Installez les dépendances de votre projet. Si vous avez rendu votre "
 "projet dépendant de Gaphor, cela va tirer Gaphor."
 
-#: ../windows.md:161
+#: ../windows.md:172
 msgid ""
 "Note that if you have forgotten to reinstall PyGObject and pycairo, the "
 "first time you add an element to a diagram that has text, gaphor will "
@@ -8815,7 +9218,7 @@ msgstr ""
 " plantera la première fois que vous ajoutez un élément à un diagramme qui"
 " contient du texte !"
 
-#: ../windows.md:171
+#: ../windows.md:183
 msgid ""
 "Start a new PowerShell terminal, and set current directory to the project"
 " folder:"
@@ -8823,39 +9226,39 @@ msgstr ""
 "Démarrez un nouveau terminal PowerShell et définissez le répertoire "
 "courant comme étant le dossier du projet :"
 
-#: ../windows.md:176
+#: ../windows.md:189
 msgid "Ensure that path environment variable is set:"
 msgstr "Assurez-vous que la variable d'environnement path est définie :"
 
-#: ../windows.md:181
+#: ../windows.md:195
 msgid "Start Visual Studio Code:"
 msgstr "Démarrez Visual Studio Code :"
 
-#: ../windows.md:186
+#: ../windows.md:201
 msgid "To start the debugger, execute the following steps:"
 msgstr "Pour lancer le débogueur, procédez comme suit :"
 
-#: ../windows.md:187
+#: ../windows.md:202
 msgid "Open `__main__.py` file from `gaphor` folder"
 msgstr "Ouvrir le fichier `__main__.py` du dossier `gaphor`"
 
-#: ../windows.md:188
+#: ../windows.md:203
 msgid "Add a breakpoint on line `main(sys.argv)`"
 msgstr "Ajouter un point d'arrêt sur la ligne `main(sys.argv)`"
 
-#: ../windows.md:189
+#: ../windows.md:204
 msgid "In the menu, select Run → Start debugging"
 msgstr "Dans le menu, sélectionnez Exécuter → Démarrer le débogage"
 
-#: ../windows.md:190 ../windows.md:201
+#: ../windows.md:205 ../windows.md:218
 msgid "Choose Select module from the list"
 msgstr "Sélectionnez Sélectionner un module dans la liste"
 
-#: ../windows.md:191 ../windows.md:202
+#: ../windows.md:206 ../windows.md:219
 msgid "Enter `gaphor` as module name"
 msgstr "Entrez `gaphor` comme nom de module"
 
-#: ../windows.md:193
+#: ../windows.md:208
 msgid ""
 "Visual Studio Code will start the application in debug mode, and will "
 "stop at main."
@@ -8863,27 +9266,27 @@ msgstr ""
 "Visual Studio Code démarrera l'application en mode débogage et s'arrêtera"
 " à l'étape principale."
 
-#: ../windows.md:195
+#: ../windows.md:210
 msgid "Debugging Your Plugin Using Visual Studio Code"
 msgstr "Débogage de votre plugin à l'aide de Visual Studio Code"
 
-#: ../windows.md:199
+#: ../windows.md:216
 msgid "Start gaphor:"
 msgstr "Démarrer gaphor :"
 
-#: ../windows.md:200
+#: ../windows.md:217
 msgid "In the VSCode menu, select Run → Start debugging"
 msgstr "Dans le menu VSCode, sélectionnez Exécuter → Démarrer le débogage"
 
-#: ../windows.md:204
+#: ../windows.md:221
 msgid "Your plugin should appear under the Tools menu."
 msgstr "Votre plugin devrait apparaître dans le menu Outils."
 
-#: ../windows.md:206
+#: ../windows.md:223
 msgid "Packaging for Windows"
 msgstr "Empaquetage pour Windows"
 
-#: ../windows.md:208
+#: ../windows.md:225
 msgid ""
 "In order to create an exe installation package for Windows, we utilize "
 "[PyInstaller](https://pyinstaller.org) which analyzes Gaphor to find all "
@@ -8893,24 +9296,24 @@ msgid ""
 "using [7-Zip](https://www.7-zip.org). To install them, open PowerShell as"
 " an administrator, then execute:"
 msgstr ""
-"Pour créer un paquet d'installation .exe pour Windows, nous utilisons "
-"PyInstaller qui analyse Gaphor pour trouver toutes les dépendances et les"
-" regrouper dans un seul dossier. Nous utilisons ensuite un script Bash "
-"personnalisé pour créer un programme d'installation pour Windows à l'aide"
-" de NSIS (https://nsis.sourceforge.io/Main_Page) et un programme "
-"d'installation portable à l'aide de 7-Zip (https://www.7-zip.org). Pour "
-"les installer, ouvrez PowerShell en tant qu'administrateur, puis exécutez"
-" la commande suivante :"
+"Pour créer un fichier d'installation exe pour Windows, nous utilisons "
+"[PyInstaller](https://pyinstaller.org), qui analyse Gaphor afin d'identifier "
+"toutes les dépendances et de les regrouper dans un seul dossier. Nous "
+"utilisons ensuite un script bash personnalisé qui crée un programme "
+"d'installation Windows à l'aide de [NSIS](https://nsis.sourceforge.io/"
+"Main_Page) et un programme d'installation portable à l'aide de [7-Zip]"
+"(https://www.7-zip.org). Pour les installer, ouvrez PowerShell en tant "
+"qu'administrateur, puis exécutez :"
 
-#: ../windows.md:220
+#: ../windows.md:237
 msgid "Then build your installer using:"
 msgstr "Puis construisez votre programme d'installation en utilisant :"
 
-#: ../windows.md:229
+#: ../windows.md:248
 msgid "Limited Anaconda Install"
 msgstr "Installation limitée d'Anaconda"
 
-#: ../windows.md:231
+#: ../windows.md:250
 msgid ""
 "Sometimes, it may be helpful to call Gaphor functionality from a python "
 "console on computers without the ability for a full development install "
@@ -8929,7 +9332,7 @@ msgstr ""
 "vous ne pourrez pas construire le programme ni instancier ou exécuter des"
 " classes d'application comme `Application` and `Session`."
 
-#: ../windows.md:233
+#: ../windows.md:252
 msgid ""
 "However, this setup can still be helpful if you want to use or call "
 "Gaphor as a library in the context of a larger project. In these cases, "
@@ -8941,11 +9344,11 @@ msgstr ""
 "important. Dans ce cas, Gaphor peut être installé comme un paquet dans un"
 " environnement Anaconda en suivant le processus suivant :"
 
-#: ../windows.md:236
+#: ../windows.md:255
 msgid "Create new anaconda environment"
 msgstr "Créer un nouvel environnement Anaconda"
 
-#: ../windows.md:238
+#: ../windows.md:257
 msgid ""
 "If you use anaconda for other projects, it's a good idea to create a new "
 "environment for Gaphor, so that its dependencies don't end up conflicting"
@@ -8957,29 +9360,30 @@ msgstr ""
 "avec votre environnement de développement préexistant. Pour ce faire, "
 "lancez la commande suivante depuis l'invite de Anaconda :"
 
-#: ../windows.md:244
-msgid "where  ``gaphor`` can be any name desired for the environment."
-msgstr "où  ``gaphor`` peut être n'importe quel nom souhaité pour l'environnement."
+#: ../windows.md:264
+msgid "where ``gaphor`` can be any name desired for the environment."
+msgstr ""
+"où ``gaphor`` peut être n'importe quel nom souhaité pour l'environnement."
 
-#: ../windows.md:246
+#: ../windows.md:266
 msgid "Update packages in the new environment"
 msgstr "Mettre à jour les paquets dans le nouvel environnement"
 
-#: ../windows.md:248
+#: ../windows.md:268
 msgid "Get the most recent packages using:"
 msgstr "Obtenez les paquets les plus récents en utilisant :"
 
-#: ../windows.md:254
+#: ../windows.md:274
 msgid "Install dependencies"
 msgstr "Installer les dépendances"
 
-#: ../windows.md:256
+#: ../windows.md:276
 msgid "The following Gaphor dependencies are installable from anaconda:"
 msgstr ""
 "Les dépendances Gaphor suivantes peuvent être installées à partir "
 "d'Anaconda :"
 
-#: ../windows.md:261
+#: ../windows.md:283
 msgid ""
 "Unfortunately, the `gtksourceview5` and `libadwaita` dependencies are not"
 " available as anaconda packages. So you may not be able to fully "
@@ -8990,11 +9394,11 @@ msgstr ""
 "ne puissiez pas compiler ni exécuter complètement le programme dans cet "
 "environnement."
 
-#: ../windows.md:263
+#: ../windows.md:285
 msgid "Set up your development environment"
 msgstr "Mise en place de l'environnement de développement"
 
-#: ../windows.md:265
+#: ../windows.md:287
 msgid ""
 "Now, to develop with Gaphor, you will want to set it up with your "
 "development. If you want to work with `ipython`, install it below:"
@@ -9003,11 +9407,11 @@ msgstr ""
 "avec votre développement. Si vous voulez travailler avec `ipython`, "
 "installez-le ci-dessous :"
 
-#: ../windows.md:269
+#: ../windows.md:293
 msgid "VSCode Tips"
 msgstr "Astuces VSCode"
 
-#: ../windows.md:270
+#: ../windows.md:294
 msgid ""
 "VSCode should work out-of-the box if it is already installed. Just set "
 "'gaphor' as the kernel in your VSCode Profile or notebook."
@@ -9016,17 +9420,17 @@ msgstr ""
 "suffit de définir 'gaphor' comme noyau dans votre profil ou bloc-notes "
 "VSCode."
 
-#: ../windows.md:272
+#: ../windows.md:296
 msgid "Spyder Tips"
 msgstr "Astuces Spyder"
 
-#: ../windows.md:273
+#: ../windows.md:297
 msgid "You can install spyder in this environment using `conda install spyder`."
 msgstr ""
 "Vous pouvez installer Spyder dans cet environnement en utilisant `conda "
 "install spyder`."
 
-#: ../windows.md:275
+#: ../windows.md:299
 msgid ""
 "If this does not work, (i.e., if `conda install spyder` reveals "
 "conflicts), you can instead use the following workaround:"
@@ -9034,18 +9438,21 @@ msgstr ""
 "Si cela ne fonctionne pas (c'est-à-dire si `conda install spyder` révèle "
 "des conflits), vous pouvez utiliser la solution suivante :"
 
-#: ../windows.md:279
+#: ../windows.md:305
 msgid "Then, in spyder, set 'gaphor' as your python interpreter"
 msgstr "Ensuite, dans Spyder, définissez 'gaphor' comme votre interpréteur python"
 
-#: ../windows.md:281
+#: ../windows.md:307
 msgid "Install Gaphor"
 msgstr "Installer Gaphor"
 
-#: ../windows.md:283
+#: ../windows.md:309
 msgid ""
 "From a python console running within your new anaconda environment, you "
 "may then install Gaphor using pip:"
 msgstr ""
 "Depuis une console python fonctionnant dans votre nouvel environnement "
 "anaconda, vous pouvez alors installer Gaphor à l'aide de pip :"
+
+#~ msgid "cd (your project's workspace)"
+#~ msgstr "cd (espace de travail de votre projet)"
