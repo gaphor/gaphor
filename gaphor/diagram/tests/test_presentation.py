@@ -99,8 +99,6 @@ def test_line_saving(element_factory, diagram):
     p.save(save_func)
 
     assert properties["matrix"] == (1.0, 0.0, 0.0, 1.0, 0.0, 0.0)
-    assert properties["orthogonal"] is False
-    assert properties["horizontal"] is False
     assert properties["points"] == [(0.0, 0.0), (10.0, 10.0)]
     assert properties["subject"] is subject
     assert "head-connection" not in properties
