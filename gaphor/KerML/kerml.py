@@ -351,7 +351,7 @@ class Metaclass(Structure):
 
 
 class AnnotatingElement(Element):
-    annotatedElement: relation_many[Element]
+    annotatedElement: derived[Element]
     annotation: relation_many[Annotation]
     ownedAnnotatingRelationship: relation_many[Annotation]
     owningAnnotatingRelationship: relation_one[Annotation]
@@ -611,7 +611,11 @@ Package.filterCondition = subset("filterCondition", Expression, 0, '*', None, Na
 MultiplicityRange.bound = subset("bound", Expression, 1, 2, None, Namespace.ownedMember)
 MultiplicityRange.lowerBound = subset("lowerBound", Expression, 0, 1, None, MultiplicityRange.bound)
 MultiplicityRange.upperBound = subset("upperBound", Expression, 1, 1, None, MultiplicityRange.bound)
-AnnotatingElement.annotatedElement = derivedunion("annotatedElement", Element, lower=1)
+# 32: override AnnotatingElement.annotatedElement: derived[Element]
+
+AnnotatingElement.annotatedElement = derived("ownedElement", Element, 0, "*",
+    lambda e: e.annotation and e.annotation[:].annotatedElement)
+
 AnnotatingElement.annotation = derivedunion("annotation", Annotation)
 AnnotatingElement.ownedAnnotatingRelationship = subset("ownedAnnotatingRelationship", Annotation, 0, '*', None, AnnotatingElement.annotation, Element.ownedRelationship)
 AnnotatingElement.owningAnnotatingRelationship = subset("owningAnnotatingRelationship", Annotation, 0, 1, None, Element.owningRelationship, AnnotatingElement.annotation)
