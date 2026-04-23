@@ -23,3 +23,13 @@ override Element.ownedElement: derived[Element]
 
 Element.ownedElement = derived("ownedElement", Element, 0, "*",
     lambda e: e.ownedRelationship and e.ownedRelationship[:].ownedRelatedElement)
+%%
+override Element.annotatingElement: derived[AnnotatingElement]
+
+Element.annotatingElement = derived("annotatingElement", AnnotatingElement, 0, "*",
+    lambda e: e.annotation and e.annotation[:].annotatingElement)
+%%
+override AnnotatingElement.annotatedElement: derived[Element]
+
+AnnotatingElement.annotatedElement = derived("ownedElement", Element, 0, "*",
+    lambda e: e.annotation and e.annotation[:].annotatedElement)
