@@ -16,6 +16,12 @@ SPDX-FileCopyrightText = ["2012 Simon Sapin", "2017 Guillaume Ayoub", "2020 The 
 SPDX-License-Identifier = "BSD-3-Clause"
 
 [[annotations]]
+path = "gaphor/plugins/console/console.py"
+precedence = "aggregate"
+SPDX-FileCopyrightText = ["2003 Jon Anderson", "2020 The Gaphor Development Team"]
+SPDX-License-Identifier = "PSF-2.0"
+
+[[annotations]]
 path = "_packaging/hook-pydot.py"
 precedence = "aggregate"
 SPDX-FileCopyrightText = "2021 PyInstaller Development Team"

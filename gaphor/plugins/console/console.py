@@ -1,13 +1,9 @@
-#!/usr/bin/env python
-
+# Based on:
 #  GTK Interactive Console
-#  (C) 2003, Jon Anderson
-#  See www.python.org/2.2/license.html for
-#  license details.
+#  (C) 2003, Jon Anderson, PSF-2.0 licensed
 #
-#  Took some good ideas from the GEdit Python Console:
+# Took some good ideas from the GEdit Python Console:
 #  https://gitlab.gnome.org/GNOME/gedit/-/blob/master/plugins/pythonconsole/pythonconsole/console.py
-#  Licensed under GPL
 
 
 import code

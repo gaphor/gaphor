@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 import logging
 
 from gi.repository import Adw, Gdk, Gtk
