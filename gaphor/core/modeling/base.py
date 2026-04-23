@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 """Base class for model elements."""
 
 from __future__ import annotations

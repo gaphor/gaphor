@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 # Based on:
 #  GTK Interactive Console
 #  (C) 2003, Jon Anderson, PSF-2.0 licensed
