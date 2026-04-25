@@ -1,3 +1,16 @@
+3.3.2
+-----
+
+Bug fixes:
+
+- Fix translations missing for wheel and flatpak installers
+- Set html-report default zoom level to 1
+- Add missing html-report files to Windows and macOS installers
+
+Internal changes:
+
+- Fix wrong repository access for website deploy update
+
 3.3.1
 -----
 
