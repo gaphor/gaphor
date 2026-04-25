@@ -165,7 +165,7 @@ furo = ">=2022,<2026"
 optional=true
 
 [tool.poetry.group.packaging.dependencies]
-pyinstaller = ">=6.13.0"
+pyinstaller = ">=6.20.0"
 pyinstaller-versionfile = "^3.0.1"
 semver = ">=2.13,<4.0"
 dmgbuild = {version = "^1.6.7", markers = "sys_platform == 'darwin'" }
