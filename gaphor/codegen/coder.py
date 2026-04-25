@@ -34,6 +34,7 @@ from pathlib import Path
 import gaphor.storage as storage
 from gaphor import UML
 from gaphor.codegen.override import Overrides
+from gaphor.codegen.xmi import convert
 from gaphor.core.modeling import Base, ElementFactory
 from gaphor.core.modeling.modelinglanguage import (
     CoreModelingLanguage,
@@ -42,6 +43,7 @@ from gaphor.core.modeling.modelinglanguage import (
 )
 from gaphor.diagram.general.modelinglanguage import GeneralModelingLanguage
 from gaphor.entrypoint import initialize
+from gaphor.storage import save
 from gaphor.UML.modelinglanguage import UMLModelingLanguage
 
 log = logging.getLogger(__name__)
@@ -65,6 +67,7 @@ header = textwrap.dedent(
         redefine,
         relation_many,
         relation_one,
+        subset,
     )
 
     """.format("ruff")  # work around tooling triggers
@@ -76,6 +79,7 @@ def main(
     supermodelfiles: list[tuple[str, str]] | None = None,
     overridesfile: str | None = None,
     outfile: str | None = None,
+    modeloutfile: str | None = None,
 ):
     logging.basicConfig()
 
@@ -99,16 +103,20 @@ def main(
         )
     )
 
-    model = load_model(modelfile, modeling_language)
+    model = load_model(Path(modelfile), modeling_language)
     super_models = (
         {
-            lang: (load_modeling_language(lang), load_model(f, modeling_language))
+            lang: (load_modeling_language(lang), load_model(Path(f), modeling_language))
             for lang, f in supermodelfiles
         }
         if supermodelfiles
         else {}
     )
     overrides = Overrides(overridesfile) if overridesfile else None
+
+    if modeloutfile:
+        with open(modeloutfile, "w", encoding="utf-8") as f:
+            save(f, model)
 
     with (
         open(outfile, "w", encoding="utf-8")
@@ -119,14 +127,20 @@ def main(
             print(line, file=out)
 
 
-def load_model(modelfile: str, modeling_language: ModelingLanguage) -> ElementFactory:
-    element_factory = ElementFactory()
-    with open(modelfile, encoding="utf-8") as file_obj:
-        storage.load(
-            file_obj,
-            element_factory,
-            modeling_language,
+def load_model(modelfile: Path, modeling_language: ModelingLanguage) -> ElementFactory:
+    if modelfile.suffix == ".xmi":
+        element_factory = convert(modelfile)
+        assert not element_factory.lselect(
+            lambda e: isinstance(e, UML.Class) and not e.name
         )
+    else:
+        element_factory = ElementFactory()
+        with modelfile.open(encoding="utf-8") as file_obj:
+            storage.load(
+                file_obj,
+                element_factory,
+                modeling_language,
+            )
 
     resolve_attribute_type_values(element_factory)
 
@@ -230,7 +244,10 @@ def class_declaration(class_: UML.Class):
     return f"class {class_.name}({base_classes}):"
 
 
-def variables(class_: UML.Class, overrides: Overrides | None = None):
+def variables(
+    class_: UML.Class,
+    overrides: Overrides | None = None,
+):
     if class_.ownedAttribute:
         a: UML.Property
         for a in sorted(class_.ownedAttribute, key=lambda a: a.name or ""):
@@ -246,12 +263,19 @@ def variables(class_: UML.Class, overrides: Overrides | None = None):
                 yield f'{a.name}: _attribute[{a.typeValue}] = _attribute("{a.name}", {a.typeValue}{default_value(a)})'
             elif is_enumeration(a.type):
                 assert isinstance(a.type, UML.Enumeration)
-                default = (
-                    a.defaultValue.value
-                    if isinstance(a.defaultValue, UML.LiteralString)
+                if (
+                    isinstance(a.defaultValue, UML.LiteralString)
                     and a.defaultValue.value
-                    else a.type.ownedLiteral[0].name
-                )
+                ):
+                    default = a.defaultValue.value
+                elif (
+                    isinstance(a.defaultValue, UML.InstanceValue)
+                    and a.defaultValue.instance
+                ):
+                    default = a.defaultValue.instance.name
+                else:
+                    default = a.type.ownedLiteral[0].name
+
                 if keyword.iskeyword(default):
                     default = f"{default}_"
                 yield f'{a.name} = _enumeration("{a.name}", {a.type.name}, {a.type.name}.{default})'
@@ -282,11 +306,15 @@ def associations(
     c: UML.Class,
     overrides: Overrides | None = None,
 ):
-    redefinitions = []
+    redefinitions: list[tuple[str, str]] = []
+    subsets: list[tuple[str, str, set[str]]] = []
+    emitted: set[str] = set()
     for a in c.ownedAttribute:
         full_name = f"{c.name}.{a.name}"
         if overrides and overrides.has_override(full_name):
             yield overrides.get_override(full_name)
+            if a.name:
+                emitted.add(a.name)
         elif (
             not a.type
             or is_simple_type(a.type)
@@ -296,16 +324,79 @@ def associations(
             continue
         elif redefines(a):
             redefinitions.append(
-                f'{full_name} = redefine({c.name}, "{a.name}", {a.type.name}, {redefines(a)}{opposite(a)})'
+                (
+                    f'{full_name} = redefine({c.name}, "{a.name}", {a.type.name}, {redefines(a)}{opposite(a)})',
+                    a.name or "",
+                )
             )
+        elif a.isDerived and a.subsettedProperty:
+            subsetted_properties = [
+                f"{prop.class_.name}.{prop.name}"
+                for prop in a.subsettedProperty
+                if prop.class_
+            ]
+            if subsetted_properties:
+                lower_value = UML.recipes.get_multiplicity_lower_value(a)
+                upper_value = UML.recipes.get_multiplicity_upper_value(a)
+                lower_arg = lower_value if isinstance(lower_value, int) else 0
+                upper_arg = upper_value if upper_value in ("*", 1, 2) else "*"
+                same_class_dependencies = {
+                    prop.name
+                    for prop in a.subsettedProperty
+                    if prop.class_ is c and prop.name
+                }
+                subsets.append(
+                    (
+                        f'{full_name} = subset("{a.name}", {a.type.name}, '
+                        f"{lower_arg}, {repr(upper_arg)}, None, {', '.join(subsetted_properties)})",
+                        a.name or "",
+                        same_class_dependencies,
+                    )
+                )
+            else:
+                log.warning(
+                    f"Derived attribute {full_name} has no subset owner classes"
+                )
+                yield f'{full_name} = derivedunion("{a.name}", {a.type.name}{lower(a)}{upper(a)})'
+                if a.name:
+                    emitted.add(a.name)
         elif a.isDerived:
             yield f'{full_name} = derivedunion("{a.name}", {a.type.name}{lower(a)}{upper(a)})'
+            if a.name:
+                emitted.add(a.name)
         elif not a.name:
             raise ValueError(f"Unnamed attribute: {full_name} ({a.association})")
         else:
             yield f'{full_name} = association("{a.name}", {a.type.name}{lower(a)}{upper(a)}{composite(a)}{opposite(a)})'
+            emitted.add(a.name)
 
-    yield from redefinitions
+    for line, name in redefinitions:
+        yield line
+        if name:
+            emitted.add(name)
+
+    pending_subsets = list(subsets)
+    while pending_subsets:
+        ready_indexes = [
+            i
+            for i, (_line, _name, dependencies) in enumerate(pending_subsets)
+            if dependencies.issubset(emitted)
+        ]
+        if not ready_indexes:
+            ready_indexes = [0]
+
+        ready_set = set(ready_indexes)
+        ready_subsets = [pending_subsets[i] for i in ready_indexes]
+        pending_subsets = [
+            subset_line
+            for i, subset_line in enumerate(pending_subsets)
+            if i not in ready_set
+        ]
+
+        for line, name, _dependencies in ready_subsets:
+            yield line
+            if name:
+                emitted.add(name)
 
 
 def subsets(
@@ -320,11 +411,13 @@ def subsets(
             or is_extension_end(a)
         ):
             continue
+
+        full_name = f"{c.name}.{a.name}"
+
         for slot in a.appliedStereotype[:].slot:
             if slot.definingFeature.name != "subsets":
                 continue
 
-            full_name = f"{c.name}.{a.name}"
             raw_slot_value = UML.recipes.get_slot_value(slot)
             slotValue = raw_slot_value if isinstance(raw_slot_value, str) else ""
             for value in slotValue.split(","):
@@ -517,7 +610,17 @@ def is_in_toplevel_package(c: UML.Class, package_name: str) -> bool:
 def redefines(a: UML.Property) -> str | None:
     # TODO: look up element name and add underscore if needed.
     # maybe resolve redefines before we start writing?
-    # Redefine is the only one where
+
+    if len(a.redefinedProperty) > 1:
+        redefs = ", ".join(f"{r.class_.name}.{r.name}" for r in a.redefinedProperty)
+        log.warning(
+            f"{a.class_.name}.{a.name} has multiple redefines: {redefs}. Picking the first."
+        )
+
+    for r in a.redefinedProperty:
+        return f"{r.class_.name}.{r.name}"
+
+    # UML metamodel style: with stereotype
     return next(
         (
             UML.recipes.get_slot_value(slot)
@@ -589,6 +692,7 @@ def resolve_attribute_type_values(element_factory: ElementFactory) -> None:
             prop.typeValue = "bool"
         elif prop.typeValue in (
             "Integer",
+            "Real",
             "int",
         ):
             prop.typeValue = "int"
