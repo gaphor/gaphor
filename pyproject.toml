@@ -1,6 +1,6 @@
 [project]
 name = "gaphor"
-version = "3.3.1"
+version = "3.3.2"
 description = "Gaphor is the simple modeling tool written in Python."
 authors = [
     { name = "Arjan Molenaar", email = "gaphor@gmail.com" },
@@ -121,7 +121,7 @@ install-schemas = "gaphor.ui.installschemas:install_schemas_parser"
 [tool.poetry]
 requires-poetry = ">=2.0"
 include = [
-    { path = "gaphor/locale/*/LC_MESSAGES/*" },
+    { path = "gaphor/locale/*/LC_MESSAGES/*", format = ["sdist", "wheel"] },
     { path = "data/org.gaphor.Gaphor*", format = "sdist" },
 ]
 exclude = ["**/tests", "gaphor/conftest.py" ]
