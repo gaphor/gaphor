@@ -121,8 +121,8 @@ install-schemas = "gaphor.ui.installschemas:install_schemas_parser"
 [tool.poetry]
 requires-poetry = ">=2.0"
 include = [
-    { path = "gaphor/locale/*/LC_MESSAGES/*" },
-    { path = "data/org.gaphor.Gaphor*", format = "sdist" },
+    { path = "gaphor/locale/*/LC_MESSAGES/*", format = ["sdist", "wheel"] },
+    { path = "data/org.gaphor.Gaphor*", format = ["sdist", "wheel"] },
 ]
 exclude = ["**/tests", "gaphor/conftest.py" ]
 
