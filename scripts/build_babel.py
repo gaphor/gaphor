@@ -43,6 +43,7 @@ def compile_mo_release():
         "de",
         "es",
         "fi",
+        "fr",
         "hi",
         "hr",
         "hu",
@@ -53,7 +54,7 @@ def compile_mo_release():
         "ta",
         "tr",
         "uk",
-        "zh_hans",
+        "zh_Hans",
     ]
     for path in (
         path
