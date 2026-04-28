@@ -99,11 +99,12 @@
     </p>
   </description>
   <releases>
-    <release version="3.3.2" date="2026-04-25">
+    <release version="3.3.2" date="2026-04-28">
       <description>
         <p>Bug fixes:</p>
         <ul>
           <li>Fix translations missing for wheel and flatpak installers</li>
+          <li>Fix missing translations for French and Chinese</li>
           <li>Set html-report default zoom level to 1</li>
           <li>Add missing html-report files to Windows and macOS installers</li>
         </ul>
