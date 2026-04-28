@@ -216,6 +216,7 @@ gettext-pot = { "shell" = "pybabel extract -o po/gaphor.pot -F po/babel.ini -k i
 gettext-po = { "script" = "scripts.build_babel:update_po_files" }
 gettext-mo-all = { "script" = "scripts.build_babel:compile_mo_all" }
 gettext-mo-release = { "script" = "scripts.build_babel:compile_mo_release" }
+release-mature-locales-update = { "script" = "scripts.build_babel:update_release_mature_locales_file" }
 gettext-docs-pot = { "cwd" = "docs", "shell" = "sphinx-build -b gettext . locale" }
 gettext-docs-po = { "cwd" = "docs", "shell" = "sphinx-intl update -p locale" }
 translations = [ "gettext-pot", "gettext-po", "gettext-mo-all", "gettext-docs-pot", "gettext-docs-po" ]
