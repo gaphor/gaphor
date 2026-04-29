@@ -16,10 +16,12 @@ build:
   jobs:
     pre_install:
     - python3 -m pip install --upgrade pip
-    - python3 -m pip install --constraint=.github/github-requirements.txt poetry
+    - python3 -m pip install --constraint=.github/github-requirements.txt poetry poetry-plugin-export
     - poetry config virtualenvs.create false
+    - poetry export --format=requirements.txt --output=requirements-only-docs.txt --only=docs
     post_install:
-    - VIRTUAL_ENV=$READTHEDOCS_VIRTUALENV_PATH poetry install -vv --with docs --no-interaction
+    - python -m pip install .
+    - python -m pip install -r requirements-only-docs.txt
 sphinx:
   configuration: docs/conf.py
   fail_on_warning: true
