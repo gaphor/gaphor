@@ -99,6 +99,23 @@
     </p>
   </description>
   <releases>
+    <release version="3.3.2" date="2026-05-02">
+      <description>
+        <p>Bug fixes:</p>
+        <ul>
+          <li>Fix translations missing for wheel and flatpak installers</li>
+          <li>Fix missing translations for French and Chinese</li>
+          <li>Set html-report default zoom level to 1</li>
+          <li>Add missing html-report files to Windows and macOS installers</li>
+        </ul>
+        <p>Internal changes:</p>
+        <ul>
+          <li>Fix wrong repository access for website deploy update</li>
+          <li>Simplify readthedocs install process</li>
+        </ul>
+      </description>
+      <url>https://github.com/gaphor/gaphor/releases/tag/3.3.2</url>
+    </release>
     <release version="3.3.1" date="2026-04-15">
       <description>
         <p>Bug fixes:</p>
