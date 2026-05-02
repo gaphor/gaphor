@@ -1,5 +1,3 @@
-import pytest
-
 from gaphor.diagram.group import change_owner
 from gaphor.KerML import kerml
 
@@ -53,16 +51,15 @@ def test_subset_owned_element_updates_on_reparent(element_factory):
     assert child in parent_2.ownedElement
 
 
-@pytest.mark.xfail(
-    reason="Derived annotating/annotated subset chain is not fully implemented yet"
-)
 def test_owning_annotation(element_factory):
     element = element_factory.create(kerml.Element)
     annotation = element_factory.create(kerml.Annotation)
     comment = element_factory.create(kerml.Comment)
 
     element.ownedRelationship = annotation
-    comment.annotation = annotation
+    annotation.annotatedElement = element
+    annotation.annotatingElement = comment
 
-    assert comment in element.annotatingElement
-    assert element in comment.annotatedElement
+    assert annotation in element.ownedAnnotation
+    assert element in annotation.annotatedElement
+    assert comment in annotation.annotatingElement
