@@ -226,7 +226,10 @@ class ModelBrowser(UIComponent, ActionProvider):
 
         with Transaction(self.event_manager):
             element = self.element_factory.create(element_def.element_type)
-            element.name = element_def.name
+            if hasattr(element, "name"):
+                element.name = element_def.name
+            elif hasattr(element, "declaredName"):
+                element.declaredName = element_def.name
             if own:
                 change_owner(own, element)
 
