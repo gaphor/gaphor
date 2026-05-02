@@ -68,9 +68,9 @@
       "name": "gaphor",
       "buildsystem": "simple",
       "build-commands": [
+        "for po in po/*.po; do lang=$(basename \"$po\" .po); mkdir -p \"gaphor/locale/$lang/LC_MESSAGES\"; pybabel compile -i \"$po\" -o \"gaphor/locale/$lang/LC_MESSAGES/gaphor.mo\" -l \"$lang\" -D gaphor; done",
         "pip3 install --no-cache-dir --ignore-installed --prefix=${FLATPAK_DEST} .",
-        "gaphor install-schemas --schemas-dir=/app/share/glib-2.0/schemas",
-        "for po in po/*.po; do lang=$(basename \"$po\" .po); mkdir -p \"${FLATPAK_DEST}/share/locale/$lang/LC_MESSAGES\"; ${FLATPAK_DEST}/bin/pybabel compile -i \"$po\" -o \"${FLATPAK_DEST}/share/locale/$lang/LC_MESSAGES/gaphor.mo\" -l \"$lang\" -D gaphor; done"
+        "gaphor install-schemas --schemas-dir=/app/share/glib-2.0/schemas"
       ],
       "sources": [
         {
