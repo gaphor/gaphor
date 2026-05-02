@@ -99,7 +99,7 @@
     </p>
   </description>
   <releases>
-    <release version="3.3.2" date="2026-04-28">
+    <release version="3.3.2" date="2026-05-02">
       <description>
         <p>Bug fixes:</p>
         <ul>
@@ -111,6 +111,7 @@
         <p>Internal changes:</p>
         <ul>
           <li>Fix wrong repository access for website deploy update</li>
+          <li>Simplify readthedocs install process</li>
         </ul>
       </description>
       <url>https://github.com/gaphor/gaphor/releases/tag/3.3.2</url>

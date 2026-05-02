@@ -11,6 +11,7 @@ Bug fixes:
 Internal changes:
 
 - Fix wrong repository access for website deploy update
+- Simplify readthedocs install process
 
 3.3.1
 -----
