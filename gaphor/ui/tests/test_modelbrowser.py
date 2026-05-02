@@ -281,6 +281,52 @@ def test_sysml2_create_part_definition_owned_by_package(
     assert part.owner is package
 
 
+def test_drop_multiple_sysml2_elements(
+    monkeypatch, model_browser, modeling_language, element_factory, event_manager
+):
+    monkeypatch.setenv("GAPHOR_SYSML2", "1")
+    modeling_language.select_modeling_language("SysML2")
+
+    package = element_factory.create(kerml.Package)
+    part_a = element_factory.create(sysml2.PartDefinition)
+    part_b = element_factory.create(sysml2.PartDefinition)
+
+    model_browser.select_element(package)
+    list_item = MockRowItem(get_first_selected_item(model_browser.selection))
+
+    target = MockDropTarget()
+    drag_data = ElementDragData(elements=[part_a, part_b])
+    list_item_drop_drop(target, drag_data, 0, 10, list_item, event_manager)
+
+    assert part_a.owner is package
+    assert part_b.owner is package
+
+
+def test_drag_and_drop_sysml2_parent_on_child(
+    monkeypatch, model_browser, modeling_language, element_factory, event_manager
+):
+    monkeypatch.setenv("GAPHOR_SYSML2", "1")
+    modeling_language.select_modeling_language("SysML2")
+
+    root = element_factory.create(kerml.Package)
+    parent = element_factory.create(kerml.Package)
+    child = element_factory.create(kerml.Package)
+
+    assert change_owner(root, parent)
+    assert change_owner(parent, child)
+
+    model_browser.select_element(parent)
+    list_item = MockRowItem(get_first_selected_item(model_browser.selection))
+
+    target = MockDropTarget()
+    drag_data = ElementDragData(elements=[parent])
+    list_item_drop_drop(target, drag_data, 0, 10, list_item, event_manager)
+
+    assert model_browser.select_element(child) is not None
+    assert child.owner is parent
+    assert parent.owner is root
+
+
 def test_tree_model_expand_to_relationship(model_browser, element_factory):
     association = element_factory.create(UML.Association)
     package = element_factory.create(UML.Package)
