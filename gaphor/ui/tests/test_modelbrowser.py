@@ -252,6 +252,35 @@ def test_show_sysml2_item_in_tree_list_model(
     assert model_browser.selection.get_item(1).get_item().element is part
 
 
+def test_sysml2_create_package_element_in_browser(
+    monkeypatch, model_browser, modeling_language, element_factory
+):
+    monkeypatch.setenv("GAPHOR_SYSML2", "1")
+    modeling_language.select_modeling_language("SysML2")
+
+    model_browser.tree_view_create_element("package")
+
+    packages = element_factory.lselect(kerml.Package)
+    assert len(packages) == 1
+    assert packages[0].declaredName == "Package"
+
+
+def test_sysml2_create_part_definition_owned_by_package(
+    monkeypatch, model_browser, modeling_language, element_factory
+):
+    monkeypatch.setenv("GAPHOR_SYSML2", "1")
+    modeling_language.select_modeling_language("SysML2")
+
+    package = element_factory.create(kerml.Package)
+    model_browser.select_element(package)
+    model_browser.tree_view_create_element("part-definition")
+
+    parts = element_factory.lselect(sysml2.PartDefinition)
+    assert len(parts) == 1
+    part = parts[0]
+    assert part.owner is package
+
+
 def test_tree_model_expand_to_relationship(model_browser, element_factory):
     association = element_factory.create(UML.Association)
     package = element_factory.create(UML.Package)
