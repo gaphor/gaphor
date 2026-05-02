@@ -32,8 +32,7 @@ class SysML2ModelingLanguage(ModelingLanguage):
 
     @property
     def model_browser_model(self):
-        # Use UML tree model for the time being
-        from gaphor.UML.treemodel import TreeModel
+        from gaphor.SysML2.treemodel import TreeModel
 
         return TreeModel
 
