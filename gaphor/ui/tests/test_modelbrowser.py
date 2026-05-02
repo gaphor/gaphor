@@ -479,6 +479,39 @@ def test_unlink_element_should_not_collapse_branch(
     assert model_browser.selection.get_item(1).get_item().element is class_b
 
 
+def test_sysml2_unlink_element_should_not_collapse_branch(
+    monkeypatch, model_browser, modeling_language, element_factory
+):
+    monkeypatch.setenv("GAPHOR_SYSML2", "1")
+    modeling_language.select_modeling_language("SysML2")
+
+    package = element_factory.create(kerml.Package)
+    package.declaredName = "p"
+    part_a = element_factory.create(sysml2.PartDefinition)
+    part_a.declaredName = "a"
+    part_b = element_factory.create(sysml2.PartDefinition)
+    part_b.declaredName = "b"
+    assert change_owner(package, part_a)
+    assert change_owner(package, part_b)
+
+    pos = model_browser.select_element(package)
+    assert pos is not None
+    package_row = model_browser.selection.get_item(pos)
+    package_row.set_expanded(True)
+
+    part_a.unlink()
+
+    assert package_row.get_item().element is package
+    assert package_row.get_expanded()
+
+    tree_model = model_browser.model
+    package_item = tree_model.tree_item_for_element(package)
+    assert package_item is not None
+    child_model = tree_model.child_model(package_item)
+    assert child_model is not None
+    assert any(tree_item.element is part_b for tree_item in child_model)
+
+
 def test_multiplicity_element_should_not_end_up_in_root(model_browser, element_factory):
     port = element_factory.create(UML.Port)
     prop = element_factory.create(UML.Property)
