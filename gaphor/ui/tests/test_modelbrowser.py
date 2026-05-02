@@ -6,9 +6,13 @@ from gi.repository import Gio, GObject
 from gaphor import UML
 from gaphor.abc import ModelingLanguage
 from gaphor.core.modeling import Base, Diagram, ModelReady
+from gaphor.diagram.group import change_owner
 from gaphor.i18n import gettext
+from gaphor.KerML import kerml
 from gaphor.services.componentregistry import ComponentRegistry
 from gaphor.services.modelinglanguage import ModelingLanguageService
+from gaphor.SysML2 import sysml2
+from gaphor.SysML2.treemodel import TreeModel as SysML2TreeModel
 from gaphor.ui.modelbrowser import (
     ElementDragData,
     ModelBrowser,
@@ -219,6 +223,33 @@ def test_model_browser_should_not_change_for_similar_model_types(
     modeling_language.select_modeling_language("SysML")
 
     assert model_browser.model is current_model
+
+
+def test_model_browser_language_changed_to_sysml2(
+    monkeypatch, model_browser, modeling_language
+):
+    monkeypatch.setenv("GAPHOR_SYSML2", "1")
+
+    modeling_language.select_modeling_language("SysML2")
+
+    assert type(model_browser.model) is SysML2TreeModel
+
+
+def test_show_sysml2_item_in_tree_list_model(
+    monkeypatch, model_browser, modeling_language, element_factory
+):
+    monkeypatch.setenv("GAPHOR_SYSML2", "1")
+    modeling_language.select_modeling_language("SysML2")
+
+    package = element_factory.create(kerml.Package)
+    part = element_factory.create(sysml2.PartDefinition)
+    assert change_owner(package, part)
+
+    pos = model_browser.select_element(part)
+
+    assert pos == 1
+    assert model_browser.selection.get_item(0).get_item().element is package
+    assert model_browser.selection.get_item(1).get_item().element is part
 
 
 def test_tree_model_expand_to_relationship(model_browser, element_factory):
