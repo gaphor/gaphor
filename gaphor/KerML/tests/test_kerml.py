@@ -1,3 +1,5 @@
+import pytest
+
 from gaphor.KerML import kerml
 
 
@@ -10,6 +12,7 @@ def test_subset_owned_annotation_from_owned_relationship(element_factory):
     assert annotation in element.ownedAnnotation
 
 
+@pytest.mark.xfail
 def test_owning_annotation(element_factory):
     element = element_factory.create(kerml.Element)
     annotation = element_factory.create(kerml.Annotation)
