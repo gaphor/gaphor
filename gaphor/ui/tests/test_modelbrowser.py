@@ -252,6 +252,61 @@ def test_show_sysml2_item_in_tree_list_model(
     assert model_browser.selection.get_item(1).get_item().element is part
 
 
+def test_sysml2_model_browser_hides_uml_elements_and_generic_diagrams(
+    monkeypatch, model_browser, modeling_language, element_factory
+):
+    monkeypatch.setenv("GAPHOR_SYSML2", "1")
+    modeling_language.select_modeling_language("SysML2")
+
+    uml_package = element_factory.create(UML.Package)
+    uml_diagram = element_factory.create(UML.Diagram)
+    uml_diagram.element = uml_package
+
+    sysml2_package = element_factory.create(kerml.Package)
+
+    assert model_browser.model.tree_item_for_element(sysml2_package) is not None
+    assert model_browser.model.tree_item_for_element(uml_package) is None
+    assert model_browser.model.tree_item_for_element(uml_diagram) is None
+
+
+def test_sysml2_model_browser_includes_unowned_generic_diagram(
+    monkeypatch, model_browser, modeling_language, element_factory
+):
+    monkeypatch.setenv("GAPHOR_SYSML2", "1")
+    modeling_language.select_modeling_language("SysML2")
+
+    generic_diagram = element_factory.create(Diagram)
+
+    assert model_browser.model.tree_item_for_element(generic_diagram) is not None
+
+
+def test_uml_model_browser_hides_sysml2_elements(
+    monkeypatch, model_browser, modeling_language, element_factory
+):
+    monkeypatch.setenv("GAPHOR_SYSML2", "1")
+    modeling_language.select_modeling_language("UML")
+
+    uml_package = element_factory.create(UML.Package)
+    sysml2_package = element_factory.create(kerml.Package)
+    part = element_factory.create(sysml2.PartDefinition)
+    assert change_owner(sysml2_package, part)
+
+    assert model_browser.model.tree_item_for_element(uml_package) is not None
+    assert model_browser.model.tree_item_for_element(sysml2_package) is None
+    assert model_browser.model.tree_item_for_element(part) is None
+
+
+def test_uml_model_browser_includes_unowned_generic_diagram(
+    monkeypatch, model_browser, modeling_language, element_factory
+):
+    monkeypatch.setenv("GAPHOR_SYSML2", "1")
+    modeling_language.select_modeling_language("UML")
+
+    generic_diagram = element_factory.create(Diagram)
+
+    assert model_browser.model.tree_item_for_element(generic_diagram) is not None
+
+
 def test_sysml2_create_package_element_in_browser(
     monkeypatch, model_browser, modeling_language, element_factory
 ):

@@ -150,6 +150,14 @@ def tree_item_sort(a: TreeItem, b: TreeItem) -> int:
     return (na > nb) - (na < nb)
 
 
+def include_element(element: Base) -> bool:
+    if not (type(element) is Diagram or isinstance(element, UML.Element)):
+        return False
+
+    own = owner(element)
+    return own is Root or isinstance(own, UML.Element)
+
+
 class TreeModel:
     def __init__(self, event_manager, element_factory, on_select=None, on_sync=None):
         super().__init__()
@@ -260,7 +268,10 @@ class TreeModel:
         return None
 
     def add_element(self, element: Base) -> None:
-        if (not owner(element)) or self.tree_item_for_element(element):
+        if not include_element(element):
+            return
+
+        if self.tree_item_for_element(element):
             return
 
         if (owner_branch := self.owner_branch_for_element(element)) is not None:

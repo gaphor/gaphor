@@ -79,7 +79,23 @@ Root = RootType.Root
 
 @singledispatch
 def owner(_element: Base | RootType | None) -> Base | RootType | None:
+    """Obtain an owner for the element.
+
+    The owner is either another element, Root, or None.
+    Root is used for elements that should show up in the root of the
+    hierarchy. ``None`` is used for elements that should not be part of
+    a sensible owner hierarchy.
+
+    This distinction has been made to allow the GUI (model browser) to
+    distinguish between elements that can appear at the model root (e.g. Packages),
+    versus elements that should not be shown there (comments, properties).
+    """
     return None
+
+
+@owner.register
+def _(element: Diagram):
+    return Root
 
 
 @owner.register
