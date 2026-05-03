@@ -1,6 +1,7 @@
 import pytest
 
 from gaphor import UML
+from gaphor.core.modeling import Diagram
 from gaphor.i18n import gettext
 from gaphor.UML.treemodel import (
     Branch,
@@ -71,6 +72,14 @@ def test_tree_model_add_element(tree_model, element_factory):
     tree_item = tree_model.tree_item_for_element(element)
 
     assert tree_item.element is element
+
+
+def test_tree_model_add_unowned_generic_diagram(tree_model, element_factory):
+    element = element_factory.create(Diagram)
+
+    tree_model.add_element(element)
+
+    assert tree_model.tree_item_for_element(element) is not None
 
 
 def test_tree_model_add_nested_element(tree_model, element_factory):

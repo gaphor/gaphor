@@ -6,9 +6,13 @@ from gi.repository import Gio, GObject
 from gaphor import UML
 from gaphor.abc import ModelingLanguage
 from gaphor.core.modeling import Base, Diagram, ModelReady
+from gaphor.diagram.group import change_owner
 from gaphor.i18n import gettext
+from gaphor.KerML import kerml
 from gaphor.services.componentregistry import ComponentRegistry
 from gaphor.services.modelinglanguage import ModelingLanguageService
+from gaphor.SysML2 import sysml2
+from gaphor.SysML2.treemodel import TreeModel as SysML2TreeModel
 from gaphor.ui.modelbrowser import (
     ElementDragData,
     ModelBrowser,
@@ -221,6 +225,163 @@ def test_model_browser_should_not_change_for_similar_model_types(
     assert model_browser.model is current_model
 
 
+def test_model_browser_language_changed_to_sysml2(
+    monkeypatch, model_browser, modeling_language
+):
+    monkeypatch.setenv("GAPHOR_SYSML2", "1")
+
+    modeling_language.select_modeling_language("SysML2")
+
+    assert type(model_browser.model) is SysML2TreeModel
+
+
+def test_show_sysml2_item_in_tree_list_model(
+    monkeypatch, model_browser, modeling_language, element_factory
+):
+    monkeypatch.setenv("GAPHOR_SYSML2", "1")
+    modeling_language.select_modeling_language("SysML2")
+
+    package = element_factory.create(kerml.Package)
+    part = element_factory.create(sysml2.PartDefinition)
+    assert change_owner(package, part)
+
+    pos = model_browser.select_element(part)
+
+    assert pos == 1
+    assert model_browser.selection.get_item(0).get_item().element is package
+    assert model_browser.selection.get_item(1).get_item().element is part
+
+
+def test_sysml2_model_browser_hides_uml_elements_and_generic_diagrams(
+    monkeypatch, model_browser, modeling_language, element_factory
+):
+    monkeypatch.setenv("GAPHOR_SYSML2", "1")
+    modeling_language.select_modeling_language("SysML2")
+
+    uml_package = element_factory.create(UML.Package)
+    uml_diagram = element_factory.create(UML.Diagram)
+    uml_diagram.element = uml_package
+
+    sysml2_package = element_factory.create(kerml.Package)
+
+    assert model_browser.model.tree_item_for_element(sysml2_package) is not None
+    assert model_browser.model.tree_item_for_element(uml_package) is None
+    assert model_browser.model.tree_item_for_element(uml_diagram) is None
+
+
+def test_sysml2_model_browser_includes_unowned_generic_diagram(
+    monkeypatch, model_browser, modeling_language, element_factory
+):
+    monkeypatch.setenv("GAPHOR_SYSML2", "1")
+    modeling_language.select_modeling_language("SysML2")
+
+    generic_diagram = element_factory.create(Diagram)
+
+    assert model_browser.model.tree_item_for_element(generic_diagram) is not None
+
+
+def test_uml_model_browser_hides_sysml2_elements(
+    monkeypatch, model_browser, modeling_language, element_factory
+):
+    monkeypatch.setenv("GAPHOR_SYSML2", "1")
+    modeling_language.select_modeling_language("UML")
+
+    uml_package = element_factory.create(UML.Package)
+    sysml2_package = element_factory.create(kerml.Package)
+    part = element_factory.create(sysml2.PartDefinition)
+    assert change_owner(sysml2_package, part)
+
+    assert model_browser.model.tree_item_for_element(uml_package) is not None
+    assert model_browser.model.tree_item_for_element(sysml2_package) is None
+    assert model_browser.model.tree_item_for_element(part) is None
+
+
+def test_uml_model_browser_includes_unowned_generic_diagram(
+    monkeypatch, model_browser, modeling_language, element_factory
+):
+    monkeypatch.setenv("GAPHOR_SYSML2", "1")
+    modeling_language.select_modeling_language("UML")
+
+    generic_diagram = element_factory.create(Diagram)
+
+    assert model_browser.model.tree_item_for_element(generic_diagram) is not None
+
+
+def test_sysml2_create_package_element_in_browser(
+    monkeypatch, model_browser, modeling_language, element_factory
+):
+    monkeypatch.setenv("GAPHOR_SYSML2", "1")
+    modeling_language.select_modeling_language("SysML2")
+
+    model_browser.tree_view_create_element("package")
+
+    packages = element_factory.lselect(kerml.Package)
+    assert len(packages) == 1
+    assert packages[0].declaredName == "Package"
+
+
+def test_sysml2_create_part_definition_owned_by_package(
+    monkeypatch, model_browser, modeling_language, element_factory
+):
+    monkeypatch.setenv("GAPHOR_SYSML2", "1")
+    modeling_language.select_modeling_language("SysML2")
+
+    package = element_factory.create(kerml.Package)
+    model_browser.select_element(package)
+    model_browser.tree_view_create_element("part-definition")
+
+    parts = element_factory.lselect(sysml2.PartDefinition)
+    assert len(parts) == 1
+    part = parts[0]
+    assert part.owner is package
+
+
+def test_drop_multiple_sysml2_elements(
+    monkeypatch, model_browser, modeling_language, element_factory, event_manager
+):
+    monkeypatch.setenv("GAPHOR_SYSML2", "1")
+    modeling_language.select_modeling_language("SysML2")
+
+    package = element_factory.create(kerml.Package)
+    part_a = element_factory.create(sysml2.PartDefinition)
+    part_b = element_factory.create(sysml2.PartDefinition)
+
+    model_browser.select_element(package)
+    list_item = MockRowItem(get_first_selected_item(model_browser.selection))
+
+    target = MockDropTarget()
+    drag_data = ElementDragData(elements=[part_a, part_b])
+    list_item_drop_drop(target, drag_data, 0, 10, list_item, event_manager)
+
+    assert part_a.owner is package
+    assert part_b.owner is package
+
+
+def test_drag_and_drop_sysml2_parent_on_child(
+    monkeypatch, model_browser, modeling_language, element_factory, event_manager
+):
+    monkeypatch.setenv("GAPHOR_SYSML2", "1")
+    modeling_language.select_modeling_language("SysML2")
+
+    root = element_factory.create(kerml.Package)
+    parent = element_factory.create(kerml.Package)
+    child = element_factory.create(kerml.Package)
+
+    assert change_owner(root, parent)
+    assert change_owner(parent, child)
+
+    model_browser.select_element(parent)
+    list_item = MockRowItem(get_first_selected_item(model_browser.selection))
+
+    target = MockDropTarget()
+    drag_data = ElementDragData(elements=[parent])
+    list_item_drop_drop(target, drag_data, 0, 10, list_item, event_manager)
+
+    assert model_browser.select_element(child) is not None
+    assert child.owner is parent
+    assert parent.owner is root
+
+
 def test_tree_model_expand_to_relationship(model_browser, element_factory):
     association = element_factory.create(UML.Association)
     package = element_factory.create(UML.Package)
@@ -371,6 +532,39 @@ def test_unlink_element_should_not_collapse_branch(
     assert row0.get_item().element is package
     assert row0.get_expanded()
     assert model_browser.selection.get_item(1).get_item().element is class_b
+
+
+def test_sysml2_unlink_element_should_not_collapse_branch(
+    monkeypatch, model_browser, modeling_language, element_factory
+):
+    monkeypatch.setenv("GAPHOR_SYSML2", "1")
+    modeling_language.select_modeling_language("SysML2")
+
+    package = element_factory.create(kerml.Package)
+    package.declaredName = "p"
+    part_a = element_factory.create(sysml2.PartDefinition)
+    part_a.declaredName = "a"
+    part_b = element_factory.create(sysml2.PartDefinition)
+    part_b.declaredName = "b"
+    assert change_owner(package, part_a)
+    assert change_owner(package, part_b)
+
+    pos = model_browser.select_element(package)
+    assert pos is not None
+    package_row = model_browser.selection.get_item(pos)
+    package_row.set_expanded(True)
+
+    part_a.unlink()
+
+    assert package_row.get_item().element is package
+    assert package_row.get_expanded()
+
+    tree_model = model_browser.model
+    package_item = tree_model.tree_item_for_element(package)
+    assert package_item is not None
+    child_model = tree_model.child_model(package_item)
+    assert child_model is not None
+    assert any(tree_item.element is part_b for tree_item in child_model)
 
 
 def test_multiplicity_element_should_not_end_up_in_root(model_browser, element_factory):
