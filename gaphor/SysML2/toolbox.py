@@ -12,6 +12,7 @@ from gaphor.diagram.diagramtoolbox import (
 )
 from gaphor.diagram.general import diagramitems as general
 from gaphor.SysML2 import sysml2
+from gaphor.SysML2.definitions import PartDefinitionItem, RequirementDefinitionItem
 
 
 def metadata_config(metadata_item: general.MetadataItem) -> None:
@@ -21,14 +22,12 @@ def metadata_config(metadata_item: general.MetadataItem) -> None:
     metadata_item.createdOn = time.strftime("%Y-%m-%d")
 
 
-def part_definition_config(box_item: general.Box) -> None:
-    if (subject := box_item.subject) and hasattr(subject, "declaredName"):
-        subject.declaredName = subject.declaredName or gettext("Part Definition")
+def part_definition_config(item: PartDefinitionItem) -> None:
+    item.subject.declaredName = gettext("Part Definition")
 
 
-def requirement_definition_config(box_item: general.Box) -> None:
-    if (subject := box_item.subject) and hasattr(subject, "declaredName"):
-        subject.declaredName = subject.declaredName or gettext("Requirement Definition")
+def requirement_definition_config(item: RequirementDefinitionItem) -> None:
+    item.subject.declaredName = gettext("Requirement Definition")
 
 
 general_tools = ToolSection(
@@ -98,7 +97,7 @@ sysml2_tools = ToolSection(
             "gaphor-box-symbolic",
             "p",
             new_item_factory(
-                general.Box,
+                PartDefinitionItem,
                 sysml2.PartDefinition,
                 config_func=part_definition_config,
             ),
@@ -110,7 +109,7 @@ sysml2_tools = ToolSection(
             "gaphor-box-symbolic",
             "r",
             new_item_factory(
-                general.Box,
+                RequirementDefinitionItem,
                 sysml2.RequirementDefinition,
                 config_func=requirement_definition_config,
             ),
