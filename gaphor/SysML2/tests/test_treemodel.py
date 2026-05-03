@@ -1,3 +1,5 @@
+from gaphor import UML
+from gaphor.core.modeling import Diagram
 from gaphor.diagram.group import change_owner
 from gaphor.KerML import kerml
 from gaphor.SysML2 import sysml2
@@ -59,3 +61,19 @@ def test_editable_text_updates_declared_name(event_manager, element_factory):
     tree_item.editable_text = "Renamed"
 
     assert part.declaredName == "Renamed"
+
+
+def test_unowned_generic_diagram_appears_in_root(event_manager, element_factory):
+    tree_model = TreeModel(event_manager, element_factory)
+    diagram = element_factory.create(Diagram)
+
+    assert tree_model.tree_item_for_element(diagram) is not None
+
+
+def test_uml_anchored_generic_diagram_is_excluded(event_manager, element_factory):
+    tree_model = TreeModel(event_manager, element_factory)
+    uml_package = element_factory.create(UML.Package)
+    diagram = element_factory.create(UML.Diagram)
+    diagram.element = uml_package
+
+    assert tree_model.tree_item_for_element(diagram) is None

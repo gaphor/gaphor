@@ -259,8 +259,23 @@ class TreeModel:
             return next((ti for ti in owner_branch if ti.element is element), None)
         return None
 
+    def include_element(self, element: Base) -> bool:
+        if isinstance(element, Diagram):
+            own = owner(element)
+            if own not in (None, Root) and not isinstance(own, UML.Element):
+                return False
+
+        if not isinstance(element, UML.Element):
+            return False
+
+        own = owner(element)
+        return own is Root or isinstance(own, UML.Element)
+
     def add_element(self, element: Base) -> None:
-        if (not owner(element)) or self.tree_item_for_element(element):
+        if not self.include_element(element):
+            return
+
+        if self.tree_item_for_element(element):
             return
 
         if (owner_branch := self.owner_branch_for_element(element)) is not None:
