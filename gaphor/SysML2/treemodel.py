@@ -30,6 +30,7 @@ class TreeItem(GObject.Object):
 
     icon = GObject.Property(type=str)
     icon_visible = GObject.Property(type=bool, default=False)
+
     readonly_text = GObject.Property(type=str)
     attributes = GObject.Property(type=Pango.AttrList)
     editing = GObject.Property(type=bool, default=False)
@@ -97,6 +98,9 @@ class Branch:
     def __len__(self):
         return self.elements.get_n_items()
 
+    def __getitem__(self, index):
+        return self.elements.get_item(index)
+
     def __iter__(self):
         yield from self.elements
 
@@ -142,14 +146,20 @@ class TreeModel:
         self.event_manager.unsubscribe(self.on_model_ready)
 
     @property
-    def root(self) -> Gio.ListStore:
-        return self.branches[Root].elements
-
-    @property
     def template(self) -> str:
         return (importlib.resources.files("gaphor.SysML2") / "treeitem.ui").read_text(
             encoding="utf-8"
         )
+
+    @property
+    def root(self) -> Gio.ListStore:
+        return self.branches[Root].elements
+
+    def sync(self, element):
+        if tree_item := self.tree_item_for_element(element):
+            tree_item.sync()
+            if self._on_sync:
+                self._on_sync()
 
     def child_model(self, item: TreeItem) -> Gio.ListStore | None:
         branches = self.branches
@@ -218,10 +228,9 @@ class TreeModel:
                 self.remove_branch(owner_branch)
 
     def remove_branch(self, branch: Branch) -> None:
-        tree_item = next(
-            tree_item for tree_item, b in self.branches.items() if b is branch
-        )
+        tree_item = next(ti for ti, b in self.branches.items() if b is branch)
         if tree_item is Root:
+            # Do never remove the root branch
             return
 
         del self.branches[tree_item]
@@ -267,10 +276,7 @@ class TreeModel:
 
     @event_handler(ElementUpdated)
     def on_attribute_changed(self, event: ElementUpdated):
-        if tree_item := self.tree_item_for_element(event.element):
-            tree_item.sync()
-            if self._on_sync:
-                self._on_sync()
+        self.sync(event.element)
 
     @event_handler(ModelReady, ModelFlushed)
     def on_model_ready(self, _event=None):

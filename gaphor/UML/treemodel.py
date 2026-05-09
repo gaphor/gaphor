@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 import importlib.resources
 from unicodedata import normalize
 
@@ -227,11 +225,11 @@ class TreeModel:
         branches = self.branches
         if item in branches:
             return branches[item].elements
-        elif isinstance(item, RelationshipItem):
+        if isinstance(item, RelationshipItem):
             return item.child_model
-        elif not item.element:
+        if not item.element:
             return None
-        elif owned_elements := owns(item.element):
+        if owned_elements := owns(item.element):
             new_branch = Branch()
             self.branches[item] = new_branch
             for e in owned_elements:
