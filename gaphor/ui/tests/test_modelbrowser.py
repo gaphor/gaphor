@@ -228,7 +228,7 @@ def test_model_browser_should_not_change_for_similar_model_types(
 def test_model_browser_language_changed_to_sysml2(
     monkeypatch, model_browser, modeling_language
 ):
-    monkeypatch.setenv("GAPHOR_SYSML2", "1")
+    monkeypatch.setenv("GAPHOR_FEATURE_FLAG", "sysml2")
 
     modeling_language.select_modeling_language("SysML2")
 
@@ -238,7 +238,7 @@ def test_model_browser_language_changed_to_sysml2(
 def test_show_sysml2_item_in_tree_list_model(
     monkeypatch, model_browser, modeling_language, element_factory
 ):
-    monkeypatch.setenv("GAPHOR_SYSML2", "1")
+    monkeypatch.setenv("GAPHOR_FEATURE_FLAG", "sysml2")
     modeling_language.select_modeling_language("SysML2")
 
     package = element_factory.create(kerml.Package)
@@ -255,7 +255,7 @@ def test_show_sysml2_item_in_tree_list_model(
 def test_sysml2_model_browser_hides_uml_elements_and_generic_diagrams(
     monkeypatch, model_browser, modeling_language, element_factory
 ):
-    monkeypatch.setenv("GAPHOR_SYSML2", "1")
+    monkeypatch.setenv("GAPHOR_FEATURE_FLAG", "sysml2")
     modeling_language.select_modeling_language("SysML2")
 
     uml_package = element_factory.create(UML.Package)
@@ -272,7 +272,7 @@ def test_sysml2_model_browser_hides_uml_elements_and_generic_diagrams(
 def test_sysml2_model_browser_includes_unowned_generic_diagram(
     monkeypatch, model_browser, modeling_language, element_factory
 ):
-    monkeypatch.setenv("GAPHOR_SYSML2", "1")
+    monkeypatch.setenv("GAPHOR_FEATURE_FLAG", "sysml2")
     modeling_language.select_modeling_language("SysML2")
 
     generic_diagram = element_factory.create(Diagram)
@@ -283,7 +283,7 @@ def test_sysml2_model_browser_includes_unowned_generic_diagram(
 def test_uml_model_browser_hides_sysml2_elements(
     monkeypatch, model_browser, modeling_language, element_factory
 ):
-    monkeypatch.setenv("GAPHOR_SYSML2", "1")
+    monkeypatch.setenv("GAPHOR_FEATURE_FLAG", "sysml2")
     modeling_language.select_modeling_language("UML")
 
     uml_package = element_factory.create(UML.Package)
@@ -299,7 +299,7 @@ def test_uml_model_browser_hides_sysml2_elements(
 def test_uml_model_browser_includes_unowned_generic_diagram(
     monkeypatch, model_browser, modeling_language, element_factory
 ):
-    monkeypatch.setenv("GAPHOR_SYSML2", "1")
+    monkeypatch.setenv("GAPHOR_FEATURE_FLAG", "sysml2")
     modeling_language.select_modeling_language("UML")
 
     generic_diagram = element_factory.create(Diagram)
@@ -310,7 +310,7 @@ def test_uml_model_browser_includes_unowned_generic_diagram(
 def test_sysml2_create_package_element_in_browser(
     monkeypatch, model_browser, modeling_language, element_factory
 ):
-    monkeypatch.setenv("GAPHOR_SYSML2", "1")
+    monkeypatch.setenv("GAPHOR_FEATURE_FLAG", "sysml2")
     modeling_language.select_modeling_language("SysML2")
 
     model_browser.tree_view_create_element("package")
@@ -323,7 +323,7 @@ def test_sysml2_create_package_element_in_browser(
 def test_sysml2_create_part_definition_owned_by_package(
     monkeypatch, model_browser, modeling_language, element_factory
 ):
-    monkeypatch.setenv("GAPHOR_SYSML2", "1")
+    monkeypatch.setenv("GAPHOR_FEATURE_FLAG", "sysml2")
     modeling_language.select_modeling_language("SysML2")
 
     package = element_factory.create(kerml.Package)
@@ -339,7 +339,7 @@ def test_sysml2_create_part_definition_owned_by_package(
 def test_drop_multiple_sysml2_elements(
     monkeypatch, model_browser, modeling_language, element_factory, event_manager
 ):
-    monkeypatch.setenv("GAPHOR_SYSML2", "1")
+    monkeypatch.setenv("GAPHOR_FEATURE_FLAG", "sysml2")
     modeling_language.select_modeling_language("SysML2")
 
     package = element_factory.create(kerml.Package)
@@ -360,7 +360,7 @@ def test_drop_multiple_sysml2_elements(
 def test_drag_and_drop_sysml2_parent_on_child(
     monkeypatch, model_browser, modeling_language, element_factory, event_manager
 ):
-    monkeypatch.setenv("GAPHOR_SYSML2", "1")
+    monkeypatch.setenv("GAPHOR_FEATURE_FLAG", "sysml2")
     modeling_language.select_modeling_language("SysML2")
 
     root = element_factory.create(kerml.Package)
@@ -537,7 +537,7 @@ def test_unlink_element_should_not_collapse_branch(
 def test_sysml2_unlink_element_should_not_collapse_branch(
     monkeypatch, model_browser, modeling_language, element_factory
 ):
-    monkeypatch.setenv("GAPHOR_SYSML2", "1")
+    monkeypatch.setenv("GAPHOR_FEATURE_FLAG", "sysml2")
     modeling_language.select_modeling_language("SysML2")
 
     package = element_factory.create(kerml.Package)

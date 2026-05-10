@@ -18,7 +18,8 @@ from gaphor.SysML2.toolbox import sysml2_toolbox_actions
 class SysML2ModelingLanguage(ModelingLanguage):
     @property
     def name(self) -> str:
-        return "SysML 2.0" if os.getenv("GAPHOR_SYSML2") else ""
+        flags = os.getenv("GAPHOR_FEATURE_FLAG", "").split(",")
+        return "SysML 2.0" if "sysml2" in flags else ""
 
     @property
     def toolbox_definition(self) -> ToolboxDefinition:

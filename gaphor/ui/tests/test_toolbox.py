@@ -162,7 +162,7 @@ def test_expanded_sections_switch_from_generic_to_custom_diagram(
 def test_sysml2_toolbox_definition_contains_sysml2_tools(
     monkeypatch, modeling_language, element_factory
 ):
-    monkeypatch.setenv("GAPHOR_SYSML2", "1")
+    monkeypatch.setenv("GAPHOR_FEATURE_FLAG", "sysml2")
     modeling_language.select_modeling_language("SysML2")
 
     tool_ids = {tool.id for tool in tooliter(modeling_language.toolbox_definition)}
@@ -176,7 +176,7 @@ def test_sysml2_toolbox_definition_contains_sysml2_tools(
 
 
 def test_toolbox_can_select_sysml2_tool(monkeypatch, toolbox, modeling_language):
-    monkeypatch.setenv("GAPHOR_SYSML2", "1")
+    monkeypatch.setenv("GAPHOR_FEATURE_FLAG", "sysml2")
     modeling_language.select_modeling_language("SysML2")
 
     toolbox.select_tool("toolbox-sysml2-part-definition")
