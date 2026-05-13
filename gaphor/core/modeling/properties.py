@@ -62,8 +62,15 @@ log = logging.getLogger(__name__)
 
 UnlimitedNatural = int | Literal["*"]
 
+Lower = Literal[0] | Literal[1] | Literal[2]
+Upper = Literal[1] | Literal[2] | Literal["*"]
+
 
 E = TypeVar("E")
+
+
+class propagable(Protocol):
+    def propagate(self, event): ...
 
 
 class relation_one(Protocol[E]):
@@ -107,9 +114,6 @@ relation = relation_one | relation_many
 
 T = TypeVar("T")
 
-Lower = Literal[0] | Literal[1] | Literal[2]
-Upper = Literal[1] | Literal[2] | Literal["*"]
-
 
 class umlproperty:
     """Superclass for an attribute, enumeration, and association.
@@ -127,7 +131,7 @@ class umlproperty:
     upper: Upper = 1
 
     def __init__(self, name: str):
-        self.dependent_properties: set[subsettable_umlproperty | redefine] = set()
+        self.dependent_properties: set[propagable] = set()
         self.name = name
         self._name = f"_{name}"
 
@@ -172,16 +176,15 @@ class umlproperty:
             d.propagate(event)
 
 
-class subsettable_umlproperty(umlproperty):
-    """Base class for properties that can be subsetted"""
+class subsettable:
+    """Mixin class for properties that can be subsetted."""
 
-    subsets: set[umlproperty]
+    name: str
+    lower: Lower
+    upper: Upper
+    subsets: set[association | derived | redefine]
 
-    def __init__(self, name: str):
-        super().__init__(name)
-        self.subsets = set()
-
-    def add(self, subset):
+    def add(self, subset: association | derived | redefine):
         if self.upper == 1 and subset.upper == "*":
             log.warning(
                 "Modeling error: Cannot add a multiplicity * subset "
@@ -323,7 +326,7 @@ class enumeration(umlproperty):
             self.handle(AttributeUpdated(obj, self, old, self.default))
 
 
-class association(subsettable_umlproperty):
+class association(subsettable, umlproperty):
     """Association, both uni- and bi-directional.
 
     Element.assoc = association('assoc', Element, opposite='other')
@@ -397,6 +400,7 @@ class association(subsettable_umlproperty):
         self.composite = composite
         self.opposite = opposite
         self.stub: associationstub | None = None
+        self.subsets = set()
 
     def save(self, obj, save_func: Callable[[str, object], None]):
         if hasattr(obj, self._name):
@@ -700,7 +704,7 @@ class unioncache:
     version: int
 
 
-class derived[T](subsettable_umlproperty):
+class derived[T](subsettable, umlproperty):
     """Base class for derived properties, both derived unions and custom
     properties.
 
@@ -721,7 +725,7 @@ class derived[T](subsettable_umlproperty):
         lower: Lower,
         upper: Upper,
         filter: Callable[[Any], list[T | None]],
-        *subsets: relation,
+        *subsets: association | derived | redefine,
     ) -> None:
         super().__init__(name)
         self.version = 1
@@ -729,6 +733,7 @@ class derived[T](subsettable_umlproperty):
         self.lower = lower
         self.upper = upper
         self.filter = filter
+        self.subsets = set()
 
         for s in subsets:
             self.add(s)
@@ -846,7 +851,7 @@ class derivedunion(derived[T]):
         type: type[T],
         lower: Lower = 0,
         upper: Upper = "*",
-        *subsets: relation,
+        *subsets: association | derived | redefine,
     ):
         super().__init__(name, type, lower, upper, self._union, *subsets)
 
