@@ -600,3 +600,37 @@ def ocl_to_python(expression: str) -> str:
     """Parse an OCL expression and unparse it as Python source."""
 
     return unparse(parse_to_ast(expression))
+
+
+def _attribute_path(node: ast.expr) -> list[str] | None:
+    match node:
+        case ast.Name(id=name):
+            return [name]
+        case ast.Attribute(value=value, attr=attr):
+            if not isinstance(value, ast.expr):
+                return None
+            if path := _attribute_path(value):
+                return [*path, attr]
+            return None
+        case _:
+            return None
+
+
+def ocl_derive_to_python(expression: str) -> str:
+    node = lower_to_python_ast(parse_to_ast(expression))
+
+    target = node
+    if (
+        isinstance(node, ast.Compare)
+        and len(node.ops) == 1
+        and isinstance(node.ops[0], ast.Eq)
+        and len(node.comparators) == 1
+    ):
+        target = node.comparators[0]
+
+    if path := _attribute_path(target):
+        full = f"e.{'.'.join(path)}"
+        guard = f"e.{path[0]}"
+        return f"lambda e: {guard} and [{full}] or [None]"
+
+    return ""

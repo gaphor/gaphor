@@ -376,3 +376,12 @@ def test_lower_to_python_ast_for_implies():
 )
 def test_parse_and_unparse(expression, expected):
     assert ocl.ocl_to_python(expression) == expected
+
+
+def test_derive_expression():
+    result = ocl.ocl_derive_to_python("owner = owningRelationship.owningRelatedElement")
+
+    assert (
+        result
+        == "lambda e: e.owningRelationship and [e.owningRelationship.owningRelatedElement] or [None]"
+    )
