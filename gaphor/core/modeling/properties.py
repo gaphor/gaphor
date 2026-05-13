@@ -176,6 +176,10 @@ class modelproperty:
             d.propagate(event)
 
 
+# For backwards compatibility:
+umlproperty = modelproperty
+
+
 class subsettable:
     """Mixin class for properties that can be subsetted."""
 
