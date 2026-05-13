@@ -1,26 +1,20 @@
 import ast
-import xml.etree.ElementTree as ET
-from pathlib import Path
 
 import pytest
 
+from gaphor import UML
 from gaphor.codegen import ocl
+from gaphor.codegen.xmi import convert
 
 
-def _extract_ocl_expressions(model: Path) -> list[str]:
-    root = ET.parse(model).getroot()
+@pytest.fixture(scope="module")
+def kerml():
+    return convert("models/KerML-25-04-04.xmi")
 
-    expressions: list[str] = []
-    for element in root.iter():
-        if element.tag.rsplit("}", 1)[-1] != "specification":
-            continue
-        if element.attrib.get("language") != "OCL2.0":
-            continue
-        body = element.attrib.get("body")
-        if body:
-            expressions.append(body)
 
-    return expressions
+@pytest.fixture(scope="module")
+def sysml():
+    return convert("models/SysML2-25-02-15.xmi")
 
 
 @pytest.mark.parametrize(
@@ -38,20 +32,24 @@ def test_tokenize_known_expressions(expression):
     assert result
 
 
-def test_tokenize_kerml_ocl2_expressions():
-    expressions = _extract_ocl_expressions(Path("models/KerML-25-04-04.xmi"))
+def test_tokenize_kerml_ocl2_expressions(kerml):
+    expressions = kerml.lselect(
+        lambda e: isinstance(e, UML.OpaqueExpression) and e.language == "OCL2.0"
+    )
 
     assert expressions
     for expression in expressions:
-        assert ocl.tokenize(expression)
+        assert ocl.tokenize(expression.body)
 
 
-def test_tokenize_sysml2_ocl2_expressions():
-    expressions = _extract_ocl_expressions(Path("models/SysML2-25-02-15.xmi"))
+def test_tokenize_sysml2_ocl2_expressions(sysml):
+    expressions = sysml.lselect(
+        lambda e: isinstance(e, UML.OpaqueExpression) and e.language == "OCL2.0"
+    )
 
     assert expressions
     for expression in expressions:
-        assert ocl.tokenize(expression)
+        assert ocl.tokenize(expression.body)
 
 
 def test_tokenize_range_operator_as_double_dot():
@@ -319,24 +317,26 @@ def test_parse_complex_expression():
     assert isinstance(result.right, ast.Call)
 
 
-def test_parse_real_kerml_expression():
-    expressions = _extract_ocl_expressions(Path("models/KerML-25-04-04.xmi"))
+def test_parse_real_kerml_expression(kerml):
+    expressions = kerml.lselect(
+        lambda e: isinstance(e, UML.OpaqueExpression) and e.language == "OCL2.0"
+    )
 
     assert expressions
-
-    # Parse a few expressions to AST without errors
     for expression in expressions:
-        result = ocl.parse_to_ast(expression)
+        result = ocl.parse_to_ast(expression.body)
         assert result is not None
 
 
-def test_parse_real_sysml2_expression():
-    expressions = _extract_ocl_expressions(Path("models/SysML2-25-02-15.xmi"))
+def test_parse_real_sysml2_expression(sysml):
+    expressions = sysml.lselect(
+        lambda e: isinstance(e, UML.OpaqueExpression) and e.language == "OCL2.0"
+    )
 
     assert expressions
 
     for expression in expressions:
-        result = ocl.parse_to_ast(expression)
+        result = ocl.parse_to_ast(expression.body)
         assert result is not None
 
 
@@ -378,10 +378,26 @@ def test_parse_and_unparse(expression, expected):
     assert ocl.ocl_to_python(expression) == expected
 
 
-def test_derive_expression():
-    result = ocl.ocl_derive_to_python("owner = owningRelationship.owningRelatedElement")
-
-    assert (
-        result
-        == "lambda e: e.owningRelationship and [e.owningRelationship.owningRelatedElement] or [None]"
-    )
+@pytest.mark.parametrize(
+    ("owning_class_id", "expression", "expected"),
+    [
+        (
+            "Root-Elements-Element",
+            "owner = owningRelationship.owningRelatedElement",
+            "lambda e: e.owningRelationship and [e.owningRelationship.owningRelatedElement] or [None]",
+        ),
+        (
+            "Root-Annotations-Annotation",
+            "annotatingElement = if ownedAnnotatingElement <> null then ownedAnnotatingElement else owningAnnotatingElement endif",
+            "e.ownedAnnotatingElement if e.ownedAnnotatingElement else owningAnnotatingElement",
+        ),
+        (
+            "Root-Annotations-AnnotatingElement",
+            "annotatedElement = if annotation->notEmpty() then annotation.annotatedElement else Sequence{owningNamespace} endif",
+            "lambda e: e.annotation[:].annotatedElement if e.annotation else [e.owningNamespace]",
+        ),
+    ],
+)
+def test_derive_expression(kerml, owning_class_id, expression, expected):
+    owning_class = kerml.lookup(owning_class_id)
+    assert ocl.ocl_derive_to_python(expression, owning_class) == expected

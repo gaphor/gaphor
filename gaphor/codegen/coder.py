@@ -26,7 +26,6 @@ import argparse
 import contextlib
 import keyword
 import logging
-import re
 import sys
 import textwrap
 from collections.abc import Iterable
@@ -34,6 +33,7 @@ from pathlib import Path
 
 import gaphor.storage as storage
 from gaphor import UML
+from gaphor.codegen import ocl
 from gaphor.codegen.override import Overrides
 from gaphor.codegen.xmi import convert
 from gaphor.core.modeling import Base, ElementFactory
@@ -336,7 +336,17 @@ def associations(
                 f"name={a.name!r}, type={a.type.name}, lower={lower_arg}, upper={upper_arg!r}, "
                 f"rule={derive_rule!r}"
             )
-            yield f'{full_name} = derivedunion("{a.name}", {a.type.name}{lower(a)}{upper(a)})'
+            if derive_expression := ocl_derive_expression(derive_rule, c):
+                yield (
+                    f'{full_name} = derived("{a.name}", {a.type.name}, '
+                    f"{lower_arg}, {upper_arg!r}, {derive_expression})"
+                )
+            else:
+                yield (
+                    f"# no derive expression generated for {full_name}; "
+                    "falling back to generic derivedunion"
+                )
+                yield f'{full_name} = derivedunion("{a.name}", {a.type.name}{lower(a)}{upper(a)})'
             processed.add(a.name)
         elif a.isDerived and a.subsettedProperty:
             subsetted_properties = [
@@ -455,14 +465,14 @@ def lookup_derive_rule(c: UML.Class, a: UML.Property) -> str | None:
     if not a.name:
         return None
 
-    pattern = re.compile(rf"^\s*{re.escape(a.name)}\s*=")
+    pattern = f"{a.name} = "
     for rule in c.ownedRule:
         specification = rule.specification
         if not isinstance(specification, UML.OpaqueExpression):
             continue
 
         body = specification.body
-        if isinstance(body, str) and pattern.match(body):
+        if isinstance(body, str) and body.startswith(pattern):
             return body.strip()
     return None
 
@@ -473,6 +483,16 @@ def derive_multiplicity(a: UML.Property) -> tuple[int, str | int]:
     lower_arg = lower_value if isinstance(lower_value, int) else 0
     upper_arg = upper_value if upper_value in ("*", 1, 2) else "*"
     return lower_arg, upper_arg
+
+
+# TODO: return value should return the Property objects used in the expression, so they can be watched
+def ocl_derive_expression(rule: str, owning_class: UML.Class) -> str | None:
+    """Convert an OCL derive rule to a Python lambda expression when possible."""
+
+    expression = ocl.ocl_derive_to_python(rule, owning_class)
+    if not expression or not expression.strip().startswith("lambda "):
+        return None
+    return expression
 
 
 def default_value(a) -> str:

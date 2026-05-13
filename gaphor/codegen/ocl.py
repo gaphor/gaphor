@@ -1,6 +1,16 @@
+"""OCL 2.0 parser
+
+The parser is limited, in that it is only capable of producing
+Python expressions (lambda functions) for a small part of the
+OCL expressions present in the KerML and SysML v2 models.
+
+It should be enough to generate the data model, though.
+"""
+
 from __future__ import annotations
 
 import ast
+from collections.abc import Iterator
 from dataclasses import dataclass
 from typing import cast
 
@@ -19,6 +29,8 @@ from pyparsing import (
     alphas,
     pyparsing_common,
 )
+
+from gaphor import UML
 
 ParserElement.enable_packrat()
 
@@ -602,21 +614,87 @@ def ocl_to_python(expression: str) -> str:
     return unparse(parse_to_ast(expression))
 
 
-def _attribute_path(node: ast.expr) -> list[str] | None:
+def _split_attribute_path(node: ast.expr) -> list[str] | None:
     match node:
         case ast.Name(id=name):
             return [name]
         case ast.Attribute(value=value, attr=attr):
             if not isinstance(value, ast.expr):
                 return None
-            if path := _attribute_path(value):
+            if path := _split_attribute_path(value):
                 return [*path, attr]
             return None
         case _:
             return None
 
 
-def ocl_derive_to_python(expression: str) -> str:
+def _prefixed_path_or_unparse(node: ast.expr) -> str:
+    if path := _split_attribute_path(node):
+        return f"e.{'.'.join(path)}"
+    return ast.unparse(node)
+
+
+def _if_condition_source(test: ast.expr, body: ast.expr) -> str:
+    if (
+        isinstance(test, ast.Compare)
+        and len(test.ops) == 1
+        and isinstance(test.ops[0], ast.NotEq)
+        and len(test.comparators) == 1
+        and isinstance(test.comparators[0], ast.Constant)
+        and test.comparators[0].value is None
+        and _split_attribute_path(test.left) == _split_attribute_path(body)
+    ):
+        return _prefixed_path_or_unparse(body)
+
+    return _prefixed_path_or_unparse(test)
+
+
+def _not_empty_source_path(test: ast.expr) -> list[str] | None:
+    if (
+        isinstance(test, ast.Call)
+        and isinstance(test.func, ast.Attribute)
+        and test.func.attr == "notEmpty"
+        and not test.args
+    ):
+        return _split_attribute_path(test.func.value)
+    return None
+
+
+def _prefixed_list_or_unparse(node: ast.expr) -> str:
+    if isinstance(node, ast.List):
+        elements = ", ".join(_prefixed_path_or_unparse(elt) for elt in node.elts)
+        return f"[{elements}]"
+    return ast.unparse(node)
+
+
+def _iter_class_hierarchy(cls: UML.Class) -> Iterator[UML.Class]:
+    yield cls
+
+    for generalization in cls.generalization:
+        general = generalization.general
+        if isinstance(general, UML.Class):
+            yield general
+
+
+def _all_attributes_in_hierarchy(owning_class: UML.Class) -> Iterator[UML.Property]:
+    for cls in _iter_class_hierarchy(owning_class):
+        yield from cls.ownedAttribute
+
+
+def _head_is_multi_valued(path: list[str], owning_class: UML.Class) -> bool:
+    if not path:
+        return False
+
+    head = path[0]
+    for attribute in _all_attributes_in_hierarchy(owning_class):
+        if attribute.name == head:
+            return UML.recipes.get_multiplicity_upper_value(attribute) != 1
+
+    return False
+
+
+# TODO: should also return a set of involved UML.Property's, so we can add notifications
+def ocl_derive_to_python(expression: str, owning_class: UML.Class) -> str:
     node = lower_to_python_ast(parse_to_ast(expression))
 
     target = node
@@ -628,7 +706,46 @@ def ocl_derive_to_python(expression: str) -> str:
     ):
         target = node.comparators[0]
 
-    if path := _attribute_path(target):
+    if isinstance(target, ast.IfExp):
+        if source_path := _not_empty_source_path(target.test):
+            body_path = _split_attribute_path(target.body)
+            if body_path and body_path[: len(source_path)] == source_path:
+                source = f"e.{'.'.join(source_path)}"
+                taill = body_path[len(source_path) :]
+                projection = f".{'.'.join(taill)}" if taill else ""
+                body = f"{source}[:]{projection}"
+                orelse = _prefixed_list_or_unparse(target.orelse)
+                return f"lambda e: {body} if {source} else {orelse}"
+
+        body = _prefixed_path_or_unparse(target.body)
+        condition = _if_condition_source(target.test, target.body)
+        orelse = _prefixed_list_or_unparse(target.orelse)
+        return f"{body} if {condition} else {orelse}"
+
+    if (
+        isinstance(target, ast.Call)
+        and isinstance(target.func, ast.Attribute)
+        and target.func.attr == "selectByKind"
+        and len(target.args) == 1
+        and isinstance(target.args[0], ast.Name)
+    ):
+        source_path = _split_attribute_path(target.func.value)
+        if source_path:
+            if len(source_path) > 1 and _head_is_multi_valued(
+                source_path, owning_class
+            ):
+                source = f"e.{source_path[0]}[:].{'.'.join(source_path[1:])}"
+            else:
+                source = f"e.{'.'.join(source_path)}"
+            return (
+                f"lambda e: [x for x in {source} if isinstance(x, {target.args[0].id})]"
+            )
+
+    if path := _split_attribute_path(target):
+        if len(path) > 1 and _head_is_multi_valued(path, owning_class):
+            head = f"e.{path[0]}"
+            tail = ".".join(path[1:])
+            return f"lambda e: [*{head}[:].{tail}] or []"
         full = f"e.{'.'.join(path)}"
         guard = f"e.{path[0]}"
         return f"lambda e: {guard} and [{full}] or [None]"

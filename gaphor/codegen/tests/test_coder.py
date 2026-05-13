@@ -383,7 +383,33 @@ def test_coder_emits_comment_for_non_subsetted_derive_rule():
 
     assert a == [
         "# derive-rule for Behavior.step: name='step', type=Step, lower=0, upper='*', rule='step = feature->selectByKind(Step)'",
-        'Behavior.step = derivedunion("step", Step)',
+        "Behavior.step = derived(\"step\", Step, 0, '*', lambda e: [x for x in e.feature if isinstance(x, Step)])",
+    ]
+
+
+def test_coder_emits_derived_for_convertible_derive_rule():
+    class_element = UML.Class()
+    class_element.name = "Element"
+    class_relationship = UML.Class()
+    class_relationship.name = "Relationship"
+
+    owner = UML.Property()
+    owner.name = "owner"
+    owner.type = class_relationship
+    owner.isDerived = True
+    class_element.ownedAttribute = owner
+
+    derive_rule = UML.Constraint()
+    derive_specification = UML.OpaqueExpression()
+    derive_specification.body = "owner = owningRelationship.owningRelatedElement"
+    derive_rule.specification = derive_specification
+    class_element.ownedRule = derive_rule
+
+    a = list(associations(class_element))
+
+    assert a == [
+        "# derive-rule for Element.owner: name='owner', type=Relationship, lower=0, upper='*', rule='owner = owningRelationship.owningRelatedElement'",
+        "Element.owner = derived(\"owner\", Relationship, 0, '*', lambda e: e.owningRelationship and [e.owningRelationship.owningRelatedElement] or [None])",
     ]
 
 
