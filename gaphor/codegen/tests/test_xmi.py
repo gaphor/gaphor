@@ -70,3 +70,9 @@ def test_body_condition_specification_conversion(kerml):
     assert isinstance(operation.bodyCondition.specification, UML.OpaqueExpression)
     assert operation.bodyCondition.specification.body == "FeatureDirectionKind::_'in'"
     assert operation.bodyCondition.specification.language == "OCL2.0"
+
+
+def test_element_owned_rules(kerml):
+    element = kerml.lookup("Root-Elements-Element")
+
+    assert element.ownedRule

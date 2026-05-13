@@ -34,6 +34,9 @@ class xmlns:
 
 def create_element(elem: etree.Element, element_factory: ElementFactory):
     for child in elem:
+        if f"{xmlns.xmi}idref" in child.attrib:
+            continue
+
         match child.tag:
             case "ownedAttribute" | "ownedEnd" | "ownedLiteral" | "ownedParameter":
                 element = create(child, element_factory)
@@ -42,18 +45,19 @@ def create_element(elem: etree.Element, element_factory: ElementFactory):
                 if "isOrdered" in child.attrib:
                     element.isOrdered = child.attrib["isOrdered"] == "true"
                 yield element
-            case "packagedElement" | "ownedOperation":
+            case "packagedElement" | "ownedOperation" | "ownedRule" | "specification":
                 element = create(child, element_factory)
                 yield element
                 for child_element in create_element(child, element_factory):
-                    assert group(element, child_element)
+                    assert group(element, child_element), (
+                        f"Can't group {element}/{child_element}"
+                    )
             case (
                 "bodyCondition"
                 | "generalization"
                 | "memberEnd"
                 | "navigableOwnedEnd"
                 | "ownedComment"
-                | "ownedRule"
                 | "packageImport"
                 | "precondition"
                 | "redefinedOperation"
@@ -65,8 +69,6 @@ def create_element(elem: etree.Element, element_factory: ElementFactory):
 
 def create(elem: etree.Element, element_factory: ElementFactory) -> UML.Element:
     id = elem.attrib[f"{xmlns.xmi}id"]
-    if existing := element_factory.lookup(id):
-        return existing
 
     type_name = elem.attrib[f"{xmlns.xmi}type"]
     assert type_name.startswith("uml:")
@@ -86,10 +88,7 @@ def link_constraint(
 
     for child in elem:
         match child.tag:
-            case "constrainedElement":
-                if idref := child.attrib.get(f"{xmlns.xmi}idref"):
-                    constraint.constrainedElement = element_factory[idref]
-            case "ownedComment":
+            case "constrainedElement" | "ownedComment":
                 pass
             case "specification":
                 specification = create(child, element_factory)
@@ -183,8 +182,6 @@ def link_element(elem: etree.Element, element_factory: ElementFactory):
             case "ownedEnd" | "ownedOperation" | "ownedParameter":
                 link_feature(child, element_factory)
             case "ownedRule":
-                if f"{xmlns.xmi}idref" in child.attrib:
-                    continue
                 assert isinstance(element, UML.Namespace)
                 element.ownedRule = link_constraint(child, element_factory)
             case "packagedElement":
