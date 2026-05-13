@@ -361,6 +361,32 @@ def test_coder_write_derivedunion_for_non_subsetted_derived_property():
     assert a == ['Behavior.step = derivedunion("step", Step)']
 
 
+def test_coder_emits_comment_for_non_subsetted_derive_rule():
+    class_step = UML.Class()
+    class_step.name = "Step"
+    class_behavior = UML.Class()
+    class_behavior.name = "Behavior"
+
+    step = UML.Property()
+    step.name = "step"
+    step.type = class_step
+    step.isDerived = True
+    class_behavior.ownedAttribute = step
+
+    derive_rule = UML.Constraint()
+    derive_specification = UML.OpaqueExpression()
+    derive_specification.body = "step = feature->selectByKind(Step)"
+    derive_rule.specification = derive_specification
+    class_behavior.ownedRule = derive_rule
+
+    a = list(associations(class_behavior))
+
+    assert a == [
+        "# derive-rule for Behavior.step: name='step', type=Step, lower=0, upper='*', rule='step = feature->selectByKind(Step)'",
+        'Behavior.step = derivedunion("step", Step)',
+    ]
+
+
 def test_coder_does_not_emit_legacy_subset_wiring_for_derived_subset():
     class_type = UML.Class()
     class_type.name = "Type"
@@ -384,21 +410,6 @@ def test_coder_does_not_emit_legacy_subset_wiring_for_derived_subset():
     generated = list(subsets(class_behavior, {}))
 
     assert generated == []
-
-
-def test_coder_writes_real_kerml_subset_without_legacy_wiring(kerml_xmi):
-    behavior = next(
-        kerml_xmi.select(lambda e: isinstance(e, UML.Class) and e.name == "Behavior")
-    )
-
-    association_lines = list(associations(behavior))
-    subset_lines = [line for line in subsets(behavior, {}) if "Behavior.step" in line]
-
-    assert (
-        "Behavior.step = subset(\"step\", Step, 0, '*', None, Type.feature)"
-        in association_lines
-    )
-    assert subset_lines == []
 
 
 def test_coder_write_association_opposite_not_navigable(

@@ -502,6 +502,7 @@ class MembershipImport(Import):
 
 
 Element.owningRelationship = association("owningRelationship", Relationship, upper=1, opposite="ownedRelatedElement")
+# derive-rule for Element.owningNamespace: name='owningNamespace', type=Namespace, lower=0, upper=1, rule='owningNamespace = if owningMembership = null then null else owningMembership.membershipOwningNamespace endif'
 Element.owningNamespace = derivedunion("owningNamespace", Namespace, upper=1)
 Element.ownedRelationship = association("ownedRelationship", Relationship, opposite="owningRelatedElement")
 # 17: override Element.owner: derived[Element]
@@ -514,40 +515,71 @@ Element.owner = derived("owner", Element, 0, 1,
 Element.ownedElement = derived("ownedElement", Element, 0, "*",
     lambda e: e.ownedRelationship and e.ownedRelationship[:].ownedRelatedElement)
 
+# derive-rule for Element.documentation: name='documentation', type=Documentation, lower=0, upper='*', rule='documentation = ownedElement->selectByKind(Documentation)'
+Element.documentation = derivedunion("documentation", Documentation)
+# derive-rule for Element.ownedAnnotation: name='ownedAnnotation', type=Annotation, lower=0, upper='*', rule='ownedAnnotation = ownedRelationship-> selectByKind(Annotation)-> select(a | a.annotatedElement = self)'
+Element.ownedAnnotation = derivedunion("ownedAnnotation", Annotation)
+# derive-rule for Element.textualRepresentation: name='textualRepresentation', type=TextualRepresentation, lower=0, upper='*', rule='textualRepresentation = ownedElement->selectByKind(TextualRepresentation)'
+Element.textualRepresentation = derivedunion("textualRepresentation", TextualRepresentation)
 Element.owningMembership = subset("owningMembership", OwningMembership, 0, 1, None, Element.owningRelationship)
-Element.documentation = subset("documentation", Documentation, 0, '*', None, Element.ownedElement)
-Element.ownedAnnotation = subset("ownedAnnotation", Annotation, 0, '*', None, Element.ownedRelationship)
-Element.textualRepresentation = subset("textualRepresentation", TextualRepresentation, 0, '*', None, Element.ownedElement)
 Namespace.membership = derivedunion("membership", Membership)
+# derive-rule for Namespace.ownedImport: name='ownedImport', type=Import, lower=0, upper='*', rule='ownedImport = ownedRelationship->selectByKind(Import)'
+Namespace.ownedImport = derivedunion("ownedImport", Import)
+# derive-rule for Namespace.member: name='member', type=Element, lower=0, upper='*', rule='member = membership.memberElement'
 Namespace.member = derivedunion("member", Element)
-Namespace.ownedImport = subset("ownedImport", Import, 0, '*', None, Element.ownedRelationship)
-Namespace.ownedMember = subset("ownedMember", Element, 0, '*', None, Namespace.member)
-Namespace.ownedMembership = subset("ownedMembership", Membership, 0, '*', None, Namespace.membership, Element.ownedRelationship)
-Namespace.importedMembership = subset("importedMembership", Membership, 0, '*', None, Namespace.membership)
+# derive-rule for Namespace.ownedMember: name='ownedMember', type=Element, lower=0, upper='*', rule='ownedMember = ownedMembership->selectByKind(OwningMembership).ownedMemberElement'
+Namespace.ownedMember = derivedunion("ownedMember", Element)
+# derive-rule for Namespace.ownedMembership: name='ownedMembership', type=Membership, lower=0, upper='*', rule='ownedMembership = ownedRelationship->selectByKind(Membership)'
+Namespace.ownedMembership = derivedunion("ownedMembership", Membership)
+# derive-rule for Namespace.importedMembership: name='importedMembership', type=Membership, lower=0, upper='*', rule='importedMembership = importedMemberships(Set{})'
+Namespace.importedMembership = derivedunion("importedMembership", Membership)
+# derive-rule for Type.ownedSpecialization: name='ownedSpecialization', type=Specialization, lower=0, upper='*', rule='ownedSpecialization = ownedRelationship->selectByKind(Specialization)-> select(s | s.special = self)'
+Type.ownedSpecialization = derivedunion("ownedSpecialization", Specialization)
+# derive-rule for Type.ownedFeatureMembership: name='ownedFeatureMembership', type=FeatureMembership, lower=0, upper='*', rule='ownedFeatureMembership = ownedRelationship->selectByKind(FeatureMembership)'
+Type.ownedFeatureMembership = derivedunion("ownedFeatureMembership", FeatureMembership)
+# derive-rule for Type.feature: name='feature', type=Feature, lower=0, upper='*', rule='feature = featureMembership.ownedMemberFeature'
+Type.feature = derivedunion("feature", Feature)
+# derive-rule for Type.ownedFeature: name='ownedFeature', type=Feature, lower=0, upper='*', rule='ownedFeature = ownedFeatureMembership.ownedMemberFeature'
+Type.ownedFeature = derivedunion("ownedFeature", Feature)
+# derive-rule for Type.input: name='input', type=Feature, lower=0, upper='*', rule="input = feature->select(f |      let direction: FeatureDirectionKind = directionOf(f) in     direction = FeatureDirectionKind::_'in' or     direction = FeatureDirectionKind::inout)"
+Type.input = derivedunion("input", Feature)
+# derive-rule for Type.output: name='output', type=Feature, lower=0, upper='*', rule='output = feature->select(f |      let direction: FeatureDirectionKind = directionOf(f) in     direction = FeatureDirectionKind::out or     direction = FeatureDirectionKind::inout)'
+Type.output = derivedunion("output", Feature)
+# derive-rule for Type.inheritedMembership: name='inheritedMembership', type=Membership, lower=0, upper='*', rule='inheritedMembership = inheritedMemberships(Set{}, Set{}, false)'
+Type.inheritedMembership = derivedunion("inheritedMembership", Membership)
+# derive-rule for Type.endFeature: name='endFeature', type=Feature, lower=0, upper='*', rule='endFeature = feature->select(isEnd)'
+Type.endFeature = derivedunion("endFeature", Feature)
+# derive-rule for Type.ownedEndFeature: name='ownedEndFeature', type=Feature, lower=0, upper='*', rule='ownedEndFeature = ownedFeature->select(isEnd)'
+Type.ownedEndFeature = derivedunion("ownedEndFeature", Feature)
+# derive-rule for Type.ownedConjugator: name='ownedConjugator', type=Conjugation, lower=0, upper=1, rule='ownedConjugator =     let ownedConjugators: Sequence(Conjugator) =          ownedRelationship->selectByKind(Conjugation) in     if ownedConjugators->isEmpty() then null      else ownedConjugators->at(1) endif'
+Type.ownedConjugator = derivedunion("ownedConjugator", Conjugation, upper=1)
+# derive-rule for Type.inheritedFeature: name='inheritedFeature', type=Feature, lower=0, upper='*', rule='inheritedFeature = inheritedMemberships-> selectByKind(FeatureMembership).memberFeature'
+Type.inheritedFeature = derivedunion("inheritedFeature", Feature)
+# derive-rule for Type.multiplicity: name='multiplicity', type=Multiplicity, lower=0, upper=1, rule='multiplicity =      let ownedMultiplicities: Sequence(Multiplicity) =         ownedMember->selectByKind(Multiplicity) in     if ownedMultiplicities->isEmpty() then null     else ownedMultiplicities->first()     endif'
+Type.multiplicity = derivedunion("multiplicity", Multiplicity, upper=1)
+# derive-rule for Type.unioningType: name='unioningType', type=Type, lower=0, upper='*', rule='unioningType = ownedUnioning.unioningType'
 Type.unioningType = derivedunion("unioningType", Type)
+# derive-rule for Type.intersectingType: name='intersectingType', type=Type, lower=0, upper='*', rule='intersectingType = ownedIntersecting.intersectingType'
 Type.intersectingType = derivedunion("intersectingType", Type)
+# derive-rule for Type.ownedUnioning: name='ownedUnioning', type=Unioning, lower=0, upper='*', rule='ownedUnioning = ownedRelationship->selectByKind(Unioning)'
+Type.ownedUnioning = derivedunion("ownedUnioning", Unioning)
+# derive-rule for Type.ownedDisjoining: name='ownedDisjoining', type=Disjoining, lower=0, upper='*', rule='ownedDisjoining = ownedRelationship->selectByKind(Disjoining)'
+Type.ownedDisjoining = derivedunion("ownedDisjoining", Disjoining)
+# derive-rule for Type.featureMembership: name='featureMembership', type=FeatureMembership, lower=0, upper='*', rule='featureMembership = ownedFeatureMembership->union( inheritedMembership->selectByKind(FeatureMembership))'
 Type.featureMembership = derivedunion("featureMembership", FeatureMembership)
+# derive-rule for Type.differencingType: name='differencingType', type=Type, lower=0, upper='*', rule='differencingType = ownedDifferencing.differencingType'
 Type.differencingType = derivedunion("differencingType", Type)
-Type.ownedSpecialization = subset("ownedSpecialization", Specialization, 0, '*', None, Element.ownedRelationship)
-Type.ownedFeatureMembership = subset("ownedFeatureMembership", FeatureMembership, 0, '*', None, Namespace.ownedMembership, Type.featureMembership)
-Type.feature = subset("feature", Feature, 0, '*', None, Namespace.member)
-Type.ownedFeature = subset("ownedFeature", Feature, 0, '*', None, Namespace.ownedMember)
-Type.inheritedMembership = subset("inheritedMembership", Membership, 0, '*', None, Namespace.membership)
-Type.ownedConjugator = subset("ownedConjugator", Conjugation, 0, 1, None, Element.ownedRelationship)
-Type.multiplicity = subset("multiplicity", Multiplicity, 0, 1, None, Namespace.ownedMember)
+# derive-rule for Type.ownedDifferencing: name='ownedDifferencing', type=Differencing, lower=0, upper='*', rule='ownedDifferencing = ownedRelationship->selectByKind(Differencing)'
+Type.ownedDifferencing = derivedunion("ownedDifferencing", Differencing)
+# derive-rule for Type.directedFeature: name='directedFeature', type=Feature, lower=0, upper='*', rule='directedFeature = feature->select(f | directionOf(f) <> null)'
+Type.directedFeature = derivedunion("directedFeature", Feature)
 Type.ownedIntersecting = subset("ownedIntersecting", Intersecting, 0, '*', None, Element.ownedRelationship)
-Type.ownedUnioning = subset("ownedUnioning", Unioning, 0, '*', None, Element.ownedRelationship)
-Type.ownedDisjoining = subset("ownedDisjoining", Disjoining, 0, '*', None, Element.ownedRelationship)
-Type.ownedDifferencing = subset("ownedDifferencing", Differencing, 0, '*', None, Element.ownedRelationship)
-Type.endFeature = subset("endFeature", Feature, 0, '*', None, Type.feature)
-Type.inheritedFeature = subset("inheritedFeature", Feature, 0, '*', None, Type.feature)
-Type.directedFeature = subset("directedFeature", Feature, 0, '*', None, Type.feature)
-Type.input = subset("input", Feature, 0, '*', None, Type.directedFeature)
-Type.output = subset("output", Feature, 0, '*', None, Type.directedFeature)
-Type.ownedEndFeature = subset("ownedEndFeature", Feature, 0, '*', None, Type.endFeature, Type.ownedFeature)
-Classifier.ownedSubclassification = subset("ownedSubclassification", Subclassification, 0, '*', None, Type.ownedSpecialization)
+# derive-rule for Classifier.ownedSubclassification: name='ownedSubclassification', type=Subclassification, lower=0, upper='*', rule='ownedSubclassification = ownedSpecialization->selectByKind(Subclassification)'
+Classifier.ownedSubclassification = derivedunion("ownedSubclassification", Subclassification)
+# derive-rule for Behavior.step: name='step', type=Step, lower=0, upper='*', rule='step = feature->selectByKind(Step)'
+Behavior.step = derivedunion("step", Step)
 Behavior.parameter = redefine(Behavior, "parameter", Feature, Type.directedFeature)
-Behavior.step = subset("step", Step, 0, '*', None, Type.feature)
+# derive-rule for Relationship.relatedElement: name='relatedElement', type=Element, lower=0, upper='*', rule='relatedElement = source->union(target)'
 Relationship.relatedElement = derivedunion("relatedElement", Element)
 Relationship.target = association("target", Element)
 Relationship.source = association("source", Element)
@@ -559,33 +591,53 @@ OwningMembership.ownedMemberElement = redefine(OwningMembership, "ownedMemberEle
 FeatureMembership.owningType = redefine(FeatureMembership, "owningType", Type, Membership.membershipOwningNamespace, opposite="ownedFeatureMembership")
 FeatureMembership.ownedMemberFeature = redefine(FeatureMembership, "ownedMemberFeature", Feature, OwningMembership.ownedMemberElement, opposite="owningFeatureMembership")
 ParameterMembership.ownedMemberParameter = redefine(ParameterMembership, "ownedMemberParameter", Feature, FeatureMembership.ownedMemberFeature)
+# derive-rule for Feature.type: name='type', type=Type, lower=0, upper='*', rule='type =      let types : OrderedSet(Types) = OrderedSet{self}->         -- Note: The closure operation automatically handles circular relationships.         closure(typingFeatures()).typing.type->asOrderedSet() in     types->reject(t1 | types->exist(t2 | t2 <> t1 and t2.specializes(t1)))'
 Feature.type = derivedunion("type", Type)
+# derive-rule for Feature.ownedRedefinition: name='ownedRedefinition', type=Redefinition, lower=0, upper='*', rule='ownedRedefinition = ownedSubsetting->selectByKind(Redefinition)'
+Feature.ownedRedefinition = derivedunion("ownedRedefinition", Redefinition)
+# derive-rule for Feature.ownedSubsetting: name='ownedSubsetting', type=Subsetting, lower=0, upper='*', rule='ownedSubsetting = ownedSpecialization->selectByKind(Subsetting)'
+Feature.ownedSubsetting = derivedunion("ownedSubsetting", Subsetting)
+# derive-rule for Feature.ownedTyping: name='ownedTyping', type=FeatureTyping, lower=0, upper='*', rule='ownedTyping = ownedGeneralization->selectByKind(FeatureTyping)'
+Feature.ownedTyping = derivedunion("ownedTyping", FeatureTyping)
+# derive-rule for Feature.featuringType: name='featuringType', type=Type, lower=0, upper='*', rule='featuringType =     let featuringTypes : OrderedSet(Type) =          featuring.type->asOrderedSet() in     if chainingFeature->isEmpty() then featuringTypes     else         featuringTypes->             union(chainingFeature->first().featuringType)->             asOrderedSet()     endif'
 Feature.featuringType = derivedunion("featuringType", Type)
+# derive-rule for Feature.ownedTypeFeaturing: name='ownedTypeFeaturing', type=TypeFeaturing, lower=0, upper='*', rule='ownedTypeFeaturing = ownedRelationship->selectByKind(TypeFeaturing)-> select(tf | tf.featureOfType = self)'
+Feature.ownedTypeFeaturing = derivedunion("ownedTypeFeaturing", TypeFeaturing)
+# derive-rule for Feature.chainingFeature: name='chainingFeature', type=Feature, lower=0, upper='*', rule='chainingFeature = ownedFeatureChaining.chainingFeature'
 Feature.chainingFeature = derivedunion("chainingFeature", Feature)
+# derive-rule for Feature.ownedFeatureInverting: name='ownedFeatureInverting', type=FeatureInverting, lower=0, upper='*', rule='ownedFeatureInverting = ownedRelationship->selectByKind(FeatureInverting)-> select(fi | fi.featureInverted = self)'
+Feature.ownedFeatureInverting = derivedunion("ownedFeatureInverting", FeatureInverting)
+# derive-rule for Feature.ownedFeatureChaining: name='ownedFeatureChaining', type=FeatureChaining, lower=0, upper='*', rule='ownedFeatureChaining = ownedRelationship->selectByKind(FeatureChaining)'
+Feature.ownedFeatureChaining = derivedunion("ownedFeatureChaining", FeatureChaining)
+# derive-rule for Feature.ownedReferenceSubsetting: name='ownedReferenceSubsetting', type=ReferenceSubsetting, lower=0, upper=1, rule='ownedReferenceSubsetting =     let referenceSubsettings : OrderedSet(ReferenceSubsetting) =         ownedSubsetting->selectByKind(ReferenceSubsetting) in     if referenceSubsettings->isEmpty() then null     else referenceSubsettings->first() endif'
+Feature.ownedReferenceSubsetting = derivedunion("ownedReferenceSubsetting", ReferenceSubsetting, upper=1)
+# derive-rule for Feature.featureTarget: name='featureTarget', type=Feature, lower=1, upper=1, rule='featureTarget = if chainingFeature->isEmpty() then self else chainingFeature->last() endif'
 Feature.featureTarget = derivedunion("featureTarget", Feature, lower=1, upper=1)
+# derive-rule for Feature.crossFeature: name='crossFeature', type=Feature, lower=0, upper=1, rule='crossFeature =     if ownedCrossSubsetting = null then null     else          let chainingFeatures: Sequence(Feature) =              ownedCrossSubsetting.crossedFeature.chainingFeature in         if chainingFeatures->size() < 2 then null         else chainingFeatures->at(2)     endif'
 Feature.crossFeature = derivedunion("crossFeature", Feature, upper=1)
+# derive-rule for Feature.ownedCrossSubsetting: name='ownedCrossSubsetting', type=CrossSubsetting, lower=0, upper=1, rule='ownedCrossSubsetting =     let crossSubsettings: Sequence(CrossSubsetting) =          ownedSubsetting->selectByKind(CrossSubsetting) in     if crossSubsettings->isEmpty() then null     else crossSubsettings->first()     endif'
+Feature.ownedCrossSubsetting = derivedunion("ownedCrossSubsetting", CrossSubsetting, upper=1)
 Feature.owningType = subset("owningType", Type, 0, 1, None, Feature.featuringType, Element.owningNamespace)
-Feature.ownedSubsetting = subset("ownedSubsetting", Subsetting, 0, '*', None, Type.ownedSpecialization)
 Feature.owningFeatureMembership = subset("owningFeatureMembership", FeatureMembership, 0, 1, None, Element.owningMembership)
-Feature.ownedTyping = subset("ownedTyping", FeatureTyping, 0, '*', None, Type.ownedSpecialization)
-Feature.ownedTypeFeaturing = subset("ownedTypeFeaturing", TypeFeaturing, 0, '*', None, Element.ownedRelationship)
-Feature.ownedFeatureInverting = subset("ownedFeatureInverting", FeatureInverting, 0, '*', None, Element.ownedRelationship)
-Feature.ownedFeatureChaining = subset("ownedFeatureChaining", FeatureChaining, 0, '*', None, Element.ownedRelationship)
-Feature.ownedRedefinition = subset("ownedRedefinition", Redefinition, 0, '*', None, Feature.ownedSubsetting)
 Feature.endOwningType = subset("endOwningType", Type, 0, 1, None, Feature.owningType)
-Feature.ownedReferenceSubsetting = subset("ownedReferenceSubsetting", ReferenceSubsetting, 0, 1, None, Feature.ownedSubsetting)
-Feature.ownedCrossSubsetting = subset("ownedCrossSubsetting", CrossSubsetting, 0, 1, None, Feature.ownedSubsetting)
+# derive-rule for Step.behavior: name='behavior', type=Behavior, lower=0, upper='*', rule='behavior = type->selectByKind(Behavior)'
+Step.behavior = derivedunion("behavior", Behavior)
 Step.parameter = redefine(Step, "parameter", Feature, Type.directedFeature)
-Step.behavior = subset("behavior", Behavior, 0, '*', None, Feature.type)
+# derive-rule for Expression.result: name='result', type=Feature, lower=1, upper=1, rule='result =     let resultParams : Sequence(Feature) =         featureMemberships->             selectByKind(ReturnParameterMembership).             ownedMemberParameter in     if resultParams->notEmpty() then resultParams->first()     else null     endif'
+Expression.result = derivedunion("result", Feature, lower=1, upper=1)
 Expression.function = redefine(Expression, "function", Function, Step.behavior)
-Expression.result = subset("result", Feature, 1, 1, None, Type.output, Step.parameter)
 InstantiationExpression.argument = derivedunion("argument", Expression)
-InstantiationExpression.instantiatedType = subset("instantiatedType", Type, 1, 1, None, Namespace.member)
-FeatureChainExpression.targetFeature = subset("targetFeature", Feature, 1, 1, None, Namespace.member)
-MetadataAccessExpression.referencedElement = subset("referencedElement", Element, 1, 1, None, Namespace.member)
-FeatureReferenceExpression.referent = subset("referent", Feature, 1, 1, None, Namespace.member)
+# derive-rule for InstantiationExpression.instantiatedType: name='instantiatedType', type=Type, lower=1, upper=1, rule='instantiatedType = instantiatedType()'
+InstantiationExpression.instantiatedType = derivedunion("instantiatedType", Type, lower=1, upper=1)
+# derive-rule for FeatureChainExpression.targetFeature: name='targetFeature', type=Feature, lower=1, upper=1, rule='targetFeature =     let nonParameterMemberships : Sequence(Membership) = ownedMembership->         reject(oclIsKindOf(ParameterMembership)) in     if nonParameterMemberships->isEmpty() or        not nonParameterMemberships->first().memberElement.oclIsKindOf(Feature)     then null     else nonParameterMemberships->first().memberElement.oclAsType(Feature)     endif'
+FeatureChainExpression.targetFeature = derivedunion("targetFeature", Feature, lower=1, upper=1)
+# derive-rule for MetadataAccessExpression.referencedElement: name='referencedElement', type=Element, lower=1, upper=1, rule='referencedElement =     let elements : Sequence(Element) = ownedMembership->         reject(oclIsKindOf(FeatureMembership)).memberElement in     if elements->isEmpty() then null     else elements->first()     endif'
+MetadataAccessExpression.referencedElement = derivedunion("referencedElement", Element, lower=1, upper=1)
+# derive-rule for FeatureReferenceExpression.referent: name='referent', type=Feature, lower=1, upper=1, rule='referent =     let nonParameterMemberships : Sequence(Membership) = ownedMembership->         reject(oclIsKindOf(ParameterMembership)) in     if nonParameterMemberships->isEmpty() or        not nonParameterMemberships->first().memberElement.oclIsKindOf(Feature)     then null     else nonParameterMemberships->first().memberElement.oclAsType(Feature)     endif'
+FeatureReferenceExpression.referent = derivedunion("referent", Feature, lower=1, upper=1)
+# derive-rule for Function.result: name='result', type=Feature, lower=1, upper=1, rule='result =     let resultParams : Sequence(Feature) =         featureMemberships->             selectByKind(ReturnParameterMembership).             ownedMemberParameter in     if resultParams->notEmpty() then resultParams->first()     else null     endif'
+Function.result = derivedunion("result", Feature, lower=1, upper=1)
 Function.expression = subset("expression", Expression, 0, '*', None, Behavior.step)
-Function.result = subset("result", Feature, 1, 1, None, Type.output, Behavior.parameter)
 ResultExpressionMembership.ownedResultExpression = redefine(ResultExpressionMembership, "ownedResultExpression", Expression, FeatureMembership.ownedMemberFeature)
 BooleanExpression.predicate = redefine(BooleanExpression, "predicate", Predicate, Expression.function)
 Connector.defaultFeaturingType = derivedunion("defaultFeaturingType", Type, upper=1)
@@ -594,12 +646,17 @@ Connector.association = redefine(Connector, "association", Association, Feature.
 Connector.connectorEnd = redefine(Connector, "connectorEnd", Feature, Type.endFeature)
 Connector.sourceFeature = redefine(Connector, "sourceFeature", Feature, Relationship.source)
 Connector.targetFeature = redefine(Connector, "targetFeature", Feature, Relationship.target)
+# derive-rule for Flow.payloadType: name='payloadType', type=Classifier, lower=0, upper='*', rule='payloadType = if payloadFeature = null then Sequence{} else payloadFeature.type endif'
 Flow.payloadType = derivedunion("payloadType", Classifier)
+# derive-rule for Flow.targetInputFeature: name='targetInputFeature', type=Feature, lower=0, upper=1, rule='targetInputFeature =     if connectorEnd->size() < 2 or          connectorEnd->at(2).ownedFeature->isEmpty()     then null     else connectorEnd->at(2).ownedFeature->first()     endif'
 Flow.targetInputFeature = derivedunion("targetInputFeature", Feature, upper=1)
+# derive-rule for Flow.sourceOutputFeature: name='sourceOutputFeature', type=Feature, lower=0, upper=1, rule='sourceOutputFeature =     if connectorEnd->isEmpty() or          connectorEnd.ownedFeature->isEmpty()     then null     else connectorEnd.ownedFeature->first()     endif'
 Flow.sourceOutputFeature = derivedunion("sourceOutputFeature", Feature, upper=1)
+# derive-rule for Flow.flowEnd: name='flowEnd', type=FlowEnd, lower=0, upper=2, rule='flowEnd = connectorEnd->selectByKind(FlowEnd)'
+Flow.flowEnd = derivedunion("flowEnd", FlowEnd, upper=2)
+# derive-rule for Flow.payloadFeature: name='payloadFeature', type=PayloadFeature, lower=0, upper=1, rule='payloadFeature =     let payloadFeatures : Sequence(PayloadFeature) =         ownedFeature->selectByKind(PayloadFeature) in     if payloadFeatures->isEmpty() then null     else payloadFeatures->first()     endif'
+Flow.payloadFeature = derivedunion("payloadFeature", PayloadFeature, upper=1)
 Flow.interaction = redefine(Flow, "interaction", Interaction, Connector.association)
-Flow.flowEnd = subset("flowEnd", FlowEnd, 0, 2, None, Connector.connectorEnd)
-Flow.payloadFeature = subset("payloadFeature", PayloadFeature, 0, 1, None, Type.ownedFeature)
 Association.relatedType = redefine(Association, "relatedType", Type, Relationship.relatedElement)
 Association.sourceType = redefine(Association, "sourceType", Type, Relationship.source)
 Association.targetType = redefine(Association, "targetType", Type, Relationship.target)
@@ -607,19 +664,26 @@ Association.associationEnd = redefine(Association, "associationEnd", Feature, Ty
 FeatureValue.value = redefine(FeatureValue, "value", Expression, OwningMembership.ownedMemberElement)
 FeatureValue.featureWithValue = subset("featureWithValue", Feature, 1, 1, None, Membership.membershipOwningNamespace)
 ElementFilterMembership.condition = redefine(ElementFilterMembership, "condition", Expression, OwningMembership.ownedMemberElement)
-Package.filterCondition = subset("filterCondition", Expression, 0, '*', None, Namespace.ownedMember)
-MultiplicityRange.bound = subset("bound", Expression, 1, 2, None, Namespace.ownedMember)
-MultiplicityRange.lowerBound = subset("lowerBound", Expression, 0, 1, None, MultiplicityRange.bound)
-MultiplicityRange.upperBound = subset("upperBound", Expression, 1, 1, None, MultiplicityRange.bound)
+# derive-rule for Package.filterCondition: name='filterCondition', type=Expression, lower=0, upper='*', rule='filterCondition = ownedMembership-> selectByKind(ElementFilterMembership).condition'
+Package.filterCondition = derivedunion("filterCondition", Expression)
+# derive-rule for MultiplicityRange.lowerBound: name='lowerBound', type=Expression, lower=0, upper=1, rule='lowerBound =     let ownedExpressions : Sequence(Expression) =         ownedMember->selectByKind(Expression) in     if ownedExpressions->size() < 2 then null     else ownedExpressions->first()     endif'
+MultiplicityRange.lowerBound = derivedunion("lowerBound", Expression, upper=1)
+# derive-rule for MultiplicityRange.upperBound: name='upperBound', type=Expression, lower=1, upper=1, rule='upperBound =     let ownedExpressions : Sequence(Expression) =         ownedMember->selectByKind(Expression) in     if ownedExpressions->isEmpty() then null     else if ownedExpressions->size() = 1 then ownedExpressions->at(1)     else ownedExpressions->at(2)     endif endif'
+MultiplicityRange.upperBound = derivedunion("upperBound", Expression, lower=1, upper=1)
+# derive-rule for MultiplicityRange.bound: name='bound', type=Expression, lower=1, upper=2, rule='bound =     if upperBound = null then Sequence{}     else if lowerBound = null then Sequence{upperBound}     else Sequence{lowerBound, upperBound}     endif endif'
+MultiplicityRange.bound = derivedunion("bound", Expression, lower=1, upper=2)
 # 32: override AnnotatingElement.annotatedElement: derived[Element]
 
 AnnotatingElement.annotatedElement = derived("ownedElement", Element, 0, "*",
     lambda e: e.annotation and e.annotation[:].annotatedElement)
 
+# derive-rule for AnnotatingElement.ownedAnnotatingRelationship: name='ownedAnnotatingRelationship', type=Annotation, lower=0, upper='*', rule='ownedAnnotatingRelationship = ownedRelationship->     selectByKind(Annotation)->     select(a | a.annotatedElement <> self)'
+AnnotatingElement.ownedAnnotatingRelationship = derivedunion("ownedAnnotatingRelationship", Annotation)
+# derive-rule for AnnotatingElement.annotation: name='annotation', type=Annotation, lower=0, upper='*', rule='annotation =      if owningAnnotatingRelationship = null then ownedAnnotatingRelationship     else owningAnnotatingRelationship->prepend(owningAnnotatingRelationship)     endif'
 AnnotatingElement.annotation = derivedunion("annotation", Annotation)
-AnnotatingElement.ownedAnnotatingRelationship = subset("ownedAnnotatingRelationship", Annotation, 0, '*', None, AnnotatingElement.annotation, Element.ownedRelationship)
 AnnotatingElement.owningAnnotatingRelationship = subset("owningAnnotatingRelationship", Annotation, 0, 1, None, Element.owningRelationship, AnnotatingElement.annotation)
-MetadataFeature.metaclass = subset("metaclass", Metaclass, 0, 1, None, Feature.type)
+# derive-rule for MetadataFeature.metaclass: name='metaclass', type=Metaclass, lower=0, upper=1, rule='metaclass =      let metaclassTypes : Sequence(Type) = type->selectByKind(Metaclass) in     if metaclassTypes->isEmpty() then null     else metaClassTypes->first()     endif'
+MetadataFeature.metaclass = derivedunion("metaclass", Metaclass, upper=1)
 Disjoining.typeDisjoined = redefine(Disjoining, "typeDisjoined", Type, Relationship.source)
 Disjoining.disjoiningType = redefine(Disjoining, "disjoiningType", Type, Relationship.target)
 Disjoining.owningType = subset("owningType", Type, 0, 1, None, Relationship.owningRelatedElement, Disjoining.typeDisjoined)
@@ -663,11 +727,12 @@ Dependency.client = redefine(Dependency, "client", Element, Relationship.source)
 Dependency.supplier = redefine(Dependency, "supplier", Element, Relationship.target)
 TextualRepresentation.representedElement = redefine(TextualRepresentation, "representedElement", Element, AnnotatingElement.annotatedElement, opposite="textualRepresentation")
 Documentation.documentedElement = redefine(Documentation, "documentedElement", Element, AnnotatingElement.annotatedElement, opposite="documentation")
+# derive-rule for Annotation.ownedAnnotatingElement: name='ownedAnnotatingElement', type=AnnotatingElement, lower=0, upper=1, rule='ownedAnnotatingElement =     let ownedAnnotatingElements : Sequence(AnnotatingElement) =          ownedRelatedElement->selectByKind(AnnotatingElement) in     if ownedAnnotatingElements->isEmpty() then null     else ownedAnnotatingElements->first()     endif'
+Annotation.ownedAnnotatingElement = derivedunion("ownedAnnotatingElement", AnnotatingElement, upper=1)
 Annotation.annotatingElement = redefine(Annotation, "annotatingElement", AnnotatingElement, Relationship.source, opposite="annotation")
 Annotation.annotatedElement = redefine(Annotation, "annotatedElement", Element, Relationship.target)
 Annotation.owningAnnotatedElement = subset("owningAnnotatedElement", Element, 0, 1, None, Annotation.annotatedElement, Relationship.owningRelatedElement)
 Annotation.owningAnnotatingElement = subset("owningAnnotatingElement", AnnotatingElement, 0, 1, None, Annotation.annotatingElement, Relationship.owningRelatedElement)
-Annotation.ownedAnnotatingElement = subset("ownedAnnotatingElement", AnnotatingElement, 0, 1, None, Annotation.annotatingElement, Relationship.ownedRelatedElement)
 Import.importedElement = derivedunion("importedElement", Element, lower=1, upper=1)
 Import.importOwningNamespace = redefine(Import, "importOwningNamespace", Namespace, Relationship.source, opposite="ownedImport")
 NamespaceImport.importedNamespace = redefine(NamespaceImport, "importedNamespace", Namespace, Relationship.target)
