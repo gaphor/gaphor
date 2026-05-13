@@ -19,8 +19,6 @@ from gaphor.core.modeling.properties import (
 )
 
 
-
-
 from gaphor.core.modeling.base import Base as _Base
 
 
@@ -44,9 +42,9 @@ class Element(_Base):
     elementId: _attribute[str] = _attribute("elementId", str)
     isImpliedIncluded: _attribute[bool] = _attribute("isImpliedIncluded", bool, default=False)
     ownedAnnotation: relation_many[Annotation]
-    ownedElement: derived[Element]
+    ownedElement: relation_many[Element]
     ownedRelationship: relation_many[Relationship]
-    owner: derived[Element]
+    owner: relation_one[Element]
     owningMembership: relation_one[OwningMembership]
     owningNamespace: relation_one[Namespace]
     owningRelationship: relation_one[Relationship]
@@ -351,7 +349,7 @@ class Metaclass(Structure):
 
 
 class AnnotatingElement(Element):
-    annotatedElement: derived[Element]
+    annotatedElement: relation_many[Element]
     annotation: relation_many[Annotation]
     ownedAnnotatingRelationship: relation_many[Annotation]
     owningAnnotatingRelationship: relation_one[Annotation]
@@ -505,16 +503,10 @@ Element.owningRelationship = association("owningRelationship", Relationship, upp
 # derive-rule for Element.owningNamespace: name='owningNamespace', type=Namespace, lower=0, upper=1, rule='owningNamespace = if owningMembership = null then null else owningMembership.membershipOwningNamespace endif'
 Element.owningNamespace = derivedunion("owningNamespace", Namespace, upper=1)
 Element.ownedRelationship = association("ownedRelationship", Relationship, opposite="owningRelatedElement")
-# 17: override Element.owner: derived[Element]
-
-Element.owner = derived("owner", Element, 0, 1,
-    lambda e: e.owningRelationship and [e.owningRelationship.owningRelatedElement] or [None])
-
-# 22: override Element.ownedElement: derived[Element]
-
-Element.ownedElement = derived("ownedElement", Element, 0, "*",
-    lambda e: e.ownedRelationship and e.ownedRelationship[:].ownedRelatedElement)
-
+# derive-rule for Element.owner: name='owner', type=Element, lower=0, upper=1, rule='owner = owningRelationship.owningRelatedElement'
+Element.owner = derivedunion("owner", Element, upper=1)
+# derive-rule for Element.ownedElement: name='ownedElement', type=Element, lower=0, upper='*', rule='ownedElement = ownedRelationship.ownedRelatedElement'
+Element.ownedElement = derivedunion("ownedElement", Element)
 # derive-rule for Element.documentation: name='documentation', type=Documentation, lower=0, upper='*', rule='documentation = ownedElement->selectByKind(Documentation)'
 Element.documentation = derivedunion("documentation", Documentation)
 # derive-rule for Element.ownedAnnotation: name='ownedAnnotation', type=Annotation, lower=0, upper='*', rule='ownedAnnotation = ownedRelationship-> selectByKind(Annotation)-> select(a | a.annotatedElement = self)'
@@ -672,11 +664,8 @@ MultiplicityRange.lowerBound = derivedunion("lowerBound", Expression, upper=1)
 MultiplicityRange.upperBound = derivedunion("upperBound", Expression, lower=1, upper=1)
 # derive-rule for MultiplicityRange.bound: name='bound', type=Expression, lower=1, upper=2, rule='bound =     if upperBound = null then Sequence{}     else if lowerBound = null then Sequence{upperBound}     else Sequence{lowerBound, upperBound}     endif endif'
 MultiplicityRange.bound = derivedunion("bound", Expression, lower=1, upper=2)
-# 32: override AnnotatingElement.annotatedElement: derived[Element]
-
-AnnotatingElement.annotatedElement = derived("ownedElement", Element, 0, "*",
-    lambda e: e.annotation and e.annotation[:].annotatedElement)
-
+# derive-rule for AnnotatingElement.annotatedElement: name='annotatedElement', type=Element, lower=1, upper='*', rule='annotatedElement = if annotation->notEmpty() then annotation.annotatedElement else Sequence{owningNamespace} endif'
+AnnotatingElement.annotatedElement = derivedunion("annotatedElement", Element, lower=1)
 # derive-rule for AnnotatingElement.ownedAnnotatingRelationship: name='ownedAnnotatingRelationship', type=Annotation, lower=0, upper='*', rule='ownedAnnotatingRelationship = ownedRelationship->     selectByKind(Annotation)->     select(a | a.annotatedElement <> self)'
 AnnotatingElement.ownedAnnotatingRelationship = derivedunion("ownedAnnotatingRelationship", Annotation)
 # derive-rule for AnnotatingElement.annotation: name='annotation', type=Annotation, lower=0, upper='*', rule='annotation =      if owningAnnotatingRelationship = null then ownedAnnotatingRelationship     else owningAnnotatingRelationship->prepend(owningAnnotatingRelationship)     endif'
