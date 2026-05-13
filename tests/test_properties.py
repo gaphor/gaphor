@@ -8,7 +8,7 @@ import gaphor.RAAML.diagramitems
 import gaphor.SysML.diagramitems
 import gaphor.UML.diagramitems
 from gaphor.core.modeling import Base
-from gaphor.core.modeling.properties import umlproperty
+from gaphor.core.modeling.properties import modelproperty
 
 
 def presentations(module):
@@ -44,7 +44,7 @@ def test_extract_presentations():
 def test_property_name_matches_assigned_name(element_type):
     for name in dir(element_type):
         prop = getattr(element_type, name)
-        if isinstance(prop, umlproperty):
+        if isinstance(prop, modelproperty):
             assert name == prop.name, (
                 f"No matching property name for {element_type}.{name}"
             )

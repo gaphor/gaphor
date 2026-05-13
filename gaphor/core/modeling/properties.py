@@ -115,7 +115,7 @@ relation = relation_one | relation_many
 T = TypeVar("T")
 
 
-class umlproperty:
+class modelproperty:
     """Superclass for an attribute, enumeration, and association.
 
     The subclasses should define a ``name`` attribute that contains the name
@@ -201,7 +201,7 @@ class subsettable:
     def propagate(self, event): ...
 
 
-class attribute[T](umlproperty):
+class attribute[T](modelproperty):
     """Attribute.
 
     Element.attr = attribute('attr', str, '')
@@ -277,7 +277,7 @@ class attribute[T](umlproperty):
             self.handle(AttributeUpdated(obj, self, old, self.default))
 
 
-class enumeration(umlproperty):
+class enumeration(modelproperty):
     """Enumeration.
 
       Element.enum = enumeration('enum', EnumKind, 'one')
@@ -326,7 +326,7 @@ class enumeration(umlproperty):
             self.handle(AttributeUpdated(obj, self, old, self.default))
 
 
-class association(subsettable, umlproperty):
+class association(subsettable, modelproperty):
     """Association, both uni- and bi-directional.
 
     Element.assoc = association('assoc', Element, opposite='other')
@@ -534,7 +534,7 @@ class association(subsettable, umlproperty):
             if not self.stub:
                 self.stub = associationstub(self)
                 # Do not let property start with underscore, or it will not be found
-                # as an umlproperty.
+                # as an modelproperty.
                 setattr(self.type, f"GAPHOR__associationstub__{id(self):x}", self.stub)
             self.stub.set(value, obj)
 
@@ -581,7 +581,9 @@ class association(subsettable, umlproperty):
                 if do_notify:
                     self.handle(AssociationDeleted(obj, self, value, index))
                 for subset in self.subsets:
-                    col: collection[umlproperty] | umlproperty | None = subset.get(obj)
+                    col: collection[modelproperty] | modelproperty | None = subset.get(
+                        obj
+                    )
                     if isinstance(col, collection) and value in col:
                         subset.delete(obj, value)
 
@@ -645,12 +647,12 @@ class AssociationStubError(Exception):
     pass
 
 
-class associationstub(umlproperty):
+class associationstub(modelproperty):
     """An association stub is an internal thingy that ensures all associations
     are always bidirectional.
 
     This helps the application when one end of the association is
-    unlinked. On unlink() of an element all `umlproperty`'s are iterated
+    unlinked. On unlink() of an element all `modelproperty`'s are iterated
     and called by their unlink() method.
     """
 
@@ -704,7 +706,7 @@ class unioncache:
     version: int
 
 
-class derived[T](subsettable, umlproperty):
+class derived[T](subsettable, modelproperty):
     """Base class for derived properties, both derived unions and custom
     properties.
 
@@ -927,7 +929,7 @@ class derivedunion(derived[T]):
             log.error(f"Don't know how to handle event {event} for derived union")
 
 
-class redefine(umlproperty):
+class redefine(modelproperty):
     """Redefined association.
 
       Element.redefine = redefine(Element, 'redefine', Class, Element.assoc)
