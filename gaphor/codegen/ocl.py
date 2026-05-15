@@ -693,7 +693,69 @@ def _head_is_multi_valued(path: list[str], owning_class: UML.Class) -> bool:
     return False
 
 
-# TODO: should also return a set of involved UML.Property's, so we can add notifications
+def _collect_dependencies(node: ASTNode, path=None):  # noqa: C901
+    """Recursively yield property access paths from an OCL AST node."""
+    if path is None:
+        path = []
+    match node:
+        case ast.Attribute(value=val, attr=attr):
+            yield from _collect_dependencies(val, (path or []) + [attr])
+        case ast.Name(id=name):
+            if path:
+                yield ".".join([name] + path)
+            else:
+                yield name
+        case OCLNavigation(target=target, operator=op, property_name=prop):
+            if op == "->":
+                yield from _collect_dependencies(target)
+            else:
+                yield from _collect_dependencies(target, (path or []) + [prop])
+        case OCLLetIn(variable=_, var_type=_, init=init, body=body):
+            yield from _collect_dependencies(init, path)
+            yield from _collect_dependencies(body, path)
+        case OCLCollection(elements=elements):
+            for el in elements:
+                yield from _collect_dependencies(el, path)
+        case OCLImplies(left=left, right=right):
+            yield from _collect_dependencies(left, path)
+            yield from _collect_dependencies(right, path)
+        case ast.BoolOp(values=vals):
+            for v in vals:
+                yield from _collect_dependencies(v, path)
+        case ast.BinOp(left=l, right=r):
+            yield from _collect_dependencies(l, path)
+            yield from _collect_dependencies(r, path)
+        case ast.Compare(left=l, comparators=comps):
+            yield from _collect_dependencies(l, path)
+            for c in comps:
+                yield from _collect_dependencies(c, path)
+        case ast.IfExp(test=t, body=b, orelse=o):
+            yield from _collect_dependencies(t, path)
+            yield from _collect_dependencies(b, path)
+            yield from _collect_dependencies(o, path)
+        case ast.Subscript(value=v, slice=s, ctx=_):
+            yield from _collect_dependencies(v, path)
+            yield from _collect_dependencies(s, path)
+        case _:
+            pass
+
+
+def extract_dependencies_from_ocl(expression: str) -> set[str]:
+    """Extract property names/chains accessed in the OCL expression."""
+    try:
+        node = parse_to_ast(expression)
+        if (
+            isinstance(node, ast.Compare)
+            and len(node.ops) == 1
+            and isinstance(node.ops[0], ast.Eq)
+            and len(node.comparators) == 1
+        ):
+            return set(_collect_dependencies(node.comparators[0]))
+        return set(_collect_dependencies(node))
+    except Exception:
+        return set()
+
+
 def ocl_derive_to_python(expression: str, owning_class: UML.Class) -> str:
     node = lower_to_python_ast(parse_to_ast(expression))
 

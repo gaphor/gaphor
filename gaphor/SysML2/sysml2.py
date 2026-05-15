@@ -5,6 +5,7 @@
 from __future__ import annotations
 
 import enum
+import functools
 
 from gaphor.core.modeling.properties import (
     association,
@@ -12,6 +13,7 @@ from gaphor.core.modeling.properties import (
     derived,
     derivedunion,
     enumeration as _enumeration,
+    propagate_derived,
     redefine,
     relation_many,
     relation_one,
@@ -87,6 +89,12 @@ class TriggerKind(enum.StrEnum):
 
 
 class Definition(_Classifier):
+
+    def __init__(self, id=None, model=None):
+        super().__init__(id, model)
+        w = self.watcher()
+        w.watch("variantMembership.ownedVariantUsage", handler=functools.partial(propagate_derived, Definition.variant))
+
     directedUsage: relation_many[Usage]
     isVariation: _attribute[bool] = _attribute("isVariation", bool)
     ownedAction: relation_many[ActionUsage]
@@ -134,6 +142,12 @@ class FlowDefinition(ActionDefinition, _Interaction):
 
 
 class Usage(_Feature):
+
+    def __init__(self, id=None, model=None):
+        super().__init__(id, model)
+        w = self.watcher()
+        w.watch("variantMembership.ownedVariantUsage", handler=functools.partial(propagate_derived, Usage.variant))
+
     definition: relation_many[_Classifier]
     directedUsage: relation_many[Usage]
     isVariation: _attribute[bool] = _attribute("isVariation", bool)
@@ -216,6 +230,11 @@ class ConstraintUsage(OccurrenceUsage, _BooleanExpression):
 
 
 class RequirementUsage(ConstraintUsage):
+
+    def __init__(self, id=None, model=None):
+        super().__init__(id, model)
+        w = self.watcher()
+
     actorParameter: relation_many[PartUsage]
     assumedConstraint: relation_many[ConstraintUsage]
     framedConcern: relation_many[ConcernUsage]
@@ -259,6 +278,11 @@ class ConstraintDefinition(OccurrenceDefinition, _Predicate):
 
 
 class RequirementDefinition(ConstraintDefinition):
+
+    def __init__(self, id=None, model=None):
+        super().__init__(id, model)
+        w = self.watcher()
+
     actorParameter: relation_many[PartUsage]
     assumedConstraint: relation_many[ConstraintUsage]
     framedConcern: relation_many[ConcernUsage]
@@ -273,6 +297,12 @@ class ConcernDefinition(RequirementDefinition):
 
 
 class AssertConstraintUsage(ConstraintUsage, _Invariant):
+
+    def __init__(self, id=None, model=None):
+        super().__init__(id, model)
+        w = self.watcher()
+        w.watch("self", handler=functools.partial(propagate_derived, AssertConstraintUsage.assertedConstraint))
+
     assertedConstraint: relation_one[ConstraintUsage]
 
 
@@ -328,6 +358,12 @@ class TransitionFeatureMembership(_FeatureMembership):
 
 
 class EventOccurrenceUsage(OccurrenceUsage):
+
+    def __init__(self, id=None, model=None):
+        super().__init__(id, model)
+        w = self.watcher()
+        w.watch("self", handler=functools.partial(propagate_derived, EventOccurrenceUsage.eventOccurrence))
+
     eventOccurrence: relation_one[OccurrenceUsage]
 
 
@@ -361,6 +397,12 @@ class StateDefinition(ActionDefinition):
 
 
 class TransitionUsage(ActionUsage):
+
+    def __init__(self, id=None, model=None):
+        super().__init__(id, model)
+        w = self.watcher()
+        w.watch("succession.targetFeature", handler=functools.partial(propagate_derived, TransitionUsage.target))
+
     effectAction: relation_many[ActionUsage]
     guardExpression: relation_many[_Expression]
     source: relation_one[ActionUsage]
@@ -488,6 +530,12 @@ class ConjugatedPortDefinition(PortDefinition):
 
 
 class ConjugatedPortTyping(_FeatureTyping):
+
+    def __init__(self, id=None, model=None):
+        super().__init__(id, model)
+        w = self.watcher()
+        w.watch("conjugatedPortDefinition.originalPortDefinition", handler=functools.partial(propagate_derived, ConjugatedPortTyping.portDefinition))
+
     conjugatedPortDefinition: relation_one[ConjugatedPortDefinition]
     portDefinition: relation_one[PortDefinition]
 
@@ -520,6 +568,12 @@ class RenderingUsage(PartUsage):
 
 
 class ViewpointDefinition(RequirementDefinition):
+
+    def __init__(self, id=None, model=None):
+        super().__init__(id, model)
+        w = self.watcher()
+        w.watch("framedConcern.featureMemberhsip", handler=functools.partial(propagate_derived, ViewpointDefinition.viewpointStakeholder))
+
     viewpointStakeholder: relation_many[PartUsage]
 
 
@@ -541,6 +595,12 @@ class ViewRenderingMembership(_FeatureMembership):
 
 
 class ViewpointUsage(RequirementUsage):
+
+    def __init__(self, id=None, model=None):
+        super().__init__(id, model)
+        w = self.watcher()
+        w.watch("framedConcern.featureMemberhsip", handler=functools.partial(propagate_derived, ViewpointUsage.viewpointStakeholder))
+
     viewpointDefinition: relation_one[ViewpointDefinition]
     viewpointStakeholder: relation_many[PartUsage]
 
@@ -585,10 +645,24 @@ class RequirementVerificationMembership(RequirementConstraintMembership):
 
 
 class VerificationCaseDefinition(CaseDefinition):
+
+    def __init__(self, id=None, model=None):
+        super().__init__(id, model)
+        w = self.watcher()
+        w.watch("objectiveRequirement", handler=functools.partial(propagate_derived, VerificationCaseDefinition.verifiedRequirement))
+        w.watch("objectiveRequirement.featureMembership", handler=functools.partial(propagate_derived, VerificationCaseDefinition.verifiedRequirement))
+
     verifiedRequirement: relation_many[RequirementUsage]
 
 
 class VerificationCaseUsage(CaseUsage):
+
+    def __init__(self, id=None, model=None):
+        super().__init__(id, model)
+        w = self.watcher()
+        w.watch("objectiveRequirement", handler=functools.partial(propagate_derived, VerificationCaseUsage.verifiedRequirement))
+        w.watch("objectiveRequirement.featureMembership", handler=functools.partial(propagate_derived, VerificationCaseUsage.verifiedRequirement))
+
     verificationCaseDefinition: relation_one[VerificationCaseDefinition]
     verifiedRequirement: relation_many[RequirementUsage]
 

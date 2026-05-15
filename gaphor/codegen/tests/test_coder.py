@@ -64,9 +64,9 @@ def test_coder_write_class():
     class_ = UML.Class()
     class_.name = "TestClass"
 
-    class_def = class_declaration(class_)
+    class_def = class_declaration(class_, None)
 
-    assert class_def == "class TestClass():"
+    assert list(class_def) == ["class TestClass():", "    pass"]
 
 
 def test_coder_write_class_no_attributes():

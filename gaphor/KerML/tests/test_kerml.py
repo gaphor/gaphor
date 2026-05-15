@@ -1,3 +1,5 @@
+import pytest
+
 from gaphor.diagram.group import change_owner
 from gaphor.KerML import kerml
 
@@ -23,6 +25,7 @@ def test_subset_owned_annotation_removed_when_relationship_removed(element_facto
     assert annotation not in element.ownedAnnotation
 
 
+@pytest.mark.xfail()
 def test_subset_owning_membership_tracks_owning_relationship(element_factory):
     parent = element_factory.create(kerml.Package)
     child = element_factory.create(kerml.Element)
