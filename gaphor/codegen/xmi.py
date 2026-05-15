@@ -34,6 +34,9 @@ class xmlns:
 
 def create_element(elem: etree.Element, element_factory: ElementFactory):
     for child in elem:
+        if f"{xmlns.xmi}idref" in child.attrib:
+            continue
+
         match child.tag:
             case "ownedAttribute" | "ownedEnd" | "ownedLiteral" | "ownedParameter":
                 element = create(child, element_factory)
@@ -42,18 +45,19 @@ def create_element(elem: etree.Element, element_factory: ElementFactory):
                 if "isOrdered" in child.attrib:
                     element.isOrdered = child.attrib["isOrdered"] == "true"
                 yield element
-            case "packagedElement" | "ownedOperation":
+            case "packagedElement" | "ownedOperation" | "ownedRule" | "specification":
                 element = create(child, element_factory)
                 yield element
                 for child_element in create_element(child, element_factory):
-                    assert group(element, child_element)
+                    assert group(element, child_element), (
+                        f"Can't group {element}/{child_element}"
+                    )
             case (
                 "bodyCondition"
                 | "generalization"
                 | "memberEnd"
                 | "navigableOwnedEnd"
                 | "ownedComment"
-                | "ownedRule"
                 | "packageImport"
                 | "precondition"
                 | "redefinedOperation"
@@ -65,6 +69,7 @@ def create_element(elem: etree.Element, element_factory: ElementFactory):
 
 def create(elem: etree.Element, element_factory: ElementFactory) -> UML.Element:
     id = elem.attrib[f"{xmlns.xmi}id"]
+
     type_name = elem.attrib[f"{xmlns.xmi}type"]
     assert type_name.startswith("uml:")
     type = modeling_language.lookup_element(type_name.replace("uml:", ""))
@@ -73,6 +78,30 @@ def create(elem: etree.Element, element_factory: ElementFactory) -> UML.Element:
     if "name" in elem.attrib:
         element.name = elem.attrib["name"]
     return element
+
+
+def link_constraint(
+    elem: etree.Element, element_factory: ElementFactory
+) -> UML.Constraint:
+    constraint = create(elem, element_factory)
+    assert isinstance(constraint, UML.Constraint)
+
+    for child in elem:
+        match child.tag:
+            case "constrainedElement" | "ownedComment":
+                pass
+            case "specification":
+                specification = create(child, element_factory)
+                assert isinstance(specification, UML.OpaqueExpression)
+                if "body" in child.attrib:
+                    specification.body = child.attrib["body"]
+                if "language" in child.attrib:
+                    specification.language = child.attrib["language"]
+                constraint.specification = specification
+            case unsupported:
+                raise ValueError(f"Unhandled tag {unsupported}")
+
+    return constraint
 
 
 # These functions relies on the URL and id consistency of KerML identifiers.
@@ -152,9 +181,12 @@ def link_element(elem: etree.Element, element_factory: ElementFactory):
                     link_feature(child, element_factory)
             case "ownedEnd" | "ownedOperation" | "ownedParameter":
                 link_feature(child, element_factory)
+            case "ownedRule":
+                assert isinstance(element, UML.Namespace)
+                element.ownedRule = link_constraint(child, element_factory)
             case "packagedElement":
                 link_element(child, element_factory)
-            case "ownedComment" | "ownedLiteral" | "ownedRule" | "packageImport":
+            case "ownedComment" | "ownedLiteral" | "packageImport":
                 pass
             case unsupported:
                 raise ValueError(f"Unhandled tag {unsupported}")
@@ -164,7 +196,10 @@ def link_feature(elem: etree.Element, element_factory: ElementFactory):  # noqa:
     element = element_factory[elem.attrib[f"{xmlns.xmi}id"]]
     for child in elem:
         match child.tag:
-            case "bodyCondition" | "ownedComment" | "ownedRule" | "precondition":
+            case "bodyCondition":
+                assert isinstance(element, UML.Operation)
+                element.bodyCondition = link_constraint(child, element_factory)
+            case "ownedComment" | "ownedRule" | "precondition":
                 pass
             case "association":
                 element.association = element_factory[child.attrib[f"{xmlns.xmi}idref"]]
