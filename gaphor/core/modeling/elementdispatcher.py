@@ -14,7 +14,7 @@ from gaphor.core.modeling.event import (
     ElementUpdated,
     ModelReady,
 )
-from gaphor.core.modeling.properties import umlproperty
+from gaphor.core.modeling.properties import modelproperty
 
 log = logging.getLogger(__name__)
 
@@ -109,11 +109,11 @@ class ElementDispatcher(Service):
 
         # Table used to fire events:
         # (event.element, event.property): { handler: set(path, ..), ..}
-        self._handlers: dict[tuple[Base, umlproperty], dict[Handler, set]] = {}
+        self._handlers: dict[tuple[Base, modelproperty], dict[Handler, set]] = {}
 
         # Fast resolution when handlers are disconnected
         # handler: [(element, property), ..]
-        self._reverse: dict[Handler, list[tuple[Base, umlproperty]]] = {}
+        self._reverse: dict[Handler, list[tuple[Base, modelproperty]]] = {}
 
         self.event_manager.subscribe(self.on_model_loaded)
         self.event_manager.subscribe(self.on_element_change_event)
@@ -140,7 +140,7 @@ class ElementDispatcher(Service):
                     del self._handlers[key]
         del self._reverse[handler]
 
-    def _path_to_properties(self, element: Base, path: str) -> tuple[umlproperty]:
+    def _path_to_properties(self, element: Base, path: str) -> tuple[modelproperty]:
         """Given a start element and a path, return a tuple of properties
         (association, attribute, etc.) representing the path."""
         c = type(element)
@@ -166,7 +166,9 @@ class ElementDispatcher(Service):
                 c = prop.type
         return tuple(tpath)
 
-    def _add_handlers(self, element: Base, props: tuple[umlproperty], handler: Handler):
+    def _add_handlers(
+        self, element: Base, props: tuple[modelproperty], handler: Handler
+    ):
         """Provided an element and a path of properties (props), register the
         handler for each property."""
         property, remainder = props[0], props[1:]
