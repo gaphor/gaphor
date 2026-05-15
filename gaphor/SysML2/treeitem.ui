@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <template class="GtkListItem">
+    <property name="child">
+      <object class="GtkTreeExpander" id="expander">
+        <property name="indent-for-icon">true</property>
+        <binding name="list-row">
+          <lookup name="item">GtkListItem</lookup>
+        </binding>
+        <property name="child">
+          <object class="GtkBox" id="row">
+            <style>
+              <class name="row"/>
+            </style>
+            <property name="spacing">6</property>
+            <child>
+              <object class="GtkImage">
+                <binding name="icon-name">
+                  <lookup name="icon" type="gaphor+SysML2+treemodel+TreeItem">
+                    <lookup name="item">expander</lookup>
+                  </lookup>
+                </binding>
+                <binding name="visible">
+                  <lookup name="icon_visible" type="gaphor+SysML2+treemodel+TreeItem">
+                    <lookup name="item">expander</lookup>
+                  </lookup>
+                </binding>
+              </object>
+            </child>
+            <child>
+              <object class="TextField" id="text">
+                <binding name="readonly-text">
+                  <lookup name="readonly-text" type="gaphor+SysML2+treemodel+TreeItem">
+                    <lookup name="item">expander</lookup>
+                  </lookup>
+                </binding>
+                <binding name="editable-text">
+                  <lookup name="editable-text" type="gaphor+SysML2+treemodel+TreeItem">
+                    <lookup name="item">expander</lookup>
+                  </lookup>
+                </binding>
+                <binding name="attributes">
+                  <lookup name="attributes" type="gaphor+SysML2+treemodel+TreeItem">
+                    <lookup name="item">expander</lookup>
+                  </lookup>
+                </binding>
+                <binding name="editing">
+                  <lookup name="editing" type="gaphor+SysML2+treemodel+TreeItem">
+                    <lookup name="item">expander</lookup>
+                  </lookup>
+                </binding>
+                <binding name="can-edit">
+                  <lookup name="can-edit" type="gaphor+SysML2+treemodel+TreeItem">
+                    <lookup name="item">expander</lookup>
+                  </lookup>
+                </binding>
+              </object>
+            </child>
+          </object>
+        </property>
+      </object>
+    </property>
+  </template>
+</interface>

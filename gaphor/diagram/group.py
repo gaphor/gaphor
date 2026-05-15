@@ -7,6 +7,7 @@ These concepts are mostly used in the ownership module (`change_owner`)
 from __future__ import annotations
 
 import itertools
+import logging
 from collections.abc import Callable, Iterator
 from enum import Enum
 from functools import singledispatch
@@ -15,6 +16,8 @@ from typing import TypeVar
 from generic.multidispatch import FunctionDispatcher, multidispatch
 
 from gaphor.core.modeling import Base, Diagram, Presentation
+
+log = logging.getLogger(__name__)
 
 T = TypeVar("T", bound=Base)
 
@@ -76,7 +79,23 @@ Root = RootType.Root
 
 @singledispatch
 def owner(_element: Base | RootType | None) -> Base | RootType | None:
+    """Obtain an owner for the element.
+
+    The owner is either another element, Root, or None.
+    Root is used for elements that should show up in the root of the
+    hierarchy. ``None`` is used for elements that should not be part of
+    a sensible owner hierarchy.
+
+    This distinction has been made to allow the GUI (model browser) to
+    distinguish between elements that can appear at the model root (e.g. Packages),
+    versus elements that should not be shown there (comments, properties).
+    """
     return None
+
+
+@owner.register
+def _(element: Diagram):
+    return Root
 
 
 @owner.register
@@ -95,6 +114,7 @@ def _(element: Diagram):
 
 
 def no_group(parent, element) -> bool:
+    log.debug("No gouping for parent=%s, child=%s", parent, element)
     return False
 
 

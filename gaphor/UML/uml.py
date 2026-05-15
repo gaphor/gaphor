@@ -15,6 +15,7 @@ from gaphor.core.modeling.properties import (
     redefine,
     relation_many,
     relation_one,
+    subset,
 )
 
 
@@ -143,6 +144,7 @@ class DeploymentTarget(NamedElement):
 class InstanceSpecification(DeployedArtifact, DeploymentTarget, PackageableElement):
     classifier: relation_many[Classifier]
     extended: relation_many[Element]
+    instanceValue: relation_many[InstanceValue]
     slot: relation_many[Slot]
     specification: relation_one[ValueSpecification]
 
@@ -306,7 +308,7 @@ class Dependency(DirectedRelationship, PackageableElement):
 
 
 class Abstraction(Dependency):
-    mapping: _attribute[str] = _attribute("mapping", str)
+    mapping: relation_one[OpaqueExpression]
 
 
 class Realization(Abstraction):
@@ -409,6 +411,12 @@ class Interface(Classifier, ConnectableElement):
     ownedAttribute: relation_many[Property]
     ownedOperation: relation_many[Operation]
     redefinedInterface: relation_many[Interface]
+
+
+class OpaqueExpression(ValueSpecification):
+    abstraction: relation_one[Abstraction]
+    body: _attribute[str] = _attribute("body", str)
+    language: _attribute[str] = _attribute("language", str)
 
 
 class Include(DirectedRelationship, NamedElement):
@@ -1005,6 +1013,10 @@ class SequenceDiagram(InteractionDiagram):
     diagramType: _attribute[str] = _attribute("diagramType", str, default="sd")
 
 
+class InstanceValue(ValueSpecification):
+    instance: relation_one[InstanceSpecification]
+
+
 # 66: override Lifeline.parse: Callable[[Lifeline, str], None]
 # defined in umloverrides.py
 
@@ -1040,6 +1052,7 @@ InstanceSpecification.slot = association("slot", Slot, composite=True, opposite=
 InstanceSpecification.specification = association("specification", ValueSpecification, upper=1, composite=True)
 InstanceSpecification.classifier = association("classifier", Classifier, opposite="instanceSpecification")
 InstanceSpecification.extended = association("extended", Element, opposite="appliedStereotype")
+InstanceSpecification.instanceValue = association("instanceValue", InstanceValue, opposite="instance")
 Element.ownedElement.add(InstanceSpecification.slot)  # type: ignore[attr-defined]
 Element.ownedElement.add(InstanceSpecification.specification)  # type: ignore[attr-defined]
 EnumerationLiteral.enumeration = association("enumeration", Enumeration, upper=1, opposite="ownedLiteral")
@@ -1170,6 +1183,7 @@ Dependency.client = association("client", NamedElement, lower=1, opposite="clien
 Dependency.supplier = association("supplier", NamedElement, lower=1, opposite="supplierDependency")
 DirectedRelationship.source.add(Dependency.client)  # type: ignore[attr-defined]
 DirectedRelationship.target.add(Dependency.supplier)  # type: ignore[attr-defined]
+Abstraction.mapping = association("mapping", OpaqueExpression, upper=1, composite=True, opposite="abstraction")
 ObjectNode.selection = association("selection", Behavior, upper=1)
 ObjectNode.upperBound = association("upperBound", ValueSpecification, upper=1, composite=True, opposite="objectNode")
 Element.ownedElement.add(ObjectNode.upperBound)  # type: ignore[attr-defined]
@@ -1268,6 +1282,7 @@ Classifier.attribute.add(Interface.ownedAttribute)  # type: ignore[attr-defined]
 Namespace.ownedMember.add(Interface.ownedAttribute)  # type: ignore[attr-defined]
 Element.ownedElement.add(Interface.interfaceRealization)  # type: ignore[attr-defined]
 NamedElement.clientDependency.add(Interface.interfaceRealization)  # type: ignore[attr-defined]
+OpaqueExpression.abstraction = association("abstraction", Abstraction, upper=1, opposite="mapping")
 Include.addition = association("addition", UseCase, upper=1)
 Include.includingCase = association("includingCase", UseCase, upper=1, opposite="include")
 DirectedRelationship.target.add(Include.addition)  # type: ignore[attr-defined]
@@ -1648,3 +1663,4 @@ Element.ownedElement.add(ValueSpecificationAction.value)  # type: ignore[attr-de
 Comment.annotatedElement = association("annotatedElement", Element, opposite="comment")
 Diagram.element = association("element", Element, upper=1, opposite="ownedDiagram")
 Element.owner.add(Diagram.element)  # type: ignore[attr-defined]
+InstanceValue.instance = association("instance", InstanceSpecification, upper=1, opposite="instanceValue")

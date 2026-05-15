@@ -54,7 +54,14 @@ from gaphor.core.modeling.event import (
     RedefinedUpdated,
 )
 
-__all__ = ["attribute", "enumeration", "association", "derivedunion", "redefine"]
+__all__ = [
+    "attribute",
+    "enumeration",
+    "association",
+    "derivedunion",
+    "subset",
+    "redefine",
+]
 
 
 log = logging.getLogger(__name__)
@@ -127,9 +134,9 @@ class umlproperty:
     upper: Upper = 1
 
     def __init__(self, name: str):
-        self.dependent_properties: set[subsettable_umlproperty | redefine] = set()
+        self.dependent_properties: set[subsettable_property] = set()
         self.name = name
-        self._name = f"_{name}"
+        self._name = f"_{name}_{id(self)}"
 
     def __get__(self, obj, class_=None):
         return self.get(obj) if obj else self
@@ -172,8 +179,8 @@ class umlproperty:
             d.propagate(event)
 
 
-class subsettable_umlproperty(umlproperty):
-    """Base class for properties that can be subsetted"""
+class subsettable_property(umlproperty):
+    """Base class for properties that can be subsetted."""
 
     subsets: set[umlproperty]
 
@@ -323,7 +330,7 @@ class enumeration(umlproperty):
             self.handle(AttributeUpdated(obj, self, old, self.default))
 
 
-class association(subsettable_umlproperty):
+class association(subsettable_property):
     """Association, both uni- and bi-directional.
 
     Element.assoc = association('assoc', Element, opposite='other')
@@ -700,7 +707,7 @@ class unioncache:
     version: int
 
 
-class derived[T](subsettable_umlproperty):
+class derived[T](subsettable_property):
     """Base class for derived properties, both derived unions and custom
     properties.
 
@@ -922,7 +929,50 @@ class derivedunion(derived[T]):
             log.error(f"Don't know how to handle event {event} for derived union")
 
 
-class redefine(umlproperty):
+class subset(derived[T]):
+    """Derived subset.
+
+    A subset derives its values from one or more superset relations and keeps
+    only values matching ``type`` and an optional ``filter`` predicate.
+    """
+
+    def __init__(
+        self,
+        name: str,
+        type: type[T],
+        lower: Lower = 0,
+        upper: Upper = "*",
+        filter: Callable[[T], bool] | None = None,
+        *supersets: relation,
+    ):
+        self._predicate = filter if filter else lambda _value: True
+        super().__init__(name, type, lower, upper, self._subset, *supersets)
+
+    def _subset(self, obj):
+        values: list[T] = []
+        for superset in self.subsets:
+            if not object_has_property(obj, superset):
+                continue
+
+            current = superset.get(obj)  # type: ignore[var-annotated]
+            candidates: Iterable[T] = (
+                current
+                if isinstance(current, Iterable)
+                else [current]
+                if current
+                else []
+            )
+            for candidate in candidates:
+                if (
+                    isinstance(candidate, self.type)
+                    and self._predicate(candidate)
+                    and candidate not in values
+                ):
+                    values.append(candidate)
+        return values
+
+
+class redefine(subsettable_property):
     """Redefined association.
 
       Element.redefine = redefine(Element, 'redefine', Class, Element.assoc)
@@ -940,12 +990,12 @@ class redefine(umlproperty):
         opposite: str | None = None,
     ):
         super().__init__(name)
-        assert isinstance(original, association | derived), (
+        assert isinstance(original, association | derived | redefine), (
             f"expected association or derived, got {original}"
         )
         self.decl_class = decl_class
         self.type = type
-        self.original: association | derived = original
+        self.original: association | derived | redefine = original
         self.upper = original.upper
         self.lower = original.lower
         self._opposite = opposite

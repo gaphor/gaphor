@@ -81,7 +81,7 @@ class ModelingLanguageService(Service, ActionProvider, ModelingLanguage):
                 raise ValueError(
                     f"Invalid namespace '{ns}', should be one of {list(self._modeling_languages.keys())}"
                 )
-            return self._modeling_languages[ns].lookup_element(name)
+            return self._modeling_languages[ns].lookup_element(name, ns)
 
         return next(
             filter(

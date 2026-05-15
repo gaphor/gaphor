@@ -131,7 +131,22 @@ def test_uml_package_does_not_depend_on_other_modeling_languages():
         archrule("No modeling language dependencies for UML")
         .match("gaphor.UML*")
         .exclude("*.tests.*")
-        .should_not_import("gaphor.C4Model*", "gaphor.RAAML*", "gaphor.SysML*")
+        .should_not_import(
+            "gaphor.C4Model*", "gaphor.RAAML*", "gaphor.KerML*", "gaphor.SysML*"
+        )
+        .check(gaphor, only_toplevel_imports=True)
+    )
+
+
+def test_sysml2_package_does_not_depend_on_other_modeling_languages():
+    (
+        archrule("No modeling language dependencies for SysML v2")
+        .match("gaphor.SysML2*")
+        .exclude("*.tests.*")
+        .may_import("gaphor.SysML2*")
+        .should_not_import(
+            "gaphor.C4Model*", "gaphor.RAAML*", "gaphor.UML*", "gaphor.SysML*"
+        )
         .check(gaphor, only_toplevel_imports=True)
     )
 

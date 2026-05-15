@@ -17,6 +17,7 @@ from gaphor.core.modeling.properties import (
     enumeration,
     relation_many,
     relation_one,
+    subset,
 )
 
 
@@ -867,6 +868,64 @@ def test_derivedunion_listmixins():
 
     assert list(a.a[:].name) == ["foo", "bar"]
     assert sorted(a.u[:].name) == ["bar", "baz", "foo"]
+
+
+def test_subset_filters_by_type():
+    class Item(Base):
+        pass
+
+    class Step(Item):
+        pass
+
+    class Other(Item):
+        pass
+
+    class Holder(Base):
+        feature: relation_many[Item]
+        step: relation_many[Step]
+
+    Holder.feature = association("feature", Item)
+    Holder.step = subset("step", Step, 0, "*", None, Holder.feature)
+
+    holder = Holder()
+    holder.feature = Step()
+    holder.feature = Other()
+
+    assert len(holder.step) == 1
+    assert isinstance(holder.step[0], Step)
+
+
+def test_subset_applies_filter():
+    class Item(Base):
+        name = attribute("name", str, "")
+
+    class Step(Item):
+        pass
+
+    class Holder(Base):
+        feature: relation_many[Item]
+        step: relation_many[Step]
+
+    Holder.feature = association("feature", Item)
+    Holder.step = subset(
+        "step",
+        Step,
+        0,
+        "*",
+        lambda value: value.name.startswith("good"),
+        Holder.feature,
+    )
+
+    matching = Step()
+    matching.name = "good-step"
+    non_matching = Step()
+    non_matching.name = "skip-step"
+
+    holder = Holder()
+    holder.feature = matching
+    holder.feature = non_matching
+
+    assert list(holder.step) == [matching]
 
 
 def test_composite():
