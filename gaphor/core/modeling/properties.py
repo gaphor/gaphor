@@ -789,47 +789,50 @@ class derived[T](subsettable_property):
         raise AttributeError(f"Can not delete values on union {self.name}: {self.type}")
 
     def propagate(self, event):
-        """Re-emit state change for the derived properties as Derived*Event's.
-
-        If multiplicity is [0..1]:   send DerivedSet if len(union) < 2
-        if multiplicity is [*]:   send DerivedAdded and DerivedDeleted
-        if value not in derived union and
-        """
         if event.property not in self.subsets:
             return
-        if not isinstance(event, AssociationUpdated):
-            return
 
-        # mimic the events for Set/Add/Delete
-        if self.upper == 1:
-            old_value = hasattr(event.element, self._name) and self.get(event.element)
-            # Make sure unions are created again
-            self.version += 1
-            new_value = self.get(event.element)
-            if old_value != new_value:
-                self.handle(DerivedSet(event.element, self, old_value, new_value))
+        return propagate_derived(self, event)
+
+
+def propagate_derived(prop: derived, event: AssociationUpdated):
+    """Re-emit state change for the derived properties as Derived*Event's.
+
+    If multiplicity is [0..1]:   send DerivedSet if len(union) < 2
+    if multiplicity is [*]:   send DerivedAdded and DerivedDeleted
+    if value not in derived union and
+    """
+    if not isinstance(event, AssociationUpdated):
+        return
+
+    # mimic the events for Set/Add/Delete
+    if prop.upper == 1:
+        old_value = hasattr(event.element, prop._name) and prop.get(event.element)  # noqa: SLF001
+        # Make sure unions are created again
+        new_value = prop.get(event.element)
+        if old_value != new_value:
+            prop.version += 1
+            prop.handle(DerivedSet(event.element, prop, old_value, new_value))
+    else:
+        # Make sure unions are created again
+        prop.version += 1
+
+        if isinstance(event, AssociationSet):
+            prop.handle(DerivedDeleted(event.element, prop, event.old_value))
+            prop.handle(DerivedAdded(event.element, prop, event.new_value))
+
+        elif isinstance(event, AssociationAdded):
+            prop.handle(DerivedAdded(event.element, prop, event.new_value))
+
+        elif isinstance(event, AssociationDeleted):
+            prop.handle(DerivedDeleted(event.element, prop, event.old_value))
+
+        elif isinstance(event, AssociationUpdated):
+            prop.handle(DerivedUpdated(event.element, prop))
         else:
-            # Make sure unions are created again
-            self.version += 1
-
-            if isinstance(event, AssociationSet):
-                self.handle(DerivedDeleted(event.element, self, event.old_value))
-                self.handle(DerivedAdded(event.element, self, event.new_value))
-
-            elif isinstance(event, AssociationAdded):
-                self.handle(DerivedAdded(event.element, self, event.new_value))
-
-            elif isinstance(event, AssociationDeleted):
-                self.handle(DerivedDeleted(event.element, self, event.old_value))
-
-            elif isinstance(event, AssociationUpdated):
-                self.handle(DerivedUpdated(event.element, self))
-            else:
-                log.error(
-                    "Don't know how to handle event "
-                    + str(event)
-                    + " for derived union"
-                )
+            log.error(
+                "Don't know how to handle event " + str(event) + " for derived property"
+            )
 
 
 def object_has_property(obj, prop):
@@ -1015,6 +1018,17 @@ class redefine(subsettable_property):
         return (
             self.original.composite if isinstance(self.original, association) else False
         )
+
+    @property
+    def version(self) -> int:
+        if isinstance(self.original, derived):
+            return self.original.version
+        return 0
+
+    @version.setter
+    def version(self, version: int) -> None:
+        if isinstance(self.original, derived):
+            self.original.version = version
 
     def load(self, obj, value):
         if self.original.name == self.name:

@@ -5,6 +5,7 @@
 from __future__ import annotations
 
 import enum
+import functools
 
 from gaphor.core.modeling.properties import (
     association,
@@ -12,6 +13,7 @@ from gaphor.core.modeling.properties import (
     derived,
     derivedunion,
     enumeration as _enumeration,
+    propagate_derived,
     redefine,
     relation_many,
     relation_one,

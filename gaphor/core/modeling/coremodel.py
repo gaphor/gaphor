@@ -5,6 +5,7 @@
 from __future__ import annotations
 
 import enum
+import functools
 
 from gaphor.core.modeling.properties import (
     association,
@@ -12,6 +13,7 @@ from gaphor.core.modeling.properties import (
     derived,
     derivedunion,
     enumeration as _enumeration,
+    propagate_derived,
     redefine,
     relation_many,
     relation_one,
@@ -30,14 +32,22 @@ class ChangeKind(enum.StrEnum):
 # 1: override Base
 from gaphor.core.modeling.base import Base
 
+
+
 # 7: override Diagram
 from gaphor.core.modeling.diagram import Diagram
+
+
 
 # 10: override Presentation
 from gaphor.core.modeling.presentation import Presentation
 
+
+
 # 16: override StyleSheet
 from gaphor.core.modeling.stylesheet import StyleSheet
+
+
 
 class PendingChange(Base):
     applied: _attribute[int] = _attribute("applied", int, default=0)

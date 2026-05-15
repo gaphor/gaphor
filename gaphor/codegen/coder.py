@@ -58,6 +58,7 @@ header = textwrap.dedent(
     from __future__ import annotations
 
     import enum
+    import functools
 
     from gaphor.core.modeling.properties import (
         association,
@@ -65,6 +66,7 @@ header = textwrap.dedent(
         derived,
         derivedunion,
         enumeration as _enumeration,
+        propagate_derived,
         redefine,
         relation_many,
         relation_one,
@@ -195,15 +197,7 @@ def coder(
             # imported from super model
             continue
 
-        if overrides and overrides.has_override(c.name):
-            yield overrides.get_override(c.name)
-            continue
-
-        yield class_declaration(c)
-        if properties := list(variables(c, overrides)):
-            yield from (f"    {p}" for p in properties)
-        else:
-            yield "    pass"
+        yield from class_declaration(c, overrides)
         yield ""
         yield ""
 
@@ -234,15 +228,47 @@ def enumeration(enum: UML.Enumeration):
     yield ""
 
 
-def class_declaration(class_: UML.Class):
+def class_declaration(c: UML.Class, overrides: Overrides | None):
+    if overrides and overrides.has_override(c.name):
+        yield overrides.get_override(c.name)
+        return
+
     base_classes = ", ".join(
-        c.name
-        for c in sorted(
-            bases(class_),
-            key=lambda c: c.name,
+        b.name
+        for b in sorted(
+            bases(c),
+            key=lambda b: b.name,
         )
     )
-    return f"class {class_.name}({base_classes}):"
+    yield f"class {c.name}({base_classes}):"
+
+    derived_info = [
+        (a.name, deps)
+        for a in c.ownedAttribute
+        if a.isDerived
+        and (derive_rule := lookup_derive_rule(c, a))
+        and (deps := ocl.extract_dependencies_from_ocl(derive_rule))
+    ]
+    if derived_info:
+        yield ""
+        yield "    def __init__(self, id=None, model=None):"
+        yield "        super().__init__(id, model)"
+        yield "        w = self.watcher()"
+        for derived_name, deps in derived_info:
+            for dep in sorted(deps):
+                # Avoid watches for derived attributes without implementation
+                # Note that this leaves a gap in the model.
+                a = next(a for a in c.ownedAttribute if a.name == derived_name)
+                if dep == derived_name or (a.isDerived and not a.type):
+                    continue
+                yield f'        w.watch("{dep}", handler=functools.partial(propagate_derived, {c.name}.{derived_name}))'
+        yield ""
+
+    properties = list(variables(c, overrides))
+    if properties:
+        yield from (f"    {p}" for p in properties)
+    elif not derived_info:
+        yield "    pass"
 
 
 def variables(
@@ -485,7 +511,6 @@ def derive_multiplicity(a: UML.Property) -> tuple[int, str | int]:
     return lower_arg, upper_arg
 
 
-# TODO: return value should return the Property objects used in the expression, so they can be watched
 def ocl_derive_expression(rule: str, owning_class: UML.Class) -> str | None:
     """Convert an OCL derive rule to a Python lambda expression when possible."""
 

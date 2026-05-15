@@ -5,6 +5,7 @@
 from __future__ import annotations
 
 import enum
+import functools
 
 from gaphor.core.modeling.properties import (
     association,
@@ -12,6 +13,7 @@ from gaphor.core.modeling.properties import (
     derived,
     derivedunion,
     enumeration as _enumeration,
+    propagate_derived,
     redefine,
     relation_many,
     relation_one,
@@ -35,6 +37,15 @@ class VisibilityKind(enum.StrEnum):
 
 
 class Element(_Base):
+
+    def __init__(self, id=None, model=None):
+        super().__init__(id, model)
+        w = self.watcher()
+        w.watch("owningMembership", handler=functools.partial(propagate_derived, Element.owningNamespace))
+        w.watch("owningMembership.membershipOwningNamespace", handler=functools.partial(propagate_derived, Element.owningNamespace))
+        w.watch("owningRelationship.owningRelatedElement", handler=functools.partial(propagate_derived, Element.owner))
+        w.watch("ownedRelationship.ownedRelatedElement", handler=functools.partial(propagate_derived, Element.ownedElement))
+
     aliasIds: _attribute[str] = _attribute("aliasIds", str)
     declaredName: _attribute[str] = _attribute("declaredName", str)
     declaredShortName: _attribute[str] = _attribute("declaredShortName", str)
@@ -52,6 +63,12 @@ class Element(_Base):
 
 
 class Namespace(Element):
+
+    def __init__(self, id=None, model=None):
+        super().__init__(id, model)
+        w = self.watcher()
+        w.watch("membership.memberElement", handler=functools.partial(propagate_derived, Namespace.member))
+
     importedMembership: relation_many[Membership]
     member: relation_many[Element]
     membership: relation_many[Membership]
@@ -61,6 +78,16 @@ class Namespace(Element):
 
 
 class Type(Namespace):
+
+    def __init__(self, id=None, model=None):
+        super().__init__(id, model)
+        w = self.watcher()
+        w.watch("featureMembership.ownedMemberFeature", handler=functools.partial(propagate_derived, Type.feature))
+        w.watch("ownedFeatureMembership.ownedMemberFeature", handler=functools.partial(propagate_derived, Type.ownedFeature))
+        w.watch("ownedUnioning.unioningType", handler=functools.partial(propagate_derived, Type.unioningType))
+        w.watch("ownedIntersecting.intersectingType", handler=functools.partial(propagate_derived, Type.intersectingType))
+        w.watch("ownedDifferencing.differencingType", handler=functools.partial(propagate_derived, Type.differencingType))
+
     differencingType: relation_many[Type]
     directedFeature: relation_many[Feature]
     endFeature: relation_many[Feature]
@@ -109,6 +136,11 @@ class Relationship(Element):
 
 
 class Membership(Relationship):
+
+    def __init__(self, id=None, model=None):
+        super().__init__(id, model)
+        w = self.watcher()
+
     memberElement: relation_one[Element]
     memberName: _attribute[str] = _attribute("memberName", str)
     memberShortName: _attribute[str] = _attribute("memberShortName", str)
@@ -117,6 +149,11 @@ class Membership(Relationship):
 
 
 class OwningMembership(Membership):
+
+    def __init__(self, id=None, model=None):
+        super().__init__(id, model)
+        w = self.watcher()
+
     ownedMemberElement: relation_one[Element]
 
 
@@ -130,6 +167,14 @@ class ParameterMembership(FeatureMembership):
 
 
 class Feature(Type):
+
+    def __init__(self, id=None, model=None):
+        super().__init__(id, model)
+        w = self.watcher()
+        w.watch("ownedFeatureChaining.chainingFeature", handler=functools.partial(propagate_derived, Feature.chainingFeature))
+        w.watch("self", handler=functools.partial(propagate_derived, Feature.featureTarget))
+        w.watch("ownedCrossSubsetting", handler=functools.partial(propagate_derived, Feature.crossFeature))
+
     chainingFeature: relation_many[Feature]
     crossFeature: relation_one[Feature]
     direction = _enumeration("direction", FeatureDirectionKind, FeatureDirectionKind.in_)
@@ -263,6 +308,12 @@ class Invariant(BooleanExpression):
 
 
 class Connector(Feature, Relationship):
+
+    def __init__(self, id=None, model=None):
+        super().__init__(id, model)
+        w = self.watcher()
+        w.watch("connectorEnd.ownedReferenceSubsetting", handler=functools.partial(propagate_derived, Connector.relatedFeature))
+
     association: relation_many[Association]
     connectorEnd: relation_many[Feature]
     defaultFeaturingType: relation_one[Type]
@@ -272,6 +323,14 @@ class Connector(Feature, Relationship):
 
 
 class Flow(Connector, Step):
+
+    def __init__(self, id=None, model=None):
+        super().__init__(id, model)
+        w = self.watcher()
+        w.watch("payloadFeature", handler=functools.partial(propagate_derived, Flow.payloadType))
+        w.watch("payloadFeature.type", handler=functools.partial(propagate_derived, Flow.payloadType))
+        w.watch("connectorEnd.ownedFeature", handler=functools.partial(propagate_derived, Flow.sourceOutputFeature))
+
     flowEnd: relation_many[FlowEnd]
     interaction: relation_many[Interaction]
     payloadFeature: relation_one[PayloadFeature]
@@ -297,6 +356,12 @@ class FlowEnd(Feature):
 
 
 class Association(Classifier, Relationship):
+
+    def __init__(self, id=None, model=None):
+        super().__init__(id, model)
+        w = self.watcher()
+        w.watch("associationEnd.type", handler=functools.partial(propagate_derived, Association.relatedType))
+
     associationEnd: relation_many[Feature]
     relatedType: relation_many[Type]
     sourceType: relation_one[Type]
@@ -331,6 +396,13 @@ class Multiplicity(Feature):
 
 
 class MultiplicityRange(Multiplicity):
+
+    def __init__(self, id=None, model=None):
+        super().__init__(id, model)
+        w = self.watcher()
+        w.watch("lowerBound", handler=functools.partial(propagate_derived, MultiplicityRange.bound))
+        w.watch("upperBound", handler=functools.partial(propagate_derived, MultiplicityRange.bound))
+
     bound: relation_many[Expression]
     lowerBound: relation_one[Expression]
     upperBound: relation_one[Expression]
@@ -349,6 +421,14 @@ class Metaclass(Structure):
 
 
 class AnnotatingElement(Element):
+
+    def __init__(self, id=None, model=None):
+        super().__init__(id, model)
+        w = self.watcher()
+        w.watch("annotation.annotatedElement", handler=functools.partial(propagate_derived, AnnotatingElement.annotatedElement))
+        w.watch("ownedAnnotatingRelationship", handler=functools.partial(propagate_derived, AnnotatingElement.annotation))
+        w.watch("owningAnnotatingRelationship", handler=functools.partial(propagate_derived, AnnotatingElement.annotation))
+
     annotatedElement: relation_many[Element]
     annotation: relation_many[Annotation]
     ownedAnnotatingRelationship: relation_many[Annotation]
@@ -475,6 +555,13 @@ class Documentation(Comment):
 
 
 class Annotation(Relationship):
+
+    def __init__(self, id=None, model=None):
+        super().__init__(id, model)
+        w = self.watcher()
+        w.watch("ownedAnnotatingElement", handler=functools.partial(propagate_derived, Annotation.annotatingElement))
+        w.watch("owningAnnotatingElement", handler=functools.partial(propagate_derived, Annotation.annotatingElement))
+
     annotatedElement: relation_one[Element]
     annotatingElement: relation_one[AnnotatingElement]
     ownedAnnotatingElement: relation_one[AnnotatingElement]

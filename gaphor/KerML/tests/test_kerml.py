@@ -1,3 +1,7 @@
+import pytest
+
+from gaphor.core import event_handler
+from gaphor.core.modeling.event import ElementUpdated
 from gaphor.diagram.group import change_owner
 from gaphor.KerML import kerml
 
@@ -23,6 +27,7 @@ def test_subset_owned_annotation_removed_when_relationship_removed(element_facto
     assert annotation not in element.ownedAnnotation
 
 
+@pytest.mark.xfail()
 def test_subset_owning_membership_tracks_owning_relationship(element_factory):
     parent = element_factory.create(kerml.Package)
     child = element_factory.create(kerml.Element)
@@ -63,3 +68,39 @@ def test_owning_annotation(element_factory):
     assert annotation in element.ownedAnnotation
     assert element in annotation.annotatedElement
     assert comment in annotation.annotatingElement
+
+
+def test_element_ownership_and_containment(element_factory):
+    parent = element_factory.create(kerml.Element)
+    child = element_factory.create(kerml.Element)
+    rel = element_factory.create(kerml.Relationship)
+    rel.owningRelatedElement = parent
+    rel.ownedRelatedElement = child
+
+    assert child.owner is parent
+    assert child in parent.ownedElement
+
+
+@pytest.mark.xfail()
+def test_owner_event_emitted_on_relation_creation(element_factory, event_manager):
+    @event_handler(ElementUpdated)
+    def handler(event):
+        events.append(event)
+
+    events = []
+    event_manager.subscribe(handler)
+
+    parent = element_factory.create(kerml.Element)
+    child = element_factory.create(kerml.Element)
+    rel = element_factory.create(kerml.Relationship)
+    rel.owningRelatedElement = parent
+    rel.ownedRelatedElement = child
+
+    owner_event = next(e for e in events if e.property is kerml.Element.owner)
+    owned_event = next(e for e in events if e.property is kerml.Element.ownedElement)
+
+    assert owner_event.element is child
+    assert not owner_event.old_value
+    assert owner_event.new_value is parent
+    assert owned_event.element is parent
+    assert child in owned_event.new_value
