@@ -514,7 +514,10 @@ def get_multiplicity_lower_value_as_string(
     """Get lower value of a multiplicity as a string."""
     if multiplicity.lowerValue is None:
         return None
-    if isinstance(multiplicity.lowerValue, LiteralInteger):
+    if (
+        isinstance(multiplicity.lowerValue, LiteralInteger)
+        and multiplicity.lowerValue.value is not None
+    ):
         return str(multiplicity.lowerValue.value)
     return None
 
@@ -555,7 +558,10 @@ def get_multiplicity_upper_value_as_string(
     """Get upper value of a multiplicity as a string."""
     if element.upperValue is None:
         return None
-    if isinstance(element.upperValue, LiteralUnlimitedNatural):
+    if (
+        isinstance(element.upperValue, LiteralUnlimitedNatural)
+        and element.upperValue.value is not None
+    ):
         return str(element.upperValue.value)
     return None
 
