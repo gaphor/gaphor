@@ -90,6 +90,16 @@ def test_association_end(factory, text, name_part, mult_part):
     assert (name_part, mult_part) == format_association_end(a)
 
 
+def test_association_end_text_deleted(factory):
+    """Test simple attribute formatting."""
+    a = factory.create(UML.Property)
+    a.association = factory.create(UML.Association)
+    parse(a, "myattr[0..1]")
+    parse(a, "")
+
+    assert ("", "") == format_association_end(a)
+
+
 def test_attribute_with_type(factory):
     """Test simple attribute formatting."""
     a = factory.create(UML.Property)
