@@ -7,7 +7,11 @@ from gi.repository import GLib, Gtk
 from gaphor.core.eventmanager import EventManager
 from gaphor.diagram.diagramtoolbox import ItemFactory
 from gaphor.diagram.drop import drop
-from gaphor.diagram.event import DiagramItemPlaced, DiagramSelectionChanged
+from gaphor.diagram.event import (
+    DiagramItemPlaced,
+    DiagramSelectionChanged,
+    ToolCompleted,
+)
 from gaphor.diagram.instanteditors import instant_editor
 from gaphor.diagram.presentation import ElementPresentation
 
@@ -26,15 +30,24 @@ class PlacementState:
 
 def placement_tool(factory: ItemFactory, event_manager, handle_index: int):
     gesture = Gtk.GestureDrag.new()
+    gesture.set_button(0)
     placement_state = PlacementState(factory, event_manager, handle_index)
     gesture.connect("drag-begin", on_drag_begin, placement_state)
     gesture.connect("drag-update", on_drag_update, placement_state)
     gesture.connect("drag-end", on_drag_end, placement_state)
+    gesture.connect_after("cancel", on_cancel, placement_state)
+
     return gesture
 
 
 def on_drag_begin(gesture, start_x, start_y, placement_state: PlacementState):
     view = gesture.get_widget()
+
+    if gesture.get_current_button() != 1:
+        gesture.set_state(Gtk.EventSequenceState.DENIED)
+        gesture.reset()
+        return
+
     gesture.set_state(Gtk.EventSequenceState.CLAIMED)
 
     item = create_item(
@@ -116,3 +129,8 @@ def on_drag_end(gesture, offset_x, offset_y, placement_state: PlacementState):
 def open_editor(item, view, event_manager):
     instant_editor(item, view, event_manager)
     return GLib.SOURCE_REMOVE
+
+
+def on_cancel(gesture, _sequence, placement_state: PlacementState):
+    """Revert the tool in case the gesture is cancelled."""
+    placement_state.event_manager.handle(ToolCompleted(cancelled=True))
