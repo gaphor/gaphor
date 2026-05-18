@@ -159,8 +159,8 @@ class Toolbox(UIComponent):
                     self.event_manager.handle(ToolSelected(tool_name))
 
     @event_handler(ToolCompleted)
-    def _on_diagram_item_placed(self, event) -> None:
-        if settings.reset_tool_after_create:
+    def _on_diagram_item_placed(self, event: ToolCompleted) -> None:
+        if event.cancelled or settings.reset_tool_after_create:
             # Select tool from an idle handler, so the original tool can complete properly.
             GLib.idle_add(self.select_tool, "toolbox-pointer")
 
