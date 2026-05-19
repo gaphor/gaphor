@@ -5,6 +5,7 @@
 from __future__ import annotations
 
 import enum
+import functools
 
 from gaphor.core.modeling.properties import (
     association,
@@ -12,6 +13,7 @@ from gaphor.core.modeling.properties import (
     derived,
     derivedunion,
     enumeration as _enumeration,
+    propagate_derived,
     redefine,
     relation_many,
     relation_one,
@@ -87,6 +89,12 @@ class TriggerKind(enum.StrEnum):
 
 
 class Definition(_Classifier):
+
+    def __init__(self, id=None, model=None):
+        super().__init__(id, model)
+        w = self.watcher()
+        w.watch("variantMembership.ownedVariantUsage", handler=functools.partial(propagate_derived, Definition.variant))
+
     directedUsage: relation_many[Usage]
     isVariation: _attribute[bool] = _attribute("isVariation", bool)
     ownedAction: relation_many[ActionUsage]
@@ -134,6 +142,12 @@ class FlowDefinition(ActionDefinition, _Interaction):
 
 
 class Usage(_Feature):
+
+    def __init__(self, id=None, model=None):
+        super().__init__(id, model)
+        w = self.watcher()
+        w.watch("variantMembership.ownedVariantUsage", handler=functools.partial(propagate_derived, Usage.variant))
+
     definition: relation_many[_Classifier]
     directedUsage: relation_many[Usage]
     isVariation: _attribute[bool] = _attribute("isVariation", bool)
@@ -216,6 +230,11 @@ class ConstraintUsage(OccurrenceUsage, _BooleanExpression):
 
 
 class RequirementUsage(ConstraintUsage):
+
+    def __init__(self, id=None, model=None):
+        super().__init__(id, model)
+        w = self.watcher()
+
     actorParameter: relation_many[PartUsage]
     assumedConstraint: relation_many[ConstraintUsage]
     framedConcern: relation_many[ConcernUsage]
@@ -259,6 +278,11 @@ class ConstraintDefinition(OccurrenceDefinition, _Predicate):
 
 
 class RequirementDefinition(ConstraintDefinition):
+
+    def __init__(self, id=None, model=None):
+        super().__init__(id, model)
+        w = self.watcher()
+
     actorParameter: relation_many[PartUsage]
     assumedConstraint: relation_many[ConstraintUsage]
     framedConcern: relation_many[ConcernUsage]
@@ -273,6 +297,12 @@ class ConcernDefinition(RequirementDefinition):
 
 
 class AssertConstraintUsage(ConstraintUsage, _Invariant):
+
+    def __init__(self, id=None, model=None):
+        super().__init__(id, model)
+        w = self.watcher()
+        w.watch("self", handler=functools.partial(propagate_derived, AssertConstraintUsage.assertedConstraint))
+
     assertedConstraint: relation_one[ConstraintUsage]
 
 
@@ -328,6 +358,12 @@ class TransitionFeatureMembership(_FeatureMembership):
 
 
 class EventOccurrenceUsage(OccurrenceUsage):
+
+    def __init__(self, id=None, model=None):
+        super().__init__(id, model)
+        w = self.watcher()
+        w.watch("self", handler=functools.partial(propagate_derived, EventOccurrenceUsage.eventOccurrence))
+
     eventOccurrence: relation_one[OccurrenceUsage]
 
 
@@ -361,6 +397,12 @@ class StateDefinition(ActionDefinition):
 
 
 class TransitionUsage(ActionUsage):
+
+    def __init__(self, id=None, model=None):
+        super().__init__(id, model)
+        w = self.watcher()
+        w.watch("succession.targetFeature", handler=functools.partial(propagate_derived, TransitionUsage.target))
+
     effectAction: relation_many[ActionUsage]
     guardExpression: relation_many[_Expression]
     source: relation_one[ActionUsage]
@@ -488,6 +530,12 @@ class ConjugatedPortDefinition(PortDefinition):
 
 
 class ConjugatedPortTyping(_FeatureTyping):
+
+    def __init__(self, id=None, model=None):
+        super().__init__(id, model)
+        w = self.watcher()
+        w.watch("conjugatedPortDefinition.originalPortDefinition", handler=functools.partial(propagate_derived, ConjugatedPortTyping.portDefinition))
+
     conjugatedPortDefinition: relation_one[ConjugatedPortDefinition]
     portDefinition: relation_one[PortDefinition]
 
@@ -520,6 +568,12 @@ class RenderingUsage(PartUsage):
 
 
 class ViewpointDefinition(RequirementDefinition):
+
+    def __init__(self, id=None, model=None):
+        super().__init__(id, model)
+        w = self.watcher()
+        w.watch("framedConcern.featureMemberhsip", handler=functools.partial(propagate_derived, ViewpointDefinition.viewpointStakeholder))
+
     viewpointStakeholder: relation_many[PartUsage]
 
 
@@ -541,6 +595,12 @@ class ViewRenderingMembership(_FeatureMembership):
 
 
 class ViewpointUsage(RequirementUsage):
+
+    def __init__(self, id=None, model=None):
+        super().__init__(id, model)
+        w = self.watcher()
+        w.watch("framedConcern.featureMemberhsip", handler=functools.partial(propagate_derived, ViewpointUsage.viewpointStakeholder))
+
     viewpointDefinition: relation_one[ViewpointDefinition]
     viewpointStakeholder: relation_many[PartUsage]
 
@@ -585,98 +645,185 @@ class RequirementVerificationMembership(RequirementConstraintMembership):
 
 
 class VerificationCaseDefinition(CaseDefinition):
+
+    def __init__(self, id=None, model=None):
+        super().__init__(id, model)
+        w = self.watcher()
+        w.watch("objectiveRequirement", handler=functools.partial(propagate_derived, VerificationCaseDefinition.verifiedRequirement))
+        w.watch("objectiveRequirement.featureMembership", handler=functools.partial(propagate_derived, VerificationCaseDefinition.verifiedRequirement))
+
     verifiedRequirement: relation_many[RequirementUsage]
 
 
 class VerificationCaseUsage(CaseUsage):
+
+    def __init__(self, id=None, model=None):
+        super().__init__(id, model)
+        w = self.watcher()
+        w.watch("objectiveRequirement", handler=functools.partial(propagate_derived, VerificationCaseUsage.verifiedRequirement))
+        w.watch("objectiveRequirement.featureMembership", handler=functools.partial(propagate_derived, VerificationCaseUsage.verifiedRequirement))
+
     verificationCaseDefinition: relation_one[VerificationCaseDefinition]
     verifiedRequirement: relation_many[RequirementUsage]
 
 
 
-Definition.variant = subset("variant", Usage, 0, '*', None, _Namespace.ownedMember)
-Definition.variantMembership = subset("variantMembership", VariantMembership, 0, '*', None, _Namespace.ownedMembership)
-Definition.usage = subset("usage", Usage, 0, '*', None, _Type.feature)
-Definition.directedUsage = subset("directedUsage", Usage, 0, '*', None, _Type.directedFeature, Definition.usage)
-Definition.ownedUsage = subset("ownedUsage", Usage, 0, '*', None, _Type.ownedFeature, Definition.usage)
-Definition.ownedReference = subset("ownedReference", ReferenceUsage, 0, '*', None, Definition.ownedUsage)
-Definition.ownedAttribute = subset("ownedAttribute", AttributeUsage, 0, '*', None, Definition.ownedUsage)
-Definition.ownedOccurrence = subset("ownedOccurrence", OccurrenceUsage, 0, '*', None, Definition.ownedUsage)
-Definition.ownedPort = subset("ownedPort", PortUsage, 0, '*', None, Definition.ownedUsage)
-Definition.ownedConnection = subset("ownedConnection", ConnectorAsUsage, 0, '*', None, Definition.ownedUsage)
-Definition.ownedTransition = subset("ownedTransition", TransitionUsage, 0, '*', None, Definition.ownedUsage)
-Definition.ownedEnumeration = subset("ownedEnumeration", EnumerationUsage, 0, '*', None, Definition.ownedAttribute)
-Definition.ownedItem = subset("ownedItem", ItemUsage, 0, '*', None, Definition.ownedOccurrence)
-Definition.ownedFlow = subset("ownedFlow", FlowUsage, 0, '*', None, Definition.ownedConnection)
-Definition.ownedInterface = subset("ownedInterface", InterfaceUsage, 0, '*', None, Definition.ownedConnection)
-Definition.ownedAllocation = subset("ownedAllocation", AllocationUsage, 0, '*', None, Definition.ownedConnection)
-Definition.ownedAction = subset("ownedAction", ActionUsage, 0, '*', None, Definition.ownedOccurrence)
-Definition.ownedConstraint = subset("ownedConstraint", ConstraintUsage, 0, '*', None, Definition.ownedOccurrence)
-Definition.ownedPart = subset("ownedPart", PartUsage, 0, '*', None, Definition.ownedItem)
-Definition.ownedState = subset("ownedState", StateUsage, 0, '*', None, Definition.ownedAction)
-Definition.ownedCalculation = subset("ownedCalculation", CalculationUsage, 0, '*', None, Definition.ownedAction)
-Definition.ownedRequirement = subset("ownedRequirement", RequirementUsage, 0, '*', None, Definition.ownedConstraint)
-Definition.ownedMetadata = subset("ownedMetadata", MetadataUsage, 0, '*', None, Definition.ownedItem)
-Definition.ownedConcern = subset("ownedConcern", ConcernUsage, 0, '*', None, Definition.ownedRequirement)
-Definition.ownedCase = subset("ownedCase", CaseUsage, 0, '*', None, Definition.ownedCalculation)
-Definition.ownedView = subset("ownedView", ViewUsage, 0, '*', None, Definition.ownedPart)
-Definition.ownedViewpoint = subset("ownedViewpoint", ViewpointUsage, 0, '*', None, Definition.ownedRequirement)
-Definition.ownedRendering = subset("ownedRendering", RenderingUsage, 0, '*', None, Definition.ownedPart)
-Definition.ownedAnalysisCase = subset("ownedAnalysisCase", AnalysisCaseUsage, 0, '*', None, Definition.ownedCase)
-Definition.ownedVerificationCase = subset("ownedVerificationCase", VerificationCaseUsage, 0, '*', None, Definition.ownedCase)
-Definition.ownedUseCase = subset("ownedUseCase", UseCaseUsage, 0, '*', None, Definition.ownedCase)
-ActionDefinition.action = subset("action", ActionUsage, 0, '*', None, _Behavior.step, Definition.usage)
+# derive-rule for Definition.variant: name='variant', type=Usage, lower=0, upper='*', rule='variant = variantMembership.ownedVariantUsage'
+Definition.variant = derived("variant", Usage, 0, '*', lambda e: [*e.variantMembership[:].ownedVariantUsage] or [])
+# derive-rule for Definition.variantMembership: name='variantMembership', type=VariantMembership, lower=0, upper='*', rule='variantMembership = ownedMembership->selectByKind(VariantMembership)'
+Definition.variantMembership = derived("variantMembership", VariantMembership, 0, '*', lambda e: [x for x in e.ownedMembership if isinstance(x, VariantMembership)])
+# derive-rule for Definition.usage: name='usage', type=Usage, lower=0, upper='*', rule='usage = feature->selectByKind(Usage)'
+Definition.usage = derived("usage", Usage, 0, '*', lambda e: [x for x in e.feature if isinstance(x, Usage)])
+# derive-rule for Definition.directedUsage: name='directedUsage', type=Usage, lower=0, upper='*', rule='directedUsage = directedFeature->selectByKind(Usage)'
+Definition.directedUsage = derived("directedUsage", Usage, 0, '*', lambda e: [x for x in e.directedFeature if isinstance(x, Usage)])
+# derive-rule for Definition.ownedUsage: name='ownedUsage', type=Usage, lower=0, upper='*', rule='ownedUsage = ownedFeature->selectByKind(Usage)'
+Definition.ownedUsage = derived("ownedUsage", Usage, 0, '*', lambda e: [x for x in e.ownedFeature if isinstance(x, Usage)])
+# derive-rule for Definition.ownedReference: name='ownedReference', type=ReferenceUsage, lower=0, upper='*', rule='ownedReference = ownedUsage->selectByKind(ReferenceUsage)'
+Definition.ownedReference = derived("ownedReference", ReferenceUsage, 0, '*', lambda e: [x for x in e.ownedUsage if isinstance(x, ReferenceUsage)])
+# derive-rule for Definition.ownedAttribute: name='ownedAttribute', type=AttributeUsage, lower=0, upper='*', rule='ownedAttribute = ownedUsage->selectByKind(AttributeUsage)'
+Definition.ownedAttribute = derived("ownedAttribute", AttributeUsage, 0, '*', lambda e: [x for x in e.ownedUsage if isinstance(x, AttributeUsage)])
+# derive-rule for Definition.ownedEnumeration: name='ownedEnumeration', type=EnumerationUsage, lower=0, upper='*', rule='ownedEnumeration = ownedUsage->selectByKind(EnumerationUsage)'
+Definition.ownedEnumeration = derived("ownedEnumeration", EnumerationUsage, 0, '*', lambda e: [x for x in e.ownedUsage if isinstance(x, EnumerationUsage)])
+# derive-rule for Definition.ownedOccurrence: name='ownedOccurrence', type=OccurrenceUsage, lower=0, upper='*', rule='ownedOccurrence = ownedUsage->selectByKind(OccurrenceUsage)'
+Definition.ownedOccurrence = derived("ownedOccurrence", OccurrenceUsage, 0, '*', lambda e: [x for x in e.ownedUsage if isinstance(x, OccurrenceUsage)])
+# derive-rule for Definition.ownedItem: name='ownedItem', type=ItemUsage, lower=0, upper='*', rule='ownedItem = ownedUsage->selectByKind(ItemUsage)'
+Definition.ownedItem = derived("ownedItem", ItemUsage, 0, '*', lambda e: [x for x in e.ownedUsage if isinstance(x, ItemUsage)])
+# derive-rule for Definition.ownedPart: name='ownedPart', type=PartUsage, lower=0, upper='*', rule='ownedPart = ownedUsage->selectByKind(PartUsage)'
+Definition.ownedPart = derived("ownedPart", PartUsage, 0, '*', lambda e: [x for x in e.ownedUsage if isinstance(x, PartUsage)])
+# derive-rule for Definition.ownedPort: name='ownedPort', type=PortUsage, lower=0, upper='*', rule='ownedPort = ownedUsage->selectByKind(PortUsage)'
+Definition.ownedPort = derived("ownedPort", PortUsage, 0, '*', lambda e: [x for x in e.ownedUsage if isinstance(x, PortUsage)])
+# derive-rule for Definition.ownedConnection: name='ownedConnection', type=ConnectorAsUsage, lower=0, upper='*', rule='ownedConnection = ownedUsage->selectByKind(ConnectorAsUsage)'
+Definition.ownedConnection = derived("ownedConnection", ConnectorAsUsage, 0, '*', lambda e: [x for x in e.ownedUsage if isinstance(x, ConnectorAsUsage)])
+# derive-rule for Definition.ownedFlow: name='ownedFlow', type=FlowUsage, lower=0, upper='*', rule='ownedFlow = ownedUsage->selectByKind(FlowConnectionUsage)'
+Definition.ownedFlow = derived("ownedFlow", FlowUsage, 0, '*', lambda e: [x for x in e.ownedUsage if isinstance(x, FlowConnectionUsage)])
+# derive-rule for Definition.ownedInterface: name='ownedInterface', type=InterfaceUsage, lower=0, upper='*', rule='ownedInterface = ownedUsage->selectByKind(ReferenceUsage)'
+Definition.ownedInterface = derived("ownedInterface", InterfaceUsage, 0, '*', lambda e: [x for x in e.ownedUsage if isinstance(x, ReferenceUsage)])
+# derive-rule for Definition.ownedAllocation: name='ownedAllocation', type=AllocationUsage, lower=0, upper='*', rule='ownedAllocation = ownedUsage->selectByKind(AllocationUsage)'
+Definition.ownedAllocation = derived("ownedAllocation", AllocationUsage, 0, '*', lambda e: [x for x in e.ownedUsage if isinstance(x, AllocationUsage)])
+# derive-rule for Definition.ownedAction: name='ownedAction', type=ActionUsage, lower=0, upper='*', rule='ownedAction = ownedUsage->selectByKind(ActionUsage)'
+Definition.ownedAction = derived("ownedAction", ActionUsage, 0, '*', lambda e: [x for x in e.ownedUsage if isinstance(x, ActionUsage)])
+# derive-rule for Definition.ownedState: name='ownedState', type=StateUsage, lower=0, upper='*', rule='ownedState = ownedUsage->selectByKind(StateUsage)'
+Definition.ownedState = derived("ownedState", StateUsage, 0, '*', lambda e: [x for x in e.ownedUsage if isinstance(x, StateUsage)])
+# derive-rule for Definition.ownedTransition: name='ownedTransition', type=TransitionUsage, lower=0, upper='*', rule='ownedTransition = ownedUsage->selectByKind(TransitionUsage)'
+Definition.ownedTransition = derived("ownedTransition", TransitionUsage, 0, '*', lambda e: [x for x in e.ownedUsage if isinstance(x, TransitionUsage)])
+# derive-rule for Definition.ownedCalculation: name='ownedCalculation', type=CalculationUsage, lower=0, upper='*', rule='ownedCalculation = ownedUsage->selectByKind(CalculationUsage)'
+Definition.ownedCalculation = derived("ownedCalculation", CalculationUsage, 0, '*', lambda e: [x for x in e.ownedUsage if isinstance(x, CalculationUsage)])
+# derive-rule for Definition.ownedConstraint: name='ownedConstraint', type=ConstraintUsage, lower=0, upper='*', rule='ownedConstraint = ownedUsage->selectByKind(ConstraintUsage)'
+Definition.ownedConstraint = derived("ownedConstraint", ConstraintUsage, 0, '*', lambda e: [x for x in e.ownedUsage if isinstance(x, ConstraintUsage)])
+# derive-rule for Definition.ownedRequirement: name='ownedRequirement', type=RequirementUsage, lower=0, upper='*', rule='ownedRequirement = ownedUsage->selectByKind(RequirementUsage)'
+Definition.ownedRequirement = derived("ownedRequirement", RequirementUsage, 0, '*', lambda e: [x for x in e.ownedUsage if isinstance(x, RequirementUsage)])
+# derive-rule for Definition.ownedConcern: name='ownedConcern', type=ConcernUsage, lower=0, upper='*', rule='ownedConcern = ownedUsage->selectByKind(ConcernUsage)'
+Definition.ownedConcern = derived("ownedConcern", ConcernUsage, 0, '*', lambda e: [x for x in e.ownedUsage if isinstance(x, ConcernUsage)])
+# derive-rule for Definition.ownedCase: name='ownedCase', type=CaseUsage, lower=0, upper='*', rule='ownedCase = ownedUsage->selectByKind(CaseUsage)'
+Definition.ownedCase = derived("ownedCase", CaseUsage, 0, '*', lambda e: [x for x in e.ownedUsage if isinstance(x, CaseUsage)])
+# derive-rule for Definition.ownedAnalysisCase: name='ownedAnalysisCase', type=AnalysisCaseUsage, lower=0, upper='*', rule='ownedAnalysisCase = ownedUsage->selectByKind(AnalysisCaseUsage)'
+Definition.ownedAnalysisCase = derived("ownedAnalysisCase", AnalysisCaseUsage, 0, '*', lambda e: [x for x in e.ownedUsage if isinstance(x, AnalysisCaseUsage)])
+# derive-rule for Definition.ownedVerificationCase: name='ownedVerificationCase', type=VerificationCaseUsage, lower=0, upper='*', rule='ownedVerificationCase = ownedUsage->selectByKind(VerificationCaseUsage)'
+Definition.ownedVerificationCase = derived("ownedVerificationCase", VerificationCaseUsage, 0, '*', lambda e: [x for x in e.ownedUsage if isinstance(x, VerificationCaseUsage)])
+# derive-rule for Definition.ownedUseCase: name='ownedUseCase', type=UseCaseUsage, lower=0, upper='*', rule='ownedUseCase = ownedUsage->selectByKind(UseCaseUsage)'
+Definition.ownedUseCase = derived("ownedUseCase", UseCaseUsage, 0, '*', lambda e: [x for x in e.ownedUsage if isinstance(x, UseCaseUsage)])
+# derive-rule for Definition.ownedView: name='ownedView', type=ViewUsage, lower=0, upper='*', rule='ownedView = ownedUsage->selectByKind(ViewUsage)'
+Definition.ownedView = derived("ownedView", ViewUsage, 0, '*', lambda e: [x for x in e.ownedUsage if isinstance(x, ViewUsage)])
+# derive-rule for Definition.ownedViewpoint: name='ownedViewpoint', type=ViewpointUsage, lower=0, upper='*', rule='ownedViewpoint = ownedUsage->selectByKind(ViewpointUsage)'
+Definition.ownedViewpoint = derived("ownedViewpoint", ViewpointUsage, 0, '*', lambda e: [x for x in e.ownedUsage if isinstance(x, ViewpointUsage)])
+# derive-rule for Definition.ownedRendering: name='ownedRendering', type=RenderingUsage, lower=0, upper='*', rule='ownedRendering = ownedUsage->selectByKind(RenderingUsage)'
+Definition.ownedRendering = derived("ownedRendering", RenderingUsage, 0, '*', lambda e: [x for x in e.ownedUsage if isinstance(x, RenderingUsage)])
+# derive-rule for Definition.ownedMetadata: name='ownedMetadata', type=MetadataUsage, lower=0, upper='*', rule='ownedMetadata = ownedUsage->selectByKind(MetadataUsage)'
+Definition.ownedMetadata = derived("ownedMetadata", MetadataUsage, 0, '*', lambda e: [x for x in e.ownedUsage if isinstance(x, MetadataUsage)])
+# derive-rule for ActionDefinition.action: name='action', type=ActionUsage, lower=0, upper='*', rule='action = usage->selectByKind(ActionUsage)'
+ActionDefinition.action = derived("action", ActionUsage, 0, '*', lambda e: [x for x in e.usage if isinstance(x, ActionUsage)])
 FlowDefinition.flowEnd = redefine(FlowDefinition, "flowEnd", Usage, _Association.associationEnd)
+# derive-rule for Usage.variant: name='variant', type=Usage, lower=0, upper='*', rule='variant = variantMembership.ownedVariantUsage'
+Usage.variant = derived("variant", Usage, 0, '*', lambda e: [*e.variantMembership[:].ownedVariantUsage] or [])
+# derive-rule for Usage.variantMembership: name='variantMembership', type=VariantMembership, lower=0, upper='*', rule='variantMembership = ownedMembership->selectByKind(VariantMembership)'
+Usage.variantMembership = derived("variantMembership", VariantMembership, 0, '*', lambda e: [x for x in e.ownedMembership if isinstance(x, VariantMembership)])
+# derive-rule for Usage.usage: name='usage', type=Usage, lower=0, upper='*', rule='usage = feature->selectByKind(Usage)'
+Usage.usage = derived("usage", Usage, 0, '*', lambda e: [x for x in e.feature if isinstance(x, Usage)])
+# derive-rule for Usage.directedUsage: name='directedUsage', type=Usage, lower=0, upper='*', rule='directedUsage = directedFeature->selectByKind(Usage)'
+Usage.directedUsage = derived("directedUsage", Usage, 0, '*', lambda e: [x for x in e.directedFeature if isinstance(x, Usage)])
+# derive-rule for Usage.nestedUsage: name='nestedUsage', type=Usage, lower=0, upper='*', rule='nestedUsage = ownedFeature->selectByKind(Usage)'
+Usage.nestedUsage = derived("nestedUsage", Usage, 0, '*', lambda e: [x for x in e.ownedFeature if isinstance(x, Usage)])
+# derive-rule for Usage.nestedReference: name='nestedReference', type=ReferenceUsage, lower=0, upper='*', rule='nestedReference = nestedUsage->selectByKind(ReferenceUsage)'
+Usage.nestedReference = derived("nestedReference", ReferenceUsage, 0, '*', lambda e: [x for x in e.nestedUsage if isinstance(x, ReferenceUsage)])
+# derive-rule for Usage.nestedAttribute: name='nestedAttribute', type=AttributeUsage, lower=0, upper='*', rule='nestedAttribute = nestedUsage->selectByKind(AttributeUsage)'
+Usage.nestedAttribute = derived("nestedAttribute", AttributeUsage, 0, '*', lambda e: [x for x in e.nestedUsage if isinstance(x, AttributeUsage)])
+# derive-rule for Usage.nestedOccurrence: name='nestedOccurrence', type=OccurrenceUsage, lower=0, upper='*', rule='nestedOccurrence = nestedUsage->selectByKind(OccurrenceUsage)'
+Usage.nestedOccurrence = derived("nestedOccurrence", OccurrenceUsage, 0, '*', lambda e: [x for x in e.nestedUsage if isinstance(x, OccurrenceUsage)])
+# derive-rule for Usage.nestedItem: name='nestedItem', type=ItemUsage, lower=0, upper='*', rule='nestedItem = nestedUsage->selectByKind(ItemUsage)'
+Usage.nestedItem = derived("nestedItem", ItemUsage, 0, '*', lambda e: [x for x in e.nestedUsage if isinstance(x, ItemUsage)])
+# derive-rule for Usage.nestedPart: name='nestedPart', type=PartUsage, lower=0, upper='*', rule='nestedPart = nestedUsage->selectByKind(PartUsage)'
+Usage.nestedPart = derived("nestedPart", PartUsage, 0, '*', lambda e: [x for x in e.nestedUsage if isinstance(x, PartUsage)])
+# derive-rule for Usage.nestedPort: name='nestedPort', type=PortUsage, lower=0, upper='*', rule='nestedPort = nestedUsage->selectByKind(PortUsage)'
+Usage.nestedPort = derived("nestedPort", PortUsage, 0, '*', lambda e: [x for x in e.nestedUsage if isinstance(x, PortUsage)])
+# derive-rule for Usage.nestedConnection: name='nestedConnection', type=ConnectorAsUsage, lower=0, upper='*', rule='nestedConnection = nestedUsage->selectByKind(ConnectorAsUsage)'
+Usage.nestedConnection = derived("nestedConnection", ConnectorAsUsage, 0, '*', lambda e: [x for x in e.nestedUsage if isinstance(x, ConnectorAsUsage)])
+# derive-rule for Usage.nestedFlow: name='nestedFlow', type=FlowUsage, lower=0, upper='*', rule='nestedFlow = nestedUsage->selectByKind(FlowConnectionUsage)'
+Usage.nestedFlow = derived("nestedFlow", FlowUsage, 0, '*', lambda e: [x for x in e.nestedUsage if isinstance(x, FlowConnectionUsage)])
+# derive-rule for Usage.nestedInterface: name='nestedInterface', type=InterfaceUsage, lower=0, upper='*', rule='nestedInterface = nestedUsage->selectByKind(ReferenceUsage)'
+Usage.nestedInterface = derived("nestedInterface", InterfaceUsage, 0, '*', lambda e: [x for x in e.nestedUsage if isinstance(x, ReferenceUsage)])
+# derive-rule for Usage.nestedAllocation: name='nestedAllocation', type=AllocationUsage, lower=0, upper='*', rule='nestedAllocation = nestedUsage->selectByKind(AllocationUsage)'
+Usage.nestedAllocation = derived("nestedAllocation", AllocationUsage, 0, '*', lambda e: [x for x in e.nestedUsage if isinstance(x, AllocationUsage)])
+# derive-rule for Usage.nestedAction: name='nestedAction', type=ActionUsage, lower=0, upper='*', rule='nestedAction = nestedUsage->selectByKind(ActionUsage)'
+Usage.nestedAction = derived("nestedAction", ActionUsage, 0, '*', lambda e: [x for x in e.nestedUsage if isinstance(x, ActionUsage)])
+# derive-rule for Usage.nestedState: name='nestedState', type=StateUsage, lower=0, upper='*', rule='nestedState = nestedUsage->selectByKind(StateUsage)'
+Usage.nestedState = derived("nestedState", StateUsage, 0, '*', lambda e: [x for x in e.nestedUsage if isinstance(x, StateUsage)])
+# derive-rule for Usage.nestedTransition: name='nestedTransition', type=TransitionUsage, lower=0, upper='*', rule='nestedTransition = nestedUsage->selectByKind(TransitionUsage)'
+Usage.nestedTransition = derived("nestedTransition", TransitionUsage, 0, '*', lambda e: [x for x in e.nestedUsage if isinstance(x, TransitionUsage)])
+# derive-rule for Usage.nestedCalculation: name='nestedCalculation', type=CalculationUsage, lower=0, upper='*', rule='nestedCalculation = nestedUsage->selectByKind(CalculationUsage)'
+Usage.nestedCalculation = derived("nestedCalculation", CalculationUsage, 0, '*', lambda e: [x for x in e.nestedUsage if isinstance(x, CalculationUsage)])
+# derive-rule for Usage.nestedConstraint: name='nestedConstraint', type=ConstraintUsage, lower=0, upper='*', rule='nestedConstraint = nestedUsage->selectByKind(ConstraintUsage)'
+Usage.nestedConstraint = derived("nestedConstraint", ConstraintUsage, 0, '*', lambda e: [x for x in e.nestedUsage if isinstance(x, ConstraintUsage)])
+# derive-rule for Usage.nestedRequirement: name='nestedRequirement', type=RequirementUsage, lower=0, upper='*', rule='nestedRequirement = nestedUsage->selectByKind(RequirementUsage)'
+Usage.nestedRequirement = derived("nestedRequirement", RequirementUsage, 0, '*', lambda e: [x for x in e.nestedUsage if isinstance(x, RequirementUsage)])
+# derive-rule for Usage.nestedConcern: name='nestedConcern', type=ConcernUsage, lower=0, upper='*', rule='nestedConcern = nestedUsage->selectByKind(ConcernUsage)'
+Usage.nestedConcern = derived("nestedConcern", ConcernUsage, 0, '*', lambda e: [x for x in e.nestedUsage if isinstance(x, ConcernUsage)])
+# derive-rule for Usage.nestedCase: name='nestedCase', type=CaseUsage, lower=0, upper='*', rule='nestedCase = nestedUsage->selectByKind(CaseUsage)'
+Usage.nestedCase = derived("nestedCase", CaseUsage, 0, '*', lambda e: [x for x in e.nestedUsage if isinstance(x, CaseUsage)])
+# derive-rule for Usage.nestedAnalysisCase: name='nestedAnalysisCase', type=AnalysisCaseUsage, lower=0, upper='*', rule='nestedAnalysisCase = nestedUsage->selectByKind(AnalysisCaseUsage)'
+Usage.nestedAnalysisCase = derived("nestedAnalysisCase", AnalysisCaseUsage, 0, '*', lambda e: [x for x in e.nestedUsage if isinstance(x, AnalysisCaseUsage)])
+# derive-rule for Usage.nestedVerificationCase: name='nestedVerificationCase', type=VerificationCaseUsage, lower=0, upper='*', rule='nestedVerificationCase = nestedUsage->selectByKind(VerificationCaseUsage)'
+Usage.nestedVerificationCase = derived("nestedVerificationCase", VerificationCaseUsage, 0, '*', lambda e: [x for x in e.nestedUsage if isinstance(x, VerificationCaseUsage)])
+# derive-rule for Usage.nestedUseCase: name='nestedUseCase', type=UseCaseUsage, lower=0, upper='*', rule='nestedUseCase = nestedUsage->selectByKind(UseCaseUsage)'
+Usage.nestedUseCase = derived("nestedUseCase", UseCaseUsage, 0, '*', lambda e: [x for x in e.nestedUsage if isinstance(x, UseCaseUsage)])
+# derive-rule for Usage.nestedView: name='nestedView', type=ViewUsage, lower=0, upper='*', rule='nestedView = nestedUsage->selectByKind(ViewUsage)'
+Usage.nestedView = derived("nestedView", ViewUsage, 0, '*', lambda e: [x for x in e.nestedUsage if isinstance(x, ViewUsage)])
+# derive-rule for Usage.nestedViewpoint: name='nestedViewpoint', type=ViewpointUsage, lower=0, upper='*', rule='nestedViewpoint = nestedUsage->selectByKind(ViewpointUsage)'
+Usage.nestedViewpoint = derived("nestedViewpoint", ViewpointUsage, 0, '*', lambda e: [x for x in e.nestedUsage if isinstance(x, ViewpointUsage)])
+# derive-rule for Usage.nestedRendering: name='nestedRendering', type=RenderingUsage, lower=0, upper='*', rule='nestedRendering = nestedUsage->selectByKind(RenderingUsage)'
+Usage.nestedRendering = derived("nestedRendering", RenderingUsage, 0, '*', lambda e: [x for x in e.nestedUsage if isinstance(x, RenderingUsage)])
+# derive-rule for Usage.nestedMetadata: name='nestedMetadata', type=MetadataUsage, lower=0, upper='*', rule='nestedMetadata = nestedUsage->selectByKind(MetadataUsage)'
+Usage.nestedMetadata = derived("nestedMetadata", MetadataUsage, 0, '*', lambda e: [x for x in e.nestedUsage if isinstance(x, MetadataUsage)])
 Usage.definition = redefine(Usage, "definition", _Classifier, _Feature.type)
-Usage.variant = subset("variant", Usage, 0, '*', None, _Namespace.ownedMember)
-Usage.variantMembership = subset("variantMembership", VariantMembership, 0, '*', None, _Namespace.ownedMembership)
 Usage.owningDefinition = subset("owningDefinition", Definition, 0, 1, None, _Feature.owningType)
 Usage.owningUsage = subset("owningUsage", Usage, 0, 1, None, _Feature.owningType)
-Usage.usage = subset("usage", Usage, 0, '*', None, _Type.feature)
-Usage.directedUsage = subset("directedUsage", Usage, 0, '*', None, _Type.directedFeature, Usage.usage)
-Usage.nestedUsage = subset("nestedUsage", Usage, 0, '*', None, _Type.ownedFeature, Usage.usage)
-Usage.nestedReference = subset("nestedReference", ReferenceUsage, 0, '*', None, Usage.nestedUsage)
-Usage.nestedAttribute = subset("nestedAttribute", AttributeUsage, 0, '*', None, Usage.nestedUsage)
-Usage.nestedOccurrence = subset("nestedOccurrence", OccurrenceUsage, 0, '*', None, Usage.nestedUsage)
-Usage.nestedPort = subset("nestedPort", PortUsage, 0, '*', None, Usage.nestedUsage)
-Usage.nestedConnection = subset("nestedConnection", ConnectorAsUsage, 0, '*', None, Usage.nestedUsage)
-Usage.nestedTransition = subset("nestedTransition", TransitionUsage, 0, '*', None, Usage.nestedUsage)
 Usage.nestedEnumeration = subset("nestedEnumeration", EnumerationUsage, 0, '*', None, Usage.nestedAttribute)
-Usage.nestedItem = subset("nestedItem", ItemUsage, 0, '*', None, Usage.nestedOccurrence)
-Usage.nestedFlow = subset("nestedFlow", FlowUsage, 0, '*', None, Usage.nestedConnection)
-Usage.nestedInterface = subset("nestedInterface", InterfaceUsage, 0, '*', None, Usage.nestedConnection)
-Usage.nestedAllocation = subset("nestedAllocation", AllocationUsage, 0, '*', None, Usage.nestedConnection)
-Usage.nestedAction = subset("nestedAction", ActionUsage, 0, '*', None, Usage.nestedOccurrence)
-Usage.nestedConstraint = subset("nestedConstraint", ConstraintUsage, 0, '*', None, Usage.nestedOccurrence)
-Usage.nestedPart = subset("nestedPart", PartUsage, 0, '*', None, Usage.nestedItem)
-Usage.nestedState = subset("nestedState", StateUsage, 0, '*', None, Usage.nestedAction)
-Usage.nestedCalculation = subset("nestedCalculation", CalculationUsage, 0, '*', None, Usage.nestedAction)
-Usage.nestedRequirement = subset("nestedRequirement", RequirementUsage, 0, '*', None, Usage.nestedConstraint)
-Usage.nestedMetadata = subset("nestedMetadata", MetadataUsage, 0, '*', None, Usage.nestedItem)
-Usage.nestedConcern = subset("nestedConcern", ConcernUsage, 0, '*', None, Usage.nestedRequirement)
-Usage.nestedCase = subset("nestedCase", CaseUsage, 0, '*', None, Usage.nestedCalculation)
-Usage.nestedView = subset("nestedView", ViewUsage, 0, '*', None, Usage.nestedPart)
-Usage.nestedViewpoint = subset("nestedViewpoint", ViewpointUsage, 0, '*', None, Usage.nestedRequirement)
-Usage.nestedRendering = subset("nestedRendering", RenderingUsage, 0, '*', None, Usage.nestedPart)
-Usage.nestedAnalysisCase = subset("nestedAnalysisCase", AnalysisCaseUsage, 0, '*', None, Usage.nestedCase)
-Usage.nestedVerificationCase = subset("nestedVerificationCase", VerificationCaseUsage, 0, '*', None, Usage.nestedCase)
-Usage.nestedUseCase = subset("nestedUseCase", UseCaseUsage, 0, '*', None, Usage.nestedCase)
+# derive-rule for OccurrenceUsage.individualDefinition: name='individualDefinition', type=OccurrenceDefinition, lower=0, upper=1, rule='individualDefinition =     let individualDefinitions : OrderedSet(OccurrenceDefinition) =          occurrenceDefinition->             selectByKind(OccurrenceDefinition)->             select(isIndividual) in     if individualDefinitions->isEmpty() then null     else individualDefinitions->first() endif'
+# no derive expression generated for OccurrenceUsage.individualDefinition; falling back to generic derivedunion
+OccurrenceUsage.individualDefinition = derivedunion("individualDefinition", OccurrenceDefinition, upper=1)
 OccurrenceUsage.occurrenceDefinition = redefine(OccurrenceUsage, "occurrenceDefinition", _Class, Usage.definition)
-OccurrenceUsage.individualDefinition = subset("individualDefinition", OccurrenceDefinition, 0, 1, None, OccurrenceUsage.occurrenceDefinition)
 ActionUsage.actionDefinition = redefine(ActionUsage, "actionDefinition", _Behavior, _Step.behavior)
 FlowUsage.flowDefinition = redefine(FlowUsage, "flowDefinition", _Interaction, ActionUsage.actionDefinition)
 EnumerationDefinition.enumeratedValue = redefine(EnumerationDefinition, "enumeratedValue", EnumerationUsage, Definition.variant)
 AttributeUsage.attributeDefinition = redefine(AttributeUsage, "attributeDefinition", _DataType, Usage.definition)
 EnumerationUsage.enumerationDefinition = redefine(EnumerationUsage, "enumerationDefinition", EnumerationDefinition, AttributeUsage.attributeDefinition)
 ConstraintUsage.constraintDefinition = redefine(ConstraintUsage, "constraintDefinition", _Predicate, _BooleanExpression.predicate)
+# derive-rule for RequirementUsage.requiredConstraint: name='requiredConstraint', type=ConstraintUsage, lower=0, upper='*', rule='requiredConstraint = ownedFeatureMembership->     selectByKind(RequirementConstraintMembership)->     select(kind = RequirementConstraintKind::requirement).     ownedConstraint'
+RequirementUsage.requiredConstraint = derived("requiredConstraint", ConstraintUsage, 0, '*', lambda e: [x for x in e.ownedFeatureMembership if isinstance(x, RequirementConstraintMembership)])
+# derive-rule for RequirementUsage.assumedConstraint: name='assumedConstraint', type=ConstraintUsage, lower=0, upper='*', rule='assumedConstraint = ownedFeatureMembership->     selectByKind(RequirementConstraintMembership)->     select(kind = RequirementConstraintKind::assumption).     ownedConstraint'
+RequirementUsage.assumedConstraint = derived("assumedConstraint", ConstraintUsage, 0, '*', lambda e: [x for x in e.ownedFeatureMembership if isinstance(x, RequirementConstraintMembership)])
+# derive-rule for RequirementUsage.subjectParameter: name='subjectParameter', type=Usage, lower=1, upper=1, rule='subjectParameter =     let subjects : OrderedSet(SubjectMembership) =          featureMembership->selectByKind(SubjectMembership) in     if subjects->isEmpty() then null     else subjects->first().ownedSubjectParameter     endif'
+# no derive expression generated for RequirementUsage.subjectParameter; falling back to generic derivedunion
+RequirementUsage.subjectParameter = derivedunion("subjectParameter", Usage, lower=1, upper=1)
+# derive-rule for RequirementUsage.framedConcern: name='framedConcern', type=ConcernUsage, lower=0, upper='*', rule='framedConcern = featureMembership-> selectByKind(FramedConcernMembership). ownedConcern'
+RequirementUsage.framedConcern = derived("framedConcern", ConcernUsage, 0, '*', lambda e: [x for x in e.featureMembership if isinstance(x, FramedConcernMembership)])
+# derive-rule for RequirementUsage.actorParameter: name='actorParameter', type=PartUsage, lower=0, upper='*', rule='actorParameter = featureMembership-> selectByKind(ActorMembership). ownedActorParameter'
+RequirementUsage.actorParameter = derived("actorParameter", PartUsage, 0, '*', lambda e: [x for x in e.featureMembership if isinstance(x, ActorMembership)])
+# derive-rule for RequirementUsage.stakeholderParameter: name='stakeholderParameter', type=PartUsage, lower=0, upper='*', rule='stakeholderParameter = featureMembership-> selectByKind(AStakholderMembership). ownedStakeholderParameter'
+RequirementUsage.stakeholderParameter = derived("stakeholderParameter", PartUsage, 0, '*', lambda e: [x for x in e.featureMembership if isinstance(x, AStakholderMembership)])
 RequirementUsage.requirementDefinition = redefine(RequirementUsage, "requirementDefinition", RequirementDefinition, ConstraintUsage.constraintDefinition)
-RequirementUsage.requiredConstraint = subset("requiredConstraint", ConstraintUsage, 0, '*', None, _Type.ownedFeature)
-RequirementUsage.assumedConstraint = subset("assumedConstraint", ConstraintUsage, 0, '*', None, _Type.ownedFeature)
-RequirementUsage.subjectParameter = subset("subjectParameter", Usage, 1, 1, None, _Step.parameter, Usage.usage)
-RequirementUsage.actorParameter = subset("actorParameter", PartUsage, 0, '*', None, _Step.parameter, Usage.usage)
-RequirementUsage.stakeholderParameter = subset("stakeholderParameter", PartUsage, 0, '*', None, _Step.parameter, Usage.usage)
-RequirementUsage.framedConcern = subset("framedConcern", ConcernUsage, 0, '*', None, RequirementUsage.requiredConstraint)
 ConcernUsage.concernDefinition = redefine(ConcernUsage, "concernDefinition", ConcernDefinition, RequirementUsage.requirementDefinition)
+# derive-rule for RequirementConstraintMembership.referencedConstraint: name='referencedConstraint', type=ConstraintUsage, lower=1, upper=1, rule='referencedConstraint =     let referencedFeature : Feature =          ownedConstraint.referencedFeatureTarget() in     if referencedFeature = null then ownedConstraint     else if referencedFeature.oclIsKindOf(ConstraintUsage) then         refrencedFeature.oclAsType(ConstraintUsage)     else null     endif endif'
+# no derive expression generated for RequirementConstraintMembership.referencedConstraint; falling back to generic derivedunion
 RequirementConstraintMembership.referencedConstraint = derivedunion("referencedConstraint", ConstraintUsage, lower=1, upper=1)
 RequirementConstraintMembership.ownedConstraint = redefine(RequirementConstraintMembership, "ownedConstraint", ConstraintUsage, _FeatureMembership.ownedMemberFeature)
 FramedConcernMembership.ownedConcern = redefine(FramedConcernMembership, "ownedConcern", ConcernUsage, RequirementConstraintMembership.ownedConstraint)
@@ -684,105 +831,216 @@ FramedConcernMembership.referencedConcern = redefine(FramedConcernMembership, "r
 ActorMembership.ownedActorParameter = redefine(ActorMembership, "ownedActorParameter", PartUsage, _ParameterMembership.ownedMemberParameter)
 StakeholderMembership.ownedStakeholderParameter = redefine(StakeholderMembership, "ownedStakeholderParameter", PartUsage, _ParameterMembership.ownedMemberParameter)
 SubjectMembership.ownedSubjectParameter = redefine(SubjectMembership, "ownedSubjectParameter", Usage, _ParameterMembership.ownedMemberParameter)
-RequirementDefinition.subjectParameter = subset("subjectParameter", Usage, 1, 1, None, _Behavior.parameter, Definition.usage)
-RequirementDefinition.actorParameter = subset("actorParameter", PartUsage, 0, '*', None, _Behavior.parameter, Definition.usage)
-RequirementDefinition.stakeholderParameter = subset("stakeholderParameter", PartUsage, 0, '*', None, _Behavior.parameter, Definition.usage)
-RequirementDefinition.assumedConstraint = subset("assumedConstraint", ConstraintUsage, 0, '*', None, _Type.ownedFeature)
-RequirementDefinition.requiredConstraint = subset("requiredConstraint", ConstraintUsage, 0, '*', None, _Type.ownedFeature)
-RequirementDefinition.framedConcern = subset("framedConcern", ConcernUsage, 0, '*', None, RequirementDefinition.requiredConstraint)
+# derive-rule for RequirementDefinition.subjectParameter: name='subjectParameter', type=Usage, lower=1, upper=1, rule='subjectParameter =     let subjects : OrderedSet(SubjectMembership) =          featureMembership->selectByKind(SubjectMembership) in     if subjects->isEmpty() then null     else subjects->first().ownedSubjectParameter     endif'
+# no derive expression generated for RequirementDefinition.subjectParameter; falling back to generic derivedunion
+RequirementDefinition.subjectParameter = derivedunion("subjectParameter", Usage, lower=1, upper=1)
+# derive-rule for RequirementDefinition.actorParameter: name='actorParameter', type=PartUsage, lower=0, upper='*', rule='actorParameter = featureMembership-> selectByKind(ActorMembership). ownedActorParameter'
+RequirementDefinition.actorParameter = derived("actorParameter", PartUsage, 0, '*', lambda e: [x for x in e.featureMembership if isinstance(x, ActorMembership)])
+# derive-rule for RequirementDefinition.stakeholderParameter: name='stakeholderParameter', type=PartUsage, lower=0, upper='*', rule='stakeholderParameter = featureMembership->     selectByKind(StakholderMembership).     ownedStakeholderParameter'
+RequirementDefinition.stakeholderParameter = derived("stakeholderParameter", PartUsage, 0, '*', lambda e: [x for x in e.featureMembership if isinstance(x, StakholderMembership)])
+# derive-rule for RequirementDefinition.assumedConstraint: name='assumedConstraint', type=ConstraintUsage, lower=0, upper='*', rule='assumedConstraint = ownedFeatureMembership->     selectByKind(RequirementConstraintMembership)->     select(kind = RequirementConstraintKind::assumption).     ownedConstraint'
+RequirementDefinition.assumedConstraint = derived("assumedConstraint", ConstraintUsage, 0, '*', lambda e: [x for x in e.ownedFeatureMembership if isinstance(x, RequirementConstraintMembership)])
+# derive-rule for RequirementDefinition.requiredConstraint: name='requiredConstraint', type=ConstraintUsage, lower=0, upper='*', rule='requiredConstraint = ownedFeatureMembership->     selectByKind(RequirementConstraintMembership)->     select(kind = RequirementConstraintKind::requirement).     ownedConstraint'
+RequirementDefinition.requiredConstraint = derived("requiredConstraint", ConstraintUsage, 0, '*', lambda e: [x for x in e.ownedFeatureMembership if isinstance(x, RequirementConstraintMembership)])
+# derive-rule for RequirementDefinition.framedConcern: name='framedConcern', type=ConcernUsage, lower=0, upper='*', rule='framedConcern = featureMembership-> selectByKind(FramedConcernMembership). ownedConcern'
+RequirementDefinition.framedConcern = derived("framedConcern", ConcernUsage, 0, '*', lambda e: [x for x in e.featureMembership if isinstance(x, FramedConcernMembership)])
+# derive-rule for AssertConstraintUsage.assertedConstraint: name='assertedConstraint', type=ConstraintUsage, lower=1, upper=1, rule='assertedConstraint =     if referencedFeatureTarget() = null then self     else if referencedFeatureTarget().oclIsKindOf(ConstraintUsage) then         referencedFeatureTarget().oclAsType(ConstraintUsage)     else null     endif endif'
+# no derive expression generated for AssertConstraintUsage.assertedConstraint; falling back to generic derivedunion
 AssertConstraintUsage.assertedConstraint = derivedunion("assertedConstraint", ConstraintUsage, lower=1, upper=1)
+# derive-rule for SatisfyRequirementUsage.satisfyingFeature: name='satisfyingFeature', type=_Feature, lower=1, upper=1, rule='satisfyingFeature =     let bindings: BindingConnector = ownedMember->         selectByKind(BindingConnector)->         select(b | b.relatedElement->includes(subjectParameter)) in     if bindings->isEmpty() or         bindings->first().relatedElement->exits(r | r <> subjectParameter)      then null     else bindings->first().relatedElement->any(r | r <> subjectParameter)     endif'
+# no derive expression generated for SatisfyRequirementUsage.satisfyingFeature; falling back to generic derivedunion
 SatisfyRequirementUsage.satisfyingFeature = derivedunion("satisfyingFeature", _Feature, lower=1, upper=1)
 SatisfyRequirementUsage.satisfiedRequirement = redefine(SatisfyRequirementUsage, "satisfiedRequirement", RequirementUsage, AssertConstraintUsage.assertedConstraint)
-CalculationDefinition.calculation = subset("calculation", CalculationUsage, 0, '*', None, ActionDefinition.action, _Function.expression)
+# derive-rule for CalculationDefinition.calculation: name='calculation', type=CalculationUsage, lower=0, upper='*', rule='calculation = action->selectByKind(CalculationUsage)'
+CalculationDefinition.calculation = derived("calculation", CalculationUsage, 0, '*', lambda e: [x for x in e.action if isinstance(x, CalculationUsage)])
 CalculationUsage.calculationDefinition = redefine(CalculationUsage, "calculationDefinition", _Function, _Expression.function)
-ItemUsage.itemDefinition = subset("itemDefinition", _Structure, 0, '*', None, OccurrenceUsage.occurrenceDefinition)
+# derive-rule for ItemUsage.itemDefinition: name='itemDefinition', type=_Structure, lower=0, upper='*', rule='itemDefinition = occurrenceDefinition->selectByKind(Structure)'
+ItemUsage.itemDefinition = derived("itemDefinition", _Structure, 0, '*', lambda e: [x for x in e.occurrenceDefinition if isinstance(x, Structure)])
 MetadataUsage.metadataDefinition = redefine(MetadataUsage, "metadataDefinition", _Metaclass, ItemUsage.itemDefinition)
+# derive-rule for CaseUsage.objectiveRequirement: name='objectiveRequirement', type=RequirementUsage, lower=0, upper=1, rule='objectiveRequirement =      let objectives: OrderedSet(RequirementUsage) =          featureMembership->             selectByKind(ObjectiveMembership).             ownedRequirement in     if objectives->isEmpty() then null     else objectives->first().ownedObjectiveRequirement     endif'
+# no derive expression generated for CaseUsage.objectiveRequirement; falling back to generic derivedunion
+CaseUsage.objectiveRequirement = derivedunion("objectiveRequirement", RequirementUsage, upper=1)
+# derive-rule for CaseUsage.subjectParameter: name='subjectParameter', type=Usage, lower=1, upper=1, rule='subjectParameter =     let subjects : OrderedSet(SubjectMembership) =          featureMembership->selectByKind(SubjectMembership) in     if subjects->isEmpty() then null     else subjects->first().ownedSubjectParameter     endif'
+# no derive expression generated for CaseUsage.subjectParameter; falling back to generic derivedunion
+CaseUsage.subjectParameter = derivedunion("subjectParameter", Usage, lower=1, upper=1)
+# derive-rule for CaseUsage.actorParameter: name='actorParameter', type=PartUsage, lower=0, upper='*', rule='actorParameter = featureMembership-> selectByKind(ActorMembership). ownedActorParameter'
+CaseUsage.actorParameter = derived("actorParameter", PartUsage, 0, '*', lambda e: [x for x in e.featureMembership if isinstance(x, ActorMembership)])
 CaseUsage.caseDefinition = redefine(CaseUsage, "caseDefinition", CaseDefinition, CalculationUsage.calculationDefinition)
-CaseUsage.objectiveRequirement = subset("objectiveRequirement", RequirementUsage, 0, 1, None, Usage.usage)
-CaseUsage.subjectParameter = subset("subjectParameter", Usage, 1, 1, None, _Step.parameter, Usage.usage)
-CaseUsage.actorParameter = subset("actorParameter", PartUsage, 0, '*', None, _Step.parameter, Usage.usage)
-CaseDefinition.objectiveRequirement = subset("objectiveRequirement", RequirementUsage, 0, 1, None, Definition.usage)
-CaseDefinition.subjectParameter = subset("subjectParameter", Usage, 1, 1, None, _Behavior.parameter, Definition.usage)
-CaseDefinition.actorParameter = subset("actorParameter", PartUsage, 0, '*', None, _Behavior.parameter, Definition.usage)
+# derive-rule for CaseDefinition.objectiveRequirement: name='objectiveRequirement', type=RequirementUsage, lower=0, upper=1, rule='objectiveRequirement =      let objectives: OrderedSet(RequirementUsage) =          featureMembership->             selectByKind(ObjectiveMembership).             ownedRequirement in     if objectives->isEmpty() then null     else objectives->first().ownedObjectiveRequirement     endif'
+# no derive expression generated for CaseDefinition.objectiveRequirement; falling back to generic derivedunion
+CaseDefinition.objectiveRequirement = derivedunion("objectiveRequirement", RequirementUsage, upper=1)
+# derive-rule for CaseDefinition.subjectParameter: name='subjectParameter', type=Usage, lower=1, upper=1, rule='subjectParameter =     let subjectMems : OrderedSet(SubjectMembership) =          featureMembership->selectByKind(SubjectMembership) in     if subjectMems->isEmpty() then null     else subjectMems->first().ownedSubjectParameter     endif'
+# no derive expression generated for CaseDefinition.subjectParameter; falling back to generic derivedunion
+CaseDefinition.subjectParameter = derivedunion("subjectParameter", Usage, lower=1, upper=1)
+# derive-rule for CaseDefinition.actorParameter: name='actorParameter', type=PartUsage, lower=0, upper='*', rule='actorParameter = featureMembership-> selectByKind(ActorMembership). ownedActorParameter'
+CaseDefinition.actorParameter = derived("actorParameter", PartUsage, 0, '*', lambda e: [x for x in e.featureMembership if isinstance(x, ActorMembership)])
 ObjectiveMembership.ownedObjectiveRequirement = redefine(ObjectiveMembership, "ownedObjectiveRequirement", RequirementUsage, _FeatureMembership.ownedMemberFeature)
 TransitionFeatureMembership.transitionFeature = redefine(TransitionFeatureMembership, "transitionFeature", _Step, _FeatureMembership.ownedMemberFeature)
+# derive-rule for EventOccurrenceUsage.eventOccurrence: name='eventOccurrence', type=OccurrenceUsage, lower=1, upper=1, rule='eventOccurrence =     if referencedFeatureTarget() = null then self     else if referencedFeatureTarget().oclIsKindOf(OccurrenceUsage) then         referencedFeatureTarget().oclAsType(OccurrenceUsage)     else null     endif endif'
+# no derive expression generated for EventOccurrenceUsage.eventOccurrence; falling back to generic derivedunion
 EventOccurrenceUsage.eventOccurrence = derivedunion("eventOccurrence", OccurrenceUsage, lower=1, upper=1)
 PerformActionUsage.performedAction = redefine(PerformActionUsage, "performedAction", ActionUsage, EventOccurrenceUsage.eventOccurrence)
+# derive-rule for StateUsage.entryAction: name='entryAction', type=ActionUsage, lower=0, upper=1, rule='entryAction =     let entryMemberships : Sequence(StateSubactionMembership) =         ownedMembership->             selectByKind(StateSubactionMembership)->             select(kind = StateSubactionKind::entry) in     if entryMemberships->isEmpty() then null     else entryMemberships->at(1)     endif'
+# no derive expression generated for StateUsage.entryAction; falling back to generic derivedunion
 StateUsage.entryAction = derivedunion("entryAction", ActionUsage, upper=1)
+# derive-rule for StateUsage.doAction: name='doAction', type=ActionUsage, lower=0, upper=1, rule='doAction =     let doMemberships : Sequence(StateSubactionMembership) =         ownedMembership->             selectByKind(StateSubactionMembership)->             select(kind = StateSubactionKind::do) in     if doMemberships->isEmpty() then null     else doMemberships->at(1)     endif'
+# no derive expression generated for StateUsage.doAction; falling back to generic derivedunion
 StateUsage.doAction = derivedunion("doAction", ActionUsage, upper=1)
+# derive-rule for StateUsage.exitAction: name='exitAction', type=ActionUsage, lower=0, upper=1, rule='exitAction =     let exitMemberships : Sequence(StateSubactionMembership) =         ownedMembership->             selectByKind(StateSubactionMembership)->             select(kind = StateSubactionKind::exit) in     if exitMemberships->isEmpty() then null     else exitMemberships->at(1)     endif'
+# no derive expression generated for StateUsage.exitAction; falling back to generic derivedunion
 StateUsage.exitAction = derivedunion("exitAction", ActionUsage, upper=1)
 StateUsage.stateDefinition = redefine(StateUsage, "stateDefinition", _Behavior, ActionUsage.actionDefinition)
 ExhibitStateUsage.exhibitedState = redefine(ExhibitStateUsage, "exhibitedState", StateUsage, PerformActionUsage.performedAction)
 StateSubactionMembership.action = redefine(StateSubactionMembership, "action", ActionUsage, _FeatureMembership.ownedMemberFeature)
+# derive-rule for StateDefinition.state: name='state', type=StateUsage, lower=0, upper='*', rule='state = action->selectByKind(StateUsage)'
+StateDefinition.state = derived("state", StateUsage, 0, '*', lambda e: [x for x in e.action if isinstance(x, StateUsage)])
+# derive-rule for StateDefinition.entryAction: name='entryAction', type=ActionUsage, lower=0, upper=1, rule='entryAction =     let entryMemberships : Sequence(StateSubactionMembership) =         ownedMembership->             selectByKind(StateSubactionMembership)->             select(kind = StateSubactionKind::entry) in     if entryMemberships->isEmpty() then null     else entryMemberships->at(1)     endif'
+# no derive expression generated for StateDefinition.entryAction; falling back to generic derivedunion
 StateDefinition.entryAction = derivedunion("entryAction", ActionUsage, upper=1)
+# derive-rule for StateDefinition.doAction: name='doAction', type=ActionUsage, lower=0, upper=1, rule='doAction =     let doMemberships : Sequence(StateSubactionMembership) =         ownedMembership->             selectByKind(StateSubactionMembership)->             select(kind = StateSubactionKind::do) in     if doMemberships->isEmpty() then null     else doMemberships->at(1)     endif'
+# no derive expression generated for StateDefinition.doAction; falling back to generic derivedunion
 StateDefinition.doAction = derivedunion("doAction", ActionUsage, upper=1)
+# derive-rule for StateDefinition.exitAction: name='exitAction', type=ActionUsage, lower=0, upper=1, rule='exitAction =      let exitMemberships : Sequence(StateSubactionMembership) =         ownedMembership->             selectByKind(StateSubactionMembership)->             select(kind = StateSubactionKind::exit) in     if exitMemberships->isEmpty() then null     else exitMemberships->at(1)     endif'
+# no derive expression generated for StateDefinition.exitAction; falling back to generic derivedunion
 StateDefinition.exitAction = derivedunion("exitAction", ActionUsage, upper=1)
-StateDefinition.state = subset("state", StateUsage, 0, '*', None, ActionDefinition.action)
+# derive-rule for TransitionUsage.source: name='source', type=ActionUsage, lower=1, upper=1, rule='source =     let sourceFeature : Feature = sourceFeature() in     if sourceFeature = null then null     else sourceFeature.featureTarget.oclAsType(ActionUsage)'
+# no derive expression generated for TransitionUsage.source; falling back to generic derivedunion
 TransitionUsage.source = derivedunion("source", ActionUsage, lower=1, upper=1)
+# derive-rule for TransitionUsage.target: name='target', type=ActionUsage, lower=1, upper=1, rule='target =     if succession.targetFeature->isEmpty() then null     else         let targetFeature : Feature =             succession.targetFeature->first().featureTarget in         if not targetFeature.oclIsKindOf(ActionUsage) then null         else targetFeature.oclAsType(ActionUsage)         endif     endif'
+# no derive expression generated for TransitionUsage.target; falling back to generic derivedunion
 TransitionUsage.target = derivedunion("target", ActionUsage, lower=1, upper=1)
-TransitionUsage.triggerAction = subset("triggerAction", AcceptActionUsage, 0, '*', None, _Type.ownedFeature)
-TransitionUsage.guardExpression = subset("guardExpression", _Expression, 0, '*', None, _Type.ownedFeature)
+# derive-rule for TransitionUsage.triggerAction: name='triggerAction', type=AcceptActionUsage, lower=0, upper='*', rule='triggerAction = ownedFeatureMembership->     selectByKind(TransitionFeatureMembership)->     select(kind = TransitionFeatureKind::trigger).transitionFeatures->     selectByKind(AcceptActionUsage)'
+TransitionUsage.triggerAction = derived("triggerAction", AcceptActionUsage, 0, '*', lambda e: [x for x in e.ownedFeatureMembership if isinstance(x, TransitionFeatureMembership)])
+# derive-rule for TransitionUsage.guardExpression: name='guardExpression', type=_Expression, lower=0, upper='*', rule='guardExpression = ownedFeatureMembership->     selectByKind(TransitionFeatureMembership)->     select(kind = TransitionFeatureKind::trigger).transitionFeature->     selectByKind(Expression)'
+TransitionUsage.guardExpression = derived("guardExpression", _Expression, 0, '*', lambda e: [x for x in e.ownedFeatureMembership if isinstance(x, TransitionFeatureMembership)])
+# derive-rule for TransitionUsage.succession: name='succession', type=_Succession, lower=1, upper=1, rule='succession = ownedMember->selectByKind(Succession)->at(1)'
+TransitionUsage.succession = derived("succession", _Succession, 1, 1, lambda e: [x for x in e.ownedMember if isinstance(x, Succession)])
 TransitionUsage.effectAction = subset("effectAction", ActionUsage, 0, '*', None, _Type.feature)
-TransitionUsage.succession = subset("succession", _Succession, 1, 1, None, _Namespace.ownedMember)
-UseCaseUsage.includedUseCase = derivedunion("includedUseCase", UseCaseUsage)
+# derive-rule for UseCaseUsage.includedUseCase: name='includedUseCase', type=UseCaseUsage, lower=0, upper='*', rule='includedUseCase = ownedUseCase-> selectByKind(IncludeUseCaseUsage). useCaseIncluded'
+UseCaseUsage.includedUseCase = derived("includedUseCase", UseCaseUsage, 0, '*', lambda e: [x for x in e.ownedUseCase if isinstance(x, IncludeUseCaseUsage)])
 UseCaseUsage.useCaseDefinition = redefine(UseCaseUsage, "useCaseDefinition", UseCaseDefinition, CaseUsage.caseDefinition)
 IncludeUseCaseUsage.useCaseIncluded = redefine(IncludeUseCaseUsage, "useCaseIncluded", UseCaseUsage, PerformActionUsage.performedAction)
-UseCaseDefinition.includedUseCase = derivedunion("includedUseCase", UseCaseUsage)
+# derive-rule for UseCaseDefinition.includedUseCase: name='includedUseCase', type=UseCaseUsage, lower=0, upper='*', rule='includedUseCase = ownedUseCase-> selectByKind(IncludeUseCaseUsage). useCaseIncluded'
+UseCaseDefinition.includedUseCase = derived("includedUseCase", UseCaseUsage, 0, '*', lambda e: [x for x in e.ownedUseCase if isinstance(x, IncludeUseCaseUsage)])
+# derive-rule for AssignmentActionUsage.targetArgument: name='targetArgument', type=_Expression, lower=0, upper=1, rule='targetArgument = argument(1)'
+# no derive expression generated for AssignmentActionUsage.targetArgument; falling back to generic derivedunion
 AssignmentActionUsage.targetArgument = derivedunion("targetArgument", _Expression, upper=1)
+# derive-rule for AssignmentActionUsage.valueExpression: name='valueExpression', type=_Expression, lower=0, upper=1, rule='valueExpression = argument(2)'
+# no derive expression generated for AssignmentActionUsage.valueExpression; falling back to generic derivedunion
 AssignmentActionUsage.valueExpression = derivedunion("valueExpression", _Expression, upper=1)
-AssignmentActionUsage.referent = subset("referent", _Feature, 1, 1, None, _Namespace.member)
+# derive-rule for AssignmentActionUsage.referent: name='referent', type=_Feature, lower=1, upper=1, rule='referent =     let unownedFeatures : Sequence(Feature) = ownedMembership->         reject(oclIsKindOf(FeatureMembership)).memberElement->         selectByKind(Feature) in     if unownedFeatures->isEmpty() then null     else unownedFeatures->first().oclAsType(Feature)     endif'
+# no derive expression generated for AssignmentActionUsage.referent; falling back to generic derivedunion
+AssignmentActionUsage.referent = derivedunion("referent", _Feature, lower=1, upper=1)
+# derive-rule for LoopActionUsage.bodyAction: name='bodyAction', type=ActionUsage, lower=1, upper=1, rule='bodyAction =     let parameter : Feature = inputParameter(2) in     if parameter <> null and parameter.oclIsKindOf(Action) then         parameter.oclAsType(Action)     else         null     endif'
+# no derive expression generated for LoopActionUsage.bodyAction; falling back to generic derivedunion
 LoopActionUsage.bodyAction = derivedunion("bodyAction", ActionUsage, lower=1, upper=1)
+# derive-rule for ForLoopActionUsage.seqArgument: name='seqArgument', type=_Expression, lower=1, upper=1, rule='seqArgument = argument(1)'
+# no derive expression generated for ForLoopActionUsage.seqArgument; falling back to generic derivedunion
 ForLoopActionUsage.seqArgument = derivedunion("seqArgument", _Expression, lower=1, upper=1)
+# derive-rule for ForLoopActionUsage.loopVariable: name='loopVariable', type=ReferenceUsage, lower=1, upper=1, rule='loopVariable =     if ownedFeature->isEmpty() or          not ownedFeature->first().oclIsKindOf(ReferenceUsage) then          null     else          ownedFeature->first().oclAsType(ReferenceUsage)     endif'
+# no derive expression generated for ForLoopActionUsage.loopVariable; falling back to generic derivedunion
 ForLoopActionUsage.loopVariable = derivedunion("loopVariable", ReferenceUsage, lower=1, upper=1)
+# derive-rule for TerminateActionUsage.terminatedOccurrenceArgument: name='terminatedOccurrenceArgument', type=_Expression, lower=0, upper=1, rule='terminatedOccurrenceArgument = argument(1)'
+# no derive expression generated for TerminateActionUsage.terminatedOccurrenceArgument; falling back to generic derivedunion
 TerminateActionUsage.terminatedOccurrenceArgument = derivedunion("terminatedOccurrenceArgument", _Expression, upper=1)
+# derive-rule for AcceptActionUsage.receiverArgument: name='receiverArgument', type=_Expression, lower=0, upper=1, rule='receiverArgument = argument(2)'
+# no derive expression generated for AcceptActionUsage.receiverArgument; falling back to generic derivedunion
 AcceptActionUsage.receiverArgument = derivedunion("receiverArgument", _Expression, upper=1)
+# derive-rule for AcceptActionUsage.payloadParameter: name='payloadParameter', type=ReferenceUsage, lower=1, upper=1, rule='payloadParameter = if parameter->isEmpty() then null else parameter->first() endif'
+# no derive expression generated for AcceptActionUsage.payloadParameter; falling back to generic derivedunion
+AcceptActionUsage.payloadParameter = derivedunion("payloadParameter", ReferenceUsage, lower=1, upper=1)
+# derive-rule for AcceptActionUsage.payloadArgument: name='payloadArgument', type=_Expression, lower=0, upper=1, rule='payloadArgument = argument(1)'
+# no derive expression generated for AcceptActionUsage.payloadArgument; falling back to generic derivedunion
 AcceptActionUsage.payloadArgument = derivedunion("payloadArgument", _Expression, upper=1)
-AcceptActionUsage.payloadParameter = subset("payloadParameter", ReferenceUsage, 1, 1, None, Usage.nestedReference, _Step.parameter)
+# derive-rule for WhileLoopActionUsage.whileArgument: name='whileArgument', type=_Expression, lower=1, upper=1, rule='whileArgument =     let parameter : Feature = inputParameter(1) in     if parameter <> null and parameter.oclIsKindOf(Expression) then         parameter.oclAsType(Expression)     else         null     endif'
+# no derive expression generated for WhileLoopActionUsage.whileArgument; falling back to generic derivedunion
 WhileLoopActionUsage.whileArgument = derivedunion("whileArgument", _Expression, lower=1, upper=1)
+# derive-rule for WhileLoopActionUsage.untilArgument: name='untilArgument', type=_Expression, lower=0, upper=1, rule='untilArgument =     let parameter : Feature = inputParameter(3) in     if parameter <> null and parameter.oclIsKindOf(Expression) then         parameter.oclAsType(Expression)     else         null     endif'
+# no derive expression generated for WhileLoopActionUsage.untilArgument; falling back to generic derivedunion
 WhileLoopActionUsage.untilArgument = derivedunion("untilArgument", _Expression, upper=1)
+# derive-rule for SendActionUsage.receiverArgument: name='receiverArgument', type=_Expression, lower=0, upper=1, rule='receiverArgument = argument(3)'
+# no derive expression generated for SendActionUsage.receiverArgument; falling back to generic derivedunion
 SendActionUsage.receiverArgument = derivedunion("receiverArgument", _Expression, upper=1)
+# derive-rule for SendActionUsage.payloadArgument: name='payloadArgument', type=_Expression, lower=1, upper=1, rule='payloadArgument = argument(1)'
+# no derive expression generated for SendActionUsage.payloadArgument; falling back to generic derivedunion
 SendActionUsage.payloadArgument = derivedunion("payloadArgument", _Expression, lower=1, upper=1)
+# derive-rule for SendActionUsage.senderArgument: name='senderArgument', type=_Expression, lower=0, upper=1, rule='senderArgument = argument(2)'
+# no derive expression generated for SendActionUsage.senderArgument; falling back to generic derivedunion
 SendActionUsage.senderArgument = derivedunion("senderArgument", _Expression, upper=1)
+# derive-rule for IfActionUsage.elseAction: name='elseAction', type=ActionUsage, lower=0, upper=1, rule='elseAction =      let parameter : Feature = inputParameter(3) in     if parameter <> null and parameter.oclIsKindOf(ActionUsage) then         parameter.oclAsType(ActionUsage)     else         null     endif'
+# no derive expression generated for IfActionUsage.elseAction; falling back to generic derivedunion
 IfActionUsage.elseAction = derivedunion("elseAction", ActionUsage, upper=1)
+# derive-rule for IfActionUsage.thenAction: name='thenAction', type=ActionUsage, lower=1, upper=1, rule='thenAction =      let parameter : Feature = inputParameter(2) in     if parameter <> null and parameter.oclIsKindOf(ActionUsage) then         parameter.oclAsType(ActionUsage)     else         null     endif'
+# no derive expression generated for IfActionUsage.thenAction; falling back to generic derivedunion
 IfActionUsage.thenAction = derivedunion("thenAction", ActionUsage, lower=1, upper=1)
+# derive-rule for IfActionUsage.ifArgument: name='ifArgument', type=_Expression, lower=1, upper=1, rule='ifArgument =      let parameter : Feature = inputParameter(1) in     if parameter <> null and parameter.oclIsKindOf(Expression) then         parameter.oclAsType(Expression)     else         null     endif'
+# no derive expression generated for IfActionUsage.ifArgument; falling back to generic derivedunion
 IfActionUsage.ifArgument = derivedunion("ifArgument", _Expression, lower=1, upper=1)
 VariantMembership.ownedVariantUsage = redefine(VariantMembership, "ownedVariantUsage", Usage, _OwningMembership.ownedMemberElement)
 PartUsage.partDefinition = subset("partDefinition", PartDefinition, 0, '*', None, ItemUsage.itemDefinition)
+# derive-rule for AnalysisCaseUsage.resultExpression: name='resultExpression', type=_Expression, lower=0, upper=1, rule='resultExpression =     let results : OrderedSet(ResultExpressionMembership) =         featureMembersip->             selectByKind(ResultExpressionMembership) in     if results->isEmpty() then null     else results->first().ownedResultExpression     endif'
+# no derive expression generated for AnalysisCaseUsage.resultExpression; falling back to generic derivedunion
+AnalysisCaseUsage.resultExpression = derivedunion("resultExpression", _Expression, upper=1)
 AnalysisCaseUsage.analysisCaseDefinition = redefine(AnalysisCaseUsage, "analysisCaseDefinition", AnalysisCaseDefinition, CaseUsage.caseDefinition)
-AnalysisCaseUsage.resultExpression = subset("resultExpression", _Expression, 0, 1, None, _Type.ownedFeature)
-AnalysisCaseDefinition.resultExpression = subset("resultExpression", _Expression, 0, 1, None, _Function.expression, _Type.ownedFeature)
+# derive-rule for AnalysisCaseDefinition.resultExpression: name='resultExpression', type=_Expression, lower=0, upper=1, rule='resultExpression =     let results : OrderedSet(ResultExpressionMembership) =         featureMembersip->             selectByKind(ResultExpressionMembership) in     if results->isEmpty() then null     else results->first().ownedResultExpression     endif'
+# no derive expression generated for AnalysisCaseDefinition.resultExpression; falling back to generic derivedunion
+AnalysisCaseDefinition.resultExpression = derivedunion("resultExpression", _Expression, upper=1)
 PortConjugation.originalPortDefinition = redefine(PortConjugation, "originalPortDefinition", PortDefinition, _Conjugation.originalType)
 PortConjugation.conjugatedPortDefinition = redefine(PortConjugation, "conjugatedPortDefinition", ConjugatedPortDefinition, _Conjugation.owningType, opposite="ownedPortConjugator")
-PortDefinition.conjugatedPortDefinition = subset("conjugatedPortDefinition", ConjugatedPortDefinition, 0, 1, None, _Namespace.ownedMember)
+# derive-rule for PortDefinition.conjugatedPortDefinition: name='conjugatedPortDefinition', type=ConjugatedPortDefinition, lower=0, upper=1, rule='conjugatedPortDefinition =  let conjugatedPortDefinitions : OrderedSet(ConjugatedPortDefinition) =     ownedMember->selectByKind(ConjugatedPortDefinition) in if conjugatedPortDefinitions->isEmpty() then null else conjugatedPortDefinitions->first() endif'
+# no derive expression generated for PortDefinition.conjugatedPortDefinition; falling back to generic derivedunion
+PortDefinition.conjugatedPortDefinition = derivedunion("conjugatedPortDefinition", ConjugatedPortDefinition, upper=1)
 ConjugatedPortDefinition.originalPortDefinition = redefine(ConjugatedPortDefinition, "originalPortDefinition", PortDefinition, _Element.owningNamespace, opposite="conjugatedPortDefinition")
 ConjugatedPortDefinition.ownedPortConjugator = redefine(ConjugatedPortDefinition, "ownedPortConjugator", PortConjugation, _Type.ownedConjugator, opposite="conjugatedPortDefinition")
-ConjugatedPortTyping.portDefinition = derivedunion("portDefinition", PortDefinition, lower=1, upper=1)
+# derive-rule for ConjugatedPortTyping.portDefinition: name='portDefinition', type=PortDefinition, lower=1, upper=1, rule='portDefinition = conjugatedPortDefinition.originalPortDefinition'
+ConjugatedPortTyping.portDefinition = derived("portDefinition", PortDefinition, 1, 1, lambda e: e.conjugatedPortDefinition and [e.conjugatedPortDefinition.originalPortDefinition] or [None])
 ConjugatedPortTyping.conjugatedPortDefinition = redefine(ConjugatedPortTyping, "conjugatedPortDefinition", ConjugatedPortDefinition, _FeatureTyping.type)
 PortUsage.portDefinition = redefine(PortUsage, "portDefinition", PortDefinition, OccurrenceUsage.occurrenceDefinition)
+# derive-rule for ViewUsage.satisfiedViewpoint: name='satisfiedViewpoint', type=ViewpointUsage, lower=0, upper='*', rule='satisfiedViewpoint = ownedRequirement-> selectByKind(ViewpointUsage)-> select(isComposite)'
+ViewUsage.satisfiedViewpoint = derived("satisfiedViewpoint", ViewpointUsage, 0, '*', lambda e: [x for x in e.ownedRequirement if isinstance(x, ViewpointUsage)])
+# derive-rule for ViewUsage.exposedElement: name='exposedElement', type=_Element, lower=0, upper='*', rule='exposedElement = ownedImport->selectByKind(Expose).     importedMemberships(Set{}).memberElement->     select(elm | includeAsExposed(elm))->     asOrderedSet()'
+ViewUsage.exposedElement = derived("exposedElement", _Element, 0, '*', lambda e: [x for x in e.ownedImport if isinstance(x, Expose)])
+# derive-rule for ViewUsage.viewRendering: name='viewRendering', type=RenderingUsage, lower=0, upper=1, rule='viewRendering =     let renderings: OrderedSet(ViewRenderingMembership) =         featureMembership->selectByKind(ViewRenderingMembership) in     if renderings->isEmpty() then null     else renderings->first().referencedRendering     endif'
+# no derive expression generated for ViewUsage.viewRendering; falling back to generic derivedunion
 ViewUsage.viewRendering = derivedunion("viewRendering", RenderingUsage, upper=1)
+# derive-rule for ViewUsage.viewCondition: name='viewCondition', type=_Expression, lower=0, upper='*', rule='viewCondition = ownedMembership-> selectByKind(ElementFilterMembership). condition'
+ViewUsage.viewCondition = derived("viewCondition", _Expression, 0, '*', lambda e: [x for x in e.ownedMembership if isinstance(x, ElementFilterMembership)])
 ViewUsage.viewDefinition = redefine(ViewUsage, "viewDefinition", ViewDefinition, PartUsage.partDefinition)
-ViewUsage.satisfiedViewpoint = subset("satisfiedViewpoint", ViewpointUsage, 0, '*', None, Usage.nestedRequirement)
-ViewUsage.exposedElement = subset("exposedElement", _Element, 0, '*', None, _Namespace.member)
-ViewUsage.viewCondition = subset("viewCondition", _Expression, 0, '*', None, _Namespace.ownedMember)
+# derive-rule for ViewDefinition.view: name='view', type=ViewUsage, lower=0, upper='*', rule='view = usage->selectByKind(ViewUsage)'
+ViewDefinition.view = derived("view", ViewUsage, 0, '*', lambda e: [x for x in e.usage if isinstance(x, ViewUsage)])
+# derive-rule for ViewDefinition.satisfiedViewpoint: name='satisfiedViewpoint', type=ViewpointUsage, lower=0, upper='*', rule='satisfiedViewpoint = ownedRequirement-> selectByKind(ViewpointUsage)-> select(isComposite)'
+ViewDefinition.satisfiedViewpoint = derived("satisfiedViewpoint", ViewpointUsage, 0, '*', lambda e: [x for x in e.ownedRequirement if isinstance(x, ViewpointUsage)])
+# derive-rule for ViewDefinition.viewRendering: name='viewRendering', type=RenderingUsage, lower=0, upper=1, rule='viewRendering =     let renderings: OrderedSet(ViewRenderingMembership) =         featureMembership->selectByKind(ViewRenderingMembership) in     if renderings->isEmpty() then null     else renderings->first().referencedRendering     endif'
+# no derive expression generated for ViewDefinition.viewRendering; falling back to generic derivedunion
 ViewDefinition.viewRendering = derivedunion("viewRendering", RenderingUsage, upper=1)
-ViewDefinition.view = subset("view", ViewUsage, 0, '*', None, Definition.usage)
-ViewDefinition.satisfiedViewpoint = subset("satisfiedViewpoint", ViewpointUsage, 0, '*', None, Definition.ownedRequirement)
-ViewDefinition.viewCondition = subset("viewCondition", _Expression, 0, '*', None, _Namespace.ownedMember)
+# derive-rule for ViewDefinition.viewCondition: name='viewCondition', type=_Expression, lower=0, upper='*', rule='viewCondition = ownedMembership-> selectByKind(ElementFilterMembership). condition'
+ViewDefinition.viewCondition = derived("viewCondition", _Expression, 0, '*', lambda e: [x for x in e.ownedMembership if isinstance(x, ElementFilterMembership)])
 RenderingUsage.renderingDefinition = redefine(RenderingUsage, "renderingDefinition", RenderingDefinition, PartUsage.partDefinition)
-ViewpointDefinition.viewpointStakeholder = derivedunion("viewpointStakeholder", PartUsage)
-RenderingDefinition.rendering = subset("rendering", RenderingUsage, 0, '*', None, Definition.usage)
+# derive-rule for ViewpointDefinition.viewpointStakeholder: name='viewpointStakeholder', type=PartUsage, lower=0, upper='*', rule='viewpointStakeholder = framedConcern.featureMemberhsip->     selectByKind(StakeholderMembership).     ownedStakeholderParameter'
+ViewpointDefinition.viewpointStakeholder = derived("viewpointStakeholder", PartUsage, 0, '*', lambda e: [*e.framedConcern[:].featureMemberhsip] or [])
+# derive-rule for RenderingDefinition.rendering: name='rendering', type=RenderingUsage, lower=0, upper='*', rule='rendering = usages->selectByKind(RenderingUsage)'
+RenderingDefinition.rendering = derived("rendering", RenderingUsage, 0, '*', lambda e: [x for x in e.usages if isinstance(x, RenderingUsage)])
+# derive-rule for ViewRenderingMembership.referencedRendering: name='referencedRendering', type=RenderingUsage, lower=1, upper=1, rule='referencedRendering =     let referencedFeature : Feature =          ownedRendering.referencedFeatureTarget() in     if referencedFeature = null then ownedRendering     else if referencedFeature.oclIsKindOf(RenderingUsage) then         refrencedFeature.oclAsType(RenderingUsage)     else null     endif endif'
+# no derive expression generated for ViewRenderingMembership.referencedRendering; falling back to generic derivedunion
 ViewRenderingMembership.referencedRendering = derivedunion("referencedRendering", RenderingUsage, lower=1, upper=1)
 ViewRenderingMembership.ownedRendering = redefine(ViewRenderingMembership, "ownedRendering", RenderingUsage, _FeatureMembership.ownedMemberFeature)
-ViewpointUsage.viewpointStakeholder = derivedunion("viewpointStakeholder", PartUsage)
+# derive-rule for ViewpointUsage.viewpointStakeholder: name='viewpointStakeholder', type=PartUsage, lower=0, upper='*', rule='viewpointStakeholder = framedConcern.featureMemberhsip-> selectByKind(StakeholderMembership). ownedStakeholderParameter'
+ViewpointUsage.viewpointStakeholder = derived("viewpointStakeholder", PartUsage, 0, '*', lambda e: [*e.framedConcern[:].featureMemberhsip] or [])
 ViewpointUsage.viewpointDefinition = redefine(ViewpointUsage, "viewpointDefinition", ViewpointDefinition, RequirementUsage.requirementDefinition)
 ConnectionUsage.connectionDefinition = redefine(ConnectionUsage, "connectionDefinition", _AssociationStructure, _Connector.association)
 ConnectionDefinition.connectionEnd = redefine(ConnectionDefinition, "connectionEnd", Usage, _Association.associationEnd)
 InterfaceUsage.interfaceDefinition = redefine(InterfaceUsage, "interfaceDefinition", InterfaceDefinition, ConnectionUsage.connectionDefinition)
 InterfaceDefinition.interfaceEnd = redefine(InterfaceDefinition, "interfaceEnd", PortUsage, ConnectionDefinition.connectionEnd)
-AllocationDefinition.allocation = subset("allocation", AllocationUsage, 0, '*', None, Definition.usage)
+# derive-rule for AllocationDefinition.allocation: name='allocation', type=AllocationUsage, lower=0, upper='*', rule='allocation = usage->selectAsKind(AllocationUsage)'
+# no derive expression generated for AllocationDefinition.allocation; falling back to generic derivedunion
+AllocationDefinition.allocation = derivedunion("allocation", AllocationUsage)
 AllocationUsage.allocationDefinition = redefine(AllocationUsage, "allocationDefinition", AllocationDefinition, ConnectionUsage.connectionDefinition)
 RequirementVerificationMembership.ownedRequirement = redefine(RequirementVerificationMembership, "ownedRequirement", RequirementUsage, RequirementConstraintMembership.ownedConstraint)
 RequirementVerificationMembership.verifiedRequirement = redefine(RequirementVerificationMembership, "verifiedRequirement", RequirementUsage, RequirementConstraintMembership.referencedConstraint)
+# derive-rule for VerificationCaseDefinition.verifiedRequirement: name='verifiedRequirement', type=RequirementUsage, lower=0, upper='*', rule='verifiedRequirement =     if objectiveRequirement = null then OrderedSet{}     else          objectiveRequirement.featureMembership->             selectByKind(RequirementVerificationMembership).             verifiedRequirement->asOrderedSet()     endif'
+# no derive expression generated for VerificationCaseDefinition.verifiedRequirement; falling back to generic derivedunion
 VerificationCaseDefinition.verifiedRequirement = derivedunion("verifiedRequirement", RequirementUsage)
+# derive-rule for VerificationCaseUsage.verifiedRequirement: name='verifiedRequirement', type=RequirementUsage, lower=0, upper='*', rule='verifiedRequirement =     if objectiveRequirement = null then OrderedSet{}     else          objectiveRequirement.featureMembership->             selectByKind(RequirementVerificationMembership).             verifiedRequirement->asOrderedSet()     endif'
+# no derive expression generated for VerificationCaseUsage.verifiedRequirement; falling back to generic derivedunion
 VerificationCaseUsage.verifiedRequirement = derivedunion("verifiedRequirement", RequirementUsage)
 VerificationCaseUsage.verificationCaseDefinition = subset("verificationCaseDefinition", VerificationCaseDefinition, 0, 1, None, CaseUsage.caseDefinition)

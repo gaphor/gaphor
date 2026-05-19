@@ -33,6 +33,7 @@ from pathlib import Path
 
 import gaphor.storage as storage
 from gaphor import UML
+from gaphor.codegen import ocl
 from gaphor.codegen.override import Overrides
 from gaphor.codegen.xmi import convert
 from gaphor.core.modeling import Base, ElementFactory
@@ -57,6 +58,7 @@ header = textwrap.dedent(
     from __future__ import annotations
 
     import enum
+    import functools
 
     from gaphor.core.modeling.properties import (
         association,
@@ -64,6 +66,7 @@ header = textwrap.dedent(
         derived,
         derivedunion,
         enumeration as _enumeration,
+        propagate_derived,
         redefine,
         relation_many,
         relation_one,
@@ -194,15 +197,7 @@ def coder(
             # imported from super model
             continue
 
-        if overrides and overrides.has_override(c.name):
-            yield overrides.get_override(c.name)
-            continue
-
-        yield class_declaration(c)
-        if properties := list(variables(c, overrides)):
-            yield from (f"    {p}" for p in properties)
-        else:
-            yield "    pass"
+        yield from class_declaration(c, overrides)
         yield ""
         yield ""
 
@@ -233,15 +228,47 @@ def enumeration(enum: UML.Enumeration):
     yield ""
 
 
-def class_declaration(class_: UML.Class):
+def class_declaration(c: UML.Class, overrides: Overrides | None):
+    if overrides and overrides.has_override(c.name):
+        yield overrides.get_override(c.name)
+        return
+
     base_classes = ", ".join(
-        c.name
-        for c in sorted(
-            bases(class_),
-            key=lambda c: c.name,
+        b.name
+        for b in sorted(
+            bases(c),
+            key=lambda b: b.name,
         )
     )
-    return f"class {class_.name}({base_classes}):"
+    yield f"class {c.name}({base_classes}):"
+
+    derived_info = [
+        (a.name, deps)
+        for a in c.ownedAttribute
+        if a.isDerived
+        and (derive_rule := lookup_derive_rule(c, a))
+        and (deps := ocl.extract_dependencies_from_ocl(derive_rule))
+    ]
+    if derived_info:
+        yield ""
+        yield "    def __init__(self, id=None, model=None):"
+        yield "        super().__init__(id, model)"
+        yield "        w = self.watcher()"
+        for derived_name, deps in derived_info:
+            for dep in sorted(deps):
+                # Avoid watches for derived attributes without implementation
+                # Note that this leaves a gap in the model.
+                a = next(a for a in c.ownedAttribute if a.name == derived_name)
+                if dep == derived_name or (a.isDerived and not a.type):
+                    continue
+                yield f'        w.watch("{dep}", handler=functools.partial(propagate_derived, {c.name}.{derived_name}))'
+        yield ""
+
+    properties = list(variables(c, overrides))
+    if properties:
+        yield from (f"    {p}" for p in properties)
+    elif not derived_info:
+        yield "    pass"
 
 
 def variables(
@@ -328,6 +355,25 @@ def associations(
                     a.name or "",
                 )
             )
+        elif a.isDerived and (derive_rule := lookup_derive_rule(c, a)):
+            lower_arg, upper_arg = derive_multiplicity(a)
+            yield (
+                f"# derive-rule for {full_name}: "
+                f"name={a.name!r}, type={a.type.name}, lower={lower_arg}, upper={upper_arg!r}, "
+                f"rule={derive_rule!r}"
+            )
+            if derive_expression := ocl_derive_expression(derive_rule, c):
+                yield (
+                    f'{full_name} = derived("{a.name}", {a.type.name}, '
+                    f"{lower_arg}, {upper_arg!r}, {derive_expression})"
+                )
+            else:
+                yield (
+                    f"# no derive expression generated for {full_name}; "
+                    "falling back to generic derivedunion"
+                )
+                yield f'{full_name} = derivedunion("{a.name}", {a.type.name}{lower(a)}{upper(a)})'
+            processed.add(a.name)
         elif a.isDerived and a.subsettedProperty:
             subsetted_properties = [
                 f"{prop.class_.name}.{prop.name}"
@@ -335,10 +381,7 @@ def associations(
                 if prop.class_
             ]
             if subsetted_properties:
-                lower_value = UML.recipes.get_multiplicity_lower_value(a)
-                upper_value = UML.recipes.get_multiplicity_upper_value(a)
-                lower_arg = lower_value if isinstance(lower_value, int) else 0
-                upper_arg = upper_value if upper_value in ("*", 1, 2) else "*"
+                lower_arg, upper_arg = derive_multiplicity(a)
                 same_class_dependencies = {
                     prop.name
                     for prop in a.subsettedProperty
@@ -442,6 +485,39 @@ def operations(c: UML.Class, overrides: Overrides | None = None):
             full_name = f"{c.name}.{o.name}"
             if overrides and overrides.has_override(full_name):
                 yield overrides.get_override(full_name)
+
+
+def lookup_derive_rule(c: UML.Class, a: UML.Property) -> str | None:
+    if not a.name:
+        return None
+
+    pattern = f"{a.name} = "
+    for rule in c.ownedRule:
+        specification = rule.specification
+        if not isinstance(specification, UML.OpaqueExpression):
+            continue
+
+        body = specification.body
+        if isinstance(body, str) and body.startswith(pattern):
+            return body.strip()
+    return None
+
+
+def derive_multiplicity(a: UML.Property) -> tuple[int, str | int]:
+    lower_value = UML.recipes.get_multiplicity_lower_value(a)
+    upper_value = UML.recipes.get_multiplicity_upper_value(a)
+    lower_arg = lower_value if isinstance(lower_value, int) else 0
+    upper_arg = upper_value if upper_value in ("*", 1, 2) else "*"
+    return lower_arg, upper_arg
+
+
+def ocl_derive_expression(rule: str, owning_class: UML.Class) -> str | None:
+    """Convert an OCL derive rule to a Python lambda expression when possible."""
+
+    expression = ocl.ocl_derive_to_python(rule, owning_class)
+    if not expression or not expression.strip().startswith("lambda "):
+        return None
+    return expression
 
 
 def default_value(a) -> str:
@@ -603,9 +679,6 @@ def is_in_toplevel_package(c: UML.Class, package_name: str) -> bool:
 
 
 def redefines(a: UML.Property) -> str | None:
-    # TODO: look up element name and add underscore if needed.
-    # maybe resolve redefines before we start writing?
-
     if len(a.redefinedProperty) > 1:
         redefs = ", ".join(f"{r.class_.name}.{r.name}" for r in a.redefinedProperty)
         log.warning(

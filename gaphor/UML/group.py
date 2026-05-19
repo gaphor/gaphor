@@ -66,6 +66,18 @@ def diagram_ungroup(element, diagram):
     return False
 
 
+@group.register(UML.Namespace, UML.Constraint)
+def owned_rule_group(namespace, constraint):
+    namespace.ownedRule = constraint
+    return True
+
+
+@group.register(UML.Constraint, UML.OpaqueExpression)
+def constraint_expression_group(constraint, expression):
+    constraint.specification = expression
+    return True
+
+
 @group.register(UML.Package, UML.PackageableElement)
 def packageable_element_group(
     parent: UML.Package, element: UML.PackageableElement
