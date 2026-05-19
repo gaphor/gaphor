@@ -37,15 +37,6 @@ ParserElement.enable_packrat()
 
 # Custom AST node types for OCL-specific constructs
 @dataclass
-class OCLNavigation:
-    """Represents OCL navigation: expr->operation() or expr.property"""
-
-    target: ASTNode
-    operator: str  # "->" or "."
-    property_name: str
-
-
-@dataclass
 class OCLLetIn:
     """Represents OCL let-in expression: let var : Type = expr in expr"""
 
@@ -72,7 +63,7 @@ class OCLImplies:
 
 
 # Type alias for all possible AST nodes
-ASTNode = ast.expr | OCLNavigation | OCLLetIn | OCLCollection | OCLImplies
+ASTNode = ast.expr | OCLLetIn | OCLCollection | OCLImplies
 Token = str | int | float
 
 
@@ -171,11 +162,7 @@ def _coerce_expr(node: ASTNode, operator: str | Token | None) -> ast.expr:
     if isinstance(node, ast.expr):
         return node
 
-    try:
-        return lower_to_python_ast(node)
-    except TypeError as exc:
-        msg = f"Unsupported operand for {operator}: {type(node).__name__}"
-        raise ValueError(msg) from exc
+    return lower_to_python_ast(node)
 
 
 def _parse_expression(stream: TokenStream) -> ASTNode:
@@ -297,9 +284,8 @@ def _parse_unary(stream: TokenStream) -> ASTNode:
     if stream.current() == "not":
         stream.consume()
         operand = _parse_unary(stream)
-        if isinstance(operand, ast.expr):
-            return ast.UnaryOp(op=ast.Not(), operand=operand)
-        return operand
+        assert isinstance(operand, ast.expr)
+        return ast.UnaryOp(op=ast.Not(), operand=operand)
 
     return _parse_primary(stream)
 
@@ -312,23 +298,20 @@ def _parse_navigation_or_attribute(
     prop_name = prop if isinstance(prop, str) else ""
 
     if stream.current() != "(":
-        if operator == "." and isinstance(expr, ast.expr):
-            return ast.Attribute(value=expr, attr=prop_name, ctx=ast.Load())
-        return OCLNavigation(expr, operator, prop_name)
+        assert operator == "." and isinstance(expr, ast.expr)
+        return ast.Attribute(value=expr, attr=prop_name, ctx=ast.Load())
 
     stream.consume()
     args = _parse_arguments(stream)
     if stream.current() == ")":
         stream.consume()
 
-    if isinstance(expr, ast.expr):
-        return ast.Call(
-            func=ast.Attribute(value=expr, attr=prop_name, ctx=ast.Load()),
-            args=args,  # type: ignore[arg-type]
-            keywords=[],
-        )
-
-    return OCLNavigation(expr, operator, prop_name)
+    assert isinstance(expr, ast.expr)
+    return ast.Call(
+        func=ast.Attribute(value=expr, attr=prop_name, ctx=ast.Load()),
+        args=args,  # type: ignore[arg-type]
+        keywords=[],
+    )
 
 
 def _parse_subscript(stream: TokenStream, expr: ASTNode) -> ASTNode:
@@ -391,8 +374,6 @@ def _parse_atom(stream: TokenStream) -> ASTNode:
     token = stream.current()
 
     match token:
-        case None:
-            return ast.Constant(value=None)
         case str() as value if value.startswith("'") and value.endswith("'"):
             stream.consume()
             return ast.Constant(value=value[1:-1].replace("''", "'"))
@@ -539,12 +520,8 @@ def _lower_ast_field(value: object) -> object:
     match value:
         case list() as items:
             return [_lower_ast_field(item) for item in items]
-        case tuple() as items:
-            return tuple(_lower_ast_field(item) for item in items)
         case ast.AST():
             return _lower_python_ast(value)
-        case OCLNavigation() | OCLLetIn() | OCLCollection() | OCLImplies():
-            return lower_to_python_ast(value)
         case _:
             return value
 
@@ -561,12 +538,6 @@ def lower_to_python_ast(node: ASTNode) -> ast.expr:
             lowered = _lower_python_ast(node)
             assert isinstance(lowered, ast.expr)
             return lowered
-        case OCLNavigation(target=target, property_name=property_name):
-            return ast.Attribute(
-                value=lower_to_python_ast(target),
-                attr=property_name,
-                ctx=ast.Load(),
-            )
         case OCLLetIn(variable=variable, init=init, body=body):
             return ast.Call(
                 func=ast.Lambda(
@@ -619,8 +590,7 @@ def _split_attribute_path(node: ast.expr) -> list[str] | None:
         case ast.Name(id=name):
             return [name]
         case ast.Attribute(value=value, attr=attr):
-            if not isinstance(value, ast.expr):
-                return None
+            assert isinstance(value, ast.expr)
             if path := _split_attribute_path(value):
                 return [*path, attr]
             return None
@@ -682,9 +652,6 @@ def _all_attributes_in_hierarchy(owning_class: UML.Class) -> Iterator[UML.Proper
 
 
 def _head_is_multi_valued(path: list[str], owning_class: UML.Class) -> bool:
-    if not path:
-        return False
-
     head = path[0]
     for attribute in _all_attributes_in_hierarchy(owning_class):
         if attribute.name == head:
@@ -705,20 +672,6 @@ def _collect_dependencies(node: ASTNode, path=None):  # noqa: C901
                 yield ".".join([name] + path)
             else:
                 yield name
-        case OCLNavigation(target=target, operator=op, property_name=prop):
-            if op == "->":
-                yield from _collect_dependencies(target)
-            else:
-                yield from _collect_dependencies(target, (path or []) + [prop])
-        case OCLLetIn(variable=_, var_type=_, init=init, body=body):
-            yield from _collect_dependencies(init, path)
-            yield from _collect_dependencies(body, path)
-        case OCLCollection(elements=elements):
-            for el in elements:
-                yield from _collect_dependencies(el, path)
-        case OCLImplies(left=left, right=right):
-            yield from _collect_dependencies(left, path)
-            yield from _collect_dependencies(right, path)
         case ast.BoolOp(values=vals):
             for v in vals:
                 yield from _collect_dependencies(v, path)
@@ -733,27 +686,21 @@ def _collect_dependencies(node: ASTNode, path=None):  # noqa: C901
             yield from _collect_dependencies(t, path)
             yield from _collect_dependencies(b, path)
             yield from _collect_dependencies(o, path)
-        case ast.Subscript(value=v, slice=s, ctx=_):
-            yield from _collect_dependencies(v, path)
-            yield from _collect_dependencies(s, path)
         case _:
             pass
 
 
 def extract_dependencies_from_ocl(expression: str) -> set[str]:
     """Extract property names/chains accessed in the OCL expression."""
-    try:
-        node = parse_to_ast(expression)
-        if (
-            isinstance(node, ast.Compare)
-            and len(node.ops) == 1
-            and isinstance(node.ops[0], ast.Eq)
-            and len(node.comparators) == 1
-        ):
-            return set(_collect_dependencies(node.comparators[0]))
-        return set(_collect_dependencies(node))
-    except Exception:
-        return set()
+    node = parse_to_ast(expression)
+    if (
+        isinstance(node, ast.Compare)
+        and len(node.ops) == 1
+        and isinstance(node.ops[0], ast.Eq)
+        and len(node.comparators) == 1
+    ):
+        return set(_collect_dependencies(node.comparators[0]))
+    return set(_collect_dependencies(node))
 
 
 def ocl_derive_to_python(expression: str, owning_class: UML.Class) -> str:

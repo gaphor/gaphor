@@ -17,7 +17,6 @@ from xml.etree import ElementTree as etree
 from gaphor import UML
 from gaphor.core.modeling.elementfactory import ElementFactory
 from gaphor.diagram.group import group
-from gaphor.storage import save
 from gaphor.UML.modelinglanguage import UMLModelingLanguage
 
 log = logging.getLogger(__name__)
@@ -205,16 +204,6 @@ def link_feature(elem: etree.Element, element_factory: ElementFactory):  # noqa:
                 element.association = element_factory[child.attrib[f"{xmlns.xmi}idref"]]
             case "defaultValue":
                 element.defaultValue = create(child, element_factory)
-                if (instance := child.find("instance")) is not None:
-                    if idref := child.attrib.get(f"{xmlns.xmi}idref"):
-                        assert isinstance(element, UML.Parameter | UML.Property)
-                        element.defaultValue.instance = element_factory[
-                            instance.attrib[f"{xmlns.xmi}idref"]
-                        ]
-                    elif "href" in child.attrib:
-                        log.warning(
-                            "should default value instance %s", child.attrib["href"]
-                        )
             case "lowerValue":
                 element.lowerValue = create(child, element_factory)
                 assert isinstance(element, UML.MultiplicityElement)
@@ -349,17 +338,3 @@ def convert(filename: Path) -> ElementFactory:
             raise ValueError(f"Unexpected top level element {elem}")
 
     return element_factory
-
-
-def main(infile: str, outfile: str):
-    element_factory = convert(Path(infile))
-
-    with open(outfile, "w", encoding="utf-8") as f:
-        save(f, element_factory)
-
-
-if __name__ == "__main__":
-    import sys
-
-    infile = sys.argv[1]
-    outfile = sys.argv[2]
