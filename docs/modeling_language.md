@@ -9,7 +9,7 @@ SysML, RAAML and the C4 model.
 
 A modeling language in Gaphor is defined by a class implementing the
 `gaphor.abc.ModelingLanguage` abstract base class. The modeling language should
-be registered as a `gaphor.modelinglanguages` entry point.
+be registered as a `gaphor.modelinglanguages` entry point in `pyproject.toml`.
 
 The `ModelingLanguage` interface is fairly minimal. It allows other services to
 look up elements and diagram items, as well as a toolbox, and diagram types.
@@ -20,11 +20,12 @@ functions.
 But let's not get ahead of ourselves. What is the functionality a modeling
 language implementation can offer?
 
-Three functionalities are exposed by a [`ModelingLanguage` instance](#modeling-language):
+Four functionalities are exposed by a [`ModelingLanguage` instance](#modeling-language):
 
 * A data model (elements) and diagram items
 * Diagram types
 * A toolbox definition
+* Model browser defintion
 
 Other functionalities can be extended by adding handlers to the respective
 generic functions:

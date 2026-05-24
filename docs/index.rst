@@ -67,6 +67,7 @@ Did you know Gaphor has excellent integration with :doc:`Sphinx <sphinx>` and :d
    models/sysml
    models/raaml
    models/c4model
+   models/sysml2
 
 .. toctree::
    :caption: Concepts

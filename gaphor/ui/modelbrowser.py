@@ -46,37 +46,9 @@ class ModelBrowser(UIComponent, ActionProvider):
         self.event_manager.subscribe(self.on_diagram_selection_changed)
         self.event_manager.subscribe(self.on_modeling_language_changed)
 
-        model_type = self.modeling_language.model_browser_model
-        model = self.component_registry.partial(model_type)(
-            on_select=self._on_select, on_sync=self._on_sync
-        )
-        self.model = model
-
-        tree_model = Gtk.TreeListModel.new(
-            model.root,
-            passthrough=False,
-            autoexpand=False,
-            create_func=model.child_model,
-        )
-
-        def tree_item_sort(a, b, *user_data):
-            return model.tree_item_sort(a, b)
-
-        self.sorter = Gtk.CustomSorter.new(tree_item_sort)
-        tree_sorter = Gtk.TreeListRowSorter.new(self.sorter)
-        sort_model = Gtk.SortListModel.new(tree_model, tree_sorter)
-        self.selection = Gtk.MultiSelection.new(sort_model)
-
-        factory = Gtk.SignalListItemFactory.new()
-        factory.connect(
-            "setup",
-            list_item_factory_setup,
-            self.selection,
-            self.event_manager,
-            self.modeling_language,
-            model.template,
-        )
-        self.tree_view = Gtk.ListView.new(self.selection, factory)
+        self.selection = Gtk.MultiSelection.new(None)
+        self.tree_view = Gtk.ListView()
+        self.tree_view.set_model(self.selection)
         self.tree_view.set_vexpand(True)
 
         def selection_changed(selection, _position, _n_items):
@@ -114,6 +86,8 @@ class ModelBrowser(UIComponent, ActionProvider):
         box.append(scrolled_window)
         self.top_level = box
 
+        self.update_model()
+
         return box
 
     def close(self):
@@ -128,6 +102,52 @@ class ModelBrowser(UIComponent, ActionProvider):
         self.selection = None
         self.tree_view = None
         self.top_level = None
+
+    def update_model(self):
+        model_type = self.modeling_language.model_browser_model
+        if model_type is type(self.model):
+            return
+
+        model = self.component_registry.partial(model_type)(
+            on_select=self._on_select, on_sync=self._on_sync
+        )
+        self.model = model
+
+        if not self.tree_view:
+            return
+
+        assert isinstance(self.selection, Gtk.SelectionModel)
+
+        if model is None:
+            self.sorter = None
+            self.selection.set_model(None)
+            self.tree_view.set_factory(None)
+
+        tree_model = Gtk.TreeListModel.new(
+            model.root,
+            passthrough=False,
+            autoexpand=False,
+            create_func=model.child_model,
+        )
+
+        def tree_item_sort(a, b, *_user_data):
+            return model.tree_item_sort(a, b)
+
+        self.sorter = Gtk.CustomSorter.new(tree_item_sort)
+        tree_sorter = Gtk.TreeListRowSorter.new(self.sorter)
+        sort_model = Gtk.SortListModel.new(tree_model, tree_sorter)
+
+        factory = Gtk.SignalListItemFactory()
+        factory.connect(
+            "setup",
+            list_item_factory_setup,
+            self.selection,
+            self.event_manager,
+            self.modeling_language,
+            model.template,
+        )
+        self.selection.set_model(sort_model)
+        self.tree_view.set_factory(factory)
 
     def select_element(self, element: Base) -> int | None:
         assert self.model
@@ -226,7 +246,10 @@ class ModelBrowser(UIComponent, ActionProvider):
 
         with Transaction(self.event_manager):
             element = self.element_factory.create(element_def.element_type)
-            element.name = element_def.name
+            if hasattr(element, "name"):
+                element.name = element_def.name
+            elif hasattr(element, "declaredName"):
+                element.declaredName = element_def.name
             if own:
                 change_owner(own, element)
 
@@ -260,16 +283,7 @@ class ModelBrowser(UIComponent, ActionProvider):
     @event_handler(ModelingLanguageChanged)
     def on_modeling_language_changed(self, event: ModelingLanguageChanged) -> None:
         """Reconfigures the model browser based on the modeling language selected."""
-        if (not self.top_level) or type(
-            self.model
-        ) is self.modeling_language.model_browser_model:
-            return
-
-        bin = self.top_level.get_parent()
-        self.close()
-        widget = self.open()
-        if bin:
-            bin.set_child(widget)
+        self.update_model()
 
 
 class SearchEngine:

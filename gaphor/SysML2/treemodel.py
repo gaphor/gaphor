@@ -3,7 +3,6 @@ from unicodedata import normalize
 
 from gi.repository import Gio, GObject, Pango
 
-import gaphor.UML.uml as UML
 from gaphor.core import event_handler
 from gaphor.core.format import format
 from gaphor.core.modeling import (
@@ -20,7 +19,7 @@ from gaphor.core.modeling import (
 )
 from gaphor.diagram.group import Root, RootType, owner, owns
 from gaphor.diagram.iconname import icon_name
-from gaphor.i18n import gettext
+from gaphor.KerML import kerml
 
 
 class TreeItem(GObject.Object):
@@ -39,93 +38,62 @@ class TreeItem(GObject.Object):
 
     @GObject.Property(type=str)
     def editable_text(self):
+        element = self.element
+        if not element:
+            return ""
         return (
-            (self.element.name or "")
-            if isinstance(self.element, UML.NamedElement)
-            else ""
+            getattr(element, "declaredName", None)
+            or getattr(element, "elementId", None)
+            or ""
         )
 
     @editable_text.setter  # type: ignore[no-redef]
     def editable_text(self, text):
-        if isinstance(self.element, UML.NamedElement):
-            self.element.name = text or ""
+        if element := self.element:
+            if hasattr(element, "declaredName"):
+                element.declaredName = text or ""
 
     def sync(self) -> None:
         if element := self.element:
-            self.readonly_text = format(element) or gettext("<None>")
+            self.readonly_text = format(element)
             self.notify("editable-text")
             self.icon = icon_name(element)
-            self.icon_visible = bool(
-                self.icon
-                and not isinstance(
-                    element, UML.Parameter | UML.Property | UML.Operation
-                )
-            )
-            self.attributes = pango_attributes(element)
+            self.icon_visible = bool(self.icon)
+            self.attributes = Pango.AttrList()
 
     def start_editing(self):
         self.editing = True
 
 
-class RelationshipItem(TreeItem):
-    def __init__(self, child_model):
-        super().__init__(None)
-        self.child_model = child_model
-        self.readonly_text = gettext("<Relationships>")
-        self.can_edit = False
-
-
 class Branch:
     def __init__(self):
         self.elements = Gio.ListStore.new(TreeItem.__gtype__)
-        self.relationships = Gio.ListStore.new(TreeItem.__gtype__)
 
     def append(self, element: Base):
-        if isinstance(element, UML.Relationship):
-            if self.relationships.get_n_items() == 0:
-                self.elements.insert(0, RelationshipItem(self.relationships))
-            self.relationships.append(TreeItem(element))
-        else:
-            self.elements.append(TreeItem(element))
+        self.elements.append(TreeItem(element))
 
-    def remove(self, element):
-        list_store = (
-            self.relationships
-            if isinstance(element, UML.Relationship)
-            else self.elements
-        )
+    def remove(self, element: Base):
         if (
             index := next(
-                (i for i, ti in enumerate(list_store) if ti.element is element),
+                (i for i, ti in enumerate(self.elements) if ti.element is element),
                 None,
             )
         ) is not None:
-            list_store.remove(index)
-
-        # Clean up empty relationships node
-        if list_store is self.relationships and self.relationships.get_n_items() == 0:
-            for i, e in enumerate(self.elements):
-                if isinstance(e, RelationshipItem):
-                    self.elements.remove(i)
-                    break
+            self.elements.remove(index)
 
     def remove_all(self):
-        self.relationships.remove_all()
         self.elements.remove_all()
 
     def changed(self, element: Base):
-        list_store = (
-            self.relationships
-            if isinstance(element, UML.Relationship)
-            else self.elements
-        )
         if not (
-            tree_item := next((ti for ti in list_store if ti.element is element), None)
+            tree_item := next(
+                (ti for ti in self.elements if ti.element is element), None
+            )
         ):
             return
-        found, index = list_store.find(tree_item)
+        found, index = self.elements.find(tree_item)
         if found:
-            list_store.items_changed(index, 1, 1)
+            self.elements.items_changed(index, 1, 1)
 
     def __len__(self):
         return self.elements.get_n_items()
@@ -135,25 +103,20 @@ class Branch:
 
     def __iter__(self):
         yield from self.elements
-        yield from self.relationships
 
 
 def tree_item_sort(a: TreeItem, b: TreeItem) -> int:
-    if isinstance(a, RelationshipItem):
-        return -1
-    if isinstance(b, RelationshipItem):
-        return 1
     na = normalize("NFC", a.readonly_text).casefold()
     nb = normalize("NFC", b.readonly_text).casefold()
     return (na > nb) - (na < nb)
 
 
 def include_element(element: Base) -> bool:
-    if not (type(element) is Diagram or isinstance(element, UML.Element)):
+    if not (type(element) is Diagram or isinstance(element, kerml.Element)):
         return False
 
     own = owner(element)
-    return own is Root or isinstance(own, UML.Element)
+    return own is Root or isinstance(own, kerml.Element)
 
 
 class TreeModel:
@@ -184,7 +147,7 @@ class TreeModel:
 
     @property
     def template(self) -> str:
-        return (importlib.resources.files("gaphor.UML") / "treeitem.ui").read_text(
+        return (importlib.resources.files("gaphor.SysML2") / "treeitem.ui").read_text(
             encoding="utf-8"
         )
 
@@ -192,48 +155,23 @@ class TreeModel:
     def root(self) -> Gio.ListStore:
         return self.branches[Root].elements
 
-    def sync(self, element, seen=None):
-        if seen is None:
-            seen = set()
-
-        if (
-            element in seen
-            or not owner(element)
-            or not (tree_item := self.tree_item_for_element(element))
-        ):
-            return
-
-        seen.add(element)
-        tree_item.sync()
-        if self._on_sync:
-            self._on_sync()
-
-        if own := owner(element):
-            self.sync(own, seen)
-
-        if isinstance(element, UML.Parameter) and element.activityParameterNode:
-            for node in element.activityParameterNode:
-                self.sync(node, seen)
-
-        if isinstance(element, UML.Type):
-            for e in self.element_factory.select(UML.TypedElement):
-                if e.type is element:
-                    self.sync(e, seen)
+    def sync(self, element):
+        if tree_item := self.tree_item_for_element(element):
+            tree_item.sync()
+            if self._on_sync:
+                self._on_sync()
 
     def child_model(self, item: TreeItem) -> Gio.ListStore | None:
-        """This method will create branches on demand (lazy)."""
         branches = self.branches
         if item in branches:
             return branches[item].elements
-        if isinstance(item, RelationshipItem):
-            return item.child_model
         if not item.element:
             return None
         if owned_elements := owns(item.element):
             new_branch = Branch()
             self.branches[item] = new_branch
-            for e in owned_elements:
-                new_branch.append(e)
+            for element in owned_elements:
+                new_branch.append(element)
             return new_branch.elements
         return None
 
@@ -241,9 +179,7 @@ class TreeModel:
         return tree_item_sort(a, b)
 
     def should_expand(self, item: TreeItem, element: Base) -> bool:
-        return isinstance(element, UML.Relationship) and isinstance(
-            item, RelationshipItem
-        )
+        return False
 
     def owner_branch_for_element(self, element: Base) -> Branch | None:
         if (own := owner(element)) is Root:
@@ -251,9 +187,9 @@ class TreeModel:
 
         return next(
             (
-                m
-                for ti, m in self.branches.items()
-                if isinstance(ti, TreeItem) and ti.element is own
+                branch
+                for tree_item, branch in self.branches.items()
+                if isinstance(tree_item, TreeItem) and tree_item.element is own
             ),
             None,
         )
@@ -261,7 +197,7 @@ class TreeModel:
     def tree_item_for_element(self, element: Base | RootType) -> TreeItem | None:
         if element is Root:
             return None
-        if owner_branch := self.owner_branch_for_element(element):
+        if (owner_branch := self.owner_branch_for_element(element)) is not None:
             return next((ti for ti in owner_branch if ti.element is element), None)
         return None
 
@@ -278,14 +214,13 @@ class TreeModel:
             self.notify_child_model(own)
 
     def remove_element(self, element: Base) -> None:
-        if not isinstance(element, Base):
-            return
-
         for child in owns(element):
             self.remove_element(child)
 
         for owner_branch in [
-            b for b in self.branches.values() if element in (i.element for i in b)
+            branch
+            for branch in self.branches.values()
+            if element in (i.element for i in branch)
         ]:
             owner_branch.remove(element)
 
@@ -304,7 +239,6 @@ class TreeModel:
             self.notify_child_model(tree_item.element)
 
     def notify_child_model(self, element: Base):
-        # Only notify the change, the branch is created in child_model()
         if not self.branches.get(self.tree_item_for_element(element) or Root) and (
             owner_branch := self.branches.get(
                 self.tree_item_for_element(owner(element) or Root) or Root
@@ -328,17 +262,12 @@ class TreeModel:
 
     @event_handler(DerivedAdded, DerivedDeleted)
     def on_owned_element_changed(self, event):
-        """Ensure we update the node once owned elements change."""
-        if event.property in (UML.Element.ownedElement, UML.Namespace.member):
+        if event.property in (kerml.Element.ownedElement,):
             self.notify_child_model(event.element)
 
     @event_handler(DerivedSet)
     def on_owner_changed(self, event: DerivedSet):
-        # Should check on ownedElement as well, since it may not have been updated
-        # before this thing triggers
-        if (
-            event.property in (UML.Element.owner, UML.NamedElement.memberNamespace)
-        ) and owner(event.element):
+        if event.property in (kerml.Element.owner,) and owner(event.element):
             element = event.element
             self.remove_element(element)
             self.add_element(element)
@@ -352,24 +281,5 @@ class TreeModel:
     @event_handler(ModelReady, ModelFlushed)
     def on_model_ready(self, _event=None):
         self.clear()
-
         for element in self.element_factory.select(owner):
             self.add_element(element)
-
-
-def pango_attributes(element):
-    attrs = Pango.AttrList.new()
-    attrs.insert(
-        Pango.attr_weight_new(
-            Pango.Weight.BOLD if isinstance(element, Diagram) else Pango.Weight.NORMAL
-        )
-    )
-    attrs.insert(
-        Pango.attr_style_new(
-            Pango.Style.ITALIC
-            if isinstance(element, UML.Classifier | UML.BehavioralFeature)
-            and element.isAbstract
-            else Pango.Style.NORMAL
-        )
-    )
-    return attrs
