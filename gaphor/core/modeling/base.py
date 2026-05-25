@@ -12,7 +12,7 @@ from uuid import uuid1
 
 from gaphor.core.modeling.collection import collection
 from gaphor.core.modeling.event import ElementTypeUpdated, ElementUpdated
-from gaphor.core.modeling.properties import relation_many, umlproperty
+from gaphor.core.modeling.properties import modelproperty, relation_many
 
 if TYPE_CHECKING:
     from gaphor.core.modeling.diagram import Diagram
@@ -104,13 +104,13 @@ class Base:
         )
 
     @classproperty
-    def __properties__(cls) -> Iterator[umlproperty]:
+    def __properties__(cls) -> Iterator[modelproperty]:
         """Iterate over all attributes, associations, etc."""
-        umlprop = umlproperty
+        modelprop = modelproperty
         for propname in dir(cls):
             if not propname.startswith("_"):
                 prop = getattr(cls, propname)
-                if isinstance(prop, umlprop):
+                if isinstance(prop, modelprop):
                     yield prop
 
     def __str__(self) -> str:

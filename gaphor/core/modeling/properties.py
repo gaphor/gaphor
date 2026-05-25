@@ -62,8 +62,15 @@ log = logging.getLogger(__name__)
 
 UnlimitedNatural = int | Literal["*"]
 
+Lower = Literal[0] | Literal[1] | Literal[2]
+Upper = Literal[1] | Literal[2] | Literal["*"]
+
 
 E = TypeVar("E")
+
+
+class propagable(Protocol):
+    def propagate(self, event): ...
 
 
 class relation_one(Protocol[E]):
@@ -107,11 +114,8 @@ relation = relation_one | relation_many
 
 T = TypeVar("T")
 
-Lower = Literal[0] | Literal[1] | Literal[2]
-Upper = Literal[1] | Literal[2] | Literal["*"]
 
-
-class umlproperty:
+class modelproperty:
     """Superclass for an attribute, enumeration, and association.
 
     The subclasses should define a ``name`` attribute that contains the name
@@ -127,7 +131,7 @@ class umlproperty:
     upper: Upper = 1
 
     def __init__(self, name: str):
-        self.dependent_properties: set[subsettable_umlproperty | redefine] = set()
+        self.dependent_properties: set[propagable] = set()
         self.name = name
         self._name = f"_{name}"
 
@@ -172,16 +176,19 @@ class umlproperty:
             d.propagate(event)
 
 
-class subsettable_umlproperty(umlproperty):
-    """Base class for properties that can be subsetted"""
+# For backwards compatibility:
+umlproperty = modelproperty
 
-    subsets: set[umlproperty]
 
-    def __init__(self, name: str):
-        super().__init__(name)
-        self.subsets = set()
+class subsettable:
+    """Mixin class for properties that can be subsetted."""
 
-    def add(self, subset):
+    name: str
+    lower: Lower
+    upper: Upper
+    subsets: set[association | derived | redefine]
+
+    def add(self, subset: association | derived | redefine):
         if self.upper == 1 and subset.upper == "*":
             log.warning(
                 "Modeling error: Cannot add a multiplicity * subset "
@@ -198,7 +205,7 @@ class subsettable_umlproperty(umlproperty):
     def propagate(self, event): ...
 
 
-class attribute[T](umlproperty):
+class attribute[T](modelproperty):
     """Attribute.
 
     Element.attr = attribute('attr', str, '')
@@ -274,7 +281,7 @@ class attribute[T](umlproperty):
             self.handle(AttributeUpdated(obj, self, old, self.default))
 
 
-class enumeration(umlproperty):
+class enumeration(modelproperty):
     """Enumeration.
 
       Element.enum = enumeration('enum', EnumKind, 'one')
@@ -323,7 +330,7 @@ class enumeration(umlproperty):
             self.handle(AttributeUpdated(obj, self, old, self.default))
 
 
-class association(subsettable_umlproperty):
+class association(subsettable, modelproperty):
     """Association, both uni- and bi-directional.
 
     Element.assoc = association('assoc', Element, opposite='other')
@@ -397,6 +404,7 @@ class association(subsettable_umlproperty):
         self.composite = composite
         self.opposite = opposite
         self.stub: associationstub | None = None
+        self.subsets = set()
 
     def save(self, obj, save_func: Callable[[str, object], None]):
         if hasattr(obj, self._name):
@@ -530,7 +538,7 @@ class association(subsettable_umlproperty):
             if not self.stub:
                 self.stub = associationstub(self)
                 # Do not let property start with underscore, or it will not be found
-                # as an umlproperty.
+                # as an modelproperty.
                 setattr(self.type, f"GAPHOR__associationstub__{id(self):x}", self.stub)
             self.stub.set(value, obj)
 
@@ -577,7 +585,9 @@ class association(subsettable_umlproperty):
                 if do_notify:
                     self.handle(AssociationDeleted(obj, self, value, index))
                 for subset in self.subsets:
-                    col: collection[umlproperty] | umlproperty | None = subset.get(obj)
+                    col: collection[modelproperty] | modelproperty | None = subset.get(
+                        obj
+                    )
                     if isinstance(col, collection) and value in col:
                         subset.delete(obj, value)
 
@@ -641,12 +651,12 @@ class AssociationStubError(Exception):
     pass
 
 
-class associationstub(umlproperty):
+class associationstub(modelproperty):
     """An association stub is an internal thingy that ensures all associations
     are always bidirectional.
 
     This helps the application when one end of the association is
-    unlinked. On unlink() of an element all `umlproperty`'s are iterated
+    unlinked. On unlink() of an element all `modelproperty`'s are iterated
     and called by their unlink() method.
     """
 
@@ -700,7 +710,7 @@ class unioncache:
     version: int
 
 
-class derived[T](subsettable_umlproperty):
+class derived[T](subsettable, modelproperty):
     """Base class for derived properties, both derived unions and custom
     properties.
 
@@ -721,7 +731,7 @@ class derived[T](subsettable_umlproperty):
         lower: Lower,
         upper: Upper,
         filter: Callable[[Any], list[T | None]],
-        *subsets: relation,
+        *subsets: association | derived | redefine,
     ) -> None:
         super().__init__(name)
         self.version = 1
@@ -729,6 +739,7 @@ class derived[T](subsettable_umlproperty):
         self.lower = lower
         self.upper = upper
         self.filter = filter
+        self.subsets = set()
 
         for s in subsets:
             self.add(s)
@@ -846,7 +857,7 @@ class derivedunion(derived[T]):
         type: type[T],
         lower: Lower = 0,
         upper: Upper = "*",
-        *subsets: relation,
+        *subsets: association | derived | redefine,
     ):
         super().__init__(name, type, lower, upper, self._union, *subsets)
 
@@ -922,7 +933,7 @@ class derivedunion(derived[T]):
             log.error(f"Don't know how to handle event {event} for derived union")
 
 
-class redefine(umlproperty):
+class redefine(modelproperty):
     """Redefined association.
 
       Element.redefine = redefine(Element, 'redefine', Class, Element.assoc)
