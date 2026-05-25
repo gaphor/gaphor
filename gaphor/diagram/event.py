@@ -1,9 +1,14 @@
+from dataclasses import dataclass
+
+
+@dataclass
 class ToolCompleted:
-    pass
+    cancelled: bool = False
 
 
 class DiagramItemPlaced(ToolCompleted):
     def __init__(self, item):
+        super().__init__(False)
         self.item = item
 
 

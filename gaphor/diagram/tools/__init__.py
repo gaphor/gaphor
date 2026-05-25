@@ -11,6 +11,7 @@ from gaphor.diagram.tools.dropzone import drop_zone_tool
 from gaphor.diagram.tools.itemtool import find_item_and_handle_at_point, item_tool
 from gaphor.diagram.tools.magnet import magnet_tool
 from gaphor.diagram.tools.placement import placement_tool
+from gaphor.diagram.tools.reset import reset_tool
 from gaphor.diagram.tools.textedit import text_edit_tools
 from gaphor.diagram.tools.txtool import transactional_tool
 
@@ -35,6 +36,7 @@ def apply_magnet_tool_set(view, modeling_language, event_manager):
     view.add_controller(
         *transactional_tool(magnet_tool(event_manager), event_manager=event_manager)
     )
+    view.add_controller(reset_tool(event_manager))
     add_basic_tools(view, modeling_language, event_manager)
 
 
@@ -49,6 +51,7 @@ def apply_placement_tool_set(
             event_manager=event_manager,
         )
     )
+    view.add_controller(reset_tool(event_manager))
     view.add_controller(
         drop_zone_tool(item_factory.item_class, item_factory.subject_class)
     )
