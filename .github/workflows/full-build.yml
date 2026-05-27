@@ -119,6 +119,7 @@ jobs:
         with:
           path: ~/.cache/pip
           key: ${{ runner.os }}-python${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}-41
+          # https://github.com/zizmorcore/zizmor/issues/2071
           lookup-only: ${{ startsWith(github.ref, 'refs/tags/') }}
       - name: Install Dependencies
         id: install
@@ -177,6 +178,7 @@ jobs:
         with:
           path: ~/.cache/pip
           key: ${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}-24.04
+          # https://github.com/zizmorcore/zizmor/issues/2071
           lookup-only: ${{ startsWith(github.ref, 'refs/tags/') }}
       - uses: flatpak/flatpak-github-actions/flatpak-builder@401fe28a8384095fc1531b9d320b292f0ee45adb # master
         with:
@@ -221,6 +223,7 @@ jobs:
         with:
           path: ~/.cache/pip
           key: ${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}-${{ matrix.target.runner }}
+          # https://github.com/zizmorcore/zizmor/issues/2071
           lookup-only: ${{ startsWith(github.ref, 'refs/tags/') }}
       - name: Install macOS Dependencies
         env:
@@ -319,6 +322,7 @@ jobs:
         with:
           path: C:\gtk\**
           key: ${{ runner.os }}-gvsbuild-${{ env.gvsbuild_version }}
+          # https://github.com/zizmorcore/zizmor/issues/2071
           lookup-only: ${{ startsWith(github.ref, 'refs/tags/') }}
       - name: Download Gvsbuild
         if: steps.cache.outputs.cache-hit != 'true'
@@ -350,6 +354,7 @@ jobs:
         with:
           path: ~/.cache/pip
           key: ${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}
+          # https://github.com/zizmorcore/zizmor/issues/2071
           lookup-only: ${{ startsWith(github.ref, 'refs/tags/') }}
       - name: Install Dependencies
         id: install

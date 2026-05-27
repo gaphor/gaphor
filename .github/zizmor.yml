@@ -5,9 +5,3 @@ rules:
   dangerous-triggers:
     ignore:
       - labeler.yml:2
-  cache-poisoning:
-    # https://github.com/zizmorcore/zizmor/issues/2071
-    ignore:
-      - full-build.yml:314
-      - full-build.yml:345
-      - full-build.yml:349
