@@ -44,6 +44,15 @@ class Toolbox(UIComponent):
         self.event_manager.subscribe(self._on_diagram_item_placed)
         self.event_manager.subscribe(self._on_modeling_language_changed)
         self.event_manager.subscribe(self._on_current_diagram_changed)
+
+        ctrl = Gtk.EventControllerKey.new()
+        self._toolbox_container.add_controller(ctrl)
+
+        def on_shortcut(_ctrl, keyval, _keycode, state):
+            return self.activate_shortcut(keyval, state)
+
+        ctrl.connect("key-pressed", on_shortcut)
+
         self.select_tool("toolbox-pointer")
         return self._toolbox_container
 
