@@ -114,10 +114,13 @@ jobs:
       - name: Set ownership of checkout directory
         run: chown -R $(id -u):$(id -g) $PWD
       - name: Use Python Dependency Cache
+        if: github.event_name != 'release'
         uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
         with:
           path: ~/.cache/pip
           key: ${{ runner.os }}-python${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}-41
+          # https://github.com/zizmorcore/zizmor/issues/2071
+          lookup-only: ${{ startsWith(github.ref, 'refs/tags/') }}
       - name: Install Dependencies
         id: install
         uses: ./.github/actions/install
@@ -170,10 +173,13 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}
           persist-credentials: false
       - name: Use Python Dependency Cache
+        if: github.event_name != 'release'
         uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
         with:
           path: ~/.cache/pip
           key: ${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}-24.04
+          # https://github.com/zizmorcore/zizmor/issues/2071
+          lookup-only: ${{ startsWith(github.ref, 'refs/tags/') }}
       - uses: flatpak/flatpak-github-actions/flatpak-builder@401fe28a8384095fc1531b9d320b292f0ee45adb # master
         with:
           bundle: gaphor.flatpak
@@ -212,10 +218,13 @@ jobs:
         with:
           python-version: ${{ env.python_version }}
       - name: Use Python Dependency Cache
+        if: github.event_name != 'release'
         uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
         with:
           path: ~/.cache/pip
           key: ${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}-${{ matrix.target.runner }}
+          # https://github.com/zizmorcore/zizmor/issues/2071
+          lookup-only: ${{ startsWith(github.ref, 'refs/tags/') }}
       - name: Install macOS Dependencies
         env:
           HOMEBREW_NO_INSTALL_CLEANUP: 1
@@ -307,11 +316,14 @@ jobs:
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     steps:
       - name: GTK binaries get from cache
+        if: github.event_name != 'release'
         uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
         id: cache
         with:
           path: C:\gtk\**
           key: ${{ runner.os }}-gvsbuild-${{ env.gvsbuild_version }}
+          # https://github.com/zizmorcore/zizmor/issues/2071
+          lookup-only: ${{ startsWith(github.ref, 'refs/tags/') }}
       - name: Download Gvsbuild
         if: steps.cache.outputs.cache-hit != 'true'
         env:
@@ -337,10 +349,13 @@ jobs:
         with:
           python-version: ${{ env.python_version }}
       - name: Use Python Dependency Cache
+        if: github.event_name != 'release'
         uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
         with:
           path: ~/.cache/pip
           key: ${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}
+          # https://github.com/zizmorcore/zizmor/issues/2071
+          lookup-only: ${{ startsWith(github.ref, 'refs/tags/') }}
       - name: Install Dependencies
         id: install
         uses: ./.github/actions/install
@@ -470,6 +485,7 @@ jobs:
           private-key: ${{ secrets.GAPHOR_UPDATER_APP_PRIVATE_KEY }}
           repositories: |
             gaphor.github.io
+          permission-contents: write
       - name: Repository Dispatch
         uses: peter-evans/repository-dispatch@28959ce8df70de7be546dd1250a005dd32156697 # v4.0.1
         with:
