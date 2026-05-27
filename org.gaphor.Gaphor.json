@@ -23,7 +23,8 @@
     "--share=ipc",
     "--socket=wayland",
     "--device=dri",
-    "--socket=session-bus"
+    "--socket=session-bus",
+    "--filesystem=home"
   ],
   "modules": [
     {
