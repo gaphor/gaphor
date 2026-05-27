@@ -119,7 +119,7 @@ jobs:
         with:
           path: ~/.cache/pip
           key: ${{ runner.os }}-python${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}-41
-          lookup-only: true
+          lookup-only: ${{ startsWith(github.ref, 'refs/tags/') }}
       - name: Install Dependencies
         id: install
         uses: ./.github/actions/install
@@ -177,7 +177,7 @@ jobs:
         with:
           path: ~/.cache/pip
           key: ${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}-24.04
-          lookup-only: true
+          lookup-only: ${{ startsWith(github.ref, 'refs/tags/') }}
       - uses: flatpak/flatpak-github-actions/flatpak-builder@401fe28a8384095fc1531b9d320b292f0ee45adb # master
         with:
           bundle: gaphor.flatpak
@@ -221,7 +221,7 @@ jobs:
         with:
           path: ~/.cache/pip
           key: ${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}-${{ matrix.target.runner }}
-          lookup-only: true
+          lookup-only: ${{ startsWith(github.ref, 'refs/tags/') }}
       - name: Install macOS Dependencies
         env:
           HOMEBREW_NO_INSTALL_CLEANUP: 1
@@ -319,7 +319,7 @@ jobs:
         with:
           path: C:\gtk\**
           key: ${{ runner.os }}-gvsbuild-${{ env.gvsbuild_version }}
-          lookup-only: true
+          lookup-only: ${{ startsWith(github.ref, 'refs/tags/') }}
       - name: Download Gvsbuild
         if: steps.cache.outputs.cache-hit != 'true'
         env:
@@ -350,7 +350,7 @@ jobs:
         with:
           path: ~/.cache/pip
           key: ${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}
-          lookup-only: true
+          lookup-only: ${{ startsWith(github.ref, 'refs/tags/') }}
       - name: Install Dependencies
         id: install
         uses: ./.github/actions/install
