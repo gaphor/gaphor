@@ -45,7 +45,7 @@ dependencies = [
     "pillow>=10.0.0",
     "defusedxml>=0.7.1",
     "pyobjc-framework-cocoa (>=9.0.1) ; sys_platform == 'darwin'",
-    "dulwich>=1.2.4",
+    "dulwich>=1.2.5",
 ]
 
 [project.scripts]
