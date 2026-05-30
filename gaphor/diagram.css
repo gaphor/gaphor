@@ -61,6 +61,10 @@ diagramframe {
   padding: 4;
 }
 
+:has(.item) compartment:first-child {
+  justify-content: start;
+}
+
 /* Relationships */
 
 commentline,
