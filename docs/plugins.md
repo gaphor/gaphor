@@ -117,8 +117,45 @@ page](service_oriented.md).
 
 ## Community Developed Plugins
 
+The Gaphor community maintains plugins that integrate Gaphor with external tools or add specialized modeling workflows.
+These plugins are not bundled with Gaphor, but they can be installed separately in your plugin directory.
+
 ### Gaphor_Tools
+
 #### What does it do?
+
 Import and export of SysML requirements and notes to Excel and Confluence. It's currently at the proof-of-concept stage of development, but does allow a requirements table to be exported, then edited and imported bringing in all the changes to the model, similarly for element notes.
+
 #### Where can I get it?
+
 From this [BitBucket Repo](https://bitbucket.org/resonatesystems/gaphor_tools/src/main/)
+
+### Gaphor Project Plugin
+
+#### What does it do?
+
+Reuse packages across different projects by leveraging Git submodules for versioning.
+
+#### Where can I get it?
+
+From the [Gaphor Project Plugin repository](https://github.com/ApogeoSpace/gaphor-project-plugin).
+
+### Gaphor Autolayout
+
+#### What does it do?
+
+Apply a more powerful automatic layout engine to diagrams using [ELKJS](https://github.com/kieler/elkjs/).
+
+#### Where can I get it?
+
+From the [Gaphor Autolayout repository](https://github.com/tompkins-ct/gaphor-autolayout).
+
+### MagicDraw Import Plugin
+
+#### What does it do?
+
+Import a MagicDraw model into an existing Gaphor model.
+
+#### Where can I get it?
+
+From the [MagicDraw Import Plugin repository](https://github.com/pbrown12303/GaphorMDImportPlugin).
