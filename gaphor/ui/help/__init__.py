@@ -46,7 +46,7 @@ class HelpService(Service, ActionProvider):
 
     @action(name="app.documentation", shortcut="F1")
     def documentation(self):
-        Gio.AppInfo.launch_default_for_uri("https://docs.gaphor.org", None)
+        Gio.AppInfo.launch_default_for_uri("https://docs.gaphor.org")
 
     @action(name="app.shortcuts", shortcut="<Primary>question")
     def shortcuts(self):

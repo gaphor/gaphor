@@ -121,3 +121,6 @@ class Notification:
     """Inform the user about important events."""
 
     message: str
+    action_name: str | None = None
+    action_label: str | None = None
+    action_target: str | None = None
