@@ -45,7 +45,7 @@ jobs:
             api.github.com:443
             *.githubusercontent.com:443
             ghcr.io
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           persist-credentials: false
@@ -107,7 +107,7 @@ jobs:
           cairo-gobject-devel python${{ matrix.python_version }}-devel
       - name: Switch Primary Python to ${{ matrix.python_version }}
         run: alternatives --install /usr/bin/python python /usr/bin/python${{ matrix.python_version }} 1
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           persist-credentials: false
@@ -135,7 +135,7 @@ jobs:
           poetry run coverage lcov
       - name: Upload Code Coverage to Qlty
         if: ${{ matrix.python_version == env.python_version }}
-        uses: qltysh/qlty-action/coverage@a19242102d17e497f437d7466aa01b528537e899 # v1
+        uses: qltysh/qlty-action/coverage@fd52dc852530a708d68c3b7342f8d33d1df4cd55 # v1
         with:
           token: ${{ secrets.QLTY_COVERAGE_TOKEN }}
           files: coverage.lcov
@@ -168,7 +168,7 @@ jobs:
         with:
           egress-policy: audit
 
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           persist-credentials: false
@@ -209,7 +209,7 @@ jobs:
       artifact-intel: ${{ steps.output.outputs.artifact-intel }}
       artifact-arm: ${{ steps.output.outputs.artifact-arm }}
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           persist-credentials: false
@@ -340,7 +340,7 @@ jobs:
           Write-Output "XDG_DATA_HOME=$HOME\.local\share" >> $env:GITHUB_ENV
           Write-Output "C:\gtk\bin" >> $env:GITHUB_PATH
           choco install graphviz -y
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           persist-credentials: false
