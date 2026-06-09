@@ -117,8 +117,6 @@ page](service_oriented.md).
 
 ## Community Developed Plugins
 
-### Gaphor_Tools
-#### What does it do?
-Import and export of SysML requirements and notes to Excel and Confluence. It's currently at the proof-of-concept stage of development, but does allow a requirements table to be exported, then edited and imported bringing in all the changes to the model, similarly for element notes.
-#### Where can I get it?
-From this [BitBucket Repo](https://bitbucket.org/resonatesystems/gaphor_tools/src/main/)
+```{toctree}
+community_developed_plugins
+```
