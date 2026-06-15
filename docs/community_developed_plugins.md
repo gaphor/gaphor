@@ -1,38 +1,74 @@
-## Community Developed Plugins
+# Community Developed Plugins
 
-### Gaphor Tools Plugins
+## Plugins List
 
-```{list-table} 
-:header-rows: 1
+<style>
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+  border-color: #c9f3f3;
+}
 
-* - Name
-  - What does it do?
-* - **Notes Plugin**
-  - The Export Notes plugin can be used to export notes  into an Excel file, CSV file or confluence page. 
-    Similarly the import plugin can be used to import any changes back to the model
-* - **Export/Import Requirements Plugin**
-  - The export Plugin can be used to export the requirement matrix from your gaphor model into an Excel file, csv file or to a Confluence page.
-    The import Plugin on the other hand, can be used to import requirements from an Excel file, CSV file or Confluence page into the model. 
-* - **Export RFIs**
-  - This plugin exports all RFIs from the model into an Excel or CSV file. 
-    Any comment with a name starting with `RFI` will automatically be detected and included in the export.
-* - **Import Responses**
-  - After RFIs have been exported and responses have been added to the Excel or CSV file, this plugin can import those responses back into the model automatically.
-* - **Compare Notes / Requirements**
-  - This plugin compares the Notes/Requirements currently in the model with previously exported versions to identify any differences or changes. This is especially useful when    changes may have been made to the model but have not yet been exported or reviewed.
-* - **Authenticate Confluence**
-  - To support importing from and exporting to Confluence, authentication is required. 
-    This plugin manages the authentication session so users do not need to repeatedly authenticate during the same session.
-* - **Apply Stylesheet**
-  - This plugin applies a custom CSS stylesheet to the generated output, allowing formatting and styling to align with company standards or documentation guidelines.
-* - **Export SDD**
-  - This plugin is used to export a system Design Document (The document will only export customer facing diagrams which will have some description). 
-    There are few steps on how to use this plugin
-    - Using Gaphor's inbuilt plugin (Export all images to SVG/PNG), export all the diagrams
-    - Run SDD plugin and save your .adoc file in the same directory as exported images
-    - Then you will be asked to Run asciidoctor-pdf that will convert this .adoc file into pdf
+th, td {
+  padding: 8px;
+}
+</style>
 
+<table>
+  <colgroup>
+    <col style="width: 25%">
+    <col style="width: 75%">
+
+  </colgroup>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>What does it do?</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+      <a href="https://bitbucket.org/resonatesystems/gaphor_tools_community/src/public-release" target="_blank">
+        Gaphor Tools
+      </a>
+      </td>
+      <td>
+      The Gaphor Tools consist of a variety of plugins developed to interact with model and import/export elements from it in a nice format and manner.
+      It consists of plugins such as Export/Import Notes, Export/Import Requirements, Export RFIs, Import RFI responses back to the model, Export System Description Document etc
+      The detailed info regarding these plugins can be found in the readme.md in Gaphor_tools repo
+      </td>
+    </tr>
+     <tr>
+     <td>
+      <a href="https://github.com/ApogeoSpace/gaphor-project-plugin" target="_blank">
+        Gaphor project Plugin
+      </a>
+      </td>
+      <td>Reuse packages across different projects by leveraging Git submodules for versioning </td>
+    </tr>
+    </tr>
+     <tr>
+      <td><a href="https://github.com/tompkins-ct/gaphor-autolayout" target="_blank">
+        Gaphor Auto Layout
+      </a>
+      </td>
+      <td>Apply a more powerful automatic layout engine to diagrams using [ELKJS](https://github.com/kieler/elkjs/)</td>
+    </tr>
+    </tr>
+     <tr>
+      <td><a href="https://github.com/pbrown12303/GaphorMDImportPlugin" target="_blank">
+        Magic Draw Import 
+      </a>
+      </td>
+      <td>This plugin is designed to import a MagicDraw model into an existing Gaphor model.</td>
+    </tr>
+  </tbody>
+</table>
+
+
+```{toctree}
+:maxdepth: 1
+:hidden:
+plugins
 ```
-
-#### Where can I get the above plugins?
-From this [BitBucket Repo](https://bitbucket.org/resonatesystems/gaphor_tools_community/src/public-release/)

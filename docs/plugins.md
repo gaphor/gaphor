@@ -1,5 +1,8 @@
-# Plugins
+---
+file_format: mystnb
+---
 
+# Creating and Installing plugins
 ```{important}
 Plugins is an experimental feature! The API may change.
 
@@ -115,8 +118,3 @@ also requires including Service as a base class. In the HelloWorldPlugin example
 A more complete description of this approach can be found in the [Service Oriented Architecture documentation
 page](service_oriented.md).
 
-## Community Developed Plugins
-
-```{toctree}
-community_developed_plugins
-```
