@@ -2,6 +2,7 @@
 """Babel gettext helpers for Gaphor."""
 
 import json
+import shutil
 import subprocess
 import sys
 import urllib.request
@@ -42,6 +43,10 @@ def compile_mo_file(path: Path):
     )
     mo_path.parent.mkdir(parents=True, exist_ok=True)
     run_babel("compile", path, mo_path, path.stem)
+    if path.stem == "zh_Hans":
+        zh_cn = mo_path.parent.parent.parent / "zh_CN" / "LC_MESSAGES" / "gaphor.mo"
+        zh_cn.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(mo_path, zh_cn)
 
 
 def compile_mo_all():
