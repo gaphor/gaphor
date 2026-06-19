@@ -132,7 +132,7 @@ pyobjc-framework-cocoa = { setuptools = "<82" }
 pyobjc-core = { setuptools = "<82" }
 
 [tool.poetry.group.dev.dependencies]
-pytest = ">=7.1,<9.1"
+pytest = ">=9.1.0,<9.2"
 pytest-archon = "^0.0"
 pytest-cov = ">=4,<8"
 pytest-randomly = "^4.0.1"
@@ -165,7 +165,7 @@ furo = ">=2022,<2026"
 optional=true
 
 [tool.poetry.group.packaging.dependencies]
-pyinstaller = ">=6.20.0"
+pyinstaller = ">=6.21.0"
 pyinstaller-versionfile = "^3.0.1"
 semver = ">=2.13,<4.0"
 dmgbuild = {version = "^1.6.7", markers = "sys_platform == 'darwin'" }
