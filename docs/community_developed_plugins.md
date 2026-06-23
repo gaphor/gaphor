@@ -58,7 +58,7 @@ th, td {
     </tr>
      <tr>
       <td><a href="https://github.com/pbrown12303/GaphorMDImportPlugin" target="_blank">
-        Magic Draw Import 
+        Magic Draw Import
       </a>
       </td>
       <td>This plugin is designed to import a MagicDraw model into an existing Gaphor model.</td>

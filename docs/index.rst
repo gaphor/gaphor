@@ -46,7 +46,7 @@ Did you know Gaphor has excellent integration with :doc:`Sphinx <sphinx>` and :d
    exporting
    stereotypes
    merge_conflicts
-   
+
 
 .. toctree::
    :caption: Development

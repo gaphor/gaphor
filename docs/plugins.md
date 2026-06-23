@@ -117,4 +117,3 @@ also requires including Service as a base class. In the HelloWorldPlugin example
 
 A more complete description of this approach can be found in the [Service Oriented Architecture documentation
 page](service_oriented.md).
-
