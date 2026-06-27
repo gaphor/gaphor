@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg height="16px" viewBox="0 0 16 16" width="16px" xmlns="http://www.w3.org/2000/svg" xmlns:gpa="https://www.gtk.org/grappa">
-  <g stroke="#2e3436">
-    <path d="m 1 3 14 0 0 10 H 1 Z" fill="none" stroke-width="2px" gpa:stroke="foreground" stroke-linejoin="round" class="foreground-stroke"/>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:gpa="https://www.gtk.org/grappa" width="16px" height="16px" viewBox="0 0 16 16">
+  <g fill="#2e3436">
+    <path d="m 1,3 l 14,0 l 0,10 L 1,13 Z" fill="none" stroke="foreground" stroke-width="2" stroke-linejoin="round" class="foreground-stroke" gpa:stroke="foreground"/>
   </g>
 </svg>

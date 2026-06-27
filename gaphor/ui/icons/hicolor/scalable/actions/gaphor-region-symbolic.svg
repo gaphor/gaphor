@@ -1,47 +1,9 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg
-   width="15.996555"
-   height="10.002463"
-   viewBox="0 0 4.2324218 2.6464852"
-   version="1.1"
-   id="svg4268"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:dc="http://purl.org/dc/elements/1.1/">
-  <defs
-     id="defs4262" />
-  <metadata
-     id="metadata4265">
-    <rdf:RDF>
-      <cc:Work
-         rdf:about="">
-        <dc:format>image/svg+xml</dc:format>
-        <dc:type
-           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-      </cc:Work>
-    </rdf:RDF>
-  </metadata>
-  <g
-     id="region"
-     style="display:inline"
-     transform="translate(-51.59375,-10.847656)">
-    <path
-       style="color:#000000;fill:#000000;-inkscape-stroke:none"
-       d="m 51.59375,10.847656 v 2.646485 h 0.529297 v -2.646485 z"
-       id="path1361" />
-    <path
-       style="color:#000000;fill:#000000;-inkscape-stroke:none"
-       d="m 52.123047,11.244141 v 0.265625 H 55.5625 v -0.265625 z"
-       id="path1363" />
-    <path
-       style="color:#000000;fill:#000000;-inkscape-stroke:none"
-       d="m 55.298828,10.847656 v 2.646485 h 0.527344 v -2.646485 z"
-       id="path1365" />
-    <path
-       style="color:#000000;fill:#000000;-inkscape-stroke:none"
-       d="m 52.123047,12.832031 v 0.265625 H 55.5625 v -0.265625 z"
-       id="path1367" />
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 16 16">
+  <g fill="#2e3436">
+    <path d="m 0,0 l 0,15.9999987908 l 2.00092344293,0 l 0,-15.9999987908 z" fill="#2e3436"/>
+    <path d="m 2.00092344293,2.39705100183 l 0,1.60590355843 L 15.0032305381,4.00295456026 l 0,-1.60590355843 z" fill="#2e3436"/>
+    <path d="m 14.0064603202,0 l 0,15.9999987908 l 1.99354043588,0 l 0,-15.9999987908 z" fill="#2e3436"/>
+    <path d="m 2.00092344293,11.9970442306 l 0,1.60590355843 L 15.0032305381,13.602947789 l 0,-1.60590355843 z" fill="#2e3436"/>
   </g>
 </svg>
