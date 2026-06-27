@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:gpa="https://www.gtk.org/grappa" width="16px" height="16px" viewBox="0 0 16 16">
-  <g fill="#2e3436">
-    <path d="m 1,3 l 14,0 l 0,10 L 1,13 Z" fill="none" stroke="foreground" stroke-width="2" stroke-linejoin="round" class="foreground-stroke" gpa:stroke="foreground"/>
-  </g>
+<svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 16 16">
+  <path d="m 1,3 l 14,0 l 0,10 L 1,13 Z" fill-opacity="0" stroke="foreground" stroke-width="2" stroke-linejoin="round" class="foreground-stroke"/>
 </svg>

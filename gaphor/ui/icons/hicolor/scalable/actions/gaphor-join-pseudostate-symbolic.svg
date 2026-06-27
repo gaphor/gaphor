@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 16 16">
-  <g fill="#2e3436">
-    <path d="m 7.98348175629,0 l 0,15.999999575" fill="none" stroke="#2e3436" stroke-width="2.30924047" stroke-dasharray="none" stroke-linecap="butt" stroke-linejoin="miter" stroke-opacity="1"/>
-    <path d="m 0.00843408521467,3.20117004187 l 5.18218619854,-0.0699610913155 l 0,0" fill="none" stroke="#2e3436" stroke-width="1.15461805" stroke-linecap="butt" stroke-linejoin="miter" stroke-opacity="1"/>
-    <path d="m 3.33722736953,0.388177372512 l 2.64336256278,2.79378524702 l -2.90469195836,2.55399211891" fill="none" stroke="#2e3436" stroke-width="1.15461805" stroke-linecap="butt" stroke-linejoin="miter" stroke-opacity="1"/>
-    <path d="m 0.0268789421012,13.0002120669 l 5.18218619854,-0.0699610913155 l 0,0" fill="none" stroke="#2e3436" stroke-width="1.15461805" stroke-linecap="butt" stroke-linejoin="miter" stroke-opacity="1"/>
-    <path d="m 3.35567222642,10.1872193975 l 2.64336256278,2.79378524702 l -2.90469195836,2.55399211891" fill="none" stroke="#2e3436" stroke-width="1.15461805" stroke-linecap="butt" stroke-linejoin="miter" stroke-opacity="1"/>
-    <path d="m 9.19709751245,8.13743601367 l 5.18218619854,-0.0699610913155 l 0,0" fill="none" stroke="#2e3436" stroke-width="1.15461805" stroke-linecap="butt" stroke-linejoin="miter" stroke-opacity="1"/>
-    <path d="m 12.5258907968,5.32444334431 l 2.64336256278,2.79378524702 l -2.90469195836,2.55399211891" fill="none" stroke="#2e3436" stroke-width="1.15461805" stroke-linecap="butt" stroke-linejoin="miter" stroke-opacity="1"/>
+  <g stroke="#2e3436" fill-opacity="0">
+    <path d="m 8,0 l 0,16" stroke-width="3" stroke-linecap="butt" stroke-opacity="1" class="foreground-stroke"/>
+    <path d="M 10,8 l 5,0 m -3,3 l 3,-3 l -3,-3" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" fill-opacity="0" class="foreground-stroke"/>
+    <path d="M 1,4 l 5,0 m -3,3 l 3,-3 l -3,-3" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" fill-opacity="0" class="foreground-stroke"/>
+    <path d="M 1,12 l 5,0 m -3,3 l 3,-3 l -3,-3" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" fill-opacity="0" class="foreground-stroke"/>
   </g>
 </svg>
