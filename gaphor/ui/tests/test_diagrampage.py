@@ -1,8 +1,5 @@
-import os
-
 import pytest
 import pytest_asyncio
-from gi.repository import Gtk
 
 from gaphor import UML
 from gaphor.core.modeling import Diagram
@@ -10,8 +7,6 @@ from gaphor.diagram.general import Box
 from gaphor.ui.diagrampage import (
     DiagramPage,
     delete_selected_items,
-    get_placement_cursor,
-    placement_icon_base,
 )
 from gaphor.UML import Comment
 from gaphor.UML.diagramitems import ClassItem, PackageItem
@@ -39,31 +34,6 @@ def test_placement(diagram, page, element_factory):
 
     diagram.create(CommentItem, subject=element_factory.create(Comment))
     assert len(element_factory.lselect()) == 4
-
-
-@pytest.mark.skipif(
-    bool(os.environ.get("GDK_PIXBUF_MODULEDIR")),
-    reason="Causes a SegFault when run from VSCode",
-)
-def test_placement_icon_base_is_loaded_once():
-    icon1 = placement_icon_base()
-    icon2 = placement_icon_base()
-
-    assert icon1 is icon2
-
-
-@pytest.mark.skipif(
-    bool(os.environ.get("GDK_PIXBUF_MODULEDIR")),
-    reason="Causes a SegFault when run from VSCode",
-)
-def test_placement_cursor(view):
-    window = Gtk.Window()
-    window.set_child(view)
-    window.present()
-
-    cursor = get_placement_cursor(view, "gaphor-box-symbolic")
-
-    assert cursor
 
 
 @pytest.mark.asyncio

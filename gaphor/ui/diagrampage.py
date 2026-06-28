@@ -7,7 +7,7 @@ from gaphas.segment import LineSegmentPainter
 from gaphas.tool.itemtool import default_find_item_and_handle_at_point
 from gaphas.tool.rubberband import RubberbandPainter, RubberbandState
 from gaphas.view import GtkView
-from gi.repository import Adw, Gdk, Gio, GLib, Graphene, Gsk, Gtk
+from gi.repository import Adw, Gdk, Gio, GLib, Gtk
 
 from gaphor.core import event_handler, gettext
 from gaphor.core.modeling import StyleSheet
@@ -41,60 +41,6 @@ def new_builder():
     builder = Gtk.Builder()
     builder.add_from_string(translated_ui_string("gaphor.ui", "diagrampage.ui"))
     return builder
-
-
-def get_placement_cursor(view: GtkView, icon_name: str) -> Gdk.Cursor:
-    surface = view.get_native().get_surface()
-    display = surface.get_display()
-    assert display
-
-    icon_theme = Gtk.IconTheme.get_for_display(display)
-    icon_base = icon_theme.lookup_icon(
-        "gaphor-placement-icon-base",
-        None,
-        16,
-        1,
-        Gtk.TextDirection.NONE,
-        Gtk.IconLookupFlags.NONE,
-    )
-    theme_icon = icon_theme.lookup_icon(
-        icon_name,
-        None,
-        24,
-        1,
-        Gtk.TextDirection.NONE,
-        Gtk.IconLookupFlags.FORCE_SYMBOLIC,
-    )
-
-    snapshot = Gtk.Snapshot.new()
-    icon_base.snapshot(
-        snapshot,
-        16,
-        16,
-    )
-    snapshot.save()
-    snapshot.translate(Graphene.Point().init(9, 15))
-    theme_icon.snapshot_symbolic(
-        snapshot,
-        24,
-        24,
-        [view.get_color()],
-    )
-    snapshot.restore()
-    render_node = snapshot.to_node()
-    assert render_node
-
-    renderer = Gsk.Renderer.new_for_surface(surface)
-    assert renderer and renderer.is_realized()
-    texture = renderer.render_texture(render_node, None)
-    renderer.unrealize()
-
-    return Gdk.Cursor.new_from_texture(
-        texture,
-        1,
-        1,
-        None,
-    )
 
 
 class DiagramPage:
@@ -273,10 +219,8 @@ class DiagramPage:
             return
 
         if self.apply_tool_set(tool_name):
-            if icon_name := self.get_tool_icon_name(tool_name):
-                self.view.set_cursor(get_placement_cursor(self.view, icon_name))
-            else:
-                self.view.set_cursor(None)
+            icon_name = self.get_tool_icon_name(tool_name)
+            self.view.set_placement_cursor(icon_name)
 
     def update_drawing_style(self):
         """Set the drawing style for the diagram based on the active style
