@@ -220,7 +220,6 @@ release-mature-locales-update = { "script" = "scripts.build_babel:update_release
 gettext-docs-pot = { "cwd" = "docs", "shell" = "sphinx-build -b gettext . locale" }
 gettext-docs-po = { "cwd" = "docs", "shell" = "sphinx-intl update -p locale" }
 translations = [ "gettext-pot", "gettext-po", "gettext-mo-all", "gettext-docs-pot", "gettext-docs-po" ]
-icons = { "shell" = "make -C gaphor/ui/icons" }
 
 [tool.pytest.ini_options]
 testpaths = [
