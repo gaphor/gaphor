@@ -2,7 +2,7 @@ import os
 
 import pytest
 import pytest_asyncio
-from gi.repository import Gdk
+from gi.repository import Gtk
 
 from gaphor import UML
 from gaphor.core.modeling import Diagram
@@ -56,9 +56,12 @@ def test_placement_icon_base_is_loaded_once():
     bool(os.environ.get("GDK_PIXBUF_MODULEDIR")),
     reason="Causes a SegFault when run from VSCode",
 )
-def test_placement_cursor():
-    display = Gdk.Display.get_default()
-    cursor = get_placement_cursor(display, "gaphor-box-symbolic")
+def test_placement_cursor(view):
+    window = Gtk.Window()
+    window.set_child(view)
+    window.present()
+
+    cursor = get_placement_cursor(view, "gaphor-box-symbolic")
 
     assert cursor
 

@@ -8,7 +8,7 @@ from gaphas.segment import LineSegmentPainter
 from gaphas.tool.itemtool import default_find_item_and_handle_at_point
 from gaphas.tool.rubberband import RubberbandPainter, RubberbandState
 from gaphas.view import GtkView
-from gi.repository import Adw, Gdk, GdkPixbuf, Gio, GLib, Gtk
+from gi.repository import Adw, Gdk, Gio, GLib, Graphene, Gsk, Gtk
 
 from gaphor.core import event_handler, gettext
 from gaphor.core.modeling import StyleSheet
@@ -38,7 +38,7 @@ log = logging.getLogger(__name__)
 @functools.lru_cache(maxsize=1)
 def placement_icon_base():
     f = importlib.resources.files("gaphor") / "ui" / "placement-icon-base.png"
-    return GdkPixbuf.Pixbuf.new_from_file_at_scale(str(f), 64, 64, True)
+    return Gdk.Texture.new_from_filename(str(f))
 
 
 if hasattr(GtkView, "set_css_name"):
@@ -51,11 +51,11 @@ def new_builder():
     return builder
 
 
-@functools.cache
-def get_placement_icon(display, icon_name):
-    if display is None:
-        display = Gdk.Display.get_default()
-    pixbuf = placement_icon_base().copy()
+def get_placement_cursor(view: GtkView, icon_name: str) -> Gdk.Cursor:
+    surface = view.get_native().get_surface()
+    display = surface.get_display()
+    assert display
+
     theme_icon = Gtk.IconTheme.get_for_display(display).lookup_icon(
         icon_name,
         None,
@@ -64,23 +64,35 @@ def get_placement_icon(display, icon_name):
         Gtk.TextDirection.NONE,
         Gtk.IconLookupFlags.FORCE_SYMBOLIC,
     )
-    icon = GdkPixbuf.Pixbuf.new_from_file_at_scale(
-        theme_icon.get_file().get_path(), 32, 32, True
+    snapshot = Gtk.Snapshot.new()
+    snapshot.append_texture(
+        placement_icon_base(),
+        Graphene.Rect().init(0, 0, 48, 48),
     )
-    icon.copy_area(
-        0,
-        0,
-        icon.get_width(),
-        icon.get_height(),
-        pixbuf,
-        9,
-        15,
+    snapshot.save()
+    snapshot.translate(Graphene.Point().init(7, 11))
+
+    theme_icon.snapshot_symbolic(
+        snapshot,
+        24,
+        24,
+        [view.get_color()],
     )
-    return Gdk.Texture.new_for_pixbuf(pixbuf)
+    snapshot.restore()
+    render_node = snapshot.to_node()
+    assert render_node
 
+    renderer = Gsk.Renderer.new_for_surface(surface)
+    assert renderer and renderer.is_realized()
+    texture = renderer.render_texture(render_node, None)
+    renderer.unrealize()
 
-def get_placement_cursor(display, icon_name):
-    return Gdk.Cursor.new_from_texture(get_placement_icon(display, icon_name), 1, 1)
+    return Gdk.Cursor.new_from_texture(
+        texture,
+        1,
+        1,
+        None,
+    )
 
 
 class DiagramPage:
@@ -260,7 +272,7 @@ class DiagramPage:
 
         if self.apply_tool_set(tool_name):
             if icon_name := self.get_tool_icon_name(tool_name):
-                self.view.set_cursor(get_placement_cursor(None, icon_name))
+                self.view.set_cursor(get_placement_cursor(self.view, icon_name))
             else:
                 self.view.set_cursor(None)
 
