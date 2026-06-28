@@ -46,7 +46,7 @@ gi.require_versions({
 
 finder = MockFinder([
     "gi.repository.Adw", "gi.repository.Gtk", "gi.repository.Gdk",
-    "gi.repository.GdkPixbuf", "gi.repository.GtkSource", "gi.repository.Graphene"
+    "gi.repository.Gsk", "gi.repository.GtkSource", "gi.repository.Graphene"
 ])
 sys.meta_path.insert(0, finder)
 

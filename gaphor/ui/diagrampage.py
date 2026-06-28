@@ -1,5 +1,4 @@
 import functools
-import importlib
 import logging
 
 from gaphas.guide import GuidePainter
@@ -34,13 +33,6 @@ from gaphor.ui.event import ToolSelected
 
 log = logging.getLogger(__name__)
 
-
-@functools.lru_cache(maxsize=1)
-def placement_icon_base():
-    f = importlib.resources.files("gaphor") / "ui" / "placement-icon-base.png"
-    return Gdk.Texture.new_from_filename(str(f))
-
-
 if hasattr(GtkView, "set_css_name"):
     GtkView.set_css_name("diagramview")
 
@@ -56,7 +48,16 @@ def get_placement_cursor(view: GtkView, icon_name: str) -> Gdk.Cursor:
     display = surface.get_display()
     assert display
 
-    theme_icon = Gtk.IconTheme.get_for_display(display).lookup_icon(
+    icon_theme = Gtk.IconTheme.get_for_display(display)
+    icon_base = icon_theme.lookup_icon(
+        "gaphor-placement-icon-base",
+        None,
+        16,
+        1,
+        Gtk.TextDirection.NONE,
+        Gtk.IconLookupFlags.NONE,
+    )
+    theme_icon = icon_theme.lookup_icon(
         icon_name,
         None,
         24,
@@ -64,14 +65,15 @@ def get_placement_cursor(view: GtkView, icon_name: str) -> Gdk.Cursor:
         Gtk.TextDirection.NONE,
         Gtk.IconLookupFlags.FORCE_SYMBOLIC,
     )
+
     snapshot = Gtk.Snapshot.new()
-    snapshot.append_texture(
-        placement_icon_base(),
-        Graphene.Rect().init(0, 0, 48, 48),
+    icon_base.snapshot(
+        snapshot,
+        16,
+        16,
     )
     snapshot.save()
-    snapshot.translate(Graphene.Point().init(7, 11))
-
+    snapshot.translate(Graphene.Point().init(9, 15))
     theme_icon.snapshot_symbolic(
         snapshot,
         24,
