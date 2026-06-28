@@ -1,5 +1,4 @@
 import functools
-import importlib
 import logging
 
 from gaphas.guide import GuidePainter
@@ -8,7 +7,7 @@ from gaphas.segment import LineSegmentPainter
 from gaphas.tool.itemtool import default_find_item_and_handle_at_point
 from gaphas.tool.rubberband import RubberbandPainter, RubberbandState
 from gaphas.view import GtkView
-from gi.repository import Adw, Gdk, GdkPixbuf, Gio, GLib, Gtk
+from gi.repository import Adw, Gdk, Gio, GLib, Gtk
 
 from gaphor.core import event_handler, gettext
 from gaphor.core.modeling import StyleSheet
@@ -34,13 +33,6 @@ from gaphor.ui.event import ToolSelected
 
 log = logging.getLogger(__name__)
 
-
-@functools.lru_cache(maxsize=1)
-def placement_icon_base():
-    f = importlib.resources.files("gaphor") / "ui" / "placement-icon-base.png"
-    return GdkPixbuf.Pixbuf.new_from_file_at_scale(str(f), 64, 64, True)
-
-
 if hasattr(GtkView, "set_css_name"):
     GtkView.set_css_name("diagramview")
 
@@ -49,38 +41,6 @@ def new_builder():
     builder = Gtk.Builder()
     builder.add_from_string(translated_ui_string("gaphor.ui", "diagrampage.ui"))
     return builder
-
-
-@functools.cache
-def get_placement_icon(display, icon_name):
-    if display is None:
-        display = Gdk.Display.get_default()
-    pixbuf = placement_icon_base().copy()
-    theme_icon = Gtk.IconTheme.get_for_display(display).lookup_icon(
-        icon_name,
-        None,
-        24,
-        1,
-        Gtk.TextDirection.NONE,
-        Gtk.IconLookupFlags.FORCE_SYMBOLIC,
-    )
-    icon = GdkPixbuf.Pixbuf.new_from_file_at_scale(
-        theme_icon.get_file().get_path(), 32, 32, True
-    )
-    icon.copy_area(
-        0,
-        0,
-        icon.get_width(),
-        icon.get_height(),
-        pixbuf,
-        9,
-        15,
-    )
-    return Gdk.Texture.new_for_pixbuf(pixbuf)
-
-
-def get_placement_cursor(display, icon_name):
-    return Gdk.Cursor.new_from_texture(get_placement_icon(display, icon_name), 1, 1)
 
 
 class DiagramPage:
@@ -259,10 +219,8 @@ class DiagramPage:
             return
 
         if self.apply_tool_set(tool_name):
-            if icon_name := self.get_tool_icon_name(tool_name):
-                self.view.set_cursor(get_placement_cursor(None, icon_name))
-            else:
-                self.view.set_cursor(None)
+            icon_name = self.get_tool_icon_name(tool_name)
+            self.view.set_placement_cursor(icon_name)
 
     def update_drawing_style(self):
         """Set the drawing style for the diagram based on the active style
