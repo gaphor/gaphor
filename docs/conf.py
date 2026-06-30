@@ -45,6 +45,7 @@ extensions = [
 
 autodoc_mock_imports = [
     "gi.repository.Gdk",
+    "gi.repository.Gsk",
     "gi.repository.Gtk",
     "gi.repository.Adw",
     "gi.repository.GtkSource",
