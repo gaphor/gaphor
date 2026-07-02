@@ -46,7 +46,7 @@ Did you know Gaphor has excellent integration with :doc:`Sphinx <sphinx>` and :d
    exporting
    stereotypes
    merge_conflicts
-   plugins
+
 
 .. toctree::
    :caption: Development
@@ -57,6 +57,7 @@ Did you know Gaphor has excellent integration with :doc:`Sphinx <sphinx>` and :d
    windows
    container
    contribute
+   community_developed_plugins
 
 .. toctree::
    :caption: Modeling languages

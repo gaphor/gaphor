@@ -1,5 +1,8 @@
-# Plugins
+---
+file_format: mystnb
+---
 
+# Creating and Installing plugins
 ```{important}
 Plugins is an experimental feature! The API may change.
 
@@ -114,11 +117,3 @@ also requires including Service as a base class. In the HelloWorldPlugin example
 
 A more complete description of this approach can be found in the [Service Oriented Architecture documentation
 page](service_oriented.md).
-
-## Community Developed Plugins
-
-### Gaphor_Tools
-#### What does it do?
-Import and export of SysML requirements and notes to Excel and Confluence. It's currently at the proof-of-concept stage of development, but does allow a requirements table to be exported, then edited and imported bringing in all the changes to the model, similarly for element notes.
-#### Where can I get it?
-From this [BitBucket Repo](https://bitbucket.org/resonatesystems/gaphor_tools/src/main/)
