@@ -53,7 +53,7 @@ th, td {
         Gaphor Auto Layout
       </a>
       </td>
-      <td>Apply a more powerful automatic layout engine to diagrams using [ELKJS](https://github.com/kieler/elkjs/)</td>
+      <td>Apply a more powerful automatic layout engine to diagrams using <a href="https://github.com/kieler/elkjs/" target="_blank">ELKJS</a></td>
     </tr>
     </tr>
      <tr>
