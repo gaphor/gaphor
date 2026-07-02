@@ -69,6 +69,5 @@ th, td {
 
 ```{toctree}
 :maxdepth: 1
-:hidden:
 plugins
 ```
