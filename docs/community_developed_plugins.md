@@ -1,4 +1,4 @@
-# Community Developed Plugins
+# Community Plugins
 
 ## Plugins List
 
