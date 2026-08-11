@@ -1825,6 +1825,15 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "Dialysson",
+      "name": "Dialysson",
+      "avatar_url": "https://avatars.githubusercontent.com/u/13652043?v=4",
+      "profile": "https://github.com/Dialysson",
+      "contributions": [
+        "translation"
+      ]
     }
   ],
   "contributorsPerLine": 7,
