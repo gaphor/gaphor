@@ -42,7 +42,6 @@ a = Analysis(  # type: ignore
     datas=[
         (ROOT / "gaphor/diagram.css", "gaphor"),
         (ROOT / "gaphor/ui/styling*.css", "gaphor/ui"),
-        (ROOT / "gaphor/ui/placement-icon-base.png", "gaphor/ui"),
         (ROOT / "gaphor/ui/language-specs/*.lang", "gaphor/ui/language-specs"),
         (ROOT / "LICENSES/Apache-2.0.txt", "gaphor"),
         (ROOT / "gaphor/templates/*.gaphor", "gaphor/templates"),

@@ -2,7 +2,7 @@ import logging
 
 from gaphas.model import Model
 from gaphas.view import GtkView
-from gi.repository import GObject
+from gi.repository import Gdk, GObject, Graphene, Gsk, Gtk
 
 from gaphor.diagram.painter import ItemPainter
 from gaphor.diagram.selection import Selection
@@ -20,6 +20,66 @@ class DiagramView(GtkView):
         self.bounding_box_painter = self.painter
         self.selection.add_handler(self._on_selection_changed)
         self._on_selection_changed()
+
+    def set_placement_cursor(self, icon_name: str | None) -> None:
+        native = self.get_native()
+        if icon_name is None or not native:
+            self.set_cursor(None)
+            return
+
+        surface = native.get_surface()
+        display = surface.get_display()
+        assert display
+
+        icon_theme = Gtk.IconTheme.get_for_display(display)
+        icon_base = icon_theme.lookup_icon(
+            "gaphor-placement-icon-base",
+            None,
+            16,
+            1,
+            Gtk.TextDirection.NONE,
+            Gtk.IconLookupFlags.NONE,
+        )
+        theme_icon = icon_theme.lookup_icon(
+            icon_name,
+            None,
+            24,
+            1,
+            Gtk.TextDirection.NONE,
+            Gtk.IconLookupFlags.FORCE_SYMBOLIC,
+        )
+
+        snapshot = Gtk.Snapshot.new()
+        icon_base.snapshot(
+            snapshot,
+            16,
+            16,
+        )
+        snapshot.save()
+        snapshot.translate(Graphene.Point().init(9, 15))
+        theme_icon.snapshot_symbolic(
+            snapshot,
+            24,
+            24,
+            [self.get_color()],
+        )
+        snapshot.restore()
+        render_node = snapshot.to_node()
+        assert render_node
+
+        renderer = Gsk.Renderer.new_for_surface(surface)
+        assert renderer and renderer.is_realized()
+        texture = renderer.render_texture(render_node, None)
+        renderer.unrealize()
+
+        self.set_cursor(
+            Gdk.Cursor.new_from_texture(
+                texture,
+                1,
+                1,
+                None,
+            )
+        )
 
     @GObject.Signal(name="cut-clipboard", flags=GObject.SignalFlags.RUN_LAST)
     def _cut_clipboard(self):

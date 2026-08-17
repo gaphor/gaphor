@@ -56,13 +56,14 @@ execute:
 ```bash
 sudo apt-get install -y python3-dev python3-gi python3-gi-cairo \
 gir1.2-gtk-4.0 libgirepository-2.0-dev libcairo2-dev libgtksourceview-5-dev \
-graphviz
+graphviz libgles2-mesa
 ```
 
 For Redhat/RPM/Fedora based systems:
 
 ```bash
-sudo dnf install python3-devel cairo-gobject-devel gobject-introspection-devel graphviz
+sudo dnf install python3-devel cairo-gobject-devel gobject-introspection-devel \
+libglvnd-gles graphviz
 ```
 
 Install [Poetry](https://python-poetry.org) using [pipx](https://pypa.github.io/pipx/):
@@ -163,5 +164,5 @@ There is also an [Arch User Repository (AUR) for
 Gaphor](https://aur.archlinux.org/packages/python-gaphor) available for Arch
 users.
 
-Please, do not hesitate to contact us if you need help to create a Linux
+Please do not hesitate to contact us if you need help to create a Linux
 package for Gaphor or Gaphas.
