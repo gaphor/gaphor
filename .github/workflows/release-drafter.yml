@@ -17,7 +17,7 @@ jobs:
     steps:
       # Drafts your next Release notes as Pull Requests are merged into "main"
       - name: Harden Runner
-        uses: step-security/harden-runner@bf7454d06d71f1098171f2acdf0cd4708d7b5920 # v2.20.0
+        uses: step-security/harden-runner@05e31511f85b41b11d1cf0ef85d0992719546e2c # v2.21.0
         with:
           disable-sudo: true
           egress-policy: block
@@ -25,6 +25,6 @@ jobs:
             api.github.com:443
             *.githubusercontent.com:443
             ghcr.io
-      - uses: release-drafter/release-drafter@eada3c96a64734dd381cfbda23511034e328ddb0 # v7.6.0
+      - uses: release-drafter/release-drafter@34d80673e067bdc0c24568d3af899c216adcfaa9 # v7.7.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
