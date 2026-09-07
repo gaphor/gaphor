@@ -43,7 +43,7 @@ jobs:
           path: .hypothesis
           key: ${{ runner.os }}-hypothesis
       - name: Install Dependencies
-        uses: ./.github/actions/install
+        uses: $/.github/actions/install
         with:
           python-command: python${{ env.python_version }}
       - name: Test with Hypothesis
