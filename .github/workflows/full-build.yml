@@ -33,7 +33,7 @@ jobs:
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@05e31511f85b41b11d1cf0ef85d0992719546e2c # v2.21.0
+        uses: step-security/harden-runner@e14015d583714f6e62063499dc959a02595150a1 # v2.21.1
         with:
           disable-sudo: true
           disable-file-monitoring: true
@@ -95,7 +95,7 @@ jobs:
       version: ${{ steps.install.outputs.version }}
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@05e31511f85b41b11d1cf0ef85d0992719546e2c # v2.21.0
+        uses: step-security/harden-runner@e14015d583714f6e62063499dc959a02595150a1 # v2.21.1
         with:
           egress-policy: audit
       - name: Set up Path
@@ -164,7 +164,7 @@ jobs:
       options: --privileged
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@05e31511f85b41b11d1cf0ef85d0992719546e2c # v2.21.0
+        uses: step-security/harden-runner@e14015d583714f6e62063499dc959a02595150a1 # v2.21.1
         with:
           egress-policy: audit
 
@@ -180,7 +180,7 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}-24.04
           # https://github.com/zizmorcore/zizmor/issues/2071
           lookup-only: ${{ startsWith(github.ref, 'refs/tags/') }}
-      - uses: flatpak/flatpak-github-actions/flatpak-builder@401fe28a8384095fc1531b9d320b292f0ee45adb # master
+      - uses: flatpak/flatpak-github-actions/flatpak-builder@79327416609af08178ad73b352877e51450790b3 # master
         with:
           bundle: gaphor.flatpak
           manifest-path: org.gaphor.Gaphor.json
@@ -429,7 +429,7 @@ jobs:
       version: ${{ needs.linux-wheel.outputs.version }}
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@05e31511f85b41b11d1cf0ef85d0992719546e2c # v2.21.0
+        uses: step-security/harden-runner@e14015d583714f6e62063499dc959a02595150a1 # v2.21.1
         with:
           egress-policy: audit
 
@@ -473,7 +473,7 @@ jobs:
       name: release
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@05e31511f85b41b11d1cf0ef85d0992719546e2c # v2.21.0
+        uses: step-security/harden-runner@e14015d583714f6e62063499dc959a02595150a1 # v2.21.1
         with:
           egress-policy: audit
 
@@ -502,7 +502,7 @@ jobs:
       name: release
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@05e31511f85b41b11d1cf0ef85d0992719546e2c # v2.21.0
+        uses: step-security/harden-runner@e14015d583714f6e62063499dc959a02595150a1 # v2.21.1
         with:
           egress-policy: audit
 
