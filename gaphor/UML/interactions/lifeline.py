@@ -31,9 +31,18 @@ from gaphas.solver.constraint import BaseConstraint
 from gaphor import UML
 from gaphor.core.modeling.properties import attribute
 from gaphor.diagram.presentation import ElementPresentation, Named
-from gaphor.diagram.shapes import Box, CssNode, Text, cairo_state, draw_border, stroke
+from gaphor.diagram.shapes import (
+    Box,
+    CssNode,
+    IconBox,
+    Text,
+    cairo_state,
+    draw_border,
+    stroke,
+)
 from gaphor.diagram.support import represents
 from gaphor.UML.compartments import text_stereotypes
+from gaphor.UML.usecases.actor import ARM, draw_actor
 
 
 def clamp(value, min_value, max_value):
@@ -154,7 +163,7 @@ class LifelineItem(Named, ElementPresentation[UML.Lifeline]):
     """
 
     def __init__(self, diagram, id=None):
-        super().__init__(diagram, id)
+        super().__init__(diagram, id, width=ARM * 2)
 
         self._connections = diagram.connections
 
@@ -171,22 +180,10 @@ class LifelineItem(Named, ElementPresentation[UML.Lifeline]):
         self.watch_handle(bottom)
         self._ports.insert(0, self._lifetime.port)
 
-        self.shape = Box(
-            CssNode(
-                "compartment",
-                None,
-                Box(
-                    text_stereotypes(self),
-                    CssNode("name", self.subject, Text(text=self._format_name)),
-                ),
-            ),
-            CssNode("lifetime", None, Box(draw=self.draw_lifetime)),
-            draw=draw_border,
-        )
-
         self.watch("subject[NamedElement].name")
         self.watch("subject[Element].appliedStereotype.classifier.name")
         self.watch("subject[Lifeline].represents.name")
+        self.watch("subject[Lifeline].represents.type", self.update_shapes)
         self.watch("subject[Lifeline].represents.type.name")
         self.watch("subject[Lifeline].represents.typeValue")
         self.setup_constraints()
@@ -248,6 +245,34 @@ class LifelineItem(Named, ElementPresentation[UML.Lifeline]):
 
         return self.subject.name or ""
 
+    def update_shapes(self, event=None):
+        if (
+            self.subject
+            and self.subject.represents
+            and isinstance(self.subject.represents.type, UML.Actor)
+        ):
+            self.shape = IconBox(
+                Box(
+                    draw=draw_actor,
+                ),
+                text_stereotypes(self),
+                CssNode("name", self.subject, Text(text=self._format_name)),
+                CssNode("lifetime", None, Box(draw=self.draw_lifetime)),
+            )
+        else:
+            self.shape = Box(
+                CssNode(
+                    "compartment",
+                    None,
+                    Box(
+                        text_stereotypes(self),
+                        CssNode("name", self.subject, Text(text=self._format_name)),
+                    ),
+                ),
+                CssNode("lifetime", None, Box(draw=self.draw_lifetime)),
+                draw=draw_border,
+            )
+
     def draw_lifetime(self, box, context, bounding_box):
         """Draw lifeline time line.
 
@@ -266,7 +291,7 @@ class LifelineItem(Named, ElementPresentation[UML.Lifeline]):
                 x = self._handles[SW].pos.x
                 top = self._lifetime.top
                 y_offset = self._handles[NW].pos.y
-                cr.move_to(top.pos.x - x, top.pos.y - y_offset)
+                cr.move_to(top.pos.x - x, top.pos.y - y_offset + 16)
                 cr.line_to(bottom.pos.x - x, bottom.pos.y - y_offset)
                 stroke(context, fill=False)
 
