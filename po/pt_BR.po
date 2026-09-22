@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: Gaphor 0.14.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-05 21:23-0400\n"
-"PO-Revision-Date: 2026-07-04 01:01+0000\n"
-"Last-Translator: Dialysson Capelli <dialyssonalves@gmail.com>\n"
+"PO-Revision-Date: 2026-09-23 14:51+0000\n"
+"Last-Translator: Renan Heptum <renan@heptum.com>\n"
 "Language: pt_BR\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/"
 "gaphor/gaphor/pt_BR/>\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.18.0\n"
-"X-Generator: Weblate 2026.7.1.dev0\n"
+"X-Generator: Weblate 2026.10.dev0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:28
 msgid "C4"
@@ -1225,7 +1225,7 @@ msgstr "Juntar Especificação"
 
 #: gaphor/UML/classes/propertypages.ui:444
 msgid "Source:"
-msgstr ""
+msgstr "Fonte:"
 
 #: gaphor/UML/classes/propertypages.ui:468
 #, fuzzy
@@ -1610,7 +1610,7 @@ msgstr "Nome"
 
 #: gaphor/diagram/propertypages.ui:75
 msgid "Label"
-msgstr ""
+msgstr "Etiqueta"
 
 #: gaphor/diagram/propertypages.ui:98
 #, fuzzy
@@ -1629,7 +1629,7 @@ msgstr "String"
 
 #: gaphor/diagram/propertypages.ui:122 gaphor/diagram/propertypages.ui:151
 msgid "Arrow"
-msgstr ""
+msgstr "Flecha"
 
 #: gaphor/diagram/propertypages.ui:123 gaphor/diagram/propertypages.ui:152
 msgid "Triangle"
@@ -1697,14 +1697,12 @@ msgid "No focused item."
 msgstr "Nenhum item em foco."
 
 #: gaphor/diagram/propertypages.ui:417 gaphor/diagram/styleeditor.ui:5
-#, fuzzy
 msgid "Style Editor"
-msgstr "Folha de Estilos"
+msgstr "Editor de Estilos"
 
 #: gaphor/diagram/propertypages.ui:426
-#, fuzzy
 msgid "Open Style Editor"
-msgstr "Abrir Editor de Mesclagem"
+msgstr "Abrir Editor de Estilos"
 
 #: gaphor/diagram/styleeditor.ui:27
 #, fuzzy
@@ -1718,12 +1716,11 @@ msgstr "Cores"
 
 #: gaphor/diagram/styleeditor.ui:68
 msgid "Background Color"
-msgstr ""
+msgstr "Cor de fundo"
 
 #: gaphor/diagram/styleeditor.ui:85
-#, fuzzy
 msgid "Text Color"
-msgstr "Cores"
+msgstr "Cor do Texto"
 
 #: gaphor/diagram/styleeditor.ui:99
 #, fuzzy
@@ -1823,6 +1820,7 @@ msgstr "Exportar diagrama como SVG"
 #: gaphor/plugins/diagramexport/export.py:126
 msgid "Export all diagrams as SVG diagrams in a specifieddirectory"
 msgstr ""
+"Exportar todos os diagramas como diagramas SVG em um diretório específico"
 
 #: gaphor/plugins/diagramexport/export.py:130
 #: gaphor/plugins/diagramexport/export.py:148
@@ -1838,8 +1836,10 @@ msgid "Export all diagrams as PNG"
 msgstr "Exportar diagrama como PNG"
 
 #: gaphor/plugins/diagramexport/export.py:144
+#, fuzzy
 msgid "Export all diagrams as PNG diagrams in a specifieddirectory"
 msgstr ""
+"Exportar todos os diagramas como diagramas PNG em um diretório específico"
 
 #: gaphor/plugins/diagramexport/export.py:161
 #, fuzzy
@@ -1849,6 +1849,7 @@ msgstr "Exportar diagrama como PDF"
 #: gaphor/plugins/diagramexport/export.py:162
 msgid "Export all diagrams as PDF diagrams in a specifieddirectory"
 msgstr ""
+"Exportar todos os diagramas como diagramas PDF em um diretório específico"
 
 #: gaphor/plugins/diagramexport/export.py:179
 #, fuzzy
@@ -1858,6 +1859,7 @@ msgstr "Exportar diagrama como EPS"
 #: gaphor/plugins/diagramexport/export.py:180
 msgid "Export all diagrams as EPS diagrams in a specifieddirectory"
 msgstr ""
+"Exportar todos os diagramas como diagramas EPS em um diretório específico"
 
 #: gaphor/plugins/htmlreport/report.py:28
 #, fuzzy
@@ -1866,7 +1868,7 @@ msgstr "Exportar como EPS"
 
 #: gaphor/plugins/htmlreport/report.py:29
 msgid "Export model as a navigable HTML report"
-msgstr ""
+msgstr "Exportar modelo como um relatório HTML navegável"
 
 #: gaphor/plugins/htmlreport/report.py:33
 #, fuzzy
@@ -1923,11 +1925,11 @@ msgstr "Diagrama de código"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Personal Banking Customer"
-msgstr ""
+msgstr "Cliente Particular de Banco"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Internet Banking System"
-msgstr ""
+msgstr "Sistema Bancário Eletrônico"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Mainframe Banking System"
@@ -1935,7 +1937,7 @@ msgstr ""
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "View account balances, and make payments using"
-msgstr ""
+msgstr "Ver saldos da conta, e realizar pagamentos usando"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Get account information from, and makes payments using"
@@ -1947,13 +1949,12 @@ msgid "E-mail System"
 msgstr "Sistema"
 
 #: gaphor/templates/c4model-example.gaphor
-#, fuzzy
 msgid "Sends e-mail to"
-msgstr "Enviar sinal de ação"
+msgstr "Enviar sinal para"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Sends e-mail using"
-msgstr ""
+msgstr "Enviar e-mails utilizando"
 
 #: gaphor/templates/c4model-example.gaphor
 #, fuzzy
@@ -2023,9 +2024,8 @@ msgid "Mainframe Banking System Facade"
 msgstr ""
 
 #: gaphor/templates/c4model-example.gaphor
-#, fuzzy
 msgid "Uses"
-msgstr "usa"
+msgstr "Usos"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid ""
