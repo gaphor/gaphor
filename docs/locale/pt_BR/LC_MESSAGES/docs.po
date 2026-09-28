@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gaphor 2.23.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-05 21:26-0400\n"
-"PO-Revision-Date: 2026-09-27 18:33+0000\n"
+"PO-Revision-Date: 2026-09-29 01:02+0000\n"
 "Last-Translator: Gabriel <bloxgabriel18@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/"
 "gaphor/docs-gaphor-org/pt_BR/>\n"
@@ -171,8 +171,8 @@ msgid ""
 "inspect the result of their work by opening the `coffee-machine` model "
 "located in the `examples` folder."
 msgstr ""
-"inspecionar o resultado do trabalho abrindo 'máquina de café' localizado na "
-"pasta 'exemplos'."
+"inspecionar o resultado do trabalho abrindo `máquina de café` localizado na "
+"pasta `exemplos`."
 
 #: ../coffee_machine.md:51
 msgid "Abstraction Levels"
@@ -322,7 +322,7 @@ msgstr "Pacotes de nível superior do SysMLtemplate."
 
 #: ../coffee_machine.md:105
 msgid "Pillars"
-msgstr "PIlares"
+msgstr "Pilares"
 
 #: ../coffee_machine.md:107
 msgid ""
@@ -2074,9 +2074,8 @@ msgid ""
 msgstr ""
 
 #: ../first_model.md:40
-#, fuzzy
 msgid "Icon for generalization relationships."
-msgstr "Melhora a reconexão para relacionamentos"
+msgstr "Ícone para relacionamentos de generalização."
 
 #: ../first_model.md:42
 msgid ""
@@ -2448,7 +2447,7 @@ msgstr ""
 
 #: ../getting_started.md:34 ../getting_started.md:41
 msgid "Model Browser"
-msgstr ""
+msgstr "Navegador de Modelos"
 
 #: ../getting_started.md:35
 msgid "Diagram Element Toolbox"
@@ -3037,9 +3036,8 @@ msgid ""
 msgstr ""
 
 #: ../macos.md:12
-#, fuzzy
 msgid "To set up a development environment with macOS:"
-msgstr "Atualiza instruções do ambiente de desenvolvimento"
+msgstr "Para configurar um ambiente de desenvolvimento no macOS:"
 
 #: ../macos.md:13
 msgid "Install [Homebrew](https://brew.sh)"
@@ -3925,9 +3923,8 @@ msgid ""
 msgstr ""
 
 #: gaphor.core.modeling.diagram.Diagram.create:1 of
-#, fuzzy
 msgid "Create a new diagram item on the diagram."
-msgstr "Adiciona diagramas em diagramas"
+msgstr "Crie um novo item de diagrama no diagrama."
 
 #: gaphor.core.modeling.diagram.Diagram.create:3 of
 msgid ""
@@ -3963,9 +3960,8 @@ msgid "This method is part of the :obj:`gaphas.model.Model` protocol."
 msgstr ""
 
 #: gaphor.core.modeling.diagram.Diagram.update:1 of
-#, fuzzy
 msgid "Update the diagram."
-msgstr "Diagrama de Casos de Uso"
+msgstr "Atualize o diagrama."
 
 #: gaphor.core.modeling.diagram.Diagram.update:3 of
 msgid ""
@@ -6746,7 +6742,7 @@ msgstr "RAAML"
 
 #: ../style_sheets.md:334
 msgid "FTA"
-msgstr "ACL"
+msgstr "Acordo de Livre Comércio"
 
 #: ../style_sheets.md:334
 msgid "any AND/OR/… Gate"
@@ -7144,9 +7140,8 @@ msgid "You only require transactions if the undo manager is active."
 msgstr ""
 
 #: gaphor.transaction.Transaction:1 of
-#, fuzzy
 msgid "The transaction."
-msgstr "Atualizações nas traduções"
+msgstr "A transação."
 
 #: gaphor.transaction.Transaction:3 of
 msgid ""
@@ -7174,9 +7169,8 @@ msgid "Events can be handled programmatically, although this is discouraged:"
 msgstr ""
 
 #: gaphor.transaction.Transaction.commit:1 of
-#, fuzzy
 msgid "Commit the transaction."
-msgstr "Atualizações nas traduções"
+msgstr "Confirme a transação."
 
 #: gaphor.transaction.Transaction.commit:3 of
 msgid ""
@@ -7200,9 +7194,8 @@ msgid ""
 msgstr ""
 
 #: gaphor.transaction.Transaction.rollback:1 of
-#, fuzzy
 msgid "Roll-back the transaction."
-msgstr "Adicionar tradução para croato"
+msgstr "Reverta a transação."
 
 #: gaphor.transaction.Transaction.rollback:3 of
 msgid ""
@@ -7385,9 +7378,8 @@ msgid "In the same PowerShell terminal, clone the repository:"
 msgstr ""
 
 #: ../windows.md:105
-#, fuzzy
 msgid "Install Poetry:"
-msgstr "Sobre Gaphor"
+msgstr "Instale o Poetry:"
 
 #: ../windows.md:111
 msgid "Add GTK to your environmental variables:"
@@ -7400,9 +7392,8 @@ msgid ""
 msgstr ""
 
 #: ../windows.md:124
-#, fuzzy
 msgid "Install Gaphor's dependencies:"
-msgstr "Sobre Gaphor"
+msgstr "Instale as dependências do Gaphor:"
 
 #: ../windows.md:130 ../windows.md:165
 msgid "Reinstall PyGObject and pycairo using gvsbuild wheels:"
@@ -7493,9 +7484,8 @@ msgid "Debugging Your Plugin Using Visual Studio Code"
 msgstr ""
 
 #: ../windows.md:216
-#, fuzzy
 msgid "Start gaphor:"
-msgstr "Sobre Gaphor"
+msgstr "Inicie o Gaphor:"
 
 #: ../windows.md:217
 msgid "In the VSCode menu, select Run → Start debugging"
