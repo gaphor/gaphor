@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gaphor 2.23.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-05 21:26-0400\n"
-"PO-Revision-Date: 2026-04-15 10:10+0000\n"
+"PO-Revision-Date: 2026-10-01 04:51+0000\n"
 "Last-Translator: Stan SZLAPKA <stansz@free.fr>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/gaphor/docs-"
 "gaphor-org/fr/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.17.1-dev\n"
+"X-Generator: Weblate 2026.10.dev0\n"
 "Generated-By: Babel 2.18.0\n"
 
 #: ../changelog.rst:2
@@ -670,7 +670,7 @@ msgstr "Barman"
 
 #: ../coffee_machine_concept.md:91
 msgid "Coffee Machine"
-msgstr "Espresso Machine (Machine à café)"
+msgstr "Machine à café"
 
 #: ../coffee_machine_concept.md:92
 msgid "Roasted Coffee"
@@ -942,7 +942,7 @@ msgstr ""
 
 #: ../coffee_machine_logical.md:5
 msgid "Coffee Machine: Logical Level"
-msgstr "Coffee Machine (Machine à café) : Niveau logique"
+msgstr "Machine à café : Niveau logique"
 
 #: ../coffee_machine_logical.md:9
 msgid ""
@@ -3567,8 +3567,8 @@ msgid ""
 "For download instructions, and the blog, please visit the `Gaphor Website"
 " <https://gaphor.org>`_."
 msgstr ""
-"Pour les instructions de téléchargement et le blog, veuillez visiter le "
-"`le site web de Gaphor <https://gaphor.org>`_."
+"Pour les instructions de téléchargement et le blog, veuillez visiter `le "
+"site web de Gaphor <https://gaphor.org>`_."
 
 #: ../index.rst:26
 msgid ""
@@ -5065,10 +5065,10 @@ msgid ""
 "updates. If an item has an ``update(context: UpdateContext)`` method, "
 "it's invoked. Constraints are solved."
 msgstr ""
-"Tous les éléments ayant demandé une mise à jour via "
-":meth:`request_update` sont désormais considérés comme des mises à jour. "
-"Si un élément possède une méthode ``update(context: UpdateContext)``, "
-"elle est invoquée. Les contraintes sont résolues."
+"Tous les éléments ayant demandé une mise à jour via :meth :`request_update` "
+"sont désormais considérés comme des mises à jour. Si un élément possède une "
+"méthode ``update(context : UpdateContext)``, elle est invoquée. Les "
+"contraintes sont résolues."
 
 #: ../models/core.rst:99
 msgid "Protocols"
@@ -5181,7 +5181,7 @@ msgstr "Les expressions peuvent être :"
 
 #: gaphor.core.modeling.elementfactory.ElementFactory.select:5 of
 msgid ":obj:`None`: return all elements."
-msgstr ":obj:`None`: renvoie tous les éléments."
+msgstr ":obj:`None' : renvoie tous les éléments."
 
 #: gaphor.core.modeling.elementfactory.ElementFactory.select:6 of
 msgid "A type: return all elements of that type, or subtypes."
@@ -7714,11 +7714,11 @@ msgstr "``background-color: azure;``"
 
 #: ../style_sheets.md:150
 msgid "``background-color: rgb(255, 255, 255);``"
-msgstr "``background-color: rgb(255, 255, 255) ;``"
+msgstr "``background-color : rgb(255, 255, 255) ;``"
 
 #: ../style_sheets.md:152
 msgid "``background-color: hsl(130, 95%, 10%);``"
-msgstr "``background-color: hsl(130, 95%, 10%) ;``"
+msgstr "``background-color : hsl(130, 95%, 10%) ;``"
 
 #: ../style_sheets.md:153
 msgid "``color``"
@@ -7956,7 +7956,7 @@ msgstr "Style CSS d'espacement de chaque coté (top, right, bottom, left)."
 
 #: ../style_sheets.md:207
 msgid "Example: ``padding: 3 4``."
-msgstr "Exemple: ``padding: 3 4``."
+msgstr "Exemple : ``padding : 3 4``."
 
 #: ../style_sheets.md:211
 msgid ""
