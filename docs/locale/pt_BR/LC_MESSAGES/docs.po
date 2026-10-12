@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: Gaphor 2.23.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-05 21:26-0400\n"
-"PO-Revision-Date: 2026-07-04 13:01+0000\n"
-"Last-Translator: Dialysson Capelli <dialyssonalves@gmail.com>\n"
+"PO-Revision-Date: 2026-09-29 01:02+0000\n"
+"Last-Translator: Gabriel <bloxgabriel18@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/"
 "gaphor/docs-gaphor-org/pt_BR/>\n"
 "Language: pt_BR\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 2026.7.1.dev0\n"
+"X-Generator: Weblate 2026.10.dev0\n"
 "Generated-By: Babel 2.18.0\n"
 
 #: ../changelog.rst:2
@@ -171,8 +171,8 @@ msgid ""
 "inspect the result of their work by opening the `coffee-machine` model "
 "located in the `examples` folder."
 msgstr ""
-"inspecionar o resultado do trabalho abrindo 'máquina de café' localizado na "
-"pasta 'exemplos'."
+"inspecionar o resultado do trabalho abrindo `máquina de café` localizado na "
+"pasta `exemplos`."
 
 #: ../coffee_machine.md:51
 msgid "Abstraction Levels"
@@ -309,22 +309,20 @@ msgstr ""
 "abstração."
 
 #: ../coffee_machine.md:102
-#, fuzzy
 msgid ""
 "![Top level packages of the SysML template.](images/coffee-machine-top-"
 "level-packages.png)"
 msgstr ""
-"![Pacotes de nível superior do modelo SysML](images/coffee-machine-top-"
+"![Pacotes de nível superior do modelo SysML.](images/coffee-machine-top-"
 "level-packages.png)"
 
 #: ../coffee_machine.md:102
-#, fuzzy
 msgid "Top level packages of the SysMLtemplate."
-msgstr "Pacotes de nível superior do template SysML."
+msgstr "Pacotes de nível superior do SysMLtemplate."
 
 #: ../coffee_machine.md:105
 msgid "Pillars"
-msgstr "PIlares"
+msgstr "Pilares"
 
 #: ../coffee_machine.md:107
 msgid ""
@@ -347,9 +345,8 @@ msgid "Requirements: Written statements that constrain the system"
 msgstr "Requisitos: Declarações escritas que restringem o sistema"
 
 #: ../coffee_machine.md:113
-#, fuzzy
 msgid "Parametric: Enforces mathematical rules across values in the system"
-msgstr "Paramétricos: impõe regras matemáticas entre valores no sistema"
+msgstr "Paramétrico: Impõe regras matemáticas aos valores no sistema"
 
 #: ../coffee_machine.md:115
 msgid ""
@@ -362,7 +359,6 @@ msgstr ""
 "SysML](https://youtu.be/998UznK9ogY) (em inglês)."
 
 #: ../coffee_machine.md:118
-#, fuzzy
 msgid ""
 "Since Parametric Diagrams are one of the least used diagram types in "
 "SysML, we are going to only focus on the first three. The power of SysML "
@@ -370,11 +366,11 @@ msgid ""
 "For example, by allocating behavior like an activity to an element of the"
 " structure like a block."
 msgstr ""
-"Como os diagramas paramétricos são um dos tipos de diagrama menos usados "
-"em SysML, vamos nos concentrar apenas nos três primeiros. O poder do "
-"SysML está em ser capaz de fazer relacionamentos entre esses três "
-"pilares. Por exemplo, alocando um comportamento como uma atividade a um "
-"elemento da estrutura como um bloco."
+"Como os Diagramas Paramétricos estão entre os tipos de diagrama menos "
+"utilizados na SysML, focaremos apenas nos três primeiros. O potencial da "
+"SysML reside na capacidade de estabelecer relações entre esses três pilares "
+"— por exemplo, ao alocar um comportamento, como uma atividade, a um elemento "
+"da estrutura, como um bloco."
 
 #: ../coffee_machine.md:123
 msgid ""
@@ -389,18 +385,17 @@ msgstr ""
 "de café expresso."
 
 #: ../coffee_machine.md:127
-#, fuzzy
 msgid ""
 "![Three pillar packages nested under each abstraction level "
 "package.](images/coffee-machine-pillars.png)"
 msgstr ""
-"![Três pacotes de pilares aninhados em cada pacote de nível de "
-"abstração](images/coffee-machine-pillars.png)"
+"![Três pacotes de pilares aninhados sob cada pacote de nível de abstração.]"
+"(images/coffee-machine-pillars.png)"
 
 #: ../coffee_machine.md:127
-#, fuzzy
 msgid "Three pillar packages nested under each abstraction levelpackage."
-msgstr "Três pacotes de pilares aninhados em cada pacote de nível de abstração"
+msgstr ""
+"Três pacotes de pilares aninhados sob cada pacote de nível de abstração."
 
 #: ../coffee_machine.md:130
 msgid "Table of Contents"
@@ -669,16 +664,15 @@ msgid "Customer"
 msgstr "Customer (cliente)"
 
 #: ../coffee_machine_concept.md:97
-#, fuzzy
 msgid ""
 "Each block in the Block Definition Diagram (bdd) represents a key concept"
 " within the coffee shop domain, and the containment relationship is used "
 "between the domain and the blocks to show that they are part of the "
 "domain."
 msgstr ""
-"Cada bloco representa um conceito-chave dentro do domínio da cafeteria, e"
-" a relação de contenção é usada entre o domínio e os blocos para mostrar "
-"que eles fazem parte do domínio."
+"Cada bloco no Diagrama de Definição de Blocos (bdd) representa um conceito-"
+"chave no domínio da cafeteria, e a relação de contenção é utilizada entre o "
+"domínio e os blocos para indicar que eles fazem parte do domínio."
 
 #: ../coffee_machine_concept.md:101
 msgid ""
@@ -717,6 +711,16 @@ msgid ""
 "layout](first_model.md#adding-relations) to align and distribute all "
 "elements."
 msgstr ""
+"As formigas precisam de mais ajuda sua para renomear o diagrama de Domínio "
+"de Funcionalidades (Feature Domain) e atualizá-lo para que corresponda ao "
+"diagrama acima. Certifique-se de que \"Profile: SysML\" esteja selecionado "
+"no canto superior esquerdo da interface do usuário do Gaphor. Os nomes dos "
+"blocos podem ser alterados diretamente no diagrama, mas o nome do bdd só "
+"pode ser alterado no Navegador de Modelos (Model Browser). No pacote "
+"Structure, clique com o botão direito nos blocos marcados com o símbolo "
+"\"B\" e renomeie-os a partir do menu de contexto. Lembre-se também de que "
+"você pode usar o recurso de [layout automático](first_model.md#adding-"
+"relations) para alinhar e distribuir todos os elementos."
 
 #: ../coffee_machine_concept.md:121
 msgid ""
@@ -763,6 +767,8 @@ msgid ""
 "Block definition diagram showing context of the coffee shop with external"
 " entities"
 msgstr ""
+"Diagrama de definição de bloco mostrando o contexto da cafeteria com "
+"entidades externas"
 
 #: ../coffee_machine_concept.md:143
 msgid ""
@@ -771,6 +777,12 @@ msgid ""
 "arrows shown, use an Association entity, then toggle Enable Item Flow to "
 "on for that association and fill in the Item Property field."
 msgstr ""
+"As formigas precisam de mais ajuda sua para renomear o diagrama de contexto "
+"da funcionalidade e atualizá-lo, de modo que corresponda ao diagrama acima. "
+"Para criar as setas específicas mostradas, utilize uma entidade de "
+"associação, ative a opção \"Enable Item Flow\" (Habilitar Fluxo de Item) "
+"para essa associação e preencha o campo \"Item Property\" (Propriedade do "
+"Item)."
 
 #: ../coffee_machine_concept.md:148
 msgid ""
@@ -779,6 +791,10 @@ msgid ""
 "useful tool for understanding the system and its role in the broader "
 "environment."
 msgstr ""
+"De modo geral, o diagrama de contexto de uma máquina de café oferece uma "
+"visão de alto nível do sistema e de suas interações com entidades externas. "
+"É uma ferramenta útil para compreender o sistema e seu papel no ambiente "
+"mais amplo."
 
 #: ../coffee_machine_concept.md:152
 msgid "Concept Requirements"
@@ -792,6 +808,11 @@ msgid ""
 "as the barista, the other engineers working on the product, "
 "manufacturing, and service."
 msgstr ""
+"Os requisitos conceituais são geralmente levantados por meio da análise das "
+"necessidades das partes interessadas envolvidas no desenvolvimento da "
+"máquina de café. Isso envolve identificar e coletar informações de diversos "
+"atores, como o barista, os demais engenheiros que trabalham no produto, as "
+"equipes de manufatura e as de assistência técnica."
 
 #: ../coffee_machine_concept.md:158
 msgid ""
@@ -801,6 +822,11 @@ msgid ""
 "provide feedback on existing coffee machines to identify areas where "
 "improvements could be made."
 msgstr ""
+"Para levantar os requisitos do conceito, os stakeholders podem ser "
+"questionados sobre o que desejam que a máquina de café faça, quais recursos "
+"ela deve possuir e quais problemas deve solucionar. Também pode ser "
+"solicitado que forneçam feedback sobre máquinas de café existentes, a fim de "
+"identificar áreas passíveis de melhoria."
 
 #: ../coffee_machine_concept.md:163
 msgid ""
@@ -809,12 +835,19 @@ msgid ""
 " then be used to develop the concept requirements for the coffee machine,"
 " which serve as a starting point for the design process."
 msgstr ""
+"Uma vez levantadas as necessidades das partes interessadas, elas podem ser "
+"analisadas para identificar temas e requisitos comuns. Essas informações "
+"podem, então, ser utilizadas para desenvolver os requisitos conceituais da "
+"máquina de café, servindo como ponto de partida para o processo de projeto."
 
 #: ../coffee_machine_concept.md:168
 msgid ""
 "The following are some concept requirements for a coffee machine that "
 "addresses a water tank, heat-up time, and HMI button:"
 msgstr ""
+"A seguir, apresentam-se alguns requisitos conceituais para uma máquina de "
+"café, abordando o reservatório de água, o tempo de aquecimento e o botão da "
+"interface homem-máquina (HMI):"
 
 #: ../coffee_machine_concept.md:171
 msgid ""
@@ -822,6 +855,9 @@ msgid ""
 " to make multiple cups of coffee before needing a refill. The water tank "
 "should be easy to access and fill."
 msgstr ""
+"Reservatório de água: A cafeteira deve possuir um reservatório de água com "
+"capacidade suficiente para preparar várias xícaras de café antes de precisar "
+"ser reabastecido. O reservatório deve ser de fácil acesso e abastecimento."
 
 #: ../coffee_machine_concept.md:175
 msgid ""
@@ -2038,9 +2074,8 @@ msgid ""
 msgstr ""
 
 #: ../first_model.md:40
-#, fuzzy
 msgid "Icon for generalization relationships."
-msgstr "Melhora a reconexão para relacionamentos"
+msgstr "Ícone para relacionamentos de generalização."
 
 #: ../first_model.md:42
 msgid ""
@@ -2412,7 +2447,7 @@ msgstr ""
 
 #: ../getting_started.md:34 ../getting_started.md:41
 msgid "Model Browser"
-msgstr ""
+msgstr "Navegador de Modelos"
 
 #: ../getting_started.md:35
 msgid "Diagram Element Toolbox"
@@ -3001,9 +3036,8 @@ msgid ""
 msgstr ""
 
 #: ../macos.md:12
-#, fuzzy
 msgid "To set up a development environment with macOS:"
-msgstr "Atualiza instruções do ambiente de desenvolvimento"
+msgstr "Para configurar um ambiente de desenvolvimento no macOS:"
 
 #: ../macos.md:13
 msgid "Install [Homebrew](https://brew.sh)"
@@ -3889,9 +3923,8 @@ msgid ""
 msgstr ""
 
 #: gaphor.core.modeling.diagram.Diagram.create:1 of
-#, fuzzy
 msgid "Create a new diagram item on the diagram."
-msgstr "Adiciona diagramas em diagramas"
+msgstr "Crie um novo item de diagrama no diagrama."
 
 #: gaphor.core.modeling.diagram.Diagram.create:3 of
 msgid ""
@@ -3927,9 +3960,8 @@ msgid "This method is part of the :obj:`gaphas.model.Model` protocol."
 msgstr ""
 
 #: gaphor.core.modeling.diagram.Diagram.update:1 of
-#, fuzzy
 msgid "Update the diagram."
-msgstr "Diagrama de Casos de Uso"
+msgstr "Atualize o diagrama."
 
 #: gaphor.core.modeling.diagram.Diagram.update:3 of
 msgid ""
@@ -6589,7 +6621,7 @@ msgstr ""
 
 #: ../style_sheets.md:321
 msgid "Swimlane"
-msgstr ""
+msgstr "Raia"
 
 #: ../style_sheets.md:321
 msgid "``partition``"
@@ -6710,7 +6742,7 @@ msgstr "RAAML"
 
 #: ../style_sheets.md:334
 msgid "FTA"
-msgstr "ACL"
+msgstr "Acordo de Livre Comércio"
 
 #: ../style_sheets.md:334
 msgid "any AND/OR/… Gate"
@@ -7108,9 +7140,8 @@ msgid "You only require transactions if the undo manager is active."
 msgstr ""
 
 #: gaphor.transaction.Transaction:1 of
-#, fuzzy
 msgid "The transaction."
-msgstr "Atualizações nas traduções"
+msgstr "A transação."
 
 #: gaphor.transaction.Transaction:3 of
 msgid ""
@@ -7138,9 +7169,8 @@ msgid "Events can be handled programmatically, although this is discouraged:"
 msgstr ""
 
 #: gaphor.transaction.Transaction.commit:1 of
-#, fuzzy
 msgid "Commit the transaction."
-msgstr "Atualizações nas traduções"
+msgstr "Confirme a transação."
 
 #: gaphor.transaction.Transaction.commit:3 of
 msgid ""
@@ -7164,9 +7194,8 @@ msgid ""
 msgstr ""
 
 #: gaphor.transaction.Transaction.rollback:1 of
-#, fuzzy
 msgid "Roll-back the transaction."
-msgstr "Adicionar tradução para croato"
+msgstr "Reverta a transação."
 
 #: gaphor.transaction.Transaction.rollback:3 of
 msgid ""
@@ -7349,9 +7378,8 @@ msgid "In the same PowerShell terminal, clone the repository:"
 msgstr ""
 
 #: ../windows.md:105
-#, fuzzy
 msgid "Install Poetry:"
-msgstr "Sobre Gaphor"
+msgstr "Instale o Poetry:"
 
 #: ../windows.md:111
 msgid "Add GTK to your environmental variables:"
@@ -7364,9 +7392,8 @@ msgid ""
 msgstr ""
 
 #: ../windows.md:124
-#, fuzzy
 msgid "Install Gaphor's dependencies:"
-msgstr "Sobre Gaphor"
+msgstr "Instale as dependências do Gaphor:"
 
 #: ../windows.md:130 ../windows.md:165
 msgid "Reinstall PyGObject and pycairo using gvsbuild wheels:"
@@ -7457,9 +7484,8 @@ msgid "Debugging Your Plugin Using Visual Studio Code"
 msgstr ""
 
 #: ../windows.md:216
-#, fuzzy
 msgid "Start gaphor:"
-msgstr "Sobre Gaphor"
+msgstr "Inicie o Gaphor:"
 
 #: ../windows.md:217
 msgid "In the VSCode menu, select Run → Start debugging"
