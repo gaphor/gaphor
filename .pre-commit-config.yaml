@@ -1,6 +1,6 @@
 repos:
 - repo: https://github.com/pre-commit/mirrors-mypy
-  rev: a66e98df7b4aeeb3724184b332785976d062b92e  # frozen: v1.19.1
+  rev: 2834ec6639549dd6796205c8f011dedcd587288b  # frozen: v2.4.0
   hooks:
   - id: mypy
     additional_dependencies:
@@ -14,14 +14,14 @@ repos:
     exclude: '.\.gaphor'
   - id: trailing-whitespace
 - repo: https://github.com/shellcheck-py/shellcheck-py
-  rev: 745eface02aef23e168a8afb6b5737818efbea95  # frozen: v0.11.0.1
+  rev: a6564f5d57444e123433a5c9af733e3975c77229  # frozen: v0.11.0.1-1
   hooks:
   - id: shellcheck
     args: [--exclude, SC1017]
 - repo: https://github.com/astral-sh/ruff-pre-commit
-  rev: 'aca6d4c8045a504e2812ea4bedff1d0a09e437bc'  # frozen: v0.15.8
+  rev: '44b5042edab9382aba712eed4f9c7bab7a3d6a3e'  # frozen: v0.17.0
   hooks:
-  - id: ruff
+  - id: ruff-check
     args: [--fix, --preview]
   - id: ruff-format
     types_or: [python, spec]
