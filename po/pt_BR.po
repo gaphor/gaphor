@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: Gaphor 0.14.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-05 21:23-0400\n"
-"PO-Revision-Date: 2026-07-04 01:01+0000\n"
-"Last-Translator: Dialysson Capelli <dialyssonalves@gmail.com>\n"
+"PO-Revision-Date: 2026-09-29 01:02+0000\n"
+"Last-Translator: Gabriel <bloxgabriel18@gmail.com>\n"
 "Language: pt_BR\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/"
 "gaphor/gaphor/pt_BR/>\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.18.0\n"
-"X-Generator: Weblate 2026.7.1.dev0\n"
+"X-Generator: Weblate 2026.10.dev0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:28
 msgid "C4"
@@ -145,7 +145,6 @@ msgid "Class"
 msgstr "Classe"
 
 #: gaphor/C4Model/toolbox.py:160 gaphor/UML/toolbox.py:54
-#, fuzzy
 msgid "Data Type"
 msgstr "Tipo de Dados"
 
@@ -416,7 +415,6 @@ msgid "Text"
 msgstr "Texto"
 
 #: gaphor/SysML/propertypages.ui:258
-#, fuzzy
 msgid "Show text"
 msgstr "Mostrar texto"
 
@@ -676,9 +674,8 @@ msgstr ""
 "nenhum outro diagrama."
 
 #: gaphor/UML/toolbox.py:34
-#, fuzzy
 msgid "Component Diagram"
-msgstr "Diagrama de componentes"
+msgstr "Diagrama de Componentes"
 
 #: gaphor/UML/toolbox.py:35
 msgid "Deployment Diagram"
@@ -888,9 +885,8 @@ msgid "FIFO"
 msgstr "PEPS"
 
 #: gaphor/UML/actions/objectnode.py:46
-#, fuzzy
 msgid "upperBound"
-msgstr "Limite Superior"
+msgstr "limite superior"
 
 #: gaphor/UML/actions/objectnode.py:58
 msgid "ordering"
@@ -1219,18 +1215,16 @@ msgid "Abstract"
 msgstr "Abstrato"
 
 #: gaphor/UML/classes/propertypages.ui:419
-#, fuzzy
 msgid "Final specialization"
-msgstr "Juntar Especificação"
+msgstr "Especialização final"
 
 #: gaphor/UML/classes/propertypages.ui:444
 msgid "Source:"
-msgstr ""
+msgstr "Fonte:"
 
 #: gaphor/UML/classes/propertypages.ui:468
-#, fuzzy
 msgid "Target:"
-msgstr "Ímã"
+msgstr "Alvo:"
 
 #: gaphor/UML/classes/propertypages.ui:504
 msgid "Dependency type"
@@ -1595,41 +1589,36 @@ msgid "class"
 msgstr "classe"
 
 #: gaphor/diagram/propertypages.py:330 gaphor/diagram/propertypages.py:345
-#, fuzzy
 msgid "id"
-msgstr "Id"
+msgstr "id"
 
 #: gaphor/diagram/propertypages.py:342
 msgid "Model Element"
 msgstr "Elemento Modelo"
 
 #: gaphor/diagram/propertypages.py:343
-#, fuzzy
 msgid "qname"
-msgstr "Nome"
+msgstr "qnome"
 
 #: gaphor/diagram/propertypages.ui:75
 msgid "Label"
-msgstr ""
+msgstr "Etiqueta"
 
 #: gaphor/diagram/propertypages.ui:98
-#, fuzzy
 msgid "Line Ends"
-msgstr "Licença"
+msgstr "Fim da linha"
 
 #: gaphor/diagram/propertypages.ui:111
-#, fuzzy
 msgid "Head"
-msgstr "Cabeça:"
+msgstr "Cabeça"
 
 #: gaphor/diagram/propertypages.ui:121 gaphor/diagram/propertypages.ui:150
-#, fuzzy
 msgid "Nothing"
-msgstr "String"
+msgstr "Nada"
 
 #: gaphor/diagram/propertypages.ui:122 gaphor/diagram/propertypages.ui:151
 msgid "Arrow"
-msgstr ""
+msgstr "Flecha"
 
 #: gaphor/diagram/propertypages.ui:123 gaphor/diagram/propertypages.ui:152
 msgid "Triangle"
@@ -1697,38 +1686,32 @@ msgid "No focused item."
 msgstr "Nenhum item em foco."
 
 #: gaphor/diagram/propertypages.ui:417 gaphor/diagram/styleeditor.ui:5
-#, fuzzy
 msgid "Style Editor"
-msgstr "Folha de Estilos"
+msgstr "Editor de Estilos"
 
 #: gaphor/diagram/propertypages.ui:426
-#, fuzzy
 msgid "Open Style Editor"
-msgstr "Abrir Editor de Mesclagem"
+msgstr "Abrir Editor de Estilos"
 
 #: gaphor/diagram/styleeditor.ui:27
-#, fuzzy
 msgid "Border Radius"
-msgstr "ordenado"
+msgstr "Raio da borda"
 
 #: gaphor/diagram/styleeditor.ui:51
-#, fuzzy
 msgid "Color"
-msgstr "Cores"
+msgstr "Cor"
 
 #: gaphor/diagram/styleeditor.ui:68
 msgid "Background Color"
-msgstr ""
+msgstr "Cor de fundo"
 
 #: gaphor/diagram/styleeditor.ui:85
-#, fuzzy
 msgid "Text Color"
-msgstr "Cores"
+msgstr "Cor do Texto"
 
 #: gaphor/diagram/styleeditor.ui:99
-#, fuzzy
 msgid "Add to Style Sheet"
-msgstr "Folha de Estilos"
+msgstr "Adicionar à folha de estilos"
 
 #: gaphor/diagram/tools/dnd.py:91
 msgid "Element can’t be represented on a diagram."
@@ -1816,69 +1799,64 @@ msgid "Export diagram as EPS"
 msgstr "Exportar diagrama como EPS"
 
 #: gaphor/plugins/diagramexport/export.py:125
-#, fuzzy
 msgid "Export all diagrams as SVG"
-msgstr "Exportar diagrama como SVG"
+msgstr "Exportar todos os diagramas como SVG"
 
 #: gaphor/plugins/diagramexport/export.py:126
 msgid "Export all diagrams as SVG diagrams in a specifieddirectory"
 msgstr ""
+"Exportar todos os diagramas como diagramas SVG em um diretório específico"
 
 #: gaphor/plugins/diagramexport/export.py:130
 #: gaphor/plugins/diagramexport/export.py:148
 #: gaphor/plugins/diagramexport/export.py:166
 #: gaphor/plugins/diagramexport/export.py:184
-#, fuzzy
 msgid "Export all diagrams"
-msgstr "Exportar diagrama como SVG"
+msgstr "Exportar todos os diagramas"
 
 #: gaphor/plugins/diagramexport/export.py:143
-#, fuzzy
 msgid "Export all diagrams as PNG"
-msgstr "Exportar diagrama como PNG"
+msgstr "Exportar todos os diagramas como PNG"
 
 #: gaphor/plugins/diagramexport/export.py:144
 msgid "Export all diagrams as PNG diagrams in a specifieddirectory"
 msgstr ""
+"Exportar todos os diagramas como arquivos PNG para um diretório especificado"
 
 #: gaphor/plugins/diagramexport/export.py:161
-#, fuzzy
 msgid "Export all diagrams as PDF"
-msgstr "Exportar diagrama como PDF"
+msgstr "Exportar todos os diagramas como PDF"
 
 #: gaphor/plugins/diagramexport/export.py:162
 msgid "Export all diagrams as PDF diagrams in a specifieddirectory"
 msgstr ""
+"Exportar todos os diagramas como diagramas PDF em um diretório específico"
 
 #: gaphor/plugins/diagramexport/export.py:179
-#, fuzzy
 msgid "Export all diagrams as EPS"
-msgstr "Exportar diagrama como EPS"
+msgstr "Exportar todos os diagramas como EPS"
 
 #: gaphor/plugins/diagramexport/export.py:180
 msgid "Export all diagrams as EPS diagrams in a specifieddirectory"
 msgstr ""
+"Exportar todos os diagramas como diagramas EPS em um diretório específico"
 
 #: gaphor/plugins/htmlreport/report.py:28
-#, fuzzy
 msgid "Export as HTML Report"
-msgstr "Exportar como EPS"
+msgstr "Exportar como relatório HTML"
 
 #: gaphor/plugins/htmlreport/report.py:29
 msgid "Export model as a navigable HTML report"
-msgstr ""
+msgstr "Exportar modelo como um relatório HTML navegável"
 
 #: gaphor/plugins/htmlreport/report.py:33
-#, fuzzy
 msgid "Export HTML Report"
-msgstr "Exportar como EPS"
+msgstr "Exportar relatório HTML"
 
 #: gaphor/storage/recovery.py:153
-#, fuzzy
 msgid "This model contains unsaved changes. The changes have been restored."
 msgstr ""
-"O modelo aberto contém alterações não salvas. As alterações que não forem"
-" salvas serão perdidas permanentemente."
+"Este modelo contém alterações não salvas. As alterações foram restauradas."
 
 #: gaphor/templates/blank.gaphor gaphor/ui/mainwindow.py:268
 #: gaphor/ui/mainwindow.py:273 gaphor/ui/mainwindow.ui:129
@@ -1923,115 +1901,107 @@ msgstr "Diagrama de código"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Personal Banking Customer"
-msgstr ""
+msgstr "Cliente Particular de Banco"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Internet Banking System"
-msgstr ""
+msgstr "Sistema Bancário Eletrônico"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Mainframe Banking System"
-msgstr ""
+msgstr "Sistema Bancário em Mainframe"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "View account balances, and make payments using"
-msgstr ""
+msgstr "Ver saldos da conta, e realizar pagamentos usando"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Get account information from, and makes payments using"
-msgstr ""
+msgstr "Obtenha informações da conta e faça pagamentos usando"
 
 #: gaphor/templates/c4model-example.gaphor
-#, fuzzy
 msgid "E-mail System"
-msgstr "Sistema"
+msgstr "Sistema de E-mail"
 
 #: gaphor/templates/c4model-example.gaphor
-#, fuzzy
 msgid "Sends e-mail to"
-msgstr "Enviar sinal de ação"
+msgstr "Enviar sinal para"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Sends e-mail using"
-msgstr ""
+msgstr "Enviar e-mails utilizando"
 
 #: gaphor/templates/c4model-example.gaphor
-#, fuzzy
 msgid "Web Application"
-msgstr "Abre o menu do aplicativo"
+msgstr "Aplicação Web"
 
 #: gaphor/templates/c4model-example.gaphor
-#, fuzzy
 msgid "API Application"
-msgstr "Abre o menu do aplicativo"
+msgstr "Aplicação de API"
 
 #: gaphor/templates/c4model-example.gaphor
-#, fuzzy
 msgid "Single-Page Application"
-msgstr "Abre o menu do aplicativo"
+msgstr "Aplicação de Página Única"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Mobile App"
-msgstr ""
+msgstr "Aplicativo móvel"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Visit bigbank.com/lb using"
-msgstr ""
+msgstr "Acesse bigbank.com/lb usando"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "View account balances and make payments using"
-msgstr ""
+msgstr "Consulte os saldos da sua conta e faça pagamentos usando"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Makes API calls to"
-msgstr ""
+msgstr "Faz chamadas de API para"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Reads from, writes to"
-msgstr ""
+msgstr "Lê de, grava em"
 
 #: gaphor/templates/c4model-example.gaphor
-#, fuzzy
 msgid "Delivers"
-msgstr "Derivar Requisição"
+msgstr "Entrega"
 
 #: gaphor/templates/c4model-example.gaphor
-#, fuzzy
 msgid "Sign In Controller"
-msgstr "controlador"
+msgstr "Controlador de Login"
 
 #: gaphor/templates/c4model-example.gaphor
-#, fuzzy
 msgid "Security Component"
-msgstr "Novo Componente"
+msgstr "Componente de segurança"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Reset Password Controller"
-msgstr ""
+msgstr "Controlador de Redefinição de Senha"
 
 #: gaphor/templates/c4model-example.gaphor
-#, fuzzy
 msgid "E-mail Component"
-msgstr "Novo Componente"
+msgstr "Componente de E-mail"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Account Summary Controller"
-msgstr ""
+msgstr "Controlador de Resumo de Contas"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid "Mainframe Banking System Facade"
-msgstr ""
+msgstr "Fachada do Sistema Bancário de Mainframe"
 
 #: gaphor/templates/c4model-example.gaphor
-#, fuzzy
 msgid "Uses"
-msgstr "usa"
+msgstr "Usos"
 
 #: gaphor/templates/c4model-example.gaphor
 msgid ""
 "Makes API calls to\n"
 "[JSON/HTTPS]"
 msgstr ""
+"Realiza chamadas de API para\n"
+"[JSON/HTTPS]"
 
 #: gaphor/templates/raaml-example.gaphor gaphor/templates/raaml.gaphor
 #: gaphor/templates/uml-example.gaphor gaphor/templates/uml.gaphor
@@ -2631,9 +2601,8 @@ msgid "Zoom In"
 msgstr "Ampliar +"
 
 #: gaphor/ui/diagrams.py:300
-#, fuzzy
 msgid "Selected element is not in present in this diagram."
-msgstr "O elemento não pode ser representado em um diagrama."
+msgstr "O elemento selecionado não está presente neste diagrama."
 
 #: gaphor/ui/diagrams.ui:12
 msgid "Open a Diagram"
@@ -2693,11 +2662,13 @@ msgstr ""
 
 #: gaphor/ui/elementeditor.ui:86
 msgid "Help improve Gaphor"
-msgstr ""
+msgstr "Ajude a melhorar o Gaphor"
 
 #: gaphor/ui/elementeditor.ui:95
 msgid "Gaphor is free and open source software, written by devoted volunteers."
 msgstr ""
+"O Gaphor é um software livre e de código aberto, desenvolvido por "
+"voluntários dedicados."
 
 #: gaphor/ui/elementeditor.ui:103
 msgid ""
@@ -2705,22 +2676,25 @@ msgid ""
 "translate Gaphor into your language, report bugs, or suggest new "
 "features. Join us in improving Gaphor!"
 msgstr ""
+"Há muitas maneiras de ajudar a tornar o Gaphor melhor: escrever uma postagem "
+"no blog, traduzir o Gaphor para o seu idioma, relatar bugs ou sugerir novos "
+"recursos. Junte-se a nós para melhorar o Gaphor!"
 
 #: gaphor/ui/elementeditor.ui:111
 msgid ""
 "Visit <a href=\"https://gaphor.org/contribute/\">gaphor.org</a> for more "
 "information."
 msgstr ""
+"Visite <a href=\"https://gaphor.org/contribute/\">gaphor.org</a> para mais "
+"informações."
 
 #: gaphor/ui/elementeditor.ui:150
-#, fuzzy
 msgid "Editor"
-msgstr "Editores"
+msgstr "Editor"
 
 #: gaphor/ui/elementeditor.ui:176
-#, fuzzy
 msgid "Styling"
-msgstr "String"
+msgstr "Estilização"
 
 #: gaphor/ui/elementeditor.ui:188
 msgid "Style Sheet"
@@ -2735,9 +2709,8 @@ msgid "The (natural) language used in this model."
 msgstr "O idioma (natural) usado neste modelo."
 
 #: gaphor/ui/elementeditor.ui:219
-#, fuzzy
 msgid "CSS Editor"
-msgstr "Folha de Estilos"
+msgstr "Editor CSS"
 
 #: gaphor/ui/elementeditor.ui:247
 msgid "CSS nodes of focused item"
@@ -2801,7 +2774,7 @@ msgstr "Todos os Arquivos"
 
 #: gaphor/ui/filedialog.py:100
 msgid "Flatpak Document Portal"
-msgstr ""
+msgstr "Portal de Documentos do Flatpak"
 
 #: gaphor/ui/filemanager.py:41
 #, python-brace-format
@@ -2883,7 +2856,7 @@ msgstr "Não foi possível salvar o modelo “{filename}”."
 
 #: gaphor/ui/filemanager.py:299
 msgid "Model has been saved."
-msgstr ""
+msgstr "O modelo foi salvo."
 
 #: gaphor/ui/filemanager.py:326 gaphor/ui/filemanager.py:364
 msgid "Save Gaphor Model As"
@@ -2993,13 +2966,12 @@ msgstr ""
 "Risco"
 
 #: gaphor/ui/greeter.py:86
-#, fuzzy
 msgid "C4 Model Example"
-msgstr "Exemplo UML"
+msgstr "Exemplo de Modelo C4"
 
 #: gaphor/ui/greeter.py:87
 msgid "C4 Model example of a banking system"
-msgstr ""
+msgstr "Exemplo do modelo C4 de um sistema bancário"
 
 #: gaphor/ui/greeter.ui:8 gaphor/ui/greeter.ui:60 gaphor/ui/mainwindow.ui:260
 #: gaphor/ui/menubar.ui:12
@@ -3016,9 +2988,8 @@ msgid "Keyboard Shortcuts"
 msgstr "Atalhos do teclado"
 
 #: gaphor/ui/greeter.ui:22 gaphor/ui/mainwindow.ui:292
-#, fuzzy
 msgid "Help"
-msgstr "ⓘ Ajuda"
+msgstr "Ajuda"
 
 #: gaphor/ui/greeter.ui:26 gaphor/ui/help/about.ui:9
 #: gaphor/ui/mainwindow.ui:296
@@ -3027,7 +2998,7 @@ msgstr "Sobre Gaphor"
 
 #: gaphor/ui/greeter.ui:91
 msgid "Recently Opened"
-msgstr ""
+msgstr "Inaugurado recentemente"
 
 #: gaphor/ui/greeter.ui:108
 msgid "Create New Model"
@@ -3038,9 +3009,8 @@ msgid "Press F11 to exit Fullscreen"
 msgstr "Pressione F11 para sair da tela cheia"
 
 #: gaphor/ui/mainwindow.ui:37
-#, fuzzy
 msgid "Change modeling profile"
-msgstr "Carregando modelo de {filename}"
+msgstr "Alterar perfil de modelagem"
 
 #: gaphor/ui/mainwindow.ui:47
 msgid "Open application menu"
@@ -3061,9 +3031,8 @@ msgid "Redo"
 msgstr "Refazer"
 
 #: gaphor/ui/mainwindow.ui:173
-#, fuzzy
 msgid "Align selected elements"
-msgstr "Elemento Conectável"
+msgstr "Alinhar elementos selecionados"
 
 #: gaphor/ui/help/shortcuts.ui:20 gaphor/ui/mainwindow.ui:181
 msgid "Toggle Property Editor"
@@ -3080,9 +3049,8 @@ msgid "Save As…"
 msgstr "Salvar Como…"
 
 #: gaphor/ui/mainwindow.ui:284
-#, fuzzy
 msgid "Preferences…"
-msgstr "Preferências"
+msgstr "Preferências…"
 
 #: gaphor/ui/mainwindow.ui:305
 msgid "Align Left"
@@ -3093,9 +3061,8 @@ msgid "Align Right"
 msgstr "Alinhar à direita"
 
 #: gaphor/ui/mainwindow.ui:315
-#, fuzzy
 msgid "Align Vertical Center"
-msgstr "Alinhar centro na horizontal"
+msgstr "Alinhar centralizado verticalmente"
 
 #: gaphor/ui/mainwindow.ui:322
 msgid "Align Top"
@@ -3122,14 +3089,12 @@ msgid "Max Size"
 msgstr "Tamanho máximo"
 
 #: gaphor/ui/menubar.ui:5
-#, fuzzy
 msgid "_File"
-msgstr "Arquivos"
+msgstr "_Arquivo"
 
 #: gaphor/ui/menubar.ui:31
-#, fuzzy
 msgid "_Edit"
-msgstr "Sair"
+msgstr "_Editar"
 
 #: gaphor/ui/help/shortcuts.ui:176 gaphor/ui/menubar.ui:44
 msgid "Cut"
@@ -3140,9 +3105,8 @@ msgid "Copy"
 msgstr "Copiar"
 
 #: gaphor/ui/menubar.ui:52
-#, fuzzy
 msgid "Paste"
-msgstr "Data"
+msgstr "Colar"
 
 #: gaphor/ui/help/shortcuts.ui:190 gaphor/ui/menubar.ui:56
 msgid "Paste (copy defining elements)"
@@ -3153,42 +3117,36 @@ msgid "Select All"
 msgstr "Selecionar Tudo"
 
 #: gaphor/ui/menubar.ui:70
-#, fuzzy
 msgid "Unselect All"
-msgstr "Selecionar Tudo"
+msgstr "Desmarcar tudo"
 
 #: gaphor/ui/menubar.ui:76
 msgid "_View"
-msgstr ""
+msgstr "_Visualizar"
 
 #: gaphor/ui/menubar.ui:87
-#, fuzzy
 msgid "Actual Size"
-msgstr "Tamanho máximo"
+msgstr "Tamanho real"
 
 #: gaphor/ui/menubar.ui:102
 msgid "_Window"
-msgstr ""
+msgstr "_Janela"
 
 #: gaphor/ui/menubar.ui:106
-#, fuzzy
 msgid "Maximize"
-msgstr "Tamanho máximo"
+msgstr "Maximizar"
 
 #: gaphor/ui/menubar.ui:110
-#, fuzzy
 msgid "Full screen"
-msgstr "Alternar Tela Cheia"
+msgstr "Tela Cheia"
 
 #: gaphor/ui/menubar.ui:116
-#, fuzzy
 msgid "_Help"
-msgstr "ⓘ Ajuda"
+msgstr "_Ajuda"
 
 #: gaphor/ui/menubar.ui:119
-#, fuzzy
 msgid "Online Documentation"
-msgstr "Inverter orientação"
+msgstr "Documentação Online"
 
 #: gaphor/ui/modelbrowser.py:574
 msgid "_Open"
@@ -3279,15 +3237,15 @@ msgid "Errors:"
 msgstr "Erros:"
 
 #: gaphor/ui/help/debuginfo.py:85
-#, fuzzy
 msgid ""
 "An unexpected error occurred.\n"
 "Please file an issue on GitHub and include information from About Gaphor "
 "→ Troubleshooting → Debugging Information."
 msgstr ""
 "Ocorreu um erro inesperado.\n"
-"Por favor, preencha um relatório de problema no GitHub e inclua "
-"informações de Ferramentas -> Relatórios de erros."
+"Por favor, registre um problema no GitHub e inclua as informações "
+"encontradas em Sobre o Gaphor → Solução de problemas → Informações de "
+"depuração."
 
 #: gaphor/ui/help/preferences.ui:9
 msgid "Appearance"
@@ -3314,9 +3272,8 @@ msgid "Change from System Language to English"
 msgstr "Alterar do Idioma do Sistema para Inglês"
 
 #: gaphor/ui/help/preferences.ui:42
-#, fuzzy
 msgid "Editing"
-msgstr "Mostrar Direção"
+msgstr "Edição"
 
 #: gaphor/ui/help/preferences.ui:45
 msgid "Reset Tool Automatically"
@@ -3324,7 +3281,7 @@ msgstr "Redefinir ferramenta automaticamente"
 
 #: gaphor/ui/help/preferences.ui:46
 msgid "After an element is created, switch back to the pointer tool."
-msgstr ""
+msgstr "Após criar um elemento, volte para a ferramenta de seleção."
 
 #: gaphor/ui/help/preferences.ui:51
 msgid "Remove Unused Elements"
@@ -3337,9 +3294,8 @@ msgstr ""
 "diagrama."
 
 #: gaphor/ui/help/shortcuts.ui:27
-#, fuzzy
 msgid "Toggle Style Editor"
-msgstr "Abrir Editor de Mesclagem"
+msgstr "Alternar editor de estilo"
 
 #: gaphor/ui/help/shortcuts.ui:34
 msgid "Toggle Fullscreen"
@@ -3358,9 +3314,8 @@ msgid "Open a Model…"
 msgstr "Abrir um Modelo…"
 
 #: gaphor/ui/help/shortcuts.ui:87
-#, fuzzy
 msgid "Model Browser"
-msgstr "Mostrar no Navegador de Modelo"
+msgstr "Navegador de Modelos"
 
 #: gaphor/ui/help/shortcuts.ui:92
 msgid "Rename"
@@ -3372,16 +3327,15 @@ msgstr "Pesquisar"
 
 #: gaphor/ui/help/shortcuts.ui:112
 msgid "Expand Node"
-msgstr ""
+msgstr "Expandir nó"
 
 #: gaphor/ui/help/shortcuts.ui:119
 msgid "Collapse Node"
-msgstr ""
+msgstr "Recolher nó"
 
 #: gaphor/ui/help/shortcuts.ui:129
-#, fuzzy
 msgid "Diagram"
-msgstr "Novo Diagrama C4"
+msgstr "Diagrama"
 
 #: gaphor/ui/help/shortcuts.ui:134
 msgid "Close Diagram"
@@ -3396,18 +3350,16 @@ msgid "Deselect All"
 msgstr "Desselecionar Tudo"
 
 #: gaphor/ui/help/shortcuts.ui:253
-#, fuzzy
 msgid "Move selected items"
-msgstr "Nenhum item selecionado"
+msgstr "Mover itens selecionados"
 
 #: gaphor/ui/help/shortcuts.ui:254 gaphor/ui/help/shortcuts.ui:262
-#, fuzzy
 msgid "Works in any direction"
-msgstr "Inverter direção"
+msgstr "Funciona em qualquer direção"
 
 #: gaphor/ui/help/shortcuts.ui:261
 msgid "Move selected items right big steps"
-msgstr ""
+msgstr "Mover itens selecionados para a direita em grandes passos"
 
 #: gaphor/ui/modelmerge/organize.py:137
 #, python-brace-format
@@ -3505,9 +3457,8 @@ msgid "Update relation “{name}”"
 msgstr "Atualizar relação “{name}”"
 
 #: gaphor/ui/tests/test_modelbrowser.py:330
-#, fuzzy
 msgid "general: General"
-msgstr "geral: {name}"
+msgstr "geral: Geral"
 
 #~ msgid "A."
 #~ msgstr ""
