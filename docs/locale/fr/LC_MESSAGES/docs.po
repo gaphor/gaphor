@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: Gaphor 2.23.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-05 21:26-0400\n"
-"PO-Revision-Date: 2026-10-01 04:51+0000\n"
-"Last-Translator: Stan SZLAPKA <stansz@free.fr>\n"
+"PO-Revision-Date: 2026-10-12 01:53+0000\n"
+"Last-Translator: Dan Yeaw <dan@yeaw.me>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/gaphor/docs-"
 "gaphor-org/fr/>\n"
 "Language: fr\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 2026.10.dev0\n"
+"X-Generator: Weblate 2026.10.1.dev0\n"
 "Generated-By: Babel 2.18.0\n"
 
 #: ../changelog.rst:2
@@ -5181,7 +5181,7 @@ msgstr "Les expressions peuvent être :"
 
 #: gaphor.core.modeling.elementfactory.ElementFactory.select:5 of
 msgid ":obj:`None`: return all elements."
-msgstr ":obj:`None' : renvoie tous les éléments."
+msgstr ":obj:`None`: renvoie tous les éléments."
 
 #: gaphor.core.modeling.elementfactory.ElementFactory.select:6 of
 msgid "A type: return all elements of that type, or subtypes."
@@ -7714,11 +7714,11 @@ msgstr "``background-color: azure;``"
 
 #: ../style_sheets.md:150
 msgid "``background-color: rgb(255, 255, 255);``"
-msgstr "``background-color : rgb(255, 255, 255) ;``"
+msgstr "``background-color: rgb(255, 255, 255);``"
 
 #: ../style_sheets.md:152
 msgid "``background-color: hsl(130, 95%, 10%);``"
-msgstr "``background-color : hsl(130, 95%, 10%) ;``"
+msgstr "``background-color: hsl(130, 95%, 10%);``"
 
 #: ../style_sheets.md:153
 msgid "``color``"
@@ -7956,7 +7956,7 @@ msgstr "Style CSS d'espacement de chaque coté (top, right, bottom, left)."
 
 #: ../style_sheets.md:207
 msgid "Example: ``padding: 3 4``."
-msgstr "Exemple : ``padding : 3 4``."
+msgstr "Exemple: ``padding: 3 4``."
 
 #: ../style_sheets.md:211
 msgid ""
