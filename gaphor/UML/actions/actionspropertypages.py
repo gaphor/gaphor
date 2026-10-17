@@ -117,16 +117,28 @@ class ValueSpecificationActionPropertyPage(PropertyPageBase):
     def construct(self):
         builder = new_builder("value-specifiation-action-editor")
 
-        value = builder.get_object("value")
-        value.set_text(self.subject.value or "")
-        value.connect("changed", self._on_value_change)
+        value_entry = builder.get_object("value")
+        value_text = ""
+        if self.subject.value:
+            raw_value = UML.recipes.get_literal_value_as_string(self.subject.value)
+            if isinstance(raw_value, str):
+                value_text = raw_value
+        value_entry.set_text(value_text)
+        value_entry.connect("changed", self._on_value_change)
 
         return builder.get_object("value-specifiation-action-editor")
 
     def _on_value_change(self, entry):
+        value = entry.get_text().strip()
         with Transaction(self.event_manager, context="editing"):
-            value = entry.get_text()
-            self.subject.value = value
+            if (
+                self.subject.value is None
+                or UML.recipes.get_literal_value_as_string(self.subject.value) != value
+            ):
+                value_spec = self.subject.model.create(UML.LiteralString)
+                value_spec.value = value
+                value_spec.valueSpecificationAction = self.subject
+                self.subject.value = value_spec
 
 
 @PropertyPages.register(UML.CallBehaviorAction)
