@@ -21,7 +21,7 @@ def selectors(input, namespaces=None):
     namespaces = namespaces or {}
     yield parse_selector(tokens, namespaces)
     tokens.skip_whitespace_and_comment()
-    while 1:
+    while True:
         next = tokens.next()
         if next is None:
             return
@@ -34,7 +34,7 @@ def selectors(input, namespaces=None):
 def media_query_selector(input):
     tokens = TokenStream(input)
     query = []
-    while 1:
+    while True:
         tokens.skip_whitespace_and_comment()
         next = tokens.next()
         if next is None:
@@ -53,7 +53,7 @@ def media_query_selector(input):
 
 def parse_selector(tokens, namespaces):
     result = parse_compound_selector(tokens, namespaces)
-    while 1:
+    while True:
         has_whitespace = tokens.skip_whitespace()
         while tokens.skip_comment():
             has_whitespace = tokens.skip_whitespace() or has_whitespace
@@ -72,7 +72,7 @@ def parse_selector(tokens, namespaces):
 def parse_compound_selector(tokens, namespaces):
     type_selectors = parse_type_selector(tokens, namespaces)
     simple_selectors = type_selectors if type_selectors is not None else []
-    while 1:
+    while True:
         simple_selector = parse_simple_selector(tokens, namespaces)
         if simple_selector is None:
             break
@@ -146,7 +146,7 @@ def parse_attribute_selector(tokens, namespaces):
     # Allow syntax like "subject.ownedAttribute"
     if local_name:
         name, lower_name = local_name
-        while 1:
+        while True:
             peek = tokens.peek()
             if peek == ".":
                 next = tokens.next()
@@ -252,7 +252,7 @@ class TokenStream:
 
     def skip(self, skip_types):
         found = False
-        while 1:
+        while True:
             peek = self.peek()
             if peek is None or peek.type not in skip_types:
                 break

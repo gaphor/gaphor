@@ -136,7 +136,7 @@ def render_svg(diagram, items) -> bytes:
         items=items,
         with_diagram_type=False,
     )
-    return buffer.getbuffer()
+    return buffer.getbuffer().tobytes()
 
 
 def render_png(diagram, items) -> bytes:
@@ -148,4 +148,4 @@ def render_png(diagram, items) -> bytes:
 
     buffer = io.BytesIO()
     render(diagram, new_png_surface, items=items, with_diagram_type=False)
-    return buffer.getbuffer()
+    return buffer.getbuffer().tobytes()

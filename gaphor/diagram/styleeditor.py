@@ -20,7 +20,7 @@ class StylePropertyPage(PropertyPageBase):
     """A button to open a easy-to-use CSS editor."""
 
     order = 450
-    style_editor = None
+    style_editor: "StyleEditor | None" = None
 
     def __init__(self, subject, event_manager, element_factory, main_window):
         super().__init__()
