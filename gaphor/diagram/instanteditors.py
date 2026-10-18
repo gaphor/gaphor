@@ -8,7 +8,7 @@ from gi.repository import Gdk, Gtk
 
 from gaphor.diagram.presentation import LinePresentation, Named, Valued
 from gaphor.transaction import Transaction
-
+from gaohor.UML.uml import LiteralString
 
 @singledispatch
 def instant_editor(
@@ -74,11 +74,11 @@ def valued_item_editor(item, view, event_manager, pos=None) -> bool:
     entry = popup_entry(value)
 
     def update_text():
+        raw_str = entry.get_buffer().get_text().strip()
         with Transaction(event_manager, context="editing"):
-            try:
-                item.subject.value = entry.get_buffer().get_text()
-            except TypeError:
-                item.subject.value.value = entry.get_buffer().get_text()
+            lit_str = item.subject.model.create(LiteralString)
+            lit_str.value = raw_str
+            item.subject.value = lit_str
 
     show_popover(entry, view, box, update_text)
 
