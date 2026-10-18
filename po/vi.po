@@ -8,20 +8,21 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2026-04-05 21:23-0400\n"
-"PO-Revision-Date: 2026-04-05 20:02+0000\n"
-"Last-Translator: Flowerlywind <tuanhoangnguyen25019@gmail.com>\n"
+"PO-Revision-Date: 2026-07-22 16:01+0000\n"
+"Last-Translator: Hoang Truong <truong11t2@gmail.com>\n"
 "Language: vi\n"
-"Language-Team: Vietnamese "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/vi/>\n"
+"Language-Team: Vietnamese <https://hosted.weblate.org/projects/gaphor/gaphor/"
+"vi/>\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.18.0\n"
+"X-Generator: Weblate 2026.8.dev0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:28
 msgid "C4"
-msgstr ""
+msgstr "C4"
 
 #: gaphor/C4Model/propertypages.ui:11 gaphor/diagram/general/metadata.py:70
 #: gaphor/diagram/propertypages.ui:268
@@ -39,7 +40,7 @@ msgstr "Hệ thống phần mềm mới"
 
 #: gaphor/C4Model/toolbox.py:38
 msgid "New Container"
-msgstr ""
+msgstr "Vùng chứa mới"
 
 #: gaphor/C4Model/toolbox.py:45 gaphor/C4Model/toolbox.py:169
 #: gaphor/templates/c4model-example.gaphor
@@ -52,7 +53,7 @@ msgstr "Cơ sở dữ liệu mới"
 
 #: gaphor/C4Model/toolbox.py:53
 msgid "New Component"
-msgstr ""
+msgstr "Thành phần mới"
 
 #: gaphor/C4Model/toolbox.py:57 gaphor/ui/greeter.py:55
 msgid "C4 Model"
@@ -69,16 +70,16 @@ msgstr "Hệ thống phần mềm"
 
 #: gaphor/C4Model/toolbox.py:85
 msgid "Container"
-msgstr ""
+msgstr "Vùng chứa"
 
 #: gaphor/C4Model/toolbox.py:97
 msgid "Container: Database"
-msgstr ""
+msgstr "Vùng chứa: Cơ sở dữ liệu"
 
 #: gaphor/C4Model/toolbox.py:109 gaphor/C4Model/toolbox.py:159
 #: gaphor/UML/classes/classestoolbox.py:63 gaphor/UML/toolbox.py:53
 msgid "Component"
-msgstr ""
+msgstr "Thành phần"
 
 #: gaphor/C4Model/toolbox.py:121 gaphor/RAAML/fta/ftatoolbox.py:16
 #: gaphor/UML/classes/classestoolbox.py:119
@@ -119,7 +120,7 @@ msgstr "Biểu đồ khái quát"
 #: gaphor/UML/classes/classestoolbox.py:51 gaphor/UML/toolbox.py:48
 #: gaphor/ui/modelbrowser.py:403
 msgid "Package"
-msgstr ""
+msgstr "Gói"
 
 #: gaphor/C4Model/toolbox.py:151 gaphor/SysML/toolbox.py:183
 #: gaphor/UML/actions/actionstoolbox.py:42
@@ -155,7 +156,7 @@ msgstr "Kiểu dữ liệu"
 #: gaphor/SysML/toolbox.py:186 gaphor/UML/classes/classestoolbox.py:154
 #: gaphor/UML/toolbox.py:57
 msgid "Enumeration"
-msgstr ""
+msgstr "Kiểu liệt kê"
 
 #: gaphor/C4Model/toolbox.py:165
 msgid "Primitive Type"
@@ -163,35 +164,35 @@ msgstr "Kiểu nguyên thủy"
 
 #: gaphor/RAAML/modelinglanguage.py:30 gaphor/ui/greeter.py:48
 msgid "RAAML"
-msgstr ""
+msgstr "RAAML"
 
 #: gaphor/RAAML/toolbox.py:30
 msgid "FTA Diagram"
-msgstr ""
+msgstr "Sơ đồ FTA"
 
 #: gaphor/RAAML/toolbox.py:31
 msgid "STPA Diagram"
-msgstr ""
+msgstr "Sơ đồ STPA"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:195 gaphor/RAAML/fta/ftatoolbox.py:201
 #: gaphor/RAAML/fta/topevent.py:27 gaphor/RAAML/toolbox.py:37
 msgid "Top Event"
-msgstr ""
+msgstr "Sự kiện gốc"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:17 gaphor/RAAML/stpa/stpatoolbox.py:43
 #: gaphor/RAAML/toolbox.py:38 gaphor/templates/raaml-example.gaphor
 msgid "Loss"
-msgstr ""
+msgstr "Tổn thất"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:22 gaphor/RAAML/stpa/stpatoolbox.py:52
 #: gaphor/RAAML/toolbox.py:39 gaphor/templates/raaml-example.gaphor
 msgid "Hazard"
-msgstr ""
+msgstr "Mối nguy"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:61 gaphor/RAAML/toolbox.py:40
 #: gaphor/SysML/blocks/block.py:57 gaphor/SysML/blocks/interfaceblock.py:56
 msgid "Situation"
-msgstr ""
+msgstr "Tình huống"
 
 #: gaphor/RAAML/fta/andgate.py:34 gaphor/RAAML/fta/ftatoolbox.py:24
 msgid "AND Gate"
@@ -200,22 +201,22 @@ msgstr "Cổng AND"
 #: gaphor/RAAML/fta/basicevent.py:32 gaphor/RAAML/fta/ftatoolbox.py:125
 #: gaphor/RAAML/fta/ftatoolbox.py:131
 msgid "Basic Event"
-msgstr ""
+msgstr "Sự kiện cơ bản"
 
 #: gaphor/RAAML/fta/conditionalevent.py:29 gaphor/RAAML/fta/ftatoolbox.py:136
 #: gaphor/RAAML/fta/ftatoolbox.py:143
 msgid "Conditional Event"
-msgstr ""
+msgstr "Sự kiện điều kiện"
 
 #: gaphor/RAAML/fta/dormantevent.py:32 gaphor/RAAML/fta/ftatoolbox.py:162
 #: gaphor/RAAML/fta/ftatoolbox.py:168
 msgid "Dormant Event"
-msgstr ""
+msgstr "Sự kiện tiềm ẩn"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:12 gaphor/templates/raaml-example.gaphor
 #: gaphor/templates/raaml.gaphor
 msgid "Fault Tree Analysis"
-msgstr ""
+msgstr "Phân tích cây lỗi"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:30
 msgid "AND"
@@ -239,15 +240,15 @@ msgstr "NOT"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:57
 msgid "Sequence Enforcing (SEQ) Gate"
-msgstr ""
+msgstr "Cổng thực thi trình tự (SEQ)"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:63
 msgid "SEQ"
-msgstr ""
+msgstr "SEQ"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:68
 msgid "Exclusive OR Gate"
-msgstr ""
+msgstr "Cổng OR loại trừ"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:74
 msgid "XOR"
@@ -256,46 +257,46 @@ msgstr "XOR"
 #: gaphor/RAAML/fta/ftatoolbox.py:79 gaphor/RAAML/fta/ftatoolbox.py:86
 #: gaphor/RAAML/fta/majorityvotegate.py:37
 msgid "Majority Vote Gate"
-msgstr ""
+msgstr "Cổng quyết định theo đa số"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:92 gaphor/RAAML/fta/ftatoolbox.py:98
 #: gaphor/RAAML/fta/inhibitgate.py:32
 msgid "Inhibit Gate"
-msgstr ""
+msgstr "Cổng cấm"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:103 gaphor/RAAML/fta/ftatoolbox.py:109
 #: gaphor/RAAML/fta/transferin.py:32
 msgid "Transfer In"
-msgstr ""
+msgstr "Chuyển vào"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:114 gaphor/RAAML/fta/ftatoolbox.py:120
 #: gaphor/RAAML/fta/transferout.py:33
 msgid "Transfer Out"
-msgstr ""
+msgstr "Chuyển ra"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:149 gaphor/RAAML/fta/ftatoolbox.py:156
 #: gaphor/RAAML/fta/undevelopedevent.py:32
 msgid "Undeveloped Event"
-msgstr ""
+msgstr "Sự kiện chưa phát triển"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:173 gaphor/RAAML/fta/ftatoolbox.py:179
 #: gaphor/RAAML/fta/houseevent.py:32
 msgid "House Event"
-msgstr ""
+msgstr "Sự kiện nhà"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:184 gaphor/RAAML/fta/ftatoolbox.py:190
 #: gaphor/RAAML/fta/zeroevent.py:33
 msgid "Zero Event"
-msgstr ""
+msgstr "Sự kiện rỗng"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:206 gaphor/RAAML/fta/ftatoolbox.py:213
 #: gaphor/RAAML/fta/intermediateevent.py:28
 msgid "Intermediate Event"
-msgstr ""
+msgstr "Sự kiện trung gian"
 
 #: gaphor/RAAML/fta/seqgate.py:34
 msgid "Sequence Enforcing Gate"
-msgstr ""
+msgstr "Cổng cưỡng chế trình tự"
 
 #: gaphor/RAAML/fta/xorgate.py:33
 msgid "XOR Gate"
@@ -303,52 +304,52 @@ msgstr "Cổng XOR"
 
 #: gaphor/RAAML/stpa/controlaction.py:27 gaphor/RAAML/stpa/stpatoolbox.py:158
 msgid "Control Action"
-msgstr ""
+msgstr "Hành động điều khiển"
 
 #: gaphor/RAAML/stpa/operationalsituation.py:29
 #: gaphor/RAAML/stpa/stpatoolbox.py:127
 msgid "Operational Situation"
-msgstr ""
+msgstr "Tình huống vận hành"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:27 gaphor/RAAML/stpa/stpatoolbox.py:116
 #: gaphor/templates/raaml-example.gaphor
 msgid "Abstract Operational Situation"
-msgstr ""
+msgstr "Tình huống vận hành trừu tượng"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:35 gaphor/SysML/blocks/blockstoolbox.py:100
 #: gaphor/UML/classes/classestoolbox.py:127
 msgid "Generalization"
-msgstr ""
+msgstr "Khái quát hóa"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:72
 msgid "Control Structure"
-msgstr ""
+msgstr "Cấu trúc điều khiển"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:83 gaphor/templates/sysml-example.gaphor
 msgid "Controller"
-msgstr ""
+msgstr "Bộ điều khiển"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:94 gaphor/templates/sysml-example.gaphor
 msgid "Actuator"
-msgstr ""
+msgstr "Cơ cấu chấp hành"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:105
 msgid "Controlled Process"
-msgstr ""
+msgstr "Quá trình được điều khiển"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:138
 #: gaphor/RAAML/stpa/unsafecontrolaction.py:28
 msgid "Unsafe Control Action"
-msgstr ""
+msgstr "Hành động điều khiển không an toàn"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:149
 msgid "Relevant To"
-msgstr "Liên Quan Tới"
+msgstr "Liên quan đến"
 
 #: gaphor/SysML/diagramtype.py:42
 #, python-brace-format
 msgid "Can’t create “{name}” nested under a “{elem}”"
-msgstr ""
+msgstr "Không thể tạo “{name}” nằm lồng bên trong “{elem}”"
 
 #: gaphor/SysML/modelinglanguage.py:39 gaphor/ui/greeter.py:41
 msgid "SysML"
@@ -384,20 +385,20 @@ msgstr "Hiển thị các Bộ phận"
 
 #: gaphor/SysML/propertypages.ui:113
 msgid "Show References"
-msgstr "Hiển thị Trích Dẫn"
+msgstr "Hiển thị trích dẫn"
 
 #: gaphor/SysML/propertypages.ui:129 gaphor/SysML/propertypages.ui:161
 msgid "Show Values"
-msgstr "Hiển thị Giá trị"
+msgstr "Hiển thị giá trị"
 
 #: gaphor/SysML/propertypages.ui:183
 msgid "Aggregation"
-msgstr ""
+msgstr "Quan hệ kết hợp"
 
 #: gaphor/SysML/propertypages.ui:195 gaphor/UML/classes/propertypages.ui:125
 #: gaphor/UML/classes/propertypages.ui:238
 msgid "No aggregation"
-msgstr ""
+msgstr "Không có quan hệ tập hợp"
 
 #: gaphor/SysML/propertypages.ui:196 gaphor/UML/classes/propertypages.ui:126
 #: gaphor/UML/classes/propertypages.ui:239

@@ -193,7 +193,7 @@ class StereotypeView(GObject.Object):
         slot = self.slot
         with Transaction(self.event_manager):
             if value:
-                if slot is None:
+                if slot is None and self.attr:
                     slot = UML.recipes.add_slot(self.instance, self.attr)
                 UML.recipes.set_slot_value(slot, value)
             elif slot:

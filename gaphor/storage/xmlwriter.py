@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from collections.abc import Iterator
+from collections.abc import Generator
 from contextlib import contextmanager
 from typing import Protocol
 from xml.sax.saxutils import escape, quoteattr
@@ -83,14 +83,14 @@ class XMLWriter:
         return name[1]
 
     @contextmanager
-    def document(self) -> Iterator[XMLWriter]:
+    def document(self) -> Generator[XMLWriter, None, None]:
         self._write(f'<?xml version="1.0" encoding="{self._encoding}"?>\n')
         yield self
 
     @contextmanager
     def element_ns(
         self, name: tuple[str, str], attrs: dict[tuple[str, str], str]
-    ) -> Iterator[XMLWriter]:
+    ) -> Generator[XMLWriter, None, None]:
         with self._prefix_mappings() as xmlns:
             self._write(self._qname(name), start_tag=True)
             self._out.write(xmlns)
@@ -103,7 +103,9 @@ class XMLWriter:
             self._write(f"{self._qname(name)}", end_tag=True)
 
     @contextmanager
-    def element(self, name: str, attrs: dict[str, str]) -> Iterator[XMLWriter]:
+    def element(
+        self, name: str, attrs: dict[str, str]
+    ) -> Generator[XMLWriter, None, None]:
         """Create new element in default namespace."""
         ns = next(
             (uri for uri, prefix in self._current_context.items() if prefix == ""), ""
@@ -114,7 +116,7 @@ class XMLWriter:
             yield self
 
     @contextmanager
-    def cdata(self) -> Iterator[XMLWriter]:
+    def cdata(self) -> Generator[XMLWriter, None, None]:
         self._write("<![CDATA[")
         self._in_cdata = True
 
@@ -127,7 +129,7 @@ class XMLWriter:
         self._undeclared_ns_maps.append((prefix, uri))
 
     @contextmanager
-    def _prefix_mappings(self) -> Iterator[str]:
+    def _prefix_mappings(self) -> Generator[str, None, None]:
         if not self._undeclared_ns_maps:
             yield ""
         else:

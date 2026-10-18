@@ -55,7 +55,7 @@ class Layout:
     ) -> None:
         # Since text expressions can return False, we should also accommodate for that
         if text not in (None, False):
-            self.set_text(text)  # type: ignore[arg-type]
+            self.set_text(text)
         if font:
             self.set_font(font)
         if width is not None:
