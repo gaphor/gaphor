@@ -71,7 +71,7 @@ actions = ToolSection(
             "toolbox-activity",
             gettext("Activity"),
             "gaphor-activity-symbolic",
-            "<Ctrl><Shift>A",
+            "<Ctrl><Shift>T",
             new_item_factory(
                 diagramitems.ActivityItem,
                 UML.Activity,
