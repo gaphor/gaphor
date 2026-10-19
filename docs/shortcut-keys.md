@@ -27,7 +27,7 @@ Shortcut keys are specific to a modelling language - any that are not re-defined
 
 "action", "a",
 
-"activity", "<Ctrl><Shift>A",
+"activity", <kbd>Ctrl</kbd><kbd>Shift</kbd>A",
 
 "activity-final-node", "f",
 
@@ -35,9 +35,9 @@ Shortcut keys are specific to a modelling language - any that are not re-defined
 
 "artifact", "h",
 
-"association", "<Shift>A",
+"association", "<kbd>Shift</kbd>A",
 
-"call-behavior-action", "<Ctrl>b",
+"call-behavior-action", "<kbd>Alt</kbd>a",
 
 "choice-pseudostate", None,
 
@@ -45,23 +45,23 @@ Shortcut keys are specific to a modelling language - any that are not re-defined
 
 "comment", "k",
 
-"comment-line", "<Shift>K",
+"comment-line", "<kbd>Shift</kbd>K",
 
 "component", "o",
 
-"composite-association", "<Shift>Z",
+"composite-association", "<kbd>Shift</kbd>Z",
 
-"containment", "<Shift>C",
+"containment", "<kbd>Shift</kbd>C",
 
-"control-flow", "<Shift>F",
+"control-flow", "<kbd>Shift</kbd>F",
 
-"data-type", "<Shift>L",
+"data-type", "<kbd>Shift</kbd>L",
 
 "decision-node", "g",
 
 "deep-history-pseudostate", None,
 
-"dependency", "<Shift>D",
+"dependency", "<kbd>Shift</kbd>D",
 
 "device", "d",
 
@@ -69,29 +69,29 @@ Shortcut keys are specific to a modelling language - any that are not re-defined
 
 "entry-point-pseudostate", None,
 
-"enumeration", "<Shift>W",
+"enumeration", "<kbd>Shift</kbd>W",
 
-"extend", "<Shift>X",
+"extend", "<kbd>Shift</kbd>X",
 
-"extension", "<Shift>E",
+"extension", "<kbd>Shift</kbd>E",
 
 "flow-final-node", "w",
 
-"fork-node", "<Shift>R",
+"fork-node", "<kbd>Shift</kbd>R",
 
-"generalization", "<Shift>G",
+"generalization", "<kbd>Shift</kbd>G",
 
-"import", "<Shift>M",
+"import", "<kbd>Shift</kbd>M",
 
-"include", "<Shift>U",
+"include", "<kbd>Shift</kbd>U",
 
 "initial-node", "j",
 
-"interaction", "<Shift>N",
+"interaction", "<kbd>Shift</kbd>N",
 
 "interface", "i",
 
-"interface-realization", "<Shift>I",
+"interface-realization", "<kbd>Shift</kbd>I",
 
 "lifeline", "v",
 
@@ -101,31 +101,31 @@ Shortcut keys are specific to a modelling language - any that are not re-defined
 
 "node", "n",
 
-"object-flow", "<Shift>Y",
+"object-flow", "<kbd>Shift</kbd>Y",
 
-"object-node", "<Shift>O",
+"object-node", "<kbd>Shift</kbd>O",
 
 "package", "p",
 
-"partition", "<Shift>P",
+"partition", "<kbd>Shift</kbd>P",
 
-"primitive", "<Shift>H",
+"primitive", "<kbd>Shift</kbd>H",
 
 "profile", "r",
 
-"shared-association", "<Shift>Q",
+"shared-association", "<kbd>Shift</kbd>Q",
 
 "state", "s",
 
 "stereotype", "z",
 
-"transition", "<Shift>T",
+"transition", "<kbd>Shift</kbd>T",
 
 "use-case", "u",
 
-"use-case-association", "<Shift>J",
+"use-case-association", "<kbd>Shift</kbd>J",
 
-"value-specification-action", "<Ctrl>e",
+"value-specification-action", "<kbd>Alt</kbd>v",
 
 "execution-specification", None,
 
@@ -137,13 +137,13 @@ Shortcut keys are specific to a modelling language - any that are not re-defined
 
 "initial-pseudostate", None,
 
-"input-pin", "<Ctrl>k",
+"input-pin", "<kbd>Ctrl</kbd>k",
 
 "join-pseudostate", None,
 
 "junction-pseudostate", None,
 
-"output-pin", "<Ctrl>l",
+"output-pin", "<kbd>Ctrl</kbd>l",
 
 "reflexive-message", None,
 
@@ -161,29 +161,29 @@ Shortcut keys are specific to a modelling language - any that are not re-defined
 
 "allocate-dependency", None,
 
-"association", "<Shift>A",
+"association", "<kbd>Shift</kbd>A",
 
-"block", "<Shift>B",
+"block", "<kbd>Shift</kbd>B",
 
-"composite-association", "<Shift>Z",
+"composite-association", "<kbd>Shift</kbd>Z",
 
-"connector", "<Shift>C",
+"connector", "<kbd>Shift</kbd>C",
 
-"containment", "<Shift>M",
+"containment", "<kbd>Shift</kbd>M",
 
-"derive-reqt-dependency", "<Shift>D",
+"derive-reqt-dependency", "<kbd>Shift</kbd>D",
 
-"direct-association", "<Shift>S",
+"direct-association", "<kbd>Shift</kbd>S",
 
-"enumeration", "<Shift>W",
+"enumeration", "<kbd>Shift</kbd>W",
 
-"generalization", "<Shift>G",
+"generalization", "<kbd>Shift</kbd>G",
 
-"interfaceblock", "<Ctrl><Shift>B",
+"interfaceblock", "<kbd>Ctrl</kbd><kbd>Shift</kbd>B",
 
 "package", "p",
 
-"primitive", "<Shift>H",
+"primitive", "<kbd>Shift</kbd>H",
 
 "property", "o",
 
@@ -193,11 +193,11 @@ Shortcut keys are specific to a modelling language - any that are not re-defined
 
 "requirement", "r",
 
-"satisfy-dependency", "<Shift>I",
+"satisfy-dependency", "<kbd>Shift</kbd>I",
 
-"shared-association", "<Shift>Q",
+"shared-association", "<kbd>Shift</kbd>Q",
 
 "trace-dependency", "y",
 
-"value-type", "<Shift>L",
-"verify-dependency", "<Shift>V",
+"value-type", "<kbd>Shift</kbd>L",
+"verify-dependency", "<kbd>Shift</kbd>V",
