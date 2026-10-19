@@ -8,7 +8,7 @@ from gi.repository import Gdk, Gtk
 
 from gaphor.diagram.presentation import LinePresentation, Named, Valued
 from gaphor.transaction import Transaction
-from gaohor.UML.uml import LiteralString
+from gaphor.UML.uml import LiteralString
 
 @singledispatch
 def instant_editor(
