@@ -2,8 +2,8 @@
 
 Shortcut keys are specific to a modelling language - any that are not re-defined inherit from the base lanaguage. 
 
-DRAWING
--------
+## DRAWING Short Cut keys
+
 
 
 "box", "b",
@@ -21,8 +21,7 @@ DRAWING
 "metadata", None,
 
 
-UML
----
+## UML Short Cut Keys
 
 "accept-event-action", None,
 
@@ -157,8 +156,8 @@ UML
 "terminate-pseudostate", None,
 
 
-SYSML
------
+## SYSML Short Cut Keys 
+
 
 "allocate-dependency", None,
 
