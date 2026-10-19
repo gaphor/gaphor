@@ -133,7 +133,7 @@ class ValueSpecificationActionPropertyPage(PropertyPageBase):
         with Transaction(self.event_manager, context="editing"):
             if value_str == "":
                 self.subject.value = None
-            else:
+            elif (self.subject.value is None) or (UML.recipes.get_literal_value_as_string(self.subject.value) != value_str):
                 lit_str = self.subject.model.create(UML.LiteralString)
                 lit_str.value = value_str
                 self.subject.value = lit_str
