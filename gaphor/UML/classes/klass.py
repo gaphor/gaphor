@@ -51,6 +51,7 @@ class ClassItem(Classified, ElementPresentation[UML.Class]):
         return ()
 
     def update_shapes(self, event=None):
+        raise RuntimeError("Booh")
         self.shape = Box(
             name_compartment(self, self.additional_stereotypes),
             *(
