@@ -1,5 +1,4 @@
-Short Cut Keys
-==============
+# Short Cut Keys
 
 Shortcut keys are specific to a modelling language - any that are not re-defined inherit from the base lanaguage. 
 
