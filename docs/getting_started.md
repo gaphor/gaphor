@@ -178,3 +178,6 @@ On Windows and macOS it can be set independently of the operating system's langu
 ### Style Sheet
 
 The [style sheet](style_sheets) allows to change the visual appearance of diagrams and model elements.
+
+### Short Cut Keys
+Using [Short Cut Keys](short cut keys) can make editing faster. 
