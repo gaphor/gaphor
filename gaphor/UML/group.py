@@ -52,6 +52,12 @@ def _(element: UML.Element):
     )
 
 
+@group.register(UML.Element, UML.Comment)
+@ungroup.register(UML.Element, UML.Comment)
+def comment_group(parent, element):
+    return True
+
+
 @group.register(UML.Element, UML.Diagram)
 def diagram_group(element, diagram):
     diagram.element = element
