@@ -139,6 +139,8 @@ def drop_on_partition(
         item.change_parent(None)
         old_parent.request_update()
 
-    if change_owner(target_subject, item.subject):
-        grow_parent(new_parent, item)
-        item.change_parent(new_parent)
+    #if change_owner(target_subject, item.subject):
+    # Do not change ownership of the model element
+    # TODO: crete allocation relationhip to swimlane type instead.
+    grow_parent(new_parent, item)
+    item.change_parent(new_parent)
