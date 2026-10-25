@@ -1,8 +1,14 @@
 import pytest
 
 from gaphor import UML
+from gaphor.diagram.diagramtoolbox import new_item_factory
 from gaphor.diagram.tests.fixtures import connect
-from gaphor.plugins.autolayout.pydot import AutoLayout, parse_edge_pos, strip_quotes
+from gaphor.plugins.autolayout.pydot import (
+    AutoLayout,
+    diagram_as_pydot,
+    parse_edge_pos,
+    strip_quotes,
+)
 from gaphor.UML.diagramitems import (
     ActionItem,
     AssociationItem,
@@ -71,6 +77,16 @@ def test_layout_with_nested(diagram, create, event_manager):
 
     assert c1.matrix[4] < p.width
     assert c1.matrix[5] < p.height
+
+
+def test_created_comment_in_parent_cluster(diagram, create):
+    parent = create(PackageItem, UML.Package)
+    comment = new_item_factory(CommentItem, UML.Comment)(diagram, parent)
+
+    assert comment.parent is parent
+    graph = diagram_as_pydot(diagram, "polyline")
+    cluster = next(g for g in graph.get_subgraphs() if g.get("id") == parent.id)
+    assert any(node.get("id") == comment.id for node in cluster.get_nodes())
 
 
 def test_layout_with_attached_item(diagram, create, event_manager):
