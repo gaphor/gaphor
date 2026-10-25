@@ -1,6 +1,6 @@
 # Short Cut Keys
 
-Shortcut keys are specific to a modelling language - any that are not re-defined inherit from the base lanaguage. 
+Shortcut keys are specific to a modelling language - any that are not re-defined inherit from the base lanaguage.
 
 ## DRAWING Short Cut keys
 
@@ -156,7 +156,7 @@ Shortcut keys are specific to a modelling language - any that are not re-defined
 "terminate-pseudostate", None,
 
 
-## SYSML Short Cut Keys 
+## SYSML Short Cut Keys
 
 
 "allocate-dependency", None,
