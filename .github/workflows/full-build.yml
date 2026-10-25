@@ -22,13 +22,13 @@ concurrency:
 
 
 env:
-  python_version: '3.14'
+  python_version: '3.15'
   mainline_build: ${{ github.ref == 'refs/heads/main' || github.event.label.name == 'translation' || github.event_name == 'release' }}
 
 jobs:
   lint:
     name: 🕵️ Lint
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     timeout-minutes: 10
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     steps:
@@ -80,7 +80,7 @@ jobs:
   linux-wheel:
     name:  🐧 Linux (Wheel) with Python ${{ matrix.python_version }}
     needs: lint
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     environment:
       name: build
     container: fedora:43
@@ -88,7 +88,7 @@ jobs:
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     strategy:
       matrix:
-        python_version: ['3.12', '3.13', '3.14']
+        python_version: ['3.13', '3.14', '3.15']
     outputs:
       targz: gaphor-${{ steps.install.outputs.version }}.tar.gz
       wheel: gaphor-${{ steps.install.outputs.version }}-py3-none-any.whl
@@ -158,7 +158,7 @@ jobs:
   linux-flatpak-devel:
     name: 📦 Linux (Devel Flatpak)
     needs: lint
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     container:
       image: ghcr.io/flathub-infra/flatpak-github-actions:gnome-50
       options: --privileged
@@ -421,7 +421,7 @@ jobs:
   publish-to-pypi:
     name: 🧀 Publish to PyPI (release only)
     needs: [ linux-wheel, linux-flatpak-devel, check-macos-app, check-windows-installer ]
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     permissions:
       id-token: write
     if: github.event_name == 'release'
@@ -468,7 +468,7 @@ jobs:
   trigger-website-version-update:
     name: ⏩ gaphor.org version update
     needs: [ publish-to-pypi ]
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     environment:
       name: release
     steps:
@@ -497,7 +497,7 @@ jobs:
   trigger-flatpak-version-update:
     name: ⏩ Flathub version update
     needs: [ publish-to-pypi ]
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     environment:
       name: release
     steps:

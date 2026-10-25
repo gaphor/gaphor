@@ -5,7 +5,7 @@ on:
     # 05:00 UTC on the 1st of each month
     - cron: "0 5 1 * *"
 env:
-  python_version: '3.14'
+  python_version: '3.15'
 
 permissions:
   contents: read
@@ -13,7 +13,7 @@ permissions:
 jobs:
   update:
     name: Sync release locale list with Weblate
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     environment:
       name: release
     steps:
