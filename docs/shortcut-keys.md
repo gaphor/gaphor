@@ -27,7 +27,7 @@ Shortcut keys are specific to a modelling language - any that are not re-defined
 
 "action", "a",
 
-"activity", <kbd>Ctrl</kbd><kbd>Shift</kbd>T",
+"activity", "<kbd>Ctrl</kbd><kbd>Shift</kbd>T",
 
 "activity-final-node", "f",
 
