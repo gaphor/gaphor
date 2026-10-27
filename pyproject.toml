@@ -9,6 +9,8 @@ authors = [
 
 readme = "README.md"
 
+license = "Apache-2.0"
+
 keywords = ["GTK", "diagram", "UML", "MBSE", "modeling"]
 
 classifiers = [
@@ -19,7 +21,6 @@ classifiers = [
     "Intended Audience :: Developers",
     "Intended Audience :: End Users/Desktop",
     "Intended Audience :: Information Technology",
-    "License :: OSI Approved :: Apache Software License",
     "Operating System :: MacOS :: MacOS X",
     "Operating System :: Microsoft :: Windows",
     "Operating System :: POSIX",
