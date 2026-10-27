@@ -33,6 +33,8 @@ class InterfaceBlockItem(Classified, ElementPresentation[InterfaceBlock]):
             "subject[UML:NamedElement].namespace.name"
         ).watch("subject[UML:Classifier].isAbstract", self.update_shapes).watch(
             "subject[UML:Class].ownedAttribute.aggregation", self.update_shapes
+        ).watch("subject[UML:Class].ownedAttribute.name").watch(
+            "subject[UML:Class].ownedAttribute.type.name"
         )
         operation_watches(self, "Block")
         stereotype_watches(self)
