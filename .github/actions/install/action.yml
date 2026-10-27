@@ -15,6 +15,7 @@ runs:
       run: |
         pipx install --pip-args=--constraint=.github/github-requirements.txt poetry
         poetry config virtualenvs.in-project true
+        poetry config installer.parallel false
       shell: bash
     - name: Collect Project Data
       id: meta
