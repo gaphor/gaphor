@@ -6,7 +6,7 @@ on:
   pull_request:
     branches: [main]
 env:
-  python_version: '3.14'
+  python_version: '3.15'
 
 permissions:
   contents: read
@@ -16,7 +16,7 @@ jobs:
     permissions:
       security-events: write  # for github/codeql-action/autobuild to send a status report
     name: Analyze
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     steps:
     - name: Harden Runner
       uses: step-security/harden-runner@dc2769abcc0fcfbadfc1df54081c1608579ef6b2 # v2.22.2
