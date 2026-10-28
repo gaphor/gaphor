@@ -1,19 +1,15 @@
 import datetime
 import logging
 import sys
-import textwrap
 import time
+import traceback
 from types import TracebackType
-
-import better_exceptions
 
 from gaphor.event import Notification
 from gaphor.i18n import gettext
 from gaphor.ui.selftest import system_information
 
 logger = logging.getLogger(__name__)
-
-better_exceptions.SUPPORTS_COLOR = False
 
 START_TIME = time.time()
 
@@ -43,28 +39,13 @@ class DebugInfo:
         buffer.append(gettext("Errors:"))
         buffer.append("\n\n")
 
-        def print_exception(tp, v, tb, depth=0):
-            for line in better_exceptions.format_exception(tp, v, tb):
-                buffer.append(textwrap.indent(line, "  " * depth + "|"))
-            if issubclass(tp, BaseExceptionGroup):
-                for i, sub_exc in enumerate(v.exceptions):
-                    buffer.append(
-                        f"{'  ' * depth}{'└─┬──' if i == 0 else '  ├──'}────────────────────────────╌┄┈\n"
-                    )
-                    print_exception(
-                        type(sub_exc), sub_exc, sub_exc.__traceback__, depth=depth + 1
-                    )
-                buffer.append(
-                    f"{'  ' * (depth + 1)}└─────────────────────────────╌┄┈\n"
-                )
-            elif depth == 0:
-                buffer.append("└─────────────────────────────╌┄┈\n")
-
         for ts, tp, v, tb in self.exceptions:
             buffer.append(
                 f"Time since application startup: {datetime.timedelta(seconds=int(ts - START_TIME))}\n"
             )
-            print_exception(tp, v, tb)
+            buffer.extend(
+                traceback.TracebackException(tp, v, tb, capture_locals=True).format()
+            )
 
             return "".join(buffer)
 
