@@ -22,18 +22,18 @@ concurrency:
 
 
 env:
-  python_version: '3.14'
+  python_version: '3.15'
   mainline_build: ${{ github.ref == 'refs/heads/main' || github.event.label.name == 'translation' || github.event_name == 'release' }}
 
 jobs:
   lint:
     name: 🕵️ Lint
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     timeout-minutes: 10
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@ccd8616d44fd3846e67624a50d5aad6d37bf2d25 # v2.22.1
+        uses: step-security/harden-runner@dc2769abcc0fcfbadfc1df54081c1608579ef6b2 # v2.22.2
         with:
           disable-sudo: true
           disable-file-monitoring: true
@@ -50,7 +50,7 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}
           persist-credentials: false
       - name: Set up Python
-        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
         with:
           python-version: ${{ env.python_version }}
       - name: Check Github Actions workflows
@@ -80,7 +80,7 @@ jobs:
   linux-wheel:
     name:  🐧 Linux (Wheel) with Python ${{ matrix.python_version }}
     needs: lint
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     environment:
       name: build
     container: fedora:43
@@ -88,14 +88,14 @@ jobs:
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     strategy:
       matrix:
-        python_version: ['3.12', '3.13', '3.14']
+        python_version: ['3.13', '3.14', '3.15']
     outputs:
       targz: gaphor-${{ steps.install.outputs.version }}.tar.gz
       wheel: gaphor-${{ steps.install.outputs.version }}-py3-none-any.whl
       version: ${{ steps.install.outputs.version }}
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@ccd8616d44fd3846e67624a50d5aad6d37bf2d25 # v2.22.1
+        uses: step-security/harden-runner@dc2769abcc0fcfbadfc1df54081c1608579ef6b2 # v2.22.2
         with:
           egress-policy: audit
       - name: Set up Path
@@ -135,7 +135,7 @@ jobs:
           poetry run coverage lcov
       - name: Upload Code Coverage to Qlty
         if: ${{ matrix.python_version == env.python_version }}
-        uses: qltysh/qlty-action/coverage@c9b09987143d1e4ac955f4803c7bea742102feb5 # v1
+        uses: qltysh/qlty-action/coverage@ebcd284bf32e36a030afe15f1e136c7be08b9506 # v1
         with:
           token: ${{ secrets.QLTY_COVERAGE_TOKEN }}
           files: coverage.lcov
@@ -158,13 +158,13 @@ jobs:
   linux-flatpak-devel:
     name: 📦 Linux (Devel Flatpak)
     needs: lint
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     container:
       image: ghcr.io/flathub-infra/flatpak-github-actions:gnome-50
       options: --privileged
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@ccd8616d44fd3846e67624a50d5aad6d37bf2d25 # v2.22.1
+        uses: step-security/harden-runner@dc2769abcc0fcfbadfc1df54081c1608579ef6b2 # v2.22.2
         with:
           egress-policy: audit
 
@@ -214,7 +214,7 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}
           persist-credentials: false
       - name: Set up Python
-        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
         with:
           python-version: ${{ env.python_version }}
       - name: Use Python Dependency Cache
@@ -231,6 +231,7 @@ jobs:
         run: |
           # Pre-installed Python conflicts with Homebrew Python (Intel only)
           # https://github.com/actions/runner-images/issues/9966
+          brew update
           brew install --quiet --overwrite python@${python_version}
           brew install gtksourceview5 libadwaita adwaita-icon-theme gobject-introspection graphviz create-dmg
       - name: Workaround for broken gdk-pixbuf SVG loader
@@ -345,9 +346,9 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}
           persist-credentials: false
       - name: Set up Python
-        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
         with:
-          python-version: ${{ env.python_version }}
+          python-version: '3.14'
       - name: Use Python Dependency Cache
         if: github.event_name != 'release'
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
@@ -421,7 +422,7 @@ jobs:
   publish-to-pypi:
     name: 🧀 Publish to PyPI (release only)
     needs: [ linux-wheel, linux-flatpak-devel, check-macos-app, check-windows-installer ]
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     permissions:
       id-token: write
     if: github.event_name == 'release'
@@ -429,7 +430,7 @@ jobs:
       version: ${{ needs.linux-wheel.outputs.version }}
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@ccd8616d44fd3846e67624a50d5aad6d37bf2d25 # v2.22.1
+        uses: step-security/harden-runner@dc2769abcc0fcfbadfc1df54081c1608579ef6b2 # v2.22.2
         with:
           egress-policy: audit
 
@@ -442,7 +443,7 @@ jobs:
           name: ${{ needs.linux-wheel.outputs.wheel }}
           path: dist
       - name: Publish package distributions to PyPI
-        uses: pypa/gh-action-pypi-publish@dc37677b2e1c63e2034f94d8a5b11f265b73ba33 # release/v1
+        uses: pypa/gh-action-pypi-publish@7245906fb61fa33a13554f9d5fb856fe61758086 # release/v1
 
   submit-to-winget:
     name: 📦 Submit to WinGet (release only)
@@ -468,12 +469,12 @@ jobs:
   trigger-website-version-update:
     name: ⏩ gaphor.org version update
     needs: [ publish-to-pypi ]
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     environment:
       name: release
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@ccd8616d44fd3846e67624a50d5aad6d37bf2d25 # v2.22.1
+        uses: step-security/harden-runner@dc2769abcc0fcfbadfc1df54081c1608579ef6b2 # v2.22.2
         with:
           egress-policy: audit
 
@@ -497,12 +498,12 @@ jobs:
   trigger-flatpak-version-update:
     name: ⏩ Flathub version update
     needs: [ publish-to-pypi ]
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     environment:
       name: release
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@ccd8616d44fd3846e67624a50d5aad6d37bf2d25 # v2.22.1
+        uses: step-security/harden-runner@dc2769abcc0fcfbadfc1df54081c1608579ef6b2 # v2.22.2
         with:
           egress-policy: audit
 

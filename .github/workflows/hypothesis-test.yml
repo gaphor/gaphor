@@ -5,7 +5,7 @@ on:
     # min hour dom month dow
     - cron:  '0 6 * * 3'
 env:
-  python_version: '3.14'
+  python_version: '3.15'
 
 permissions:
   contents: read
@@ -13,7 +13,7 @@ permissions:
 jobs:
 
   hypothesis:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     container: fedora:39
     timeout-minutes: 60
     permissions:
