@@ -174,7 +174,6 @@ def test_swimlane_does_not_change_ownership(create):
     group(activity_item.subject, action_item.subject)
 
     action_owner = action_item.subject.owner
-    print(action_owner)
     
     drop_on_partition(action_item, swimlanes, swimlanes.width - 10, swimlanes.height / 2)
 
