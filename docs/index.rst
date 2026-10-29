@@ -35,6 +35,7 @@ Did you know Gaphor has excellent integration with :doc:`Sphinx <sphinx>` and :d
    coffee_machine
    troubleshooting
    changelog
+   shortcut-keys
 
 .. toctree::
    :caption: Features
