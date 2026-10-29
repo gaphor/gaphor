@@ -133,7 +133,7 @@ def drop_on_partition(
     if target_subject is item.subject.inPartition:
         #no change, so just return
         return
-    if target_subject == None:
+    if target_subject is None:
         #no longer in partition, set parent to None, and return
         item.change_parent(None)
         ungroup(item.parent, item)
