@@ -131,16 +131,22 @@ def drop_on_partition(
     target_subject = new_parent.partition_at_point((x, y))
 
     if target_subject is item.subject.inPartition:
+        #no change, so just return
         return
-
+    if target_subject == None:
+        #no longer in partition, set parent to None, and return
+        item.change_parent(None)
+        ungroup(item.parent, item)
+        old_parent.request_update()
+        
     if isinstance(old_parent, PartitionItem) and any(
         ungroup(p, item.subject) for p in old_parent.partition
     ):
         item.change_parent(None)
         old_parent.request_update()
-
-    #if change_owner(target_subject, item.subject):
-    # Do not change ownership of the model element
-    # TODO: crete allocation relationhip to swimlane type instead.
-    grow_parent(new_parent, item)
-    item.change_parent(new_parent)
+        
+    item_owner = item.subject.owner
+    if change_owner(target_subject, item.subject):
+        grow_parent(new_parent, item)
+        item.change_parent(new_parent)
+    change_owner(item_owner, item.subject)
