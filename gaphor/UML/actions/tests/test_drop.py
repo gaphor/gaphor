@@ -147,7 +147,7 @@ def test_drop_from_second_swimlane_to_outside(create):
     #ActionItem should no longer be grouped with swimlanes
     assert action_item.subject not in swimlanes.partition[0].node
     assert action_item.subject not in swimlanes.partition[1].node
-    assert action_item.parent == None
+    assert action_item.parent is None
 
 def test_move_action_from_activity_to_swimlane(create):
     activity_item: ActivityItem = create(ActivityItem, uml.Activity)
