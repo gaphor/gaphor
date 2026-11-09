@@ -192,8 +192,6 @@ jobs:
     strategy:
       matrix:
         target:
-          - runner: macos-15-intel
-            arch: intel
           - runner: macos-15
             arch: arm
     name: 🍏 macOS
@@ -206,7 +204,6 @@ jobs:
     timeout-minutes: 45
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     outputs:
-      artifact-intel: ${{ steps.output.outputs.artifact-intel }}
       artifact-arm: ${{ steps.output.outputs.artifact-arm }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -228,12 +225,9 @@ jobs:
       - name: Install macOS Dependencies
         env:
           HOMEBREW_NO_INSTALL_CLEANUP: 1
+          HOMEBREW_NO_AUTO_UPDATE: 1
         run: |
-          # Pre-installed Python conflicts with Homebrew Python (Intel only)
-          # https://github.com/actions/runner-images/issues/9966
-          brew update
-          brew install --quiet --overwrite python@${python_version}
-          brew install gtksourceview5 libadwaita adwaita-icon-theme gobject-introspection graphviz create-dmg
+          brew install --quiet gtksourceview5 libadwaita adwaita-icon-theme gobject-introspection graphviz create-dmg
       - name: Workaround for broken gdk-pixbuf SVG loader
         run: |
           # Fix gdk-pixbuf SVG loader. This is broken on Homebrew (July 2nd 2025)
@@ -278,8 +272,6 @@ jobs:
     strategy:
       matrix:
         target:
-          - runner: macos-15-intel
-            artifact: ${{ needs.macos.outputs.artifact-intel }}
           - runner: macos-15
             artifact: ${{ needs.macos.outputs.artifact-arm }}
     runs-on: ${{ matrix.target.runner }}
