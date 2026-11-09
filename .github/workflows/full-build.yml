@@ -227,9 +227,6 @@ jobs:
           HOMEBREW_NO_INSTALL_CLEANUP: 1
           HOMEBREW_NO_AUTO_UPDATE: 1
         run: |
-          # Runner images ship with Homebrew pre-installed; skip brew update
-          # and auto-update.
-          brew install --quiet --overwrite python@${python_version}
           brew install --quiet gtksourceview5 libadwaita adwaita-icon-theme gobject-introspection graphviz create-dmg
       - name: Workaround for broken gdk-pixbuf SVG loader
         run: |
