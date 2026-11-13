@@ -266,3 +266,26 @@ def test_element_with_member_and_no_owner(tree_model, element_factory):
     association_model = tree_model.branches.get(association_item)
 
     assert property_item in association_model.elements
+
+
+def test_rename_type_updates_typed_element_when_type_is_not_visible(
+    tree_model, element_factory
+):
+    package = element_factory.create(UML.Package)
+    nested_package = element_factory.create(UML.Package)
+    nested_package.nestingPackage = package
+    car = element_factory.create(UML.Class)
+    car.name = "Car"
+    car.package = nested_package
+    wheel = element_factory.create(UML.Class)
+    wheel.package = package
+    association = UML.recipes.create_association(car, wheel)
+    association.package = package
+    tree_model.child_model(tree_model.tree_item_for_element(package))
+    tree_model.child_model(tree_model.tree_item_for_element(association))
+    car_end_item = tree_model.tree_item_for_element(association.memberEnd[0])
+
+    car.name = "SUV"
+
+    assert tree_model.tree_item_for_element(car) is None
+    assert car_end_item.readonly_text == ": SUV"

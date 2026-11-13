@@ -190,14 +190,20 @@ class TreeModel:
         if seen is None:
             seen = set()
 
-        if (
-            element in seen
-            or not owner(element)
-            or not (tree_item := self.tree_item_for_element(element))
-        ):
+        if element in seen:
             return
 
         seen.add(element)
+
+        # Typed elements can be visible in the tree, even when their type is not
+        if isinstance(element, UML.Type):
+            for e in self.element_factory.select(UML.TypedElement):
+                if e.type is element:
+                    self.sync(e, seen)
+
+        if not owner(element) or not (tree_item := self.tree_item_for_element(element)):
+            return
+
         tree_item.sync()
         if self._on_sync:
             self._on_sync()
@@ -208,11 +214,6 @@ class TreeModel:
         if isinstance(element, UML.Parameter) and element.activityParameterNode:
             for node in element.activityParameterNode:
                 self.sync(node, seen)
-
-        if isinstance(element, UML.Type):
-            for e in self.element_factory.select(UML.TypedElement):
-                if e.type is element:
-                    self.sync(e, seen)
 
     def child_model(self, item: TreeItem) -> Gio.ListStore | None:
         """This method will create branches on demand (lazy)."""
