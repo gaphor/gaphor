@@ -113,17 +113,17 @@ def _draw_head(context: DrawContext, style: LineEndStyle):
         cr.line_to(15, 6)
         cr.move_to(0, 0)
     elif style == LineEndStyle.triangle:
-        cr.move_to(20, 0)
-        cr.line_to(10, -6)
-        cr.line_to(0, 0)
-        cr.line_to(10, 6)
-        cr.close_path()
-    elif style == LineEndStyle.diamond:
         cr.move_to(20, -12)
         cr.line_to(20, 12)
         cr.line_to(0, 0)
         cr.close_path()
         cr.move_to(20, 0)
+    elif style == LineEndStyle.diamond:
+        cr.move_to(20, 0)
+        cr.line_to(10, -6)
+        cr.line_to(0, 0)
+        cr.line_to(10, 6)
+        cr.close_path()
     else:
         cr.move_to(0, 0)
 
@@ -138,17 +138,17 @@ def _draw_tail(context: DrawContext, style: LineEndStyle):
     elif style == LineEndStyle.triangle:
         cr.line_to(20, 0)
         stroke(context, fill=True)
-        cr.move_to(20, 0)
-        cr.line_to(10, -6)
+        cr.move_to(20, -12)
         cr.line_to(0, 0)
-        cr.line_to(10, 6)
+        cr.line_to(20, 12)
         cr.close_path()
     elif style == LineEndStyle.diamond:
         cr.line_to(20, 0)
         stroke(context, fill=True)
-        cr.move_to(20, -12)
+        cr.move_to(20, 0)
+        cr.line_to(10, -6)
         cr.line_to(0, 0)
-        cr.line_to(20, 12)
+        cr.line_to(10, 6)
         cr.close_path()
     else:
         cr.line_to(0, 0)
