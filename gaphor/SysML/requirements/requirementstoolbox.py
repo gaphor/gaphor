@@ -49,7 +49,7 @@ requirements = ToolSection(
             "toolbox-refine-dependency",
             gettext("Refine"),
             "gaphor-refine-symbolic",
-            None,
+            "n",
             new_item_factory(sysml_items.RefineItem),
         ),
         ToolDef(
