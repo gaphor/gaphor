@@ -4,114 +4,110 @@ Shortcut keys are specific to a modelling language - any that are not re-defined
 
 ## DRAWING Short Cut keys
 
-
 |Item | Key |
-|-----|-------|
-|box| "b"|
-|ellipse| "e"|
-|line| "l"|
-|magnet| "F1"|
-|pointer| "Escape"|
+|-----|-----|
+|box| <kbd>b</kbd>|
+|ellipse| <kbd>e</kbd>|
+|line| <kbd>l</kbd>|
+|magnet| <kbd>F1</kbd>|
+|pointer| <kbd>Escape</kbd>|
 |image| None|
-|metadata|None|
-
+|metadata| None|
 
 ## UML Short Cut Keys
 
-|Item | Key|
-|---|---|
+|Item | Key |
+|-----|-----|
 |accept-event-action | None|
-|action | "a"|
-|activity | "<kbd>Ctrl</kbd><kbd>Shift</kbd>T"|
-|activity-final-node |  "f"|
-|actor |  "t"|
-|artifact |  "h"|
-|association |  "<kbd>Shift</kbd>A"|
-|call-behavior-action |  "<kbd>Alt</kbd>a"|
-|choice-pseudostate |  None|
-|class |  "c"|
-|comment |  "k"|
-|comment-line |  "<kbd>Shift</kbd>K"|
-|component |  "o"|
-|composite-association |  "<kbd>Shift</kbd>Z"|
-|containment |  "<kbd>Shift</kbd>C"|
-|control-flow |  "<kbd>Shift</kbd>F"|
-|data-type |  "<kbd>Shift</kbd>L"|
-|decision-node |  "g"|
-|deep-history-pseudostate |  None|
-|dependency |  "<kbd>Shift</kbd>D"|
-|device |  "d"|
-|direct-association |  None|
-|entry-point-pseudostate |  None|
-|enumeration |  "<kbd>Shift</kbd>W"|
-|extend |  "<kbd>Shift</kbd>X"|
-|extension |  "<kbd>Shift</kbd>E"|
-|flow-final-node |  "w"|
-|fork-node |  "<kbd>Shift</kbd>R"|
-|generalization |  "<kbd>Shift</kbd>G"|
-|import |  "<kbd>Shift</kbd>M"|
-|include |  "<kbd>Shift</kbd>U"|
-|initial-node |  "j"|
-|interaction |  "<kbd>Shift</kbd>N"|
-|interface |  "i"|
-|interface-realization |  "<kbd>Shift</kbd>I"|
-|lifeline |  "v"|
-|message |  "M"|
-|metaclass |  "m"|
-|node |  "n"|
-|object-flow |  "<kbd>Shift</kbd>Y"|
-|object-node |  "<kbd>Shift</kbd>O"|
-|package |  "p"|
-|partition |  "<kbd>Shift</kbd>P"|
-|primitive |  "<kbd>Shift</kbd>H"|
-|profile |  "r"|
-|shared-association |  "<kbd>Shift</kbd>Q"|
-|state |  "s"|
-|stereotype |  "z"|
-|transition |  "<kbd>Shift</kbd>T"|
-|use-case |  "u"|
-|use-case-association |  "<kbd>Shift</kbd>J"|
-|value-specification-action |  "<kbd>Alt</kbd>v"|
-|execution-specification |  None|
-|exit-point-pseudostate |  None|
-|final-state |  None|
-|fork-pseudostate |  None|
-|initial-pseudostate |  None|
-|input-pin |  "<kbd>Ctrl</kbd>k"|
-|join-pseudostate |  None|
-|junction-pseudostate |  None|
-|output-pin |  "<kbd>Ctrl</kbd>l"|
-|reflexive-message |  None|
-|send-signal-action |  None|
-|shallow-history-pseudostate |  None|
-|state-machine |  None|
-|terminate-pseudostate |  None|
-
+|action | <kbd>a</kbd>|
+|activity | <kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>T</kbd>|
+|activity-final-node | <kbd>f</kbd>|
+|actor | <kbd>t</kbd>|
+|artifact | <kbd>h</kbd>|
+|association | <kbd>Shift</kbd><kbd>A</kbd>|
+|call-behavior-action | <kbd>Alt</kbd><kbd>a</kbd>|
+|choice-pseudostate | None|
+|class | <kbd>c</kbd>|
+|comment | <kbd>k</kbd>|
+|comment-line | <kbd>Shift</kbd><kbd>K</kbd>|
+|component | <kbd>o</kbd>|
+|composite-association | <kbd>Shift</kbd><kbd>Z</kbd>|
+|containment | <kbd>Shift</kbd><kbd>C</kbd>|
+|control-flow | <kbd>Shift</kbd><kbd>F</kbd>|
+|data-type | <kbd>Shift</kbd><kbd>L</kbd>|
+|decision-node | <kbd>g</kbd>|
+|deep-history-pseudostate | None|
+|dependency | <kbd>Shift</kbd><kbd>D</kbd>|
+|device | <kbd>d</kbd>|
+|direct-association | None|
+|entry-point-pseudostate | None|
+|enumeration | <kbd>Shift</kbd><kbd>W</kbd>|
+|extend | <kbd>Shift</kbd><kbd>X</kbd>|
+|extension | <kbd>Shift</kbd><kbd>E</kbd>|
+|flow-final-node | <kbd>w</kbd>|
+|fork-node | <kbd>Shift</kbd><kbd>R</kbd>|
+|generalization | <kbd>Shift</kbd><kbd>G</kbd>|
+|import | <kbd>Shift</kbd><kbd>M</kbd>|
+|include | <kbd>Shift</kbd><kbd>U</kbd>|
+|initial-node | <kbd>j</kbd>|
+|interaction | <kbd>Shift</kbd><kbd>N</kbd>|
+|interface | <kbd>i</kbd>|
+|interface-realization | <kbd>Shift</kbd><kbd>I</kbd>|
+|lifeline | <kbd>v</kbd>|
+|message | <kbd>M</kbd>|
+|metaclass | <kbd>m</kbd>|
+|node | <kbd>n</kbd>|
+|object-flow | <kbd>Shift</kbd><kbd>Y</kbd>|
+|object-node | <kbd>Shift</kbd><kbd>O</kbd>|
+|package | <kbd>p</kbd>|
+|partition | <kbd>Shift</kbd><kbd>P</kbd>|
+|primitive | <kbd>Shift</kbd><kbd>H</kbd>|
+|profile | <kbd>r</kbd>|
+|shared-association | <kbd>Shift</kbd><kbd>Q</kbd>|
+|state | <kbd>s</kbd>|
+|stereotype | <kbd>z</kbd>|
+|transition | <kbd>Shift</kbd><kbd>T</kbd>|
+|use-case | <kbd>u</kbd>|
+|use-case-association | <kbd>Shift</kbd><kbd>J</kbd>|
+|value-specification-action | <kbd>Alt</kbd><kbd>v</kbd>|
+|execution-specification | None|
+|exit-point-pseudostate | None|
+|final-state | None|
+|fork-pseudostate | None|
+|initial-pseudostate | None|
+|input-pin | <kbd>Ctrl</kbd><kbd>k</kbd>|
+|join-pseudostate | None|
+|junction-pseudostate | None|
+|output-pin | <kbd>Ctrl</kbd><kbd>l</kbd>|
+|reflexive-message | None|
+|send-signal-action | None|
+|shallow-history-pseudostate | None|
+|state-machine | None|
+|terminate-pseudostate | None|
 
 ## SYSML Short Cut Keys
 
-
 |Item | Key |
-|---|---|
+|-----|-----|
 |allocate-dependency| None|
-|association | <kbd>Shift</kbd>A|
-|block | <kbd>Shift</kbd>B|
-|composite-association | <kbd>Shift</kbd>Z|
-|connector | <kbd>Shift</kbd>C|
-|containment | <kbd>Shift</kbd>M|
-|derive-reqt-dependency | <kbd>Shift</kbd>D|
-|direct-association | <kbd>Shift</kbd>S|
-|enumeration | <kbd>Shift</kbd>W|
-|generalization | <kbd>Shift</kbd>G|
-|interfaceblock | <kbd>Ctrl</kbd><kbd>Shift</kbd>B|
-|package | p|
-|primitive | <kbd>Shift</kbd>H|
-|property | o|
-|proxy-port | x|
-|refine-dependency | n|
-|requirement | r|
-|satisfy-dependency | <kbd>Shift</kbd>I|
-|shared-association | <kbd>Shift</kbd>Q|
-|trace-dependency | y|
-|value-type | <kbd>Shift</kbd>L|
-|verify-dependency | <kbd>Shift</kbd>V|
+|association | <kbd>Shift</kbd><kbd>A</kbd>|
+|block | <kbd>Shift</kbd><kbd>B</kbd>|
+|composite-association | <kbd>Shift</kbd><kbd>Z</kbd>|
+|connector | <kbd>Shift</kbd><kbd>C</kbd>|
+|containment | <kbd>Shift</kbd><kbd>M</kbd>|
+|derive-reqt-dependency | <kbd>Shift</kbd><kbd>D</kbd>|
+|direct-association | <kbd>Shift</kbd><kbd>S</kbd>|
+|enumeration | <kbd>Shift</kbd><kbd>W</kbd>|
+|generalization | <kbd>Shift</kbd><kbd>G</kbd>|
+|interfaceblock | <kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>B</kbd>|
+|package | <kbd>p</kbd>|
+|primitive | <kbd>Shift</kbd><kbd>H</kbd>|
+|property | <kbd>o</kbd>|
+|proxy-port | <kbd>x</kbd>|
+|refine-dependency | <kbd>n</kbd>|
+|requirement | <kbd>r</kbd>|
+|satisfy-dependency | <kbd>Shift</kbd><kbd>I</kbd>|
+|shared-association | <kbd>Shift</kbd><kbd>Q</kbd>|
+|trace-dependency | <kbd>y</kbd>|
+|value-type | <kbd>Shift</kbd><kbd>L</kbd>|
+|verify-dependency | <kbd>Shift</kbd><kbd>V</kbd>|
