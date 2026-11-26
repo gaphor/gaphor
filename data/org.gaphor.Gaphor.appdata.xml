@@ -99,6 +99,32 @@
     </p>
   </description>
   <releases>
+    <release version="3.4.0" date="2026-11-26">
+      <description>
+        <ul>
+          <li>Remove support for macOS Intel</li>
+          <li>Show actor on a lifeline</li>
+          <li>Notify when diagram(s) is/are exported</li>
+          <li>Cancel placement tool with right-button click</li>
+          <li>Add group and ungroup for comments</li>
+        </ul>
+        <p>Internal changes:</p>
+        <ul>
+          <li>Add support for Python 3.15, drop Python 3.12</li>
+        </ul>
+        <p>Bug fixes:</p>
+        <ul>
+          <li>Update part property types when a block is renamed</li>
+          <li>Fix swapped diamond and triangle line ends</li>
+          <li>Fix Chinese Simplified not mapped to translation</li>
+          <li>Fix window glitches on macOS</li>
+          <li>Make shortcuts work inside the toolbox pane</li>
+          <li>Fix issue where multiplicity could show as "None"</li>
+          <li>Fix warning when status window is closed</li>
+        </ul>
+      </description>
+      <url>https://github.com/gaphor/gaphor/releases/tag/3.4.0</url>
+    </release>
     <release version="3.3.2" date="2026-05-02">
       <description>
         <p>Bug fixes:</p>
