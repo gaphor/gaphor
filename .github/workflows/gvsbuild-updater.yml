@@ -5,7 +5,7 @@ on:
     # min hour dom month dow
     - cron:  '0 5 * * 3'
 env:
-  python_version: '3.14'
+  python_version: '3.15'
   file: '.github/workflows/full-build.yml'
   yaml_key: '.jobs.windows.env.gvsbuild_version'
 
@@ -15,13 +15,13 @@ permissions:
 jobs:
 
   check-version:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     outputs:
       current_version: ${{ steps.current-version.outputs.current_version }}
       latest_version: ${{ steps.latest-version.outputs.latest_version }}
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@ccd8616d44fd3846e67624a50d5aad6d37bf2d25 # v2.22.1
+        uses: step-security/harden-runner@aebdcf6156ab6691adf63218240e476564a1ed4c # v2.23.0
         with:
           disable-sudo: true
           egress-policy: block
@@ -37,7 +37,7 @@ jobs:
           ref: main
           persist-credentials: false
       - name: Set up Python
-        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
         with:
           python-version: ${{ env.python_version }}
       - name: Get current version
@@ -50,7 +50,7 @@ jobs:
           echo "latest_version=$(python -m lastversion gvsbuild)" >> "$GITHUB_OUTPUT"
 
   update-version:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     needs: [ check-version ]
     if: ${{ needs.check-version.outputs.current_version != needs.check-version.outputs.latest_version }}
     environment:
@@ -63,7 +63,7 @@ jobs:
       LATEST: ${{ needs.check-version.outputs.latest_version }}
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@ccd8616d44fd3846e67624a50d5aad6d37bf2d25 # v2.22.1
+        uses: step-security/harden-runner@aebdcf6156ab6691adf63218240e476564a1ed4c # v2.23.0
         with:
           disable-sudo: true
           egress-policy: block
@@ -79,7 +79,7 @@ jobs:
       - name: Update version
         run: sed -i "$(yq '${yaml_key} | line' "${file}")s/$CURRENT/$LATEST/" "${file}"
       - name: Create GitHub App Token
-        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
+        uses: actions/create-github-app-token@f418cff399f7aef4c2f0ad47e25ca7a6abbdd6fc # v3.4.0
         id: generate-token
         with:
           client-id: ${{ secrets.GAPHOR_UPDATER_APP_ID }}
@@ -88,7 +88,7 @@ jobs:
           permission-pull-requests: write
           permission-workflows: write
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8.1.1
+        uses: peter-evans/create-pull-request@3ffccacd46053766916f087ce41d627c0b8cf2d1 # v8.1.3
         with:
           token: ${{ steps.generate-token.outputs.token }}
           commit-message: Bump Gvsbuild to version ${{ env.LATEST }}

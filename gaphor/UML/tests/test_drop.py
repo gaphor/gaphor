@@ -1,6 +1,7 @@
 from gaphor import UML
 from gaphor.diagram.drop import drop
 from gaphor.UML.classes import PackageItem
+from gaphor.UML.general import CommentItem
 from gaphor.UML.interactions import MessageItem
 from gaphor.UML.interactions.interactionsconnect import connect_lifelines
 from gaphor.UML.recipes import (
@@ -17,6 +18,24 @@ def test_drop_class(diagram, element_factory):
 
     assert klass.presentation
     assert klass.presentation[0] in diagram.ownedPresentation
+
+
+def test_reparent_comment(diagram, create):
+    parent = create(PackageItem, UML.Package)
+    other_parent = create(PackageItem, UML.Package)
+    comment = create(CommentItem, UML.Comment)
+
+    drop(comment, parent, 0, 0)
+    assert comment.parent is parent
+
+    drop(comment, other_parent, 0, 0)
+    assert comment.parent is other_parent
+    assert comment not in parent.children
+
+    drop(comment, diagram, 0, 0)
+    assert comment.parent is None
+    assert comment not in other_parent.children
+    assert not comment.subject.annotatedElement
 
 
 def test_drop_dependency(diagram, element_factory):
