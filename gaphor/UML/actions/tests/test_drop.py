@@ -112,7 +112,8 @@ def test_drop_on_swimlane_on_first_partition(create):
 
     drop_on_partition(action_item, swimlanes, 10, swimlanes.height / 2)
 
-    assert action_item == swimlanes.children[0]
+    assert action_item.parent is swimlanes
+    assert action_item.subject in swimlanes.partition[0].node
 
 
 def test_drop_on_swimlane_on_second_partition(create):
@@ -124,7 +125,9 @@ def test_drop_on_swimlane_on_second_partition(create):
         action_item, swimlanes, swimlanes.width - 10, swimlanes.height / 2
     )
 
-    assert action_item in swimlanes.children
+    assert action_item.parent is swimlanes
+    assert action_item.subject not in swimlanes.partition[0].node
+    assert action_item.subject in swimlanes.partition[1].node
 
 
 def test_drop_from_first_swimlane_on_second_partition(create):
@@ -140,8 +143,9 @@ def test_drop_from_first_swimlane_on_second_partition(create):
         action_item, swimlanes, handles[1].pos.x - 10, swimlanes.height / 2
     )
 
-    assert action_item in swimlanes.children
-    assert action_item == swimlanes.children[0]
+    assert action_item.parent is swimlanes
+    assert action_item.subject not in swimlanes.partition[0].node
+    assert action_item.subject in swimlanes.partition[1].node
 
 
 def test_drop_from_second_swimlane_to_outside(create):
@@ -155,10 +159,28 @@ def test_drop_from_second_swimlane_to_outside(create):
     )
     drop_on_partition(action_item, swimlanes, handles[1].pos.x - 10, 1000)
 
-    # ActionItem should no longer be grouped with swimlanes
+    assert not action_item.subject.inPartition
     assert action_item.subject not in swimlanes.partition[0].node
     assert action_item.subject not in swimlanes.partition[1].node
     assert action_item.parent is None
+
+
+def test_drop_from_second_swimlane_to_outside_keeps_owner(create):
+    swimlanes: PartitionItem = create(PartitionItem, uml.ActivityPartition)
+    partition_config(swimlanes)
+    activity_item = create(ActivityItem, Activity)
+    action_item = create(ActionItem, uml.Action)
+    group(activity_item.subject, action_item.subject)
+
+    handles = swimlanes.handles()
+    drop_on_partition(
+        action_item, swimlanes, handles[1].pos.x - 10, swimlanes.height / 2
+    )
+    drop_on_partition(action_item, swimlanes, handles[1].pos.x - 10, 1000)
+
+    assert not action_item.subject.inPartition
+    assert action_item.parent is None
+    assert action_item.subject.owner is activity_item.subject
 
 
 def test_move_action_from_activity_to_swimlane(create):
@@ -175,7 +197,9 @@ def test_move_action_from_activity_to_swimlane(create):
         action_item, swimlanes, handles[0].pos.x + 10, swimlanes.height / 2
     )
 
-    assert action_item == swimlanes.children[0]
+    assert action_item.parent is swimlanes
+    assert action_item.subject in swimlanes.partition[0].node
+    assert action_item.subject.owner is activity_item.subject
     assert action_item.subject in activity_item.subject.ownedElement
 
 
@@ -193,6 +217,7 @@ def test_swimlane_does_not_change_ownership(create):
         action_item, swimlanes, swimlanes.width - 10, swimlanes.height / 2
     )
 
-    assert action_item in swimlanes.children
+    assert action_item.parent is swimlanes
+    assert action_item.subject in swimlanes.partition[1].node
     # ownership of subject should not change
     assert action_item.subject.owner is action_owner
