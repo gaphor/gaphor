@@ -38,7 +38,7 @@ blocks = ToolSection(
             "toolbox-interfaceblock",
             gettext("InterfaceBlock"),
             "gaphor-interface-block-symbolic",
-            None,
+            "<Ctrl><Shift>B",
             new_item_factory(
                 sysml_items.InterfaceBlockItem,
                 sysml.InterfaceBlock,
@@ -89,7 +89,7 @@ blocks = ToolSection(
             "toolbox-direct-association",
             gettext("Direct Association"),
             "gaphor-direct-association-symbolic",
-            None,
+            "<Shift>S",
             new_item_factory(
                 uml_items.AssociationItem,
                 config_func=direct_association_config,
