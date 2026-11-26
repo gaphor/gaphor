@@ -3,11 +3,7 @@ from gaphor.diagram.group import group
 from gaphor.UML import Action, ControlFlow, ObjectFlow, ObjectNode, uml
 from gaphor.UML.actions.action import ActionItem
 from gaphor.UML.actions.actionstoolbox import partition_config
-from gaphor.UML.actions.activity import (
-    Activity,
-    ActivityItem,
-    ActivityParameterNodeItem,
-)
+from gaphor.UML.actions.activity import ActivityItem, ActivityParameterNodeItem
 from gaphor.UML.actions.drop import drop_on_partition
 from gaphor.UML.actions.partition import PartitionItem
 
@@ -168,7 +164,7 @@ def test_drop_from_second_swimlane_to_outside(create):
 def test_drop_from_second_swimlane_to_outside_keeps_owner(create):
     swimlanes: PartitionItem = create(PartitionItem, uml.ActivityPartition)
     partition_config(swimlanes)
-    activity_item = create(ActivityItem, Activity)
+    activity_item = create(ActivityItem, uml.Activity)
     action_item = create(ActionItem, uml.Action)
     group(activity_item.subject, action_item.subject)
 
@@ -206,7 +202,7 @@ def test_move_action_from_activity_to_swimlane(create):
 def test_swimlane_does_not_change_ownership(create):
     swimlanes: PartitionItem = create(PartitionItem, uml.ActivityPartition)
     partition_config(swimlanes)
-    activity_item = create(ActivityItem, Activity)
+    activity_item = create(ActivityItem, uml.Activity)
 
     action_item = create(ActionItem, uml.Action)
     group(activity_item.subject, action_item.subject)
