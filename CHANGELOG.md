@@ -1,3 +1,26 @@
+3.4.0
+-----
+
+- Remove support for macOS Intel
+- Show actor on a lifeline
+- Notify when diagram(s) is/are exported
+- Cancel placement tool with right-button click
+- Add group and ungroup for comments
+
+Internal changes:
+
+- Add support for Python 3.15, drop Python 3.12
+
+Bug fixes:
+
+- Update part property types when a block is renamed
+- Fix swapped diamond and triangle line ends
+- Fix Chinese Simplified not mapped to translation
+- Fix window glitches on macOS
+- Make shortcuts work inside the toolbox pane
+- Fix issue where multiplicity could show as "None"
+- Fix warning when status window is closed
+
 3.3.2
 -----
 
