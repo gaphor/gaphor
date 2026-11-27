@@ -132,7 +132,8 @@ def drop_on_partition(
 
     if target_subject is None:
         if isinstance(old_parent, PartitionItem):
-            _ungroup_partitions(old_parent, item)
+            for partition in old_parent.partition:
+                ungroup(partition, item.subject)
         item.change_parent(None)
         if old_parent:
             old_parent.request_update()
@@ -142,15 +143,11 @@ def drop_on_partition(
         return
 
     if isinstance(old_parent, PartitionItem):
-        _ungroup_partitions(old_parent, item)
+        for partition in old_parent.partition:
+            ungroup(partition, item.subject)
         item.change_parent(None)
         old_parent.request_update()
 
     if group(target_subject, item.subject):
         grow_parent(new_parent, item)
         item.change_parent(new_parent)
-
-
-def _ungroup_partitions(parent: PartitionItem, item) -> None:
-    for partition in parent.partition:
-        ungroup(partition, item.subject)
