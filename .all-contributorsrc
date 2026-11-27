@@ -1853,6 +1853,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "much",
+      "name": "much",
+      "avatar_url": "https://avatars.githubusercontent.com/u/2566280?v=4",
+      "profile": "https://github.com/MUCH",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
