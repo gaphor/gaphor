@@ -70,14 +70,15 @@ For something that is bigger than a one or two line fix:
 
 1. Create your own fork of the code
 2. The easiest way to contribute to the project is using GitHub Codespaces:
-  - Navigate to https://github.com/gaphor/gaphor
-  - Click the Code drop-down menu and select the Open with Codespaces option.
-  - Select + New codespace at the bottom on the pane.
+   - Navigate to https://github.com/gaphor/gaphor
+   - Click the Code drop-down menu and select the Open with Codespaces option.
+   - Select + New codespace at the bottom on the pane.
 
 Alternatively, you can also setup a local development environment:
   - Linux: https://docs.gaphor.org/en/latest/linux.html
   - MacOS: https://docs.gaphor.org/en/latest/macos.html
   - Windows: https://docs.gaphor.org/en/latest/windows.html
+  - conda: https://docs.gaphor.org/en/latest/conda.html
 3. Add tests for your changes, run the tests with `pytest`.
 4. Do the changes in your fork.
 5. If you like the change and think the project could use it:
