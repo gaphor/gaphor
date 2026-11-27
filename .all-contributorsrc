@@ -1844,6 +1844,15 @@
       "contributions": [
         "translation"
       ]
+    },
+    {
+      "login": "RichardB01",
+      "name": "Richard Bamford",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1304898?v=4",
+      "profile": "https://github.com/RichardB01",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
