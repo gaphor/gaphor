@@ -9,6 +9,7 @@
   <summary xml:lang="hu">Egyszerű UML és SysML modellező eszköz</summary>
   <metadata_license>CC-BY-3.0</metadata_license>
   <project_license>Apache-2.0</project_license>
+  <translation type="gettext">gaphor</translation>
   <developer_name>Arjan J. Molenaar</developer_name>
   <categories>
     <category>Development</category>
