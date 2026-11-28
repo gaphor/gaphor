@@ -291,6 +291,42 @@ extend-select = ["I"]
 [tool.ruff.lint.mccabe]
 max-complexity = 18
 
+[tool.conda.workspace]
+channels = ["conda-forge"]
+platforms = ["linux-64", "osx-arm64", "win-64"]
+
+[tool.conda.dependencies]
+python = ">=3.13,<3.16"
+pycairo = ">=1.29.2"
+pygobject = ">=3.58.1"
+gtk4 = "*"
+libadwaita = "*"
+gtksourceview = "*"
+adwaita-icon-theme = "*"
+gaphas = ">=5.1"
+better-exceptions = ">=0.3.3"
+tinycss2 = ">=1.0.2"
+babel = ">=2.10.3"
+jedi = ">=0.18.1,<0.20.0"
+pydot = ">=1.4.2"
+pillow = ">=13.0.0"
+defusedxml = ">=0.7.1"
+dulwich = ">=1.2.21"
+python-generic = ">=1.1.8"
+
+[tool.conda.environments]
+default = ["self"]
+
+[tool.conda.feature.self.tasks]
+# Replace the released package with the local editable install.
+_install-self = { cmd = "conda pypi install -e . -q -y" }
+
+[tool.conda.feature.self.dependencies]
+poetry-core = ">=2.0.0,<3.0.0"
+
+[tool.conda.tasks]
+dev = { cmd = "gaphor", depends-on = ["_install-self"] }
+
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
